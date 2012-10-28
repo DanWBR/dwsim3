@@ -1,0 +1,251 @@
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class FormPhEnv
+    Inherits System.Windows.Forms.Form
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormPhEnv))
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox
+        Me.CheckBox4 = New System.Windows.Forms.CheckBox
+        Me.CheckBox3 = New System.Windows.Forms.CheckBox
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox
+        Me.Button1 = New System.Windows.Forms.Button
+        Me.ComboBox3 = New System.Windows.Forms.ComboBox
+        Me.Label23 = New System.Windows.Forms.Label
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox
+        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip
+        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem
+        Me.GraphControl = New ZedGraph.ZedGraphControl
+        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem
+        Me.Grid1 = New System.Windows.Forms.DataGridView
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker
+        Me.TextBox1 = New System.Windows.Forms.NumericUpDown
+        Me.GroupBox6.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.FaTabStrip1.SuspendLayout()
+        Me.FaTabStripItem1.SuspendLayout()
+        Me.FaTabStripItem2.SuspendLayout()
+        CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TextBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'GroupBox6
+        '
+        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
+        Me.GroupBox6.Controls.Add(Me.TextBox1)
+        Me.GroupBox6.Controls.Add(Me.CheckBox2)
+        Me.GroupBox6.Controls.Add(Me.CheckBox4)
+        Me.GroupBox6.Controls.Add(Me.CheckBox3)
+        Me.GroupBox6.Controls.Add(Me.CheckBox1)
+        Me.GroupBox6.Controls.Add(Me.Button1)
+        Me.GroupBox6.Controls.Add(Me.ComboBox3)
+        Me.GroupBox6.Controls.Add(Me.Label23)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.TabStop = False
+        '
+        'CheckBox2
+        '
+        Me.CheckBox2.Checked = True
+        Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
+        resources.ApplyResources(Me.CheckBox2, "CheckBox2")
+        Me.CheckBox2.Name = "CheckBox2"
+        '
+        'CheckBox4
+        '
+        resources.ApplyResources(Me.CheckBox4, "CheckBox4")
+        Me.CheckBox4.Name = "CheckBox4"
+        '
+        'CheckBox3
+        '
+        resources.ApplyResources(Me.CheckBox3, "CheckBox3")
+        Me.CheckBox3.Name = "CheckBox3"
+        '
+        'CheckBox1
+        '
+        resources.ApplyResources(Me.CheckBox1, "CheckBox1")
+        Me.CheckBox1.Name = "CheckBox1"
+        '
+        'Button1
+        '
+        resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.Name = "Button1"
+        '
+        'ComboBox3
+        '
+        Me.ComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox3.DropDownWidth = 139
+        resources.ApplyResources(Me.ComboBox3, "ComboBox3")
+        Me.ComboBox3.Name = "ComboBox3"
+        '
+        'Label23
+        '
+        resources.ApplyResources(Me.Label23, "Label23")
+        Me.Label23.Name = "Label23"
+        '
+        'GroupBox1
+        '
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
+        Me.GroupBox1.Controls.Add(Me.ComboBox1)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.TabStop = False
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox1.DropDownWidth = 250
+        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
+        Me.ComboBox1.Items.AddRange(New Object() {resources.GetString("ComboBox1.Items"), resources.GetString("ComboBox1.Items1"), resources.GetString("ComboBox1.Items2"), resources.GetString("ComboBox1.Items3"), resources.GetString("ComboBox1.Items4"), resources.GetString("ComboBox1.Items5"), resources.GetString("ComboBox1.Items6"), resources.GetString("ComboBox1.Items7"), resources.GetString("ComboBox1.Items8"), resources.GetString("ComboBox1.Items9"), resources.GetString("ComboBox1.Items10"), resources.GetString("ComboBox1.Items11")})
+        Me.ComboBox1.Name = "ComboBox1"
+        '
+        'Label1
+        '
+        resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.Name = "Label1"
+        '
+        'GroupBox2
+        '
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
+        Me.GroupBox2.Controls.Add(Me.FaTabStrip1)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.TabStop = False
+        '
+        'FaTabStrip1
+        '
+        Me.FaTabStrip1.AlwaysShowClose = False
+        Me.FaTabStrip1.AlwaysShowMenuGlyph = False
+        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
+        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2})
+        Me.FaTabStrip1.Name = "FaTabStrip1"
+        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
+        '
+        'FaTabStripItem1
+        '
+        Me.FaTabStripItem1.CanClose = False
+        Me.FaTabStripItem1.Controls.Add(Me.GraphControl)
+        Me.FaTabStripItem1.IsDrawn = True
+        Me.FaTabStripItem1.Name = "FaTabStripItem1"
+        Me.FaTabStripItem1.Selected = True
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
+        '
+        'GraphControl
+        '
+        resources.ApplyResources(Me.GraphControl, "GraphControl")
+        Me.GraphControl.IsAntiAlias = True
+        Me.GraphControl.IsAutoScrollRange = True
+        Me.GraphControl.Name = "GraphControl"
+        Me.GraphControl.ScrollGrace = 0
+        Me.GraphControl.ScrollMaxX = 0
+        Me.GraphControl.ScrollMaxY = 0
+        Me.GraphControl.ScrollMaxY2 = 0
+        Me.GraphControl.ScrollMinX = 0
+        Me.GraphControl.ScrollMinY = 0
+        Me.GraphControl.ScrollMinY2 = 0
+        '
+        'FaTabStripItem2
+        '
+        Me.FaTabStripItem2.CanClose = False
+        Me.FaTabStripItem2.Controls.Add(Me.Grid1)
+        Me.FaTabStripItem2.IsDrawn = True
+        Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
+        '
+        'Grid1
+        '
+        Me.Grid1.AllowUserToAddRows = False
+        Me.Grid1.AllowUserToDeleteRows = False
+        Me.Grid1.AllowUserToOrderColumns = True
+        Me.Grid1.AllowUserToResizeRows = False
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Grid1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        Me.Grid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.Grid1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
+        Me.Grid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        resources.ApplyResources(Me.Grid1, "Grid1")
+        Me.Grid1.Name = "Grid1"
+        Me.Grid1.ReadOnly = True
+        Me.Grid1.RowHeadersVisible = False
+        Me.Grid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        '
+        'BackgroundWorker1
+        '
+        '
+        'TextBox1
+        '
+        Me.TextBox1.DecimalPlaces = 2
+        Me.TextBox1.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
+        Me.TextBox1.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.TextBox1.Name = "TextBox1"
+        '
+        'FormPhEnv
+        '
+        resources.ApplyResources(Me, "$this")
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.GroupBox6)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+        Me.Name = "FormPhEnv"
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
+        Me.GroupBox6.ResumeLayout(False)
+        Me.GroupBox6.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.FaTabStrip1.ResumeLayout(False)
+        Me.FaTabStripItem1.ResumeLayout(False)
+        Me.FaTabStripItem2.ResumeLayout(False)
+        CType(Me.Grid1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TextBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
+    End Sub
+    Public WithEvents GroupBox6 As System.Windows.Forms.GroupBox
+    Public WithEvents Button1 As System.Windows.Forms.Button
+    Public WithEvents ComboBox3 As System.Windows.Forms.ComboBox
+    Public WithEvents Label23 As System.Windows.Forms.Label
+    Public WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Public WithEvents Label1 As System.Windows.Forms.Label
+    Public WithEvents ComboBox1 As System.Windows.Forms.ComboBox
+    Public WithEvents GroupBox2 As System.Windows.Forms.GroupBox
+    Public WithEvents FaTabStrip1 As FarsiLibrary.Win.FATabStrip
+    Public WithEvents FaTabStripItem1 As FarsiLibrary.Win.FATabStripItem
+    Public WithEvents FaTabStripItem2 As FarsiLibrary.Win.FATabStripItem
+    Public WithEvents Grid1 As System.Windows.Forms.DataGridView
+    Public WithEvents GraphControl As ZedGraph.ZedGraphControl
+    Public WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Public WithEvents CheckBox1 As System.Windows.Forms.CheckBox
+    Public WithEvents CheckBox2 As System.Windows.Forms.CheckBox
+    Public WithEvents CheckBox3 As System.Windows.Forms.CheckBox
+    Public WithEvents CheckBox4 As System.Windows.Forms.CheckBox
+    Public WithEvents TextBox1 As System.Windows.Forms.NumericUpDown
+End Class

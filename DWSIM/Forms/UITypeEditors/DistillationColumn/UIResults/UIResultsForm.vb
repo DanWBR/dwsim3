@@ -1,0 +1,363 @@
+'    Copyright 2008 Daniel Wagner O. de Medeiros
+'
+'    This file is part of DWSIM.
+'
+'    DWSIM is free software: you can redistribute it and/or modify
+'    it under the terms of the GNU General Public License as published by
+'    the Free Software Foundation, either version 3 of the License, or
+'    (at your option) any later version.
+'
+'    DWSIM is distributed in the hope that it will be useful,
+'    but WITHOUT ANY WARRANTY; without even the implied warranty of
+'    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'    GNU General Public License for more details.
+'
+'    You should have received a copy of the GNU General Public License
+'    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
+
+Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
+Imports DWSIM.DWSIM.SimulationObjects.UnitOps
+Imports DWSIM.DWSIM.SimulationObjects
+
+Public Class UIResultsForm
+
+    Dim dc As Column
+    Dim form As FormFlowsheet
+
+    Dim loaded As Boolean = False
+    Dim cv As DWSIM.SistemasDeUnidades.Conversor
+    Dim su As DWSIM.SistemasDeUnidades.Unidades
+    Dim nf As String
+
+    Private Sub UIResultsForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        cv = New DWSIM.SistemasDeUnidades.Conversor()
+        form = My.Application.ActiveSimulation
+        dc = form.Collections.ObjectCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+        nf = form.Options.NumberFormat
+        su = form.Options.SelectedUnitSystem
+
+        Me.Text = dc.GraphicObject.Tag & " - " & Me.Text
+
+        Dim ns As Integer = dc.NumberOfStages - 1
+        Dim nc As Integer = UBound(dc.x0(0))
+        Dim i, j, k As Integer
+
+        Dim T0(ns), Tf(ns), V0(ns), Vf(ns), L0(ns), Lf(ns), LSS0(ns), LSSf(ns), VSS0(ns), VSSf(ns), P0(ns) As Double
+        Dim x0(ns)(), xf(ns)(), y0(ns)(), yf(ns)(), K0(ns)(), Kf(ns)() As Double
+        Dim cx0(nc)(), cxf(nc)(), cy0(nc)(), cyf(nc)(), cK0(nc)(), cKf(nc)() As Double
+
+        Dim py(ns) As Double
+        For i = 0 To ns
+            py(i) = i + 1
+        Next
+        For i = 0 To ns
+            T0(i) = Format(cv.ConverterDoSI(su.spmp_temperature, dc.T0(i)), nf)
+            Tf(i) = Format(cv.ConverterDoSI(su.spmp_temperature, dc.Tf(i)), nf)
+            V0(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.V0(i)), nf)
+            Vf(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.Vf(i)), nf)
+            L0(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.L0(i)), nf)
+            Lf(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.Lf(i)), nf)
+            VSS0(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.VSS0(i)), nf)
+            VSSf(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.VSSf(i)), nf)
+            LSS0(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.LSS0(i)), nf)
+            LSSf(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.LSSf(i)), nf)
+            P0(i) = Format(cv.ConverterDoSI(su.spmp_pressure, dc.P0(i)), nf)
+            x0(i) = dc.x0(i)
+            xf(i) = dc.xf(i)
+            y0(i) = dc.y0(i)
+            yf(i) = dc.yf(i)
+            K0(i) = dc.K0(i)
+            Kf(i) = dc.Kf(i)
+        Next
+        For i = 0 To nc
+            cx0(i) = dc.T0.Clone
+            cxf(i) = dc.T0.Clone
+            cy0(i) = dc.T0.Clone
+            cyf(i) = dc.T0.Clone
+            cK0(i) = dc.T0.Clone
+            cKf(i) = dc.T0.Clone
+        Next
+        For i = 0 To ns
+            For j = 0 To nc
+                cx0(j)(i) = Format(x0(i)(j) * L0(i), nf)
+                cxf(j)(i) = Format(xf(i)(j) * Lf(i), nf)
+                cy0(j)(i) = Format(y0(i)(j) * V0(i), nf)
+                cyf(j)(i) = Format(yf(i)(j) * Vf(i), nf)
+                cK0(j)(i) = Format(K0(i)(j), nf)
+                cKf(j)(i) = Format(Kf(i)(j), nf)
+            Next
+        Next
+
+        'Fill tables
+        With TableTP
+            .Columns.Clear()
+            .Columns.Add("0", DWSIM.App.GetLocalString("DCStage"))
+            .Columns.Add("1", "T0 (" & su.spmp_temperature & ")")
+            .Columns.Add("2", "Tf (" & su.spmp_temperature & ")")
+            .Rows.Clear()
+            For i = 0 To ns
+                .Rows.Add(New Object() {py(i), T0(i), Tf(i)})
+                .Rows(.Rows.Count - 1).HeaderCell.Value = dc.Stages(i).Name
+            Next
+        End With
+        With TableVL
+            .Columns.Clear()
+            .Columns.Add("0", DWSIM.App.GetLocalString("DCStage"))
+            .Columns.Add("1", "L0 (" & su.spmp_molarflow & ")")
+            .Columns.Add("2", "Lf (" & su.spmp_molarflow & ")")
+            .Columns.Add("3", "V0 (" & su.spmp_molarflow & ")")
+            .Columns.Add("4", "Vf (" & su.spmp_molarflow & ")")
+            .Rows.Clear()
+            For i = 0 To ns
+                .Rows.Add(New Object() {py(i), L0(i), Lf(i), V0(i), Vf(i)})
+                .Rows(.Rows.Count - 1).HeaderCell.Value = dc.Stages(i).Name
+            Next
+        End With
+        With TableCP
+            .Columns.Clear()
+            .Columns.Add("0", DWSIM.App.GetLocalString("DCStage"))
+            For i = 0 To nc
+                .Columns.Add("[V]" & i, "[V] " & DWSIM.App.GetComponentName(dc.compids(i)) & " (" & su.spmp_molarflow & ")")
+            Next
+            For i = 0 To nc
+                .Columns.Add("[L]" & i, "[L] " & DWSIM.App.GetComponentName(dc.compids(i)) & " (" & su.spmp_molarflow & ")")
+            Next
+            For i = 0 To nc
+                .Columns.Add("[Kval]" & i, "[Kval] " & DWSIM.App.GetComponentName(dc.compids(i)))
+            Next
+            .Rows.Clear()
+            For i = 0 To ns
+                Dim obj((nc + 1) * 3 + 1) As Object
+                obj(0) = py(i)
+                k = 1
+                For j = 0 To nc
+                    obj(k) = cyf(j)(i)
+                    k = k + 1
+                Next
+                For j = 0 To nc
+                    obj(k) = cxf(j)(i)
+                    k = k + 1
+                Next
+                For j = 0 To nc
+                    obj(k) = cKf(j)(i)
+                    k = k + 1
+                Next
+                .Rows.Add(obj)
+                .Rows(.Rows.Count - 1).HeaderCell.Value = dc.Stages(i).Name
+            Next
+        End With
+
+        loaded = True
+
+        FillGraphs()
+
+    End Sub
+
+    Private Sub FillGraphs()
+
+        cv = New DWSIM.SistemasDeUnidades.Conversor()
+
+        Dim ns As Integer = dc.NumberOfStages - 1
+        Dim nc As Integer = UBound(dc.x0(0))
+        Dim i, j As Integer
+
+        Dim T0(ns), Tf(ns), V0(ns), Vf(ns), L0(ns), Lf(ns), LSS0(ns), LSSf(ns), VSS0(ns), VSSf(ns), P0(ns) As Double
+        Dim x0(ns)(), xf(ns)(), y0(ns)(), yf(ns)(), K0(ns)(), Kf(ns)(), cx0(nc)(), cxf(nc)(), cy0(nc)(), cyf(nc)(), cK0(nc)(), cKf(nc)() As Double
+
+        Dim py(ns) As Double
+        For i = 0 To ns
+            py(i) = i + 1
+        Next
+        For i = 0 To ns
+            T0(i) = Format(cv.ConverterDoSI(su.spmp_temperature, dc.T0(i)), nf)
+            Tf(i) = Format(cv.ConverterDoSI(su.spmp_temperature, dc.Tf(i)), nf)
+            V0(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.V0(i)), nf)
+            Vf(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.Vf(i)), nf)
+            L0(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.L0(i)), nf)
+            Lf(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.Lf(i)), nf)
+            VSS0(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.VSS0(i)), nf)
+            VSSf(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.VSSf(i)), nf)
+            LSS0(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.LSS0(i)), nf)
+            LSSf(i) = Format(cv.ConverterDoSI(su.spmp_molarflow, dc.LSSf(i)), nf)
+            P0(i) = Format(cv.ConverterDoSI(su.spmp_pressure, dc.P0(i)), nf)
+            x0(i) = dc.x0(i)
+            xf(i) = dc.xf(i)
+            y0(i) = dc.y0(i)
+            yf(i) = dc.yf(i)
+            K0(i) = dc.K0(i)
+            Kf(i) = dc.Kf(i)
+        Next
+        For i = 0 To nc
+            cx0(i) = dc.T0.Clone
+            cxf(i) = dc.T0.Clone
+            cy0(i) = dc.T0.Clone
+            cyf(i) = dc.T0.Clone
+            cK0(i) = dc.T0.Clone
+            cKf(i) = dc.T0.Clone
+        Next
+        For i = 0 To ns
+            For j = 0 To nc
+                cx0(j)(i) = Format(x0(i)(j) * L0(i), nf)
+                cxf(j)(i) = Format(xf(i)(j) * Lf(i), nf)
+                cy0(j)(i) = Format(y0(i)(j) * V0(i), nf)
+                cyf(j)(i) = Format(yf(i)(j) * Vf(i), nf)
+                cK0(j)(i) = Format(K0(i)(j), nf)
+                cKf(j)(i) = Format(Kf(i)(j), nf)
+            Next
+        Next
+
+        With Me.GraphTP.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("Tf", Tf, py, Color.White, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            If CheckBox1.Checked Then
+                With .AddCurve("T0", T0, py, Color.White, ZedGraph.SymbolType.Circle)
+                    .Color = Color.SteelBlue
+                    .Line.IsSmooth = False
+                    .Line.Style = Drawing2D.DashStyle.Dash
+                    .Symbol.Fill.Type = ZedGraph.FillType.None
+                End With
+            End If
+            With .Legend
+                .IsVisible = True
+                .Border.IsVisible = False
+                .Position = ZedGraph.LegendPos.BottomCenter
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = "T (" & su.spmp_temperature & ")"
+            .YAxis.Title.Text = DWSIM.App.GetLocalString("DCStage")
+            .YAxis.Scale.IsReverse = True
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphTP.Invalidate()
+
+        With Me.GraphVL.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("Vf", Vf, py, Color.White, ZedGraph.SymbolType.Circle)
+                .Color = Color.MediumVioletRed
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            With .AddCurve("Lf", Lf, py, Color.White, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            If CheckBox2.Checked Then
+                With .AddCurve("V0", V0, py, Color.White, ZedGraph.SymbolType.Circle)
+                    .Color = Color.MediumVioletRed
+                    .Line.IsSmooth = False
+                    .Line.Style = Drawing2D.DashStyle.Dash
+                    .Symbol.Fill.Type = ZedGraph.FillType.None
+                End With
+                With .AddCurve("L0", L0, py, Color.White, ZedGraph.SymbolType.Circle)
+                    .Color = Color.SteelBlue
+                    .Line.IsSmooth = False
+                    .Line.Style = Drawing2D.DashStyle.Dash
+                    .Symbol.Fill.Type = ZedGraph.FillType.None
+                End With
+            End If
+            With .Legend
+                .IsVisible = True
+                .Border.IsVisible = False
+                .Position = ZedGraph.LegendPos.BottomCenter
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = DWSIM.App.GetLocalString("DCFlows") & " (" & su.spmp_molarflow & ")"
+            .YAxis.Title.Text = DWSIM.App.GetLocalString("DCStage")
+            .YAxis.Scale.IsReverse = True
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphVL.Invalidate()
+
+        Dim rnd As New Random(231)
+
+        With Me.GraphCP.GraphPane
+            .CurveList.Clear()
+            If CheckBox3.Checked And CheckBox4.Checked Then
+                For i = 0 To nc
+                    With .AddCurve("[L] " & DWSIM.App.GetComponentName(dc.compids(i)), cxf(i), py, Color.White, ZedGraph.SymbolType.Circle)
+                        .Color = Color.FromArgb(255, rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))
+                        .Line.IsSmooth = False
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        .IsX2Axis = False
+                    End With
+                Next
+                For i = 0 To nc
+                    With .AddCurve("[V] " & DWSIM.App.GetComponentName(dc.compids(i)), cyf(i), py, Color.White, ZedGraph.SymbolType.Circle)
+                        .Color = Color.FromArgb(255, rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))
+                        .Line.IsSmooth = False
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        .IsX2Axis = False
+                    End With
+                Next
+                For i = 0 To nc
+                    With .AddCurve("[Kval] " & DWSIM.App.GetComponentName(dc.compids(i)), cKf(i), py, Color.White, ZedGraph.SymbolType.Circle)
+                        .Color = Color.FromArgb(255, rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))
+                        .Line.IsSmooth = False
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                    End With
+                Next
+            ElseIf CheckBox3.Checked Then
+                For i = 0 To nc
+                    With .AddCurve("[L] " & DWSIM.App.GetComponentName(dc.compids(i)), cxf(i), py, Color.White, ZedGraph.SymbolType.Circle)
+                        .Color = Color.FromArgb(255, rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))
+                        .Line.IsSmooth = False
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        .IsX2Axis = False
+                    End With
+                Next
+                For i = 0 To nc
+                    With .AddCurve("[V] " & DWSIM.App.GetComponentName(dc.compids(i)), cyf(i), py, Color.White, ZedGraph.SymbolType.Circle)
+                        .Color = Color.FromArgb(255, rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))
+                        .Line.IsSmooth = False
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                    End With
+                Next
+            ElseIf CheckBox4.Checked Then
+                For i = 0 To nc
+                    With .AddCurve("[Kval] " & DWSIM.App.GetComponentName(dc.compids(i)), cKf(i), py, Color.White, ZedGraph.SymbolType.Circle)
+                        .Color = Color.FromArgb(255, rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))
+                        .Line.IsSmooth = False
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                    End With
+                Next
+            End If
+            With .Legend
+                .IsVisible = True
+                .Border.IsVisible = False
+                .Position = ZedGraph.LegendPos.BottomCenter
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = DWSIM.App.GetLocalString("DCFlows") & " (" & su.spmp_molarflow & ")"
+            .YAxis.Title.Text = DWSIM.App.GetLocalString("DCStage")
+            .YAxis.Scale.IsReverse = True
+            .YAxis.Title.Text = DWSIM.App.GetLocalString("DCStage")
+            .AxisChange(Me.CreateGraphics)
+            If CheckBox3.Checked And CheckBox4.Checked Then
+                .X2Axis.IsVisible = True
+                .X2Axis.Title.Text = "K"
+                .XAxis.Title.Text = DWSIM.App.GetLocalString("DCFlows") & " (" & su.spmp_molarflow & ")"
+            ElseIf CheckBox3.Checked Then
+                .X2Axis.IsVisible = False
+                .XAxis.Title.Text = DWSIM.App.GetLocalString("DCFlows") & " (" & su.spmp_molarflow & ")"
+            ElseIf CheckBox4.Checked Then
+                .X2Axis.IsVisible = False
+                .XAxis.Title.Text = "K"
+            End If
+        End With
+        Me.GraphCP.Invalidate()
+
+    End Sub
+
+    Private Sub CheckBox1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox1.CheckedChanged, CheckBox2.CheckedChanged, CheckBox3.CheckedChanged, CheckBox4.CheckedChanged
+        If loaded Then
+            FillGraphs()
+        End If
+    End Sub
+
+End Class
