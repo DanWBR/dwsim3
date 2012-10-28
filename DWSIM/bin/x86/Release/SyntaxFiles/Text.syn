@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Language Name="Text file" Startblock="Text">
+<FileTypes>
+	<FileType Extension=".txt" Name="Text file"/>	
+</FileTypes>
+
+	<Block Name="Text" Style="Text" PatternStyle="CS Keyword" EscapeChar="" IsMultiline="true">
+
+
+
+		<!-- Keywords that can exist inside this block -->
+		<Keywords>
+			<PatternGroup Name="Keywords" Style="CS Keyword">
+			</PatternGroup>
+		</Keywords>
+		<!-- Operators that can exist inside this block -->
+		<Operators>
+			<PatternGroup name="URL" Style="CS URL">
+				<Pattern Text="http://([\w-]+\.)+[\w-]+(/[\w- ./?%&amp;=]*)?" IsComplex="true" />
+			</PatternGroup>
+		</Operators>
+		<!-- Blocks that can exist inside this block -->
+		<ChildBlocks>
+			<Child Name="CS String" />
+		</ChildBlocks>
+	</Block>
+
+	<Block Name="CS String" Style="CS String" PatternStyle="" EscapeChar="\" IsMultiline="false">
+		<Scope Start="&quot;" End="&quot;" 	Style="CS String"  Text="" />
+		<Operators>
+			<PatternGroup name="URL" Style="CS URL">
+				<Pattern Text="http://([\w-]+\.)+[\w-]+(/[\w- ./?%&amp;=]*)?" IsComplex="true" />
+			</PatternGroup>
+		</Operators>
+	</Block>
+	
+	<Style Name="Text" ForeColor="" BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="CS String" ForeColor="Black" BackColor="" Bold="True" Italic="True" Underline="false" />
+	<Style Name="CS Operator" ForeColor="Red" BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="CS Keyword" ForeColor="Blue" BackColor="" Bold="true" Italic="false" Underline="false" />
+	<Style Name="CS URL" ForeColor="Blue" BackColor="" Bold="false" Italic="false" Underline="true" />
+</Language>

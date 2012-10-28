@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Language Name="NPath" Startblock="Code">
+<FileTypes>
+	<FileType Extension=".npath" Name="NPath file"/></FileTypes>
+
+	<Block Name="Code" Style="Code" IsMultiline="true">		
+		<Scope Start="((?i)(case)(?!(\s)+(tran)))" End="((?i)end)" StartIsComplex="true" EndIsComplex="true" Style="C1" Text="begin...end" StartISKeyword="true" EndIsKeyword="true" />
+		<Scope Start="((?i)(begin)(?!(\s)+(tran)))" End="((?i)end)" StartIsComplex="true" EndIsComplex="true" Style="C1" Text="begin...end" StartISKeyword="true" EndIsKeyword="true" />		
+		<Scope Start="[" End="]" Style="C1" Text="[...]" />		
+		
+		<!-- Keywords that can exist inside this block -->
+		<Keywords>
+			<PatternGroup Name="C1" Style="C1" CaseSensitive="false" NormalizeCase="true">
+				<Patterns>
+					select from where 
+				</Patterns>
+				<Pattern Text="order by" />
+				<Pattern Text="go" IsSeparator="true"/>
+
+			</PatternGroup>
+			
+			<PatternGroup Name="alfakrull" Style="Code" CaseSensitive="false" NormalizeCase="false">
+				<Patterns>
+					@count @max @avg @min @like @and @or @not @select @from @where @between @in @contains @freetext
+				</Patterns>
+			</PatternGroup>
+			
+			<PatternGroup Name="C2" Style="C2" CaseSensitive="false" NormalizeCase="true">
+				<Patterns>
+					count max avg min like between in contains freetext
+				</Patterns>
+			</PatternGroup>
+			
+			<PatternGroup Name="C3" Style="C3" CaseSensitive="false" NormalizeCase="true">
+				<Patterns>
+					and or not
+				</Patterns>
+			</PatternGroup>
+						
+			<PatternGroup Name="Numbers" Style="Number">
+				<Pattern Text="([0-9]+)" IsComplex="true" />
+			</PatternGroup>
+					
+		</Keywords>
+		<!-- Operators that can exist inside this block -->
+		<Operators>
+			<PatternGroup name="Operators" Style="Operator">
+				<Patterns>
+			 % " &amp; * ( ) - + | \ / [ ] ; &quot; ' &lt; &gt; , .
+				</Patterns>
+			</PatternGroup>
+		</Operators>
+		<!-- Blocks that can exist inside this block -->
+		<ChildBlocks>
+			<Child Name="String" />
+			<Child Name="Date" />
+			<Child Name="Guid" />
+			<Child Name="Code" />
+		</ChildBlocks>
+	</Block>	
+
+	<Block Name="String" Style="String" IsMultiline="true">
+		<Scope Start="&quot;" End="&quot;" EscapeChar="" Style="String" />
+		<Scope Start="'" End="'" EscapeChar="" Style="String" />
+	</Block>"
+	
+	<Block Name="Guid" Style="String" IsMultiline="true">
+		<Scope Start="{" End="}" EscapeChar="" Style="String" />
+	</Block>"
+	
+	<Block Name="Date" Style="String" IsMultiline="true">
+		<Scope Start="#" End="#" EscapeChar="" Style="String" />
+	</Block>"
+		
+<Style Name="Code" ForeColor="" BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="Scope" ForeColor="" BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="Comment" ForeColor="Green" BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="String" ForeColor="SteelBlue" BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="Number" ForeColor="Teal" BackColor="" Bold="true" Italic="false" Underline="false" />
+	<Style Name="ServerVariable" ForeColor="DarkMagenta" BackColor="" Bold="true" Italic="false" Underline="false" />
+	<Style Name="Variable" ForeColor="Magenta" BackColor="" Bold="true" Italic="false" Underline="false" />
+	<Style Name="Keyword" ForeColor="Blue" BackColor="" Bold="true" Italic="false" Underline="false" />
+	<Style Name="Operator" ForeColor="Red" BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="C1" ForeColor="Blue" 	BackColor="" Bold="true" Italic="false" Underline="false" />
+	<Style Name="C2" ForeColor="DarkBlue" 	BackColor="" Bold="true" Italic="false" Underline="false" />
+	<Style Name="C3" ForeColor="Magenta" 	BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="C4" ForeColor="Red" 	BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="C5" ForeColor="DarkRed" 	BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="C6" ForeColor="DarkBlue" 	BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="C7" ForeColor="DarkGreen" 	BackColor="" Bold="true" Italic="false" Underline="false" />
+	<Style Name="C8" ForeColor="Silver" 	BackColor="" Bold="false" Italic="false" Underline="false" />
+</Language>
