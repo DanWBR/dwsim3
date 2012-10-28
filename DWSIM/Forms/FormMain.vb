@@ -3343,27 +3343,27 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
     End Sub
 
     Private Sub BlogDeDesenvolvimentoToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BlogDeDesenvolvimentoToolStripMenuItem.Click
-        System.Diagnostics.Process.Start("http://dwsim.inforside.com.br")
+        System.Diagnostics.Process.Start("http://dwsim.inforside.com.br/blog")
     End Sub
 
     Private Sub DownloadsToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DownloadsToolStripMenuItem.Click
-        System.Diagnostics.Process.Start("http://sourceforge.net/project/showfiles.php?group_id=233626")
+        System.Diagnostics.Process.Start("http://sourceforge.net/projects/dwsim/files/")
     End Sub
 
     Private Sub WikiToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WikiToolStripMenuItem.Click
-        System.Diagnostics.Process.Start("http://apps.sourceforge.net/mediawiki/dwsim/")
+        System.Diagnostics.Process.Start("http://dwsim.inforside.com.br")
     End Sub
 
     Private Sub FórumToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FórumToolStripMenuItem.Click
-        System.Diagnostics.Process.Start("http://sourceforge.net/forum/?group_id=233626")
+        System.Diagnostics.Process.Start("http://sourceforge.net/p/dwsim/discussion/")
     End Sub
 
     Private Sub RastreamentoDeBugsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RastreamentoDeBugsToolStripMenuItem.Click
-        System.Diagnostics.Process.Start("http://sourceforge.net/tracker/?group_id=233626")
+        System.Diagnostics.Process.Start("http://sourceforge.net/apps/mantisbt/dwsim/")
     End Sub
 
     Private Sub DonateToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DonateToolStripMenuItem.Click
-        System.Diagnostics.Process.Start("http://sourceforge.net/project/project_donations.php?group_id=233626")
+        System.Diagnostics.Process.Start("http://sourceforge.net/p/dwsim/donate/")
     End Sub
 
     Private Sub MostrarBarraDeFerramentasToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MostrarBarraDeFerramentasToolStripMenuItem.Click
