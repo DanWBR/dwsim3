@@ -22,6 +22,7 @@ Imports DWSIM.DWSIM.SimulationObjects.Streams
 Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.HeatExchanger
 Imports System.Globalization
 Imports System.Reflection
+Imports System.Threading.Tasks
 
 Namespace DWSIM.SimulationObjects.UnitOps
 
@@ -77,45 +78,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected m_ColdSidePressureDrop As Double = 0
         Protected m_specifiedtemperature As SpecifiedTemperature = SpecifiedTemperature.Cold_Fluid
         Protected m_flowdirection As FlowDirection
-        Protected m_stprops As STHXProperties
+        Protected m_stprops As New STHXProperties
         Protected m_f As Double = 1.0#
 
-        'Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
-        '    Return MyBase.LoadData(data)
-        'End Function
-
-        'Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
-
-        '    Dim elements As System.Collections.Generic.List(Of System.Xml.Linq.XElement) = MyBase.SaveData()
-        '    Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
-
-        '    With elements
-        '        .Add(New XElement("CalculationMode", CalcMode))
-        '        .Add(New XElement("FlowDirection", m_flowdirection))
-        '        .Add(New XElement("Type", Type))
-        '        .Add(New XElement("SpecifiedTemperature", m_specifiedtemperature))
-        '        .Add(New XElement("FoulingFactor", FoulingFactor.GetValueOrDefault.ToString(ci)))
-        '        .Add(New XElement("DeltaP", m_dp.GetValueOrDefault.ToString(ci)))
-        '        .Add(New XElement("TempHotOut", TempHotOut.GetValueOrDefault.ToString(ci)))
-        '        .Add(New XElement("TempColdOut", TempColdOut.GetValueOrDefault.ToString(ci)))
-        '        .Add(New XElement("HotSidePressureDrop", m_HotSidePressureDrop.ToString(ci)))
-        '        .Add(New XElement("ColdSidePressureDrop", m_ColdSidePressureDrop.ToString(ci)))
-        '        .Add(New XElement("Q", m_Q.GetValueOrDefault.ToString(ci)))
-        '        .Add(New XElement("Area", m_Area.GetValueOrDefault.ToString(ci)))
-        '        .Add(New XElement("OverallCoefficient", m_OverallCoefficient.GetValueOrDefault.ToString(ci)))
-        '        .Add(New XElement("F", m_f.ToString(ci)))
-        '        .Add(New XElement("STHXProperties", m_stprops.SaveData.ToArray().ToString()))
-        '    End With
-
-        '    Return elements
-
-        'End Function
-
-        Public ReadOnly Property STProperties() As STHXProperties
+        Public Property STProperties() As STHXProperties
             Get
                 If m_stprops Is Nothing Then m_stprops = New STHXProperties
                 Return m_stprops
             End Get
+            Set(value As STHXProperties)
+                m_stprops = value
+            End Set
         End Property
 
         Public Property LMTD_F() As Double
@@ -804,17 +777,39 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             DeltaHc = Q / Wc
                             DeltaHh = -Q / Wh
                             Hc2 = Hc1 + DeltaHc
-                            Me.PropertyPackage.CurrentMaterialStream = StInCold
-                            tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc2)
-                            Tc2_ant = Tc2
-                            Tc2 = tmp(2)
-                            Tc2 = 0.6 * Tc2 + 0.4 * Tc2_ant
                             Hh2 = Hh1 + DeltaHh
-                            Me.PropertyPackage.CurrentMaterialStream = StInHot
-                            tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th2)
-                            Th2_ant = Th2
-                            Th2 = tmp(2)
-                            Th2 = 0.6 * Th2 + 0.4 * Th2_ant
+                            If My.Settings.EnableParallelProcessing Then
+                                Dim pp As PropertyPackages.PropertyPackage = Me.PropertyPackage
+                                pp.CurrentMaterialStream = StInCold
+                                Dim Vzc As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
+                                pp.CurrentMaterialStream = StInHot
+                                Dim Vzh As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
+                                Dim tasks(1) As Task
+                                tasks(0) = Task.Factory.StartNew(Sub()
+                                                                     tmp = pp.FlashBase.Flash_PH(Vzc, Pc2, Hc2, Tc2, pp)
+                                                                     Tc2_ant = Tc2
+                                                                     Tc2 = tmp(4)
+                                                                     Tc2 = 0.6 * Tc2 + 0.4 * Tc2_ant
+                                                                 End Sub)
+                                tasks(1) = Task.Factory.StartNew(Sub()
+                                                                     tmp = pp.FlashBase.Flash_PH(Vzh, Ph2, Hh2, Th2, pp)
+                                                                     Th2_ant = Th2
+                                                                     Th2 = tmp(4)
+                                                                     Th2 = 0.6 * Th2 + 0.4 * Th2_ant
+                                                                 End Sub)
+                                Task.WaitAll(tasks)
+                            Else
+                                Me.PropertyPackage.CurrentMaterialStream = StInCold
+                                tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc2)
+                                Tc2_ant = Tc2
+                                Tc2 = tmp(2)
+                                Tc2 = 0.6 * Tc2 + 0.4 * Tc2_ant
+                                Me.PropertyPackage.CurrentMaterialStream = StInHot
+                                tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th2)
+                                Th2_ant = Th2
+                                Th2 = tmp(2)
+                                Th2 = 0.6 * Th2 + 0.4 * Th2_ant
+                            End If
                         End If
                         If STProperties.Shell_Fluid = 0 Then
                             Pc2 = Pc1 - dps
@@ -1471,27 +1466,13 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.HeatExchanger
 
         Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
 
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
+
         End Function
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
 
-            Dim elements As New List(Of System.Xml.Linq.XElement)
-            Dim ci As CultureInfo = CultureInfo.InvariantCulture
-
-            With elements
-
-                Dim fields As FieldInfo() = Me.GetType.GetFields()
-                For Each fi As FieldInfo In fields
-                    If TypeOf Me.GetType.GetField(fi.Name).GetValue(Me) Is Double Then
-                        .Add(New XElement(fi.Name, Double.Parse(Me.GetType.GetField(fi.Name).GetValue(Me)).ToString(ci)))
-                    Else
-                        .Add(New XElement(fi.Name, Me.GetType.GetField(fi.Name).GetValue(Me)))
-                    End If
-                Next
-
-            End With
-
-            Return elements
+            Return XMLSerializer.XMLSerializer.Serialize(Me, True)
 
         End Function
 

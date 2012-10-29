@@ -47,8 +47,15 @@ Namespace DWSIM.Editors.Composition
                 Dim selectionControl As New CompositionEditorForm
                 selectionControl.Text = form.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & DWSIM.App.GetLocalString("EditComp")
                 selectionControl.Componentes = value
+                selectionControl.NF = form.Options.NumberFormat
+                selectionControl.SU = form.Options.SelectedUnitSystem
+                selectionControl.Q = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Fases(0).SPMProperties.molarflow.GetValueOrDefault
+                selectionControl.W = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
 
                 editorService.ShowDialog(selectionControl)
+
+                form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Fases(0).SPMProperties.molarflow = selectionControl.Q
+                form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Fases(0).SPMProperties.massflow = selectionControl.W
 
                 value = selectionControl.Componentes
 

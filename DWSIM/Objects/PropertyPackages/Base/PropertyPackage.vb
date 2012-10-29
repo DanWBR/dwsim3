@@ -157,7 +157,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 #Region "   Constructor"
 
         Sub New()
-            MyBase.New()
+            Me.New(False)
         End Sub
 
         Sub New(ByVal capeopenmode As Boolean)

@@ -33,7 +33,7 @@ Imports Microsoft.Msdn.Samples
 Imports Infralution.Localization
 Imports System.Globalization
 Imports DWSIM.DWSIM.FormClasses
-
+Imports System.Threading.Tasks
 Imports System.Xml.Serialization
 Imports System.Xml
 Imports System.Reflection
@@ -2546,23 +2546,23 @@ Public Class FormMain
             End If
         End With
 
-        'processar lista de arquivos recentes
-        If Not My.Settings.MostRecentFiles.Contains([path]) Then
-            My.Settings.MostRecentFiles.Add([path])
-            If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
-        End If
-
-        form.Options.FilePath = Me.filename
-        form.Text = form.Options.SimNome + " (" + form.Options.FilePath + ")"
-        form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
-
-        Me.ToolStripStatusLabel1.Text = ""
+        Me.UIThread(New Action(Sub()
+                                   'processar lista de arquivos recentes
+                                   If Not My.Settings.MostRecentFiles.Contains([path]) Then
+                                       My.Settings.MostRecentFiles.Add([path])
+                                       If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
+                                   End If
+                                   form.Options.FilePath = Me.filename
+                                   form.Text = form.Options.SimNome + " (" + form.Options.FilePath + ")"
+                                   form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                                   Me.ToolStripStatusLabel1.Text = ""
+                               End Sub))
 
         Application.DoEvents()
 
     End Sub
 
-    Sub SaveF(ByVal caminho As String, ByRef form As FormFlowsheet)
+    Sub SaveF(ByVal caminho As String, ByVal form As FormFlowsheet)
 
         Dim rndfolder As String = My.Computer.FileSystem.SpecialDirectories.Temp & pathsep & RandomString(8, True) & pathsep
 
@@ -2691,39 +2691,37 @@ Public Class FormMain
 
         Dim ext As String = Path.GetExtension(caminho)
 
-        If ext <> ".dwbcs" Then
-
-            'lista dos mais recentes, modificar
-            With My.Settings.MostRecentFiles
-                If Not .Contains(Me.filename) Then
-                    If My.Settings.MostRecentFiles.Count = 3 Then
-                        .Item(2) = .Item(1)
-                        .Item(1) = .Item(0)
-                        .Item(0) = Me.filename
-                    ElseIf My.Settings.MostRecentFiles.Count = 2 Then
-                        .Add(.Item(1))
-                        .Item(1) = .Item(0)
-                        .Item(0) = Me.filename
-                    ElseIf My.Settings.MostRecentFiles.Count = 1 Then
-                        .Add(.Item(0))
-                        .Item(0) = Me.filename
-                    ElseIf My.Settings.MostRecentFiles.Count = 0 Then
-                        .Add(Me.filename)
-                    End If
-                End If
-            End With
-
-            'processar lista de arquivos recentes
-            If Not My.Settings.MostRecentFiles.Contains(caminho) Then
-                My.Settings.MostRecentFiles.Add(caminho)
-                If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
-            End If
-
-            form.Options.FilePath = Me.filename
-            form.Text = form.Options.SimNome + " (" + form.Options.FilePath + ")"
-            form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
-
-        End If
+        Me.UIThread(New System.Action(Sub()
+                                          If ext <> ".dwbcs" Then
+                                              'lista dos mais recentes, modificar
+                                              With My.Settings.MostRecentFiles
+                                                  If Not .Contains(Me.filename) Then
+                                                      If My.Settings.MostRecentFiles.Count = 3 Then
+                                                          .Item(2) = .Item(1)
+                                                          .Item(1) = .Item(0)
+                                                          .Item(0) = Me.filename
+                                                      ElseIf My.Settings.MostRecentFiles.Count = 2 Then
+                                                          .Add(.Item(1))
+                                                          .Item(1) = .Item(0)
+                                                          .Item(0) = Me.filename
+                                                      ElseIf My.Settings.MostRecentFiles.Count = 1 Then
+                                                          .Add(.Item(0))
+                                                          .Item(0) = Me.filename
+                                                      ElseIf My.Settings.MostRecentFiles.Count = 0 Then
+                                                          .Add(Me.filename)
+                                                      End If
+                                                  End If
+                                              End With
+                                              'processar lista de arquivos recentes
+                                              If Not My.Settings.MostRecentFiles.Contains(caminho) Then
+                                                  My.Settings.MostRecentFiles.Add(caminho)
+                                                  If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
+                                              End If
+                                              form.Options.FilePath = Me.filename
+                                              form.Text = form.Options.SimNome + " (" + form.Options.FilePath + ")"
+                                              form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                                          End If
+                                      End Sub))
 
     End Sub
 
@@ -2931,7 +2929,12 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                     Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
                     Application.DoEvents()
                     If Path.GetExtension(Me.filename).ToLower = ".dwxml" Then
-                        Me.SaveXML(Me.filename, Me.ActiveMdiChild)
+                        Dim t As Task = Task.Factory.StartNew(Sub()
+                                                                  Me.SaveXML(Me.filename, Me.ActiveMdiChild)
+                                                              End Sub)
+                        While Not t.IsCompleted
+                            Application.DoEvents()
+                        End While
                     Else
                         Me.bgSaveFile.RunWorkerAsync()
                     End If

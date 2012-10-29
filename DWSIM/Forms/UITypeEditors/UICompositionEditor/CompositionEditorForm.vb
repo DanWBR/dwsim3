@@ -1,14 +1,13 @@
 ﻿Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
+Imports DWSIM.DWSIM.SimulationObjects.Streams
 
 Public Class CompositionEditorForm
     Inherits System.Windows.Forms.Form
     Public Componentes As Dictionary(Of String, Substancia)
+    Public Q, W As Double
+    Public SU As DWSIM.SistemasDeUnidades.Unidades
+    Public NF As String = ""
     Private loaded As Boolean = False
-
-    Private Sub CompositionEditorForm_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-
-        
-    End Sub
 
     Private Sub CompositionEditorForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -69,12 +68,12 @@ Public Class CompositionEditorForm
 
         If Not Me.Label2.Text = DWSIM.App.GetLocalString("Erro") Then
 
-            Call Me.Button23_Click(sender, e)
-
             Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim row As DataGridViewRow
-            Dim mmtotal, mtotal As Double
+            Dim mmtotal As Double = 0
+            Dim mtotal As Double = 0
             If Me.RadioButton1.Checked Then
+                Call Me.Button23_Click(sender, e)
                 For Each row In Me.GridComp.Rows
                     Me.Componentes(row.HeaderCell.Tag).FracaoMolar = row.Cells(0).Value
                 Next
@@ -84,7 +83,8 @@ Public Class CompositionEditorForm
                 For Each comp In Me.Componentes.Values
                     comp.FracaoMassica = comp.FracaoMolar.GetValueOrDefault * comp.ConstantProperties.Molar_Weight / mtotal
                 Next
-            Else
+            ElseIf Me.RadioButton2.Checked Then
+                Call Me.Button23_Click(sender, e)
                 For Each row In Me.GridComp.Rows
                     Me.Componentes(row.HeaderCell.Tag).FracaoMassica = row.Cells(0).Value
                 Next
@@ -94,9 +94,39 @@ Public Class CompositionEditorForm
                 For Each comp In Me.Componentes.Values
                     comp.FracaoMolar = comp.FracaoMassica.GetValueOrDefault / comp.ConstantProperties.Molar_Weight / mmtotal
                 Next
+            ElseIf Me.RadioButton3.Checked Then
+                Dim total As Double = 0
+                For Each row In GridComp.Rows
+                    total += row.Cells(0).Value
+                Next
+                Dim cv As New DWSIM.SistemasDeUnidades.Conversor
+                Q = cv.ConverterParaSI(SU.spmp_molarflow, total)
+                For Each row In Me.GridComp.Rows
+                    Me.Componentes(row.HeaderCell.Tag).FracaoMolar = row.Cells(0).Value / total
+                Next
+                For Each comp In Me.Componentes.Values
+                    mtotal += comp.FracaoMolar.GetValueOrDefault * comp.ConstantProperties.Molar_Weight
+                Next
+                For Each comp In Me.Componentes.Values
+                    comp.FracaoMassica = comp.FracaoMolar.GetValueOrDefault * comp.ConstantProperties.Molar_Weight / mtotal
+                Next
+            ElseIf Me.RadioButton4.Checked Then
+                Dim total As Double = 0
+                For Each row In GridComp.Rows
+                    total += row.Cells(0).Value
+                Next
+                Dim cv As New DWSIM.SistemasDeUnidades.Conversor
+                W = cv.ConverterParaSI(SU.spmp_massflow, total)
+                For Each row In Me.GridComp.Rows
+                    Me.Componentes(row.HeaderCell.Tag).FracaoMassica = row.Cells(0).Value / total
+                Next
+                For Each comp In Me.Componentes.Values
+                    mmtotal += comp.FracaoMassica.GetValueOrDefault / comp.ConstantProperties.Molar_Weight
+                Next
+                For Each comp In Me.Componentes.Values
+                    comp.FracaoMolar = comp.FracaoMassica.GetValueOrDefault / comp.ConstantProperties.Molar_Weight / mmtotal
+                Next
             End If
-
-
 
         End If
 
@@ -124,7 +154,13 @@ Public Class CompositionEditorForm
             For Each r As DataGridViewRow In Me.GridComp.Rows
                 v += CDbl(r.Cells(0).Value)
             Next
-            Me.Label3.Text = Format(v, "#0.0000")
+            If Me.RadioButton1.Checked Or Me.RadioButton2.Checked Then
+                Me.Label3.Text = Format(v, "#0.0000")
+            ElseIf Me.RadioButton3.Checked Then
+                Me.Label3.Text = Format(v, NF) & " " & SU.spmp_molarflow
+            Else
+                Me.Label3.Text = Format(v, NF) & " " & SU.spmp_massflow
+            End If
             Me.Label3.ForeColor = Color.SlateBlue
         Catch ex As Exception
             Me.Label3.Text = DWSIM.App.GetLocalString("indefinido")
@@ -133,11 +169,10 @@ Public Class CompositionEditorForm
 
     End Sub
 
-    Private Sub RadioButton2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RadioButton2.CheckedChanged
-
-    End Sub
-
-    Private Sub RadioButton1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RadioButton1.CheckedChanged
+    Private Sub RadioButton_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RadioButton1.CheckedChanged,
+                                                                                                                RadioButton2.CheckedChanged,
+                                                                                                                RadioButton3.CheckedChanged,
+                                                                                                                RadioButton4.CheckedChanged
 
         If Me.loaded Then
 
@@ -147,34 +182,24 @@ Public Class CompositionEditorForm
 
                 Call Me.Button23_Click(sender, e)
 
-                Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                 Dim row As DataGridViewRow
-                Dim mmtotal, mtotal As Double
                 If Me.RadioButton1.Checked Then
-                    For Each row In Me.GridComp.Rows
-                        Me.Componentes(row.HeaderCell.Tag).FracaoMassica = row.Cells(0).Value
-                    Next
-                    For Each comp In Me.Componentes.Values
-                        mmtotal += comp.FracaoMassica.GetValueOrDefault / comp.ConstantProperties.Molar_Weight
-                    Next
-                    For Each comp In Me.Componentes.Values
-                        comp.FracaoMolar = comp.FracaoMassica.GetValueOrDefault / comp.ConstantProperties.Molar_Weight / mmtotal
-                    Next
                     For Each row In Me.GridComp.Rows
                         row.Cells(0).Value = Me.Componentes(row.HeaderCell.Tag).FracaoMolar
                     Next
-                Else
-                    For Each row In Me.GridComp.Rows
-                        Me.Componentes(row.HeaderCell.Tag).FracaoMolar = row.Cells(0).Value
-                    Next
-                    For Each comp In Me.Componentes.Values
-                        mtotal += comp.FracaoMolar.GetValueOrDefault * comp.ConstantProperties.Molar_Weight
-                    Next
-                    For Each comp In Me.Componentes.Values
-                        comp.FracaoMassica = comp.FracaoMolar.GetValueOrDefault * comp.ConstantProperties.Molar_Weight / mtotal
-                    Next
+                ElseIf Me.RadioButton2.Checked Then
                     For Each row In Me.GridComp.Rows
                         row.Cells(0).Value = Me.Componentes(row.HeaderCell.Tag).FracaoMassica
+                    Next
+                ElseIf Me.RadioButton3.Checked Then
+                    Dim cv As New DWSIM.SistemasDeUnidades.Conversor
+                    For Each row In Me.GridComp.Rows
+                        row.Cells(0).Value = cv.ConverterDoSI(SU.spmp_molarflow, Me.Componentes(row.HeaderCell.Tag).FracaoMolar.GetValueOrDefault * Q)
+                    Next
+                ElseIf Me.RadioButton4.Checked Then
+                    Dim cv As New DWSIM.SistemasDeUnidades.Conversor
+                    For Each row In Me.GridComp.Rows
+                        row.Cells(0).Value = cv.ConverterDoSI(SU.spmp_massflow, Me.Componentes(row.HeaderCell.Tag).FracaoMassica.GetValueOrDefault * W)
                     Next
                 End If
 

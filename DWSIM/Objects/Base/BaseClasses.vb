@@ -1661,7 +1661,7 @@ End Class
     ''' <returns>A reference to the interface on the collection containing the specified ports</returns>
     ''' <remarks>Return the collection of unit ports (i.e. ICapeUnitCollection). These are delivered as a
     ''' collection of elements exposing the interfaces ICapeUnitPort</remarks>
-    Public ReadOnly Property ports() As Object Implements CapeOpen.ICapeUnit.ports
+    <Xml.Serialization.XmlIgnore()> Public ReadOnly Property ports() As Object Implements CapeOpen.ICapeUnit.ports
         Get
             If Not Me._capeopenmode Then
                 If Not Me.GraphicObject.TipoObjeto = TipoObjeto.CapeOpenUO Then
@@ -1774,7 +1774,7 @@ End Class
     ''' If the PMC does not support exposing its parameters, it should raise the ECapeNoImpl error, instead of
     ''' returning a NULL reference or an empty Collection. But if the PMC supports parameters but has for this call
     ''' no parameters, it should return a valid ICapeCollection reference exposing zero parameters.</remarks>
-    Public ReadOnly Property parameters() As Object Implements CapeOpen.ICapeUtilities.parameters
+    <Xml.Serialization.XmlIgnore()> Public ReadOnly Property parameters() As Object Implements CapeOpen.ICapeUtilities.parameters
         Get
             Return _parameters
         End Get
@@ -1793,7 +1793,7 @@ End Class
     ''' simulation context, it is recommended to raise the ECapeNoImpl error.
     ''' Initially, this method was only present in the ICapeUnit interface. Since ICapeUtilities.SetSimulationContext
     ''' is now available for any kind of PMC, ICapeUnit. SetSimulationContext is deprecated.</remarks>
-    Public WriteOnly Property simulationContext() As Object Implements CapeOpen.ICapeUtilities.simulationContext
+    <Xml.Serialization.XmlIgnore()> Public WriteOnly Property simulationContext() As Object Implements CapeOpen.ICapeUtilities.simulationContext
         Set(ByVal value As Object)
             _simcontext = value
         End Set

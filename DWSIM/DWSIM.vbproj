@@ -578,6 +578,7 @@
     <Compile Include="Forms\UITypeEditors\UISTHXEditor\UISTHXEditor.vb" />
     <Compile Include="Forms\UITypeEditors\UIUnitConverter\UIUnitConverter.vb" />
     <Compile Include="Interfaces\IUtilityPlugin.vb" />
+    <Compile Include="Objects\Classes\Shared\ExtensionMethods.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\Base.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\BostonBrittInsideOut.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\BostonFournierInsideOut3P.vb" />

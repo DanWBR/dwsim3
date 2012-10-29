@@ -122,8 +122,7 @@ Namespace DWSIM.SimulationObjects.Streams
 
         Public Overrides ReadOnly Property Flowsheet() As FormFlowsheet
             Get
-                Dim myfl As FormFlowsheet = MyBase.FlowSheet
-                If myfl Is Nothing Then Return _flowsheet Else Return myfl
+                If MyBase.FlowSheet Is Nothing Then Return _flowsheet Else Return MyBase.FlowSheet
             End Get
         End Property
 
@@ -159,32 +158,6 @@ Namespace DWSIM.SimulationObjects.Streams
             Set(ByVal value As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage)
                 If value IsNot Nothing Then _ppid = value.UniqueID
             End Set
-            'Get
-            '    If Not _pp Is Nothing Then
-            '        Return _pp
-            '    Else
-            '        Try
-            '            If Not Me.Flowsheet Is Nothing Then
-            '                For Each pp As PropertyPackages.PropertyPackage In Me.Flowsheet.Options.PropertyPackages.Values
-            '                    Return pp
-            '                    Exit For
-            '                Next
-            '            Else
-            '                'For Each pp As PropertyPackages.PropertyPackage In _flowsheet.Options.PropertyPackages.Values
-            '                '    Return pp
-            '                '    Exit For
-            '                'Next
-            '                Return Nothing
-            '            End If
-            '        Catch ex As Exception
-            '            Console.WriteLine(ex.ToString)
-            '        End Try
-            '    End If
-            '    Return Nothing
-            'End Get
-            'Set(ByVal value As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage)
-            '    _pp = value
-            'End Set
         End Property
 
         Public Overrides Sub PropertyValueChanged(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs)
@@ -1812,7 +1785,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <value></value>
         ''' <returns>Compound IDs</returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property ComponentIds() As Object Implements CapeOpen.ICapeThermoMaterialObject.ComponentIds
+        <Xml.Serialization.XmlIgnore()> Public ReadOnly Property ComponentIds() As Object Implements CapeOpen.ICapeThermoMaterialObject.ComponentIds
             Get
                 Dim compids As Object = Nothing
                 Dim formulas As Object = Nothing
@@ -2200,7 +2173,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <value></value>
         ''' <returns>List of phases</returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property PhaseIds() As Object Implements CapeOpen.ICapeThermoMaterialObject.PhaseIds
+        <Xml.Serialization.XmlIgnore()> Public ReadOnly Property PhaseIds() As Object Implements CapeOpen.ICapeThermoMaterialObject.PhaseIds
             Get
                 Dim pl As New ArrayList
                 For Each pi As PhaseInfo In Me.PropertyPackage.PhaseMappings.Values

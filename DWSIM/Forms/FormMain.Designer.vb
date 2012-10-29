@@ -719,7 +719,7 @@ Partial Class FormMain
 
         End With
 
-        Control.CheckForIllegalCrossThreadCalls = False
+        Control.CheckForIllegalCrossThreadCalls = True
 
         'process command line arguments
         If My.Application.CommandLineArgs.Count > 1 Then
