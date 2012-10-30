@@ -326,7 +326,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = result
                 result = Me.AUX_LIQVISCm(T)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = result
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = result / Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.Value
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = result / Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault
 
             ElseIf phaseID = 2 Then
 
@@ -355,7 +355,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = result
                 result = Me.AUX_VAPVISCm(T, Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault, Me.AUX_MMM(fase))
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = result
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = result / Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.Value
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = result / Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault
 
             ElseIf phaseID = 1 Then
 

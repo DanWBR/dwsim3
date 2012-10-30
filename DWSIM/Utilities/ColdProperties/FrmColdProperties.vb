@@ -125,15 +125,15 @@ Public Class FrmColdProperties
                 ft_ant2 = ft_ant
                 ft_ant = ft
                 Try
-                    tmp = pp.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, t, 101325, 0)
+                    tmp = pp.FlashBase.Flash_PT(pp.RET_VMOL(PropertyPackages.Fase.Mixture), 101325, t, pp)
                     v = tmp(1)
-                    vv = tmp(9)
-                    vl = tmp(8)
+                    vv = tmp(3)
+                    vl = tmp(2)
                 Catch ex As Exception
-                    tmp = ppi.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, t, 101325, 0)
+                    tmp = ppi.FlashBase.Flash_PT(pp.RET_VMOL(PropertyPackages.Fase.Mixture), 101325, t, pp)
                     v = tmp(1)
-                    vv = tmp(9)
-                    vl = tmp(8)
+                    vv = tmp(3)
+                    vl = tmp(2)
                 End Try
 
                 mwv = pp.AUX_MMM(vv)

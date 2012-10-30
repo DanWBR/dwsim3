@@ -318,7 +318,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             If id.ComponentName = p.ComponentName Then
                                 If p.connectedObject IsNot Nothing Then
                                     If Not My.Application.ActiveSimulation Is Nothing Then
-                                        Dim mystr As SimulationObjects_BaseClass = My.Application.ActiveSimulation.Collections.ObjectCollection(CType(p.connectedObject, ICapeIdentification).ComponentDescription)
+                                        Dim mystr As SimulationObjects_BaseClass = Me.Flowsheet.Collections.ObjectCollection(CType(p.connectedObject, ICapeIdentification).ComponentDescription)
                                         If Not myport.connectedObject Is Nothing Then myport.Disconnect()
                                         myport.Connect(mystr)
                                     End If

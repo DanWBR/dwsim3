@@ -103,7 +103,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
-            Dim form As Global.DWSIM.FormFlowsheet = My.Application.ActiveSimulation
+            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
 
             Dim Ti, Pi, Hi, Si, Wi, rho_vi, qvi, qli, ei, ein, T2, P2, H2 As Double
 
@@ -209,7 +209,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function DeCalculate() As Integer
 
-            Dim form As Global.DWSIM.FormFlowsheet = My.Application.ActiveSimulation
+            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
 
             If Me.GraphicObject.OutputConnectors(0).IsAttached Then
 

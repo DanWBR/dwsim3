@@ -234,7 +234,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
-            'Dim form As Global.DWSIM.FormChild = My.Application.ActiveSimulation
+            'Dim form As Global.DWSIM.FormChild = Me.Flowsheet
             Dim Ti1, Ti2, w1, w2, A, Tc1, Th1, Wc, Wh, P1, P2, Th2, Tc2, U As Double
             Dim Pc1, Ph1, Pc2, Ph2, DeltaHc, DeltaHh, H1, H2, Hc1, Hh1, Hc2, Hh2 As Double
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
@@ -862,7 +862,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function DeCalculate() As Integer
 
-            Dim form As Global.DWSIM.FormFlowsheet = My.Application.ActiveSimulation
+            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
 
             If Me.GraphicObject.OutputConnectors(0).IsAttached Then
 

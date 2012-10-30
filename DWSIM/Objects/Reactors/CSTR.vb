@@ -180,7 +180,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             If Me.Conversions Is Nothing Then Me.m_conversions = New Dictionary(Of String, Double)
             If Me.ComponentConversions Is Nothing Then Me.m_componentconversions = New Dictionary(Of String, Double)
 
-            form = My.Application.ActiveSimulation
+            form = Me.Flowsheet
 
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
 
@@ -725,7 +725,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             'If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac11"))
             'If Not Me.GraphicObject.OutputConnectors(1).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac11"))
 
-            Dim form As Global.DWSIM.FormFlowsheet = My.Application.ActiveSimulation
+            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
 
             'Dim ems As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
             'Dim W As Double = ems.Fases(0).SPMProperties.massflow.GetValueOrDefault

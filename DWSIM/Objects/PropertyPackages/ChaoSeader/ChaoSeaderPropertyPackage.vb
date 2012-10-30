@@ -400,8 +400,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 result = Me.AUX_LIQVISCm(T)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = result
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = result / Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.Value
-                result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.P, FlashSpec.VAP, P, 0, 0)(2)
-
+               
             ElseIf phaseID = 2 Then
 
                 result = Me.AUX_VAPDENS(T, P)

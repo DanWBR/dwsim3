@@ -51,7 +51,7 @@ Imports System.Runtime.InteropServices
     Protected m_SpecId As String = ""
     Protected m_SpecVarType As DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Nenhum
 
-    <System.NonSerialized()> Protected m_flowsheet As FormFlowsheet
+    <System.NonSerialized()> Protected Friend m_flowsheet As FormFlowsheet
 
     Protected m_showqtable As Boolean = True
 
@@ -1345,7 +1345,7 @@ End Class
                 Return FlowSheet.Options.PropertyPackages(_ppid)
             Else
                 Try
-                    For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In My.Application.ActiveSimulation.Options.PropertyPackages.Values
+                    For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In Me.FlowSheet.Options.PropertyPackages.Values
                         Return pp
                         Exit For
                     Next

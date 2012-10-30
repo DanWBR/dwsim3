@@ -110,7 +110,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
-            Dim form As FormFlowsheet = My.Application.ActiveSimulation
+            Dim form As FormFlowsheet = Me.FlowSheet
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
 
             If Not Me.GraphicObject.InputConnectors(0).IsAttached Then
@@ -446,7 +446,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             'If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac11"))
             'If Not Me.GraphicObject.OutputConnectors(1).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac11"))
 
-            Dim form As Global.DWSIM.FormFlowsheet = My.Application.ActiveSimulation
+            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
 
             Dim j As Integer = 0
 

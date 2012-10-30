@@ -958,39 +958,32 @@ Imports DWSIM.DWSIM.FormClasses
         frmUnit.ShowDialog(Me)
     End Sub
 
-    Private Sub VBScriptToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Dim fs As New FormScript
-        fs.fc = Me
-        fs.language = 0
-        fs.Show(Me)
-    End Sub
-
     Private Sub IronRubyToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles IronRubyToolStripMenuItem.Click
-        Dim fs As New FormScript
-        fs.fc = Me
-        fs.language = 2
-        fs.Show(Me)
-    End Sub
-
-    Private Sub IronRubyToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Dim fs As New FormScript
-        fs.fc = Me
-        fs.language = 3
-        fs.Show(Me)
-    End Sub
-
-    Private Sub JScriptToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Dim fs As New FormScript
-        fs.fc = Me
-        fs.language = 1
-        fs.Show(Me)
+        If DWSIM.App.IsRunningOnMono Then
+            Dim fs As New FormScriptMono
+            fs.fc = Me
+            fs.language = 2
+            fs.Show(Me)
+        Else
+            Dim fs As New FormScript
+            fs.fc = Me
+            fs.language = 2
+            fs.Show(Me)
+        End If
     End Sub
 
     Private Sub LuaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LuaToolStripMenuItem.Click
-        Dim fs As New FormScript
-        fs.fc = Me
-        fs.language = 4
-        fs.Show(Me)
+        If DWSIM.App.IsRunningOnMono Then
+            Dim fs As New FormScriptMono
+            fs.fc = Me
+            fs.language = 4
+            fs.Show(Me)
+        Else
+            Dim fs As New FormScript
+            fs.fc = Me
+            fs.language = 4
+            fs.Show(Me)
+        End If
     End Sub
 
     Private Sub ExibirSaídaDoConsoleToolStripMenuItem_CheckedChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles ExibirSaídaDoConsoleToolStripMenuItem.CheckedChanged

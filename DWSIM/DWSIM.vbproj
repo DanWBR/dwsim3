@@ -312,6 +312,12 @@
     <Compile Include="Forms\FormPassword.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\FormScriptMono.Designer.vb">
+      <DependentUpon>FormScriptMono.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormScriptMono.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FormState.Designer.vb">
       <DependentUpon>FormState.vb</DependentUpon>
     </Compile>
@@ -331,6 +337,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\UITypeEditors\UIMTableObjectOrderEditor\UIMTableObjectOrder.vb" />
+    <Compile Include="Forms\UITypeEditors\UIScriptEditor\ScriptEditorFormMono.Designer.vb">
+      <DependentUpon>ScriptEditorFormMono.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UITypeEditors\UIScriptEditor\ScriptEditorFormMono.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interfaces\Excel.vb" />
     <Compile Include="Interfaces\IPersistStream.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
@@ -1088,6 +1100,30 @@
     <EmbeddedResource Include="Forms\FormMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormScriptMono.de.resx">
+      <DependentUpon>FormScriptMono.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormScriptMono.en.resx">
+      <DependentUpon>FormScriptMono.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormScriptMono.es.resx">
+      <DependentUpon>FormScriptMono.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormScriptMono.resx">
+      <DependentUpon>FormScriptMono.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UIScriptEditor\ScriptEditorFormMono.de.resx">
+      <DependentUpon>ScriptEditorFormMono.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UIScriptEditor\ScriptEditorFormMono.en.resx">
+      <DependentUpon>ScriptEditorFormMono.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UIScriptEditor\ScriptEditorFormMono.es.resx">
+      <DependentUpon>ScriptEditorFormMono.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UIScriptEditor\ScriptEditorFormMono.resx">
+      <DependentUpon>ScriptEditorFormMono.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

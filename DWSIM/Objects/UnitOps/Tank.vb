@@ -82,7 +82,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
 
-            Dim form As Global.DWSIM.FormFlowsheet = My.Application.ActiveSimulation
+            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
             Dim Ti, Pi, Hi, Wi, rho_li, qli, qvi, ei, ein, P2, Q As Double
 
             qvi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault.ToString
@@ -160,7 +160,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function DeCalculate() As Integer
 
-            Dim form As Global.DWSIM.FormFlowsheet = My.Application.ActiveSimulation
+            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
 
             If Me.GraphicObject.OutputConnectors(0).IsAttached Then
 

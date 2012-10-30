@@ -113,7 +113,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
-            Dim form As Global.DWSIM.FormFlowsheet = My.Application.ActiveSimulation
+            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
 
             If Not Me.GraphicObject.InputConnectors(1).IsAttached Then
@@ -266,7 +266,7 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
 
         Public Overrides Function DeCalculate() As Integer
 
-            Dim form As Global.DWSIM.FormFlowsheet = My.Application.ActiveSimulation
+            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
 
             'Zerar valores da corrente de matéria conectada a jusante
             If Me.GraphicObject.OutputConnectors(0).IsAttached Then

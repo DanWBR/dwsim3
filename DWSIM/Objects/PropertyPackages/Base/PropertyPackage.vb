@@ -791,7 +791,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim P As Double = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
             Dim T As Double = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
-            If Not My.Application.CAPEOPENMode Then
+            If Not My.Application.CAPEOPENMode And Not My.Application.ActiveSimulation Is Nothing Then
                 If My.Application.ActiveSimulation.Options.CalculateBubbleAndDewPoints Then
                     result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.P, FlashSpec.VAP, P, 0, 0)(2)
                     Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = result
@@ -957,9 +957,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If Not My.Application.CAPEOPENMode Then
                 Try
-                    Me._ioquick = My.Application.ActiveSimulation.Options.PropertyPackageIOFlashQuickMode
-                    Me._tpseverity = My.Application.ActiveSimulation.Options.ThreePhaseFlashStabTestSeverity
-                    Me._tpcompids = My.Application.ActiveSimulation.Options.ThreePhaseFlashStabTestCompIds
+                    Me._ioquick = Me.CurrentMaterialStream.Flowsheet.Options.PropertyPackageIOFlashQuickMode
+                    Me._tpseverity = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestSeverity
+                    Me._tpcompids = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestCompIds
                 Catch ex As Exception
                     Me._tpseverity = 0
                     Me._tpcompids = New String() {}
@@ -1764,9 +1764,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
         Public Overridable Function DW_CalcEquilibrio_ISOL(ByVal spec1 As FlashSpec, ByVal spec2 As FlashSpec, ByVal val1 As Double, ByVal val2 As Double, ByVal estimate As Double) As Object
 
             Try
-                Me._ioquick = My.Application.ActiveSimulation.Options.PropertyPackageIOFlashQuickMode
-                Me._tpseverity = My.Application.ActiveSimulation.Options.ThreePhaseFlashStabTestSeverity
-                Me._tpcompids = My.Application.ActiveSimulation.Options.ThreePhaseFlashStabTestCompIds
+                Me._ioquick = Me.CurrentMaterialStream.Flowsheet.Options.PropertyPackageIOFlashQuickMode
+                Me._tpseverity = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestSeverity
+                Me._tpcompids = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestCompIds
             Catch ex As Exception
                 Me._tpseverity = 0
                 Me._tpcompids = New String() {}
@@ -1903,7 +1903,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mixture), P, H, T, Me)
 
                                 T = result(4)
-                                
+
                                 hl = Me.DW_CalcEnthalpy(vz, T, P, State.Liquid)
                                 hv = Me.DW_CalcEnthalpy(vz, T, P, State.Vapor)
                                 sl = Me.DW_CalcEntropy(vz, T, P, State.Liquid)
@@ -4281,7 +4281,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarflow = Nothing
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massflow = Nothing
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massfraction = Nothing
-               Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarfraction = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarfraction = Nothing
 
             End If
 
@@ -4988,7 +4988,7 @@ Final3:
                 tr1 = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Normal_Boiling_Point / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature
                 result = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A * ((1 - Tr) / (1 - tr1)) ^ 0.375
                 Return result 'kJ/kg
-            ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "ChemSep"
+            ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "ChemSep" Then
                 Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.VaporizationEnthalpyEquation
                 result = Me.CalcCSTDepProp(eqno, A, B, C, D, 0, T, T / Tr) / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight / 1000 'kJ/kg
                 Return result
@@ -8440,7 +8440,7 @@ Final3:
                             xl2 = res(0)
                     End Select
                 Else
-                    Select labels(i)
+                    Select Case labels(i)
                         Case "Vapor"
                             xv = 0.0#
                         Case "Liquid"

@@ -287,7 +287,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
         Public Function GetTargetVarValue()
 
-            formC = My.Application.ActiveSimulation
+            formC = Me.Flowsheet
             Me.su = formC.Options.SelectedUnitSystem
             Me.nf = formC.Options.NumberFormat
 
@@ -317,7 +317,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
         Public Function GetSourceVarValue()
 
-            formC = My.Application.ActiveSimulation
+            formC = Me.Flowsheet
             Me.su = formC.Options.SelectedUnitSystem
             Me.nf = formC.Options.NumberFormat
 
@@ -345,7 +345,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
         Public Function SetTargetVarValue(ByVal val As Nullable(Of Double))
 
-            formC = My.Application.ActiveSimulation
+            formC = Me.Flowsheet
             Me.su = formC.Options.SelectedUnitSystem
             Me.nf = formC.Options.NumberFormat
 
@@ -436,7 +436,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
                     Me.GraphicObject.Calculated = True
 
-                    Dim form As Global.DWSIM.FormFlowsheet = My.Application.ActiveSimulation
+                    Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
                     Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
                     'Call function to calculate flowsheet
                     With objargs
