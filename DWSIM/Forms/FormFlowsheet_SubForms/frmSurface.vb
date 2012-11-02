@@ -1,4 +1,4 @@
-﻿Imports Microsoft.MSDN.Samples.GraphicObjects
+﻿Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports PropertyGridEx
@@ -165,7 +165,25 @@ Public Class frmSurface
     Private Sub FlowsheetDesignSurface_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles FlowsheetDesignSurface.KeyDown
 
         If e.KeyCode = Keys.Delete Then
-            Call Me.ChildParent.DeleteSelectedObject(sender, e)
+            Dim n As Integer = Me.FlowsheetDesignSurface.SelectedObjects.Count
+            If n > 1 Then
+                If MessageBox.Show("Delete " & n & " objects?", "Mass delete", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                    Dim indexes As New ArrayList
+                    For Each gobj As GraphicObject In Me.FlowsheetDesignSurface.SelectedObjects.Values
+                        indexes.Add(gobj.Tag)
+                    Next
+                    For Each s As String In indexes
+                        Dim gobj As GraphicObject
+                        gobj = ChildParent.GetFlowsheetGraphicObject(s)
+                        If Not gobj Is Nothing Then
+                            Me.ChildParent.DeleteSelectedObject(sender, e, gobj, False)
+                            Me.FlowsheetDesignSurface.SelectedObjects.Remove(gobj.Name)
+                        End If
+                    Next
+                End If
+            ElseIf n = 1 Then
+                Me.ChildParent.DeleteSelectedObject(sender, e, Me.FlowsheetDesignSurface.SelectedObject)
+            End If
         ElseIf e.KeyCode = Keys.R And e.Control Then
             Call Me.RecalcularToolStripMenuItem_Click(sender, e)
         ElseIf e.KeyCode = Keys.E And e.Control Then
@@ -2097,7 +2115,7 @@ Public Class frmSurface
     End Sub
 
     Private Sub ExcluirToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExcluirToolStripMenuItem.Click
-        Call Me.ChildParent.DeleteSelectedObject(sender, e)
+        Call Me.ChildParent.DeleteSelectedObject(sender, e, Me.FlowsheetDesignSurface.SelectedObject)
     End Sub
 
     Private Sub HorizontalmenteToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HorizontalmenteToolStripMenuItem.Click
@@ -2864,7 +2882,7 @@ Public Class frmSurface
 
     Private Sub FlowsheetDesignSurface_DragDrop(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles FlowsheetDesignSurface.DragDrop
 
-       If e.Effect = DragDropEffects.Copy Then
+        If e.Effect = DragDropEffects.Copy Then
             Dim obj As DataGridViewRow = e.Data.GetData("System.Windows.Forms.DataGridViewRow")
             Dim tobj As TipoObjeto = TipoObjeto.Nenhum
             Dim p As Point = Me.FlowsheetDesignSurface.PointToClient(New Point(e.X, e.Y))

@@ -36,7 +36,7 @@ Namespace DWSIM.Flowsheet
         ''' <param name="objArgs">A StatusChangeEventArgs object containing information about the object to be calculated and its current status.</param>
         ''' <param name="sender"></param>
         ''' <remarks></remarks>
-        Public Shared Sub CalculateFlowsheet(ByRef form As FormFlowsheet, ByVal objArgs As DWSIM.Outros.StatusChangeEventArgs, ByVal sender As Object)
+        Public Shared Sub CalculateFlowsheet(ByVal form As FormFlowsheet, ByVal objArgs As DWSIM.Outros.StatusChangeEventArgs, ByVal sender As Object, Optional ByVal OnlyMe As Boolean = False)
 
             Dim preLab As String = form.FormSurface.LabelCalculator.Text
 
@@ -136,7 +136,7 @@ Namespace DWSIM.Flowsheet
                             End If
                         End If
                     Case Else
-                        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
+                        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Or OnlyMe Then
                             Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
                             myObj.GraphicObject.Calculated = False
                             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])")
@@ -158,712 +158,6 @@ Namespace DWSIM.Flowsheet
                         End If
                 End Select
 
-                'Select Case objArgs.Tipo
-                '    Case TipoObjeto.MaterialStream
-                '        Dim myObj As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(objArgs.Nome)
-                '        Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '        If Not gobj Is Nothing Then
-                '            If gobj.OutputConnectors(0).IsAttached = True Then
-                '                Dim myUnitOp As SimulationObjects_UnitOpBaseClass
-                '                myUnitOp = form.Collections.ObjectCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
-                '                If objArgs.Emissor = "Spec" Then
-                '                    CalculateMaterialStream(form, myObj)
-                '                    myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '                Else
-                '                    If objArgs.Calculado = True Then
-
-                '                        Dim gObjA As GraphicObject = Nothing
-
-                '                        Try
-                '                            gobj = FormFlowsheet.SearchSurfaceObjectsByName(myUnitOp.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '                            gobj.Calculated = True
-                '                            preLab = form.FormSurface.LabelSimMode.Text
-                '                            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & gobj.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '                            Application.DoEvents()
-
-                '                            ''  animacao
-
-                '                            Dim imgA = My.Resources.green_down
-                '                            If Not imgA Is Nothing Then
-                '                                Dim myEmbeddedImage As New EmbeddedImageGraphic(gobj.X + gobj.Width / 2 - 8, gobj.Y - 18, imgA)
-                '                                gObjA = myEmbeddedImage
-                '                                'gObjA.AdditionalInfo = form.FormSurface.FlowsheetDesignSurface
-                '                                gObjA.Tag = "" 'DWSIM.App.GetLocalString("FIGURA") & Guid.NewGuid.ToString
-                '                                gObjA.AutoSize = False
-                '                                gObjA.Height = 16
-                '                                gObjA.Width = 16
-                '                                gobj.Status = Status.Calculating
-                '                            End If
-                '                            form.FormSurface.FlowsheetDesignSurface.drawingObjects.Add(gObjA)
-                '                            form.FormSurface.FlowsheetDesignSurface.Invalidate()
-
-                '                            ''''
-
-                '                            myUnitOp.Solve()
-
-                '                            ''''
-                '                            gobj.Status = Status.Calculated
-
-                '                            If myUnitOp.IsSpecAttached = True And myUnitOp.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myUnitOp.AttachedSpecId).Calculate()
-                '                            form.WriteToLog(gobj.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '                            form.FormSurface.LabelSimMode.Text = preLab
-
-                '                        Catch ex As Exception
-
-                '                            form.FormSurface.LabelSimMode.Text = preLab
-                '                            myUnitOp.ErrorMessage = ex.Message
-                '                            form.WriteToLog(gobj.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-                '                            gobj = FormFlowsheet.SearchSurfaceObjectsByName(myUnitOp.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '                            gobj.Calculated = False
-                '                            myUnitOp.DeCalculate()
-
-                '                        Finally
-
-                '                            ''''
-
-                '                            form.FormSurface.FlowsheetDesignSurface.drawingObjects.Remove(gObjA)
-                '                            form.FormSurface.FlowsheetDesignSurface.Invalidate()
-
-                '                        End Try
-                '                    Else
-                '                        myUnitOp.DeCalculate()
-                '                        gobj = FormFlowsheet.SearchSurfaceObjectsByName(myUnitOp.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '                        gobj.Calculated = False
-                '                    End If
-                '                End If
-                '            End If
-                '            form.FormSurface.Refresh()
-                '        End If
-                '    Case TipoObjeto.EnergyStream
-                '        Dim myObj As DWSIM.SimulationObjects.Streams.EnergyStream = form.Collections.CLCS_EnergyStreamCollection(objArgs.Nome)
-                '        Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '        If Not gobj Is Nothing Then
-                '            If gobj.OutputConnectors(0).IsAttached = True Then
-                '                Dim myUnitOp As SimulationObjects_UnitOpBaseClass
-                '                myUnitOp = form.Collections.ObjectCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
-                '                If objArgs.Calculado = True Then
-                '                    Try
-                '                        preLab = form.FormSurface.LabelSimMode.Text
-                '                        myUnitOp.GraphicObject.Calculated = False
-                '                        form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & gobj.Tag & "... (PP: " & myUnitOp.PropertyPackage.Tag & " [" & myUnitOp.PropertyPackage.ComponentName & "])"
-                '                        Application.DoEvents()
-                '                        myUnitOp.Solve()
-                '                        myUnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '                        form.WriteToLog(gobj.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '                        myUnitOp.GraphicObject.Calculated = True
-                '                        If myUnitOp.IsSpecAttached = True And myUnitOp.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myUnitOp.AttachedSpecId).Calculate()
-                '                        form.FormSurface.LabelSimMode.Text = preLab
-                '                        gobj = FormFlowsheet.SearchSurfaceObjectsByName(myUnitOp.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '                        gobj.Calculated = True
-
-                '                    Catch ex As Exception
-                '                        form.FormSurface.LabelSimMode.Text = preLab
-                '                        myUnitOp.GraphicObject.Calculated = False
-                '                        myUnitOp.ErrorMessage = ex.Message
-                '                        form.WriteToLog(gobj.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-                '                        gobj = FormFlowsheet.SearchSurfaceObjectsByName(myUnitOp.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '                        gobj.Calculated = False
-                '                        myUnitOp.DeCalculate()
-                '                        myUnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '                    Finally
-                '                    End Try
-                '                Else
-                '                    myUnitOp.DeCalculate()
-                '                    myUnitOp.GraphicObject.Calculated = False
-                '                End If
-                '                myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '                form.FormSurface.Refresh()
-                '            End If
-                '        End If
-                '    Case TipoObjeto.Pipe
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Pipe = form.Collections.CLCS_PipeCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Pipe = form.Collections.CLCS_PipeCollection(objArgs.Nome)
-                '            If myObj.GraphicObject.OutputConnectors(0).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.NodeIn
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Mixer = form.Collections.CLCS_MixerCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Mixer = form.Collections.CLCS_MixerCollection(objArgs.Nome)
-                '            If myObj.GraphicObject.OutputConnectors(0).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.NodeEn
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.EnergyMixer = form.Collections.CLCS_EnergyMixerCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.EnergyMixer = form.Collections.CLCS_EnergyMixerCollection(objArgs.Nome)
-                '            If myObj.GraphicObject.OutputConnectors(0).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.NodeOut
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Splitter = form.Collections.CLCS_SplitterCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Splitter = form.Collections.CLCS_SplitterCollection(objArgs.Nome)
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            Dim cp As ConnectionPoint
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name))
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.Pump
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Pump = form.Collections.CLCS_PumpCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve(New Object() {"NaoEnergia"})
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Pump = form.Collections.CLCS_PumpCollection(objArgs.Nome)
-                '            If myObj.GraphicObject.OutputConnectors(0).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.Valve
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Valve = form.Collections.CLCS_ValveCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Valve = form.Collections.CLCS_ValveCollection(objArgs.Nome)
-                '            If myObj.GraphicObject.OutputConnectors(0).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-
-                '        End If
-                '    Case TipoObjeto.Vessel
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Vessel = form.Collections.CLCS_VesselCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Vessel = form.Collections.CLCS_VesselCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name))
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-
-                '        End If
-                '    Case TipoObjeto.Compressor
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Compressor = form.Collections.CLCS_CompressorCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve(New Object() {"NaoEnergia"})
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            Dim obj = form.FormSurface.FlowsheetDesignSurface.SelectedObject
-                '            form.FormSurface.FlowsheetDesignSurface.SelectedObject = Nothing
-                '            form.FormSurface.FlowsheetDesignSurface.SelectedObject = obj
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Compressor = form.Collections.CLCS_CompressorCollection(objArgs.Nome)
-                '            If myObj.GraphicObject.OutputConnectors(0).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.Heater
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Heater = form.Collections.CLCS_HeaterCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve(New Object() {"NaoEnergia"})
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            Dim obj = form.FormSurface.FlowsheetDesignSurface.SelectedObject
-                '            form.FormSurface.FlowsheetDesignSurface.SelectedObject = Nothing
-                '            form.FormSurface.FlowsheetDesignSurface.SelectedObject = obj
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Heater = form.Collections.CLCS_HeaterCollection(objArgs.Nome)
-                '            If myObj.GraphicObject.OutputConnectors(0).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.Cooler
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Cooler = form.Collections.CLCS_CoolerCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            Dim obj = form.FormSurface.FlowsheetDesignSurface.SelectedObject
-                '            form.FormSurface.FlowsheetDesignSurface.SelectedObject = Nothing
-                '            form.FormSurface.FlowsheetDesignSurface.SelectedObject = obj
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Cooler = form.Collections.CLCS_CoolerCollection(objArgs.Nome)
-                '            If myObj.GraphicObject.OutputConnectors(0).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.Expander
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Expander = form.Collections.CLCS_TurbineCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            Dim obj = form.FormSurface.FlowsheetDesignSurface.SelectedObject
-                '            form.FormSurface.FlowsheetDesignSurface.SelectedObject = Nothing
-                '            form.FormSurface.FlowsheetDesignSurface.SelectedObject = obj
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Expander = form.Collections.CLCS_TurbineCollection(objArgs.Nome)
-                '            If myObj.GraphicObject.OutputConnectors(0).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.Tank
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Tank = form.Collections.CLCS_TankCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            Dim obj = form.FormSurface.FlowsheetDesignSurface.SelectedObject
-                '            form.FormSurface.FlowsheetDesignSurface.SelectedObject = Nothing
-                '            form.FormSurface.FlowsheetDesignSurface.SelectedObject = obj
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.Tank = form.Collections.CLCS_TankCollection(objArgs.Nome)
-                '            If myObj.GraphicObject.OutputConnectors(0).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.OT_Reciclo
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.SpecialOps.Recycle = form.Collections.CLCS_RecycleCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            Dim obj = form.FormSurface.FlowsheetDesignSurface.SelectedObject
-                '            form.FormSurface.FlowsheetDesignSurface.SelectedObject = Nothing
-                '            form.FormSurface.FlowsheetDesignSurface.SelectedObject = obj
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '            form.FormSurface.FlowsheetDesignSurface.Invalidate()
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.SpecialOps.Recycle = form.Collections.CLCS_RecycleCollection(objArgs.Nome)
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '            CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(form.Collections.RecycleCollection(objArgs.Nome).OutputConnectors(0).AttachedConnector.AttachedTo.Name), True)
-                '            form.FormSurface.FlowsheetDesignSurface.Invalidate()
-                '        End If
-                '    Case TipoObjeto.RCT_Conversion
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Reactor_Conversion" Then
-                '            Dim myObj As DWSIM.SimulationObjects.Reactors.Reactor_Conversion = form.Collections.CLCS_ReactorConversionCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.Reactors.Reactor_Conversion = form.Collections.CLCS_ReactorConversionCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name), True)
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.RCT_Equilibrium
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Reactor_Equilibrium" Then
-                '            Dim myObj As DWSIM.SimulationObjects.Reactors.Reactor_Equilibrium = form.Collections.CLCS_ReactorEquilibriumCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.Reactors.Reactor_Equilibrium = form.Collections.CLCS_ReactorEquilibriumCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name), True)
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.RCT_Gibbs
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Reactor_Gibbs" Then
-                '            Dim myObj As DWSIM.SimulationObjects.Reactors.Reactor_Gibbs = form.Collections.CLCS_ReactorGibbsCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.Reactors.Reactor_Gibbs = form.Collections.CLCS_ReactorGibbsCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name), True)
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.RCT_CSTR
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Reactor_CSTR" Then
-                '            Dim myObj As DWSIM.SimulationObjects.Reactors.Reactor_CSTR = form.Collections.CLCS_ReactorCSTRCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.Reactors.Reactor_CSTR = form.Collections.CLCS_ReactorCSTRCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name))
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.RCT_PFR
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Reactor_PFR" Then
-                '            Dim myObj As DWSIM.SimulationObjects.Reactors.Reactor_PFR = form.Collections.CLCS_ReactorPFRCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.Reactors.Reactor_PFR = form.Collections.CLCS_ReactorPFRCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name))
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.HeatExchanger
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.HeatExchanger = form.Collections.CLCS_HeatExchangerCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.HeatExchanger = form.Collections.CLCS_HeatExchangerCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name))
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.ShortcutColumn
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.ShortcutColumn = form.Collections.CLCS_ShortcutColumnCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.ShortcutColumn = form.Collections.CLCS_ShortcutColumnCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name))
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.DistillationColumn
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.DistillationColumn = form.Collections.CLCS_DistillationColumnCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.DistillationColumn = form.Collections.CLCS_DistillationColumnCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached And cp.Type = ConType.ConOut Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name))
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-
-                '        End If
-                '    Case TipoObjeto.AbsorptionColumn
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.AbsorptionColumn = form.Collections.CLCS_AbsorptionColumnCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.AbsorptionColumn = form.Collections.CLCS_AbsorptionColumnCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached And cp.Type = ConType.ConOut Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name))
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.ReboiledAbsorber
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.ReboiledAbsorber = form.Collections.CLCS_ReboiledAbsorberCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.ReboiledAbsorber = form.Collections.CLCS_ReboiledAbsorberCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached And cp.Type = ConType.ConOut Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name))
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.RefluxedAbsorber
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.RefluxedAbsorber = form.Collections.CLCS_RefluxedAbsorberCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.RefluxedAbsorber = form.Collections.CLCS_RefluxedAbsorberCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached And cp.Type = ConType.ConOut Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name))
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.ComponentSeparator
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.ComponentSeparator = form.Collections.CLCS_ComponentSeparatorCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.ComponentSeparator = form.Collections.CLCS_ComponentSeparatorCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If cp.IsAttached And cp.Type = ConType.ConOut Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name))
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.OrificePlate
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.OrificePlate = form.Collections.CLCS_OrificePlateCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.OrificePlate = form.Collections.CLCS_OrificePlateCollection(objArgs.Nome)
-                '            If myObj.GraphicObject.OutputConnectors(0).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-
-                '        End If
-                '    Case TipoObjeto.CapeOpenUO
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.CapeOpenUO = form.Collections.CLCS_CapeOpenUOCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.CapeOpenUO = form.Collections.CLCS_CapeOpenUOCollection(objArgs.Nome)
-                '            Dim cp As ConnectionPoint
-                '            Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                '            For Each cp In gobj.OutputConnectors
-                '                If myObj.RecalcOutputStreams And cp.IsAttached And cp.Type = ConType.ConOut Then CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name))
-                '            Next
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                '    Case TipoObjeto.CustomUO
-                '        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.CustomUO = form.Collections.CLCS_CustomUOCollection(objArgs.Nome)
-                '            myObj.GraphicObject.Calculated = False
-                '            form.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])"
-                '            Application.DoEvents()
-                '            myObj.Solve()
-                '            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                '            myObj.GraphicObject.Calculated = True
-                '            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                '            form.FormProps.PGEx1.Refresh()
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        Else
-                '            Dim myObj As DWSIM.SimulationObjects.UnitOps.CustomUO = form.Collections.CLCS_CustomUOCollection(objArgs.Nome)
-                '            If myObj.GraphicObject.OutputConnectors(0).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            If myObj.GraphicObject.OutputConnectors(1).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(1).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            If myObj.GraphicObject.OutputConnectors(2).IsAttached Then
-                '                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myObj.GraphicObject.OutputConnectors(2).AttachedConnector.AttachedTo.Name))
-                '            End If
-                '            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                '        End If
-                'End Select
-
             End If
 
             Application.DoEvents()
@@ -878,7 +172,7 @@ Namespace DWSIM.Flowsheet
         ''' <param name="ms">Material Stream object to be calculated.</param>
         ''' <param name="DoNotCalcFlash">Tells the calculator whether to do flash calculations or not.</param>
         ''' <remarks></remarks>
-        Public Shared Sub CalculateMaterialStream(ByRef form As FormFlowsheet, ByRef ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False)
+        Public Shared Sub CalculateMaterialStream(ByVal form As FormFlowsheet, ByVal ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False, Optional ByVal OnlyMe As Boolean = False)
 
             Dim preLab As String = form.FormSurface.LabelCalculator.Text
             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
@@ -1005,14 +299,16 @@ Namespace DWSIM.Flowsheet
                     If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
                 End With
                 sobj.Calculated = True
-                Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                With objargs
-                    .Calculado = True
-                    .Nome = ms.Nome
-                    .Tipo = TipoObjeto.MaterialStream
-                End With
                 form.UpdateStatusLabel(preLab)
-                CalculateFlowsheet(form, objargs, Nothing)
+                If Not OnlyMe Then
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = True
+                        .Nome = ms.Nome
+                        .Tipo = TipoObjeto.MaterialStream
+                    End With
+                    CalculateFlowsheet(form, objargs, Nothing)
+                End If
             ElseIf Q >= 0 And T > 0 And P > 0 And comp >= 0 Then
                 With ms.PropertyPackage
                     .CurrentMaterialStream = ms
@@ -1071,14 +367,16 @@ Namespace DWSIM.Flowsheet
                     If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
                 End With
                 sobj.Calculated = True
-                Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                With objargs
-                    .Calculado = True
-                    .Nome = ms.Nome
-                    .Tipo = TipoObjeto.MaterialStream
-                End With
                 form.UpdateStatusLabel(preLab)
-                CalculateFlowsheet(form, objargs, Nothing)
+                If Not OnlyMe Then
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = True
+                        .Nome = ms.Nome
+                        .Tipo = TipoObjeto.MaterialStream
+                    End With
+                    CalculateFlowsheet(form, objargs, Nothing)
+                End If
             Else
                 With ms.PropertyPackage
                     .CurrentMaterialStream = ms
@@ -1104,19 +402,21 @@ Namespace DWSIM.Flowsheet
                 End With
                 ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                 sobj.Calculated = False
-                Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                With objargs
-                    .Calculado = False
-                    .Nome = ms.Nome
-                    .Tipo = TipoObjeto.MaterialStream
-                End With
                 form.UpdateStatusLabel(preLab)
-                CalculateFlowsheet(form, objargs, Nothing)
+                If Not OnlyMe Then
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Nome = ms.Nome
+                        .Tipo = TipoObjeto.MaterialStream
+                    End With
+                    CalculateFlowsheet(form, objargs, Nothing)
+                End If
             End If
 
         End Sub
 
-        Public Shared Sub DeCalculateObject(ByRef form As FormFlowsheet, ByRef obj As GraphicObject)
+        Public Shared Sub DeCalculateObject(ByVal form As FormFlowsheet, ByVal obj As GraphicObject)
 
             If obj.TipoObjeto = TipoObjeto.MaterialStream Then
 
@@ -1164,7 +464,7 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
-        Public Shared Sub DeCalculateDisconnectedObject(ByRef form As FormFlowsheet, ByRef obj As GraphicObject, ByVal side As String)
+        Public Shared Sub DeCalculateDisconnectedObject(ByVal form As FormFlowsheet, ByVal obj As GraphicObject, ByVal side As String)
 
             If obj.TipoObjeto = TipoObjeto.MaterialStream Then
 
@@ -1242,7 +542,7 @@ Namespace DWSIM.Flowsheet
         ''' </summary>
         ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
         ''' <remarks></remarks>
-        Public Shared Sub ProcessCalculationQueue(ByRef form As FormFlowsheet)
+        Public Shared Sub ProcessCalculationQueue(ByVal form As FormFlowsheet)
 
             ProcessQueueInternal(form)
 
@@ -1250,7 +550,7 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
-        Private Shared Sub ProcessQueueInternal(ByRef form As FormFlowsheet)
+        Private Shared Sub ProcessQueueInternal(ByVal form As FormFlowsheet)
 
             form.FormSurface.LabelTime.Text = ""
             form.FormSurface.calcstart = Date.Now
@@ -1322,11 +622,84 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        Private Shared Sub ProcessQueue(ByVal form As FormFlowsheet, ByVal objqueue As Queue(Of Outros.StatusChangeEventArgs))
+
+            form.FormSurface.LabelTime.Text = ""
+            form.FormSurface.calcstart = Date.Now
+            form.FormSurface.PictureBox3.Image = My.Resources.weather_lightning
+            form.FormSurface.PictureBox4.Visible = True
+
+            While objqueue.Count >= 1
+
+                My.MyApplication.CalculatorStopRequested = False
+
+                If form.FormSurface.Timer2.Enabled = False Then form.FormSurface.Timer2.Start()
+
+                Dim myinfo As DWSIM.Outros.StatusChangeEventArgs = objqueue.Peek()
+
+                Try
+                    form.FormQueue.TextBox1.Clear()
+                    For Each c As DWSIM.Outros.StatusChangeEventArgs In objqueue
+                        form.FormQueue.TextBox1.AppendText(form.Collections.ObjectCollection(c.Nome).GraphicObject.Tag & vbTab & vbTab & vbTab & "[" & DWSIM.App.GetLocalString(form.Collections.ObjectCollection(c.Nome).Descricao) & "]" & vbCrLf)
+                    Next
+                Catch ex As Exception
+                    'form.WriteToLog(ex.Message, Color.Black, DWSIM.FormClasses.TipoAviso.Erro)
+                End Try
+
+                Try
+                    If myinfo.Tipo = TipoObjeto.MaterialStream Then
+                        CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), False, True)
+                    Else
+                        CalculateFlowsheet(form, myinfo, Nothing)
+                    End If
+                Catch ex As Exception
+                    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                End Try
+
+                form.FormWatch.UpdateList()
+
+                For Each g As GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects
+                    If g.TipoObjeto = TipoObjeto.GO_MasterTable Then
+                        CType(g, DWSIM.GraphicObjects.MasterTableGraphic).Update(form)
+                    End If
+                Next
+
+                If objqueue.Count = 1 Then form.FormSpreadsheet.InternalCounter = 0
+                If objqueue.Count > 0 Then objqueue.Dequeue()
+
+                Application.DoEvents()
+
+            End While
+
+            form.FormQueue.TextBox1.Clear()
+
+            If Not form.FormSpreadsheet Is Nothing Then
+                If form.FormSpreadsheet.chkUpdate.Checked Then form.FormSpreadsheet.EvaluateAll()
+            End If
+
+            If form.FormSurface.LabelTime.Text <> "" Then
+                form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & form.FormSurface.LabelTime.Text, Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
+            End If
+
+            If form.FormSurface.Timer2.Enabled = True Then form.FormSurface.Timer2.Stop()
+            form.FormSurface.PictureBox3.Image = My.Resources.tick
+            form.FormSurface.PictureBox4.Visible = False
+            form.FormSurface.LabelTime.Text = ""
+
+            If Not form.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then Call form.FormSurface.UpdateSelectedObject()
+
+            form.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorOcioso")
+
+            Application.DoEvents()
+
+        End Sub
+
+
         ''' <summary>
         ''' Checks the calculator status to see if the user did any stop/abort request, and throws an exception to force aborting, if necessary.
         ''' </summary>
         ''' <remarks></remarks>
-      Public Shared Sub CheckCalculatorStatus()
+        Public Shared Sub CheckCalculatorStatus()
 
             If Not My.Application.IsRunningParallelTasks Then
                 Application.DoEvents()
@@ -1345,7 +718,7 @@ Namespace DWSIM.Flowsheet
         ''' </summary>
         ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
         ''' <remarks></remarks>
-        Public Shared Sub CalculateAll(ByRef form As FormFlowsheet)
+        Public Shared Sub CalculateAll(ByVal form As FormFlowsheet)
 
             For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                 If baseobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream And baseobj.GraphicObject.Calculated Then
@@ -1376,7 +749,7 @@ Namespace DWSIM.Flowsheet
         ''' <param name="form">Flowsheet where the object belongs to.</param>
         ''' <param name="ObjID">Unique Id of the object ("Name" or "GraphicObject.Name" properties). This is not the object's Flowsheet display name ("Tag" property or its GraphicObject object).</param>
         ''' <remarks></remarks>
-        Public Shared Sub CalculateObject(ByRef form As FormFlowsheet, ByVal ObjID As String)
+        Public Shared Sub CalculateObject(ByVal form As FormFlowsheet, ByVal ObjID As String)
 
             If form.Collections.ObjectCollection.ContainsKey(ObjID) Then
 
@@ -1419,7 +792,7 @@ Namespace DWSIM.Flowsheet
 
         'Simultaneous Adjust Solver
 
-        Private Shared Sub SolveSimultaneousAdjusts(ByRef form As FormFlowsheet)
+        Private Shared Sub SolveSimultaneousAdjusts(ByVal form As FormFlowsheet)
 
             If form.m_simultadjustsolverenabled Then
 
@@ -1497,10 +870,10 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
-        Private Shared Function FunctionValue(ByRef form As FormFlowsheet, ByVal x() As Double) As Double()
+        Private Shared Function FunctionValue(ByVal form As FormFlowsheet, ByVal x() As Double) As Double()
 
             Dim i As Integer = 0
-            For Each adj As SimulationObjects.SpecialOps.Adjust In Form.Collections.CLCS_AdjustCollection.Values
+            For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
                 If adj.SimultaneousAdjust Then
                     SetMnpVarValue(x(i), form, adj)
                     i += 1
@@ -1530,7 +903,7 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
-        Private Shared Function FunctionGradient(ByRef form As FormFlowsheet, ByVal x() As Double) As Double(,)
+        Private Shared Function FunctionGradient(ByVal form As FormFlowsheet, ByVal x() As Double) As Double(,)
 
             Dim epsilon As Double = 0.01
 
@@ -1564,7 +937,7 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
-        Private Shared Function GetCtlVarValue(ByRef form As FormFlowsheet, ByRef adj As SimulationObjects.SpecialOps.Adjust)
+        Private Shared Function GetCtlVarValue(ByVal form As FormFlowsheet, ByVal adj As SimulationObjects.SpecialOps.Adjust)
 
             With adj.ControlledObjectData
                 Return form.Collections.ObjectCollection(.m_ID).GetPropertyValue(.m_Property)
@@ -1572,7 +945,7 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
-        Private Shared Function GetMnpVarValue(ByRef form As FormFlowsheet, ByRef adj As SimulationObjects.SpecialOps.Adjust)
+        Private Shared Function GetMnpVarValue(ByVal form As FormFlowsheet, ByVal adj As SimulationObjects.SpecialOps.Adjust)
 
             With adj.ManipulatedObjectData()
                 Return form.Collections.ObjectCollection(.m_ID).GetPropertyValue(.m_Property)
@@ -1580,7 +953,7 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
-        Private Shared Function SetMnpVarValue(ByVal val As Nullable(Of Double), ByRef form As FormFlowsheet, ByRef adj As SimulationObjects.SpecialOps.Adjust)
+        Private Shared Function SetMnpVarValue(ByVal val As Nullable(Of Double), ByVal form As FormFlowsheet, ByVal adj As SimulationObjects.SpecialOps.Adjust)
 
             With adj.ManipulatedObjectData()
                 form.Collections.ObjectCollection(.m_ID).SetPropertyValue(.m_Property, val)
@@ -1590,7 +963,7 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
-        Private Shared Function GetRefVarValue(ByRef form As FormFlowsheet, ByRef adj As SimulationObjects.SpecialOps.Adjust)
+        Private Shared Function GetRefVarValue(ByVal form As FormFlowsheet, ByVal adj As SimulationObjects.SpecialOps.Adjust)
 
             With adj.ManipulatedObjectData
                 With adj.ControlledObjectData()
@@ -1604,23 +977,23 @@ Namespace DWSIM.Flowsheet
 
     <System.Serializable()> Public Class COMSolver
 
-        Public Sub CalculateFlowsheet(ByRef form As FormFlowsheet, ByVal objArgs As DWSIM.Outros.StatusChangeEventArgs, ByVal sender As Object)
+        Public Sub CalculateFlowsheet(ByVal form As FormFlowsheet, ByVal objArgs As DWSIM.Outros.StatusChangeEventArgs, ByVal sender As Object)
             FlowsheetSolver.CalculateFlowsheet(form, objArgs, sender)
         End Sub
 
-        Public Sub CalculateMaterialStream(ByRef form As FormFlowsheet, ByRef ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False)
+        Public Sub CalculateMaterialStream(ByVal form As FormFlowsheet, ByVal ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False)
             FlowsheetSolver.CalculateMaterialStream(form, ms, DoNotCalcFlash)
         End Sub
 
-        Public Sub DeCalculateObject(ByRef form As FormFlowsheet, ByRef obj As GraphicObject)
+        Public Sub DeCalculateObject(ByVal form As FormFlowsheet, ByVal obj As GraphicObject)
             FlowsheetSolver.DeCalculateObject(form, obj)
         End Sub
 
-        Public Sub DeCalculateDisconnectedObject(ByRef form As FormFlowsheet, ByRef obj As GraphicObject, ByVal side As String)
+        Public Sub DeCalculateDisconnectedObject(ByVal form As FormFlowsheet, ByVal obj As GraphicObject, ByVal side As String)
             FlowsheetSolver.DeCalculateDisconnectedObject(form, obj, side)
         End Sub
 
-        Public Sub ProcessCalculationQueue(ByRef form As FormFlowsheet)
+        Public Sub ProcessCalculationQueue(ByVal form As FormFlowsheet)
             FlowsheetSolver.ProcessCalculationQueue(form)
         End Sub
 
@@ -1628,11 +1001,11 @@ Namespace DWSIM.Flowsheet
             FlowsheetSolver.CheckCalculatorStatus()
         End Sub
 
-        Public Sub CalculateAll(ByRef form As FormFlowsheet)
+        Public Sub CalculateAll(ByVal form As FormFlowsheet)
             FlowsheetSolver.CalculateAll(form)
         End Sub
 
-        Public Sub CalculateObject(ByRef form As FormFlowsheet, ByVal ObjID As String)
+        Public Sub CalculateObject(ByVal form As FormFlowsheet, ByVal ObjID As String)
             FlowsheetSolver.CalculateObject(form, ObjID)
         End Sub
 

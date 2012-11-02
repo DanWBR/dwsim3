@@ -1147,125 +1147,74 @@ Public Class FormMain
             Me.filename = form.Options.FilePath
 
             Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
+
             Dim fs3 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\3.bin", FileMode.Open)
 
-            Try
+            Using fs3
                 form.FormSurface.FlowsheetDesignSurface.m_drawingObjects = Nothing
                 form.FormSurface.FlowsheetDesignSurface.m_drawingObjects = DirectCast(mySerializer.Deserialize(fs3), Microsoft.Msdn.Samples.GraphicObjects.GraphicObjectCollection)
-            Catch ex As System.Runtime.Serialization.SerializationException
-                Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
-                MessageBox.Show(ex.Message)
-            Finally
-                fs3.Close()
-            End Try
+            End Using
 
             Dim fs As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\1.bin", FileMode.Open)
 
-            Try
+            Using fs
                 form.Collections = Nothing
                 form.Collections = DirectCast(mySerializer.Deserialize(fs), DWSIM.FormClasses.ClsObjectCollections)
-            Catch ex As System.Runtime.Serialization.SerializationException
-                Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
-                MessageBox.Show(ex.Message)
-            Finally
-                fs.Close()
-            End Try
+            End Using
 
             Dim fs2 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\2.bin", FileMode.Open)
 
-            Try
+            Using fs2
                 form.Options = Nothing
                 form.Options = DirectCast(mySerializer.Deserialize(fs2), DWSIM.FormClasses.ClsFormOptions)
                 If form.Options.PropertyPackages.Count = 0 Then form.Options.PropertyPackages = Me.PropertyPackages
-            Catch ex As System.Runtime.Serialization.SerializationException
-                Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
-                MessageBox.Show(ex.Message)
-            Finally
-                fs2.Close()
-            End Try
+            End Using
 
-            Try
-                form.FormObjList.TreeViewObj.Nodes.Clear()
-                TreeViewDataAccess.LoadTreeViewData(form.FormObjList.TreeViewObj, My.Computer.FileSystem.SpecialDirectories.Temp & "\5.bin")
-            Catch ex As System.Runtime.Serialization.SerializationException
-                Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
-                MessageBox.Show(ex.Message)
-            Finally
-
-            End Try
+            form.FormObjList.TreeViewObj.Nodes.Clear()
+            TreeViewDataAccess.LoadTreeViewData(form.FormObjList.TreeViewObj, My.Computer.FileSystem.SpecialDirectories.Temp & "\5.bin")
 
             Dim fs7 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\7.bin", FileMode.Open)
 
-            Try
+            Using fs7
                 form.Text = DirectCast(mySerializer.Deserialize(fs7), String)
-            Catch ex As System.Runtime.Serialization.SerializationException
-                Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
-                MessageBox.Show(ex.Message)
-            Finally
-                fs7.Close()
-            End Try
+            End Using
 
             If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\8.bin") Then
                 Dim fs8 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\8.bin", FileMode.Open)
-                Try
+                Using fs8
                     form.FormLog.GridDT.Rows.Clear()
                     form.FormLog.GridDT = DirectCast(mySerializer.Deserialize(fs8), DataTable)
-                Catch ex As System.Runtime.Serialization.SerializationException
-                    Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
-                    MessageBox.Show(ex.Message)
-                Finally
-                    fs8.Close()
-                End Try
+                End Using
             End If
 
             If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\9.bin") Then
                 Dim fs9 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\9.bin", FileMode.Open)
-                Try
+                Using fs9
                     form.FormSpreadsheet.dt1 = DirectCast(mySerializer.Deserialize(fs9), Object(,))
-                Catch ex As System.Runtime.Serialization.SerializationException
-                    Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
-                    MessageBox.Show(ex.Message)
-                Finally
-                    fs9.Close()
-                End Try
+                End Using
             End If
 
             If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\10.bin") Then
                 Dim fs10 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\10.bin", FileMode.Open)
-                Try
+                Using fs10
                     form.FormSpreadsheet.dt2 = DirectCast(mySerializer.Deserialize(fs10), Object(,))
-                Catch ex As System.Runtime.Serialization.SerializationException
-                    Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
-                    MessageBox.Show(ex.Message)
-                Finally
-                    fs10.Close()
-                End Try
+                End Using
             End If
 
             If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\11.bin") Then
                 Dim fs11 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\11.bin", FileMode.Open)
-                Try
+                Using fs11
                     form.FormWatch.items = DirectCast(mySerializer.Deserialize(fs11), Dictionary(Of Integer, DWSIM.Outros.WatchItem))
                     form.FormWatch.PopulateList()
-                Catch ex As System.Runtime.Serialization.SerializationException
-                    Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
-                    MessageBox.Show(ex.Message)
-                Finally
-                    fs11.Close()
-                End Try
+                End Using
             End If
 
             If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\13.bin") Then
                 Dim fs13 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\13.bin", FileMode.Open)
-                Try
+                Using fs13
                     form.FlowsheetStates = DirectCast(mySerializer.Deserialize(fs13), Dictionary(Of Date, FlowsheetState))
                     form.UpdateStateList()
-                Catch ex As System.Runtime.Serialization.SerializationException
-                    Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
-                    MessageBox.Show(ex.Message)
-                Finally
-                    fs13.Close()
-                End Try
+                End Using
             End If
 
             form.CheckCollections()

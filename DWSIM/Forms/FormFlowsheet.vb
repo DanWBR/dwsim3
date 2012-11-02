@@ -15,13 +15,13 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports PropertyGridEx
 Imports WeifenLuo.WinFormsUI
 Imports System.Drawing
-
+Imports System.Linq
 Imports System.IO
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
@@ -30,6 +30,7 @@ Imports DWSIM.DWSIM.SimulationObjects
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports DWSIM.DWSIM.FormClasses
+Imports DWSIM.DWSIM.GraphicObjects
 
 <System.Serializable()> Public Class FormFlowsheet
 
@@ -1204,12 +1205,12 @@ Imports DWSIM.DWSIM.FormClasses
 
 #Region "    Connect/Disconnect Objects "
 
-    Public Sub DeleteSelectedObject(ByVal sender As System.Object, ByVal e As System.EventArgs, Optional ByVal confirmation As Boolean = True)
+    Public Sub DeleteSelectedObject(ByVal sender As System.Object, ByVal e As System.EventArgs, gobj As GraphicObject, Optional ByVal confirmation As Boolean = True)
 
-        If Not Me.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then
-            Dim SelectedObj As GraphicObject = Me.FormSurface.FlowsheetDesignSurface.SelectedObject
+        If Not gobj Is Nothing Then
+            Dim SelectedObj As GraphicObject = gobj
             Dim namesel As String = SelectedObj.Name
-            If Not Me.FormSurface.FlowsheetDesignSurface.SelectedObject.IsConnector Then
+            If Not gobj.IsConnector Then
                 Dim msgresult As MsgBoxResult
                 If confirmation Then
                     If SelectedObj.TipoObjeto = TipoObjeto.GO_Figura Then
@@ -1219,93 +1220,102 @@ Imports DWSIM.DWSIM.FormClasses
                     ElseIf SelectedObj.TipoObjeto = TipoObjeto.GO_Texto Then
                         msgresult = MessageBox.Show(DWSIM.App.GetLocalString("Excluiracaixadetexto"), DWSIM.App.GetLocalString("Excluirobjeto"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     Else
-                        msgresult = MessageBox.Show(DWSIM.App.GetLocalString("Excluir") & Me.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & "?", DWSIM.App.GetLocalString("Excluirobjeto"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                        msgresult = MessageBox.Show(DWSIM.App.GetLocalString("Excluir") & gobj.Tag & "?", DWSIM.App.GetLocalString("Excluirobjeto"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     End If
                 Else
                     msgresult = MsgBoxResult.Yes
                 End If
                 If msgresult = MsgBoxResult.Yes Then
 
+                    'remove object property table, if it exists
+                    Dim tables As List(Of GraphicObject) = (From t As GraphicObject In Me.FormSurface.FlowsheetDesignSurface.drawingObjects
+                                                                      Select t Where t.TipoObjeto = TipoObjeto.GO_Tabela).ToList
+                    Dim table As TableGraphic = (From t As TableGraphic In tables
+                                                                      Select t Where t.BaseOwner.Nome = gobj.Name).SingleOrDefault
+                    If Not table Is Nothing Then
+                        Try
+                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(table)
+                        Catch ex As Exception
+
+                        End Try
+                    End If
+
                     If SelectedObj.IsEnergyStream Then
 
                         DeCalculateObject(Me, SelectedObj)
                         Dim InCon, OutCon As ConnectionPoint
-                        For Each InCon In Me.FormSurface.FlowsheetDesignSurface.SelectedObject.InputConnectors
+                        For Each InCon In gobj.InputConnectors
                             If InCon.IsAttached = True Then
                                 If InCon.AttachedConnector.AttachedFrom.EnergyConnector.IsAttached Then
                                     With InCon.AttachedConnector.AttachedFrom.EnergyConnector
                                         .IsAttached = False
-                                        Me.FormSurface.FlowsheetDesignSurface.SelectedObject = .AttachedConnector
-                                        Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                                        gobj = .AttachedConnector
+                                        Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                                         .AttachedConnector = Nothing
                                     End With
                                 Else
                                     With InCon.AttachedConnector.AttachedFrom.OutputConnectors(InCon.AttachedConnector.AttachedFromConnectorIndex)
                                         .IsAttached = False
-                                        Me.FormSurface.FlowsheetDesignSurface.SelectedObject = .AttachedConnector
-                                        Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                                        gobj = .AttachedConnector
+                                        Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                                         .AttachedConnector = Nothing
                                     End With
                                 End If
                             End If
                         Next
-                        Me.FormSurface.FlowsheetDesignSurface.SelectedObject = SelectedObj
-                        For Each OutCon In Me.FormSurface.FlowsheetDesignSurface.SelectedObject.OutputConnectors
+                        gobj = SelectedObj
+                        For Each OutCon In gobj.OutputConnectors
                             If OutCon.IsAttached = True Then
                                 With OutCon.AttachedConnector.AttachedTo.InputConnectors(OutCon.AttachedConnector.AttachedToConnectorIndex)
                                     .IsAttached = False
-                                    Me.FormSurface.FlowsheetDesignSurface.SelectedObject = .AttachedConnector
-                                    Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                                    gobj = .AttachedConnector
+                                    Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                                     .AttachedConnector = Nothing
                                 End With
                             End If
                         Next
-                        Me.FormSurface.FlowsheetDesignSurface.SelectedObject = SelectedObj
+                        gobj = SelectedObj
 
                         Me.Collections.EnergyStreamCollection.Remove(namesel)
-                        Me.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes.RemoveByKey(namesel)
+                        If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes.RemoveByKey(namesel)
                         'DWSIM
                         Me.Collections.CLCS_EnergyStreamCollection(namesel).Dispose()
                         Me.Collections.CLCS_EnergyStreamCollection.Remove(namesel)
                         Me.Collections.ObjectCollection.Remove(namesel)
                         Me.Collections.ObjectCollection.Remove(namesel)
-                        Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                        Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                     Else
 
                         If SelectedObj.TipoObjeto = TipoObjeto.GO_Figura Then
-                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                         ElseIf SelectedObj.TipoObjeto = TipoObjeto.GO_Tabela Then
-                            'Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                            'Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                         ElseIf SelectedObj.TipoObjeto = TipoObjeto.GO_MasterTable Then
-                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                         ElseIf SelectedObj.TipoObjeto = TipoObjeto.GO_Texto Then
-                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                         ElseIf SelectedObj.TipoObjeto = TipoObjeto.GO_TabelaRapida Then
-                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                         Else
                             Dim obj As SimulationObjects_BaseClass = Me.Collections.ObjectCollection(SelectedObj.Name)
-                            If Not obj.Tabela Is Nothing Then
-                                'deletar tabela
-                                Me.FormSurface.FlowsheetDesignSurface.drawingObjects.Remove(obj.Tabela)
-                            End If
                             DeCalculateObject(Me, SelectedObj)
-                            If Me.FormSurface.FlowsheetDesignSurface.SelectedObject.EnergyConnector.IsAttached = True Then
-                                With Me.FormSurface.FlowsheetDesignSurface.SelectedObject.EnergyConnector.AttachedConnector.AttachedTo.InputConnectors(0)
+                            If gobj.EnergyConnector.IsAttached = True Then
+                                With gobj.EnergyConnector.AttachedConnector.AttachedTo.InputConnectors(0)
                                     .IsAttached = False
-                                    Me.FormSurface.FlowsheetDesignSurface.SelectedObject = .AttachedConnector
-                                    Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                                    gobj = .AttachedConnector
+                                    Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                                     .AttachedConnector = Nothing
                                 End With
                             End If
-                            Me.FormSurface.FlowsheetDesignSurface.SelectedObject = SelectedObj
+                            gobj = SelectedObj
                             Dim InCon, OutCon As ConnectionPoint
-                            For Each InCon In Me.FormSurface.FlowsheetDesignSurface.SelectedObject.InputConnectors
+                            For Each InCon In gobj.InputConnectors
                                 Try
                                     If InCon.IsAttached = True Then
                                         With InCon.AttachedConnector.AttachedFrom.OutputConnectors(InCon.AttachedConnector.AttachedFromConnectorIndex)
                                             .IsAttached = False
-                                            Me.FormSurface.FlowsheetDesignSurface.SelectedObject = .AttachedConnector
-                                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                                            gobj = .AttachedConnector
+                                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                                             .AttachedConnector = Nothing
                                         End With
                                     End If
@@ -1313,14 +1323,14 @@ Imports DWSIM.DWSIM.FormClasses
 
                                 End Try
                             Next
-                            Me.FormSurface.FlowsheetDesignSurface.SelectedObject = SelectedObj
-                            For Each OutCon In Me.FormSurface.FlowsheetDesignSurface.SelectedObject.OutputConnectors
+                            gobj = SelectedObj
+                            For Each OutCon In gobj.OutputConnectors
                                 Try
                                     If OutCon.IsAttached = True Then
                                         With OutCon.AttachedConnector.AttachedTo.InputConnectors(OutCon.AttachedConnector.AttachedToConnectorIndex)
                                             .IsAttached = False
-                                            Me.FormSurface.FlowsheetDesignSurface.SelectedObject = .AttachedConnector
-                                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                                            gobj = .AttachedConnector
+                                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                                             .AttachedConnector = Nothing
                                         End With
                                     End If
@@ -1329,89 +1339,90 @@ Imports DWSIM.DWSIM.FormClasses
                                 End Try
                             Next
 
-                            Me.FormSurface.FlowsheetDesignSurface.SelectedObject = SelectedObj
+                            gobj = SelectedObj
 
                             'dispose object
                             Me.Collections.ObjectCollection(namesel).Dispose()
+
                             Select Case SelectedObj.TipoObjeto
                                 Case TipoObjeto.NodeIn
                                     Me.Collections.MixerCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_MixerCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.NodeOut
                                     Me.Collections.SplitterCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_SplitterCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.NodeEn
                                     Me.Collections.MixerENCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeME").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeME").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_EnergyMixerCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.Pump
                                     Me.Collections.PumpCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodePU").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodePU").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_PumpCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.Tank
                                     Me.Collections.TankCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_TankCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.Vessel
                                     Me.Collections.SeparatorCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_VesselCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.MaterialStream
                                     Me.Collections.MaterialStreamCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_MaterialStreamCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.Compressor
                                     Me.Collections.CompressorCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_CompressorCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.Expander
                                     Me.Collections.TurbineCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_TurbineCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.TPVessel
                                     Me.Collections.TPSeparatorCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes.RemoveByKey(namesel)
                                 Case TipoObjeto.Cooler
                                     Me.Collections.CoolerCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_CoolerCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.Heater
                                     Me.Collections.HeaterCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_HeaterCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.Pipe
                                     Me.Collections.CLCS_PipeCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodePI").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodePI").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.PipeCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.Valve
                                     Me.Collections.ValveCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_ValveCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
@@ -1440,43 +1451,43 @@ Imports DWSIM.DWSIM.FormClasses
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.HeatExchanger
                                     Me.Collections.HeatExchangerCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_HeatExchangerCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.ShortcutColumn
                                     Me.Collections.HeatExchangerCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_HeatExchangerCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.OrificePlate
                                     Me.Collections.OrificePlateCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_OrificePlateCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.ComponentSeparator
                                     Me.Collections.ComponentSeparatorCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_ComponentSeparatorCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.CustomUO
                                     Me.Collections.CustomUOCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_CustomUOCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.CapeOpenUO
                                     Me.Collections.CapeOpenUOCollection.Remove(namesel)
-                                    Me.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_CapeOpenUOCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                             End Select
 
-                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
 
                         End If
 
@@ -1508,7 +1519,7 @@ Imports DWSIM.DWSIM.FormClasses
 
         If Not gobj Is Nothing Then
             Me.FormSurface.FlowsheetDesignSurface.SelectedObject = gobj
-            Me.DeleteSelectedObject(Me, New EventArgs(), confirmation)
+            Me.DeleteSelectedObject(Me, New EventArgs(), gobj, confirmation)
         End If
 
     End Sub
@@ -1533,9 +1544,8 @@ Imports DWSIM.DWSIM.FormClasses
                             conptObj.AttachedConnector.AttachedFrom.OutputConnectors(conptObj.AttachedConnector.AttachedFromConnectorIndex).IsAttached = False
                             conptObj.AttachedConnector.AttachedFrom.OutputConnectors(conptObj.AttachedConnector.AttachedFromConnectorIndex).AttachedConnector = Nothing
                             Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Clear()
-                            Me.FormSurface.FlowsheetDesignSurface.SelectedObject = conptObj.AttachedConnector
                             conptObj.IsAttached = False
-                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(conptObj.AttachedConnector)
                             Exit Sub
                         End If
                     End If
@@ -1548,9 +1558,8 @@ Imports DWSIM.DWSIM.FormClasses
                             DeCalculateDisconnectedObject(Me, SelObj, "Out")
                             conptObj.AttachedConnector.AttachedTo.InputConnectors(conptObj.AttachedConnector.AttachedToConnectorIndex).IsAttached = False
                             conptObj.AttachedConnector.AttachedTo.InputConnectors(conptObj.AttachedConnector.AttachedToConnectorIndex).AttachedConnector = Nothing
-                            Me.FormSurface.FlowsheetDesignSurface.SelectedObject = conptObj.AttachedConnector
                             conptObj.IsAttached = False
-                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(conptObj.AttachedConnector)
                             Exit Sub
                         End If
                     End If
@@ -1561,9 +1570,8 @@ Imports DWSIM.DWSIM.FormClasses
                     DeCalculateDisconnectedObject(Me, SelObj, "Out")
                     SelObj.EnergyConnector.AttachedConnector.AttachedFrom.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedFromConnectorIndex).IsAttached = False
                     SelObj.EnergyConnector.AttachedConnector.AttachedFrom.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedFromConnectorIndex).AttachedConnector = Nothing
-                    Me.FormSurface.FlowsheetDesignSurface.SelectedObject = SelObj.EnergyConnector.AttachedConnector
                     SelObj.EnergyConnector.IsAttached = False
-                    Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject()
+                    Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(SelObj.EnergyConnector.AttachedConnector)
                     Exit Sub
                 End If
             End If

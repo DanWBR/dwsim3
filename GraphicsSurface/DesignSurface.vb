@@ -922,8 +922,8 @@ Imports System.Runtime.Serialization
         End Get
     End Property
 
-    Public Sub DeleteSelectedObject()
-        Dim objectToDelete As GraphicObject = Me.SelectedObject
+    Public Sub DeleteSelectedObject(gobj As GraphicObject)
+        Dim objectToDelete As GraphicObject = gobj
         If Not objectToDelete Is Nothing Then
             If Me.drawingObjects.Contains(objectToDelete) Then
                 Me.drawingObjects.Remove(objectToDelete)

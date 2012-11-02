@@ -785,16 +785,17 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
     Private Sub BackgroundWorker1_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
 
-        Dim gobj As Microsoft.MSDN.Samples.GraphicObjects.GraphicObject = FormFlowsheet.SearchSurfaceObjectsByTag(Me.ComboBox3.SelectedItem, Frm.FormSurface.FlowsheetDesignSurface)
+        Dim gobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = Nothing
+        gobj = FormFlowsheet.SearchSurfaceObjectsByTag(Me.ComboBox3.SelectedItem, Frm.FormSurface.FlowsheetDesignSurface)
         Me.mat = Frm.Collections.CLCS_MaterialStreamCollection(gobj.Name)
         Me.strname = gobj.Tag
 
         If Me.showoppoint Then
-            ot = cv.ConverterDoSI(su.spmp_temperature, mat.Fases(0).SPMProperties.temperature)
-            op = cv.ConverterDoSI(su.spmp_pressure, mat.Fases(0).SPMProperties.pressure)
+            ot = cv.ConverterDoSI(su.spmp_temperature, mat.Fases(0).SPMProperties.temperature.GetValueOrDefault)
+            op = cv.ConverterDoSI(su.spmp_pressure, mat.Fases(0).SPMProperties.pressure.GetValueOrDefault)
             ov = mat.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault / mat.Fases(0).SPMProperties.density.GetValueOrDefault / 1000
-            oh = cv.ConverterDoSI(su.spmp_enthalpy, mat.Fases(0).SPMProperties.enthalpy)
-            os = cv.ConverterDoSI(su.spmp_entropy, mat.Fases(0).SPMProperties.entropy)
+            oh = cv.ConverterDoSI(su.spmp_enthalpy, mat.Fases(0).SPMProperties.enthalpy.GetValueOrDefault)
+            os = cv.ConverterDoSI(su.spmp_entropy, mat.Fases(0).SPMProperties.entropy.GetValueOrDefault)
         End If
 
         Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = Frm.Options.SelectedPropertyPackage
@@ -805,61 +806,61 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
         If Me.CheckBox4.Checked Then
 
-            '    If mat.Fases(0).Componentes.ContainsKey(DWSIM.App.GetLocalString("guaH2O")) Then
+    '    If mat.Fases(0).Componentes.ContainsKey(DWSIM.App.GetLocalString("guaH2O")) Then
 
-            '        If mat.Fases(0).Componentes(DWSIM.App.GetLocalString("guaH2O")).FracaoMolar.GetValueOrDefault > 0 Then
+    '        If mat.Fases(0).Componentes(DWSIM.App.GetLocalString("guaH2O")).FracaoMolar.GetValueOrDefault > 0 Then
 
-            '            Dim n As Integer = mat.Fases(0).Componentes.Count - 1
-            '            Dim Vz(n) As Double
-            '            Dim nomes(mat.Fases(0).Componentes.Count - 1) As String
-            '            Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-            '            Dim i As Integer = 0
-            '            For Each comp In mat.Fases(0).Componentes.Values
-            '                Vz(i) = comp.FracaoMolar.GetValueOrDefault
-            '                nomes(i) = comp.Nome
-            '                i += 1
-            '            Next
-            '            Dim t, t0, tn, delta As Double
-            '            Dim p(1) As Object
-            '            t0 = 250
-            '            tn = 320
-            '            delta = (tn - t0) / 10
-            '            Dim hid As New DWSIM.Utilities.HYD.KlaudaSandler(mat)
-            '            i = 0
-            '            Do
-            '                t = t0 + i * delta
-            '                p = hid.HYD_KS2(t, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-            '                If CDbl(p(0)) < 600 * 101325 Then
-            '                    ph1.Add(p(0))
-            '                    th1.Add(t)
-            '                End If
-            '                If CDbl(p(1)) < 600 * 101325 Then
-            '                    ph2.Add(p(1))
-            '                    th2.Add(t)
-            '                End If
-            '                i = i + 1
-            '            Loop Until t >= tn
-            '            If th1.Count = 0 Then
-            '                th1.Add(CDbl(0))
-            '                ph1.Add(CDbl(0))
-            '            End If
-            '            If th2.Count = 0 Then
-            '                th2.Add(CDbl(0))
-            '                ph2.Add(CDbl(0))
-            '            End If
-            '        Else
-            '            th1.Add(CDbl(0))
-            '            th2.Add(CDbl(0))
-            '            ph1.Add(CDbl(0))
-            '            ph2.Add(CDbl(0))
-            '        End If
+    '            Dim n As Integer = mat.Fases(0).Componentes.Count - 1
+    '            Dim Vz(n) As Double
+    '            Dim nomes(mat.Fases(0).Componentes.Count - 1) As String
+    '            Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+    '            Dim i As Integer = 0
+    '            For Each comp In mat.Fases(0).Componentes.Values
+    '                Vz(i) = comp.FracaoMolar.GetValueOrDefault
+    '                nomes(i) = comp.Nome
+    '                i += 1
+    '            Next
+    '            Dim t, t0, tn, delta As Double
+    '            Dim p(1) As Object
+    '            t0 = 250
+    '            tn = 320
+    '            delta = (tn - t0) / 10
+    '            Dim hid As New DWSIM.Utilities.HYD.KlaudaSandler(mat)
+    '            i = 0
+    '            Do
+    '                t = t0 + i * delta
+    '                p = hid.HYD_KS2(t, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+    '                If CDbl(p(0)) < 600 * 101325 Then
+    '                    ph1.Add(p(0))
+    '                    th1.Add(t)
+    '                End If
+    '                If CDbl(p(1)) < 600 * 101325 Then
+    '                    ph2.Add(p(1))
+    '                    th2.Add(t)
+    '                End If
+    '                i = i + 1
+    '            Loop Until t >= tn
+    '            If th1.Count = 0 Then
+    '                th1.Add(CDbl(0))
+    '                ph1.Add(CDbl(0))
+    '            End If
+    '            If th2.Count = 0 Then
+    '                th2.Add(CDbl(0))
+    '                ph2.Add(CDbl(0))
+    '            End If
+    '        Else
+    '            th1.Add(CDbl(0))
+    '            th2.Add(CDbl(0))
+    '            ph1.Add(CDbl(0))
+    '            ph2.Add(CDbl(0))
+    '        End If
 
-            '    Else
-            '        th1.Add(CDbl(0))
-            '        th2.Add(CDbl(0))
-            '        ph1.Add(CDbl(0))
-            '        ph2.Add(CDbl(0))
-            '    End If
+    '    Else
+    '        th1.Add(CDbl(0))
+    '        th2.Add(CDbl(0))
+    '        ph1.Add(CDbl(0))
+    '        ph2.Add(CDbl(0))
+    '    End If
         Else
             th1.Add(CDbl(0))
             th2.Add(CDbl(0))

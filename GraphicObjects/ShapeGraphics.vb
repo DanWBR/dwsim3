@@ -1142,6 +1142,7 @@ Namespace GraphicObjects
         Public Sub New()
             Me.TipoObjeto = GraphicObjects.TipoObjeto.NodeIn
             Me.Description = "Misturador"
+            Me.m_mixpoint = True
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)
@@ -1338,6 +1339,7 @@ Namespace GraphicObjects
         Public Sub New()
             Me.TipoObjeto = GraphicObjects.TipoObjeto.NodeOut
             Me.Description = "Divisor"
+            Me.m_splitpoint = True
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)
@@ -1729,6 +1731,7 @@ Namespace GraphicObjects
         Public Sub New()
             Me.TipoObjeto = GraphicObjects.TipoObjeto.Vessel
             Me.Description = "VasoSeparadorGL"
+            Me.m_splitpoint = True
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)
@@ -2885,7 +2888,7 @@ Namespace GraphicObjects
         Public Overrides Sub Draw(ByVal g As System.Drawing.Graphics)
 
             CreateConnectors(0, 0)
-          
+
             UpdateStatus(Me)
 
             Dim pt As Point
@@ -4663,6 +4666,7 @@ Namespace GraphicObjects
         Public Sub New()
             Me.TipoObjeto = GraphicObjects.TipoObjeto.RCT_Conversion
             Me.Description = "ReatorConversao"
+            Me.m_splitpoint = True
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)
@@ -4960,6 +4964,7 @@ Namespace GraphicObjects
         Public Sub New()
             Me.TipoObjeto = GraphicObjects.TipoObjeto.RCT_Equilibrium
             Me.Description = "ReatorEquilibrio"
+            Me.m_splitpoint = True
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)
@@ -5253,6 +5258,7 @@ Namespace GraphicObjects
         Public Sub New()
             Me.TipoObjeto = GraphicObjects.TipoObjeto.RCT_Gibbs
             Me.Description = "ReatorGibbs"
+            Me.m_splitpoint = True
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)
@@ -5939,6 +5945,8 @@ Namespace GraphicObjects
             'Defines the unitop type.
             TipoObjeto = GraphicObjects.TipoObjeto.HeatExchanger
             'Creates 2 in and 2 out connection points.
+            Me.m_mixpoint = True
+            Me.m_splitpoint = True
             CreateConnectors(2, 2)
             Me.Description = "HeatExchanger"
         End Sub
@@ -6113,6 +6121,7 @@ Namespace GraphicObjects
             CreateConnectors(2, 2)
             Me.InputConnectors(1).Type = ConType.ConEn
             Me.Description = "ShortcutColumn"
+            Me.m_splitpoint = True
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)
@@ -6397,6 +6406,8 @@ Namespace GraphicObjects
         Public Sub New()
             Me.TipoObjeto = GraphicObjects.TipoObjeto.DistillationColumn
             Me.Description = "DistillationColumn"
+            Me.m_mixpoint = True
+            Me.m_splitpoint = True
             'CreateConnectors(2, 2)
             'Me.InputConnectors(1).Type = ConType.ConEn
         End Sub
@@ -6696,6 +6707,8 @@ Namespace GraphicObjects
         Public Sub New()
             Me.TipoObjeto = GraphicObjects.TipoObjeto.AbsorptionColumn
             Me.Description = "AbsorptionColumn"
+            Me.m_mixpoint = True
+            Me.m_splitpoint = True
             'CreateConnectors(2, 2)
             'Me.InputConnectors(1).Type = ConType.ConEn
         End Sub
@@ -6972,6 +6985,8 @@ Namespace GraphicObjects
             'CreateConnectors(2, 2)
             'Me.InputConnectors(1).Type = ConType.ConEn
             Me.Description = "ReboiledAbsorber"
+            Me.m_mixpoint = True
+            Me.m_splitpoint = True
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)
@@ -7241,6 +7256,8 @@ Namespace GraphicObjects
             'CreateConnectors(2, 2)
             'Me.InputConnectors(1).Type = ConType.ConEn
             Me.Description = "RefluxedAbsorber"
+            Me.m_mixpoint = True
+            Me.m_splitpoint = True
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)
@@ -7540,6 +7557,8 @@ Namespace GraphicObjects
         Public Sub New()
             Me.TipoObjeto = GraphicObjects.TipoObjeto.ComponentSeparator
             Me.Description = "ComponentSeparator"
+            Me.m_mixpoint = False
+            Me.m_splitpoint = True
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)
@@ -8014,6 +8033,8 @@ Namespace GraphicObjects
         Public Sub New()
             Me.TipoObjeto = GraphicObjects.TipoObjeto.CustomUO
             Me.Description = "Custom Unit Operation"
+            Me.m_mixpoint = True
+            Me.m_splitpoint = True
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)
@@ -8255,8 +8276,8 @@ Namespace GraphicObjects
         Public Sub New()
             Me.TipoObjeto = GraphicObjects.TipoObjeto.CapeOpenUO
             Me.Description = "CapeOpenUnitOperation"
-            'CreateConnectors(2, 2)
-            'Me.InputConnectors(1).Type = ConType.ConEn
+            Me.m_mixpoint = True
+            Me.m_splitpoint = True
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)

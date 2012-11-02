@@ -123,10 +123,24 @@ Namespace GraphicObjects
         Protected m_objdesc As String = ""
         Protected m_status As Status = Status.NotCalculated
         Protected m_icon As ShapeIcon = ShapeIcon.DefaultShape
+        Protected m_mixpoint As Boolean = False
+        Protected m_splitpoint As Boolean = False
 
         Public Shared Function ReturnInstance(typename As String) As GraphicObject
             Return Activator.CreateInstance(Type.GetType(typename))
         End Function
+
+        Public ReadOnly Property MixPoint() As Boolean
+            Get
+                Return m_mixpoint
+            End Get
+        End Property
+
+        Public ReadOnly Property SplitPoint() As Boolean
+            Get
+                Return m_splitpoint
+            End Get
+        End Property
 
         Public Property ShapeOverride() As ShapeIcon
             Get

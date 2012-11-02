@@ -16,7 +16,7 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports Microsoft.Scripting.Hosting
 Imports System.IO
@@ -27,6 +27,7 @@ Imports STATSTG = System.Runtime.InteropServices.ComTypes.STATSTG
 Imports System.Runtime.InteropServices
 
 Imports DWSIM.DWSIM.SimulationObjects
+Imports System.Reflection
 
 Namespace DWSIM.SimulationObjects.UnitOps
 
@@ -48,33 +49,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Private _restorefromcollections As Boolean = False
         Private _recalculateoutputstreams As Boolean = True
-
-        Public Property ReactionSetID() As String
-            Get
-                Return Me.m_reactionSetID
-            End Get
-            Set(ByVal value As String)
-                Me.m_reactionSetID = value
-            End Set
-        End Property
-
-        Public Property ReactionSetName() As String
-            Get
-                Return Me.m_reactionSetName
-            End Get
-            Set(ByVal value As String)
-                Me.m_reactionSetName = value
-            End Set
-        End Property
-
-        Public Property RecalcOutputStreams() As Boolean
-            Get
-                Return _recalculateoutputstreams
-            End Get
-            Set(ByVal value As Boolean)
-                _recalculateoutputstreams = value
-            End Set
-        End Property
 
         Public Sub New()
             MyBase.New()
@@ -98,21 +72,68 @@ Namespace DWSIM.SimulationObjects.UnitOps
             _ports = New List(Of ICapeUnitPort)
             _params = New List(Of ICapeParameter)
 
-            ShowForm()
+            If Not DWSIM.App.IsRunningOnMono Then
 
-            If Not _seluo Is Nothing Then
-                Try
-                    Dim t As Type = Type.GetTypeFromProgID(_seluo.TypeName)
-                    _couo = Activator.CreateInstance(t)
+                ShowForm()
+
+                If Not _seluo Is Nothing Then
+                    Try
+                        Dim t As Type = Type.GetTypeFromProgID(_seluo.TypeName)
+                        _couo = Activator.CreateInstance(t)
+                        InitNew()
+                        Init()
+                        GetPorts()
+                        GetParams()
+                        CreateConnectors()
+                    Catch ex As Exception
+                        Me.FlowSheet.WriteToLog("Error creating CAPE-OPEN Unit Operation: " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                    End Try
+                End If
+
+            Else
+
+                ShowFormMono()
+
+                If Not _seluo Is Nothing Then
+
+                    'Try
+
+                    Dim myt As Type = Nothing
+
+                    If Not File.Exists(_seluo.Location) Then
+                        ShowFormMono()
+                    End If
+
+                    myt = GetManagedUnitType(_seluo.Location)
+
+                    _couo = Activator.CreateInstance(myt)
+
+                    Try
+                        With _seluo
+                            .Name = CType(_couo, ICapeIdentification).ComponentName
+                            .Description = CType(_couo, ICapeIdentification).ComponentDescription
+                            .TypeName = myt.Name
+                            .Version = myt.Module.Assembly.GetName.Version.ToString
+                        End With
+                    Catch ex As Exception
+
+                    End Try
+
                     InitNew()
                     Init()
                     GetPorts()
                     GetParams()
                     CreateConnectors()
-                Catch ex As Exception
-                    Me.FlowSheet.WriteToLog("Error creating CAPE-OPEN Unit Operation: " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                End Try
+
+                    'Catch ex As Exception
+                    '    Me.FlowSheet.WriteToLog("Error creating CAPE-OPEN Unit Operation: " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                    'End Try
+
+                End If
+
             End If
+
+
 
         End Sub
 
@@ -120,13 +141,32 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         <OnDeserialized()> Sub PersistLoad(ByVal context As System.Runtime.Serialization.StreamingContext)
 
-            If Not _seluo Is Nothing Then
-                Dim t As Type = Type.GetTypeFromProgID(_seluo.TypeName)
-                Try
-                    _couo = Activator.CreateInstance(t)
-                Catch ex As Exception
-                    MessageBox.Show("Error creating CAPE-OPEN Unit Operation instance." & vbCrLf & ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
+            If Not DWSIM.App.IsRunningOnMono Then
+
+                If Not _seluo Is Nothing Then
+                    Dim t As Type = Type.GetTypeFromProgID(_seluo.TypeName)
+                    Try
+                        _couo = Activator.CreateInstance(t)
+                    Catch ex As Exception
+                        MessageBox.Show("Error creating CAPE-OPEN Unit Operation instance." & vbCrLf & ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                End If
+
+            Else
+
+                If Not _seluo Is Nothing Then
+                    Dim myt As Type = Nothing
+                    If Not File.Exists(_seluo.Location) Then
+                        ShowFormMono()
+                    End If
+                    myt = GetManagedUnitType(_seluo.Location)
+                    Try
+                        _couo = Activator.CreateInstance(myt)
+                    Catch ex As Exception
+                        MessageBox.Show("Error creating CAPE-OPEN Unit Operation instance." & vbCrLf & ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                End If
+
             End If
 
             If My.Settings.UseCOPersistenceSupport Then
@@ -210,6 +250,26 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Sub
 
+        Sub ShowFormMono()
+
+            Dim ofd As New OpenFileDialog
+
+            With ofd
+                .Title = "Insert Managed CAPE-OPEN Unit Operation"
+                .Filter = "Managed Assemblies (*.exe, *.dll)|*.EXE;*.DLL;*.exe;*.dll"
+                .Multiselect = False
+            End With
+
+            If ofd.ShowDialog = DialogResult.OK Then
+                Dim assmpath As String = ofd.FileName
+                Me._seluo = New Auxiliary.CapeOpen.CapeOpenUnitOpInfo
+                With Me._seluo
+                    .Location = assmpath
+                End With
+            End If
+
+        End Sub
+
         Overloads Sub InitNew()
 
             Dim myuo As Interfaces.IPersistStreamInit = TryCast(_couo, Interfaces.IPersistStreamInit)
@@ -224,17 +284,29 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Sub Init()
 
-            If Not _couo Is Nothing Then
-                Dim myuo As CapeOpen.ICapeUtilities = TryCast(_couo, CapeOpen.ICapeUtilities)
-                If Not myuo Is Nothing Then myuo.Initialize()
-                Dim myuo2 As CapeOpen.ICapeIdentification = TryCast(_couo, CapeOpen.ICapeIdentification)
-                If Not myuo2 Is Nothing Then
-                    myuo2.ComponentName = Me.GraphicObject.Tag
-                    myuo2.ComponentDescription = Me.GraphicObject.Name
-                End If
-                If My.Settings.SetCOSimulationContext Then
+            If DWSIM.App.IsRunningOnMono Then
+
+                If Not _couo Is Nothing Then
+                    Dim myuo As CapeOpen.ICapeUtilities = _couo
+                    myuo.Initialize()
                     myuo.simulationContext = Me.FlowSheet
                 End If
+
+            Else
+
+                If Not _couo Is Nothing Then
+                    Dim myuo As CapeOpen.ICapeUtilities = TryCast(_couo, CapeOpen.ICapeUtilities)
+                    If Not myuo Is Nothing Then myuo.Initialize()
+                    Dim myuo2 As CapeOpen.ICapeIdentification = TryCast(_couo, CapeOpen.ICapeIdentification)
+                    If Not myuo2 Is Nothing Then
+                        myuo2.ComponentName = Me.GraphicObject.Tag
+                        myuo2.ComponentDescription = Me.GraphicObject.Name
+                    End If
+                    If My.Settings.SetCOSimulationContext Then
+                        myuo.simulationContext = Me.FlowSheet
+                    End If
+                End If
+
             End If
 
         End Sub
@@ -318,7 +390,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             If id.ComponentName = p.ComponentName Then
                                 If p.connectedObject IsNot Nothing Then
                                     If Not My.Application.ActiveSimulation Is Nothing Then
-                                        Dim mystr As SimulationObjects_BaseClass = Me.Flowsheet.Collections.ObjectCollection(CType(p.connectedObject, ICapeIdentification).ComponentDescription)
+                                        Dim mystr As SimulationObjects_BaseClass = Me.FlowSheet.Collections.ObjectCollection(CType(p.connectedObject, ICapeIdentification).ComponentDescription)
                                         If Not myport.connectedObject Is Nothing Then myport.Disconnect()
                                         myport.Connect(mystr)
                                     End If
@@ -616,6 +688,58 @@ Namespace DWSIM.SimulationObjects.UnitOps
 #End Region
 
 #Region "    DWSIM Specifics"
+
+        Public Property ReactionSetID() As String
+            Get
+                Return Me.m_reactionSetID
+            End Get
+            Set(ByVal value As String)
+                Me.m_reactionSetID = value
+            End Set
+        End Property
+
+        Public Property ReactionSetName() As String
+            Get
+                Return Me.m_reactionSetName
+            End Get
+            Set(ByVal value As String)
+                Me.m_reactionSetName = value
+            End Set
+        End Property
+
+        Public Property RecalcOutputStreams() As Boolean
+            Get
+                Return _recalculateoutputstreams
+            End Get
+            Set(ByVal value As Boolean)
+                _recalculateoutputstreams = value
+            End Set
+        End Property
+
+        Function isCOUnit(ByVal t As Type)
+            Dim interfaceTypes As New List(Of Type)(t.GetInterfaces())
+            Return (interfaceTypes.Contains(GetType(CapeOpen.ICapeUnit)))
+        End Function
+
+        Function GetManagedUnitType(ByVal filepath As String) As Type
+
+            Dim mya As Assembly = Assembly.LoadFile(filepath)
+            Dim availableTypes As New List(Of Type)()
+            availableTypes.AddRange(mya.GetTypes())
+
+            Dim tl As List(Of Type) = availableTypes.FindAll(AddressOf isCOUnit)
+
+            Dim myt As Type = Nothing
+            For Each t As Type In tl
+                If Not t.IsAbstract Then
+                    myt = t
+                    Exit For
+                End If
+            Next
+
+            Return myt
+
+        End Function
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
