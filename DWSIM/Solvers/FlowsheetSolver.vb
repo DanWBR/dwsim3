@@ -474,9 +474,13 @@ Namespace DWSIM.Flowsheet
 
                     For Each con In obj.InputConnectors
                         If con.IsAttached Then
-                            Dim UnitOp As Object = form.Collections.ObjectCollection(con.AttachedConnector.AttachedFrom.Name)
-                            UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                            UnitOp.DeCalculate()
+                            Try
+                                Dim UnitOp As Object = form.Collections.ObjectCollection(con.AttachedConnector.AttachedFrom.Name)
+                                UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                UnitOp.DeCalculate()
+                            Catch ex As Exception
+
+                            End Try
                         End If
                     Next
 
@@ -484,9 +488,13 @@ Namespace DWSIM.Flowsheet
 
                     For Each con In obj.OutputConnectors
                         If con.IsAttached Then
-                            Dim UnitOp As Object = form.Collections.ObjectCollection(con.AttachedConnector.AttachedTo.Name)
-                            UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                            UnitOp.DeCalculate()
+                            Try
+                                Dim UnitOp As Object = form.Collections.ObjectCollection(con.AttachedConnector.AttachedTo.Name)
+                                UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                UnitOp.DeCalculate()
+                            Catch ex As Exception
+
+                            End Try
                         End If
                     Next
 
@@ -521,15 +529,23 @@ Namespace DWSIM.Flowsheet
 
                 If side = "In" Then
 
-                    Dim UnitOp As Object = form.Collections.ObjectCollection(obj.Name)
-                    UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                    UnitOp.DeCalculate()
+                    Try
+                        Dim UnitOp As Object = form.Collections.ObjectCollection(obj.Name)
+                        UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                        UnitOp.DeCalculate()
+                    Catch ex As Exception
+
+                    End Try
 
                 Else
 
-                    Dim UnitOp As Object = form.Collections.ObjectCollection(obj.Name)
-                    UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                    UnitOp.DeCalculate()
+                    Try
+                        Dim UnitOp As Object = form.Collections.ObjectCollection(obj.Name)
+                        UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                        UnitOp.DeCalculate()
+                    Catch ex As Exception
+
+                    End Try
 
                 End If
 

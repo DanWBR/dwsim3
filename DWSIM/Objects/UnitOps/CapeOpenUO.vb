@@ -25,7 +25,8 @@ Imports System.Runtime.InteropServices.ComTypes
 Imports System.Runtime.Serialization
 Imports STATSTG = System.Runtime.InteropServices.ComTypes.STATSTG
 Imports System.Runtime.InteropServices
-
+Imports System.Linq
+Imports System.Xml.Linq
 Imports DWSIM.DWSIM.SimulationObjects
 Imports System.Reflection
 
@@ -52,6 +53,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Sub New()
             MyBase.New()
+            _ports = New List(Of ICapeUnitPort)
+            _params = New List(Of ICapeParameter)
         End Sub
 
         Public Sub New(ByVal name As String, ByVal desc As String)
@@ -60,7 +63,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Sub New(ByVal nome As String, ByVal descricao As String, ByVal gobj As GraphicObject)
 
-            MyBase.CreateNew()
+            Me.New()
 
             Me.GraphicObject = gobj
 
@@ -68,9 +71,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Me.ComponentDescription = descricao
             Me.FillNodeItems()
             Me.QTFillNodeItems()
-
-            _ports = New List(Of ICapeUnitPort)
-            _params = New List(Of ICapeParameter)
 
             If Not DWSIM.App.IsRunningOnMono Then
 
@@ -163,43 +163,43 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Try
                         _couo = Activator.CreateInstance(myt)
                     Catch ex As Exception
-                        MessageBox.Show("Error creating CAPE-OPEN Unit Operation instance." & vbCrLf & ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Dim ecu As CapeOpen.ECapeUser = _couo
+                        MessageBox.Show(Me.ComponentName + ": error loading CAPE-OPEN Unit Operation - " + ex.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        MessageBox.Show(Me.ComponentName & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description)
                     End Try
                 End If
 
             End If
 
-            If My.Settings.UseCOPersistenceSupport Then
-                If _istr IsNot Nothing Then
-                    Dim myuo As Interfaces.IPersistStreamInit = TryCast(_couo, Interfaces.IPersistStreamInit)
-                    If Not myuo Is Nothing Then
+            If _istr IsNot Nothing Then
+                Dim myuo As Interfaces.IPersistStreamInit = TryCast(_couo, Interfaces.IPersistStreamInit)
+                If Not myuo Is Nothing Then
+                    Try
+                        _istr.baseStream.Position = 0
+                        myuo.Load(_istr)
+                        _restorefromcollections = False
+                    Catch ex As Exception
+                        'couldn't restore data from IStream. Will restore using port and parameter collections instead.
+                        MessageBox.Show(Me.GraphicObject.Tag + ": Error restoring persisted data from CAPE-OPEN Object - " + ex.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        _restorefromcollections = True
+                    End Try
+                Else
+                    Dim myuo2 As Interfaces.IPersistStream = TryCast(_couo, Interfaces.IPersistStream)
+                    If myuo2 IsNot Nothing Then
                         Try
                             _istr.baseStream.Position = 0
-                            myuo.Load(_istr)
+                            myuo2.Load(_istr)
                             _restorefromcollections = False
                         Catch ex As Exception
-                            'couldn't restore data from IStream. Will restore using port and parameter collections instead.
-                            MessageBox.Show(Me.GraphicObject.Tag + ": Error restoring persisted data from CAPE-OPEN Object - " + ex.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Dim ecu As CapeOpen.ECapeUser = _couo
+                            MessageBox.Show(Me.ComponentName + ": error loading CAPE-OPEN Unit Operation - " + ex.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            MessageBox.Show(Me.ComponentName & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description)
                             _restorefromcollections = True
                         End Try
-                    Else
-                        Dim myuo2 As Interfaces.IPersistStream = TryCast(_couo, Interfaces.IPersistStream)
-                        If myuo2 IsNot Nothing Then
-                            Try
-                                _istr.baseStream.Position = 0
-                                myuo2.Load(_istr)
-                                _restorefromcollections = False
-                            Catch ex As Exception
-                                MessageBox.Show(Me.GraphicObject.Tag + ": Error restoring persisted data from CAPE-OPEN Object - " + ex.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                                _restorefromcollections = True
-                            End Try
-                        End If
                     End If
-                Else
-                    'the CAPE-OPEN object doesn't support Persistence, restore parameters and ports info from internal collections.
-                    _restorefromcollections = True
                 End If
             Else
+                'the CAPE-OPEN object doesn't support Persistence, restore parameters and ports info from internal collections.
                 _restorefromcollections = True
             End If
 
@@ -299,8 +299,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     If Not myuo Is Nothing Then myuo.Initialize()
                     Dim myuo2 As CapeOpen.ICapeIdentification = TryCast(_couo, CapeOpen.ICapeIdentification)
                     If Not myuo2 Is Nothing Then
-                        myuo2.ComponentName = Me.GraphicObject.Tag
-                        myuo2.ComponentDescription = Me.GraphicObject.Name
+                        If Not Me.GraphicObject Is Nothing Then myuo2.ComponentName = Me.GraphicObject.Tag
+                        If Not Me.GraphicObject Is Nothing Then myuo2.ComponentDescription = Me.GraphicObject.Name
                     End If
                     If My.Settings.SetCOSimulationContext Then
                         myuo.simulationContext = Me.FlowSheet
@@ -587,6 +587,86 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End If
         End Sub
 
+        Sub UpdateConnectors2()
+
+            'called only when loading simulation from XML file.
+
+            If Not _couo Is Nothing Then
+                Dim myuo As CapeOpen.ICapeUnit = _couo
+                Dim myports As ICapeCollection = myuo.ports
+                Dim nip As Integer = 1
+                Dim nop As Integer = 1
+                Dim objid As String
+                Dim i As Integer = 0
+                Dim numports As Integer = myports.Count
+                If numports > 0 Then
+                    For i = 1 To numports
+                        Dim id As ICapeIdentification = myports.Item(i)
+                        Dim myport As ICapeUnitPort = myports.Item(i)
+                        Select Case myport.direction
+                            Case CapePortDirection.CAPE_INLET
+                                nip += 1
+                            Case CapePortDirection.CAPE_OUTLET
+                                nop += 1
+                        End Select
+                    Next
+                    For i = 1 To numports
+                        Dim id As ICapeIdentification = myports.Item(i)
+                        Dim myport As ICapeUnitPort = myports.Item(i)
+                        Select Case myport.direction
+                            Case CapePortDirection.CAPE_INLET
+                                With Me.GraphicObject.InputConnectors(Me.GraphicObject.InputConnectors.Count - 1)
+                                    Select Case myport.portType
+                                        Case CapePortType.CAPE_ENERGY
+                                            .Type = ConType.ConEn
+                                        Case CapePortType.CAPE_MATERIAL
+                                            .Type = ConType.ConIn
+                                    End Select
+                                    .Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + (Me.GraphicObject.InputConnectors.Count) / (nip - 1) * Me.GraphicObject.Height / 2)
+                                    .ConnectorName = id.ComponentName
+                                End With
+                                If myport.connectedObject IsNot Nothing Then
+                                    objid = CType(myport.connectedObject, ICapeIdentification).ComponentDescription
+                                    myport.Disconnect()
+                                    Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objid, Me.FlowSheet.FormSurface.FlowsheetDesignSurface)
+                                    Select Case myport.portType
+                                        Case CapePortType.CAPE_MATERIAL
+                                            Me.FlowSheet.ConnectObject(gobj, Me.GraphicObject, 0, Me.GraphicObject.InputConnectors.Count - 1)
+                                        Case CapePortType.CAPE_ENERGY
+                                            Me.FlowSheet.ConnectObject(gobj, Me.GraphicObject, 0, Me.GraphicObject.InputConnectors.Count - 1)
+                                    End Select
+                                    myport.Connect(Me.FlowSheet.GetFlowsheetSimulationObject(gobj.Tag))
+                                End If
+                            Case CapePortDirection.CAPE_OUTLET
+                                With Me.GraphicObject.OutputConnectors(Me.GraphicObject.OutputConnectors.Count - 1)
+                                    Select Case myport.portType
+                                        Case CapePortType.CAPE_ENERGY
+                                            .Type = ConType.ConEn
+                                        Case CapePortType.CAPE_MATERIAL
+                                            .Type = ConType.ConOut
+                                    End Select
+                                    .Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + (Me.GraphicObject.OutputConnectors.Count) / (nop - 1) * Me.GraphicObject.Height / 2)
+                                    .ConnectorName = id.ComponentName
+                                End With
+                                If myport.connectedObject IsNot Nothing Then
+                                    objid = CType(myport.connectedObject, ICapeIdentification).ComponentDescription
+                                    myport.Disconnect()
+                                    Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objid, Me.FlowSheet.FormSurface.FlowsheetDesignSurface)
+                                    Select Case myport.portType
+                                        Case CapePortType.CAPE_MATERIAL
+                                            Me.FlowSheet.ConnectObject(Me.GraphicObject, gobj, Me.GraphicObject.OutputConnectors.Count - 1, 0)
+                                        Case CapePortType.CAPE_ENERGY
+                                            Me.FlowSheet.ConnectObject(Me.GraphicObject, gobj, Me.GraphicObject.OutputConnectors.Count - 1, 0)
+                                    End Select
+                                    myport.Connect(Me.FlowSheet.GetFlowsheetSimulationObject(gobj.Tag))
+                                End If
+                        End Select
+                    Next
+                End If
+                UpdateConnectorPositions()
+            End If
+        End Sub
+
         Sub UpdateConnectorPositions()
             Dim i As Integer = 0
             Dim obj1(Me.GraphicObject.InputConnectors.Count), obj2(Me.GraphicObject.InputConnectors.Count) As Double
@@ -688,6 +768,85 @@ Namespace DWSIM.SimulationObjects.UnitOps
 #End Region
 
 #Region "    DWSIM Specifics"
+
+        Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
+
+            MyBase.LoadData(data)
+
+            Dim info As XElement = (From el As XElement In data Select el Where el.Name = "CAPEOPEN_Object_Info").SingleOrDefault
+            _seluo = New Auxiliary.CapeOpen.CapeOpenUnitOpInfo
+            _seluo.LoadData(info.Elements.ToList)
+
+            If Not DWSIM.App.IsRunningOnMono Then
+
+                If Not _seluo Is Nothing Then
+                    Try
+                        Dim t As Type = Type.GetTypeFromProgID(_seluo.TypeName)
+                        _couo = Activator.CreateInstance(t)
+                        InitNew()
+                        Init()
+                        GetPorts()
+                        GetParams()
+                        'CreateConnectors()
+                    Catch ex As Exception
+                        Me.FlowSheet.WriteToLog("Error creating CAPE-OPEN Unit Operation: " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                    End Try
+                End If
+
+            Else
+
+                If Not _seluo Is Nothing Then
+
+                    Dim myt As Type = Nothing
+
+                    If Not File.Exists(_seluo.Location) Then
+                        ShowFormMono()
+                    End If
+
+                    myt = GetManagedUnitType(_seluo.Location)
+
+                    _couo = Activator.CreateInstance(myt)
+
+                    Try
+                        With _seluo
+                            .Name = CType(_couo, ICapeIdentification).ComponentName
+                            .Description = CType(_couo, ICapeIdentification).ComponentDescription
+                            .TypeName = myt.Name
+                            .Version = myt.Module.Assembly.GetName.Version.ToString
+                        End With
+                    Catch ex As Exception
+
+                    End Try
+
+                    InitNew()
+                    Init()
+                    GetPorts()
+                    GetParams()
+                    'CreateConnectors()
+
+                End If
+
+            End If
+
+            Dim pdata As XElement = (From el As XElement In data Select el Where el.Name = "PersistedData").SingleOrDefault
+            _istr = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream(Convert.FromBase64String(pdata.Value)))
+            PersistLoad(Nothing)
+
+        End Function
+
+        Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
+
+            Dim elements As List(Of XElement) = MyBase.SaveData()
+            With elements
+                .Add(New XElement("CAPEOPEN_Object_Info", _seluo.SaveData().ToArray))
+                _istr = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
+                Me.Save(_istr, True)
+                .Add(New XElement("PersistedData", Convert.ToBase64String(CType(_istr.baseStream, MemoryStream).ToArray())))
+            End With
+
+            Return elements
+
+        End Function
 
         Public Property ReactionSetID() As String
             Get
@@ -862,7 +1021,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 .Tipo = TipoObjeto.CapeOpenUO
             End With
 
-            FlowSheet.CalculationQueue.Enqueue(objargs)
+            Try
+                FlowSheet.CalculationQueue.Enqueue(objargs)
+            Catch ex As Exception
+
+            End Try
 
         End Function
 
@@ -1265,6 +1428,9 @@ End Namespace
 Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
 
     <System.Serializable()> Public Class CapeOpenUnitOpInfo
+
+        Implements XMLSerializer.Interfaces.ICustomXMLSerialization
+
         Public TypeName As String = ""
         Public Version As String = ""
         Public Description As String = ""
@@ -1275,6 +1441,15 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
         Public Location As String = ""
         Public Name As String = ""
         Public ImplementedCategory As String = ""
+
+        Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
+        End Function
+
+        Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
+            Return XMLSerializer.XMLSerializer.Serialize(Me, True)
+        End Function
+
     End Class
 
     ' System.Drawing.ComIStreamWrapper.cs
@@ -1311,7 +1486,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
 
         Private Const STG_E_INVALIDFUNCTION As Integer = CInt(&H80030001)
 
-        Public ReadOnly baseStream As Stream
+        Public baseStream As Stream
         Private position As Long = -1
 
         Friend Sub New(ByVal stream As Stream)

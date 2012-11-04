@@ -2198,7 +2198,7 @@ Imports DWSIM.DWSIM.GraphicObjects
 
     Public Function NamedValue(ByVal value As String) As Object Implements CapeOpen.ICapeCOSEUtilities.NamedValue
 
-        Return NamedValueList(value)
+        Return NamedValueList()
 
     End Function
     Public ReadOnly Property NamedValueList() As Object Implements CapeOpen.ICapeCOSEUtilities.NamedValueList

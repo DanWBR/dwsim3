@@ -36,18 +36,19 @@ Public Class ElementMatrixEditorForm
             .AllowUserToAddRows = False
             .Rows.Clear()
             .Columns.Clear()
+            .Columns.Add("el", "Element")
             For Each s As String In gr.ComponentIDs
                 .Columns.Add(s, DWSIM.App.GetComponentName(s))
             Next
             For Each s As String In gr.Elements
                 .Rows.Add()
-                .Rows(.Rows.Count - 1).HeaderCell.Value = s
             Next
             c = gr.ComponentIDs.Count - 1
             e_ = gr.Elements.Length - 1
             For i = 0 To e_
+                .Rows(i).Cells(0).Value = gr.Elements(i)
                 For j = 0 To c
-                    .Rows(i).Cells(j).Value = elmat(i, j)
+                    .Rows(i).Cells(j + 1).Value = elmat(i, j)
                 Next
             Next
         End With
@@ -65,18 +66,19 @@ Public Class ElementMatrixEditorForm
             .AllowUserToAddRows = False
             .Rows.Clear()
             .Columns.Clear()
+            .Columns.Add("el", "Elements")
             For Each s As String In gr.ComponentIDs
                 .Columns.Add(s, DWSIM.App.GetComponentName(s))
             Next
             For Each s As String In gr.Elements
                 .Rows.Add()
-                .Rows(.Rows.Count - 1).HeaderCell.Value = s
             Next
             c = gr.ComponentIDs.Count - 1
             e_ = gr.Elements.Length - 1
             For i = 0 To e_
+                .Rows(i).Cells(0).Value = gr.Elements(i)
                 For j = 0 To c
-                    .Rows(i).Cells(j).Value = gr.ElementMatrix(i, j)
+                    .Rows(i).Cells(j + 1).Value = gr.ElementMatrix(i, j)
                 Next
             Next
         End With
@@ -85,16 +87,21 @@ Public Class ElementMatrixEditorForm
 
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
 
-        ReDim elmat(Me.grid.Rows.Count - 1, Me.grid.Columns.Count - 1)
+        ReDim elmat(Me.grid.Rows.Count - 1, Me.grid.Columns.Count - 2)
         ReDim gr.TotalElements(Me.grid.Rows.Count - 1)
         Dim sum_e As Double
+        Dim elements As New ArrayList
         For Each r As DataGridViewRow In Me.grid.Rows
             sum_e = 0
+            elements.Add(r.Cells(0).Value)
             For Each c As DataGridViewColumn In Me.grid.Columns
-                elmat(r.Index, c.Index) = grid.Rows(r.Index).Cells(c.Index).Value
+                If c.Index > 0 Then
+                    elmat(r.Index, c.Index - 1) = grid.Rows(r.Index).Cells(c.Index).Value
+                End If
             Next
         Next
-        
+        gr.Elements = elements.ToArray(Type.GetType("System.String"))
+
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click

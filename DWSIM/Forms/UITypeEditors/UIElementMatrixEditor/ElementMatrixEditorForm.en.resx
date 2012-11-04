@@ -112,15 +112,15 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Matrix</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>77, 23</value>
   </data>
@@ -128,13 +128,16 @@
     <value>Add Element</value>
   </data>
   <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 48</value>
+    <value>92, 19</value>
   </data>
   <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>143, 23</value>
   </data>
   <data name="Button2.Text" xml:space="preserve">
     <value>Remove Selected Element</value>
+  </data>
+  <data name="Button3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>241, 19</value>
   </data>
   <data name="Button3.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 23</value>
@@ -143,7 +146,7 @@
     <value>Create from Selected Components</value>
   </data>
   <data name="Button4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>350, 19</value>
+    <value>665, 19</value>
   </data>
   <data name="Button4.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 23</value>

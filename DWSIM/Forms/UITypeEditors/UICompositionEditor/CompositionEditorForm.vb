@@ -149,23 +149,26 @@ Public Class CompositionEditorForm
 
     Private Sub GridComp_CellValueChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridComp.CellValueChanged
 
-        Try
-            Dim v As Double = 0
-            For Each r As DataGridViewRow In Me.GridComp.Rows
-                v += CDbl(r.Cells(0).Value)
-            Next
-            If Me.RadioButton1.Checked Or Me.RadioButton2.Checked Then
-                Me.Label3.Text = Format(v, "#0.0000")
-            ElseIf Me.RadioButton3.Checked Then
-                Me.Label3.Text = Format(v, NF) & " " & SU.spmp_molarflow
-            Else
-                Me.Label3.Text = Format(v, NF) & " " & SU.spmp_massflow
-            End If
-            Me.Label3.ForeColor = Color.SlateBlue
-        Catch ex As Exception
-            Me.Label3.Text = DWSIM.App.GetLocalString("indefinido")
-            Me.Label3.ForeColor = Color.Red
-        End Try
+        If loaded Then
+            Try
+                Dim v As Double = 0
+                For Each r As DataGridViewRow In Me.GridComp.Rows
+                    v += CDbl(r.Cells(0).Value)
+                Next
+                If Me.RadioButton1.Checked Or Me.RadioButton2.Checked Then
+                    Me.Label3.Text = Format(v, "#0.0000")
+                ElseIf Me.RadioButton3.Checked Then
+                    Me.Label3.Text = Format(v, NF) & " " & SU.spmp_molarflow
+                Else
+                    Me.Label3.Text = Format(v, NF) & " " & SU.spmp_massflow
+                End If
+                Me.Label3.ForeColor = Color.SlateBlue
+            Catch ex As Exception
+                Me.Label3.Text = DWSIM.App.GetLocalString("indefinido")
+                Me.Label3.ForeColor = Color.Red
+            End Try
+        End If
+
 
     End Sub
 
@@ -259,6 +262,15 @@ Public Class CompositionEditorForm
                 r = r + 1
             End If
         Next
+
+    End Sub
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
 
     End Sub
 End Class

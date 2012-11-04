@@ -2038,12 +2038,13 @@ Public Class FormMain
                 Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
                 Dim obj As SimulationObjects_BaseClass = Activator.CreateInstance(t)
                 obj.FillNodeItems(True)
-                obj.LoadData(xel.Elements.ToList)
                 obj.QTFillNodeItems()
                 Dim gobj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
                                     form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
+                obj.GraphicObject = gobj
                 If Not gobj Is Nothing Then
-                    obj.GraphicObject = gobj
+                    form.Collections.ObjectCollection.Add(id, obj)
+                    obj.LoadData(xel.Elements.ToList)
                     If TypeOf obj Is Streams.MaterialStream Then
                         For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
                             For Each c As ConstantProperties In form.Options.SelectedComponents.Values
@@ -2052,7 +2053,6 @@ Public Class FormMain
                         Next
                     End If
                     With form.Collections
-                        .ObjectCollection.Add(id, obj)
                         Select Case gobj.TipoObjeto
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Compressor
                                 .CLCS_CompressorCollection.Add(id, obj)
@@ -2158,6 +2158,10 @@ Public Class FormMain
                         so2.SourceObject = form.Collections.ObjectCollection(so2.SourceObjectData.m_ID)
                         DirectCast(so2.GraphicObject, SpecGraphic).ConnectedToTv = so2.TargetObject.GraphicObject
                     End If
+                End If
+                If TryCast(so, DWSIM.SimulationObjects.UnitOps.CapeOpenUO) IsNot Nothing Then
+                    DirectCast(so, DWSIM.SimulationObjects.UnitOps.CapeOpenUO).UpdateConnectors2()
+                    DirectCast(so, DWSIM.SimulationObjects.UnitOps.CapeOpenUO).UpdatePortsFromConnectors()
                 End If
             Next
 
@@ -2288,19 +2292,6 @@ Public Class FormMain
             form.dckPanel.ActiveAutoHideContent = Nothing
             form.dckPanel.Parent = form
 
-            Try
-                form.FormWatch.DockState = Docking.DockState.DockRight
-                form.FormWatch.DockState = Docking.DockState.DockBottom
-                form.FormCOReports.DockState = Docking.DockState.DockLeft
-                form.FormCOReports.DockState = Docking.DockState.DockBottom
-                form.FormOutput.DockState = Docking.DockState.DockLeft
-                form.FormOutput.DockState = Docking.DockState.DockBottom
-                form.FormQueue.DockState = Docking.DockState.DockRight
-                form.FormQueue.DockState = Docking.DockState.DockBottom
-            Catch ex As Exception
-
-            End Try
-
             Me.tmpform2 = form
             'form.dckPanel.SuspendLayout(True)
             form.FormLog.DockPanel = Nothing
@@ -2377,7 +2368,7 @@ Public Class FormMain
 
         End Try
 
-        
+
 
     End Sub
 

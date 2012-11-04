@@ -26,6 +26,8 @@ Public Class FormWelcome
 
     Private Sub FormTips_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        If DWSIM.App.IsRunningOnMono Then Me.BackgroundImageLayout = ImageLayout.Stretch
+
         CheckBox1.Checked = My.Settings.ShowTips
 
         For Each f As String In My.Settings.MostRecentFiles

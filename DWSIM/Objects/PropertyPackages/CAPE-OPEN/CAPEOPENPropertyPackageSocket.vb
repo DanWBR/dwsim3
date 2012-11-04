@@ -26,8 +26,9 @@ Imports System.Math
 Imports CapeOpen
 Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
 Imports Microsoft.Win32
-
+Imports System.Linq
 Imports System.Runtime.InteropServices
+Imports DWSIM.DWSIM.SimulationObjects.UnitOps
 
 Namespace DWSIM.SimulationObjects.PropertyPackages
 
@@ -245,6 +246,133 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 
         End Sub
+
+        Public Overrides Function DW_CalcEquilibrio_ISOL(ByVal spec1 As FlashSpec, ByVal spec2 As FlashSpec, ByVal val1 As Double, ByVal val2 As Double, ByVal estimate As Double) As Object
+
+            Dim pstr As MaterialStream = Me.CurrentMaterialStream
+            Dim tstr As MaterialStream = Me.CurrentMaterialStream.Clone
+
+            Me.CurrentMaterialStream = tstr
+
+            Me.CurrentMaterialStream.AtEquilibrium = False
+
+            Dim s1 As String() = New String() {}
+            Dim s2 As String() = New String() {}
+            Dim s11 As String = ""
+            Dim s22 As String = ""
+
+            Select Case spec1
+                Case FlashSpec.T
+                    s1 = New String() {"temperature", Nothing, "Overall"}
+                    s11 = "T"
+                    Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature = val1
+                Case FlashSpec.P
+                    s1 = New String() {"pressure", Nothing, "Overall"}
+                    s11 = "P"
+                    Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure = val1
+            End Select
+
+            Select Case spec2
+                Case FlashSpec.T
+                    s2 = New String() {"temperature", Nothing, "Overall"}
+                    s22 = "T"
+                    Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature = val2
+                Case FlashSpec.P
+                    s2 = New String() {"pressure", Nothing, "Overall"}
+                    s22 = "P"
+                    Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure = val2
+                Case FlashSpec.S
+                    s2 = New String() {"entropy", Nothing, "Overall"}
+                    s22 = "S"
+                    Me.CurrentMaterialStream.Fases(0).SPMProperties.entropy = val2
+                Case FlashSpec.H
+                    s2 = New String() {"enthalpy", Nothing, "Overall"}
+                    s22 = "H"
+                    Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy = val2
+                Case FlashSpec.VAP
+                    s2 = New String() {"phaseFraction", "Mole", "Vapor"}
+                    s22 = "VF"
+                    Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = val2
+            End Select
+
+            Me.DW_ZerarPhaseProps(Fase.Vapor)
+            Me.DW_ZerarPhaseProps(Fase.Liquid)
+            Me.DW_ZerarPhaseProps(Fase.Liquid1)
+            Me.DW_ZerarPhaseProps(Fase.Liquid2)
+            Me.DW_ZerarPhaseProps(Fase.Liquid3)
+            Me.DW_ZerarPhaseProps(Fase.Aqueous)
+            Me.DW_ZerarPhaseProps(Fase.Solid)
+
+            If _coversion = "1.0" Then
+                Try
+                    Me.CalcEquilibrium(Me.CurrentMaterialStream, s11 + s22, Nothing)
+                Catch ex As Exception
+                    Dim ecu As CapeOpen.ECapeUser = _copp
+                    Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.ComponentName & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description, Color.Red, FormClasses.TipoAviso.Erro)
+                End Try
+            Else
+                Try
+                    Me.SetMaterial(Me.CurrentMaterialStream)
+                    Me.CalcEquilibrium1(s1, s2, "Unspecified")
+                Catch ex As Exception
+                    Dim ecu As CapeOpen.ECapeUser = _copp
+                    Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.ComponentName & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description, Color.Red, FormClasses.TipoAviso.Erro)
+                End Try
+            End If
+
+            Me.CurrentMaterialStream.AtEquilibrium = True
+
+            Dim summf As Double = 0, sumwf As Double = 0
+            For Each pi As PhaseInfo In Me.PhaseMappings.Values
+                If Not pi.PhaseLabel = "Disabled" Then
+                    summf += Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction.GetValueOrDefault
+                    sumwf += Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.massfraction.GetValueOrDefault
+                End If
+            Next
+            If Abs(summf - 1) > 0.000001 Then
+                For Each pi As PhaseInfo In Me.PhaseMappings.Values
+                    If Not pi.PhaseLabel = "Disabled" And Not Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction.HasValue Then
+                        Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction = 1 - summf
+                        Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.massfraction = 1 - sumwf
+                    End If
+                Next
+            End If
+
+            For Each pi As PhaseInfo In Me.PhaseMappings.Values
+                If Not pi.PhaseLabel = "Disabled" Then
+                    Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molecularWeight = Me.AUX_MMM(pi.DWPhaseID)
+                    DW_CalcPhaseProps(pi.DWPhaseID)
+                End If
+            Next
+
+            DW_CalcPhaseProps(Fase.Liquid)
+            DW_CalcPhaseProps(Fase.Mixture)
+
+            Dim T, P, H, S, xl, xv As Double, i As Integer
+            Dim Vx(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1), Vy(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            i = 0
+            For Each su As Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
+                Vx(i) = su.FracaoMolar.GetValueOrDefault
+                i += 1
+            Next
+            i = 0
+            For Each su As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                Vy(i) = su.FracaoMolar.GetValueOrDefault
+                i += 1
+            Next
+            xl = Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault
+            xv = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+            H = Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+            S = Me.CurrentMaterialStream.Fases(0).SPMProperties.entropy.GetValueOrDefault
+
+            Me.CurrentMaterialStream = pstr
+            tstr = Nothing
+
+            Return New Object() {xl, xv, T, P, H, S, 1, 1, Vx, Vy, Nothing}
+
+        End Function
 
         Public Overloads Function DW_CalcEquilibrio_ISOL(ByVal Vz As Array, ByVal spec1 As FlashSpec, ByVal spec2 As FlashSpec, ByVal val1 As Double, ByVal val2 As Double, ByVal estimate As Double) As Object
 
@@ -1236,7 +1364,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 End Try
 
                 If _istrts IsNot Nothing Then
-                    Dim myuo As Interfaces.IPersistStreamInit = TryCast(_pptpl, Interfaces.IPersistStreamInit)
+                    Dim myuo As Interfaces2.IPersistStreamInit = TryCast(_pptpl, Interfaces2.IPersistStreamInit)
                     If Not myuo Is Nothing Then
                         Try
                             _istrts.baseStream.Position = 0
@@ -1244,7 +1372,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Catch ex As Exception
                         End Try
                     Else
-                        Dim myuo2 As Interfaces.IPersistStream = TryCast(_pptpl, Interfaces.IPersistStream)
+                        Dim myuo2 As Interfaces2.IPersistStream = TryCast(_pptpl, Interfaces2.IPersistStream)
                         If myuo2 IsNot Nothing Then
                             Try
                                 _istrts.baseStream.Position = 0
@@ -1281,7 +1409,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 End If
 
                 If _istrpp IsNot Nothing Then
-                    Dim myuo As Interfaces.IPersistStreamInit = TryCast(_copp, Interfaces.IPersistStreamInit)
+                    Dim myuo As Interfaces2.IPersistStreamInit = TryCast(_copp, Interfaces2.IPersistStreamInit)
                     If Not myuo Is Nothing Then
                         Try
                             _istrpp.baseStream.Position = 0
@@ -1290,7 +1418,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             MessageBox.Show(Me.ComponentName + ": error restoring persisted data from CAPE-OPEN Object - " + ex.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         End Try
                     Else
-                        Dim myuo2 As Interfaces.IPersistStream = TryCast(_copp, Interfaces.IPersistStream)
+                        Dim myuo2 As Interfaces2.IPersistStream = TryCast(_copp, Interfaces2.IPersistStream)
                         If myuo2 IsNot Nothing Then
                             Try
                                 _istrpp.baseStream.Position = 0
@@ -1322,45 +1450,29 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             'If the CAPE-OPEN Property Package doesn't implement any of the IPersist interfaces, the _istrpp variable will be null.
 
             If Not _pptpl Is Nothing Then
-                Dim myuo As Interfaces.IPersistStream = TryCast(_pptpl, Interfaces.IPersistStream)
+                Dim myuo As Interfaces2.IPersistStream = TryCast(_pptpl, Interfaces2.IPersistStream)
                 If myuo IsNot Nothing Then
                     _istrts = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
-                    Try
-                        myuo.Save(_istrts, True)
-                    Catch ex As Exception
-
-                    End Try
+                    myuo.Save(_istrts, True)
                 Else
-                    Dim myuo2 As Interfaces.IPersistStreamInit = TryCast(_pptpl, Interfaces.IPersistStreamInit)
+                    Dim myuo2 As Interfaces2.IPersistStreamInit = TryCast(_pptpl, Interfaces2.IPersistStreamInit)
                     If myuo2 IsNot Nothing Then
                         _istrts = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
-                        Try
-                            myuo2.Save(_istrts, True)
-                        Catch ex As Exception
-
-                        End Try
+                        myuo2.Save(_istrts, True)
                     End If
                 End If
             End If
 
             If Not _copp Is Nothing Then
-                Dim myuo As Interfaces.IPersistStream = TryCast(_copp, Interfaces.IPersistStream)
+                Dim myuo As Interfaces2.IPersistStream = TryCast(_copp, Interfaces2.IPersistStream)
                 If myuo IsNot Nothing Then
                     _istrpp = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
-                    Try
-                        myuo.Save(_istrpp, True)
-                    Catch ex As Exception
-
-                    End Try
+                    myuo.Save(_istrpp, True)
                 Else
-                    Dim myuo2 As Interfaces.IPersistStreamInit = TryCast(_copp, Interfaces.IPersistStreamInit)
+                    Dim myuo2 As Interfaces2.IPersistStreamInit = TryCast(_copp, Interfaces2.IPersistStreamInit)
                     If myuo2 IsNot Nothing Then
                         _istrpp = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
-                        Try
-                            myuo2.Save(_istrpp, True)
-                        Catch ex As Exception
-
-                        End Try
+                        myuo2.Save(_istrpp, True)
                     End If
                 End If
             End If
@@ -1371,6 +1483,37 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
 
+            Me.ComponentName = (From el As XElement In data Select el Where el.Name = "ComponentName").SingleOrDefault.Value
+            Me.ComponentDescription = (From el As XElement In data Select el Where el.Name = "ComponentDescription").SingleOrDefault.Value
+            Me.Tag = (From el As XElement In data Select el Where el.Name = "Tag").SingleOrDefault.Value
+            Me._coversion = (From el As XElement In data Select el Where el.Name = "CAPEOPEN_Version").SingleOrDefault.Value
+
+            _mappings.Clear()
+            For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "CompoundMappings").Elements
+                _mappings.Add(xel2.@From, xel2.@To)
+            Next
+
+            _phasemappings.Clear()
+            For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "PhaseMappings").Elements
+                _phasemappings.Add(xel2.@From, New PhaseInfo(xel2.@PhaseLabel, xel2.@DWPhaseIndex, [Enum].Parse(Type.GetType("DWSIM.DWSIM.SimulationObjects.PropertyPackages.Fase"), xel2.@DWPhaseID)))
+            Next
+
+            Dim pdata1 As XElement = (From el As XElement In data Select el Where el.Name = "PersistedData1").SingleOrDefault
+            If Not pdata1 Is Nothing Then
+                _istrts = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream(Convert.FromBase64String(pdata1.Value)))
+            End If
+
+            Dim pdata2 As XElement = (From el As XElement In data Select el Where el.Name = "PersistedData2").SingleOrDefault
+            If Not pdata2 Is Nothing Then
+                _istrpp = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream(Convert.FromBase64String(pdata2.Value)))
+            End If
+
+            Dim info As XElement = (From el As XElement In data Select el Where el.Name = "CAPEOPEN_Object_Info").SingleOrDefault
+            _selts = New CapeOpenUnitOpInfo
+            _selts.LoadData(info.Elements.ToList)
+
+            PersistLoad(Nothing)
+
         End Function
 
         Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
@@ -1380,62 +1523,51 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             With elements
 
-                .Add(New XElement("Name", ComponentName))
+                .Add(New XElement("Type", Me.GetType.ToString))
+                .Add(New XElement("ComponentName", ComponentName))
+                .Add(New XElement("ComponentDescription", ComponentDescription))
                 .Add(New XElement("Tag", Tag))
+                .Add(New XElement("CAPEOPEN_Version", _coversion))
+                .Add(New XElement("CAPEOPEN_Object_Info", _selts.SaveData().ToArray))
+                .Add(New XElement("CompoundMappings"))
+                For Each kvp As KeyValuePair(Of String, String) In _mappings
+                    .Item(.Count - 1).Add(New XElement("CompoundMapping", New XAttribute("From", kvp.Key), New XAttribute("To", kvp.Value)))
+                Next
+                .Add(New XElement("PhaseMappings"))
+                For Each kvp As KeyValuePair(Of String, PhaseInfo) In _phasemappings
+                    .Item(.Count - 1).Add(New XElement("PhaseMapping", New XAttribute("From", kvp.Key),
+                                                                        New XAttribute("DWPhaseID", kvp.Value.DWPhaseID),
+                                                                        New XAttribute("DWPhaseIndex", kvp.Value.DWPhaseIndex),
+                                                                        New XAttribute("PhaseLabel", kvp.Value.PhaseLabel)))
+                Next
 
                 If Not _pptpl Is Nothing Then
-                    Dim myuo As Interfaces.IPersistStream = TryCast(_pptpl, Interfaces.IPersistStream)
+                    Dim myuo As Interfaces2.IPersistStream = TryCast(_pptpl, Interfaces2.IPersistStream)
                     If myuo IsNot Nothing Then
-                        _istrts = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
-                        Try
-                            myuo.Save(_istrts, True)
-                        Catch ex As Exception
-
-                        End Try
                         Dim mbs As New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream)
-                        myuo.Save(mbs, 0)
+                        myuo.Save(mbs, True)
                         .Add(New XElement("PersistedData1", Convert.ToBase64String(CType(mbs.baseStream, MemoryStream).ToArray())))
                     Else
-                        Dim myuo2 As Interfaces.IPersistStreamInit = TryCast(_pptpl, Interfaces.IPersistStreamInit)
+                        Dim myuo2 As Interfaces2.IPersistStreamInit = TryCast(_pptpl, Interfaces2.IPersistStreamInit)
                         If myuo2 IsNot Nothing Then
-                            _istrts = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
-                            Try
-                                myuo2.Save(_istrts, True)
-                            Catch ex As Exception
-
-                            End Try
                             Dim mbs As New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream)
-                            myuo2.Save(mbs, 0)
+                            myuo2.Save(mbs, True)
                             .Add(New XElement("PersistedData1", Convert.ToBase64String(CType(mbs.baseStream, MemoryStream).ToArray())))
                         End If
                     End If
-
-
                 End If
 
                 If Not _copp Is Nothing Then
-                    Dim myuo As Interfaces.IPersistStream = TryCast(_copp, Interfaces.IPersistStream)
+                    Dim myuo As Interfaces2.IPersistStream = TryCast(_copp, Interfaces2.IPersistStream)
                     If myuo IsNot Nothing Then
-                        _istrpp = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
-                        Try
-                            myuo.Save(_istrpp, True)
-                        Catch ex As Exception
-
-                        End Try
                         Dim mbs As New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream)
-                        myuo.Save(mbs, 0)
-                        .Add(New XElement("PersistedData1", Convert.ToBase64String(CType(mbs.baseStream, MemoryStream).ToArray())))
+                        myuo.Save(mbs, True)
+                        .Add(New XElement("PersistedData2", Convert.ToBase64String(CType(mbs.baseStream, MemoryStream).ToArray())))
                     Else
-                        Dim myuo2 As Interfaces.IPersistStreamInit = TryCast(_copp, Interfaces.IPersistStreamInit)
+                        Dim myuo2 As Interfaces2.IPersistStreamInit = TryCast(_copp, Interfaces2.IPersistStreamInit)
                         If myuo2 IsNot Nothing Then
-                            _istrpp = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
-                            Try
-                                myuo2.Save(_istrpp, True)
-                            Catch ex As Exception
-
-                            End Try
                             Dim mbs As New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream)
-                            myuo2.Save(mbs, 0)
+                            myuo2.Save(mbs, True)
                             .Add(New XElement("PersistedData2", Convert.ToBase64String(CType(mbs.baseStream, MemoryStream).ToArray())))
                         End If
                     End If

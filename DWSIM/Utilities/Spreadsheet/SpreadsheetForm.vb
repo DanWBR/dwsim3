@@ -310,8 +310,12 @@ Public Class SpreadsheetForm
         Dim text As String = ""
         For i As Integer = 0 To dt2.GetUpperBound(0)
             For j As Integer = 0 To dt1.GetUpperBound(1)
-                Dim xel As New XElement("dummy", DirectCast(dt2(i, j), SpreadsheetCellParameters).SaveData.ToArray)
-                text += xel.ToString + ";"
+                If Not dt2(i, j) Is Nothing Then
+                    Dim xel As New XElement("dummy", DirectCast(dt2(i, j), SpreadsheetCellParameters).SaveData.ToArray)
+                    text += xel.ToString + ";"
+                Else
+                    text += " ;"
+                End If
             Next
             text = text.TrimEnd(";") + "|"
         Next
@@ -355,9 +359,14 @@ Public Class SpreadsheetForm
                 For j As Integer = 0 To m
                     Dim scp As New SpreadsheetCellParameters()
                     Dim element As New XElement("dummy")
-                    element = XElement.Parse(rows(i).Split(";")(j))
-                    scp.LoadData(element.Elements.ToList)
-                    elm(i, j) = scp
+                    Dim xmltext As String = rows(i).Split(";")(j)
+                    If xmltext <> " " Then
+                        element = XElement.Parse(xmltext)
+                        scp.LoadData(element.Elements.ToList)
+                        elm(i, j) = scp
+                    Else
+                        elm(i, j) = scp
+                    End If
                 Next
             Next
             dt2 = elm

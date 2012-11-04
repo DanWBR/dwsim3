@@ -4647,7 +4647,7 @@ Namespace DWSIM.SimulationObjects.Streams
             _operation = operation
             _scope = scope
 
-            Throw ex
+            'Throw ex
 
         End Sub
 
