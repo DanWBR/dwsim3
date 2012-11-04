@@ -56,19 +56,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("<?xml version=""1.0"" encoding=""utf-16""?>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<ArrayOfString xmlns:xsi=""http://www.w3."& _ 
-            "org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" />")>  _
-        Public Property MostRecentFiles() As Global.System.Collections.Specialized.StringCollection
-            Get
-                Return CType(Me("MostRecentFiles"),Global.System.Collections.Specialized.StringCollection)
-            End Get
-            Set
-                Me("MostRecentFiles") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public Property UserUnits() As String
             Get
@@ -112,30 +99,6 @@ Namespace My
             End Get
             Set
                 Me("PaletteMode") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property ShowWarningPPChange() As Boolean
-            Get
-                Return CType(Me("ShowWarningPPChange"),Boolean)
-            End Get
-            Set
-                Me("ShowWarningPPChange") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property ShowWarningSubstChange() As Boolean
-            Get
-                Return CType(Me("ShowWarningSubstChange"),Boolean)
-            End Get
-            Set
-                Me("ShowWarningSubstChange") = value
             End Set
         End Property
         
@@ -348,6 +311,19 @@ Namespace My
             End Get
             Set
                 Me("EnableParallelProcessing") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("<?xml version=""1.0"" encoding=""utf-16""?>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<ArrayOfString xmlns:xsi=""http://www.w3."& _ 
+            "org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" />")>  _
+        Public Property MostRecentFiles() As Global.System.Collections.Specialized.StringCollection
+            Get
+                Return CType(Me("MostRecentFiles"),Global.System.Collections.Specialized.StringCollection)
+            End Get
+            Set
+                Me("MostRecentFiles") = value
             End Set
         End Property
     End Class

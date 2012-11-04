@@ -118,6 +118,96 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>268, 17</value>
+  </data>
+  <data name="cbudb.Text" xml:space="preserve">
+    <value>Replace components when loading user databases</value>
+  </data>
+  <data name="Button11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>297, 17</value>
+  </data>
+  <data name="Button11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>310, 23</value>
+  </data>
+  <data name="Button11.Text" xml:space="preserve">
+    <value>Add ChemSep™ Database</value>
+  </data>
+  <data name="Button7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>285, 23</value>
+  </data>
+  <data name="Button7.Text" xml:space="preserve">
+    <value>Add User Database</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 22</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>233, 13</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Manage compound databases used by DWSIM.</value>
+  </data>
+  <data name="dgvdb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>610, 186</value>
+  </data>
+  <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>616, 232</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Databases</value>
+  </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Databases</value>
+  </data>
+  <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
+    <value>Enable Parallel Calculations</value>
+  </data>
+  <data name="GroupBox7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 6</value>
+  </data>
+  <data name="GroupBox7.Text" xml:space="preserve">
+    <value>Calculation Engine</value>
+  </data>
+  <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 17</value>
+  </data>
+  <data name="chkUpdates.Text" xml:space="preserve">
+    <value>Check for updates on startup</value>
+  </data>
+  <data name="chkconsole.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 17</value>
+  </data>
+  <data name="chkconsole.Text" xml:space="preserve">
+    <value>Redirect console output</value>
+  </data>
+  <data name="GroupBox6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 127</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>203, 17</value>
+  </data>
+  <data name="KryptonCheckBox1.Text" xml:space="preserve">
+    <value>Show the welcome screen on startup</value>
+  </data>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 67</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>611, 54</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Reminders</value>
+  </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Features</value>
+  </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
     <value>279, 47</value>
   </data>
@@ -196,7 +286,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABw
-        KgAAAk1TRnQBSQFMAgEBCgEAAZQBAAGUAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAZwBAAGcAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAeQCogHiAqAB4QKfAd4CnAHcAZwBmgHaApgB2gKYAdkClwHXApUB1gKU
         AdMCkQHTApEB0QKPAc8CjQHPAo0BzwKNAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKf
         Ad4CnAHeApwB3AKaAdoCmAHaApgB2gKYAdoCmGAAA+wD8APuA+0B6gHrAeoD6APnAuUB5gLjAeQD4gPh
@@ -400,96 +490,6 @@
   </data>
   <data name="FaTabStripItem4.Title" xml:space="preserve">
     <value>UI Language</value>
-  </data>
-  <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>268, 17</value>
-  </data>
-  <data name="cbudb.Text" xml:space="preserve">
-    <value>Replace components when loading user databases</value>
-  </data>
-  <data name="Button11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>297, 17</value>
-  </data>
-  <data name="Button11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>310, 23</value>
-  </data>
-  <data name="Button11.Text" xml:space="preserve">
-    <value>Add ChemSep™ Database</value>
-  </data>
-  <data name="Button7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>285, 23</value>
-  </data>
-  <data name="Button7.Text" xml:space="preserve">
-    <value>Add User Database</value>
-  </data>
-  <data name="GroupBox11.Text" xml:space="preserve">
-    <value>Tasks</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>258, 13</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>Manage component databases available for DWSIM.</value>
-  </data>
-  <data name="dgvdb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 186</value>
-  </data>
-  <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>616, 232</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Databases</value>
-  </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Databases</value>
-  </data>
-  <data name="chkEnableParallelCalcs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 17</value>
-  </data>
-  <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
-    <value>Enable Calculations in Parallel</value>
-  </data>
-  <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Calculation Engine</value>
-  </data>
-  <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 17</value>
-  </data>
-  <data name="chkUpdates.Text" xml:space="preserve">
-    <value>Check for updates on startup</value>
-  </data>
-  <data name="chkconsole.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 17</value>
-  </data>
-  <data name="chkconsole.Text" xml:space="preserve">
-    <value>Redirect console output</value>
-  </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Other</value>
-  </data>
-  <data name="KryptonCheckBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>212, 17</value>
-  </data>
-  <data name="KryptonCheckBox3.Text" xml:space="preserve">
-    <value>Warn when property package changes</value>
-  </data>
-  <data name="KryptonCheckBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>276, 17</value>
-  </data>
-  <data name="KryptonCheckBox2.Text" xml:space="preserve">
-    <value>Warn when a component is removed from simulation</value>
-  </data>
-  <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 17</value>
-  </data>
-  <data name="KryptonCheckBox1.Text" xml:space="preserve">
-    <value>Show the welcome screen on startup</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Reminders</value>
-  </data>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Features</value>
   </data>
   <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>225, 25</value>

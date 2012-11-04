@@ -1235,16 +1235,7 @@ Final3:
                     2 * aml * rho * (1 + 2 * bml * rho - (bml * rho) ^ 2) ^ -1
 
             If TIPO = "L" Then
-                'Dim C0, C1 As Double
-                'rho_lim = Me.ESTIMAR_RhoLim(aml, bml, T, P)
-                'P_lim = R * T * rho_lim / (1 - rho_lim * bml) - aml * rho_lim ^ 2 / (1 + 2 * bml * rho_lim - (rho_lim * bml) ^ 2)
-                'C1 = (rho - 0.7 * rho_mc) * dPdrho
-                'C0 = P_lim - C1 * Math.Log(rho_lim - 0.7 * rho_mc)
-                'rho_calc = Math.Exp((P - C0) / C1) + 0.7 * rho_mc
-                'Pcalc = R * T * rho_calc / (1 - rho_calc * bml) - aml * rho_calc ^ 2 / (1 + 2 * bml * rho_calc - (rho_calc * bml) ^ 2)
-                'Zcalc = P / (rho_calc * R * T)
                 Zcalc = ZV
-                ' CALCULO DO COEFICIENTE DE FUGACIDADE DA FASE LIQUIDA
                 i = 0
                 Do
                     t1 = bi(i) * (Zcalc - 1) / bml
@@ -1258,17 +1249,7 @@ Final3:
                 Loop Until i = n + 1
                 Return LN_CF
             Else
-                'Dim aa, bb As Double
-                'rho_lim = Me.ESTIMAR_RhoLim(aml, bml, T, P)
-                'P_lim = R * T * rho_lim / (1 - rho_lim * bml) - aml * rho_lim ^ 2 / (1 + 2 * bml * rho_lim - (rho_lim * bml) ^ 2)
-                'rho_x = (rho_lim + rho_mc) / 2
-                'bb = 1 / P_lim * (1 / (rho_lim * (1 - rho_lim / rho_x)))
-                'aa = -bb / rho_x
-                'rho_calc = (1 / P + bb) / aa
-                'Pcalc = R * T * rho_calc / (1 - rho_calc * bml) - aml * rho_calc ^ 2 / (1 + 2 * bml * rho_calc - (rho_calc * bml) ^ 2)
-                'Zcalc = P / (rho_calc * R * T)
                 Zcalc = ZV
-                ' CALCULO DO COEFICIENTE DE FUGACIDADE DA FASE VAPOR
                 i = 0
                 Do
                     t1 = bi(i) * (Zcalc - 1) / bml

@@ -359,6 +359,7 @@
     <Compile Include="Objects\Classes\Math\AP.vb" />
     <Compile Include="Objects\Classes\Math\Brent.vb" />
     <Compile Include="Objects\Classes\Math\BrentMinimize.vb" />
+    <Compile Include="Objects\Classes\Math\Broyden.vb" />
     <Compile Include="Objects\Classes\Math\BS.vb" />
     <Compile Include="Objects\Classes\Math\LP_Solve.vb" />
     <Compile Include="Objects\Classes\Math\cMatLib.vb" />
@@ -634,7 +635,6 @@
     <Compile Include="Objects\PropertyPackages\NRTL\NRTLPropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\PC-SAFT\Helper Classes\PCSAFT.vb" />
     <Compile Include="Objects\PropertyPackages\PC-SAFT\PCSAFTPropertyPackage.vb" />
-    <Compile Include="Objects\PropertyPackages\PengRobinson_IWVT\PengRobinsonIWVT.vb" />
     <Compile Include="Forms\PropPack_ConfigForms\FormConfigUNIQUAC.Designer.vb">
       <DependentUpon>FormConfigUNIQUAC.vb</DependentUpon>
     </Compile>

@@ -91,83 +91,6 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
         End Sub
 
-        Private Sub broydn(ByVal N As Object, ByVal X As Object, ByVal F As Object, ByRef P As Object, ByRef XB As Object, ByRef FB As Object, ByRef H As Object, ByRef IFLAG As Integer)
-            '
-            '**********************************************************************
-            '
-            '       N = NUMBER OF EQUATIONS
-            '       X(N) = CURRENT VALUE OF X, INITAL GUESS X0 ON FIRST CALL
-            '              THE VALUE OF X IS NOT UPDATED AND MUST BE UPDATED IN
-            '              CALLING PROGRAM
-            '       F(N) = VALUE OF F(X) MUST BE PROVIDED ON ALL CALLS
-            '       P(N) = STEP PREDICTED BY BROYDN (USED TO UPDATE X)
-            '              THE NEW VALUE OF X IS X+P
-            '       XB(N) = RETENTION FOR X VECTOR
-            '       FB(N) = RETENTION FOR F VECTOR
-            '       H(N,N) = BROYDEN H MATRIX IT MUST BE INITIALIZED TO A CLOSE
-            '                J(X0)**-1 OR IDENTITY MATRIX
-            '       IFLAG = CALCULATION CONTROL FLAG
-            '               0 INITIAL CALL, NO H UPDATE
-            '               1 UPDATE CALL, NO H DAMPING
-            '
-            Dim I As Short
-            Dim J As Short
-            Dim PTP As Double
-            Dim PTH As Double
-            Dim THETA As Double
-            Dim PTHY As Double
-            Dim PTHF As Double
-            Dim HY As Double
-            Dim DENOM As Double
-            '
-            '      INITIAL CALL
-            '
-            If (IFLAG <> 0) Then
-                PTP = 0.0#
-                '
-                For I = 0 To N 'do 30 I=1,N
-                    P(I) = X(I) - XB(I)
-                    PTP = PTP + P(I) * P(I)
-                    HY = 0.0#
-                    For J = 0 To N '  DO 20 J=1,N
-                        HY = HY + H(I, J) * (F(J) - FB(J))
-20:                 Next J
-                    XB(I) = HY - P(I)
-30:             Next I
-                PTHY = 0.0#
-                PTHF = 0.0#
-                '
-                For I = 0 To N ' DO 40 I=1,N
-                    PTH = 0.0#
-                    For J = 0 To N '  DO 35 J=1,N
-                        PTH = PTH + P(J) * H(J, I)
-35:                 Next J
-                    PTHY = PTHY + PTH * (F(I) - FB(I))
-                    PTHF = PTHF + PTH * F(I)
-                    FB(I) = PTH
-40:             Next I
-                THETA = 1.0#
-                '
-                DENOM = (1.0# - THETA) * PTP + THETA * PTHY
-                '
-                For I = 0 To N ' DO 50 I=1,N
-                    For J = 0 To N ' DO 50 J=1,N
-                        H(I, J) = H(I, J) - THETA * XB(I) * FB(J) / DENOM
-                    Next J
-50:             Next I
-                '
-            End If
-            For I = 0 To N '  DO 70 I=1,N
-                XB(I) = X(I)
-                FB(I) = F(I)
-                P(I) = 0.0#
-                '
-                For J = 0 To N '  DO 70 J=1,N
-                    P(I) = P(I) - H(I, J) * F(J)
-                Next J
-70:         Next I
-            ''
-        End Sub
 
         Private Function CalcKbj1(ByVal ns As Integer, ByVal nc As Integer, ByVal K(,) As Object, _
                                         ByVal z()() As Double, ByVal y()() As Double, ByVal T() As Double, _
@@ -263,6 +186,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
         Dim llextr As Boolean = False
 
         Public Function FunctionValue(ByVal x() As Double) As Double()
+
 
             Dim errors(x.Length - 1) As Double
 
@@ -1046,7 +970,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                                 ByVal UseNewtonUpdate As Boolean, _
                                 ByVal AdjustSb As Boolean, ByVal UseIJ As Boolean, _
                                 ByVal coltype As Column.ColType, ByVal KbjWA As Boolean, _
-                                ByRef pp As PropertyPackages.PropertyPackage, _
+                                ByVal pp As PropertyPackages.PropertyPackage, _
                                 ByVal specs As Dictionary(Of String, SepOps.ColumnSpec), _
                                 ByVal reuseJ As Boolean, ByVal jac0 As Object, _
                                 ByVal epsilon As Double, _
@@ -1054,6 +978,8 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                                 ByVal dfmin As Double, ByVal dfmax As Double, _
                                 ByVal deltat_el As Double, _
                                 Optional ByVal llex As Boolean = False) As Object
+
+            Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
             llextr = llex 'liq-liq extractor
 
@@ -1489,12 +1415,12 @@ restart:            fx = Me.FunctionValue(xvar)
                             End If
                             bx = xvar
                             bf = fx
-                            broydn(el, bx, bf, bp, bxb, bfb, hes, 0)
+                            Broyden.broydn(el, bx, bf, bp, bxb, bfb, hes, 0)
                             dx = bp
                         Else
                             bx = xvar
                             bf = fx
-                            broydn(el, bx, bf, bp, bxb, bfb, hes, 1)
+                            Broyden.broydn(el, bx, bf, bp, bxb, bfb, hes, 1)
                             dx = bp
                         End If
                         _bx = xvar.Clone
@@ -1629,19 +1555,41 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 Dim tmp(ns) As Object
 
-                For i = 0 To ns
-                    If llextr Then
-                        tmp(i) = pp.DW_CalcKvalue(xc(i), yc(i), Tj(i), P(i), "LL")
-                    Else
-                        tmp(i) = pp.DW_CalcKvalue(xc(i), yc(i), Tj(i), P(i))
-                    End If
-                    For j = 0 To nc - 1
-                        K_ant(i, j) = K(i, j)
-                        K(i, j) = tmp(i)(j)
+                If doparallel Then
+                    My.Application.IsRunningParallelTasks = True
+                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                                                             Sub(ipar)
+                                                                 If llextr Then
+                                                                     tmp(ipar) = pp.DW_CalcKvalue(xc(ipar), yc(ipar), Tj(ipar), P(ipar), "LL")
+                                                                 Else
+                                                                     tmp(ipar) = pp.DW_CalcKvalue(xc(ipar), yc(ipar), Tj(ipar), P(ipar))
+                                                                 End If
+                                                             End Sub))
+                    While Not task1.IsCompleted
+                        Application.DoEvents()
+                    End While
+                    For i = 0 To ns
+                        For j = 0 To nc - 1
+                            K_ant(i, j) = K(i, j)
+                            K(i, j) = tmp(i)(j)
+                        Next
+                        Kbj_ant(i) = Kbj(i)
                     Next
-                    Kbj_ant(i) = Kbj(i)
-                Next
-
+                    My.Application.IsRunningParallelTasks = False
+                Else
+                    For i = 0 To ns
+                        If llextr Then
+                            tmp(i) = pp.DW_CalcKvalue(xc(i), yc(i), Tj(i), P(i), "LL")
+                        Else
+                            tmp(i) = pp.DW_CalcKvalue(xc(i), yc(i), Tj(i), P(i))
+                        End If
+                        For j = 0 To nc - 1
+                            K_ant(i, j) = K(i, j)
+                            K(i, j) = tmp(i)(j)
+                        Next
+                        Kbj_ant(i) = Kbj(i)
+                    Next
+                End If
 
                 If KbjWA = False Then
                     Kbj1 = CalcKbj1(ns, nc, K, zc, yc, Tj1, P, pp)
@@ -1676,28 +1624,72 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 'update A/B/C/D/E/F
 
-                For i = 0 To ns
-
-                    'new Ks
-                    K2(i) = pp.DW_CalcKvalue(xc(i), yc(i), Tj2(i), P(i))
-
-                    'enthalpies
-                    If llextr Then
-                        Hv1(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
-                        Hv2(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
-                    Else
-                        Hv1(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj1(i), P(i), PropertyPackages.State.Vapor)
-                        Hv2(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj2(i), P(i), PropertyPackages.State.Vapor)
-                    End If
-                    Hl1(i) = pp.DW_CalcEnthalpyDeparture(xc(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
-                    Hl2(i) = pp.DW_CalcEnthalpyDeparture(xc(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
-
-                    For j = 0 To nc - 1
-                        K2j(i, j) = K2(i)(j)
-                        If Double.IsNaN(K2(i)(j)) Or Double.IsInfinity(K2(i)(j)) Then K2(i)(j) = pp.AUX_PVAPi(j, Tj(i)) / P(i)
+                If doparallel Then
+                    My.Application.IsRunningParallelTasks = True
+                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                                                             Sub(ipar)
+                                                                 'new Ks
+                                                                 K2(ipar) = pp.DW_CalcKvalue(xc(ipar), yc(ipar), Tj2(ipar), P(ipar))
+                                                             End Sub))
+                    While Not task1.IsCompleted
+                        Application.DoEvents()
+                    End While
+                    For i = 0 To ns
+                        For j = 0 To nc - 1
+                            K2j(i, j) = K2(i)(j)
+                            If Double.IsNaN(K2(i)(j)) Or Double.IsInfinity(K2(i)(j)) Then K2(i)(j) = pp.AUX_PVAPi(j, Tj(i)) / P(i)
+                        Next
                     Next
+                    My.Application.IsRunningParallelTasks = False
+                Else
+                    For i = 0 To ns
 
-                Next
+                        'new Ks
+                        K2(i) = pp.DW_CalcKvalue(xc(i), yc(i), Tj2(i), P(i))
+
+                        For j = 0 To nc - 1
+                            K2j(i, j) = K2(i)(j)
+                            If Double.IsNaN(K2(i)(j)) Or Double.IsInfinity(K2(i)(j)) Then K2(i)(j) = pp.AUX_PVAPi(j, Tj(i)) / P(i)
+                        Next
+
+                    Next
+                End If
+
+                If doparallel Then
+                    My.Application.IsRunningParallelTasks = True
+                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                                                             Sub(ipar)
+                                                                 'enthalpies
+                                                                 If llextr Then
+                                                                     Hv1(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
+                                                                     Hv2(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
+                                                                 Else
+                                                                     Hv1(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Vapor)
+                                                                     Hv2(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Vapor)
+                                                                 End If
+                                                                 Hl1(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
+                                                                 Hl2(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
+                                                             End Sub))
+                    While Not task1.IsCompleted
+                        Application.DoEvents()
+                    End While
+                    My.Application.IsRunningParallelTasks = False
+                Else
+                    For i = 0 To ns
+
+                        'enthalpies
+                        If llextr Then
+                            Hv1(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
+                            Hv2(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
+                        Else
+                            Hv1(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj1(i), P(i), PropertyPackages.State.Vapor)
+                            Hv2(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj2(i), P(i), PropertyPackages.State.Vapor)
+                        End If
+                        Hl1(i) = pp.DW_CalcEnthalpyDeparture(xc(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
+                        Hl2(i) = pp.DW_CalcEnthalpyDeparture(xc(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
+
+                    Next
+                End If
 
                 If KbjWA = False Then
                     Kbj2 = CalcKbj1(ns, nc, K2j, zc, yc, Tj2, P, pp)
@@ -2545,84 +2537,6 @@ restart:            fx = Me.FunctionValue(xvar)
 
         End Sub
 
-        Private Sub broydn(ByVal N As Object, ByVal X As Object, ByVal F As Object, ByRef P As Object, ByRef XB As Object, ByRef FB As Object, ByRef H As Object, ByRef IFLAG As Integer)
-            '
-            '**********************************************************************
-            '
-            '       N = NUMBER OF EQUATIONS
-            '       X(N) = CURRENT VALUE OF X, INITAL GUESS X0 ON FIRST CALL
-            '              THE VALUE OF X IS NOT UPDATED AND MUST BE UPDATED IN
-            '              CALLING PROGRAM
-            '       F(N) = VALUE OF F(X) MUST BE PROVIDED ON ALL CALLS
-            '       P(N) = STEP PREDICTED BY BROYDN (USED TO UPDATE X)
-            '              THE NEW VALUE OF X IS X+P
-            '       XB(N) = RETENTION FOR X VECTOR
-            '       FB(N) = RETENTION FOR F VECTOR
-            '       H(N,N) = BROYDEN H MATRIX IT MUST BE INITIALIZED TO A CLOSE
-            '                J(X0)**-1 OR IDENTITY MATRIX
-            '       IFLAG = CALCULATION CONTROL FLAG
-            '               0 INITIAL CALL, NO H UPDATE
-            '               1 UPDATE CALL, NO H DAMPING
-            '
-            Dim I As Short
-            Dim J As Short
-            Dim PTP As Double
-            Dim PTH As Double
-            Dim THETA As Double
-            Dim PTHY As Double
-            Dim PTHF As Double
-            Dim HY As Double
-            Dim DENOM As Double
-            '
-            '      INITIAL CALL
-            '
-            If (IFLAG <> 0) Then
-                PTP = 0.0#
-                '
-                For I = 0 To N 'do 30 I=1,N
-                    P(I) = X(I) - XB(I)
-                    PTP = PTP + P(I) * P(I)
-                    HY = 0.0#
-                    For J = 0 To N '  DO 20 J=1,N
-                        HY = HY + H(I, J) * (F(J) - FB(J))
-20:                 Next J
-                    XB(I) = HY - P(I)
-30:             Next I
-                PTHY = 0.0#
-                PTHF = 0.0#
-                '
-                For I = 0 To N ' DO 40 I=1,N
-                    PTH = 0.0#
-                    For J = 0 To N '  DO 35 J=1,N
-                        PTH = PTH + P(J) * H(J, I)
-35:                 Next J
-                    PTHY = PTHY + PTH * (F(I) - FB(I))
-                    PTHF = PTHF + PTH * F(I)
-                    FB(I) = PTH
-40:             Next I
-                THETA = 1.0#
-                '
-                DENOM = (1.0# - THETA) * PTP + THETA * PTHY
-                '
-                For I = 0 To N ' DO 50 I=1,N
-                    For J = 0 To N ' DO 50 J=1,N
-                        H(I, J) = H(I, J) - THETA * XB(I) * FB(J) / DENOM
-                    Next J
-50:             Next I
-                '
-            End If
-            For I = 0 To N '  DO 70 I=1,N
-                XB(I) = X(I)
-                FB(I) = F(I)
-                P(I) = 0.0#
-                '
-                For J = 0 To N '  DO 70 J=1,N
-                    P(I) = P(I) - H(I, J) * F(J)
-                Next J
-70:         Next I
-            ''
-        End Sub
-
         Dim ndeps As Double = 0.1
 
         Dim _nc, _ns As Integer
@@ -2640,6 +2554,8 @@ restart:            fx = Me.FunctionValue(xvar)
         Dim _Kval()() As Double
 
         Public Function FunctionValue(ByVal x() As Double) As Double()
+
+            Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
             Dim nc, ns As Integer
             Dim i, j As Integer
@@ -2745,41 +2661,87 @@ restart:            fx = Me.FunctionValue(xvar)
             Next
 
             'calculate K-values
-            Dim tmp0 As Object
 
-            For i = 0 To ns
-                If llextr Then
-                    tmp0 = _pp.DW_CalcKvalue(xc(i), yc(i), Tj(i), P(i), "LL")
-                Else
-                    tmp0 = _pp.DW_CalcKvalue(xc(i), yc(i), Tj(i), P(i))
-                End If
-                For j = 0 To nc - 1
-                    Kval(i)(j) = tmp0(j)
+            If doparallel Then
+                My.Application.IsRunningParallelTasks = True
+                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                                                         Sub(ipar)
+                                                             Dim tmp0 As Object
+                                                             If llextr Then
+                                                                 tmp0 = _pp.DW_CalcKvalue(xc(ipar), yc(ipar), Tj(ipar), P(ipar), "LL")
+                                                             Else
+                                                                 tmp0 = _pp.DW_CalcKvalue(xc(ipar), yc(ipar), Tj(ipar), P(ipar))
+                                                             End If
+                                                             Dim jj As Integer
+                                                             For jj = 0 To nc - 1
+                                                                 Kval(ipar)(jj) = tmp0(jj)
+                                                             Next
+                                                         End Sub))
+                While Not task1.IsCompleted
+                    Application.DoEvents()
+                End While
+                My.Application.IsRunningParallelTasks = False
+            Else
+                Dim tmp0 As Object
+                For i = 0 To ns
+                    If llextr Then
+                        tmp0 = _pp.DW_CalcKvalue(xc(i), yc(i), Tj(i), P(i), "LL")
+                    Else
+                        tmp0 = _pp.DW_CalcKvalue(xc(i), yc(i), Tj(i), P(i))
+                    End If
+                    For j = 0 To nc - 1
+                        Kval(i)(j) = tmp0(j)
+                    Next
+                    CheckCalculatorStatus()
                 Next
-                CheckCalculatorStatus()
-            Next
+            End If
 
             _Kval = Kval
 
             'calculate enthalpies
 
-            For i = 0 To ns
-                If Vj(i) <> 0 Then
-                    If llextr Then
-                        Hv(i) = _pp.DW_CalcEnthalpy(yc(i), Tj(i), P(i), PropertyPackages.State.Liquid) * _pp.AUX_MMM(yc(i)) / 1000
+            If doparallel Then
+                My.Application.IsRunningParallelTasks = True
+                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                                                         Sub(ipar)
+                                                             If Vj(ipar) <> 0 Then
+                                                                 If llextr Then
+                                                                     Hv(ipar) = _pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * _pp.AUX_MMM(yc(ipar)) / 1000
+                                                                 Else
+                                                                     Hv(ipar) = _pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * _pp.AUX_MMM(yc(ipar)) / 1000
+                                                                 End If
+                                                             Else
+                                                                 Hv(ipar) = 0
+                                                             End If
+                                                             If Lj(ipar) <> 0 Then
+                                                                 Hl(ipar) = _pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * _pp.AUX_MMM(xc(ipar)) / 1000
+                                                             Else
+                                                                 Hl(ipar) = 0
+                                                             End If
+                                                         End Sub))
+                While Not task1.IsCompleted
+                    Application.DoEvents()
+                End While
+                My.Application.IsRunningParallelTasks = False
+            Else
+                For i = 0 To ns
+                    If Vj(i) <> 0 Then
+                        If llextr Then
+                            Hv(i) = _pp.DW_CalcEnthalpy(yc(i), Tj(i), P(i), PropertyPackages.State.Liquid) * _pp.AUX_MMM(yc(i)) / 1000
+                        Else
+                            Hv(i) = _pp.DW_CalcEnthalpy(yc(i), Tj(i), P(i), PropertyPackages.State.Vapor) * _pp.AUX_MMM(yc(i)) / 1000
+                        End If
                     Else
-                        Hv(i) = _pp.DW_CalcEnthalpy(yc(i), Tj(i), P(i), PropertyPackages.State.Vapor) * _pp.AUX_MMM(yc(i)) / 1000
+                        Hv(i) = 0
                     End If
-                Else
-                    Hv(i) = 0
-                End If
-                If Lj(i) <> 0 Then
-                    Hl(i) = _pp.DW_CalcEnthalpy(xc(i), Tj(i), P(i), PropertyPackages.State.Liquid) * _pp.AUX_MMM(xc(i)) / 1000
-                Else
-                    Hl(i) = 0
-                End If
-                CheckCalculatorStatus()
-            Next
+                    If Lj(i) <> 0 Then
+                        Hl(i) = _pp.DW_CalcEnthalpy(xc(i), Tj(i), P(i), PropertyPackages.State.Liquid) * _pp.AUX_MMM(xc(i)) / 1000
+                    Else
+                        Hl(i) = 0
+                    End If
+                    CheckCalculatorStatus()
+                Next
+            End If
 
             'reboiler and condenser heat duties
 
@@ -3343,7 +3305,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                 ByVal UseNewtonUpdate As Boolean, _
                                 ByVal UseIJ As Boolean, _
                                 ByVal coltype As Column.ColType, _
-                                ByRef pp As PropertyPackages.PropertyPackage, _
+                                ByVal pp As PropertyPackages.PropertyPackage, _
                                 ByVal specs As Dictionary(Of String, SepOps.ColumnSpec), _
                                 ByVal reuseJ As Boolean, ByVal jac0 As Object, _
                                 ByVal df As Double, ByVal maxtc As Double, ByVal epsilon As Double, _
@@ -3542,12 +3504,12 @@ restart:            fx = Me.FunctionValue(xvar)
                         Next
                         bx = xvar
                         bf = fxvar
-                        broydn(xvar.Length - 1, bx, bf, bp, bxb, bfb, hes, 0)
+                        Broyden.broydn(xvar.Length - 1, bx, bf, bp, bxb, bfb, hes, 0)
                         dxvar = bp
                     Else
                         bx = xvar
                         bf = fxvar
-                        broydn(xvar.Length - 1, bx, bf, bp, bxb, bfb, hes, 1)
+                        Broyden.broydn(xvar.Length - 1, bx, bf, bp, bxb, bfb, hes, 1)
                         dxvar = bp
                     End If
                     _bx = xvar.Clone

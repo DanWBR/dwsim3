@@ -35,9 +35,7 @@ Public Class FormOptions
         Me.chkEnableParallelCalcs.Checked = My.Settings.EnableParallelProcessing
 
         Me.KryptonCheckBox1.Checked = My.Settings.ShowTips
-        Me.KryptonCheckBox2.Checked = My.Settings.ShowWarningSubstChange
-        Me.KryptonCheckBox3.Checked = My.Settings.ShowWarningPPChange
-
+      
         Me.KryptonCheckBox6.Checked = My.Settings.BackupActivated
         Me.KryptonTextBox1.Text = My.Settings.BackupFolder
         Me.TrackBar1.Value = My.Settings.BackupInterval
@@ -66,14 +64,6 @@ Public Class FormOptions
 
     Private Sub KryptonCheckBox1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonCheckBox1.CheckedChanged
         My.Settings.ShowTips = Me.KryptonCheckBox1.Checked
-    End Sub
-
-    Private Sub KryptonCheckBox2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonCheckBox2.CheckedChanged
-        My.Settings.ShowWarningSubstChange = Me.KryptonCheckBox2.Checked
-    End Sub
-
-    Private Sub KryptonCheckBox3_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonCheckBox3.CheckedChanged
-        My.Settings.ShowWarningPPChange = Me.KryptonCheckBox3.Checked
     End Sub
 
     Private Sub KryptonCheckBox6_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonCheckBox6.CheckedChanged

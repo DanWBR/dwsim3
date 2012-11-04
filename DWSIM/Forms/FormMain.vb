@@ -414,11 +414,6 @@ Public Class FormMain
         PRSV2PPVL.ComponentDescription = DWSIM.App.GetLocalString("DescPRSV2VLPP")
         PropertyPackages.Add(PRSV2PPVL.ComponentName.ToString, PRSV2PPVL)
 
-        Dim PRIWVTPP As PengRobinsonIWVTPropertyPackage = New PengRobinsonIWVTPropertyPackage()
-        PRIWVTPP.ComponentName = DWSIM.App.GetLocalString("PRIWVT")
-        PRIWVTPP.ComponentDescription = DWSIM.App.GetLocalString("DescPengRobinsonIWVTPP")
-        PropertyPackages.Add(PRIWVTPP.ComponentName.ToString, PRIWVTPP)
-
         Dim SRKPP As SRKPropertyPackage = New SRKPropertyPackage()
         SRKPP.ComponentName = "Soave-Redlich-Kwong (SRK)"
         SRKPP.ComponentDescription = DWSIM.App.GetLocalString("DescSoaveRedlichKwongSRK")
