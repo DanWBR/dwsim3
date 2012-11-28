@@ -99,7 +99,7 @@
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-        If Me.Height = 360 Then
+        If Me.Height <= 360 Then
             Me.Button1.Text = DWSIM.App.GetLocalString("Detalhes21")
             Me.Height = 592
         Else

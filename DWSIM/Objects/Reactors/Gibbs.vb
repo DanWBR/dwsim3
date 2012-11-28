@@ -192,13 +192,19 @@ Namespace DWSIM.SimulationObjects.Reactors
             End Set
         End Property
 
-        Public ReadOnly Property ComponentIDs() As List(Of String)
+        Public Property ComponentIDs() As List(Of String)
+            Set(value As List(Of String))
+                _components = value
+            End Set
             Get
                 Return _components
             End Get
         End Property
 
-        Public ReadOnly Property InitialEstimates() As List(Of Double)
+        Public Property InitialEstimates() As List(Of Double)
+            Set(value As List(Of Double))
+                _initialestimates = value
+            End Set
             Get
                 If _initialestimates Is Nothing Then _initialestimates = New List(Of Double)
                 Return _initialestimates
@@ -1018,19 +1024,30 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         'this call to the brent solver calculates the damping factor which minimizes the error (fval).
 
-                        fval = brentsolver.brentoptimize(0.000000000001, 1.5, 0.0001, df)
+                        fval = brentsolver.brentoptimize(0.3, 1, 0.0001, df)
+
+                        Dim multipl As Double = 1.0#
+                        'For i = 0 To c + e + 1
+                        '    If i <= c And x(i) - dx(i) * df < 0 Then
+                        '        If x(i) / (dx(i) * df) < multipl Then multipl = x(i) / (dx(i) * df)
+                        '    End If
+                        'Next
 
                         For i = 0 To c + e + 1
-                            x(i) -= dx(i) * df
-                            If x(i) < 0 And i <= c Then x(i) = 0.001 * N0tot
+                            x(i) -= dx(i) * df * multipl
+                            If x(i) <= 0 And i <= c Then x(i) = 0.000001 * N0tot
                         Next
 
                         niter += 1
 
-                    Loop Until AbsSum(fx) < 0.001 Or niter > 999
+                        If AbsSum(dx) = 0.0# Then
+                            Throw New Exception("No solution found - reached a stationary point of the objective function (singular gradient matrix).")
+                        End If
 
-                    If niter > 99 Then
-                        Throw New Exception("Maximum number of iterations reached.")
+                    Loop Until AbsSum(fx) < 0.001 Or niter > 249
+
+                    If niter > 249 Then
+                        Throw New Exception("Reached the maximum number of iterations without converging.")
                     End If
 
                     'reevaluate function
@@ -1713,12 +1730,14 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     .Item.Add(DWSIM.App.GetLocalString("RGInitialEstimates"), Me, "InitialEstimates", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("RGInitialEstimates_description"), True)
                     With .Item(.Item.Count - 1)
-                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
+                        .DefaultValue = Nothing
                         .IsBrowsable = False
+                        .CustomEditor = New DWSIM.Editors.Reactors.UIGibbsInitialEstimatesEditor
                     End With
 
                     .Item.Add(DWSIM.App.GetLocalString("RGElementMatrix"), Me, "ElementMatrix", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("RGElementMatrix_description"), True)
                     With .Item(.Item.Count - 1)
+                        .DefaultValue = Nothing
                         .IsBrowsable = False
                         .CustomEditor = New DWSIM.Editors.Reactors.UIElementMatrixEditor
                     End With

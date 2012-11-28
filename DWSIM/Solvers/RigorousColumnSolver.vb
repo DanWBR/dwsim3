@@ -2256,9 +2256,11 @@ restart:            fx = Me.FunctionValue(xvar)
                                 ByVal HF As Array, ByVal T As Array, ByVal P As Array, _
                                 ByVal stopatitnumber As Integer, _
                                 ByVal eff() As Double, _
-                                ByRef pp As PropertyPackages.PropertyPackage, _
+                                ByVal pp As PropertyPackages.PropertyPackage, _
                                 ByVal specs As Dictionary(Of String, SepOps.ColumnSpec), _
                                 Optional ByVal llextr As Boolean = False) As Object
+
+            Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
             Dim ic As Integer
             Dim t_error As Double
@@ -2435,18 +2437,38 @@ restart:            fx = Me.FunctionValue(xvar)
                 ''''''''''''''''''''
                 Dim H(ns), dHldT(ns), dHvdT(ns), dHdTa(ns), dHdTb(ns), dHdTc(ns), dHl(ns), dHv(ns) As Double
 
-                For i = 0 To ns
-                    Hl(i) = pp.DW_CalcEnthalpy(xc(i), Tj(i), P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(i)) / 1000
-                    dHl(i) = pp.DW_CalcEnthalpy(xc(i), Tj(i) - 0.01, P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(i)) / 1000
-                    If llextr Then
-                        Hv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i), P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(yc(i)) / 1000
-                        dHv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i) - 0.01, P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(yc(i)) / 1000
-                    Else
-                        Hv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i), P(i), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(i)) / 1000
-                        dHv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i) - 0.01, P(i), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(i)) / 1000
-                    End If
-                    CheckCalculatorStatus()
-                Next
+                If doparallel Then
+                    My.Application.IsRunningParallelTasks = True
+                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                                                             Sub(ipar)
+                                                                 Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
+                                                                 dHl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar) - 0.01, P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
+                                                                 If llextr Then
+                                                                     Hv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(yc(ipar)) / 1000
+                                                                     dHv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar) - 0.01, P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(yc(ipar)) / 1000
+                                                                 Else
+                                                                     Hv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
+                                                                     dHv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar) - 0.01, P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
+                                                                 End If
+                                                             End Sub))
+                    While Not task1.IsCompleted
+                        Application.DoEvents()
+                    End While
+                    My.Application.IsRunningParallelTasks = False
+                Else
+                    For i = 0 To ns
+                        Hl(i) = pp.DW_CalcEnthalpy(xc(i), Tj(i), P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(i)) / 1000
+                        dHl(i) = pp.DW_CalcEnthalpy(xc(i), Tj(i) - 0.01, P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(i)) / 1000
+                        If llextr Then
+                            Hv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i), P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(yc(i)) / 1000
+                            dHv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i) - 0.01, P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(yc(i)) / 1000
+                        Else
+                            Hv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i), P(i), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(i)) / 1000
+                            dHv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i) - 0.01, P(i), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(i)) / 1000
+                        End If
+                        CheckCalculatorStatus()
+                    Next
+                End If
 
                 For i = 0 To ns
                     If i = 0 Then
@@ -2484,7 +2506,6 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 t_error = 0
                 For i = 0 To ns
-
                     Tj_ant(i) = Tj(i)
                     Tj(i) = Tj(i) + xth(i)
                     If Tj(i) < 0 Then Tj(i) = Tj_ant(i)
@@ -2503,9 +2524,7 @@ restart:            fx = Me.FunctionValue(xvar)
                         sumy(i) += yc(i)(j)
                     Next
                     t_error += Abs(Tj(i) - Tj_ant(i)) ^ 2
-
                     CheckCalculatorStatus()
-
                 Next
 
                 For i = 0 To ns

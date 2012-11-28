@@ -188,11 +188,12 @@ Imports DWSIM.DWSIM.GraphicObjects
 
     End Sub
 
-    Private Sub FormFlowsheet_Invalidated(sender As Object, e As System.Windows.Forms.InvalidateEventArgs) Handles Me.Invalidated
-
-    End Sub
-
     Private Sub FormChild_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        If DWSIM.App.IsRunningOnMono Then
+            Me.FlowLayoutPanel1.AutoSize = False
+            Me.FlowLayoutPanel1.Height = 50
+        End If
 
         Dim rand As New Random
         Dim str As String = rand.Next(10000000, 99999999)

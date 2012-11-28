@@ -841,19 +841,25 @@ Namespace DWSIM.SimulationObjects.Reactors
                 tmpx = x
                 tmpdx = dx
                 df = 1
-                fval = brentsolver.brentoptimize(0.000000000001, 1.5, 0.0001, df)
+                fval = brentsolver.brentoptimize(0.1, 1.5, 0.0001, df)
 
                 For i = 0 To r
                     x(i) -= dx(i) * df
+                    If x(i) <= 0 And i <= c Then x(i) = 0.000001 * N0tot
                 Next
 
                 niter += 1
 
-            Loop Until AbsSum(fx) < 0.001 Or niter > 99
+                If AbsSum(dx) = 0.0# Then
+                    Throw New Exception("No solution found - reached a stationary point of the objective function (singular gradient matrix).")
+                End If
 
-            If niter > 99 Then
-                Throw New Exception("Maximum number of iterations reached.")
+            Loop Until AbsSum(fx) < 0.00001 Or niter > 249
+
+            If niter > 249 Then
+                Throw New Exception("Reached the maximum number of iterations without converging.")
             End If
+
             'reevaluate function
 
             g1 = FunctionValue2G(REx)

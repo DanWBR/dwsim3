@@ -16,7 +16,7 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Runtime.Serialization
 Imports System.IO
@@ -118,7 +118,7 @@ Imports System.Runtime.InteropServices
 
             'connections
             If sobj.TipoObjeto = TipoObjeto.Cooler Or sobj.TipoObjeto = TipoObjeto.Pipe Or sobj.TipoObjeto = TipoObjeto.Expander Then
-                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada")) Then
+                If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y, e.ChangedItem.Value)
@@ -137,7 +137,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(0).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedesada")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
@@ -156,7 +156,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeenergia")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeenergia")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.EnergyStream, sobj.X + sobj.Width * 1.2 / 2, sobj.Y + sobj.Height + 20, e.ChangedItem.Value)
@@ -177,7 +177,7 @@ Imports System.Runtime.InteropServices
                     End If
                 End If
             ElseIf sobj.TipoObjeto = TipoObjeto.Compressor Or sobj.TipoObjeto = TipoObjeto.Heater Or sobj.TipoObjeto = TipoObjeto.Pump Then
-                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada")) Then
+                If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y, e.ChangedItem.Value)
@@ -196,7 +196,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(0).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedesada")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
@@ -215,7 +215,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeenergia")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeenergia")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.EnergyStream, sobj.X - 20, sobj.Y + sobj.Height + 20, e.ChangedItem.Value)
@@ -236,7 +236,7 @@ Imports System.Runtime.InteropServices
                     End If
                 End If
             ElseIf sobj.TipoObjeto = TipoObjeto.Valve Or sobj.TipoObjeto = TipoObjeto.OrificePlate Or sobj.TipoObjeto = TipoObjeto.OT_Reciclo Or sobj.TipoObjeto = TipoObjeto.Tank Then
-                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada")) Then
+                If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y, e.ChangedItem.Value)
@@ -255,7 +255,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(0).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedesada")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
@@ -276,7 +276,7 @@ Imports System.Runtime.InteropServices
                     End If
                 End If
             ElseIf sobj.TipoObjeto = TipoObjeto.Vessel Or sobj.TipoObjeto = TipoObjeto.RCT_Conversion Or sobj.TipoObjeto = TipoObjeto.RCT_Equilibrium Or sobj.TipoObjeto = TipoObjeto.RCT_Gibbs Then
-                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada")) Then
+                If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y, e.ChangedItem.Value)
@@ -352,7 +352,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeenergia")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeenergia")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.EnergyStream, sobj.X - 20, sobj.Y + sobj.Height + 20, e.ChangedItem.Value)
@@ -373,7 +373,7 @@ Imports System.Runtime.InteropServices
                     End If
                 End If
             ElseIf sobj.TipoObjeto = TipoObjeto.NodeIn Then
-                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada1")) Then
+                If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada1")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y - 20, e.ChangedItem.Value)
@@ -392,7 +392,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(0).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada2")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada2")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y, e.ChangedItem.Value)
@@ -411,7 +411,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(1).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada3")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada3")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y + 20, e.ChangedItem.Value)
@@ -430,7 +430,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(2).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Conectadoasada")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Conectadoasada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
@@ -451,7 +451,7 @@ Imports System.Runtime.InteropServices
                     End If
                 End If
             ElseIf sobj.TipoObjeto = TipoObjeto.NodeOut Then
-                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada")) Then
+                If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y, e.ChangedItem.Value)
@@ -470,7 +470,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(0).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedesaida1")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida1")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y + 20, e.ChangedItem.Value)
@@ -489,7 +489,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedesaida2")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida2")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
@@ -508,7 +508,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(1).AttachedConnector.AttachedTo)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedesaida3")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida3")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y - 20, e.ChangedItem.Value)
@@ -704,7 +704,7 @@ Imports System.Runtime.InteropServices
                     End If
                 End If
             ElseIf sobj.TipoObjeto = TipoObjeto.OT_EnergyRecycle Then
-                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada")) Then
+                If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.EnergyStream, sobj.X - 40, sobj.Y, e.ChangedItem.Value)
@@ -723,7 +723,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(0).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedesada")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.EnergyStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
@@ -744,7 +744,7 @@ Imports System.Runtime.InteropServices
                     End If
                 End If
             ElseIf sobj.TipoObjeto = TipoObjeto.ComponentSeparator Then
-                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada")) Then
+                If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y, e.ChangedItem.Value)
@@ -763,7 +763,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(0).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("OutletStream1")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("OutletStream1")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
@@ -782,7 +782,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("OutletStream2")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("OutletStream2")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y + sobj.Height * 0.8, e.ChangedItem.Value)
@@ -801,7 +801,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeenergia")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeenergia")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.EnergyStream, sobj.X - 20, sobj.Y + sobj.Height + 20, e.ChangedItem.Value)
@@ -822,7 +822,7 @@ Imports System.Runtime.InteropServices
                     End If
                 End If
             ElseIf sobj.TipoObjeto = TipoObjeto.CustomUO Then
-                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada1")) Then
+                If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada1")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y - 20, e.ChangedItem.Value)
@@ -841,7 +841,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(0).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada2")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada2")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y, e.ChangedItem.Value)
@@ -860,7 +860,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(1).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada3")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada3")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y + 20, e.ChangedItem.Value)
@@ -879,7 +879,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(2).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("CorrentedeenergiaE")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("CorrentedeenergiaE")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.EnergyStream, sobj.X - sobj.Width * 1.5, sobj.Y - sobj.Height - 40, e.ChangedItem.Value)
@@ -898,7 +898,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj.InputConnectors(3).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedesaida1")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida1")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y + 20, e.ChangedItem.Value)
@@ -917,7 +917,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedesaida2")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida2")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
@@ -936,7 +936,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(1).AttachedConnector.AttachedTo)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedesaida3")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida3")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y - 20, e.ChangedItem.Value)
@@ -955,7 +955,7 @@ Imports System.Runtime.InteropServices
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(2).AttachedConnector.AttachedTo)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("CorrentedeenergiaS")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("CorrentedeenergiaS")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
                             Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.EnergyStream, sobj.X + sobj.Width * 1.5, sobj.Y + sobj.Height + 40, e.ChangedItem.Value)
@@ -987,9 +987,17 @@ Imports System.Runtime.InteropServices
     Public Overridable ReadOnly Property FlowSheet() As Global.DWSIM.FormFlowsheet
         Get
             Dim frm As FormFlowsheet = My.Application.ActiveSimulation
-            If frm Is Nothing Then frm = FormMain.ActiveMdiChild Else m_flowsheet = frm
-            If frm Is Nothing Then frm = m_flowsheet
-            If Not frm Is Nothing Then Return frm Else Return Nothing
+            If TypeOf FormMain.ActiveMdiChild Is FormFlowsheet Then
+                If frm Is Nothing Then frm = FormMain.ActiveMdiChild Else m_flowsheet = frm
+                If frm Is Nothing Then frm = m_flowsheet
+                If Not frm Is Nothing Then Return frm Else Return Nothing
+            Else
+                If FormMain.ActiveMdiChild IsNot Nothing Then
+                    If TypeOf FormMain.ActiveMdiChild Is FormFlowsheet Then Return FormMain.ActiveMdiChild Else Return Nothing
+                Else
+                    Return Nothing
+                End If
+            End If
         End Get
     End Property
 
