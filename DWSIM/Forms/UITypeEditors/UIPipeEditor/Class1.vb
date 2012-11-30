@@ -77,6 +77,10 @@ Imports System.Windows.Forms
         End Set
     End Property
 
+    Public Property SystemOfUnits() As DWSIM.SistemasDeUnidades.Unidades
+
+    Public Property NumberFormat As String
+
     Public Overrides Function ToString() As String
         Return DWSIM.App.GetLocalString("Cliqueparaeditar")
     End Function
@@ -221,10 +225,10 @@ Imports System.Windows.Forms
             GridMalha.Rows(2).HeaderCell.Value = DWSIM.App.GetLocalString("Quantidade")
             GridMalha.Rows(3).HeaderCell.Value = DWSIM.App.GetLocalString("Incrementos")
             GridMalha.Rows(4).HeaderCell.Value = DWSIM.App.GetLocalString("Material")
-            GridMalha.Rows(5).HeaderCell.Value = DWSIM.App.GetLocalString("Comprimentom")
-            GridMalha.Rows(6).HeaderCell.Value = DWSIM.App.GetLocalString("Elevaom")
-            GridMalha.Rows(7).HeaderCell.Value = DWSIM.App.GetLocalString("Dexternoin")
-            GridMalha.Rows(8).HeaderCell.Value = DWSIM.App.GetLocalString("Dinternoin")
+            GridMalha.Rows(5).HeaderCell.Value = DWSIM.App.GetLocalString("Comprimentom").Replace("(m)", "(" & SystemOfUnits.distance & ")")
+            GridMalha.Rows(6).HeaderCell.Value = DWSIM.App.GetLocalString("Elevaom").Replace("(m)", "(" & SystemOfUnits.distance & ")")
+            GridMalha.Rows(7).HeaderCell.Value = DWSIM.App.GetLocalString("Dexternoin").Replace("(in.)", "(" & SystemOfUnits.diameter & ")")
+            GridMalha.Rows(8).HeaderCell.Value = DWSIM.App.GetLocalString("Dinternoin").Replace("(in.)", "(" & SystemOfUnits.diameter & ")")
 
             Dim CBTemplate As New DataGridViewComboBoxCell()
             Dim CBMat As New DataGridViewComboBoxCell()
@@ -829,7 +833,7 @@ Imports System.Windows.Forms
 
     End Sub
 
-    Public Function DN(ByVal i As Integer, ByVal k As Integer)
+    Public Function DN(ByVal i As Integer, ByVal k As Integer) As String
 
         Dim DNom(218, 6) As String
         Dim l, j As Integer
@@ -843,7 +847,11 @@ Imports System.Windows.Forms
                 linha_atual = MyReader2.ReadFields()
                 j = 0
                 Do
-                    DNom(l, j) = linha_atual(j)
+                    If Double.TryParse(linha_atual(j), New Double) Then
+                        DNom(l, j) = linha_atual(j).Replace(",", ".")
+                    Else
+                        DNom(l, j) = linha_atual(j)
+                    End If
                     j = j + 1
                 Loop Until j = 7
                 l = l + 1
@@ -1062,100 +1070,110 @@ Imports System.Windows.Forms
     Private Sub ToolStripMenuItem2_DropDownItemClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolStripMenuItem2.DropDownItemClicked
 
         Dim idx = ToolStripMenuItem2.DropDownItems.IndexOf(e.ClickedItem)
+        Dim cv As New DWSIM.SistemasDeUnidades.Conversor
 
         Dim r = idx + 25 - 4
-        GridMalha.CurrentCell.Value = DN(r, 1)
-        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = DN(r, 6)
+        GridMalha.CurrentCell.Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 1)), NumberFormat)
+        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 6)), NumberFormat)
 
     End Sub
 
     Private Sub ToolStripMenuItem3_DropDownItemClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolStripMenuItem3.DropDownItemClicked
 
         Dim idx = ToolStripMenuItem3.DropDownItems.IndexOf(e.ClickedItem)
+        Dim cv As New DWSIM.SistemasDeUnidades.Conversor
 
         Dim r = idx + 43 - 4
-        GridMalha.CurrentCell.Value = DN(r, 1)
-        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = DN(r, 6)
+        GridMalha.CurrentCell.Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 1)), NumberFormat)
+        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 6)), NumberFormat)
 
     End Sub
 
     Private Sub ToolStripMenuItem4_DropDownItemClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolStripMenuItem4.DropDownItemClicked
 
         Dim idx = ToolStripMenuItem4.DropDownItems.IndexOf(e.ClickedItem)
+        Dim cv As New DWSIM.SistemasDeUnidades.Conversor
 
         Dim r = idx + 55 - 4
-        GridMalha.CurrentCell.Value = DN(r, 1)
-        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = DN(r, 6)
+        GridMalha.CurrentCell.Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 1)), NumberFormat)
+        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 6)), NumberFormat)
 
     End Sub
 
     Private Sub ToolStripMenuItem5_DropDownItemClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolStripMenuItem5.DropDownItemClicked
 
         Dim idx = ToolStripMenuItem5.DropDownItems.IndexOf(e.ClickedItem)
+        Dim cv As New DWSIM.SistemasDeUnidades.Conversor
 
         Dim r = idx + 65 - 4
-        GridMalha.CurrentCell.Value = DN(r, 1)
-        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = DN(r, 6)
+        GridMalha.CurrentCell.Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 1)), NumberFormat)
+        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 6)), NumberFormat)
 
     End Sub
 
     Private Sub ToolStripMenuItem6_DropDownItemClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolStripMenuItem6.DropDownItemClicked
 
         Dim idx = ToolStripMenuItem6.DropDownItems.IndexOf(e.ClickedItem)
+        Dim cv As New DWSIM.SistemasDeUnidades.Conversor
 
         Dim r = idx + 79 - 4
-        GridMalha.CurrentCell.Value = DN(r, 1)
-        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = DN(r, 6)
+        GridMalha.CurrentCell.Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 1)), NumberFormat)
+        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 6)), NumberFormat)
 
     End Sub
 
     Private Sub ToolStripMenuItem7_DropDownItemClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolStripMenuItem7.DropDownItemClicked
 
         Dim idx = ToolStripMenuItem7.DropDownItems.IndexOf(e.ClickedItem)
+        Dim cv As New DWSIM.SistemasDeUnidades.Conversor
 
         Dim r = idx + 86 - 4
-        GridMalha.CurrentCell.Value = DN(r, 1)
-        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = DN(r, 6)
+        GridMalha.CurrentCell.Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 1)), NumberFormat)
+        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 6)), NumberFormat)
 
     End Sub
 
     Private Sub ToolStripMenuItem8_DropDownItemClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolStripMenuItem8.DropDownItemClicked
 
         Dim idx = ToolStripMenuItem8.DropDownItems.IndexOf(e.ClickedItem)
+        Dim cv As New DWSIM.SistemasDeUnidades.Conversor
 
         Dim r = idx + 98 - 4
-        GridMalha.CurrentCell.Value = DN(r, 1)
-        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = DN(r, 6)
+        GridMalha.CurrentCell.Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 1)), NumberFormat)
+        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 6)), NumberFormat)
 
     End Sub
 
     Private Sub ToolStripMenuItem9_DropDownItemClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolStripMenuItem9.DropDownItemClicked
 
         Dim idx = ToolStripMenuItem9.DropDownItems.IndexOf(e.ClickedItem)
+        Dim cv As New DWSIM.SistemasDeUnidades.Conversor
 
         Dim r = idx + 109 - 4
-        GridMalha.CurrentCell.Value = DN(r, 1)
-        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = DN(r, 6)
+        GridMalha.CurrentCell.Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 1)), NumberFormat)
+        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 6)), NumberFormat)
 
     End Sub
 
     Private Sub ToolStripMenuItem10_DropDownItemClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolStripMenuItem10.DropDownItemClicked
 
         Dim idx = ToolStripMenuItem10.DropDownItems.IndexOf(e.ClickedItem)
+        Dim cv As New DWSIM.SistemasDeUnidades.Conversor
 
         Dim r = idx + 122 - 4
-        GridMalha.CurrentCell.Value = DN(r, 1)
-        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = DN(r, 6)
+        GridMalha.CurrentCell.Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 1)), NumberFormat)
+        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 6)), NumberFormat)
 
     End Sub
 
     Private Sub ToolStripMenuItem11_DropDownItemClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ToolStripMenuItem11.DropDownItemClicked
 
         Dim idx = ToolStripMenuItem11.DropDownItems.IndexOf(e.ClickedItem)
+        Dim cv As New DWSIM.SistemasDeUnidades.Conversor
 
         Dim r = idx + 135 - 4
-        GridMalha.CurrentCell.Value = DN(r, 1)
-        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = DN(r, 6)
+        GridMalha.CurrentCell.Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 1)), NumberFormat)
+        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 6)), NumberFormat)
 
     End Sub
 
@@ -1164,6 +1182,7 @@ Imports System.Windows.Forms
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
 
         Dim column As New DataGridViewColumn
+        Dim cv As New DWSIM.SistemasDeUnidades.Conversor
         Dim v1, v2, v3, v4, v5, v6, v7, v8, v9 As Object
 
         If Not Me.Profile Is Nothing Then Me.Profile.Sections.Clear()
@@ -1178,7 +1197,7 @@ Imports System.Windows.Forms
                 v7 = Me.GridMalha.Rows(6).Cells(column.Name).Value
                 v8 = Me.GridMalha.Rows(7).Cells(column.Name).Value
                 v9 = Me.GridMalha.Rows(8).Cells(column.Name).Value
-                Me.Profile.Sections.Add(column.Index + 1, New PipeSection(v1, v2, v3, v4, v5, v6, v7, v8, v9))
+                Me.Profile.Sections.Add(column.Index + 1, New PipeSection(v1, v2, v3, v4, v5, cv.Convert(Me.SystemOfUnits.distance, "m", v6), cv.Convert(Me.SystemOfUnits.distance, "m", v7), cv.Convert(Me.SystemOfUnits.diameter, "in", v8), cv.Convert(Me.SystemOfUnits.diameter, "in", v9)))
             Else
                 Label1.Text = DWSIM.App.GetLocalString("Erronasecao") & " " & column.Index + 1 & "."
                 RaiseEvent StatusChanged(e, PipeEditorStatus.Erro)
@@ -1249,6 +1268,7 @@ Imports System.Windows.Forms
 
     Private Sub ConvertProfileToGrid(ByVal Profile As PipeProfile)
 
+        Dim cv As New DWSIM.SistemasDeUnidades.Conversor
         Dim psec As New PipeSection
 
         'If Not Me.GridMalha.Columns Is Nothing Then Me.GridMalha.Columns.Clear()
@@ -1267,10 +1287,10 @@ Imports System.Windows.Forms
             Else
                 Me.GridMalha.Rows(4).Cells(psec.Indice - 1).Value = psec.Material
             End If
-            Me.GridMalha.Rows(5).Cells(psec.Indice - 1).Value = psec.Comprimento
-            Me.GridMalha.Rows(6).Cells(psec.Indice - 1).Value = psec.Elevacao
-            Me.GridMalha.Rows(7).Cells(psec.Indice - 1).Value = psec.DE
-            Me.GridMalha.Rows(8).Cells(psec.Indice - 1).Value = psec.DI
+            Me.GridMalha.Rows(5).Cells(psec.Indice - 1).Value = Format(cv.Convert("m", Me.SystemOfUnits.distance, psec.Comprimento), NumberFormat)
+            Me.GridMalha.Rows(6).Cells(psec.Indice - 1).Value = Format(cv.Convert("m", Me.SystemOfUnits.distance, psec.Elevacao), NumberFormat)
+            Me.GridMalha.Rows(7).Cells(psec.Indice - 1).Value = Format(cv.Convert("in", Me.SystemOfUnits.diameter, psec.DE), NumberFormat)
+            Me.GridMalha.Rows(8).Cells(psec.Indice - 1).Value = Format(cv.Convert("in", Me.SystemOfUnits.diameter, psec.DI), NumberFormat)
         Next
         psec = Nothing
 
@@ -1279,6 +1299,10 @@ Imports System.Windows.Forms
     Private Sub PipeEditor_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         If Not Me.Profile Is Nothing Then
+            GridMalha.Rows(5).HeaderCell.Value = DWSIM.App.GetLocalString("Comprimentom").Replace("(m)", "(" & SystemOfUnits.distance & ")")
+            GridMalha.Rows(6).HeaderCell.Value = DWSIM.App.GetLocalString("Elevaom").Replace("(m)", "(" & SystemOfUnits.distance & ")")
+            GridMalha.Rows(7).HeaderCell.Value = DWSIM.App.GetLocalString("Dexternoin").Replace("(in.)", "(" & SystemOfUnits.diameter & ")")
+            GridMalha.Rows(8).HeaderCell.Value = DWSIM.App.GetLocalString("Dinternoin").Replace("(in.)", "(" & SystemOfUnits.diameter & ")")
             If Me.Profile.Sections.Count > 0 Then
                 Me.ConvertProfileToGrid(Me.Profile)
                 Me.GridMalha.Columns.RemoveAt(Me.GridMalha.Columns.Count - 1)

@@ -584,7 +584,7 @@ Public Class FormMain
     Private Function GetComponents()
 
         'try to find chemsep xml database
-        If File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "default.ini") Or DWSIM.App.IsRunningOnMono Then
+        If File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "dwsim.ini") Or DWSIM.App.IsRunningOnMono Then
             'PORTABLE/MONO MODE
             My.Settings.ChemSepDatabasePath = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "chemsepdb" & Path.DirectorySeparatorChar & "chemsep1.xml"
         Else

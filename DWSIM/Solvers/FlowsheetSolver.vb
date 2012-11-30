@@ -329,7 +329,22 @@ Namespace DWSIM.Flowsheet
                     ElseIf form.Options.SempreCalcularFlashPH And H <> 0 Then
                         .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                     Else
-                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                        If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Then
+                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                        Else
+                            Select Case ms.SpecType
+                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
+                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                            End Select
+                        End If
                     End If
                     If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                         .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)

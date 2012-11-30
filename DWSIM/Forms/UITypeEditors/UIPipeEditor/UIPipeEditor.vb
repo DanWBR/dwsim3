@@ -48,6 +48,8 @@ Namespace DWSIM.Editors.PipeEditor
             If (editorService IsNot Nothing) Then
                 Dim selectionControl As New PipeEditorForm
 
+                selectionControl.PipeEditor1.SystemOfUnits = My.Application.ActiveSimulation.Options.SelectedUnitSystem
+                selectionControl.PipeEditor1.NumberFormat = My.Application.ActiveSimulation.Options.NumberFormat
                 selectionControl.PipeEditor1.Profile = value
 
                 editorService.ShowDialog(selectionControl)

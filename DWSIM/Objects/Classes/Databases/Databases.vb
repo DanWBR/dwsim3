@@ -122,7 +122,7 @@ Namespace DWSIM.Databases
             Dim unif As New Global.DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
             Dim modf As New Global.DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
 
-            For Each node As XmlNode In xmldoc.ChildNodes(0).ChildNodes
+            For Each node As XmlNode In xmldoc.ChildNodes(1).ChildNodes
                 cp = New ClassesBasicasTermodinamica.ConstantProperties
                 With cp
                     .CurrentDB = "ChemSep"

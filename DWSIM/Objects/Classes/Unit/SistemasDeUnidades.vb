@@ -1376,6 +1376,13 @@ Namespace DWSIM.SistemasDeUnidades
 
         End Function
 
+        Public Function Convert(fromunit As String, tounit As String, value As Double) As Double
+
+            Dim sival As Double = Me.ConverterParaSI(fromunit, value)
+            Return Double.Parse(Me.ConverterDoSI(tounit, sival))
+
+        End Function
+
         Public Sub New()
 
         End Sub
