@@ -500,6 +500,12 @@ Public Class FormMain
 
         End If
 
+        Dim LQPP As LIQUAC2PropertyPackage = New LIQUAC2PropertyPackage()
+        LQPP.ComponentName = "LIQUAC2 (Electrolyte)"
+        LQPP.ComponentDescription = DWSIM.App.GetLocalString("DescLQPP")
+
+        PropertyPackages.Add(LQPP.ComponentName.ToString, LQPP)
+
     End Sub
 
     Private Sub FormParent_MdiChildActivate(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.MdiChildActivate
@@ -603,14 +609,18 @@ Public Class FormMain
             'load chempsep database, if existent
             If File.Exists(My.Settings.ChemSepDatabasePath) Then Me.LoadCSDB(My.Settings.ChemSepDatabasePath)
         Catch ex As Exception
-            MessageBox.Show(ex.ToString, "Error loading ChemSep database")
+            ex.Data.Add("Reason", "Error loading ChemSep database")
+            Throw ex
         End Try
 
         'load DWSIM XML database
         Me.LoadDWSIMDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "dwsim.xml")
 
         'load Biodiesel XML database
-        'Me.LoadBDDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "biod_db.xml")
+        Me.LoadBDDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "biod_db.xml")
+
+        'load Electrolyte XML database
+        Me.LoadEDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "electrolyte.xml")
 
         Dim invaliddbs As New List(Of String)
 
@@ -669,14 +679,11 @@ Public Class FormMain
         If File.Exists(filename) Then
             Dim dwdb As New DWSIM.Databases.DWSIM
             Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-            'Try
             dwdb.Load(filename)
             cpa = dwdb.Transfer()
             For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
                 If Not Me.AvailableComponents.ContainsKey(cp.Name) Then Me.AvailableComponents.Add(cp.Name, cp)
             Next
-            'Catch ex As Exception
-            'End Try
         End If
     End Sub
 
@@ -684,14 +691,23 @@ Public Class FormMain
         If File.Exists(filename) Then
             Dim bddb As New DWSIM.Databases.Biodiesel
             Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-            'Try
             bddb.Load(filename)
             cpa = bddb.Transfer()
             For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
                 If Not Me.AvailableComponents.ContainsKey(cp.Name) Then Me.AvailableComponents.Add(cp.Name, cp)
             Next
-            'Catch ex As Exception
-            'End Try
+        End If
+    End Sub
+
+    Public Sub LoadEDB(ByVal filename As String)
+        If File.Exists(filename) Then
+            Dim edb As New DWSIM.Databases.Electrolyte
+            Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+            edb.Load(filename)
+            cpa = edb.Transfer()
+            For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
+                If Not Me.AvailableComponents.ContainsKey(cp.Name) Then Me.AvailableComponents.Add(cp.Name, cp)
+            Next
         End If
     End Sub
 
@@ -2022,6 +2038,8 @@ Public Class FormMain
                 obj.UniqueID = uniqueID
                 form.Options.PropertyPackages.Add(uniqueID, obj)
             Next
+
+            My.Application.ActiveSimulation = form
 
             fls.Label2.Text = "Loading Flowsheet Unit Operations and Streams..."
             Application.DoEvents()

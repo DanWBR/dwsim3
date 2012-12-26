@@ -52,8 +52,8 @@ Public NotInheritable Class SplashScreen
 
     Protected Overrides Sub OnPaintBackground(ByVal pevent As System.Windows.Forms.PaintEventArgs)
         Dim gfx As Graphics = pevent.Graphics
-        Dim mypng As System.Drawing.Bitmap = My.Resources.dwsim31
-        mypng.MakeTransparent()
+        Dim mypng As System.Drawing.Bitmap = My.Resources.DWSIM_branco
+        'mypng.MakeTransparent()
         gfx.DrawImage(mypng, New Rectangle(0, 0, Me.Width, Me.Height))
     End Sub
 

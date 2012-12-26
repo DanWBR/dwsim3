@@ -116,6 +116,10 @@ Imports DWSIM.DWSIM.GraphicObjects
 
     Private Sub FormChild2_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
 
+        If My.Application.ActiveSimulation Is Me Then
+            My.Application.ActiveSimulation = Nothing
+        End If
+
         'dispose objects
         For Each obj As SimulationObjects_BaseClass In Me.Collections.ObjectCollection.Values
             If obj.disposedValue = False Then obj.Dispose()

@@ -330,6 +330,12 @@
     <Compile Include="Forms\PropPack_ConfigForms\FormConfigFPROPS.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\PropPack_ConfigForms\FormConfigLIQUAC.Designer.vb">
+      <DependentUpon>FormConfigLIQUAC.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PropPack_ConfigForms\FormConfigLIQUAC.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\PropPack_ConfigForms\FormConfigPRSV2.Designer.vb">
       <DependentUpon>FormConfigPRSV2.vb</DependentUpon>
     </Compile>
@@ -624,6 +630,8 @@
     </Compile>
     <Compile Include="Objects\PropertyPackages\LeeKeslerPlocker\Helper Classes\LKP.vb" />
     <Compile Include="Objects\PropertyPackages\LeeKeslerPlocker\LKPPropertyPackage.vb" />
+    <Compile Include="Objects\PropertyPackages\LIQUAC2\LIQUAC2PropertyPackage.vb" />
+    <Compile Include="Objects\PropertyPackages\LIQUAC2\Model\LIQUAC2.vb" />
     <Compile Include="Objects\PropertyPackages\PengRobinson\Helper Classes\PR.vb" />
     <Compile Include="Objects\PropertyPackages\PRSV2\PRSV2-VL.vb" />
     <Compile Include="Objects\PropertyPackages\PRSV2\PRSV2.vb" />
@@ -1107,6 +1115,9 @@
     <EmbeddedResource Include="Forms\FormCompoundCreator.de.resx">
       <DependentUpon>FormCompoundCreator.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormDataRegression.de.resx">
+      <DependentUpon>FormDataRegression.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormMain.vb</DependentUpon>
@@ -1122,6 +1133,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormScriptMono.resx">
       <DependentUpon>FormScriptMono.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigLIQUAC.de.resx">
+      <DependentUpon>FormConfigLIQUAC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigLIQUAC.en.resx">
+      <DependentUpon>FormConfigLIQUAC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigLIQUAC.es.resx">
+      <DependentUpon>FormConfigLIQUAC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigLIQUAC.resx">
+      <DependentUpon>FormConfigLIQUAC.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIGibbsInitialEstimates\GibbsInitialEstimatesEditorForm.en.resx">
       <DependentUpon>GibbsInitialEstimatesEditorForm.vb</DependentUpon>
@@ -1876,6 +1899,7 @@
     <None Include="Resources\dwsim_tela2%282%29.png" />
     <None Include="Resources\dwsim31.png" />
     <None Include="Resources\dwsim3bg.jpg" />
+    <None Include="Resources\DWSIM-branco.png" />
     <Content Include="Resources\es.png" />
     <Content Include="Resources\fr.png" />
     <None Include="Resources\green_down.png" />
@@ -2808,6 +2832,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\UITypeEditors\DistillationColumn\UISpecificationsEditor\" />
+    <Folder Include="Objects\PropertyPackages\ExtendedUNIQUAC\Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

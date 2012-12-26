@@ -532,7 +532,7 @@ Partial Class FormMain
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
         Me.ToolStripStatusLabel1.Spring = True
         Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripStatusLabel1, resources.GetString("ToolStripStatusLabel1.StatusBarText"))
-        Me.ToolStripStatusLabel1.Text = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.ToolStripStatusLabel1.Text = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'tslupd
         '
@@ -542,7 +542,7 @@ Partial Class FormMain
         Me.tslupd.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.tslupd.Name = "tslupd"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.tslupd, resources.GetString("tslupd.StatusBarText"))
-        Me.tslupd.Text = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.tslupd.Text = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'TimerBackup
         '

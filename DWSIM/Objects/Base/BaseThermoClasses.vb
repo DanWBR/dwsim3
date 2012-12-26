@@ -295,7 +295,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
                 .Add(New XElement("SPMProperties"))
                 elements(elements.Count - 1).Add(XMLSerializer.XMLSerializer.Serialize(Me.SPMProperties))
-                
+
                 .Add(New XElement("TPMProperties"))
                 elements(elements.Count - 1).Add(XMLSerializer.XMLSerializer.Serialize(Me.TPMProperties))
 
@@ -2095,6 +2095,24 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         'COSMO-SAC's database equivalent name
         Public COSMODBName = ""
+
+        'Electrolyte-related properties
+        Public IsIon As Boolean = False
+        Public IsSalt As Boolean = False
+        Public IsHydratedSalt As Boolean = False
+        Public Charge As Integer = 0
+        Public PositiveIon As String = ""
+        Public NegativeIon As String = ""
+        Public PositiveIonStoichCoeff As Integer = 0
+        Public NegativeIonStoichCoeff As Integer = 0
+        Public StoichSum As Integer = 0
+        Public Electrolyte_DelGF As Double = 0.0#
+        Public Electrolyte_DelHF As Double = 0.0#
+        Public Electrolyte_Cp0 As Double = 0.0#
+        Public TemperatureOfFusion As Double = 0.0#
+        Public EnthalpyOfFusionAtTf As Double = 0.0#
+        Public SolidTs As Double = 0.0#
+        Public SolidDensityAtTs As Double = 0.0#
 
         'the following properties are no longer used but kept for compatibility reasons
         Public UNIFAC_Ri As Double

@@ -1,0 +1,281 @@
+'    Copyright 2008 Daniel Wagner O. de Medeiros
+'
+'    This file is part of DWSIM.
+'
+'    DWSIM is free software: you can redistribute it and/or modify
+'    it under the terms of the GNU General Public License as published by
+'    the Free Software Foundation, either version 3 of the License, or
+'    (at your option) any later version.
+'
+'    DWSIM is distributed in the hope that it will be useful,
+'    but WITHOUT ANY WARRANTY; without even the implied warranty of
+'    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'    GNU General Public License for more details.
+'
+'    You should have received a copy of the GNU General Public License
+'    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
+
+
+Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
+Imports System.IO
+
+Public Class FormConfigLIQUAC
+
+    Inherits FormConfigBase
+
+    Public Loaded = False
+    Public param As System.Collections.Specialized.StringDictionary
+
+    Private Sub ConfigFormLIQUAC_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        Loaded = False
+
+        Me.Text = DWSIM.App.GetLocalString("ConfigurarPacotedePropriedades") & _pp.Tag & ")"
+
+        With Me.KryptonDataGridView1.Rows
+            .Clear()
+            For Each kvp As KeyValuePair(Of String, Double) In _pp.Parameters
+                .Add(New Object() {kvp.Key, DWSIM.App.GetLocalString(kvp.Key), kvp.Value})
+            Next
+        End With
+
+        Dim ppu As DWSIM.SimulationObjects.PropertyPackages.LIQUAC2PropertyPackage = _pp
+
+        Dim nf As String = "0.####"
+
+        dgvu1.Rows.Clear()
+
+        Dim id1, id2 As String
+
+        For Each cp As ConstantProperties In _comps.Values
+            If Not cp.IsIon Then
+                id1 = cp.Name
+            Else
+                id1 = cp.Formula
+            End If
+gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
+                For Each cp2 As ConstantProperties In _comps.Values
+                    If Not cp2.IsIon Then
+                        id2 = cp2.Name
+                    Else
+                        id2 = cp2.Formula
+                    End If
+                    If id1 <> id2 Then
+                        If Not ppu.m_uni.InteractionParameters(id1).ContainsKey(id2) Then
+                            'check if collection has id2 as primary id
+                            If ppu.m_uni.InteractionParameters.ContainsKey(id2) Then
+                                If Not ppu.m_uni.InteractionParameters(id2).ContainsKey(id1) Then
+                                    ppu.m_uni.InteractionParameters(id1).Add(id2, New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LIQUAC2_IPData)
+                                    Dim a12 As Double = ppu.m_uni.InteractionParameters(id1)(id2).A12
+                                    Dim a21 As Double = ppu.m_uni.InteractionParameters(id1)(id2).A21
+                                    Dim b12 As Double = ppu.m_uni.InteractionParameters(id1)(id2).B12
+                                    Dim c12 As Double = ppu.m_uni.InteractionParameters(id1)(id2).C12
+                                    dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(id1), DWSIM.App.GetComponentName(id2), Format(a12, nf), Format(a21, nf), Format(b12, nf), Format(c12, nf)})
+                                    With dgvu1.Rows(dgvu1.Rows.Count - 1)
+                                        .Cells(0).Tag = id1
+                                        .Cells(1).Tag = id2
+                                    End With
+                                End If
+                            End If
+                        Else
+                            Dim a12 As Double = ppu.m_uni.InteractionParameters(id1)(id2).A12
+                            Dim a21 As Double = ppu.m_uni.InteractionParameters(id1)(id2).A21
+                            Dim b12 As Double = ppu.m_uni.InteractionParameters(id1)(id2).B12
+                            Dim c12 As Double = ppu.m_uni.InteractionParameters(id1)(id2).C12
+                            dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(id1), DWSIM.App.GetComponentName(id2), Format(a12, nf), Format(a21, nf), Format(b12, nf), Format(c12, nf)})
+                            With dgvu1.Rows(dgvu1.Rows.Count - 1)
+                                .Cells(0).Tag = id1
+                                .Cells(1).Tag = id2
+                            End With
+                        End If
+                    End If
+                Next
+            Else
+                ppu.m_uni.InteractionParameters.Add(id1, New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LIQUAC2_IPData))
+                GoTo gt1
+            End If
+        Next
+
+        Loaded = True
+
+    End Sub
+
+    Private Sub KryptonDataGridView1_CellEndEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles KryptonDataGridView1.CellEndEdit
+
+        _pp.Parameters(Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value) = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(2).Value
+
+    End Sub
+
+    Private Sub KryptonDataGridView1_CellValidating(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellValidatingEventArgs) Handles KryptonDataGridView1.CellValidating
+
+        If Me.Loaded Then
+            If e.ColumnIndex = 1 Then
+                If Double.TryParse(e.FormattedValue, New Integer) = False Then
+                    Me.KryptonDataGridView1.Rows(e.RowIndex).ErrorText = _
+                        DWSIM.App.GetLocalString("Ovalorinseridoinvlid")
+                    e.Cancel = True
+                ElseIf CDbl(e.FormattedValue) < 0 Then
+                    Me.KryptonDataGridView1.Rows(e.RowIndex).ErrorText = _
+                        DWSIM.App.GetLocalString("Ovalorinseridoinvlid")
+                    e.Cancel = True
+                End If
+            End If
+        End If
+
+    End Sub
+
+    Private Sub FormConfigPR_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
+        Loaded = True
+    End Sub
+
+    Public Sub RefreshIPTable()
+
+    End Sub
+
+    Private Sub dgvu1_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvu1.CellValueChanged
+        If Loaded Then
+            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage = _pp
+            Dim value As Object = dgvu1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+            Dim id1 As String = dgvu1.Rows(e.RowIndex).Cells(0).Tag.ToString
+            Dim id2 As String = dgvu1.Rows(e.RowIndex).Cells(1).Tag.ToString
+            Select Case e.ColumnIndex
+                Case 2
+                    ppu.m_uni.InteractionParameters(id1)(id2).A12 = value
+                Case 3
+                    ppu.m_uni.InteractionParameters(id1)(id2).A21 = value
+            End Select
+        End If
+    End Sub
+
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click, Button2.Click, Button5.Click
+
+        Dim row As Integer = dgvu1.SelectedCells(0).RowIndex
+        Dim count As Integer = 0
+        Dim delta1 As Double = 10
+        Dim delta2 As Double = 10
+
+        Dim ms As New DWSIM.SimulationObjects.Streams.MaterialStream("", "")
+
+        Dim ppn As New DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
+        Dim uniquac As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
+
+        Dim ppu, unifac As Object
+
+        If sender.Name = "Button1" Then
+            ppu = New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
+            unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
+        ElseIf sender.Name = "Button5" Then
+            ppu = New DWSIM.SimulationObjects.PropertyPackages.UNIFACLLPropertyPackage
+            unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
+        Else
+            ppu = New DWSIM.SimulationObjects.PropertyPackages.MODFACPropertyPackage
+            unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
+        End If
+
+        Dim id1 As String = dgvu1.Rows(row).Cells(0).Tag.ToString
+        Dim id2 As String = dgvu1.Rows(row).Cells(1).Tag.ToString
+
+        Dim comp1, comp2 As ConstantProperties
+        comp1 = _comps(id1)
+        comp2 = _comps(id2)
+
+        With ms
+            For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                With phase
+                    .Componentes.Add(comp1.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp1.Name, ""))
+                    .Componentes(comp1.Name).ConstantProperties = comp1
+                    .Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
+                    .Componentes(comp2.Name).ConstantProperties = comp2
+                End With
+            Next
+        End With
+
+        ppn.CurrentMaterialStream = ms
+        ppu.CurrentMaterialStream = ms
+
+        Dim T1 = 298.15
+
+        Dim actu(1), actn(1), actnd(1), fx(1), fxd(1), dfdx(1, 1), x(1), x0(1), dx(1) As Double
+
+        actu(0) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
+        actu(1) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
+
+        x(0) = dgvu1.Rows(row).Cells(2).Value
+        x(1) = dgvu1.Rows(row).Cells(3).Value
+
+        If x(0) = 0 Then x(0) = -100
+        If x(1) = 0 Then x(1) = 100
+
+        Do
+
+            uniquac.InteractionParameters.Clear()
+            uniquac.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData))
+            uniquac.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData())
+            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
+            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
+
+            actnd(0) = uniquac.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
+            actnd(1) = uniquac.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
+
+            fx(0) = Math.Log(actu(0) / actnd(0))
+            fx(1) = Math.Log(actu(1) / actnd(1))
+
+            uniquac.InteractionParameters.Clear()
+            uniquac.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData))
+            uniquac.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData())
+            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0) + delta1
+            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
+
+            actnd(0) = uniquac.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
+            actnd(1) = uniquac.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
+
+            fxd(0) = Math.Log(actu(0) / actnd(0))
+            fxd(1) = Math.Log(actu(1) / actnd(1))
+
+            dfdx(0, 0) = -(fxd(0) - fx(0)) / delta1
+            dfdx(1, 0) = -(fxd(1) - fx(1)) / delta1
+
+            uniquac.InteractionParameters.Clear()
+            uniquac.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData))
+            uniquac.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData())
+            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
+            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1) + delta2
+
+            actnd(0) = uniquac.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
+            actnd(1) = uniquac.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
+
+            fxd(0) = Math.Log(actu(0) / actnd(0))
+            fxd(1) = Math.Log(actu(1) / actnd(1))
+
+            dfdx(0, 1) = -(fxd(0) - fx(0)) / delta2
+            dfdx(1, 1) = -(fxd(1) - fx(1)) / delta2
+
+            'solve linear system
+            DWSIM.MathEx.SysLin.rsolve.rmatrixsolve(dfdx, fx, UBound(fx) + 1, dx)
+
+            x0(0) = x(0)
+            x0(1) = x(1)
+
+            x(0) += dx(0)
+            x(1) += dx(1)
+
+            count += 1
+
+        Loop Until Math.Abs(fx(0) + fx(1)) < 0.03 Or count > 50
+
+        If count < 50 Then
+            dgvu1.Rows(row).Cells(2).Value = x0(0)
+            dgvu1.Rows(row).Cells(3).Value = x0(1)
+        Else
+            dgvu1.Rows(row).Cells(2).Value = 0
+            dgvu1.Rows(row).Cells(3).Value = 0
+        End If
+
+
+    End Sub
+
+    Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
+        Process.Start(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "data" & Path.DirectorySeparatorChar & "uniquacip.dat")
+    End Sub
+
+End Class

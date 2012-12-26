@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="_12Propanodiol" xml:space="preserve">
     <value>1.2-Propanediol (C3H8O2)</value>
@@ -1628,10 +1628,10 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>There is a vapor phase in the input stream of the heat exchanger.</value>
   </data>
   <data name="Existeumerronaconfig" xml:space="preserve">
-    <value>There is a error in the configuration of the Specification. Check the source and target objects.</value>
+    <value>There is an error with the spec settings. Check source and target objects.</value>
   </data>
   <data name="Existeumerronaconfig2" xml:space="preserve">
-    <value>There is a error in the configuration of Adjustment. Check the source and target objects.</value>
+    <value>There is an error with the adjust settings. Check source and target objects.</value>
   </data>
   <data name="Expansor" xml:space="preserve">
     <value>Expander</value>

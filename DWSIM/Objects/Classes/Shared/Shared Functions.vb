@@ -139,9 +139,8 @@ Namespace DWSIM
         Shared Sub LoadSettings()
 
             Dim configfile As String = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "dwsim.ini"
-
             If Not File.Exists(configfile) Then File.Copy(My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "default.ini", configfile)
-
+            
             Dim source As New IniConfigSource(configfile)
             Dim col() As String
 

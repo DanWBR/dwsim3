@@ -45,6 +45,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Return newclass
         End Function
 
+        Public Function CloneToLIQUAC() As LIQUAC2_IPData
+
+            Dim newclass As New LIQUAC2_IPData
+            With newclass
+                .ID1 = Me.ID1
+                .ID2 = Me.ID2
+                .Group1 = .ID1
+                .Group2 = .ID2
+                .A12 = Me.A12
+                .A21 = Me.A21
+            End With
+            Return newclass
+        End Function
+
     End Class
 
     <System.Serializable()> Public Class UNIQUAC

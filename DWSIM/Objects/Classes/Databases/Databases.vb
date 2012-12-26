@@ -122,7 +122,7 @@ Namespace DWSIM.Databases
             Dim unif As New Global.DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
             Dim modf As New Global.DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
 
-            For Each node As XmlNode In xmldoc.ChildNodes(1).ChildNodes
+            For Each node As XmlNode In xmldoc.ChildNodes(0).ChildNodes
                 cp = New ClassesBasicasTermodinamica.ConstantProperties
                 With cp
                     .CurrentDB = "ChemSep"
@@ -917,6 +917,99 @@ Namespace DWSIM.Databases
 
             reader.Close()
             reader = Nothing
+
+            Return cpa.ToArray(Type.GetType("DWSIM.DWSIM.ClassesBasicasTermodinamica.ConstantProperties"))
+
+        End Function
+
+    End Class
+
+    Public Class Electrolyte
+
+        Private xmldoc As XmlDocument
+
+        Sub New()
+
+        End Sub
+
+        Public Sub Load(ByVal filename As String)
+            Dim pathsep As Char = Path.DirectorySeparatorChar
+
+            Dim settings As New XmlReaderSettings()
+            settings.ConformanceLevel = ConformanceLevel.Fragment
+            settings.IgnoreWhitespace = True
+            settings.IgnoreComments = True
+            settings.CheckCharacters = False
+            Dim reader As XmlReader = XmlReader.Create(filename)
+            reader.Read()
+
+            xmldoc = New XmlDocument
+            xmldoc.Load(reader)
+
+        End Sub
+
+        Public Function Transfer() As ClassesBasicasTermodinamica.ConstantProperties()
+
+            Dim cp As ClassesBasicasTermodinamica.ConstantProperties
+            Dim cpa As New ArrayList()
+            Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
+            Dim nf As Globalization.NumberFormatInfo = cult.NumberFormat
+            Dim i As Integer = 200000
+            For Each node As XmlNode In xmldoc.ChildNodes(1)
+                cp = New ClassesBasicasTermodinamica.ConstantProperties
+                With cp
+                    .OriginalDB = "Electrolytes"
+                    For Each node2 As XmlNode In node.ChildNodes
+                        Select Case node2.Name
+                            Case "Name"
+                                .Name = node2.InnerText
+                            Case "Formula"
+                                .Formula = node2.InnerText
+                            Case "MW"
+                                .Molar_Weight = Double.Parse(node2.InnerText, nf)
+                            Case "Ion"
+                                .IsIon = node2.InnerText
+                            Case "Salt"
+                                .IsSalt = node2.InnerText
+                            Case "HydratedSalt"
+                                .IsHydratedSalt = node2.InnerText
+                            Case "Charge"
+                                .Charge = node2.InnerText
+                            Case "PositiveIon"
+                                .PositiveIon = node2.InnerText
+                            Case "NegativeIon"
+                                .NegativeIon = node2.InnerText
+                            Case "PositiveIonStoichCoeff"
+                                .PositiveIonStoichCoeff = node2.InnerText
+                            Case "NegativeIonStoichCoeff"
+                                .NegativeIonStoichCoeff = node2.InnerText
+                            Case "StoichSum"
+                                .StoichSum = node2.InnerText
+                            Case "DelGF_kJ_mol"
+                                .Electrolyte_DelGF = Double.Parse(node2.InnerText, nf) 'kJ/mol
+                            Case "DelHf_kJ_mol"
+                                .Electrolyte_DelHF = Double.Parse(node2.InnerText, nf) 'kJ/mol
+                            Case "Cp_J_mol_K"
+                                .Electrolyte_Cp0 = Double.Parse(node2.InnerText, nf) / 1000 'kJ/mol.K
+                            Case "Tf_C"
+                                .TemperatureOfFusion = Double.Parse(node2.InnerText, nf) + 273.15 'K
+                            Case "Hfus_at_Tf_kJ_mol"
+                                .EnthalpyOfFusionAtTf = Double.Parse(node2.InnerText, nf) 'kJ/mol
+                            Case "DenS_T_C"
+                                .SolidTs = Double.Parse(node2.InnerText, nf) + 273.15 'K
+                            Case "DenS_g_mL"
+                                .SolidDensityAtTs = Double.Parse(node2.InnerText, nf) * 1000 'kg/m3
+                        End Select
+                    Next
+                    .ID = i
+                    .IsHYPO = False
+                    .IsPF = False
+                    .VaporPressureEquation = 101
+                    .IdealgasCpEquation = 5
+                End With
+                cpa.Add(cp)
+                i += 1
+            Next
 
             Return cpa.ToArray(Type.GetType("DWSIM.DWSIM.ClassesBasicasTermodinamica.ConstantProperties"))
 

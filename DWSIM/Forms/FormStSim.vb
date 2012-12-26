@@ -85,9 +85,11 @@ Public Class FormStSim
                 Dim idx As Integer = Me.AddCompToGrid(comp)
                 If Not idx = -1 Then
                     For Each c As DataGridViewCell In Me.ogc1.Rows(idx).Cells
-                        If comp.Acentric_Factor = 0.0# Or comp.Critical_Compressibility = 0.0# Then
-                            c.Style.ForeColor = Color.Red
-                            c.ToolTipText = DWSIM.App.GetLocalString("CompMissingData")
+                        If comp.OriginalDB <> "Electrolytes" Then
+                            If comp.Acentric_Factor = 0.0# Or comp.Critical_Compressibility = 0.0# Then
+                                c.Style.ForeColor = Color.Red
+                                c.ToolTipText = DWSIM.App.GetLocalString("CompMissingData")
+                            End If
                         End If
                     Next
                 End If

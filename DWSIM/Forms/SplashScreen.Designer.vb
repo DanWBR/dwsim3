@@ -34,8 +34,8 @@ Partial Class SplashScreen
         Me.Version.AutoSize = True
         Me.Version.BackColor = System.Drawing.Color.Transparent
         Me.Version.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Version.ForeColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(216, Byte), Integer), CType(CType(234, Byte), Integer))
-        Me.Version.Location = New System.Drawing.Point(230, 299)
+        Me.Version.ForeColor = System.Drawing.Color.FromArgb(CType(CType(8, Byte), Integer), CType(CType(116, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Version.Location = New System.Drawing.Point(144, 12)
         Me.Version.Name = "Version"
         Me.Version.Size = New System.Drawing.Size(104, 15)
         Me.Version.TabIndex = 3
@@ -48,7 +48,7 @@ Partial Class SplashScreen
         Me.Copyright.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Copyright.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Copyright.ForeColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(216, Byte), Integer), CType(CType(234, Byte), Integer))
-        Me.Copyright.Location = New System.Drawing.Point(46, 345)
+        Me.Copyright.Location = New System.Drawing.Point(68, 381)
         Me.Copyright.Name = "Copyright"
         Me.Copyright.Size = New System.Drawing.Size(547, 82)
         Me.Copyright.TabIndex = 4
@@ -61,8 +61,8 @@ Partial Class SplashScreen
         Me.Data.AutoSize = True
         Me.Data.BackColor = System.Drawing.Color.Transparent
         Me.Data.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Data.ForeColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(216, Byte), Integer), CType(CType(234, Byte), Integer))
-        Me.Data.Location = New System.Drawing.Point(230, 318)
+        Me.Data.ForeColor = System.Drawing.Color.FromArgb(CType(CType(8, Byte), Integer), CType(CType(116, Byte), Integer), CType(CType(155, Byte), Integer))
+        Me.Data.Location = New System.Drawing.Point(144, 33)
         Me.Data.Name = "Data"
         Me.Data.Size = New System.Drawing.Size(104, 15)
         Me.Data.TabIndex = 5
@@ -75,7 +75,7 @@ Partial Class SplashScreen
         Me.LabelLicense.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.LabelLicense.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelLicense.ForeColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(216, Byte), Integer), CType(CType(234, Byte), Integer))
-        Me.LabelLicense.Location = New System.Drawing.Point(21, 441)
+        Me.LabelLicense.Location = New System.Drawing.Point(43, 480)
         Me.LabelLicense.Name = "LabelLicense"
         Me.LabelLicense.Size = New System.Drawing.Size(595, 20)
         Me.LabelLicense.TabIndex = 6
@@ -88,8 +88,8 @@ Partial Class SplashScreen
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.ClientSize = New System.Drawing.Size(640, 480)
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.ClientSize = New System.Drawing.Size(685, 532)
         Me.ControlBox = False
         Me.Controls.Add(Me.LabelLicense)
         Me.Controls.Add(Me.Data)
