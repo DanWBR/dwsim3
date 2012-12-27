@@ -759,7 +759,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 constprops.Add(s.ConstantProperties)
             Next
 
-
             If st = State.Liquid Then
                 ativ = Me.m_uni.GAMMA_MR(T, Vx, constprops)
                 For i = 0 To n
@@ -769,8 +768,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         lnfug(i) = Math.Log(ativ(i) * Me.AUX_PVAPi(i, T) / (P))
                     End If
                 Next
-            Else
-                lnfug = prn.CalcLnFug(T, P, Vx, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, Nothing, "V")
+            ElseIf st = State.Vapor Then
+                For i = 0 To n
+                    lnfug(i) = 0.0#
+                Next
+            ElseIf st = State.Solid Then
+                For i = 0 To n
+                    If constprops(i).TemperatureOfFusion <> 0 Then
+                        lnfug(i) = Log(Me.AUX_PVAPi(i, T) * Exp(-constprops(i).EnthalpyOfFusionAtTf / (8.314 * T) * (1 - T / constprops(i).TemperatureOfFusion)))
+                    Else
+                        lnfug(i) = 0.0#
+                    End If
+                Next
             End If
 
             For i = 0 To n
@@ -778,6 +787,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Next
 
             Return fugcoeff
+
         End Function
 
     End Class

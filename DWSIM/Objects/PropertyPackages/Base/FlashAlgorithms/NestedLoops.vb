@@ -146,7 +146,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Do
                 If Vz(i) <> 0 Then
                     Vy(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * V + 1)
-                    Vx(i) = Vy(i) / Ki(i)
+                    If Ki(i) <> 0 Then Vx(i) = Vy(i) / Ki(i) Else Vx(i) = Vz(i)
                     If Vy(i) < 0 Then Vy(i) = 0
                     If Vx(i) < 0 Then Vx(i) = 0
                 Else
@@ -223,7 +223,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 If Double.IsNaN(Math.Abs(e1) + Math.Abs(e2)) Then
 
-                    Throw New Exception(DWSIM.App.GetLocalString("pp_FlashError"))
+                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
                 ElseIf Math.Abs(e3) < 0.0000000001 Then
 
