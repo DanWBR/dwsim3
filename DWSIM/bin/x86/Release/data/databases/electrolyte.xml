@@ -9,6 +9,7 @@
   <HydratedSalt>False</HydratedSalt>
   <PositiveIon>NH4+</PositiveIon>
   <NegativeIon>S2O82-</NegativeIon>
+  <HydrationNumber>0</HydrationNumber>
   <PositiveIonStoichCoeff>2</PositiveIonStoichCoeff>
   <NegativeIonStoichCoeff>1</NegativeIonStoichCoeff>
   <StoichSum>3</StoichSum>
@@ -385,6 +386,7 @@
   <Ion>False</Ion>
   <Salt>True</Salt>
   <HydratedSalt>True</HydratedSalt>
+  <HydrationNumber>1.5</HydrationNumber>
   <PositiveIon>K+</PositiveIon>
   <NegativeIon>CO32-</NegativeIon>
   <PositiveIonStoichCoeff>2</PositiveIonStoichCoeff>
@@ -406,6 +408,7 @@
   <Ion>False</Ion>
   <Salt>True</Salt>
   <HydratedSalt>True</HydratedSalt>
+  <HydrationNumber>1.5</HydrationNumber>
   <PositiveIon>K+</PositiveIon>
   <NegativeIon>CO32-</NegativeIon>
   <PositiveIonStoichCoeff>2</PositiveIonStoichCoeff>
@@ -448,6 +451,7 @@
   <Ion>False</Ion>
   <Salt>True</Salt>
   <HydratedSalt>True</HydratedSalt>
+  <HydrationNumber>2</HydrationNumber>
   <PositiveIon>K+</PositiveIon>
   <NegativeIon>CO32-</NegativeIon>
   <PositiveIonStoichCoeff>2</PositiveIonStoichCoeff>
@@ -973,6 +977,7 @@
   <Ion>False</Ion>
   <Salt>True</Salt>
   <HydratedSalt>True</HydratedSalt>
+  <HydrationNumber>2</HydrationNumber>
   <PositiveIon>Na+</PositiveIon>
   <NegativeIon>CO32-</NegativeIon>
   <PositiveIonStoichCoeff>2</PositiveIonStoichCoeff>
@@ -1036,6 +1041,7 @@
   <Ion>False</Ion>
   <Salt>True</Salt>
   <HydratedSalt>True</HydratedSalt>
+  <HydrationNumber>10</HydrationNumber>
   <PositiveIon>Na+</PositiveIon>
   <NegativeIon>SO42-</NegativeIon>
   <PositiveIonStoichCoeff>2</PositiveIonStoichCoeff>
@@ -1057,6 +1063,7 @@
   <Ion>False</Ion>
   <Salt>True</Salt>
   <HydratedSalt>True</HydratedSalt>
+  <HydrationNumber>4</HydrationNumber>
   <PositiveIon>Na+</PositiveIon>
   <NegativeIon>SO42-</NegativeIon>
   <PositiveIonStoichCoeff>2</PositiveIonStoichCoeff>
@@ -1099,6 +1106,7 @@
   <Ion>False</Ion>
   <Salt>True</Salt>
   <HydratedSalt>True</HydratedSalt>
+  <HydrationNumber>2</HydrationNumber>
   <PositiveIon>Na+</PositiveIon>
   <NegativeIon>Br-</NegativeIon>
   <PositiveIonStoichCoeff>1</PositiveIonStoichCoeff>
@@ -1141,6 +1149,7 @@
   <Ion>False</Ion>
   <Salt>True</Salt>
   <HydratedSalt>True</HydratedSalt>
+  <HydrationNumber>2</HydrationNumber>
   <PositiveIon>Na+</PositiveIon>
   <NegativeIon>Cl-</NegativeIon>
   <PositiveIonStoichCoeff>1</PositiveIonStoichCoeff>
@@ -1225,6 +1234,7 @@
   <Ion>False</Ion>
   <Salt>True</Salt>
   <HydratedSalt>True</HydratedSalt>
+  <HydrationNumber>6</HydrationNumber>
   <PositiveIon>NaK2+</PositiveIon>
   <NegativeIon>CO32-</NegativeIon>
   <PositiveIonStoichCoeff>2</PositiveIonStoichCoeff>
@@ -1267,6 +1277,7 @@
   <Ion>False</Ion>
   <Salt>True</Salt>
   <HydratedSalt>True</HydratedSalt>
+  <HydrationNumber>1</HydrationNumber>
   <PositiveIon>Na+</PositiveIon>
   <NegativeIon>NO3-</NegativeIon>
   <PositiveIonStoichCoeff>1</PositiveIonStoichCoeff>
@@ -1419,7 +1430,7 @@
   <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
   <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
   <StoichSum>0</StoichSum>
-  <Charge>-3</Charge>
+  <Charge>-1</Charge>
   <DelGF_kJ_mol>-111.3</DelGF_kJ_mol>
   <DelHf_kJ_mol>-207.4</DelHf_kJ_mol>
   <Cp_J_mol_K>-86.6</Cp_J_mol_K>

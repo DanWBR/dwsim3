@@ -5545,7 +5545,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_DELGF_T(ByVal T1 As Double, ByVal T2 As Double, ByVal id As String) As Double
+        Public Function AUX_DELGF_T(ByVal T1 As Double, ByVal T2 As Double, ByVal id As String, Optional ByVal mode2 As Boolean = False) As Double
 
             Dim dA As Double = 0
             Dim dB As Double = 0
@@ -5571,13 +5571,13 @@ Final3:
 
             Dim result As Double = (dGr - dHr) / (R * T1) + dHr / (R * T2) + int1 / (R * T2) - int2 / R
 
-            'result = dGr / (R * T1) + dHr / R * (1 / T2 - 1 / T1)
+            If mode2 Then result = dGr / (R * T1) + dHr / R * (1 / T2 - 1 / T1)
 
             Return result
 
         End Function
 
-        Public Function AUX_DELGig_RT(ByVal T1 As Double, ByVal T2 As Double, ByVal ID() As String, ByVal stcoeff() As Double, ByVal baseID As Integer) As Double
+        Public Function AUX_DELGig_RT(ByVal T1 As Double, ByVal T2 As Double, ByVal ID() As String, ByVal stcoeff() As Double, ByVal baseID As Integer, Optional ByVal mode2 As Boolean = False) As Double
 
             Dim n As Integer = ID.Length
 
@@ -5600,7 +5600,7 @@ Final3:
                     int2(i) = stcoeff(i) * Me.AUX_INT_CPDT_Ti(T1, T2, ID(i)) / stcoeff(baseID) * .Fases(0).Componentes(ID(i)).ConstantProperties.Molar_Weight
                     sint1 += int1(i)
                     sint2 += int2(i)
-                    dgfT(i) = stcoeff(i) * Me.AUX_DELGF_T(T1, T2, ID(i)) * .Fases(0).Componentes(ID(i)).ConstantProperties.Molar_Weight
+                    dgfT(i) = stcoeff(i) * Me.AUX_DELGF_T(T1, T2, ID(i), mode2) * .Fases(0).Componentes(ID(i)).ConstantProperties.Molar_Weight
                     sumdgft += dgfT(i) '/ stcoeff(baseID)
                     i = i + 1
                 Loop Until i = n

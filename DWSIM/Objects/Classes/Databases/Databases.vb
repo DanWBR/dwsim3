@@ -973,6 +973,8 @@ Namespace DWSIM.Databases
                                 .IsSalt = node2.InnerText
                             Case "HydratedSalt"
                                 .IsHydratedSalt = node2.InnerText
+                            Case "HydrationNumber"
+                                .HydrationNumber = node2.InnerText
                             Case "Charge"
                                 .Charge = node2.InnerText
                             Case "PositiveIon"
@@ -987,8 +989,10 @@ Namespace DWSIM.Databases
                                 .StoichSum = node2.InnerText
                             Case "DelGF_kJ_mol"
                                 .Electrolyte_DelGF = Double.Parse(node2.InnerText, nf) 'kJ/mol
+                                .IG_Gibbs_Energy_of_Formation_25C = Double.Parse(node2.InnerText, nf) * 1000 / .Molar_Weight 'kJ/kg
                             Case "DelHf_kJ_mol"
                                 .Electrolyte_DelHF = Double.Parse(node2.InnerText, nf) 'kJ/mol
+                                .IG_Enthalpy_of_Formation_25C = Double.Parse(node2.InnerText, nf) * 1000 / .Molar_Weight 'kJ/kg
                             Case "Cp_J_mol_K"
                                 .Electrolyte_Cp0 = Double.Parse(node2.InnerText, nf) / 1000 'kJ/mol.K
                             Case "Tf_C"

@@ -257,7 +257,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             i = 0
             Do
-                wtotal += Vx(i) * cprops(i).Molar_Weight / 1000
+                If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
+                    wtotal += Vx(i) * cprops(i).Molar_Weight / 1000
+                End If
                 i += 1
             Loop Until i = n + 1
 
@@ -347,8 +349,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Do
                 j = 0
                 Do
-                    tau_ij(i, j) = Math.Exp(-a12(i, j) / (1.98721 * T))
-                    tau_ji(j, i) = Math.Exp(-a21(i, j) / (1.98721 * T))
+                    tau_ij(i, j) = Math.Exp(-a12(i, j) / T)
+                    tau_ji(j, i) = Math.Exp(-a21(i, j) / T)
                     j = j + 1
                 Loop Until j = n + 1
                 i = i + 1
@@ -426,7 +428,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 For j = 0 To n
                     If cprops(j).Name = "Water" Or cprops(j).Name = "Methanol" Then
                         If cprops(i).IsIon Then
-                            sum2mr(i) += solvmfrac(j) * molality(i) * (Bij(j, i) + Im * dBdIm(j, i))
+                            sum2mr(j) += solvmfrac(j) * molality(i) * (Bij(j, i) + Im * dBdIm(j, i))
                         End If
                     End If
                 Next
@@ -435,7 +437,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             sum3mr = 0
             For i = 0 To n
                 For j = 0 To n
-                    If cprops(i).Charge > 0 And cprops(i).Charge < 0 Then
+                    If cprops(i).Charge > 0 And cprops(j).Charge < 0 Then
                         sum3mr += molality(i) * molality(j) * (Bij(i, j) + Im * dBdIm(i, j))
                     End If
                 Next
@@ -444,9 +446,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             For i = 0 To n
                 sum4mr(i) = 0
                 For j = 0 To n
-                    If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
-                        If cprops(j).IsIon Then
-                            sum4mr(i) += solvmfrac(i) * Bij(i, j)
+                    If cprops(j).Name = "Water" Or cprops(j).Name = "Methanol" Then
+                        If cprops(i).IsIon Then
+                            sum4mr(i) += solvmfrac(j) * Bij(j, i)
                         End If
                     End If
                 Next
@@ -477,7 +479,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             sum7mr = 0
             For i = 0 To n
                 For j = 0 To n
-                    If cprops(i).Charge > 0 And cprops(i).Charge < 0 Then
+                    If cprops(i).Charge > 0 And cprops(j).Charge < 0 Then
                         sum7mr += molality(i) * molality(j) * dBdIm(i, j)
                     End If
                 Next
@@ -488,13 +490,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             For i = 0 To n
                 sum8mr(i) = 0
                 For j = 0 To n
-                    If cprops(j).IsIon Then
-                        sum8mr(i) += solvmfrac(i) * Bref(i, j)
+                    If cprops(i).IsIon Then
+                        sum8mr(i) += solvmfrac(j) * Bref(j, i)
                     End If
                 Next
             Next
 
-            For i = 0 To n - 1
+            For i = 0 To n
                 With cprops(i)
                     If .IsIon Then
                         lngmr(i) = 1 / Msolv * sum4mr(i) + .Charge ^ 2 / (2 * Msolv) * sum5mr + sum6mr(i) + .Charge ^ 2 / 2 * sum7mr - 1 / Msolv * sum8mr(i)
@@ -541,7 +543,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 i = i + 1
             Loop Until i = n + 1
 
-            Dim Rref, Qref, phirefi(n), phiiref(n), sumphirefi As Double
+            Dim Rref, Qref, phirefi(n), phiiref(n), sum3sr(n), sum4sr, sum5sr(n) As Double
 
             Rref = 0
             For i = 0 To n
@@ -549,19 +551,45 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 Qref += solvmfrac(i) * VQ(i)
             Next
 
-            sumphirefi = 0
+            sum4sr = 0.0#
+            For i = 0 To n
+                sum3sr(i) = 0.0#
+                For j = 0 To n
+                    If cprops(j).Name = "Water" Or cprops(j).Name = "Methanol" Then
+                        sum3sr(i) += VQ(j) * solvmfrac(j) * tau_ji(j, i)
+                        If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
+                            sum4sr += VQ(j) * solvmfrac(j)
+                        End If
+                    End If
+                Next
+            Next
+
             For i = 0 To n
                 phirefi(i) = 0
                 For j = 0 To n
-                    phirefi(i) += Qref * tau_ij(i, j)
-                    sumphirefi += phirefi(i)
+                    If cprops(j).Name = "Water" Or cprops(j).Name = "Methanol" Then
+                        phirefi(i) = sum3sr(i) / sum4sr
+                    End If
+                Next
+            Next
+
+            For i = 0 To n
+                sum5sr(i) = 0.0#
+                For j = 0 To n
+                    If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
+                        If cprops(j).Name = "Water" Or cprops(j).Name = "Methanol" Then
+                            sum5sr(i) += VQ(j) * solvmfrac(j) * tau_ij(i, j)
+                        End If
+                    End If
                 Next
             Next
 
             For i = 0 To n
                 phiiref(i) = 0
                 For j = 0 To n
-                    phiiref(i) += Qref * tau_ji(i, j) / sumphirefi
+                    If cprops(j).Name = "Water" Or cprops(j).Name = "Methanol" Then
+                        phiiref(i) += VQ(j) * solvmfrac(j) * tau_ji(i, j) / sum5sr(j)
+                    End If
                 Next
             Next
 
@@ -571,7 +599,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                     lngsr(i) = Math.Log(fi(i) / Vx(i)) + z / 2 * VQ(i) * Math.Log(teta(i) / fi(i)) + l(i) - fi(i) / Vx(i) * sum2 - VQ(i) * Math.Log(S(i)) + VQ(i) - VQ(i) * sum1(i)
                     If .IsIon Then
                         'reference state normalization
-                        lngsr(i) += 1 - VR(i) / Rref + Log(VR(i) / Rref) - 5 * VQ(i) * (1 - VR(i) * Qref / (Rref * VQ(i)) + Log(VR(i) * Qref / (Rref * VQ(i)))) + VQ(i) * (1 - Log(phirefi(i) - phiiref(i)))
+                        lngsr(i) -= 1 - VR(i) / Rref + Log(VR(i) / Rref) - 5 * VQ(i) * (1 - VR(i) * Qref / (Rref * VQ(i)) + Log(VR(i) * Qref / (Rref * VQ(i)))) + VQ(i) * (1 - Log(phirefi(i)) - phiiref(i))
+                        lngsr(i) += Log(Xsolv)
                     End If
                 End With
                 i = i + 1

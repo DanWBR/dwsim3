@@ -16,14 +16,14 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports Ciloci.Flee
 Imports System.Math
 Imports DWSIM.DWSIM.MathEx.Common
 Imports DotNumerics.Optimization
 Imports DWSIM.DWSIM.MathEx
-Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 
 Namespace DWSIM.SimulationObjects.Reactors
 
@@ -745,7 +745,6 @@ Namespace DWSIM.SimulationObjects.Reactors
             c = Me.ComponentIDs.Count - 1
 
             ReDim E(c, r)
-
 
             'E: matrix of stoichometric coefficients
             i = 0
