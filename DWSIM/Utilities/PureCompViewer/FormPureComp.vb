@@ -70,11 +70,14 @@ Public Class FormPureComp
         T = Tmin
         vxCp.Clear()
         vyCp.Clear()
-        Do
-            vxCp.Add(cv.ConverterDoSI(su.spmp_temperature, T))
-            vyCp.Add(cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_CPi(constprop.Name, T)))
-            T += delta
-        Loop Until T > Tmax
+
+        If Not constprop.IsIon Or Not constprop.IsSalt Then
+            Do
+                vxCp.Add(cv.ConverterDoSI(su.spmp_temperature, T))
+                vyCp.Add(cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_CPi(constprop.Name, T)))
+                T += delta
+            Loop Until T > Tmax
+        End If
 
         'pressao de vapor
         With constprop
@@ -87,11 +90,13 @@ Public Class FormPureComp
         T = Tmin
         vxPvap.Clear()
         vyPvap.Clear()
-        Do
-            vxPvap.Add(cv.ConverterDoSI(su.spmp_temperature, T))
-            vyPvap.Add(cv.ConverterDoSI(su.spmp_pressure, pp.AUX_PVAPi(constprop.Name, T)))
-            T += delta
-        Loop Until T > Tmax
+        If Not constprop.IsIon And Not constprop.IsSalt Then
+            Do
+                vxPvap.Add(cv.ConverterDoSI(su.spmp_temperature, T))
+                vyPvap.Add(cv.ConverterDoSI(su.spmp_pressure, pp.AUX_PVAPi(constprop.Name, T)))
+                T += delta
+            Loop Until T > Tmax
+        End If
 
         'viscosidade liquido
         With constprop
@@ -102,11 +107,13 @@ Public Class FormPureComp
         T = Tmin
         vxVisc.Clear()
         vyVisc.Clear()
-        Do
-            vxVisc.Add(cv.ConverterDoSI(su.spmp_temperature, T))
-            vyVisc.Add(cv.ConverterDoSI(su.spmp_viscosity, pp.AUX_LIQVISCi(constprop.Name, T)))
-            T += delta
-        Loop Until T > Tmax
+        If Not constprop.IsIon And Not constprop.IsSalt Then
+            Do
+                vxVisc.Add(cv.ConverterDoSI(su.spmp_temperature, T))
+                vyVisc.Add(cv.ConverterDoSI(su.spmp_viscosity, pp.AUX_LIQVISCi(constprop.Name, T)))
+                T += delta
+            Loop Until T > Tmax
+        End If
 
         'entalpia vaporizacao
         With constprop
@@ -120,12 +127,14 @@ Public Class FormPureComp
         vxDHvap.Clear()
         vyDHvap.Clear()
         Dim Tr As Double
-        Do
-            Tr = T / constprop.Critical_Temperature
-            vxDHvap.Add(cv.ConverterDoSI(su.spmp_temperature, T))
-            vyDHvap.Add(cv.ConverterDoSI(su.spmp_enthalpy, pp.AUX_HVAPi(constprop.Name, T)))
-            T += delta
-        Loop Until T > Tmax
+        If Not constprop.IsIon And Not constprop.IsSalt Then
+            Do
+                Tr = T / constprop.Critical_Temperature
+                vxDHvap.Add(cv.ConverterDoSI(su.spmp_temperature, T))
+                vyDHvap.Add(cv.ConverterDoSI(su.spmp_enthalpy, pp.AUX_HVAPi(constprop.Name, T)))
+                T += delta
+            Loop Until T > Tmax
+        End If
 
         With Me.GraphCp.GraphPane
             .CurveList.Clear()
@@ -204,7 +213,7 @@ Public Class FormPureComp
         'Grid Propriedades
         With Me.GridProps.Rows
             .Clear()
-            .Add(New Object() {DWSIM.App.GetLocalString("Database"), constprop.CurrentDB, ""})
+            .Add(New Object() {DWSIM.App.GetLocalString("Database"), constprop.OriginalDB, ""})
             .Add(New Object() {DWSIM.App.GetLocalString("Type"), DWSIM.App.GetComponentType(constprop), ""})
             .Add(New Object() {"ID", constprop.ID, ""})
             .Add(New Object() {DWSIM.App.GetLocalString("CASNumber"), constprop.CAS_Number, ""})
@@ -225,6 +234,19 @@ Public Class FormPureComp
             .Add(New Object() {DWSIM.App.GetLocalString("SRKVolumeTranslationCoefficient"), Format(constprop.SRK_Volume_Translation_Coefficient, nf), ""})
             .Add(New Object() {"UNIQUAC R", Format(constprop.UNIQUAC_R, nf), ""})
             .Add(New Object() {"UNIQUAC Q", Format(constprop.UNIQUAC_Q, nf), ""})
+            If constprop.IsIon Then
+                .Add(New Object() {"Charge", Format(constprop.Charge, "+#;-#"), ""})
+            End If
+            If constprop.IsSalt Then
+                .Add(New Object() {"HydrationNumber", constprop.HydrationNumber, ""})
+                .Add(New Object() {"PositiveIon", constprop.PositiveIon, ""})
+                .Add(New Object() {"NegativeIon", constprop.NegativeIon, ""})
+                .Add(New Object() {"TemperatureOfFusion", Format(cv.ConverterDoSI(su.spmp_temperature, constprop.TemperatureOfFusion), nf), su.spmp_temperature})
+                .Add(New Object() {"EnthalpyOfFusionAtTf", Format(constprop.EnthalpyOfFusionAtTf, nf), "kJ/mol"})
+                .Add(New Object() {"TemperatureOfSolidDensity_Ts", Format(cv.ConverterDoSI(su.spmp_temperature, constprop.SolidTs), nf), su.spmp_temperature})
+                .Add(New Object() {"SolidDensityAtTs", Format(cv.ConverterDoSI(su.spmp_density, constprop.SolidDensityAtTs), nf), su.spmp_density})
+            End If
+
         End With
     End Sub
 

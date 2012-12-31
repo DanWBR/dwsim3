@@ -108,19 +108,19 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
 
     Private Sub KryptonDataGridView1_CellValidating(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellValidatingEventArgs) Handles KryptonDataGridView1.CellValidating
 
-        If Me.Loaded Then
-            If e.ColumnIndex = 1 Then
-                If Double.TryParse(e.FormattedValue, New Integer) = False Then
-                    Me.KryptonDataGridView1.Rows(e.RowIndex).ErrorText = _
-                        DWSIM.App.GetLocalString("Ovalorinseridoinvlid")
-                    e.Cancel = True
-                ElseIf CDbl(e.FormattedValue) < 0 Then
-                    Me.KryptonDataGridView1.Rows(e.RowIndex).ErrorText = _
-                        DWSIM.App.GetLocalString("Ovalorinseridoinvlid")
-                    e.Cancel = True
-                End If
-            End If
-        End If
+        'If Me.Loaded Then
+        '    If e.ColumnIndex = 1 Then
+        '        If Double.TryParse(e.FormattedValue, New Integer) = False Then
+        '            Me.KryptonDataGridView1.Rows(e.RowIndex).ErrorText = _
+        '                DWSIM.App.GetLocalString("Ovalorinseridoinvlid")
+        '            e.Cancel = True
+        '        ElseIf CDbl(e.FormattedValue) < 0 Then
+        '            Me.KryptonDataGridView1.Rows(e.RowIndex).ErrorText = _
+        '                DWSIM.App.GetLocalString("Ovalorinseridoinvlid")
+        '            e.Cancel = True
+        '        End If
+        '    End If
+        'End If
 
     End Sub
 

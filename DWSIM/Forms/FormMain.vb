@@ -519,8 +519,11 @@ Public Class FormMain
             Me.ToolStripButton1.Enabled = True
             Me.CloseAllToolstripMenuItem.Enabled = True
             If Not Me.ActiveMdiChild Is Nothing Then
-                If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then My.Application.ActiveSimulation = Me.ActiveMdiChild
+                If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
+                    My.Application.ActiveSimulation = Me.ActiveMdiChild
+               End If
             End If
+
         End If
     End Sub
 
@@ -1155,7 +1158,7 @@ Public Class FormMain
                 End Try
             End If
 
-            Me.filename = form.Options.FilePath
+            Me.filename = caminho
 
             Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
 
@@ -1769,7 +1772,7 @@ Public Class FormMain
 
             form.Options.LoadData(data)
 
-            Me.filename = form.Options.FilePath
+            Me.filename = path
 
             fls.Label2.Text = "Loading Flowsheet Graphic Objects..."
             Application.DoEvents()
@@ -2351,15 +2354,21 @@ Public Class FormMain
 
             My.Application.ActiveSimulation = form
 
-            form.FrmStSim1.Init()
+            'form.FrmStSim1.Init()
 
             form.Invalidate()
 
             'form = Nothing
 
+            form.WindowState = FormWindowState.Normal
+            form.WindowState = FormWindowState.Maximized
+            Application.DoEvents()
             form.FormSurface.FlowsheetDesignSurface.ZoomAll()
+            Application.DoEvents()
             form.FormSurface.FlowsheetDesignSurface.ZoomAll()
+            Application.DoEvents()
             form.FormSurface.FlowsheetDesignSurface.Zoom = 1.0#
+            Application.DoEvents()
             form.TSTBZoom.Text = Format(form.FormSurface.FlowsheetDesignSurface.Zoom, "#%")
 
             Application.DoEvents()
@@ -2380,8 +2389,6 @@ Public Class FormMain
             Application.DoEvents()
 
         End Try
-
-
 
     End Sub
 

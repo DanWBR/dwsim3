@@ -19,7 +19,7 @@
 Imports System.Collections.Generic
 Imports FileHelpers
 Imports System.Math
-Imports System.Xml.Linq
+Imports System.Linq
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
@@ -221,7 +221,60 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Sub
 
-        Function GAMMA_MR(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties))
+        Function FreezingPointDepression(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double()
+
+            Dim n As Integer = UBound(Vx)
+            Dim wid As Integer = cprops.IndexOf((From c As ConstantProperties In cprops Select c Where c.Name = "Water").SingleOrDefault)
+            Dim activcoeff As Double() = GAMMA_MR(T, Vx, cprops)
+            Dim Tnfp, DHm, DT, Td As Double
+
+            Tnfp = cprops(wid).TemperatureOfFusion
+            DHm = cprops(wid).EnthalpyOfFusionAtTf * cprops(wid).Molar_Weight
+
+            DT = 8.314 * Tnfp ^ 2 / DHm * Math.Log(Vx(wid) * activcoeff(wid))
+            Td = DT + Tnfp
+
+            Return New Double() {Td, DT}
+
+        End Function
+
+        Function OsmoticCoeff(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double
+
+            Dim n As Integer = UBound(Vx)
+            Dim i As Integer
+            Dim molality(n), summ As Double
+
+            Dim activcoeff As Double() = GAMMA_MR(T, Vx, cprops)
+            Dim wid As Integer = cprops.IndexOf((From c As ConstantProperties In cprops Select c Where c.Name = "Water").SingleOrDefault)
+
+            'calculate molality considering 1 mol of mixture.
+
+            Dim wtotal As Double = 0
+
+            i = 0
+            Do
+                If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
+                    wtotal += Vx(i) * cprops(i).Molar_Weight / 1000
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            i = 0
+            Do
+                If cprops(i).IsIon Then
+                    molality(i) = Vx(i) / wtotal
+                    summ += molality(i)
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            Dim oc As Double = -Log(Vx(wid) * activcoeff(wid)) / (cprops(wid).Molar_Weight / 1000 * summ)
+
+            Return oc
+
+        End Function
+
+        Function GAMMA_MR(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Array
 
             Dim n As Integer = UBound(Vx)
 
@@ -402,7 +455,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 Next
             Next
 
-            Dim sum1mr(n), sum2mr(n), sum3mr, sum4mr(n), sum5mr, sum6mr(n), sum7mr, sum8mr(n) As Double
+            Dim sum1mr(n), sum2mr, sum3mr, sum4mr(n), sum5mr, sum6mr(n), sum7mr, sum8mr(n) As Double
 
             For i = 0 To n
                 For j = 0 To n
@@ -414,21 +467,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             For i = 0 To n
                 sum1mr(i) = 0
+            Next
+
+            For i = 0 To n
                 For j = 0 To n
                     If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
                         If cprops(j).IsIon Then
-                            sum1mr(i) += molality(j) * Bij(i, j)
+                            sum1mr(i) += molality(j) * Bij(j, i)
                         End If
                     End If
                 Next
             Next
 
+            sum2mr = 0
             For i = 0 To n
-                sum2mr(i) = 0
                 For j = 0 To n
-                    If cprops(j).Name = "Water" Or cprops(j).Name = "Methanol" Then
-                        If cprops(i).IsIon Then
-                            sum2mr(j) += solvmfrac(j) * molality(i) * (Bij(j, i) + Im * dBdIm(j, i))
+                    If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
+                        If cprops(j).IsIon Then
+                            sum2mr += solvmfrac(i) * molality(j) * (Bij(i, j) + Im * dBdIm(i, j))
                         End If
                     End If
                 Next
@@ -445,10 +501,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             For i = 0 To n
                 sum4mr(i) = 0
+            Next
+
+            For i = 0 To n
                 For j = 0 To n
-                    If cprops(j).Name = "Water" Or cprops(j).Name = "Methanol" Then
-                        If cprops(i).IsIon Then
-                            sum4mr(i) += solvmfrac(j) * Bij(j, i)
+                    If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
+                        If cprops(j).IsIon Then
+                            sum4mr(j) += solvmfrac(i) * Bij(i, j)
                         End If
                     End If
                 Next
@@ -465,12 +524,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 Next
             Next
 
+
             For i = 0 To n
                 sum6mr(i) = 0
+            Next
+
+            For i = 0 To n
                 For j = 0 To n
                     If cprops(i).IsIon Then
                         If cprops(j).IsIon Then
-                            sum6mr(i) += molality(j) * Bij(j, i)
+                            sum6mr(j) += molality(i) * Bij(i, j)
                         End If
                     End If
                 Next
@@ -489,9 +552,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             For i = 0 To n
                 sum8mr(i) = 0
+            Next
+
+            For i = 0 To n
                 For j = 0 To n
-                    If cprops(i).IsIon Then
-                        sum8mr(i) += solvmfrac(j) * Bref(j, i)
+                    If cprops(j).IsIon Then
+                        sum8mr(j) += solvmfrac(i) * Bref(i, j)
                     End If
                 Next
             Next
@@ -501,7 +567,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                     If .IsIon Then
                         lngmr(i) = 1 / Msolv * sum4mr(i) + .Charge ^ 2 / (2 * Msolv) * sum5mr + sum6mr(i) + .Charge ^ 2 / 2 * sum7mr - 1 / Msolv * sum8mr(i)
                     ElseIf .Name = "Water" Or .Name = "Methanol" Then
-                        lngmr(i) = sum1mr(i) - .Molar_Weight / 1000 / Msolv * sum2mr(i) - Msolv * sum3mr
+                        lngmr(i) = sum1mr(i) - .Molar_Weight / 1000 / Msolv * sum2mr - Msolv * sum3mr
                     Else
                         lngmr(i) = 0.0#
                     End If
@@ -639,6 +705,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Return g
 
         End Function
+
+
 
     End Class
 

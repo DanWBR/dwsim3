@@ -78,6 +78,7 @@ Public Class FormStSim
 
             ACSC1 = New AutoCompleteStringCollection
 
+            Me.ListViewA.Items.Clear()
             For Each comp In Me.FrmChild.Options.SelectedComponents.Values
                 Me.ListViewA.Items.Add(comp.Name, DWSIM.App.GetComponentName(comp.Name), 0).Tag = comp.Name
             Next

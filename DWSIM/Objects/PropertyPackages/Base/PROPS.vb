@@ -499,18 +499,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim n = UBound(Vz)
 
-            Dim phi(n), somaz, i, j
+            Dim phi(n) As Double, somaz, i, j
 
             somaz = 0
             i = 0
             Do
-                If Vz(i) <> 0 Then somaz = somaz + Vz(i) * VVl(i)
+                If Vz(i) <> 0 And Not Double.IsNaN(VVl(i)) Then somaz = somaz + Vz(i) * VVl(i)
                 i = i + 1
             Loop Until i = n + 1
 
             i = 0
             Do
-                If Vz(i) <> 0 Then phi(i) = Vz(i) * VVl(i) / somaz
+                If Vz(i) <> 0 And Not Double.IsNaN(VVl(i)) Then phi(i) = Vz(i) * VVl(i) / somaz
                 i = i + 1
             Loop Until i = n + 1
 

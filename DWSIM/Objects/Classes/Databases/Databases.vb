@@ -148,17 +148,21 @@ Namespace DWSIM.Databases
                             cp.Critical_Compressibility = Double.Parse(node2.Attributes("value").Value, nf)
                         Case "NormalBoilingPointTemperature" 'K
                             cp.Normal_Boiling_Point = Double.Parse(node2.Attributes("value").Value, nf)
+                        Case "NormalMeltingPointTemperature"
+                            cp.TemperatureOfFusion = Double.Parse(node2.Attributes("value").Value, nf)
                         Case "MolecularWeight"
                             cp.Molar_Weight = Double.Parse(node2.Attributes("value").Value, nf)
                         Case "AcentricityFactor"
                             cp.Acentric_Factor = Double.Parse(node2.Attributes("value").Value, nf)
                         Case "DipoleMoment" 'coloumb.m
                             cp.Dipole_Moment = Double.Parse(node2.Attributes("value").Value, nf)
-                        Case "HeatOfFormation" '/1000/MW
+                        Case "HeatOfFusionAtMeltingPoint" ' kJ/kg
+                            cp.EnthalpyOfFusionAtTf = Double.Parse(node2.Attributes("value").Value, nf) / 1000 / cp.Molar_Weight
+                        Case "HeatOfFormation" '/1000/MW, kJ/kg
                             cp.IG_Enthalpy_of_Formation_25C = Double.Parse(node2.Attributes("value").Value, nf) / 1000 / cp.Molar_Weight
-                        Case "GibbsEnergyOfFormation" '/1000/MW
+                        Case "GibbsEnergyOfFormation" '/1000/MW, kJ/kg
                             cp.IG_Gibbs_Energy_of_Formation_25C = Double.Parse(node2.Attributes("value").Value, nf) / 1000 / cp.Molar_Weight
-                        Case "AbsEntropy" '/1000/MW
+                        Case "AbsEntropy" '/1000/MW, kJ/kg
                             cp.IG_Entropy_of_Formation_25C = Double.Parse(node2.Attributes("value").Value, nf) / 1000 / cp.Molar_Weight
                         Case "RacketParameter"
                             cp.Z_Rackett = Double.Parse(node2.Attributes("value").Value, nf)

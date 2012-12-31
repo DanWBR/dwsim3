@@ -65,7 +65,7 @@ Partial Class AboutBoxMONO
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(541, 471)
+        Me.Button1.Location = New System.Drawing.Point(565, 471)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 3
@@ -133,10 +133,10 @@ Partial Class AboutBoxMONO
         Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label6.Location = New System.Drawing.Point(137, 112)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(417, 13)
+        Me.Label6.Size = New System.Drawing.Size(503, 13)
         Me.Label6.TabIndex = 11
-        Me.Label6.Text = "Daniel Wagner (English), Abad Lira / Gustavo León (Spanish), Rainer Göllnitz (Ger" & _
-    "man)"
+        Me.Label6.Text = "Daniel Wagner (English), Abad Lira / Gustavo León (Spanish), Rainer Göllnitz / Gr" & _
+    "egor Reichert (German)"
         '
         'LabelLicense
         '
@@ -161,7 +161,7 @@ Partial Class AboutBoxMONO
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox1.Size = New System.Drawing.Size(594, 206)
+        Me.TextBox1.Size = New System.Drawing.Size(622, 206)
         Me.TextBox1.TabIndex = 13
         Me.TextBox1.Text = resources.GetString("TextBox1.Text")
         '
@@ -214,7 +214,7 @@ Partial Class AboutBoxMONO
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(628, 527)
+        Me.ClientSize = New System.Drawing.Size(653, 523)
         Me.ControlBox = False
         Me.Controls.Add(Me.LblCLRInfo)
         Me.Controls.Add(Me.Label4)

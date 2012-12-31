@@ -150,6 +150,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public _phasemappings As New Dictionary(Of String, PhaseInfo)
 
+        Friend IsElectrolytePP As Boolean = False
+
         <System.NonSerialized()> Private _como As Object 'CAPE-OPEN Material Object
 
         <System.NonSerialized()> Public ConfigForm As FormConfigBase 'System.Windows.Forms.Form
@@ -720,20 +722,32 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overridable Sub DW_CalcOverallProps()
 
-            Dim HL, HV, SL, SV, DL, DV, CPL, CPV, KL, KV, CVL, CVV As Nullable(Of Double)
-            Dim xl, xv, wl, wv, vl, vv, result As Double
+            Dim HL, HV, HS, SL, SV, SS, DL, DV, DS, CPL, CPV, CPS, KL, KV, KS, CVL, CVV, CSV As Nullable(Of Double)
+            Dim xl, xv, xs, wl, wv, ws, vl, vv, vs, result As Double
 
             xl = Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault
             xv = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
+            xs = Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault
 
             wl = Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction.GetValueOrDefault
             wv = Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault
+            ws = Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault
 
             DL = Me.CurrentMaterialStream.Fases(1).SPMProperties.density.GetValueOrDefault
             DV = Me.CurrentMaterialStream.Fases(2).SPMProperties.density.GetValueOrDefault
+            DS = Me.CurrentMaterialStream.Fases(7).SPMProperties.density.GetValueOrDefault
 
-            vl = Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction.GetValueOrDefault / DL.GetValueOrDefault / (Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction.GetValueOrDefault / DL.GetValueOrDefault + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault / DV.GetValueOrDefault)
-            vv = Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault / DV.GetValueOrDefault / (Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction.GetValueOrDefault / DL.GetValueOrDefault + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault / DV.GetValueOrDefault)
+            Dim tl As Double = 0.0#
+            Dim tv As Double = 0.0#
+            Dim ts As Double = 0.0#
+
+            If DL <> 0.0# Then tl = Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction.GetValueOrDefault / DL.GetValueOrDefault
+            If DV <> 0.0# Then tv = Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault / DV.GetValueOrDefault
+            If DS <> 0.0# Then ts = Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault / DS.GetValueOrDefault
+
+            vl = tl / (tl + tv + ts)
+            vv = tv / (tl + tv + ts)
+            vs = ts / (tl + tv + ts)
 
             If xl = 1 Then
                 vl = 1
@@ -743,7 +757,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 vv = 1
             End If
 
-            result = vl * DL.GetValueOrDefault + vv * DV.GetValueOrDefault
+            result = vl * DL.GetValueOrDefault + vv * DV.GetValueOrDefault + vs * DS.GetValueOrDefault
             If Double.IsNaN(result) Then
                 If Double.IsNaN(DL) = False And Double.IsNaN(DV) = True Then
                     result = DL
@@ -757,28 +771,32 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             HL = Me.CurrentMaterialStream.Fases(1).SPMProperties.enthalpy.GetValueOrDefault
             HV = Me.CurrentMaterialStream.Fases(2).SPMProperties.enthalpy.GetValueOrDefault
+            HS = Me.CurrentMaterialStream.Fases(7).SPMProperties.enthalpy.GetValueOrDefault
 
-            result = wl * HL.GetValueOrDefault + wv * HV.GetValueOrDefault
+            result = wl * HL.GetValueOrDefault + wv * HV.GetValueOrDefault + ws * HS.GetValueOrDefault
             Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy = result
 
             SL = Me.CurrentMaterialStream.Fases(1).SPMProperties.entropy.GetValueOrDefault
             SV = Me.CurrentMaterialStream.Fases(2).SPMProperties.entropy.GetValueOrDefault
+            SS = Me.CurrentMaterialStream.Fases(7).SPMProperties.entropy.GetValueOrDefault
 
-            result = wl * SL.GetValueOrDefault + wv * SV.GetValueOrDefault
+            result = wl * SL.GetValueOrDefault + wv * SV.GetValueOrDefault + ws * SS.GetValueOrDefault
             Me.CurrentMaterialStream.Fases(0).SPMProperties.entropy = result
 
             Me.CurrentMaterialStream.Fases(0).SPMProperties.compressibilityFactor = Nothing
 
             CPL = Me.CurrentMaterialStream.Fases(1).SPMProperties.heatCapacityCp.GetValueOrDefault
             CPV = Me.CurrentMaterialStream.Fases(2).SPMProperties.heatCapacityCp.GetValueOrDefault
+            CPS = Me.CurrentMaterialStream.Fases(7).SPMProperties.heatCapacityCp.GetValueOrDefault
 
-            result = wl * CPL.GetValueOrDefault + wv * CPV.GetValueOrDefault
+            result = wl * CPL.GetValueOrDefault + wv * CPV.GetValueOrDefault + ws * CPS.GetValueOrDefault
             Me.CurrentMaterialStream.Fases(0).SPMProperties.heatCapacityCp = result
 
             CVL = Me.CurrentMaterialStream.Fases(1).SPMProperties.heatCapacityCv.GetValueOrDefault
             CVV = Me.CurrentMaterialStream.Fases(2).SPMProperties.heatCapacityCv.GetValueOrDefault
+            CSV = Me.CurrentMaterialStream.Fases(7).SPMProperties.heatCapacityCv.GetValueOrDefault
 
-            result = wl * CVL.GetValueOrDefault + wv * CVV.GetValueOrDefault
+            result = wl * CVL.GetValueOrDefault + wv * CVV.GetValueOrDefault + ws * CSV.GetValueOrDefault
             Me.CurrentMaterialStream.Fases(0).SPMProperties.heatCapacityCv = result
 
             result = Me.AUX_MMM(Fase.Mixture)
@@ -791,8 +809,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             KL = Me.CurrentMaterialStream.Fases(1).SPMProperties.thermalConductivity.GetValueOrDefault
             KV = Me.CurrentMaterialStream.Fases(2).SPMProperties.thermalConductivity.GetValueOrDefault
+            KS = Me.CurrentMaterialStream.Fases(7).SPMProperties.thermalConductivity.GetValueOrDefault
 
-            result = xl * KL.GetValueOrDefault + xv * KV.GetValueOrDefault
+            result = xl * KL.GetValueOrDefault + xv * KV.GetValueOrDefault + xs * KS.GetValueOrDefault
             Me.CurrentMaterialStream.Fases(0).SPMProperties.thermalConductivity = result
 
             Me.CurrentMaterialStream.Fases(0).SPMProperties.viscosity = Nothing
@@ -3508,7 +3527,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 Dim tmp As Nullable(Of Double)
                 Dim it As PropertyGridEx.CustomProperty = Nothing
 
-                If Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 And Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                If Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 And _
+                    (Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Or _
+                     Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0) Then
 
                     Dim pm As New PropertyGridEx.CustomPropertyCollection()
                     'PropertyGridEx.CustomPropertyCollection - Mistura
@@ -3641,7 +3662,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
                     pv.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
                     refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.heatCapacityCp.GetValueOrDefault / CDbl(Me.CurrentMaterialStream.Fases(2).SPMProperties.heatCapacityCv.GetValueOrDefault)
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat)
+                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
                     pv.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
                     refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.thermalConductivity.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
@@ -3710,7 +3731,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
                     refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.CurrentMaterialStream.Fases(1).SPMProperties.heatCapacityCv.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat)
+                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
                     pl.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
                     refval = Me.CurrentMaterialStream.Fases(0).TPMProperties.surfaceTension.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.tdp_surfaceTension, refval), Flowsheet.Options.NumberFormat)
@@ -3743,6 +3764,41 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                     Dim pl As New PropertyGridEx.CustomPropertyCollection()
                     'PropertyGridEx.CustomPropertyCollection - Liquido
+
+                    If Me.IsElectrolytePP Then
+
+                        'Liquid Phase Activity Coefficients
+                        Dim comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+                        Dim k0 As New PropertyGridEx.CustomPropertyCollection()
+                        For Each comp In Flowsheet.Options.SelectedComponents.Values
+                            valor = Format(Me.CurrentMaterialStream.Fases(3).Componentes(comp.Name).ActivityCoeff, Flowsheet.Options.NumberFormat)
+                            k0.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("ActivityCoefficients"), DWSIM.App.GetLocalString("ActivityCoefficients"), True)
+                            k0.Item(k0.Count - 1).IsReadOnly = True
+                            k0.Item(k0.Count - 1).DefaultValue = Nothing
+                            k0.Item(k0.Count - 1).DefaultType = GetType(Nullable(Of Double))
+                        Next
+                        pl.Add(DWSIM.App.GetLocalString("ActivityCoefficients"), k0, True, DWSIM.App.GetLocalString("ActivityCoefficients"), DWSIM.App.GetLocalString("LiquidPhaseActivityCoefficients"), True)
+                        With pl.Item(pl.Count - 1)
+                            .IsReadOnly = True
+                            .IsBrowsable = True
+                            .CustomEditor = New System.Drawing.Design.UITypeEditor
+                            .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
+                        End With
+
+                        refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.osmoticCoefficient.GetValueOrDefault
+                        If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
+                        pl.Add(DWSIM.App.GetLocalString("OsmoticCoefficient"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("OsmoticCoefficient"), True)
+
+                        refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.freezingPoint.GetValueOrDefault
+                        If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_temperature, refval), Flowsheet.Options.NumberFormat)
+                        pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("FreezingPoint"), su.spmp_temperature), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("FreezingPoint"), True)
+
+                        refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.freezingPointDepression.GetValueOrDefault
+                        If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_deltaT, refval), Flowsheet.Options.NumberFormat)
+                        pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("FreezingPointDepression"), su.spmp_deltaT), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("FreezingPointDepression"), True)
+
+                    End If
+
                     refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.enthalpy.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("EntalpiaEspecficadaf2"), True)
@@ -3780,7 +3836,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
                     refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.CurrentMaterialStream.Fases(3).SPMProperties.heatCapacityCv.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat)
+                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
                     pl.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
                     refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.thermalConductivity.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
@@ -3847,7 +3903,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
                     refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.CurrentMaterialStream.Fases(4).SPMProperties.heatCapacityCv.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat)
+                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
                     pl.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
                     refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.thermalConductivity.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
@@ -3914,7 +3970,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
                     refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.CurrentMaterialStream.Fases(5).SPMProperties.heatCapacityCv.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat)
+                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
                     pl.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
                     refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.thermalConductivity.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
@@ -3981,7 +4037,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
                     refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.CurrentMaterialStream.Fases(6).SPMProperties.heatCapacityCv.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat)
+                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
                     pl.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
                     refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.thermalConductivity.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
@@ -4048,7 +4104,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
                     refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.CurrentMaterialStream.Fases(7).SPMProperties.heatCapacityCv.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat)
+                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
                     pl.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
                     refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.thermalConductivity.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
@@ -4130,7 +4186,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Dim i As Integer = 0
             For Each subs As Substancia In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(f)).Componentes.Values
                 subs.FugacityCoeff = fc(i)
-                subs.ActivityCoeff = fc(i) * P / Me.AUX_PVAPi(i, T)
+                'subs.ActivityCoeff = fc(i) * P / Me.AUX_PVAPi(i, T)
                 i += 1
             Next
 
@@ -5152,6 +5208,9 @@ Final3:
                 Else
                     vcl(i) = Me.m_props.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Molar_Weight, "")
                 End If
+                If subst.ConstantProperties.IsIon Or subst.ConstantProperties.IsSalt Then
+                    vcl(i) = 0.0#
+                End If
                 i = i + 1
             Next
             val = Me.m_props.condlm_li(Me.RET_VVC, vcl, Me.RET_VMOL(Me.RET_PHASECODE(phaseid)))
@@ -5190,6 +5249,7 @@ Final3:
             Dim m_pr2 As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PengRobinson
 
             If phaseid = 1 Then
+
                 If T / Me.AUX_TCM(Fase.Liquid) > 1 Then
 
                     Dim Z = m_pr2.Z_PR(T, P, RET_VMOL(Fase.Liquid), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
@@ -5206,7 +5266,7 @@ Final3:
                             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
                                 If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
                                     If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
-                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" Then
+                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
                                             vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
                                             vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
                                         Else
@@ -5246,6 +5306,7 @@ Final3:
 
                 End If
             ElseIf phaseid = 3 Then
+
                 If T / Me.AUX_TCM(Fase.Liquid1) > 1 Then
 
                     Dim Z = m_pr2.Z_PR(T, P, RET_VMOL(Fase.Liquid1), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
@@ -5262,11 +5323,14 @@ Final3:
                             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
                                 If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
                                     If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
-                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" Then
+                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
                                             vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
                                             vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
                                         Else
                                             vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                        End If
+                                        If subst.ConstantProperties.IsIon Or subst.ConstantProperties.IsSalt Then
+                                            vk(i) = 1.0E+20
                                         End If
                                     Else
                                         vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
@@ -5303,7 +5367,7 @@ Final3:
                             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
                                 If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
                                     If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
-                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" Then
+                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
                                             vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
                                             vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
                                         Else
@@ -5344,7 +5408,7 @@ Final3:
                             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
                                 If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
                                     If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
-                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" Then
+                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
                                             vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
                                             vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
                                         Else
@@ -5385,7 +5449,7 @@ Final3:
                             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
                                 If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
                                     If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
-                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" Then
+                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
                                             vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
                                             vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
                                         Else
@@ -5840,6 +5904,21 @@ Final3:
 
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 val(i) = Me.AUX_CPi(subst.Nome, T)
+                i += 1
+            Next
+
+            Return val
+
+        End Function
+
+        Public Function RET_VHVAP(ByVal T As Double) As Array
+
+            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+            Dim i As Integer = 0
+
+            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                val(i) = Me.AUX_HVAPi(subst.Nome, T)
                 i += 1
             Next
 

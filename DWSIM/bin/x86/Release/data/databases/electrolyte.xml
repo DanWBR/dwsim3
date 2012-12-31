@@ -1159,8 +1159,8 @@
   <DelGF_kJ_mol>-858.2</DelGF_kJ_mol>
   <DelHf_kJ_mol>-1001.74</DelHf_kJ_mol>
   <Cp_J_mol_K>0</Cp_J_mol_K>
-  <Tf_C>-273.15</Tf_C>
-  <Hfus_at_Tf_kJ_mol>0</Hfus_at_Tf_kJ_mol>
+  <Tf_C>800.85</Tf_C>
+  <Hfus_at_Tf_kJ_mol>28.16</Hfus_at_Tf_kJ_mol>
   <DenS_T_C>-273.15</DenS_T_C>
   <DenS_g_mL>0</DenS_g_mL>
 </compound>

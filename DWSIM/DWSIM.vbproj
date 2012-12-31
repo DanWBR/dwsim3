@@ -637,6 +637,7 @@
     <Compile Include="Objects\PropertyPackages\PRSV2\PRSV2.vb" />
     <Compile Include="Objects\PropertyPackages\PRSV2\PRSV2PropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\PRSV2\PRSV2VLPropertyPackage.vb" />
+    <Compile Include="Objects\PropertyPackages\Raoult\Helper Classes\Ideal.vb" />
     <Compile Include="Objects\PropertyPackages\SRK\Helper Classes\SRK2.vb" />
     <Compile Include="Objects\PropertyPackages\MODFAC\Helper Classes\MODFAC.vb" />
     <Compile Include="Objects\PropertyPackages\MODFAC\MODFACPropertyPackage.vb" />

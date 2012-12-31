@@ -48,7 +48,7 @@ Partial Class AboutBoxNET
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label1.Location = New System.Drawing.Point(17, 15)
+        Me.Label1.Location = New System.Drawing.Point(17, 9)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(404, 13)
         Me.Label1.TabIndex = 1
@@ -67,7 +67,7 @@ Partial Class AboutBoxNET
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(491, 483)
+        Me.Button1.Location = New System.Drawing.Point(566, 479)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 3
@@ -79,7 +79,7 @@ Partial Class AboutBoxNET
         Me.Version.AutoSize = True
         Me.Version.BackColor = System.Drawing.Color.Transparent
         Me.Version.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Version.Location = New System.Drawing.Point(17, 32)
+        Me.Version.Location = New System.Drawing.Point(17, 26)
         Me.Version.Name = "Version"
         Me.Version.Size = New System.Drawing.Size(121, 13)
         Me.Version.TabIndex = 4
@@ -91,7 +91,7 @@ Partial Class AboutBoxNET
         Me.Copyright.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Copyright.Location = New System.Drawing.Point(17, 49)
         Me.Copyright.Name = "Copyright"
-        Me.Copyright.Size = New System.Drawing.Size(538, 67)
+        Me.Copyright.Size = New System.Drawing.Size(624, 67)
         Me.Copyright.TabIndex = 5
         Me.Copyright.Text = "Copyright "
         '
@@ -135,10 +135,10 @@ Partial Class AboutBoxNET
         Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label6.Location = New System.Drawing.Point(138, 116)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(417, 13)
+        Me.Label6.Size = New System.Drawing.Size(503, 13)
         Me.Label6.TabIndex = 11
-        Me.Label6.Text = "Daniel Wagner (English), Abad Lira / Gustavo León (Spanish), Rainer Göllnitz (Ger" & _
-    "man)"
+        Me.Label6.Text = "Daniel Wagner (English), Abad Lira / Gustavo León (Spanish), Rainer Göllnitz / Gr" & _
+    "egor Reichert (German)"
         '
         'LabelLicense
         '
@@ -163,7 +163,7 @@ Partial Class AboutBoxNET
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox1.Size = New System.Drawing.Size(546, 184)
+        Me.TextBox1.Size = New System.Drawing.Size(621, 184)
         Me.TextBox1.TabIndex = 13
         Me.TextBox1.Text = resources.GetString("TextBox1.Text")
         '
@@ -238,7 +238,7 @@ Partial Class AboutBoxNET
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(578, 515)
+        Me.ClientSize = New System.Drawing.Size(648, 511)
         Me.ControlBox = False
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Label3)
