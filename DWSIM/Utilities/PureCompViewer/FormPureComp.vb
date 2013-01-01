@@ -234,19 +234,15 @@ Public Class FormPureComp
             .Add(New Object() {DWSIM.App.GetLocalString("SRKVolumeTranslationCoefficient"), Format(constprop.SRK_Volume_Translation_Coefficient, nf), ""})
             .Add(New Object() {"UNIQUAC R", Format(constprop.UNIQUAC_R, nf), ""})
             .Add(New Object() {"UNIQUAC Q", Format(constprop.UNIQUAC_Q, nf), ""})
-            If constprop.IsIon Then
-                .Add(New Object() {"Charge", Format(constprop.Charge, "+#;-#"), ""})
-            End If
-            If constprop.IsSalt Then
-                .Add(New Object() {"HydrationNumber", constprop.HydrationNumber, ""})
-                .Add(New Object() {"PositiveIon", constprop.PositiveIon, ""})
-                .Add(New Object() {"NegativeIon", constprop.NegativeIon, ""})
-                .Add(New Object() {"TemperatureOfFusion", Format(cv.ConverterDoSI(su.spmp_temperature, constprop.TemperatureOfFusion), nf), su.spmp_temperature})
-                .Add(New Object() {"EnthalpyOfFusionAtTf", Format(constprop.EnthalpyOfFusionAtTf, nf), "kJ/mol"})
-                .Add(New Object() {"TemperatureOfSolidDensity_Ts", Format(cv.ConverterDoSI(su.spmp_temperature, constprop.SolidTs), nf), su.spmp_temperature})
-                .Add(New Object() {"SolidDensityAtTs", Format(cv.ConverterDoSI(su.spmp_density, constprop.SolidDensityAtTs), nf), su.spmp_density})
-            End If
-
+            .Add(New Object() {DWSIM.App.GetLocalString("Charge"), Format(constprop.Charge, "+#;-#"), ""})
+            .Add(New Object() {DWSIM.App.GetLocalString("HydrationNumber"), constprop.HydrationNumber, ""})
+            .Add(New Object() {DWSIM.App.GetLocalString("PositiveIon"), constprop.PositiveIon, ""})
+            .Add(New Object() {DWSIM.App.GetLocalString("NegativeIon"), constprop.NegativeIon, ""})
+            .Add(New Object() {DWSIM.App.GetLocalString("TemperatureOfFusion"), Format(cv.ConverterDoSI(su.spmp_temperature, constprop.TemperatureOfFusion), nf), su.spmp_temperature})
+            .Add(New Object() {DWSIM.App.GetLocalString("EnthalpyOfFusionAtTf"), Format(constprop.EnthalpyOfFusionAtTf, nf), "kJ/mol"})
+            .Add(New Object() {DWSIM.App.GetLocalString("TemperatureOfSolidDensity_Ts"), Format(cv.ConverterDoSI(su.spmp_temperature, constprop.SolidTs), nf), su.spmp_temperature})
+            .Add(New Object() {DWSIM.App.GetLocalString("SolidDensityAtTs"), Format(cv.ConverterDoSI(su.spmp_density, constprop.SolidDensityAtTs), nf), su.spmp_density})
+            
         End With
     End Sub
 
@@ -303,6 +299,22 @@ Public Class FormPureComp
                 constprop.UNIQUAC_R = GridProps.Rows(e.RowIndex).Cells(1).Value
             Case 20 '.Add(New Object() {"UNIQUAC Q", Format(constprop.UNIQUAC_Q, nf), ""})
                 constprop.UNIQUAC_Q = GridProps.Rows(e.RowIndex).Cells(1).Value
+            Case 21 '.Add(New Object() {DWSIM.App.GetLocalString("Charge"), Format(constprop.Charge, "+#;-#"), ""})
+                constprop.Charge = GridProps.Rows(e.RowIndex).Cells(1).Value
+            Case 22 '.Add(New Object() {DWSIM.App.GetLocalString("HydrationNumber"), constprop.HydrationNumber, ""})
+                constprop.HydrationNumber = GridProps.Rows(e.RowIndex).Cells(1).Value
+            Case 23 '.Add(New Object() {DWSIM.App.GetLocalString("PositiveIon"), constprop.PositiveIon, ""})
+                constprop.PositiveIon = GridProps.Rows(e.RowIndex).Cells(1).Value
+            Case 24 '.Add(New Object() {DWSIM.App.GetLocalString("NegativeIon"), constprop.NegativeIon, ""})
+                constprop.NegativeIon = GridProps.Rows(e.RowIndex).Cells(1).Value
+            Case 25 '.Add(New Object() {DWSIM.App.GetLocalString("TemperatureOfFusion"), Format(cv.ConverterDoSI(su.spmp_temperature, constprop.TemperatureOfFusion), nf), su.spmp_temperature})
+                constprop.TemperatureOfFusion = cv.ConverterParaSI(su.spmp_temperature, GridProps.Rows(e.RowIndex).Cells(1).Value)
+            Case 26 '.Add(New Object() {DWSIM.App.GetLocalString("EnthalpyOfFusionAtTf"), Format(constprop.EnthalpyOfFusionAtTf, nf), "kJ/mol"})
+                constprop.EnthalpyOfFusionAtTf = GridProps.Rows(e.RowIndex).Cells(1).Value
+            Case 27 '.Add(New Object() {DWSIM.App.GetLocalString("TemperatureOfSolidDensity_Ts"), Format(cv.ConverterDoSI(su.spmp_temperature, constprop.SolidTs), nf), su.spmp_temperature})
+                constprop.SolidTs = cv.ConverterParaSI(su.spmp_temperature, GridProps.Rows(e.RowIndex).Cells(1).Value)
+            Case 28 '.Add(New Object() {DWSIM.App.GetLocalString("SolidDensityAtTs"), Format(cv.ConverterDoSI(su.spmp_density, constprop.SolidDensityAtTs), nf), su.spmp_density})
+                constprop.SolidDensityAtTs = cv.ConverterParaSI(su.spmp_density, GridProps.Rows(e.RowIndex).Cells(1).Value)
         End Select
 
         For Each mat As DWSIM.SimulationObjects.Streams.MaterialStream In Me.ChildParent.Collections.CLCS_MaterialStreamCollection.Values

@@ -1127,7 +1127,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Dim REx(r) As Double
 
                 For i = 0 To r
-                    REx(i) = 0.0# '(lbound(i) + ubound(i)) / 2
+                    REx(i) = ubound(i) * 0.8
                 Next
 
                 Dim REx0(REx.Length - 1) As Double

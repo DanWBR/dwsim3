@@ -73,16 +73,19 @@ Imports Mono.CSharp
         tscb2.SelectedItem = 10
         tscb1.SelectedItem = "Courier New"
 
-        'readAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly)
-        'readAssembly(GetType(System.String).Assembly)
-        'readAssembly(GetType(Mapack.Matrix).Assembly)
+        readAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly)
+        readAssembly(GetType(DWSIM.SimulationObjects.PropertyPackages.PropertyPackage).Assembly)
+        readAssembly(GetType(System.String).Assembly)
+        readAssembly(GetType(Mapack.Matrix).Assembly)
 
-        'Me.txtScript.Controls.Add(Me.listBoxAutoComplete)
+        Me.txtScript.Controls.Add(Me.listBoxAutoComplete)
 
-        'With Me.listBoxAutoComplete
-        '    .Font = New Font("Arial", 9, FontStyle.Regular, GraphicsUnit.Point)
-        '    .Height = 150
-        'End With
+        Me.listBoxAutoComplete = New GListBox
+
+        With Me.listBoxAutoComplete
+            .Font = New Font("Arial", 9, FontStyle.Regular, GraphicsUnit.Point)
+            .Height = 150
+        End With
 
 
     End Sub
@@ -299,155 +302,153 @@ Imports Mono.CSharp
             currentChar = Me.txtScript.Document.Text.Substring(i - 1, 1)
         End If
 
-        'If e.KeyData = Keys.OemPeriod Then
-        '    ' The amazing dot key
+        If e.KeyData = Keys.OemPeriod Then
+            ' The amazing dot key
+            If Not Me.listBoxAutoComplete.Visible Then
+                ' Display the member listview if there are
+                ' items in it
+                If populateListBox() Then
+                    Me.listBoxAutoComplete.SelectedIndex = 0
+                    ' Find the position of the caret
+                    Dim point As Point = New Point(Me.txtScript.Caret.Position.X * Me.txtScript.FontSize + 34, Me.txtScript.Caret.Position.Y)
+                    point.Y += CInt(Math.Truncate(Me.txtScript.FontSize)) + 4
+                    point.X += 2
+                    ' for Courier, may need a better method
+                    Me.listBoxAutoComplete.Location = point
+                    Me.listBoxAutoComplete.BringToFront()
+                    Me.listBoxAutoComplete.Show()
+                End If
+            Else
+                Me.listBoxAutoComplete.Hide()
+                typed = ""
 
-        '    If Not Me.listBoxAutoComplete.Visible Then
-        '        ' Display the member listview if there are
-        '        ' items in it
-        '        If populateListBox() Then
-        '            'this.listBoxAutoComplete.SelectedIndex = 0;
+            End If
+        ElseIf e.KeyCode = Keys.Back Then
+            ' Delete key - hides the member list if the character
+            ' being deleted is a dot
 
-        '            ' Find the position of the caret
-        '            Dim point As Point = New Point(Me.txtScript.Caret.Position.X * Me.txtScript.FontSize + 34, Me.txtScript.Caret.Position.Y)
-        '            point.Y += CInt(Math.Truncate(Me.txtScript.FontSize)) + 4
-        '            point.X += 2
-        '            ' for Courier, may need a better method
-        '            Me.listBoxAutoComplete.Location = point
-        '            Me.listBoxAutoComplete.BringToFront()
-        '            Me.listBoxAutoComplete.Show()
-        '        End If
-        '    Else
-        '        Me.listBoxAutoComplete.Hide()
-        '        typed = ""
+            Me.textBoxTooltip.Hide()
+            If typed.Length > 0 Then
+                typed = typed.Substring(0, typed.Length - 1)
+            End If
+            If currentChar = "." Then
+                Me.listBoxAutoComplete.Hide()
 
-        '    End If
-        'ElseIf e.KeyCode = Keys.Back Then
-        '    ' Delete key - hides the member list if the character
-        '    ' being deleted is a dot
+            End If
+        ElseIf e.KeyCode = Keys.Up Then
+            ' The up key moves up our member list, if
+            ' the list is visible
 
-        '    Me.textBoxTooltip.Hide()
-        '    If typed.Length > 0 Then
-        '        typed = typed.Substring(0, typed.Length - 1)
-        '    End If
-        '    If currentChar = "." Then
-        '        Me.listBoxAutoComplete.Hide()
+            Me.textBoxTooltip.Hide()
 
-        '    End If
-        'ElseIf e.KeyCode = Keys.Up Then
-        '    ' The up key moves up our member list, if
-        '    ' the list is visible
+            If Me.listBoxAutoComplete.Visible Then
+                Me.wordMatched = True
+                If Me.listBoxAutoComplete.SelectedIndex > 0 Then
+                    Me.listBoxAutoComplete.SelectedIndex -= 1
+                End If
 
-        '    Me.textBoxTooltip.Hide()
+                e.Handled = True
+                e.SuppressKeyPress = True
+            End If
+        ElseIf e.KeyCode = Keys.Down Then
+            ' The up key moves down our member list, if
+            ' the list is visible
 
-        '    If Me.listBoxAutoComplete.Visible Then
-        '        Me.wordMatched = True
-        '        If Me.listBoxAutoComplete.SelectedIndex > 0 Then
-        '            Me.listBoxAutoComplete.SelectedIndex -= 1
-        '        End If
+            Me.textBoxTooltip.Hide()
 
-        '        e.Handled = True
-        '    End If
-        'ElseIf e.KeyCode = Keys.Down Then
-        '    ' The up key moves down our member list, if
-        '    ' the list is visible
+            If Me.listBoxAutoComplete.Visible Then
+                Me.wordMatched = True
+                If Me.listBoxAutoComplete.SelectedIndex < Me.listBoxAutoComplete.Items.Count - 1 Then
+                    Me.listBoxAutoComplete.SelectedIndex += 1
+                End If
 
-        '    Me.textBoxTooltip.Hide()
+                e.Handled = True
+                e.SuppressKeyPress = True
+            End If
+        ElseIf e.KeyCode = Keys.D9 Then
+            ' Trap the open bracket key, displaying a cheap and
+            ' cheerful tooltip if the word just typed is in our tree
+            ' (the parameters are stored in the tag property of the node)
 
-        '    If Me.listBoxAutoComplete.Visible Then
-        '        Me.wordMatched = True
-        '        If Me.listBoxAutoComplete.SelectedIndex < Me.listBoxAutoComplete.Items.Count - 1 Then
-        '            Me.listBoxAutoComplete.SelectedIndex += 1
-        '        End If
+            Dim word As String = Me.getLastWord()
+            Me.foundNode = False
+            Me.nameSpaceNode = Nothing
 
-        '        e.Handled = True
-        '    End If
-        'ElseIf e.KeyCode = Keys.D9 Then
-        '    ' Trap the open bracket key, displaying a cheap and
-        '    ' cheerful tooltip if the word just typed is in our tree
-        '    ' (the parameters are stored in the tag property of the node)
+            Me.currentPath = ""
+            searchTree(Me.treeViewItems.Nodes, word, False)
 
-        '    Dim word As String = Me.getLastWord()
-        '    Me.foundNode = False
-        '    Me.nameSpaceNode = Nothing
+            If Me.nameSpaceNode IsNot Nothing Then
+                If TypeOf Me.nameSpaceNode.Tag Is String Then
+                    Me.textBoxTooltip.Text = DirectCast(Me.nameSpaceNode.Tag, String)
 
-        '    Me.currentPath = ""
-        '    searchTree(Me.treeViewItems.Nodes, word, False)
+                    Dim point As Point = New Point(txtScript.Caret.Position.X, txtScript.Caret.Position.Y)
+                    point.Y += CInt(Math.Truncate(Math.Ceiling(Me.txtScript.FontSize))) + 2
+                    point.X -= 10
+                    Me.textBoxTooltip.Location = point
+                    Me.textBoxTooltip.Width = Me.textBoxTooltip.Text.Length * 6
 
-        '    If Me.nameSpaceNode IsNot Nothing Then
-        '        If TypeOf Me.nameSpaceNode.Tag Is String Then
-        '            Me.textBoxTooltip.Text = DirectCast(Me.nameSpaceNode.Tag, String)
+                    Me.textBoxTooltip.Size = New Size(Me.textBoxTooltip.Text.Length * 6, Me.textBoxTooltip.Height)
 
-        '            Dim point As Point = New Point(txtScript.Caret.Position.X, txtScript.Caret.Position.Y)
-        '            point.Y += CInt(Math.Truncate(Math.Ceiling(Me.txtScript.FontSize))) + 2
-        '            point.X -= 10
-        '            Me.textBoxTooltip.Location = point
-        '            Me.textBoxTooltip.Width = Me.textBoxTooltip.Text.Length * 6
+                    ' Resize tooltip for long parameters
+                    ' (doesn't wrap text nicely)
+                    If Me.textBoxTooltip.Width > 300 Then
+                        Me.textBoxTooltip.Width = 300
+                        Dim height As Integer = 0
+                        height = Me.textBoxTooltip.Text.Length \ 50
+                        Me.textBoxTooltip.Height = height * 15
+                    End If
+                    Me.textBoxTooltip.Show()
+                End If
+            End If
+        ElseIf e.KeyCode = Keys.D8 Then
+            ' Close bracket key, hide the tooltip textbox
+            Me.textBoxTooltip.Hide()
+        ElseIf e.KeyValue < 48 OrElse (e.KeyValue >= 58 AndAlso e.KeyValue <= 64) OrElse (e.KeyValue >= 91 AndAlso e.KeyValue <= 96) OrElse e.KeyValue > 122 Then
+            ' Check for any non alphanumerical key, hiding
+            ' member list box if it's visible.
 
-        '            Me.textBoxTooltip.Size = New Size(Me.textBoxTooltip.Text.Length * 6, Me.textBoxTooltip.Height)
+            If Me.listBoxAutoComplete.Visible Then
+                ' Check for keys for autofilling (return,tab,space)
+                ' and autocomplete the richtextbox when they're pressed.
+                If e.KeyCode = Keys.[Return] OrElse e.KeyCode = Keys.Tab OrElse e.KeyCode = Keys.Space Then
+                    Me.textBoxTooltip.Hide()
 
-        '            ' Resize tooltip for long parameters
-        '            ' (doesn't wrap text nicely)
-        '            If Me.textBoxTooltip.Width > 300 Then
-        '                Me.textBoxTooltip.Width = 300
-        '                Dim height As Integer = 0
-        '                height = Me.textBoxTooltip.Text.Length \ 50
-        '                Me.textBoxTooltip.Height = height * 15
-        '            End If
-        '            Me.textBoxTooltip.Show()
-        '        End If
-        '    End If
-        'ElseIf e.KeyCode = Keys.D8 Then
-        '    ' Close bracket key, hide the tooltip textbox
+                    ' Autocomplete
+                    Me.selectItem()
 
-        '    Me.textBoxTooltip.Hide()
-        'ElseIf e.KeyValue < 48 OrElse (e.KeyValue >= 58 AndAlso e.KeyValue <= 64) OrElse (e.KeyValue >= 91 AndAlso e.KeyValue <= 96) OrElse e.KeyValue > 122 Then
-        '    ' Check for any non alphanumerical key, hiding
-        '    ' member list box if it's visible.
+                    Me.typed = ""
+                    Me.wordMatched = False
+                    e.Handled = True
+                    e.SuppressKeyPress = True
+                End If
 
-        '    If Me.listBoxAutoComplete.Visible Then
-        '        ' Check for keys for autofilling (return,tab,space)
-        '        ' and autocomplete the richtextbox when they're pressed.
-        '        If e.KeyCode = Keys.[Return] OrElse e.KeyCode = Keys.Tab OrElse e.KeyCode = Keys.Space Then
-        '            Me.textBoxTooltip.Hide()
+                ' Hide the member list view
+                Me.listBoxAutoComplete.Hide()
+            End If
+        ElseIf e.KeyCode = Keys.F5 Then
+                Me.Button1_Click(sender, e)
+        Else
+            ' Letter or number typed, search for it in the listview
+            If Me.listBoxAutoComplete.Visible Then
+                Dim val As Char = ChrW(e.KeyValue)
+                Me.typed += val
 
-        '            ' Autocomplete
-        '            Me.selectItem()
+                Me.wordMatched = False
 
-        '            Me.typed = ""
-        '            Me.wordMatched = False
-        '            e.Handled = True
-        '        End If
+                ' Loop through all the items in the listview, looking
+                ' for one that starts with the letters typed
+                For i = 0 To Me.listBoxAutoComplete.Items.Count - 1
+                    If Me.listBoxAutoComplete.Items(i).ToString().ToLower().StartsWith(Me.typed.ToLower()) Then
+                        Me.wordMatched = True
+                        Me.listBoxAutoComplete.SelectedIndex = i
+                        Exit For
+                    End If
+                Next
+            Else
+                Me.typed = ""
+            End If
 
-        '        ' Hide the member list view
-        '        Me.listBoxAutoComplete.Hide()
-        '    End If
-        'Else
-
-        If e.KeyCode = Keys.F5 Then
-            Me.Button1_Click(sender, e)
-            'Else
-            '    ' Letter or number typed, search for it in the listview
-            '    If Me.listBoxAutoComplete.Visible Then
-            '        Dim val As Char = ChrW(e.KeyValue)
-            '        Me.typed += val
-
-            '        Me.wordMatched = False
-
-            '        ' Loop through all the items in the listview, looking
-            '        ' for one that starts with the letters typed
-            '        For i = 0 To Me.listBoxAutoComplete.Items.Count - 1
-            '            If Me.listBoxAutoComplete.Items(i).ToString().ToLower().StartsWith(Me.typed.ToLower()) Then
-            '                Me.wordMatched = True
-            '                Me.listBoxAutoComplete.SelectedIndex = i
-            '                Exit For
-            '            End If
-            '        Next
-            '    Else
-            '        Me.typed = ""
-            '    End If
-
-        End If
+            End If
     End Sub
 
     Private Sub txtScript_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles txtScript.MouseDown
@@ -921,6 +922,7 @@ Namespace Intellisense
 
     End Class
 #End Region
+
 End Namespace
 
 

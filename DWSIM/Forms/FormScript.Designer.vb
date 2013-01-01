@@ -21,44 +21,45 @@
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormScript))
-        Me.txtOutput = New System.Windows.Forms.TextBox
-        Me.txtScript = New Alsing.Windows.Forms.SyntaxBoxControl
-        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
-        Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton
-        Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton
-        Me.PrintToolStripButton = New System.Windows.Forms.ToolStripButton
-        Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator
-        Me.CutToolStripButton = New System.Windows.Forms.ToolStripButton
-        Me.CopyToolStripButton = New System.Windows.Forms.ToolStripButton
-        Me.PasteToolStripButton = New System.Windows.Forms.ToolStripButton
-        Me.toolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator
-        Me.tscb1 = New System.Windows.Forms.ToolStripComboBox
-        Me.tscb2 = New System.Windows.Forms.ToolStripComboBox
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator
-        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton
-        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem
-        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem
-        Me.txtErrorList = New System.Windows.Forms.TextBox
-        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip
-        Me.ofd1 = New System.Windows.Forms.OpenFileDialog
-        Me.sfd1 = New System.Windows.Forms.SaveFileDialog
-        Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip
-        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem
-        Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem
-        Me.ListBox1 = New System.Windows.Forms.ListBox
-        Me.FaTabStripItem5 = New FarsiLibrary.Win.FATabStripItem
-        Me.treeViewItems = New System.Windows.Forms.TreeView
+        Me.txtOutput = New System.Windows.Forms.TextBox()
+        Me.txtScript = New Alsing.Windows.Forms.SyntaxBoxControl()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.PrintToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
+        Me.CutToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.CopyToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.PasteToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.toolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tscb1 = New System.Windows.Forms.ToolStripComboBox()
+        Me.tscb2 = New System.Windows.Forms.ToolStripComboBox()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
+        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
+        Me.txtErrorList = New System.Windows.Forms.TextBox()
+        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
+        Me.ofd1 = New System.Windows.Forms.OpenFileDialog()
+        Me.sfd1 = New System.Windows.Forms.SaveFileDialog()
+        Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip()
+        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
+        Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.FaTabStripItem5 = New FarsiLibrary.Win.FATabStripItem()
+        Me.treeViewItems = New System.Windows.Forms.TreeView()
         Me.imageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.ofd2 = New System.Windows.Forms.OpenFileDialog
-        Me.pd1 = New System.Windows.Forms.PrintDialog
-        Me.textBoxTooltip = New System.Windows.Forms.TextBox
+        Me.ofd2 = New System.Windows.Forms.OpenFileDialog()
+        Me.pd1 = New System.Windows.Forms.PrintDialog()
+        Me.textBoxTooltip = New System.Windows.Forms.TextBox()
+        Me.listBoxAutoComplete = New Global.DWSIM.GListBox()
         Me.ToolStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
         Me.FaTabStripItem2.SuspendLayout()
@@ -341,10 +342,19 @@
         Me.textBoxTooltip.Name = "textBoxTooltip"
         Me.textBoxTooltip.ReadOnly = True
         '
+        'listBoxAutoComplete
+        '
+        Me.listBoxAutoComplete.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.listBoxAutoComplete.FormattingEnabled = True
+        Me.listBoxAutoComplete.ImageList = Nothing
+        resources.ApplyResources(Me.listBoxAutoComplete, "listBoxAutoComplete")
+        Me.listBoxAutoComplete.Name = "listBoxAutoComplete"
+        '
         'FormScript
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.listBoxAutoComplete)
         Me.Controls.Add(Me.FaTabStrip2)
         Me.Controls.Add(Me.FaTabStrip1)
         Me.Controls.Add(Me.ToolStrip1)
@@ -401,8 +411,8 @@
     Public WithEvents tscb1 As System.Windows.Forms.ToolStripComboBox
     Public WithEvents tscb2 As System.Windows.Forms.ToolStripComboBox
     Public WithEvents imageList1 As System.Windows.Forms.ImageList
-    Public WithEvents listBoxAutoComplete As GListBox
     Public WithEvents textBoxTooltip As System.Windows.Forms.TextBox
     Public WithEvents FaTabStripItem5 As FarsiLibrary.Win.FATabStripItem
     Public WithEvents treeViewItems As System.Windows.Forms.TreeView
+    Friend WithEvents listBoxAutoComplete As Global.DWSIM.GListBox
 End Class
