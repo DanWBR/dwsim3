@@ -363,9 +363,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Objects\Classes\Controls\GListBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Objects\Classes\Databases\Databases.vb" />
     <Compile Include="Objects\Classes\General\ConsoleRedirection.vb" />
     <Compile Include="Objects\Classes\MAPI\MAPI.vb" />

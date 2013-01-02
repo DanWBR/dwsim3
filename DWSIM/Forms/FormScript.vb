@@ -5,9 +5,9 @@ Imports Microsoft.Scripting.Hosting
 Imports System.Drawing.Text
 Imports System.Reflection
 Imports System.ComponentModel
-Imports DWSIM.Intellisense
 Imports LuaInterface
 Imports Mono.CSharp
+Imports DWSIM.Intellisense
 
 <System.Serializable()> Public Class FormScript
 
@@ -36,7 +36,7 @@ Imports Mono.CSharp
     Private currentPath As String
 #End Region
 
-    Private Sub FormVBScript_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub FormVBScript_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Me.Load
 
         Me.txtScript.Document = New Alsing.SourceCode.SyntaxDocument()
         With Me.txtScript.Document
@@ -74,17 +74,13 @@ Imports Mono.CSharp
         tscb1.SelectedItem = "Courier New"
 
         readAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly)
-        readAssembly(GetType(DWSIM.SimulationObjects.PropertyPackages.PropertyPackage).Assembly)
         readAssembly(GetType(System.String).Assembly)
-        readAssembly(GetType(Mapack.Matrix).Assembly)
-
-        Me.txtScript.Controls.Add(Me.listBoxAutoComplete)
-
-        Me.listBoxAutoComplete = New GListBox
+        readAssembly(GetType(CapeOpen.BaseUnitEditor).Assembly)
+        readAssembly(GetType(CAPEOPEN110.ICapeThermoPhases).Assembly)
 
         With Me.listBoxAutoComplete
-            .Font = New Font("Arial", 9, FontStyle.Regular, GraphicsUnit.Point)
-            .Height = 150
+            .Font = New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point)
+            .Height = 250
         End With
 
 
@@ -375,20 +371,16 @@ Imports Mono.CSharp
             Me.nameSpaceNode = Nothing
 
             Me.currentPath = ""
-            searchTree(Me.treeViewItems.Nodes, word, False)
+            searchTree(Me.treeViewItems.Nodes, ReplacePath(word), True)
 
             If Me.nameSpaceNode IsNot Nothing Then
                 If TypeOf Me.nameSpaceNode.Tag Is String Then
                     Me.textBoxTooltip.Text = DirectCast(Me.nameSpaceNode.Tag, String)
-
-                    Dim point As Point = New Point(txtScript.Caret.Position.X, txtScript.Caret.Position.Y)
-                    point.Y += CInt(Math.Truncate(Math.Ceiling(Me.txtScript.FontSize))) + 2
-                    point.X -= 10
-                    Me.textBoxTooltip.Location = point
+                    ' Find the position of the caret
+                    Dim point As Point = New Point(Me.txtScript.Caret.Position.X * Me.txtScript.FontSize, Me.txtScript.Caret.Position.Y)
+                    point.Y += CInt(Math.Truncate(Me.txtScript.FontSize)) + 4
                     Me.textBoxTooltip.Width = Me.textBoxTooltip.Text.Length * 6
-
                     Me.textBoxTooltip.Size = New Size(Me.textBoxTooltip.Text.Length * 6, Me.textBoxTooltip.Height)
-
                     ' Resize tooltip for long parameters
                     ' (doesn't wrap text nicely)
                     If Me.textBoxTooltip.Width > 300 Then
@@ -397,6 +389,7 @@ Imports Mono.CSharp
                         height = Me.textBoxTooltip.Text.Length \ 50
                         Me.textBoxTooltip.Height = height * 15
                     End If
+                    Me.textBoxTooltip.Location = point
                     Me.textBoxTooltip.Show()
                 End If
             End If
@@ -423,10 +416,10 @@ Imports Mono.CSharp
                 End If
 
                 ' Hide the member list view
-                Me.listBoxAutoComplete.Hide()
+                If e.KeyCode <> Keys.ShiftKey Then Me.listBoxAutoComplete.Hide()
             End If
         ElseIf e.KeyCode = Keys.F5 Then
-                Me.Button1_Click(sender, e)
+            Me.Button1_Click(sender, e)
         Else
             ' Letter or number typed, search for it in the listview
             If Me.listBoxAutoComplete.Visible Then
@@ -448,7 +441,7 @@ Imports Mono.CSharp
                 Me.typed = ""
             End If
 
-            End If
+        End If
     End Sub
 
     Private Sub txtScript_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles txtScript.MouseDown
@@ -461,12 +454,12 @@ Imports Mono.CSharp
         End Try
     End Sub
 
-    Private Sub listBoxAutoComplete_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Private Sub listBoxAutoComplete_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles listBoxAutoComplete.KeyDown
         ' Ignore any keys being pressed on the listview
         Me.txtScript.Focus()
     End Sub
 
-    Private Sub listBoxAutoComplete_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs)
+    Private Sub listBoxAutoComplete_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles listBoxAutoComplete.DoubleClick
         ' Item double clicked, select it
         If Me.listBoxAutoComplete.SelectedItems.Count = 1 Then
             Me.wordMatched = True
@@ -477,7 +470,7 @@ Imports Mono.CSharp
         End If
     End Sub
 
-    Private Sub listBoxAutoComplete_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs)
+    Private Sub listBoxAutoComplete_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles listBoxAutoComplete.SelectedIndexChanged
         ' Make sure when an item is selected, control is returned back to the richtext
         Me.txtScript.Focus()
     End Sub
@@ -488,6 +481,13 @@ Imports Mono.CSharp
     End Sub
 
 #Region "Util methods"
+
+    Public Function ReplacePath(word As String) As String
+        word = word.ToLower
+        If word.Contains("flowsheet") Then Return word.Replace("flowsheet", "DWSIM.FormFlowsheet")
+        If word.Contains("solver") Then Return word.Replace("solver", "DWSIM.DWSIM.Flowsheet.FlowsheetSolver")
+        Return word
+    End Function
 
     ''' <summary>
     ''' Takes an assembly filename, opens it and retrieves all types.
@@ -654,15 +654,12 @@ Imports Mono.CSharp
         End If
 
         For i As Integer = 0 To treeNodes.Count - 1
-            If treeNodes(i).FullPath = currentPath Then
+            If treeNodes(i).FullPath.ToLower = currentPath.ToLower Then
                 If continueUntilFind Then
                     nameSpaceNode = treeNodes(i)
                 End If
-
                 nameSpaceNode = treeNodes(i)
-
                 ' got a dot, continue, or return
-
                 Me.searchTree(treeNodes(i).Nodes, path, continueUntilFind)
             ElseIf Not continueUntilFind Then
                 foundNode = True
@@ -679,7 +676,7 @@ Imports Mono.CSharp
     ''' <param name="treeNodes"></param>
     Private Sub findNode(ByVal path As String, ByVal treeNodes As TreeNodeCollection)
         For i As Integer = 0 To treeNodes.Count - 1
-            If treeNodes(i).FullPath = path Then
+            If treeNodes(i).FullPath.ToLower = path.ToLower Then
                 Me.findNodeResult = treeNodes(i)
                 Exit For
             ElseIf treeNodes(i).Nodes.Count > 0 Then
@@ -702,7 +699,7 @@ Imports Mono.CSharp
 
         If word <> "" Then
             findNodeResult = Nothing
-            findNode(word, Me.treeViewItems.Nodes)
+            findNode(ReplacePath(word), Me.treeViewItems.Nodes)
 
             If Me.findNodeResult IsNot Nothing Then
                 Me.listBoxAutoComplete.Items.Clear()
@@ -749,7 +746,7 @@ Imports Mono.CSharp
                             End If
                         End If
 
-                        Me.listBoxAutoComplete.Items.Add(New GListBoxItem(items(n).DisplayText, imageindex))
+                        Me.listBoxAutoComplete.Items.Add(New Intellisense.GListBoxItem(items(n).DisplayText, imageindex))
                     Next
                 End If
             End If
@@ -875,10 +872,10 @@ Namespace Intellisense
             e.DrawFocusRectangle()
             Dim item As GListBoxItem
             Dim bounds As Rectangle = e.Bounds
-            Dim imageSize As Size = _myImageList.ImageSize
             Try
                 item = DirectCast(Items(e.Index), GListBoxItem)
                 If item.ImageIndex <> -1 Then
+                    Dim imageSize As Size = _myImageList.ImageSize
                     _myImageList.Draw(e.Graphics, bounds.Left, bounds.Top, item.ImageIndex)
                     e.Graphics.DrawString(item.Text, e.Font, New SolidBrush(e.ForeColor), bounds.Left + imageSize.Width, bounds.Top)
                 Else

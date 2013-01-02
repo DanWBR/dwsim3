@@ -51,15 +51,15 @@
         Me.sfd1 = New System.Windows.Forms.SaveFileDialog()
         Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
+        Me.listBoxAutoComplete = New Intellisense.GListBox()
+        Me.imageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.FaTabStripItem5 = New FarsiLibrary.Win.FATabStripItem()
         Me.treeViewItems = New System.Windows.Forms.TreeView()
-        Me.imageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ofd2 = New System.Windows.Forms.OpenFileDialog()
         Me.pd1 = New System.Windows.Forms.PrintDialog()
         Me.textBoxTooltip = New System.Windows.Forms.TextBox()
-        Me.listBoxAutoComplete = New Global.DWSIM.GListBox()
         Me.ToolStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
         Me.FaTabStripItem2.SuspendLayout()
@@ -277,11 +277,32 @@
         'FaTabStripItem3
         '
         Me.FaTabStripItem3.CanClose = False
+        Me.FaTabStripItem3.Controls.Add(Me.textBoxTooltip)
+        Me.FaTabStripItem3.Controls.Add(Me.listBoxAutoComplete)
         Me.FaTabStripItem3.Controls.Add(Me.txtScript)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
         Me.FaTabStripItem3.Selected = True
         resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
+        '
+        'listBoxAutoComplete
+        '
+        Me.listBoxAutoComplete.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.listBoxAutoComplete.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.listBoxAutoComplete.FormattingEnabled = True
+        Me.listBoxAutoComplete.ImageList = Me.imageList1
+        resources.ApplyResources(Me.listBoxAutoComplete, "listBoxAutoComplete")
+        Me.listBoxAutoComplete.Name = "listBoxAutoComplete"
+        '
+        'imageList1
+        '
+        Me.imageList1.ImageStream = CType(resources.GetObject("imageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.imageList1.TransparentColor = System.Drawing.Color.Lime
+        Me.imageList1.Images.SetKeyName(0, "")
+        Me.imageList1.Images.SetKeyName(1, "")
+        Me.imageList1.Images.SetKeyName(2, "")
+        Me.imageList1.Images.SetKeyName(3, "")
+        Me.imageList1.Images.SetKeyName(4, "")
         '
         'FaTabStripItem4
         '
@@ -310,19 +331,8 @@
         'treeViewItems
         '
         resources.ApplyResources(Me.treeViewItems, "treeViewItems")
-        Me.treeViewItems.LineColor = System.Drawing.Color.Empty
         Me.treeViewItems.Name = "treeViewItems"
         Me.treeViewItems.PathSeparator = "."
-        '
-        'imageList1
-        '
-        Me.imageList1.ImageStream = CType(resources.GetObject("imageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.imageList1.TransparentColor = System.Drawing.Color.Lime
-        Me.imageList1.Images.SetKeyName(0, "")
-        Me.imageList1.Images.SetKeyName(1, "")
-        Me.imageList1.Images.SetKeyName(2, "")
-        Me.imageList1.Images.SetKeyName(3, "")
-        Me.imageList1.Images.SetKeyName(4, "")
         '
         'ofd2
         '
@@ -342,19 +352,10 @@
         Me.textBoxTooltip.Name = "textBoxTooltip"
         Me.textBoxTooltip.ReadOnly = True
         '
-        'listBoxAutoComplete
-        '
-        Me.listBoxAutoComplete.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.listBoxAutoComplete.FormattingEnabled = True
-        Me.listBoxAutoComplete.ImageList = Nothing
-        resources.ApplyResources(Me.listBoxAutoComplete, "listBoxAutoComplete")
-        Me.listBoxAutoComplete.Name = "listBoxAutoComplete"
-        '
         'FormScript
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.listBoxAutoComplete)
         Me.Controls.Add(Me.FaTabStrip2)
         Me.Controls.Add(Me.FaTabStrip1)
         Me.Controls.Add(Me.ToolStrip1)
@@ -372,6 +373,7 @@
         CType(Me.FaTabStrip2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStrip2.ResumeLayout(False)
         Me.FaTabStripItem3.ResumeLayout(False)
+        Me.FaTabStripItem3.PerformLayout()
         Me.FaTabStripItem4.ResumeLayout(False)
         Me.FaTabStripItem5.ResumeLayout(False)
         Me.ResumeLayout(False)
@@ -411,8 +413,8 @@
     Public WithEvents tscb1 As System.Windows.Forms.ToolStripComboBox
     Public WithEvents tscb2 As System.Windows.Forms.ToolStripComboBox
     Public WithEvents imageList1 As System.Windows.Forms.ImageList
-    Public WithEvents textBoxTooltip As System.Windows.Forms.TextBox
     Public WithEvents FaTabStripItem5 As FarsiLibrary.Win.FATabStripItem
     Public WithEvents treeViewItems As System.Windows.Forms.TreeView
-    Friend WithEvents listBoxAutoComplete As Global.DWSIM.GListBox
+    Friend WithEvents listBoxAutoComplete As Intellisense.GListBox
+    Private WithEvents textBoxTooltip As System.Windows.Forms.TextBox
 End Class
