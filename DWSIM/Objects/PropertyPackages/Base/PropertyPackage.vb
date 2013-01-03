@@ -5719,7 +5719,11 @@ Final3:
             Next
 
             sub1 = Me.CurrentMaterialStream.Fases(phasenumber).Componentes(subst)
-            Return sub1.FracaoMolar.GetValueOrDefault * sub1.ConstantProperties.Molar_Weight / mol_x_mm
+            If mol_x_mm <> 0.0# Then
+                Return sub1.FracaoMolar.GetValueOrDefault * sub1.ConstantProperties.Molar_Weight / mol_x_mm
+            Else
+                Return 0.0#
+            End If
 
         End Function
 
@@ -6365,7 +6369,11 @@ Final3:
 
             i = 0
             For Each sub1 In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                Vwe(i) = Vz(i) * sub1.ConstantProperties.Molar_Weight / mol_x_mm
+                If mol_x_mm <> 0 Then
+                    Vwe(i) = Vz(i) * sub1.ConstantProperties.Molar_Weight / mol_x_mm
+                Else
+                    Vwe(i) = 0.0#
+                End If
                 i += 1
             Next
 

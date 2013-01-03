@@ -3454,6 +3454,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
                         With msm
                             .Fases(0).SPMProperties.massflow = LSSf(0) * pp.AUX_MMM(xf(0)) / 1000
+                            .Fases(0).SPMProperties.molarflow = LSSf(0)
                             .Fases(0).SPMProperties.temperature = Tf(0)
                             .Fases(0).SPMProperties.pressure = P(0) - Me.CondenserDeltaP
                             i = 0
@@ -3461,11 +3462,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 subst.FracaoMolar = xf(0)(i)
                                 i += 1
                             Next
-                            'i = 0
-                            'For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(1).Componentes.Values
-                            '    subst.FracaoMolar = xf(0)(i)
-                            '    i += 1
-                            'Next
+                            i = 0
+                            For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(0).Componentes.Values
+                                subst.FracaoMassica = pp.AUX_CONVERT_MOL_TO_MASS(xf(0))(i)
+                                i += 1
+                            Next
                         End With
                     Case StreamInformation.Behavior.OverheadVapor
                         msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
@@ -3478,11 +3479,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 subst.FracaoMolar = yf(0)(i)
                                 i += 1
                             Next
-                            'i = 0
-                            'For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(2).Componentes.Values
-                            '    subst.FracaoMolar = yf(0)(i)
-                            '    i += 1
-                            'Next
+                            i = 0
+                            For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(0).Componentes.Values
+                                subst.FracaoMassica = pp.AUX_CONVERT_MOL_TO_MASS(yf(0))(i)
+                                i += 1
+                            Next
                         End With
                     Case StreamInformation.Behavior.BottomsLiquid
                         msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
@@ -3495,11 +3496,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 subst.FracaoMolar = xf(ns)(i)
                                 i += 1
                             Next
-                            'i = 0
-                            'For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(1).Componentes.Values
-                            '    subst.FracaoMolar = xf(ns)(i)
-                            '    i += 1
-                            'Next
+                            i = 0
+                            For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(0).Componentes.Values
+                                subst.FracaoMassica = pp.AUX_CONVERT_MOL_TO_MASS(xf(ns))(i)
+                                i += 1
+                            Next
                         End With
                     Case StreamInformation.Behavior.Sidedraw
                         Dim sidx As Integer = StageIndex(sinf.AssociatedStage)
@@ -3514,11 +3515,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     subst.FracaoMolar = xf(sidx)(i)
                                     i += 1
                                 Next
-                                'i = 0
-                                'For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(1).Componentes.Values
-                                '    subst.FracaoMolar = xf(sidx)(i)
-                                '    i += 1
-                                'Next
+                                i = 0
+                                For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(0).Componentes.Values
+                                    subst.FracaoMassica = pp.AUX_CONVERT_MOL_TO_MASS(xf(sidx))(i)
+                                    i += 1
+                                Next
                             End With
                         ElseIf sinf.StreamPhase = StreamInformation.Phase.V Then
                             With msm
@@ -3530,11 +3531,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     subst.FracaoMolar = yf(sidx)(i)
                                     i += 1
                                 Next
-                                'i = 0
-                                'For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(2).Componentes.Values
-                                '    subst.FracaoMolar = yf(sidx)(i)
-                                '    i += 1
-                                'Next
+                                i = 0
+                                For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(0).Componentes.Values
+                                    subst.FracaoMassica = pp.AUX_CONVERT_MOL_TO_MASS(yf(sidx))(i)
+                                    i += 1
+                                Next
                             End With
                         End If
                 End Select

@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PROP_AC_0" xml:space="preserve">
     <value>Kopfdruck</value>
@@ -443,15 +443,19 @@
   </data>
   <data name="PROP_MS_126" xml:space="preserve">
     <value>Bubble Pressure at Stream Temperature</value>
+    <comment>0</comment>
   </data>
   <data name="PROP_MS_127" xml:space="preserve">
     <value>Dew Pressure at Stream Temperature</value>
+    <comment>0</comment>
   </data>
   <data name="PROP_MS_128" xml:space="preserve">
     <value>Bubble Temperature at Stream Pressure</value>
+    <comment>0</comment>
   </data>
   <data name="PROP_MS_129" xml:space="preserve">
     <value>Dew Temperature at Stream Pressure</value>
+    <comment>0</comment>
   </data>
   <data name="PROP_MS_13" xml:space="preserve">
     <value>Molare Masse Dampfphase</value>
@@ -459,6 +463,7 @@
   </data>
   <data name="PROP_MS_130" xml:space="preserve">
     <value>Phases</value>
+    <comment>0</comment>
   </data>
   <data name="PROP_MS_14" xml:space="preserve">
     <value>Spezifische Enthalpie Dampfphase</value>

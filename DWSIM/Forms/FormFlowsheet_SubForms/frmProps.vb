@@ -1348,6 +1348,11 @@ Public Class frmProps
                     'ChildParent.WriteToLog(ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                 Finally
                     CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.OldValue, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).Tag = e.ChangedItem.Value
+                    For Each g As GraphicObject In ChildParent.FormSurface.FlowsheetDesignSurface.drawingObjects
+                        If g.TipoObjeto = TipoObjeto.GO_MasterTable Then
+                            CType(g, DWSIM.GraphicObjects.MasterTableGraphic).Update(ChildParent)
+                        End If
+                    Next
                 End Try
             Else
                 MessageBox.Show(DWSIM.App.GetLocalString("JaExisteObjetoNome"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
