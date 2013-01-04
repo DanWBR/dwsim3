@@ -393,6 +393,12 @@ Imports DWSIM.Intellisense
 
     Public Function ReplacePath(word As String) As String
         word = word.ToLower
+        If word.Contains("ims1.propertypackage") Then Return word.Replace("ims1.propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
+        If word.Contains("ims2.propertypackage") Then Return word.Replace("ims2.propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
+        If word.Contains("ims3.propertypackage") Then Return word.Replace("ims3.propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
+        If word.Contains("oms1.propertypackage") Then Return word.Replace("oms1.propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
+        If word.Contains("oms2.propertypackage") Then Return word.Replace("oms2.propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
+        If word.Contains("oms3.propertypackage") Then Return word.Replace("oms3.propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
         If word.Contains("ims1") Then Return word.Replace("ims1", "DWSIM.DWSIM.Streams.MaterialStream")
         If word.Contains("ims2") Then Return word.Replace("ims2", "DWSIM.DWSIM.Streams.MaterialStream")
         If word.Contains("ims3") Then Return word.Replace("ims3", "DWSIM.DWSIM.Streams.MaterialStream")

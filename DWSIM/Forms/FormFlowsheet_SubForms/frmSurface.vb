@@ -603,6 +603,7 @@ Public Class frmSurface
 
                                     Dim tabela As New DWSIM.GraphicObjects.QuickTableGraphic(obj, px2.X + 5, px2.Y + 5)
                                     obj.TabelaRapida = tabela
+                                    obj.TabelaRapida.BaseOwner = obj
                                     tabela.Tag = obj.Nome
                                     tabela.Name = "QTAB-" & Guid.NewGuid.ToString
                                     tabela.HeaderText = gobj.Tag
@@ -617,6 +618,7 @@ Public Class frmSurface
 
                                 Me.m_qt = obj.TabelaRapida
                                 If Not Me.FlowsheetDesignSurface.drawingObjects.Contains(obj.TabelaRapida) Then
+                                    obj.TabelaRapida.BaseOwner = obj
                                     Me.FlowsheetDesignSurface.drawingObjects.Add(obj.TabelaRapida)
                                 End If
                                 Me.FlowsheetDesignSurface.Invalidate()

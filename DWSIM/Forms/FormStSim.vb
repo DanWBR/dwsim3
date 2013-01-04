@@ -49,6 +49,12 @@ Public Class FormStSim
 
         Init()
 
+        If DWSIM.App.IsRunningOnMono Then
+            Me.ListViewPP.View = View.List
+        Else
+            Me.ListViewPP.View = View.Tile
+        End If
+
     End Sub
 
     Private Sub FormStSim_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing

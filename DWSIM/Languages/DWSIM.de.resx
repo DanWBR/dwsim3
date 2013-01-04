@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="_12Propanodiol" xml:space="preserve">
     <value>1,2-Propanediol (C3H8O2)</value>
@@ -4536,7 +4536,7 @@ A modification to the attraction term in the Peng-Robinson equation of state pub
 PRSV2 is particularly advantageous for VLE calculations. While PRSV1 does offer an advantage over the Peng-Robinson model for describing thermodynamic behavior, it is still not accurate enough, in general, for phase equilibrium calculations.</value>
   </data>
   <data name="MasterTable" xml:space="preserve">
-    <value>Master Property Table</value>
+    <value>Haupttabelle Eigenschaften</value>
   </data>
   <data name="MT_ObjectsToShow" xml:space="preserve">
     <value>Objects to Show</value>

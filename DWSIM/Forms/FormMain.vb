@@ -501,7 +501,7 @@ Public Class FormMain
         End If
 
         Dim LQPP As LIQUAC2PropertyPackage = New LIQUAC2PropertyPackage()
-        LQPP.ComponentName = "LIQUAC2 (Electrolyte)"
+        LQPP.ComponentName = "LIQUAC2 (Aqueous Electrolytes)"
         LQPP.ComponentDescription = DWSIM.App.GetLocalString("DescLQPP")
 
         PropertyPackages.Add(LQPP.ComponentName.ToString, LQPP)
@@ -2360,15 +2360,15 @@ Public Class FormMain
 
             'form = Nothing
 
-            form.WindowState = FormWindowState.Normal
-            form.WindowState = FormWindowState.Maximized
-            Application.DoEvents()
-            form.FormSurface.FlowsheetDesignSurface.ZoomAll()
-            Application.DoEvents()
-            form.FormSurface.FlowsheetDesignSurface.ZoomAll()
-            Application.DoEvents()
-            form.FormSurface.FlowsheetDesignSurface.Zoom = 1.0#
-            Application.DoEvents()
+            If xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView") IsNot Nothing Then
+                Dim flsconfig As String = xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView").Value
+                If flsconfig <> "" Then
+                    form.FormSurface.FlowsheetDesignSurface.Zoom = flsconfig.Split(";")(0)
+                    form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value = flsconfig.Split(";")(1)
+                    form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value = flsconfig.Split(";")(2)
+                End If
+            End If
+
             form.TSTBZoom.Text = Format(form.FormSurface.FlowsheetDesignSurface.Zoom, "#%")
 
             Application.DoEvents()
@@ -2475,6 +2475,19 @@ Public Class FormMain
         xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Add(New XElement("Data2"))
         xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("Data1").Value = form.FormSpreadsheet.CopyDT1ToString()
         xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("Data2").Value = form.FormSpreadsheet.CopyDT2ToString()
+
+        Dim flsconfig As New StringBuilder()
+
+        With flsconfig
+            .Append(form.FormSurface.FlowsheetDesignSurface.Zoom & ";")
+            .Append(form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value & ";")
+            .Append(form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value)
+        End With
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("FlowsheetView"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView")
+
+        xel.Add(flsconfig.ToString)
 
         xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("PanelLayout"))
         xel = xdoc.Element("DWSIM_Simulation_Data").Element("PanelLayout")

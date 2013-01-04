@@ -443,7 +443,7 @@ Partial Class FormFlowsheet
         Me.TSTable.IsDrawn = True
         Me.TSTable.Name = "TSTable"
         resources.ApplyResources(Me.TSTable, "TSTable")
-        Me.TSTable.Title = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.TSTable.Title = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'ToolStrip2
         '
@@ -1136,7 +1136,6 @@ Partial Class FormFlowsheet
         Me.Controls.Add(Me.MenuStrip1)
         Me.DoubleBuffered = True
         Me.Name = "FormFlowsheet"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ToolStrip4.ResumeLayout(False)
         Me.ToolStrip4.PerformLayout()
         Me.ToolStrip7.ResumeLayout(False)

@@ -34,7 +34,7 @@ Public Class FormSensAnalysis
     Public selectedindex As Integer = 0
     Public selectedsacase As SensitivityAnalysisCase
 
-    Public cbc2, cbc3 As DataGridViewComboBoxCell
+    Public cbc2, cbc3, cbc0, cbc1 As DataGridViewComboBoxCell
 
     Private Sub FormSensAnalysis_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -52,18 +52,24 @@ Public Class FormSensAnalysis
             Me.lbCases.Items.Add(sacase.name)
         Next
 
-        Me.cbObjDepVar.Items.Clear()
         Me.cbObjIndVar1.Items.Clear()
         Me.cbObjIndVar2.Items.Clear()
-        Me.cbPropDepVar.Items.Clear()
         Me.cbPropIndVar1.Items.Clear()
         Me.cbPropIndVar2.Items.Clear()
 
         For Each obj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
-            Me.cbObjDepVar.Items.Add(obj.GraphicObject.Tag)
             Me.cbObjIndVar1.Items.Add(obj.GraphicObject.Tag)
             Me.cbObjIndVar2.Items.Add(obj.GraphicObject.Tag)
         Next
+
+        cbc0 = New DataGridViewComboBoxCell
+        cbc0.Sorted = True
+        cbc0.MaxDropDownItems = 10
+        For Each obj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+            cbc0.Items.Add(obj.GraphicObject.Tag)
+        Next
+        cbc1 = New DataGridViewComboBoxCell
+        cbc1.MaxDropDownItems = 10
 
         cbc2 = New DataGridViewComboBoxCell
         cbc2.Sorted = True
@@ -88,6 +94,11 @@ Public Class FormSensAnalysis
             .Style.BackColor = Color.FromKnownColor(KnownColor.Control)
         End With
 
+        With Me.dgDepVariables
+            .Columns(1).CellTemplate = cbc0
+            .Columns(2).CellTemplate = cbc1
+        End With
+
         With Me.dgVariables
             .Columns(0).CellTemplate = tbc1
             .Columns(1).CellTemplate = tbc1
@@ -98,6 +109,7 @@ Public Class FormSensAnalysis
             .Columns(1).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft
         End With
 
+        If Me.lbCases.Items.Count > 0 Then Me.lbCases.SelectedIndex = Me.lbCases.Items.Count - 1
 
     End Sub
 
@@ -142,19 +154,6 @@ Public Class FormSensAnalysis
         End If
     End Sub
 
-    Private Sub cbObjDepVar_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbObjDepVar.SelectedIndexChanged
-        Me.cbPropDepVar.Items.Clear()
-        If Not Me.cbObjDepVar.SelectedItem Is Nothing Then
-            If Me.cbObjDepVar.SelectedItem.ToString <> "" Then
-                Dim props As String() = Me.ReturnProperties(Me.cbObjDepVar.SelectedItem.ToString, True)
-                For Each prop As String In props
-                    Me.cbPropDepVar.Items.Add(DWSIM.App.GetPropertyName(prop))
-                Next
-            End If
-        End If
-
-    End Sub
-
     Private Sub cbPropIndVar1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbPropIndVar1.SelectedIndexChanged
         Dim props As String() = Me.ReturnProperties(Me.cbObjIndVar1.SelectedItem.ToString, False)
         For Each prop As String In props
@@ -175,19 +174,6 @@ Public Class FormSensAnalysis
                 For Each obj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                     If Me.cbObjIndVar2.SelectedItem.ToString = obj.GraphicObject.Tag Then
                         Me.tbUnitIndVar2.Text = obj.GetPropertyUnit(prop, su)
-                    End If
-                Next
-            End If
-        Next
-    End Sub
-
-    Private Sub cbPropDepVar_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbPropDepVar.SelectedIndexChanged
-        Dim props As String() = Me.ReturnProperties(Me.cbObjDepVar.SelectedItem.ToString, True)
-        For Each prop As String In props
-            If DWSIM.App.GetPropertyName(prop) = Me.cbPropDepVar.SelectedItem.ToString Then
-                For Each obj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
-                    If Me.cbObjDepVar.SelectedItem.ToString = obj.GraphicObject.Tag Then
-                        Me.tbUnitDepVar.Text = obj.GetPropertyUnit(prop, su)
                     End If
                 Next
             End If
@@ -226,10 +212,17 @@ Public Class FormSensAnalysis
                 Me.tbUpperLimIndVar2.Text = .upperlimit.GetValueOrDefault
                 Me.nuNumPointsIndVar2.Value = .points
             End With
-            With sacase.dv
-                Me.cbObjDepVar.SelectedItem = .objectTAG
-                Me.cbPropDepVar.SelectedItem = DWSIM.App.GetPropertyName(.propID)
-            End With
+            Me.dgDepVariables.Rows.Clear()
+            For Each var As SAVariable In .depvariables.Values
+                With var
+                    Me.dgDepVariables.Rows.Add()
+                    Dim dgrow As DataGridViewRow = Me.dgDepVariables.Rows(Me.dgDepVariables.Rows.Count - 1)
+                    dgrow.Cells(0).Value = .id
+                    dgrow.Cells(1).Value = .objectTAG
+                    dgrow.Cells(2).Value = DWSIM.App.GetPropertyName(.propID)
+                    dgrow.Cells(3).Value = .unit
+                End With
+            Next
             Me.dgvResults.Rows.Clear()
             For Each result As Double() In .results
                 Me.dgvResults.Rows.Add(New Object() {Format(cv.ConverterDoSI(sacase.iv1.unit, result(0)), nf), Format(cv.ConverterDoSI(sacase.iv2.unit, result(1)), nf), Format(cv.ConverterDoSI(sacase.dv.unit, result(2)), nf)})
@@ -334,16 +327,18 @@ Public Class FormSensAnalysis
                 End With
             End If
             If Me.rbVar.Checked Then
-                With sacase.dv
-                    .objectTAG = Me.cbObjDepVar.SelectedItem
-                    .objectID = CType(FormFlowsheet.SearchSurfaceObjectsByTag(.objectTAG, form.FormSurface.FlowsheetDesignSurface), GraphicObjects.GraphicObject).Name
-                    Dim props As String() = Me.ReturnProperties(.objectTAG, True)
-                    For Each prop As String In props
-                        If DWSIM.App.GetPropertyName(prop) = Me.cbPropDepVar.SelectedItem.ToString Then
-                            .propID = prop
-                        End If
-                    Next
-                End With
+                .depvariables.Clear()
+                For Each dgrow As DataGridViewRow In Me.dgDepVariables.Rows
+                    Dim var As New SAVariable
+                    With var
+                        .id = dgrow.Cells(0).Value
+                        .objectTAG = dgrow.Cells(1).Value
+                        .objectID = Me.ReturnObject(dgrow.Cells(1).Value).Nome
+                        .propID = Me.ReturnPropertyID(.objectID, dgrow.Cells(2).Value)
+                        .unit = dgrow.Cells(3).Value
+                    End With
+                    .depvariables.Add(var.id, var)
+                Next
             End If
             Try
                 .results.Clear()
@@ -437,6 +432,9 @@ Public Class FormSensAnalysis
             counter = 0
             Me.tbStats.Text = ""
             With Me.dgvResults
+                .Columns.Clear()
+                .Columns.Add("IV1", "")
+                .Columns.Add("IV2", "")
                 .Rows.Clear()
                 If Me.tbUnitIndVar1.Text <> "" Then
                     .Columns(0).HeaderText = Me.cbObjIndVar1.SelectedItem.ToString & " - " & Me.cbPropIndVar1.SelectedItem.ToString & " (" & Me.tbUnitIndVar1.Text & ")"
@@ -454,22 +452,20 @@ Public Class FormSensAnalysis
                     .Columns(1).Visible = False
                 End If
                 If Me.rbExp.Checked Then
-                    .Columns(2).HeaderText = "EXP Val"
+                    .Columns.Add("DV", "EXP Val")
                 Else
-                    If Me.tbUnitDepVar.Text <> "" Then
-                        .Columns(2).HeaderText = Me.cbObjDepVar.SelectedItem.ToString & " - " & Me.cbPropDepVar.SelectedItem.ToString & " (" & Me.tbUnitDepVar.Text & ")"
-                    Else
-                        .Columns(2).HeaderText = Me.cbObjDepVar.SelectedItem.ToString & " - " & Me.cbPropDepVar.SelectedItem.ToString
-                    End If
+                    For Each var As SAVariable In selectedsacase.depvariables.Values
+                        .Columns.Add(var.propID, var.objectTAG & " - " & DWSIM.App.GetPropertyName(var.propID) & " (" & var.unit & ")")
+                    Next
                 End If
             End With
+            'store original values
+            iv1val0 = form.Collections.ObjectCollection(iv1id).GetPropertyValue(iv1prop)
+            If Me.chkIndVar2.Checked Then iv2val0 = form.Collections.ObjectCollection(iv2id).GetPropertyValue(iv2prop) Else iv2val0 = 0
             For i = 0 To iv1np
                 For j = 0 To iv2np
                     iv1val = iv1ll + i * (iv1ul - iv1ll) / iv1np
                     If Me.chkIndVar2.Checked Then iv2val = iv2ll + j * (iv2ul - iv2ll) / iv2np Else iv2val = 0
-                    'store original values
-                    iv1val0 = form.Collections.ObjectCollection(iv1id).GetPropertyValue(iv1prop)
-                    If Me.chkIndVar2.Checked Then iv2val0 = form.Collections.ObjectCollection(iv2id).GetPropertyValue(iv2prop) Else iv2val0 = 0
                     'set object properties
                     form.Collections.ObjectCollection(iv1id).SetPropertyValue(iv1prop, iv1val)
                     If Me.chkIndVar2.Checked Then form.Collections.ObjectCollection(iv2id).SetPropertyValue(iv2prop, iv2val)
@@ -488,15 +484,30 @@ Public Class FormSensAnalysis
                         End With
                         Me.selectedsacase.exbase = ExpressionFactory.CreateGeneric(Of Double)(Me.selectedsacase.expression, Me.selectedsacase.econtext)
                         dvval = Me.selectedsacase.exbase.Evaluate
+                        'store results
+                        res.Add(New Double() {iv1val, iv2val, dvval})
                     Else
-                        dvval = cv.ConverterDoSI(form.Collections.ObjectCollection(dvid).GetPropertyUnit(dvprop, su), form.Collections.ObjectCollection(dvid).GetPropertyValue(dvprop))
+                        'store results
+                        Dim currresults As New ArrayList
+                        currresults.Add(iv1val)
+                        currresults.Add(iv2val)
+                        For Each var As SAVariable In selectedsacase.depvariables.Values
+                            var.currentvalue = form.Collections.ObjectCollection(var.objectID).GetPropertyValue(var.propID)
+                            currresults.Add(var.currentvalue)
+                        Next
+                        res.Add(currresults.ToArray(Type.GetType("System.Double")))
                     End If
-                    'store results
-                    res.Add(New Double() {iv1val, iv2val, dvval})
                     If rbExp.Checked Then
                         Me.dgvResults.Rows.Add(New Object() {Format(cv.ConverterDoSI(sacase.iv1.unit, iv1val), nf), Format(cv.ConverterDoSI(sacase.iv2.unit, iv2val), nf), Format(dvval, nf)})
                     Else
-                        Me.dgvResults.Rows.Add(New Object() {Format(cv.ConverterDoSI(sacase.iv1.unit, iv1val), nf), Format(cv.ConverterDoSI(sacase.iv2.unit, iv2val), nf), Format(cv.ConverterDoSI(sacase.dv.unit, dvval), nf)})
+                        Dim formattedvalues As New ArrayList
+                        Dim k = 0
+                        formattedvalues.Add(Format(cv.ConverterDoSI(sacase.iv1.unit, iv1val), nf))
+                        formattedvalues.Add(Format(cv.ConverterDoSI(sacase.iv2.unit, iv2val), nf))
+                        For Each var As SAVariable In selectedsacase.depvariables.Values
+                            formattedvalues.Add(Format(cv.ConverterDoSI(var.unit, var.currentvalue), nf))
+                        Next
+                        Me.dgvResults.Rows.Add(formattedvalues.ToArray())
                     End If
                     Me.dgvResults.FirstDisplayedScrollingRowIndex = Me.dgvResults.Rows.Count - 1
                     counter += 1
@@ -620,6 +631,36 @@ Public Class FormSensAnalysis
         End If
     End Sub
 
+    Private Sub dgDepVariables_CellValueChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgDepVariables.CellValueChanged
+        If e.RowIndex >= 0 Then
+            Select Case e.ColumnIndex
+                Case 1
+                    Dim cbc As DataGridViewComboBoxCell = Me.dgDepVariables.Rows(e.RowIndex).Cells(e.ColumnIndex + 1)
+                    cbc.Items.Clear()
+                    With cbc.Items
+                        If Me.dgDepVariables.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString <> "" Then
+                            Dim props As String()
+                            props = Me.ReturnProperties(Me.dgDepVariables.Rows(e.RowIndex).Cells(1).Value, True)
+                            For Each prop As String In props
+                                .Add(DWSIM.App.GetPropertyName(prop))
+                            Next
+                        End If
+                    End With
+                Case 2
+                    If Not Me.dgDepVariables.Rows(e.RowIndex).Cells(e.ColumnIndex).Value Is Nothing Then
+                        Dim tbc0 As DataGridViewTextBoxCell = Me.dgDepVariables.Rows(e.RowIndex).Cells(3)
+                        Dim props As String() = Me.ReturnProperties(Me.dgDepVariables.Rows(e.RowIndex).Cells(1).Value, True)
+                        For Each prop As String In props
+                            If DWSIM.App.GetPropertyName(prop) = Me.dgDepVariables.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString Then
+                                Dim obj As SimulationObjects_BaseClass = ReturnObject(Me.dgDepVariables.Rows(e.RowIndex).Cells(1).Value)
+                                tbc0.Value = obj.GetPropertyUnit(prop, su)
+                            End If
+                        Next
+                    End If
+            End Select
+        End If
+    End Sub
+
     Private Function ReturnObject(ByVal objectTAG As String) As SimulationObjects_BaseClass
 
         For Each obj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
@@ -650,4 +691,17 @@ Public Class FormSensAnalysis
         My.Application.ActiveSimulation.WriteToLog(e.Exception.Message.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
     End Sub
 
+    Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton1.Click
+        Me.dgDepVariables.Rows.Add()
+        Me.dgDepVariables.Rows(Me.dgDepVariables.Rows.Count - 1).HeaderCell.Value = Me.dgDepVariables.Rows.Count.ToString
+        Me.dgDepVariables.Rows(Me.dgDepVariables.Rows.Count - 1).Cells(0).Value = Guid.NewGuid.ToString
+    End Sub
+
+    Private Sub ToolStripButton2_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton2.Click
+        If Me.dgDepVariables.SelectedRows.Count > 0 Then
+            For i As Integer = 0 To Me.dgDepVariables.SelectedRows.Count - 1
+                Me.dgDepVariables.Rows.Remove(Me.dgDepVariables.SelectedRows(0))
+            Next
+        End If
+    End Sub
 End Class

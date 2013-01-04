@@ -49,12 +49,14 @@ Namespace DWSIM.Optimization
         <System.NonSerialized()> Public econtext As ExpressionContext
 
         Public variables As New Dictionary(Of String, SAVariable)
+        Public depvariables As New Dictionary(Of String, SAVariable)
 
         Sub New()
             iv1 = New SAVariable
             iv2 = New SAVariable
             dv = New SAVariable
             variables = New Dictionary(Of String, SAVariable)
+            depvariables = New Dictionary(Of String, SAVariable)
             results = New ArrayList()
         End Sub
 
@@ -96,6 +98,12 @@ Namespace DWSIM.Optimization
                 variables.Add(xel0.@Key, savar)
             Next
 
+            For Each xel0 As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "DepVariables").SingleOrDefault.Elements.ToList
+                Dim savar As New SAVariable
+                savar.LoadData(xel0.Elements.ToList)
+                depvariables.Add(xel0.@Key, savar)
+            Next
+
         End Function
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
@@ -108,6 +116,10 @@ Namespace DWSIM.Optimization
                 .Add(New XElement("DV", dv.SaveData.ToArray))
                 .Add(New XElement("Variables"))
                 For Each kvp As KeyValuePair(Of String, SAVariable) In variables
+                    .Item(.Count - 1).Add(New XElement("Variable", New XAttribute("Key", kvp.Key), kvp.Value.SaveData.ToArray))
+                Next
+                .Add(New XElement("DepVariables"))
+                For Each kvp As KeyValuePair(Of String, SAVariable) In depvariables
                     .Item(.Count - 1).Add(New XElement("Variable", New XAttribute("Key", kvp.Key), kvp.Value.SaveData.ToArray))
                 Next
             End With

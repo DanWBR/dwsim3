@@ -112,32 +112,19 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnRun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 845</value>
-  </data>
-  <data name="btnRun.Size" type="System.Drawing.Size, System.Drawing">
-    <value>432, 24</value>
-  </data>
   <data name="btnRun.Text" xml:space="preserve">
     <value>Sensitivitätsanalyse starten</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="tbStats.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 203</value>
-  </data>
-  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>202, 222</value>
-  </data>
   <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Information</value>
+    <value>Informationen</value>
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>IV 1</value>
@@ -145,20 +132,11 @@
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>IV 2</value>
   </data>
-  <data name="Column3.HeaderText" xml:space="preserve">
-    <value>DV</value>
-  </data>
-  <data name="dgvResults.Size" type="System.Drawing.Size, System.Drawing">
-    <value>321, 216</value>
-  </data>
-  <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 869</value>
-  </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>542, 235</value>
-  </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Ergebnisse</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Fälle</value>
   </data>
   <data name="btnDeleteCase.Text" xml:space="preserve">
     <value>Löschen</value>
@@ -172,35 +150,21 @@
   <data name="btnNewCase.Text" xml:space="preserve">
     <value>Neu</value>
   </data>
-  <data name="lbCases.Size" type="System.Drawing.Size, System.Drawing">
-    <value>452, 108</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Name und Beschreibung</value>
   </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>542, 134</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Fälle</value>
-  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Beschr.</value>
   </data>
-  <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>542, 120</value>
-  </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Name und Beschreibung</value>
-  </data>
   <data name="Label3.Text" xml:space="preserve">
     <value>Objekt</value>
   </data>
-  <data name="tbUpperLimIndVar1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>253, 50</value>
-  </data>
-  <data name="tbUpperLimIndVar1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 20</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Unabhängige Variable 1</value>
   </data>
   <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>62, 13</value>
@@ -208,23 +172,11 @@
   <data name="Label8.Text" xml:space="preserve">
     <value>Obergrenze</value>
   </data>
-  <data name="tbUnitIndVar1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>441, 23</value>
-  </data>
-  <data name="tbUnitIndVar1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 20</value>
-  </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 13</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Einh.</value>
-  </data>
-  <data name="tbLowerLimIndVar1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>72, 50</value>
-  </data>
-  <data name="tbLowerLimIndVar1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 20</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 13</value>
@@ -232,23 +184,11 @@
   <data name="Label7.Text" xml:space="preserve">
     <value>Untergrenze</value>
   </data>
-  <data name="nuNumPointsIndVar1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>469, 50</value>
-  </data>
-  <data name="nuNumPointsIndVar1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 20</value>
-  </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 13</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Anzahl Punkte</value>
-  </data>
-  <data name="cbPropIndVar1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>229, 23</value>
-  </data>
-  <data name="cbPropIndVar1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 21</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 13</value>
@@ -256,20 +196,8 @@
   <data name="Label5.Text" xml:space="preserve">
     <value>Eigensch.</value>
   </data>
-  <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>542, 81</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Unabhängige Variable 1</value>
-  </data>
   <data name="Label14.Text" xml:space="preserve">
     <value>Objekt</value>
-  </data>
-  <data name="tbUpperLimIndVar2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 34</value>
-  </data>
-  <data name="tbUpperLimIndVar2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 20</value>
   </data>
   <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 13</value>
@@ -283,18 +211,6 @@
   <data name="Label9.Text" xml:space="preserve">
     <value>Obergrenze</value>
   </data>
-  <data name="cbPropIndVar2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>234, 7</value>
-  </data>
-  <data name="cbPropIndVar2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 21</value>
-  </data>
-  <data name="tbUnitIndVar2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>438, 7</value>
-  </data>
-  <data name="tbUnitIndVar2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 20</value>
-  </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 13</value>
   </data>
@@ -307,26 +223,11 @@
   <data name="Label10.Text" xml:space="preserve">
     <value>Einh.</value>
   </data>
-  <data name="nuNumPointsIndVar2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>466, 34</value>
-  </data>
-  <data name="nuNumPointsIndVar2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 20</value>
-  </data>
-  <data name="tbLowerLimIndVar2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>67, 34</value>
-  </data>
-  <data name="tbLowerLimIndVar2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 20</value>
-  </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 13</value>
   </data>
   <data name="Label11.Text" xml:space="preserve">
     <value>Untergrenze</value>
-  </data>
-  <data name="pnIndvar2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>536, 62</value>
   </data>
   <data name="chkIndVar2.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 17</value>
@@ -334,8 +235,8 @@
   <data name="chkIndVar2.Text" xml:space="preserve">
     <value>Unabhängige Variable 2</value>
   </data>
-  <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>542, 81</value>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Abhängige Variable</value>
   </data>
   <data name="rbExp.Size" type="System.Drawing.Size, System.Drawing">
     <value>70, 17</value>
@@ -346,21 +247,14 @@
   <data name="rbVar.Text" xml:space="preserve">
     <value>Variable</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Column8.Width" type="System.Int32, mscorlib">
-    <value>23</value>
+  <data name="GroupBox9.Text" xml:space="preserve">
+    <value>Ausdrucksparameter</value>
   </data>
   <data name="DataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="DataGridViewTextBoxColumn1.Width" type="System.Int32, mscorlib">
-    <value>41</value>
-  </data>
   <data name="DataGridViewComboBoxColumn2.HeaderText" xml:space="preserve">
     <value>Objekt</value>
-  </data>
-  <data name="DataGridViewComboBoxColumn2.Width" type="System.Int32, mscorlib">
-    <value>44</value>
   </data>
   <data name="Column4.HeaderText" xml:space="preserve">
     <value>Eigenschaft</value>
@@ -371,17 +265,14 @@
   <data name="Column9.HeaderText" xml:space="preserve">
     <value>Einheit</value>
   </data>
-  <data name="Column9.Width" type="System.Int32, mscorlib">
-    <value>45</value>
-  </data>
   <data name="tsbAddVar.ToolTipText" xml:space="preserve">
     <value>Hinzufügen</value>
   </data>
   <data name="tsbDelVar.ToolTipText" xml:space="preserve">
     <value>Entfernen</value>
   </data>
-  <data name="GroupBox9.Text" xml:space="preserve">
-    <value>Ausdrucksparameter</value>
+  <data name="GroupBox8.Text" xml:space="preserve">
+    <value>Ausdruck</value>
   </data>
   <data name="btnClear.Text" xml:space="preserve">
     <value>Löschen</value>
@@ -395,71 +286,26 @@
   <data name="Label15.Text" xml:space="preserve">
     <value>Akt. Wert</value>
   </data>
-  <data name="Label17.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 25</value>
-  </data>
   <data name="Label17.Size" type="System.Drawing.Size, System.Drawing">
     <value>52, 13</value>
   </data>
   <data name="Label17.Text" xml:space="preserve">
     <value>Ausdruck</value>
   </data>
-  <data name="GroupBox8.Text" xml:space="preserve">
-    <value>Ausdruck</value>
+  <data name="GroupBox10.Text" xml:space="preserve">
+    <value>Variablen</value>
   </data>
-  <data name="Label20.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 26</value>
-  </data>
-  <data name="Label20.Text" xml:space="preserve">
+  <data name="DataGridViewComboBoxColumn1.HeaderText" xml:space="preserve">
     <value>Objekt</value>
   </data>
-  <data name="cbObjDepVar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>50, 23</value>
+  <data name="DataGridViewComboBoxColumn3.HeaderText" xml:space="preserve">
+    <value>Eigenschaft</value>
   </data>
-  <data name="Label19.Location" type="System.Drawing.Point, System.Drawing">
-    <value>177, 26</value>
-  </data>
-  <data name="Label19.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 13</value>
-  </data>
-  <data name="Label19.Text" xml:space="preserve">
-    <value>Eigensch.</value>
-  </data>
-  <data name="cbPropDepVar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 23</value>
-  </data>
-  <data name="cbPropDepVar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 21</value>
-  </data>
-  <data name="tbUnitDepVar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>441, 23</value>
-  </data>
-  <data name="tbUnitDepVar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 20</value>
-  </data>
-  <data name="Label16.Location" type="System.Drawing.Point, System.Drawing">
-    <value>409, 26</value>
-  </data>
-  <data name="Label16.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 13</value>
-  </data>
-  <data name="Label16.Text" xml:space="preserve">
-    <value>Einh.</value>
-  </data>
-  <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>542, 397</value>
-  </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Abhängige Variable</value>
-  </data>
-  <data name="btnAbort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>441, 845</value>
-  </data>
-  <data name="btnAbort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 24</value>
+  <data name="DataGridViewTextBoxColumn5.HeaderText" xml:space="preserve">
+    <value>Einheit</value>
   </data>
   <data name="btnAbort.Text" xml:space="preserve">
-    <value>Pause</value>
+    <value>Abbruch</value>
   </data>
   <data name="LinkLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>613, 17</value>
