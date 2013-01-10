@@ -5618,24 +5618,40 @@ Final3:
             Dim dE As Double = 0
             Dim dHr As Double = 0
             Dim dGr As Double = 0
+            Dim term3 As Double = 0
 
             Dim int1, int2 As Double
+            Dim R = 8.314
 
             With Me.CurrentMaterialStream.Fases(0).Componentes(id).ConstantProperties
 
                 dHr = .IG_Enthalpy_of_Formation_25C
                 dGr = .IG_Gibbs_Energy_of_Formation_25C
+                
+                If mode2 Then
+                    If .IsIon Or .IsSalt Then
+                        term3 = .Electrolyte_Cp0 * 1000 / .Molar_Weight * (Log(T2 / T1) + (T1 / T2) - 1) / R
+                    Else
+                        int1 = Me.AUX_INT_CPDTi(T1, T2, id)
+                        int2 = Me.AUX_INT_CPDT_Ti(T1, T2, id)
+                        term3 = int1 / (R * T2) - int2 / R
+                    End If
+                Else
+                    int1 = Me.AUX_INT_CPDTi(T1, T2, id)
+                    int2 = Me.AUX_INT_CPDT_Ti(T1, T2, id)
+                    term3 = int1 / (R * T2) - int2 / R
+                End If
 
-                int1 = Me.AUX_INT_CPDTi(T1, T2, id)
-                int2 = Me.AUX_INT_CPDT_Ti(T1, T2, id)
 
             End With
 
-            Dim R = 8.314
+            Dim result As Double
 
-            Dim result As Double = (dGr - dHr) / (R * T1) + dHr / (R * T2) + int1 / (R * T2) - int2 / R
-
-            If mode2 Then result = dGr / (R * T1) + dHr / R * (1 / T2 - 1 / T1)
+            If mode2 Then
+                result = dGr / (R * T1) + dHr / R * (1 / T2 - 1 / T1) + term3
+            Else
+                result = (dGr - dHr) / (R * T1) + dHr / (R * T2) + term3
+            End If
 
             Return result
 

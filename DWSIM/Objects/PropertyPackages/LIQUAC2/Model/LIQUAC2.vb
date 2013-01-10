@@ -403,7 +403,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 j = 0
                 Do
                     tau_ij(i, j) = Math.Exp(-a12(i, j) / T)
-                    tau_ji(j, i) = Math.Exp(-a21(i, j) / T)
+                    tau_ji(i, j) = Math.Exp(-a21(i, j) / T)
                     j = j + 1
                 Loop Until j = n + 1
                 i = i + 1
@@ -418,7 +418,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 i = i + 1
             Loop Until i = n + 1
 
-            Dim teta(n), fi(n), l(n), S(n), lngc(n), lngr(n), lngmr(n), lnglr(n), lngsr(n), lng(n), g(n), sum1(n), sum2 As Double
+            Dim teta(n), fi(n), l(n), S(n), S2(n), lngc(n), lngr(n), lngmr(n), lnglr(n), lngsr(n), lng(n), g(n), sum1(n), sum2 As Double
 
             'long range term
 
@@ -440,7 +440,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 For j = 0 To n
                     If cprops(i).IsIon And cprops(j).IsIon Then
                         a1(i, j) = -1
-                        a2(i, j) = 0.25 / Abs(cprops(i).Charge - cprops(j).Charge)
+                        a2(i, j) = 0.25 / (Abs(cprops(i).Charge - cprops(j).Charge))
                         If Double.IsInfinity(a2(i, j)) Then a2(i, j) = 0.0#
                     ElseIf Not cprops(i).IsIon And cprops(j).IsIon Then
                         a1(i, j) = -1.2
@@ -473,7 +473,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 For j = 0 To n
                     If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
                         If cprops(j).IsIon Then
-                            sum1mr(i) += molality(j) * Bij(j, i)
+                            sum1mr(i) += molality(j) * Bij(i, j)
                         End If
                     End If
                 Next
@@ -591,7 +591,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 S(i) = 0
                 j = 0
                 Do
-                    S(i) += teta(j) * tau_ji(j, i)
+                    S(i) += teta(j) * tau_ji(i, j)
+                    j = j + 1
+                Loop Until j = n + 1
+                i = i + 1
+            Loop Until i = n + 1
+
+            i = 0
+            Do
+                S2(i) = 0
+                j = 0
+                Do
+                    S2(i) += teta(j) * tau_ij(j, i)
                     j = j + 1
                 Loop Until j = n + 1
                 i = i + 1
@@ -602,7 +613,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 sum1(i) = 0
                 j = 0
                 Do
-                    sum1(i) += teta(j) * tau_ij(i, j) / S(j)
+                    sum1(i) += teta(j) * tau_ij(i, j) / S2(j)
                     j = j + 1
                 Loop Until j = n + 1
                 sum2 += Vx(i) * l(i)
@@ -622,7 +633,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 sum3sr(i) = 0.0#
                 For j = 0 To n
                     If cprops(j).Name = "Water" Or cprops(j).Name = "Methanol" Then
-                        sum3sr(i) += VQ(j) * solvmfrac(j) * tau_ji(j, i)
+                        sum3sr(i) += VQ(j) * solvmfrac(j) * tau_ji(i, j)
                         If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
                             sum4sr += VQ(j) * solvmfrac(j)
                         End If
@@ -654,7 +665,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 phiiref(i) = 0
                 For j = 0 To n
                     If cprops(j).Name = "Water" Or cprops(j).Name = "Methanol" Then
-                        phiiref(i) += VQ(j) * solvmfrac(j) * tau_ji(i, j) / sum5sr(j)
+                        phiiref(i) += VQ(j) * solvmfrac(j) * tau_ij(i, j) / sum5sr(j)
                     End If
                 Next
             Next
@@ -666,7 +677,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                     If .IsIon Then
                         'reference state normalization
                         lngsr(i) -= 1 - VR(i) / Rref + Log(VR(i) / Rref) - 5 * VQ(i) * (1 - VR(i) * Qref / (Rref * VQ(i)) + Log(VR(i) * Qref / (Rref * VQ(i)))) + VQ(i) * (1 - Log(phirefi(i)) - phiiref(i))
-                        lngsr(i) += Log(Xsolv)
+                        lngsr(i) -= -Log(Xsolv)
                     End If
                 End With
                 i = i + 1

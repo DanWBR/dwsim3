@@ -247,7 +247,11 @@ Namespace DWSIM.Flowsheet
                         .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                     Else
                         If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Then
-                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                            If ms.GraphicObject.InputConnectors(0).IsAttached Then
+                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                            Else
+                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                            End If
                         Else
                             Select Case ms.SpecType
                                 Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
@@ -262,7 +266,7 @@ Namespace DWSIM.Flowsheet
                                     .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
                             End Select
                         End If
-                    End If
+                        End If
                     If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                         .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
                     Else

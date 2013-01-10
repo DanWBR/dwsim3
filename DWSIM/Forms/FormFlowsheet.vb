@@ -173,7 +173,7 @@ Imports DWSIM.DWSIM.GraphicObjects
 
             If x = MsgBoxResult.Yes Then
 
-                Call FormMain.SaveFileDialog_NoBG()
+                Call FormMain.SaveToolStripButton_Click(sender, e)
                 Me.m_overrideCloseQuestion = True
                 Me.Close()
 

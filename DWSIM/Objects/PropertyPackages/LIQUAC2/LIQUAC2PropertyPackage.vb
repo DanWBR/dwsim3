@@ -262,7 +262,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Sub
 
-       Public Overrides Sub DW_CalcPhaseProps(ByVal fase As DWSIM.SimulationObjects.PropertyPackages.Fase)
+        Public Overrides Sub DW_CalcPhaseProps(ByVal fase As DWSIM.SimulationObjects.PropertyPackages.Fase)
 
             Dim result As Double
             Dim resultObj As Object
@@ -568,7 +568,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             End Select
         End Function
 
-      Public Overrides Sub DW_CalcCompPartialVolume(ByVal phase As Fase, ByVal T As Double, ByVal P As Double)
+        Public Overrides Sub DW_CalcCompPartialVolume(ByVal phase As Fase, ByVal T As Double, ByVal P As Double)
 
             Select Case phase
                 Case Fase.Liquid
@@ -1127,7 +1127,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Dim REx(r) As Double
 
                 For i = 0 To r
-                    REx(i) = ubound(i) * 0.8
+                    REx(i) = ubound(i) * 0.5
                 Next
 
                 Dim REx0(REx.Length - 1) As Double
@@ -1148,6 +1148,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Do
 
                     fx = Me.FunctionValue2N(x)
+
+                    If AbsSum(fx) < 0.00001 Then Exit Do
+
                     dfdx_ant = dfdx.Clone
                     dfdx = Me.FunctionGradient2N(x)
 
@@ -1166,21 +1169,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                     For i = 0 To r
                         x(i) -= dx(i) * df
-                        'If x(i) > ubound(i) Then x(i) = ubound(i)
-                        'If x(i) < lbound(i) Then x(i) = lbound(i)
                     Next
 
                     niter += 1
 
                     If AbsSum(dx) = 0.0# Then
-                        Throw New Exception("No solution found - reached a stationary point of the objective function (singular gradient matrix).")
+                        Throw New Exception("Chemical Equilibrium Solver error: No solution found - reached a stationary point of the objective function (singular gradient matrix).")
                     End If
 
-                Loop Until AbsSum(fx) < 0.00001 Or niter > 999
+                    If niter > 999 Then
+                        Throw New Exception("Chemical Equilibrium Solver error: Reached the maximum number of iterations without converging.")
+                    End If
 
-                If niter > 999 Then
-                    Throw New Exception("Reached the maximum number of iterations without converging.")
-                End If
+                Loop
+
+                fx = Me.FunctionValue2N(x)
 
                 i = 0
                 For Each r As String In Me.Reactions
@@ -1259,7 +1262,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             For i = 0 To N.Count - 1
                 For j = 0 To nc
                     If CompoundProperties(j).Name = ComponentIDs(i) Then
-                        Vx(j) = (N(ComponentIDs(i)))
+                        Vx(j) = N(ComponentIDs(i))
                         Exit For
                     End If
                 Next
@@ -1299,15 +1302,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             For i = 0 To Me.Reactions.Count - 1
                 prod(i) = 1
-                j = 0
                 For Each s As String In Me.ComponentIDs
                     With Me.CurrentMaterialStream.Flowsheet.Options.Reactions(Me.Reactions(i))
                         If .Components.ContainsKey(s) Then
-                            'If .Components(s).StoichCoeff > 0 Then prod(i) += .Components(s).StoichCoeff * Log(CP(j))
-                            prod(i) += .Components(s).StoichCoeff * Log(CP(j))
+                            If .Components(s).StoichCoeff > 0 Then
+                                For j = 0 To nc
+                                    If CompoundProperties(j).Name = s Then
+                                        prod(i) *= CP(j) ^ .Components(s).StoichCoeff
+                                        Exit For
+                                    End If
+                                Next
+                            End If
                         End If
                     End With
-                    j += 1
                 Next
             Next
 
@@ -1315,9 +1322,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             For i = 0 To Me.Reactions.Count - 1
                 With Me.CurrentMaterialStream.Flowsheet.Options.Reactions(Me.Reactions(i))
-                    f(i) = prod(i) - Log(.ConstantKeqValue)
+                    f(i) = prod(i) - .ConstantKeqValue + pen_val
                     If Double.IsNaN(f(i)) Or Double.IsInfinity(f(i)) Then
-                        f(i) = -Log(.ConstantKeqValue) * pen_val
+                        f(i) = -.ConstantKeqValue + pen_val
                     End If
                 End With
             Next
@@ -1328,7 +1335,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Private Function FunctionGradient2N(ByVal x() As Double) As Double(,)
 
-            Dim epsilon As Double = 0.0000000001
+            Dim epsilon As Double = 0.000001
 
             Dim f1(), f2() As Double
             Dim g(x.Length - 1, x.Length - 1), x2(x.Length - 1) As Double

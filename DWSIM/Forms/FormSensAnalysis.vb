@@ -33,6 +33,7 @@ Public Class FormSensAnalysis
     Public abortCalc As Boolean = False
     Public selectedindex As Integer = 0
     Public selectedsacase As SensitivityAnalysisCase
+    Private selected As Boolean = False
 
     Public cbc2, cbc3, cbc0, cbc1 As DataGridViewComboBoxCell
 
@@ -261,6 +262,8 @@ Public Class FormSensAnalysis
             Next
         End If
 
+        selected = True
+
     End Sub
 
     Private Sub btnCopyCase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCopyCase.Click
@@ -327,6 +330,7 @@ Public Class FormSensAnalysis
                 End With
             End If
             If Me.rbVar.Checked Then
+                If .depvariables Is Nothing Then .depvariables = New Dictionary(Of String, SAVariable)
                 .depvariables.Clear()
                 For Each dgrow As DataGridViewRow In Me.dgDepVariables.Rows
                     Dim var As New SAVariable
@@ -702,6 +706,12 @@ Public Class FormSensAnalysis
             For i As Integer = 0 To Me.dgDepVariables.SelectedRows.Count - 1
                 Me.dgDepVariables.Rows.Remove(Me.dgDepVariables.SelectedRows(0))
             Next
+        End If
+    End Sub
+
+    Private Sub tbCaseName_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbCaseName.TextChanged
+        If selected Then
+            Me.lbCases.Items(Me.lbCases.SelectedIndex) = Me.tbCaseName.Text
         End If
     End Sub
 End Class
