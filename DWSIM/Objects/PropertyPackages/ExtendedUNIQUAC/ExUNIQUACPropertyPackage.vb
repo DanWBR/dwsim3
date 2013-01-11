@@ -1,4 +1,4 @@
-﻿'    LIQUAC2 Property Package 
+﻿'    Extended UNIQUAC Property Package 
 '    Copyright 2013 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -28,14 +28,14 @@ Imports Ciloci.Flee
 Namespace DWSIM.SimulationObjects.PropertyPackages
 
     <System.Runtime.InteropServices.Guid(LIQUAC2PropertyPackage.ClassId)> _
-<System.Serializable()> Public Class LIQUAC2PropertyPackage
+<System.Serializable()> Public Class ExUNIQUACPropertyPackage
 
         Inherits DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
 
-        Public Shadows Const ClassId As String = "f3eeff51-eccc-4c15-b4b0-1eb4d13c61f3"
+        Public Shadows Const ClassId As String = "f3eeff51-eccd-4c15-b4b0-1eb4d13c61f3"
 
         Private m_props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-        Public m_uni As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LIQUAC2
+        Public m_uni As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.ExUNIQUAC
         Private m_id As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Ideal
 
         Public Sub New(ByVal comode As Boolean)
@@ -47,15 +47,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             MyBase.New()
 
             Me.IsConfigurable = True
-            Me.ConfigForm = New FormConfigLIQUAC
+            Me.ConfigForm = New FormConfigExUNIQUAC
             Me._packagetype = PropertyPackages.PackageType.ActivityCoefficient
-            Me.iselectrolytePP = True
+            Me.IsElectrolytePP = True
 
         End Sub
 
         Public Overrides Sub ReconfigureConfigForm()
             MyBase.ReconfigureConfigForm()
-            Me.ConfigForm = New FormConfigLIQUAC
+            Me.ConfigForm = New FormConfigExUNIQUAC
         End Sub
 
 #Region "    DWSIM Functions"

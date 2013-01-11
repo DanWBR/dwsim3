@@ -219,7 +219,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 i = i + 1
             Loop Until i = n + 1
 
-           
+
             i = 0
             Do
                 'from chemsep book (error!)

@@ -506,6 +506,12 @@ Public Class FormMain
 
         PropertyPackages.Add(LQPP.ComponentName.ToString, LQPP)
 
+        Dim EUQPP As ExUNIQUACPropertyPackage = New ExUNIQUACPropertyPackage()
+        EUQPP.ComponentName = "Extended UNIQUAC (Aqueous Electrolytes)"
+        EUQPP.ComponentDescription = DWSIM.App.GetLocalString("DescEUPP")
+
+        PropertyPackages.Add(EUQPP.ComponentName.ToString, EUQPP)
+
     End Sub
 
     Private Sub FormParent_MdiChildActivate(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.MdiChildActivate

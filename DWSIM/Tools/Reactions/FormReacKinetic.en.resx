@@ -112,15 +112,15 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="KryptonButton3.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="KryptonLabel18.Size" type="System.Drawing.Size, System.Drawing">
     <value>38, 19</value>
   </data>
@@ -147,9 +147,6 @@
   </data>
   <data name="tbFwdE.Size" type="System.Drawing.Size, System.Drawing">
     <value>85, 20</value>
-  </data>
-  <data name="KryptonLabel14.Text" xml:space="preserve">
-    <value>AND</value>
   </data>
   <data name="tbFwdA.Size" type="System.Drawing.Size, System.Drawing">
     <value>85, 20</value>

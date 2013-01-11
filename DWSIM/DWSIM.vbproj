@@ -324,6 +324,12 @@
     <Compile Include="Forms\FormState.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\PropPack_ConfigForms\FormConfigExUNIQUAC.Designer.vb">
+      <DependentUpon>FormConfigExUNIQUAC.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PropPack_ConfigForms\FormConfigExUNIQUAC.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\PropPack_ConfigForms\FormConfigFPROPS.Designer.vb">
       <DependentUpon>FormConfigFPROPS.vb</DependentUpon>
     </Compile>
@@ -615,6 +621,8 @@
     <Compile Include="Objects\PropertyPackages\ChaoSeader\Helper Classes\CS.vb" />
     <Compile Include="Objects\PropertyPackages\COSMOSAC\COSMOSACPropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\COSMOSAC\Helper Classes\COSMOSAC.vb" />
+    <Compile Include="Objects\PropertyPackages\ExtendedUNIQUAC\ExUNIQUACPropertyPackage.vb" />
+    <Compile Include="Objects\PropertyPackages\ExtendedUNIQUAC\Model\ExUNIQUAC.vb" />
     <Compile Include="Objects\PropertyPackages\FPROPS\FPROPSPropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\FPROPS\FPROPS_NativeCalls.vb" />
     <Compile Include="Objects\PropertyPackages\GraysonStreed\GraysonStreedPropertyPackage.vb" />
@@ -1131,6 +1139,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormScriptMono.resx">
       <DependentUpon>FormScriptMono.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigExUNIQUAC.de.resx">
+      <DependentUpon>FormConfigExUNIQUAC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigExUNIQUAC.en.resx">
+      <DependentUpon>FormConfigExUNIQUAC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigExUNIQUAC.es.resx">
+      <DependentUpon>FormConfigExUNIQUAC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigExUNIQUAC.resx">
+      <DependentUpon>FormConfigExUNIQUAC.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigLIQUAC.de.resx">
       <DependentUpon>FormConfigLIQUAC.vb</DependentUpon>
@@ -2830,7 +2850,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\UITypeEditors\DistillationColumn\UISpecificationsEditor\" />
-    <Folder Include="Objects\PropertyPackages\ExtendedUNIQUAC\Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

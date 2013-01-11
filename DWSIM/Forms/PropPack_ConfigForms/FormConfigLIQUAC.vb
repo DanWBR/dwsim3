@@ -134,7 +134,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
 
     Private Sub dgvu1_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvu1.CellValueChanged
         If Loaded Then
-            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage = _pp
+            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.LIQUAC2PropertyPackage = _pp
             Dim value As Object = dgvu1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
             Dim id1 As String = dgvu1.Rows(e.RowIndex).Cells(0).Tag.ToString
             Dim id2 As String = dgvu1.Rows(e.RowIndex).Cells(1).Tag.ToString
@@ -143,6 +143,10 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
                     ppu.m_uni.InteractionParameters(id1)(id2).A12 = value
                 Case 3
                     ppu.m_uni.InteractionParameters(id1)(id2).A21 = value
+                Case 4
+                    ppu.m_uni.InteractionParameters(id1)(id2).B12 = value
+                Case 5
+                    ppu.m_uni.InteractionParameters(id1)(id2).C12 = value
             End Select
         End If
     End Sub

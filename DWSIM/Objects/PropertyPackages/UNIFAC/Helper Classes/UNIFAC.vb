@@ -984,8 +984,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac_ip.txt"
             Using parser As New TextFieldParser(filename)
-                delimiter = ","
+                delimiter = vbTab
                 parser.SetDelimiters(delimiter)
+                fields = parser.ReadFields()
                 While Not parser.EndOfData
                     fields = parser.ReadFields()
                     If Not Me.InteracParam.ContainsKey(fields(0)) Then

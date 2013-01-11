@@ -1502,7 +1502,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
             Me.m_stoichcoeff = stoichcoeff
             Me.m_basecomp = isbasereactant
             Me.m_directorder = directorder
-            Me.m_reverseorder = ReverseOrder
+            Me.m_reverseorder = reversorder
         End Sub
 
     End Class
