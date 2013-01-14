@@ -1,121 +1,121 @@
 'UNIFAC group parameters,,,,,,
-'ID,SUB_ID,Main groups,Group,Rk,Qk,example
-1,1,CH2,CH3,0.9011,0.848,ethane:  2*CH3
-1,2,CH2,CH2,0.6744,0.54,n-butane: 2*CH3 2*CH2
-1,3,CH2,CH,0.4469,0.228,isobutane: 3*CH3 1*CH
-1,4,CH2,C,0.2195,0,neopentane: 4*CH3 1*C
-2,5,C=C,CH2=CH,1.3454,1.176,hexene-1: 1*CH3 3*CH2 1*CH2=CH
-2,6,C=C,CH=CH,1.1167,0.867,hexene-2: 1*CH3 2*CH2 1*CH=CH
-2,7,C=C,CH2=C,1.1173,0.988,2-methyl-1-butene: 2*CH3 1*CH2 1*CH2=CH
-2,8,C=C,CH=C,0.8886,0.676,2-methyl-2-butene: 2*CH3 1*CH=C
-2,9,C=C,C=C,0.6605,0.485,2.3-dimethylbutene: 4*CH3 1*C=C
-3,10,ACH,ACH,0.5313,0.4,napthaline:  8*ACH 2*AC
-3,11,ACH,AC,0.3652,0.12,styrene: 1*CH2=CH 5*ACH 1*AC
-4,12,ACCH2,ACCH2,1.2663,0.968,toluene: 5*ACH 1*ACCH3
-4,13,ACCH2,ACCH3,1.0396,0.66,ethylbenzene: 5*ACH 1*ACCH2 1*CH3
-4,14,ACCH2,ACCH,0.8121,0.348,cumene: 2*CH3 5*ACH 1*ACCH
-5,15,OH,OH,1,1.2,propanol-2: 2*CH3 1*CH 1*OH
-6,16,MeOH,CH3OH,1.4311,1.432,methanol: 1*CH3OH
-7,17,H2O,H2O,0.92,1.4,water: 1*H2O
-8,18,ACOH,ACOH,0.8952,0.68,phenol: 5*ACH 1*ACOH
-9,19,CH2CO,CH3CO,1.6724,1.448,butanone: 1*CH3 1*CH2 1*CH3CO
-9,20,CH2CO,CH2CO,1.4457,1.18,pentanone-3: 2*CH3 1*CH2 1*CH2CO
-10,21,CHO,CHO,0.998,0.948,propionaldehyde: 1*CH3 1*CH2 1*CHO
-11,22,COOC,CH3COO,1.9031,1.728,butyl acetate: 1*CH3 3*CH2 1*CH3COO
-11,23,COOC,CH2COO,1.6764,1.42,methyl propionate: 2*CH3 1*CH2COO
-12,24,HCOO,HCOO,1.242,1.188,ethyl formate: 1*CH3 1*CH2 1*HCOO
-13,25,CH2O,CH3O,1.145,1.088,dimethyl ether: 1*CH3 1*CH3CO
-13,26,CH2O,CH2O,0.9183,0.78,diethyl ether: 2*CH3 1*CH2 1*CH2O
-13,27,CH2O,CHO,0.6908,0.468,diisopropyl ether: 4*CH3 1*CH 1*CHO
-13,28,CH2O,THF,0.9183,1.1,tetrahydrofuran: 3*CH2 1*THF
-14,29,CNH2,CH3NH2,1.5959,1.544,methylamine:   1*CH3NH
-14,30,CNH2,CH2NH2,1.3692,1.236,ethylamine    1*CH3 1*CH2NH2
-14,31,CNH2,CHNH2,1.1417,0.924,isopropyl amine: 2*CH3 1*CHNH2
-15,32,CNH,CH3NH,1.4337,1.244,dimethylamine: 1*CH3 1*CH3NH
-15,33,CNH,CH2NH,1.207,0.936,diethylamine:  2*CH3 1*CH2 1*CH2NH
-15,34,CNH,CHNH,0.9795,0.624,diisopropyl amine: 4*CH2 1*CH 1*CHNH
-16,35,C3N,CH3N,1.1865,0.94,trimethylamine: 2*CH3 1*CH3N
-16,36,C3N,CH2N,0.9597,0.632,triethylamine: 3*CH3 2*CH2 1*CH2N
-17,37,ACNH2,ACNH2,1.06,0.816,aniline: 5*ACH 1*ACNH2
-18,38,Pyridine,C5H5N,2.9993,2.113,pyridine: 1*C5H5N
-18,39,Pyridine,C5H4N,2.8332,1.833,2-methylpyridine: 1*CH3 1*C5H4N
-18,40,Pyridine,C5H3N,2.667,1.553,2 3-dimethylpyridine: 2*CH3 1*C5H3N
-19,41,CCN,CH3CN,1.8701,1.724,acetonitrile: 1*CH3CN
-19,42,CCN,CH2CN,1.6434,1.416,propionitrile: 1*CH3 1*CH2CN
-20,43,COOH,COOH,1.3013,1.224,acetic acid: 1*CH3 1*COOH
-20,44,COOH,HCOOH,1.528,1.532,formic acid:  1*HCOOH
-21,45,CCl,CH2Cl,1.4654,1.264,butane-1-chloro: 1*CH3 2*CH2 1*CH2Cl
-21,46,CCl,CHCl,1.238,0.952,propane-2-chloro: 2*CH3 1*CHCl
-21,47,CCl,CCl,1.0106,0.724,2-methylpropane-2-chloro: 2*CH3 1*CCl
-22,48,CCl2,CH2Cl2,2.2564,1.998,methane-dichloro: 1*CH2Cl2
-22,49,CCl2,CHCl2,2.0606,1.684,ethane-1.1-dichloro: 1*CH3 1*CHCl2
-22,50,CCl2,CCl2,1.8016,1.448,propane-2.2-dichloro: 2*CH3 1*CCl2
-23,51,CCl3,CHCl3,2.87,2.41,chloroform: 1*CHCl3
-23,52,CCl3,CCl3,2.6401,2.184,ethane-1.1.1-trichloro: 1*CH3 1*CCl3
-24,53,CCl4,CCl4,3.39,2.91,methane-tetrachloro: 1*CCl4
-26,54,ACCl,ACCl,1.1562,0.844,benzene-chloro: 5*ACH 1*ACCl
-26,55,CNO2,CH3NO2,2.0086,1.868,nitromethane: 1*CH3NO2
-26,56,CNO2,CH2NO2,1.7818,1.56,propane-1-nitro: 1*CH3 1*CH2 1*CH2NO2
-26,57,CNO2,CHNO2,1.5544,1.248,propane-2-nitro: 2*CH3 1*CHNO2
-27,58,ACNO2,ACNO2,1.4199,1.104,benzene-nitro: 5*ACH 1*ACNO2
-28,59,CS2,CS2,2.057,1.65,carbon disulphide: 1*CS2
-29,60,CH3SH,CH3SH,1.877,1.676,methanethiol: 1*CH3SH
-29,61,CH3SH,CH2SH,1.651,1.368,ethanethiol: 1*CH3 1*CH2SH
-30,62,Furfural,furfural,3.168,2.484,furfural: 1*furfural
-31,63,DOH,DOH,2.4088,2.248,1.2-ethanediol: 1*DOH
-32,64,I,I,1.264,0.992,iodoethane: 1*CH3 1*CH2 1*I
-33,65,Br,Br,0.9492,0.832,bromoethane: 1*CH3 1*CH2 1*Br
-34,66,C#C,CH#C,1.292,1.088,hexyne-1: 1*CH3 3*CH2 1*CH{triple}C
-34,67,C#C,C#C,1.0613,0.784,hexyne-2: 2*CH3 2*CH2 1*C{triple}C
-35,68,DMSO,DMSO,2.8266,2.472,dimethylsulfoxide: 1*DMSO
-36,69,ACRY,acrylnitrile,2.3144,2.052,acrylnitrile: 1*acrylnitrile
-37,70,ClCC,Cl-C=C,0.791,0.724,ethene-trichloro:  1*CH=C 3*Cl-(C=C)
-38,71,ACF,ACF,0.6948,0.524,hexafluorobenzene:  6*ACF
-39,72,DMF,DMF,3.0856,2.736,n.n-dimethylformamide: 1*DMF
-39,73,DMF,HCON(CH2)2,2.6322,2.12,n.n-diethylformamide: 2*CH3 1*HCON(CH2)2
-40,74,CF2,CF3,1.406,1.38,perfluorohexane: 2*CF3 4*CF2
-40,75,CF2,CF2,1.0105,0.92,perfluorohexane: 2*CF3 4*CF2
-40,76,CF2,CF,0.615,0.46,perfluoromethylcyclohexane: 1*CF3 5*CF2 1*CF
-41,77,COO,COO,1.38,1.2,methyl acrylate: 1*CH3 1*CH2=CH 1*COO
-42,78,SiH2,SiH3,1.6035,1.263,methylsilane: 1*CH3 1*SiH3
-42,79,SiH2,SiH2,1.4443,1.006,diethylsilane: 2*CH3 2*CH2 1*SiH2
-42,80,SiH2,SiH,1.2853,0.749,heptamethyltrisiloxane:  7*CH3 2*SiO 1*SiH
-42,81,SiH2,Si,1.047,0.41,heptamethyldisiloxane:  6*CH3 1*SiO 1*Si
-43,82,SiO,SiH2O,1.4838,1.062,1.3-dimethyldisiloxane: 3*CH3 1*SiH2O 1*SiH2
-43,83,SiO,SiHO,1.303,0.764,1.1.3.3-tetramethyldisiloxane: 4*CH3 1*SiHO 1*SiH
-43,84,SiO,SiO,1.1044,0.466,octamethylcyclotetrasiloxane:  8*CH3 4*SiO
-44,85,NMP,NMP,3.981,3.2,n-methylpyrrolidone: 1*NMP
-45,86,CClF,CCl3F,3.0356,2.644,trichlorofluoromethane: 1*CCl3F
-45,87,CClF,CCl2F,2.2287,1.916,tetrachloro-1.2-difluoroethane: 2*CCl2F
-45,88,CClF,HCCl2F,2.406,2.116,dichlorofluoromethane: 1*HCCl2F
-45,89,CClF,HCClF,1.6493,1.416,1-chloro-1.2.2.2-tetrafluoroethane: 1*CF3 1*HCClF
-45,90,CClF,CClF2,1.8174,1.648,1.2-dichlorotetrafluoroethane: 2*CClF2
-45,91,CClF,HCClF2,1.967,1.828,chlorodifluoromethane: 1*HCClF2
-45,92,CClF,CClF3,2.1721,2.1,chlorotrifluoromethane: 1*CClF3
-45,93,CClF,CCl2F2,2.6243,2.376,dichlorodifluoromethane: 1*CCl2F2
-46,94,CON,CONH2,1.4515,1.248,acetamide: 1*CH3 1*CONH2
-46,95,CON,CONHCH3,2.1905,1.796,n-methylacetamide: 1*CH3 1*CONHCH3
-46,96,CON,CONHCH2,1.9637,1.488,n-ethylacetamide: 2*CH3 1*CONHCH2
-46,97,CON,CON(CH3)2,2.8589,2.428,n.n-dimethylacetamid: 1*CH3 1*CON(CH3)2
-46,98,CON,CONCH3CH2,2.6322,2.12,n.n-methylethylacetamid: 2*CH3 1*CONCH3CH2
-46,99,CON,CON(CH2)2,2.4054,1.812,n.n-diethylacetamid: 3*CH3 1*CON(CH2)2
-47,100,OCCOH,C2H5O2,2.1226,1.904,2-ethoxyethanol: 1*CH3 1*CH2 1*C2H5O2
-47,101,OCCOH,C2H4O2,1.8952,1.592,2-ethoxy-1-propanol: 2*CH3 1*CH2 1*C2H4O2
-48,102,CH2S,CH3S,1.613,1.368,dimethylsulphide: 1*CH3 1*CH3S
-48,103,CH2S,CH2S,1.3863,1.06,diethylsulphide: 2*CH3 1*CH2 1*CH2S
-48,104,CH2S,CHS,1.1589,0.748,diisopropylsulphide: 4*CH3 1*CH 1*CHS
-49,105,Morpholine,morpholine,3.474,2.796,morpholine: 1*MORPH
-50,106,Thiophene,C4H4S,2.8569,2.14,thiophene: 1*C4H4S
-50,107,Thiophene,C4H3S,2.6908,1.86,2-methylthiophene: 1*CH3 1*C4H3S
-50,108,Thiophene,C4H2S,2.5247,1.58,2 3-dimethylthiophene: 2*CH3 1*C4H2S
-52,109,CH2SuCH2,CH2SuCH2,2.6869,2.120,sulfolane: 1*CH2SuCH2 2*CH3
-52,110,CH2SuCH2,CH2SuCH,2.4595,1.808,2,4 dimethyl sulfolane: 1*CH2SuCH 1*CH3 1*CH2 1*CH
-53,111,Oxides,CH2OCH2,1.5926,1.320,ethylene oxide:  1*CH2OCH2
-53,112,Oxides,CH2OCH,1.3652,1.008,1,2-propylene oxied:  1*CH3  1*CH2OCH
-53,113,Oxides,CH2OC,1.1378,0.780,1,2-epoxy-2-methylpropane: 2*CH3  1*CH2OC
-53,114,Oxides,CHOCH,1.1378,0.696,2,3 epoxybutane: 2*CH3  1*CHOCH
-53,115,Oxides,CHOC,0.9103,0.468,2,3-epoxy-2-methylbutane:  3*CH3  1*CHOCH
-53,116,Oxides,COC,0.6829,0.240,2,3-epoxy-2 3-dimethylbutane: 4*CH3  1*COC
-54,117,Anhydride,O=COC=O,1.7732,1.520,acetic anhydride: 2*CH3  1*O=COC=O
-55,118,Aromatic Nitrile,AC-CN,1.3342,0.996,benzonitrile: 5*ACH  1*AC-CN
-56,119,Aromatic Bromo,AC-Br,1.3629,0.972,bromobenzene: 5*ACH  1*AC-Br
+'ID,SUB_ID,Main groups,Group,Rk,Qk,example,picture
+1,1,CH2,CH3,0.9011,0.848,ethane:  2*CH3,CH3 Ethane
+1,2,CH2,CH2,0.6744,0.54,n-butane: 2*CH3 2*CH2,CH2 Butane
+1,3,CH2,CH,0.4469,0.228,isobutane: 3*CH3 1*CH,CH2 Isobutane
+1,4,CH2,C,0.2195,0,neopentane: 4*CH3 1*C,CH Neopentane
+2,5,C=C,CH2=CH,1.3454,1.176,hexene-1: 1*CH3 3*CH2 1*CH2=CH,CH2=CH 1-Hexene
+2,6,C=C,CH=CH,1.1167,0.867,hexene-2: 1*CH3 2*CH2 1*CH=CH,CH=CH 2-Hexene
+2,7,C=C,CH2=C,1.1173,0.988,2-methyl-1-butene: 2*CH3 1*CH2 1*CH2=CH,CH2=C 2-methyl-1-butene
+2,8,C=C,CH=C,0.8886,0.676,2-methyl-2-butene: 2*CH3 1*CH=C,CH=C 2-methyl-2-butene
+2,9,C=C,C=C,0.6605,0.485,2.3-dimethylbutene: 4*CH3 1*C=C,C=C 2-3-dimethylbuten
+3,10,ACH,ACH,0.5313,0.4,napthaline:  8*ACH 2*AC,ACH Naphtalen
+3,11,ACH,AC,0.3652,0.12,styrene: 1*CH2=CH 5*ACH 1*AC,AC Styrene
+4,12,ACCH2,ACCH3,1.2663,0.968,toluene: 5*ACH 1*ACCH3,ACCH3 Toluol
+4,13,ACCH2,ACCH2,1.0396,0.660,ethylbenzene: 5*ACH 1*ACCH2 1*CH3,ACCH2 Ethylbenzene
+4,14,ACCH2,ACCH,0.8121,0.348,cumene: 2*CH3 5*ACH 1*ACCH,ACCH Cumol
+5,15,OH,OH,1,1.2,propanol-2: 2*CH3 1*CH 1*OH,OH Isopropylalkohol
+6,16,MeOH,CH3OH,1.4311,1.432,methanol: 1*CH3OH,Methanol
+7,17,H2O,H2O,0.92,1.4,water: 1*H2O,Water
+8,18,ACOH,ACOH,0.8952,0.68,phenol: 5*ACH 1*ACOH,ACOH Phenol
+9,19,CH2CO,CH3CO,1.6724,1.448,butanone: 1*CH3 1*CH2 1*CH3CO,CH3CO Butanone
+9,20,CH2CO,CH2CO,1.4457,1.18,pentanone-3: 2*CH3 1*CH2 1*CH2CO,CH2CO Pentanone
+10,21,CHO,CHO,0.998,0.948,propionaldehyde: 1*CH3 1*CH2 1*CHO,CHO Propanal
+11,22,COOC,CH3COO,1.9031,1.728,butyl acetate: 1*CH3 3*CH2 1*CH3COO,CH3COO Acetic_acid_butyl_ester
+11,23,COOC,CH2COO,1.6764,1.42,methyl propionate: 2*CH3 1*CH2COO,CH2COO Methylpropionate
+12,24,HCOO,HCOO,1.242,1.188,ethyl formate: 1*CH3 1*CH2 1*HCOO,HCOO Ethylformate
+13,25,CH2O,CH3O,1.145,1.088,dimethyl ether: 1*CH3 1*CH3CO,CH3O Dimethylether,CH3O Dimethylether
+13,26,CH2O,CH2O,0.9183,0.78,diethyl ether: 2*CH3 1*CH2 1*CH2O,CH2O Diethylether
+13,27,CH2O,CHO,0.6908,0.468,diisopropyl ether: 4*CH3 1*CH 1*CHO,CHO Diisobutylether
+13,28,CH2O,THF,0.9183,1.1,tetrahydrofuran: 3*CH2 1*THF,THF Tetrahydrofuran
+14,29,CNH2,CH3NH2,1.5959,1.544,methylamine:   1*CH3NH,CH3NH2 Methylamine
+14,30,CNH2,CH2NH2,1.3692,1.236,ethylamine    1*CH3 1*CH2NH2,CH2NH2 Ethylamine
+14,31,CNH2,CHNH2,1.1417,0.924,isopropyl amine: 2*CH3 1*CHNH2,CHNH2 Isopropylamine
+15,32,CNH,CH3NH,1.4337,1.244,dimethylamine: 1*CH3 1*CH3NH,CH3NH Dimethylamine
+15,33,CNH,CH2NH,1.207,0.936,diethylamine:  2*CH3 1*CH2 1*CH2NH,CH2NH Diethylamine
+15,34,CNH,CHNH,0.9795,0.624,diisopropyl amine: 4*CH2 1*CH 1*CHNH,CHNH Diisopropylamine
+16,35,C3N,CH3N,1.1865,0.94,trimethylamine: 2*CH3 1*CH3N,CH3N Trimethylamine
+16,36,C3N,CH2N,0.9597,0.632,triethylamine: 3*CH3 2*CH2 1*CH2N,CH2N Triethylamine
+17,37,ACNH2,ACNH2,1.06,0.816,aniline: 5*ACH 1*ACNH2,ACNH2 Aniline
+18,38,Pyridine,C5H5N,2.9993,2.113,pyridine: 1*C5H5N,C5H5N Pyridine
+18,39,Pyridine,C5H4N,2.8332,1.833,2-methylpyridine: 1*CH3 1*C5H4N,C5H4N 2-Methylpyridine
+18,40,Pyridine,C5H3N,2.667,1.553,2 3-dimethylpyridine: 2*CH3 1*C5H3N,C5H3N Dimethylpyridine
+19,41,CCN,CH3CN,1.8701,1.724,acetonitrile: 1*CH3CN,CH3CN Acetonitrile
+19,42,CCN,CH2CN,1.6434,1.416,propionitrile: 1*CH3 1*CH2CN,CH2CN Propionitrile
+20,43,COOH,COOH,1.3013,1.224,acetic acid: 1*CH3 1*COOH,COOH Aceticacid
+20,44,COOH,HCOOH,1.528,1.532,formic acid:  1*HCOOH,HCOOH Formicacid
+21,45,CCl,CH2Cl,1.4654,1.264,butane-1-chloro: 1*CH3 2*CH2 1*CH2Cl,CH2Cl 1-Chlorobutane
+21,46,CCl,CHCl,1.238,0.952,propane-2-chloro: 2*CH3 1*CHCl,CHCl 2-chloropropane
+21,47,CCl,CCl,1.0106,0.724,2-methylpropane-2-chloro: 2*CH3 1*CCl,CCl Tertbutylchloride
+22,48,CCl2,CH2Cl2,2.2564,1.998,methane-dichloro: 1*CH2Cl2,CCl2 Methylenechloride
+22,49,CCl2,CHCl2,2.0606,1.684,ethane-1.1-dichloro: 1*CH3 1*CHCl2,CHCl2 1.1-Dichloroethane
+22,50,CCl2,CCl2,1.8016,1.448,propane-2.2-dichloro: 2*CH3 1*CCl2,CCl2 2.2-Dichloropropane
+23,51,CCl3,CHCl3,2.87,2.41,chloroform: 1*CHCl3,CHCl3 Chloroform
+23,52,CCl3,CCl3,2.6401,2.184,ethane-1.1.1-trichloro: 1*CH3 1*CCl3,CCl3 Trichloroethane
+24,53,CCl4,CCl4,3.39,2.91,methane-tetrachloro: 1*CCl4,CCl4 Carbontetrachloride
+25,54,ACCl,ACCl,1.1562,0.844,benzene-chloro: 5*ACH 1*ACCl,ACCl Chlorobenzene
+26,55,CNO2,CH3NO2,2.0086,1.868,nitromethane: 1*CH3NO2,CH3NO2 Nitromethane
+26,56,CNO2,CH2NO2,1.7818,1.56,propane-1-nitro: 1*CH3 1*CH2 1*CH2NO2,CH2NO2 1-Nitropropane
+26,57,CNO2,CHNO2,1.5544,1.248,propane-2-nitro: 2*CH3 1*CHNO2,CHNO2 2-Nitropropane
+27,58,ACNO2,ACNO2,1.4199,1.104,benzene-nitro: 5*ACH 1*ACNO2,ACNO2 Nitrobenzene
+28,59,CS2,CS2,2.057,1.65,carbon disulphide: 1*CS2,CS2 Carbondisulfide
+29,60,CH3SH,CH3SH,1.877,1.676,methanethiol: 1*CH3SH,CH3SH Methanethiol
+29,61,CH3SH,CH2SH,1.651,1.368,ethanethiol: 1*CH3 1*CH2SH,CH2SH Ethanthiol
+30,62,Furfural,furfural,3.168,2.484,furfural: 1*furfural,Furfural
+31,63,DOH,DOH,2.4088,2.248,1.2-ethanediol: 1*DOH,DOH 1.2-Ethandiol
+32,64,I,I,1.264,0.992,iodoethane: 1*CH3 1*CH2 1*I,I Iodoethane
+33,65,Br,Br,0.9492,0.832,bromoethane: 1*CH3 1*CH2 1*Br,Br Ethylbromide
+34,66,C#C,CH#C,1.292,1.088,hexyne-1: 1*CH3 3*CH2 1*CH{triple}C,CH(triple)C  1-Hexyne
+34,67,C#C,C#C,1.0613,0.784,hexyne-2: 2*CH3 2*CH2 1*C{triple}C,C(triple)C  2-Hexyne
+35,68,DMSO,DMSO,2.8266,2.472,dimethylsulfoxide: 1*DMSO,DMSO Dimethylsulfoxide
+36,69,ACRY,acrylnitrile,2.3144,2.052,acrylnitrile: 1*acrylnitrile,Acrylnitrile
+37,70,ClCC,Cl-C=C,0.791,0.724,ethene-trichloro:  1*CH=C 3*Cl-(C=C),Cl-C=C Trichloroethylene
+38,71,ACF,ACF,0.6948,0.524,hexafluorobenzene:  6*ACF,ACF Hexafluorobenzene
+39,72,DMF,DMF,3.0856,2.736,n.n-dimethylformamide: 1*DMF,DMF Dimethylformamide
+39,73,DMF,HCON(CH2)2,2.6322,2.12,n.n-diethylformamide: 2*CH3 1*HCON(CH2)2,HCON(CH2)2 Diethylformamide
+40,74,CF2,CF3,1.406,1.38,perfluorohexane: 2*CF3 4*CF2,CF3 Perfluorohexane
+40,75,CF2,CF2,1.0105,0.92,perfluorohexane: 2*CF3 4*CF2,CF2 Perfluorohexane
+40,76,CF2,CF,0.615,0.46,perfluoromethylcyclohexane: 1*CF3 5*CF2 1*CF,CF Perfluoromethylcyclohexane
+41,77,COO,COO,1.38,1.2,methyl acrylate: 1*CH3 1*CH2=CH 1*COO,COO Methylacrylate
+42,78,SiH2,SiH3,1.6035,1.263,methylsilane: 1*CH3 1*SiH3,SiH3 Methylsilane
+42,79,SiH2,SiH2,1.4443,1.006,diethylsilane: 2*CH3 2*CH2 1*SiH2,SiH2 Diethylsilane
+42,80,SiH2,SiH,1.2853,0.749,heptamethyltrisiloxane:  7*CH3 2*SiO 1*SiH,SIH Heptamethyltrisiloxane
+42,81,SiH2,Si,1.047,0.41,hexamethyldisiloxane:  6*CH3 1*SiO 1*Si,Si Hexamethyldisiloxane
+43,82,SiO,SiH2O,1.4838,1.062,1.3-dimethyldisiloxane: 3*CH3 1*SiH2O 1*SiH2,SiH2O 1.3-Dimethyildisiloxane
+43,83,SiO,SiHO,1.303,0.764,1.1.3.3-tetramethyldisiloxane: 4*CH3 1*SiHO 1*SiH,SiHO 1.1.3.3-Tetramethyldisiloxane
+43,84,SiO,SiO,1.1044,0.466,octamethylcyclotetrasiloxane:  8*CH3 4*SiO,SiO Octamethylcyclotetrasiloxane
+44,85,NMP,NMP,3.981,3.2,n-methylpyrrolidone: 1*NMP,NMP n-Methylpyrolidone
+45,86,CClF,CCl3F,3.0356,2.644,trichlorofluoromethane: 1*CCl3F,CCl3F Trichlorofluoromethane
+45,87,CClF,CCl2F,2.2287,1.916,tetrachloro-1.2-difluoroethane: 2*CCl2F,CCl2F 1.1.2.2-Tetrachloro-1.2-difluoroethan
+45,88,CClF,HCCl2F,2.406,2.116,dichlorofluoromethane: 1*HCCl2F,HCCl2F Dichlorofluoromethane
+45,89,CClF,HCClF,1.6493,1.416,1-chloro-1.2.2.2-tetrafluoroethane: 1*CF3 1*HCClF,HCClF 1-Chloro-1.2.2.2-Tetrafluoroethane
+45,90,CClF,CClF2,1.8174,1.648,1.2-dichlorotetrafluoroethane: 2*CClF2,CClF2 1.2-Dichlorotetrafluoroethane
+45,91,CClF,HCClF2,1.967,1.828,chlorodifluoromethane: 1*HCClF2,HCClF2 Difluorochloromethane
+45,92,CClF,CClF3,2.1721,2.1,chlorotrifluoromethane: 1*CClF3,CClF3 Chlorotrifluoromethane
+45,93,CClF,CCl2F2,2.6243,2.376,dichlorodifluoromethane: 1*CCl2F2,CCl2F2 Dichlorodifluoromethane
+46,94,CON,CONH2,1.4515,1.248,acetamide: 1*CH3 1*CONH2,CONH2 Acetamide
+46,95,CON,CONHCH3,2.1905,1.796,n-methylacetamide: 1*CH3 1*CONHCH3,CONHCH3 n-Methylacetamide
+46,96,CON,CONHCH2,1.9637,1.488,n-ethylacetamide: 2*CH3 1*CONHCH2,CONHCH2 n-Ethylacetamide
+46,97,CON,CON(CH3)2,2.8589,2.428,n.n-dimethylacetamid: 1*CH3 1*CON(CH3)2,CON(CH3)2 N.N-Dimethylacetamide
+46,98,CON,CONCH3CH2,2.6322,2.12,n.n-methylethylacetamid: 2*CH3 1*CONCH3CH2,CONCH3CH2 N.N-Methylethylacetamidd
+46,99,CON,CON(CH2)2,2.4054,1.812,n.n-diethylacetamid: 3*CH3 1*CON(CH2)2,CON(CH2)2 N.N-Diethylacetamid
+47,100,OCCOH,C2H5O2,2.1226,1.904,2-ethoxyethanol: 1*CH3 1*CH2 1*C2H5O2,C2H5O2 2-Ethoxyethanol
+47,101,OCCOH,C2H4O2,1.8952,1.592,2-ethoxy-1-propanol: 2*CH3 1*CH2 1*C2H4O2,C2H4O2 2-Ethoxy-1-Propanol
+48,102,CH2S,CH3S,1.613,1.368,dimethylsulphide: 1*CH3 1*CH3S,CH3S Dimethylsulfide
+48,103,CH2S,CH2S,1.3863,1.06,diethylsulphide: 2*CH3 1*CH2 1*CH2S,CH2S Diethylsulfide
+48,104,CH2S,CHS,1.1589,0.748,diisopropylsulphide: 4*CH3 1*CH 1*CHS,CHS Diisopropylsulfide
+49,105,Morpholine,morpholine,3.474,2.796,morpholine: 1*MORPH,MORPH Morpholine
+50,106,Thiophene,C4H4S,2.8569,2.14,thiophene: 1*C4H4S,C4H4S Thiophene
+50,107,Thiophene,C4H3S,2.6908,1.86,2-methylthiophene: 1*CH3 1*C4H3S,C4H3S 2-Methylthiophene
+50,108,Thiophene,C4H2S,2.5247,1.58,2 3-dimethylthiophene: 2*CH3 1*C4H2S,C4H2S 2.3-Dimethylthiophene
+52,109,CH2SuCH2,CH2SuCH2,2.6869,2.120,sulfolane: 1*CH2SuCH2 2*CH2,CH2SuCH2 Sulfolane
+52,110,CH2SuCH2,CH2SuCH,2.4595,1.808,2.4 dimethyl sulfolane: 1*CH2SuCH 2*CH3 1*CH2 1*CH,CH2SuCH 2.4-Dimethylsulfolane
+53,111,Oxides,CH2OCH2,1.5926,1.320,ethylene oxide:  1*CH2OCH2,CH2OCH2 Ethyleneoxide
+53,112,Oxides,CH2OCH,1.3652,1.008,1.2-propylene oxide:  1*CH3  1*CH2OCH,CH2OCH 1.2-Propyleneoxide
+53,113,Oxides,CH2OC,1.1378,0.780,1.2-epoxy-2-methylpropane: 2*CH3  1*CH2OC,CH2OC 1.2-Epoxy-2-Methylpropane
+53,114,Oxides,CHOCH,1.1378,0.696,2.3 epoxybutane: 2*CH3  1*CHOCH,CHOCH 2.3 Epoxybutane
+53,115,Oxides,CHOC,0.9103,0.468,2.3-epoxy-2-methylbutane:  3*CH3  1*CHOCH,CHOC 2.3-Epoxy-2-Methylbutane
+53,116,Oxides,COC,0.6829,0.240,2.3-epoxy-2 3-dimethylbutane: 4*CH3  1*COC,COC 2.3-Epoxy-2 3-Dimethylbutane
+54,117,Anhydride,O=COC=O,1.7732,1.520,acetic anhydride: 2*CH3  1*O=COC=O,O=COC=O Aceticanhydride
+55,118,Aromatic Nitrile,AC-CN,1.3342,0.996,benzonitrile: 5*ACH  1*AC-CN,AC-CN Benzonitrile
+56,119,Aromatic Bromo,AC-Br,1.3629,0.972,bromobenzene: 5*ACH  1*AC-Br,AC-Br Bromobenzene

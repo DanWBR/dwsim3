@@ -451,13 +451,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             i = 0
             Do
-                'from chemsep book (error!)
-                'lngc(i) = (1 - z / 2 * VQ(i)) * Math.Log(fi(i) / Vx(i)) + z / 2 * VQ(i) * Math.Log(teta(i) / Vx(i)) - VR(i) / r + z / 2 * VQ(i) * (VR(i) / r - VQ(i) / q)
-                'from wikipedia (correct?!)
-                'lngc(i) = 1 - VR(i) / r + Math.Log(VR(i) / r) - z / 2 * VQ(i) * (1 - fi(i) / teta(i) + Math.Log(fi(i) / teta(i)))
-                'lngr(i) = VQ(i) * (1 - Math.Log(S(i)) - sum1(i))
-                'lng(i) = lngc(i) + lngr(i)
-                lng(i) = Math.Log(fi(i) / Vx(i)) + z / 2 * VQ(i) * Math.Log(teta(i) / fi(i)) + l(i) - fi(i) / Vx(i) * sum2 - VQ(i) * Math.Log(S(i)) + VQ(i) - VQ(i) * sum1(i)
+                lngc(i) = 1 - VR(i) / r + Math.Log(VR(i) / r) - z / 2 * VQ(i) * (1 - fi(i) / teta(i) + Math.Log(fi(i) / teta(i)))
+                lngr(i) = VQ(i) * (1 - Math.Log(S(i)) - sum1(i))
+                lng(i) = lngc(i) + lngr(i)
                 g(i) = Math.Exp(lng(i))
                 i = i + 1
             Loop Until i = n + 1

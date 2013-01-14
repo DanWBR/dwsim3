@@ -17,6 +17,7 @@
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports Microsoft.VisualBasic.FileIO
+
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
     <System.Serializable()> Public Class Unifac

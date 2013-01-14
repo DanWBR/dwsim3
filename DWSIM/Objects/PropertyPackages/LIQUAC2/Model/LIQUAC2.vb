@@ -221,59 +221,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Sub
 
-        Function FreezingPointDepression(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double()
-
-            Dim n As Integer = UBound(Vx)
-            Dim wid As Integer = cprops.IndexOf((From c As ConstantProperties In cprops Select c Where c.Name = "Water").SingleOrDefault)
-            Dim activcoeff As Double() = GAMMA_MR(T, Vx, cprops)
-            Dim Tnfp, DHm, DT, Td As Double
-
-            Tnfp = cprops(wid).TemperatureOfFusion
-            DHm = cprops(wid).EnthalpyOfFusionAtTf * cprops(wid).Molar_Weight
-
-            DT = 8.314 * Tnfp ^ 2 / DHm * Math.Log(Vx(wid) * activcoeff(wid))
-            Td = DT + Tnfp
-
-            Return New Double() {Td, DT}
-
-        End Function
-
-        Function OsmoticCoeff(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double
-
-            Dim n As Integer = UBound(Vx)
-            Dim i As Integer
-            Dim molality(n), summ As Double
-
-            Dim activcoeff As Double() = GAMMA_MR(T, Vx, cprops)
-            Dim wid As Integer = cprops.IndexOf((From c As ConstantProperties In cprops Select c Where c.Name = "Water").SingleOrDefault)
-
-            'calculate molality considering 1 mol of mixture.
-
-            Dim wtotal As Double = 0
-
-            i = 0
-            Do
-                If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
-                    wtotal += Vx(i) * cprops(i).Molar_Weight / 1000
-                End If
-                i += 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                If cprops(i).IsIon Then
-                    molality(i) = Vx(i) / wtotal
-                    summ += molality(i)
-                End If
-                i += 1
-            Loop Until i = n + 1
-
-            Dim oc As Double = -Log(Vx(wid) * activcoeff(wid)) / (cprops(wid).Molar_Weight / 1000 * summ)
-
-            Return oc
-
-        End Function
-
         Function GAMMA_MR(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Array
 
             Dim n As Integer = UBound(Vx)
@@ -282,7 +229,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Dim Vids(n) As String, VQ(n), VR(n), vsolv(n), charge(n), molality(n), solvdensity(n), solvvfrac(n), solvmfrac(n) As Double
             Dim Msolv, DCsolv, dsolv, Xsolv, Im, A, b, a1(n, n), a2(n, n), Bij(n, n), Bref(n, n), dBdIm(n, n) As Double
 
-            Dim i, j As Integer
+            Dim i, j, k, l As Integer
 
             i = 0
             Do
@@ -418,7 +365,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 i = i + 1
             Loop Until i = n + 1
 
-            Dim teta(n), fi(n), l(n), S(n), S2(n), lngc(n), lngr(n), lngmr(n), lnglr(n), lngsr(n), lng(n), g(n), sum1(n), sum2 As Double
+            Dim teta(n), fi(n), S(n), lngc(n), lngr(n), lngmr(n), lnglr(n), lngsr(n), lng(n), g(n), sum1(n) As Double
 
             'long range term
 
@@ -455,7 +402,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 Next
             Next
 
-            Dim sum1mr(n), sum2mr, sum3mr, sum4mr(n), sum5mr, sum6mr(n), sum7mr, sum8mr(n) As Double
+            Dim sum1mr(n), sum2mr, sum3mr, sum4mr(n), sum5mr, sum6mr(n), sum7mr, sum8mr(n), sum0 As Double
 
             For i = 0 To n
                 For j = 0 To n
@@ -576,49 +523,29 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             'short range term
 
-            Dim z As Double = 10.0#
-
             i = 0
             Do
                 fi(i) = Vx(i) * VR(i) / r
                 teta(i) = Vx(i) * VQ(i) / q
-                l(i) = z / 2 * (VR(i) - VQ(i)) - (VR(i) - 1)
                 i = i + 1
             Loop Until i = n + 1
 
-            i = 0
-            Do
-                S(i) = 0
-                j = 0
-                Do
-                    S(i) += teta(j) * tau_ji(i, j)
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+            For i = 0 To n
+                For k = 0 To n
+                    S(i) += teta(k) * tau_ji(i, k)
+                Next
+            Next
 
-            i = 0
-            Do
-                S2(i) = 0
-                j = 0
-                Do
-                    S2(i) += teta(j) * tau_ij(j, i)
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
+            For i = 0 To n
                 sum1(i) = 0
-                j = 0
-                Do
-                    sum1(i) += teta(j) * tau_ij(i, j) / S2(j)
-                    j = j + 1
-                Loop Until j = n + 1
-                sum2 += Vx(i) * l(i)
-                i = i + 1
-            Loop Until i = n + 1
+                For k = 0 To n
+                    sum0 = 0
+                    For l = 0 To n
+                        sum0 += teta(l) * tau_ij(l, k)
+                    Next
+                    sum1(i) += teta(k) * tau_ij(i, k) / sum0
+                Next
+            Next
 
             Dim Rref, Qref, phirefi(n), phiiref(n), sum3sr(n), sum4sr, sum5sr(n) As Double
 
@@ -651,33 +578,28 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Next
 
             For i = 0 To n
-                sum5sr(i) = 0.0#
-                For j = 0 To n
-                    If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
-                        If cprops(j).Name = "Water" Or cprops(j).Name = "Methanol" Then
-                            sum5sr(i) += VQ(j) * solvmfrac(j) * tau_ij(i, j)
-                        End If
-                    End If
-                Next
-            Next
-
-            For i = 0 To n
-                phiiref(i) = 0
-                For j = 0 To n
-                    If cprops(j).Name = "Water" Or cprops(j).Name = "Methanol" Then
-                        phiiref(i) += VQ(j) * solvmfrac(j) * tau_ij(i, j) / sum5sr(j)
-                    End If
+                For k = 0 To n
+                    sum0 = 0
+                    For l = 0 To n
+                        sum0 += VQ(l) * solvmfrac(l) * tau_ij(l, k)
+                    Next
+                    phiiref(i) += VQ(k) * solvmfrac(k) * tau_ij(i, k) / sum0
                 Next
             Next
 
             i = 0
             Do
                 With cprops(i)
-                    lngsr(i) = Math.Log(fi(i) / Vx(i)) + z / 2 * VQ(i) * Math.Log(teta(i) / fi(i)) + l(i) - fi(i) / Vx(i) * sum2 - VQ(i) * Math.Log(S(i)) + VQ(i) - VQ(i) * sum1(i)
+                    lngc(i) = Log(fi(i) / Vx(i)) + 1 - fi(i) / Vx(i) - 5 * VQ(i) * (Log(fi(i) / teta(i)) + 1 - fi(i) / teta(i))
+                    lngr(i) = VQ(i) * (1 - Log(S(i)) - sum1(i))
+                    lngsr(i) = lngc(i) + lngr(i)
                     If .IsIon Then
                         'reference state normalization
-                        lngsr(i) -= 1 - VR(i) / Rref + Log(VR(i) / Rref) - 5 * VQ(i) * (1 - VR(i) * Qref / (Rref * VQ(i)) + Log(VR(i) * Qref / (Rref * VQ(i)))) + VQ(i) * (1 - Log(phirefi(i)) - phiiref(i))
-                        lngsr(i) -= -Log(Xsolv)
+                        lngsr(i) -= Log(VR(i) / Rref) + 1 - VR(i) / Rref - 5 * VQ(i) * (Log(VR(i) * Qref / (Rref * VQ(i))) + 1 - VR(i) * Qref / (Rref * VQ(i)))
+                        lngsr(i) -= VQ(i) * (1 - Log(phirefi(i)) - phiiref(i))
+                        lngsr(i) += Log(Xsolv)
+                    ElseIf .IsSalt Then
+                        lngsr(i) = 0.0#
                     End If
                 End With
                 i = i + 1

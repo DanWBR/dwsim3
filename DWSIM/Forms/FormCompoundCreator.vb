@@ -20,7 +20,7 @@ Imports DWSIM.DWSIM.Utilities.Hypos.Methods
 Imports DWSIM.DWSIM.MathEx.Common
 Imports System.IO
 Imports System.Runtime.Serialization.Formatters.Binary
-
+Imports System.Linq
 Imports System.Math
 
 Public Class FormCompoundCreator
@@ -50,15 +50,21 @@ Public Class FormCompoundCreator
         Me.SIToolStripMenuItem.Checked = True
 
         'Grid UNIFAC
+        Dim pathsep = System.IO.Path.DirectorySeparatorChar
+        Dim picpath As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac" & pathsep
+        Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac.txt"
+        Dim lines() As String = IO.File.ReadAllLines(filename)
+        Dim i As Integer
         With Me.GridUNIFAC.Rows
             .Clear()
-            For Each jg As JobackGroup In jb.Groups.Values
-                .Add(New Object() {CInt(0)})
-                .Item(.Count - 1).HeaderCell.Value = jg.Group
-                .Item(.Count - 1).HeaderCell.Tag = jg.ID
+            For i = 2 To lines.Length - 1
+                .Add(New Object() {CInt(0), Image.FromFile(picpath & lines(i).Split(",")(7) & ".png")})
+                .Item(.Count - 1).HeaderCell.Value = lines(i).Split(",")(3)
+                .Item(.Count - 1).HeaderCell.Tag = lines(i).Split(",")(2)
+                .Item(.Count - 1).Cells(1).ToolTipText = lines(i).Split(",")(7)
             Next
         End With
-
+        
         mycase = New CompoundGeneratorCase
         With mycase
             .cp.VaporPressureEquation = 0
@@ -130,6 +136,63 @@ Public Class FormCompoundCreator
             If .RegressCPIG Then rbRegressCPIG.Checked = True
             If .RegressLDENS Then rbRegressLIQDENS.Checked = True
             If .RegressLVISC Then rbRegressLIQVISC.Checked = True
+            If .EqPVAP Then rbCoeffPVAP.Checked = True
+            If .EqCPIG Then rbCoeffCPIG.Checked = True
+            If .EqLDENS Then rbCoeffLIQDENS.Checked = True
+            If .EqLVISC Then rbCoeffLIQVISC.Checked = True
+
+            For Each it As Object In cbEqPVAP.Items
+                If it.ToString.Split(":")(0) = .cp.VaporPressureEquation Then
+                    cbEqPVAP.SelectedIndex = cbEqPVAP.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
+            For Each it As Object In cbEqCPIG.Items
+                If it.ToString.Split(":")(0) = .cp.IdealgasCpEquation Then
+                    cbEqCPIG.SelectedIndex = cbEqCPIG.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
+            For Each it As Object In cbEqLIQDENS.Items
+                If it.ToString.Split(":")(0) = .cp.LiquidDensityEquation Then
+                    cbEqLIQDENS.SelectedIndex = cbEqLIQDENS.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
+            For Each it As Object In cbEqLIQVISC.Items
+                If it.ToString.Split(":")(0) = .cp.LiquidViscosityEquation Then
+                    cbEqLIQVISC.SelectedIndex = cbEqLIQVISC.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
+            tbPVAP_A.Text = .cp.Vapor_Pressure_Constant_A
+            tbPVAP_B.Text = .cp.Vapor_Pressure_Constant_B
+            tbPVAP_C.Text = .cp.Vapor_Pressure_Constant_C
+            tbPVAP_D.Text = .cp.Vapor_Pressure_Constant_D
+            tbPVAP_E.Text = .cp.Vapor_Pressure_Constant_E
+
+            tbCPIG_A.Text = .cp.Ideal_Gas_Heat_Capacity_Const_A
+            tbCPIG_B.Text = .cp.Ideal_Gas_Heat_Capacity_Const_B
+            tbCPIG_C.Text = .cp.Ideal_Gas_Heat_Capacity_Const_C
+            tbCPIG_D.Text = .cp.Ideal_Gas_Heat_Capacity_Const_D
+            tbCPIG_E.Text = .cp.Ideal_Gas_Heat_Capacity_Const_E
+
+            tbLIQDENS_A.Text = .cp.Liquid_Density_Const_A
+            tbLIQDENS_B.Text = .cp.Liquid_Density_Const_B
+            tbLIQDENS_C.Text = .cp.Liquid_Density_Const_C
+            tbLIQDENS_D.Text = .cp.Liquid_Density_Const_D
+            tbLIQDENS_E.Text = .cp.Liquid_Density_Const_E
+
+            tbLIQVISC_A.Text = .cp.Liquid_Viscosity_Const_A
+            tbLIQVISC_B.Text = .cp.Liquid_Viscosity_Const_B
+            tbLIQVISC_C.Text = .cp.Liquid_Viscosity_Const_C
+            tbLIQVISC_D.Text = .cp.Liquid_Viscosity_Const_D
+            tbLIQVISC_E.Text = .cp.Liquid_Viscosity_Const_E
+
             populating = True
             For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
                 r.Cells(0).Value = .cp.UNIFACGroups.Collection(r.HeaderCell.Value)
@@ -192,15 +255,19 @@ Public Class FormCompoundCreator
 
                 Tb = jb.CalcTb(vnd)
                 If CheckBoxNBP.Checked Then Me.TextBoxNBP.Text = cv.ConverterDoSI(su.spmp_temperature, Tb)
+                Tb = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxNBP.Text)
 
                 MM = jb.CalcMW(vnd)
                 If CheckBoxMW.Checked Then Me.TextBoxMW.Text = MM
+                MM = Me.TextBoxMW.Text
 
                 Tc = jb.CalcTc(Tb, vnd)
                 If CheckBoxTc.Checked Then Me.TextBoxTc.Text = cv.ConverterDoSI(su.spmp_temperature, Tc)
+                Tc = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxTc.Text)
 
                 Pc = jb.CalcPc(vnd)
                 If CheckBoxPc.Checked Then Me.TextBoxPc.Text = cv.ConverterDoSI(su.spmp_pressure, Pc)
+                Pc = cv.ConverterParaSI(su.spmp_pressure, Me.TextBoxPc.Text)
 
                 Vc = jb.CalcVc(vnd)
                 If CheckBoxZc.Checked Then Me.TextBoxZc.Text = Pc * Vc / Tc / 8.314 / 1000
@@ -209,6 +276,7 @@ Public Class FormCompoundCreator
                 w = (-Math.Log(Pc / 100000) - 5.92714 + 6.09648 / (Tb / Tc) + 1.28862 * Math.Log(Tb / Tc) - 0.169347 * (Tb / Tc) ^ 6) / (15.2518 - 15.6875 / (Tb / Tc) - 13.4721 * Math.Log(Tb / Tc) + 0.43577 * (Tb / Tc) ^ 6)
 
                 If CheckBoxAF.Checked Then Me.TextBoxAF.Text = w
+                w = Me.TextBoxAF.Text
                 If CheckBoxDHF.Checked Then Me.TextBoxDHF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDHf(vnd) / MM)
                 Hvb = methods.DHvb_Vetere(Tc, Pc, Tb) / MM
                 If CheckBoxDGF.Checked Then Me.TextBoxDGF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDGf(vnd) / MM)
@@ -884,6 +952,119 @@ Public Class FormCompoundCreator
         Return Nothing
 
     End Function
+
+    Private Sub rbCoeffPVAP_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbCoeffPVAP.CheckedChanged
+        mycase.EqPVAP = rbCoeffPVAP.Checked
+    End Sub
+
+    Private Sub rbCoeffCPIG_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbCoeffCPIG.CheckedChanged
+        mycase.EqCPIG = rbCoeffCPIG.Checked
+    End Sub
+
+    Private Sub rbCoeffLIQDENS_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbCoeffLIQDENS.CheckedChanged
+        mycase.EqLDENS = rbCoeffLIQDENS.Checked
+    End Sub
+
+    Private Sub rbCoeffLIQVISC_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbCoeffLIQVISC.CheckedChanged
+        mycase.EqLVISC = rbCoeffLIQVISC.Checked
+    End Sub
+
+    Private Sub cbEqPVAP_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbEqPVAP.SelectedIndexChanged
+        If mycase.EqPVAP Then mycase.cp.VaporPressureEquation = cbEqPVAP.SelectedItem.ToString.Split(":")(0)
+    End Sub
+
+    Private Sub cbEqCPIG_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbEqCPIG.SelectedIndexChanged
+        If mycase.EqCPIG Then mycase.cp.IdealgasCpEquation = cbEqCPIG.SelectedItem.ToString.Split(":")(0)
+    End Sub
+
+    Private Sub cbEqLIQDENS_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbEqLIQDENS.SelectedIndexChanged
+        If mycase.EqLDENS Then mycase.cp.LiquidDensityEquation = cbEqLIQDENS.SelectedItem.ToString.Split(":")(0)
+    End Sub
+
+    Private Sub cbEqLIQVISC_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbEqLIQVISC.SelectedIndexChanged
+        If mycase.EqLVISC Then mycase.cp.LiquidViscosityEquation = cbEqLIQVISC.SelectedItem.ToString.Split(":")(0)
+    End Sub
+
+    Private Sub tbPVAP_A_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbPVAP_A.TextChanged
+        If mycase.EqPVAP Then mycase.cp.Vapor_Pressure_Constant_A = tbPVAP_A.Text
+    End Sub
+
+    Private Sub tbPVAP_B_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbPVAP_B.TextChanged
+        If mycase.EqPVAP Then mycase.cp.Vapor_Pressure_Constant_B = tbPVAP_B.Text
+    End Sub
+
+    Private Sub tbPVAP_C_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbPVAP_C.TextChanged
+        If mycase.EqPVAP Then mycase.cp.Vapor_Pressure_Constant_C = tbPVAP_C.Text
+    End Sub
+
+    Private Sub tbPVAP_D_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbPVAP_D.TextChanged
+        If mycase.EqPVAP Then mycase.cp.Vapor_Pressure_Constant_D = tbPVAP_D.Text
+    End Sub
+
+    Private Sub tbPVAP_E_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbPVAP_E.TextChanged
+        If mycase.EqPVAP Then mycase.cp.Vapor_Pressure_Constant_E = tbPVAP_E.Text
+    End Sub
+
+    Private Sub tbCPIG_A_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbCPIG_A.TextChanged
+        If mycase.EqCPIG Then mycase.cp.Ideal_Gas_Heat_Capacity_Const_A = tbCPIG_A.Text
+    End Sub
+
+    Private Sub tbCPIG_B_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbCPIG_B.TextChanged
+        If mycase.EqCPIG Then mycase.cp.Ideal_Gas_Heat_Capacity_Const_B = tbCPIG_B.Text
+    End Sub
+
+    Private Sub tbCPIG_C_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbCPIG_C.TextChanged
+        If mycase.EqCPIG Then mycase.cp.Ideal_Gas_Heat_Capacity_Const_C = tbCPIG_C.Text
+    End Sub
+
+    Private Sub tbCPIG_D_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbCPIG_D.TextChanged
+        If mycase.EqCPIG Then mycase.cp.Ideal_Gas_Heat_Capacity_Const_D = tbCPIG_D.Text
+    End Sub
+
+    Private Sub tbCPIG_E_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbCPIG_E.TextChanged
+        If mycase.EqCPIG Then mycase.cp.Ideal_Gas_Heat_Capacity_Const_E = tbCPIG_E.Text
+    End Sub
+
+    Private Sub tbLIQDENS_A_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQDENS_A.TextChanged
+        If mycase.EqLDENS Then mycase.cp.Liquid_Density_Const_A = tbLIQDENS_A.Text
+    End Sub
+
+    Private Sub tbLIQDENS_b_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQDENS_B.TextChanged
+        If mycase.EqLDENS Then mycase.cp.Liquid_Density_Const_B = tbLIQDENS_B.Text
+    End Sub
+
+    Private Sub tbLIQDENS_c_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQDENS_C.TextChanged
+        If mycase.EqLDENS Then mycase.cp.Liquid_Density_Const_C = tbLIQDENS_C.Text
+    End Sub
+
+    Private Sub tbLIQDENS_d_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQDENS_D.TextChanged
+        If mycase.EqLDENS Then mycase.cp.Liquid_Density_Const_D = tbLIQDENS_D.Text
+    End Sub
+
+    Private Sub tbLIQDENS_e_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQDENS_E.TextChanged
+        If mycase.EqLDENS Then mycase.cp.Liquid_Density_Const_E = tbLIQDENS_E.Text
+    End Sub
+
+    Private Sub tbLIQVISC_A_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQVISC_A.TextChanged
+        If mycase.EqLVISC Then mycase.cp.Liquid_Viscosity_Const_A = tbLIQVISC_A.Text
+    End Sub
+
+    Private Sub tbLIQVISC_B_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQVISC_B.TextChanged
+        If mycase.EqLVISC Then mycase.cp.Liquid_Viscosity_Const_B = tbLIQVISC_B.Text
+    End Sub
+
+    Private Sub tbLIQVISC_C_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQVISC_C.TextChanged
+        If mycase.EqLVISC Then mycase.cp.Liquid_Viscosity_Const_C = tbLIQVISC_C.Text
+    End Sub
+
+    Private Sub tbLIQVISC_D_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQVISC_D.TextChanged
+        If mycase.EqLVISC Then mycase.cp.Liquid_Viscosity_Const_D = tbLIQVISC_D.Text
+    End Sub
+
+    Private Sub tbLIQVISC_E_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQVISC_E.TextChanged
+        If mycase.EqLVISC Then mycase.cp.Liquid_Viscosity_Const_E = tbLIQVISC_E.Text
+    End Sub
+
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase
@@ -902,6 +1083,11 @@ End Class
     Public RegressCPIG As Boolean = False
     Public RegressLVISC As Boolean = False
     Public RegressLDENS As Boolean = False
+
+    Public EqPVAP As Boolean = False
+    Public EqCPIG As Boolean = False
+    Public EqLVISC As Boolean = False
+    Public EqLDENS As Boolean = False
 
     Public RegressOKPVAP As Boolean = False
     Public RegressOKCPIG As Boolean = False

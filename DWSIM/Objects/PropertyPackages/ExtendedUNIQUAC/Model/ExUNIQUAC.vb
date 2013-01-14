@@ -154,66 +154,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Sub
 
-        Function FreezingPointDepression(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double()
-
-            Dim n As Integer = UBound(Vx)
-            Dim wid As Integer = cprops.IndexOf((From c As ConstantProperties In cprops Select c Where c.Name = "Water").SingleOrDefault)
-            Dim activcoeff As Double() = GAMMA_MR(T, Vx, cprops)
-            Dim Tnfp, DHm, DT, Td As Double
-
-            Tnfp = cprops(wid).TemperatureOfFusion
-            DHm = cprops(wid).EnthalpyOfFusionAtTf * cprops(wid).Molar_Weight
-
-            DT = 8.314 * Tnfp ^ 2 / DHm * Math.Log(Vx(wid) * activcoeff(wid))
-            Td = DT + Tnfp
-
-            Return New Double() {Td, DT}
-
-        End Function
-
-        Function OsmoticCoeff(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double
-
-            Dim n As Integer = UBound(Vx)
-            Dim i As Integer
-            Dim molality(n), summ As Double
-
-            Dim activcoeff As Double() = GAMMA_MR(T, Vx, cprops)
-            Dim wid As Integer = cprops.IndexOf((From c As ConstantProperties In cprops Select c Where c.Name = "Water").SingleOrDefault)
-
-            'calculate molality considering 1 mol of mixture.
-
-            Dim wtotal As Double = 0
-
-            i = 0
-            Do
-                If cprops(i).Name = "Water" Or cprops(i).Name = "Methanol" Then
-                    wtotal += Vx(i) * cprops(i).Molar_Weight / 1000
-                End If
-                i += 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                If cprops(i).IsIon Then
-                    molality(i) = Vx(i) / wtotal
-                    summ += molality(i)
-                End If
-                i += 1
-            Loop Until i = n + 1
-
-            Dim oc As Double = -Log(Vx(wid) * activcoeff(wid)) / (cprops(wid).Molar_Weight / 1000 * summ)
-
-            Return oc
-
-        End Function
-
         Function GAMMA_MR(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Array
 
             Dim n As Integer = UBound(Vx)
 
-            Dim tau_ji(n, n), ai(n), bi(n), ci(n), uij0(n, n), uijT(n, n), uii(n, n) As Double
+            Dim tau_ji(n, n), uij0(n, n), uijT(n, n), uii(n, n) As Double
             Dim Vids(n) As String, VQ(n), VR(n), vsolv(n), charge(n), molality(n), solvdensity(n), solvvfrac(n), solvmfrac(n) As Double
             Dim Msolv, DCsolv, dsolv, Xsolv, Im, A, b, a1(n, n), a2(n, n), Bij(n, n), Bref(n, n), dBdIm(n, n) As Double
+            Dim teta(n), fi(n), S(n), lngc(n), lngr(n), lnglr(n), lngsr(n), lng(n), g(n), sum1(n), sum0 As Double
 
             Dim i, j, k, l, wi As Integer
 
@@ -230,9 +178,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 If Me.ModelData.ContainsKey(cprops(i).Formula) Then
                     VQ(i) = Me.ModelData(cprops(i).Formula).Q
                     VR(i) = Me.ModelData(cprops(i).Formula).R
-                    ai(i) = Me.ModelData(cprops(i).Formula).a
-                    bi(i) = Me.ModelData(cprops(i).Formula).b
-                    ci(i) = Me.ModelData(cprops(i).Formula).c
                 Else
                     VQ(i) = cprops(i).UNIQUAC_Q
                     VR(i) = cprops(i).UNIQUAC_R
@@ -309,6 +254,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             A = 132775.7 * dsolv ^ 0.5 / (DCsolv * T) ^ (1.5)
             b = 6.359696 * dsolv ^ 0.5 / (DCsolv * T) ^ 0.5
 
+            'long range term (Debye-Huckel)
+
+            For i = 0 To n
+                With cprops(i)
+                    If .IsIon Then
+                        lnglr(i) = -A * .Charge ^ 2 * Im ^ 0.5 / (1 + b * Im ^ 0.5)
+                    ElseIf .Name = "Water" Then
+                        lnglr(i) = 2 * A * .Molar_Weight / 1000 * dsolv / (b ^ 3 * solvdensity(i)) * (1 + b * Im ^ 0.5 - 1 / (b * Im ^ 0.5) - 2 * Log(b * Im ^ 0.5))
+                    Else
+                        lnglr(i) = 0.0#
+                    End If
+                End With
+            Next
+
+            'short range term
+
             i = 0
             Do
                 j = 0
@@ -320,8 +281,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         Else
                             If Me.InteractionParameters.ContainsKey(Vids(j)) Then
                                 If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
-                                    uij0(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).uij0
-                                    uijT(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).uijT
+                                    uij0(j, i) = Me.InteractionParameters(Vids(j))(Vids(i)).uij0
+                                    uijT(j, i) = Me.InteractionParameters(Vids(j))(Vids(i)).uijT
                                 End If
                             End If
                         End If
@@ -354,30 +315,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 i = i + 1
             Loop Until i = n + 1
 
-            Dim teta(n), fi(n), S(n), lngc(n), lngr(n), lnglr(n), lngsr(n), lng(n), g(n), sum1(n), sum0 As Double
-
-            'long range term (Debye-Huckel)
-
-            For i = 0 To n
-                With cprops(i)
-                    If .IsIon Then
-                        lnglr(i) = -A * .Charge ^ 2 * Im ^ 0.5 / (1 + b * Im ^ 0.5)
-                    ElseIf .Name = "Water" Then
-                        lnglr(i) = 2 * A * .Molar_Weight / 1000 * dsolv / (b ^ 3 * solvdensity(i)) * (1 + b * Im ^ 0.5 - 1 / (b * Im ^ 0.5) - 2 * Log(b * Im ^ 0.5))
-                    Else
-                        lnglr(i) = 0.0#
-                    End If
-                End With
-            Next
-
-            'short range term
-
-            Dim z As Double = 10.0#
-
             i = 0
             Do
-                fi(i) = Vx(i) * VR(i) / r
-                teta(i) = Vx(i) * VQ(i) / q
+                fi(i) = Vx(i) * VR(i) / R
+                teta(i) = Vx(i) * VQ(i) / Q
                 i = i + 1
             Loop Until i = n + 1
 
@@ -405,16 +346,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             i = 0
             Do
-                With cprops(i)
-                    lngc(i) = Log(fi(i) / Vx(i)) + 1 - fi(i) / Vx(i) + z / 2 * VQ(i) * (Log(fi(i) / teta(i)) + 1 - fi(i) / teta(i))
-                    lngr(i) = VQ(i) * (1 - Log(S(i)) - sum1(i))
-                    lngsr(i) = lngc(i) + lngr(i)
-                    If .IsIon Then
-                        'reference state normalization
-                        lngsr(i) -= Log(VR(i) / VR(wi) + 1 - VR(i) / VR(wi) - z / 2 * VQ(i) * (Log(VR(i) * VQ(wi) / (VR(wi) * VQ(i))) + 1 - VR(i) * VQ(wi) / (VR(wi) * VQ(i))))
-                        lngsr(i) -= VQ(i) * (1 - Log(tau_ji(wi, i)) - tau_ji(i, wi))
-                    End If
-                End With
+                lngc(i) = Log(fi(i) / Vx(i)) + 1 - fi(i) / Vx(i) - 5 * VQ(i) * (Log(fi(i) / teta(i)) + 1 - fi(i) / teta(i))
+                lngr(i) = VQ(i) * (1 - Log(S(i)) - sum1(i))
+                lngsr(i) = lngc(i) + lngr(i)
+                If cprops(i).IsIon Then
+                    'reference state normalization
+                    lngsr(i) -= Log(VR(i) / VR(wi)) + 1 - VR(i) / VR(wi) - 5 * VQ(i) * (Log(VR(i) * VQ(wi) / (VR(wi) * VQ(i))) + 1 - VR(i) * VQ(wi) / (VR(wi) * VQ(i)))
+                    lngsr(i) -= VQ(i) * (1 - Log(tau_ji(wi, i)) - tau_ji(i, wi))
+                    lngsr(i) += Log(Vx(wi))
+                End If
                 i = i + 1
             Loop Until i = n + 1
 
@@ -424,7 +364,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 lng(i) = lngsr(i) + lnglr(i)
             Next
 
-            'calculate activity of non-dissociated salts
+            'calculate mean molal activity coefficient
 
             Dim plng, nlng As Double
 
