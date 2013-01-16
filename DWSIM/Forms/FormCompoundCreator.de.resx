@@ -187,6 +187,12 @@
   <data name="GridUNIFAC.Size" type="System.Drawing.Size, System.Drawing">
     <value>436, 239</value>
   </data>
+  <data name="Column4.HeaderText" xml:space="preserve">
+    <value>Anzahl</value>
+  </data>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Beispiel</value>
+  </data>
   <data name="Label60.Size" type="System.Drawing.Size, System.Drawing">
     <value>438, 32</value>
   </data>
@@ -297,6 +303,9 @@
   </data>
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Kritische Daten</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>UNIQUAC Parameter</value>
   </data>
   <data name="CheckBoxAF.ToolTip" xml:space="preserve">
     <value>Abschätzung aufgrund UNIFAC-Struktur</value>
@@ -525,12 +534,6 @@
   </data>
   <data name="DBOpenDlg.Title" xml:space="preserve">
     <value>Öffne/Erzeuge Database</value>
-  </data>
-  <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Anzahl</value>
-  </data>
-  <data name="Column1.HeaderText" xml:space="preserve">
-    <value>Beispiel</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

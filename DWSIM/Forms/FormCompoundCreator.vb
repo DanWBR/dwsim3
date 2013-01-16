@@ -47,8 +47,6 @@ Public Class FormCompoundCreator
 
         methods = New DWSIM.Utilities.Hypos.Methods.HYP()
 
-        Me.SIToolStripMenuItem.Checked = True
-
         'Grid UNIFAC
         Dim pathsep = System.IO.Path.DirectorySeparatorChar
         Dim picpath As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac" & pathsep
@@ -61,10 +59,13 @@ Public Class FormCompoundCreator
                 .Add(New Object() {CInt(0), Image.FromFile(picpath & lines(i).Split(",")(7) & ".png")})
                 .Item(.Count - 1).HeaderCell.Value = lines(i).Split(",")(3)
                 .Item(.Count - 1).HeaderCell.Tag = lines(i).Split(",")(2)
-                .Item(.Count - 1).Cells(1).ToolTipText = lines(i).Split(",")(7)
+                .Item(.Count - 1).Cells(1).ToolTipText = "Main Group: " & lines(i).Split(",")(2) & vbCrLf & _
+                                                        "Subgroup: " & lines(i).Split(",")(3) & vbCrLf & _
+                                                        "Rk / Qk: " & lines(i).Split(",")(4) & " / " & lines(i).Split(",")(5) & vbCrLf & _
+                                                        "Example Compound: " & lines(i).Split(",")(6)
             Next
         End With
-        
+
         mycase = New CompoundGeneratorCase
         With mycase
             .cp.VaporPressureEquation = 0
@@ -73,12 +74,49 @@ Public Class FormCompoundCreator
             .cp.LiquidViscosityEquation = 0
         End With
 
-        loaded = True
+        For Each su In CType(Me.MdiParent, FormMain).AvailableUnitSystems.Values
+            Dim tsmi As New ToolStripMenuItem
+                With tsmi
+                    .Text = su.nome
+                    .DisplayStyle = ToolStripItemDisplayStyle.Text
+                    .CheckOnClick = True
+                End With
+                Me.SistemaDeUnidadesToolStripMenuItem.DropDownItems.Insert(Me.SistemaDeUnidadesToolStripMenuItem.DropDownItems.Count, tsmi)
+                AddHandler tsmi.Click, AddressOf Me.UnitSystem_click
+        Next
+
+        Me.SistemaDeUnidadesToolStripMenuItem.DropDownItems(0).PerformClick()
 
     End Sub
 
-    Private Sub FormCompoundCreator_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+    Private Sub UnitSystem_click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        If loaded Then
+            StoreData()
+        End If
+        Dim myLink As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
+        If myLink.Checked Then
+            If CType(Me.MdiParent, FormMain).AvailableUnitSystems.ContainsKey(myLink.Text) Then
+                su = CType(Me.MdiParent, FormMain).AvailableUnitSystems(myLink.Text)
+            End If
+            For Each tsmi As ToolStripMenuItem In Me.SistemaDeUnidadesToolStripMenuItem.DropDownItems
+                tsmi.Checked = False
+            Next
+            myLink.Checked = True
+        Else
+            For Each tsmi As ToolStripMenuItem In Me.SistemaDeUnidadesToolStripMenuItem.DropDownItems
+                tsmi.Checked = False
+            Next
+            CType(Me.SistemaDeUnidadesToolStripMenuItem.DropDownItems(0), ToolStripMenuItem).Checked = True
+            su = New DWSIM.SistemasDeUnidades.UnidadesSI
+        End If
+        If loaded Then
+            mycase.su = su
+            UpdateUnits()
+            WriteData()
+        End If
+    End Sub
 
+    Private Sub FormCompoundCreator_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
 
         If Not forceclose Then
             Dim x = MessageBox.Show(DWSIM.App.GetLocalString("Desejasalvarasaltera"), DWSIM.App.GetLocalString("Fechando") & " " & Me.Text, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
@@ -109,7 +147,41 @@ Public Class FormCompoundCreator
         Dim i As Integer
 
         With mycase
-            Me.su = .su
+            If File.Exists(.database) Then
+                Me.tbDBPath.Text = .database
+            Else
+                Me.tbDBPath.Text = "<file not found>"
+            End If
+            Me.Text = .Filename
+            If .su.spmp_temperature IsNot Nothing Then
+                Me.su = .su
+                If Not CType(Me.MdiParent, FormMain).AvailableUnitSystems.ContainsKey(.su.nome) Then
+                    If Not TypeOf .su Is DWSIM.SistemasDeUnidades.UnidadesSI And Not _
+                        TypeOf .su Is DWSIM.SistemasDeUnidades.UnidadesCGS And Not _
+                        TypeOf .su Is DWSIM.SistemasDeUnidades.UnidadesINGLES Then
+                        CType(Me.MdiParent, FormMain).AvailableUnitSystems.Add(.su.nome, .su)
+                    End If
+                    Dim tsmi As New ToolStripMenuItem
+                    With tsmi
+                        .Text = mycase.su.nome
+                        .DisplayStyle = ToolStripItemDisplayStyle.Text
+                        .CheckOnClick = True
+                    End With
+                    Me.SistemaDeUnidadesToolStripMenuItem.DropDownItems.Insert(Me.SistemaDeUnidadesToolStripMenuItem.DropDownItems.Count, tsmi)
+                    AddHandler tsmi.Click, AddressOf Me.UnitSystem_click
+                Else
+                    For Each tsmi As ToolStripMenuItem In Me.SistemaDeUnidadesToolStripMenuItem.DropDownItems
+                        If tsmi.Text = .su.nome Then
+                            tsmi.Checked = True
+                        Else
+                            tsmi.Checked = False
+                        End If
+                    Next
+                    UpdateUnits()
+                End If
+            Else
+                .su = Me.su
+            End If
             tbDBPath.Text = .database
             TextBoxAF.Text = .cp.Acentric_Factor
             TextBoxCAS.Text = .cp.CAS_Number
@@ -127,11 +199,14 @@ Public Class FormCompoundCreator
             TextBoxPCSAFTEpsilon.Text = .cp.PC_SAFT_epsilon_k
             TextBoxPCSAFTm.Text = .cp.PC_SAFT_m
             TextBoxPCSAFTSigma.Text = .cp.PC_SAFT_sigma
+            TextBoxUNIQUAC_Q.Text = .cp.UNIQUAC_Q
+            TextBoxUNIQUAC_R.Text = .cp.UNIQUAC_R
             TextBoxTc.Text = cv.ConverterDoSI(su.spmp_temperature, .cp.Critical_Temperature)
             TextBoxVTCPR.Text = .cp.PR_Volume_Translation_Coefficient
             TextBoxVTCSRK.Text = .cp.SRK_Volume_Translation_Coefficient
             TextBoxZc.Text = .cp.Critical_Compressibility
             TextBoxZRa.Text = .cp.Z_Rackett
+
             If .RegressPVAP Then rbEstimatePVAP.Checked = True
             If .RegressCPIG Then rbRegressCPIG.Checked = True
             If .RegressLDENS Then rbRegressLIQDENS.Checked = True
@@ -140,6 +215,19 @@ Public Class FormCompoundCreator
             If .EqCPIG Then rbCoeffCPIG.Checked = True
             If .EqLDENS Then rbCoeffLIQDENS.Checked = True
             If .EqLVISC Then rbCoeffLIQVISC.Checked = True
+
+            CheckBoxMW.Checked = .CalcMW
+            CheckBoxNBP.Checked = .CalcNBP
+            CheckBoxAF.Checked = .CalcAF
+            CheckBoxCSAF.Checked = .CalcCSAF
+            CheckBoxCSLV.Checked = .CalcCSMV
+            CheckBoxCSSP.Checked = .CalcCSSP
+            CheckBoxTc.Checked = .CalcTC
+            CheckBoxPc.Checked = .CalcPC
+            CheckBoxZc.Checked = .CalcZC
+            CheckBoxZRa.Checked = .CalcZRA
+            CheckBoxDHF.Checked = .CalcHF
+            CheckBoxDGF.Checked = .CalcGF
 
             For Each it As Object In cbEqPVAP.Items
                 If it.ToString.Split(":")(0) = .cp.VaporPressureEquation Then
@@ -223,6 +311,115 @@ Public Class FormCompoundCreator
 
     End Sub
 
+    Sub StoreData()
+
+        With mycase
+            .su = Me.su
+            .database = tbDBPath.Text
+            .cp.Acentric_Factor = TextBoxAF.Text
+            .cp.CAS_Number = TextBoxCAS.Text
+            .cp.Chao_Seader_Acentricity = TextBoxCSAF.Text
+            .cp.Chao_Seader_Liquid_Molar_Volume = TextBoxCSLV.Text
+            .cp.Chao_Seader_Solubility_Parameter = TextBoxCSSP.Text
+            .cp.IG_Gibbs_Energy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, TextBoxDGF.Text)
+            .cp.IG_Enthalpy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, TextBoxDHF.Text)
+            .cp.Formula = TextBoxFormula.Text
+            .cp.ID = TextBoxID.Text
+            .cp.Molar_Weight = TextBoxMW.Text
+            .cp.Name = TextBoxName.Text
+            .cp.Normal_Boiling_Point = cv.ConverterParaSI(su.spmp_temperature, TextBoxNBP.Text)
+            .cp.Critical_Pressure = cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text)
+            .cp.PC_SAFT_epsilon_k = TextBoxPCSAFTEpsilon.Text
+            .cp.PC_SAFT_m = TextBoxPCSAFTm.Text
+            .cp.PC_SAFT_sigma = TextBoxPCSAFTSigma.Text
+            .cp.UNIQUAC_Q = TextBoxUNIQUAC_Q.Text
+            .cp.UNIQUAC_R = TextBoxUNIQUAC_R.Text
+            .cp.Critical_Temperature = cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text)
+            .cp.PR_Volume_Translation_Coefficient = TextBoxVTCPR.Text
+            .cp.SRK_Volume_Translation_Coefficient = TextBoxVTCSRK.Text
+            .cp.Critical_Compressibility = TextBoxZc.Text
+            .cp.Z_Rackett = TextBoxZRa.Text
+
+            .RegressPVAP = rbEstimatePVAP.Checked
+            .RegressCPIG = rbRegressCPIG.Checked
+            .RegressLDENS = rbRegressLIQDENS.Checked
+            .RegressLVISC = rbRegressLIQVISC.Checked
+            .EqPVAP = rbCoeffPVAP.Checked
+            .EqCPIG = rbCoeffCPIG.Checked
+            .EqLDENS = rbCoeffLIQDENS.Checked
+            .EqLVISC = rbCoeffLIQVISC.Checked
+
+            .CalcMW = CheckBoxMW.Checked
+            .CalcNBP = CheckBoxNBP.Checked
+            .CalcAF = CheckBoxAF.Checked
+            .CalcCSAF = CheckBoxCSAF.Checked
+            .CalcCSMV = CheckBoxCSLV.Checked
+            .CalcCSSP = CheckBoxCSSP.Checked
+            .CalcTC = CheckBoxTc.Checked
+            .CalcPC = CheckBoxPc.Checked
+            .CalcZC = CheckBoxZc.Checked
+            .CalcZRA = CheckBoxZRa.Checked
+            .CalcHF = CheckBoxDHF.Checked
+            .CalcGF = CheckBoxDGF.Checked
+
+            .cp.VaporPressureEquation = cbEqPVAP.SelectedItem.ToString.Split(":")(0)
+            .cp.IdealgasCpEquation = cbEqCPIG.SelectedItem.ToString.Split(":")(0)
+            .cp.LiquidDensityEquation = cbEqLIQDENS.SelectedItem.ToString.Split(":")(0)
+            .cp.LiquidViscosityEquation = cbEqLIQVISC.SelectedItem.ToString.Split(":")(0)
+
+            .cp.Vapor_Pressure_Constant_A = tbPVAP_A.Text
+            .cp.Vapor_Pressure_Constant_B = tbPVAP_B.Text
+            .cp.Vapor_Pressure_Constant_C = tbPVAP_C.Text
+            .cp.Vapor_Pressure_Constant_D = tbPVAP_D.Text
+            .cp.Vapor_Pressure_Constant_E = tbPVAP_E.Text
+
+            .cp.Ideal_Gas_Heat_Capacity_Const_A = tbCPIG_A.Text
+            .cp.Ideal_Gas_Heat_Capacity_Const_B = tbCPIG_B.Text
+            .cp.Ideal_Gas_Heat_Capacity_Const_C = tbCPIG_C.Text
+            .cp.Ideal_Gas_Heat_Capacity_Const_D = tbCPIG_D.Text
+            .cp.Ideal_Gas_Heat_Capacity_Const_E = tbCPIG_E.Text
+
+            .cp.Liquid_Density_Const_A = tbLIQDENS_A.Text
+            .cp.Liquid_Density_Const_B = tbLIQDENS_B.Text
+            .cp.Liquid_Density_Const_C = tbLIQDENS_C.Text
+            .cp.Liquid_Density_Const_D = tbLIQDENS_D.Text
+            .cp.Liquid_Density_Const_E = tbLIQDENS_E.Text
+
+            .cp.Liquid_Viscosity_Const_A = tbLIQVISC_A.Text
+            .cp.Liquid_Viscosity_Const_B = tbLIQVISC_B.Text
+            .cp.Liquid_Viscosity_Const_C = tbLIQVISC_C.Text
+            .cp.Liquid_Viscosity_Const_D = tbLIQVISC_D.Text
+            .cp.Liquid_Viscosity_Const_E = tbLIQVISC_E.Text
+
+            For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
+                .cp.UNIFACGroups.Collection(r.HeaderCell.Value) = r.Cells(0).Value
+            Next
+
+            mycase.DataPVAP.Clear()
+            For Each row As DataGridViewRow In Me.GridExpDataPVAP.Rows
+                If row.Index < Me.GridExpDataPVAP.Rows.Count - 1 Then mycase.DataPVAP.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_pressure, row.Cells(1).Value)})
+            Next
+
+            mycase.DataCPIG.Clear()
+            For Each row As DataGridViewRow In Me.GridExpDataCPIG.Rows
+                If row.Index < Me.GridExpDataCPIG.Rows.Count - 1 Then mycase.DataCPIG.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value)})
+            Next
+
+            mycase.DataLDENS.Clear()
+            For Each row As DataGridViewRow In Me.GridExpDataLIQDENS.Rows
+                If row.Index < Me.GridExpDataLIQDENS.Rows.Count - 1 Then mycase.DataLDENS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value)})
+            Next
+
+            mycase.DataLVISC.Clear()
+            For Each row As DataGridViewRow In Me.GridExpDataLIQVISC.Rows
+                If row.Index < Me.GridExpDataLIQVISC.Rows.Count - 1 Then mycase.DataLVISC.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_viscosity, row.Cells(1).Value)})
+            Next
+
+        End With
+
+
+    End Sub
+
     Private Sub GridUNIFAC_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridUNIFAC.CellValueChanged
         If loaded Then
             'get group amounts
@@ -300,165 +497,123 @@ Public Class FormCompoundCreator
         End If
     End Sub
 
-    Private Sub TextBoxTc_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxTc.TextChanged
-        If Double.TryParse(TextBoxTc.Text, New Double()) Then
-            mycase.cp.Critical_Temperature = cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text)
-        End If
-    End Sub
+    'Private Sub TextBoxTc_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxTc.TextChanged
+    '    If Double.TryParse(TextBoxTc.Text, New Double()) Then
+    '        mycase.cp.Critical_Temperature = cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text)
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxPc_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxPc.TextChanged
-        If Double.TryParse(TextBoxPc.Text, New Double()) Then
-            mycase.cp.Critical_Pressure = cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text)
-        End If
-    End Sub
+    'Private Sub TextBoxPc_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxPc.TextChanged
+    '    If Double.TryParse(TextBoxPc.Text, New Double()) Then
+    '        mycase.cp.Critical_Pressure = cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text)
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxDHF_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxDHF.TextChanged
-        If Double.TryParse(TextBoxDHF.Text, New Double()) Then
-            mycase.cp.IG_Enthalpy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, TextBoxDHF.Text)
-        End If
-    End Sub
+    'Private Sub TextBoxDHF_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxDHF.TextChanged
+    '    If Double.TryParse(TextBoxDHF.Text, New Double()) Then
+    '        mycase.cp.IG_Enthalpy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, TextBoxDHF.Text)
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxDGF_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxDGF.TextChanged
-        If Double.TryParse(TextBoxDGF.Text, New Double()) Then
-            mycase.cp.IG_Gibbs_Energy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, TextBoxDGF.Text)
-        End If
-    End Sub
+    'Private Sub TextBoxDGF_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxDGF.TextChanged
+    '    If Double.TryParse(TextBoxDGF.Text, New Double()) Then
+    '        mycase.cp.IG_Gibbs_Energy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, TextBoxDGF.Text)
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxNBP_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxNBP.TextChanged
-        If Double.TryParse(TextBoxNBP.Text, New Double()) Then
-            mycase.cp.Normal_Boiling_Point = cv.ConverterParaSI(su.spmp_temperature, TextBoxNBP.Text)
-        End If
-    End Sub
+    'Private Sub TextBoxNBP_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxNBP.TextChanged
+    '    If Double.TryParse(TextBoxNBP.Text, New Double()) Then
+    '        mycase.cp.Normal_Boiling_Point = cv.ConverterParaSI(su.spmp_temperature, TextBoxNBP.Text)
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxZc_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxZc.TextChanged
-        If Double.TryParse(TextBoxZc.Text, New Double()) Then
-            mycase.cp.Critical_Compressibility = TextBoxZc.Text
-        End If
-    End Sub
+    'Private Sub TextBoxZc_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxZc.TextChanged
+    '    If Double.TryParse(TextBoxZc.Text, New Double()) Then
+    '        mycase.cp.Critical_Compressibility = TextBoxZc.Text
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxZRa_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxZRa.TextChanged
-        If Double.TryParse(TextBoxZRa.Text, New Double()) Then
-            mycase.cp.Z_Rackett = TextBoxZRa.Text
-        End If
-    End Sub
+    'Private Sub TextBoxZRa_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxZRa.TextChanged
+    '    If Double.TryParse(TextBoxZRa.Text, New Double()) Then
+    '        mycase.cp.Z_Rackett = TextBoxZRa.Text
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxAF_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxAF.TextChanged
-        If Double.TryParse(TextBoxAF.Text, New Double()) Then
-            mycase.cp.Acentric_Factor = TextBoxAF.Text
-        End If
-    End Sub
+    'Private Sub TextBoxAF_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxAF.TextChanged
+    '    If Double.TryParse(TextBoxAF.Text, New Double()) Then
+    '        mycase.cp.Acentric_Factor = TextBoxAF.Text
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxMW_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxMW.TextChanged
-        If Double.TryParse(TextBoxMW.Text, New Double()) Then
-            mycase.cp.Molar_Weight = TextBoxMW.Text
-        End If
-    End Sub
+    'Private Sub TextBoxMW_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxMW.TextChanged
+    '    If Double.TryParse(TextBoxMW.Text, New Double()) Then
+    '        mycase.cp.Molar_Weight = TextBoxMW.Text
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxPCSAFTSigma_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxPCSAFTSigma.TextChanged
-        If Double.TryParse(TextBoxPCSAFTSigma.Text, New Double()) Then
-            mycase.cp.PC_SAFT_sigma = TextBoxPCSAFTSigma.Text
-        End If
-    End Sub
+    'Private Sub TextBoxPCSAFTSigma_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxPCSAFTSigma.TextChanged
+    '    If Double.TryParse(TextBoxPCSAFTSigma.Text, New Double()) Then
+    '        mycase.cp.PC_SAFT_sigma = TextBoxPCSAFTSigma.Text
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxPCSAFTm_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxPCSAFTm.TextChanged
-        If Double.TryParse(TextBoxPCSAFTm.Text, New Double()) Then
-            mycase.cp.PC_SAFT_m = TextBoxPCSAFTm.Text
-        End If
-    End Sub
+    'Private Sub TextBoxPCSAFTm_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxPCSAFTm.TextChanged
+    '    If Double.TryParse(TextBoxPCSAFTm.Text, New Double()) Then
+    '        mycase.cp.PC_SAFT_m = TextBoxPCSAFTm.Text
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxPCSAFTEpsilon_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxPCSAFTEpsilon.TextChanged
-        If Double.TryParse(TextBoxPCSAFTEpsilon.Text, New Double()) Then
-            mycase.cp.PC_SAFT_epsilon_k = TextBoxPCSAFTEpsilon.Text
-        End If
-    End Sub
+    'Private Sub TextBoxPCSAFTEpsilon_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxPCSAFTEpsilon.TextChanged
+    '    If Double.TryParse(TextBoxPCSAFTEpsilon.Text, New Double()) Then
+    '        mycase.cp.PC_SAFT_epsilon_k = TextBoxPCSAFTEpsilon.Text
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxCSAF_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxCSAF.TextChanged
-        If Double.TryParse(TextBoxCSAF.Text, New Double()) Then
-            mycase.cp.Chao_Seader_Acentricity = TextBoxCSAF.Text
-        End If
-    End Sub
+    'Private Sub TextBoxCSAF_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxCSAF.TextChanged
+    '    If Double.TryParse(TextBoxCSAF.Text, New Double()) Then
+    '        mycase.cp.Chao_Seader_Acentricity = TextBoxCSAF.Text
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxCSSP_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxCSSP.TextChanged
-        If Double.TryParse(TextBoxCSSP.Text, New Double()) Then
-            mycase.cp.Chao_Seader_Solubility_Parameter = TextBoxCSSP.Text
-        End If
-    End Sub
+    'Private Sub TextBoxCSSP_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxCSSP.TextChanged
+    '    If Double.TryParse(TextBoxCSSP.Text, New Double()) Then
+    '        mycase.cp.Chao_Seader_Solubility_Parameter = TextBoxCSSP.Text
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxCSLV_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxCSLV.TextChanged
-        If Double.TryParse(TextBoxCSLV.Text, New Double()) Then
-            mycase.cp.Chao_Seader_Liquid_Molar_Volume = TextBoxCSLV.Text
-        End If
-    End Sub
+    'Private Sub TextBoxCSLV_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxCSLV.TextChanged
+    '    If Double.TryParse(TextBoxCSLV.Text, New Double()) Then
+    '        mycase.cp.Chao_Seader_Liquid_Molar_Volume = TextBoxCSLV.Text
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxVTCPR_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxVTCPR.TextChanged
-        If Double.TryParse(TextBoxVTCPR.Text, New Double()) Then
-            mycase.cp.PR_Volume_Translation_Coefficient = TextBoxVTCPR.Text
-        End If
-    End Sub
+    'Private Sub TextBoxVTCPR_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxVTCPR.TextChanged
+    '    If Double.TryParse(TextBoxVTCPR.Text, New Double()) Then
+    '        mycase.cp.PR_Volume_Translation_Coefficient = TextBoxVTCPR.Text
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxVTCSRK_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxVTCSRK.TextChanged
-        If Double.TryParse(TextBoxVTCSRK.Text, New Double()) Then
-            mycase.cp.SRK_Volume_Translation_Coefficient = TextBoxVTCSRK.Text
-        End If
-    End Sub
+    'Private Sub TextBoxVTCSRK_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxVTCSRK.TextChanged
+    '    If Double.TryParse(TextBoxVTCSRK.Text, New Double()) Then
+    '        mycase.cp.SRK_Volume_Translation_Coefficient = TextBoxVTCSRK.Text
+    '    End If
+    'End Sub
 
-    Private Sub TextBoxID_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxID.TextChanged
-        mycase.cp.ID = TextBoxID.Text
-    End Sub
+    'Private Sub TextBoxID_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxID.TextChanged
+    '    mycase.cp.ID = TextBoxID.Text
+    'End Sub
 
-    Private Sub TextBoxName_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxName.TextChanged
-        mycase.cp.Name = TextBoxName.Text
-    End Sub
+    'Private Sub TextBoxName_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxName.TextChanged
+    '    mycase.cp.Name = TextBoxName.Text
+    'End Sub
 
-    Private Sub TextBoxCAS_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxCAS.TextChanged
-        mycase.cp.CAS_Number = TextBoxCAS.Text
-    End Sub
+    'Private Sub TextBoxCAS_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxCAS.TextChanged
+    '    mycase.cp.CAS_Number = TextBoxCAS.Text
+    'End Sub
 
-    Private Sub TextBoxFormula_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxFormula.TextChanged
-        mycase.cp.Formula = TextBoxFormula.Text
-    End Sub
-
-    Private Sub SIToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SIToolStripMenuItem.CheckedChanged
-        If SIToolStripMenuItem.Checked Then
-            CGSToolStripMenuItem.Checked = False
-            EnglishToolStripMenuItem.Checked = False
-            su = New DWSIM.SistemasDeUnidades.UnidadesSI
-        Else
-            CGSToolStripMenuItem.Checked = True
-            EnglishToolStripMenuItem.Checked = False
-            su = New DWSIM.SistemasDeUnidades.UnidadesCGS
-        End If
-        mycase.su = su
-        UpdateUnits()
-    End Sub
-
-    Private Sub CGSToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CGSToolStripMenuItem.CheckedChanged
-        If CGSToolStripMenuItem.Checked Then
-            SIToolStripMenuItem.Checked = False
-            EnglishToolStripMenuItem.Checked = False
-            su = New DWSIM.SistemasDeUnidades.UnidadesCGS
-        Else
-            SIToolStripMenuItem.Checked = True
-            EnglishToolStripMenuItem.Checked = False
-            su = New DWSIM.SistemasDeUnidades.UnidadesSI
-        End If
-        mycase.su = su
-        UpdateUnits()
-    End Sub
-
-    Private Sub EnglishToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EnglishToolStripMenuItem.CheckedChanged
-        If EnglishToolStripMenuItem.Checked Then
-            SIToolStripMenuItem.Checked = False
-            CGSToolStripMenuItem.Checked = False
-            su = New DWSIM.SistemasDeUnidades.UnidadesINGLES
-        Else
-            SIToolStripMenuItem.Checked = True
-            CGSToolStripMenuItem.Checked = False
-            su = New DWSIM.SistemasDeUnidades.UnidadesSI
-        End If
-        mycase.su = su
-        UpdateUnits()
-    End Sub
+    'Private Sub TextBoxFormula_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxFormula.TextChanged
+    '    mycase.cp.Formula = TextBoxFormula.Text
+    'End Sub
 
     Private Sub SalvarNoBancoDeDadosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SalvarNoBancoDeDadosToolStripMenuItem.Click
 
@@ -500,11 +655,11 @@ Public Class FormCompoundCreator
         Dim c_pv(4), c_cp(4), c_vi(4), c_de(4) As Double
         Dim r_cp, r_vi, r_pv, n_cp, n_pv, n_vi, r_de, n_de As Double
 
-        c_pv(0) = 51.73
-        c_pv(1) = -2749.6
+        c_pv(0) = 25
+        c_pv(1) = 2000
         c_pv(2) = -5.245
-        c_pv(3) = 0.00000713
-        c_pv(4) = 2
+        c_pv(3) = 0.0#
+        c_pv(4) = 0.0#
 
         c_cp(0) = 33.7
         c_cp(1) = 0.249
@@ -756,18 +911,26 @@ Public Class FormCompoundCreator
 
     Private Sub btnViewPVAP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewPVAP.Click
 
-        Dim px, py1, py2 As New ArrayList
+        Dim mytext As New System.Text.StringBuilder
+        mytext.AppendLine("Data Points")
+        mytext.AppendLine("x" & vbTab & "yEXP" & vbTab & "yCALC")
+        Dim px, py1, py2 As New ArrayList, x, y1, y2 As Double
         For Each d As Double() In mycase.DataPVAP
-            px.Add(cv.ConverterDoSI(su.spmp_temperature, d(0)))
-            py1.Add(cv.ConverterDoSI(su.spmp_pressure, d(1)))
+            x = cv.ConverterDoSI(su.spmp_temperature, d(0))
+            px.Add(x)
+            y1 = cv.ConverterDoSI(su.spmp_pressure, d(1))
+            py1.Add(y1)
             Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
             With mycase.cp
-                py2.Add(cv.ConverterDoSI(su.spmp_temperature, pp.CalcCSTDepProp(.VaporPressureEquation, .Vapor_Pressure_Constant_A, .Vapor_Pressure_Constant_B, .Vapor_Pressure_Constant_C, .Vapor_Pressure_Constant_D, .Vapor_Pressure_Constant_E, d(0), 0)))
+                y2 = cv.ConverterDoSI(su.spmp_pressure, pp.CalcCSTDepProp(.VaporPressureEquation, .Vapor_Pressure_Constant_A, .Vapor_Pressure_Constant_B, .Vapor_Pressure_Constant_C, .Vapor_Pressure_Constant_D, .Vapor_Pressure_Constant_E, d(0), 0))
+                py2.Add(y2)
             End With
+            mytext.AppendLine(x & vbTab & y1 & vbTab & y2)
         Next
 
         Dim frc As New FormChart
         With frc
+            .tbtext = mytext.ToString
             .px = px
             .py1 = py1
             .py2 = py2
@@ -783,18 +946,25 @@ Public Class FormCompoundCreator
 
     Private Sub btnViewCPIG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewCPIG.Click
 
-        Dim px, py1, py2 As New ArrayList
+        Dim mytext As New System.Text.StringBuilder
+        mytext.AppendLine("Data Points")
+        mytext.AppendLine("x" & vbTab & "yEXP" & vbTab & "yCALC")
+        Dim px, py1, py2 As New ArrayList, x, y1, y2 As Double
         For Each d As Double() In mycase.DataCPIG
-            px.Add(cv.ConverterDoSI(su.spmp_temperature, d(0)))
-            py1.Add(cv.ConverterDoSI(su.spmp_heatCapacityCp, d(1)))
+            x = cv.ConverterDoSI(su.spmp_temperature, d(0))
+            px.Add(x)
+            y1 = cv.ConverterDoSI(su.spmp_heatCapacityCp, d(1))
+            py1.Add(y1)
             Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
             With mycase.cp
-                py2.Add(cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.CalcCSTDepProp(.IdealgasCpEquation, .Ideal_Gas_Heat_Capacity_Const_A, .Ideal_Gas_Heat_Capacity_Const_B, .Ideal_Gas_Heat_Capacity_Const_C, .Ideal_Gas_Heat_Capacity_Const_D, .Ideal_Gas_Heat_Capacity_Const_E, d(0), 0)))
+                y2 = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.CalcCSTDepProp(.IdealgasCpEquation, .Ideal_Gas_Heat_Capacity_Const_A, .Ideal_Gas_Heat_Capacity_Const_B, .Ideal_Gas_Heat_Capacity_Const_C, .Ideal_Gas_Heat_Capacity_Const_D, .Ideal_Gas_Heat_Capacity_Const_E, d(0), 0))
+                py2.Add(y2)
             End With
         Next
 
         Dim frc As New FormChart
         With frc
+            .tbtext = mytext.ToString
             .px = px
             .py1 = py1
             .py2 = py2
@@ -810,18 +980,25 @@ Public Class FormCompoundCreator
 
     Private Sub btnViewLIQDENS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewLIQDENS.Click
 
-        Dim px, py1, py2 As New ArrayList
+        Dim mytext As New System.Text.StringBuilder
+        mytext.AppendLine("Data Points")
+        mytext.AppendLine("x" & vbTab & "yEXP" & vbTab & "yCALC")
+        Dim px, py1, py2 As New ArrayList, x, y1, y2 As Double
         For Each d As Double() In mycase.DataLDENS
-            px.Add(cv.ConverterDoSI(su.spmp_temperature, d(0)))
-            py1.Add(cv.ConverterDoSI(su.spmp_density, d(1)))
+            x = cv.ConverterDoSI(su.spmp_temperature, d(0))
+            px.Add(x)
+            y1 = cv.ConverterDoSI(su.spmp_density, d(1))
+            py1.Add(y1)
             Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
             With mycase.cp
-                py2.Add(cv.ConverterDoSI(su.spmp_density, pp.CalcCSTDepProp(.LiquidDensityEquation, .Liquid_Density_Const_A, .Liquid_Density_Const_B, .Liquid_Density_Const_C, .Liquid_Density_Const_D, .Liquid_Density_Const_E, d(0), 0)))
+                y2 = cv.ConverterDoSI(su.spmp_density, pp.CalcCSTDepProp(.LiquidDensityEquation, .Liquid_Density_Const_A, .Liquid_Density_Const_B, .Liquid_Density_Const_C, .Liquid_Density_Const_D, .Liquid_Density_Const_E, d(0), 0))
+                py2.Add(y2)
             End With
         Next
 
         Dim frc As New FormChart
         With frc
+            .tbtext = mytext.ToString
             .px = px
             .py1 = py1
             .py2 = py2
@@ -837,18 +1014,25 @@ Public Class FormCompoundCreator
 
     Private Sub btnViewLIQVISC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewLIQVISC.Click
 
-        Dim px, py1, py2 As New ArrayList
+        Dim mytext As New System.Text.StringBuilder
+        mytext.AppendLine("Data Points")
+        mytext.AppendLine("x" & vbTab & "yEXP" & vbTab & "yCALC")
+        Dim px, py1, py2 As New ArrayList, x, y1, y2 As Double
         For Each d As Double() In mycase.DataLVISC
-            px.Add(cv.ConverterDoSI(su.spmp_temperature, d(0)))
-            py1.Add(cv.ConverterDoSI(su.spmp_viscosity, d(1)))
+            x = cv.ConverterDoSI(su.spmp_temperature, d(0))
+            px.Add(x)
+            y1 = cv.ConverterDoSI(su.spmp_viscosity, d(1))
+            py1.Add(y1)
             Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
             With mycase.cp
-                py2.Add(cv.ConverterDoSI(su.spmp_viscosity, pp.CalcCSTDepProp(.LiquidViscosityEquation, .Liquid_Viscosity_Const_A, .Liquid_Viscosity_Const_B, .Liquid_Viscosity_Const_C, .Liquid_Viscosity_Const_D, .Liquid_Viscosity_Const_E, d(0), 0)))
+                y2 = cv.ConverterDoSI(su.spmp_viscosity, pp.CalcCSTDepProp(.LiquidViscosityEquation, .Liquid_Viscosity_Const_A, .Liquid_Viscosity_Const_B, .Liquid_Viscosity_Const_C, .Liquid_Viscosity_Const_D, .Liquid_Viscosity_Const_E, d(0), 0))
+                py2.Add(y2)
             End With
         Next
 
         Dim frc As New FormChart
         With frc
+            .tbtext = mytext.ToString
             .px = px
             .py1 = py1
             .py2 = py2
@@ -1065,19 +1249,106 @@ Public Class FormCompoundCreator
         If mycase.EqLVISC Then mycase.cp.Liquid_Viscosity_Const_E = tbLIQVISC_E.Text
     End Sub
 
+    Private Sub CheckBoxTc_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxTc.CheckedChanged
+        mycase.CalcTC = CheckBoxTc.Checked
+    End Sub
+
+    Private Sub CheckBoxPc_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxPc.CheckedChanged
+        mycase.CalcPC = CheckBoxPc.Checked
+    End Sub
+
+    Private Sub CheckBoxZc_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxZc.CheckedChanged
+        mycase.CalcZC = CheckBoxZc.Checked
+    End Sub
+
+    Private Sub CheckBoxZRa_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxZRa.CheckedChanged
+        mycase.CalcZRA = CheckBoxZRa.Checked
+    End Sub
+
+    Private Sub CheckBoxAF_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxAF.CheckedChanged
+        mycase.CalcAF = CheckBoxAF.Checked
+    End Sub
+
+    Private Sub CheckBoxMW_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxMW.CheckedChanged
+        mycase.CalcMW = CheckBoxMW.Checked
+    End Sub
+
+    Private Sub CheckBoxDHF_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxDHF.CheckedChanged
+        mycase.CalcHF = CheckBoxDHF.Checked
+    End Sub
+
+    Private Sub CheckBoxDGF_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxDGF.CheckedChanged
+        mycase.CalcGF = CheckBoxDGF.Checked
+    End Sub
+
+    Private Sub CheckBoxNBP_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxNBP.CheckedChanged
+        mycase.CalcNBP = CheckBoxNBP.Checked
+    End Sub
+
+    Private Sub CheckBoxCSAF_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxCSAF.CheckedChanged
+        mycase.CalcCSAF = CheckBoxCSAF.Checked
+    End Sub
+
+    Private Sub CheckBoxCSSP_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxCSSP.CheckedChanged
+        mycase.CalcCSSP = CheckBoxCSSP.Checked
+    End Sub
+
+    Private Sub CheckBoxCSLV_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxCSLV.CheckedChanged
+        mycase.CalcCSMV = CheckBoxCSLV.Checked
+    End Sub
+
+    Private Sub TextBoxUNIQUAC_Q_TextChanged(sender As System.Object, e As System.EventArgs) Handles TextBoxUNIQUAC_Q.TextChanged
+        If Double.TryParse(TextBoxUNIQUAC_Q.Text, New Double()) Then
+            mycase.cp.UNIQUAC_Q = TextBoxUNIQUAC_Q.Text
+        End If
+    End Sub
+
+    Private Sub TextBoxUNIQUAC_R_TextChanged(sender As System.Object, e As System.EventArgs) Handles TextBoxUNIQUAC_R.TextChanged
+        If Double.TryParse(TextBoxUNIQUAC_R.Text, New Double()) Then
+            mycase.cp.UNIQUAC_R = TextBoxUNIQUAC_R.Text
+        End If
+    End Sub
+
+    Private Sub rb_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbCoeffCPIG.CheckedChanged, rbCoeffLIQDENS.CheckedChanged, rbCoeffLIQVISC.CheckedChanged, rbCoeffPVAP.CheckedChanged, _
+                                                                                        rbEstimateCPIG.CheckedChanged, rbEstimateLIQDENS.CheckedChanged, rbEstimateLIQVISC.CheckedChanged, rbEstimatePVAP.CheckedChanged, _
+                                                                                        rbRegressCPIG.CheckedChanged, rbRegressLIQDENS.CheckedChanged, rbRegressLIQVISC.CheckedChanged, rbRegressPVAP.CheckedChanged
+        If loaded Then StoreData()
+
+    End Sub
+
+    Private Sub FormCompoundCreator_Shown(sender As Object, e As System.EventArgs) Handles Me.Shown
+
+        loaded = True
+
+    End Sub
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase
 
     Sub New()
         cp = New DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-        su = New DWSIM.SistemasDeUnidades.Unidades
+        su = New DWSIM.SistemasDeUnidades.UnidadesSI
     End Sub
+
+    Public Filename As String = ""
 
     Public cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
     Public database As String = ""
     Public su As DWSIM.SistemasDeUnidades.Unidades
     Public nf As String = My.Computer.Info.InstalledUICulture.NumberFormat.ToString
+
+    Public CalcMW As Boolean = True
+    Public CalcTC As Boolean = True
+    Public CalcPC As Boolean = True
+    Public CalcZC As Boolean = True
+    Public CalcZRA As Boolean = True
+    Public CalcAF As Boolean = True
+    Public CalcHF As Boolean = True
+    Public CalcGF As Boolean = True
+    Public CalcNBP As Boolean = True
+    Public CalcCSAF As Boolean = True
+    Public CalcCSSP As Boolean = True
+    Public CalcCSMV As Boolean = True
 
     Public RegressPVAP As Boolean = False
     Public RegressCPIG As Boolean = False

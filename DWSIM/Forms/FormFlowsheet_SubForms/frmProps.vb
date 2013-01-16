@@ -62,10 +62,11 @@ Public Class frmProps
                 Dim mt As DWSIM.GraphicObjects.MasterTableGraphic = sobj
 
                 If e.ChangedItem.PropertyDescriptor.Category.Contains(DWSIM.App.GetLocalString("MT_PropertiesToShow")) Then
-                    If Not mt.PropertyList.ContainsKey(e.ChangedItem.Label) Then
-                        mt.PropertyList.Add(e.ChangedItem.Label, e.ChangedItem.Value)
+                    Dim pkey As String = CType(e.ChangedItem.PropertyDescriptor, CustomProperty.CustomPropertyDescriptor).CustomProperty.Tag
+                    If Not mt.PropertyList.ContainsKey(pkey) Then
+                        mt.PropertyList.Add(pkey, e.ChangedItem.Value)
                     Else
-                        mt.PropertyList(e.ChangedItem.Label) = e.ChangedItem.Value
+                        mt.PropertyList(pkey) = e.ChangedItem.Value
                     End If
                 ElseIf e.ChangedItem.PropertyDescriptor.Category.Contains(DWSIM.App.GetLocalString("MT_ObjectsToShow")) Then
                     If Not mt.ObjectList.ContainsKey(e.ChangedItem.Label) Then

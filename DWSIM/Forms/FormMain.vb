@@ -2861,6 +2861,7 @@ csd:                Dim NewMDIChild As New FormCompoundCreator()
                     Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
                     Dim x As New BinaryFormatter()
                     NewMDIChild.mycase = x.Deserialize(objStreamReader)
+                    NewMDIChild.mycase.Filename = Me.OpenFileDialog1.FileName
                     objStreamReader.Close()
                     NewMDIChild.WriteData()
                     If Not My.Settings.MostRecentFiles.Contains(Me.OpenFileDialog1.FileName) Then
@@ -2921,6 +2922,7 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
             End If
         ElseIf TypeOf Me.ActiveMdiChild Is FormCompoundCreator Then
             If Me.SaveStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
                 Dim objStreamWriter As New FileStream(Me.SaveStudyDlg.FileName, FileMode.OpenOrCreate)
                 Dim x As New BinaryFormatter
                 x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
@@ -3218,10 +3220,21 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                             End If
                         End If
                     ElseIf TypeOf form0 Is FormCompoundCreator Then
-                        If Me.SaveStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
-                            Dim objStreamWriter As New FileStream(Me.SaveStudyDlg.FileName, FileMode.OpenOrCreate)
+                        Dim filename As String = CType(Me.ActiveMdiChild, FormCompoundCreator).mycase.Filename
+                        If filename = "" Then
+                            If Me.SaveStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                                CType(Me.ActiveMdiChild, FormCompoundCreator).mycase.Filename = Me.SaveStudyDlg.FileName
+                                CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
+                                Dim objStreamWriter As New FileStream(Me.SaveStudyDlg.FileName, FileMode.OpenOrCreate)
+                                Dim x As New BinaryFormatter
+                                x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
+                                objStreamWriter.Close()
+                            End If
+                        Else
+                            CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
+                            Dim objStreamWriter As New FileStream(filename, FileMode.OpenOrCreate)
                             Dim x As New BinaryFormatter
-                            x.Serialize(objStreamWriter, CType(form0, FormCompoundCreator).mycase)
+                            x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
                             objStreamWriter.Close()
                         End If
                     ElseIf TypeOf form0 Is FormDataRegression Then
@@ -3283,8 +3296,19 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                     End If
                 End If
             ElseIf TypeOf Me.ActiveMdiChild Is FormCompoundCreator Then
-                If Me.SaveStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
-                    Dim objStreamWriter As New FileStream(Me.SaveStudyDlg.FileName, FileMode.OpenOrCreate)
+                Dim filename As String = CType(Me.ActiveMdiChild, FormCompoundCreator).mycase.Filename
+                If filename = "" Then
+                    If Me.SaveStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                        CType(Me.ActiveMdiChild, FormCompoundCreator).mycase.Filename = Me.SaveStudyDlg.FileName
+                        CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
+                        Dim objStreamWriter As New FileStream(Me.SaveStudyDlg.FileName, FileMode.OpenOrCreate)
+                        Dim x As New BinaryFormatter
+                        x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
+                        objStreamWriter.Close()
+                    End If
+                Else
+                    CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
+                    Dim objStreamWriter As New FileStream(filename, FileMode.OpenOrCreate)
                     Dim x As New BinaryFormatter
                     x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
                     objStreamWriter.Close()

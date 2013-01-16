@@ -118,12 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="SalvarNoBancoDeDadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
-  </data>
-  <data name="SalvarNoBancoDeDadosToolStripMenuItem.Text" xml:space="preserve">
-    <value>Save into the Database</value>
-  </data>
   <data name="ComponenteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 20</value>
   </data>
@@ -135,6 +129,18 @@
   </data>
   <data name="SistemaDeUnidadesToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;System of Units</value>
+  </data>
+  <data name="SalvarNoBancoDeDadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>193, 22</value>
+  </data>
+  <data name="SalvarNoBancoDeDadosToolStripMenuItem.Text" xml:space="preserve">
+    <value>Save into the Database</value>
+  </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1170, 55</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Compound Database</value>
   </data>
   <data name="chkReplaceComps.Location" type="System.Drawing.Point, System.Drawing">
     <value>778, 23</value>
@@ -166,23 +172,29 @@
   <data name="btnCreateNewDB.Text" xml:space="preserve">
     <value>Create New</value>
   </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1170, 55</value>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1170, 652</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Compound Database</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Compound Properties</value>
   </data>
-  <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Amount</value>
+  <data name="FlowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1164, 633</value>
   </data>
-  <data name="Column1.HeaderText" xml:space="preserve">
-    <value>Example</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>UNIFAC Structure</value>
   </data>
   <data name="GridUNIFAC.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 42</value>
   </data>
   <data name="GridUNIFAC.Size" type="System.Drawing.Size, System.Drawing">
     <value>438, 255</value>
+  </data>
+  <data name="Column4.HeaderText" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Example</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Label60.AutoSize" type="System.Boolean, mscorlib">
@@ -194,8 +206,8 @@
   <data name="Label60.Text" xml:space="preserve">
     <value>Enter the amount of each UNIFAC group in the compound structure, if available.</value>
   </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>UNIFAC Structure</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Identification</value>
   </data>
   <data name="Label22.Text" xml:space="preserve">
     <value>Mole Weight</value>
@@ -209,8 +221,8 @@
   <data name="Label17.Text" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Identification</value>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>Misc Properties</value>
   </data>
   <data name="CheckBoxCSLV.ToolTip" xml:space="preserve">
     <value>Estimate using UNIFAC structure information</value>
@@ -284,8 +296,14 @@
   <data name="Label50.Text" xml:space="preserve">
     <value>Enthalpy of Formation (Ideal Gas, 25 C)</value>
   </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>Misc Properties</value>
+  <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 513</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Critical Properties</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>UNIQUAC Parameters</value>
   </data>
   <data name="CheckBoxAF.ToolTip" xml:space="preserve">
     <value>Estimate using UNIFAC structure information</value>
@@ -299,6 +317,12 @@
   <data name="CheckBoxPc.ToolTip" xml:space="preserve">
     <value>Estimate using UNIFAC structure information</value>
   </data>
+  <data name="GroupBox12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 265</value>
+  </data>
+  <data name="GroupBox12.Text" xml:space="preserve">
+    <value>PC-SAFT Parameters</value>
+  </data>
   <data name="LabelWithDivider8.Text" xml:space="preserve">
     <value>Attraction Parameter</value>
   </data>
@@ -307,12 +331,6 @@
   </data>
   <data name="LabelWithDivider10.Text" xml:space="preserve">
     <value>Segment Diameter</value>
-  </data>
-  <data name="GroupBox12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 265</value>
-  </data>
-  <data name="GroupBox12.Text" xml:space="preserve">
-    <value>PC-SAFT Parameters</value>
   </data>
   <data name="CheckBoxTc.ToolTip" xml:space="preserve">
     <value>Estimate using UNIFAC structure information</value>
@@ -332,11 +350,11 @@
   <data name="LabelWithDivider2.Text" xml:space="preserve">
     <value>Critical Temperature</value>
   </data>
-  <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
     <value>223, 513</value>
   </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Critical Properties</value>
+  <data name="GroupBox7.Text" xml:space="preserve">
+    <value>Vapor Pressure</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Label43.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -378,11 +396,11 @@
   <data name="rbEstimatePVAP.Text" xml:space="preserve">
     <value>Estimate (Lee Kesler)</value>
   </data>
-  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="GroupBox8.Size" type="System.Drawing.Size, System.Drawing">
     <value>223, 513</value>
   </data>
-  <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Vapor Pressure</value>
+  <data name="GroupBox8.Text" xml:space="preserve">
+    <value>Heat Capacity (Cp, Ideal Gas)</value>
   </data>
   <data name="Label44.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -423,11 +441,11 @@
   <data name="rbEstimateCPIG.Text" xml:space="preserve">
     <value>Estimate (Joback/UNIFAC)</value>
   </data>
-  <data name="GroupBox8.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="GroupBox9.Size" type="System.Drawing.Size, System.Drawing">
     <value>223, 513</value>
   </data>
-  <data name="GroupBox8.Text" xml:space="preserve">
-    <value>Heat Capacity (Cp, Ideal Gas)</value>
+  <data name="GroupBox9.Text" xml:space="preserve">
+    <value>Liquid Density</value>
   </data>
   <data name="Label45.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -468,11 +486,11 @@
   <data name="rbEstimateLIQDENS.Text" xml:space="preserve">
     <value>Estimate (Rackett)</value>
   </data>
-  <data name="GroupBox9.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="GroupBox10.Size" type="System.Drawing.Size, System.Drawing">
     <value>223, 513</value>
   </data>
-  <data name="GroupBox9.Text" xml:space="preserve">
-    <value>Liquid Density</value>
+  <data name="GroupBox10.Text" xml:space="preserve">
+    <value>Liquid Viscosity</value>
   </data>
   <data name="Label46.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -512,21 +530,6 @@
   </data>
   <data name="rbEstimateLIQVISC.Text" xml:space="preserve">
     <value>Estimate (Letsou-Stiel)</value>
-  </data>
-  <data name="GroupBox10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 513</value>
-  </data>
-  <data name="GroupBox10.Text" xml:space="preserve">
-    <value>Liquid Viscosity</value>
-  </data>
-  <data name="FlowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1164, 633</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1170, 652</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Compound Properties</value>
   </data>
   <data name="DBOpenDlg.Filter" xml:space="preserve">
     <value>XML Files|*.xml</value>
