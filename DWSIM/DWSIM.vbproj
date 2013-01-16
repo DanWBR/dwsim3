@@ -1123,6 +1123,9 @@
     <EmbeddedResource Include="Forms\FormCompoundCreator.de.resx">
       <DependentUpon>FormCompoundCreator.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCompoundCreator.es.resx">
+      <DependentUpon>FormCompoundCreator.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormDataRegression.de.resx">
       <DependentUpon>FormDataRegression.vb</DependentUpon>
     </EmbeddedResource>

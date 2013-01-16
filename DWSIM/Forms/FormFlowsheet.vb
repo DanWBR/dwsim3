@@ -748,7 +748,6 @@ Imports DWSIM.DWSIM.GraphicObjects
 
     Private Sub ToolStripButton6_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton6.Click
         Me.FormSurface.pageSetup.ShowDialog()
-        Me.FormSurface.SetupGraphicsSurface()
     End Sub
 
     Private Sub ToolStripButton10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton10.Click

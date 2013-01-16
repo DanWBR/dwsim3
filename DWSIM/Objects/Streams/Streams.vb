@@ -214,6 +214,11 @@ Namespace DWSIM.SimulationObjects.Streams
 
             'Me.PropertyPackage = FlowSheet.Options.PropertyPackages(0)
 
+            'assign default values for temperature, pressure and mass flow
+            Me.Fases(0).SPMProperties.temperature = 298.15
+            Me.Fases(0).SPMProperties.pressure = 101325
+            Me.Fases(0).SPMProperties.massflow = 1
+
             Me.FillNodeItems()
             Me.QTFillNodeItems()
         End Sub
@@ -1088,17 +1093,17 @@ Namespace DWSIM.SimulationObjects.Streams
                     Case 104, 116, 117, 118, 119, 120
                         If Me.Fases(0).Componentes.ContainsKey(sname) Then
                             If propidx = 104 Then
-                                value = Me.Fases(0).Componentes(sname).MolarFlow.GetValueOrDefault
+                                value = cv.ConverterDoSI(su.spmp_molarflow, Me.Fases(0).Componentes(sname).MolarFlow.GetValueOrDefault)
                             ElseIf propidx = 116 Then
-                                value = Me.Fases(2).Componentes(sname).MolarFlow.GetValueOrDefault
+                                value = cv.ConverterDoSI(su.spmp_molarflow, Me.Fases(2).Componentes(sname).MolarFlow.GetValueOrDefault)
                             ElseIf propidx = 117 Then
-                                value = Me.Fases(1).Componentes(sname).MolarFlow.GetValueOrDefault
+                                value = cv.ConverterDoSI(su.spmp_molarflow, Me.Fases(1).Componentes(sname).MolarFlow.GetValueOrDefault)
                             ElseIf propidx = 118 Then
-                                value = Me.Fases(3).Componentes(sname).MolarFlow.GetValueOrDefault
+                                value = cv.ConverterDoSI(su.spmp_molarflow, Me.Fases(3).Componentes(sname).MolarFlow.GetValueOrDefault)
                             ElseIf propidx = 119 Then
-                                value = Me.Fases(4).Componentes(sname).MolarFlow.GetValueOrDefault
+                                value = cv.ConverterDoSI(su.spmp_molarflow, Me.Fases(4).Componentes(sname).MolarFlow.GetValueOrDefault)
                             ElseIf propidx = 120 Then
-                                value = Me.Fases(5).Componentes(sname).MolarFlow.GetValueOrDefault
+                                value = cv.ConverterDoSI(su.spmp_molarflow, Me.Fases(5).Componentes(sname).MolarFlow.GetValueOrDefault)
                             End If
                         Else
                             value = 0
@@ -1106,17 +1111,17 @@ Namespace DWSIM.SimulationObjects.Streams
                     Case 105, 121, 122, 123, 124, 125
                         If Me.Fases(0).Componentes.ContainsKey(sname) Then
                             If propidx = 105 Then
-                                value = Me.Fases(0).Componentes(sname).MassFlow.GetValueOrDefault
+                                value = cv.ConverterDoSI(su.spmp_massflow, Me.Fases(0).Componentes(sname).MassFlow.GetValueOrDefault)
                             ElseIf propidx = 121 Then
-                                value = Me.Fases(2).Componentes(sname).MassFlow.GetValueOrDefault
+                                value = cv.ConverterDoSI(su.spmp_massflow, Me.Fases(2).Componentes(sname).MassFlow.GetValueOrDefault)
                             ElseIf propidx = 122 Then
-                                value = Me.Fases(1).Componentes(sname).MassFlow.GetValueOrDefault
+                                value = cv.ConverterDoSI(su.spmp_massflow, Me.Fases(1).Componentes(sname).MassFlow.GetValueOrDefault)
                             ElseIf propidx = 123 Then
-                                value = Me.Fases(3).Componentes(sname).MassFlow.GetValueOrDefault
+                                value = cv.ConverterDoSI(su.spmp_massflow, Me.Fases(3).Componentes(sname).MassFlow.GetValueOrDefault)
                             ElseIf propidx = 124 Then
-                                value = Me.Fases(4).Componentes(sname).MassFlow.GetValueOrDefault
+                                value = cv.ConverterDoSI(su.spmp_massflow, Me.Fases(4).Componentes(sname).MassFlow.GetValueOrDefault)
                             ElseIf propidx = 125 Then
-                                value = Me.Fases(5).Componentes(sname).MassFlow.GetValueOrDefault
+                                value = cv.ConverterDoSI(su.spmp_massflow, Me.Fases(5).Componentes(sname).MassFlow.GetValueOrDefault)
                             End If
                         Else
                             value = 0

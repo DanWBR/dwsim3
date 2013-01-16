@@ -740,7 +740,7 @@ Public Class FormStSim
             Me.FrmChild.ToolStripComboBoxUnitSystem.SelectedIndex = 0
             Me.FrmChild.ToolStripComboBoxUnitSystem.Items.Remove(str)
 
-            Dim bytearray2(100000) As Byte
+            Dim bytearray2(1000000) As Byte
             Dim stream2 As New IO.MemoryStream(bytearray2)
             Dim formatter2 As New BinaryFormatter()
             formatter2.Serialize(stream2, myarraylist)
@@ -797,11 +797,10 @@ Public Class FormStSim
                 Try
                     su = DirectCast(mySerializer.Deserialize(myStream), DWSIM.SistemasDeUnidades.Unidades)
                     If FormMain.AvailableUnitSystems.ContainsKey(su.nome) Then
-                        MessageBox.Show(DWSIM.App.GetLocalString("JexisteumSistemadeUn"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    Else
-                        FormMain.AvailableUnitSystems.Add(su.nome, su)
-                        Me.ComboBox2.Items.Add(su.nome)
+                        su.nome += "_1"
                     End If
+                    FormMain.AvailableUnitSystems.Add(su.nome, su)
+                    Me.ComboBox2.Items.Add(su.nome)
                 Catch ex As System.Runtime.Serialization.SerializationException
                     MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Finally
@@ -996,7 +995,7 @@ Public Class FormStSim
         pp.ReconfigureConfigForm()
         pp.ConfigForm._pp = pp
         pp.ConfigForm._comps = FrmChild.Options.SelectedComponents
-        pp.ShowConfigForm()
+        pp.ShowConfigForm(FrmChild)
     End Sub
 
     Private Sub btnDeletePP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDeletePP.Click

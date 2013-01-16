@@ -234,9 +234,6 @@
   <data name="ToolStripButton18.Text" xml:space="preserve">
     <value>Salvar como Imagem</value>
   </data>
-  <data name="ToolStripButton6.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="ToolStripButton6.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
@@ -289,7 +286,7 @@
     <value>0, 25</value>
   </data>
   <data name="ToolStrip4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>412, 25</value>
+    <value>466, 25</value>
   </data>
   <data name="ToolStrip4.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>

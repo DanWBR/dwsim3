@@ -201,6 +201,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 V = Vz(imaxy) / maxy * 0.8
             End If
 
+            If V <= 0.0# Then V = 0.0000000001
+
             For i = 0 To n
                 initval(i) = Vy(i) * V
                 lconstr(i) = 0.0#
@@ -328,6 +330,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                             F = 1000
                             V = V * 1000
+                            If V <= 0.0# Then V = 0.0000000001
                             L1 = (F * Vz(imaxl) - Vy(imaxl) - F * vx2est(imaxl) + V * vx2est(imaxl)) / (Vx1(imaxl) - vx2est(imaxl))
                             L1 = L1 * (1 - Vx1(imaxl))
                             L2 = F - L1 - V
@@ -1369,7 +1372,7 @@ out:        Return result
 
         End Sub
 
-        Public Function StabTest(ByVal T As Double, ByVal P As Double, ByVal Vz As Array, ByVal PP As PropertyPackage, Optional ByVal VzArray(,) As Double = Nothing, Optional ByVal searchseverity As Integer = 0)
+        Public Function StabTest(ByVal T As Double, ByVal P As Double, ByVal Vz As Array, ByVal pp As PropertyPackage, Optional ByVal VzArray(,) As Double = Nothing, Optional ByVal searchseverity As Integer = 0)
 
             Dim i, j, c, n, o, l, nt, maxits As Integer
             n = UBound(Vz)
@@ -1717,8 +1720,8 @@ out:        Return result
                 L = 1 - soma_y
 
                 For i = 0 To x.Length - 1
-                    Vy(i) = x(i) / V
-                    Vx1(i) = (fi(i) - x(i)) / L
+                    If V <> 0.0# Then Vy(i) = x(i) / V
+                    If L <> 0.0# Then Vx1(i) = (fi(i) - x(i)) / L
                 Next
 
                 fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
@@ -1750,9 +1753,9 @@ out:        Return result
 
                 pval = 0.0#
                 For i = 0 To n
-                    Vy(i) = (x(i) / V)
-                    Vx2(i) = (x(i + n + 1) / L2)
-                    Vx1(i) = ((fi(i) * F - Vy(i) * V - Vx2(i) * L2) / L1)
+                    If V <> 0.0# Then Vy(i) = (x(i) / V)
+                    If L2 <> 0.0# Then Vx2(i) = (x(i + n + 1) / L2)
+                    If L1 <> 0.0# Then Vx1(i) = ((fi(i) * F - Vy(i) * V - Vx2(i) * L2) / L1)
                     If Vx1(i) <= 0 Then
                         pval += Abs(Vx1(i) * L1)
                         Vx1(i) = 1.0E-20

@@ -204,13 +204,13 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
         End If
     End Sub
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click, Button2.Click, Button5.Click
+      Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click, Button2.Click, Button5.Click
 
         Dim row As Integer = dgvu1.SelectedCells(0).RowIndex
         Dim count As Integer = 0
-        Dim delta1 As Double = 10
-        Dim delta2 As Double = 10
-        Dim delta3 As Double = 0.1
+        Dim delta1 As Double = 100
+        Dim delta2 As Double = 100
+        Dim delta3 As Double = 0.01
 
         Dim ms As New DWSIM.SimulationObjects.Streams.MaterialStream("", "")
 
@@ -253,19 +253,20 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
 
         Dim T1 = 298.15
 
-        Dim actu(2), actn(2), actnd(2), fx(2), fxd(2), dfdx(2, 2), x(2), x0(2), dx(2) As Double
+        Dim actu(1), actn(1), actnd(1), fx(1), fxd(1), dfdx(1, 1), x(1), x0(1), dx(1) As Double
 
-        actu(0) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
-        actu(1) = unifac.GAMMA(T1, New Object() {0.5, 0.5}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
-        actu(2) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
+        Try
+            actu(0) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
+            actu(1) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
+        Catch ex As Exception
+            MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
         x(0) = dgvu1.Rows(row).Cells(2).Value
         x(1) = dgvu1.Rows(row).Cells(3).Value
-        x(2) = dgvu1.Rows(row).Cells(4).Value
 
-        If x(0) = 0 Then x(0) = 100
-        If x(1) = 0 Then x(1) = 100
-        If x(2) = 0 Then x(2) = 0.3
+        If x(0) = 0 Then x(0) = 0
+        If x(1) = 0 Then x(1) = 0
 
         Do
 
@@ -274,98 +275,76 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
             nrtl.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData())
             nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
             nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = x(2)
+            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = 0.3
 
             actnd(0) = nrtl.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
-            actnd(1) = nrtl.GAMMA(T1, New Object() {0.5, 0.5}, ppn.RET_VIDS, 0)
-            actnd(2) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
+            actnd(1) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
 
             fx(0) = Math.Log(actu(0) / actnd(0))
             fx(1) = Math.Log(actu(1) / actnd(1))
-            fx(2) = Math.Log(actu(2) / actnd(2))
 
             nrtl.InteractionParameters.Clear()
             nrtl.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData))
             nrtl.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData())
             nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0) + delta1
             nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = x(2)
+            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = 0.3
 
-            actnd(0) = nrtl.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
-            actnd(1) = nrtl.GAMMA(T1, New Object() {0.5, 0.5}, ppn.RET_VIDS, 0)
-            actnd(2) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
+            Try
+                actnd(0) = nrtl.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
+                actnd(1) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
+            Catch ex As Exception
+                MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
 
             fxd(0) = Math.Log(actu(0) / actnd(0))
             fxd(1) = Math.Log(actu(1) / actnd(1))
-            fxd(2) = Math.Log(actu(2) / actnd(2))
 
             dfdx(0, 0) = -(fxd(0) - fx(0)) / delta1
             dfdx(1, 0) = -(fxd(1) - fx(1)) / delta1
-            dfdx(2, 0) = -(fxd(2) - fx(2)) / delta1
 
             nrtl.InteractionParameters.Clear()
             nrtl.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData))
             nrtl.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData())
             nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
             nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1) + delta2
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = x(2)
+            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = 0.3
 
-            actnd(0) = nrtl.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
-            actnd(1) = nrtl.GAMMA(T1, New Object() {0.5, 0.5}, ppn.RET_VIDS, 0)
-            actnd(2) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
+            Try
+                actnd(0) = nrtl.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
+                actnd(1) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
+            Catch ex As Exception
+                MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
 
             fxd(0) = Math.Log(actu(0) / actnd(0))
             fxd(1) = Math.Log(actu(1) / actnd(1))
-            fxd(2) = Math.Log(actu(2) / actnd(2))
 
             dfdx(0, 1) = -(fxd(0) - fx(0)) / delta2
             dfdx(1, 1) = -(fxd(1) - fx(1)) / delta2
-            dfdx(2, 1) = -(fxd(2) - fx(2)) / delta2
-
-            nrtl.InteractionParameters.Clear()
-            nrtl.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData))
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData())
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = x(2) + delta3
-
-            actnd(0) = nrtl.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
-            actnd(1) = nrtl.GAMMA(T1, New Object() {0.5, 0.5}, ppn.RET_VIDS, 0)
-            actnd(2) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
-
-            fxd(0) = Math.Log(actu(0) / actnd(0))
-            fxd(1) = Math.Log(actu(1) / actnd(1))
-            fxd(2) = Math.Log(actu(2) / actnd(2))
-
-            dfdx(0, 2) = -(fxd(0) - fx(0)) / delta3
-            dfdx(1, 2) = -(fxd(1) - fx(1)) / delta3
-            dfdx(2, 2) = -(fxd(2) - fx(2)) / delta3
 
             'solve linear system
             DWSIM.MathEx.SysLin.rsolve.rmatrixsolve(dfdx, fx, UBound(fx) + 1, dx)
 
             x0(0) = x(0)
             x0(1) = x(1)
-            x0(2) = x(2)
 
             x(0) += dx(0)
             x(1) += dx(1)
-            x(2) += dx(2)
-
-            If x(2) < -1 Or x(2) > 10 Then x(2) = 0.3
 
             count += 1
 
-        Loop Until Math.Abs(fx(0) + fx(1) + fx(2)) < 0.03 Or count > 50
+        Loop Until Math.Abs(fx(0) + fx(1)) < 0.01 Or count > 500
 
-        If count < 50 Then
+        If count < 500 Then
             dgvu1.Rows(row).Cells(2).Value = x0(0)
             dgvu1.Rows(row).Cells(3).Value = x0(1)
-            dgvu1.Rows(row).Cells(4).Value = x0(2)
+            dgvu1.Rows(row).Cells(4).Value = 0.3
         Else
-            dgvu1.Rows(row).Cells(2).Value = 0
-            dgvu1.Rows(row).Cells(3).Value = 0
-            dgvu1.Rows(row).Cells(4).Value = 0
+            dgvu1.Rows(row).Cells(2).Value = x0(0)
+            dgvu1.Rows(row).Cells(3).Value = x0(1)
+            dgvu1.Rows(row).Cells(4).Value = 0.3
+            MessageBox.Show("Parameter estimation through UNIFAC failed: Reached the maximum number of iterations.", "UNIFAC Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
     End Sub

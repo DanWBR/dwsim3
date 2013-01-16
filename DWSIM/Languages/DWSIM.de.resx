@@ -4618,4 +4618,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="VesselOperatingMode" xml:space="preserve">
     <value>Operation Mode (Two/Three Phase separation)</value>
   </data>
+  <data name="NoRegressionAvailable" xml:space="preserve">
+    <value>Keine regression vorhanden.</value>
+  </data>
 </root>

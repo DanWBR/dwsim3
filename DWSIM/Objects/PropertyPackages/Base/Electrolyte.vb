@@ -77,6 +77,38 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
+        Function SolidEnthalpy(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double
+
+            Dim n As Integer = UBound(Vx)
+            Dim i As Integer
+            Dim HS As Double = 0.0#
+            Dim MW As Double = 0.0#
+
+            For i = 0 To n
+                HS += Vx(i) * cprops(i).Electrolyte_Cp0 * (T - 298)
+                MW += Vx(i) * cprops(i).Molar_Weight
+            Next
+
+            Return HS * 1000 / MW 'kJ/kg
+
+        End Function
+
+        Function HeatCapacityCp(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double
+
+            Dim n As Integer = UBound(Vx)
+            Dim i As Integer
+            Dim Cp As Double = 0.0#
+            Dim MW As Double = 0.0#
+
+            For i = 0 To n
+                Cp += Vx(i) * cprops(i).Electrolyte_Cp0
+                MW += Vx(i) * cprops(i).Molar_Weight
+            Next
+
+            Return Cp * 1000 / MW 'kJ/kg
+
+        End Function
+
     End Class
 
 End Namespace

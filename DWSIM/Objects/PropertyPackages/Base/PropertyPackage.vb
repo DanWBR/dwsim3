@@ -465,8 +465,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "   Must Override or Overridable Functions"
 
-        Public Overridable Sub ShowConfigForm()
-            Me.ConfigForm.Show()
+        Public Overridable Sub ShowConfigForm(Optional ByVal owner As IWin32Window = Nothing)
+            If Not owner Is Nothing Then Me.ConfigForm.Show(owner) Else Me.ConfigForm.Show()
         End Sub
 
         Public Overridable Sub ReconfigureConfigForm()
@@ -823,14 +823,30 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If Not My.Application.CAPEOPENMode And Not My.Application.ActiveSimulation Is Nothing Then
                 If My.Application.ActiveSimulation.Options.CalculateBubbleAndDewPoints Then
-                    result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.P, FlashSpec.VAP, P, 0, 0)(2)
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = result
-                    result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.P, FlashSpec.VAP, P, 1, 0)(2)
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.dewTemperature = result
-                    result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.T, FlashSpec.VAP, T, 0, 0)(3)
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = result
-                    result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.T, FlashSpec.VAP, T, 1, 0)(3)
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.dewPressure = result
+                    Try
+                        result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.P, FlashSpec.VAP, P, 0, 0)(2)
+                        Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = result
+                    Catch ex As Exception
+                        Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Bubble Temperature calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
+                    End Try
+                    Try
+                        result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.P, FlashSpec.VAP, P, 1, 0)(2)
+                        Me.CurrentMaterialStream.Fases(0).SPMProperties.dewTemperature = result
+                    Catch ex As Exception
+                        Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Dew Temperature calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
+                    End Try
+                    Try
+                        result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.T, FlashSpec.VAP, T, 0, 0)(3)
+                        Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = result
+                    Catch ex As Exception
+                        Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Bubble Pressure calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
+                    End Try
+                    Try
+                        result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.T, FlashSpec.VAP, T, 1, 0)(3)
+                        Me.CurrentMaterialStream.Fases(0).SPMProperties.dewPressure = result
+                    Catch ex As Exception
+                        Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Dew Pressure calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
+                    End Try
                 End If
             End If
 

@@ -138,8 +138,8 @@ Namespace DWSIM.GraphicObjects
                 m_sortableitems.Add("Name | DESC")
                 For Each kvp As KeyValuePair(Of String, Boolean) In m_propertylist
                     If kvp.Value Then
-                        m_sortableitems.Add(kvp.Key & " | ASC")
-                        m_sortableitems.Add(kvp.Key & " | DESC")
+                        m_sortableitems.Add(DWSIM.App.GetPropertyName(kvp.Key) & " | ASC")
+                        m_sortableitems.Add(DWSIM.App.GetPropertyName(kvp.Key) & " | DESC")
                     End If
                 Next
                 m_sortableitems.Add("Custom")
@@ -346,17 +346,17 @@ Namespace DWSIM.GraphicObjects
                     For Each kvp2 As KeyValuePair(Of String, Boolean) In m_propertylist
                         If kvp2.Value = True Then
                             For Each p As String In props
-                                If DWSIM.App.GetPropertyName(p) = kvp2.Key Then
+                                If p = kvp2.Key Then
                                     mypropid = p
+                                    Dim value As Object = myobj.GetPropertyValue(mypropid, su)
+                                    If Double.TryParse(value, New Double) Then
+                                        m_items(kvp.Key).Add(New NodeItem(kvp2.Key, Format(Double.Parse(value), nf), myobj.GetPropertyUnit(mypropid, su), 0, 0, ""))
+                                    Else
+                                        m_items(kvp.Key).Add(New NodeItem(kvp2.Key, value, myobj.GetPropertyUnit(mypropid, su), 0, 0, ""))
+                                    End If
                                     Exit For
                                 End If
                             Next
-                            Dim value As Object = myobj.GetPropertyValue(mypropid, su)
-                            If Double.TryParse(value, New Double) Then
-                                m_items(kvp.Key).Add(New NodeItem(kvp2.Key, Format(Double.Parse(value), nf), myobj.GetPropertyUnit(mypropid, su), 0, 0, ""))
-                            Else
-                                m_items(kvp.Key).Add(New NodeItem(kvp2.Key, value, myobj.GetPropertyUnit(mypropid, su), 0, 0, ""))
-                            End If
                         End If
                     Next
                 End If
@@ -493,13 +493,13 @@ Namespace DWSIM.GraphicObjects
                         Exit For
                     Next
                     For Each p As String In props
-                        If m_propertylist.ContainsKey(DWSIM.App.GetPropertyName(p)) Then
-                            .Item.Add(DWSIM.App.GetPropertyName(p), m_propertylist(DWSIM.App.GetPropertyName(p)), False, "4. " & DWSIM.App.GetLocalString("MT_PropertiesToShow"), "", True)
+                        If m_propertylist.ContainsKey(p) Then
+                            .Item.Add(DWSIM.App.GetPropertyName(p), m_propertylist(p), False, "4. " & DWSIM.App.GetLocalString("MT_PropertiesToShow"), "", True)
                         Else
                             .Item.Add(DWSIM.App.GetPropertyName(p), False, False, "4. " & DWSIM.App.GetLocalString("MT_PropertiesToShow"), "", True)
                         End If
                         .Item(.Item.Count - 1).DefaultType = Type.GetType("System.Boolean")
-                        .Item(.Item.Count - 1).Tag = "Property|" & p
+                        .Item(.Item.Count - 1).Tag = p
                     Next
                 End If
 
@@ -563,7 +563,7 @@ Namespace DWSIM.GraphicObjects
                         maxL2(i) = 0
                         count = 1
                         For Each ni In m_items(s)
-                            size = g.MeasureString(ni.Text, Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
+                            size = g.MeasureString(DWSIM.App.GetPropertyName(ni.Text), Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                             If size.Width > maxL1 Then maxL1 = size.Width
                             If size.Height > maxH Then maxH = size.Height
                             size = g.MeasureString(ni.Value, Me.FontCol2, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
@@ -581,7 +581,7 @@ Namespace DWSIM.GraphicObjects
                         maxL2(i) = 0
                         count = 1
                         For Each ni In m_items(s)
-                            size = g.MeasureString(ni.Text, Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
+                            size = g.MeasureString(DWSIM.App.GetPropertyName(ni.Text), Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                             If size.Width > maxL1 Then maxL1 = size.Width
                             If size.Height > maxH Then maxH = size.Height
                             size = g.MeasureString(ni.Value, Me.FontCol2, New PointF(0, 0), New StringFormat(StringFormatFlags.DirectionRightToLeft, 0))

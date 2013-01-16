@@ -143,9 +143,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                         F = 1
                         V = result(1)
-                        L1 = (F * Vz(imaxl) - result(3)(imaxl) - F * vx2est(imaxl) + V * vx2est(imaxl)) / (result(2)(imaxl) - vx2est(imaxl))
-                        L1 = L1 * (1 - result(2)(imaxl))
-                        L2 = F - L1 - V
+                        L2 = F * result(3)(imaxl)
+                        L1 = F - L2 - V
 
                         If L2 < 0 Then
                             L2 = Abs(L2)
@@ -153,7 +152,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         End If
 
                         For i = 0 To n
-                            vx1e(i) = (result(2)(i) * L1 - vx2est(i) * L2) / (L1 - L2)
+                            If i <> imaxl Then
+                                vx1e(i) = Vz(i) / (1 - L2)
+                            Else
+                                vx1e(i) = Vz(i) * L2
+                            End If
                         Next
 
                         Dim sumvx2 = 0
@@ -165,7 +168,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             vx1e(i) = Abs(vx1e(i)) / sumvx2
                         Next
 
-                        result = Flash_PT_3P(Vz, V, L1, L2, result(3), vx1e, vx2est, P, T, PP)
+                        Try
+                            result = Flash_PT_3P(Vz, V, L1, L2, result(3), vx1e, vx2est, P, T, PP)
+                        Catch ex As Exception
+                            'if there was an error, keep the two-phase result.
+                            result = _io.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
+                        End Try
 
                     End If
 
@@ -657,6 +665,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
+        Private Function CalcKbjw(ByVal K1() As Double, ByVal K2() As Double, ByVal L1 As Double, ByVal L2 As Double) As Double
+
+            Dim i As Integer
+            Dim n As Integer = UBound(K1) - 1
+
+            Dim Kbj1 As Object
+
+            Kbj1 = L1 * K1(0) + L2 * K2(0)
+            For i = 1 To n
+                If Abs(K1(i) - 1) < Abs(Kbj1 - 1) Then Kbj1 = L1 * K1(i) + L2 * K2(i)
+            Next
+
+            Return Kbj1
+
+        End Function
+
         Private Function EnergyBalance(ByVal R As Double) As Double
 
             Dim fr, dfr, S0, S1 As Double
@@ -955,9 +979,9 @@ restart:    Do
                                 If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
                             Next
                         Next
-                        Broyden.broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 0)
+                        broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 0)
                     Else
-                        Broyden.broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 1)
+                        broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 1)
                     End If
 
                     For i = 0 To n
@@ -1233,9 +1257,9 @@ restart:    Do
                                 If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
                             Next
                         Next
-                        Broyden.broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 0)
+                        broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 0)
                     Else
-                        Broyden.broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 1)
+                        broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 1)
                     End If
 
                     For i = 0 To n
@@ -1379,7 +1403,6 @@ restart:    Do
 
             'Calculate Ki`s
 
-
             Ki1 = PP.DW_CalcKvalue(Vx1EST, VyEST, T, P)
             Ki2 = PP.DW_CalcKvalue(Vx2EST, VyEST, T, P)
 
@@ -1429,8 +1452,8 @@ restart:    Do
                 i = i + 1
             Loop Until i = n + 1
 
-            Kb = 1 'CalcKbj1(Ki)
-            Kb0 = 1 'Kb
+            Kb = CalcKbjw(Ki1, Ki2, L1est, L2est)
+            Kb0 = Kb
 
             For i = 0 To n
                 ui1(i) = Log(Ki1(i))
@@ -1475,7 +1498,7 @@ restart:    Do
                         dfr = (fr - Me.TPErrorFunc(R1)) / (-0.0001)
                     End If
                     R0 = R
-                    R += -0.3 * fr / dfr
+                    R += -0.1 * fr / dfr
                     If R < 0 Then R = 0
                     If R > 1 Then R = 1
                     icount += 1
@@ -1491,7 +1514,7 @@ restart:    Do
 
                 Ki1 = PP.DW_CalcKvalue(Vx1, Vy, T, P)
                 Ki2 = PP.DW_CalcKvalue(Vx2, Vy, T, P)
-                'Kb = CalcKbj1(Ki)
+                Kb = CalcKbjw(Ki1, Ki2, L1, L2)
 
                 For i = 0 To n
                     uic1(i) = Log(Ki1(i))
@@ -1520,9 +1543,9 @@ restart:    Do
                                 If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
                             Next
                         Next
-                        Broyden.broydn(2 * n + 1, x, fx, dx, xbr, fbr, dfdx, 0)
+                        broydn(2 * n + 1, x, fx, dx, xbr, fbr, dfdx, 0)
                     Else
-                        Broyden.broydn(2 * n + 1, x, fx, dx, xbr, fbr, dfdx, 1)
+                        broydn(2 * n + 1, x, fx, dx, xbr, fbr, dfdx, 1)
                     End If
 
                     For i = 0 To n
@@ -1785,9 +1808,9 @@ out:        Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2}
                             If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
                         Next
                     Next
-                    Broyden.broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 0)
+                    broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 0)
                 Else
-                    Broyden.broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 1)
+                    broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 1)
                 End If
 
                 For i = 0 To n
@@ -1976,9 +1999,9 @@ out:        Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2}
                             If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
                         Next
                     Next
-                    Broyden.broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 0)
+                    broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 0)
                 Else
-                    Broyden.broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 1)
+                    broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 1)
                 End If
 
                 For i = 0 To n
@@ -2005,7 +2028,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2}
 
         End Function
 
-        Public Function StabTest(ByVal T As Double, ByVal P As Double, ByVal Vz As Array, ByVal PP As PropertyPackage, Optional ByVal VzArray(,) As Double = Nothing, Optional ByVal searchseverity As Integer = 0)
+        Public Function StabTest(ByVal T As Double, ByVal P As Double, ByVal Vz As Array, ByVal pp As PropertyPackage, Optional ByVal VzArray(,) As Double = Nothing, Optional ByVal searchseverity As Integer = 0)
 
             Dim i, j, c, n, o, l, nt, maxits As Integer
             n = UBound(Vz)
@@ -2339,6 +2362,84 @@ out:        Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2}
             End If
 
         End Function
+
+        Private Sub broydn(ByVal N As Object, ByVal X As Object, ByVal F As Object, ByVal P As Object, ByVal XB As Object, ByVal FB As Object, ByVal H As Object, ByVal IFLAG As Integer)
+            '
+            '**********************************************************************
+            '
+            '       N = NUMBER OF EQUATIONS
+            '       X(N) = CURRENT VALUE OF X, INITAL GUESS X0 ON FIRST CALL
+            '              THE VALUE OF X IS NOT UPDATED AND MUST BE UPDATED IN
+            '              CALLING PROGRAM
+            '       F(N) = VALUE OF F(X) MUST BE PROVIDED ON ALL CALLS
+            '       P(N) = STEP PREDICTED BY BROYDN (USED TO UPDATE X)
+            '              THE NEW VALUE OF X IS X+P
+            '       XB(N) = RETENTION FOR X VECTOR
+            '       FB(N) = RETENTION FOR F VECTOR
+            '       H(N,N) = BROYDEN H MATRIX IT MUST BE INITIALIZED TO A CLOSE
+            '                J(X0)**-1 OR IDENTITY MATRIX
+            '       IFLAG = CALCULATION CONTROL FLAG
+            '               0 INITIAL CALL, NO H UPDATE
+            '               1 UPDATE CALL, NO H DAMPING
+            '
+            Dim I As Short
+            Dim J As Short
+            Dim PTP As Double
+            Dim PTH As Double
+            Dim THETA As Double
+            Dim PTHY As Double
+            Dim PTHF As Double
+            Dim HY As Double
+            Dim DENOM As Double
+            '
+            '      INITIAL CALL
+            '
+            If (IFLAG <> 0) Then
+                PTP = 0.0#
+                '
+                For I = 0 To N 'do 30 I=1,N
+                    P(I) = X(I) - XB(I)
+                    PTP = PTP + P(I) * P(I)
+                    HY = 0.0#
+                    For J = 0 To N '  DO 20 J=1,N
+                        HY = HY + H(I, J) * (F(J) - FB(J))
+20:                 Next J
+                    XB(I) = HY - P(I)
+30:             Next I
+                PTHY = 0.0#
+                PTHF = 0.0#
+                '
+                For I = 0 To N ' DO 40 I=1,N
+                    PTH = 0.0#
+                    For J = 0 To N '  DO 35 J=1,N
+                        PTH = PTH + P(J) * H(J, I)
+35:                 Next J
+                    PTHY = PTHY + PTH * (F(I) - FB(I))
+                    PTHF = PTHF + PTH * F(I)
+                    FB(I) = PTH
+40:             Next I
+                THETA = 1.0#
+                '
+                DENOM = (1.0# - THETA) * PTP + THETA * PTHY
+                '
+                For I = 0 To N ' DO 50 I=1,N
+                    For J = 0 To N ' DO 50 J=1,N
+                        H(I, J) = H(I, J) - THETA * XB(I) * FB(J) / DENOM
+                    Next J
+50:             Next I
+                '
+            End If
+            For I = 0 To N '  DO 70 I=1,N
+                XB(I) = X(I)
+                FB(I) = F(I)
+                P(I) = 0.0#
+                '
+                For J = 0 To N '  DO 70 J=1,N
+                    P(I) = P(I) - H(I, J) * F(J)
+                Next J
+70:         Next I
+            ''
+        End Sub
 
         Private Function LiquidFractionBalance(ByVal R As Double) As Double
 

@@ -336,14 +336,15 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
 
             count += 1
 
-        Loop Until Math.Abs(fx(0) + fx(1)) < 0.03 Or count > 50
+        Loop Until Math.Abs(fx(0) + fx(1)) < 0.01 Or count > 500
 
-        If count < 50 Then
+        If count < 500 Then
             dgvu1.Rows(row).Cells(2).Value = x0(0)
             dgvu1.Rows(row).Cells(3).Value = x0(1)
         Else
-            dgvu1.Rows(row).Cells(2).Value = 0
-            dgvu1.Rows(row).Cells(3).Value = 0
+            dgvu1.Rows(row).Cells(2).Value = x0(0)
+            dgvu1.Rows(row).Cells(3).Value = x0(1)
+            MessageBox.Show("Parameter estimation through UNIFAC failed: Reached the maximum number of iterations.", "UNIFAC Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
 

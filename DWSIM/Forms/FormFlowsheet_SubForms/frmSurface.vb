@@ -62,7 +62,7 @@ Public Class frmSurface
             ByVal e As System.Drawing.Printing.PrintPageEventArgs) _
             Handles designSurfacePrintDocument.PrintPage
         Dim drawobj As GraphicObjectCollection = Me.FlowsheetDesignSurface.drawingObjects
-        Me.FlowsheetDesignSurface.drawingObjects.PrintObjects(e.Graphics, -FlowsheetDesignSurface.HorizontalScroll.Value, -FlowsheetDesignSurface.VerticalScroll.Value)
+        Me.FlowsheetDesignSurface.drawingObjects.PrintObjects(e.Graphics, -FlowsheetDesignSurface.HorizontalScroll.Value / FlowsheetDesignSurface.Zoom, -FlowsheetDesignSurface.VerticalScroll.Value / FlowsheetDesignSurface.Zoom)
     End Sub
 
     Private Sub frmSurface_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -2863,6 +2863,12 @@ Public Class frmSurface
                 ChildParent.FormObjList.ACSC.AddRange(arrays)
                 ChildParent.FormObjList.TBSearch.AutoCompleteCustomSource = ChildParent.FormObjList.ACSC
             End If
+
+            If gObj.TipoObjeto = TipoObjeto.MaterialStream Then
+                Me.FlowsheetDesignSurface.SelectedObject = gObj
+                Call Me.EditCompTSMI_Click(Me.FlowsheetDesignSurface, New EventArgs())
+            End If
+
         End If
 
         Me.FlowsheetDesignSurface.Cursor = Cursors.Arrow

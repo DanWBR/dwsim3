@@ -118,29 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="ComponenteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>88, 20</value>
+  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>732, 17</value>
   </data>
-  <data name="ComponenteToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Komponente</value>
-  </data>
-  <data name="SistemaDeUnidadesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 20</value>
-  </data>
-  <data name="SistemaDeUnidadesToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Einheitensystem</value>
-  </data>
-  <data name="SalvarNoBancoDeDadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 22</value>
-  </data>
-  <data name="SalvarNoBancoDeDadosToolStripMenuItem.Text" xml:space="preserve">
-    <value>Speichere in Datenbank</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Komponentendatenbank</value>
+  <data name="Button1.Text" xml:space="preserve">
+    <value>Speichern Komponente in die Datenbank</value>
   </data>
   <data name="chkReplaceComps.Location" type="System.Drawing.Point, System.Drawing">
-    <value>764, 23</value>
+    <value>966, 23</value>
   </data>
   <data name="chkReplaceComps.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 17</value>
@@ -152,10 +137,10 @@
     <value>43, 21</value>
   </data>
   <data name="tbDBPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>715, 20</value>
+    <value>475, 20</value>
   </data>
   <data name="btnSearch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>952, 18</value>
+    <value>524, 17</value>
   </data>
   <data name="btnSearch.Text" xml:space="preserve">
     <value>Suche</value>
@@ -167,7 +152,7 @@
     <value>Pfad</value>
   </data>
   <data name="btnCreateNewDB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1033, 18</value>
+    <value>605, 17</value>
   </data>
   <data name="btnCreateNewDB.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 26</value>
@@ -175,8 +160,20 @@
   <data name="btnCreateNewDB.Text" xml:space="preserve">
     <value>Neue Datenbank</value>
   </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Komponentendatenbank</value>
+  </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Komponenten Eigenschaften</value>
+  </data>
+  <data name="cbUnits.Location" type="System.Drawing.Point, System.Drawing">
+    <value>99, 21</value>
+  </data>
+  <data name="Label47.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 13</value>
+  </data>
+  <data name="Label47.Text" xml:space="preserve">
+    <value>Einheitensystem</value>
   </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>UNIFAC Struktur</value>
@@ -186,6 +183,12 @@
   </data>
   <data name="GridUNIFAC.Size" type="System.Drawing.Size, System.Drawing">
     <value>436, 239</value>
+  </data>
+  <data name="Column4.HeaderText" xml:space="preserve">
+    <value>Anzahl</value>
+  </data>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Beispiel</value>
   </data>
   <data name="Label60.Size" type="System.Drawing.Size, System.Drawing">
     <value>438, 32</value>
@@ -297,6 +300,9 @@
   </data>
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Kritische Daten</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>UNIQUAC Parameter</value>
   </data>
   <data name="CheckBoxAF.ToolTip" xml:space="preserve">
     <value>Abschätzung aufgrund UNIFAC-Struktur</value>
@@ -525,12 +531,6 @@
   </data>
   <data name="DBOpenDlg.Title" xml:space="preserve">
     <value>Öffne/Erzeuge Database</value>
-  </data>
-  <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Anzahl</value>
-  </data>
-  <data name="Column1.HeaderText" xml:space="preserve">
-    <value>Beispiel</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -275,8 +275,8 @@ Partial Class FormFlowsheet
         'ToolStripButton6
         '
         Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
         Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.page_gear
+        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
         Me.ToolStripButton6.Name = "ToolStripButton6"
         '
         'ToolStripButton11
@@ -443,7 +443,7 @@ Partial Class FormFlowsheet
         Me.TSTable.IsDrawn = True
         Me.TSTable.Name = "TSTable"
         resources.ApplyResources(Me.TSTable, "TSTable")
-        Me.TSTable.Title = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.TSTable.Title = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'ToolStrip2
         '

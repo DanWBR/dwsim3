@@ -54,6 +54,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function GAMMA(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI, ByVal index)
 
+            CheckParameters(VEKI)
+
             Dim Q(), R(), j(), L()
             Dim i, k, m As Integer
 
@@ -139,96 +141,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function GAMMA_DINF(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI, ByVal index)
+      Function GAMMA_MR(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI)
 
-            Dim Q(), R(), j(), L()
-            Dim i, k, m As Integer
-            
-            Dim n = UBound(Vx)
-            Dim n2 = UBound(VEKI, 2)
+            CheckParameters(VEKI)
 
-            Dim beta(,), teta(n2), s(n2), Vgammac(), Vgammar(), Vgamma(), b(,)
-            ReDim beta(n, n2), Vgammac(n), Vgammar(n), Vgamma(n), b(n, n2)
-            ReDim Q(n), R(n), j(n), L(n)
-
-            i = 0
-            Do
-                k = 0
-                Do
-                    m = 0
-                    Do
-                        beta(i, k) = beta(i, k) + VEKI(i, m) * TAU(m, k, T)
-                        m = m + 1
-                    Loop Until m = n2 + 1
-                    k = k + 1
-                Loop Until k = n2 + 1
-                i = i + 1
-            Loop Until i = n + 1
-
-            Dim soma_xq = 0
-            i = 0
-            Dim Vxid_ant = Vx(index)
-            Do
-                Q(i) = VQ(i)
-                If i <> index Then
-                    Vx(i) = Vx(i) + Vxid_ant / (n - 1)
-                End If
-                Vx(index) = 0.0000000001
-                soma_xq = soma_xq + Vx(i) * Q(i)
-                i = i + 1
-            Loop Until i = n + 1
-
-            k = 0
-            Do
-                i = 0
-                Do
-                    teta(k) = teta(k) + Vx(i) * Q(i) * VEKI(i, k)
-                    i = i + 1
-                Loop Until i = n + 1
-                teta(k) = teta(k) / soma_xq
-                k = k + 1
-            Loop Until k = n2 + 1
-
-            k = 0
-            Do
-                m = 0
-                Do
-                    s(k) = s(k) + teta(m) * TAU(m, k, T)
-                    m = m + 1
-                Loop Until m = n2 + 1
-                k = k + 1
-            Loop Until k = n2 + 1
-
-            Dim soma_xr = 0
-            i = 0
-            Do
-                R(i) = VR(i)
-                soma_xr = soma_xr + Vx(i) * R(i)
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                j(i) = R(i) / soma_xr
-                L(i) = Q(i) / soma_xq
-                Vgammac(i) = 1 - j(i) + Math.Log(j(i)) - 5 * Q(i) * (1 - j(i) / L(i) + Math.Log(j(i) / L(i)))
-                k = 0
-                Dim tmpsum = 0
-                Do
-                    tmpsum = tmpsum + teta(k) * beta(i, k) / s(k) - VEKI(i, k) * Math.Log(beta(i, k) / s(k))
-                    k = k + 1
-                Loop Until k = n2 + 1
-                Vgammar(i) = Q(i) * (1 - tmpsum)
-                Vgamma(i) = Math.Exp(Vgammac(i) + Vgammar(i))
-                If Vgamma(i) = 0 Then Vgamma(i) = 0.000001
-                i = i + 1
-            Loop Until i = n + 1
-
-            GAMMA_DINF = Vgamma(index)
-
-        End Function
-
-        Function GAMMA_MR(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI)
             Dim i, k, m As Integer
 
             Dim n = UBound(Vx)
@@ -311,93 +227,52 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function GAMMA_DINF_MR(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI, ByVal index)
+        Sub CheckParameters(ByVal VEKI)
 
-            Dim i, k, m As Integer
+            Dim i, j As Integer
 
-            Dim n = UBound(Vx)
+            Dim n1 = UBound(VEKI, 1)
             Dim n2 = UBound(VEKI, 2)
 
-            Dim teta(n2), s(n2) As Double
-            Dim beta(n, n2), Vgammac(n), Vgammar(n), Vgamma(n), b(n, n2) As Double
-            Dim Q(n), R(n), j(n), L(n) As Double
+            Dim ids As New ArrayList
 
-            i = 0
-            Do
-                k = 0
-                Do
-                    m = 0
-                    Do
-                        beta(i, k) = beta(i, k) + VEKI(i, m) * TAU(m, k, T)
-                        m = m + 1
-                    Loop Until m = n2 + 1
-                    k = k + 1
-                Loop Until k = n2 + 1
-                i = i + 1
-            Loop Until i = n + 1
+            For i = 0 To n1
+                For j = 0 To n2
+                    If VEKI(i, j) <> 0.0# And Not ids.Contains(j) Then ids.Add(j)
+                Next
+            Next
 
-            Dim soma_xq = 0
-            i = 0
-            Dim Vxid_ant = Vx(index)
-            Do
-                Q(i) = VQ(i)
-                If i <> index Then
-                    Vx(i) = Vx(i) + Vxid_ant / (n - 1)
-                End If
-                Vx(index) = 0.0000000001
-                soma_xq = soma_xq + Vx(i) * Q(i)
-                i = i + 1
-            Loop Until i = n + 1
+            For Each id1 As Integer In ids
+                For Each id2 As Integer In ids
+                    If id1 <> id2 Then
+                        Dim g1, g2 As Integer
+                        g1 = Me.UnifGroups.Groups(id1 + 1).PrimaryGroup
+                        g2 = Me.UnifGroups.Groups(id2 + 1).PrimaryGroup
+                        If Me.UnifGroups.InteracParam.ContainsKey(g1) Then
+                            If Not Me.UnifGroups.InteracParam(g1).ContainsKey(g2) Then
+                                If Me.UnifGroups.InteracParam.ContainsKey(g2) Then
+                                    If Not Me.UnifGroups.InteracParam(g2).ContainsKey(g1) Then
+                                        Throw New Exception("UNIFAC Error: Could not find interaction parameter for groups " & Me.UnifGroups.Groups(id1 + 1).GroupName & " / " & _
+                                                            Me.UnifGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
+                                    End If
+                                End If
+                            End If
+                        Else
+                            If Me.UnifGroups.InteracParam.ContainsKey(g2) Then
+                                If Not Me.UnifGroups.InteracParam(g2).ContainsKey(g1) Then
+                                    Throw New Exception("UNIFAC Error: Could not find interaction parameter for groups " & Me.UnifGroups.Groups(id1 + 1).GroupName & " / " & _
+                                                        Me.UnifGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
+                                End If
+                            Else
+                                Throw New Exception("UNIFAC Error: Could not find interaction parameter for groups " & Me.UnifGroups.Groups(id1 + 1).GroupName & " / " & _
+                                                    Me.UnifGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
+                            End If
+                        End If
+                    End If
+                Next
+            Next
 
-            k = 0
-            Do
-                i = 0
-                Do
-                    teta(k) = teta(k) + Vx(i) * Q(i) * VEKI(i, k)
-                    i = i + 1
-                Loop Until i = n + 1
-                teta(k) = teta(k) / soma_xq
-                k = k + 1
-            Loop Until k = n2 + 1
-
-            k = 0
-            Do
-                m = 0
-                Do
-                    s(k) = s(k) + teta(m) * TAU(m, k, T)
-                    m = m + 1
-                Loop Until m = n2 + 1
-                k = k + 1
-            Loop Until k = n2 + 1
-
-            Dim soma_xr = 0
-            i = 0
-            Do
-                R(i) = VR(i)
-                soma_xr = soma_xr + Vx(i) * R(i)
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                j(i) = R(i) / soma_xr
-                L(i) = Q(i) / soma_xq
-                Vgammac(i) = 1 - j(i) + Math.Log(j(i)) - 5 * Q(i) * (1 - j(i) / L(i) + Math.Log(j(i) / L(i)))
-                k = 0
-                Dim tmpsum = 0
-                Do
-                    tmpsum = tmpsum + teta(k) * beta(i, k) / s(k) - VEKI(i, k) * Math.Log(beta(i, k) / s(k))
-                    k = k + 1
-                Loop Until k = n2 + 1
-                Vgammar(i) = Q(i) * (1 - tmpsum)
-                Vgamma(i) = Math.Exp(Vgammac(i) + Vgammar(i))
-                If Vgamma(i) = 0 Then Vgamma(i) = 0.000001
-                i = i + 1
-            Loop Until i = n + 1
-
-            Return Vgamma
-
-        End Function
+        End Sub
 
         Function TAU(ByVal group_1, ByVal group_2, ByVal T)
 
@@ -414,7 +289,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 End If
             Else
                 res = 0
-            End If
+             End If
 
             Return Math.Exp(-res / T)
 
@@ -522,6 +397,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function GAMMA(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI, ByVal index)
 
+            CheckParameters(VEKI)
+
             Dim Q(), R(), j(), L()
             Dim i, k, m As Integer
 
@@ -607,96 +484,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function GAMMA_DINF(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI, ByVal index)
-
-            Dim Q(), R(), j(), L()
-            Dim i, k, m As Integer
-
-            Dim n = UBound(Vx)
-            Dim n2 = UBound(VEKI, 2)
-
-            Dim beta(,), teta(n2), s(n2), Vgammac(), Vgammar(), Vgamma(), b(,)
-            ReDim beta(n, n2), Vgammac(n), Vgammar(n), Vgamma(n), b(n, n2)
-            ReDim Q(n), R(n), j(n), L(n)
-
-            i = 0
-            Do
-                k = 0
-                Do
-                    m = 0
-                    Do
-                        beta(i, k) = beta(i, k) + VEKI(i, m) * TAU(m, k, T)
-                        m = m + 1
-                    Loop Until m = n2 + 1
-                    k = k + 1
-                Loop Until k = n2 + 1
-                i = i + 1
-            Loop Until i = n + 1
-
-            Dim soma_xq = 0
-            i = 0
-            Dim Vxid_ant = Vx(index)
-            Do
-                Q(i) = VQ(i)
-                If i <> index Then
-                    Vx(i) = Vx(i) + Vxid_ant / (n - 1)
-                End If
-                Vx(index) = 0.0000000001
-                soma_xq = soma_xq + Vx(i) * Q(i)
-                i = i + 1
-            Loop Until i = n + 1
-
-            k = 0
-            Do
-                i = 0
-                Do
-                    teta(k) = teta(k) + Vx(i) * Q(i) * VEKI(i, k)
-                    i = i + 1
-                Loop Until i = n + 1
-                teta(k) = teta(k) / soma_xq
-                k = k + 1
-            Loop Until k = n2 + 1
-
-            k = 0
-            Do
-                m = 0
-                Do
-                    s(k) = s(k) + teta(m) * TAU(m, k, T)
-                    m = m + 1
-                Loop Until m = n2 + 1
-                k = k + 1
-            Loop Until k = n2 + 1
-
-            Dim soma_xr = 0
-            i = 0
-            Do
-                R(i) = VR(i)
-                soma_xr = soma_xr + Vx(i) * R(i)
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                j(i) = R(i) / soma_xr
-                L(i) = Q(i) / soma_xq
-                Vgammac(i) = 1 - j(i) + Math.Log(j(i)) - 5 * Q(i) * (1 - j(i) / L(i) + Math.Log(j(i) / L(i)))
-                k = 0
-                Dim tmpsum = 0
-                Do
-                    tmpsum = tmpsum + teta(k) * beta(i, k) / s(k) - VEKI(i, k) * Math.Log(beta(i, k) / s(k))
-                    k = k + 1
-                Loop Until k = n2 + 1
-                Vgammar(i) = Q(i) * (1 - tmpsum)
-                Vgamma(i) = Math.Exp(Vgammac(i) + Vgammar(i))
-                If Vgamma(i) = 0 Then Vgamma(i) = 0.000001
-                i = i + 1
-            Loop Until i = n + 1
-
-            GAMMA_DINF = Vgamma(index)
-
-        End Function
-
         Function GAMMA_MR(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI)
+
+            CheckParameters(VEKI)
+
             Dim i, k, m As Integer
 
             Dim n = UBound(Vx)
@@ -779,93 +570,52 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function GAMMA_DINF_MR(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI, ByVal index)
+        Sub CheckParameters(ByVal VEKI)
 
-            Dim i, k, m As Integer
+            Dim i, j As Integer
 
-            Dim n = UBound(Vx)
+            Dim n1 = UBound(VEKI, 1)
             Dim n2 = UBound(VEKI, 2)
 
-            Dim teta(n2), s(n2) As Double
-            Dim beta(n, n2), Vgammac(n), Vgammar(n), Vgamma(n), b(n, n2) As Double
-            Dim Q(n), R(n), j(n), L(n) As Double
+            Dim ids As New ArrayList
 
-            i = 0
-            Do
-                k = 0
-                Do
-                    m = 0
-                    Do
-                        beta(i, k) = beta(i, k) + VEKI(i, m) * TAU(m, k, T)
-                        m = m + 1
-                    Loop Until m = n2 + 1
-                    k = k + 1
-                Loop Until k = n2 + 1
-                i = i + 1
-            Loop Until i = n + 1
+            For i = 0 To n1
+                For j = 0 To n2
+                    If VEKI(i, j) <> 0.0# And Not ids.Contains(j) Then ids.Add(j)
+                Next
+            Next
 
-            Dim soma_xq = 0
-            i = 0
-            Dim Vxid_ant = Vx(index)
-            Do
-                Q(i) = VQ(i)
-                If i <> index Then
-                    Vx(i) = Vx(i) + Vxid_ant / (n - 1)
-                End If
-                Vx(index) = 0.0000000001
-                soma_xq = soma_xq + Vx(i) * Q(i)
-                i = i + 1
-            Loop Until i = n + 1
+            For Each id1 As Integer In ids
+                For Each id2 As Integer In ids
+                    If id1 <> id2 Then
+                        Dim g1, g2 As Integer
+                        g1 = Me.UnifGroups.Groups(id1 + 1).PrimaryGroup
+                        g2 = Me.UnifGroups.Groups(id2 + 1).PrimaryGroup
+                        If Me.UnifGroups.InteracParam.ContainsKey(g1) Then
+                            If Not Me.UnifGroups.InteracParam(g1).ContainsKey(g2) Then
+                                If Me.UnifGroups.InteracParam.ContainsKey(g2) Then
+                                    If Not Me.UnifGroups.InteracParam(g2).ContainsKey(g1) Then
+                                        Throw New Exception("UNIFAC Error: Could not find interaction parameter for groups " & Me.UnifGroups.Groups(id1 + 1).GroupName & " / " & _
+                                                            Me.UnifGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
+                                    End If
+                                End If
+                            End If
+                        Else
+                            If Me.UnifGroups.InteracParam.ContainsKey(g2) Then
+                                If Not Me.UnifGroups.InteracParam(g2).ContainsKey(g1) Then
+                                    Throw New Exception("UNIFAC Error: Could not find interaction parameter for groups " & Me.UnifGroups.Groups(id1 + 1).GroupName & " / " & _
+                                                        Me.UnifGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
+                                End If
+                            Else
+                                Throw New Exception("UNIFAC Error: Could not find interaction parameter for groups " & Me.UnifGroups.Groups(id1 + 1).GroupName & " / " & _
+                                                    Me.UnifGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
+                            End If
+                        End If
+                    End If
+                Next
+            Next
 
-            k = 0
-            Do
-                i = 0
-                Do
-                    teta(k) = teta(k) + Vx(i) * Q(i) * VEKI(i, k)
-                    i = i + 1
-                Loop Until i = n + 1
-                teta(k) = teta(k) / soma_xq
-                k = k + 1
-            Loop Until k = n2 + 1
-
-            k = 0
-            Do
-                m = 0
-                Do
-                    s(k) = s(k) + teta(m) * TAU(m, k, T)
-                    m = m + 1
-                Loop Until m = n2 + 1
-                k = k + 1
-            Loop Until k = n2 + 1
-
-            Dim soma_xr = 0
-            i = 0
-            Do
-                R(i) = VR(i)
-                soma_xr = soma_xr + Vx(i) * R(i)
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                j(i) = R(i) / soma_xr
-                L(i) = Q(i) / soma_xq
-                Vgammac(i) = 1 - j(i) + Math.Log(j(i)) - 5 * Q(i) * (1 - j(i) / L(i) + Math.Log(j(i) / L(i)))
-                k = 0
-                Dim tmpsum = 0
-                Do
-                    tmpsum = tmpsum + teta(k) * beta(i, k) / s(k) - VEKI(i, k) * Math.Log(beta(i, k) / s(k))
-                    k = k + 1
-                Loop Until k = n2 + 1
-                Vgammar(i) = Q(i) * (1 - tmpsum)
-                Vgamma(i) = Math.Exp(Vgammac(i) + Vgammar(i))
-                If Vgamma(i) = 0 Then Vgamma(i) = 0.000001
-                i = i + 1
-            Loop Until i = n + 1
-
-            Return Vgamma
-
-        End Function
+        End Sub
 
         Function TAU(ByVal group_1, ByVal group_2, ByVal T)
 

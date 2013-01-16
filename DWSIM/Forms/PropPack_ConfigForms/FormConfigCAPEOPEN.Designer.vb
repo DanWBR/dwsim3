@@ -22,45 +22,44 @@ Partial Class FormConfigCAPEOPEN
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormConfigCAPEOPEN))
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.lblAbout2 = New System.Windows.Forms.Label
-        Me.lblDesc2 = New System.Windows.Forms.Label
-        Me.lblAuthorURL2 = New System.Windows.Forms.LinkLabel
-        Me.lblVersion2 = New System.Windows.Forms.Label
-        Me.lblName2 = New System.Windows.Forms.Label
-        Me.Label15 = New System.Windows.Forms.Label
-        Me.Label16 = New System.Windows.Forms.Label
-        Me.Label17 = New System.Windows.Forms.Label
-        Me.Label18 = New System.Windows.Forms.Label
-        Me.Label19 = New System.Windows.Forms.Label
-        Me.cbPropPack = New System.Windows.Forms.ComboBox
-        Me.cbThermoServer = New System.Windows.Forms.ComboBox
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.btnEditPropPack = New System.Windows.Forms.Button
-        Me.btnEditThermoServer = New System.Windows.Forms.Button
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.rb11 = New System.Windows.Forms.RadioButton
-        Me.rb10 = New System.Windows.Forms.RadioButton
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip
-        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem
-        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem
-        Me.dgmap = New System.Windows.Forms.DataGridView
-        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.col1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.col2 = New System.Windows.Forms.DataGridViewComboBoxColumn
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem
-        Me.dgvph = New System.Windows.Forms.DataGridView
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewComboBoxColumn1 = New System.Windows.Forms.DataGridViewComboBoxColumn
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.btnCancel = New System.Windows.Forms.Button
-        Me.btnOK = New System.Windows.Forms.Button
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.lblAbout2 = New System.Windows.Forms.Label()
+        Me.lblDesc2 = New System.Windows.Forms.Label()
+        Me.lblAuthorURL2 = New System.Windows.Forms.LinkLabel()
+        Me.lblVersion2 = New System.Windows.Forms.Label()
+        Me.lblName2 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.cbPropPack = New System.Windows.Forms.ComboBox()
+        Me.cbThermoServer = New System.Windows.Forms.ComboBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.btnEditPropPack = New System.Windows.Forms.Button()
+        Me.btnEditThermoServer = New System.Windows.Forms.Button()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.rb11 = New System.Windows.Forms.RadioButton()
+        Me.rb10 = New System.Windows.Forms.RadioButton()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
+        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
+        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
+        Me.dgmap = New System.Windows.Forms.DataGridView()
+        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.col1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.col2 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
+        Me.dgvph = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewComboBoxColumn1 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.btnCancel = New System.Windows.Forms.Button()
+        Me.btnOK = New System.Windows.Forms.Button()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -234,7 +233,6 @@ Partial Class FormConfigCAPEOPEN
         Me.FaTabStripItem2.Controls.Add(Me.Label4)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
-        Me.FaTabStripItem2.Selected = True
         resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         '
         'dgmap
@@ -282,7 +280,6 @@ Partial Class FormConfigCAPEOPEN
         Me.FaTabStripItem3.Controls.Add(Me.Label5)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        Me.FaTabStripItem3.Selected = True
         resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         '
         'dgvph
@@ -348,7 +345,6 @@ Partial Class FormConfigCAPEOPEN
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FormConfigCAPEOPEN"
         Me.ShowIcon = False
-        Me.ShowInTaskbar = False
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)

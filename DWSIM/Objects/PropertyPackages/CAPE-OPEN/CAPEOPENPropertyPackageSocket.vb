@@ -96,7 +96,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Sub
 
-        Public Overrides Sub ShowConfigForm()
+        Public Overrides Sub ShowConfigForm(Optional ByVal owner As IWin32Window = Nothing)
 
             If Me._phasemappings Is Nothing Then CreatePhaseMappings()
 
@@ -108,7 +108,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             CType(Me.ConfigForm, FormConfigCAPEOPEN)._mappings = Me._mappings
             CType(Me.ConfigForm, FormConfigCAPEOPEN)._phasemappings = Me._phasemappings
 
-            Me.ConfigForm.ShowDialog(My.Application.ActiveSimulation)
+            If Not owner Is Nothing Then Me.ConfigForm.Show(owner) Else Me.ConfigForm.Show()
 
             If Me.ConfigForm.DialogResult = DialogResult.OK Then
                 Me._copp = CType(Me.ConfigForm, FormConfigCAPEOPEN)._copp
