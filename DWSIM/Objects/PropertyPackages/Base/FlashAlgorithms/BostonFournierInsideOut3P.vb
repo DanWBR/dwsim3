@@ -1498,7 +1498,7 @@ restart:    Do
                         dfr = (fr - Me.TPErrorFunc(R1)) / (-0.0001)
                     End If
                     R0 = R
-                    R += -0.1 * fr / dfr
+                    R += -fr / dfr
                     If R < 0 Then R = 0
                     If R > 1 Then R = 1
                     icount += 1
@@ -1590,7 +1590,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2}
                 S1 = S + 0.001
                 fr = Me.SErrorFunc(S0, Rt)
                 dfr = (fr - Me.SErrorFunc(S1, Rt)) / -0.001
-                S += -0.3 * fr / dfr
+                S += -fr / dfr
                 If S < -(1 - Rt) Then S = -(1 - Rt) + 0.001
                 If S > (1 - Rt) Then S = (1 - Rt) - 0.001
                 icount += 1

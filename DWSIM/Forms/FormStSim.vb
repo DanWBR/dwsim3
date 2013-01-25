@@ -327,7 +327,7 @@ Public Class FormStSim
             .Add(New Object() {DWSIM.App.GetLocalString("Velocity"), su.velocity, DWSIM.App.GetLocalString("HXFoulingFactor"), su.foulingfactor})
         End With
 
-        If ComboBox2.SelectedIndex <= 6 Then
+        If ComboBox2.SelectedIndex <= 2 Then
             Me.DataGridView1.Columns(1).ReadOnly = True
             Me.DataGridView1.Columns(3).ReadOnly = True
         Else

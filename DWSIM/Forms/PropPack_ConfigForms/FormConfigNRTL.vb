@@ -341,8 +341,8 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
             dgvu1.Rows(row).Cells(3).Value = x0(1)
             dgvu1.Rows(row).Cells(4).Value = 0.3
         Else
-            dgvu1.Rows(row).Cells(2).Value = x0(0)
-            dgvu1.Rows(row).Cells(3).Value = x0(1)
+            If Not Double.IsNaN(x0(0)) Then dgvu1.Rows(row).Cells(2).Value = x0(0) Else dgvu1.Rows(row).Cells(2).Value = 0.0#
+            If Not Double.IsNaN(x0(1)) Then dgvu1.Rows(row).Cells(3).Value = x0(1) Else dgvu1.Rows(row).Cells(3).Value = 0.0#
             dgvu1.Rows(row).Cells(4).Value = 0.3
             MessageBox.Show("Parameter estimation through UNIFAC failed: Reached the maximum number of iterations.", "UNIFAC Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If

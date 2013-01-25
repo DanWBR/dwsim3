@@ -1999,6 +1999,9 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public Name As String = ""
         Public CAS_Number As String = ""
         Public Formula As String = ""
+        Public SMILES As String = ""
+        Public InChI As String = ""
+        Public ChemicalStructure As String = ""
         Public Molar_Weight As Double
         Public Critical_Temperature As Double
         Public Critical_Pressure As Double
@@ -2173,7 +2176,23 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         End Function
 
         Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
-            Return XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
+
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
+
+            For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "UNIFACGroups").Elements
+                Me.UNIFACGroups.Collection.Add(xel2.@Name, xel2.@Value)
+            Next
+
+            For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "MODFACGroups").Elements
+                Me.MODFACGroups.Collection.Add(xel2.@Name, xel2.@Value)
+            Next
+
+            For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "Elements").Elements
+                Me.Elements.Collection.Add(xel2.@Name, xel2.@Value)
+            Next
+
+            Return True
+
         End Function
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData

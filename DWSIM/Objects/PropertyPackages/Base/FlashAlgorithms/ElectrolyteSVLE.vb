@@ -163,7 +163,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             Vxlmax(i) = (1 / activcoeff(i)) * Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
                             If Vxlmax(i) > 1 Then Vxlmax(i) = 1.0#
                         Else
-                            Vxlmax(i) = 1.0#
+                            If CompoundProperties(i).IsHydratedSalt Then
+                                Vxlmax(i) = 0.0# 'in the absence of enthalpy/temperature of fusion, I'll assume that the hydrated salt will always precipitate, if present.
+                            Else
+                                Vxlmax(i) = 1.0#
+                            End If
                         End If
                     Next
 

@@ -25,7 +25,6 @@ Imports DotNumerics
 Imports Cureos.Numerics
 Imports DWSIM.DWSIM.Optimization.DatRegression
 
-
 Public Class FormDataRegression
 
     Public cv As DWSIM.SistemasDeUnidades.Conversor
@@ -54,6 +53,8 @@ Public Class FormDataRegression
             'compounds.Add(DWSIM.App.GetComponentName(c.Name))
             compounds.Add(c.Name)
         Next
+
+        compounds.Sort()
 
         Me.cbCompound1.Items.AddRange(compounds.ToArray())
         Me.cbCompound2.Items.AddRange(compounds.ToArray())
@@ -237,7 +238,9 @@ Public Class FormDataRegression
         If cancel Then Exit Function
 
         Dim Vx1(currcase.pp.Count - 1), Vx2(currcase.pp.Count - 1), Vy(currcase.pp.Count - 1), IP(x.Length - 1, x.Length) As Double
+        Dim Vx1c(currcase.pp.Count - 1), Vx2c(currcase.pp.Count - 1), Vyc(currcase.pp.Count - 1) As Double
         Dim VP(currcase.pp.Count - 1), VT(currcase.tp.Count - 1) As Double
+        Dim VPc(currcase.pp.Count - 1), VTc(currcase.tp.Count - 1) As Double
         Dim np As Integer = currcase.x1p.Count
         Dim i As Integer = 0
         Dim PVF As Boolean = False
@@ -289,7 +292,7 @@ Public Class FormDataRegression
         End Select
 
         Dim f As Double = 0.0#
-        Dim result As Object
+        Dim result As Object = Nothing
         Dim vartext As String = ""
 
         Try
@@ -297,6 +300,8 @@ Public Class FormDataRegression
             Me.currcase.calcp.Clear()
             Me.currcase.calct.Clear()
             Me.currcase.calcy.Clear()
+            Me.currcase.calcx1l1.Clear()
+            Me.currcase.calcx1l2.Clear()
 
             Select Case currcase.datatype
                 Case DataType.Pxy, DataType.Txy
@@ -305,34 +310,14 @@ Public Class FormDataRegression
                             If PVF Then
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VT(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VT(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calct.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VTc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             Else
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VP(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VP(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calcp.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VPc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             End If
                             vartext = ", Interaction parameters = {"
@@ -342,34 +327,14 @@ Public Class FormDataRegression
                             If PVF Then
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VT(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VT(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calct.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VTc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             Else
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VP(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VP(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calcp.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VPc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             End If
                             vartext = ", Interaction parameters = {"
@@ -379,34 +344,14 @@ Public Class FormDataRegression
                             If PVF Then
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VT(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VT(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calct.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VTc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             Else
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VP(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VP(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calcp.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VPc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             End If
                             vartext = ", Interaction parameters = {"
@@ -416,34 +361,14 @@ Public Class FormDataRegression
                             If PVF Then
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VT(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VT(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calct.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VTc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             Else
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VP(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VP(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calcp.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VPc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             End If
                             vartext = ", Interaction parameters = {"
@@ -454,34 +379,14 @@ Public Class FormDataRegression
                             If PVF Then
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VT(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VT(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calct.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VTc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             Else
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VP(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VP(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calcp.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VPc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             End If
                             vartext = ", Interaction parameters = {"
@@ -492,34 +397,14 @@ Public Class FormDataRegression
                             If PVF Then
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VT(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VT(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calct.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VTc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             Else
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VP(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VP(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calcp.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VPc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             End If
                             vartext = ", Interaction parameters = {"
@@ -530,34 +415,14 @@ Public Class FormDataRegression
                             If PVF Then
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VT(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VT(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calct.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VTc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             Else
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VP(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VP(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calcp.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VPc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             End If
                             vartext = ", Interaction parameters = {"
@@ -569,34 +434,14 @@ Public Class FormDataRegression
                             If PVF Then
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VT(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VT(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calct.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VTc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             Else
                                 For i = 0 To np - 1
                                     result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    Select Case currcase.objfunction
-                                        Case "Least Squares (min T/P+y)"
-                                            f += (result(4, 0) - VP(i)) ^ 2 + ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Least Squares (min T/P)"
-                                            f += (result(4, 0) - VP(i)) ^ 2
-                                        Case "Least Squares (min y)"
-                                            f += ((result(2, 0) - Vy(i)) * 100) ^ 2
-                                        Case "Weighted Least Squares"
-                                        Case "Chi Square"
-                                    End Select
-                                    Me.currcase.calcp.Add(result(4, 0))
-                                    Me.currcase.calcy.Add(result(2, 0))
+                                    VPc(i) = result(4, 0)
+                                    Vyc(i) = result(2, 0)
                                 Next
                             End If
                             vartext = ", Interaction parameters = {kij = "
@@ -605,21 +450,58 @@ Public Class FormDataRegression
                             Next
                             vartext += "}"
                     End Select
+                    For i = 0 To np - 1
+                        Me.currcase.calct.Add(VTc(i))
+                        Me.currcase.calcp.Add(VPc(i))
+                        Me.currcase.calcy.Add(Vyc(i))
+                        Select Case currcase.objfunction
+                            Case "Least Squares (min T/P+y/x)"
+                                If PVF Then
+                                    f += (VTc(i) - VT(i)) ^ 2 + ((Vyc(i) - Vy(i))) ^ 2
+                                Else
+                                    f += (VTc(i) - VP(i)) ^ 2 + ((Vyc(i) - Vy(i))) ^ 2
+                                End If
+                            Case "Least Squares (min T/P)"
+                                If PVF Then
+                                    f += (VTc(i) - VT(i)) ^ 2
+                                Else
+                                    f += (VPc(i) - VP(i)) ^ 2
+                                End If
+                            Case "Least Squares (min y/x)"
+                                If PVF Then
+                                    f += ((Vyc(i) - Vy(i))) ^ 2
+                                Else
+                                    f += ((Vyc(i) - Vy(i))) ^ 2
+                                End If
+                            Case "Weighted Least Squares (min T/P+y/x)"
+                                If PVF Then
+                                    f += ((VTc(i) - VT(i)) / VT(i)) ^ 2 + (((Vyc(i) - Vy(i))) / Vy(i)) ^ 2
+                                Else
+                                    f += ((VPc(i) - VP(i)) / VP(i)) ^ 2 + (((Vyc(i) - Vy(i))) / Vy(i)) ^ 2
+                                End If
+                            Case "Weighted Least Squares (min T/P)"
+                                If PVF Then
+                                    f += ((VTc(i) - VT(i)) / VT(i)) ^ 2
+                                Else
+                                    f += ((VPc(i) - VP(i)) / VP(i)) ^ 2
+                                End If
+                            Case "Weighted Least Squares (min y/x)"
+                                If PVF Then
+                                    f += ((Vyc(i) - Vy(i)) / Vy(i)) ^ 2
+                                Else
+                                    f += ((Vyc(i) - Vy(i)) / Vy(i)) ^ 2
+                                End If
+                            Case "Chi Square"
+                        End Select
+                    Next
                 Case DataType.TPxy
                 Case DataType.Pxx, DataType.Txx
                     Select Case currcase.model
                         Case "PRSV2-M"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {"
                             vartext += "kij = " & x(0).ToString("N4") & ", "
@@ -627,16 +509,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "PRSV2-VL"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {"
                             vartext += "kij = " & x(0).ToString("N4") & ", "
@@ -644,16 +519,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "UNIQUAC"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {"
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
@@ -661,16 +529,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "NRTL"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {"
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
@@ -679,16 +540,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "Lee-Kesler-Plöcker"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {kij = "
                             For i = 0 To x.Length - 1
@@ -697,16 +551,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "Peng-Robinson"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {kij = "
                             For i = 0 To x.Length - 1
@@ -715,16 +562,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "Soave-Redlich-Kwong"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {kij = "
                             For i = 0 To x.Length - 1
@@ -733,16 +573,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "PC-SAFT"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {kij = "
                             For i = 0 To x.Length - 1
@@ -750,20 +583,36 @@ Public Class FormDataRegression
                             Next
                             vartext += "}"
                     End Select
+                    For i = 0 To np - 1
+                        Me.currcase.calcx1l1.Add(Vx1c(i))
+                        Me.currcase.calcx1l2.Add(Vx2c(i))
+                        Select Case currcase.objfunction
+                            Case "Least Squares (min T/P+y/x)"
+                                f += ((Vx1c(i) - Vx1(i))) ^ 2 + ((Vx2c(i) - Vx2(i))) ^ 2
+                            Case "Least Squares (min T/P)"
+                                f += ((Vx1c(i) - Vx1(i))) ^ 2 + ((Vx2c(i) - Vx2(i))) ^ 2
+                            Case "Least Squares (min y/x)"
+                                f += ((Vx1c(i) - Vx1(i))) ^ 2 + ((Vx2c(i) - Vx2(i))) ^ 2
+                            Case "Weighted Least Squares (min T/P+y/x)"
+                                f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
+                            Case "Weighted Least Squares (min T/P)"
+                                f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
+                            Case "Weighted Least Squares (min y/x)"
+                                f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
+                            Case "Chi Square"
+                        End Select
+                    Next
                 Case DataType.TPxx
+                    With proppack
+                        ._tpseverity = 0
+                        ._tpcompids = New String() {currcase.comp2}
+                    End With
                     Select Case currcase.model
                         Case "PRSV2-M"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {"
                             vartext += "kij = " & x(0).ToString("N4") & ", "
@@ -771,16 +620,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "PRSV2-VL"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {"
                             vartext += "kij = " & x(0).ToString("N4") & ", "
@@ -788,16 +630,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "UNIQUAC"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {"
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
@@ -805,16 +640,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "NRTL"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {"
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
@@ -823,16 +651,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "Lee-Kesler-Plöcker"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {kij = "
                             For i = 0 To x.Length - 1
@@ -841,16 +662,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "Peng-Robinson"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {kij = "
                             For i = 0 To x.Length - 1
@@ -859,16 +673,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "Soave-Redlich-Kwong"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {kij = "
                             For i = 0 To x.Length - 1
@@ -877,16 +684,9 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "PC-SAFT"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                If CType(result, Object(,)).GetUpperBound(1) = 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + 1000 * itn
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(0.0#)
-                                ElseIf CType(result, Object(,)).GetUpperBound(1) > 0 Then
-                                    f += (result(2, 0) - Vx1(i)) ^ 2 + (result(3, 0) - Vx2(i)) ^ 2
-                                    Me.currcase.calct.Add(result(2, 0))
-                                    Me.currcase.calcy.Add(result(3, 0))
-                                End If
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                Vx1c(i) = result(2, 1)
+                                Vx2c(i) = result(2, 2)
                             Next
                             vartext = ", Interaction parameters = {kij = "
                             For i = 0 To x.Length - 1
@@ -894,6 +694,25 @@ Public Class FormDataRegression
                             Next
                             vartext += "}"
                     End Select
+                    For i = 0 To np - 1
+                        Me.currcase.calcx1l1.Add(Vx1c(i))
+                        Me.currcase.calcx1l2.Add(Vx2c(i))
+                        Select Case currcase.objfunction
+                            Case "Least Squares (min T/P+y/x)"
+                                f += ((Vx1c(i) - Vx1(i))) ^ 2 + ((Vx2c(i) - Vx2(i))) ^ 2
+                            Case "Least Squares (min T/P)"
+                                f += ((Vx1c(i) - Vx1(i))) ^ 2 + ((Vx2c(i) - Vx2(i))) ^ 2
+                            Case "Least Squares (min y/x)"
+                                f += ((Vx1c(i) - Vx1(i))) ^ 2 + ((Vx2c(i) - Vx2(i))) ^ 2
+                            Case "Weighted Least Squares (min T/P+y/x)"
+                                f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
+                            Case "Weighted Least Squares (min T/P)"
+                                f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
+                            Case "Weighted Least Squares (min y/x)"
+                                f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
+                            Case "Chi Square"
+                        End Select
+                    Next
             End Select
 
             itn += 1
@@ -1052,13 +871,13 @@ Public Class FormDataRegression
                 Case "UNIQUAC"
                     nvar = 2
                     initval2 = New Double() {currcase.iepar1, currcase.iepar2}
-                    lconstr2 = New Double() {-30000.0#, -30000.0#}
-                    uconstr2 = New Double() {30000.0#, 30000.0#}
+                    lconstr2 = New Double() {-3000000.0#, -3000000.0#}
+                    uconstr2 = New Double() {3000000.0#, 3000000.0#}
                 Case "NRTL"
                     nvar = 3
                     initval2 = New Double() {currcase.iepar1, currcase.iepar2, currcase.iepar3}
-                    lconstr2 = New Double() {-30000.0#, -30000.0#, 0.0#}
-                    uconstr2 = New Double() {30000.0#, 30000.0#, 0.5#}
+                    lconstr2 = New Double() {-3000000.0#, -3000000.0#, 0.0#}
+                    uconstr2 = New Double() {3000000.0#, 3000000.0#, 0.8#}
                 Case "Lee-Kesler-Plöcker"
                     initval2 = New Double() {1.0#}
                     lconstr2 = New Double() {0.9#}
@@ -1093,6 +912,7 @@ Public Class FormDataRegression
 
             proppack = ppm.GetPropertyPackage(ppname)
             proppack.ComponentName = ppname
+            proppack._availablecomps = FormMain.AvailableComponents
 
             Select Case currcase.method
                 Case "Limited Memory BFGS"
@@ -1168,7 +988,7 @@ Public Class FormDataRegression
             py4 = New ArrayList
             ycurvetypes = New ArrayList
             xformat = 1
-            title = .datatype.ToString
+            title = tbTitle.Text & " / " & .datatype.ToString
             Select Case .datatype
                 Case DataType.Txy
                     For i = 0 To .x1p.Count - 1
@@ -1223,55 +1043,71 @@ Public Class FormDataRegression
                     ytitle = "T / " & .tunit & " - P / " & .punit
                     ycurvetypes.AddRange(New Integer() {1, 3, 1, 3})
                 Case DataType.Txx
-                    For i = 0 To .x1p.Count - 1
-                        px.Add(Double.Parse(.x1p(i)))
-                        py1.Add(Double.Parse(.tp(i)))
-                        Try
-                            px2.Add(Double.Parse(.calct(i)))
-                            px4.Add(Double.Parse(.calcy(i)))
-                        Catch ex As Exception
-                        End Try
-                        px3.Add(Double.Parse(.x2p(i)))
-                    Next
+                    Try
+                        For i = 0 To .x1p.Count - 1
+                            px.Add(Double.Parse(.x1p(i)))
+                            py1.Add(Double.Parse(.tp(i)))
+                            px2.Add(Double.Parse(.x2p(i)))
+                            py2.Add(Double.Parse(.tp(i)))
+                            px3.Add(Double.Parse(.calcx1l1(i)))
+                            py3.Add(Double.Parse(.tp(i)))
+                            px4.Add(Double.Parse(.calcx1l2(i)))
+                            py4.Add(Double.Parse(.tp(i)))
+                        Next
+                    Catch ex As Exception
+
+                    End Try
                     xtitle = "Mole Fraction " & .comp1
                     ytitle = "T / " & .tunit
                     y1ctitle = "Tx1' exp."
-                    y2ctitle = "Tx1' calc."
-                    y3ctitle = "Tx1'' exp."
+                    y3ctitle = "Tx1' calc."
+                    y2ctitle = "Tx1'' exp."
                     y4ctitle = "Tx1'' calc."
-                    ycurvetypes.AddRange(New Integer() {1, 3, 1, 3})
+                    ycurvetypes.AddRange(New Integer() {1, 1, 3, 3})
                 Case DataType.Pxx
-                    For i = 0 To .x1p.Count - 1
-                        px.Add(Double.Parse(.x1p(i)))
-                        py1.Add(Double.Parse(.pp(i)))
-                        Try
-                            px2.Add(Double.Parse(.calct(i)))
-                            px4.Add(Double.Parse(.calcy(i)))
-                        Catch ex As Exception
-                        End Try
-                        px3.Add(Double.Parse(.x2p(i)))
-                    Next
+                    Try
+                        For i = 0 To .x1p.Count - 1
+                            px.Add(Double.Parse(.x1p(i)))
+                            py1.Add(Double.Parse(.pp(i)))
+                            px2.Add(Double.Parse(.x2p(i)))
+                            py2.Add(Double.Parse(.pp(i)))
+                            px3.Add(Double.Parse(.calcx1l1(i)))
+                            py3.Add(Double.Parse(.pp(i)))
+                            px4.Add(Double.Parse(.calcx1l2(i)))
+                            py4.Add(Double.Parse(.pp(i)))
+                        Next
+                    Catch ex As Exception
+
+                    End Try
                     xtitle = "Mole Fraction " & .comp1
                     ytitle = "P / " & .tunit
                     y1ctitle = "Px1' exp."
-                    y2ctitle = "Px1' calc."
-                    y3ctitle = "Px1'' exp."
+                    y3ctitle = "Px1' calc."
+                    y2ctitle = "Px1'' exp."
                     y4ctitle = "Px1'' calc."
-                    ycurvetypes.AddRange(New Integer() {1, 3, 1, 3})
+                    ycurvetypes.AddRange(New Integer() {1, 1, 3, 3})
                 Case DataType.TPxx
-                    For i = 0 To .x1p.Count - 1
-                        px.Add(Double.Parse(.x1p(i)))
-                        py1.Add(Double.Parse(.tp(i)))
-                        Try
-                            py2.Add(cv.ConverterDoSI(.tunit, .calct(i)))
-                            py4.Add(cv.ConverterDoSI(.punit, .calcp(i)))
-                        Catch ex As Exception
-                        End Try
-                        py3.Add(Double.Parse(.pp(i)))
-                    Next
+                    Try
+                        For i = 0 To .x1p.Count - 1
+                            px.Add(Double.Parse(.x1p(i)))
+                            py1.Add(Double.Parse(.tp(i)))
+                            px2.Add(Double.Parse(.x2p(i)))
+                            py2.Add(Double.Parse(.tp(i)))
+                            px3.Add(Double.Parse(.calcx1l1(i)))
+                            py3.Add(Double.Parse(.tp(i)))
+                            px4.Add(Double.Parse(.calcx1l2(i)))
+                            py4.Add(Double.Parse(.tp(i)))
+                        Next
+                    Catch ex As Exception
+
+                    End Try
                     xtitle = "Mole Fraction " & .comp1
                     ytitle = "T / " & .tunit & " - P / " & .punit
-                    ycurvetypes.AddRange(New Integer() {1, 3, 1, 3})
+                    y1ctitle = "Tx1' exp."
+                    y3ctitle = "Tx1' calc."
+                    y2ctitle = "Tx1'' exp."
+                    y4ctitle = "Tx1'' calc."
+                    ycurvetypes.AddRange(New Integer() {1, 1, 3, 3})
             End Select
         End With
 
@@ -1314,7 +1150,9 @@ Public Class FormDataRegression
                 Select Case currcase.datatype
                     Case DataType.Txy, DataType.Pxy, DataType.TPxy
                         mycurve = .AddCurve(y1ctitle, px.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.Black)
-                    Case DataType.Txx, DataType.Txy, DataType.Pxy
+                    Case DataType.Txy, DataType.Pxy
+                        mycurve = .AddCurve(y1ctitle, px.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.Black)
+                    Case DataType.TPxx, DataType.Txx, DataType.Pxx
                         mycurve = .AddCurve(y1ctitle, px.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.Black)
                 End Select
                 With mycurve
@@ -1381,8 +1219,10 @@ Public Class FormDataRegression
                     Select Case currcase.datatype
                         Case DataType.Txy, DataType.Pxy, DataType.TPxy
                             mycurve = .AddCurve(y2ctitle, px.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.Black)
-                        Case DataType.Txx, DataType.Txy, DataType.Pxy
+                        Case DataType.Txy, DataType.Pxy
                             mycurve = .AddCurve(y2ctitle, px2.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.Black)
+                        Case DataType.TPxx, DataType.Txx, DataType.Pxx
+                            mycurve = .AddCurve(y2ctitle, px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.Black)
                     End Select
                     With mycurve
                         Dim ppl As ZedGraph.PointPairList = .Points
@@ -1448,8 +1288,10 @@ Public Class FormDataRegression
                     Select Case currcase.datatype
                         Case DataType.Txy, DataType.Pxy, DataType.TPxy
                             mycurve = .AddCurve(y3ctitle, px2.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.Black)
-                        Case DataType.Txx, DataType.Txy, DataType.Pxy
+                        Case DataType.Txy, DataType.Pxy
                             mycurve = .AddCurve(y3ctitle, px3.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.Black)
+                        Case DataType.TPxx, DataType.Txx, DataType.Pxx
+                            mycurve = .AddCurve(y3ctitle, px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.Black)
                     End Select
                     With mycurve
                         Dim ppl As ZedGraph.PointPairList = .Points
@@ -1515,8 +1357,10 @@ Public Class FormDataRegression
                     Select Case currcase.datatype
                         Case DataType.Txy, DataType.Pxy, DataType.TPxy
                             mycurve = .AddCurve(y4ctitle, px2.ToArray(GetType(Double)), py4.ToArray(GetType(Double)), Color.Black)
-                        Case DataType.Txx, DataType.Txy, DataType.Pxy
+                        Case DataType.Txy, DataType.Pxy
                             mycurve = .AddCurve(y4ctitle, px4.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.Black)
+                        Case DataType.TPxx, DataType.Txx, DataType.Pxx
+                            mycurve = .AddCurve(y4ctitle, px4.ToArray(GetType(Double)), py4.ToArray(GetType(Double)), Color.Black)
                     End Select
                     With mycurve
                         Dim ppl As ZedGraph.PointPairList = .Points
@@ -2250,9 +2094,10 @@ Namespace DWSIM.Optimization.DatRegression
     <System.Serializable()> Public Class RegressionCase
 
         Public comp1, comp2, comp3 As String
+        Public filename As String = ""
         Public model As String = "Peng-Robinson"
         Public datatype As DataType = datatype.Pxy
-        Public tp, x1p, x2p, yp, pp, calct, calcp, calcy As New ArrayList
+        Public tp, x1p, x2p, yp, pp, calct, calcp, calcy, calcx1l1, calcx1l2 As New ArrayList
         Public method As String = "IPOPT"
         Public objfunction As String = "Least Squares (min T/P)"
         Public includesd As Boolean = False

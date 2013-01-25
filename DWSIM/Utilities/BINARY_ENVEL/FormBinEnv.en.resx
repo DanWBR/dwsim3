@@ -118,20 +118,50 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="RadioButton4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>277, 46</value>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Property Package</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Pressure</value>
+  </data>
+  <data name="cbXAxisBasis.Items" xml:space="preserve">
+    <value>Mole Fraction</value>
+  </data>
+  <data name="cbXAxisBasis.Items1" xml:space="preserve">
+    <value>Mass Fraction</value>
+  </data>
+  <data name="cbXAxisBasis.Items2" xml:space="preserve">
+    <value>Mole Percentage</value>
+  </data>
+  <data name="cbXAxisBasis.Items3" xml:space="preserve">
+    <value>Mass Percentage</value>
+  </data>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 13</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>X Axis Basis</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 13</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Compound 2</value>
   </data>
   <data name="RadioButton4.Text" xml:space="preserve">
     <value>(P)xy</value>
   </data>
-  <data name="RadioButton3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>217, 46</value>
-  </data>
   <data name="RadioButton3.Text" xml:space="preserve">
     <value>(T)xy</value>
-  </data>
-  <data name="RadioButton2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>163, 46</value>
   </data>
   <data name="RadioButton2.Text" xml:space="preserve">
     <value>Pxy</value>
@@ -149,39 +179,21 @@
     <value>Calculate</value>
   </data>
   <data name="Label23.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 13</value>
+    <value>67, 13</value>
   </data>
   <data name="Label23.Text" xml:space="preserve">
-    <value>Material Stream</value>
-  </data>
-  <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>515, 101</value>
+    <value>Compound 1</value>
   </data>
   <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Object Selection and Configuration</value>
+    <value>Envelope Settings</value>
   </data>
-  <data name="GraphControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>507, 376</value>
-  </data>
-  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>507, 376</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Results</value>
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Graph</value>
   </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Table</value>
-  </data>
-  <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>509, 397</value>
-  </data>
-  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 107</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>515, 416</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Results</value>
   </data>
 </root>

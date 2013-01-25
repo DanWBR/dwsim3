@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
@@ -145,9 +145,6 @@
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 13</value>
   </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>Komponenten</value>
-  </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Konstanten</value>
   </data>
@@ -175,9 +172,6 @@
   <data name="DataGridViewTextBoxColumn4.HeaderText" xml:space="preserve">
     <value>Anzahl</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>UNIFAC-Gruppen</value>
-  </data>
   <data name="DataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
     <value>Gruppe</value>
   </data>
@@ -202,5 +196,32 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM: Eigenschaften reiner Komponenten</value>
+  </data>
+  <data name="FaTabStripItem6.Title" xml:space="preserve">
+    <value>Molekulare</value>
+  </data>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>2D Machen</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>Molekülstruktur</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Komponente</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Formel</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>UNIFAC Gruppen</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>MODFAC Gruppen</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>SMILES Zeichenfolge</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>InChI Zeichenfolge</value>
   </data>
 </root>

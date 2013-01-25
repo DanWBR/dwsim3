@@ -104,8 +104,12 @@ exec:       With Me.GraphControl.GraphPane.Legend
             Me.Enabled = False
             Me.BackgroundWorker1.RunWorkerAsync(New Object() {0, Me.TextBox1.Text, Me.CheckBox1.Checked, Me.CheckBox3.Checked, Me.CheckBox4.Checked})
             fpec = New FormPEC
-            fpec.ShowDialog(Me)
-
+            Try
+                fpec.ShowDialog(Me)
+            Catch ex As Exception
+                fpec.Close()
+                Throw ex
+            End Try
         End If
 
     End Sub

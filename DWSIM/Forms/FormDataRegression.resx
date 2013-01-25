@@ -598,19 +598,22 @@
     <value>Bottom, Left</value>
   </data>
   <data name="cbObjFunc.Items" xml:space="preserve">
-    <value>Least Squares (min T/P+y)</value>
+    <value>Least Squares (min T/P+y/x)</value>
   </data>
   <data name="cbObjFunc.Items1" xml:space="preserve">
     <value>Least Squares (min T/P)</value>
   </data>
   <data name="cbObjFunc.Items2" xml:space="preserve">
-    <value>Least Squares (min y)</value>
+    <value>Least Squares (min y/x)</value>
   </data>
   <data name="cbObjFunc.Items3" xml:space="preserve">
-    <value>Weighted Least Squares</value>
+    <value>Weighted Least Squares (min T/P+y/x)</value>
   </data>
   <data name="cbObjFunc.Items4" xml:space="preserve">
-    <value>Chi Square</value>
+    <value>Weighted Least Squares (min T/P)</value>
+  </data>
+  <data name="cbObjFunc.Items5" xml:space="preserve">
+    <value>Weighted Least Squares (min y/x)</value>
   </data>
   <data name="cbObjFunc.Location" type="System.Drawing.Point, System.Drawing">
     <value>109, 492</value>
@@ -921,17 +924,26 @@
   <data name="colx1.HeaderText" xml:space="preserve">
     <value>x1'</value>
   </data>
+  <data name="colx1.ToolTipText" xml:space="preserve">
+    <value>Compound 1 Mole Fraction in Liquid Phase 1</value>
+  </data>
   <metadata name="colx2.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="colx2.HeaderText" xml:space="preserve">
     <value>x1''</value>
   </data>
+  <data name="colx2.ToolTipText" xml:space="preserve">
+    <value>Compound 1 Mole Fraction in Liquid Phase 2</value>
+  </data>
   <metadata name="coly1.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="coly1.HeaderText" xml:space="preserve">
     <value>y1</value>
+  </data>
+  <data name="coly1.ToolTipText" xml:space="preserve">
+    <value>Compound 1 Mole Fraction in Vapor Phase</value>
   </data>
   <metadata name="colT.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2923,36 +2935,6 @@
   <data name="&gt;&gt;colval.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;colx1.Name" xml:space="preserve">
-    <value>colx1</value>
-  </data>
-  <data name="&gt;&gt;colx1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colx2.Name" xml:space="preserve">
-    <value>colx2</value>
-  </data>
-  <data name="&gt;&gt;colx2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;coly1.Name" xml:space="preserve">
-    <value>coly1</value>
-  </data>
-  <data name="&gt;&gt;coly1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colT.Name" xml:space="preserve">
-    <value>colT</value>
-  </data>
-  <data name="&gt;&gt;colT.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colP.Name" xml:space="preserve">
-    <value>colP</value>
-  </data>
-  <data name="&gt;&gt;colP.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;ToolStripMenuItem1.Name" xml:space="preserve">
     <value>ToolStripMenuItem1</value>
   </data>
@@ -2994,6 +2976,36 @@
   </data>
   <data name="&gt;&gt;ToolStripMenuItem7.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colx1.Name" xml:space="preserve">
+    <value>colx1</value>
+  </data>
+  <data name="&gt;&gt;colx1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colx2.Name" xml:space="preserve">
+    <value>colx2</value>
+  </data>
+  <data name="&gt;&gt;colx2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;coly1.Name" xml:space="preserve">
+    <value>coly1</value>
+  </data>
+  <data name="&gt;&gt;coly1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colT.Name" xml:space="preserve">
+    <value>colT</value>
+  </data>
+  <data name="&gt;&gt;colT.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colP.Name" xml:space="preserve">
+    <value>colP</value>
+  </data>
+  <data name="&gt;&gt;colP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormDataRegression</value>

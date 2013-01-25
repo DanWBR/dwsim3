@@ -174,6 +174,10 @@ Namespace DWSIM.Databases
                             cp.Chao_Seader_Liquid_Molar_Volume = Double.Parse(node2.Attributes("value").Value, nf) * 1000
                         Case "CAS"
                             cp.CAS_Number = node2.Attributes("value").Value
+                        Case "Smiles"
+                            cp.SMILES = node2.Attributes("value").Value
+                        Case "StructureFormula"
+                            cp.ChemicalStructure = node2.Attributes("value").Value
                         Case "UniquacR"
                             cp.UNIQUAC_R = Double.Parse(node2.Attributes("value").Value, nf)
                         Case "UniquacQ"

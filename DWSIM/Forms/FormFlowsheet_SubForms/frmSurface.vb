@@ -299,20 +299,20 @@ Public Class frmSurface
                 If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
                     If Me.FlowsheetDesignSurface.SelectedObject.IsConnector = False Then
                         ChildParent.PopulatePGEx2(Me.FlowsheetDesignSurface.SelectedObject)
-                        'Try
-                        If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Tabela Then
-                            CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.TableGraphic).PopulateGrid(PGEx1)
-                        ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_MasterTable Then
-                            CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.MasterTableGraphic).PopulateGrid(PGEx1, ChildParent)
-                        Else
-                            ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, ChildParent.Options.SelectedUnitSystem)
-                        End If
-                        ChildParent.FormProps.ResumeLayout()
-                        'Catch ex As Exception
-                        '    PGEx1.SelectedObject = Nothing
-                        '                    Finally
-                        '    ChildParent.FormSurface.Select()
-                        'End Try
+                        Try
+                            If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Tabela Then
+                                CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.TableGraphic).PopulateGrid(PGEx1)
+                            ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_MasterTable Then
+                                CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.MasterTableGraphic).PopulateGrid(PGEx1, ChildParent)
+                            Else
+                                ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, ChildParent.Options.SelectedUnitSystem)
+                            End If
+                            ChildParent.FormProps.ResumeLayout()
+                        Catch ex As Exception
+                            PGEx1.SelectedObject = Nothing
+                        Finally
+                            ChildParent.FormSurface.Select()
+                        End Try
                     Else
                         Me.FlowsheetDesignSurface.SelectedObject = Nothing
                     End If
@@ -506,6 +506,10 @@ Public Class frmSurface
 
                     ChildParent.ClickedToolStripMenuItem = Nothing
                     ChildParent.InsertingObjectToPFD = False
+
+                    If tobj = TipoObjeto.MaterialStream Then
+                        Call Me.EditCompTSMI_Click(Me.FlowsheetDesignSurface, New EventArgs())
+                    End If
 
                 End If
 
@@ -2847,6 +2851,7 @@ Public Class frmSurface
 
         If Not gObj Is Nothing Then
             Me.FlowsheetDesignSurface.drawingObjects.Add(gObj)
+            Me.FlowsheetDesignSurface.SelectedObject = gObj
             Me.FlowsheetDesignSurface.Invalidate()
             Application.DoEvents()
             If Not DWSIM.App.IsRunningOnMono Then
@@ -2862,11 +2867,6 @@ Public Class frmSurface
                 ChildParent.FormObjList.ACSC.Clear()
                 ChildParent.FormObjList.ACSC.AddRange(arrays)
                 ChildParent.FormObjList.TBSearch.AutoCompleteCustomSource = ChildParent.FormObjList.ACSC
-            End If
-
-            If gObj.TipoObjeto = TipoObjeto.MaterialStream Then
-                Me.FlowsheetDesignSurface.SelectedObject = gObj
-                Call Me.EditCompTSMI_Click(Me.FlowsheetDesignSurface, New EventArgs())
             End If
 
         End If
@@ -2966,6 +2966,10 @@ Public Class frmSurface
             End Select
 
             AddObjectToSurface(tobj, mpx, mpy)
+
+            If tobj = TipoObjeto.MaterialStream Then
+                Call Me.EditCompTSMI_Click(Me.FlowsheetDesignSurface, New EventArgs())
+            End If
 
         End If
 

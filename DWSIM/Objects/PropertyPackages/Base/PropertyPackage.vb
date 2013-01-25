@@ -2513,7 +2513,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Dim dx As Double = 0.025
 
             Dim tipocalc As String
+            Dim result As Object
             Dim P, T As Double
+            Dim calcP, calcT As Double
 
             tipocalc = parameters(0)
             P = parameters(1)
@@ -2523,40 +2525,118 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                 Case "T-x-y"
 
-                    Dim px, py1, py2 As New ArrayList
+                    Dim px, py1, py2, px1l1, px1l2, py3 As New ArrayList
+                    Dim unstable As Boolean = False
+                    Dim ui, ut As New ArrayList
+                    Dim x, y1, y2 As Double
 
                     i = 0
                     Do
-                        px.Add(i * dx)
-                        py1.Add(Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)(4))
-                        py2.Add(Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, 0, Me)(4))
+                        Try
+                            calcT = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)(4)
+                            y2 = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, 0, Me)(4)
+                            x = i * dx
+                            y1 = calcT
+                            px.Add(x)
+                            py1.Add(y1)
+                            py2.Add(y2)
+                            'check if liquid phase is stable.
+                            result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, P, calcT, Me)
+                            If result(5) > 0.0# Then
+                                unstable = True
+                                ui.Add(px.Count - 1)
+                                ut.Add(calcT)
+                            End If
+                        Catch ex As Exception
+                        End Try
                         i = i + 1
                     Loop Until (i - 1) * dx >= 1
 
-                    Return New Object() {px, py1, py2}
+                    If unstable Then
+                        Dim ti, tf, uim As Double, tit As Integer
+                        ti = (ut(0) + ut(ut.Count - 1)) / 2
+                        uim = ui(0) ' (ui(0) + ui(ui.Count - 1)) / 2
+                        tf = 0.5 * ti
+                        For tit = tf To ti Step (ti - tf) / 25
+                            result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, P, tit, Me)
+                            If result(5) > 0.0# Then
+                                If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
+                                    px1l1.Add(result(2)(0))
+                                    px1l2.Add(result(6)(0))
+                                    py3.Add(tit)
+                                End If
+                            End If
+                        Next
+                        For i = 0 To ui.Count - 1
+                            py1(ui(i)) = ut(0)
+                        Next
+                    End If
+
+                    Return New Object() {px, py1, py2, px1l1, px1l2, py3}
 
                 Case "P-x-y"
 
-                    Dim px, py1, py2 As New ArrayList
+                    Dim px, py1, py2, px1l1, px1l2, py3 As New ArrayList
+                    Dim unstable As Boolean = False
+                    Dim ui, up As New ArrayList
+                    Dim x, y1, y2 As Double
 
                     i = 0
                     Do
-                        px.Add(i * dx)
-                        py1.Add(Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)(4))
-                        py2.Add(Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 1, 0, Me)(4))
+                        Try
+                            calcP = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)(4)
+                            y2 = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 1, 0, Me)(4)
+                            x = i * dx
+                            y1 = calcP
+                            px.Add(x)
+                            py1.Add(y1)
+                            py2.Add(y2)
+                            'check if liquid phase is stable.
+                            result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, calcP, T, Me)
+                            If result(5) > 0.0# Then
+                                unstable = True
+                                ui.Add(px.Count - 1)
+                                up.Add(calcP)
+                            End If
+                        Catch ex As Exception
+                        End Try
                         i = i + 1
                     Loop Until (i - 1) * dx >= 1
 
-                    Return New Object() {px, py1, py2}
+                    If unstable Then
+                        Dim pi, pf, uim As Double, pit As Integer
+                        pi = (up(0) + up(ui.Count - 1)) / 2
+                        uim = ui(0) '(ui(0) + ui(ui.Count - 1)) / 2
+                        pf = 2 * pi
+                        For pit = pi To pf Step (pf - pi) / 10
+                            result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, pit, T, Me)
+                            If result(5) > 0.0# Then
+                                If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
+                                    px1l1.Add(result(2)(0))
+                                    px1l2.Add(result(6)(0))
+                                    py3.Add(pit)
+                                End If
+                            End If
+                        Next
+                        For i = 0 To ui.Count - 1
+                            py1(ui(i)) = up(0)
+                        Next
+                    End If
 
-                Case "(T)y-x"
+                    Return New Object() {px, py1, py2, px1l1, px1l2, py3}
+
+                Case "(T)x-y"
 
                     Dim px, py As New ArrayList
 
                     i = 0
                     Do
                         px.Add(i * dx)
-                        py.Add(Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)(6)(0) * i * dx)
+                        Try
+                            py.Add(Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)(6)(0) * i * dx)
+                        Catch ex As Exception
+                            py.Add(0.0#)
+                        End Try
                         i = i + 1
                     Loop Until (i - 1) * dx >= 1
 
@@ -2569,7 +2649,11 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     i = 0
                     Do
                         px.Add(i * dx)
-                        py.Add(Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)(6)(0) * i * dx)
+                        Try
+                            py.Add(Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)(6)(0) * i * dx)
+                        Catch ex As Exception
+                            py.Add(0.0#)
+                        End Try
                         i = i + 1
                     Loop Until (i - 1) * dx >= 1
 

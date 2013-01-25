@@ -91,3 +91,6 @@ obj
 /DWSIM/bin/x86/Release/plugins/NaturalGas.dll
 /DWSIM/bin/x86/Release/plugins/NaturalGas.pdb
 /DWSIM/bin/x86/Release/plugins/NaturalGas.xml
+/DWSIM/bin/x86/Release/indigo-dotnet.dll
+/DWSIM/bin/x86/Release/indigo-inchi-dotnet.dll
+/DWSIM/bin/x86/Release/indigo-renderer-dotnet.dll

@@ -1140,9 +1140,23 @@ restart:    Do
                 Tmax = Tref + 50
             End If
 
+            Dim fx(n + 2), x(n + 2), dfdx(n + 2, n + 2), dx(n + 2), xbr(n + 2), fbr(n + 2) As Double
+
             T = Tref
             T_ = T - 2
             T0 = T - 5
+
+            If PP.AUX_IS_SINGLECOMP(Vz) Then
+                i = 0
+                T = 0
+                Do
+                    T += Vz(i) * PP.AUX_TSATi(P, i)
+                    i += 1
+                Loop Until i = n + 1
+                Vx = Vz
+                Vy = Vz
+                GoTo final
+            End If
 
             '----------------------------------------
             ' STEP 1.1 - Estimate K, Vx, Vy, V and L 
@@ -1210,8 +1224,6 @@ restart:    Do
             For i = 0 To n
                 ui(i) = Log(Ki(i) / Kb)
             Next
-
-            Dim fx(n + 2), x(n + 2), dfdx(n + 2, n + 2), dx(n + 2), xbr(n + 2), fbr(n + 2) As Double
 
             Dim RLoop As Boolean = True
 
@@ -1357,7 +1369,7 @@ restart:    Do
 
             Loop Until AbsSum(fx) < etol * (n + 2)
 
-            d2 = Date.Now
+final:      d2 = Date.Now
 
             dt = d2 - d1
 
@@ -1407,9 +1419,23 @@ restart:    Do
                 Pmax = Pref * 1.2
             End If
 
+            Dim fx(n + 2), x(n + 2), dfdx(n + 2, n + 2), dx(n + 2), xbr(n + 2), fbr(n + 2) As Double
+
             P = Pref
             P_ = Pref * 1.05
             P0 = Pref * 0.95
+
+            If PP.AUX_IS_SINGLECOMP(Vz) Then
+                i = 0
+                P = 0
+                Do
+                    P += Vz(i) * Vp(i)
+                    i += 1
+                Loop Until i = n + 1
+                Vx = Vz
+                Vy = Vz
+                GoTo final
+            End If
 
             '----------------------------------------
             ' STEP 1.1 - Estimate K, Vx, Vy, V and L 
@@ -1477,8 +1503,6 @@ restart:    Do
             For i = 0 To n
                 ui(i) = Log(Ki(i) / Kb)
             Next
-
-            Dim fx(n + 2), x(n + 2), dfdx(n + 2, n + 2), dx(n + 2), xbr(n + 2), fbr(n + 2) As Double
 
             Dim RLoop As Boolean = True
 
@@ -1618,7 +1642,7 @@ restart:    Do
 
             Loop Until AbsSum(fx) < etol * (n + 2)
 
-            d2 = Date.Now
+final:      d2 = Date.Now
 
             dt = d2 - d1
 

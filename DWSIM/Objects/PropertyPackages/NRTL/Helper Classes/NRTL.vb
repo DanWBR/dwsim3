@@ -93,27 +93,38 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             For Each nrtlip In nrtlipc
                 If Me.InteractionParameters.ContainsKey(csdb.GetDWSIMName(nrtlip.ID1)) Then
-                    If Me.InteractionParameters(csdb.GetDWSIMName(nrtlip.ID1)).ContainsKey(csdb.GetDWSIMName(nrtlip.ID2)) Then
-                    Else
+                    If Not Me.InteractionParameters(csdb.GetDWSIMName(nrtlip.ID1)).ContainsKey(csdb.GetDWSIMName(nrtlip.ID2)) Then
                         Me.InteractionParameters(csdb.GetDWSIMName(nrtlip.ID1)).Add(csdb.GetDWSIMName(nrtlip.ID2), nrtlip.Clone)
+                    End If
+                    If Not Me.InteractionParameters(csdb.GetDWSIMName(nrtlip.ID1)).ContainsKey(csdb.GetCSName(nrtlip.ID2)) Then
+                        Me.InteractionParameters(csdb.GetDWSIMName(nrtlip.ID1)).Add(csdb.GetCSName(nrtlip.ID2), nrtlip.Clone)
                     End If
                 Else
                     Me.InteractionParameters.Add(csdb.GetDWSIMName(nrtlip.ID1), New Dictionary(Of String, NRTL_IPData))
                     Me.InteractionParameters(csdb.GetDWSIMName(nrtlip.ID1)).Add(csdb.GetDWSIMName(nrtlip.ID2), nrtlip.Clone)
+                    If Not Me.InteractionParameters(csdb.GetDWSIMName(nrtlip.ID1)).ContainsKey(csdb.GetCSName(nrtlip.ID2)) Then
+                        Me.InteractionParameters(csdb.GetDWSIMName(nrtlip.ID1)).Add(csdb.GetCSName(nrtlip.ID2), nrtlip.Clone)
+                    End If
                 End If
             Next
 
             For Each nrtlip In nrtlipc
                 If Me.InteractionParameters.ContainsKey(csdb.GetCSName(nrtlip.ID1)) Then
-                    If Me.InteractionParameters(csdb.GetCSName(nrtlip.ID1)).ContainsKey(csdb.GetCSName(nrtlip.ID2)) Then
-                    Else
+                    If Not Me.InteractionParameters(csdb.GetCSName(nrtlip.ID1)).ContainsKey(csdb.GetCSName(nrtlip.ID2)) Then
                         Me.InteractionParameters(csdb.GetCSName(nrtlip.ID1)).Add(csdb.GetCSName(nrtlip.ID2), nrtlip.Clone)
+                    End If
+                    If Not Me.InteractionParameters(csdb.GetCSName(nrtlip.ID1)).ContainsKey(csdb.GetDWSIMName(nrtlip.ID2)) Then
+                        Me.InteractionParameters(csdb.GetCSName(nrtlip.ID1)).Add(csdb.GetDWSIMName(nrtlip.ID2), nrtlip.Clone)
                     End If
                 Else
                     Me.InteractionParameters.Add(csdb.GetCSName(nrtlip.ID1), New Dictionary(Of String, NRTL_IPData))
                     Me.InteractionParameters(csdb.GetCSName(nrtlip.ID1)).Add(csdb.GetCSName(nrtlip.ID2), nrtlip.Clone)
+                    If Not Me.InteractionParameters(csdb.GetCSName(nrtlip.ID1)).ContainsKey(csdb.GetDWSIMName(nrtlip.ID2)) Then
+                        Me.InteractionParameters(csdb.GetCSName(nrtlip.ID1)).Add(csdb.GetDWSIMName(nrtlip.ID2), nrtlip.Clone)
+                    End If
                 End If
             Next
+
 
             With fh1
                 nrtlipc = .ReadFile(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "biod_intparm_nrtl.dat")

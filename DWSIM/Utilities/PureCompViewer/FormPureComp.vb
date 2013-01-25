@@ -1,4 +1,6 @@
-﻿'    Copyright 2008 Daniel Wagner O. de Medeiros
+﻿Imports com.ggasoftware.indigo
+
+'    Copyright 2008 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -189,26 +191,47 @@ Public Class FormPureComp
         End With
         Me.GraphDHVAP.Invalidate()
 
-        'Grid UNIFAC
-        With Me.GridUNIFAC.Rows
-            .Clear()
-            If Not constprop.UNIFACGroups Is Nothing Then
-                For Each s As String In constprop.UNIFACGroups.Collection.Keys
-                    .Add(New Object() {s, constprop.UNIFACGroups.Collection(s)})
-                Next
-            End If
+        'UNIFAC
+        tbUNIFAC.Text = ""
+        If Not constprop.UNIFACGroups Is Nothing Then
+            For Each s As String In constprop.UNIFACGroups.Collection.Keys
+                tbUNIFAC.Text += constprop.UNIFACGroups.Collection(s) & " " & s & ", "
+            Next
+            tbUNIFAC.Text = tbUNIFAC.Text.TrimEnd(New Char() {",", " "})
+        End If
+
+        'MODFAC
+        tbMODFAC.Text = ""
+        If Not constprop.MODFACGroups Is Nothing Then
+            For Each s As String In constprop.MODFACGroups.Collection.Keys
+                tbMODFAC.Text += constprop.MODFACGroups.Collection(s) & " " & s & ", "
+            Next
+            tbMODFAC.Text = tbMODFAC.Text.TrimEnd(New Char() {",", " "})
+        End If
+
+        tbFormula.Text = constprop.Formula
+        tbSMILES.Text = constprop.SMILES
+        tbInChI.Text = constprop.InChI
+
+        'Render molecule / Calculate InChI from SMILES
+
+        Dim ind As New Indigo()
+        Dim mol As IndigoObject = ind.loadMolecule(constprop.SMILES)
+        Dim renderer As New IndigoRenderer(ind)
+
+        If constprop.InChI = "" Then
+            Dim ii As New IndigoInchi(ind)
+            tbInChI.Text = ii.getInchi(mol)
+        End If
+
+        With renderer
+            ind.setOption("render-image-size", 733, 222)
+            ind.setOption("render-margins", 15, 15)
+            ind.setOption("render-coloring", True)
+            ind.setOption("render-background-color", Color.White)
         End With
 
-        'Grid MODFAC
-        With Me.GridMODFAC.Rows
-            .Clear()
-            If Not constprop.MODFACGroups Is Nothing Then
-                For Each s As String In constprop.MODFACGroups.Collection.Keys
-                    .Add(New Object() {s, constprop.MODFACGroups.Collection(s)})
-                Next
-            End If
-
-        End With
+        pbRender.Image = renderer.renderToBitmap(mol)
 
         'Grid Propriedades
         With Me.GridProps.Rows
@@ -242,7 +265,7 @@ Public Class FormPureComp
             .Add(New Object() {DWSIM.App.GetLocalString("EnthalpyOfFusionAtTf"), Format(constprop.EnthalpyOfFusionAtTf, nf), "kJ/mol"})
             .Add(New Object() {DWSIM.App.GetLocalString("TemperatureOfSolidDensity_Ts"), Format(cv.ConverterDoSI(su.spmp_temperature, constprop.SolidTs), nf), su.spmp_temperature})
             .Add(New Object() {DWSIM.App.GetLocalString("SolidDensityAtTs"), Format(cv.ConverterDoSI(su.spmp_density, constprop.SolidDensityAtTs), nf), su.spmp_density})
-            
+
         End With
     End Sub
 
@@ -251,7 +274,6 @@ Public Class FormPureComp
             Dim name As String = ComboBox1.SelectedItem.ToString.Substring(ComboBox1.SelectedItem.ToString.IndexOf("[") + 1, ComboBox1.SelectedItem.ToString.Length - ComboBox1.SelectedItem.ToString.IndexOf("[") - 2)
             constprop = CType(Me.ChildParent.Options.SelectedComponents(name), DWSIM.ClassesBasicasTermodinamica.ConstantProperties)
         End If
-        Me.GridUNIFAC.Enabled = True
         Call Me.Populate()
     End Sub
 

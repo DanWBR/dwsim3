@@ -56,11 +56,6 @@ Partial Class FormDataRegression
         Me.LabelWithDivider3 = New System.Windows.Forms.LabelWithDivider
         Me.Label4 = New System.Windows.Forms.Label
         Me.GridExpData = New System.Windows.Forms.DataGridView
-        Me.colx1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.colx2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.coly1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.colT = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.colP = New System.Windows.Forms.DataGridViewTextBoxColumn
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
@@ -82,6 +77,11 @@ Partial Class FormDataRegression
         Me.Label11 = New System.Windows.Forms.Label
         Me.tbTitle = New System.Windows.Forms.TextBox
         Me.Label10 = New System.Windows.Forms.Label
+        Me.colx1 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.colx2 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.coly1 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.colT = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.colP = New System.Windows.Forms.DataGridViewTextBoxColumn
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -245,7 +245,7 @@ Partial Class FormDataRegression
         resources.ApplyResources(Me.cbObjFunc, "cbObjFunc")
         Me.cbObjFunc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbObjFunc.FormattingEnabled = True
-        Me.cbObjFunc.Items.AddRange(New Object() {resources.GetString("cbObjFunc.Items"), resources.GetString("cbObjFunc.Items1"), resources.GetString("cbObjFunc.Items2"), resources.GetString("cbObjFunc.Items3"), resources.GetString("cbObjFunc.Items4")})
+        Me.cbObjFunc.Items.AddRange(New Object() {resources.GetString("cbObjFunc.Items"), resources.GetString("cbObjFunc.Items1"), resources.GetString("cbObjFunc.Items2"), resources.GetString("cbObjFunc.Items3"), resources.GetString("cbObjFunc.Items4"), resources.GetString("cbObjFunc.Items5")})
         Me.cbObjFunc.Name = "cbObjFunc"
         '
         'LabelWithDivider12
@@ -311,31 +311,6 @@ Partial Class FormDataRegression
         Me.GridExpData.ContextMenuStrip = Me.ContextMenuStrip1
         Me.GridExpData.Name = "GridExpData"
         Me.GridExpData.RowHeadersVisible = False
-        '
-        'colx1
-        '
-        resources.ApplyResources(Me.colx1, "colx1")
-        Me.colx1.Name = "colx1"
-        '
-        'colx2
-        '
-        resources.ApplyResources(Me.colx2, "colx2")
-        Me.colx2.Name = "colx2"
-        '
-        'coly1
-        '
-        resources.ApplyResources(Me.coly1, "coly1")
-        Me.coly1.Name = "coly1"
-        '
-        'colT
-        '
-        resources.ApplyResources(Me.colT, "colT")
-        Me.colT.Name = "colT"
-        '
-        'colP
-        '
-        resources.ApplyResources(Me.colP, "colP")
-        Me.colP.Name = "colP"
         '
         'ContextMenuStrip1
         '
@@ -474,6 +449,31 @@ Partial Class FormDataRegression
         resources.ApplyResources(Me.Label10, "Label10")
         Me.Label10.Name = "Label10"
         '
+        'colx1
+        '
+        resources.ApplyResources(Me.colx1, "colx1")
+        Me.colx1.Name = "colx1"
+        '
+        'colx2
+        '
+        resources.ApplyResources(Me.colx2, "colx2")
+        Me.colx2.Name = "colx2"
+        '
+        'coly1
+        '
+        resources.ApplyResources(Me.coly1, "coly1")
+        Me.coly1.Name = "coly1"
+        '
+        'colT
+        '
+        resources.ApplyResources(Me.colT, "colT")
+        Me.colT.Name = "colT"
+        '
+        'colP
+        '
+        resources.ApplyResources(Me.colP, "colP")
+        Me.colP.Name = "colP"
+        '
         'FormDataRegression
         '
         resources.ApplyResources(Me, "$this")
@@ -528,11 +528,6 @@ Partial Class FormDataRegression
     Friend WithEvents cbTunit As System.Windows.Forms.ComboBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents btnCancel As System.Windows.Forms.Button
-    Friend WithEvents colx1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colx2 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents coly1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colT As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colP As System.Windows.Forms.DataGridViewTextBoxColumn
     Public WithEvents gridInEst As System.Windows.Forms.DataGridView
     Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents colpar As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -552,4 +547,9 @@ Partial Class FormDataRegression
     Friend WithEvents ToolStripMenuItem5 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem6 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem7 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents colx1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colx2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents coly1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colT As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colP As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

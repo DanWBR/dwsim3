@@ -172,6 +172,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\IKVM.OpenJDK.Jdbc.dll</HintPath>
     </Reference>
+    <Reference Include="indigo-dotnet">
+      <HintPath>References\indigo-dotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="indigo-inchi-dotnet">
+      <HintPath>References\indigo-inchi-dotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="indigo-renderer-dotnet">
+      <HintPath>References\indigo-renderer-dotnet.dll</HintPath>
+    </Reference>
     <Reference Include="Infralution.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\Infralution.Localization.dll</HintPath>
@@ -1582,6 +1591,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>PipeEditorForm.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\BINARY_ENVEL\FormBinEnv.en.resx">
+      <DependentUpon>FormBinEnv.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Utilities\Spreadsheet\SpreadsheetForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SpreadsheetForm.vb</DependentUpon>
@@ -1593,10 +1605,6 @@
     <EmbeddedResource Include="Forms\UITypeEditors\UIThermalProfileEditor\ThermalProfileEditorForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ThermalProfileEditorForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Utilities\BINARY_ENVEL\FormBinEnv.en.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormBinEnv.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\BINARY_ENVEL\FormBinEnv.resx">
       <SubType>Designer</SubType>
