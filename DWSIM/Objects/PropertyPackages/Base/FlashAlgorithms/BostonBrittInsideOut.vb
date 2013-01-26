@@ -327,7 +327,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Console.WriteLine("PT Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms. Error function value: " & AbsSum(fx))
 
-out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector}
+out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, Vx}
 
         End Function
 

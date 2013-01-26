@@ -28,7 +28,7 @@ Namespace Interfaces
 
     Public Class ExcelIntegration
 
-        Private Shared Sub SetIP(ByVal proppack As String, ByRef pp As PropertyPackage, ByVal compounds As Object, ByVal ip1 As Object, ByVal ip2 As Object, ByVal ip3 As Object, ByVal ip4 As Object)
+        Public Shared Sub SetIP(ByVal proppack As String, ByVal pp As PropertyPackage, ByVal compounds As Object, ByVal ip1 As Object, ByVal ip2 As Object, ByVal ip3 As Object, ByVal ip4 As Object)
 
             Dim i, j As Integer
 
@@ -39,10 +39,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(pp._availablecomps(c1).CAS_Number, New Dictionary(Of String, Auxiliary.PCSIP))
+                                If Not .ContainsKey(pp._availablecomps(c1).CAS_Number) Then .Add(pp._availablecomps(c1).CAS_Number, New Dictionary(Of String, Auxiliary.PCSIP))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(pp._availablecomps(c1).CAS_Number).Add(pp._availablecomps(c2).CAS_Number, New Auxiliary.PCSIP())
+                                    If Not .Item(pp._availablecomps(c1).CAS_Number).ContainsKey(pp._availablecomps(c2).CAS_Number) Then .Item(pp._availablecomps(c1).CAS_Number).Add(pp._availablecomps(c2).CAS_Number, New Auxiliary.PCSIP())
                                     With .Item(pp._availablecomps(c1).CAS_Number).Item(pp._availablecomps(c2).CAS_Number)
                                         .casno1 = pp._availablecomps(c1).CAS_Number
                                         .casno2 = pp._availablecomps(c2).CAS_Number
@@ -62,10 +62,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
+                                If Not .ContainsKey(c1) Then .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1).Add(c2, New Auxiliary.PR_IPData())
+                                    If Not .Item(c1).ContainsKey(c2) Then .Item(c1).Add(c2, New Auxiliary.PR_IPData())
                                     With .Item(c1).Item(c2)
                                         .kij = ip1(i, j)
                                     End With
@@ -81,10 +81,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1.ToLower, New Dictionary(Of String, Auxiliary.PRSV2_IPData))
+                                If Not .ContainsKey(c1.ToLower) Then .Add(c1.ToLower, New Dictionary(Of String, Auxiliary.PRSV2_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1.ToLower).Add(c2.ToLower, New Auxiliary.PRSV2_IPData())
+                                    If Not .Item(c1.ToLower).ContainsKey(c2.ToLower) Then .Item(c1.ToLower).Add(c2.ToLower, New Auxiliary.PRSV2_IPData())
                                     With .Item(c1.ToLower).Item(c2.ToLower)
                                         .kij = ip1(i, j)
                                         .kji = ip2(i, j)
@@ -101,10 +101,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1.ToLower, New Dictionary(Of String, Auxiliary.PRSV2_IPData))
+                                If Not .ContainsKey(c1.ToLower) Then .Add(c1.ToLower, New Dictionary(Of String, Auxiliary.PRSV2_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1.ToLower).Add(c2.ToLower, New Auxiliary.PRSV2_IPData())
+                                    If Not .Item(c1.ToLower).ContainsKey(c2.ToLower) Then .Item(c1.ToLower).Add(c2.ToLower, New Auxiliary.PRSV2_IPData())
                                     With .Item(c1.ToLower).Item(c2.ToLower)
                                         .kij = ip1(i, j)
                                         .kji = ip2(i, j)
@@ -121,10 +121,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
+                                If Not .ContainsKey(c1) Then .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1).Add(c2, New Auxiliary.PR_IPData())
+                                    If Not .Item(c1).ContainsKey(c2) Then .Item(c1).Add(c2, New Auxiliary.PR_IPData())
                                     With .Item(c1).Item(c2)
                                         .kij = ip1(i, j)
                                     End With
@@ -140,10 +140,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
+                                If Not .ContainsKey(c1) Then .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1).Add(c2, New Auxiliary.PR_IPData())
+                                    If Not .Item(c1).ContainsKey(c2) Then .Item(c1).Add(c2, New Auxiliary.PR_IPData())
                                     With .Item(c1).Item(c2)
                                         .kij = ip1(i, j)
                                     End With
@@ -159,10 +159,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
+                                If Not .ContainsKey(c1) Then .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1).Add(c2, New Auxiliary.PR_IPData())
+                                    If Not .Item(c1).ContainsKey(c2) Then .Item(c1).Add(c2, New Auxiliary.PR_IPData())
                                     With .Item(c1).Item(c2)
                                         .kij = ip1(i, j)
                                     End With
@@ -178,10 +178,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
+                                If Not .ContainsKey(c1) Then .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1).Add(c2, New Auxiliary.PR_IPData())
+                                    If Not .Item(c1).ContainsKey(c2) Then .Item(c1).Add(c2, New Auxiliary.PR_IPData())
                                     With .Item(c1).Item(c2)
                                         .kij = ip1(i, j)
                                     End With
@@ -197,10 +197,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
+                                If Not .ContainsKey(c1) Then .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1).Add(c2, New Auxiliary.PR_IPData())
+                                    If Not .Item(c1).ContainsKey(c2) Then .Item(c1).Add(c2, New Auxiliary.PR_IPData())
                                     With .Item(c1).Item(c2)
                                         .kij = ip1(i, j)
                                     End With
@@ -215,10 +215,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1, New Dictionary(Of String, Auxiliary.NRTL_IPData))
+                                If Not .ContainsKey(c1) Then .Add(c1, New Dictionary(Of String, Auxiliary.NRTL_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1).Add(c2, New Auxiliary.NRTL_IPData())
+                                    If Not .Item(c1).ContainsKey(c2) Then .Item(c1).Add(c2, New Auxiliary.NRTL_IPData())
                                     With .Item(c1).Item(c2)
                                         .A12 = ip2(i, j)
                                         .A21 = ip3(i, j)
@@ -236,10 +236,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
+                                If Not .ContainsKey(c1) Then .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1).Add(c2, New Auxiliary.PR_IPData())
+                                    If Not .Item(c1).ContainsKey(c2) Then .Item(c1).Add(c2, New Auxiliary.PR_IPData())
                                     With .Item(c1).Item(c2)
                                         .kij = ip1(i, j)
                                     End With
@@ -254,10 +254,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1, New Dictionary(Of String, Auxiliary.UNIQUAC_IPData))
+                                If Not .ContainsKey(c1) Then .Add(c1, New Dictionary(Of String, Auxiliary.UNIQUAC_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1).Add(c2, New Auxiliary.UNIQUAC_IPData())
+                                    If Not .Item(c1).ContainsKey(c2) Then .Item(c1).Add(c2, New Auxiliary.UNIQUAC_IPData())
                                     With .Item(c1).Item(c2)
                                         .A12 = ip2(i, j)
                                         .A21 = ip3(i, j)
@@ -274,10 +274,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
+                                If Not .ContainsKey(c1) Then .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1).Add(c2, New Auxiliary.PR_IPData())
+                                    If Not .Item(c1).ContainsKey(c2) Then .Item(c1).Add(c2, New Auxiliary.PR_IPData())
                                     With .Item(c1).Item(c2)
                                         .kij = ip1(i, j)
                                     End With
@@ -293,10 +293,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1, New Dictionary(Of String, Auxiliary.LKP_IPData))
+                                If Not .ContainsKey(c1) Then .Add(c1, New Dictionary(Of String, Auxiliary.LKP_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1).Add(c2, New Auxiliary.LKP_IPData())
+                                    If Not .Item(c1).ContainsKey(c2) Then .Item(c1).Add(c2, New Auxiliary.LKP_IPData())
                                     With .Item(c1).Item(c2)
                                         .ID1 = c1
                                         .ID2 = c2
@@ -314,10 +314,10 @@ Namespace Interfaces
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
-                                .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
+                                If Not .ContainsKey(c1) Then .Add(c1, New Dictionary(Of String, Auxiliary.PR_IPData))
                                 j = 0
                                 For Each c2 As String In compounds
-                                    .Item(c1).Add(c2, New Auxiliary.PR_IPData())
+                                    If Not .Item(c1).ContainsKey(c2) Then .Item(c1).Add(c2, New Auxiliary.PR_IPData())
                                     With .Item(c1).Item(c2)
                                         .kij = ip1(i, j)
                                     End With
@@ -361,7 +361,7 @@ Namespace Interfaces
                 pp.SetMaterial(ms)
 
                 Dim results As Object = Nothing
-               
+
                 If pressure <> 0.0# And temperature = 0.0# Then
                     ms.GetPDependentProperty(New Object() {prop}, pressure, New Object() {compound}, results)
                 ElseIf pressure = 0.0# And temperature <> 0.0# Then
@@ -637,7 +637,7 @@ Namespace Interfaces
 
                 pp = ppm.GetPropertyPackage(proppack)
                 SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4)
-               
+
                 ppm.Dispose()
                 ppm = Nothing
 
@@ -747,7 +747,7 @@ Namespace Interfaces
 
                 pp = ppm.GetPropertyPackage(proppack)
                 SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4)
-              
+
                 ppm.Dispose()
                 ppm = Nothing
 
@@ -859,7 +859,7 @@ Namespace Interfaces
 
                 pp = ppm.GetPropertyPackage(proppack)
                 SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4)
-               
+
                 ppm.Dispose()
                 ppm = Nothing
 
@@ -951,7 +951,7 @@ Namespace Interfaces
         End Function
 
         <ExcelFunction("Calculates a PVF Flash using the selected Property Package.")> _
-       Public Shared Function PVFFlash( _
+        Public Shared Function PVFFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
         <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
@@ -971,7 +971,7 @@ Namespace Interfaces
 
                 pp = ppm.GetPropertyPackage(proppack)
                 SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4)
-             
+
                 ppm.Dispose()
                 ppm = Nothing
 
@@ -1063,7 +1063,7 @@ Namespace Interfaces
         End Function
 
         <ExcelFunction("Calculates a TVF Flash using the selected Property Package.")> _
-      Public Shared Function TVFFlash( _
+        Public Shared Function TVFFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
         <ExcelArgument("Temperature in K.")> ByVal T As Double, _
@@ -1083,7 +1083,7 @@ Namespace Interfaces
 
                 pp = ppm.GetPropertyPackage(proppack)
                 SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4)
-                
+
                 ppm.Dispose()
                 ppm = Nothing
 
@@ -1174,9 +1174,30 @@ Namespace Interfaces
 
         End Function
 
+        Public Shared Sub AddCompounds(ByVal proppack As PropertyPackage, ByVal compounds As Object())
+
+            Dim ms As New Streams.MaterialStream("", "")
+
+            For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                For Each c As String In compounds
+                    phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
+                    phase.Componentes(c).ConstantProperties = proppack._availablecomps(c)
+                Next
+            Next
+
+            For Each c As String In compounds
+                Dim tmpcomp As ConstantProperties = proppack._availablecomps(c)
+                If Not proppack._selectedcomps.ContainsKey(c) Then proppack._selectedcomps.Add(c, tmpcomp)
+            Next
+
+            ms._pp = proppack
+            proppack.SetMaterial(ms)
+
+        End Sub
+
         <ExcelFunction("Calculates a PT Flash using the selected Property Package.")> _
-       Public Shared Function PTFlash( _
-       <ExcelArgument("The name of the Property Package to use.")> ByRef proppack As PropertyPackage, _
+        Public Shared Function PTFlash( _
+       <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
        <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
        <ExcelArgument("Temperature in K.")> ByVal T As Double, _
@@ -1195,7 +1216,7 @@ Namespace Interfaces
 
                 pp = proppack
                 SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4)
-                
+
                 ppm.Dispose()
                 ppm = Nothing
 
@@ -1281,7 +1302,7 @@ Namespace Interfaces
 
         <ExcelFunction("Calculates a PH Flash using the selected Property Package.")> _
         Public Shared Function PHFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByRef proppack As PropertyPackage, _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
         <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
         <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
         <ExcelArgument("Mixture Mass Enthalpy in kJ/kg.")> ByVal H As Double, _
@@ -1300,7 +1321,7 @@ Namespace Interfaces
 
                 pp = proppack
                 SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4)
-                
+
                 ppm.Dispose()
                 ppm = Nothing
 
@@ -1388,7 +1409,7 @@ Namespace Interfaces
 
         <ExcelFunction("Calculates a PS Flash using the selected Property Package.")> _
         Public Shared Function PSFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByRef proppack As PropertyPackage, _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
         <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
         <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
         <ExcelArgument("Mixture Mass Entropy in kJ/[kg.K].")> ByVal S As Double, _
@@ -1407,7 +1428,7 @@ Namespace Interfaces
 
                 pp = proppack
                 SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4)
-                
+
                 ppm.Dispose()
                 ppm = Nothing
 
@@ -1494,8 +1515,8 @@ Namespace Interfaces
         End Function
 
         <ExcelFunction("Calculates a PVF Flash using the selected Property Package.")> _
-       Public Shared Function PVFFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByRef proppack As PropertyPackage, _
+        Public Shared Function PVFFlash( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
         <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
         <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
         <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
@@ -1514,7 +1535,7 @@ Namespace Interfaces
 
                 pp = proppack
                 SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4)
-                
+
                 ppm.Dispose()
                 ppm = Nothing
 
@@ -1601,8 +1622,8 @@ Namespace Interfaces
         End Function
 
         <ExcelFunction("Calculates a TVF Flash using the selected Property Package.")> _
-      Public Shared Function TVFFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByRef proppack As PropertyPackage, _
+        Public Shared Function TVFFlash( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
         <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
         <ExcelArgument("Temperature in K.")> ByVal T As Double, _
         <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _

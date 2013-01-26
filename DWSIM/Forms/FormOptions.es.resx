@@ -112,16 +112,80 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Bases de datos</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Idioma de interfaz</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Seguridad</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>Tareas</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>383, 17</value>
+  </data>
+  <data name="cbudb.Text" xml:space="preserve">
+    <value>Reemplazar componentes presentes mientras se importa la base de datos.</value>
+  </data>
+  <data name="Button11.Text" xml:space="preserve">
+    <value>Agregar la base de datos de ChemSep ™</value>
+  </data>
+  <data name="Button7.Text" xml:space="preserve">
+    <value>Agregar la base de datos de usuario</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Bases de datos</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>415, 13</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Administrar las bases de datos de las sustancias disponibles para la simulación actual.</value>
+  </data>
+  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>611, 53</value>
+  </data>
+  <data name="GroupBox7.Text" xml:space="preserve">
+    <value>Recursos</value>
+  </data>
+  <data name="chkEnableParallelCalcs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 17</value>
+  </data>
+  <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
+    <value>Activar cálculos en paralelo</value>
+  </data>
+  <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 17</value>
+  </data>
+  <data name="chkUpdates.Text" xml:space="preserve">
+    <value>Buscar actualizaciones en el arranque</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Avisos</value>
+  </data>
+  <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 17</value>
+  </data>
+  <data name="KryptonCheckBox1.Text" xml:space="preserve">
+    <value>Mostrar consejos al inicio</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Idioma de interfaz</value>
+  </data>
   <data name="ListView1.Items" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkMAwAAAFFTeXN0
-        ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
+        ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
@@ -137,9 +201,9 @@
   </data>
   <data name="ListView1.Items1" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkMAwAAAFFTeXN0
-        ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
+        ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
@@ -155,9 +219,9 @@
   </data>
   <data name="ListView1.Items2" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkMAwAAAFFTeXN0
-        ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
+        ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
@@ -172,9 +236,9 @@
   </data>
   <data name="ListView1.Items3" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkMAwAAAFFTeXN0
-        ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
+        ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
@@ -189,10 +253,10 @@
   </data>
   <data name="ImageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAC
-        LwAAAk1TRnQBSQFMAgEBCwEAATwBAAE8AQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        LwAAAk1TRnQBSQFMAgEBCwEAAUQBAAFEAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKfAd4CnAHe
         ApwB3AKaAdoCmAHaApgB2gKYAdoCmAHkAqIB4gKgAeECnwHeApwB3AGcAZoB2gKYAdoCmAHZApcB1wKV
         AdYClAHTApEB0wKRAdECjwHPAo0BzwKNAc8CjQFCAQABiQFCAQABhgFCAQABhAFCAQABggFCAQABfwFC
@@ -395,99 +459,17 @@
         BwABPgMAASgDAAFAAwABMAMAAQEBAAEBBQABgAEBFgAD//8AggAL
 </value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>473, 13</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>Seleccione el idioma de interfaz DWSIM de la lista de abajo y haga clic en Aceptar para confirmar:</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Idioma de interfaz</value>
-  </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Idioma de interfaz</value>
-  </data>
-  <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>383, 17</value>
-  </data>
-  <data name="cbudb.Text" xml:space="preserve">
-    <value>Reemplazar componentes presentes mientras se importa la base de datos.</value>
-  </data>
-  <data name="Button11.Text" xml:space="preserve">
-    <value>Agregar la base de datos de ChemSep ™</value>
-  </data>
-  <data name="Button7.Text" xml:space="preserve">
-    <value>Agregar la base de datos de usuario</value>
-  </data>
-  <data name="GroupBox11.Text" xml:space="preserve">
-    <value>Tareas</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>415, 13</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>Administrar las bases de datos de las sustancias disponibles para la simulación actual.</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Bases de datos</value>
-  </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Bases de datos</value>
-  </data>
-  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>589, 71</value>
-  </data>
-  <data name="Label6.Text" xml:space="preserve">
-    <value>Marque esta casilla para cargar y guardar la Unidad de Operaciones utilizando las interfaces de persistencia, si está disponible. Algunos Unidad de Operaciones CAPE-OPEN no ponerlas en práctica correctamente, por lo que debe desmarcar esta casilla en caso de que su Unidad de Operaciones CAPE-OPEN no se restauran correctamente cuando se carga una simulación existentes / diagrama de flujo. Si está desactivado,  DWSIM guardar y restaurar los puertos y los valores de los parámetros que utilizan los mecanismos internos de almacenamiento.</value>
-  </data>
-  <data name="chkUsePersistenceSupport.Size" type="System.Drawing.Size, System.Drawing">
-    <value>519, 17</value>
-  </data>
-  <data name="chkUsePersistenceSupport.Text" xml:space="preserve">
-    <value>Guardar y cargar la Unidad de Operaciones utilizando las interfaces IPersistStreamInit y IPersistStream</value>
-  </data>
-  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>611, 132</value>
-  </data>
-  <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Soporte de la Persistencia</value>
-  </data>
-  <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>206, 17</value>
-  </data>
-  <data name="chkUpdates.Text" xml:space="preserve">
-    <value>Buscar actualizaciones en el arranque</value>
-  </data>
-  <data name="KryptonCheckBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>236, 17</value>
-  </data>
-  <data name="KryptonCheckBox3.Text" xml:space="preserve">
-    <value>Advertir al cambiar paquete de propiedades</value>
-  </data>
-  <data name="KryptonCheckBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>227, 17</value>
-  </data>
-  <data name="KryptonCheckBox2.Text" xml:space="preserve">
-    <value>Advertir cuando se eliminan las sustancias</value>
-  </data>
-  <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 17</value>
-  </data>
-  <data name="KryptonCheckBox1.Text" xml:space="preserve">
-    <value>Mostrar consejos al inicio</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Avisos</value>
-  </data>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Mensajes</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Copia de seguridad</value>
   </data>
   <data name="Button2.Text" xml:space="preserve">
     <value>Directorio limpio</value>
-  </data>
-  <data name="PictureBox1.ToolTip" xml:space="preserve">
-    <value>Activar esta función para que DWSIM guarde una copia de seguridad de cada simulación abierta, en el intervaloy el directorio especificado. Esto puede evitar la pérdida de datos si el programa se apaga inesperadamente por un error grave u otro motivo.</value>
   </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
     <value>Intervalo entre guardado:</value>
@@ -501,11 +483,8 @@
   <data name="KryptonCheckBox6.Text" xml:space="preserve">
     <value>Activar copias de seguridad</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Copia de seguridad</value>
-  </data>
-  <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Seguridad</value>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>IronPython y IronRuby</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 13</value>
@@ -524,9 +503,6 @@
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Administrar los caminos donde el compilador deberá buscar los archivos para importar:</value>
-  </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>IronPython y IronRuby</value>
   </data>
   <data name="FolderBrowserDialog1.Description" xml:space="preserve">
     <value>Seleccione un directorio...</value>

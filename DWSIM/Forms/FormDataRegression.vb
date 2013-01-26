@@ -24,6 +24,7 @@ Imports ZedGraph
 Imports DotNumerics
 Imports Cureos.Numerics
 Imports DWSIM.DWSIM.Optimization.DatRegression
+Imports System.Threading.Tasks
 
 Public Class FormDataRegression
 
@@ -180,7 +181,7 @@ Public Class FormDataRegression
             Next
             Me.tbRegResults.Text = .results
             currcase = mycase
-            If Not first Then UpdateGraph()
+            If Not first Then UpdateData()
         End With
 
     End Sub
@@ -194,6 +195,7 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
                 cbObjFunc.Enabled = True
+                Me.FaTabStripItem2.Visible = True
             Case 1
                 Me.GridExpData.Columns("colx1").Visible = True
                 Me.GridExpData.Columns("colx2").Visible = False
@@ -201,6 +203,7 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
                 cbObjFunc.Enabled = True
+                Me.FaTabStripItem2.Visible = True
             Case 2
                 Me.GridExpData.Columns("colx1").Visible = True
                 Me.GridExpData.Columns("colx2").Visible = False
@@ -208,27 +211,31 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
                 cbObjFunc.Enabled = True
+                Me.FaTabStripItem2.Visible = True
             Case 3
                 Me.GridExpData.Columns("colx1").Visible = True
                 Me.GridExpData.Columns("colx2").Visible = True
                 Me.GridExpData.Columns("coly1").Visible = False
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
-                cbObjFunc.Enabled = False
+                cbObjFunc.Enabled = True
+                Me.FaTabStripItem2.Visible = False
             Case 4
                 Me.GridExpData.Columns("colx1").Visible = True
                 Me.GridExpData.Columns("colx2").Visible = True
                 Me.GridExpData.Columns("coly1").Visible = False
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
-                cbObjFunc.Enabled = False
+                cbObjFunc.Enabled = True
+                Me.FaTabStripItem2.Visible = False
             Case 5
                 Me.GridExpData.Columns("colx1").Visible = True
                 Me.GridExpData.Columns("colx2").Visible = True
                 Me.GridExpData.Columns("coly1").Visible = False
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
-                cbObjFunc.Enabled = False
+                cbObjFunc.Enabled = True
+                Me.FaTabStripItem2.Visible = False
         End Select
     End Sub
 
@@ -236,6 +243,8 @@ Public Class FormDataRegression
 
         Application.DoEvents()
         If cancel Then Exit Function
+
+        Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
         Dim Vx1(currcase.pp.Count - 1), Vx2(currcase.pp.Count - 1), Vy(currcase.pp.Count - 1), IP(x.Length - 1, x.Length) As Double
         Dim Vx1c(currcase.pp.Count - 1), Vx2c(currcase.pp.Count - 1), Vyc(currcase.pp.Count - 1) As Double
@@ -306,106 +315,162 @@ Public Class FormDataRegression
             Select Case currcase.datatype
                 Case DataType.Pxy, DataType.Txy
                     Select Case currcase.model
-                        Case "PC-SAFT"
+                        Case "PC-SAFT", "Peng-Robinson", "Soave-Redlich-Kwong", "Lee-Kesler-Plöcker"
                             If PVF Then
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    VTc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
+                                If doparallel Then
+                                    My.Application.IsRunningParallelTasks = True
+                                    proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
+                                    Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                    Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 result2 = proppack.DW_CalcBubT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), VT(ipar))
+                                                                                 VTc(ipar) = result2(4)
+                                                                                 Vyc(ipar) = result2(3)(0)
+                                                                             End Sub))
+                                    While Not task1.IsCompleted
+                                        Application.DoEvents()
+                                    End While
+                                    My.Application.IsRunningParallelTasks = False
+                                Else
+                                    For i = 0 To np - 1
+                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                        VTc(i) = result(4, 0)
+                                        Vyc(i) = result(2, 0)
+                                    Next
+                                End If
                             Else
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    VPc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
-                            End If
-                            vartext = ", Interaction parameters = {"
-                            vartext += "kij = " & x(0).ToString("N4")
-                            vartext += "}"
-                        Case "Peng-Robinson"
-                            If PVF Then
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    VTc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
-                            Else
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    VPc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
-                            End If
-                            vartext = ", Interaction parameters = {"
-                            vartext += "kij = " & x(0).ToString("N4")
-                            vartext += "}"
-                        Case "Soave-Redlich-Kwong"
-                            If PVF Then
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    VTc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
-                            Else
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    VPc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
+                                If doparallel Then
+                                    My.Application.IsRunningParallelTasks = True
+                                    proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
+                                    Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                    Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 result2 = proppack.DW_CalcBubP(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VT(0), VP(ipar))
+                                                                                 VPc(ipar) = result2(4)
+                                                                                 Vyc(ipar) = result2(3)(0)
+                                                                             End Sub))
+                                    While Not task1.IsCompleted
+                                        Application.DoEvents()
+                                    End While
+                                    My.Application.IsRunningParallelTasks = False
+                                Else
+                                    For i = 0 To np - 1
+                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                        VPc(i) = result(4, 0)
+                                        Vyc(i) = result(2, 0)
+                                    Next
+                                End If
                             End If
                             vartext = ", Interaction parameters = {"
                             vartext += "kij = " & x(0).ToString("N4")
                             vartext += "}"
                         Case "UNIQUAC"
                             If PVF Then
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
-                                    VTc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
+                                If doparallel Then
+                                    My.Application.IsRunningParallelTasks = True
+                                    proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
+                                    Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                    Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 result2 = proppack.DW_CalcBubT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), VT(ipar))
+                                                                                 VTc(ipar) = result2(4)
+                                                                                 Vyc(ipar) = result2(3)(0)
+                                                                             End Sub))
+                                    While Not task1.IsCompleted
+                                        Application.DoEvents()
+                                    End While
+                                    My.Application.IsRunningParallelTasks = False
+                                Else
+                                    For i = 0 To np - 1
+                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                        VTc(i) = result(4, 0)
+                                        Vyc(i) = result(2, 0)
+                                    Next
+                                End If
                             Else
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
-                                    VPc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
+                                If doparallel Then
+                                    My.Application.IsRunningParallelTasks = True
+                                    proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
+                                    Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                    Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 result2 = proppack.DW_CalcBubP(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VT(0), VP(ipar))
+                                                                                 VPc(ipar) = result2(4)
+                                                                                 Vyc(ipar) = result2(3)(0)
+                                                                             End Sub))
+                                    While Not task1.IsCompleted
+                                        Application.DoEvents()
+                                    End While
+                                    My.Application.IsRunningParallelTasks = False
+                                Else
+                                    For i = 0 To np - 1
+                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                        VPc(i) = result(4, 0)
+                                        Vyc(i) = result(2, 0)
+                                    Next
+                                End If
                             End If
                             vartext = ", Interaction parameters = {"
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
                             vartext += "A21 = " & x(1).ToString("N4")
                             vartext += "}"
-                        Case "PRSV2-M"
+                        Case "PRSV2-M", "PRSV2-VL"
                             If PVF Then
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                    VTc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
+                                If doparallel Then
+                                    My.Application.IsRunningParallelTasks = True
+                                    proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
+                                    Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                    Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 result2 = proppack.DW_CalcBubT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), VT(ipar))
+                                                                                 VTc(ipar) = result2(4)
+                                                                                 Vyc(ipar) = result2(3)(0)
+                                                                             End Sub))
+                                    While Not task1.IsCompleted
+                                        Application.DoEvents()
+                                    End While
+                                    My.Application.IsRunningParallelTasks = False
+                                Else
+                                    For i = 0 To np - 1
+                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
+                                        VTc(i) = result(4, 0)
+                                        Vyc(i) = result(2, 0)
+                                    Next
+                                End If
                             Else
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                    VPc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
-                            End If
-                            vartext = ", Interaction parameters = {"
-                            vartext += "kij = " & x(0).ToString("N4") & ", "
-                            vartext += "kji = " & x(1).ToString("N4")
-                            vartext += "}"
-                        Case "PRSV2-VL"
-                            If PVF Then
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                    VTc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
-                            Else
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                    VPc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
+                                If doparallel Then
+                                    My.Application.IsRunningParallelTasks = True
+                                    proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
+                                    Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                    Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 result2 = proppack.DW_CalcBubP(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VT(0), VP(ipar))
+                                                                                 VPc(ipar) = result2(4)
+                                                                                 Vyc(ipar) = result2(3)(0)
+                                                                             End Sub))
+                                    While Not task1.IsCompleted
+                                        Application.DoEvents()
+                                    End While
+                                    My.Application.IsRunningParallelTasks = False
+                                Else
+                                    For i = 0 To np - 1
+                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                        VPc(i) = result(4, 0)
+                                        Vyc(i) = result(2, 0)
+                                    Next
+                                End If
                             End If
                             vartext = ", Interaction parameters = {"
                             vartext += "kij = " & x(0).ToString("N4") & ", "
@@ -413,47 +478,66 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "NRTL"
                             If PVF Then
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                    VTc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
+                                If doparallel Then
+                                    My.Application.IsRunningParallelTasks = True
+                                    proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
+                                    Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                    Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 result2 = proppack.DW_CalcBubT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), VT(ipar))
+                                                                                 VTc(ipar) = result2(4)
+                                                                                 Vyc(ipar) = result2(3)(0)
+                                                                             End Sub))
+                                    While Not task1.IsCompleted
+                                        Application.DoEvents()
+                                    End While
+                                    My.Application.IsRunningParallelTasks = False
+                                Else
+                                    For i = 0 To np - 1
+                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
+                                        VTc(i) = result(4, 0)
+                                        Vyc(i) = result(2, 0)
+                                    Next
+                                End If
                             Else
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                    VPc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
+                                If doparallel Then
+                                    My.Application.IsRunningParallelTasks = True
+                                    proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
+                                    Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                    Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 result2 = proppack.DW_CalcDewT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VT(0), VP(ipar))
+                                                                                 VPc(ipar) = result2(4)
+                                                                                 Vyc(ipar) = result2(3)(0)
+                                                                             End Sub))
+                                    While Not task1.IsCompleted
+                                        Application.DoEvents()
+                                    End While
+                                    My.Application.IsRunningParallelTasks = False
+                                Else
+                                    For i = 0 To np - 1
+                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
+                                        VPc(i) = result(4, 0)
+                                        Vyc(i) = result(2, 0)
+                                    Next
+                                End If
                             End If
                             vartext = ", Interaction parameters = {"
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
                             vartext += "A21 = " & x(1).ToString("N4") & ", "
                             vartext += "alpha12 = " & x(2).ToString("N4")
                             vartext += "}"
-                        Case "Lee-Kesler-Plöcker"
-                            If PVF Then
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    VTc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
-                            Else
-                                For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    VPc(i) = result(4, 0)
-                                    Vyc(i) = result(2, 0)
-                                Next
-                            End If
-                            vartext = ", Interaction parameters = {kij = "
-                            For i = 0 To x.Length - 1
-                                vartext += x(i).ToString("N4")
-                            Next
-                            vartext += "}"
                     End Select
                     For i = 0 To np - 1
                         Me.currcase.calct.Add(VTc(i))
                         Me.currcase.calcp.Add(VPc(i))
                         Me.currcase.calcy.Add(Vyc(i))
+                        Me.currcase.calcx1l1.Add(0.0#)
+                        Me.currcase.calcx1l2.Add(0.0#)
                         Select Case currcase.objfunction
                             Case "Least Squares (min T/P+y/x)"
                                 If PVF Then
@@ -497,86 +581,123 @@ Public Class FormDataRegression
                 Case DataType.TPxy
                 Case DataType.Pxx, DataType.Txx
                     Select Case currcase.model
-                        Case "PRSV2-M"
-                            For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                Vx1c(i) = result(2, 1)
-                                Vx2c(i) = result(2, 2)
-                            Next
-                            vartext = ", Interaction parameters = {"
-                            vartext += "kij = " & x(0).ToString("N4") & ", "
-                            vartext += "kji = " & x(1).ToString("N4")
-                            vartext += "}"
-                        Case "PRSV2-VL"
-                            For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                Vx1c(i) = result(2, 1)
-                                Vx2c(i) = result(2, 2)
-                            Next
+                        Case "PRSV2-M", "PRSV2-VL"
+                            If doparallel Then
+                                My.Application.IsRunningParallelTasks = True
+                                proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
+                                proppack._tpcompids = New String() {currcase.comp2}
+                                proppack._tpseverity = 0
+                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
+                                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                                                         Sub(ipar)
+                                                                             Dim result2 As Object
+                                                                             result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
+                                                                             Vx1c(ipar) = result(2)(0)
+                                                                             Vx2c(ipar) = result(6)(0)
+                                                                         End Sub))
+                                While Not task1.IsCompleted
+                                    Application.DoEvents()
+                                End While
+                                My.Application.IsRunningParallelTasks = False
+                            Else
+                                For i = 0 To np - 1
+                                    result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
+                                    Vx1c(i) = result(2, 1)
+                                    Vx2c(i) = result(2, 2)
+                                Next
+                            End If
                             vartext = ", Interaction parameters = {"
                             vartext += "kij = " & x(0).ToString("N4") & ", "
                             vartext += "kji = " & x(1).ToString("N4")
                             vartext += "}"
                         Case "UNIQUAC"
-                            For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
-                                Vx1c(i) = result(2, 1)
-                                Vx2c(i) = result(2, 2)
-                            Next
+                            If doparallel Then
+                                My.Application.IsRunningParallelTasks = True
+                                proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
+                                proppack._tpcompids = New String() {currcase.comp2}
+                                proppack._tpseverity = 0
+                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
+                                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                                                         Sub(ipar)
+                                                                             Dim result2 As Object
+                                                                             result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
+                                                                             Vx1c(ipar) = result2(2)(0)
+                                                                             Vx2c(ipar) = result2(6)(0)
+                                                                         End Sub))
+                                While Not task1.IsCompleted
+                                    Application.DoEvents()
+                                End While
+                                My.Application.IsRunningParallelTasks = False
+                            Else
+                                For i = 0 To np - 1
+                                    result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                    Vx1c(i) = result(2, 1)
+                                    Vx2c(i) = result(2, 2)
+                                Next
+                            End If
                             vartext = ", Interaction parameters = {"
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
                             vartext += "A21 = " & x(1).ToString("N4")
                             vartext += "}"
                         Case "NRTL"
-                            For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                Vx1c(i) = result(2, 1)
-                                Vx2c(i) = result(2, 2)
-                            Next
+                            If doparallel Then
+                                My.Application.IsRunningParallelTasks = True
+                                proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
+                                proppack._tpcompids = New String() {currcase.comp2}
+                                proppack._tpseverity = 0
+                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
+                                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                                                         Sub(ipar)
+                                                                             Dim result2 As Object
+                                                                             result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
+                                                                             Vx1c(ipar) = result2(2)(0)
+                                                                             Vx2c(ipar) = result2(6)(0)
+                                                                         End Sub))
+                                While Not task1.IsCompleted
+                                    Application.DoEvents()
+                                End While
+                                My.Application.IsRunningParallelTasks = False
+                            Else
+                                For i = 0 To np - 1
+                                    result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
+                                    Vx1c(i) = result(2, 1)
+                                    Vx2c(i) = result(2, 2)
+                                Next
+                            End If
                             vartext = ", Interaction parameters = {"
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
                             vartext += "A21 = " & x(1).ToString("N4") & ", "
                             vartext += "alpha12 = " & x(2).ToString("N4")
                             vartext += "}"
-                        Case "Lee-Kesler-Plöcker"
-                            For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                Vx1c(i) = result(2, 1)
-                                Vx2c(i) = result(2, 2)
-                            Next
-                            vartext = ", Interaction parameters = {kij = "
-                            For i = 0 To x.Length - 1
-                                vartext += x(i).ToString("N4")
-                            Next
-                            vartext += "}"
-                        Case "Peng-Robinson"
-                            For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                Vx1c(i) = result(2, 1)
-                                Vx2c(i) = result(2, 2)
-                            Next
-                            vartext = ", Interaction parameters = {kij = "
-                            For i = 0 To x.Length - 1
-                                vartext += x(i).ToString("N4")
-                            Next
-                            vartext += "}"
-                        Case "Soave-Redlich-Kwong"
-                            For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                Vx1c(i) = result(2, 1)
-                                Vx2c(i) = result(2, 2)
-                            Next
-                            vartext = ", Interaction parameters = {kij = "
-                            For i = 0 To x.Length - 1
-                                vartext += x(i).ToString("N4")
-                            Next
-                            vartext += "}"
-                        Case "PC-SAFT"
-                            For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                Vx1c(i) = result(2, 1)
-                                Vx2c(i) = result(2, 2)
-                            Next
+                        Case "Lee-Kesler-Plöcker", "Peng-Robinson", "Soave-Redlich-Kwong", "PC-SAFT"
+                            If doparallel Then
+                                My.Application.IsRunningParallelTasks = True
+                                proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
+                                proppack._tpcompids = New String() {currcase.comp2}
+                                proppack._tpseverity = 0
+                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                                                         Sub(ipar)
+                                                                             Dim result2 As Object
+                                                                             result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
+                                                                             Vx1c(ipar) = result2(2)(0)
+                                                                             Vx2c(ipar) = result2(6)(0)
+                                                                         End Sub))
+                                While Not task1.IsCompleted
+                                    Application.DoEvents()
+                                End While
+                                My.Application.IsRunningParallelTasks = False
+                            Else
+                                For i = 0 To np - 1
+                                    result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                    Vx1c(i) = result(2, 1)
+                                    Vx2c(i) = result(2, 2)
+                                Next
+                            End If
                             vartext = ", Interaction parameters = {kij = "
                             For i = 0 To x.Length - 1
                                 vartext += x(i).ToString("N4")
@@ -586,6 +707,9 @@ Public Class FormDataRegression
                     For i = 0 To np - 1
                         Me.currcase.calcx1l1.Add(Vx1c(i))
                         Me.currcase.calcx1l2.Add(Vx2c(i))
+                        Me.currcase.calct.Add(0.0#)
+                        Me.currcase.calcp.Add(0.0#)
+                        Me.currcase.calcy.Add(0.0#)
                         Select Case currcase.objfunction
                             Case "Least Squares (min T/P+y/x)"
                                 f += ((Vx1c(i) - Vx1(i))) ^ 2 + ((Vx2c(i) - Vx2(i))) ^ 2
@@ -697,6 +821,9 @@ Public Class FormDataRegression
                     For i = 0 To np - 1
                         Me.currcase.calcx1l1.Add(Vx1c(i))
                         Me.currcase.calcx1l2.Add(Vx2c(i))
+                        Me.currcase.calct.Add(0.0#)
+                        Me.currcase.calcp.Add(0.0#)
+                        Me.currcase.calcy.Add(0.0#)
                         Select Case currcase.objfunction
                             Case "Least Squares (min T/P+y/x)"
                                 f += ((Vx1c(i) - Vx1(i))) ^ 2 + ((Vx2c(i) - Vx2(i))) ^ 2
@@ -718,7 +845,7 @@ Public Class FormDataRegression
             itn += 1
             Me.tbRegResults.AppendText("Iteration #" & itn & ", Function Value = " & Format(f, "E") & vartext & vbCrLf)
 
-            UpdateGraph()
+            UpdateData()
             Application.DoEvents()
 
         Catch ex As Exception
@@ -974,7 +1101,7 @@ Public Class FormDataRegression
 
     End Sub
 
-    Sub UpdateGraph()
+    Sub UpdateData()
 
         Dim i As Integer = 0
         With Me.currcase
@@ -986,6 +1113,7 @@ Public Class FormDataRegression
             py2 = New ArrayList
             py3 = New ArrayList
             py4 = New ArrayList
+            py5 = New ArrayList
             ycurvetypes = New ArrayList
             xformat = 1
             title = tbTitle.Text & " / " & .datatype.ToString
@@ -1001,14 +1129,18 @@ Public Class FormDataRegression
                         End Try
                         px2.Add(Double.Parse(.yp(i)))
                         py3.Add(Double.Parse(.tp(i)))
+                        py5.Add(Double.Parse(.calcy(i)))
                     Next
-                    xtitle = "Mole Fraction " & .comp1
+                    xtitle = "Liquid Phase Mole Fraction " & .comp1
                     ytitle = "T / " & .tunit
+                    y2title = "Vapor Phase Mole Fraction " & .comp1
                     y1ctitle = "Tx exp."
                     y2ctitle = "Tx calc."
                     y3ctitle = "Ty exp."
                     y4ctitle = "Ty calc."
-                    ycurvetypes.AddRange(New Integer() {1, 3, 1, 3})
+                    y5ctitle = "y exp."
+                    y6ctitle = "y calc."
+                    ycurvetypes.AddRange(New Integer() {1, 3, 1, 3, 1, 3})
                 Case DataType.Pxy
                     For i = 0 To .x1p.Count - 1
                         px.Add(Double.Parse(.x1p(i)))
@@ -1020,14 +1152,18 @@ Public Class FormDataRegression
                         End Try
                         px2.Add(Double.Parse(.yp(i)))
                         py3.Add(Double.Parse(.pp(i)))
+                        py5.Add(Double.Parse(.calcy(i)))
                     Next
-                    xtitle = "Mole Fraction " & .comp1
+                    xtitle = "Liquid Phase Mole Fraction " & .comp1
                     ytitle = "P / " & .punit
+                    y2title = "Vapor Phase Mole Fraction " & .comp1
                     y1ctitle = "Px exp."
                     y2ctitle = "Px calc."
                     y3ctitle = "Py exp."
                     y4ctitle = "Py calc."
-                    ycurvetypes.AddRange(New Integer() {1, 3, 1, 3})
+                    y5ctitle = "y exp."
+                    y6ctitle = "y calc."
+                    ycurvetypes.AddRange(New Integer() {1, 3, 1, 3, 1, 3})
                 Case DataType.TPxy
                     For i = 0 To .x1p.Count - 1
                         px.Add(Double.Parse(.x1p(i)))
@@ -1038,10 +1174,14 @@ Public Class FormDataRegression
                         Catch ex As Exception
                         End Try
                         py3.Add(Double.Parse(.pp(i)))
+                        py5.Add(Double.Parse(.calcy(i)))
                     Next
-                    xtitle = "Mole Fraction " & .comp1
+                    xtitle = "Liquid Phase Mole Fraction " & .comp1
                     ytitle = "T / " & .tunit & " - P / " & .punit
-                    ycurvetypes.AddRange(New Integer() {1, 3, 1, 3})
+                    y2title = "Vapor Phase Mole Fraction " & .comp1
+                    y5ctitle = "y exp."
+                    y6ctitle = "y calc."
+                    ycurvetypes.AddRange(New Integer() {1, 3, 1, 3, 1, 3})
                 Case DataType.Txx
                     Try
                         For i = 0 To .x1p.Count - 1
@@ -1111,12 +1251,111 @@ Public Class FormDataRegression
             End Select
         End With
 
+        UpdateTable()
         DrawChart()
 
     End Sub
 
-    Public px, px2, px3, px4, py1, py2, py3, py4 As ArrayList
-    Public xtitle, ytitle, title, y1ctitle, y2ctitle, y3ctitle, y4ctitle As String
+    Sub UpdateTable()
+
+        Me.gridstats.Rows.Clear()
+        For i As Integer = 0 To currcase.x1p.Count - 1
+            With currcase
+                Me.gridstats.Rows.Add(New Object() {.x1p(i), .calcx1l1(i), .x2p(i), .calcx1l2(i), .yp(i), .calcy(i), .tp(i), cv.ConverterDoSI(.tunit, .calct(i)), .pp(i), cv.ConverterDoSI(.punit, .calcp(i)), _
+                                                    .calcy(i) - .yp(i), (.calcy(i) - .yp(i)) / .yp(i), (.calcy(i) - .yp(i)) / .yp(i) * 100, _
+                                                   cv.ConverterDoSI(.punit, .calcp(i)) - .pp(i), (cv.ConverterDoSI(.punit, .calcp(i)) - .pp(i)) / .pp(i), (cv.ConverterDoSI(.punit, .calcp(i)) - .pp(i)) / .pp(i) * 100, _
+                                                    cv.ConverterDoSI(.tunit, .calct(i)) - .tp(i), (cv.ConverterDoSI(.tunit, .calct(i)) - .tp(i)) / .tp(i), (cv.ConverterDoSI(.tunit, .calct(i)) - .tp(i)) / .tp(i) * 100, _
+                                                    .calcx1l1(i) - .x1p(i), (.calcx1l1(i) - .x1p(i)) / .x1p(i), (.calcx1l1(i) - .x1p(i)) / .x1p(i) * 100, _
+                                                    .calcx1l2(i) - .x2p(i), (.calcx1l2(i) - .x2p(i)) / .x2p(i), (.calcx1l2(i) - .x2p(i)) / .x2p(i) * 100})
+            End With
+        Next
+
+        Select Case currcase.datatype
+            Case DataType.Txx, DataType.Pxx, DataType.TPxx
+                Me.gridstats.Columns(0).Visible = True
+                Me.gridstats.Columns(1).Visible = True
+                Me.gridstats.Columns(2).Visible = True
+                Me.gridstats.Columns(3).Visible = True
+                Me.gridstats.Columns(4).Visible = False
+                Me.gridstats.Columns(5).Visible = False
+                Me.gridstats.Columns(6).Visible = False
+                Me.gridstats.Columns(7).Visible = False
+                Me.gridstats.Columns(8).Visible = False
+                Me.gridstats.Columns(9).Visible = False
+                Me.gridstats.Columns(10).Visible = False
+                Me.gridstats.Columns(11).Visible = False
+                Me.gridstats.Columns(12).Visible = False
+                Me.gridstats.Columns(13).Visible = False
+                Me.gridstats.Columns(14).Visible = False
+                Me.gridstats.Columns(15).Visible = False
+                Me.gridstats.Columns(16).Visible = False
+                Me.gridstats.Columns(17).Visible = False
+                Me.gridstats.Columns(18).Visible = False
+                Me.gridstats.Columns(19).Visible = True
+                Me.gridstats.Columns(20).Visible = True
+                Me.gridstats.Columns(21).Visible = True
+                Me.gridstats.Columns(22).Visible = True
+                Me.gridstats.Columns(23).Visible = True
+                Me.gridstats.Columns(24).Visible = True
+            Case DataType.Pxy
+                Me.gridstats.Columns(0).Visible = True
+                Me.gridstats.Columns(1).Visible = False
+                Me.gridstats.Columns(2).Visible = False
+                Me.gridstats.Columns(3).Visible = False
+                Me.gridstats.Columns(4).Visible = True
+                Me.gridstats.Columns(5).Visible = True
+                Me.gridstats.Columns(6).Visible = True
+                Me.gridstats.Columns(7).Visible = False
+                Me.gridstats.Columns(8).Visible = True
+                Me.gridstats.Columns(9).Visible = True
+                Me.gridstats.Columns(10).Visible = True
+                Me.gridstats.Columns(11).Visible = True
+                Me.gridstats.Columns(12).Visible = True
+                Me.gridstats.Columns(13).Visible = True
+                Me.gridstats.Columns(14).Visible = True
+                Me.gridstats.Columns(15).Visible = True
+                Me.gridstats.Columns(16).Visible = False
+                Me.gridstats.Columns(17).Visible = False
+                Me.gridstats.Columns(18).Visible = False
+                Me.gridstats.Columns(19).Visible = False
+                Me.gridstats.Columns(20).Visible = False
+                Me.gridstats.Columns(21).Visible = False
+                Me.gridstats.Columns(22).Visible = False
+                Me.gridstats.Columns(23).Visible = False
+                Me.gridstats.Columns(24).Visible = False
+            Case DataType.Txy
+                Me.gridstats.Columns(0).Visible = True
+                Me.gridstats.Columns(1).Visible = False
+                Me.gridstats.Columns(2).Visible = False
+                Me.gridstats.Columns(3).Visible = False
+                Me.gridstats.Columns(4).Visible = True
+                Me.gridstats.Columns(5).Visible = True
+                Me.gridstats.Columns(6).Visible = True
+                Me.gridstats.Columns(7).Visible = True
+                Me.gridstats.Columns(8).Visible = True
+                Me.gridstats.Columns(9).Visible = False
+                Me.gridstats.Columns(10).Visible = True
+                Me.gridstats.Columns(11).Visible = True
+                Me.gridstats.Columns(12).Visible = True
+                Me.gridstats.Columns(13).Visible = False
+                Me.gridstats.Columns(14).Visible = False
+                Me.gridstats.Columns(15).Visible = False
+                Me.gridstats.Columns(16).Visible = True
+                Me.gridstats.Columns(17).Visible = True
+                Me.gridstats.Columns(18).Visible = True
+                Me.gridstats.Columns(19).Visible = False
+                Me.gridstats.Columns(20).Visible = False
+                Me.gridstats.Columns(21).Visible = False
+                Me.gridstats.Columns(22).Visible = False
+                Me.gridstats.Columns(23).Visible = False
+                Me.gridstats.Columns(24).Visible = False
+        End Select
+
+
+    End Sub
+
+    Public px, px2, px3, px4, py1, py2, py3, py4, py5 As ArrayList
+    Public xtitle, ytitle, y2title, title, y1ctitle, y2ctitle, y3ctitle, y4ctitle, y5ctitle, y6ctitle As String
     Public ycurvetypes As ArrayList
     Public xformat As Integer
 
@@ -1137,7 +1376,7 @@ Public Class FormDataRegression
 
         Dim rnd As New Random()
 
-        With Me.graph.GraphPane
+        With graph.GraphPane
             .GraphObjList.Clear()
             .CurveList.Clear()
             .YAxisList.Clear()
@@ -1431,8 +1670,10 @@ Public Class FormDataRegression
             With .XAxis
                 .Title.Text = xtitle
                 .Title.FontSpec.Size = 11
-                .Scale.MinAuto = True
-                .Scale.MaxAuto = True
+                .Scale.MinAuto = False
+                .Scale.MaxAuto = False
+                .Scale.Min = 0.0#
+                .Scale.Max = 1.0#
                 .Scale.FontSpec.Size = 10
                 Select Case xformat
                     Case 1
@@ -1461,15 +1702,200 @@ Public Class FormDataRegression
             End With
 
             Me.graph.IsAntiAlias = True
-            Try
-                .AxisChange(Me.CreateGraphics)
-                .AxisChange(Me.CreateGraphics)
-                Me.graph.Invalidate()
-            Catch ex As Exception
-
-            End Try
+            Me.graph.AxisChange()
+            Me.graph.Invalidate()
 
         End With
+
+        Select Case Me.currcase.datatype
+            Case DataType.Pxy, DataType.Txy, DataType.TPxy
+                With graph2.GraphPane
+                    .GraphObjList.Clear()
+                    .CurveList.Clear()
+                    .YAxisList.Clear()
+                    If px2.Count > 0 Then
+                        Dim ya0 As New ZedGraph.YAxis(y2title)
+                        ya0.Scale.FontSpec.Size = 10
+                        ya0.Title.FontSpec.Size = 11
+                        ya0.Scale.Min = 0.0#
+                        ya0.Scale.Max = 1.0#
+                        .YAxisList.Add(ya0)
+                        Dim mycurve As LineItem = Nothing
+                        mycurve = .AddCurve(y5ctitle, px.ToArray(GetType(Double)), px2.ToArray(GetType(Double)), Color.Black)
+                        With mycurve
+                            Dim ppl As ZedGraph.PointPairList = .Points
+                            ppl.Sort(ZedGraph.SortType.XValues)
+                            Select Case ycurvetypes(4)
+                                '1 - somente pontos
+                                '2 - pontos e linha
+                                '3 - somente linha
+                                '4 - linha tracejada
+                                '5 - linha tracejada com pontos
+                                Case 1
+                                    .Line.IsVisible = False
+                                    .Line.IsSmooth = False
+                                    .Color = Color.Red
+                                    .Symbol.Type = ZedGraph.SymbolType.Circle
+                                    .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                                    .Symbol.Fill.Color = Color.Red
+                                    .Symbol.Fill.IsVisible = True
+                                    .Symbol.Size = 5
+                                Case 2
+                                    .Line.IsVisible = True
+                                    .Line.IsSmooth = False
+                                    .Color = Color.Red
+                                    .Symbol.Type = ZedGraph.SymbolType.Circle
+                                    .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                                    .Symbol.Fill.Color = Color.Red
+                                    .Symbol.Fill.IsVisible = True
+                                    .Symbol.Size = 5
+                                Case 3
+                                    .Line.IsVisible = True
+                                    .Line.IsSmooth = True
+                                    .Color = Color.Red
+                                    .Symbol.IsVisible = False
+                                Case 4
+                                    .Line.IsVisible = True
+                                    .Line.IsSmooth = False
+                                    .Line.Style = Drawing2D.DashStyle.Dash
+                                    .Color = Color.Red
+                                    .Symbol.IsVisible = False
+                                Case 5
+                                    .Line.IsVisible = True
+                                    .Line.IsSmooth = False
+                                    .Line.Style = Drawing2D.DashStyle.Dash
+                                    .Color = Color.Red
+                                    .Symbol.Type = ZedGraph.SymbolType.Circle
+                                    .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                                    .Symbol.Fill.Color = Color.Red
+                                    .Symbol.Fill.IsVisible = True
+                                    .Symbol.Size = 5
+                                Case 6
+                                    .Line.IsVisible = True
+                                    .Line.IsSmooth = False
+                                    Dim c1 As Color = Color.FromArgb(255, rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))
+                                    .Color = Color.Red
+                                    .Symbol.IsVisible = False
+                            End Select
+                            .YAxisIndex = 0
+                        End With
+                    End If
+                    If py5.Count > 0 Then
+                        Dim mycurve As LineItem = Nothing
+                        mycurve = .AddCurve(y6ctitle, px.ToArray(GetType(Double)), py5.ToArray(GetType(Double)), Color.Black)
+                        With mycurve
+                            Dim ppl As ZedGraph.PointPairList = .Points
+                            ppl.Sort(ZedGraph.SortType.XValues)
+                            Select Case ycurvetypes(5)
+                                '1 - somente pontos
+                                '2 - pontos e linha
+                                '3 - somente linha
+                                '4 - linha tracejada
+                                '5 - linha tracejada com pontos
+                                Case 1
+                                    .Line.IsVisible = False
+                                    .Line.IsSmooth = False
+                                    .Color = Color.Red
+                                    .Symbol.Type = ZedGraph.SymbolType.Circle
+                                    .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                                    .Symbol.Fill.Color = Color.Red
+                                    .Symbol.Fill.IsVisible = True
+                                    .Symbol.Size = 5
+                                Case 2
+                                    .Line.IsVisible = True
+                                    .Line.IsSmooth = False
+                                    .Color = Color.Red
+                                    .Symbol.Type = ZedGraph.SymbolType.Circle
+                                    .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                                    .Symbol.Fill.Color = Color.Red
+                                    .Symbol.Fill.IsVisible = True
+                                    .Symbol.Size = 5
+                                Case 3
+                                    .Line.IsVisible = True
+                                    .Line.IsSmooth = True
+                                    .Color = Color.Red
+                                    .Symbol.IsVisible = False
+                                Case 4
+                                    .Line.IsVisible = True
+                                    .Line.IsSmooth = False
+                                    .Line.Style = Drawing2D.DashStyle.Dash
+                                    .Color = Color.Red
+                                    .Symbol.IsVisible = False
+                                Case 5
+                                    .Line.IsVisible = True
+                                    .Line.IsSmooth = False
+                                    .Line.Style = Drawing2D.DashStyle.Dash
+                                    .Color = Color.Red
+                                    .Symbol.Type = ZedGraph.SymbolType.Circle
+                                    .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                                    .Symbol.Fill.Color = Color.Red
+                                    .Symbol.Fill.IsVisible = True
+                                    .Symbol.Size = 5
+                                Case 6
+                                    .Line.IsVisible = True
+                                    .Line.IsSmooth = False
+                                    Dim c1 As Color = Color.FromArgb(255, rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))
+                                    .Color = Color.Red
+                                    .Symbol.IsVisible = False
+                            End Select
+                            .YAxisIndex = 0
+                        End With
+                    End If
+
+                    With .AddCurve("", New Double() {0.0#, 1.0#}, New Double() {0.0#, 1.0#}, Color.Black, SymbolType.None)
+                        .Line.IsVisible = True
+                        .Line.Width = 1
+                        .YAxisIndex = 0
+                    End With
+
+                    With .Legend
+                        .Border.IsVisible = False
+                        .Position = ZedGraph.LegendPos.BottomCenter
+                        .IsHStack = True
+                        .FontSpec.Size = 10
+                    End With
+
+                    With .XAxis
+                        .Title.Text = xtitle
+                        .Title.FontSpec.Size = 11
+                        .Scale.MinAuto = False
+                        .Scale.MaxAuto = False
+                        .Scale.Min = 0.0#
+                        .Scale.Max = 1.0#
+                        .Scale.FontSpec.Size = 10
+                        Select Case xformat
+                            Case 1
+                                .Type = ZedGraph.AxisType.Linear
+                            Case 2
+                                .Type = ZedGraph.AxisType.Linear
+                            Case 3
+                                .Type = ZedGraph.AxisType.DateAsOrdinal
+                                .Scale.Format = "dd/MM/yy"
+                        End Select
+                    End With
+
+                    With .Legend
+                        .Border.IsVisible = False
+                        .IsVisible = True
+                        .Position = ZedGraph.LegendPos.TopCenter
+                        .FontSpec.Size = 11
+                    End With
+
+                    .Margin.All = 10
+
+                    With .Title
+                        .IsVisible = True
+                        .Text = title
+                        .FontSpec.Size = 12
+                    End With
+
+                End With
+
+                Me.graph2.IsAntiAlias = True
+                Me.graph2.AxisChange()
+                Me.graph2.Invalidate()
+
+        End Select
 
     End Sub
 
@@ -1621,25 +2047,41 @@ Public Class FormDataRegression
         Select Case cbModel.SelectedItem.ToString
             Case "NRTL"
                 If cbDataType.SelectedItem.ToString.Contains("LL") Then
-                    Dim estimates As Double() = EstimateNRTL(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "UNIFAC")
-                    Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                    Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
-                    Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
+                    Try
+                        Dim estimates As Double() = EstimateNRTL(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "UNIFAC-LL")
+                        Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
+                        Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                        Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
+                    Catch ex As Exception
+                        MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
                 Else
-                    Dim estimates As Double() = EstimateNRTL(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "UNIFAC-LL")
-                    Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                    Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
-                    Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
+                    Try
+                        Dim estimates As Double() = EstimateNRTL(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "UNIFAC")
+                        Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
+                        Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                        Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
+                    Catch ex As Exception
+                        MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
                 End If
             Case "UNIQUAC"
                 If cbDataType.SelectedItem.ToString.Contains("LL") Then
-                    Dim estimates As Double() = EstimateUNIQUAC(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "UNIFAC")
-                    Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                    Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                    Try
+                        Dim estimates As Double() = EstimateUNIQUAC(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "UNIFAC-LL")
+                        Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
+                        Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                    Catch ex As Exception
+                        MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
                 Else
-                    Dim estimates As Double() = EstimateUNIQUAC(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "UNIFAC-LL")
-                    Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                    Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                    Try
+                        Dim estimates As Double() = EstimateUNIQUAC(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "UNIFAC")
+                        Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
+                        Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                    Catch ex As Exception
+                        MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
                 End If
         End Select
 
@@ -1757,8 +2199,11 @@ Public Class FormDataRegression
 
             count += 1
 
-        Loop Until Math.Abs(fx(0) + fx(1)) < 0.03 Or count > 50
+        Loop Until Math.Abs(fx(0) + fx(1)) < 0.01 Or count > 500
 
+        If count >= 500 Then
+            MessageBox.Show("Parameter estimation through UNIFAC failed: Reached the maximum number of iterations.", "UNIFAC Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
         Return New Double() {x(0), x(1)}
 
     End Function
@@ -1766,8 +2211,8 @@ Public Class FormDataRegression
     Function EstimateNRTL(ByVal id1 As String, ByVal id2 As String, ByVal model As String) As Double()
 
         Dim count As Integer = 0
-        Dim delta1 As Double = 10
-        Dim delta2 As Double = 10
+        Dim delta1 As Double = 100
+        Dim delta2 As Double = 100
         Dim delta3 As Double = 0.1
 
         Dim ppn As New DWSIM.SimulationObjects.PropertyPackages.NRTLPropertyPackage(True)
@@ -1810,19 +2255,20 @@ Public Class FormDataRegression
 
         Dim T1 = 298.15
 
-        Dim actu(2), actn(2), actnd(2), fx(2), fxd(2), dfdx(2, 2), x(2), x0(2), dx(2) As Double
+        Dim actu(1), actn(1), actnd(1), fx(1), fxd(1), dfdx(1, 1), x(1), x0(1), dx(1) As Double
 
-        actu(0) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
-        actu(1) = unifac.GAMMA(T1, New Object() {0.5, 0.5}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
-        actu(2) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
+        Try
+            actu(0) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
+            actu(1) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
+        Catch ex As Exception
+            MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
         x(0) = gridInEst.Rows(0).Cells(1).Value
         x(1) = gridInEst.Rows(1).Cells(1).Value
-        x(2) = gridInEst.Rows(2).Cells(1).Value
 
-        If x(0) = 0 Then x(0) = 100
-        If x(1) = 0 Then x(1) = 100
-        If x(2) = 0 Then x(2) = 0.3
+        If x(0) = 0 Then x(0) = 0
+        If x(1) = 0 Then x(1) = 0
 
         Do
 
@@ -1831,91 +2277,71 @@ Public Class FormDataRegression
             nrtl.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData())
             nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
             nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = x(2)
+            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = 0.3
 
             actnd(0) = nrtl.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
-            actnd(1) = nrtl.GAMMA(T1, New Object() {0.5, 0.5}, ppn.RET_VIDS, 0)
-            actnd(2) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
+            actnd(1) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
 
             fx(0) = Math.Log(actu(0) / actnd(0))
             fx(1) = Math.Log(actu(1) / actnd(1))
-            fx(2) = Math.Log(actu(2) / actnd(2))
 
             nrtl.InteractionParameters.Clear()
             nrtl.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData))
             nrtl.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData())
             nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0) + delta1
             nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = x(2)
+            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = 0.3
 
-            actnd(0) = nrtl.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
-            actnd(1) = nrtl.GAMMA(T1, New Object() {0.5, 0.5}, ppn.RET_VIDS, 0)
-            actnd(2) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
+            Try
+                actnd(0) = nrtl.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
+                actnd(1) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
+            Catch ex As Exception
+                MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
 
             fxd(0) = Math.Log(actu(0) / actnd(0))
             fxd(1) = Math.Log(actu(1) / actnd(1))
-            fxd(2) = Math.Log(actu(2) / actnd(2))
 
             dfdx(0, 0) = -(fxd(0) - fx(0)) / delta1
             dfdx(1, 0) = -(fxd(1) - fx(1)) / delta1
-            dfdx(2, 0) = -(fxd(2) - fx(2)) / delta1
 
             nrtl.InteractionParameters.Clear()
             nrtl.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData))
             nrtl.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData())
             nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
             nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1) + delta2
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = x(2)
+            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = 0.3
 
-            actnd(0) = nrtl.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
-            actnd(1) = nrtl.GAMMA(T1, New Object() {0.5, 0.5}, ppn.RET_VIDS, 0)
-            actnd(2) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
+            Try
+                actnd(0) = nrtl.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
+                actnd(1) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
+            Catch ex As Exception
+                MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
 
             fxd(0) = Math.Log(actu(0) / actnd(0))
             fxd(1) = Math.Log(actu(1) / actnd(1))
-            fxd(2) = Math.Log(actu(2) / actnd(2))
 
             dfdx(0, 1) = -(fxd(0) - fx(0)) / delta2
             dfdx(1, 1) = -(fxd(1) - fx(1)) / delta2
-            dfdx(2, 1) = -(fxd(2) - fx(2)) / delta2
-
-            nrtl.InteractionParameters.Clear()
-            nrtl.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData))
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData())
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
-            nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = x(2) + delta3
-
-            actnd(0) = nrtl.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
-            actnd(1) = nrtl.GAMMA(T1, New Object() {0.5, 0.5}, ppn.RET_VIDS, 0)
-            actnd(2) = nrtl.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
-
-            fxd(0) = Math.Log(actu(0) / actnd(0))
-            fxd(1) = Math.Log(actu(1) / actnd(1))
-            fxd(2) = Math.Log(actu(2) / actnd(2))
-
-            dfdx(0, 2) = -(fxd(0) - fx(0)) / delta3
-            dfdx(1, 2) = -(fxd(1) - fx(1)) / delta3
-            dfdx(2, 2) = -(fxd(2) - fx(2)) / delta3
 
             'solve linear system
             DWSIM.MathEx.SysLin.rsolve.rmatrixsolve(dfdx, fx, UBound(fx) + 1, dx)
 
             x0(0) = x(0)
             x0(1) = x(1)
-            x0(2) = x(2)
 
             x(0) += dx(0)
             x(1) += dx(1)
-            x(2) += dx(2)
-
-            If x(2) < -1 Or x(2) > 10 Then x(2) = 0.3
 
             count += 1
 
-        Loop Until Math.Abs(fx(0) + fx(1) + fx(2)) < 0.03 Or count > 50
+        Loop Until Math.Abs(fx(0) + fx(1)) < 0.01 Or count > 500
 
-        Return New Double() {x(0), x(1), x(2)}
+        If count > 500 Then
+            MessageBox.Show("Parameter estimation through UNIFAC failed: Reached the maximum number of iterations.", "UNIFAC Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+        Return New Double() {x(0), x(1), 0.3#}
 
     End Function
 
@@ -1923,14 +2349,22 @@ Public Class FormDataRegression
 
         Select Case cbModel.SelectedItem.ToString
             Case "NRTL"
-                Dim estimates As Double() = EstimateNRTL(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "MODFAC")
-                Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
-                Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
+                Try
+                    Dim estimates As Double() = EstimateNRTL(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "MODFAC")
+                    Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
+                    Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                    Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
+                Catch ex As Exception
+                    MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
             Case "UNIQUAC"
-                Dim estimates As Double() = EstimateUNIQUAC(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "MODFAC")
-                Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                Try
+                    Dim estimates As Double() = EstimateUNIQUAC(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "MODFAC")
+                    Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
+                    Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                Catch ex As Exception
+                    MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
         End Select
 
     End Sub

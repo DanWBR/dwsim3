@@ -25,13 +25,6 @@ Partial Class FormOptions
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormOptions))
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
-        Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.ListView1 = New System.Windows.Forms.ListView()
-        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox11 = New System.Windows.Forms.GroupBox()
         Me.cbudb = New System.Windows.Forms.CheckBox()
@@ -53,6 +46,13 @@ Partial Class FormOptions
         Me.chkconsole = New System.Windows.Forms.CheckBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.KryptonCheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.ListView1 = New System.Windows.Forms.ListView()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -78,8 +78,6 @@ Partial Class FormOptions
         Me.SuperToolTip1 = New Omarslvd.Windows.Forms.SuperToolTip()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
-        Me.FaTabStripItem4.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
         Me.FaTabStripItem3.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
@@ -88,6 +86,8 @@ Partial Class FormOptions
         Me.GroupBox7.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
+        Me.FaTabStripItem4.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.FaTabStripItem2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -107,88 +107,6 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStrip1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStrip1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetToolTip(Me.FaTabStrip1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
-        '
-        'FaTabStripItem4
-        '
-        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
-        Me.FaTabStripItem4.CanClose = False
-        Me.FaTabStripItem4.Controls.Add(Me.GroupBox1)
-        Me.FaTabStripItem4.IsDrawn = True
-        Me.FaTabStripItem4.Name = "FaTabStripItem4"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem4, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem4, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem4, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
-        '
-        'GroupBox1
-        '
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
-        Me.GroupBox1.Controls.Add(Me.Button1)
-        Me.GroupBox1.Controls.Add(Me.ListView1)
-        Me.GroupBox1.Controls.Add(Me.Label3)
-        Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox1, System.Drawing.Color.Empty)
-        Me.GroupBox1.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBox1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
-        '
-        'Button1
-        '
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
-        Me.Button1.Name = "Button1"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Button1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'ListView1
-        '
-        resources.ApplyResources(Me.ListView1, "ListView1")
-        Me.ListView1.FullRowSelect = True
-        Me.ListView1.Items.AddRange(New System.Windows.Forms.ListViewItem() {CType(resources.GetObject("ListView1.Items"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items1"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items2"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items3"), System.Windows.Forms.ListViewItem)})
-        Me.ListView1.LargeImageList = Me.ImageList1
-        Me.ListView1.MultiSelect = False
-        Me.ListView1.Name = "ListView1"
-        Me.ListView1.SmallImageList = Me.ImageList1
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.ListView1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.ListView1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.ListView1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
-        Me.ListView1.UseCompatibleStateImageBehavior = False
-        Me.ListView1.View = System.Windows.Forms.View.List
-        '
-        'ImageList1
-        '
-        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
-        Me.ImageList1.Images.SetKeyName(0, "br.png")
-        Me.ImageList1.Images.SetKeyName(1, "gb.png")
-        Me.ImageList1.Images.SetKeyName(2, "us.png")
-        Me.ImageList1.Images.SetKeyName(3, "ru.png")
-        Me.ImageList1.Images.SetKeyName(4, "fr.png")
-        Me.ImageList1.Images.SetKeyName(5, "de.png")
-        Me.ImageList1.Images.SetKeyName(6, "jp.png")
-        Me.ImageList1.Images.SetKeyName(7, "id.png")
-        Me.ImageList1.Images.SetKeyName(8, "es.png")
-        Me.ImageList1.Images.SetKeyName(9, "cn.png")
-        '
-        'Label3
-        '
-        resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
-        Me.Label3.Name = "Label3"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label3, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label3, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label3, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
-        '
-        'Label1
-        '
-        resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
-        Me.Label1.Name = "Label1"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'FaTabStripItem3
         '
@@ -417,6 +335,89 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonCheckBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonCheckBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetToolTip(Me.KryptonCheckBox1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
+        '
+        'FaTabStripItem4
+        '
+        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
+        Me.FaTabStripItem4.CanClose = False
+        Me.FaTabStripItem4.Controls.Add(Me.GroupBox1)
+        Me.FaTabStripItem4.IsDrawn = True
+        Me.FaTabStripItem4.Name = "FaTabStripItem4"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem4, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem4, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem4, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
+        '
+        'GroupBox1
+        '
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
+        Me.GroupBox1.Controls.Add(Me.Button1)
+        Me.GroupBox1.Controls.Add(Me.ListView1)
+        Me.GroupBox1.Controls.Add(Me.Label3)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox1, System.Drawing.Color.Empty)
+        Me.GroupBox1.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
+        '
+        'Button1
+        '
+        resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button1.Name = "Button1"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'ListView1
+        '
+        resources.ApplyResources(Me.ListView1, "ListView1")
+        Me.ListView1.FullRowSelect = True
+        Me.ListView1.Items.AddRange(New System.Windows.Forms.ListViewItem() {CType(resources.GetObject("ListView1.Items"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items1"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items2"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items3"), System.Windows.Forms.ListViewItem)})
+        Me.ListView1.LargeImageList = Me.ImageList1
+        Me.ListView1.MultiSelect = False
+        Me.ListView1.Name = "ListView1"
+        Me.ListView1.SmallImageList = Me.ImageList1
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.ListView1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.ListView1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.ListView1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
+        Me.ListView1.UseCompatibleStateImageBehavior = False
+        Me.ListView1.View = System.Windows.Forms.View.List
+        '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "br.png")
+        Me.ImageList1.Images.SetKeyName(1, "gb.png")
+        Me.ImageList1.Images.SetKeyName(2, "us.png")
+        Me.ImageList1.Images.SetKeyName(3, "ru.png")
+        Me.ImageList1.Images.SetKeyName(4, "fr.png")
+        Me.ImageList1.Images.SetKeyName(5, "de.png")
+        Me.ImageList1.Images.SetKeyName(6, "jp.png")
+        Me.ImageList1.Images.SetKeyName(7, "id.png")
+        Me.ImageList1.Images.SetKeyName(8, "es.png")
+        Me.ImageList1.Images.SetKeyName(9, "cn.png")
+        Me.ImageList1.Images.SetKeyName(10, "")
+        '
+        'Label3
+        '
+        resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label3.Name = "Label3"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label3, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
+        '
+        'Label1
+        '
+        resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label1.Name = "Label1"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'FaTabStripItem2
         '
@@ -651,9 +652,6 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetToolTip(Me, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStrip1.ResumeLayout(False)
-        Me.FaTabStripItem4.ResumeLayout(False)
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
         Me.FaTabStripItem3.ResumeLayout(False)
         Me.GroupBox11.ResumeLayout(False)
         Me.GroupBox11.PerformLayout()
@@ -667,6 +665,9 @@ Partial Class FormOptions
         Me.GroupBox6.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
+        Me.FaTabStripItem4.ResumeLayout(False)
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.FaTabStripItem2.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()

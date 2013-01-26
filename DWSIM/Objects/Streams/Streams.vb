@@ -461,6 +461,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 'Should be define after concentrations?!?!
                 Fases(i).SPMProperties.massflow = Nothing
                 Fases(i).SPMProperties.molarflow = Nothing
+                Fases(i).SPMProperties.volumetric_flow = Nothing
 
             Next
 

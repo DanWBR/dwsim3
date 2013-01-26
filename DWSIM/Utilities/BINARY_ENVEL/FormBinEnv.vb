@@ -125,8 +125,6 @@ Public Class FormBinEnv
                 Next
             Next
 
-            Me.LblSelected.Text = ""
-
             P = cv.ConverterParaSI(su.spmp_pressure, tbP.Text)
             T = cv.ConverterParaSI(su.spmp_temperature, tbT.Text)
 

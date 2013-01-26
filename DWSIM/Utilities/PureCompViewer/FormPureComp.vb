@@ -215,23 +215,28 @@ Public Class FormPureComp
 
         'Render molecule / Calculate InChI from SMILES
 
-        Dim ind As New Indigo()
-        Dim mol As IndigoObject = ind.loadMolecule(constprop.SMILES)
-        Dim renderer As New IndigoRenderer(ind)
+        If Not constprop.SMILES Is Nothing Then
 
-        If constprop.InChI = "" Then
-            Dim ii As New IndigoInchi(ind)
-            tbInChI.Text = ii.getInchi(mol)
+            Dim ind As New Indigo()
+            Dim mol As IndigoObject = ind.loadMolecule(constprop.SMILES)
+            Dim renderer As New IndigoRenderer(ind)
+
+            If constprop.InChI = "" Then
+                Dim ii As New IndigoInchi(ind)
+                tbInChI.Text = ii.getInchi(mol)
+            End If
+
+            With renderer
+                ind.setOption("render-image-size", 733, 222)
+                ind.setOption("render-margins", 15, 15)
+                ind.setOption("render-coloring", True)
+                ind.setOption("render-background-color", Color.White)
+            End With
+
+            pbRender.Image = renderer.renderToBitmap(mol)
+
         End If
 
-        With renderer
-            ind.setOption("render-image-size", 733, 222)
-            ind.setOption("render-margins", 15, 15)
-            ind.setOption("render-coloring", True)
-            ind.setOption("render-background-color", Color.White)
-        End With
-
-        pbRender.Image = renderer.renderToBitmap(mol)
 
         'Grid Propriedades
         With Me.GridProps.Rows

@@ -22,74 +22,110 @@ Partial Class FormDataRegression
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormDataRegression))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.tbRegResults = New System.Windows.Forms.TextBox
-        Me.btnDoReg = New System.Windows.Forms.Button
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.Panel1 = New System.Windows.Forms.Panel
-        Me.Button2 = New System.Windows.Forms.Button
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.Label9 = New System.Windows.Forms.Label
-        Me.gridInEst = New System.Windows.Forms.DataGridView
-        Me.colpar = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.colval = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.btnCancel = New System.Windows.Forms.Button
-        Me.cbPunit = New System.Windows.Forms.ComboBox
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.cbTunit = New System.Windows.Forms.ComboBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.chkIncludeSD = New System.Windows.Forms.CheckBox
-        Me.btnAdvConfig = New System.Windows.Forms.Button
-        Me.cbObjFunc = New System.Windows.Forms.ComboBox
-        Me.LabelWithDivider12 = New System.Windows.Forms.LabelWithDivider
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.cbRegMethod = New System.Windows.Forms.ComboBox
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.cbCompound1 = New System.Windows.Forms.ComboBox
-        Me.LabelWithDivider3 = New System.Windows.Forms.LabelWithDivider
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.GridExpData = New System.Windows.Forms.DataGridView
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.tbRegResults = New System.Windows.Forms.TextBox()
+        Me.btnDoReg = New System.Windows.Forms.Button()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.gridInEst = New System.Windows.Forms.DataGridView()
+        Me.colpar = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colval = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.btnCancel = New System.Windows.Forms.Button()
+        Me.cbPunit = New System.Windows.Forms.ComboBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.cbTunit = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.chkIncludeSD = New System.Windows.Forms.CheckBox()
+        Me.btnAdvConfig = New System.Windows.Forms.Button()
+        Me.cbObjFunc = New System.Windows.Forms.ComboBox()
+        Me.LabelWithDivider12 = New System.Windows.Forms.LabelWithDivider()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.cbRegMethod = New System.Windows.Forms.ComboBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.cbCompound1 = New System.Windows.Forms.ComboBox()
+        Me.LabelWithDivider3 = New System.Windows.Forms.LabelWithDivider()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.GridExpData = New System.Windows.Forms.DataGridView()
+        Me.colx1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.coly1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colT = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colP = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem7 = New System.Windows.Forms.ToolStripMenuItem
-        Me.cbCompound2 = New System.Windows.Forms.ComboBox
-        Me.cbDataType = New System.Windows.Forms.ComboBox
-        Me.cbModel = New System.Windows.Forms.ComboBox
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.LabelWithDivider1 = New System.Windows.Forms.LabelWithDivider
-        Me.LabelWithDivider2 = New System.Windows.Forms.LabelWithDivider
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox
-        Me.graph = New ZedGraph.ZedGraphControl
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox
-        Me.tbDescription = New System.Windows.Forms.TextBox
-        Me.Label11 = New System.Windows.Forms.Label
-        Me.tbTitle = New System.Windows.Forms.TextBox
-        Me.Label10 = New System.Windows.Forms.Label
-        Me.colx1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.colx2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.coly1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.colT = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.colP = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem7 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.cbCompound2 = New System.Windows.Forms.ComboBox()
+        Me.cbDataType = New System.Windows.Forms.ComboBox()
+        Me.cbModel = New System.Windows.Forms.ComboBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.LabelWithDivider1 = New System.Windows.Forms.LabelWithDivider()
+        Me.LabelWithDivider2 = New System.Windows.Forms.LabelWithDivider()
+        Me.graph = New ZedGraph.ZedGraphControl()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.tbDescription = New System.Windows.Forms.TextBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.tbTitle = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
+        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
+        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
+        Me.graph2 = New ZedGraph.ZedGraphControl()
+        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
+        Me.gridstats = New System.Windows.Forms.DataGridView()
+        Me.x1l1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.x1l1calc = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.x1l2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.x1l2calc = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.y1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.y1c = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.t = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.tcalc = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.p = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.pcalc = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dy = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dyy = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dyp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dpp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dppp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dt = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dtt = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dttp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dx1l1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dxx1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dxxp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dxx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dxx2p = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.gridInEst, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridExpData, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
+        CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.FaTabStrip1.SuspendLayout()
+        Me.FaTabStripItem1.SuspendLayout()
+        Me.FaTabStripItem2.SuspendLayout()
+        Me.FaTabStripItem3.SuspendLayout()
+        CType(Me.gridstats, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -188,6 +224,7 @@ Partial Class FormDataRegression
         resources.ApplyResources(Me.colpar, "colpar")
         Me.colpar.Name = "colpar"
         Me.colpar.ReadOnly = True
+        Me.colpar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'colval
         '
@@ -195,6 +232,7 @@ Partial Class FormDataRegression
         Me.colval.DefaultCellStyle = DataGridViewCellStyle2
         resources.ApplyResources(Me.colval, "colval")
         Me.colval.Name = "colval"
+        Me.colval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'btnCancel
         '
@@ -312,6 +350,31 @@ Partial Class FormDataRegression
         Me.GridExpData.Name = "GridExpData"
         Me.GridExpData.RowHeadersVisible = False
         '
+        'colx1
+        '
+        resources.ApplyResources(Me.colx1, "colx1")
+        Me.colx1.Name = "colx1"
+        '
+        'colx2
+        '
+        resources.ApplyResources(Me.colx2, "colx2")
+        Me.colx2.Name = "colx2"
+        '
+        'coly1
+        '
+        resources.ApplyResources(Me.coly1, "coly1")
+        Me.coly1.Name = "coly1"
+        '
+        'colT
+        '
+        resources.ApplyResources(Me.colT, "colT")
+        Me.colT.Name = "colT"
+        '
+        'colP
+        '
+        resources.ApplyResources(Me.colP, "colP")
+        Me.colP.Name = "colP"
+        '
         'ContextMenuStrip1
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripMenuItem2, Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6, Me.ToolStripMenuItem7})
@@ -400,24 +463,17 @@ Partial Class FormDataRegression
         Me.LabelWithDivider2.Gap = 5
         Me.LabelWithDivider2.Name = "LabelWithDivider2"
         '
-        'GroupBox3
-        '
-        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
-        Me.GroupBox3.Controls.Add(Me.graph)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.TabStop = False
-        '
         'graph
         '
         resources.ApplyResources(Me.graph, "graph")
         Me.graph.Name = "graph"
-        Me.graph.ScrollGrace = 0
-        Me.graph.ScrollMaxX = 0
-        Me.graph.ScrollMaxY = 0
-        Me.graph.ScrollMaxY2 = 0
-        Me.graph.ScrollMinX = 0
-        Me.graph.ScrollMinY = 0
-        Me.graph.ScrollMinY2 = 0
+        Me.graph.ScrollGrace = 0.0R
+        Me.graph.ScrollMaxX = 0.0R
+        Me.graph.ScrollMaxY = 0.0R
+        Me.graph.ScrollMaxY2 = 0.0R
+        Me.graph.ScrollMinX = 0.0R
+        Me.graph.ScrollMinY = 0.0R
+        Me.graph.ScrollMinY2 = 0.0R
         '
         'GroupBox4
         '
@@ -449,37 +505,222 @@ Partial Class FormDataRegression
         resources.ApplyResources(Me.Label10, "Label10")
         Me.Label10.Name = "Label10"
         '
-        'colx1
+        'FaTabStrip1
         '
-        resources.ApplyResources(Me.colx1, "colx1")
-        Me.colx1.Name = "colx1"
+        Me.FaTabStrip1.AlwaysShowClose = False
+        Me.FaTabStrip1.AlwaysShowMenuGlyph = False
+        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
+        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2, Me.FaTabStripItem3})
+        Me.FaTabStrip1.Name = "FaTabStrip1"
+        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
         '
-        'colx2
+        'FaTabStripItem1
         '
-        resources.ApplyResources(Me.colx2, "colx2")
-        Me.colx2.Name = "colx2"
+        Me.FaTabStripItem1.CanClose = False
+        Me.FaTabStripItem1.Controls.Add(Me.graph)
+        Me.FaTabStripItem1.IsDrawn = True
+        Me.FaTabStripItem1.Name = "FaTabStripItem1"
+        Me.FaTabStripItem1.Selected = True
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         '
-        'coly1
+        'FaTabStripItem2
         '
-        resources.ApplyResources(Me.coly1, "coly1")
-        Me.coly1.Name = "coly1"
+        Me.FaTabStripItem2.CanClose = False
+        Me.FaTabStripItem2.Controls.Add(Me.graph2)
+        Me.FaTabStripItem2.IsDrawn = True
+        Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         '
-        'colT
+        'graph2
         '
-        resources.ApplyResources(Me.colT, "colT")
-        Me.colT.Name = "colT"
+        resources.ApplyResources(Me.graph2, "graph2")
+        Me.graph2.Name = "graph2"
+        Me.graph2.ScrollGrace = 0.0R
+        Me.graph2.ScrollMaxX = 0.0R
+        Me.graph2.ScrollMaxY = 0.0R
+        Me.graph2.ScrollMaxY2 = 0.0R
+        Me.graph2.ScrollMinX = 0.0R
+        Me.graph2.ScrollMinY = 0.0R
+        Me.graph2.ScrollMinY2 = 0.0R
         '
-        'colP
+        'FaTabStripItem3
         '
-        resources.ApplyResources(Me.colP, "colP")
-        Me.colP.Name = "colP"
+        Me.FaTabStripItem3.CanClose = False
+        Me.FaTabStripItem3.Controls.Add(Me.gridstats)
+        Me.FaTabStripItem3.IsDrawn = True
+        Me.FaTabStripItem3.Name = "FaTabStripItem3"
+        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
+        '
+        'gridstats
+        '
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.gridstats.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
+        Me.gridstats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.gridstats.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
+        Me.gridstats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.gridstats.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.x1l1, Me.x1l1calc, Me.x1l2, Me.x1l2calc, Me.y1, Me.y1c, Me.t, Me.tcalc, Me.p, Me.pcalc, Me.dy, Me.dyy, Me.dyp, Me.dp, Me.dpp, Me.dppp, Me.dt, Me.dtt, Me.dttp, Me.dx1l1, Me.dxx1, Me.dxxp, Me.dx2, Me.dxx2, Me.dxx2p})
+        Me.gridstats.ContextMenuStrip = Me.ContextMenuStrip1
+        resources.ApplyResources(Me.gridstats, "gridstats")
+        Me.gridstats.Name = "gridstats"
+        Me.gridstats.ReadOnly = True
+        Me.gridstats.RowHeadersVisible = False
+        '
+        'x1l1
+        '
+        resources.ApplyResources(Me.x1l1, "x1l1")
+        Me.x1l1.Name = "x1l1"
+        Me.x1l1.ReadOnly = True
+        '
+        'x1l1calc
+        '
+        resources.ApplyResources(Me.x1l1calc, "x1l1calc")
+        Me.x1l1calc.Name = "x1l1calc"
+        Me.x1l1calc.ReadOnly = True
+        '
+        'x1l2
+        '
+        resources.ApplyResources(Me.x1l2, "x1l2")
+        Me.x1l2.Name = "x1l2"
+        Me.x1l2.ReadOnly = True
+        '
+        'x1l2calc
+        '
+        resources.ApplyResources(Me.x1l2calc, "x1l2calc")
+        Me.x1l2calc.Name = "x1l2calc"
+        Me.x1l2calc.ReadOnly = True
+        '
+        'y1
+        '
+        resources.ApplyResources(Me.y1, "y1")
+        Me.y1.Name = "y1"
+        Me.y1.ReadOnly = True
+        '
+        'y1c
+        '
+        resources.ApplyResources(Me.y1c, "y1c")
+        Me.y1c.Name = "y1c"
+        Me.y1c.ReadOnly = True
+        '
+        't
+        '
+        resources.ApplyResources(Me.t, "t")
+        Me.t.Name = "t"
+        Me.t.ReadOnly = True
+        '
+        'tcalc
+        '
+        resources.ApplyResources(Me.tcalc, "tcalc")
+        Me.tcalc.Name = "tcalc"
+        Me.tcalc.ReadOnly = True
+        '
+        'p
+        '
+        resources.ApplyResources(Me.p, "p")
+        Me.p.Name = "p"
+        Me.p.ReadOnly = True
+        '
+        'pcalc
+        '
+        resources.ApplyResources(Me.pcalc, "pcalc")
+        Me.pcalc.Name = "pcalc"
+        Me.pcalc.ReadOnly = True
+        '
+        'dy
+        '
+        resources.ApplyResources(Me.dy, "dy")
+        Me.dy.Name = "dy"
+        Me.dy.ReadOnly = True
+        '
+        'dyy
+        '
+        resources.ApplyResources(Me.dyy, "dyy")
+        Me.dyy.Name = "dyy"
+        Me.dyy.ReadOnly = True
+        '
+        'dyp
+        '
+        resources.ApplyResources(Me.dyp, "dyp")
+        Me.dyp.Name = "dyp"
+        Me.dyp.ReadOnly = True
+        '
+        'dp
+        '
+        resources.ApplyResources(Me.dp, "dp")
+        Me.dp.Name = "dp"
+        Me.dp.ReadOnly = True
+        '
+        'dpp
+        '
+        resources.ApplyResources(Me.dpp, "dpp")
+        Me.dpp.Name = "dpp"
+        Me.dpp.ReadOnly = True
+        '
+        'dppp
+        '
+        resources.ApplyResources(Me.dppp, "dppp")
+        Me.dppp.Name = "dppp"
+        Me.dppp.ReadOnly = True
+        '
+        'dt
+        '
+        resources.ApplyResources(Me.dt, "dt")
+        Me.dt.Name = "dt"
+        Me.dt.ReadOnly = True
+        '
+        'dtt
+        '
+        resources.ApplyResources(Me.dtt, "dtt")
+        Me.dtt.Name = "dtt"
+        Me.dtt.ReadOnly = True
+        '
+        'dttp
+        '
+        resources.ApplyResources(Me.dttp, "dttp")
+        Me.dttp.Name = "dttp"
+        Me.dttp.ReadOnly = True
+        '
+        'dx1l1
+        '
+        resources.ApplyResources(Me.dx1l1, "dx1l1")
+        Me.dx1l1.Name = "dx1l1"
+        Me.dx1l1.ReadOnly = True
+        '
+        'dxx1
+        '
+        resources.ApplyResources(Me.dxx1, "dxx1")
+        Me.dxx1.Name = "dxx1"
+        Me.dxx1.ReadOnly = True
+        '
+        'dxxp
+        '
+        resources.ApplyResources(Me.dxxp, "dxxp")
+        Me.dxxp.Name = "dxxp"
+        Me.dxxp.ReadOnly = True
+        '
+        'dx2
+        '
+        resources.ApplyResources(Me.dx2, "dx2")
+        Me.dx2.Name = "dx2"
+        Me.dx2.ReadOnly = True
+        '
+        'dxx2
+        '
+        resources.ApplyResources(Me.dxx2, "dxx2")
+        Me.dxx2.Name = "dxx2"
+        Me.dxx2.ReadOnly = True
+        '
+        'dxx2p
+        '
+        resources.ApplyResources(Me.dxx2p, "dxx2p")
+        Me.dxx2p.Name = "dxx2p"
+        Me.dxx2p.ReadOnly = True
         '
         'FormDataRegression
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.FaTabStrip1)
         Me.Controls.Add(Me.GroupBox4)
-        Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Name = "FormDataRegression"
@@ -491,9 +732,14 @@ Partial Class FormDataRegression
         CType(Me.gridInEst, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridExpData, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
-        Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
+        CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.FaTabStrip1.ResumeLayout(False)
+        Me.FaTabStripItem1.ResumeLayout(False)
+        Me.FaTabStripItem2.ResumeLayout(False)
+        Me.FaTabStripItem3.ResumeLayout(False)
+        CType(Me.gridstats, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -504,7 +750,6 @@ Partial Class FormDataRegression
     Friend WithEvents cbCompound1 As System.Windows.Forms.ComboBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Friend WithEvents cbModel As System.Windows.Forms.ComboBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents cbDataType As System.Windows.Forms.ComboBox
@@ -530,8 +775,6 @@ Partial Class FormDataRegression
     Friend WithEvents btnCancel As System.Windows.Forms.Button
     Public WithEvents gridInEst As System.Windows.Forms.DataGridView
     Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents colpar As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colval As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
     Friend WithEvents tbTitle As System.Windows.Forms.TextBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
@@ -552,4 +795,37 @@ Partial Class FormDataRegression
     Friend WithEvents coly1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colT As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colP As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colpar As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colval As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents FaTabStrip1 As FarsiLibrary.Win.FATabStrip
+    Friend WithEvents FaTabStripItem1 As FarsiLibrary.Win.FATabStripItem
+    Friend WithEvents FaTabStripItem2 As FarsiLibrary.Win.FATabStripItem
+    Friend WithEvents graph2 As ZedGraph.ZedGraphControl
+    Friend WithEvents FaTabStripItem3 As FarsiLibrary.Win.FATabStripItem
+    Public WithEvents gridstats As System.Windows.Forms.DataGridView
+    Friend WithEvents x1l1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents x1l1calc As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents x1l2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents x1l2calc As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents y1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents y1c As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents t As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents tcalc As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents p As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents pcalc As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dy As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dyy As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dyp As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dp As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dpp As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dppp As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dt As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dtt As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dttp As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dx1l1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dxx1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dxxp As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dx2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dxx2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dxx2p As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

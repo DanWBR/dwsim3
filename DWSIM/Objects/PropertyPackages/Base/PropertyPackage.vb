@@ -4450,6 +4450,35 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massfraction = Nothing
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarfraction = Nothing
 
+            Else
+
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpyF = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropyF = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpyF = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropyF = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.speedOfSound = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.volumetric_flow = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.jouleThomsonCoefficient = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEnthalpy = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEntropy = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibility = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubbleTemperature = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubblePressure = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewTemperature = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewPressure = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = Nothing
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = Nothing
+
             End If
 
         End Sub
@@ -5153,15 +5182,19 @@ Final3:
             Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "User" Then
                 Dim tr1 As Double
                 tr1 = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Normal_Boiling_Point / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature
+                If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A = 0.0# Then
+                    Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A = New DWSIM.Utilities.Hypos.Methods.HYP().DHvb_Vetere(Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Pressure, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Normal_Boiling_Point)
+                    Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A /= Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight
+                End If
                 result = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A * ((1 - Tr) / (1 - tr1)) ^ 0.375
                 Return result 'kJ/kg
-            ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "ChemSep" Then
-                Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.VaporizationEnthalpyEquation
-                result = Me.CalcCSTDepProp(eqno, A, B, C, D, 0, T, T / Tr) / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight / 1000 'kJ/kg
-                Return result
-            Else
-                Return 0
-            End If
+                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "ChemSep" Then
+                    Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.VaporizationEnthalpyEquation
+                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, 0, T, T / Tr) / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight / 1000 'kJ/kg
+                    Return result
+                Else
+                    Return 0
+                End If
 
         End Function
 

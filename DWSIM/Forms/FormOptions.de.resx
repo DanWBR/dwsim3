@@ -112,35 +112,104 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Sprache</value>
-  </data>
   <data name="FaTabStripItem3.Title" xml:space="preserve">
     <value>Datenbanken</value>
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Meldungen</value>
+    <value>Funktionen</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Sprache</value>
   </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Backups</value>
   </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>Aufgaben</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>330, 17</value>
+  </data>
+  <data name="cbudb.Text" xml:space="preserve">
+    <value>Beim Laden von Anwenderdatenbanken Komponenten ersetzen</value>
+  </data>
+  <data name="Button11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>297, 17</value>
+  </data>
+  <data name="Button11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>245, 23</value>
+  </data>
+  <data name="Button11.Text" xml:space="preserve">
+    <value>ChemSep™ Datenbank hinzugügen</value>
+  </data>
+  <data name="Button7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>285, 23</value>
+  </data>
+  <data name="Button7.Text" xml:space="preserve">
+    <value>Anwenderdatenbank hinzufügen</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Datenbanken</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>254, 13</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Für DWSIM verfügbare Komponentendatenbanken.</value>
+  </data>
+  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>611, 51</value>
+  </data>
+  <data name="GroupBox7.Text" xml:space="preserve">
+    <value>Funktionen</value>
+  </data>
+  <data name="chkEnableParallelCalcs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 17</value>
+  </data>
+  <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
+    <value>Aktivieren Berechnungen Parallel</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Anderen</value>
+  </data>
+  <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 17</value>
+  </data>
+  <data name="chkUpdates.Text" xml:space="preserve">
+    <value>Nach Updates suchen beim Starten</value>
+  </data>
+  <data name="chkconsole.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 17</value>
+  </data>
+  <data name="chkconsole.Text" xml:space="preserve">
+    <value>Umleitung der Konsolenausgabe</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Meldungen</value>
+  </data>
+  <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>227, 17</value>
+  </data>
+  <data name="KryptonCheckBox1.Text" xml:space="preserve">
+    <value>Zeige beim Start den Eröffnungsbildschirm</value>
+  </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Sprache</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
     <value>279, 47</value>
   </data>
   <data name="ListView1.Items" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkMAwAAAFFTeXN0
-        ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
+        ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
@@ -156,9 +225,9 @@
   </data>
   <data name="ListView1.Items1" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkMAwAAAFFTeXN0
-        ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
+        ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
@@ -173,9 +242,9 @@
   </data>
   <data name="ListView1.Items2" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkMAwAAAFFTeXN0
-        ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
+        ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
@@ -190,9 +259,9 @@
   </data>
   <data name="ListView1.Items3" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkMAwAAAFFTeXN0
-        ZW0uRHJhd2luZywgVmVyc2lvbj0yLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
+        ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
@@ -207,10 +276,10 @@
   </data>
   <data name="ImageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABw
-        KgAAAk1TRnQBSQFMAgEBCgEAAVQBAAFUAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAVwBAAFcAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAeQCogHiAqAB4QKfAd4CnAHcAZwBmgHaApgB2gKYAdkClwHXApUB1gKU
         AdMCkQHTApEB0QKPAc8CjQHPAo0BzwKNAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKf
         Ad4CnAHeApwB3AKaAdoCmAHaApgB2gKYAdoCmGAAA+wD8APuA+0B6gHrAeoD6APnAuUB5gLjAeQD4gPh
@@ -409,96 +478,6 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Wählen Sie eine Sprache für die Oberfläche aus der Liste aus und klicken Sie für die Bestätigung 'OK':</value>
   </data>
-  <data name="GroupBox11.Text" xml:space="preserve">
-    <value>Aufgaben</value>
-  </data>
-  <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>330, 17</value>
-  </data>
-  <data name="cbudb.Text" xml:space="preserve">
-    <value>Beim Laden von Anwenderdatenbanken Komponenten ersetzen</value>
-  </data>
-  <data name="Button11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>297, 17</value>
-  </data>
-  <data name="Button11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>245, 23</value>
-  </data>
-  <data name="Button11.Text" xml:space="preserve">
-    <value>ChemSep™ Datenbank hinzugügen</value>
-  </data>
-  <data name="Button7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>285, 23</value>
-  </data>
-  <data name="Button7.Text" xml:space="preserve">
-    <value>Anwenderdatenbank hinzufügen</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Datenbanken</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 13</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>Für DWSIM verfügbare Komponentendatenbanken.</value>
-  </data>
-  <data name="GroupBox8.Text" xml:space="preserve">
-    <value>Grundoperationen</value>
-  </data>
-  <data name="Label7.Text" xml:space="preserve">
-    <value>Wenn aktiviert, informieren DWSIM der CAPE-OPEN Ablaufplan zu dem es gehört. Deaktivieren Sie diese Option, wenn es Fehler in der Berechnung oder inkonsistente Daten über die Ausgangsströme.</value>
-  </data>
-  <data name="chkSetCOSimulationContext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>329, 17</value>
-  </data>
-  <data name="chkSetCOSimulationContext.Text" xml:space="preserve">
-    <value>Weisen Sie Eigentum "simulationcontext" einheitliche Bedienung</value>
-  </data>
-  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>611, 140</value>
-  </data>
-  <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Unterstützung von Persistenz</value>
-  </data>
-  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>589, 72</value>
-  </data>
-  <data name="Label6.Text" xml:space="preserve">
-    <value>Markieren Sie dieses Feld zu laden und zu speichern Unit Operations mit der Persistenz-Schnittstellen, falls vorhanden. Einige CAPE-OPEN Unit Operations nicht korrekt umzusetzen, so sollten Sie dieses Kontrollkästchen deaktivieren, falls Ihr CAPE-OPEN Unit Operations sind nicht korrekt, wenn Sie eine bestehende Simulation / Fließbild Last restauriert. Wenn deaktiviert, wird DWSIM speichern und wiederherstellen Ports und Parameter "-Werte mit internen Speicher Mechanismen.</value>
-  </data>
-  <data name="chkUsePersistenceSupport.Size" type="System.Drawing.Size, System.Drawing">
-    <value>513, 17</value>
-  </data>
-  <data name="chkUsePersistenceSupport.Text" xml:space="preserve">
-    <value>Speichern und Laden von Unit Operations mit den Schnittstellen und IPersistStream IPersistStreamInit</value>
-  </data>
-  <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 17</value>
-  </data>
-  <data name="chkUpdates.Text" xml:space="preserve">
-    <value>Nach Updates suchen beim Starten</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Meldungen</value>
-  </data>
-  <data name="KryptonCheckBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>290, 17</value>
-  </data>
-  <data name="KryptonCheckBox3.Text" xml:space="preserve">
-    <value>Warne, wenn sich das thermodynamische Paket ändert</value>
-  </data>
-  <data name="KryptonCheckBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>333, 17</value>
-  </data>
-  <data name="KryptonCheckBox2.Text" xml:space="preserve">
-    <value>Warne, wenn eine Komponente aus der Simulation entfernt wird</value>
-  </data>
-  <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>227, 17</value>
-  </data>
-  <data name="KryptonCheckBox1.Text" xml:space="preserve">
-    <value>Zeige beim Start den Eröffnungsbildschirm</value>
-  </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Backupkopie</value>
   </data>
@@ -507,12 +486,6 @@
   </data>
   <data name="Button2.Text" xml:space="preserve">
     <value>Lösche alle ".dwbak"-Dateien im Backupverzeichnis</value>
-  </data>
-  <data name="PictureBox1.ToolTip" xml:space="preserve">
-    <value>Aktiviert für DWSIM das Speichern einer Sicherungskopie für jede offene
-Simulation im spezifizierten Intervall und in das spezifizierte Verzeichnis.
-Das kann Datenverluste im Falle fataler Fehler oder aus anderen Gründen
-vermeiden.</value>
   </data>
   <data name="KryptonLabel3.Text" xml:space="preserve">
     <value>5 Minuten</value>

@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Regression Ergebnisse</value>
@@ -126,9 +126,9 @@
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Regression Informationen</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 13</value>
+    <value>58, 13</value>
   </data>
   <data name="Label9.Text" xml:space="preserve">
     <value>Startwerte:</value>
@@ -139,11 +139,11 @@
   <data name="colval.HeaderText" xml:space="preserve">
     <value>Wert</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnCancel.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -151,19 +151,19 @@
     <value>Abbruch</value>
   </data>
   <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 13</value>
+    <value>49, 13</value>
   </data>
   <data name="Label8.Text" xml:space="preserve">
     <value>P Einheit</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 13</value>
+    <value>49, 13</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>T Einheit</value>
   </data>
   <data name="chkIncludeSD.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 17</value>
+    <value>217, 17</value>
   </data>
   <data name="chkIncludeSD.Text" xml:space="preserve">
     <value>Standardabweichungen berücksichtigen</value>
@@ -175,22 +175,19 @@
     <value>Komponenten</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 13</value>
+    <value>62, 13</value>
   </data>
   <data name="Label7.Text" xml:space="preserve">
     <value>Zielfunktion</value>
   </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>67, 13</value>
-  </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Komponente 1</value>
   </data>
-  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>67, 13</value>
-  </data>
   <data name="Label3.Text" xml:space="preserve">
     <value>Komponente 2</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 13</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Methode</value>
@@ -199,55 +196,55 @@
     <value>Regression Parameter</value>
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 13</value>
+    <value>38, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Modell</value>
   </data>
+  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 158</value>
+  </data>
   <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
+    <value>219, 22</value>
   </data>
   <data name="ToolStripMenuItem1.Text" xml:space="preserve">
     <value>Erzeuge Punkte (UNIFAC)</value>
   </data>
   <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
+    <value>219, 22</value>
   </data>
   <data name="ToolStripMenuItem2.Text" xml:space="preserve">
     <value>Erzeuge Punkte (NRTL)</value>
   </data>
   <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
+    <value>219, 22</value>
   </data>
   <data name="ToolStripMenuItem3.Text" xml:space="preserve">
     <value>Erzeuge Punkte (UNIQUAC)</value>
   </data>
   <data name="ToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
+    <value>219, 22</value>
   </data>
   <data name="ToolStripMenuItem4.Text" xml:space="preserve">
     <value>Erzeuge Punkte (PR)</value>
   </data>
   <data name="ToolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
+    <value>219, 22</value>
   </data>
   <data name="ToolStripMenuItem5.Text" xml:space="preserve">
     <value>Erzeuge Punkte (SRK)</value>
   </data>
   <data name="ToolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
+    <value>219, 22</value>
   </data>
   <data name="ToolStripMenuItem6.Text" xml:space="preserve">
     <value>Erzeuge Punkte (PRSV2-M)</value>
   </data>
   <data name="ToolStripMenuItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
+    <value>219, 22</value>
   </data>
   <data name="ToolStripMenuItem7.Text" xml:space="preserve">
     <value>Erzeuge Punkte (PRSV2-VL)</value>
-  </data>
-  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>222, 158</value>
   </data>
   <data name="cbDataType.Items" xml:space="preserve">
     <value>Txy (VLE)</value>
@@ -268,7 +265,7 @@
     <value>TPxx (LLE)</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 13</value>
+    <value>50, 13</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
     <value>Datentyp</value>
@@ -279,20 +276,17 @@
   <data name="LabelWithDivider2.Text" xml:space="preserve">
     <value>Experimentelle Daten</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Diagramm</value>
-  </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Information</value>
   </data>
   <data name="tbDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>344, 19</value>
+    <value>356, 19</value>
   </data>
   <data name="tbDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>490, 20</value>
+    <value>850, 20</value>
   </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 13</value>
+    <value>72, 13</value>
   </data>
   <data name="Label11.Text" xml:space="preserve">
     <value>Beschreibung</value>

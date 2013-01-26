@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="_12Propanodiol" xml:space="preserve">
-    <value>1,2-Propanediol (C3H8O2)</value>
+    <value>1,2-Propandiol (C3H8O2)</value>
   </data>
   <data name="_1Decanol" xml:space="preserve">
     <value>1-Decanol (C10H21OH)</value>
@@ -142,7 +142,7 @@
     <value>Wasser (H2O)</value>
   </data>
   <data name="_Benzeno" xml:space="preserve">
-    <value>Benzen (C6H6)</value>
+    <value>Benzol (C6H6)</value>
   </data>
   <data name="_DioxidoDeCarbono" xml:space="preserve">
     <value>Kohlendioxid (CO2)</value>
@@ -154,13 +154,13 @@
     <value>Ethanol (C2H5OH)</value>
   </data>
   <data name="_Etilbenzeno" xml:space="preserve">
-    <value>Ethylbenzen (C8H10)</value>
+    <value>Ethylbenzol (C8H10)</value>
   </data>
   <data name="_Fenol" xml:space="preserve">
     <value>Phenol (C6H6O)</value>
   </data>
   <data name="_Glicerol" xml:space="preserve">
-    <value>Glyceryn (C3H8O3)</value>
+    <value>Glycerin (C3H8O3)</value>
   </data>
   <data name="_Hidrogenio" xml:space="preserve">
     <value>Wasserstoff (H2)</value>
@@ -214,19 +214,19 @@
     <value>Sauerstoff (O2)</value>
   </data>
   <data name="_Oxileno" xml:space="preserve">
-    <value>o-Xylen (C8H10)</value>
+    <value>o-Xylol (C8H10)</value>
   </data>
   <data name="_Propano" xml:space="preserve">
     <value>Propan (C3)</value>
   </data>
   <data name="_Pxileno" xml:space="preserve">
-    <value>p-Xylen (C8H10)</value>
+    <value>p-Xylol (C8H10)</value>
   </data>
   <data name="_SulfetoDeHidrogenio" xml:space="preserve">
     <value>Schwefelwasserstoff (H2S)</value>
   </data>
   <data name="_Tolueno" xml:space="preserve">
-    <value>Toluen (C7H8)</value>
+    <value>Toluol (C7H8)</value>
   </data>
   <data name="a" xml:space="preserve">
     <value>Der</value>
@@ -349,7 +349,7 @@
     <value>Asphalt</value>
   </data>
   <data name="Aspropriedadessocalc" xml:space="preserve">
-    <value>Die Eigenschaften werden dirket mit Hilfe der Zustandsgleichung und/oder experimentellen Daten berechnet, ausgenommen:</value>
+    <value>Die Eigenschaften werden direket mit Hilfe der Zustandsgleichung und/oder experimentellen Daten berechnet, ausgenommen:</value>
   </data>
   <data name="AssistentedeConfigur" xml:space="preserve">
     <value>  -- Einrichtungsassisten</value>
@@ -523,7 +523,7 @@
     <value>OK klicken zum Löschen</value>
   </data>
   <data name="CliqueemRecalcularpa" xml:space="preserve">
-    <value>Klicken Sie "Neu berechnen", um alle Objekte neu zu berechnen, oder "Fortsetzen", um den aktuellen Status bezubehalten.</value>
+    <value>Klicken Sie "Neu berechnen", um alle Objekte neu zu berechnen, oder "Fortsetzen", um den aktuellen Status beizubehalten.</value>
   </data>
   <data name="Cliquenobotocomretic" xml:space="preserve">
     <value>Anzeige und Bearbeiten der Anmerkungen des ausgewählten Objektes</value>
@@ -580,7 +580,7 @@
     <value>In der Simulation existiert bereits eine Komponente mit dem angegebenen Namen.</value>
   </data>
   <data name="CompHypo" xml:space="preserve">
-    <value>Hypotetisch</value>
+    <value>Hypothetisch</value>
   </data>
   <data name="CompMissingData" xml:space="preserve">
     <value>Einige Parameter fehlen für diese Komponente.</value>
@@ -763,10 +763,10 @@
     <value>Überwacht</value>
   </data>
   <data name="ControlledObjectData" xml:space="preserve">
-    <value>Daten des überwachen Objektes</value>
+    <value>Daten des überwachten Objektes</value>
   </data>
   <data name="Coordenadahorizontal" xml:space="preserve">
-    <value>Horizontale Koordinte in Pixel</value>
+    <value>Horizontale Koordinate in Pixel</value>
   </data>
   <data name="Coordenadas4" xml:space="preserve">
     <value>4. Koordinaten</value>
@@ -1021,7 +1021,7 @@
     <value>Reboilerdruck</value>
   </data>
   <data name="DCReboilerTempEstimate" xml:space="preserve">
-    <value>Reboiler Temperature (est.)</value>
+    <value>Reboiler Temperatur (geschätzt)</value>
   </data>
   <data name="DCRefluxRatio" xml:space="preserve">
     <value>Rücklaufverhältnis</value>
@@ -1096,7 +1096,7 @@
     <value>Definieren Sie einen Namen für dieses Einheitensystem</value>
   </data>
   <data name="Definidopelousurio" xml:space="preserve">
-    <value>User-defined</value>
+    <value>anwenderdefiniert</value>
   </data>
   <data name="Definies" xml:space="preserve">
     <value>Definitionen</value>
@@ -1129,7 +1129,7 @@
     <value>In diesem Paket wird das NRTL-Modell (Non-Random Two-Liquid) für die Berechnung der Aktivitätskoeffizienten in der Flüssigphase verwendet. Enthalpien werden mit dem Lee-Kesler-Modell berechnet, wogegen die Dampfphasenfugazitäten und die anderen thermodynamischen Eigenschaften (beide Phasen) mit der Zustandsgleichung nach Peng-Robinson berechnet werden.</value>
   </data>
   <data name="DescPengRobinsonIWVTPP" xml:space="preserve">
-    <value>Dieses Paket verwendet die Zustandsgleichung nach Peng-Robinson EOS unter der Annahme, daß Wasser keine mischbare Komponente ist. Weiterhin werden für eine bessere Vorhersage der Flüssigdichten Volumentranslationskoeffizienten herangezogen, sofern diese verfügbar sind. Das Paket wird nur für Wasser-Kohlenwasserstoff-Systeme empfohlen.</value>
+    <value>Dieses Paket verwendet die Zustandsgleichung nach Peng-Robinson EOS unter der Annahme, daß Wasser keine mischbare Komponente ist. Weiterhin werden für eine bessere Vorhersage der Flüssigkeitsdichten Volumentranslationskoeffizienten herangezogen, sofern diese verfügbar sind. Das Paket wird nur für Wasser-Kohlenwasserstoff-Systeme empfohlen.</value>
   </data>
   <data name="DescPengRobinsonMP" xml:space="preserve">
     <value>Peng-Robinson-Paket mit Unterstützung für mehr als eine Flüssigphase.</value>
@@ -1146,7 +1146,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>In diesem Paket werden die Enthalpien, Entropien und Wärmekapazitäten mit dem Lee-Kesler-Modell berechnet.</value>
   </data>
   <data name="DescPRWSPP" xml:space="preserve">
-    <value>Verwendet die Zustandsgleichung nach Peng-Robinson mit den Wong-Sandler Mischungsregeln. Die Gibbs'sche Exzessenergie (GE/RT) wird mit dem UNIFAC-Model berechnet. Empfohlen für binäre und ternäre Mischungen polarer Komponenten bei hohen Drücken und Temperaturen.</value>
+    <value>Verwendet die Zustandsgleichung nach Peng-Robinson mit den Wong-Sandler Mischungsregeln. Die Gibbs'sche Exzessenergie (GE/RT) wird mit dem UNIFAC-Modell berechnet. Empfohlen für binäre und ternäre Mischungen polarer Komponenten bei hohen Drücken und Temperaturen.</value>
   </data>
   <data name="Descrio1" xml:space="preserve">
     <value>1. Beschreibung</value>
@@ -1214,7 +1214,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Differenz zwischen den Temperaturwerten zwischen den Strömen.</value>
   </data>
   <data name="Diferenaentreosvalor2" xml:space="preserve">
-    <value>Differenz zwischen den druckwerten zwischen den Strömen.</value>
+    <value>Differenz zwischen den Druckwerten zwischen den Strömen.</value>
   </data>
   <data name="Diferenaentreosvalor3" xml:space="preserve">
     <value>Differenz zwischen den Werten des Massenstromes</value>
@@ -1325,7 +1325,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Idealer Wirkungsgrad des Heizers auf den Prozeß, bei dem alle Wärmeverluste beim eintretenden Energiestrom mit berücksichtigt werden</value>
   </data>
   <data name="Eficinciadoaquecedor2" xml:space="preserve">
-    <value>Idealer Wirkungsgrad des heizers auf den Prozeß, bei dem die gesamte übertragene Wärme des Energiestromes für den Ausgangsstrom verfügbar ist</value>
+    <value>Idealer Wirkungsgrad des Heizers auf den Prozeß, bei dem die gesamte übertragene Wärme des Energiestromes für den Ausgangsstrom verfügbar ist</value>
   </data>
   <data name="Eficinciadocompresso" xml:space="preserve">
     <value>Wirkungsgrad des Verdichters auf den idealen isentropen/adiabaten Prozeß.</value>
@@ -1433,7 +1433,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Fehler beim Öffnen des Backups</value>
   </data>
   <data name="Erroaocalculartemper" xml:space="preserve">
-    <value>Fehler bei der Femperaturberechnung.</value>
+    <value>Fehler bei der Temperaturberechnung.</value>
   </data>
   <data name="Erroaocarregararquiv" xml:space="preserve">
     <value>Fehler beim Laden der Datei:</value>
@@ -1520,7 +1520,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>P Fehler</value>
   </data>
   <data name="ErrorAddingComponent" xml:space="preserve">
-    <value>Fehler bei der Übergabe der Data. Prüfen Sie die Eingabe und versuchen es noch einmal.</value>
+    <value>Fehler bei der Übergabe der Daten. Prüfen Sie die Eingabe und versuchen es noch einmal.</value>
   </data>
   <data name="ErrorloadingChemSepXMLdatabase" xml:space="preserve">
     <value>Fehler beim Laden der ChemSep-XML-Datenbank.</value>
@@ -1793,7 +1793,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>und deren Berechnungsprinzipien.</value>
   </data>
   <data name="FormTips_KryptonLabel16Text" xml:space="preserve">
-    <value>DWSIM Simulation Basis</value>
+    <value>DWSIM Simulations Basis</value>
   </data>
   <data name="FormTips_KryptonLabel16Text2" xml:space="preserve">
     <value>(Thermodynamik und Berechnung von Eigenschaften).</value>
@@ -2243,7 +2243,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Fehlermeldung</value>
   </data>
   <data name="Mensagemretornadaqua" xml:space="preserve">
-    <value>Meldung, die im Falle von fehlern in der Berechnung zurückgegeben wird.</value>
+    <value>Meldung, die im Falle von Fehlern in der Berechnung zurückgegeben wird.</value>
   </data>
   <data name="Mensagens" xml:space="preserve">
     <value> Meldungen</value>
@@ -2282,7 +2282,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Spezifische Entropie Gemisch</value>
   </data>
   <data name="MISTMassaespecfica" xml:space="preserve">
-    <value>Density Gemisch</value>
+    <value>Dichte Gemisch</value>
   </data>
   <data name="MISTMassamolar" xml:space="preserve">
     <value>Molare Masse Gemisch</value>
@@ -2414,7 +2414,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Maximale Anzahl an Iterationen erreicht</value>
   </data>
   <data name="Nmeromximodeiteraesd" xml:space="preserve">
-    <value>Maximale Anzahl an Iterations der Rückführung.</value>
+    <value>Maximale Anzahl an Iterationen der Rückführung.</value>
   </data>
   <data name="nNonanonC9" xml:space="preserve">
     <value>n-Nonan (nC9)</value>
@@ -2444,7 +2444,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Bei der Stromtemperatur gibt es keine Bedingungen für die Hydratbildung.</value>
   </data>
   <data name="Noforamencontradasco1" xml:space="preserve">
-    <value>Bei dem Druck des Stromen gibt es keine Bedingungen für die Hydratbildung.</value>
+    <value>Bei dem Druck des Stromes gibt es keine Bedingungen für die Hydratbildung.</value>
   </data>
   <data name="Nohcomponentesaadici" xml:space="preserve">
     <value>Keine Komponenten, die dem Stoffstrom hinzugefügt sind.</value>
@@ -2501,7 +2501,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Kein Stoffstrom mit dem Austritt des Mixers verbunden.</value>
   </data>
   <data name="Nohobjetosaseremcone" xml:space="preserve">
-    <value>Keine Objekte zum verbinden vorhanden.</value>
+    <value>Keine Objekte zum Verbinden vorhanden.</value>
   </data>
   <data name="Nohobjetosaseremdesc" xml:space="preserve">
     <value>Keine Objekte vorhanden, die vom ausgewählten Objekt getrennt werden können.</value>
@@ -2531,7 +2531,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>O2</value>
   </data>
   <data name="Oajustenoencontrouum" xml:space="preserve">
-    <value>Die Anpassung innerhalb der für die manipulierte Variable angegebenen Grenzen keine Lösung gefunden.</value>
+    <value>Die Anpassung innerhalb der für die manipulierte Variable angegebenen Grenzen hat keine Lösung gefunden.</value>
   </data>
   <data name="Oarquivonoexisteoufo" xml:space="preserve">
     <value>Die Datei existiert nicht oder wurde von ihrem originalen Ort entfernt.</value>
@@ -2564,7 +2564,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Der Rechner überschreitet die Anzahl an Iterationen für den Druck.</value>
   </data>
   <data name="Ocalculadorexcedeuon1" xml:space="preserve">
-    <value>Der rechner überschreitet die Anzahl an Iterationen für die Temperatur.</value>
+    <value>Der Rechner überschreitet die Anzahl an Iterationen für die Temperatur.</value>
   </data>
   <data name="Ocalorretiradomaiorq" xml:space="preserve">
     <value>Es wird mehr Wärme abgeführt, als durch die eintretenden Ströme zugeführt wird.</value>
@@ -2720,7 +2720,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Prozent verdampft</value>
   </data>
   <data name="PF_SG" xml:space="preserve">
-    <value>Specifische Dichte</value>
+    <value>Spezifische Dichte</value>
   </data>
   <data name="PF_TBP" xml:space="preserve">
     <value>Wahre Siedekurve</value>
@@ -2819,10 +2819,10 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>PT/PV Flash - Maximale interne Iterationen</value>
   </data>
   <data name="PP_RIG_BUB_DEW_FLASH_INIT" xml:space="preserve">
-    <value>Verwende rigorose Siede- und Taupunkte für die Initialisierung des TP Flash Dampfanteils</value>
+    <value>Verwende rigorose Berechnung von Siede- und Taupunkten für die Initialisierung des TP Flash Dampfanteils</value>
   </data>
   <data name="PP_USE_EOS_LIQDENS" xml:space="preserve">
-    <value>Verwende Zustandsgleichung für Flüssigdichte</value>
+    <value>Verwende Zustandsgleichung für Flüssigkeitsdichte</value>
   </data>
   <data name="PPmodificado" xml:space="preserve">
     <value>PP modifiziert</value>
@@ -2831,7 +2831,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Druck</value>
   </data>
   <data name="Pressoajusante" xml:space="preserve">
-    <value>Druck downstream</value>
+    <value>Druck stromabwärts</value>
   </data>
   <data name="PressoCrtica" xml:space="preserve">
     <value>Kritischer Druck</value>
@@ -3329,7 +3329,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Wählen Sie eine Variable, die durch 'Adjust' als Referenz verwendet wird.</value>
   </data>
   <data name="Selecioneavarivelase4" xml:space="preserve">
-    <value>Wählen Sie eine Varable, die als Quelle für die Spezifikation verwendet wird</value>
+    <value>Wählen Sie eine Variable, die als Quelle für die Spezifikation verwendet wird</value>
   </data>
   <data name="Selecioneavarivelase5" xml:space="preserve">
     <value>Wählen Sie eine Variable, die als Ziel der Spezifikation verwendet wird.</value>
@@ -3548,7 +3548,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>&lt;Titel&gt;</value>
   </data>
   <data name="titulo_da_simulacao" xml:space="preserve">
-    <value>Simulationtitel</value>
+    <value>Simulationstitel</value>
   </data>
   <data name="tocItems" xml:space="preserve">
     <value>TocItems</value>
@@ -4034,7 +4034,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Wärmetauscherberechnungsmodus</value>
   </data>
   <data name="HXCalculationModeDesc" xml:space="preserve">
-    <value>Wählen Sie zwischen der Berechnung beider Austrittstemperaturen durch die Vorgabe der ausgetauschten Wärme oder eine der Austrittstemperaturen durch die Vorgabe des Wärmedurchgangskoeffizienten (U) outlet temperatures by providing the other and the overall transfer coefficient (U)</value>
+    <value>Wählen Sie zwischen der Berechnung beider Austrittstemperaturen durch die Vorgabe der ausgetauschten Wärme oder eine der Austrittstemperaturen und durch die Vorgabe des Wärmedurchgangskoeffizienten (U)</value>
   </data>
   <data name="HXColdSidePressureDrop" xml:space="preserve">
     <value>Druckverlust (kaltes Fluid)</value>
@@ -4400,28 +4400,28 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Siedetemperatur bei P</value>
   </data>
   <data name="DewPress" xml:space="preserve">
-    <value>Taudruck bei T</value>
+    <value>Taupunktdruck bei T</value>
   </data>
   <data name="DewTemp" xml:space="preserve">
-    <value>Tautemperatur bei P</value>
+    <value>Taupunkttemperatur bei P</value>
   </data>
   <data name="DesejaSalvaroScriptAtual" xml:space="preserve">
-    <value>Speichern möchten, das aktuelle Skript?</value>
+    <value>Möchten Sie das aktuelle Skript speichern?</value>
   </data>
   <data name="CustomUnitOp" xml:space="preserve">
-    <value>Custom UO</value>
+    <value>Anwender UO</value>
   </data>
   <data name="CustomUnitOp_Desc" xml:space="preserve">
-    <value>Custom Grundoperation Skripts definiert.</value>
+    <value>Anwender-Grundoperation Skripts definiert.</value>
   </data>
   <data name="CUO_ScriptLanguage" xml:space="preserve">
-    <value>Skript sprache</value>
+    <value>Skriptsprache</value>
   </data>
   <data name="CUO_ScriptText" xml:space="preserve">
     <value>Skript</value>
   </data>
   <data name="DescCSPP" xml:space="preserve">
-    <value>Paket von Eigenschaften mit dem COSMO-SAC-Methode in der Bibliothek JCOSMO von Rafael Soares Renan und Gerber für die Vorhersage von Aktivitätskoeffizienten der Komponenten in der flüssigen Phase durchgeführt. Die Enthalpie, Entropie und Wärmekapazität Residuen aus der Lee-Kesler Modell berechnet. Die Dampfphase wird durch die Peng-Robinson EDE modelliert.</value>
+    <value>Paket von Eigenschaften mit dem COSMO-SAC-Methode in der Bibliothek JCOSMO von Rafael Soares Renan und Gerber für die Vorhersage von Aktivitätskoeffizienten der Komponenten in der flüssigen Phase durchgeführt. Die Enthalpie, Entropie und Wärmekapazität Residuen wird mit der Lee-Kesler Modell berechnet. Die Dampfphase wird durch die Peng-Robinson EDE modelliert.</value>
   </data>
   <data name="CorrentedeenergiaE" xml:space="preserve">
     <value>Energiestrom (E)</value>
@@ -4430,7 +4430,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Energiestrom (S)</value>
   </data>
   <data name="UO_ScriptLanguage" xml:space="preserve">
-    <value>Skript sprache</value>
+    <value>Skriptsprache</value>
   </data>
   <data name="UO_ScriptText_After" xml:space="preserve">
     <value>Skript (Hintere)</value>
@@ -4448,10 +4448,10 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Verschmutzungsfaktor</value>
   </data>
   <data name="PP_USEEXPLIQDENS" xml:space="preserve">
-    <value>Mit experimentellen Kurve zur Berechnung der Dichte (Liquid)</value>
+    <value>Mit experimenteller Kurve zur Berechnung der Dichte (Flüssigkeit)</value>
   </data>
   <data name="PP_USEEXPLIQTHERMALCOND" xml:space="preserve">
-    <value>Mit experimentellen Kurve zur Berechnung der Wärmeleitfähigkeit (Liquid)</value>
+    <value>Mit experimenteller Kurve zur Berechnung der Wärmeleitfähigkeit (Flüssigkeit)</value>
   </data>
   <data name="Cordofundo" xml:space="preserve">
     <value>Hintergrundfarbe</value>
@@ -4463,13 +4463,13 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Ausrichten von Objekten am Raster</value>
   </data>
   <data name="STHXPropertiesDesc" xml:space="preserve">
-    <value>Hier klicken Rohrbündel Eigenschaften bearbeiten</value>
+    <value>Hier klicken zur Bearbeitung der Rohrbündel Eigenschaften</value>
   </data>
   <data name="CapeOpenUnitOperation" xml:space="preserve">
     <value>CAPE-OPEN Grundoperation</value>
   </data>
   <data name="DescCOPP" xml:space="preserve">
-    <value>A CAPE-OPEN Property Package is a complete, consistent, reusable, ready-to-use collection of methods, Compounds and model parameters for calculating any of a set of known Physical Properties for the Phases of a Material. It includes all the pure Compound methods and data, together with the relevant mixing rules and interaction parameters. A Property Package normally covers only a small subset of the Compounds and methods accessible through a Physical Properties System.</value>
+    <value>Ein CAPE-OPEN Property Package ist eine komplette, konsistente, wiederverwendbare, sofort nutzbare Sammlung von Methoden, Komponenten und Modellparametern zur Berechnung aller bekannter physikalischer Eigenschaften für die Phasen eines Stoffes. Es beinhaltet alle Methoden und Daten für Reinstoffe, zusammen mit den relevanten Mischungsregeln und Interaktionsparametern. Ein Property Package deckt normalerweise nur eine kleine Teilmenge der Komponenten und Methoden ab, auf welche durch ein Physical Properties System zugegriffen werden kann.</value>
   </data>
   <data name="BuildDate" xml:space="preserve">
     <value>Datum</value>
@@ -4490,80 +4490,78 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>CAPE-OPEN Grundoperationen</value>
   </data>
   <data name="DCDampingFactorMax" xml:space="preserve">
-    <value>Damping factor maximum value</value>
+    <value>Dämpfungsfaktor Maximalwert</value>
   </data>
   <data name="DCDampingFactorMin" xml:space="preserve">
-    <value>Damping factor minimum value</value>
+    <value>Dämpfungsfaktor Minimalwert</value>
   </data>
   <data name="DCExtLoopDeltaT" xml:space="preserve">
-    <value>Temperature perturbation on external loop (K)</value>
+    <value>Temperatur-Störeinfluß auf externe Schleife (K)</value>
   </data>
   <data name="COWarningMsg1" xml:space="preserve">
-    <value>Remember to remap compounds and phases from the CAPE-OPEN Property Package to DWSIM after changing the package settings.</value>
+    <value>Bitte daran denken, die Komponenten und Phasen vom CAPE-OPEN Property Package nach DWSIM neu zu verknüpfen nachdem die Packeteinstellungen geändert wurden.</value>
   </data>
   <data name="COWarningMsg2" xml:space="preserve">
-    <value>The current Property Package instance will be replaced by the selected one. Proceed?</value>
+    <value>Die aktuelle Property Package Instanz wird durch die ausgewählte ersetzt. Fortfahren?</value>
   </data>
   <data name="COWarningMsg3" xml:space="preserve">
-    <value>This will remove the current Property Package. Proceed?</value>
+    <value>Dies wird das aktuelle Property Package löschen. Fortsetzen?</value>
   </data>
   <data name="DescPCSAFTPP" xml:space="preserve">
-    <value>The Perturbed Chain SAFT model is a state-of-the-art, engineering-like equation of state. It is designed for modelling mixtures of all types of substances: gases, solvents and polymers.
+    <value>Das Perturbed Chain SAFT Modell ist ein state-of-the-art, Engineering Zustandsgleichung. Es ist dazu bestimmt Mischungen aller Substanztypen zu modellieren: Gase, Lösungsmittel und Polymere.
 
-Perturbed-Chain SAFT is suitable for the calculation of phase equilibria and thermophysical properties of pure components and mixtures. It has been tested against experimental data for numerous systems and found to give excellent results. When compared to other equations of state, we find Perturbed-Chain SAFT to be more precise for correlation of experimental data and more predictive when applied to mixtures. It is very reliable for extrapolations over the regions where parameters were fitted.
+Perturbed-Chain SAFT ist geeignet für die Berechnung von Phasengleichgewichten und thermophysikalischen Eigenschaften von Reinstoffen und Mischungen. Es wurde mit experimentellen Daten für zahlreiche Systeme getestet und zeigte exzellente Ergebnisse. Im Vergleich zu anderen Zustandsgleichungen, findet man, daß Perturbed-Chain SAFT präzisere Ergebisse für Korrelationen mit experimentellen Daten aufweist und bessere Vorhersagen liefert wenn man es auf Mischungen anwendet.Es ist sehr zuverlässig bei der Extrapolation über den Bereich hinaus, für den die Parameter angepaßt wurden.
 
-* General Info *
+* Generale Information *
 
-DWSIM's implementation is based on the FORTRAN program which can be downloaded at http://www.th.bci.tu-dortmund.de/de/forschung/pc-saft. 
+DWSIM's Iimplementation basiert auf dem FORTRAN Programm welches unter http://www.th.bci.tu-dortmund.de/de/forschung/pc-saft heruntergeladen werden kann .
 
-*** Important ***
-
-- This implementation doesn't contain the association term!
-- The calculated Cp/Cv is actually Cp/(Cp-R)</value>
+- Diese Implementation enthält nicht den Associationsterm!
+- Der berechnete Cp/Cv-Wert ist actuell Cp/(Cp-R)</value>
   </data>
   <data name="DescPRSV2PP" xml:space="preserve">
-    <value>PRSV2 EOS with three pure compound parameters (k1, k2 and k3) and two Margules-type binary interaction parameters (kij and kji).
+    <value>PRSV2 EOS mit drei Parametern für Reinkomponenten (k1, k2 and k3) und zwei Van Margules-Typ binären Interaktionsparametern (kij and kji).
 
-A modification to the attraction term in the Peng-Robinson equation of state published by Stryjek and Vera in 1986 (PRSV) significantly improved the model's accuracy by introducing an adjustable pure component parameter and by modifying the polynomial fit of the acentric factor. A subsequent modification published in 1986 (PRSV2) further improved the model's accuracy by introducing two additional pure component parameters to the previous attraction term modification.
+ Eine Modifikation an dem Attraction-Term in der Peng-Robinson Zustandsgleichung, veröffentlicht durch Stryjek und Vera 1986 (PRSV), verbesserte deutlich die Genauigkeit des Modells, indem ein anpaßbarer Parameter für Reinstoffe eingeführt und die polynome Anpassung des azentrischen Faktors geändert wurde. Eine spätere Modifikation, veröffentlicht 1986 (PRSV2), verbesserte die Genauigkeit des Modells weiter, indem zwei weitere Parameter for Reinstoffe für den früheren Attraktions-Term eingeführt wurden.
 
-PRSV2 is particularly advantageous for VLE calculations. While PRSV1 does offer an advantage over the Peng-Robinson model for describing thermodynamic behavior, it is still not accurate enough, in general, for phase equilibrium calculations.</value>
+PRSV2 ist speziell für VLE-Berechnungen vorteilhaft. Während PRSV1 gegenüber dem Peng-Robinson Modell für die Beschreibung des thermodynamischen Verhaltens einen Vorteil aufweist, ist es im Allgemeinen für Phasengleichgewichtsberechnungen noch immer nicht genau genug,</value>
   </data>
   <data name="DescPRSV2VLPP" xml:space="preserve">
-    <value>PRSV2 EOS with three pure compound parameters (k1, k2 and k3) and two Van Laar-type binary interaction parameters (kij and kji).
+    <value>PRSV2 EOS mit drei Parametern für Reinkomponenten (k1, k2 and k3) und zwei Van Laar-Typ binären Interaktionsparametern (kij and kji).
 
-A modification to the attraction term in the Peng-Robinson equation of state published by Stryjek and Vera in 1986 (PRSV) significantly improved the model's accuracy by introducing an adjustable pure component parameter and by modifying the polynomial fit of the acentric factor. A subsequent modification published in 1986 (PRSV2) further improved the model's accuracy by introducing two additional pure component parameters to the previous attraction term modification.
+ Eine Modifikation an dem Attraction-Term in der Peng-Robinson Zustandsgleichung, veröffentlicht durch Stryjek und Vera 1986 (PRSV), verbesserte deutlich die Genauigkeit des Modells, indem ein anpaßbarer Parameter für Reinstoffe eingeführt und die polynome Anpassung des azentrischen Faktors geändert wurde. Eine spätere Modifikation, veröffentlicht 1986 (PRSV2), verbesserte die Genauigkeit des Modells weiter, indem zwei weitere Parameter for Reinstoffe für den früheren Attraktions-Term eingeführt wurden.
 
-PRSV2 is particularly advantageous for VLE calculations. While PRSV1 does offer an advantage over the Peng-Robinson model for describing thermodynamic behavior, it is still not accurate enough, in general, for phase equilibrium calculations.</value>
+PRSV2 ist speziell für VLE-Berechnungen vorteilhaft. Während PRSV1 gegenüber dem Peng-Robinson Modell für die Beschreibung des thermodynamischen Verhaltens einen Vorteil aufweist, ist es im Allgemeinen für Phasengleichgewichtsberechnungen noch immer nicht genau genug,</value>
   </data>
   <data name="MasterTable" xml:space="preserve">
     <value>Haupttabelle Eigenschaften</value>
   </data>
   <data name="MT_ObjectsToShow" xml:space="preserve">
-    <value>Objects to Show</value>
+    <value>Objekte zum Anzeigen</value>
   </data>
   <data name="MT_PropertiesToShow" xml:space="preserve">
-    <value>Properties to Show</value>
+    <value>Eigenschaften zum Anzeigen</value>
   </data>
   <data name="MT_ObjectFamily" xml:space="preserve">
-    <value>Object Type</value>
+    <value>Objekttyp</value>
   </data>
   <data name="Fundo" xml:space="preserve">
-    <value>3. Background</value>
+    <value>3. Hintergrund</value>
   </data>
   <data name="HeaderText" xml:space="preserve">
-    <value>Header Text</value>
+    <value>Überschrift Text</value>
   </data>
   <data name="MT_Sorting" xml:space="preserve">
-    <value>Object Ordering</value>
+    <value>Objektsortierung</value>
   </data>
   <data name="MT_SortObjectsBy" xml:space="preserve">
-    <value>Order Objects by</value>
+    <value>Sortiere Objekte nach</value>
   </data>
   <data name="MT_CustomSortList" xml:space="preserve">
-    <value>Custom Ordered List</value>
+    <value>Angepaßte Liste</value>
   </data>
   <data name="DescFPP" xml:space="preserve">
-    <value>FPROPS is a free open-source C-based library for high-accuracy evaluation of thermodynamic properties for a number of pure substances. It makes use of published data for the Helmholtz fundamental equation for those substances.
+    <value>FPROPS ist eine freie open-source C-basierte Bibliothek für hochgenaue Berechnungen der thermodynamischen Eigenschaften für eine Anzahl reiner Substanzen. Diese nutzt veröffentlichte Daten für die Helmholtz Fundamentalgleichung dieser Substanzen. 
 
 FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   </data>
@@ -4571,25 +4569,25 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>FPROPS</value>
   </data>
   <data name="RestoreState" xml:space="preserve">
-    <value>Restore State</value>
+    <value>Wiederherstellungsstatus</value>
   </data>
   <data name="RestoreStateError" xml:space="preserve">
-    <value>Error restoring simulation state:</value>
+    <value>Fehler beim Wiederherstellen des Simulationsstus:</value>
   </data>
   <data name="RestoreStateOK" xml:space="preserve">
-    <value>Simulation state restored succesfully.</value>
+    <value>Simulationsstatus erfolgreich wiederhergestellt.</value>
   </data>
   <data name="SaveState" xml:space="preserve">
-    <value>Save State</value>
+    <value>Speicher Status</value>
   </data>
   <data name="SaveStateError" xml:space="preserve">
-    <value>Error saving simulation state:</value>
+    <value>Fehler beim Speichern des Simulationsstatus:</value>
   </data>
   <data name="SaveStateOK" xml:space="preserve">
-    <value>Simulation state saved succesfully.</value>
+    <value>Simulationsstatus erfolgreich gespeichert.</value>
   </data>
   <data name="PP_USE_EOS_VOLUME_SHIFT" xml:space="preserve">
-    <value>Use Peneloux Volume Translation correction</value>
+    <value>Verwende Peneloux Volume Translation Korrektur</value>
   </data>
   <data name="String" xml:space="preserve">
     <value>Gleichzeitige Einstellung</value>
@@ -4604,21 +4602,18 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Fügen Sie Joule-Thomson-Kühleffekt</value>
   </data>
   <data name="ReactionExtents" xml:space="preserve">
-    <value>Reaction Extents</value>
+    <value>Reaktionsumsatz</value>
   </data>
   <data name="ReactionHeats" xml:space="preserve">
-    <value>Reaction Heats</value>
+    <value>Reaktionswärme</value>
   </data>
   <data name="ReactionRates" xml:space="preserve">
-    <value>Reaction Rates</value>
+    <value>Reaktionsgeschwindigkeit</value>
   </data>
   <data name="RSCTRIsothermalTemperature" xml:space="preserve">
     <value>Reaktortemperatur</value>
   </data>
   <data name="VesselOperatingMode" xml:space="preserve">
-    <value>Operation Mode (Two/Three Phase separation)</value>
-  </data>
-  <data name="NoRegressionAvailable" xml:space="preserve">
-    <value>Keine regression vorhanden.</value>
+    <value>Arbeitsmodus (Zwei/Drei Phasenseparation)</value>
   </data>
 </root>
