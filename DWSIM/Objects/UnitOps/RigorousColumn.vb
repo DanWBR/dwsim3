@@ -2118,15 +2118,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Get
                 If m_specs Is Nothing Then
                     m_specs = New Collections.Generic.Dictionary(Of String, Auxiliary.SepOps.ColumnSpec)
-                    With m_specs
-                        .Add("C", New ColumnSpec)
-                        .Add("R", New ColumnSpec)
-                    End With
+                End If
+                If Not m_specs.ContainsKey("C") Then
+                    m_specs.Add("C", New ColumnSpec)
                     With m_specs("C")
                         .SType = ColumnSpec.SpecType.Stream_Ratio
                         .SpecUnit = ""
                         .SpecValue = Me.RefluxRatio
                     End With
+                End If
+                If Not m_specs.ContainsKey("R") Then
+                    m_specs.Add("R", New ColumnSpec)
                     With m_specs("R")
                         .SType = ColumnSpec.SpecType.Product_Molar_Flow_Rate
                         .SpecUnit = "mol/s"
@@ -2387,8 +2389,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Sub
 
         Public Overrides Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
+
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
             Dim nf As String = FlowSheet.Options.NumberFormat
+
+            Dim obj = Me.Specs
 
             With pgrid
 

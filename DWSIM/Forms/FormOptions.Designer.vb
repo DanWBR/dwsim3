@@ -399,7 +399,6 @@ Partial Class FormOptions
         Me.ImageList1.Images.SetKeyName(7, "id.png")
         Me.ImageList1.Images.SetKeyName(8, "es.png")
         Me.ImageList1.Images.SetKeyName(9, "cn.png")
-        Me.ImageList1.Images.SetKeyName(10, "")
         '
         'Label3
         '
