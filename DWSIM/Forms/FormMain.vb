@@ -1774,7 +1774,7 @@ Public Class FormMain
             fls.Label2.Text = "Loading Flowsheet Settings..."
             Application.DoEvents()
 
-            Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("Settings").Descendants.ToList
+            Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("Settings").Elements.ToList
 
             form.Options.LoadData(data)
 

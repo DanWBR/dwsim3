@@ -23,9 +23,9 @@ Partial Class FormPureComp
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormPureComp))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.chkEnableEdit = New System.Windows.Forms.CheckBox()
@@ -35,9 +35,6 @@ Partial Class FormPureComp
         Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.GridProps = New System.Windows.Forms.DataGridView()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FaTabStripItem6 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.pbRender = New System.Windows.Forms.PictureBox()
@@ -60,6 +57,9 @@ Partial Class FormPureComp
         Me.GraphVisc = New ZedGraph.ZedGraphControl()
         Me.FaTabStripItem5 = New FarsiLibrary.Win.FATabStripItem()
         Me.GraphDHVAP = New ZedGraph.ZedGraphControl()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1.SuspendLayout()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
@@ -90,43 +90,46 @@ Partial Class FormPureComp
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'chkEnableEdit
         '
         resources.ApplyResources(Me.chkEnableEdit, "chkEnableEdit")
+        Me.chkEnableEdit.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.chkEnableEdit.Name = "chkEnableEdit"
         Me.chkEnableEdit.UseVisualStyleBackColor = True
         '
         'ComboBox1
         '
+        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.DropDownWidth = 300
-        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
         Me.ComboBox1.Name = "ComboBox1"
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label1.Name = "Label1"
         '
         'FaTabStrip1
         '
-        Me.FaTabStrip1.AlwaysShowClose = False
         resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
+        Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem6, Me.FaTabStripItem2, Me.FaTabStripItem3, Me.FaTabStripItem4, Me.FaTabStripItem5})
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
         '
         'FaTabStripItem1
         '
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         Me.FaTabStripItem1.CanClose = False
         Me.FaTabStripItem1.Controls.Add(Me.GroupBox2)
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
         Me.FaTabStripItem1.Selected = True
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         '
         'GroupBox2
         '
@@ -137,6 +140,7 @@ Partial Class FormPureComp
         '
         'GridProps
         '
+        resources.ApplyResources(Me.GridProps, "GridProps")
         Me.GridProps.AllowUserToAddRows = False
         Me.GridProps.AllowUserToDeleteRows = False
         Me.GridProps.AllowUserToResizeColumns = False
@@ -144,53 +148,23 @@ Partial Class FormPureComp
         Me.GridProps.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridProps.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridProps.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3})
-        resources.ApplyResources(Me.GridProps, "GridProps")
         Me.GridProps.Name = "GridProps"
         Me.GridProps.RowHeadersVisible = False
         Me.GridProps.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         '
-        'Column1
-        '
-        Me.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.LightGray
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle1
-        resources.ApplyResources(Me.Column1, "Column1")
-        Me.Column1.Name = "Column1"
-        Me.Column1.ReadOnly = True
-        '
-        'Column2
-        '
-        Me.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle2
-        resources.ApplyResources(Me.Column2, "Column2")
-        Me.Column2.Name = "Column2"
-        Me.Column2.ReadOnly = True
-        '
-        'Column3
-        '
-        Me.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.LightGray
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle3
-        resources.ApplyResources(Me.Column3, "Column3")
-        Me.Column3.Name = "Column3"
-        Me.Column3.ReadOnly = True
-        '
         'FaTabStripItem6
         '
+        resources.ApplyResources(Me.FaTabStripItem6, "FaTabStripItem6")
         Me.FaTabStripItem6.CanClose = False
         Me.FaTabStripItem6.Controls.Add(Me.GroupBox3)
         Me.FaTabStripItem6.Controls.Add(Me.GroupBox5)
         Me.FaTabStripItem6.IsDrawn = True
         Me.FaTabStripItem6.Name = "FaTabStripItem6"
-        resources.ApplyResources(Me.FaTabStripItem6, "FaTabStripItem6")
         '
         'GroupBox3
         '
-        Me.GroupBox3.Controls.Add(Me.pbRender)
         resources.ApplyResources(Me.GroupBox3, "GroupBox3")
+        Me.GroupBox3.Controls.Add(Me.pbRender)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.TabStop = False
         '
@@ -202,6 +176,7 @@ Partial Class FormPureComp
         '
         'GroupBox5
         '
+        resources.ApplyResources(Me.GroupBox5, "GroupBox5")
         Me.GroupBox5.Controls.Add(Me.tbInChI)
         Me.GroupBox5.Controls.Add(Me.Label7)
         Me.GroupBox5.Controls.Add(Me.tbSMILES)
@@ -212,7 +187,6 @@ Partial Class FormPureComp
         Me.GroupBox5.Controls.Add(Me.Label4)
         Me.GroupBox5.Controls.Add(Me.tbFormula)
         Me.GroupBox5.Controls.Add(Me.Label2)
-        resources.ApplyResources(Me.GroupBox5, "GroupBox5")
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.TabStop = False
         '
@@ -225,6 +199,7 @@ Partial Class FormPureComp
         'Label7
         '
         resources.ApplyResources(Me.Label7, "Label7")
+        Me.Label7.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label7.Name = "Label7"
         '
         'tbSMILES
@@ -236,6 +211,7 @@ Partial Class FormPureComp
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
+        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label6.Name = "Label6"
         '
         'tbMODFAC
@@ -247,6 +223,7 @@ Partial Class FormPureComp
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label5.Name = "Label5"
         '
         'tbUNIFAC
@@ -258,6 +235,7 @@ Partial Class FormPureComp
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label4.Name = "Label4"
         '
         'tbFormula
@@ -269,20 +247,21 @@ Partial Class FormPureComp
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label2.Name = "Label2"
         '
         'FaTabStripItem2
         '
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         Me.FaTabStripItem2.CanClose = False
         Me.FaTabStripItem2.Controls.Add(Me.GraphCp)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
-        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         '
         'GraphCp
         '
-        Me.GraphCp.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         resources.ApplyResources(Me.GraphCp, "GraphCp")
+        Me.GraphCp.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.GraphCp.IsAntiAlias = True
         Me.GraphCp.IsAutoScrollRange = True
         Me.GraphCp.IsEnableSelection = True
@@ -298,16 +277,16 @@ Partial Class FormPureComp
         '
         'FaTabStripItem3
         '
+        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         Me.FaTabStripItem3.CanClose = False
         Me.FaTabStripItem3.Controls.Add(Me.GraphPvap)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         '
         'GraphPvap
         '
-        Me.GraphPvap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         resources.ApplyResources(Me.GraphPvap, "GraphPvap")
+        Me.GraphPvap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.GraphPvap.IsAntiAlias = True
         Me.GraphPvap.IsAutoScrollRange = True
         Me.GraphPvap.Name = "GraphPvap"
@@ -321,16 +300,16 @@ Partial Class FormPureComp
         '
         'FaTabStripItem4
         '
+        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
         Me.FaTabStripItem4.CanClose = False
         Me.FaTabStripItem4.Controls.Add(Me.GraphVisc)
         Me.FaTabStripItem4.IsDrawn = True
         Me.FaTabStripItem4.Name = "FaTabStripItem4"
-        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
         '
         'GraphVisc
         '
-        Me.GraphVisc.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         resources.ApplyResources(Me.GraphVisc, "GraphVisc")
+        Me.GraphVisc.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.GraphVisc.IsAntiAlias = True
         Me.GraphVisc.IsAutoScrollRange = True
         Me.GraphVisc.Name = "GraphVisc"
@@ -344,16 +323,16 @@ Partial Class FormPureComp
         '
         'FaTabStripItem5
         '
+        resources.ApplyResources(Me.FaTabStripItem5, "FaTabStripItem5")
         Me.FaTabStripItem5.CanClose = False
         Me.FaTabStripItem5.Controls.Add(Me.GraphDHVAP)
         Me.FaTabStripItem5.IsDrawn = True
         Me.FaTabStripItem5.Name = "FaTabStripItem5"
-        resources.ApplyResources(Me.FaTabStripItem5, "FaTabStripItem5")
         '
         'GraphDHVAP
         '
-        Me.GraphDHVAP.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         resources.ApplyResources(Me.GraphDHVAP, "GraphDHVAP")
+        Me.GraphDHVAP.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.GraphDHVAP.IsAntiAlias = True
         Me.GraphDHVAP.IsAutoScrollRange = True
         Me.GraphDHVAP.Name = "GraphDHVAP"
@@ -364,6 +343,41 @@ Partial Class FormPureComp
         Me.GraphDHVAP.ScrollMinX = 0.0R
         Me.GraphDHVAP.ScrollMinY = 0.0R
         Me.GraphDHVAP.ScrollMinY2 = 0.0R
+        '
+        'Column1
+        '
+        Me.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.LightGray
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle4
+        Me.Column1.FillWeight = 60.0!
+        resources.ApplyResources(Me.Column1, "Column1")
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        Me.Column1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'Column2
+        '
+        Me.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle5
+        Me.Column2.FillWeight = 20.0!
+        resources.ApplyResources(Me.Column2, "Column2")
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
+        Me.Column2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'Column3
+        '
+        Me.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.Color.LightGray
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle6
+        Me.Column3.FillWeight = 20.0!
+        resources.ApplyResources(Me.Column3, "Column3")
+        Me.Column3.Name = "Column3"
+        Me.Column3.ReadOnly = True
+        Me.Column3.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'FormPureComp
         '
@@ -409,9 +423,6 @@ Partial Class FormPureComp
     Public WithEvents GraphDHVAP As ZedGraph.ZedGraphControl
     Friend WithEvents chkEnableEdit As System.Windows.Forms.CheckBox
     Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents FaTabStripItem6 As FarsiLibrary.Win.FATabStripItem
     Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
@@ -426,4 +437,7 @@ Partial Class FormPureComp
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents tbFormula As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

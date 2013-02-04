@@ -73,7 +73,6 @@
         End Sub
 
         Private Sub MyApplication_UnhandledException(ByVal sender As Object, ByVal e As Microsoft.VisualBasic.ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException
-            My.Application.Log.WriteException(e.Exception)
             Dim frmEx As New FormUnhandledException
             frmEx.TextBox1.Text = e.Exception.ToString
             frmEx.ex = e.Exception

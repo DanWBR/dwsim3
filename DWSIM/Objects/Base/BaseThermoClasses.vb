@@ -2056,6 +2056,20 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public Liquid_Thermal_Conductivity_Const_E As Double
         Public Liquid_Thermal_Conductivity_Tmin As Double
         Public Liquid_Thermal_Conductivity_Tmax As Double
+        Public Solid_Density_Const_A As Double
+        Public Solid_Density_Const_B As Double
+        Public Solid_Density_Const_C As Double
+        Public Solid_Density_Const_D As Double
+        Public Solid_Density_Const_E As Double
+        Public Solid_Density_Tmin As Double
+        Public Solid_Density_Tmax As Double
+        Public Solid_Heat_Capacity_Const_A As Double
+        Public Solid_Heat_Capacity_Const_B As Double
+        Public Solid_Heat_Capacity_Const_C As Double
+        Public Solid_Heat_Capacity_Const_D As Double
+        Public Solid_Heat_Capacity_Const_E As Double
+        Public Solid_Heat_Capacity_Tmin As Double
+        Public Solid_Heat_Capacity_Tmax As Double
         Public Normal_Boiling_Point As Double
         Public ID As Integer
         Public IsPF As Integer = 0
@@ -2080,6 +2094,8 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public LiquidDensityEquation As String = ""
         Public LiquidHeatCapacityEquation As String = ""
         Public LiquidThermalConductivityEquation As String = ""
+        Public SolidDensityEquation As String = ""
+        Public SolidHeatCapacityEquation As String = ""
 
         Public PC_SAFT_sigma As Double = 0.0#
         Public PC_SAFT_epsilon_k As Double = 0.0#

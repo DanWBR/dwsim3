@@ -28,7 +28,7 @@ Public Class FormRecoverFiles
             If File.Exists(str) Then
                 nomearquivo = str
                 data = File.GetLastWriteTime(str).ToString
-                Me.Grid1.Rows.Add(New Object() {0, nomearquivo, data})
+                Me.Grid1.Rows.Add(New Object() {1, nomearquivo, data})
             End If
         Next
     End Sub

@@ -4624,4 +4624,28 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="NoRegressionAvailable" xml:space="preserve">
     <value>No Regression available.</value>
   </data>
+  <data name="Charge" xml:space="preserve">
+    <value>[Electrolyte] Charge</value>
+  </data>
+  <data name="EnthalpyOfFusionAtTf" xml:space="preserve">
+    <value>Enthalpy of Fusion @ Tf</value>
+  </data>
+  <data name="HydrationNumber" xml:space="preserve">
+    <value>[Electrolyte] Hydration Number</value>
+  </data>
+  <data name="NegativeIon" xml:space="preserve">
+    <value>[Electrolyte] Negative Ion</value>
+  </data>
+  <data name="PositiveIon" xml:space="preserve">
+    <value>[Electrolyte] Positive Ion</value>
+  </data>
+  <data name="SolidDensityAtTs" xml:space="preserve">
+    <value>Solid Density @ Ts</value>
+  </data>
+  <data name="TemperatureOfFusion" xml:space="preserve">
+    <value>Temperature of Fusion</value>
+  </data>
+  <data name="TemperatureOfSolidDensity_Ts" xml:space="preserve">
+    <value>Solid Density Temperature</value>
+  </data>
 </root>

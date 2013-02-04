@@ -315,36 +315,11 @@ Namespace DWSIM.FormClasses
         End Sub
 
         Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
-
+            Return XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
         End Function
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
-
-            Dim elements As New System.Collections.Generic.List(Of System.Xml.Linq.XElement)
-            Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
-
-            With elements
-
-                .Add(New XElement("SimulationName", SimNome))
-                .Add(New XElement("SimulationAuthor", SimAutor))
-                .Add(New XElement("SimulationComments", SimComentario))
-                .Add(New XElement("UsePassword", UsePassword))
-                .Add(New XElement("Password", Password))
-                .Add(New XElement("NumberFormat", NumberFormat))
-                .Add(New XElement("FractionsNumberFormat", FractionNumberFormat))
-                .Add(New XElement("CalculatorActivated", CalculatorActivated))
-                .Add(New XElement("CalculateBubbleAndDewPoints", CalculateBubbleAndDewPoints))
-                .Add(New XElement("CalculatePHFlash", SempreCalcularFlashPH))
-                .Add(New XElement("GlobalFlashAlgorithm", PropertyPackageFlashAlgorithm.ToString))
-                .Add(New XElement("IOFlashQuickMode", PropertyPackageIOFlashQuickMode))
-                .Add(New XElement("ThreePhaseFlashStabTestSeverity", ThreePhaseFlashStabTestSeverity))
-                .Add(New XElement("ThreePhaseFlashStabTestCompIds", ThreePhaseFlashStabTestCompIds))
-                .Add(New XElement("SelectedSystemOfUnits", SelectedUnitSystem.nome))
-
-            End With
-
-            Return elements
-
+            Return XMLSerializer.XMLSerializer.Serialize(Me, True)
         End Function
 
     End Class

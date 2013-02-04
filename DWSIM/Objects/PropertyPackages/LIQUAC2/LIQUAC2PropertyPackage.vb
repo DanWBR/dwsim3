@@ -646,24 +646,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Return val
         End Function
 
-        Public Function AUX_SOLIDDENS() As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim zerodens As Double = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
-                If subst.ConstantProperties.SolidDensityAtTs <> 0.0# Then
-                    val += subst.FracaoMassica.GetValueOrDefault * 1 / subst.ConstantProperties.SolidDensityAtTs
-                Else
-                    zerodens += subst.FracaoMassica.GetValueOrDefault
-                End If
-            Next
-
-            Return 1 / val / (1 - zerodens)
-
-        End Function
-
         Public Overrides Function DW_CalcEntropy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
             Dim S As Double
@@ -893,7 +875,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
                             If xs <> 0 Then HS = Me.DW_CalcEnthalpy(Vs, T, P, State.Solid)
                             If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-                            HM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * HS + Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault * HS + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * HV
+                            HM = Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * HL + Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault * HS + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * HV
 
                             H = HM
 
@@ -902,7 +884,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
                             If xs <> 0 Then SS = Me.DW_CalcEntropy(Vs, T, P, State.Solid)
                             If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)
-                            SM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * SS + Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault * SS + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * SV
+                            SM = Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * SL + Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault * SS + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * SV
 
                             S = SM
 

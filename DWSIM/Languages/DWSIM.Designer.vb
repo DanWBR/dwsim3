@@ -1415,6 +1415,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to [Eletrólito] Carga.
+        '''</summary>
+        Friend Shared ReadOnly Property Charge() As String
+            Get
+                Return ResourceManager.GetString("Charge", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Clique em OK para limpar a malha.
         '''</summary>
         Friend Shared ReadOnly Property CliqueemOKparalimparamalha() As String
@@ -4505,6 +4514,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Entalpia de Fusão @ Tf.
+        '''</summary>
+        Friend Shared ReadOnly Property EnthalpyOfFusionAtTf() As String
+            Get
+                Return ResourceManager.GetString("EnthalpyOfFusionAtTf", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Entrada Borda.
         '''</summary>
         Friend Shared ReadOnly Property EntradaBorda() As String
@@ -6512,6 +6530,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to [Eletrólito] Número de Hidratação.
+        '''</summary>
+        Friend Shared ReadOnly Property HydrationNumber() As String
+            Get
+                Return ResourceManager.GetString("HydrationNumber", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Ignorar Líquido na Entrada.
         '''</summary>
         Friend Shared ReadOnly Property IgnorarLquidonaEntra() As String
@@ -7835,6 +7862,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to [Eletrólito] Íon Negativo.
+        '''</summary>
+        Friend Shared ReadOnly Property NegativeIon() As String
+            Get
+                Return ResourceManager.GetString("NegativeIon", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Nenhum selecionado.
         '''</summary>
         Friend Shared ReadOnly Property Nenhumselecionado() As String
@@ -9118,6 +9154,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Porv() As String
             Get
                 Return ResourceManager.GetString("Porv", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to [Eletrólito] Íon Positivo.
+        '''</summary>
+        Friend Shared ReadOnly Property PositiveIon() As String
+            Get
+                Return ResourceManager.GetString("PositiveIon", resourceCulture)
             End Get
         End Property
         
@@ -11561,6 +11606,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Densidade como Sólido @ Ts.
+        '''</summary>
+        Friend Shared ReadOnly Property SolidDensityAtTs() As String
+            Get
+                Return ResourceManager.GetString("SolidDensityAtTs", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Solo(úmido).
         '''</summary>
         Friend Shared ReadOnly Property Solomido() As String
@@ -11890,6 +11944,24 @@ Namespace My.Resources
         Friend Shared ReadOnly Property TemperaturavsVolume() As String
             Get
                 Return ResourceManager.GetString("TemperaturavsVolume", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Temperatura de Fusão.
+        '''</summary>
+        Friend Shared ReadOnly Property TemperatureOfFusion() As String
+            Get
+                Return ResourceManager.GetString("TemperatureOfFusion", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Temperatura da Densidade como Sólido.
+        '''</summary>
+        Friend Shared ReadOnly Property TemperatureOfSolidDensity_Ts() As String
+            Get
+                Return ResourceManager.GetString("TemperatureOfSolidDensity_Ts", resourceCulture)
             End Get
         End Property
         

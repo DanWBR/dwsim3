@@ -24,6 +24,7 @@ Imports WeifenLuo.WinFormsUI
 Imports System.Drawing
 Imports System.IO
 Imports DWSIM.DWSIM.SimulationObjects
+Imports System.Threading.Tasks
 
 Namespace DWSIM.Flowsheet
 
@@ -186,55 +187,12 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Public Shared Sub CalculateMaterialStream(ByVal form As FormFlowsheet, ByVal ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False, Optional ByVal OnlyMe As Boolean = False)
 
+            Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+
             Dim preLab As String = form.FormSurface.LabelCalculator.Text
             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
 
-            If ms.Fases.Count <= 3 Then
-                ms.Fases.Add("3", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid1"), ""))
-                ms.Fases.Add("4", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid2"), ""))
-                ms.Fases.Add("5", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid3"), ""))
-                ms.Fases.Add("6", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Aqueous"), ""))
-                ms.Fases.Add("7", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Solid"), ""))
-                If form.Options.SelectedComponents.Count = 0 Then
-                    MessageBox.Show(DWSIM.App.GetLocalString("Nohcomponentesaadici"))
-                Else
-                    Dim comp2 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                    For Each comp2 In form.Options.SelectedComponents.Values
-                        ms.Fases(3).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        ms.Fases(3).Componentes(comp2.Name).ConstantProperties = comp2
-                        ms.Fases(4).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        ms.Fases(4).Componentes(comp2.Name).ConstantProperties = comp2
-                        ms.Fases(5).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        ms.Fases(5).Componentes(comp2.Name).ConstantProperties = comp2
-                        ms.Fases(6).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        ms.Fases(6).Componentes(comp2.Name).ConstantProperties = comp2
-                    Next
-                End If
-            ElseIf ms.Fases.Count <= 6 Then
-                ms.Fases.Add("6", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Aqueous"), ""))
-                If form.Options.SelectedComponents.Count = 0 Then
-                    MessageBox.Show(DWSIM.App.GetLocalString("Nohcomponentesaadici"))
-                Else
-                    Dim comp2 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                    For Each comp2 In form.Options.SelectedComponents.Values
-                        ms.Fases(6).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        ms.Fases(6).Componentes(comp2.Name).ConstantProperties = comp2
-                    Next
-                End If
-            ElseIf ms.Fases.Count <= 7 Then
-                ms.Fases.Add("7", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Solid"), ""))
-                If form.Options.SelectedComponents.Count = 0 Then
-                    MessageBox.Show(DWSIM.App.GetLocalString("Nohcomponentesaadici"))
-                Else
-                    Dim comp2 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                    For Each comp2 In form.Options.SelectedComponents.Values
-                        ms.Fases(7).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        ms.Fases(7).Componentes(comp2.Name).ConstantProperties = comp2
-                    Next
-                End If
-            End If
-
-            Dim sobj As Microsoft.MSDN.Samples.GraphicObjects.GraphicObject = form.Collections.MaterialStreamCollection(ms.Nome)
+            Dim sobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = form.Collections.MaterialStreamCollection(ms.Nome)
 
             Dim T As Double = ms.Fases(0).SPMProperties.temperature.GetValueOrDefault
             Dim P As Double = ms.Fases(0).SPMProperties.pressure.GetValueOrDefault
@@ -254,7 +212,7 @@ Namespace DWSIM.Flowsheet
                     .CurrentMaterialStream = ms
                     .DW_CalcVazaoMolar()
                     If DoNotCalcFlash Then
-                        '.DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                        'do not do a flash calculation...
                     ElseIf form.Options.SempreCalcularFlashPH And H <> 0 Then
                         .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                     Else
@@ -278,36 +236,131 @@ Namespace DWSIM.Flowsheet
                                     .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
                             End Select
                         End If
+                    End If
+                    If doparallel Then
+                        My.Application.IsRunningParallelTasks = True
+                        Try
+                            Dim task1 As Task = New Task(Sub()
+                                                             If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                                             Else
+                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                                             End If
+                                                         End Sub)
+                            Dim task2 As Task = New Task(Sub()
+                                                             If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                                             Else
+                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                                             End If
+                                                         End Sub)
+                            Dim task3 As Task = New Task(Sub()
+                                                             If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                                             Else
+                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                                             End If
+                                                         End Sub)
+                            Dim task4 As Task = New Task(Sub()
+                                                             If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                                             Else
+                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                                             End If
+                                                         End Sub)
+                            Dim task5 As Task = New Task(Sub()
+                                                             If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                                             Else
+                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                                             End If
+                                                         End Sub)
+                            Dim task6 As Task = New Task(Sub()
+                                                             If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                                             Else
+                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                                             End If
+                                                         End Sub)
+                            Select Case My.Settings.MaxDegreeOfParallelism
+                                Case 1
+                                    task1.Start()
+                                    task1.Wait()
+                                    task2.Start()
+                                    task2.Wait()
+                                    task3.Start()
+                                    task3.Wait()
+                                    task4.Start()
+                                    task4.Wait()
+                                    task5.Start()
+                                    task5.Wait()
+                                    task6.Start()
+                                    task6.Wait()
+                                Case 2
+                                    task1.Start()
+                                    task2.Start()
+                                    Task.WaitAll(task1, task2)
+                                    task3.Start()
+                                    task4.Start()
+                                    Task.WaitAll(task3, task4)
+                                    task5.Start()
+                                    task6.Start()
+                                    Task.WaitAll(task5, task6)
+                                Case 3
+                                    task1.Start()
+                                    task2.Start()
+                                    task3.Start()
+                                    Task.WaitAll(task1, task2, task3)
+                                    task4.Start()
+                                    task5.Start()
+                                    task6.Start()
+                                    Task.WaitAll(task4, task5, task6)
+                                Case Else
+                                    task1.Start()
+                                    task2.Start()
+                                    task3.Start()
+                                    task4.Start()
+                                    task5.Start()
+                                    task6.Start()
+                                    Task.WaitAll(task1, task2, task3, task4, task5, task6)
+                            End Select
+                        Catch ae As AggregateException
+                            For Each ex As Exception In ae.InnerExceptions
+                                Throw
+                            Next
+                        End Try
+                        My.Application.IsRunningParallelTasks = False
+                    Else
+                        If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
                         End If
-                    If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                    End If
-                    If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                    End If
-                    If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                    End If
-                    If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                    End If
-                    If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                    End If
-                    If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                        End If
+                        If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                        End If
+                        If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                        End If
+                        If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                        End If
+                        If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        End If
                     End If
                     If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault <= 1 Then
                         .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
@@ -341,12 +394,16 @@ Namespace DWSIM.Flowsheet
                     .CurrentMaterialStream = ms
                     .DW_CalcVazaoMassica()
                     If DoNotCalcFlash Then
-                        '.DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                        'do not do a flash calculation...
                     ElseIf form.Options.SempreCalcularFlashPH And H <> 0 Then
                         .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                     Else
                         If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Then
-                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                            If ms.GraphicObject.InputConnectors(0).IsAttached Then
+                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                            Else
+                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                            End If
                         Else
                             Select Case ms.SpecType
                                 Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
@@ -362,35 +419,130 @@ Namespace DWSIM.Flowsheet
                             End Select
                         End If
                     End If
-                    If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                    If doparallel Then
+                        My.Application.IsRunningParallelTasks = True
+                        Try
+                            Dim task1 As Task = New Task(Sub()
+                                                             If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                                             Else
+                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                                             End If
+                                                         End Sub)
+                            Dim task2 As Task = New Task(Sub()
+                                                             If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                                             Else
+                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                                             End If
+                                                         End Sub)
+                            Dim task3 As Task = New Task(Sub()
+                                                             If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                                             Else
+                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                                             End If
+                                                         End Sub)
+                            Dim task4 As Task = New Task(Sub()
+                                                             If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                                             Else
+                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                                             End If
+                                                         End Sub)
+                            Dim task5 As Task = New Task(Sub()
+                                                             If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                                             Else
+                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                                             End If
+                                                         End Sub)
+                            Dim task6 As Task = New Task(Sub()
+                                                             If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                                             Else
+                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                                             End If
+                                                         End Sub)
+                            Select Case My.Settings.MaxDegreeOfParallelism
+                                Case 1
+                                    task1.Start()
+                                    task1.Wait()
+                                    task2.Start()
+                                    task2.Wait()
+                                    task3.Start()
+                                    task3.Wait()
+                                    task4.Start()
+                                    task4.Wait()
+                                    task5.Start()
+                                    task5.Wait()
+                                    task6.Start()
+                                    task6.Wait()
+                                Case 2
+                                    task1.Start()
+                                    task2.Start()
+                                    Task.WaitAll(task1, task2)
+                                    task3.Start()
+                                    task4.Start()
+                                    Task.WaitAll(task3, task4)
+                                    task5.Start()
+                                    task6.Start()
+                                    Task.WaitAll(task5, task6)
+                                Case 3
+                                    task1.Start()
+                                    task2.Start()
+                                    task3.Start()
+                                    Task.WaitAll(task1, task2, task3)
+                                    task4.Start()
+                                    task5.Start()
+                                    task6.Start()
+                                    Task.WaitAll(task4, task5, task6)
+                                Case Else
+                                    task1.Start()
+                                    task2.Start()
+                                    task3.Start()
+                                    task4.Start()
+                                    task5.Start()
+                                    task6.Start()
+                                    Task.WaitAll(task1, task2, task3, task4, task5, task6)
+                            End Select
+                        Catch ae As AggregateException
+                            For Each ex As Exception In ae.InnerExceptions
+                                Throw
+                            Next
+                        End Try
+                        My.Application.IsRunningParallelTasks = False
                     Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                    End If
-                    If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                    End If
-                    If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                    End If
-                    If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                    End If
-                    If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                    End If
-                    If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                        End If
+                        If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                        End If
+                        If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                        End If
+                        If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                        End If
+                        If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                        End If
+                        If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        End If
                     End If
                     If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault <= 1 Then
                         .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
@@ -438,7 +590,6 @@ Namespace DWSIM.Flowsheet
                     .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
                     .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
                     .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                    '.DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
                     .DW_ZerarOverallProps()
                     .CurrentMaterialStream = Nothing
                 End With

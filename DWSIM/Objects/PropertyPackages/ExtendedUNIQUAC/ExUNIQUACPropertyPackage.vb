@@ -646,24 +646,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Return val
         End Function
 
-        Public Function AUX_SOLIDDENS() As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim zerodens As Double = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
-                If subst.ConstantProperties.SolidDensityAtTs <> 0.0# Then
-                    val += subst.FracaoMassica.GetValueOrDefault * 1 / subst.ConstantProperties.SolidDensityAtTs
-                Else
-                    zerodens += subst.FracaoMassica.GetValueOrDefault
-                End If
-            Next
-
-            Return 1 / val / (1 - zerodens)
-
-        End Function
-
         Public Overrides Function DW_CalcEntropy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
             Dim S As Double

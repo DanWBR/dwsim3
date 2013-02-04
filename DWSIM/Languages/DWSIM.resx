@@ -4630,4 +4630,28 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="NoRegressionAvailable" xml:space="preserve">
     <value>Regressão não disponível.</value>
   </data>
+  <data name="Charge" xml:space="preserve">
+    <value>[Eletrólito] Carga</value>
+  </data>
+  <data name="EnthalpyOfFusionAtTf" xml:space="preserve">
+    <value>Entalpia de Fusão @ Tf</value>
+  </data>
+  <data name="HydrationNumber" xml:space="preserve">
+    <value>[Eletrólito] Número de Hidratação</value>
+  </data>
+  <data name="NegativeIon" xml:space="preserve">
+    <value>[Eletrólito] Íon Negativo</value>
+  </data>
+  <data name="PositiveIon" xml:space="preserve">
+    <value>[Eletrólito] Íon Positivo</value>
+  </data>
+  <data name="SolidDensityAtTs" xml:space="preserve">
+    <value>Densidade como Sólido @ Ts</value>
+  </data>
+  <data name="TemperatureOfFusion" xml:space="preserve">
+    <value>Temperatura de Fusão</value>
+  </data>
+  <data name="TemperatureOfSolidDensity_Ts" xml:space="preserve">
+    <value>Temperatura da Densidade como Sólido</value>
+  </data>
 </root>

@@ -241,17 +241,21 @@ Public Class SpreadsheetForm
 
     Sub DefineVariables()
 
-        If Me.formc Is Nothing Then Me.formc = FormMain.ActiveMdiChild
+        If TypeOf FormMain.ActiveMdiChild Is FormFlowsheet Then
 
-        For Each r As DataGridViewRow In Me.DataGridView1.Rows
-            For Each ce As DataGridViewCell In r.Cells
-                Try
-                    Me.ExpContext.Variables.DefineVariable(Me.GetCellString(ce), GetType(Double))
-                Catch ex As Exception
-                    ce.OwningColumn.Visible = False
-                End Try
+            If Me.formc Is Nothing Then Me.formc = FormMain.ActiveMdiChild
+
+            For Each r As DataGridViewRow In Me.DataGridView1.Rows
+                For Each ce As DataGridViewCell In r.Cells
+                    Try
+                        Me.ExpContext.Variables.DefineVariable(Me.GetCellString(ce), GetType(Double))
+                    Catch ex As Exception
+                        ce.OwningColumn.Visible = False
+                    End Try
+                Next
             Next
-        Next
+
+        End If
 
     End Sub
 
@@ -431,65 +435,71 @@ Public Class SpreadsheetForm
 
     Sub UpdateValue(ByRef cell As DataGridViewCell, ByVal expression As String)
 
-        If formc Is Nothing Then formc = My.Application.ActiveSimulation
 
-        If Me.ExpContext Is Nothing Then
-            Me.ExpContext = New Ciloci.Flee.ExpressionContext
-            With Me.ExpContext
-                .Imports.ImportStaticMembers(GetType(System.Math))
-            End With
-        End If
+        If TypeOf FormMain.ActiveMdiChild Is FormFlowsheet Then
 
-        If Me.loaded = False Then DefineVariables()
-        GetValues()
+            If formc Is Nothing Then formc = My.Application.ActiveSimulation
 
-        Me.tbValue.Text = expression
-
-        Try
-            ccparams = cell.Tag
-            ccparams.Expression = expression
-            If ccparams.CellType = VarType.Write Then
-                ccparams.ToolTipText = DWSIM.App.GetLocalString("CellWillWrite") & vbCrLf & _
-                DWSIM.App.GetLocalString("Objeto") & ": " & formc.Collections.ObjectCollection(ccparams.ObjectID).GraphicObject.Tag & vbCrLf & _
-                DWSIM.App.GetLocalString("Propriedade") & ": " & DWSIM.App.GetPropertyName(ccparams.PropID)
-                cell.ToolTipText = ccparams.ToolTipText
+            If Me.ExpContext Is Nothing Then
+                Me.ExpContext = New Ciloci.Flee.ExpressionContext
+                With Me.ExpContext
+                    .Imports.ImportStaticMembers(GetType(System.Math))
+                End With
             End If
-            If expression <> "" Then
-                If expression.Substring(0, 1) = "=" Then
-                    Me.Expr = ExpressionFactory.CreateGeneric(Of Double)(expression.Substring(1), Me.ExpContext)
-                    cell.Value = Expr.Evaluate
-                ElseIf expression.Substring(0, 1) = ":" Then
-                    Dim str As String()
-                    Dim obj, prop As String
-                    str = expression.Split(New Char() {","})
-                    obj = str(0).Substring(1)
-                    ccparams.ObjectID = obj
-                    prop = str(1)
-                    ccparams.PropID = prop
-                    cell.Value = formc.Collections.ObjectCollection(obj).GetPropertyValue(prop, formc.Options.SelectedUnitSystem)
-                    ccparams.ToolTipText = DWSIM.App.GetLocalString("CellIsReading") & vbCrLf & _
+
+            If Me.loaded = False Then DefineVariables()
+            GetValues()
+
+            Me.tbValue.Text = expression
+
+            Try
+                ccparams = cell.Tag
+                ccparams.Expression = expression
+                If ccparams.CellType = VarType.Write Then
+                    ccparams.ToolTipText = DWSIM.App.GetLocalString("CellWillWrite") & vbCrLf & _
                     DWSIM.App.GetLocalString("Objeto") & ": " & formc.Collections.ObjectCollection(ccparams.ObjectID).GraphicObject.Tag & vbCrLf & _
-                    DWSIM.App.GetLocalString("Propriedade") & ": " & DWSIM.App.GetPropertyName(prop) & vbCrLf & _
-                    DWSIM.App.GetLocalString("CurrentValue") & ": " & Format(cell.Value, formc.Options.NumberFormat) & _
-                    " " & formc.Collections.ObjectCollection(obj).GetPropertyUnit(prop, formc.Options.SelectedUnitSystem)
-                    cell.ToolTipText = ccparams.ToolTipText
-                Else
-                    cell.Value = expression
-                    ccparams.ToolTipText = expression
+                    DWSIM.App.GetLocalString("Propriedade") & ": " & DWSIM.App.GetPropertyName(ccparams.PropID)
                     cell.ToolTipText = ccparams.ToolTipText
                 End If
-            Else
-                cell.Value = ""
+                If expression <> "" Then
+                    If expression.Substring(0, 1) = "=" Then
+                        Me.Expr = ExpressionFactory.CreateGeneric(Of Double)(expression.Substring(1), Me.ExpContext)
+                        cell.Value = Expr.Evaluate
+                    ElseIf expression.Substring(0, 1) = ":" Then
+                        Dim str As String()
+                        Dim obj, prop As String
+                        str = expression.Split(New Char() {","})
+                        obj = str(0).Substring(1)
+                        ccparams.ObjectID = obj
+                        prop = str(1)
+                        ccparams.PropID = prop
+                        cell.Value = formc.Collections.ObjectCollection(obj).GetPropertyValue(prop, formc.Options.SelectedUnitSystem)
+                        ccparams.ToolTipText = DWSIM.App.GetLocalString("CellIsReading") & vbCrLf & _
+                        DWSIM.App.GetLocalString("Objeto") & ": " & formc.Collections.ObjectCollection(ccparams.ObjectID).GraphicObject.Tag & vbCrLf & _
+                        DWSIM.App.GetLocalString("Propriedade") & ": " & DWSIM.App.GetPropertyName(prop) & vbCrLf & _
+                        DWSIM.App.GetLocalString("CurrentValue") & ": " & Format(cell.Value, formc.Options.NumberFormat) & _
+                        " " & formc.Collections.ObjectCollection(obj).GetPropertyUnit(prop, formc.Options.SelectedUnitSystem)
+                        cell.ToolTipText = ccparams.ToolTipText
+                    Else
+                        cell.Value = expression
+                        ccparams.ToolTipText = expression
+                        cell.ToolTipText = ccparams.ToolTipText
+                    End If
+                Else
+                    cell.Value = ""
+                    ccparams.ToolTipText = ""
+                    cell.ToolTipText = ccparams.ToolTipText
+                End If
+            Catch ex As Exception
+                cell.Value = Me.OldValue
                 ccparams.ToolTipText = ""
+                cell.Tag = ccparams.Clone
                 cell.ToolTipText = ccparams.ToolTipText
-            End If
-        Catch ex As Exception
-            cell.Value = Me.OldValue
-            ccparams.ToolTipText = ""
-            cell.Tag = ccparams.Clone
-            cell.ToolTipText = ccparams.ToolTipText
-            My.Application.ActiveSimulation.WriteToLog(Me.Text & ": " & DWSIM.App.GetLocalString("Invalidexpressiononcell") & " " & GetCellString(cell) & " - " & ex.Message, Color.Brown, DWSIM.FormClasses.TipoAviso.Informacao)
-        End Try
+                My.Application.ActiveSimulation.WriteToLog(Me.Text & ": " & DWSIM.App.GetLocalString("Invalidexpressiononcell") & " " & GetCellString(cell) & " - " & ex.Message, Color.Brown, DWSIM.FormClasses.TipoAviso.Informacao)
+            End Try
+
+        End If
+
 
     End Sub
 

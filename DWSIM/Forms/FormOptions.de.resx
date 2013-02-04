@@ -169,6 +169,15 @@
   <data name="GroupBox7.Text" xml:space="preserve">
     <value>Funktionen</value>
   </data>
+  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>317, 24</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Maximalen Grad an Parallelität</value>
+  </data>
   <data name="chkEnableParallelCalcs.Size" type="System.Drawing.Size, System.Drawing">
     <value>183, 17</value>
   </data>
@@ -279,7 +288,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABw
-        KgAAAk1TRnQBSQFMAgEBCgEAAVwBAAFcAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAWQBAAFkAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAeQCogHiAqAB4QKfAd4CnAHcAZwBmgHaApgB2gKYAdkClwHXApUB1gKU
         AdMCkQHTApEB0QKPAc8CjQHPAo0BzwKNAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKf
         Ad4CnAHeApwB3AKaAdoCmAHaApgB2gKYAdoCmGAAA+wD8APuA+0B6gHrAeoD6APnAuUB5gLjAeQD4gPh

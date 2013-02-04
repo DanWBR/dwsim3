@@ -156,8 +156,8 @@ Namespace DWSIM.Databases
                             cp.Acentric_Factor = Double.Parse(node2.Attributes("value").Value, nf)
                         Case "DipoleMoment" 'coloumb.m
                             cp.Dipole_Moment = Double.Parse(node2.Attributes("value").Value, nf)
-                        Case "HeatOfFusionAtMeltingPoint" ' kJ/kg
-                            cp.EnthalpyOfFusionAtTf = Double.Parse(node2.Attributes("value").Value, nf) / 1000 / cp.Molar_Weight
+                        Case "HeatOfFusionAtMeltingPoint" ' kJ/mol
+                            cp.EnthalpyOfFusionAtTf = Double.Parse(node2.Attributes("value").Value, nf) / 1000 / 1000
                         Case "HeatOfFormation" '/1000/MW, kJ/kg
                             cp.IG_Enthalpy_of_Formation_25C = Double.Parse(node2.Attributes("value").Value, nf) / 1000 / cp.Molar_Weight
                         Case "GibbsEnergyOfFormation" '/1000/MW, kJ/kg
@@ -282,6 +282,28 @@ Namespace DWSIM.Databases
                                         cp.Liquid_Thermal_Conductivity_Tmax = Double.Parse(node3.Attributes("value").Value, nf)
                                 End Select
                             Next
+                        Case "SolidDensity"
+                            '<SolidDensity name="Solid density"  units="kmol/m3" >
+                            For Each node3 As XmlNode In node2.ChildNodes
+                                Select Case node3.Name
+                                    Case "eqno"
+                                        cp.SolidDensityEquation = node3.Attributes("value").Value
+                                    Case "A"
+                                        cp.Solid_Density_Const_A = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "B"
+                                        cp.Solid_Density_Const_B = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "C"
+                                        cp.Solid_Density_Const_C = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "D"
+                                        cp.Solid_Density_Const_D = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "E"
+                                        cp.Solid_Density_Const_E = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "Tmin"
+                                        cp.Solid_Density_Tmin = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "Tmax"
+                                        cp.Solid_Density_Tmax = Double.Parse(node3.Attributes("value").Value, nf)
+                                End Select
+                            Next
                         Case "LiquidDensity"
                             '- <LiquidDensity name="Liquid density" units="kmol/m3">
                             For Each node3 As XmlNode In node2.ChildNodes
@@ -324,6 +346,28 @@ Namespace DWSIM.Databases
                                         cp.Liquid_Heat_Capacity_Tmin = Double.Parse(node3.Attributes("value").Value, nf)
                                     Case "Tmax"
                                         cp.Liquid_Heat_Capacity_Tmax = Double.Parse(node3.Attributes("value").Value, nf)
+                                End Select
+                            Next
+                        Case "SolidHeatCapacityCp"
+                            '-<SolidHeatCapacityCp name="Solid heat capacity"  units="J/kmol/K" >
+                            For Each node3 As XmlNode In node2.ChildNodes
+                                Select Case node3.Name
+                                    Case "eqno"
+                                        cp.SolidHeatCapacityEquation = node3.Attributes("value").Value
+                                    Case "A"
+                                        cp.Solid_Heat_Capacity_Const_A = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "B"
+                                        cp.Solid_Heat_Capacity_Const_B = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "C"
+                                        cp.Solid_Heat_Capacity_Const_C = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "D"
+                                        cp.Solid_Heat_Capacity_Const_D = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "E"
+                                        cp.Solid_Heat_Capacity_Const_E = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "Tmin"
+                                        cp.Solid_Heat_Capacity_Tmin = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "Tmax"
+                                        cp.Solid_Heat_Capacity_Tmax = Double.Parse(node3.Attributes("value").Value, nf)
                                 End Select
                             Next
                         Case "UnifacVLE"

@@ -231,7 +231,7 @@ Public Class FormBinEnv
 
         If Me.RadioButton1.Checked Then
 
-            Dim px, py1, py2, pxi, py1i, py2i, px1l1, px1l2, py3 As New ArrayList
+            Dim px, py1, py2, pxi, py1i, py2i, px1l1, px1l2, py3, pxs1, pys1, pxs2, pys2 As New ArrayList
             px = r(0)
             py1 = r(1)
             py2 = r(2)
@@ -242,8 +242,12 @@ Public Class FormBinEnv
             px1l1 = r(3)
             px1l2 = r(4)
             py3 = r(5)
+            pxs1 = r(6)
+            pys1 = r(7)
+            pxs2 = r(8)
+            pys2 = r(9)
 
-            Dim vx1, vx2, vy1, vy2, vxi, vy1i, vy2i, vx1l1, vx1l2, vy3 As New ArrayList
+            Dim vx1, vx2, vy1, vy2, vxi, vy1i, vy2i, vx1l1, vx1l2, vy3, vxs1, vys1, vxs2, vys2 As New ArrayList
 
             i = 0
             Do
@@ -274,7 +278,24 @@ Public Class FormBinEnv
                     vy3.Add(cv.ConverterDoSI(su.spmp_temperature, py3(i)))
                     i += 1
                 Loop Until i = px1l1.Count
+            End If
 
+            If pys1.Count > 0 Then
+                i = 0
+                Do
+                    vxs1.Add(pxs1(i))
+                    vys1.Add(cv.ConverterDoSI(su.spmp_temperature, pys1(i)))
+                    i += 1
+                Loop Until i = pys1.Count
+            End If
+
+            If pys2.Count > 0 Then
+                i = 0
+                Do
+                    vxs2.Add(pxs2(i))
+                    vys2.Add(cv.ConverterDoSI(su.spmp_temperature, pys2(i)))
+                    i += 1
+                Loop Until i = pys2.Count
             End If
 
             With Me.Grid1.Columns
@@ -347,13 +368,29 @@ Public Class FormBinEnv
                     .Symbol.IsVisible = False
                 End With
                 If vx1l1.Count > 0 Then
-                    With .AddCurve(DWSIM.App.GetLocalString("LLE LP1"), vx1l1.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Diamond)
+                    With .AddCurve(DWSIM.App.GetLocalString("LLE LP1"), vx1l1.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Circle)
                         .Symbol.Fill.Type = ZedGraph.FillType.Solid
-                        .Line.IsVisible = False
+                        .Line.IsVisible = True
+                        .Line.IsSmooth = True
                     End With
-                    With .AddCurve(DWSIM.App.GetLocalString("LLE LP2"), vx1l2.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Diamond)
+                    With .AddCurve(DWSIM.App.GetLocalString("LLE LP2"), vx1l2.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.DarkRed, ZedGraph.SymbolType.Circle)
                         .Symbol.Fill.Type = ZedGraph.FillType.Solid
-                        .Line.IsVisible = False
+                        .Line.IsVisible = True
+                        .Line.IsSmooth = True
+                    End With
+                End If
+                If pys1.Count > 0 Then
+                    With .AddCurve(DWSIM.App.GetLocalString("SLE L/SL"), vxs1.ToArray(GetType(Double)), vys1.ToArray(GetType(Double)), Color.Magenta, ZedGraph.SymbolType.Circle)
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        .Line.IsVisible = True
+                        .Line.IsSmooth = True
+                    End With
+                End If
+                If pys2.Count > 0 Then
+                    With .AddCurve(DWSIM.App.GetLocalString("SLE SL/S"), vxs2.ToArray(GetType(Double)), vys2.ToArray(GetType(Double)), Color.DarkMagenta, ZedGraph.SymbolType.Circle)
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        .Line.IsVisible = True
+                        .Line.IsSmooth = True
                     End With
                 End If
                 .XAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " / " & c(0)

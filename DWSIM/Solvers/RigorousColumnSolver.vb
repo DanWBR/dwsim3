@@ -980,6 +980,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                                 Optional ByVal llex As Boolean = False) As Object
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
 
             llextr = llex 'liq-liq extractor
 
@@ -1557,7 +1558,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.Application.IsRunningParallelTasks = True
-                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  If llextr Then
                                                                      tmp(ipar) = pp.DW_CalcKvalue(xc(ipar), yc(ipar), Tj(ipar), P(ipar), "LL")
@@ -1626,7 +1627,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.Application.IsRunningParallelTasks = True
-                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  'new Ks
                                                                  K2(ipar) = pp.DW_CalcKvalue(xc(ipar), yc(ipar), Tj2(ipar), P(ipar))
@@ -1657,7 +1658,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.Application.IsRunningParallelTasks = True
-                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  'enthalpies
                                                                  If llextr Then
@@ -1784,6 +1785,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                 ByVal specs As Dictionary(Of String, SepOps.ColumnSpec)) As Object
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
 
             Dim ic As Integer
             Dim t_error, t_error_ant As Double
@@ -1863,7 +1865,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
             If doparallel Then
                 My.Application.IsRunningParallelTasks = True
-                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                          Sub(ipar)
                                                              Hl(ipar) = pp.DW_CalcEnthalpy(x(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(x(ipar)) / 1000
                                                              Hv(ipar) = pp.DW_CalcEnthalpy(y(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(y(ipar)) / 1000
@@ -1981,7 +1983,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 'tomich
                 If doparallel Then
                     My.Application.IsRunningParallelTasks = True
-                    Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, nc,
+                    Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, nc, poptions,
                                                              Sub(ipar)
                                                                  xt(ipar) = Tomich.TDMASolve(at(ipar), bt(ipar), ct(ipar), dt(ipar))
                                                              End Sub))
@@ -2031,7 +2033,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.Application.IsRunningParallelTasks = True
-                    Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                    Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  Dim tmpvar As Object = pp.DW_CalcBubT(xc(ipar), P(ipar), Tj(ipar), K(ipar), True)
                                                                  Tj(ipar) = tmpvar(4)
@@ -2082,7 +2084,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.Application.IsRunningParallelTasks = True
-                    Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                    Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
                                                                  Hv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
@@ -2261,6 +2263,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                 Optional ByVal llextr As Boolean = False) As Object
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
 
             Dim ic As Integer
             Dim t_error As Double
@@ -2439,7 +2442,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.Application.IsRunningParallelTasks = True
-                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
                                                                  dHl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar) - 0.01, P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
@@ -2575,6 +2578,7 @@ restart:            fx = Me.FunctionValue(xvar)
         Public Function FunctionValue(ByVal x() As Double) As Double()
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
 
             Dim nc, ns As Integer
             Dim i, j As Integer
@@ -2683,7 +2687,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
             If doparallel Then
                 My.Application.IsRunningParallelTasks = True
-                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                          Sub(ipar)
                                                              Dim tmp0 As Object
                                                              If llextr Then
@@ -2721,7 +2725,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
             If doparallel Then
                 My.Application.IsRunningParallelTasks = True
-                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1,
+                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                          Sub(ipar)
                                                              If Vj(ipar) <> 0 Then
                                                                  If llextr Then

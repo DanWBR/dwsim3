@@ -17,7 +17,7 @@
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
-Imports Microsoft.MSDN.Samples
+Imports Microsoft.Msdn.Samples
 Imports DWSIM.DWSIM.MathEx
 Imports System.Math
 Imports ZedGraph
@@ -141,7 +141,7 @@ Public Class FormDataRegression
             Me.cbCompound2.SelectedItem = .comp2
             If .model.ToLower = "PRSV2" Then .model = "PRSV2-M"
             Me.cbModel.SelectedItem = .model
-            Select cbModel.SelectedItem.ToString()
+            Select Case cbModel.SelectedItem.ToString()
                 Case "Peng-Robinson", "Soave-Redlich-Kwong"
                     gridInEst.Rows.Clear()
                     gridInEst.Rows.Add(New Object() {"kij", .iepar1})
@@ -245,6 +245,7 @@ Public Class FormDataRegression
         If cancel Then Exit Function
 
         Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+        Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
 
         Dim Vx1(currcase.pp.Count - 1), Vx2(currcase.pp.Count - 1), Vy(currcase.pp.Count - 1), IP(x.Length - 1, x.Length) As Double
         Dim Vx1c(currcase.pp.Count - 1), Vx2c(currcase.pp.Count - 1), Vyc(currcase.pp.Count - 1) As Double
@@ -322,16 +323,20 @@ Public Class FormDataRegression
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
-                                                                             Sub(ipar)
-                                                                                 Dim result2 As Object
-                                                                                 result2 = proppack.DW_CalcBubT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), VT(ipar))
-                                                                                 VTc(ipar) = result2(4)
-                                                                                 Vyc(ipar) = result2(3)(0)
-                                                                             End Sub))
-                                    While Not task1.IsCompleted
-                                        Application.DoEvents()
-                                    End While
+                                    Try
+                                        Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                                 Sub(ipar)
+                                                                                     Dim result2 As Object
+                                                                                     result2 = proppack.DW_CalcBubT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), VT(ipar))
+                                                                                     VTc(ipar) = result2(4)
+                                                                                     Vyc(ipar) = result2(3)(0)
+                                                                                 End Sub))
+                                        task1.Wait()
+                                    Catch ae As AggregateException
+                                        For Each ex As Exception In ae.InnerExceptions
+                                            Throw
+                                        Next
+                                    End Try
                                     My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
@@ -346,16 +351,20 @@ Public Class FormDataRegression
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
-                                                                             Sub(ipar)
-                                                                                 Dim result2 As Object
-                                                                                 result2 = proppack.DW_CalcBubP(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VT(0), VP(ipar))
-                                                                                 VPc(ipar) = result2(4)
-                                                                                 Vyc(ipar) = result2(3)(0)
-                                                                             End Sub))
-                                    While Not task1.IsCompleted
-                                        Application.DoEvents()
-                                    End While
+                                    Try
+                                        Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                                 Sub(ipar)
+                                                                                     Dim result2 As Object
+                                                                                     result2 = proppack.DW_CalcBubP(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VT(0), VP(ipar))
+                                                                                     VPc(ipar) = result2(4)
+                                                                                     Vyc(ipar) = result2(3)(0)
+                                                                                 End Sub))
+                                        task1.Wait()
+                                    Catch ae As AggregateException
+                                        For Each ex As Exception In ae.InnerExceptions
+                                            Throw
+                                        Next
+                                    End Try
                                     My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
@@ -375,16 +384,20 @@ Public Class FormDataRegression
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
-                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
-                                                                             Sub(ipar)
-                                                                                 Dim result2 As Object
-                                                                                 result2 = proppack.DW_CalcBubT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), VT(ipar))
-                                                                                 VTc(ipar) = result2(4)
-                                                                                 Vyc(ipar) = result2(3)(0)
-                                                                             End Sub))
-                                    While Not task1.IsCompleted
-                                        Application.DoEvents()
-                                    End While
+                                    Try
+                                        Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                                 Sub(ipar)
+                                                                                     Dim result2 As Object
+                                                                                     result2 = proppack.DW_CalcBubT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), VT(ipar))
+                                                                                     VTc(ipar) = result2(4)
+                                                                                     Vyc(ipar) = result2(3)(0)
+                                                                                 End Sub))
+                                        task1.Wait()
+                                    Catch ae As AggregateException
+                                        For Each ex As Exception In ae.InnerExceptions
+                                            Throw
+                                        Next
+                                    End Try
                                     My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
@@ -399,16 +412,20 @@ Public Class FormDataRegression
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
-                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
+                                    Try
+                                        Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                              Sub(ipar)
                                                                                  Dim result2 As Object
                                                                                  result2 = proppack.DW_CalcBubP(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VT(0), VP(ipar))
                                                                                  VPc(ipar) = result2(4)
                                                                                  Vyc(ipar) = result2(3)(0)
                                                                              End Sub))
-                                    While Not task1.IsCompleted
-                                        Application.DoEvents()
-                                    End While
+                                        task1.Wait()
+                                    Catch ae As AggregateException
+                                        For Each ex As Exception In ae.InnerExceptions
+                                            Throw
+                                        Next
+                                    End Try
                                     My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
@@ -429,16 +446,20 @@ Public Class FormDataRegression
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
-                                                                             Sub(ipar)
-                                                                                 Dim result2 As Object
-                                                                                 result2 = proppack.DW_CalcBubT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), VT(ipar))
-                                                                                 VTc(ipar) = result2(4)
-                                                                                 Vyc(ipar) = result2(3)(0)
-                                                                             End Sub))
-                                    While Not task1.IsCompleted
-                                        Application.DoEvents()
-                                    End While
+                                    Try
+                                        Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                                 Sub(ipar)
+                                                                                     Dim result2 As Object
+                                                                                     result2 = proppack.DW_CalcBubT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), VT(ipar))
+                                                                                     VTc(ipar) = result2(4)
+                                                                                     Vyc(ipar) = result2(3)(0)
+                                                                                 End Sub))
+                                        task1.Wait()
+                                    Catch ae As AggregateException
+                                        For Each ex As Exception In ae.InnerExceptions
+                                            Throw
+                                        Next
+                                    End Try
                                     My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
@@ -453,16 +474,20 @@ Public Class FormDataRegression
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
-                                                                             Sub(ipar)
-                                                                                 Dim result2 As Object
-                                                                                 result2 = proppack.DW_CalcBubP(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VT(0), VP(ipar))
-                                                                                 VPc(ipar) = result2(4)
-                                                                                 Vyc(ipar) = result2(3)(0)
-                                                                             End Sub))
-                                    While Not task1.IsCompleted
-                                        Application.DoEvents()
-                                    End While
+                                    Try
+                                        Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                                 Sub(ipar)
+                                                                                     Dim result2 As Object
+                                                                                     result2 = proppack.DW_CalcBubP(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VT(0), VP(ipar))
+                                                                                     VPc(ipar) = result2(4)
+                                                                                     Vyc(ipar) = result2(3)(0)
+                                                                                 End Sub))
+                                        task1.Wait()
+                                    Catch ae As AggregateException
+                                        For Each ex As Exception In ae.InnerExceptions
+                                            Throw
+                                        Next
+                                    End Try
                                     My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
@@ -483,16 +508,20 @@ Public Class FormDataRegression
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
-                                                                             Sub(ipar)
-                                                                                 Dim result2 As Object
-                                                                                 result2 = proppack.DW_CalcBubT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), VT(ipar))
-                                                                                 VTc(ipar) = result2(4)
-                                                                                 Vyc(ipar) = result2(3)(0)
-                                                                             End Sub))
-                                    While Not task1.IsCompleted
-                                        Application.DoEvents()
-                                    End While
+                                    Try
+                                        Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                                            Sub(ipar)
+                                                                                                Dim result2 As Object
+                                                                                                result2 = proppack.DW_CalcBubT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), VT(ipar))
+                                                                                                VTc(ipar) = result2(4)
+                                                                                                Vyc(ipar) = result2(3)(0)
+                                                                                            End Sub))
+                                        task1.Wait()
+                                    Catch ae As AggregateException
+                                        For Each ex As Exception In ae.InnerExceptions
+                                            Throw
+                                        Next
+                                    End Try
                                     My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
@@ -507,16 +536,20 @@ Public Class FormDataRegression
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
-                                                                             Sub(ipar)
-                                                                                 Dim result2 As Object
-                                                                                 result2 = proppack.DW_CalcDewT(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VT(0), VP(ipar))
-                                                                                 VPc(ipar) = result2(4)
-                                                                                 Vyc(ipar) = result2(3)(0)
-                                                                             End Sub))
-                                    While Not task1.IsCompleted
-                                        Application.DoEvents()
-                                    End While
+                                    Try
+                                        Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                                 Sub(ipar)
+                                                                                     Dim result2 As Object
+                                                                                     result2 = proppack.DW_CalcBubP(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VT(0), VP(ipar))
+                                                                                     VPc(ipar) = result2(4)
+                                                                                     Vyc(ipar) = result2(3)(0)
+                                                                                 End Sub))
+                                        task1.Wait()
+                                    Catch ae As AggregateException
+                                        For Each ex As Exception In ae.InnerExceptions
+                                            Throw
+                                        Next
+                                    End Try
                                     My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
@@ -584,27 +617,38 @@ Public Class FormDataRegression
                         Case "PRSV2-M", "PRSV2-VL"
                             If doparallel Then
                                 My.Application.IsRunningParallelTasks = True
+                                proppack.Parameters("PP_FLASHALGORITHM") = 3
                                 proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
-                                proppack._tpcompids = New String() {currcase.comp2}
+                                proppack._tpcompids = New String() {currcase.comp1, currcase.comp2}
                                 proppack._tpseverity = 0
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
-                                                                         Sub(ipar)
-                                                                             Dim result2 As Object
-                                                                             result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
-                                                                             Vx1c(ipar) = result(2)(0)
-                                                                             Vx2c(ipar) = result(6)(0)
-                                                                         End Sub))
-                                While Not task1.IsCompleted
-                                    Application.DoEvents()
-                                End While
+                                Try
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
+                                                                                 Vx1c(ipar) = result(2)(0)
+                                                                                 Vx2c(ipar) = result(6)(0)
+                                                                             End Sub))
+                                    task1.Wait()
+                                Catch ae As AggregateException
+                                    For Each ex As Exception In ae.InnerExceptions
+                                        Throw
+                                    Next
+                                End Try
                                 My.Application.IsRunningParallelTasks = False
                             Else
+                                proppack.Parameters("PP_FLASHALGORITHM") = 5
+                                proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
+                                proppack._tpcompids = New String() {currcase.comp1, currcase.comp2}
+                                proppack._tpseverity = 0
+                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
                                 For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                    Vx1c(i) = result(2, 1)
-                                    Vx2c(i) = result(2, 2)
+                                    result = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(i), proppack)
+                                    Vx1c(i) = result(2)(0)
+                                    Vx2c(i) = result(6)(0)
                                 Next
                             End If
                             vartext = ", Interaction parameters = {"
@@ -614,27 +658,39 @@ Public Class FormDataRegression
                         Case "UNIQUAC"
                             If doparallel Then
                                 My.Application.IsRunningParallelTasks = True
+                                proppack.Parameters("PP_FLASHALGORITHM") = 3
                                 proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
-                                proppack._tpcompids = New String() {currcase.comp2}
+                                proppack._tpcompids = New String() {currcase.comp1, currcase.comp2}
                                 proppack._tpseverity = 0
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
-                                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
-                                                                         Sub(ipar)
-                                                                             Dim result2 As Object
-                                                                             result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
-                                                                             Vx1c(ipar) = result2(2)(0)
-                                                                             Vx2c(ipar) = result2(6)(0)
-                                                                         End Sub))
-                                While Not task1.IsCompleted
-                                    Application.DoEvents()
-                                End While
+                                Try
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
+                                                                                 Vx1c(ipar) = result2(2)(0)
+                                                                                 Vx2c(ipar) = result2(6)(0)
+                                                                             End Sub))
+                                    task1.Wait()
+                                Catch ae As AggregateException
+                                    For Each ex As Exception In ae.InnerExceptions
+                                        Throw
+                                    Next
+                                End Try
                                 My.Application.IsRunningParallelTasks = False
+                                Application.DoEvents()
                             Else
+                                proppack.Parameters("PP_FLASHALGORITHM") = 5
+                                proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
+                                proppack._tpcompids = New String() {currcase.comp1, currcase.comp2}
+                                proppack._tpseverity = 0
+                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
                                 For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    Vx1c(i) = result(2, 1)
-                                    Vx2c(i) = result(2, 2)
+                                    result = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(i), proppack)
+                                    Vx1c(i) = result(2)(0)
+                                    Vx2c(i) = result(6)(0)
                                 Next
                             End If
                             vartext = ", Interaction parameters = {"
@@ -644,27 +700,38 @@ Public Class FormDataRegression
                         Case "NRTL"
                             If doparallel Then
                                 My.Application.IsRunningParallelTasks = True
+                                proppack.Parameters("PP_FLASHALGORITHM") = 3
                                 proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
-                                proppack._tpcompids = New String() {currcase.comp2}
+                                proppack._tpcompids = New String() {currcase.comp1, currcase.comp2}
                                 proppack._tpseverity = 0
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
-                                                                         Sub(ipar)
-                                                                             Dim result2 As Object
-                                                                             result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
-                                                                             Vx1c(ipar) = result2(2)(0)
-                                                                             Vx2c(ipar) = result2(6)(0)
-                                                                         End Sub))
-                                While Not task1.IsCompleted
-                                    Application.DoEvents()
-                                End While
+                                Try
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
+                                                                                 Vx1c(ipar) = result2(2)(0)
+                                                                                 Vx2c(ipar) = result2(6)(0)
+                                                                             End Sub))
+                                    task1.Wait()
+                                Catch ae As AggregateException
+                                    For Each ex As Exception In ae.InnerExceptions
+                                        Throw
+                                    Next
+                                End Try
                                 My.Application.IsRunningParallelTasks = False
                             Else
+                                proppack.Parameters("PP_FLASHALGORITHM") = 5
+                                proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
+                                proppack._tpcompids = New String() {currcase.comp1, currcase.comp2}
+                                proppack._tpseverity = 0
+                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
                                 For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                    Vx1c(i) = result(2, 1)
-                                    Vx2c(i) = result(2, 2)
+                                    result = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(i), proppack)
+                                    Vx1c(i) = result(2)(0)
+                                    Vx2c(i) = result(6)(0)
                                 Next
                             End If
                             vartext = ", Interaction parameters = {"
@@ -675,27 +742,38 @@ Public Class FormDataRegression
                         Case "Lee-Kesler-Plöcker", "Peng-Robinson", "Soave-Redlich-Kwong", "PC-SAFT"
                             If doparallel Then
                                 My.Application.IsRunningParallelTasks = True
+                                proppack.Parameters("PP_FLASHALGORITHM") = 3
                                 proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
-                                proppack._tpcompids = New String() {currcase.comp2}
+                                proppack._tpcompids = New String() {currcase.comp1, currcase.comp2}
                                 proppack._tpseverity = 0
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np,
-                                                                         Sub(ipar)
-                                                                             Dim result2 As Object
-                                                                             result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
-                                                                             Vx1c(ipar) = result2(2)(0)
-                                                                             Vx2c(ipar) = result2(6)(0)
-                                                                         End Sub))
-                                While Not task1.IsCompleted
-                                    Application.DoEvents()
-                                End While
+                                Try
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
+                                                                                 Vx1c(ipar) = result2(2)(0)
+                                                                                 Vx2c(ipar) = result2(6)(0)
+                                                                             End Sub))
+                                    task1.Wait()
+                                Catch ae As AggregateException
+                                    For Each ex As Exception In ae.InnerExceptions
+                                        Throw
+                                    Next
+                                End Try
                                 My.Application.IsRunningParallelTasks = False
                             Else
+                                proppack.Parameters("PP_FLASHALGORITHM") = 5
+                                proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
+                                proppack._tpcompids = New String() {currcase.comp1, currcase.comp2}
+                                proppack._tpseverity = 0
+                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
                                 For i = 0 To np - 1
-                                    result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(0), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                    Vx1c(i) = result(2, 1)
-                                    Vx2c(i) = result(2, 2)
+                                    result = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(i), proppack)
+                                    Vx1c(i) = result(2)(0)
+                                    Vx2c(i) = result(6)(0)
                                 Next
                             End If
                             vartext = ", Interaction parameters = {kij = "
@@ -912,7 +990,7 @@ Public Class FormDataRegression
     End Function
 
     Public Function eval_jac_g(ByVal n As Integer, ByVal x As Double(), ByVal new_x As Boolean, ByVal m As Integer, ByVal nele_jac As Integer, ByRef iRow As Integer(), _
-     ByRef jCol As Integer(), ByRef values As Double()) As Boolean
+ByRef jCol As Integer(), ByRef values As Double()) As Boolean
         If values Is Nothing Then
             ' set the structure of the jacobian 
             ' this particular jacobian is dense 
@@ -949,7 +1027,7 @@ Public Class FormDataRegression
     End Function
 
     Public Function eval_h(ByVal n As Integer, ByVal x As Double(), ByVal new_x As Boolean, ByVal obj_factor As Double, ByVal m As Integer, ByVal lambda As Double(), _
-     ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer(), ByRef jCol As Integer(), ByRef values As Double()) As Boolean
+ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer(), ByRef jCol As Integer(), ByRef values As Double()) As Boolean
         Return False
     End Function
 
@@ -1120,16 +1198,16 @@ Public Class FormDataRegression
             Select Case .datatype
                 Case DataType.Txy
                     For i = 0 To .x1p.Count - 1
-                        px.Add(Double.Parse(.x1p(i)))
-                        py1.Add(Double.Parse(.tp(i)))
                         Try
+                            px.Add(Double.Parse(.x1p(i)))
+                            py1.Add(Double.Parse(.tp(i)))
                             py2.Add(cv.ConverterDoSI(.tunit, .calct(i)))
                             py4.Add(cv.ConverterDoSI(.tunit, .calct(i)))
+                            px2.Add(Double.Parse(.yp(i)))
+                            py3.Add(Double.Parse(.tp(i)))
+                            py5.Add(Double.Parse(.calcy(i)))
                         Catch ex As Exception
                         End Try
-                        px2.Add(Double.Parse(.yp(i)))
-                        py3.Add(Double.Parse(.tp(i)))
-                        py5.Add(Double.Parse(.calcy(i)))
                     Next
                     xtitle = "Liquid Phase Mole Fraction " & .comp1
                     ytitle = "T / " & .tunit
@@ -1143,16 +1221,16 @@ Public Class FormDataRegression
                     ycurvetypes.AddRange(New Integer() {1, 3, 1, 3, 1, 3})
                 Case DataType.Pxy
                     For i = 0 To .x1p.Count - 1
-                        px.Add(Double.Parse(.x1p(i)))
-                        py1.Add(Double.Parse(.pp(i)))
                         Try
+                            px.Add(Double.Parse(.x1p(i)))
+                            py1.Add(Double.Parse(.pp(i)))
                             py2.Add(cv.ConverterDoSI(.punit, .calcp(i)))
                             py4.Add(cv.ConverterDoSI(.punit, .calcp(i)))
+                            px2.Add(Double.Parse(.yp(i)))
+                            py3.Add(Double.Parse(.pp(i)))
+                            py5.Add(Double.Parse(.calcy(i)))
                         Catch ex As Exception
                         End Try
-                        px2.Add(Double.Parse(.yp(i)))
-                        py3.Add(Double.Parse(.pp(i)))
-                        py5.Add(Double.Parse(.calcy(i)))
                     Next
                     xtitle = "Liquid Phase Mole Fraction " & .comp1
                     ytitle = "P / " & .punit
@@ -1166,15 +1244,15 @@ Public Class FormDataRegression
                     ycurvetypes.AddRange(New Integer() {1, 3, 1, 3, 1, 3})
                 Case DataType.TPxy
                     For i = 0 To .x1p.Count - 1
-                        px.Add(Double.Parse(.x1p(i)))
-                        py1.Add(Double.Parse(.tp(i)))
                         Try
+                            px.Add(Double.Parse(.x1p(i)))
+                            py1.Add(Double.Parse(.tp(i)))
                             py2.Add(cv.ConverterDoSI(.tunit, .calct(i)))
                             py4.Add(cv.ConverterDoSI(.punit, .calcp(i)))
+                            py3.Add(Double.Parse(.pp(i)))
+                            py5.Add(Double.Parse(.calcy(i)))
                         Catch ex As Exception
                         End Try
-                        py3.Add(Double.Parse(.pp(i)))
-                        py5.Add(Double.Parse(.calcy(i)))
                     Next
                     xtitle = "Liquid Phase Mole Fraction " & .comp1
                     ytitle = "T / " & .tunit & " - P / " & .punit
@@ -1261,12 +1339,16 @@ Public Class FormDataRegression
         Me.gridstats.Rows.Clear()
         For i As Integer = 0 To currcase.x1p.Count - 1
             With currcase
-                Me.gridstats.Rows.Add(New Object() {.x1p(i), .calcx1l1(i), .x2p(i), .calcx1l2(i), .yp(i), .calcy(i), .tp(i), cv.ConverterDoSI(.tunit, .calct(i)), .pp(i), cv.ConverterDoSI(.punit, .calcp(i)), _
-                                                    .calcy(i) - .yp(i), (.calcy(i) - .yp(i)) / .yp(i), (.calcy(i) - .yp(i)) / .yp(i) * 100, _
-                                                   cv.ConverterDoSI(.punit, .calcp(i)) - .pp(i), (cv.ConverterDoSI(.punit, .calcp(i)) - .pp(i)) / .pp(i), (cv.ConverterDoSI(.punit, .calcp(i)) - .pp(i)) / .pp(i) * 100, _
-                                                    cv.ConverterDoSI(.tunit, .calct(i)) - .tp(i), (cv.ConverterDoSI(.tunit, .calct(i)) - .tp(i)) / .tp(i), (cv.ConverterDoSI(.tunit, .calct(i)) - .tp(i)) / .tp(i) * 100, _
-                                                    .calcx1l1(i) - .x1p(i), (.calcx1l1(i) - .x1p(i)) / .x1p(i), (.calcx1l1(i) - .x1p(i)) / .x1p(i) * 100, _
-                                                    .calcx1l2(i) - .x2p(i), (.calcx1l2(i) - .x2p(i)) / .x2p(i), (.calcx1l2(i) - .x2p(i)) / .x2p(i) * 100})
+                Try
+                    Me.gridstats.Rows.Add(New Object() {.x1p(i), .calcx1l1(i), .x2p(i), .calcx1l2(i), .yp(i), .calcy(i), .tp(i), cv.ConverterDoSI(.tunit, .calct(i)), .pp(i), cv.ConverterDoSI(.punit, .calcp(i)), _
+                                                        .calcy(i) - .yp(i), (.calcy(i) - .yp(i)) / .yp(i), (.calcy(i) - .yp(i)) / .yp(i) * 100, _
+                                                       cv.ConverterDoSI(.punit, .calcp(i)) - .pp(i), (cv.ConverterDoSI(.punit, .calcp(i)) - .pp(i)) / .pp(i), (cv.ConverterDoSI(.punit, .calcp(i)) - .pp(i)) / .pp(i) * 100, _
+                                                        cv.ConverterDoSI(.tunit, .calct(i)) - .tp(i), (cv.ConverterDoSI(.tunit, .calct(i)) - .tp(i)) / .tp(i), (cv.ConverterDoSI(.tunit, .calct(i)) - .tp(i)) / .tp(i) * 100, _
+                                                        .calcx1l1(i) - .x1p(i), (.calcx1l1(i) - .x1p(i)) / .x1p(i), (.calcx1l1(i) - .x1p(i)) / .x1p(i) * 100, _
+                                                        .calcx1l2(i) - .x2p(i), (.calcx1l2(i) - .x2p(i)) / .x2p(i), (.calcx1l2(i) - .x2p(i)) / .x2p(i) * 100})
+                Catch ex As Exception
+
+                End Try
             End With
         Next
 
@@ -1668,6 +1750,7 @@ Public Class FormDataRegression
             End With
 
             With .XAxis
+                .Type = AxisType.Log
                 .Title.Text = xtitle
                 .Title.FontSpec.Size = 11
                 .Scale.MinAuto = False

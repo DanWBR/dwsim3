@@ -1012,8 +1012,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                              End Sub)
 
 
-            Task.WaitAll(New Task() {tasks(1), tasks(2)})
-
             If CBool(parameters(2)) = True Then
 
                 tasks(3) = Task.Factory.StartNew(Sub()
@@ -1032,7 +1030,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                      Loop Until j = n + 1
                                                      Dim ii As Integer = 0
                                                      P = 101325
-                                                     T = TVD(0)
+                                                     T = 0.3 * TCR
                                                      Do
                                                          If ii < 2 Then
                                                              tmp2 = Me.FlashBase.Flash_PV(Vz, P, parameters(1), 0, Me, False, KI)
@@ -1096,8 +1094,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                  End If
                                              End Sub)
 
-            Task.WaitAll(New Task() {tasks(3), tasks(4)})
-
+            Try
+                Task.WaitAll(New Task() {tasks(1), tasks(2), tasks(3), tasks(4)})
+            Catch ae As AggregateException
+                For Each ex As Exception In ae.InnerExceptions
+                    Throw
+                Next
+            End Try
+            
             If TVB.Count > 1 Then TVB.RemoveAt(TVB.Count - 1)
             If PB.Count > 1 Then PB.RemoveAt(PB.Count - 1)
             If HB.Count > 1 Then HB.RemoveAt(HB.Count - 1)
@@ -1225,155 +1229,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Next
 
             Return val
-
-        End Function
-
-        Public Overrides Function DW_ReturnBinaryEnvelope(ByVal parameters As Object) As Object
-
-            Dim n, i As Integer
-
-            n = Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1
-
-            Dim dx As Double = 0.05
-
-            Dim tipocalc As String
-            Dim P, T As Double
-
-            tipocalc = parameters(0)
-            P = parameters(1)
-            T = parameters(2)
-
-            Dim p1, p2, t1, t2, pc, tc, dp, dt, pmin, pmax, tmin, tmax, cx, currp, currt As Double, res As Object
-
-            For Each s As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                pc += s.FracaoMolar.GetValueOrDefault * s.ConstantProperties.Critical_Pressure
-                tc += s.FracaoMolar.GetValueOrDefault * s.ConstantProperties.Critical_Temperature
-            Next
-
-            p1 = Me.AUX_PVAPi(0, T)
-            p2 = Me.AUX_PVAPi(1, T)
-            t1 = Me.AUX_TSATi(P, 0)
-            t2 = Me.AUX_TSATi(P, 1)
-
-            pmin = Math.Min(p1, p2)
-            pmax = Math.Max(Math.Max(p1, p2), pc * 5.0#)
-            tmin = Math.Min(t1, t2)
-            tmax = Math.Max(t1, t2)
-            dp = (pmax - pmin) / 100
-            dt = (tmax - tmin) / 100
-            currt = tmin
-            currp = pmin
-            cx = 0.5#
-
-            Select Case tipocalc
-
-                Case "T-x-y"
-
-                    Dim px, py1, py2 As New ArrayList
-
-                    For i = 0 To 99
-                        Try
-                            res = Me.FlashBase.Flash_PT(New Double() {cx, 1 - cx}, P, currt, Me, False, Nothing)
-                            If res(0) > 0 And res(0) < 1 Then
-                                cx = (res(2)(0) + res(3)(0)) / 2
-                                px.Add(res(2)(0))
-                                px.Add(res(3)(0))
-                                py1.Add(currt)
-                                py1.Add(0.0#)
-                                py2.Add(0.0#)
-                                py2.Add(currt)
-                            End If
-                        Catch ex As Exception
-                        Finally
-                            currt += dt
-                        End Try
-                    Next
-
-                    'i = 0
-                    'Do
-                    '    px.Add(i * dx)
-                    '    py1.Add(Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)(4))
-                    '    py2.Add(Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, 0, Me)(4))
-                    '    i = i + 1
-                    'Loop Until (i - 1) * dx >= 1
-
-                    Return New Object() {px, py1, py2}
-
-                Case "P-x-y"
-
-                    Dim px, py1, py2 As New ArrayList
-
-                    For i = 0 To 99
-                        Try
-                            res = Me.FlashBase.Flash_PT(New Double() {cx, 1 - cx}, currp, T, Me, False, Nothing)
-                            If res(0) > 0 And res(0) < 1 Then
-                                cx = (res(2)(0) + res(3)(0)) / 2
-                                px.Add(res(2)(0))
-                                px.Add(res(3)(0))
-                                py1.Add(currp)
-                                py1.Add(0.0#)
-                                py2.Add(0.0#)
-                                py2.Add(currp)
-                            End If
-                        Catch ex As Exception
-                        Finally
-                            currp += dp
-                        End Try
-                    Next
-
-                    'i = 0
-                    'Do
-                    '    px.Add(i * dx)
-                    '    py1.Add(Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)(4))
-                    '    py2.Add(Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 1, 0, Me)(4))
-                    '    i = i + 1
-                    'Loop Until (i - 1) * dx >= 1
-
-                    Return New Object() {px, py1, py2}
-
-                Case "(T)x-y"
-
-                    Dim px, py As New ArrayList
-
-                    For i = 0 To 99
-                        Try
-                            res = Me.FlashBase.Flash_PT(New Double() {cx, 1 - cx}, P, currt, Me, False, Nothing)
-                            If res(0) > 0 And res(0) < 1 Then
-                                cx = (res(2)(0) + res(3)(0)) / 2
-                                px.Add(res(2)(0))
-                                py.Add(res(3)(0))
-                            End If
-                        Catch ex As Exception
-                        Finally
-                            currt += dt
-                        End Try
-                    Next
-
-                    Return New Object() {px, py}
-
-                Case Else
-
-                    Dim px, py As New ArrayList
-
-                    For i = 0 To 99
-                        Try
-                            res = Me.FlashBase.Flash_PT(New Double() {cx, 1 - cx}, currp, T, Me, False, Nothing)
-                            If res(0) > 0 And res(0) < 1 Then
-                                cx = (res(2)(0) + res(3)(0)) / 2
-                                px.Add(res(2)(0))
-                                py.Add(res(3)(0))
-                            Else
-                                Exit For
-                            End If
-                        Catch ex As Exception
-                        Finally
-                            currp += dp
-                        End Try
-                    Next
-
-                    Return New Object() {px, py}
-
-            End Select
 
         End Function
 

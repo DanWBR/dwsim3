@@ -217,23 +217,31 @@ Public Class FormPureComp
 
         If Not constprop.SMILES Is Nothing Then
 
-            Dim ind As New Indigo()
-            Dim mol As IndigoObject = ind.loadMolecule(constprop.SMILES)
-            Dim renderer As New IndigoRenderer(ind)
+            Try
 
-            If constprop.InChI = "" Then
-                Dim ii As New IndigoInchi(ind)
-                tbInChI.Text = ii.getInchi(mol)
-            End If
+                Dim ind As New Indigo()
+                Dim mol As IndigoObject = ind.loadMolecule(constprop.SMILES)
+                Dim renderer As New IndigoRenderer(ind)
 
-            With renderer
-                ind.setOption("render-image-size", 733, 222)
-                ind.setOption("render-margins", 15, 15)
-                ind.setOption("render-coloring", True)
-                ind.setOption("render-background-color", Color.White)
-            End With
+                If constprop.InChI = "" Then
+                    Dim ii As New IndigoInchi(ind)
+                    tbInChI.Text = ii.getInchi(mol)
+                End If
 
-            pbRender.Image = renderer.renderToBitmap(mol)
+                With renderer
+                    ind.setOption("render-image-size", 733, 222)
+                    ind.setOption("render-margins", 15, 15)
+                    ind.setOption("render-coloring", True)
+                    ind.setOption("render-background-color", Color.White)
+                End With
+
+                pbRender.Image = renderer.renderToBitmap(mol)
+
+            Catch ex As Exception
+
+                MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            End Try
 
         End If
 
@@ -254,6 +262,10 @@ Public Class FormPureComp
             .Add(New Object() {DWSIM.App.GetLocalString("EntalpiadeFormaodoGs"), Format(cv.ConverterDoSI(su.spmp_enthalpy, constprop.IG_Enthalpy_of_Formation_25C), nf), su.spmp_enthalpy})
             .Add(New Object() {DWSIM.App.GetLocalString("EnergiadeGibbsdeForm2"), Format(cv.ConverterDoSI(su.spmp_entropy, constprop.IG_Gibbs_Energy_of_Formation_25C), nf), su.spmp_enthalpy})
             .Add(New Object() {DWSIM.App.GetLocalString("PontoNormaldeEbulio"), Format(cv.ConverterDoSI(su.spmp_temperature, constprop.Normal_Boiling_Point), nf), su.spmp_temperature})
+            .Add(New Object() {DWSIM.App.GetLocalString("TemperatureOfFusion"), Format(cv.ConverterDoSI(su.spmp_temperature, constprop.TemperatureOfFusion), nf), su.spmp_temperature})
+            .Add(New Object() {DWSIM.App.GetLocalString("EnthalpyOfFusionAtTf"), Format(constprop.EnthalpyOfFusionAtTf, nf), "kJ/mol"})
+            .Add(New Object() {DWSIM.App.GetLocalString("TemperatureOfSolidDensity_Ts"), Format(cv.ConverterDoSI(su.spmp_temperature, constprop.SolidTs), nf), su.spmp_temperature})
+            .Add(New Object() {DWSIM.App.GetLocalString("SolidDensityAtTs"), Format(cv.ConverterDoSI(su.spmp_density, constprop.SolidDensityAtTs), nf), su.spmp_density})
             .Add(New Object() {DWSIM.App.GetLocalString("ChaoSeaderAcentricFactor"), Format(constprop.Chao_Seader_Acentricity, nf), "-"})
             .Add(New Object() {DWSIM.App.GetLocalString("ChaoSeaderSolubilityParameter"), Format(constprop.Chao_Seader_Solubility_Parameter, nf), "(cal/mL)^0.5"})
             .Add(New Object() {DWSIM.App.GetLocalString("ChaoSeaderLiquidMolarVolume"), Format(constprop.Chao_Seader_Liquid_Molar_Volume, nf), "mL/mol"})
@@ -266,11 +278,7 @@ Public Class FormPureComp
             .Add(New Object() {DWSIM.App.GetLocalString("HydrationNumber"), constprop.HydrationNumber, ""})
             .Add(New Object() {DWSIM.App.GetLocalString("PositiveIon"), constprop.PositiveIon, ""})
             .Add(New Object() {DWSIM.App.GetLocalString("NegativeIon"), constprop.NegativeIon, ""})
-            .Add(New Object() {DWSIM.App.GetLocalString("TemperatureOfFusion"), Format(cv.ConverterDoSI(su.spmp_temperature, constprop.TemperatureOfFusion), nf), su.spmp_temperature})
-            .Add(New Object() {DWSIM.App.GetLocalString("EnthalpyOfFusionAtTf"), Format(constprop.EnthalpyOfFusionAtTf, nf), "kJ/mol"})
-            .Add(New Object() {DWSIM.App.GetLocalString("TemperatureOfSolidDensity_Ts"), Format(cv.ConverterDoSI(su.spmp_temperature, constprop.SolidTs), nf), su.spmp_temperature})
-            .Add(New Object() {DWSIM.App.GetLocalString("SolidDensityAtTs"), Format(cv.ConverterDoSI(su.spmp_density, constprop.SolidDensityAtTs), nf), su.spmp_density})
-
+            
         End With
     End Sub
 

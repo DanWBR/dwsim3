@@ -117,18 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Bases de datos</value>
-  </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Idioma de interfaz</value>
-  </data>
-  <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Seguridad</value>
-  </data>
-  <data name="GroupBox11.Text" xml:space="preserve">
-    <value>Tareas</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
     <value>383, 17</value>
@@ -142,8 +130,8 @@
   <data name="Button7.Text" xml:space="preserve">
     <value>Agregar la base de datos de usuario</value>
   </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Bases de datos</value>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>Tareas</value>
   </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>415, 13</value>
@@ -151,11 +139,20 @@
   <data name="Label2.Text" xml:space="preserve">
     <value>Administrar las bases de datos de las sustancias disponibles para la simulación actual.</value>
   </data>
-  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>611, 53</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Bases de datos</value>
   </data>
-  <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Recursos</value>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Bases de datos</value>
+  </data>
+  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>325, 24</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Grado máximo de paralelismo</value>
   </data>
   <data name="chkEnableParallelCalcs.Size" type="System.Drawing.Size, System.Drawing">
     <value>156, 17</value>
@@ -163,14 +160,17 @@
   <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
     <value>Activar cálculos en paralelo</value>
   </data>
+  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>611, 53</value>
+  </data>
+  <data name="GroupBox7.Text" xml:space="preserve">
+    <value>Recursos</value>
+  </data>
   <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
     <value>206, 17</value>
   </data>
   <data name="chkUpdates.Text" xml:space="preserve">
     <value>Buscar actualizaciones en el arranque</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Avisos</value>
   </data>
   <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>145, 17</value>
@@ -178,8 +178,8 @@
   <data name="KryptonCheckBox1.Text" xml:space="preserve">
     <value>Mostrar consejos al inicio</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Idioma de interfaz</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Avisos</value>
   </data>
   <data name="ListView1.Items" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
@@ -256,7 +256,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAC
-        LwAAAk1TRnQBSQFMAgEBCwEAAUQBAAFEAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        LwAAAk1TRnQBSQFMAgEBCwEAAUwBAAFMAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKfAd4CnAHe
         ApwB3AKaAdoCmAHaApgB2gKYAdoCmAHkAqIB4gKgAeECnwHeApwB3AGcAZoB2gKYAdoCmAHZApcB1wKV
         AdYClAHTApEB0wKRAdECjwHPAo0BzwKNAc8CjQFCAQABiQFCAQABhgFCAQABhAFCAQABggFCAQABfwFC
@@ -465,8 +465,11 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Seleccione el idioma de interfaz DWSIM de la lista de abajo y haga clic en Aceptar para confirmar:</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Copia de seguridad</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Idioma de interfaz</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Idioma de interfaz</value>
   </data>
   <data name="Button2.Text" xml:space="preserve">
     <value>Directorio limpio</value>
@@ -483,8 +486,11 @@
   <data name="KryptonCheckBox6.Text" xml:space="preserve">
     <value>Activar copias de seguridad</value>
   </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>IronPython y IronRuby</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Copia de seguridad</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Seguridad</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 13</value>
@@ -503,6 +509,9 @@
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Administrar los caminos donde el compilador deberá buscar los archivos para importar:</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>IronPython y IronRuby</value>
   </data>
   <data name="FolderBrowserDialog1.Description" xml:space="preserve">
     <value>Seleccione un directorio...</value>

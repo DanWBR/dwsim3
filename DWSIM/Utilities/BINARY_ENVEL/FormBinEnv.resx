@@ -142,7 +142,7 @@
     <value>137, 184</value>
   </data>
   <data name="cbPropPack.Size" type="System.Drawing.Size, System.Drawing">
-    <value>295, 21</value>
+    <value>421, 21</value>
   </data>
   <data name="cbPropPack.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
@@ -376,7 +376,7 @@
     <value>137, 103</value>
   </data>
   <data name="cbXAxisBasis.Size" type="System.Drawing.Size, System.Drawing">
-    <value>295, 21</value>
+    <value>210, 21</value>
   </data>
   <data name="cbXAxisBasis.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -430,7 +430,7 @@
     <value>137, 49</value>
   </data>
   <data name="cbComp2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>295, 21</value>
+    <value>210, 21</value>
   </data>
   <data name="cbComp2.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -601,7 +601,7 @@
     <value>16</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>438, 183</value>
+    <value>564, 183</value>
   </data>
   <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 23</value>
@@ -631,7 +631,7 @@
     <value>137, 21</value>
   </data>
   <data name="cbComp1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>295, 21</value>
+    <value>210, 21</value>
   </data>
   <data name="cbComp1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -679,7 +679,7 @@
     <value>5, 4</value>
   </data>
   <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>566, 215</value>
+    <value>687, 215</value>
   </data>
   <data name="GroupBox6.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -702,47 +702,26 @@
   <data name="GroupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="&gt;&gt;FaTabStrip1.Name" xml:space="preserve">
-    <value>FaTabStrip1</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip1.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip1.Parent" xml:space="preserve">
-    <value>GroupBox2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 221</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>566, 493</value>
-  </data>
-  <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Resultados</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.Name" xml:space="preserve">
-    <value>GroupBox2</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="FaTabStrip1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="FaTabStrip1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt</value>
+  </data>
+  <data name="GraphControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="GraphControl.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Arial, 8.25pt</value>
+  </data>
+  <data name="GraphControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="GraphControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>679, 453</value>
+  </data>
+  <data name="GraphControl.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
   </data>
   <data name="&gt;&gt;GraphControl.Name" xml:space="preserve">
     <value>GraphControl</value>
@@ -757,7 +736,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>558, 453</value>
+    <value>679, 453</value>
   </data>
   <data name="FaTabStripItem1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -776,6 +755,18 @@
   </data>
   <data name="&gt;&gt;FaTabStripItem1.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="Grid1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="Grid1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="Grid1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>507, 379</value>
+  </data>
+  <data name="Grid1.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
   </data>
   <data name="&gt;&gt;Grid1.Name" xml:space="preserve">
     <value>Grid1</value>
@@ -814,7 +805,7 @@
     <value>3, 16</value>
   </data>
   <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>560, 474</value>
+    <value>681, 474</value>
   </data>
   <data name="FaTabStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -834,62 +825,32 @@
   <data name="&gt;&gt;FaTabStrip1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="GraphControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 221</value>
   </data>
-  <data name="GraphControl.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 8.25pt</value>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>687, 493</value>
   </data>
-  <data name="GraphControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="GraphControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>558, 453</value>
-  </data>
-  <data name="GraphControl.TabIndex" type="System.Int32, mscorlib">
+  <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
-  <data name="&gt;&gt;GraphControl.Name" xml:space="preserve">
-    <value>GraphControl</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Resultados</value>
   </data>
-  <data name="&gt;&gt;GraphControl.Type" xml:space="preserve">
-    <value>ZedGraph.ZedGraphControl, ZedGraph, Version=5.1.0.32336, Culture=neutral, PublicKeyToken=02a83cbd123fcd60</value>
+  <data name="&gt;&gt;GroupBox2.Name" xml:space="preserve">
+    <value>GroupBox2</value>
   </data>
-  <data name="&gt;&gt;GraphControl.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+  <data name="&gt;&gt;GroupBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;GraphControl.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;GroupBox2.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="Grid1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="Grid1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="Grid1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>507, 379</value>
-  </data>
-  <data name="Grid1.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;Grid1.Name" xml:space="preserve">
-    <value>Grid1</value>
-  </data>
-  <data name="&gt;&gt;Grid1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Grid1.Parent" xml:space="preserve">
-    <value>FaTabStripItem2</value>
-  </data>
-  <data name="&gt;&gt;Grid1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;GroupBox2.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="BackgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>en</value>
   </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -901,7 +862,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>577, 718</value>
+    <value>698, 718</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

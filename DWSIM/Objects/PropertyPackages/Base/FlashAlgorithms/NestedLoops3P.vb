@@ -292,7 +292,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
 out:
 
-            Dim result As Object = New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector}
+            Dim result As Object = New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
             ' check if there is a liquid phase
 
@@ -641,7 +641,7 @@ out:
 
             Loop Until AbsSum(fx) < etol
 
-out:        Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2}
+out:        Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2, 0.0#, PP.RET_NullVector}
 
         End Function
 
@@ -799,7 +799,7 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
 
             Console.WriteLine("PH Flash [NL3P]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms")
 
-            Return New Object() {L, V, Vx1, Vy, Tf, ecount, Ki, L2, Vx2}
+            Return New Object() {L, V, Vx1, Vy, Tf, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
         End Function
 
@@ -890,7 +890,7 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
 
             Console.WriteLine("PS Flash [NL3P]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms")
 
-            Return New Object() {L, V, Vx1, Vy, Tf, ecount, Ki, L2, Vx2}
+            Return New Object() {L, V, Vx1, Vy, Tf, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
         End Function
 
@@ -957,84 +957,6 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
             OBJ_FUNC_PS_FLASH = serr
 
             Console.WriteLine("PS Flash [NL3P]: Current T = " & T & ", Current S Error = " & serr)
-
-        End Function
-
-        Function ESTIMAR_T_H(ByVal HT As Double, ByVal Tref As Double, ByVal TIPO As String, ByVal P As Double, ByVal Vz As Array) As Double
-
-            Dim maxit As Integer = CInt(proppack.Parameters("PP_PHFMII"))
-            Dim tol As Double = CDbl(proppack.Parameters("PP_PHFILT"))
-
-            Dim cnt As Integer = 0
-            Dim Tant, Tant2, fi_, fip_, dfdT, fi_ant, fi_ant2 As Double
-
-            Tf = Tref
-            Do
-                fi_ant2 = fi_ant
-                fi_ant = fi_
-                If TIPO = "L" Then
-                    fi_ = HT - proppack.DW_CalcEnthalpy(Vz, Tf, Pf, State.Liquid)
-                Else
-                    fi_ = HT - proppack.DW_CalcEnthalpy(Vz, Tf, Pf, State.Vapor)
-                End If
-                If cnt <= 1 Then
-                    Tant2 = Tant
-                    Tant = Tf
-                    Tf = Tf * 1.1
-                Else
-                    Tant2 = Tant
-                    Tant = Tf
-                    fip_ = HT - proppack.DW_CalcEnthalpy(Vz, Tf + 0.01, Pf, State.Vapor)
-                    dfdT = (fip_ - fi_) / 0.01
-                    Tf = Tf - fi_ / dfdT
-                End If
-                If Tf < 0 Then
-                    Tf = Tant * 1.01
-                End If
-                cnt += 1
-                If cnt >= maxit Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
-            Loop Until Math.Abs(fi_ / HT) < tol Or Double.IsNaN(Tf) Or Abs(Tf - Tant) < tol
-
-            Return Tf
-
-        End Function
-
-        Function ESTIMAR_T_S(ByVal ST As Double, ByVal Tref As Double, ByVal TIPO As String, ByVal P As Double, ByVal Vz As Array) As Double
-
-            Dim maxit As Integer = CInt(proppack.Parameters("PP_PSFMII"))
-            Dim tol As Double = CDbl(proppack.Parameters("PP_PSFILT"))
-
-            Dim cnt As Integer = 0
-            Dim Tant, Tant2, fi_, fip_, dfdT, fi_ant, fi_ant2 As Double
-
-            Tf = Tref
-            Do
-                fi_ant2 = fi_ant
-                fi_ant = fi_
-                If TIPO = "L" Then
-                    fi_ = ST - proppack.DW_CalcEntropy(Vz, Tf, Pf, State.Liquid)
-                Else
-                    fi_ = ST - proppack.DW_CalcEntropy(Vz, Tf, Pf, State.Vapor)
-                End If
-                If cnt <= 1 Then
-                    Tant2 = Tant
-                    Tant = Tf
-                    Tf = Tf * 1.1
-                Else
-                    Tant2 = Tant
-                    Tant = Tf
-                    fip_ = ST - proppack.DW_CalcEntropy(Vz, Tf + 0.01, Pf, State.Vapor)
-                    dfdT = (fip_ - fi_) / 0.01
-                    Tf = Tf - fi_ / dfdT
-                End If
-                If Tf < 0 Then
-                    Tf = Tant * 1.01
-                End If
-                cnt += 1
-                If cnt >= maxit Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
-            Loop Until Math.Abs(fi_ / ST) < tol Or Double.IsNaN(Tf) Or Abs(Tf - Tant) < tol
-
-            Return Tf
 
         End Function
 
@@ -1370,7 +1292,7 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
 
             Console.WriteLine("TV Flash [NL3P]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms")
 
-            Return New Object() {L, V, Vx, Vy, P, ecount, Ki, 0.0#, PP.RET_NullVector}
+            Return New Object() {L, V, Vx, Vy, P, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
         End Function
 
@@ -1689,7 +1611,7 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
 
             Console.WriteLine("PV Flash [NL3P]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms")
 
-            Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector}
+            Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
         End Function
 

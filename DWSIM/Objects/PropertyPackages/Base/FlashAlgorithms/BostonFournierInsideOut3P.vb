@@ -1051,7 +1051,7 @@ restart:    Do
                 End If
             End If
 
-            Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, Ki2}
+            Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, Ki2, 0.0#, PP.RET_NullVector}
 
         End Function
 
@@ -1334,7 +1334,7 @@ restart:    Do
                 End If
             End If
 
-            Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, Ki2}
+            Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, Ki2, 0.0#, PP.RET_NullVector}
 
         End Function
 
@@ -1575,7 +1575,7 @@ restart:    Do
 
             Loop Until AbsSum(fx) < etol
 
-out:        Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2}
+out:        Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2, 0.0#, PP.RET_NullVector}
 
         End Function
 
@@ -1837,7 +1837,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2}
 
             Loop Until AbsSum(fx) < etol * (n + 2)
 
-            Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, Ki2}
+            Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, Ki2, 0.0#, PP.RET_NullVector}
 
         End Function
 
@@ -2024,7 +2024,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2}
 
             Loop Until AbsSum(fx) < etol * (n + 2)
 
-            Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, Ki2}
+            Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, Ki2, 0.0#, PP.RET_NullVector}
 
         End Function
 
