@@ -578,31 +578,24 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
             Dim epsilon As Double = ndeps
 
-            Dim f2(), f3() As Double
-            Dim g(x.Length - 1, x.Length - 1), x1(x.Length - 1), x2(x.Length - 1), x3(x.Length - 1), x4(x.Length - 1) As Double
+            Dim f1(), f2() As Double
+            Dim g(x.Length - 1, x.Length - 1), x1(x.Length - 1), x2(x.Length - 1) As Double
             Dim i, j, k As Integer
 
+            f1 = FunctionValue(x)
             For i = 0 To x.Length - 1
                 For j = 0 To x.Length - 1
                     If i <> j Then
-                        x1(j) = x(j)
+                        'x1(j) = x(j)
                         x2(j) = x(j)
-                        x3(j) = x(j)
-                        x4(j) = x(j)
                     Else
-                        'x1(j) = x(j) + 2 * epsilon
-                        x2(j) = x(j) * (1 + epsilon)
-                        x3(j) = x(j) * (1 - epsilon)
-                        'x4(j) = x(j) - 2 * epsilon
+                        'x1(j) = x(j)
+                        x2(j) = x(j) * (1 - epsilon) + (epsilon / 2) ^ 2
                     End If
                 Next
-                'f1 = FunctionValue(x1)
                 f2 = FunctionValue(x2)
-                f3 = FunctionValue(x3)
-                'f4 = FunctionValue(x4)
                 For k = 0 To x.Length - 1
-                    g(k, i) = (f2(k) - f3(k)) / (x2(i) - x3(i))
-                    'g(k, i) = (-f1(k) + 8 * f2(k) - 8 * f3(k) + f4(k)) / (12 * epsilon)
+                    g(k, i) = (f1(k) - f2(k)) / (x(i) - x2(i))
                 Next
             Next
 
