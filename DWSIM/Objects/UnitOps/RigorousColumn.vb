@@ -3110,9 +3110,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End If
             If Me.Specs("R").SType = ColumnSpec.SpecType.Product_Molar_Flow_Rate Then
                 If Me.CondenserType = condtype.Full_Reflux Then
-                    vaprate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_ - vaprate
-                Else
+                    vaprate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_
+                    distrate = 0.0
+                ElseIf Me.CondenserType = condtype.Partial_Condenser Then
                     distrate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_ - vaprate
+                Else
+                    distrate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_
+                    vaprate = 0.0
                 End If
             Else
                 If Me.CondenserType = condtype.Full_Reflux Then
