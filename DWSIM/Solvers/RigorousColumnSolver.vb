@@ -122,7 +122,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim wi(ns, nc - 1), ti(ns, nc - 1), sumwi(ns), sumti(ns) As Double
             For i = 0 To ns
                 Array.Resize(Kw11(i), nc)
-                Array.Resize(Kw11(i), nc)
+                Array.Resize(Kw21(i), nc)
             Next
 
             For i = 0 To ns
@@ -1079,7 +1079,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim wi(ns, nc - 1), ti(ns, nc - 1), sumwi(ns), sumti(ns) As Double
             For i = 0 To ns
                 Array.Resize(Kw1(i), nc)
-                Array.Resize(Kw1(i), nc)
+                Array.Resize(Kw2(i), nc)
             Next
 
             Dim tmp0 As Object = Nothing
