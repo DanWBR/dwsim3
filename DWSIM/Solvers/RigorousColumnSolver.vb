@@ -336,7 +336,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Else
                 _LSSj(0) = 0.0
             End If
-            _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
+            If _Lj(0) <> 0 Or Not Double.IsNaN(_Lj(0)) Or Not Double.IsInfinity(_Lj(0)) Then
+                _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
+            Else
+                _Rlj(0) = 1
+            End If
 
             For i = 0 To _ns
                 _VSSj(i) = (_Rvj(i) - 1) * _Vj(i)
@@ -755,7 +759,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Else
                 _LSSj(0) = 0.0
             End If
-            _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
+            If _Lj(0) <> 0 Or Not Double.IsNaN(_Lj(0)) Or Not Double.IsInfinity(_Lj(0)) Then
+                _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
+            Else
+                _Rlj(0) = 1
+            End If
 
             For i = 0 To _ns
                 _VSSj(i) = (_Rvj(i) - 1) * _Vj(i)
