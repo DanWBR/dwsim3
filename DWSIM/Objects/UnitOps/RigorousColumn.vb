@@ -3231,7 +3231,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Else
                         Select Case Me.ColumnType
                             Case ColType.DistillationColumn
-                                V(i) = (rr + 1) * distrate - F(0) + V(0)
+                                If Me.CondenserType = condtype.Partial_Condenser Then
+                                    V(i) = (rr + 1) * distrate - F(0) + V(0)
+                                ElseIf Me.CondenserType = condtype.Full_Reflux Then
+                                    V(i) = (rr + 1) * V(0) - F(0)
+                                Else
+                                    V(i) = (rr + 1) * distrate - F(0)
+                                End If
                             Case ColType.RefluxedAbsorber
                                 V(i) = (rr + 1) * distrate - F(0) + V(0)
                             Case ColType.AbsorptionColumn
