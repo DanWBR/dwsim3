@@ -331,8 +331,10 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Next
             If _condtype = Column.condtype.Total_Condenser Then
                 _LSSj(0) = 1 - sumLSS - sumVSS - _Lj(_ns)
-            Else
+            ElseIf _condtype = Column.condtype.Partial_Condenser Then
                 _LSSj(0) = 1 - sumLSS - sumVSS - _Vj(0) - _Lj(_ns)
+            Else
+                _LSSj(0) = 0.0
             End If
             _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
 
@@ -748,8 +750,10 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Next
             If _condtype = Column.condtype.Total_Condenser Then
                 _LSSj(0) = 1 - sumLSS - sumVSS - _Lj(_ns)
-            Else
+            ElseIf _condtype = Column.condtype.Partial_Condenser Then
                 _LSSj(0) = 1 - sumLSS - sumVSS - _Vj(0) - _Lj(_ns)
+            Else
+                _LSSj(0) = 0.0
             End If
             _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
 
