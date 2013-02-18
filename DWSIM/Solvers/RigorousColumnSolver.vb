@@ -473,7 +473,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
                     spfval1 = _LSSj(0) - spval1 / _maxF
                 Case ColumnSpec.SpecType.Stream_Ratio
-                    spfval1 = -_Lj(0) + spval1 * _LSSj(0)
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        spfval1 = _Lj(0) - spval1 * _LSSj(0)
+                    Else
+                        spfval1 = _Lj(0) - spval1 * _Vj(0)
+                    End If
                 Case ColumnSpec.SpecType.Temperature
                     spfval1 = _Tj(0) - spval1
             End Select
@@ -508,7 +512,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
                     spfval2 = _Lj(_ns) - spval2 / _maxF
                 Case ColumnSpec.SpecType.Stream_Ratio
-                    spfval2 = -_Vj(_ns) + spval2 * _Lj(_ns)
+                    spfval2 = _Vj(_ns) - spval2 * _Lj(_ns)
                 Case ColumnSpec.SpecType.Temperature
                     spfval2 = _Tj(_ns) - spval2
             End Select
@@ -882,7 +886,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
                     spfval1 = _LSSj(0) - spval1 / _maxF
                 Case ColumnSpec.SpecType.Stream_Ratio
-                    spfval1 = _Lj(0) / _LSSj(0) - spval1
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        spfval1 = _Lj(0) - spval1 * _LSSj(0)
+                    Else
+                        spfval1 = _Lj(0) - spval1 * _Vj(0)
+                    End If
                 Case ColumnSpec.SpecType.Temperature
                     spfval1 = _Tj(0) - spval1
             End Select
@@ -917,7 +925,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
                     spfval2 = _Lj(_ns) - spval2 / _maxF
                 Case ColumnSpec.SpecType.Stream_Ratio
-                    spfval2 = -_Vj(_ns) / _Lj(_ns) + spval2
+                    spfval2 = _Vj(_ns) - spval2 * _Lj(_ns)
                 Case ColumnSpec.SpecType.Temperature
                     spfval2 = _Tj(_ns) - spval2
             End Select
