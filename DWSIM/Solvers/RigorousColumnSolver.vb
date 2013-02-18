@@ -1177,10 +1177,24 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
             Dim Sbj(ns), lnSbj0(ns), lnSbj(ns), S(ns, nc - 1) As Double
             Dim Rvj(ns), Rlj(ns), lnRvj(ns), lnRlj(ns), lnRvj0(ns), lnRlj0(ns) As Double
-            Dim VSSj(ns), LSSj(ns) As Double
+            Dim VSSj(ns), LSSj(ns), PSbj As Double
+            'Calculo de Sbj, Rlj y Rvj del Lazo Externo
 
             For i = 0 To ns
                 Sbj(i) = Kbj(i) * V(i) / L(i)
+            Next
+            If AdjustSb Then
+                SbOK = False
+                PSbj = 1
+                For i = 0 To ns
+                    PSbj *= Sbj(i)
+                Next
+                Sb = PSbj ^ (1 / (ns + 1))
+            Else
+                Sb = 1
+            End If
+
+            For i = 0 To ns
                 If Sbj(i) = 0 Then Sbj(i) = 1.0E-20
                 lnSbj(i) = Log(Sbj(i))
                 If V(i) <> 0 Then Rvj(i) = 1 + VSS(i) / V(i) Else Rvj(i) = 1
