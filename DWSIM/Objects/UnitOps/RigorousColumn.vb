@@ -3253,9 +3253,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     If i = 0 Then
                         Select Case Me.ColumnType
                             Case ColType.DistillationColumn
-                                If Me.CondenserType = condtype.Partial_Condenser Then
-                                    L(0) = distrate * rr
-                                ElseIf Me.CondenserType = condtype.Full_Reflux Then
+                                If Me.CondenserType = condtype.Full_Reflux Then
+                                    L(0) = vaprate * rr
                                 Else
                                     L(0) = distrate * rr
                                 End If
