@@ -3185,8 +3185,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Next
             Next
 
-            T(0) = T2
-            T(ns) = T1
+            T(0) = T1
+            T(ns) = T2
 
             Dim pv(nc - 1) As Double
             For i = 0 To nc - 1
