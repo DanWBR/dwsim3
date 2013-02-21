@@ -3425,6 +3425,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Next
                     Kf.Add(obj)
                     Me.JacobianMatrix = result(13)
+                    Q = result(8)
                 Else
                     Kf.Add(result(7)(i))
                 End If

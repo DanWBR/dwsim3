@@ -151,19 +151,22 @@ Namespace DWSIM.Flowsheet
                             Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
                             For Each cp As ConnectionPoint In gobj.OutputConnectors
                                 If cp.IsAttached And cp.Type = ConType.ConOut Then
-                                    Dim ms As SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
-                                    Try
-                                        ms.GraphicObject.Calculated = False
-                                        form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
-                                        CalculateMaterialStream(form, ms)
-                                        ms.GraphicObject.Calculated = True
-                                    Catch ex As Exception
-                                        ms.GraphicObject.Calculated = False
-                                        ms.Clear()
-                                        ms.ClearAllProps()
-                                        ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                                        form.WriteToLog(gobj.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-                                    End Try
+                                    Dim obj As SimulationObjects_BaseClass = form.Collections.ObjectCollection(cp.AttachedConnector.AttachedTo.Name)
+                                    If TypeOf obj Is Streams.MaterialStream Then
+                                        Dim ms As Streams.MaterialStream = CType(obj, Streams.MaterialStream)
+                                        Try
+                                            ms.GraphicObject.Calculated = False
+                                            form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
+                                            CalculateMaterialStream(form, ms)
+                                            ms.GraphicObject.Calculated = True
+                                        Catch ex As Exception
+                                            ms.GraphicObject.Calculated = False
+                                            ms.Clear()
+                                            ms.ClearAllProps()
+                                            ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                            form.WriteToLog(gobj.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                                        End Try
+                                    End If
                                 End If
                             Next
                             myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
