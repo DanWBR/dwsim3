@@ -203,9 +203,13 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim i, j As Integer
 
             For i = 0 To _ns
-                For j = 0 To _nc - 1
-                    _S(i, j) = Exp(x(i)) * _alpha(i, j) * _Sb
-                Next
+                If i = 0 And Me._condtype = Column.condtype.Total_Condenser Then
+                    _Rlj(i) = Exp(x(i))
+                Else
+                    For j = 0 To _nc - 1
+                        _S(i, j) = Exp(x(i)) * _alpha(i, j) * _Sb
+                    Next
+                End If
             Next
 
             Dim m1, m2 As Integer
@@ -618,9 +622,14 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim i, j As Integer
 
             For i = 0 To _ns
-                For j = 0 To _nc - 1
-                    _S(i, j) = Exp(_bx(i) + _dbx(i) * t) * _alpha(i, j) * _Sb
-                Next
+                If i = 0 And Me._condtype = Column.condtype.Total_Condenser Then
+                    _Rlj(i) = Exp(_bx(i) + _dbx(i) * t)
+                Else
+                    For j = 0 To _nc - 1
+                        _S(i, j) = Exp(_bx(i) + _dbx(i) * t) * _alpha(i, j) * _Sb
+                    Next
+                End If
+                
             Next
 
             Dim m1, m2 As Integer
@@ -1179,6 +1188,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim Sbj(ns), lnSbj0(ns), lnSbj(ns), S(ns, nc - 1) As Double
             Dim Rvj(ns), Rlj(ns), lnRvj(ns), lnRlj(ns), lnRvj0(ns), lnRlj0(ns) As Double
             Dim VSSj(ns), LSSj(ns), PSbj As Double
+            Dim Nss As Integer = ns + 1
             'Calculo de Sbj, Rlj y Rvj del Lazo Externo
 
             For i = 0 To ns
@@ -1188,9 +1198,13 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 SbOK = False
                 PSbj = 1
                 For i = 0 To ns
-                    PSbj *= Sbj(i)
+                    If i = 0 And Me._condtype = Column.condtype.Total_Condenser Then
+                        Nss -= 1
+                    Else
+                        PSbj *= Sbj(i)
+                    End If
                 Next
-                Sb = PSbj ^ (1 / (ns + 1))
+                Sb = PSbj ^ (1 / (Nss))
             Else
                 Sb = 1
             End If
@@ -1365,7 +1379,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 'solve using newton's method
 
                 For i = 0 To ns
-                    xvar(i) = lnSbj(i)
+                    If i = 0 And Me._condtype = Column.condtype.Total_Condenser Then
+                        xvar(i) = lnRlj(i)
+                    Else
+                        xvar(i) = lnSbj(i)
+                    End If
                 Next
 
                 m1 = 0
@@ -1507,12 +1525,18 @@ restart:            fx = Me.FunctionValue(xvar)
                 Loop Until il_err < itol
 
                 For i = 0 To ns
-                    lnSbj_ant(i) = lnSbj(i)
-                    lnSbj(i) = xvar(i)
-                    Sbj(i) = Exp(lnSbj(i))
-                    For j = 0 To nc - 1
-                        S(i, j) = Sbj(i) * alpha(i, j) * Sb
-                    Next
+                    If i = 0 And Me._condtype = Column.condtype.Total_Condenser Then
+                        lnRlj_ant(i) = lnRlj(i)
+                        lnRlj(i) = xvar(i)
+                        Rlj(i) = Exp(lnRlj(i))
+                    Else
+                        lnSbj_ant(i) = lnSbj(i)
+                        lnSbj(i) = xvar(i)
+                        Sbj(i) = Exp(lnSbj(i))
+                        For j = 0 To nc - 1
+                            S(i, j) = Sbj(i) * alpha(i, j) * Sb
+                        Next
+                    End If
                 Next
 
                 m1 = 0
