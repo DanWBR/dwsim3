@@ -3425,7 +3425,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Next
                     Kf.Add(obj)
                     Me.JacobianMatrix = result(13)
-                    Q = result(8)
                 Else
                     Kf.Add(result(7)(i))
                 End If
@@ -3435,6 +3434,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Lf = result(2)
             VSSf = result(3)
             LSSf = result(4)
+            Q = result(8)
 
             'if enabled, auto update initial estimates
 
