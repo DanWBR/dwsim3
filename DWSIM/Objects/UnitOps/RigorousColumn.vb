@@ -3304,30 +3304,35 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Pvap(i)(j) = pp.AUX_PVAPi(j, T(i))
                     Next
                     'Dim tmp As Object = pp.DW_CalcKvalue(zm, (T1 + T2) / 2, (P(0) + P(ns)) / 2)
-                    For j = 0 To nc - 1
-                        fracv(i) = Me.CalcIdealVapFrac(zm, Pvap(i), P(i))
-                        If fracv(i) < 0 Then fracv(i) = 0.000001
-                        If fracv(i) > 1 Then fracv(i) = 0.999999
-                        y(i)(j) = zm(j) * idealK(i)(j) / ((idealK(i)(j) - 1) * fracv(i) + 1)
-                        x(i)(j) = y(i)(j) / idealK(i)(j)
-                        z(i)(j) = zm(j)
-                    Next
-                    Dim sumx, sumy As Double
-                    sumx = 0
-                    sumy = 0
-                    For j = 0 To nc - 1
-                        sumx += x(i)(j)
-                        sumy += y(i)(j)
-                    Next
-                    For j = 0 To nc - 1
-                        x(i)(j) = x(i)(j) / sumx
-                        y(i)(j) = y(i)(j) / sumy
-                    Next
+                    'For j = 0 To nc - 1
+                    '    fracv(i) = Me.CalcIdealVapFrac(zm, Pvap(i), P(i))
+                    '    If fracv(i) < 0 Then fracv(i) = 0.000001
+                    '    If fracv(i) > 1 Then fracv(i) = 0.999999
+                    '    y(i)(j) = zm(j) * idealK(i)(j) / ((idealK(i)(j) - 1) * fracv(i) + 1)
+                    '    x(i)(j) = y(i)(j) / idealK(i)(j)
+                    '    z(i)(j) = zm(j)
+                    'Next
+                    'Dim sumx, sumy As Double
+                    'sumx = 0
+                    'sumy = 0
+                    'For j = 0 To nc - 1
+                    '    sumx += x(i)(j)
+                    '    sumy += y(i)(j)
+                    'Next
+                    'For j = 0 To nc - 1
+                    '    x(i)(j) = x(i)(j) / sumx
+                    '    y(i)(j) = y(i)(j) / sumy
+                    'Next
                     For j = 0 To nc - 1
                         Kval(i)(j) = idealK(i)(j)
                     Next
                 End If
                 i = i + 1
+            Next
+            For i = 0 To ns
+                x(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), PropertyPackage)(2)
+                y(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), PropertyPackage)(3)
+                z(i) = zm
             Next
 
             Select Case Me.ColumnType
