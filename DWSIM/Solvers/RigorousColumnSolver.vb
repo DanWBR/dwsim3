@@ -203,7 +203,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim i, j As Integer
 
             For i = 0 To _ns
-                If i = 0 And Me._condtype = Column.condtype.Total_Condenser Then
+                If i = 0 AndAlso _condtype = Column.condtype.Total_Condenser Then
                     _Rlj(i) = Exp(x(i))
                 Else
                     For j = 0 To _nc - 1
@@ -622,7 +622,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim i, j As Integer
 
             For i = 0 To _ns
-                If i = 0 And Me._condtype = Column.condtype.Total_Condenser Then
+                If i = 0 AndAlso _condtype = Column.condtype.Total_Condenser Then
                     _Rlj(i) = Exp(_bx(i) + _dbx(i) * t)
                 Else
                     For j = 0 To _nc - 1
@@ -1198,7 +1198,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 SbOK = False
                 PSbj = 1
                 For i = 0 To ns
-                    If i = 0 And Me._condtype = Column.condtype.Total_Condenser Then
+                    If i = 0 AndAlso _condtype = Column.condtype.Total_Condenser Then
                         Nss -= 1
                     Else
                         PSbj *= Sbj(i)
@@ -1379,7 +1379,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 'solve using newton's method
 
                 For i = 0 To ns
-                    If i = 0 And Me._condtype = Column.condtype.Total_Condenser Then
+                    If i = 0 AndAlso _condtype = Column.condtype.Total_Condenser Then
                         xvar(i) = lnRlj(i)
                     Else
                         xvar(i) = lnSbj(i)
@@ -1525,7 +1525,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 Loop Until il_err < itol
 
                 For i = 0 To ns
-                    If i = 0 And Me._condtype = Column.condtype.Total_Condenser Then
+                    If i = 0 AndAlso _condtype = Column.condtype.Total_Condenser Then
                         lnRlj_ant(i) = lnRlj(i)
                         lnRlj(i) = xvar(i)
                         Rlj(i) = Exp(lnRlj(i))
