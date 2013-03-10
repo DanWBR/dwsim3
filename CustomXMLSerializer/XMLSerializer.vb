@@ -169,12 +169,16 @@ Public Class XMLSerializer
                             End If
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is [Enum] Then
                             Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
-                            Dim val As String = xel.Value
-                            If Not val Is Nothing Then obj.GetType.GetField(prop.Name).SetValue(obj, [Enum].Parse(obj.GetType.GetField(prop.Name).GetValue(obj).GetType, val))
+                            If Not xel Is Nothing Then
+                                Dim val As String = xel.Value
+                                If Not val Is Nothing Then obj.GetType.GetField(prop.Name).SetValue(obj, [Enum].Parse(obj.GetType.GetField(prop.Name).GetValue(obj).GetType, val))
+                            End If
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Font Then
                             Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
-                            Dim val As Font = GetFontByString(xel.Value)
-                            obj.GetType.GetField(prop.Name).SetValue(obj, val)
+                            If Not xel Is Nothing Then
+                                Dim val As Font = GetFontByString(xel.Value)
+                                obj.GetType.GetField(prop.Name).SetValue(obj, val)
+                            End If
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Color Then
                             Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
                             Dim val As Color = ColorTranslator.FromHtml(xel.Value)

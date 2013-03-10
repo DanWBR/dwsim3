@@ -20,7 +20,8 @@ Imports System.Math
 Imports DWSIM.DWSIM.SimulationObjects
 Imports DWSIM.DWSIM.MathEx
 Imports DWSIM.DWSIM.MathEx.Common
-Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
+Imports System.Threading.Tasks
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -491,20 +492,49 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, Vx, 0.0#, PP.RET_Nu
                 ui(i) = Log(Ki(i) / Kb)
             Next
 
-            DHv1 = PP.DW_CalcEnthalpyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
-            DHv2 = PP.DW_CalcEnthalpyDeparture(Vy, Tref, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
-
-            C = DHv2
-            D = (DHv1 - C) / (T - Tref)
-
-            If T < DWSIM.MathEx.Common.Max(VTc, Vz) Then
-                DHl1 = PP.DW_CalcEnthalpyDeparture(Vx, T, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx) / 1000
-                DHl2 = PP.DW_CalcEnthalpyDeparture(Vx, Tref, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx) / 1000
-                E = DHl2
-                F = (DHl1 - E) / (T - Tref)
+            If My.Settings.EnableParallelProcessing Then
+                My.Application.IsRunningParallelTasks = True
+                Try
+                    Dim task1 As Task = New Task(Sub()
+                                                     DHv1 = PP.DW_CalcEnthalpyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
+                                                     DHv2 = PP.DW_CalcEnthalpyDeparture(Vy, Tref, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
+                                                     C = DHv2
+                                                     D = (DHv1 - C) / (T - Tref)
+                                                 End Sub)
+                    Dim task2 As Task = New Task(Sub()
+                                                     If T < DWSIM.MathEx.Common.Max(VTc, Vz) Then
+                                                         DHl1 = PP.DW_CalcEnthalpyDeparture(Vx, T, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx) / 1000
+                                                         DHl2 = PP.DW_CalcEnthalpyDeparture(Vx, Tref, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx) / 1000
+                                                         E = DHl2
+                                                         F = (DHl1 - E) / (T - Tref)
+                                                     Else
+                                                         E = 0
+                                                         F = 0
+                                                     End If
+                                                 End Sub)
+                    task1.Start()
+                    task2.Start()
+                    Task.WaitAll(task1, task2)
+                Catch ae As AggregateException
+                    For Each ex As Exception In ae.InnerExceptions
+                        Throw
+                    Next
+                End Try
+                My.Application.IsRunningParallelTasks = False
             Else
-                E = 0
-                F = 0
+                DHv1 = PP.DW_CalcEnthalpyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
+                DHv2 = PP.DW_CalcEnthalpyDeparture(Vy, Tref, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
+                C = DHv2
+                D = (DHv1 - C) / (T - Tref)
+                If T < DWSIM.MathEx.Common.Max(VTc, Vz) Then
+                    DHl1 = PP.DW_CalcEnthalpyDeparture(Vx, T, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx) / 1000
+                    DHl2 = PP.DW_CalcEnthalpyDeparture(Vx, Tref, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx) / 1000
+                    E = DHl2
+                    F = (DHl1 - E) / (T - Tref)
+                Else
+                    E = 0
+                    F = 0
+                End If
             End If
 
             Dim fx(n + 6), x(n + 6), dfdx(n + 6, n + 6), dx(n + 6), xbr(n + 6), fbr(n + 6) As Double
@@ -570,20 +600,49 @@ restart:    Do
                 Bc = Log(Kb_ / Kb) / (1 / T_ - 1 / T)
                 Ac = Log(Kb) - Bc * (1 / T - 1 / T_)
 
-                DHv1 = PP.DW_CalcEnthalpyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
-                DHv2 = PP.DW_CalcEnthalpyDeparture(Vy, T0, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
-
-                Cc = DHv2
-                Dc = (DHv1 - Cc) / (T - T0)
-
-                If T < DWSIM.MathEx.Common.Max(VTc, Vz) Then
-                    DHl1 = PP.DW_CalcEnthalpyDeparture(Vx, T, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx) / 1000
-                    DHl2 = PP.DW_CalcEnthalpyDeparture(Vx, T0, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx) / 1000
-                    Ec = DHl2
-                    Fc = (DHl1 - Ec) / (T - T0)
+                If My.Settings.EnableParallelProcessing Then
+                    My.Application.IsRunningParallelTasks = True
+                    Try
+                        Dim task1 As Task = New Task(Sub()
+                                                         DHv1 = PP.DW_CalcEnthalpyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
+                                                         DHv2 = PP.DW_CalcEnthalpyDeparture(Vy, T0, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
+                                                         Cc = DHv2
+                                                         Dc = (DHv1 - Cc) / (T - T0)
+                                                     End Sub)
+                        Dim task2 As Task = New Task(Sub()
+                                                         If T < DWSIM.MathEx.Common.Max(VTc, Vz) Then
+                                                             DHl1 = PP.DW_CalcEnthalpyDeparture(Vx, T, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx) / 1000
+                                                             DHl2 = PP.DW_CalcEnthalpyDeparture(Vx, T0, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx) / 1000
+                                                             Ec = DHl2
+                                                             Fc = (DHl1 - Ec) / (T - T0)
+                                                         Else
+                                                             Ec = 0
+                                                             Fc = 0
+                                                         End If
+                                                     End Sub)
+                        task1.Start()
+                        task2.Start()
+                        Task.WaitAll(task1, task2)
+                    Catch ae As AggregateException
+                        For Each ex As Exception In ae.InnerExceptions
+                            Throw
+                        Next
+                    End Try
+                    My.Application.IsRunningParallelTasks = False
                 Else
-                    Ec = 0
-                    Fc = 0
+                    DHv1 = PP.DW_CalcEnthalpyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
+                    DHv2 = PP.DW_CalcEnthalpyDeparture(Vy, T0, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
+                    Cc = DHv2
+                    Dc = (DHv1 - Cc) / (T - T0)
+                    If T < DWSIM.MathEx.Common.Max(VTc, Vz) Then
+                        DHl1 = PP.DW_CalcEnthalpyDeparture(Vx, T, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx) / 1000
+                        DHl2 = PP.DW_CalcEnthalpyDeparture(Vx, T0, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx) / 1000
+                        Ec = DHl2
+                        Fc = (DHl1 - Ec) / (T - T0)
+                    Else
+                        Ec = 0
+                        Fc = 0
+                    End If
                 End If
 
                 '-------------------------------------------
@@ -734,6 +793,7 @@ restart:    Do
             ReDim Vn(n), Vx(n), Vy(n), Vp(n), ui(n), uic(n), pi(n), Ki(n), fi(n), Vt(n), Vpc(n), VTc(n), Vw(n)
 
             Vn = PP.RET_VNAMES()
+            VTc = PP.RET_VTC
             fi = Vz.Clone
 
             Tmin = 0
@@ -874,20 +934,49 @@ restart:    Do
                 ui(i) = Log(Ki(i) / Kb)
             Next
 
-            DSv1 = PP.DW_CalcEntropyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
-            DSv2 = PP.DW_CalcEntropyDeparture(Vy, Tref, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
-
-            C = DSv2
-            D = (DSv1 - C) / (T - Tref)
-
-            If T < DWSIM.MathEx.Common.Max(VTc, Vz) Then
-                DSl1 = PP.DW_CalcEntropyDeparture(Vx, T, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx)
-                DSl2 = PP.DW_CalcEntropyDeparture(Vx, Tref, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx)
-                E = DSl2
-                F = (DSl1 - E) / (T - Tref)
+            If My.Settings.EnableParallelProcessing Then
+                My.Application.IsRunningParallelTasks = True
+                Try
+                    Dim task1 As Task = New Task(Sub()
+                                                     DSv1 = PP.DW_CalcEntropyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
+                                                     DSv2 = PP.DW_CalcEntropyDeparture(Vy, Tref, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
+                                                     C = DSv2
+                                                     D = (DSv1 - C) / (T - Tref)
+                                                 End Sub)
+                    Dim task2 As Task = New Task(Sub()
+                                                     If T < DWSIM.MathEx.Common.Max(VTc, Vz) Then
+                                                         DSl1 = PP.DW_CalcEntropyDeparture(Vx, T, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx)
+                                                         DSl2 = PP.DW_CalcEntropyDeparture(Vx, Tref, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx)
+                                                         E = DSl2
+                                                         F = (DSl1 - E) / (T - Tref)
+                                                     Else
+                                                         E = 0
+                                                         F = 0
+                                                     End If
+                                                 End Sub)
+                    task1.Start()
+                    task2.Start()
+                    Task.WaitAll(task1, task2)
+                Catch ae As AggregateException
+                    For Each ex As Exception In ae.InnerExceptions
+                        Throw
+                    Next
+                End Try
+                My.Application.IsRunningParallelTasks = False
             Else
-                E = 0
-                F = 0
+                DSv1 = PP.DW_CalcEntropyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
+                DSv2 = PP.DW_CalcEntropyDeparture(Vy, Tref, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
+                C = DSv2
+                D = (DSv1 - C) / (T - Tref)
+                If T < DWSIM.MathEx.Common.Max(VTc, Vz) Then
+                    DSl1 = PP.DW_CalcEntropyDeparture(Vx, T, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx)
+                    DSl2 = PP.DW_CalcEntropyDeparture(Vx, Tref, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx)
+                    E = DSl2
+                    F = (DSl1 - E) / (T - Tref)
+                Else
+                    E = 0
+                    F = 0
+                End If
             End If
 
             Dim fx(n + 6), x(n + 6), dfdx(n + 6, n + 6), dx(n + 6), xbr(n + 6), fbr(n + 6) As Double
@@ -950,20 +1039,49 @@ restart:    Do
                 Bc = Log(Kb_ / Kb) / (1 / T_ - 1 / T)
                 Ac = Log(Kb) - Bc * (1 / T - 1 / T_)
 
-                DSv1 = PP.DW_CalcEntropyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
-                DSv2 = PP.DW_CalcEntropyDeparture(Vy, T0, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
-
-                Cc = DSv2
-                Dc = (DSv1 - Cc) / (T - T0)
-
-                If T < DWSIM.MathEx.Common.Max(VTc, Vz) Then
-                    DSl1 = PP.DW_CalcEntropyDeparture(Vx, T, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx)
-                    DSl2 = PP.DW_CalcEntropyDeparture(Vx, T0, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx)
-                    Ec = DSl2
-                    Fc = (DSl1 - Ec) / (T - T0)
+                If My.Settings.EnableParallelProcessing Then
+                    My.Application.IsRunningParallelTasks = True
+                    Try
+                        Dim task1 As Task = New Task(Sub()
+                                                         DSv1 = PP.DW_CalcEntropyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
+                                                         DSv2 = PP.DW_CalcEntropyDeparture(Vy, T0, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
+                                                         Cc = DSv2
+                                                         Dc = (DSv1 - Cc) / (T - T0)
+                                                     End Sub)
+                        Dim task2 As Task = New Task(Sub()
+                                                         If T < DWSIM.MathEx.Common.Max(VTc, Vz) Then
+                                                             DSl1 = PP.DW_CalcEntropyDeparture(Vx, T, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx)
+                                                             DSl2 = PP.DW_CalcEntropyDeparture(Vx, T0, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx)
+                                                             Ec = DSl2
+                                                             Fc = (DSl1 - Ec) / (T - T0)
+                                                         Else
+                                                             Ec = 0
+                                                             Fc = 0
+                                                         End If
+                                                     End Sub)
+                        task1.Start()
+                        task2.Start()
+                        Task.WaitAll(task1, task2)
+                    Catch ae As AggregateException
+                        For Each ex As Exception In ae.InnerExceptions
+                            Throw
+                        Next
+                    End Try
+                    My.Application.IsRunningParallelTasks = False
                 Else
-                    Ec = 0
-                    Fc = 0
+                    DSv1 = PP.DW_CalcEntropyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
+                    DSv2 = PP.DW_CalcEntropyDeparture(Vy, T0, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
+                    Cc = DSv2
+                    Dc = (DSv1 - Cc) / (T - T0)
+                    If T < DWSIM.MathEx.Common.Max(VTc, Vz) Then
+                        DSl1 = PP.DW_CalcEntropyDeparture(Vx, T, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx)
+                        DSl2 = PP.DW_CalcEntropyDeparture(Vx, T0, P, PropertyPackages.State.Liquid) * PP.AUX_MMM(Vx)
+                        Ec = DSl2
+                        Fc = (DSl1 - Ec) / (T - T0)
+                    Else
+                        Ec = 0
+                        Fc = 0
+                    End If
                 End If
 
                 '-------------------------------------------

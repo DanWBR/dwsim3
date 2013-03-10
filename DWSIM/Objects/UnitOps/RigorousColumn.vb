@@ -3425,6 +3425,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Lf = result(2)
             VSSf = result(3)
             LSSf = result(4)
+            Q = result(8)
 
             'if enabled, auto update initial estimates
 

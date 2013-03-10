@@ -94,6 +94,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'x86|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -134,6 +135,9 @@
     <Reference Include="Ciloci.Flee, Version=0.9.14.0, Culture=neutral, PublicKeyToken=c8526a021ef298ed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\Ciloci.Flee.dll</HintPath>
+    </Reference>
+    <Reference Include="Cudafy.NET">
+      <HintPath>..\..\..\CudafyV1.12\bin\Cudafy.NET.dll</HintPath>
     </Reference>
     <Reference Include="Cureos.Numerics, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -674,7 +678,7 @@
     <Compile Include="Forms\PropPack_ConfigForms\FormConfigUNIQUAC.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Objects\PropertyPackages\UNIFAC\UNIFACLLPropertyPackage.vb" />
+    <Compile Include="Objects\PropertyPackages\UNIFAC\UNIFACPropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\UNIQUAC\Helper Classes\UNIQUAC.vb" />
     <Compile Include="Objects\PropertyPackages\UNIQUAC\UNIQUACPropertyPackage.vb" />
     <Compile Include="Objects\Reactors\BaseReactor.vb" />
@@ -921,7 +925,7 @@
     <Compile Include="Objects\PropertyPackages\SteamTables\Helper Classes\IAPWS_IF97.vb" />
     <Compile Include="Objects\PropertyPackages\SteamTables\SteamTablesPropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\UNIFAC\Helper Classes\UNIFAC.vb" />
-    <Compile Include="Objects\PropertyPackages\UNIFAC\UNIFACPropertyPackage.vb" />
+    <Compile Include="Objects\PropertyPackages\UNIFAC\UNIFACLLPropertyPackage.vb" />
     <Compile Include="Objects\Classes\General\TreeViewDataAccess.vb" />
     <Compile Include="Forms\UITypeEditors\SpecialOps\ADJ\UIMVSelectorFormEditor.vb" />
     <Compile Include="Forms\UITypeEditors\SpecialOps\ADJ\UIRVSelectorForm.Designer.vb">

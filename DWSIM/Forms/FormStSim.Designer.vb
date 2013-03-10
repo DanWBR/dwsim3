@@ -482,8 +482,8 @@ Partial Class FormStSim
         Me.NavigationPanePage1.ImageFooter = Nothing
         Me.NavigationPanePage1.ImageIndex = 1
         Me.NavigationPanePage1.ImageIndexFooter = -1
-        Me.NavigationPanePage1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
-        Me.NavigationPanePage1.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.NavigationPanePage1.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.NavigationPanePage1.ImageList = Nothing
         Me.NavigationPanePage1.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage1.Key = "NavigationPanePage1"
@@ -544,8 +544,8 @@ Partial Class FormStSim
         Me.NavigationPanePage5.ImageFooter = Nothing
         Me.NavigationPanePage5.ImageIndex = 2
         Me.NavigationPanePage5.ImageIndexFooter = -1
-        Me.NavigationPanePage5.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
-        Me.NavigationPanePage5.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.NavigationPanePage5.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.NavigationPanePage5.ImageList = Nothing
         Me.NavigationPanePage5.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage5.Key = "NavigationPanePage5"
@@ -591,8 +591,8 @@ Partial Class FormStSim
         Me.NavigationPanePage3.ImageFooter = Nothing
         Me.NavigationPanePage3.ImageIndex = 6
         Me.NavigationPanePage3.ImageIndexFooter = -1
-        Me.NavigationPanePage3.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
-        Me.NavigationPanePage3.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.NavigationPanePage3.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.NavigationPanePage3.ImageList = Nothing
         Me.NavigationPanePage3.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage3.Key = "NavigationPanePage3"
@@ -638,8 +638,8 @@ Partial Class FormStSim
         Me.NavigationPanePage4.ImageFooter = Nothing
         Me.NavigationPanePage4.ImageIndex = 0
         Me.NavigationPanePage4.ImageIndexFooter = -1
-        Me.NavigationPanePage4.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
-        Me.NavigationPanePage4.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.NavigationPanePage4.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.NavigationPanePage4.ImageList = Nothing
         Me.NavigationPanePage4.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage4.Key = "NavigationPanePage4"
@@ -1034,7 +1034,7 @@ Partial Class FormStSim
         Me.ListViewPP.ShowItemToolTips = True
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ListViewPP, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ListViewPP, System.Drawing.Color.Empty)
-        Me.ListViewPP.TileSize = New System.Drawing.Size(280, 24)
+        Me.ListViewPP.TileSize = New System.Drawing.Size(280, 20)
         Me.ListViewPP.UseCompatibleStateImageBehavior = False
         Me.ListViewPP.View = System.Windows.Forms.View.List
         '
@@ -1332,8 +1332,8 @@ Partial Class FormStSim
         Me.Controls.Add(Me.PanelDescricao)
         Me.Controls.Add(Me.PanelUnits)
         Me.Controls.Add(Me.PanelCarPet)
-        Me.Controls.Add(Me.PanelPP)
         Me.Controls.Add(Me.PanelPPAdv)
+        Me.Controls.Add(Me.PanelPP)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FormStSim"
         Me.ShowIcon = False

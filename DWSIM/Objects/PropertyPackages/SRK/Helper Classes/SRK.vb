@@ -388,7 +388,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Dim DSres = R * Math.Log((Z - BG1) / Z) + R * Math.Log(Z) - 1 / ((uu ^ 2 - 4 * ww) ^ 0.5 * bm) * dadT * Math.Log((2 * Z + BG1 * (uu - (uu ^ 2 - 4 * ww) ^ 0.5)) / (2 * Z + BG1 * (uu + (uu ^ 2 - 4 * ww) ^ 0.5)))
             Dim DHres = DAres + T * (DSres) + R * T * (Z - 1)
 
-            H_SRK_MIX = Hid + DHres / MMm '/ 1000
+            If MathEx.Common.Sum(Vz) = 0.0# Then
+                H_SRK_MIX = 0.0#
+            Else
+                H_SRK_MIX = Hid + DHres / MMm '/ 1000
+            End If
 
         End Function
 
@@ -559,7 +563,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             'Dim DSres = R * Math.Log((Z - BG1) / Z) + R * Math.Log(V * 101325 / (R * 298.15)) - 1 / ((uu ^ 2 - 4 * ww) ^ 0.5 * bm) * dadT * Math.Log((2 * Z + BG1 * (uu - (uu ^ 2 - 4 * ww) ^ 0.5)) / (2 * Z + BG1 * (uu + (uu ^ 2 - 4 * ww) ^ 0.5)))
             Dim DSres = R * Math.Log((Z - BG1) / Z) + R * Math.Log(Z) - 1 / ((uu ^ 2 - 4 * ww) ^ 0.5 * bm) * dadT * Math.Log((2 * Z + BG1 * (uu - (uu ^ 2 - 4 * ww) ^ 0.5)) / (2 * Z + BG1 * (uu + (uu ^ 2 - 4 * ww) ^ 0.5)))
 
-            S_SRK_MIX = Sid + DSres / MMm '/ 1000
+            If MathEx.Common.Sum(Vz) = 0.0# Then
+                S_SRK_MIX = 0.0#
+            Else
+                S_SRK_MIX = Sid + DSres / MMm '/ 1000
+            End If
 
         End Function
 

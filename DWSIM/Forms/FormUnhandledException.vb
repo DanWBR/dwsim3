@@ -67,7 +67,7 @@ Public Class FormUnhandledException
 
         Dim msg As New SendFileTo.MAPI()
         msg.AddRecipientTo("dwsim@inforside.com.br")
-        msg.SendMailPopup("DWSIM Exception", "[PLEASE ADD EXCEPTION DETAILS HERE]" & vbCrLf & vbCrLf & ex.ToString)
+        msg.SendMailPopup("DWSIM Exception", "[PLEASE ADD EXCEPTION DETAILS HERE]" & vbCrLf & vbCrLf & "DWSIM version: " & My.Application.Info.Version.ToString & vbCrLf & ex.ToString)
 
     End Sub
 

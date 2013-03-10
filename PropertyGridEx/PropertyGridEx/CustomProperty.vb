@@ -273,7 +273,7 @@ Namespace PropertyGridEx
                         If Not method Is Nothing Then
                             method.SetValue(oRef, value)
                         Else
-                            oRef.GetType().GetProperty(sProp).SetValue(oRef, value, Nothing)
+                            oRef.GetType().GetProperty(sProp).SetValue( oRef, value, Nothing)
                         End If
                     End If
                 Else

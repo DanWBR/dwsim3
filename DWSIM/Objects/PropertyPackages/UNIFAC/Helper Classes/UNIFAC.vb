@@ -161,7 +161,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                     beta(i, k) = 0
                     m = 0
                     Do
-                        beta(i, k) = beta(i, k) + VEKI(i, m) * TAU(m, k, T)
+                        If VEKI(i, m) <> 0.0# And Not Double.IsNaN(VEKI(i, m)) Then
+                            beta(i, k) = beta(i, k) + VEKI(i, m) * TAU(m, k, T)
+                        Else
+
+                        End If
                         m = m + 1
                     Loop Until m = n2 + 1
                     k = k + 1
@@ -192,7 +196,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Do
                 m = 0
                 Do
-                    s(k) = s(k) + teta(m) * TAU(m, k, T)
+                    If teta(m) <> 0.0# And Not Double.IsNaN(teta(m)) Then s(k) = s(k) + teta(m) * TAU(m, k, T)
                     m = m + 1
                 Loop Until m = n2 + 1
                 k = k + 1

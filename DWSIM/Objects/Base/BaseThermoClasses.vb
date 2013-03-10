@@ -2124,7 +2124,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public IsIon As Boolean = False
         Public IsSalt As Boolean = False
         Public IsHydratedSalt As Boolean = False
-        Public HydrationNumber As Integer = 0
+        Public HydrationNumber As Double = 0.0#
         Public Charge As Integer = 0
         Public PositiveIon As String = ""
         Public NegativeIon As String = ""

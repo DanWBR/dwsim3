@@ -1,5 +1,5 @@
-﻿'    UNIFAC-LL Property Package 
-'    Copyright 2008-2011 Daniel Wagner O. de Medeiros
+﻿'    UNIFAC Property Package 
+'    Copyright 2008 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -24,18 +24,18 @@ Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 
 Namespace DWSIM.SimulationObjects.PropertyPackages
 
-    <System.Runtime.InteropServices.Guid(UNIFACLLPropertyPackage.ClassId)> _
-<System.Serializable()> Public Class UNIFACLLPropertyPackage
+    <System.Runtime.InteropServices.Guid(UNIFACPropertyPackage.ClassId)> _
+<System.Serializable()> Public Class UNIFACPropertyPackage
 
         Inherits DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
 
-        Public Shadows Const ClassId As String = "E48B580B-82E4-4bd7-841A-647A24A447B5"
+        Public Shadows Const ClassId As String = "B20E8A1D-6CB5-43a1-87E2-148EBB25235A"
 
         Public MAT_KIJ(38, 38)
 
         Private m_props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
         Public m_pr As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PengRobinson
-        Private m_uni As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
+        Private m_uni As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
         Private m_lk As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKesler
         '<System.NonSerialized()> Private m_xn As DLLXnumbers.Xnumbers
 

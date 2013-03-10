@@ -342,18 +342,28 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             If Tref = 0 Then Tref = 298.15
             x1 = Tref
             Do
-                'If doparallel Then
-                '    Dim t1 As Task = Task.Factory.StartNew(Sub()
-                '                                               fx = Herror(x1, {P, Vz, PP})
-                '                                           End Sub)
-                '    Dim t2 As Task = Task.Factory.StartNew(Sub()
-                '                                               fx2 = Herror(x1 + 1, {P, Vz, PP})
-                '                                           End Sub)
-                '    Task.WaitAll({t1, t2})
-                'Else
-                fx = Herror(x1, {P, Vz, PP})
-                fx2 = Herror(x1 + 1, {P, Vz, PP})
-                'End If
+                If My.Settings.EnableParallelProcessing Then
+                    My.Application.IsRunningParallelTasks = True
+                    Try
+                        Dim task1 As Task = New Task(Sub()
+                                                         fx = Herror(x1, {P, Vz, PP})
+                                                     End Sub)
+                        Dim task2 As Task = New Task(Sub()
+                                                         fx2 = Herror(x1 + 1, {P, Vz, PP})
+                                                     End Sub)
+                        task1.Start()
+                        task2.Start()
+                        Task.WaitAll(task1, task2)
+                    Catch ae As AggregateException
+                        For Each ex As Exception In ae.InnerExceptions
+                            Throw
+                        Next
+                    End Try
+                    My.Application.IsRunningParallelTasks = False
+                Else
+                    fx = Herror(x1, {P, Vz, PP})
+                    fx2 = Herror(x1 + 1, {P, Vz, PP})
+                End If
                 If Abs(fx) < etol Then Exit Do
                 dfdx = (fx2 - fx)
                 x1 = x1 - fx / dfdx
@@ -438,18 +448,28 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             If Tref = 0 Then Tref = 298.15
             x1 = Tref
             Do
-                'If doparallel Then
-                '    Dim t1 As Task = Task.Factory.StartNew(Sub()
-                '                                               fx = Serror(x1, {P, Vz, PP})
-                '                                           End Sub)
-                '    Dim t2 As Task = Task.Factory.StartNew(Sub()
-                '                                               fx2 = Serror(x1 + 1, {P, Vz, PP})
-                '                                           End Sub)
-                '    Task.WaitAll({t1, t2})
-                'Else
-                fx = Serror(x1, {P, Vz, PP})
-                fx2 = Serror(x1 + 1, {P, Vz, PP})
-                'End If
+                If My.Settings.EnableParallelProcessing Then
+                    My.Application.IsRunningParallelTasks = True
+                    Try
+                        Dim task1 As Task = New Task(Sub()
+                                                         fx = Serror(x1, {P, Vz, PP})
+                                                     End Sub)
+                        Dim task2 As Task = New Task(Sub()
+                                                         fx2 = Serror(x1 + 1, {P, Vz, PP})
+                                                     End Sub)
+                        task1.Start()
+                        task2.Start()
+                        Task.WaitAll(task1, task2)
+                    Catch ae As AggregateException
+                        For Each ex As Exception In ae.InnerExceptions
+                            Throw
+                        Next
+                    End Try
+                    My.Application.IsRunningParallelTasks = False
+                Else
+                    fx = Serror(x1, {P, Vz, PP})
+                    fx2 = Serror(x1 + 1, {P, Vz, PP})
+                End If
                 If Abs(fx) < etol Then Exit Do
                 dfdx = (fx2 - fx)
                 x1 = x1 - fx / dfdx

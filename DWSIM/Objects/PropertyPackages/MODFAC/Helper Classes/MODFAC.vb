@@ -242,7 +242,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             For i = 0 To n1
                 For j = 0 To n2
-                    If VEKI(i, j) <> 0.0# And Not ids.Contains(j) Then ids.Add(j)
+                    If VEKI(i, j) <> 0.0# And Not Double.IsNaN(VEKI(i, j)) And Not ids.Contains(j) Then ids.Add(j)
                 Next
             Next
 

@@ -1,4 +1,6 @@
-﻿Namespace My
+﻿Imports Cudafy
+
+Namespace My
 
     ' The following events are availble for MyApplication:
     ' 
@@ -69,6 +71,10 @@
                 Dim txtwriter As New ConsoleRedirection.TextBoxStreamWriter()
                 Console.SetOut(txtwriter)
             End If
+
+            'set CUDA params
+            CudafyModes.CodeGen = eGPUCodeGenerator.CudaC
+            CudafyModes.Target = eGPUType.Cuda
 
         End Sub
 

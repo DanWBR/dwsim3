@@ -152,19 +152,22 @@ Namespace DWSIM.Flowsheet
                             Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
                             For Each cp As ConnectionPoint In gobj.OutputConnectors
                                 If cp.IsAttached And cp.Type = ConType.ConOut Then
-                                    Dim ms As SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
-                                    Try
-                                        ms.GraphicObject.Calculated = False
-                                        form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
-                                        CalculateMaterialStream(form, ms)
-                                        ms.GraphicObject.Calculated = True
-                                    Catch ex As Exception
-                                        ms.GraphicObject.Calculated = False
-                                        ms.Clear()
-                                        ms.ClearAllProps()
-                                        ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                                        form.WriteToLog(gobj.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-                                    End Try
+                                    Dim obj As SimulationObjects_BaseClass = form.Collections.ObjectCollection(cp.AttachedConnector.AttachedTo.Name)
+                                    If TypeOf obj Is Streams.MaterialStream Then
+                                        Dim ms As Streams.MaterialStream = CType(obj, Streams.MaterialStream)
+                                        Try
+                                            MS.GraphicObject.Calculated = False
+                                            form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & MS.GraphicObject.Tag & "... (PP: " & MS.PropertyPackage.Tag & " [" & MS.PropertyPackage.ComponentName & "])")
+                                            CalculateMaterialStream(form, MS)
+                                            MS.GraphicObject.Calculated = True
+                                        Catch ex As Exception
+                                            MS.GraphicObject.Calculated = False
+                                            MS.Clear()
+                                            MS.ClearAllProps()
+                                            MS.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                            form.WriteToLog(gobj.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                                        End Try
+                                    End If
                                 End If
                             Next
                             myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
@@ -186,6 +189,51 @@ Namespace DWSIM.Flowsheet
         ''' <param name="DoNotCalcFlash">Tells the calculator whether to do flash calculations or not.</param>
         ''' <remarks></remarks>
         Public Shared Sub CalculateMaterialStream(ByVal form As FormFlowsheet, ByVal ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False, Optional ByVal OnlyMe As Boolean = False)
+
+            If ms.Fases.Count <= 3 Then
+                ms.Fases.Add("3", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid1"), ""))
+                ms.Fases.Add("4", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid2"), ""))
+                ms.Fases.Add("5", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid3"), ""))
+                ms.Fases.Add("6", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Aqueous"), ""))
+                ms.Fases.Add("7", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Solid"), ""))
+                If form.Options.SelectedComponents.Count = 0 Then
+                    MessageBox.Show(DWSIM.App.GetLocalString("Nohcomponentesaadici"))
+                Else
+                    Dim comp2 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+                    For Each comp2 In form.Options.SelectedComponents.Values
+                        ms.Fases(3).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
+                        ms.Fases(3).Componentes(comp2.Name).ConstantProperties = comp2
+                        ms.Fases(4).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
+                        ms.Fases(4).Componentes(comp2.Name).ConstantProperties = comp2
+                        ms.Fases(5).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
+                        ms.Fases(5).Componentes(comp2.Name).ConstantProperties = comp2
+                        ms.Fases(6).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
+                        ms.Fases(6).Componentes(comp2.Name).ConstantProperties = comp2
+                    Next
+                End If
+            ElseIf ms.Fases.Count <= 6 Then
+                ms.Fases.Add("6", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Aqueous"), ""))
+                If form.Options.SelectedComponents.Count = 0 Then
+                    MessageBox.Show(DWSIM.App.GetLocalString("Nohcomponentesaadici"))
+                Else
+                    Dim comp2 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+                    For Each comp2 In form.Options.SelectedComponents.Values
+                        ms.Fases(6).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
+                        ms.Fases(6).Componentes(comp2.Name).ConstantProperties = comp2
+                    Next
+                End If
+            ElseIf ms.Fases.Count <= 7 Then
+                ms.Fases.Add("7", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Solid"), ""))
+                If form.Options.SelectedComponents.Count = 0 Then
+                    MessageBox.Show(DWSIM.App.GetLocalString("Nohcomponentesaadici"))
+                Else
+                    Dim comp2 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+                    For Each comp2 In form.Options.SelectedComponents.Values
+                        ms.Fases(7).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
+                        ms.Fases(7).Componentes(comp2.Name).ConstantProperties = comp2
+                    Next
+                End If
+            End If
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 

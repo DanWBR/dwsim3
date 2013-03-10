@@ -4732,10 +4732,10 @@ Namespace DWSIM.SimulationObjects.Streams
 
         Protected m_energy As Nullable(Of Double)
         Protected m_params As ParameterCollection
-        Protected WithEvents m_work As DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter
-        Protected WithEvents m_tlo As DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter
-        Protected WithEvents m_thi As DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter
-        Protected WithEvents m_af As DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter
+        Protected WithEvents m_work As CapeOpen.RealParameter
+        Protected WithEvents m_tlo As CapeOpen.RealParameter
+        Protected WithEvents m_thi As CapeOpen.RealParameter
+        Protected WithEvents m_af As CapeOpen.RealParameter
 
 #Region "   DWSIM Specific"
 
@@ -4760,7 +4760,7 @@ Namespace DWSIM.SimulationObjects.Streams
 
         Sub CreateParamCol()
             If m_params Is Nothing Then
-                m_work = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter("work", Me.Energia.GetValueOrDefault, 0.0#, "J/s")
+                m_work = New CapeOpen.RealParameter("work", Me.Energia.GetValueOrDefault, 0.0#, "J/s")
                 'm_af = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter("axisFrequency", 0.0#, 0.0#, "s-1")
                 'm_tlo = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter("temperatureLow", 0.0#, 0.0#, "K")
                 'm_thi = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter("temperatureHigh", 0.0#, 0.0#, "K")
@@ -4998,8 +4998,8 @@ Namespace DWSIM.SimulationObjects.Streams
             End Set
         End Property
 
-        Private Sub m_work_OnParameterValueChanged(ByVal sender As Object, ByVal args As System.EventArgs) Handles m_work.OnParameterValueChanged
-            Me.Energia = m_work.value / 1000
+        Private Sub m_work_OnParameterValueChanged(ByVal sender As Object, ByVal args As System.EventArgs) Handles m_work.ParameterValueChanged
+            Me.Energia = m_work.SIValue / 1000
         End Sub
 
         Public Function Count() As Integer Implements CapeOpen.ICapeCollection.Count

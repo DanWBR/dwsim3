@@ -522,13 +522,39 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         ''' <remarks>The composition vector must follow the same sequence as the components which were added in the material stream.</remarks>
         Public Overridable Overloads Function DW_CalcKvalue(ByVal Vx As System.Array, ByVal Vy As System.Array, ByVal T As Double, ByVal P As Double, Optional ByVal type As String = "LV") As Object
 
-            Dim fugvap, fugliq As Object
+            Dim fugvap As Object = Nothing
+            Dim fugliq As Object = Nothing
 
-            fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-            If type = "LV" Then
-                fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-            Else ' LL
-                fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Liquid)
+            If My.Settings.EnableParallelProcessing Then
+                My.Application.IsRunningParallelTasks = True
+                Try
+                    Dim task1 As Task = New Task(Sub()
+                                                     fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
+                                                 End Sub)
+                    Dim task2 As Task = New Task(Sub()
+                                                     If type = "LV" Then
+                                                         fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
+                                                     Else ' LL
+                                                         fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Liquid)
+                                                     End If
+                                                 End Sub)
+
+                    task1.Start()
+                    task2.Start()
+                    Task.WaitAll(task1, task2)
+                Catch ae As AggregateException
+                    For Each ex As Exception In ae.InnerExceptions
+                        Throw
+                    Next
+                End Try
+                My.Application.IsRunningParallelTasks = False
+            Else
+                fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
+                If type = "LV" Then
+                    fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
+                Else ' LL
+                    fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Liquid)
+                End If
             End If
 
             Dim n As Integer = UBound(fugvap)
@@ -4429,67 +4455,71 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
             phaseID = Me.RET_PHASEID(fase)
 
-            If phaseID <> 0 Then
+            If Me.CurrentMaterialStream.Fases.ContainsKey(phaseID) Then
 
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpyF = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropyF = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpyF = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropyF = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.speedOfSound = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.volumetric_flow = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.jouleThomsonCoefficient = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEnthalpy = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEntropy = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibility = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubbleTemperature = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubblePressure = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewTemperature = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewPressure = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarflow = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massflow = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massfraction = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarfraction = Nothing
+                If phaseID <> 0 Then
 
-            Else
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpyF = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropyF = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpyF = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropyF = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.speedOfSound = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.volumetric_flow = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.jouleThomsonCoefficient = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEnthalpy = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEntropy = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibility = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubbleTemperature = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubblePressure = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewTemperature = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewPressure = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarflow = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massflow = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massfraction = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarfraction = Nothing
 
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpyF = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropyF = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpyF = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropyF = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.speedOfSound = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.volumetric_flow = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.jouleThomsonCoefficient = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEnthalpy = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEntropy = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibility = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubbleTemperature = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubblePressure = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewTemperature = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewPressure = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = Nothing
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = Nothing
+                Else
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpyF = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropyF = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpyF = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropyF = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.speedOfSound = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.volumetric_flow = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.jouleThomsonCoefficient = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEnthalpy = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEntropy = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibility = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubbleTemperature = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubblePressure = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewTemperature = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewPressure = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = Nothing
+
+                End If
 
             End If
 

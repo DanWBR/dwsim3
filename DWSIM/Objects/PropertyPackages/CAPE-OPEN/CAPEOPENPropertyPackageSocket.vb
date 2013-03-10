@@ -108,7 +108,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             CType(Me.ConfigForm, FormConfigCAPEOPEN)._mappings = Me._mappings
             CType(Me.ConfigForm, FormConfigCAPEOPEN)._phasemappings = Me._phasemappings
 
-            If Not owner Is Nothing Then Me.ConfigForm.Show(owner) Else Me.ConfigForm.Show()
+            If Not owner Is Nothing Then Me.ConfigForm.ShowDialog(owner) Else Me.ConfigForm.ShowDialog()
 
             If Me.ConfigForm.DialogResult = DialogResult.OK Then
                 Me._copp = CType(Me.ConfigForm, FormConfigCAPEOPEN)._copp

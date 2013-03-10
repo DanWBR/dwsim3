@@ -1600,10 +1600,10 @@ End Class
     End Sub
 
     Sub CreateCOParameters()
-        _parameters = New CapeOpen.ParameterCollection()
+        _parameters = New CapeOpen.ParameterCollection
         Dim props() = Me.GetProperties(PropertyType.ALL)
         For Each s As String In props
-            _parameters.Add(New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter(s, Me.GetPropertyValue(s), 0.0#, Me.GetPropertyUnit(s)))
+            _parameters.Add(New CapeOpen.RealParameter(s, Me.GetPropertyValue(s), 0.0#, Me.GetPropertyUnit(s)))
             With _parameters.Item(_parameters.Count - 1)
                 .Mode = CapeParamMode.CAPE_OUTPUT
             End With

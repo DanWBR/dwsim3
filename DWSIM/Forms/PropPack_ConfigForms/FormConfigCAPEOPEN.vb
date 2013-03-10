@@ -326,7 +326,6 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
     End Sub
 
-
     Private Sub cbPropPack_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbPropPack.SelectedIndexChanged
 
         If _loaded Then
@@ -359,6 +358,11 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
     Private Sub dgvph_DataError(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles dgvph.DataError
 
+    End Sub
+
+    Private Sub btnCancel_Click(sender As System.Object, e As System.EventArgs) Handles btnCancel.Click
+        Me.DialogResult = Windows.Forms.DialogResult.Cancel
+        Me.Close()
     End Sub
 
 End Class
