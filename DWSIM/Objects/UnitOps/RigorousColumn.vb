@@ -3299,9 +3299,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         z(i)(j) = zm(j)
                     Next
                 Else
+                    x(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), PropertyPackage)(2)
+                    y(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), PropertyPackage)(3)
+                    z(i) = zm
                     For j = 0 To nc - 1
-                        idealK(i)(j) = pp.AUX_PVAPi(j, T(i)) / P(i)
-                        Pvap(i)(j) = pp.AUX_PVAPi(j, T(i))
+                        Kval(i)(j) = y(i)(j) / x(i)(j)
                     Next
                     'Dim tmp As Object = pp.DW_CalcKvalue(zm, (T1 + T2) / 2, (P(0) + P(ns)) / 2)
                     'For j = 0 To nc - 1
@@ -3323,18 +3325,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     '    x(i)(j) = x(i)(j) / sumx
                     '    y(i)(j) = y(i)(j) / sumy
                     'Next
-                    For j = 0 To nc - 1
-                        Kval(i)(j) = idealK(i)(j)
-                    Next
+                    'For j = 0 To nc - 1
+                    '    Kval(i)(j) = idealK(i)(j)
+                    'Next
                 End If
                 i = i + 1
             Next
-            For i = 0 To ns
-                x(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), PropertyPackage)(2)
-                y(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), PropertyPackage)(3)
-                z(i) = zm
-            Next
-
             Select Case Me.ColumnType
                 Case ColType.DistillationColumn
                     Q(0) = 0
