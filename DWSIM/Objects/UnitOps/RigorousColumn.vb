@@ -3188,12 +3188,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
             T(0) = T1
             T(ns) = T2
 
-            Dim pv(nc - 1) As Double
-            For i = 0 To nc - 1
-                pv(i) = pp.AUX_PVAPi(i, (T1 + T2) / 2)
-            Next
+            'Dim pv(nc - 1) As Double
+            'For i = 0 To nc - 1
+            '    pv(i) = pp.AUX_PVAPi(i, (T1 + T2) / 2)
+            'Next
 
-            Dim vapfrac As Double = Me.CalcIdealVapFrac(zm, pv, (P(0) + P(ns)) / 2)
+            'Dim vapfrac As Double = Me.CalcIdealVapFrac(zm, pv, (P(0) + P(ns)) / 2)
 
             i = 0
             For Each st As Stage In Me.Stages
