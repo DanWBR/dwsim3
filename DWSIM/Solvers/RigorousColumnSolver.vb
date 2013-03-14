@@ -458,15 +458,15 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 Case ColumnSpec.SpecType.Component_Fraction
                     If _condtype = Column.condtype.Total_Condenser Then
                         If _specs("C").SpecUnit = "M" Then
-                            spfval1 = _LSSj(0) * _xc(0)(spci1) - _LSSj(0) * spval1
+                            spfval1 = _xc(0)(spci1) - spval1
                         Else 'W
                             spfval1 = _pp.AUX_CONVERT_MOL_TO_MASS(_xc(0))(spci1) - spval1
                         End If
                     Else
                         If _specs("C").SpecUnit = "M" Then
-                            spfval1 = _Vj(0) * _yc(0)(spci1) - _Vj(0) * spval1
+                            spfval1 = _yc(0)(spci1) - spval1
                         Else 'W
-                            spfval1 = -_pp.AUX_CONVERT_MOL_TO_MASS(_yc(0))(spci1) + spval1
+                            spfval1 = _pp.AUX_CONVERT_MOL_TO_MASS(_yc(0))(spci1) - spval1
                         End If
                     End If
                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
@@ -529,7 +529,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Select Case _specs("R").SType
                 Case ColumnSpec.SpecType.Component_Fraction
                     If _specs("R").SpecUnit = "M" Then
-                        spfval2 = _Lj(_ns) * _xc(_ns)(spci2) - _Lj(_ns) * spval2
+                        spfval2 = _xc(_ns)(spci2) - spval2
                     Else 'W
                         spfval2 = _pp.AUX_CONVERT_MOL_TO_MASS(_xc(_ns))(spci2) - spval2
                     End If
@@ -911,15 +911,15 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 Case ColumnSpec.SpecType.Component_Fraction
                     If _condtype = Column.condtype.Total_Condenser Then
                         If _specs("C").SpecUnit = "M" Then
-                            spfval1 = _LSSj(0) * _xc(0)(spci1) - _LSSj(0) * spval1
+                            spfval1 = _xc(0)(spci1) - spval1
                         Else 'W
                             spfval1 = _pp.AUX_CONVERT_MOL_TO_MASS(_xc(0))(spci1) - spval1
                         End If
                     Else
                         If _specs("C").SpecUnit = "M" Then
-                            spfval1 = _Vj(0) * _yc(0)(spci1) - _Vj(0) * spval1
+                            spfval1 = _yc(0)(spci1) - spval1
                         Else 'W
-                            spfval1 = -_pp.AUX_CONVERT_MOL_TO_MASS(_yc(0))(spci1) + spval1
+                            spfval1 = _pp.AUX_CONVERT_MOL_TO_MASS(_yc(0))(spci1) - spval1
                         End If
                     End If
                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
@@ -982,7 +982,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Select Case _specs("R").SType
                 Case ColumnSpec.SpecType.Component_Fraction
                     If _specs("R").SpecUnit = "M" Then
-                        spfval2 = _Lj(_ns) * _xc(_ns)(spci2) - _Lj(_ns) * spval2
+                        spfval2 = _xc(_ns)(spci2) - spval2
                     Else 'W
                         spfval2 = _pp.AUX_CONVERT_MOL_TO_MASS(_xc(_ns))(spci2) - spval2
                     End If

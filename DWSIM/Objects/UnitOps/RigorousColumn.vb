@@ -2461,7 +2461,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me.Specs("C"), "SpecUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
                                 Select Case Me.Specs("C").SType
                                     Case ColumnSpec.SpecType.Component_Fraction
-                                        units = New String() {"M", "W"}
+                                        units = New String() {"M", "We"}
                                     Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                                         units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                     Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
@@ -2507,7 +2507,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             .Add(DWSIM.App.GetLocalString("DCReboilerSpecUnit"), Me.Specs("R"), "SpecUnit", False, DWSIM.App.GetLocalString("DCReboilerSpec"))
                             Select Case Me.Specs("R").SType
                                 Case ColumnSpec.SpecType.Component_Fraction
-                                    units = New String() {"M", "W"}
+                                    units = New String() {"M", "We"}
                                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                                     units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                 Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
@@ -2564,7 +2564,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             .Add(DWSIM.App.GetLocalString("DCReboilerSpecUnit"), Me.Specs("R"), "SpecUnit", False, DWSIM.App.GetLocalString("DCReboilerSpec"))
                             Select Case Me.Specs("R").SType
                                 Case ColumnSpec.SpecType.Component_Fraction
-                                    units = New String() {"M", "W"}
+                                    units = New String() {"M", "We"}
                                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                                     units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                 Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
@@ -2638,7 +2638,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me.Specs("C"), "SpecUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
                                 Select Case Me.Specs("C").SType
                                     Case ColumnSpec.SpecType.Component_Fraction
-                                        units = New String() {"M", "W"}
+                                        units = New String() {"M", "We"}
                                     Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                                         units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                     Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
