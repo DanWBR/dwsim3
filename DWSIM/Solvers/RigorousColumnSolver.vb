@@ -1212,11 +1212,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                     Hv2(i) = pp.DW_CalcEnthalpyDeparture(y(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
                 Else
                     K2(i) = pp.DW_CalcKvalue(x(i), y(i), Tj2(i), P(i))
-                    Hv1(i) = pp.DW_CalcEnthalpyDeparture(y(i), Tj1(i), P(i), PropertyPackages.State.Vapor)
-                    Hv2(i) = pp.DW_CalcEnthalpyDeparture(y(i), Tj2(i), P(i), PropertyPackages.State.Vapor)
+                    'Hv1(i) = pp.DW_CalcEnthalpyDeparture(y(i), Tj1(i), P(i), PropertyPackages.State.Vapor)
+                    'Hv2(i) = pp.DW_CalcEnthalpyDeparture(y(i), Tj2(i), P(i), PropertyPackages.State.Vapor)
                 End If
-                Hl1(i) = pp.DW_CalcEnthalpyDeparture(x(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
-                Hl2(i) = pp.DW_CalcEnthalpyDeparture(x(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
+                'Hl1(i) = pp.DW_CalcEnthalpyDeparture(x(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
+                'Hl2(i) = pp.DW_CalcEnthalpyDeparture(x(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
                 For j = 0 To nc - 1
                     K2j(i, j) = K2(i)(j)
                     If Double.IsNaN(K2(i)(j)) Or Double.IsInfinity(K2(i)(j)) Then K2(i)(j) = pp.AUX_PVAPi(j, T(i)) / P(i)
@@ -1232,10 +1232,10 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             For i = 0 To ns
                 Bj(i) = Log(Kbj1(i) / Kbj2(i)) / (1 / Tj2(i) - 1 / Tj1(i))
                 Aj(i) = Log(Kbj1(i)) + Bj(i) * (1 / Tj1(i))
-                Dj(i) = (Hv1(i) - Hv2(i)) / (Tj1(i) - Tj2(i))
-                Cj(i) = Hv1(i) - Dj(i) * (Tj1(i) - T_(i))
-                Fj(i) = (Hl1(i) - Hl2(i)) / (Tj1(i) - Tj2(i))
-                Ej(i) = Hl1(i) - Fj(i) * (Tj1(i) - T_(i))
+                'Dj(i) = (Hv1(i) - Hv2(i)) / (Tj1(i) - Tj2(i))
+                'Cj(i) = Hv1(i) - Dj(i) * (Tj1(i) - T_(i))
+                'Fj(i) = (Hl1(i) - Hl2(i)) / (Tj1(i) - Tj2(i))
+                'Ej(i) = Hl1(i) - Fj(i) * (Tj1(i) - T_(i))
             Next
 
             'external loop
@@ -1407,10 +1407,10 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
                 _Bj = Bj.Clone
                 _Aj = Aj.Clone
-                _Cj = Cj.Clone
-                _Dj = Dj.Clone
-                _Ej = Ej.Clone
-                _Fj = Fj.Clone
+                '_Cj = Cj.Clone
+                '_Dj = Dj.Clone
+                '_Ej = Ej.Clone
+                '_Fj = Fj.Clone
                 _eff = eff.Clone
                 _Tj = Tj.Clone
                 _T_ = T_.Clone
@@ -1785,11 +1785,11 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                      Hv1(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
                                                                      Hv2(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
                                                                  Else
-                                                                     Hv1(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Vapor)
-                                                                     Hv2(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Vapor)
+                                                                     'Hv1(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Vapor)
+                                                                     'Hv2(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Vapor)
                                                                  End If
-                                                                 Hl1(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
-                                                                 Hl2(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
+                                                                 'Hl1(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
+                                                                 'Hl2(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
                                                              End Sub))
                     While Not task1.IsCompleted
                         Application.DoEvents()
@@ -1803,11 +1803,11 @@ restart:            fx = Me.FunctionValue(xvar)
                             Hv1(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
                             Hv2(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
                         Else
-                            Hv1(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj1(i), P(i), PropertyPackages.State.Vapor)
-                            Hv2(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj2(i), P(i), PropertyPackages.State.Vapor)
+                            'Hv1(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj1(i), P(i), PropertyPackages.State.Vapor)
+                            'Hv2(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj2(i), P(i), PropertyPackages.State.Vapor)
                         End If
-                        Hl1(i) = pp.DW_CalcEnthalpyDeparture(xc(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
-                        Hl2(i) = pp.DW_CalcEnthalpyDeparture(xc(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
+                        'Hl1(i) = pp.DW_CalcEnthalpyDeparture(xc(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
+                        'Hl2(i) = pp.DW_CalcEnthalpyDeparture(xc(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
 
                     Next
                 End If
@@ -1827,14 +1827,14 @@ restart:            fx = Me.FunctionValue(xvar)
                     Aj_ant(i) = Aj(i)
                     Aj(i) = Log(Kbj1(i)) + Bj(i) * (1 / Tj1(i))
                     Aerr(i) = Aj(i) - Aj_ant(i)
-                    Dj_ant(i) = Dj(i)
-                    Dj(i) = (Hv1(i) - Hv2(i)) / (Tj1(i) - Tj2(i))
-                    Cj_ant(i) = Cj(i)
-                    Cj(i) = Hv1(i) - Dj(i) * (Tj1(i) - T_(i))
-                    Fj_ant(i) = Fj(i)
-                    Fj(i) = (Hl1(i) - Hl2(i)) / (Tj1(i) - Tj2(i))
-                    Ej_ant(i) = Ej(i)
-                    Ej(i) = Hl1(i) - Fj(i) * (Tj1(i) - T_(i))
+                    'Dj_ant(i) = Dj(i)
+                    'Dj(i) = (Hv1(i) - Hv2(i)) / (Tj1(i) - Tj2(i))
+                    'Cj_ant(i) = Cj(i)
+                    'Cj(i) = Hv1(i) - Dj(i) * (Tj1(i) - T_(i))
+                    'Fj_ant(i) = Fj(i)
+                    'Fj(i) = (Hl1(i) - Hl2(i)) / (Tj1(i) - Tj2(i))
+                    'Ej_ant(i) = Ej(i)
+                    'Ej(i) = Hl1(i) - Fj(i) * (Tj1(i) - T_(i))
                 Next
 
                 ec += 1
