@@ -311,8 +311,8 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 _Vj(i) = 0
                 For j = 0 To _nc - 1
                     If i < _ns Then
-                        _vc(i)(j) = _eff(i) * (_S(i, j) * _lc(i)(j) - _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)) + _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)
-                        '_vc(i)(j) = _S(i, j) * _lc(i)(j)
+                        '_vc(i)(j) = _eff(i) * (_S(i, j) * _lc(i)(j) - _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)) + _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)
+                        _vc(i)(j) = _S(i, j) * _lc(i)(j)
                     Else
                         _vc(i)(j) = _S(i, j) * _lc(i)(j)
                     End If
@@ -335,16 +335,19 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Next
             If _condtype = Column.condtype.Total_Condenser Then
                 _LSSj(0) = sumF - sumLSS - sumVSS - _Lj(_ns)
+                _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
             ElseIf _condtype = Column.condtype.Partial_Condenser Then
                 _LSSj(0) = sumF - sumLSS - sumVSS - _Vj(0) - _Lj(_ns)
-            Else
-                _LSSj(0) = 0.0
-            End If
-            If _Lj(0) <> 0 Or Not Double.IsNaN(_Lj(0)) Or Not Double.IsInfinity(_Lj(0)) Then
                 _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
             Else
+                _LSSj(0) = 0.0
                 _Rlj(0) = 1
             End If
+            'If _Lj(0) <> 0 Or Not Double.IsNaN(_Lj(0)) Or Not Double.IsInfinity(_Lj(0)) Then
+            '    _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
+            'Else
+            '    _Rlj(0) = 1
+            'End If
 
             For i = 0 To _ns
                 _VSSj(i) = (_Rvj(i) - 1) * _Vj(i)
@@ -770,7 +773,8 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 _Vj(i) = 0
                 For j = 0 To _nc - 1
                     If i < _ns Then
-                        _vc(i)(j) = _eff(i) * (_S(i, j) * _lc(i)(j) - _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)) + _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)
+                        '_vc(i)(j) = _eff(i) * (_S(i, j) * _lc(i)(j) - _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)) + _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)
+                        _vc(i)(j) = _S(i, j) * _lc(i)(j)
                     Else
                         _vc(i)(j) = _S(i, j) * _lc(i)(j)
                     End If
@@ -792,16 +796,19 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Next
             If _condtype = Column.condtype.Total_Condenser Then
                 _LSSj(0) = sumF - sumLSS - sumVSS - _Lj(_ns)
+                _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
             ElseIf _condtype = Column.condtype.Partial_Condenser Then
                 _LSSj(0) = sumF - sumLSS - sumVSS - _Vj(0) - _Lj(_ns)
-            Else
-                _LSSj(0) = 0.0
-            End If
-            If _Lj(0) <> 0 Or Not Double.IsNaN(_Lj(0)) Or Not Double.IsInfinity(_Lj(0)) Then
                 _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
             Else
+                _LSSj(0) = 0.0
                 _Rlj(0) = 1
             End If
+            'If _Lj(0) <> 0 Or Not Double.IsNaN(_Lj(0)) Or Not Double.IsInfinity(_Lj(0)) Then
+            '    _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
+            'Else
+            '    _Rlj(0) = 1
+            'End If
 
             For i = 0 To _ns
                 _VSSj(i) = (_Rvj(i) - 1) * _Vj(i)
