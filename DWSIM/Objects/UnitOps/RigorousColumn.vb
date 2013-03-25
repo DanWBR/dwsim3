@@ -2426,70 +2426,69 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCCondenserDeltaP"), su.spmp_deltaP), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         '.Item.Add(DWSIM.App.GetLocalString("DCRefluxRatio"), Me, "RefluxRatio", False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         Dim units As String() = New String() {}
-                        If Not Me.CondenserType = condtype.Full_Reflux Then
-                            Dim cspec As New PropertyGridEx.CustomPropertyCollection()
-                            With cspec
-                                'condenser spec
-                                If Me.CondenserType = condtype.Full_Reflux Or Me.CondenserType = condtype.Partial_Condenser Then
-                                    Dim cspecv As New PropertyGridEx.CustomPropertyCollection()
-                                    With cspecv
-                                        .Add(DWSIM.App.GetLocalString("DCVaporFlowRate"), Me, "VaporFlowRate", False, DWSIM.App.GetLocalString("DCCondenserSpec"), "", True)
-                                        .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me, "VaporFlowRateUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                        units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
-                                        With .Item(.Count - 1)
-                                            .Choices = New PropertyGridEx.CustomChoices(units, False)
-                                        End With
-                                    End With
-                                    .Add(DWSIM.App.GetLocalString("DCVaporFlowRate"), cspecv, False, DWSIM.App.GetLocalString("DCCondenserSpec"), "", True)
+
+                        Dim cspec As New PropertyGridEx.CustomPropertyCollection()
+                        With cspec
+                            'condenser spec
+                            If Me.CondenserType = condtype.Partial_Condenser Then
+                                Dim cspecv As New PropertyGridEx.CustomPropertyCollection()
+                                With cspecv
+                                    .Add(DWSIM.App.GetLocalString("DCVaporFlowRate"), Me, "VaporFlowRate", False, DWSIM.App.GetLocalString("DCCondenserSpec"), "", True)
+                                    .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me, "VaporFlowRateUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
+                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                     With .Item(.Count - 1)
-                                        .IsBrowsable = True
-                                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                        .CustomEditor = New System.Drawing.Design.UITypeEditor
+                                        .Choices = New PropertyGridEx.CustomChoices(units, False)
                                     End With
-                                End If
-                                .Add(DWSIM.App.GetLocalString("DCCondenserSpecType"), Me.Specs("C"), "SType", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                If Me.Specs("C").SType = ColumnSpec.SpecType.Component_Fraction Or _
-                                    Me.Specs("C").SType = ColumnSpec.SpecType.Component_Mass_Flow_Rate Or _
-                                    Me.Specs("C").SType = ColumnSpec.SpecType.Component_Recovery Or _
-                                    Me.Specs("C").SType = ColumnSpec.SpecType.Component_Molar_Flow_Rate Then
-                                    .Add(DWSIM.App.GetLocalString("DCCondenserSpecComp"), DWSIM.App.GetComponentName(Me.Specs("C").ComponentID), False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                    With .Item(.Count - 1)
-                                        .CustomEditor = New DWSIM.Editors.Components.UIComponentSelector
-                                    End With
-                                End If
-                                .Add(DWSIM.App.GetLocalString("DCCondenserSpecValue"), Me.Specs("C"), "SpecValue", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me.Specs("C"), "SpecUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                Select Case Me.Specs("C").SType
-                                    Case ColumnSpec.SpecType.Component_Fraction
-                                        units = New String() {"M", "We"}
-                                    Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
-                                        units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
-                                    Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                                        units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
-                                    Case ColumnSpec.SpecType.Component_Recovery
-                                        units = New String() {"% M/M", "% W/W"}
-                                    Case ColumnSpec.SpecType.Heat_Duty
-                                        units = New String() {"kW", "kcal/h", "BTU/h", "BTU/s", "cal/s", "HP", "kJ/h", "kJ/d", "MW", "W"}
-                                    Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
-                                        units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
-                                    Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                                        units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
-                                    Case ColumnSpec.SpecType.Stream_Ratio
-                                        units = New String() {""}
-                                    Case ColumnSpec.SpecType.Temperature
-                                        units = New String() {"K", "R", "C", "F"}
-                                End Select
-                                With .Item(.Count - 1)
-                                    .Choices = New PropertyGridEx.CustomChoices(units, False)
                                 End With
+                                .Add(DWSIM.App.GetLocalString("DCVaporFlowRate"), cspecv, False, DWSIM.App.GetLocalString("DCCondenserSpec"), "", True)
+                                With .Item(.Count - 1)
+                                    .IsBrowsable = True
+                                    .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
+                                    .CustomEditor = New System.Drawing.Design.UITypeEditor
+                                End With
+                            End If
+                            .Add(DWSIM.App.GetLocalString("DCCondenserSpecType"), Me.Specs("C"), "SType", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
+                            If Me.Specs("C").SType = ColumnSpec.SpecType.Component_Fraction Or _
+                                Me.Specs("C").SType = ColumnSpec.SpecType.Component_Mass_Flow_Rate Or _
+                                Me.Specs("C").SType = ColumnSpec.SpecType.Component_Recovery Or _
+                                Me.Specs("C").SType = ColumnSpec.SpecType.Component_Molar_Flow_Rate Then
+                                .Add(DWSIM.App.GetLocalString("DCCondenserSpecComp"), DWSIM.App.GetComponentName(Me.Specs("C").ComponentID), False, DWSIM.App.GetLocalString("DCCondenserSpec"))
+                                With .Item(.Count - 1)
+                                    .CustomEditor = New DWSIM.Editors.Components.UIComponentSelector
+                                End With
+                            End If
+                            .Add(DWSIM.App.GetLocalString("DCCondenserSpecValue"), Me.Specs("C"), "SpecValue", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
+                            .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me.Specs("C"), "SpecUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
+                            Select Case Me.Specs("C").SType
+                                Case ColumnSpec.SpecType.Component_Fraction
+                                    units = New String() {"M", "We"}
+                                Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
+                                    units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
+                                Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
+                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                Case ColumnSpec.SpecType.Component_Recovery
+                                    units = New String() {"% M/M", "% W/W"}
+                                Case ColumnSpec.SpecType.Heat_Duty
+                                    units = New String() {"kW", "kcal/h", "BTU/h", "BTU/s", "cal/s", "HP", "kJ/h", "kJ/d", "MW", "W"}
+                                Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
+                                    units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
+                                Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
+                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                Case ColumnSpec.SpecType.Stream_Ratio
+                                    units = New String() {""}
+                                Case ColumnSpec.SpecType.Temperature
+                                    units = New String() {"K", "R", "C", "F"}
+                            End Select
+                            With .Item(.Count - 1)
+                                .Choices = New PropertyGridEx.CustomChoices(units, False)
                             End With
-                            .Item.Add(DWSIM.App.GetLocalString("DCCondenserSpecs"), cspec, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
-                            With .Item(.Item.Count - 1)
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
+                        End With
+                        .Item.Add(DWSIM.App.GetLocalString("DCCondenserSpecs"), cspec, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
+                        With .Item(.Item.Count - 1)
+                            .IsBrowsable = True
+                            .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
+                            .CustomEditor = New System.Drawing.Design.UITypeEditor
+                        End With
                         Dim rspec As New PropertyGridEx.CustomPropertyCollection()
                         With rspec
                             'reboiler spec
@@ -2813,6 +2812,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Next
                 End If
 
+            ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCCondenserDeltaP")) Then
+
+                Me.CondenserDeltaP = cv.ConverterParaSI(su.spmp_deltaP, e.ChangedItem.Value)
+
             ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCCondenserPressure")) Or _
             e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCFirstStgPressure")) Then
 
@@ -2828,10 +2831,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCDistillateFlowRate")) Then
 
                 Me.DistillateFlowRate = cv.ConverterParaSI(su.spmp_molarflow, e.ChangedItem.Value)
-
-            ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCCondenserDeltaP")) Then
-
-                Me.CondenserDeltaP = cv.ConverterParaSI(su.spmp_deltaP, e.ChangedItem.Value)
 
             ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCCondenserType")) Then
 
