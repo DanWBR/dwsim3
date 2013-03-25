@@ -3167,12 +3167,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     T2 = T1
                 Case ColType.DistillationColumn
                     Try
-                        T1 = pp.DW_CalcBubT(zm, P(ns))(4) * 1.01
+                        T1 = pp.DW_CalcBubT(zm, P(0))(4) * 1.01
                     Catch ex As Exception
                         T1 = MathEx.Common.Max(FT)
                     End Try
                     Try
-                        T2 = pp.DW_CalcDewT(zm, P(0))(4) * 0.99
+                        T2 = pp.DW_CalcDewT(zm, P(ns))(4) * 0.99
                     Catch ex As Exception
                         T2 = MathEx.Common.Max(FT)
                     End Try
