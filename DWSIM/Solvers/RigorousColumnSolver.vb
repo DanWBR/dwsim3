@@ -296,9 +296,9 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                     _lc(i)(j) = xt(j)(i)
                     _Lj(i) += _lc(i)(j)
                 Next
-                If _Lj(i) < 0 Then
-                    _Lj(i) = 1.0E-20
-                End If
+                'If _Lj(i) < 0 Then
+                '    _Lj(i) = 1.0E-20
+                'End If
             Next
 
             For i = 0 To _ns
@@ -318,9 +318,9 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                     End If
                     _Vj(i) += _vc(i)(j)
                 Next
-                If _Vj(i) < 0 Then
-                    _Vj(i) = 1.0E-20
-                End If
+                'If _Vj(i) < 0 Then
+                '    _Vj(i) = 1.0E-20
+                'End If
             Next
 
             'departures from product flows
@@ -354,20 +354,20 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 If i > 0 Then _LSSj(i) = (_Rlj(i) - 1) * _Lj(i)
             Next
 
-            For i = 0 To _ns
-                sum1(i) = 0
-                For j = 0 To i
-                    sum1(i) += _F(j) - _LSSj(j) - _VSSj(j)
-                Next
-            Next
+            'For i = 0 To _ns
+            '    sum1(i) = 0
+            '    For j = 0 To i
+            '        sum1(i) += _F(j) - _LSSj(j) - _VSSj(j)
+            '    Next
+            'Next
 
-            'Ljs
-            For i = 0 To _ns
-                If i < _ns Then _Lj(i) = _Vj(i + 1) + sum1(i) - _Vj(0) Else _Lj(i) = sum1(i) - _Vj(0)
-                If _Lj(i) < 0 Then
-                    _Lj(i) = 0.0000000001
-                End If
-            Next
+            ''Ljs
+            'For i = 0 To _ns
+            '    If i < _ns Then _Lj(i) = _Vj(i + 1) + sum1(i) - _Vj(0) Else _Lj(i) = sum1(i) - _Vj(0)
+            '    If _Lj(i) < 0 Then
+            '        _Lj(i) = 0.0000000001
+            '    End If
+            'Next
 
             For i = 0 To _ns
                 For j = 0 To _nc - 1
@@ -755,7 +755,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 For j = 0 To _nc - 1
                     'lc(i)(j) = lm(j)(i, 0)
                     _lc(i)(j) = xt(j)(i)
-                    If _lc(i)(j) < 0 Then _lc(i)(j) = 0
+                    'If _lc(i)(j) < 0 Then _lc(i)(j) = 0
                     _Lj(i) += _lc(i)(j)
                 Next
                 'If _Lj(i) < 0 Then _Lj(i) = 0.0000000001
@@ -765,7 +765,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 _Vj(i) = 0
                 For j = 0 To _nc - 1
                     _xc(i)(j) = _lc(i)(j) / _Lj(i)
-                    If Double.IsNaN(_xc(i)(j)) Then _xc(i)(j) = 0
+                    'If Double.IsNaN(_xc(i)(j)) Then _xc(i)(j) = 0
                 Next
             Next
 
@@ -778,7 +778,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                     Else
                         _vc(i)(j) = _S(i, j) * _lc(i)(j)
                     End If
-                    If _vc(i)(j) < 0 Or Double.IsNaN(_vc(i)(j)) Then _vc(i)(j) = 0
+                    'If _vc(i)(j) < 0 Or Double.IsNaN(_vc(i)(j)) Then _vc(i)(j) = 0
                     _Vj(i) += _vc(i)(j)
                 Next
                 'If _Vj(i) < 0 Then _Vj(i) = 0.0000000001
@@ -815,17 +815,17 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 If i > 0 Then _LSSj(i) = (_Rlj(i) - 1) * _Lj(i)
             Next
 
-            For i = 0 To _ns
-                sum1(i) = 0
-                For j = 0 To i
-                    sum1(i) += _F(j) - _LSSj(j) - _VSSj(j)
-                Next
-            Next
+            'For i = 0 To _ns
+            '    sum1(i) = 0
+            '    For j = 0 To i
+            '        sum1(i) += _F(j) - _LSSj(j) - _VSSj(j)
+            '    Next
+            'Next
 
-            'Ljs
-            For i = 0 To _ns
-                If i < _ns Then _Lj(i) = _Vj(i + 1) + sum1(i) - _Vj(0) Else _Lj(i) = sum1(i) - _Vj(0)
-            Next
+            ''Ljs
+            'For i = 0 To _ns
+            '    If i < _ns Then _Lj(i) = _Vj(i + 1) + sum1(i) - _Vj(0) Else _Lj(i) = sum1(i) - _Vj(0)
+            'Next
 
             For i = 0 To _ns
                 For j = 0 To _nc - 1
