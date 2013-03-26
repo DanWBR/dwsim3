@@ -259,7 +259,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
             For i = 0 To _ns
                 For j = 0 To _nc - 1
-                    Bs(i, j) = -(_Rlj(i) + _S(i, j) * _Rvj(i))
+                    If i = 0 And _condtype = Column.condtype.Total_Condenser Then
+                        Bs(i, j) = -(_Rlj(i))
+                    Else
+                        Bs(i, j) = -(_Rlj(i) + _S(i, j) * _Rvj(i))
+                    End If
                     If i < _ns Then Cs(i, j) = _S(i + 1, j)
                 Next
             Next
@@ -718,7 +722,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
             For i = 0 To _ns
                 For j = 0 To _nc - 1
-                    Bs(i, j) = -(_Rlj(i) + _S(i, j) * _Rvj(i))
+                    If i = 0 And _condtype = Column.condtype.Total_Condenser Then
+                        Bs(i, j) = -(_Rlj(i))
+                    Else
+                        Bs(i, j) = -(_Rlj(i) + _S(i, j) * _Rvj(i))
+                    End If
                     If i < _ns Then Cs(i, j) = _S(i + 1, j)
                 Next
             Next
