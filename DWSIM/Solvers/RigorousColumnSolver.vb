@@ -631,12 +631,12 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                         x2(j) = x(j)
                     Else
                         'x1(j) = x(j)
-                        x2(j) = x(j) * (1 - epsilon) + (epsilon / 2) ^ 2
+                        x2(j) = x(j) * (1 + epsilon) + (epsilon / 2) ^ 2
                     End If
                 Next
                 f2 = FunctionValue(x2)
                 For k = 0 To x.Length - 1
-                    g(k, i) = (f1(k) - f2(k)) / (x(i) - x2(i))
+                    g(k, i) = (f2(k) - f1(k)) / (x2(i) - x(i))
                 Next
             Next
 
