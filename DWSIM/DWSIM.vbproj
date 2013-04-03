@@ -136,8 +136,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\Ciloci.Flee.dll</HintPath>
     </Reference>
-    <Reference Include="Cudafy.NET">
-      <HintPath>..\..\..\CudafyV1.12\bin\Cudafy.NET.dll</HintPath>
+    <Reference Include="Cudafy.NET, Version=1.12.4695.21111, Culture=neutral, PublicKeyToken=63a4c9931616906b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Cudafy.NET.dll</HintPath>
     </Reference>
     <Reference Include="Cureos.Numerics, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -629,6 +630,7 @@
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\GibbsMinimization3P.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoops.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoops3P.vb" />
+    <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoopsImmiscible.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoopsSLE.vb" />
     <Compile Include="Objects\PropertyPackages\Base\MichelsenBase.vb" />
     <Compile Include="Objects\PropertyPackages\CAPE-OPEN\CAPEOPENPropertyPackageManager.vb" />

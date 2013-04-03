@@ -650,6 +650,7 @@ Public Class FormSensAnalysis
                             Next
                         End If
                     End With
+                    cbc.Sorted = True
                 Case 2
                     If Not Me.dgDepVariables.Rows(e.RowIndex).Cells(e.ColumnIndex).Value Is Nothing Then
                         Dim tbc0 As DataGridViewTextBoxCell = Me.dgDepVariables.Rows(e.RowIndex).Cells(3)
@@ -692,7 +693,7 @@ Public Class FormSensAnalysis
     End Function
 
     Private Sub dgVariables_DataError(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles dgVariables.DataError
-        My.Application.ActiveSimulation.WriteToLog(e.Exception.Message.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+
     End Sub
 
     Private Sub ToolStripButton1_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton1.Click
@@ -713,5 +714,13 @@ Public Class FormSensAnalysis
         If selected Then
             Me.lbCases.Items(Me.lbCases.SelectedIndex) = Me.tbCaseName.Text
         End If
+    End Sub
+
+    Private Sub dgDepVariables_DataError(sender As Object, e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles dgDepVariables.DataError
+
+    End Sub
+
+    Private Sub dgvResults_DataError(sender As Object, e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles dgvResults.DataError
+
     End Sub
 End Class

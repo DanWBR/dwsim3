@@ -169,7 +169,7 @@ Public Class FormCompoundCreator
             TextBoxZc.Text = .cp.Critical_Compressibility
             TextBoxZRa.Text = .cp.Z_Rackett
 
-            If .RegressPVAP Then rbEstimatePVAP.Checked = True
+            If .RegressPVAP Then rbRegressPVAP.Checked = True
             If .RegressCPIG Then rbRegressCPIG.Checked = True
             If .RegressLDENS Then rbRegressLIQDENS.Checked = True
             If .RegressLVISC Then rbRegressLIQVISC.Checked = True
@@ -301,7 +301,7 @@ Public Class FormCompoundCreator
             .cp.Critical_Compressibility = TextBoxZc.Text
             .cp.Z_Rackett = TextBoxZRa.Text
 
-            .RegressPVAP = rbEstimatePVAP.Checked
+            .RegressPVAP = rbRegressPVAP.Checked
             .RegressCPIG = rbRegressCPIG.Checked
             .RegressLDENS = rbRegressLIQDENS.Checked
             .RegressLVISC = rbRegressLIQVISC.Checked
@@ -737,28 +737,6 @@ Public Class FormCompoundCreator
 
     End Function
 
-    Private Sub btnRegressPVAP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressPVAP.Click
-
-        mycase.DataPVAP.Clear()
-        For Each row As DataGridViewRow In Me.GridExpDataPVAP.Rows
-            If row.Index < Me.GridExpDataPVAP.Rows.Count - 1 Then mycase.DataPVAP.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_pressure, row.Cells(1).Value)})
-        Next
-
-        Dim result As Object = RegressData(0, False)
-
-        tbStatusPVAP.Text = GetInfo(result(3))
-
-        With mycase.cp
-            .VaporPressureEquation = 101
-            .Vapor_Pressure_Constant_A = result(0)(0)
-            .Vapor_Pressure_Constant_B = result(0)(1)
-            .Vapor_Pressure_Constant_C = result(0)(2)
-            .Vapor_Pressure_Constant_D = result(0)(3)
-            .Vapor_Pressure_Constant_E = result(0)(4)
-        End With
-
-    End Sub
-
     Private Sub btnRegressCPIG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressCPIG.Click
 
         mycase.DataCPIG.Clear()
@@ -772,11 +750,26 @@ Public Class FormCompoundCreator
 
         With mycase.cp
             .IdealgasCpEquation = 5
+
+            For Each it As Object In cbEqCPIG.Items
+                If it.ToString.Split(":")(0) = .IdealgasCpEquation Then
+                    cbEqCPIG.SelectedIndex = cbEqCPIG.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
             .Ideal_Gas_Heat_Capacity_Const_A = result(0)(0) * 1000
             .Ideal_Gas_Heat_Capacity_Const_B = result(0)(1) * 1000
             .Ideal_Gas_Heat_Capacity_Const_C = result(0)(2) * 1000
             .Ideal_Gas_Heat_Capacity_Const_D = result(0)(3) * 1000
             .Ideal_Gas_Heat_Capacity_Const_E = result(0)(4) * 1000
+
+            tbCPIG_A.Text = .Ideal_Gas_Heat_Capacity_Const_A
+            tbCPIG_B.Text = .Ideal_Gas_Heat_Capacity_Const_B
+            tbCPIG_C.Text = .Ideal_Gas_Heat_Capacity_Const_C
+            tbCPIG_D.Text = .Ideal_Gas_Heat_Capacity_Const_D
+            tbCPIG_E.Text = .Ideal_Gas_Heat_Capacity_Const_E
+
         End With
 
     End Sub
@@ -794,11 +787,26 @@ Public Class FormCompoundCreator
 
         With mycase.cp
             .LiquidDensityEquation = 105
+
+            For Each it As Object In cbEqLIQDENS.Items
+                If it.ToString.Split(":")(0) = .LiquidDensityEquation Then
+                    cbEqLIQDENS.SelectedIndex = cbEqLIQDENS.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
             .Liquid_Density_Const_A = result(0)(0)
             .Liquid_Density_Const_B = result(0)(1)
             .Liquid_Density_Const_C = result(0)(2)
             .Liquid_Density_Const_D = result(0)(3)
             .Liquid_Density_Const_E = result(0)(4)
+
+            tbLIQDENS_A.Text = .Liquid_Density_Const_A
+            tbLIQDENS_B.Text = .Liquid_Density_Const_B
+            tbLIQDENS_C.Text = .Liquid_Density_Const_C
+            tbLIQDENS_D.Text = .Liquid_Density_Const_D
+            tbLIQDENS_E.Text = .Liquid_Density_Const_E
+
         End With
 
     End Sub
@@ -815,12 +823,28 @@ Public Class FormCompoundCreator
         tbStatusLIQVISC.Text = GetInfo(result(3))
 
         With mycase.cp
+
             .LiquidViscosityEquation = 101
+
+            For Each it As Object In cbEqLIQVISC.Items
+                If it.ToString.Split(":")(0) = .LiquidViscosityEquation Then
+                    cbEqLIQVISC.SelectedIndex = cbEqLIQVISC.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
             .Liquid_Viscosity_Const_A = result(0)(0)
             .Liquid_Viscosity_Const_B = result(0)(1)
             .Liquid_Viscosity_Const_C = result(0)(2)
             .Liquid_Viscosity_Const_D = result(0)(3)
             .Liquid_Viscosity_Const_E = result(0)(4)
+
+            tbLIQVISC_A.Text = .Liquid_Viscosity_Const_A
+            tbLIQVISC_B.Text = .Liquid_Viscosity_Const_B
+            tbLIQVISC_C.Text = .Liquid_Viscosity_Const_C
+            tbLIQVISC_D.Text = .Liquid_Viscosity_Const_D
+            tbLIQVISC_E.Text = .Liquid_Viscosity_Const_E
+
         End With
 
     End Sub

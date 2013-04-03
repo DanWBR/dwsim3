@@ -206,9 +206,34 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             _zarray = CalcZ(T, P, Vx, VKij, VTc, VPc, Vw)
             If forcephase <> "" Then
                 If forcephase = "L" Then
-                    Z = Common.Min(_zarray.ToArray())
+                    If _zarray.Count > 0 Then
+                        Z = Common.Min(_zarray.ToArray())
+                    Else
+                        Dim P_lim, rho_lim, Pcalc, rho_calc As Double
+                        Dim C0, C1 As Double
+                        rho_lim = New Auxiliary.PengRobinson().ESTIMAR_RhoLim(aml, bml, T, P)
+                        P_lim = R * T * rho_lim / (1 - rho_lim * bml) - aml * rho_lim ^ 2 / (1 + 2 * bml * rho_lim - (rho_lim * bml) ^ 2)
+                        C1 = (rho - 0.7 * rho_mc) * dPdrho
+                        C0 = P_lim - C1 * Math.Log(rho_lim - 0.7 * rho_mc)
+                        rho_calc = Math.Exp((P - C0) / C1) + 0.7 * rho_mc
+                        Pcalc = R * T * rho_calc / (1 - rho_calc * bml) - aml * rho_calc ^ 2 / (1 + 2 * bml * rho_calc - (rho_calc * bml) ^ 2)
+                        Z = P / (rho_calc * R * T)
+                    End If
                 ElseIf forcephase = "V" Then
-                    Z = Common.Max(_zarray.ToArray())
+                    If _zarray.Count > 0 Then
+                        Z = Common.Max(_zarray.ToArray())
+                    Else
+                        Dim aa, bb As Double
+                        Dim P_lim, rho_lim, Pcalc, rho_calc, rho_x As Double
+                        rho_lim = New Auxiliary.PengRobinson().ESTIMAR_RhoLim(aml, bml, T, P)
+                        P_lim = R * T * rho_lim / (1 - rho_lim * bml) - aml * rho_lim ^ 2 / (1 + 2 * bml * rho_lim - (rho_lim * bml) ^ 2)
+                        rho_x = (rho_lim + rho_mc) / 2
+                        bb = 1 / P_lim * (1 / (rho_lim * (1 - rho_lim / rho_x)))
+                        aa = -bb / rho_x
+                        rho_calc = (1 / P + bb) / aa
+                        Pcalc = R * T * rho_calc / (1 - rho_calc * bml) - aml * rho_calc ^ 2 / (1 + 2 * bml * rho_calc - (rho_calc * bml) ^ 2)
+                        Z = P / (rho_calc * R * T)
+                    End If
                 End If
             Else
                 _mingz = ZtoMinG(_zarray.ToArray, T, P, Vx, VKij, VTc, VPc, Vw)

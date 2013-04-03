@@ -192,42 +192,49 @@ Public Class FormBinEnv
                 For i = 0 To r(0).count - 1
                     r(0)(i) = r(0)(i) * mw1 / (r(0)(i) * mw1 + (1 - r(0)(i)) * mw2)
                 Next
-                For i = 0 To r(0).count - 1
+                For i = 0 To r2(0).count - 1
                     r2(0)(i) = r2(0)(i) * mw1 / (r2(0)(i) * mw1 + (1 - r2(0)(i)) * mw2)
                 Next
-                For i = 0 To r(0).count - 1
-                    r(3)(i) = r(3)(i) * mw1 / (r(3)(i) * mw1 + (1 - r(3)(i)) * mw2)
-                Next
-                For i = 0 To r(0).count - 1
-                    r(4)(i) = r(4)(i) * mw1 / (r(4)(i) * mw1 + (1 - r(4)(i)) * mw2)
-                Next
+                If r.Length > 2 Then
+                    For i = 0 To r(3).count - 1
+                        r(3)(i) = r(3)(i) * mw1 / (r(3)(i) * mw1 + (1 - r(3)(i)) * mw2)
+                    Next
+                    For i = 0 To r(4).count - 1
+                        r(4)(i) = r(4)(i) * mw1 / (r(4)(i) * mw1 + (1 - r(4)(i)) * mw2)
+                    Next
+                End If
             Case 2
                 For i = 0 To r(0).count - 1
                     r(0)(i) = r(0)(i) * 100
                 Next
-                For i = 0 To r(0).count - 1
+                For i = 0 To r2(0).count - 1
                     r2(0)(i) = r2(0)(i) * 100
                 Next
-                For i = 0 To r(0).count - 1
-                    r(3)(i) = r(3)(i) * 100
-                Next
-                For i = 0 To r(0).count - 1
-                    r(4)(i) = r(4)(i) * 100
-                Next
+                If r.Length > 2 Then
+                    For i = 0 To r(3).count - 1
+                        r(3)(i) = r(3)(i) * 100
+                    Next
+                    For i = 0 To r(4).count - 1
+                        r(4)(i) = r(4)(i) * 100
+                    Next
+                End If
             Case 3
                 For i = 0 To r(0).count - 1
                     r(0)(i) = r(0)(i) * mw1 / (r(0)(i) * mw1 + (1 - r(0)(i)) * mw2) * 100
                 Next
-                For i = 0 To r(0).count - 1
+                For i = 0 To r2(0).count - 1
                     r2(0)(i) = r2(0)(i) * mw1 / (r2(0)(i) * mw1 + (1 - r2(0)(i)) * mw2) * 100
                 Next
-                For i = 0 To r(0).count - 1
-                    r(3)(i) = r(3)(i) * mw1 / (r(3)(i) * mw1 + (1 - r(3)(i)) * mw2) * 100
-                Next
-                For i = 0 To r(0).count - 1
-                    r(4)(i) = r(4)(i) * mw1 / (r(4)(i) * mw1 + (1 - r(4)(i)) * mw2) * 100
-                Next
+                If r.Length > 2 Then
+                    For i = 0 To r(3).count - 1
+                        r(3)(i) = r(3)(i) * mw1 / (r(3)(i) * mw1 + (1 - r(3)(i)) * mw2) * 100
+                    Next
+                    For i = 0 To r(4).count - 1
+                        r(4)(i) = r(4)(i) * mw1 / (r(4)(i) * mw1 + (1 - r(4)(i)) * mw2) * 100
+                    Next
+                End If
         End Select
+
 
         If Me.RadioButton1.Checked Then
 

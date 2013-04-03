@@ -201,6 +201,8 @@ Public Class FormStSim
                 ComboBoxFlashAlg.SelectedIndex = 5
             Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
                 ComboBoxFlashAlg.SelectedIndex = 6
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
+                ComboBoxFlashAlg.SelectedIndex = 7
             Case Else
                 ComboBoxFlashAlg.SelectedIndex = 0
         End Select
@@ -224,6 +226,27 @@ Public Class FormStSim
         Me.TBdesc.Text = Me.FrmChild.Options.SimComentario
         Me.TBtit.Text = Me.FrmChild.Options.SimNome
 
+        SetupKeyCompounds()
+
+        Select Case FrmChild.Options.ThreePhaseFlashStabTestSeverity
+            Case 0
+                Me.RadioButton1.Checked = True
+            Case 1
+                Me.RadioButton2.Checked = True
+            Case 2
+                Me.RadioButton3.Checked = True
+        End Select
+
+        Me.tbPassword.Text = FrmChild.Options.Password
+        Me.chkUsePassword.Checked = FrmChild.Options.UsePassword
+
+        If DWSIM.App.IsRunningOnMono Then btnConfigPP.Enabled = True
+
+        Me.loaded = True
+
+    End Sub
+
+    Private Sub SetupKeyCompounds()
         Dim comps, selected As New ArrayList
         If FrmChild.Options.ThreePhaseFlashStabTestCompIds Is Nothing Then FrmChild.Options.ThreePhaseFlashStabTestCompIds = New String() {}
         For Each c As ConstantProperties In FrmChild.Options.SelectedComponents.Values
@@ -251,23 +274,6 @@ Public Class FormStSim
                 .Tag = comps(i)
             End With
         Next
-
-        Select Case FrmChild.Options.ThreePhaseFlashStabTestSeverity
-            Case 0
-                Me.RadioButton1.Checked = True
-            Case 1
-                Me.RadioButton2.Checked = True
-            Case 2
-                Me.RadioButton3.Checked = True
-        End Select
-
-        Me.tbPassword.Text = FrmChild.Options.Password
-        Me.chkUsePassword.Checked = FrmChild.Options.UsePassword
-
-        If DWSIM.App.IsRunningOnMono Then btnConfigPP.Enabled = True
-
-        Me.loaded = True
-
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
@@ -581,6 +587,8 @@ Public Class FormStSim
 
         End With
 
+        FrmChild.ToolStripComboBoxUnitSystem.SelectedItem = ComboBox2.SelectedItem
+
     End Sub
 
     Private Sub DataGridView1_CellValueChanged1(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles DataGridView1.CellValueChanged
@@ -803,6 +811,13 @@ Public Class FormStSim
                     End If
                     FormMain.AvailableUnitSystems.Add(su.nome, su)
                     Me.ComboBox2.Items.Add(su.nome)
+                    Me.FrmChild.Options.SelectedUnitSystem.nome = su.nome
+                    Dim array1(FormMain.AvailableUnitSystems.Count - 1) As String
+                    FormMain.AvailableUnitSystems.Keys.CopyTo(array1, 0)
+                    FrmChild.ToolStripComboBoxUnitSystem.Items.Clear()
+                    FrmChild.ToolStripComboBoxUnitSystem.Items.AddRange(array1)
+                    ComboBox2.SelectedItem = Me.FrmChild.Options.SelectedUnitSystem.nome
+                    FrmChild.ToolStripComboBoxUnitSystem.SelectedItem = ComboBox2.SelectedItem
                 Catch ex As System.Runtime.Serialization.SerializationException
                     MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Finally
@@ -1071,6 +1086,7 @@ Public Class FormStSim
                 Next
             Next
             Me.ListViewA.Items.Add(tmpcomp.Name, DWSIM.App.GetComponentName(tmpcomp.Name), 0).Tag = tmpcomp.Name
+            SetupKeyCompounds()
         End If
     End Sub
 
@@ -1096,6 +1112,7 @@ Public Class FormStSim
                 Me.ListViewA.Items.Add(tmpcomp.Name, DWSIM.App.GetComponentName(tmpcomp.Name), 0).Tag = tmpcomp.Name
                 Me.ogc1.Rows.RemoveAt(index)
             End If
+            SetupKeyCompounds()
         End If
 
     End Sub
@@ -1115,6 +1132,7 @@ Public Class FormStSim
                 phase.Componentes.Remove(tmpcomp.Name)
             Next
         Next
+        SetupKeyCompounds()
 
     End Sub
 
@@ -1192,6 +1210,10 @@ Public Class FormStSim
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
                 Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = False
+            Case 7
+                Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
+                Me.chkIOmode.Enabled = True
+                Me.GroupBox11.Enabled = True
         End Select
     End Sub
 

@@ -1,6 +1,5 @@
 ﻿Imports DWSIM.DWSIM.SimulationObjects
-
-Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 
 Public Class UI_AdjControlPanelForm
 
@@ -112,8 +111,8 @@ Public Class UI_AdjControlPanelForm
                 stepsize = .StepSize
                 tol = .Tolerance
                 If Me.usemaxmin Then
-                    min = .MinVal
-                    max = .MaxVal
+                    min = .MinVal.GetValueOrDefault
+                    max = .MaxVal.GetValueOrDefault
                 End If
             End With
 
@@ -137,7 +136,7 @@ Public Class UI_AdjControlPanelForm
                 Do
                     fi_ant2 = fi_ant
                     fi_ant = fi
-                    fi = cvVal - adjval
+                    fi = cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal - adjval)
 
                     Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
                     Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Iterao") & " " & (cnt + 1) & " " & DWSIM.App.GetLocalString("de") & " " & maxit
@@ -270,7 +269,7 @@ Public Class UI_AdjControlPanelForm
                     DWSIM.Flowsheet.FlowsheetSolver.CalculateObject(My.Application.ActiveSimulation, myADJ.ManipulatedObject.GraphicObject.Name)
 
                     cvVal = Me.GetCtlVarValue()
-                    f = cvVal - adjval
+                    f = cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal - adjval)
                     Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
                     Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Procurandosubinterva")
                     Me.tbErro.Text = f
@@ -301,7 +300,7 @@ Public Class UI_AdjControlPanelForm
                     DWSIM.Flowsheet.FlowsheetSolver.CalculateObject(My.Application.ActiveSimulation, myADJ.ManipulatedObject.GraphicObject.Name)
 
                     cvVal = Me.GetCtlVarValue()
-                    f_inf = cvVal - adjval
+                    f_inf = cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal - adjval)
                     Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
                     Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Procurandosubinterva")
                     Me.tbErro.Text = f_inf
@@ -426,7 +425,7 @@ Public Class UI_AdjControlPanelForm
                     DWSIM.Flowsheet.FlowsheetSolver.CalculateObject(My.Application.ActiveSimulation, myADJ.ManipulatedObject.GraphicObject.Name)
 
                     cvVal = Me.GetCtlVarValue()
-                    fbb = cvVal - adjval
+                    fbb = cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal - adjval)
                     Me.tbErro.Text = fbb
                     iter2 += 1
 

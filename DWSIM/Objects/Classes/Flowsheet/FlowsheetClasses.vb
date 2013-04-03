@@ -19,6 +19,7 @@
 Imports Microsoft.MSDN.Samples.GraphicObjects
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.SimulationObjects
+Imports System.Linq
 
 Namespace DWSIM.FormClasses
 
@@ -315,11 +316,28 @@ Namespace DWSIM.FormClasses
         End Sub
 
         Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
+
+            Dim el As XElement = (From xel As XElement In data Select xel Where xel.Name = "ThreePhaseFlashStabTestCompIds").SingleOrDefault
+
+            If Not el Is Nothing Then Me.ThreePhaseFlashStabTestCompIds = el.Value.Split(",")
+
             Return XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
+
         End Function
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
-            Return XMLSerializer.XMLSerializer.Serialize(Me, True)
+
+            Dim elements As System.Collections.Generic.List(Of System.Xml.Linq.XElement) = XMLSerializer.XMLSerializer.Serialize(Me, True)
+            Dim comps As String = ""
+            For Each s As String In Me.ThreePhaseFlashStabTestCompIds
+                comps += s + ","
+            Next
+            If comps <> "" Then
+                comps = comps.Remove(comps.Length - 1, 1)
+                elements.Add(New XElement("ThreePhaseFlashStabTestCompIds", comps))
+            End If
+            Return elements
+
         End Function
 
     End Class

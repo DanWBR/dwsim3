@@ -509,16 +509,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     PCR = cp0(1)
                     VCR = cp0(2)
                 Else
-                    TCR = 0
-                    PCR = 0
-                    VCR = 0
+                    TCR = Me.AUX_TCM(Fase.Mixture)
+                    PCR = Me.AUX_PCM(Fase.Mixture)
+                    VCR = Me.AUX_VCM(Fase.Mixture)
                 End If
             Else
                 TCR = Me.AUX_TCM(Fase.Mixture)
                 PCR = Me.AUX_PCM(Fase.Mixture)
                 VCR = Me.AUX_VCM(Fase.Mixture)
-                CP.Add(New Object() {TCR, PCR, VCR})
             End If
+            CP.Add(New Object() {TCR, PCR, VCR})
 
             Pmin = 101325
             Tmin = 0.3 * TCR
@@ -542,47 +542,59 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             T = Tmin
             Do
                 If i < 2 Then
-                    tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 0, 0, Me)
-                    'tmp2 = BUBP_PR_M2(T, Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VTB, Me.RET_VW, KI)
-                    TVB.Add(tmp2(4))
-                    PB.Add(P)
-                    T = TVB(i)
-                    HB.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
-                    SB.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
-                    VB.Add(Me.m_pr.Z_PR(T, P, Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "L") * 8.314 * T / P)
-                    P = P + dP
-                    KI = tmp2(6)
-                Else
-                    If beta < 20 Then
-                        tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, 0, PB(i - 1), Me, True, KI)
-                        'tmp2 = BUBP_PR_M2(T, Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VTB, Me.RET_VW, KI, PB(i - 1))
-                        TVB.Add(T)
-                        PB.Add(tmp2(4))
-                        P = PB(i)
-                        HB.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
-                        SB.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
-                        VB.Add(Me.m_pr.Z_PR(T, P, Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "L") * 8.314 * T / P)
-                        If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                            T = T + dT * 0.5
-                        Else
-                            T = T + dT
-                        End If
-                        KI = tmp2(6)
-                    Else
-                        tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 0, TVB(i - 1), Me, True, KI)
-                        'tmp2 = BUBT_PR_M2(P, Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VTB, Me.RET_VW, KI, TVB(i - 1))
+                    Try
+                        tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 0, 0, Me)
                         TVB.Add(tmp2(4))
                         PB.Add(P)
                         T = TVB(i)
                         HB.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
                         SB.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
-                        VB.Add(Me.m_pr.Z_PR(T, P, Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "L") * 8.314 * T / P)
-                        If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
-                            P = P + dP * 0.1
-                        Else
-                            P = P + dP
-                        End If
+                        VB.Add(1 / Me.AUX_LIQDENS(T, P, 0, 0, False) * Me.AUX_MMM(Fase.Mixture))
                         KI = tmp2(6)
+                    Catch ex As Exception
+
+                    Finally
+                        P = P + dP
+                    End Try
+                Else
+                    If beta < 20 Then
+                        Try
+                            tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, 0, PB(i - 1), Me, True, KI)
+                            TVB.Add(T)
+                            PB.Add(tmp2(4))
+                            P = PB(i)
+                            HB.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
+                            SB.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
+                            VB.Add(1 / Me.AUX_LIQDENS(T, P, 0, 0, False) * Me.AUX_MMM(Fase.Mixture))
+                            KI = tmp2(6)
+                        Catch ex As Exception
+
+                        Finally
+                            If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.02 Then
+                                T = T + dT * 0.5
+                            Else
+                                T = T + dT
+                            End If
+                        End Try
+                    Else
+                        Try
+                            tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 0, TVB(i - 1), Me, True, KI)
+                            TVB.Add(tmp2(4))
+                            PB.Add(P)
+                            T = TVB(i)
+                            HB.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
+                            SB.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
+                            VB.Add(1 / Me.AUX_LIQDENS(T, P, 0, 0, False) * Me.AUX_MMM(Fase.Mixture))
+                            KI = tmp2(6)
+                        Catch ex As Exception
+
+                        Finally
+                            If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
+                                P = P + dP * 0.1
+                            Else
+                                P = P + dP
+                            End If
+                        End Try
                     End If
                     beta = (Math.Log(PB(i) / 101325) - Math.Log(PB(i - 1) / 101325)) / (Math.Log(TVB(i)) - Math.Log(TVB(i - 1)))
                 End If
@@ -606,59 +618,68 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             P = Pmin
             Do
                 If i < 2 Then
-                    tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 1, 0, Me)
-                    'tmp2 = DEWT_PR_M2(P, Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VTB, Me.RET_VW, KI)
-                    TVD.Add(tmp2(4))
-                    PO.Add(P)
-                    T = TVD(i)
-                    HO.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
-                    SO.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
-                    VO.Add(Me.m_pr.Z_PR(T, P, Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "V") * 8.314 * T / P)
-                    If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
-                        P = P + dP * 0.1
-                    Else
-                        P = P + dP
-                    End If
-                    KI = tmp2(6)
-                Else
-                    If Abs(beta) < 2 Then
-                        tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, 1, PO(i - 1), Me, True, KI)
-                        'tmp2 = DEWP_PR_M2(T, Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VTB, Me.RET_VW, KI, PO(i - 1))
-                        TVD.Add(T)
-                        PO.Add(tmp2(4))
-                        P = PO(i)
-                        HO.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
-                        SO.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
-                        VO.Add(Me.m_pr.Z_PR(T, P, Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "V") * 8.314 * T / P)
-                        If TVD(i) - TVD(i - 1) <= 0 Then
-                            If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                T = T - dT * 0.1
-                            Else
-                                T = T - dT
-                            End If
-                        Else
-                            If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                T = T + dT * 0.1
-                            Else
-                                T = T + dT
-                            End If
-                        End If
-                        KI = tmp2(6)
-                    Else
-                        tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 1, TVD(i - 1), Me, False, KI)
-                        'tmp2 = DEWT_PR_M2(P, Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VTB, Me.RET_VW, KI, TVD(i - 1)) 'BOLP_PR2(T, Vz2, Vids2)
+                    Try
+                        tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 1, 0, Me)
                         TVD.Add(tmp2(4))
                         PO.Add(P)
                         T = TVD(i)
                         HO.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
                         SO.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
-                        VO.Add(Me.m_pr.Z_PR(T, P, Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "V") * 8.314 * T / P)
-                        If Math.Abs(T - TCR) / TCR < 0.05 And Math.Abs(P - PCR) / PCR < 0.05 Then
-                            P = P + dP * 0.25
+                        VO.Add(1 / Me.AUX_VAPDENS(T, P) * Me.AUX_MMM(Fase.Mixture))
+                        KI = tmp2(6)
+                    Catch ex As Exception
+                    Finally
+                        If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
+                            P = P + dP * 0.1
                         Else
                             P = P + dP
                         End If
-                        KI = tmp2(6)
+                    End Try
+                Else
+                    If Abs(beta) < 2 Then
+                        Try
+                            tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, 1, PO(i - 1), Me, True, KI)
+                            TVD.Add(T)
+                            PO.Add(tmp2(4))
+                            P = PO(i)
+                            HO.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
+                            SO.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
+                            VO.Add(1 / Me.AUX_VAPDENS(T, P) * Me.AUX_MMM(Fase.Mixture))
+                            KI = tmp2(6)
+                        Catch ex As Exception
+                        Finally
+                            If TVD(i) - TVD(i - 1) <= 0 Then
+                                If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
+                                    T = T - dT * 0.1
+                                Else
+                                    T = T - dT
+                                End If
+                            Else
+                                If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
+                                    T = T + dT * 0.1
+                                Else
+                                    T = T + dT
+                                End If
+                            End If
+                        End Try
+                    Else
+                        Try
+                            tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 1, TVD(i - 1), Me, False, KI)
+                            TVD.Add(tmp2(4))
+                            PO.Add(P)
+                            T = TVD(i)
+                            HO.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
+                            SO.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
+                            VO.Add(1 / Me.AUX_VAPDENS(T, P) * Me.AUX_MMM(Fase.Mixture))
+                            KI = tmp2(6)
+                        Catch ex As Exception
+                        Finally
+                            If Math.Abs(T - TCR) / TCR < 0.05 And Math.Abs(P - PCR) / PCR < 0.05 Then
+                                P = P + dP * 0.25
+                            Else
+                                P = P + dP
+                            End If
+                        End Try
                     End If
                     If i >= PO.Count Then
                         i = i - 1
@@ -669,11 +690,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 i = i + 1
             Loop Until i >= 200 Or PO(i - 1) = 0 Or PO(i - 1) < 0 Or TVD(i - 1) < 0 Or _
                         Double.IsNaN(PO(i - 1)) = True Or Double.IsNaN(TVD(i - 1)) = True Or _
-                        (Math.Abs(T - TCR) / TCR < 0.03 And Math.Abs(P - PCR) / PCR < 0.01)
+                        Math.Abs(T - TCR) / TCR < 0.03 And Math.Abs(P - PCR) / PCR < 0.03
+
+            beta = 10
 
             If CBool(parameters(2)) = True Then
-
-                beta = 10
 
                 j = 0
                 Do
@@ -682,42 +703,51 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Loop Until j = n + 1
 
                 i = 0
-                P = 101325
+                P = 400000
                 T = TVD(0)
                 Do
                     If i < 2 Then
-                        tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, parameters(1), 0, Me, False, KI)
-                        'tmp2 = FLASH_PV(P, parameters(1), Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VTB, Me.RET_VW, KI)
-                        TQ.Add(tmp2(4))
-                        PQ.Add(P)
-                        T = TQ(i)
-                        P = P + dP
-                        KI = tmp2(6)
-                    Else
-                        If beta < 2 Then
-                            tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, parameters(1), PQ(i - 1), Me, True, KI)
-                            'tmp2 = FLASH_TV(T, parameters(1), Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VTB, Me.RET_VW, KI, PQ(i - 1))
-                            TQ.Add(T)
-                            PQ.Add(tmp2(4))
-                            P = PQ(i)
-                            If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.2 Then
-                                T = T + dT * 0.25
-                            Else
-                                T = T + dT
-                            End If
-                            KI = tmp2(6)
-                        Else
-                            tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, parameters(1), TQ(i - 1), Me, True, KI)
-                            'tmp2 = FLASH_PV(P, parameters(1), Me.RET_VMOL(Fase.Mixture), Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VTB, Me.RET_VW, KI, TQ(i - 1))
+                        Try
+                            tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, parameters(1), 0, Me, False, KI)
                             TQ.Add(tmp2(4))
                             PQ.Add(P)
                             T = TQ(i)
-                            If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.1 Then
-                                P = P + dP * 0.1
-                            Else
-                                P = P + dP
-                            End If
                             KI = tmp2(6)
+                        Catch ex As Exception
+                        Finally
+                            P = P + dP
+                        End Try
+                    Else
+                        If beta < 2 Then
+                            Try
+                                tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, parameters(1), PQ(i - 1), Me, True, KI)
+                                TQ.Add(T)
+                                PQ.Add(tmp2(4))
+                                P = PQ(i)
+                                KI = tmp2(6)
+                            Catch ex As Exception
+                            Finally
+                                If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.2 Then
+                                    T = T + dT * 0.25
+                                Else
+                                    T = T + dT
+                                End If
+                            End Try
+                        Else
+                            Try
+                                tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, parameters(1), TQ(i - 1), Me, True, KI)
+                                TQ.Add(tmp2(4))
+                                PQ.Add(P)
+                                T = TQ(i)
+                                KI = tmp2(6)
+                            Catch ex As Exception
+                            Finally
+                                If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.1 Then
+                                    P = P + dP * 0.1
+                                Else
+                                    P = P + dP
+                                End If
+                            End Try
                         End If
                         beta = (Math.Log(PQ(i) / 101325) - Math.Log(PQ(i - 1) / 101325)) / (Math.Log(TQ(i)) - Math.Log(TQ(i - 1)))
                     End If
@@ -728,7 +758,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Loop Until i >= 200 Or PQ(i - 1) = 0 Or PQ(i - 1) < 0 Or TQ(i - 1) < 0 Or _
                             Double.IsNaN(PQ(i - 1)) = True Or Double.IsNaN(TQ(i - 1)) = True Or _
                             Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02
-
             Else
                 TQ.Add(0)
                 PQ.Add(0)
@@ -1132,7 +1161,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ}
 
         End Function
-
 
         Public Function RET_KIJ(ByVal id1 As String, ByVal id2 As String) As Double
             If Me.m_pr.InteractionParameters.ContainsKey(id1) Then

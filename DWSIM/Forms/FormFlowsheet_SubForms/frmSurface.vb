@@ -2851,6 +2851,7 @@ Public Class frmSurface
 
         If Not gObj Is Nothing Then
             Me.FlowsheetDesignSurface.drawingObjects.Add(gObj)
+            gObj.Draw(Me.FlowsheetDesignSurface.CreateGraphics)
             Me.FlowsheetDesignSurface.SelectedObject = gObj
             Me.FlowsheetDesignSurface.Invalidate()
             Application.DoEvents()

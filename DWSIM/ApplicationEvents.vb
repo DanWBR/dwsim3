@@ -73,8 +73,8 @@ Namespace My
             End If
 
             'set CUDA params
-            CudafyModes.CodeGen = eGPUCodeGenerator.CudaC
-            CudafyModes.Target = eGPUType.Cuda
+            CudafyModes.Compiler = eGPUCompiler.All
+            CudafyModes.Target = eGPUType.OpenCL
 
         End Sub
 

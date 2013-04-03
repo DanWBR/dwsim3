@@ -50,12 +50,18 @@ Public Class CompositionEditorForm
     Private Sub Button23_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KButton23.Click
         Dim total As Double = 0
         Dim row As DataGridViewRow
-        For Each row In GridComp.Rows
-            total += row.Cells(0).Value
-        Next
-        For Each row In GridComp.Rows
-            row.Cells(0).Value = row.Cells(0).Value / total
-        Next
+        If My.Computer.Keyboard.ShiftKeyDown Then
+            For Each row In GridComp.Rows
+                row.Cells(0).Value = 1 / GridComp.Rows.Count
+            Next
+        Else
+            For Each row In GridComp.Rows
+                total += row.Cells(0).Value
+            Next
+            For Each row In GridComp.Rows
+                row.Cells(0).Value = row.Cells(0).Value / total
+            Next
+        End If
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KButton3.Click

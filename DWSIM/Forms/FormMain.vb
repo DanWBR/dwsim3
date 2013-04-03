@@ -2928,6 +2928,8 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                 Dim x As New BinaryFormatter
                 x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
                 objStreamWriter.Close()
+                Me.filename = Me.SaveStudyDlg.FileName
+                Me.ActiveMdiChild.Text = Me.filename
             End If
         ElseIf TypeOf Me.ActiveMdiChild Is FormDataRegression Then
             If Me.SaveRegStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
@@ -2935,6 +2937,8 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                 Dim x As New BinaryFormatter
                 x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormDataRegression).StoreCase())
                 objStreamWriter.Close()
+                Me.filename = Me.SaveRegStudyDlg.FileName
+                Me.ActiveMdiChild.Text = Me.filename
             End If
         End If
 
@@ -3306,6 +3310,8 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                         Dim x As New BinaryFormatter
                         x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
                         objStreamWriter.Close()
+                        Me.filename = Me.SaveStudyDlg.FileName
+                        Me.ActiveMdiChild.Text = Me.filename
                     End If
                 Else
                     CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
@@ -3313,6 +3319,8 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                     Dim x As New BinaryFormatter
                     x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
                     objStreamWriter.Close()
+                    Me.filename = Me.SaveStudyDlg.FileName
+                    Me.ActiveMdiChild.Text = Me.filename
                 End If
             ElseIf TypeOf Me.ActiveMdiChild Is FormDataRegression Then
                 If Me.SaveRegStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
@@ -3320,6 +3328,8 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                     Dim x As New BinaryFormatter
                     x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormDataRegression).StoreCase())
                     objStreamWriter.Close()
+                    Me.filename = Me.SaveRegStudyDlg.FileName
+                    Me.ActiveMdiChild.Text = Me.filename
                 End If
             End If
         Else
