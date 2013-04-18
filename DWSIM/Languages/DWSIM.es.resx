@@ -4620,4 +4620,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="NoRegressionAvailable" xml:space="preserve">
     <value>Regressão não disponível.</value>
   </data>
+  <data name="Solid" xml:space="preserve">
+    <value>Solido</value>
+  </data>
 </root>

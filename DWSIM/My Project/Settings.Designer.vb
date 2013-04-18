@@ -362,6 +362,30 @@ Namespace My
                 Me("SelectedGPU") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property CudafyTarget() As Integer
+            Get
+                Return CType(Me("CudafyTarget"),Integer)
+            End Get
+            Set
+                Me("CudafyTarget") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property CudafyDeviceID() As Integer
+            Get
+                Return CType(Me("CudafyDeviceID"),Integer)
+            End Get
+            Set
+                Me("CudafyDeviceID") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

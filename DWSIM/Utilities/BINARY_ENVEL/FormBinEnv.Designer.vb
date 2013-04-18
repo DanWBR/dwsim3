@@ -89,25 +89,28 @@ Partial Class FormBinEnv
         '
         'cbPropPack
         '
+        resources.ApplyResources(Me.cbPropPack, "cbPropPack")
         Me.cbPropPack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbPropPack.DropDownWidth = 222
-        resources.ApplyResources(Me.cbPropPack, "cbPropPack")
         Me.cbPropPack.Items.AddRange(New Object() {resources.GetString("cbPropPack.Items"), resources.GetString("cbPropPack.Items1"), resources.GetString("cbPropPack.Items2"), resources.GetString("cbPropPack.Items3")})
         Me.cbPropPack.Name = "cbPropPack"
         '
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
+        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label6.Name = "Label6"
         '
         'lblT
         '
         resources.ApplyResources(Me.lblT, "lblT")
+        Me.lblT.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.lblT.Name = "lblT"
         '
         'lblP
         '
         resources.ApplyResources(Me.lblP, "lblP")
+        Me.lblP.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.lblP.Name = "lblP"
         '
         'tbT
@@ -123,80 +126,91 @@ Partial Class FormBinEnv
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label5.Name = "Label5"
         '
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label4.Name = "Label4"
         '
         'cbXAxisBasis
         '
+        resources.ApplyResources(Me.cbXAxisBasis, "cbXAxisBasis")
         Me.cbXAxisBasis.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbXAxisBasis.DropDownWidth = 222
-        resources.ApplyResources(Me.cbXAxisBasis, "cbXAxisBasis")
         Me.cbXAxisBasis.Items.AddRange(New Object() {resources.GetString("cbXAxisBasis.Items"), resources.GetString("cbXAxisBasis.Items1"), resources.GetString("cbXAxisBasis.Items2"), resources.GetString("cbXAxisBasis.Items3")})
         Me.cbXAxisBasis.Name = "cbXAxisBasis"
         '
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label3.Name = "Label3"
         '
         'cbComp2
         '
+        resources.ApplyResources(Me.cbComp2, "cbComp2")
         Me.cbComp2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbComp2.DropDownWidth = 222
-        resources.ApplyResources(Me.cbComp2, "cbComp2")
         Me.cbComp2.Name = "cbComp2"
         '
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label2.Name = "Label2"
         '
         'RadioButton4
         '
         resources.ApplyResources(Me.RadioButton4, "RadioButton4")
+        Me.RadioButton4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.RadioButton4.Name = "RadioButton4"
         '
         'RadioButton3
         '
         resources.ApplyResources(Me.RadioButton3, "RadioButton3")
+        Me.RadioButton3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.RadioButton3.Name = "RadioButton3"
         '
         'RadioButton2
         '
         resources.ApplyResources(Me.RadioButton2, "RadioButton2")
+        Me.RadioButton2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.RadioButton2.Name = "RadioButton2"
         '
         'RadioButton1
         '
-        Me.RadioButton1.Checked = True
         resources.ApplyResources(Me.RadioButton1, "RadioButton1")
+        Me.RadioButton1.Checked = True
+        Me.RadioButton1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.RadioButton1.Name = "RadioButton1"
         Me.RadioButton1.TabStop = True
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label1.Name = "Label1"
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button1.Name = "Button1"
         '
         'cbComp1
         '
+        resources.ApplyResources(Me.cbComp1, "cbComp1")
         Me.cbComp1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbComp1.DropDownWidth = 222
-        resources.ApplyResources(Me.cbComp1, "cbComp1")
         Me.cbComp1.Name = "cbComp1"
         '
         'Label23
         '
         resources.ApplyResources(Me.Label23, "Label23")
+        Me.Label23.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label23.Name = "Label23"
         '
         'GroupBox2
@@ -208,26 +222,26 @@ Partial Class FormBinEnv
         '
         'FaTabStrip1
         '
+        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
-        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2})
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
         '
         'FaTabStripItem1
         '
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         Me.FaTabStripItem1.CanClose = False
         Me.FaTabStripItem1.Controls.Add(Me.GraphControl)
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
         Me.FaTabStripItem1.Selected = True
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         '
         'GraphControl
         '
-        Me.GraphControl.BackColor = System.Drawing.Color.WhiteSmoke
         resources.ApplyResources(Me.GraphControl, "GraphControl")
+        Me.GraphControl.BackColor = System.Drawing.Color.WhiteSmoke
         Me.GraphControl.IsAntiAlias = True
         Me.GraphControl.IsAutoScrollRange = True
         Me.GraphControl.Name = "GraphControl"
@@ -241,14 +255,15 @@ Partial Class FormBinEnv
         '
         'FaTabStripItem2
         '
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         Me.FaTabStripItem2.CanClose = False
         Me.FaTabStripItem2.Controls.Add(Me.Grid1)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
-        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         '
         'Grid1
         '
+        resources.ApplyResources(Me.Grid1, "Grid1")
         Me.Grid1.AllowUserToAddRows = False
         Me.Grid1.AllowUserToDeleteRows = False
         Me.Grid1.AllowUserToOrderColumns = True
@@ -258,7 +273,6 @@ Partial Class FormBinEnv
         Me.Grid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.Grid1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.Grid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        resources.ApplyResources(Me.Grid1, "Grid1")
         Me.Grid1.Name = "Grid1"
         Me.Grid1.ReadOnly = True
         Me.Grid1.RowHeadersVisible = False

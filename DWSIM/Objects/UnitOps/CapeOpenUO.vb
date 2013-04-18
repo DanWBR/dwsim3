@@ -47,7 +47,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Private Shadows _ports As List(Of ICapeUnitPort)
         Private _params As List(Of ICapeParameter)
 
-        Private _istr As DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper
+        <System.NonSerialized()> Private _istr As DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper
+        Private _persisteddata As Byte()
 
         Private _restorefromcollections As Boolean = False
         Private _recalculateoutputstreams As Boolean = True
@@ -172,6 +173,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             End If
 
+            If _persisteddata IsNot Nothing Then
+                _istr = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream(_persisteddata))
+            End If
+
             If _istr IsNot Nothing Then
                 Dim myuo As Interfaces.IPersistStreamInit = TryCast(_couo, Interfaces.IPersistStreamInit)
                 If Not myuo Is Nothing Then
@@ -185,7 +190,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         _restorefromcollections = True
                     End Try
                 Else
-                    Dim myuo2 As Interfaces.IPersistStream = TryCast(_couo, Interfaces.IPersistStream)
+                    Dim myuo2 As Interfaces2.IPersistStream = TryCast(_couo, Interfaces2.IPersistStream)
                     If myuo2 IsNot Nothing Then
                         Try
                             _istr.baseStream.Position = 0
@@ -227,6 +232,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             Try
                                 _istr.baseStream.Position = 0
                                 myuo2.Save(_istr, True)
+                                Using ms As New MemoryStream()
+                                    _istr.baseStream.Position = 0
+                                    _istr.baseStream.CopyTo(ms)
+                                    _persisteddata = ms.ToArray()
+                                End Using
                             Catch ex As Exception
                                 Dim ecu As CapeOpen.ECapeUser = _couo
                                 Me.FlowSheet.WriteToLog(Me.ComponentName & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description, Color.Red, FormClasses.TipoAviso.Erro)
@@ -240,6 +250,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             Try
                                 _istr.baseStream.Position = 0
                                 myuo2.Save(_istr, True)
+                                Using ms As New MemoryStream()
+                                    _istr.baseStream.Position = 0
+                                    _istr.baseStream.CopyTo(ms)
+                                    _persisteddata = ms.ToArray()
+                                End Using
                             Catch ex As Exception
                                 Dim ecu As CapeOpen.ECapeUser = _couo
                                 Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description, Color.Red, FormClasses.TipoAviso.Erro)

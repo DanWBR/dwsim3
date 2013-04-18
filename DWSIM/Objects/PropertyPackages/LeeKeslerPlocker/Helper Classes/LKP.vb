@@ -17,6 +17,9 @@
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports FileHelpers
+Imports Cudafy
+Imports Cudafy.Translator
+Imports Cudafy.Host
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
@@ -46,6 +49,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
     <System.Serializable()> Public Class LeeKeslerPlocker
 
         Dim m_pr As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
+        <System.NonSerialized()> Dim km As CudafyModule
 
         Private _ip As Dictionary(Of String, Dictionary(Of String, LKP_IPData))
 
@@ -746,6 +750,16 @@ Final3:
 
         Function CalcLnFug(ByVal TIPO As String, ByVal T As Double, ByVal P As Double, ByVal Vz As Object, ByVal VKij As Object, ByVal VTc As Object, ByVal VPc As Object, ByVal Vw As Object, ByVal VMM As Object, ByVal VVc As Object, ByVal Hid As Double) As Object
 
+            If My.Settings.EnableGPUProcessing Then
+                Return CalcLnFugGPU(TIPO, T, P, Vz, VKij, VTc, VPc, Vw, VMM, VVc, Hid)
+            Else
+                Return CalcLnFugCPU(TIPO, T, P, Vz, VKij, VTc, VPc, Vw, VMM, VVc, Hid)
+            End If
+
+        End Function
+
+        Function CalcLnFugCPU(ByVal TIPO As String, ByVal T As Double, ByVal P As Double, ByVal Vz As Object, ByVal VKij As Object, ByVal VTc As Object, ByVal VPc As Object, ByVal Vw As Object, ByVal VMM As Object, ByVal VVc As Object, ByVal Hid As Double) As Object
+
             'mixture critical properties
             Dim Tcm, Pcm, Vcm, wm, Tr, Pr, zcm As Double
             Dim obj = Me.MixCritProp_LK(Vz, VTc, VPc, Vw, VVc, VKij)
@@ -840,6 +854,181 @@ Final3:
 
         End Function
 
+        Private Function CalcLnFugGPU(ByVal TIPO As String, ByVal T As Double, ByVal P As Double, ByVal Vz As Object, ByVal VKij As Object, ByVal VTc As Object, ByVal VPc As Object, ByVal Vw As Object, ByVal VMM As Object, ByVal VVc As Object, ByVal Hid As Double) As Object
+
+            'mixture critical properties
+            Dim Tcm, Pcm, Vcm, wm, Tr, Pr, zcm As Double
+            Dim obj = Me.MixCritProp_LK(Vz, VTc, VPc, Vw, VVc, VKij)
+            Tcm = obj(0)
+            Pcm = obj(1)
+            Vcm = obj(2)
+            wm = obj(3)
+            Tr = T / Tcm
+            Pr = P / Pcm
+            zcm = Pcm * Vcm / (8.314 * Tcm)
+
+            Dim i, n As Integer
+
+            n = UBound(Vz)
+
+            i = 0
+            Dim MMm = 0
+            Do
+                MMm += Vz(i) * VMM(i)
+                i += 1
+            Loop Until i = n + 1
+
+            Dim dHmRTcm As Double
+
+            dHmRTcm = Me.H_LK_MIX(TIPO, T, P, Vz, VKij, VTc, VPc, Vw, VMM, 0, VVc) / (8.314 * Tcm) * MMm
+
+            Dim lnfugm, lnfugs, lnfugh As Double, res As Double()
+
+            res = Me.LnFugM(TIPO, Tr, Pr, wm)
+            lnfugm = res(0)
+            lnfugs = res(1)
+            lnfugh = res(2)
+
+            Dim dlnfidwm, lnfi(n) As Double
+
+            dlnfidwm = 1 / 0.3978 * (lnfugh - lnfugs)
+
+            Dim suma(n), sumb(n), sumc(n) As Double
+
+            lkp_gpu_func(n, VVc, VTc, VKij, Vz, Vw, Tcm, Pcm, Vcm, zcm, suma, sumb, sumc)
+
+            Dim zm = Me.Z_LK(TIPO, Tr, Pr, wm)(0)
+
+            For i = 0 To n
+                lnfi(i) = lnfugm - 1 / T * dHmRTcm * suma(i) + (zm - 1) / Pcm * sumb(i) - dlnfidwm * sumc(i)
+            Next
+
+            Return lnfi
+
+        End Function
+
+        Private Sub lkp_gpu_func(n As Integer, VVc As Double(), VTc As Double(), VKij As Double(,), Vz As Double(), Vw As Double(), Tcm As Double, Pcm As Double, Vcm As Double, zcm As Double, suma As Double(), sumb As Double(), sumc As Double())
+
+            Dim dTcmdx(n, n), dVcmdx(n, n), dPcmdx(n, n), dZcmdx(n, n) As Double
+            Dim vcjk(n, n), tcjk(n, n) As Double
+            Dim sum1(n, n), sum2(n, n) As Double
+
+            If km Is Nothing Then
+                km = CudafyTranslator.Cudafy()
+                km.Serialize()
+            End If
+
+            Dim gpu As GPGPU = CudafyHost.GetDevice(My.Settings.CudafyTarget)
+            gpu.LoadModule(km)
+
+            ' allocate the memory on the GPU
+            Dim dev_vcjk As Double(,) = gpu.Allocate(Of Double)(vcjk)
+            Dim dev_tcjk As Double(,) = gpu.Allocate(Of Double)(tcjk)
+            Dim dev_vvc As Double() = gpu.Allocate(Of Double)(VVc)
+            Dim dev_vtc As Double() = gpu.Allocate(Of Double)(VTc)
+            Dim dev_vkij As Double(,) = gpu.Allocate(Of Double)(VKij)
+            Dim dev_sum1 As Double(,) = gpu.Allocate(Of Double)(sum1)
+            Dim dev_sum2 As Double(,) = gpu.Allocate(Of Double)(sum2)
+            Dim dev_vz As Double() = gpu.Allocate(Of Double)(Vz)
+            Dim dev_vw As Double() = gpu.Allocate(Of Double)(Vw)
+            Dim dev_dtcmdx As Double(,) = gpu.Allocate(Of Double)(dTcmdx)
+            Dim dev_dvcmdx As Double(,) = gpu.Allocate(Of Double)(dVcmdx)
+            Dim dev_dpcmdx As Double(,) = gpu.Allocate(Of Double)(dPcmdx)
+            Dim dev_dzcmdx As Double(,) = gpu.Allocate(Of Double)(dZcmdx)
+            Dim dev_suma As Double() = gpu.Allocate(Of Double)(suma)
+            Dim dev_sumb As Double() = gpu.Allocate(Of Double)(sumb)
+            Dim dev_sumc As Double() = gpu.Allocate(Of Double)(sumc)
+
+            ' copy the arrays to the GPU
+            gpu.CopyToDevice(vcjk, dev_vcjk)
+            gpu.CopyToDevice(tcjk, dev_tcjk)
+            gpu.CopyToDevice(VVc, dev_vvc)
+            gpu.CopyToDevice(VTc, dev_vtc)
+            gpu.CopyToDevice(VKij, dev_vkij)
+            gpu.CopyToDevice(sum1, dev_sum1)
+            gpu.CopyToDevice(sum2, dev_sum2)
+            gpu.CopyToDevice(Vz, dev_vz)
+            gpu.CopyToDevice(Vw, dev_vw)
+            gpu.CopyToDevice(dTcmdx, dev_dtcmdx)
+            gpu.CopyToDevice(dVcmdx, dev_dvcmdx)
+            gpu.CopyToDevice(dPcmdx, dev_dpcmdx)
+            gpu.CopyToDevice(dZcmdx, dev_dzcmdx)
+            gpu.CopyToDevice(suma, dev_suma)
+            gpu.CopyToDevice(sumb, dev_sumb)
+            gpu.CopyToDevice(sumc, dev_sumc)
+
+            ' launch subs
+            gpu.Launch(New dim3(n + 1, n + 1), 1).lkp_gpu_sum1(dev_vcjk, dev_tcjk, dev_vvc, dev_vtc, dev_vkij)
+            gpu.Launch(New dim3(n + 1, n + 1), 1).lkp_gpu_sum2(dev_sum1, dev_sum2, dev_vz, dev_vcjk, dev_tcjk)
+            gpu.Launch(New dim3(n + 1, n + 1), 1).lkp_gpu_sum3(dev_sum1, dev_sum2, dev_dzcmdx, dev_dvcmdx, dev_dtcmdx, dev_dpcmdx, dev_vw, Tcm, Pcm, Vcm, zcm)
+            gpu.Launch(n + 1, 1).lkp_gpu_sum4(dev_suma, dev_sumb, dev_sumc, dev_dtcmdx, dev_dpcmdx, dev_vz, dev_vw)
+
+            ' copy the arrays back from the GPU to the CPU
+            gpu.CopyFromDevice(dev_suma, suma)
+            gpu.CopyFromDevice(dev_sumb, sumb)
+            gpu.CopyFromDevice(dev_sumc, sumc)
+            gpu.CopyFromDevice(dev_vcjk, vcjk)
+            gpu.CopyFromDevice(dev_tcjk, tcjk)
+            gpu.CopyFromDevice(dev_sum1, sum1)
+            gpu.CopyFromDevice(dev_sum2, sum2)
+            gpu.CopyFromDevice(dev_dtcmdx, dTcmdx)
+            gpu.CopyFromDevice(dev_dvcmdx, dVcmdx)
+            gpu.CopyFromDevice(dev_dpcmdx, dPcmdx)
+            gpu.CopyFromDevice(dev_dzcmdx, dZcmdx)
+
+            ' free the memory allocated on the GPU
+            gpu.FreeAll()
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub lkp_gpu_sum1(thread As Cudafy.GThread, vcjk As Double(,), tcjk As Double(,), VVc As Double(), VTc As Double(), VKij As Double(,))
+
+            Dim i As Integer = thread.blockIdx.x
+            Dim j As Integer = thread.blockIdx.y
+
+            vcjk(i, j) = 1 / 8 * (VVc(i) ^ (1 / 3) + VVc(j) ^ (1 / 3)) ^ 3 / 1000
+            tcjk(i, j) = (VTc(i) * VTc(j)) ^ 0.5 * VKij(i, j)
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub lkp_gpu_sum2(thread As Cudafy.GThread, sum1 As Double(,), sum2 As Double(,), Vz As Double(), vcjk As Double(,), tcjk As Double(,))
+
+            Dim i As Integer = thread.blockIdx.x
+            Dim j As Integer = thread.blockIdx.y
+
+            For l As Integer = 0 To Vz.Length - 1
+                sum1(i, j) += Vz(l) * (vcjk(l, j) ^ 0.25 * tcjk(l, j) - vcjk(l, i) ^ 0.25 * tcjk(l, i))
+                sum2(i, j) += Vz(l) * (vcjk(l, j) - vcjk(l, i))
+            Next
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub lkp_gpu_sum3(thread As Cudafy.GThread, sum1 As Double(,), sum2 As Double(,), dZcmdx As Double(,), dVcmdx As Double(,), dTcmdx As Double(,), dPcmdx As Double(,), Vw As Double(), Tcm As Double, Pcm As Double, Vcm As Double, zcm As Double)
+
+            Dim i As Integer = thread.blockIdx.x
+            Dim j As Integer = thread.blockIdx.y
+
+            dZcmdx(i, j) = -0.085 * (Vw(j) - Vw(i))
+            dVcmdx(i, j) = 2 * sum2(i, j)
+            dTcmdx(i, j) = (2 * sum1(i, j) - 0.25 * Vcm ^ (0.25 - 1) * dVcmdx(i, j) * Tcm) / Vcm ^ 0.25
+            dPcmdx(i, j) = Pcm * (dZcmdx(i, j) / zcm + dTcmdx(i, j) / Tcm - dVcmdx(i, j) / Vcm)
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub lkp_gpu_sum4(thread As Cudafy.GThread, suma As Double(), sumb As Double(), sumc As Double(), dTcmdx As Double(,), dPcmdx As Double(,), Vz As Double(), Vw As Double())
+
+            Dim i As Integer = thread.blockIdx.x
+            Dim j As Integer = 0
+
+            For j = 0 To Vz.Length - 1
+                If j <> i Then
+                    suma(i) += Vz(j) * dTcmdx(i, j)
+                    sumb(i) += Vz(j) * dPcmdx(i, j)
+                    sumc(i) += Vz(j) * (Vw(j) - Vw(i))
+                End If
+            Next
+
+        End Sub
 
     End Class
 

@@ -179,7 +179,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     sumfis = 0
                     sumlis = 0
                     For i = 0 To n
-                        If Vnf(i) > Vxlmax(i) Then
+                        If Vnf(i) / Sum(Vnf) > Vxlmax(i) Then
                             hassolids = True
                             Vxl(i) = Vxlmax(i)
                             sumfis += Vnf(i)
@@ -271,6 +271,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim results As New Dictionary(Of String, Object)
 
+            results.Add("MixtureMoleFlows", Vnf)
             results.Add("VaporPhaseMoleFraction", V)
             results.Add("LiquidPhaseMoleFraction", L)
             results.Add("SolidPhaseMoleFraction", S)
@@ -520,7 +521,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
 
                 For i = 0 To nc
-                    Vx(i) = Vx(i) / mtot
+                    Vx(i) = Vx(i) '/ mtot
                 Next
 
 

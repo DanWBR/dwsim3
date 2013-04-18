@@ -47,13 +47,13 @@ Public Class FormStSim
 
         initialized = True
 
-        Init()
-
         If DWSIM.App.IsRunningOnMono Then
             Me.ListViewPP.View = View.List
         Else
             Me.ListViewPP.View = View.Tile
         End If
+
+        Init()
 
     End Sub
 

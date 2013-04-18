@@ -74,7 +74,7 @@ Namespace My
 
             'set CUDA params
             CudafyModes.Compiler = eGPUCompiler.All
-            CudafyModes.Target = eGPUType.OpenCL
+            CudafyModes.Target = My.Settings.CudafyTarget
 
         End Sub
 

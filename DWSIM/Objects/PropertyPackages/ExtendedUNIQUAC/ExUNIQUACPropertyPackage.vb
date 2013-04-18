@@ -762,7 +762,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Me.CurrentMaterialStream.AtEquilibrium = False
 
-            Dim P, T, H, S, xv, xl, xs As Double
+            Dim P, T, H, S, xv, xl, xs, M As Double
             Dim result As Dictionary(Of String, Object)
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim n As Integer = Me.CurrentMaterialStream.Fases(0).Componentes.Count
@@ -820,7 +820,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
                             Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction = xs
 
+                            Dim Vz = result("LiquidPhaseMolarComposition")
 
+                            i = 0
+                            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                                subst.MolarFlow = Vz(i) * Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow
+                                i += 1
+                            Next
+
+                            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                                subst.MassFlow = subst.MolarFlow * subst.ConstantProperties.Molar_Weight / 1000
+                            Next
+
+                            M = result("MoleSum")
+
+                            Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow *= M
 
                             Dim Vx = result("LiquidPhaseMolarComposition")
                             Dim Vy = result("VaporPhaseMolarComposition")

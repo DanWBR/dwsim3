@@ -288,7 +288,8 @@ Public Class FormPureComp
     Private Sub ComboBox1_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles ComboBox1.SelectedIndexChanged
         If OnlyViewing = True Or constprop Is Nothing Then
             Dim name As String = ComboBox1.SelectedItem.ToString.Substring(ComboBox1.SelectedItem.ToString.IndexOf("[") + 1, ComboBox1.SelectedItem.ToString.Length - ComboBox1.SelectedItem.ToString.IndexOf("[") - 2)
-            constprop = CType(Me.ChildParent.Options.SelectedComponents(name), DWSIM.ClassesBasicasTermodinamica.ConstantProperties)
+            constprop = Nothing
+            constprop = Me.ChildParent.Options.SelectedComponents(name)
         End If
         Call Me.Populate()
     End Sub
@@ -358,7 +359,10 @@ Public Class FormPureComp
         For Each mat As DWSIM.SimulationObjects.Streams.MaterialStream In Me.ChildParent.Collections.CLCS_MaterialStreamCollection.Values
             For Each p As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
                 For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In p.Componentes.Values
-                    subst.ConstantProperties = constprop
+                    If subst.ConstantProperties.Name = constprop.Name Then
+                        subst.ConstantProperties = constprop
+                        Exit For
+                    End If
                 Next
             Next
         Next

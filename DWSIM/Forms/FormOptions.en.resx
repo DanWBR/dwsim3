@@ -117,22 +117,94 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Databases</value>
+  <data name="GroupBox8.Text" xml:space="preserve">
+    <value>OpenCL/CUDA device info</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cbGPU.Location" type="System.Drawing.Point, System.Drawing">
+    <value>345, 47</value>
+  </data>
+  <data name="cbGPU.Size" type="System.Drawing.Size, System.Drawing">
+    <value>257, 21</value>
+  </data>
+  <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 51</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Selected Device</value>
+  </data>
+  <data name="chkEnableGPUProcessing.Size" type="System.Drawing.Size, System.Drawing">
+    <value>222, 17</value>
+  </data>
+  <data name="chkEnableGPUProcessing.Text" xml:space="preserve">
+    <value>Enable OpenCL/CUDA Parallel Processing</value>
+  </data>
+  <data name="cbParallelism.Location" type="System.Drawing.Point, System.Drawing">
+    <value>345, 20</value>
+  </data>
+  <data name="cbParallelism.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 21</value>
+  </data>
+  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 24</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Maximum Parallelism</value>
+  </data>
+  <data name="chkEnableParallelCalcs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 17</value>
+  </data>
+  <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
+    <value>Enable CPU Parallel Processing</value>
+  </data>
+  <data name="GroupBox7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 8</value>
+  </data>
+  <data name="GroupBox7.Text" xml:space="preserve">
+    <value>Calculation Engine</value>
+  </data>
+  <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 17</value>
+  </data>
+  <data name="chkUpdates.Text" xml:space="preserve">
+    <value>Check for updates on startup</value>
+  </data>
+  <data name="chkconsole.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 17</value>
+  </data>
+  <data name="chkconsole.Text" xml:space="preserve">
+    <value>Redirect console output</value>
+  </data>
+  <data name="GroupBox6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 200</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>203, 17</value>
+  </data>
+  <data name="KryptonCheckBox1.Text" xml:space="preserve">
+    <value>Show the welcome screen on startup</value>
+  </data>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 269</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>611, 44</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Reminders</value>
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Features</value>
   </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>UI Language</value>
-  </data>
-  <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Backups</value>
-  </data>
-  <data name="GroupBox11.Text" xml:space="preserve">
-    <value>Tasks</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
     <value>268, 17</value>
   </data>
@@ -154,11 +226,8 @@
   <data name="Button7.Text" xml:space="preserve">
     <value>Add User Database</value>
   </data>
-  <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>616, 232</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Databases</value>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>Tasks</value>
   </data>
   <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 22</value>
@@ -172,86 +241,14 @@
   <data name="dgvdb.Size" type="System.Drawing.Size, System.Drawing">
     <value>610, 186</value>
   </data>
-  <data name="GroupBox7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 8</value>
+  <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>616, 232</value>
   </data>
-  <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Calculation Engine</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Databases</value>
   </data>
-  <data name="GroupBox8.Text" xml:space="preserve">
-    <value>CUDA GPU Info</value>
-  </data>
-  <data name="cbGPU.Location" type="System.Drawing.Point, System.Drawing">
-    <value>379, 47</value>
-  </data>
-  <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>217, 51</value>
-  </data>
-  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 13</value>
-  </data>
-  <data name="Label7.Text" xml:space="preserve">
-    <value>Selected Graphics Card (GPU)</value>
-  </data>
-  <data name="chkEnableGPUProcessing.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 17</value>
-  </data>
-  <data name="chkEnableGPUProcessing.Text" xml:space="preserve">
-    <value>Enable GPU (CUDA) Processing</value>
-  </data>
-  <data name="cbParallelism.Location" type="System.Drawing.Point, System.Drawing">
-    <value>379, 20</value>
-  </data>
-  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>217, 24</value>
-  </data>
-  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 13</value>
-  </data>
-  <data name="Label6.Text" xml:space="preserve">
-    <value>Maximum Degree of Parallelism</value>
-  </data>
-  <data name="chkEnableParallelCalcs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 17</value>
-  </data>
-  <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
-    <value>Enable Parallel Calculations</value>
-  </data>
-  <data name="GroupBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 200</value>
-  </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Other</value>
-  </data>
-  <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 17</value>
-  </data>
-  <data name="chkUpdates.Text" xml:space="preserve">
-    <value>Check for updates on startup</value>
-  </data>
-  <data name="chkconsole.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 17</value>
-  </data>
-  <data name="chkconsole.Text" xml:space="preserve">
-    <value>Redirect console output</value>
-  </data>
-  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 269</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>611, 44</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Reminders</value>
-  </data>
-  <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 17</value>
-  </data>
-  <data name="KryptonCheckBox1.Text" xml:space="preserve">
-    <value>Show the welcome screen on startup</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>UI Language</value>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Databases</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
     <value>279, 47</value>
@@ -331,7 +328,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABw
-        KgAAAk1TRnQBSQFMAgEBCgEAAbwBAAG8AQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAcwBAAHMAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAeQCogHiAqAB4QKfAd4CnAHcAZwBmgHaApgB2gKYAdkClwHXApUB1gKU
         AdMCkQHTApEB0QKPAc8CjQHPAo0BzwKNAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKf
         Ad4CnAHeApwB3AKaAdoCmAHaApgB2gKYAdoCmGAAA+wD8APuA+0B6gHrAeoD6APnAuUB5gLjAeQD4gPh
@@ -530,8 +527,11 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Select an User Interface Language from the list below and click 'OK' to confirm:</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Backup Copy</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>UI Language</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>UI Language</value>
   </data>
   <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>225, 25</value>
@@ -563,11 +563,11 @@
   <data name="KryptonCheckBox6.Text" xml:space="preserve">
     <value>Enable backup copies</value>
   </data>
-  <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>608, 314</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Backup Copy</value>
   </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>IronPython and IronRuby</value>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Backups</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>33, 13</value>
@@ -586,6 +586,12 @@
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Manage the paths were the compiler should search files for importing into scripts:</value>
+  </data>
+  <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>608, 314</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>IronPython and IronRuby</value>
   </data>
   <data name="FolderBrowserDialog1.Description" xml:space="preserve">
     <value>Select a folder...</value>

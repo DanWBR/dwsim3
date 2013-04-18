@@ -121,6 +121,9 @@
   <data name="cbPropPack.Location" type="System.Drawing.Point, System.Drawing">
     <value>150, 184</value>
   </data>
+  <data name="cbPropPack.Size" type="System.Drawing.Size, System.Drawing">
+    <value>409, 21</value>
+  </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 13</value>
   </data>
@@ -211,11 +214,8 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Envelope-Typ</value>
   </data>
-  <data name="LblSelected.Location" type="System.Drawing.Point, System.Drawing">
-    <value>381, 21</value>
-  </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>384, 183</value>
+    <value>565, 183</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Berechnen</value>
@@ -232,13 +232,13 @@
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Envelope-Einstellungen</value>
   </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Ergebnisse</value>
+  </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Graph</value>
   </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Tabelle</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Ergebnisse</value>
   </data>
 </root>

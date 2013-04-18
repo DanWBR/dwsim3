@@ -1160,7 +1160,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Dim FCL = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
                             Dim FCL2 = Me.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
                             Dim FCV = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-                            Dim FCS = Me.DW_CalcFugCoeff(Vy, T, P, State.Solid)
+                            Dim FCS = Me.DW_CalcFugCoeff(Vs, T, P, State.Solid)
 
                             i = 0
                             For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
@@ -2584,6 +2584,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         ti = (ut(0) + ut(ut.Count - 1)) / 2
                         uim = ui(0) ' (ui(0) + ui(ui.Count - 1)) / 2
                         tf = MathEx.Common.Max(Me.RET_VTF())
+                        If tf = 0.0# Then tf = ti * 0.7
                         For tit = tf To ti Step (ti - tf) / 25
                             result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, P, tit, Me)
                             If result(5) > 0.0# Then
@@ -3366,7 +3367,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             End With
                         End If
                         If Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[8] " & DWSIM.App.GetLocalString("Solid"), l4, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas6"), True)
+                            .Item.Add("[8] " & DWSIM.App.GetLocalString("Solid"), s, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas7"), True)
                             With .Item(.Item.Count - 1)
                                 If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
                                 .IsBrowsable = True
