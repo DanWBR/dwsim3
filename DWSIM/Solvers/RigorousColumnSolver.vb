@@ -507,7 +507,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                         Else '% W/W
                             spfval1 = _pp.RET_VMM()(spci1) * 1000 * (_yc(0)(spci1) * _Vj(0) - sumc)
                         End If
-                    End If 
+                    End If
                 Case ColumnSpec.SpecType.Heat_Duty
                     _Q(0) = spval1 / _maxF
                 Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
@@ -670,7 +670,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                         _S(i, j) = Exp(_bx(i) + _dbx(i) * t) * _alpha(i, j) * _Sb
                     Next
                 End If
-                
+
             Next
 
             Dim m1, m2 As Integer
@@ -1416,7 +1416,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
                 'update inner loop parameters
 
-                Dim lnSbj_ant(ns), lnRvj_ant(ns), lnRlj_ant(ns), df, df_ant As Double
+                Dim lnSbj_ant(ns), lnRvj_ant(ns), lnRlj_ant(ns), df, df_ant, xlowbound As Double
 
                 df_ant = df
 
@@ -1558,16 +1558,20 @@ restart:            fx = Me.FunctionValue(xvar)
                     End If
 
                     'this call to the brent solver calculates the damping factor which minimizes the error (fval).
+                    itol = tol(0) * ns
                     df = 1
                     If UseDampingFactor Then fval = brentsolver.brentoptimize(dfmin, dfmax, tol(0), df)
 
                     perturb = False
                     bypass = False
+                    xlowbound = 0.1
                     For i = 0 To el
                         xvar_ant(i) = xvar(i)
                         xvar(i) += dx(i) * df
+
                         If Abs((dx(i) * df) / xvar_ant(i)) > 10 Then
-                            perturb = True
+                            'perturb = True
+                            xvar(i) = xvar_ant(i) - df * (xvar_ant(i) - xlowbound) * 0.5
                         End If
                         If Double.IsNaN(dx(i)) Or Double.IsInfinity(dx(i)) Then
                             bypass = True
@@ -1603,7 +1607,6 @@ restart:            fx = Me.FunctionValue(xvar)
                     If Double.IsNaN(il_err) Then Throw New Exception(DWSIM.App.GetLocalString("DCGeneralError"))
                     If MathEx.Common.AbsSum(dx) = 0.0# Or Abs((il_err - il_err_ant) / il_err) < itol Then Exit Do
 
-                    itol = tol(0) * ns
 
                     CheckCalculatorStatus()
 
