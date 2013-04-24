@@ -217,7 +217,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             m2 = 0
 
             If _vcnt > 0 Then
-                For i = _ns To _vcnt + _ns
+                For i = _ns + 1 To _vcnt + _ns
                     For j = m1 To _ns
                         If _Rvj(j) <> 1 Then
                             m1 = j + 1
