@@ -622,7 +622,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
         Private Function FunctionGradient(ByVal x() As Double) As Double(,)
 
             Dim epsilon As Double = ndeps
-
+            Dim hs As Double
             Dim f1(), f2() As Double
             Dim g(x.Length - 1, x.Length - 1), x1(x.Length - 1), x2(x.Length - 1) As Double
             Dim i, j, k As Integer
@@ -635,12 +635,14 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                         x2(j) = x(j)
                     Else
                         'x1(j) = x(j)
-                        x2(j) = x(j) * (1 + epsilon) + (epsilon / 2) ^ 2
+                        'x2(j) = x(j) * (1 + epsilon) + (epsilon / 2) ^ 2
+                        x2(j) = x(j) + epsilon
                     End If
                 Next
                 f2 = FunctionValue(x2)
                 For k = 0 To x.Length - 1
-                    g(k, i) = (f2(k) - f1(k)) / (x2(i) - x(i))
+                    hs = epsilon
+                    g(k, i) = (f2(k) - f1(k)) / hs
                 Next
             Next
 
