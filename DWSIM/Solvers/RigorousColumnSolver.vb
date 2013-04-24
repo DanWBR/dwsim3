@@ -1140,7 +1140,15 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 If i > 0 Then sumLSS += LSS(i)
                 sumVSS += VSS(i)
             Next
-            Dim B As Double = sumF - sumLSS - sumVSS - V(0) - LSS(0)
+
+            Dim B As Double
+            If _condtype = Column.condtype.Total_Condenser Then
+                B = sumF - sumLSS - sumVSS - LSS(0)
+            ElseIf _condtype = Column.condtype.Partial_Condenser Then
+                B = sumF - sumLSS - sumVSS - V(0) - LSS(0)
+            Else
+                B = sumF - sumLSS - sumVSS - V(0)
+            End If
 
             'step2
 
