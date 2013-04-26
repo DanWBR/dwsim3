@@ -601,14 +601,15 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 ElseIf i > _ns And i <= _vcnt + _ns Then
                     For j = 0 To _ns
                         If _Rvj(j) <> 1 Then
-                            errors(i) = (_VSS(j) - _VSSj(j)) / _VSS(j)
+                            errors(i) = (_VSS(j) - _VSSj(j)) '/ _VSS(j)
                             i += 1
                         End If
                     Next
-                ElseIf i > _vcnt + _ns And i <= _vcnt + _lcnt + _ns Then
+                End If
+                If i > _vcnt + _ns And i <= _vcnt + _lcnt + _ns Then
                     For j = 1 To _ns
                         If _Rlj(j) <> 1 Then
-                            errors(i) = (_LSS(j) - _LSSj(j)) / _LSS(j)
+                            errors(i) = (_LSS(j) - _LSSj(j)) '/ _LSS(j)
                             i += 1
                         End If
                     Next
@@ -1056,10 +1057,33 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             For i = 0 To _ns
                 _Tj(i) = _Tj0(i)
             Next
+            Dim errors(_bx.Length - 1) As Double
+
+            For i = 0 To _bx.Length - 1
+                If i <= _ns Then
+                    errors(i) = entbal(i)
+                ElseIf i > _ns And i <= _vcnt + _ns Then
+                    For j = 0 To _ns
+                        If _Rvj(j) <> 1 Then
+                            errors(i) = (_VSS(j) - _VSSj(j)) '/ _VSS(j)
+                            i += 1
+                        End If
+                    Next
+                End If
+                If i > _vcnt + _ns And i <= _vcnt + _lcnt + _ns Then
+                    For j = 1 To _ns
+                        If _Rlj(j) <> 1 Then
+                            errors(i) = (_LSS(j) - _LSSj(j)) '/ _LSS(j)
+                            i += 1
+                        End If
+                    Next
+                End If
+            Next
+
 
             Dim il_err As Double = 0
-            For i = 0 To _ns
-                il_err += Abs(entbal(i)) ^ 2
+            For i = 0 To _bx.Length - 1
+                il_err += errors(i) ^ 2
             Next
 
             Return il_err
