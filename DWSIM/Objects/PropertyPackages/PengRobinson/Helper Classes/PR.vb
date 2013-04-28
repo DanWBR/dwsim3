@@ -1,4 +1,25 @@
+'    Peng-Robinson Property Package 
+'    Copyright 2008-2013 Daniel Wagner O. de Medeiros
+'
+'    This file is part of DWSIM.
+'
+'    DWSIM is free software: you can redistribute it and/or modify
+'    it under the terms of the GNU General Public License as published by
+'    the Free Software Foundation, either version 3 of the License, or
+'    (at your option) any later version.
+'
+'    DWSIM is distributed in the hope that it will be useful,
+'    but WITHOUT ANY WARRANTY; without even the implied warranty of
+'    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'    GNU General Public License for more details.
+'
+'    You should have received a copy of the GNU General Public License
+'    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
+
 Imports DWSIM.DWSIM.MathEx
+Imports Cudafy
+Imports Cudafy.Translator
+Imports Cudafy.Host
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
@@ -128,6 +149,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
         End Function
 
         Public Overrides Function CalcLnFug(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "")
+
+            If My.Settings.EnableGPUProcessing Then
+                Return CalcLnFugGPU(T, P, Vx, VKij, VTc, VPc, Vw, otherargs, forcephase)
+            Else
+                Return CalcLnFugCPU(T, P, Vx, VKij, VTc, VPc, Vw, otherargs, forcephase)
+            End If
+
+        End Function
+
+        Private Function CalcLnFugCPU(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "")
 
             Dim n, R, coeff(3) As Double
             Dim Vant(0, 4) As Double
@@ -266,6 +297,223 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Return LN_CF
 
         End Function
+
+        Private Function CalcLnFugGPU(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Double(,), ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "")
+
+            Dim n, R, coeff(3) As Double
+            Dim Vant(0, 4) As Double
+            Dim beta As Double
+            Dim criterioOK As Boolean = False
+            Dim AG, BG, aml, bml As Double
+            Dim t1, t2, t3, t4, t5 As Double
+
+            n = UBound(Vx)
+
+            Dim ai(n), bi(n), tmp(n + 1), a(n, n), b(n, n) As Double
+            Dim aml2(n), amv2(n), LN_CF(n), PHI(n) As Double
+            Dim Tc(n), Pc(n), W(n), alpha(n), m(n), Tr(n) As Double
+            Dim rho, rho0, rho_mc, Tmc, dPdrho, dPdrho_ As Double
+
+            R = 8.314
+
+            Dim i As Integer
+            i = 0
+            Do
+                Tc(i) = VTc(i)
+                Tr(i) = T / Tc(i)
+                Pc(i) = VPc(i)
+                W(i) = Vw(i)
+                i = i + 1
+            Loop Until i = n + 1
+
+            Dim aml_temp(n), aml2_temp(n), bml_temp(n) As Double
+
+            pr_gpu_func(n, Vx, VKij, Tc, Pc, W, T, alpha, ai, bi, a, aml_temp, bml_temp, aml2_temp)
+
+            aml2 = aml2_temp
+            aml = MathEx.Common.Sum(aml_temp)
+            bml = MathEx.Common.Sum(bml_temp)
+
+            AG = aml * P / (R * T) ^ 2
+            BG = bml * P / (R * T)
+
+            Dim _zarray As ArrayList, _mingz As Object, Z As Double
+
+            _zarray = CalcZ(T, P, Vx, VKij, VTc, VPc, Vw)
+            If forcephase <> "" Then
+                If forcephase = "L" Then
+                    If _zarray.Count > 0 Then
+                        Z = Common.Min(_zarray.ToArray())
+                    Else
+                        Dim P_lim, rho_lim, Pcalc, rho_calc As Double
+                        Dim C0, C1 As Double
+                        rho_lim = New Auxiliary.PengRobinson().ESTIMAR_RhoLim(aml, bml, T, P)
+                        P_lim = R * T * rho_lim / (1 - rho_lim * bml) - aml * rho_lim ^ 2 / (1 + 2 * bml * rho_lim - (rho_lim * bml) ^ 2)
+                        C1 = (rho - 0.7 * rho_mc) * dPdrho
+                        C0 = P_lim - C1 * Math.Log(rho_lim - 0.7 * rho_mc)
+                        rho_calc = Math.Exp((P - C0) / C1) + 0.7 * rho_mc
+                        Pcalc = R * T * rho_calc / (1 - rho_calc * bml) - aml * rho_calc ^ 2 / (1 + 2 * bml * rho_calc - (rho_calc * bml) ^ 2)
+                        Z = P / (rho_calc * R * T)
+                    End If
+                ElseIf forcephase = "V" Then
+                    If _zarray.Count > 0 Then
+                        Z = Common.Max(_zarray.ToArray())
+                    Else
+                        Dim aa, bb As Double
+                        Dim P_lim, rho_lim, Pcalc, rho_calc, rho_x As Double
+                        rho_lim = New Auxiliary.PengRobinson().ESTIMAR_RhoLim(aml, bml, T, P)
+                        P_lim = R * T * rho_lim / (1 - rho_lim * bml) - aml * rho_lim ^ 2 / (1 + 2 * bml * rho_lim - (rho_lim * bml) ^ 2)
+                        rho_x = (rho_lim + rho_mc) / 2
+                        bb = 1 / P_lim * (1 / (rho_lim * (1 - rho_lim / rho_x)))
+                        aa = -bb / rho_x
+                        rho_calc = (1 / P + bb) / aa
+                        Pcalc = R * T * rho_calc / (1 - rho_calc * bml) - aml * rho_calc ^ 2 / (1 + 2 * bml * rho_calc - (rho_calc * bml) ^ 2)
+                        Z = P / (rho_calc * R * T)
+                    End If
+                End If
+            Else
+                _mingz = ZtoMinG(_zarray.ToArray, T, P, Vx, VKij, VTc, VPc, Vw)
+                Z = _zarray(_mingz(0))
+            End If
+
+            beta = 1 / P * (1 - (BG * Z ^ 2 + AG * Z - 6 * BG ^ 2 * Z - 2 * BG * Z - 2 * AG * BG + 2 * BG ^ 2 + 2 * BG) / (Z * (3 * Z ^ 2 - 2 * Z + 2 * BG * Z + AG - 3 * BG ^ 2 - 2 * BG)))
+
+            rho0 = 1 / bml
+            rho_mc = 0.2599 / bml
+            Tmc = 0.20268 * aml / (R * bml)
+            rho = P / (Z * R * T)
+            dPdrho_ = 0.1 * R * T
+            dPdrho = bml * rho * R * T * (1 - bml * rho) ^ -2 + R * T * (1 - bml * rho) ^ -1 + _
+                    aml * rho ^ 2 * (1 + 2 * bml * rho - (bml * rho) ^ 2) ^ -2 * (2 * bml - 2 * bml ^ 2 * rho) + _
+                    2 * aml * rho * (1 + 2 * bml * rho - (bml * rho) ^ 2) ^ -1
+
+            i = 0
+            Do
+                t1 = bi(i) * (Z - 1) / bml
+                t2 = -Math.Log(Z - BG)
+                t3 = AG * (2 * aml2(i) / aml - bi(i) / bml)
+                t4 = Math.Log((Z + (1 + 2 ^ 0.5) * BG) / (Z + (1 - 2 ^ 0.5) * BG))
+                t5 = 2 * 2 ^ 0.5 * BG
+                LN_CF(i) = t1 + t2 - (t3 * t4 / t5)
+                LN_CF(i) = LN_CF(i)
+                i = i + 1
+            Loop Until i = n + 1
+
+            Return LN_CF
+
+        End Function
+
+        Public Shared Sub pr_gpu_func(n As Integer, Vx As Double(), VKij As Double(,), Tc As Double(), Pc As Double(), w As Double(), T As Double, alpha As Double(), ai As Double(), bi As Double(), a As Double(,), aml_temp As Double(), bml_temp As Double(), aml2_temp As Double())
+
+            Dim gpu As GPGPU = My.MyApplication.gpu
+
+            If gpu.IsMultithreadingEnabled Then gpu.Lock()
+
+            ' allocate the memory on the GPU
+            Dim dev_alpha As Double() = gpu.Allocate(Of Double)(alpha)
+            Dim dev_ai As Double() = gpu.Allocate(Of Double)(ai)
+            Dim dev_bi As Double() = gpu.Allocate(Of Double)(bi)
+            Dim dev_Tc As Double() = gpu.Allocate(Of Double)(Tc)
+            Dim dev_Pc As Double() = gpu.Allocate(Of Double)(Pc)
+            Dim dev_W As Double() = gpu.Allocate(Of Double)(w)
+            Dim dev_a As Double(,) = gpu.Allocate(Of Double)(a)
+            Dim dev_vkij As Double(,) = gpu.Allocate(Of Double)(VKij)
+            Dim dev_Vx As Double() = gpu.Allocate(Of Double)(Vx)
+            Dim dev_aml2_temp As Double() = gpu.Allocate(Of Double)(aml2_temp)
+            Dim dev_aml_temp As Double() = gpu.Allocate(Of Double)(aml_temp)
+            Dim dev_bml_temp As Double() = gpu.Allocate(Of Double)(bml_temp)
+
+            ' copy the arrays to the GPU
+            gpu.CopyToDevice(alpha, dev_alpha)
+            gpu.CopyToDevice(ai, dev_ai)
+            gpu.CopyToDevice(bi, dev_bi)
+            gpu.CopyToDevice(Tc, dev_Tc)
+            gpu.CopyToDevice(Pc, dev_Pc)
+            gpu.CopyToDevice(w, dev_W)
+            gpu.CopyToDevice(a, dev_a)
+            gpu.CopyToDevice(VKij, dev_vkij)
+            gpu.CopyToDevice(Vx, dev_Vx)
+            gpu.CopyToDevice(aml2_temp, dev_aml2_temp)
+            gpu.CopyToDevice(aml_temp, dev_aml_temp)
+            gpu.CopyToDevice(bml_temp, dev_bml_temp)
+
+            ' launch subs
+            gpu.Launch(n + 1, 1).pr_gpu_sum1(dev_alpha, dev_ai, dev_bi, dev_Tc, dev_Pc, dev_W, T)
+            gpu.Launch(New dim3(n + 1, n + 1), 1).pr_gpu_sum2(dev_a, dev_ai, dev_vkij)
+            gpu.Launch(n + 1, 1).pr_gpu_sum3(dev_Vx, dev_a, dev_aml_temp, dev_aml2_temp)
+            gpu.Launch(n + 1, 1).pr_gpu_sum4(dev_Vx, dev_bi, dev_bml_temp)
+
+            ' copy the arrays back from the GPU to the CPU
+            gpu.CopyFromDevice(dev_alpha, alpha)
+            gpu.CopyFromDevice(dev_ai, ai)
+            gpu.CopyFromDevice(dev_bi, bi)
+            gpu.CopyFromDevice(dev_Tc, Tc)
+            gpu.CopyFromDevice(dev_Pc, Pc)
+            gpu.CopyFromDevice(dev_W, w)
+            gpu.CopyFromDevice(dev_a, a)
+            gpu.CopyFromDevice(dev_vkij, VKij)
+            gpu.CopyFromDevice(dev_Vx, Vx)
+            gpu.CopyFromDevice(dev_aml2_temp, aml2_temp)
+            gpu.CopyFromDevice(dev_aml_temp, aml_temp)
+            gpu.CopyFromDevice(dev_bml_temp, bml_temp)
+
+            ' free the memory allocated on the GPU
+            gpu.Free(dev_alpha)
+            gpu.Free(dev_ai)
+            gpu.Free(dev_bi)
+            gpu.Free(dev_Tc)
+            gpu.Free(dev_Pc)
+            gpu.Free(dev_W)
+            gpu.Free(dev_a)
+            gpu.Free(dev_vkij)
+            gpu.Free(dev_Vx)
+            gpu.Free(dev_aml2_temp)
+            gpu.Free(dev_aml_temp)
+            gpu.Free(dev_bml_temp)
+
+            If gpu.IsMultithreadingEnabled Then gpu.Unlock()
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub pr_gpu_sum1(thread As Cudafy.GThread, alpha As Double(), ai As Double(), bi As Double(), Tc As Double(), Pc As Double(), W As Double(), T As Double)
+
+            Dim i As Integer = thread.blockIdx.x
+
+            alpha(i) = (1 + (0.37464 + 1.54226 * W(i) - 0.26992 * W(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
+            ai(i) = 0.45724 * alpha(i) * 8.314 ^ 2 * Tc(i) ^ 2 / Pc(i)
+            bi(i) = 0.0778 * 8.314 * Tc(i) / Pc(i)
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub pr_gpu_sum2(thread As Cudafy.GThread, a As Double(,), ai As Double(), VKij As Double(,))
+
+            Dim i As Integer = thread.blockIdx.x
+            Dim j As Integer = thread.blockIdx.y
+
+            a(i, j) = (ai(i) * ai(j)) ^ 0.5 * (1 - VKij(i, j))
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub pr_gpu_sum3(thread As Cudafy.GThread, Vx As Double(), a As Double(,), aml_temp As Double(), aml2_temp As Double())
+
+            Dim i As Integer = thread.blockIdx.x
+
+            aml_temp(i) = 0
+            aml2_temp(i) = 0
+            For k As Integer = 0 To Vx.Length - 1
+                aml_temp(i) += Vx(i) * Vx(k) * a(i, k)
+                aml2_temp(i) += Vx(k) * a(k, i)
+            Next
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub pr_gpu_sum4(thread As Cudafy.GThread, Vx As Double(), bi As Double(), bml_temp As Double())
+
+            Dim i As Integer = thread.blockIdx.x
+
+            bml_temp(i) = Vx(i) * bi(i)
+
+        End Sub
 
         Function CalcZ(ByVal T, ByVal P, ByVal Vx, ByVal VKij, ByVal VTc, ByVal VPc, ByVal Vw) As ArrayList
 

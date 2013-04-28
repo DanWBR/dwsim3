@@ -27,6 +27,8 @@ Public Class FormOptions
 
     Inherits System.Windows.Forms.Form
 
+    Private loaded As Boolean = False
+
     Private Sub FormOptions_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
         My.Settings.Save()
     End Sub
@@ -106,6 +108,8 @@ Public Class FormOptions
         For Each s As String In My.Settings.ScriptPaths
             Me.lbpaths.Items.Add(s)
         Next
+
+        loaded = True
 
     End Sub
 
@@ -424,6 +428,9 @@ Public Class FormOptions
                 Exit For
             End If
         Next
+        If loaded Then
+            MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
+        End If
     End Sub
 
     Private Sub chkEnableGPUProcessing_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkEnableGPUProcessing.CheckedChanged

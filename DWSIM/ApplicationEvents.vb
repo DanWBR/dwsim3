@@ -20,6 +20,9 @@ Namespace My
         Public IsRunningParallelTasks As Boolean = False
         Public ActiveSimulation As FormFlowsheet
         Public CAPEOPENMode As Boolean = False
+        Public Shared gpu As Cudafy.Host.GPGPU
+        Public Shared gpumod As CudafyModule
+        Public Shared prevlang As Integer = 0 '0 = CUDA, 1 = OpenCL
 
         Private Sub MyApplication_Startup(ByVal sender As Object, ByVal e As Microsoft.VisualBasic.ApplicationServices.StartupEventArgs) Handles Me.Startup
 

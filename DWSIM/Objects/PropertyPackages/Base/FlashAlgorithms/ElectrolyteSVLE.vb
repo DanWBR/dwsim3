@@ -137,127 +137,137 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Me.Vx0 = Vx.Clone
 
-                'calculate chemical equilibria between ions, salts and water. 
-                ''SolveChemicalEquilibria' returns the equilibrium molar amounts in the liquid phase, including precipitates.
+                Dim int_count As Integer = 0
+                Dim L_ant As Double = 0.0#
 
-                Vnf = SolveChemicalEquilibria(Vx, T, P, ids).Clone
+                Do
 
-                'calculate activity coefficients.
+                    'calculate chemical equilibria between ions, salts and water. 
+                    ''SolveChemicalEquilibria' returns the equilibrium molar amounts in the liquid phase, including precipitates.
 
-                If TypeOf proppack Is ExUNIQUACPropertyPackage Then
-                    activcoeff = CType(proppack, ExUNIQUACPropertyPackage).m_uni.GAMMA_MR(T, Vnf, CompoundProperties)
-                ElseIf TypeOf proppack Is LIQUAC2PropertyPackage Then
-                    activcoeff = CType(proppack, LIQUAC2PropertyPackage).m_uni.GAMMA_MR(T, Vnf, CompoundProperties)
-                End If
+                    Vnf = SolveChemicalEquilibria(Vx, T, P, ids).Clone
 
-                Dim Vxlmax(n) As Double
-
-                If P > Vnf(wid) * activcoeff(wid) * Psat Then
-
-                    'water is still on liquid phase. proceed.
-
-                    'calculate maximum solubilities for solids/precipitates.
-
-                    For i = 0 To n
-                        If CompoundProperties(i).TemperatureOfFusion <> 0.0# Then
-                            Vxlmax(i) = (1 / activcoeff(i)) * Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
-                            If Vxlmax(i) > 1 Then Vxlmax(i) = 1.0#
-                        Else
-                            If CompoundProperties(i).IsHydratedSalt Then
-                                Vxlmax(i) = 0.0# 'in the absence of enthalpy/temperature of fusion, I'll assume that the hydrated salt will always precipitate, if present.
-                            Else
-                                Vxlmax(i) = 1.0#
-                            End If
-                        End If
-                    Next
-
-                    'mass balance.
-
-                    Dim sumfis, sumlis As Double
-                    Dim hassolids As Boolean = False
-
-                    sumfis = 0
-                    sumlis = 0
-                    For i = 0 To n
-                        If Vnf(i) / Sum(Vnf) > Vxlmax(i) Then
-                            hassolids = True
-                            Vxl(i) = Vxlmax(i)
-                            sumfis += Vnf(i)
-                            sumlis += Vxl(i)
-                        End If
-                    Next
-
-                    If hassolids Then L = (1 - sumfis) / (1 - sumlis) Else L = 1
-                    S = 1 - L
-
-                    For i = 0 To n
-                        If Vnf(i) > Vxlmax(i) Then
-                            Vns(i) = Vnf(i) - Vxl(i) * L
-                        End If
-                        If Vxl(i) <> 0.0# Then
-                            Vnl(i) = Vxl(i) * L
-                        Else
-                            Vnl(i) = Vnf(i)
-                        End If
-                    Next
-
-                    For i = 0 To n
-                        Vxl(i) = Vnl(i) / Sum(Vnl)
-                        Vxs(i) = Vns(i) / Sum(Vns)
-                    Next
-
-                    'calculate final activity coefficients.
+                    'calculate activity coefficients.
 
                     If TypeOf proppack Is ExUNIQUACPropertyPackage Then
-                        activcoeff = CType(proppack, ExUNIQUACPropertyPackage).m_uni.GAMMA_MR(T, Vxl, CompoundProperties)
+                        activcoeff = CType(proppack, ExUNIQUACPropertyPackage).m_uni.GAMMA_MR(T, Vnf, CompoundProperties)
                     ElseIf TypeOf proppack Is LIQUAC2PropertyPackage Then
-                        activcoeff = CType(proppack, LIQUAC2PropertyPackage).m_uni.GAMMA_MR(T, Vxl, CompoundProperties)
+                        activcoeff = CType(proppack, LIQUAC2PropertyPackage).m_uni.GAMMA_MR(T, Vnf, CompoundProperties)
                     End If
 
-                Else
+                    Dim Vxlmax(n) As Double
 
-                    'water is in vapor phase. all remaining compounds will be treated as solids.
-                    'ions???
+                    If P > Vnf(wid) * activcoeff(wid) * Psat Then
 
-                    L = 0
-                    V = Vnf(wid)
-                    Vxl(wid) = 0.0#
-                    Vxv(wid) = 1.0#
+                        'water is still on liquid phase. proceed.
 
-                    For i = 0 To n
-                        If i <> wid Then
-                            Vxlmax(i) = 0.0#
-                        End If
-                    Next
+                        'calculate maximum solubilities for solids/precipitates.
 
-                    'mass balance.
+                        For i = 0 To n
+                            If CompoundProperties(i).TemperatureOfFusion <> 0.0# Then
+                                Vxlmax(i) = (1 / activcoeff(i)) * Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
+                                If Vxlmax(i) > 1 Then Vxlmax(i) = 1.0#
+                            Else
+                                If CompoundProperties(i).IsHydratedSalt Then
+                                    Vxlmax(i) = 0.0# 'in the absence of enthalpy/temperature of fusion, I'll assume that the hydrated salt will always precipitate, if present.
+                                Else
+                                    Vxlmax(i) = 1.0#
+                                End If
+                            End If
+                        Next
 
-                    Dim sumfis, sumlis As Double
-                    Dim hassolids As Boolean = False
+                        'mass balance.
 
-                    sumfis = 0
-                    sumlis = 0
-                    For i = 0 To n
-                        If Vnf(i) > Vxlmax(i) And i <> wid Then
-                            hassolids = True
-                            Vxl(i) = Vxlmax(i)
-                            sumfis += Vnf(i)
-                            sumlis += Vxl(i)
-                        End If
-                    Next
+                        Dim sumfis, sumlis As Double
+                        Dim hassolids As Boolean = False
 
-                    S = 1 - V
+                        sumfis = 0
+                        sumlis = 0
+                        For i = 0 To n
+                            If Vnf(i) / Sum(Vnf) > Vxlmax(i) Then
+                                hassolids = True
+                                Vxl(i) = Vxlmax(i)
+                                sumfis += Vnf(i)
+                                sumlis += Vxl(i)
+                            End If
+                        Next
 
-                    For i = 0 To n
-                        If Vnf(i) > Vxlmax(i) Then
-                            Vns(i) = Vnf(i)
-                        End If
-                    Next
+                        L_ant = L
+                        If hassolids Then L = (1 - sumfis) / (1 - sumlis) Else L = 1
+                        S = 1 - L
 
-                    For i = 0 To n
-                        Vxs(i) = Vns(i) / Sum(Vns)
-                    Next
+                        For i = 0 To n
+                            If Vnf(i) > Vxlmax(i) Then
+                                Vns(i) = Vnf(i) - Vxl(i) * L
+                            End If
+                            If Vxl(i) <> 0.0# Then
+                                Vnl(i) = Vxl(i) * L
+                            Else
+                                Vnl(i) = Vnf(i)
+                            End If
+                        Next
 
+                        For i = 0 To n
+                            Vxl(i) = Vnl(i) / Sum(Vnl)
+                            Vxs(i) = Vns(i) / Sum(Vns)
+                        Next
+
+
+                    Else
+
+                        'water is in vapor phase. all remaining compounds will be treated as solids.
+                        'ions???
+
+                        L_ant = L
+                        L = 0
+                        V = Vnf(wid)
+                        Vxl(wid) = 0.0#
+                        Vxv(wid) = 1.0#
+
+                        For i = 0 To n
+                            If i <> wid Then
+                                Vxlmax(i) = 0.0#
+                            End If
+                        Next
+
+                        'mass balance.
+
+                        Dim sumfis, sumlis As Double
+                        Dim hassolids As Boolean = False
+
+                        sumfis = 0
+                        sumlis = 0
+                        For i = 0 To n
+                            If Vnf(i) > Vxlmax(i) And i <> wid Then
+                                hassolids = True
+                                Vxl(i) = Vxlmax(i)
+                                sumfis += Vnf(i)
+                                sumlis += Vxl(i)
+                            End If
+                        Next
+
+                        S = 1 - V
+
+                        For i = 0 To n
+                            If Vnf(i) > Vxlmax(i) Then
+                                Vns(i) = Vnf(i)
+                            End If
+                        Next
+
+                        For i = 0 To n
+                            Vxs(i) = Vns(i) / Sum(Vns)
+                        Next
+
+                    End If
+
+                    If Math.Abs(L - L_ant) < 0.001 Then Exit Do
+
+                    Vx = Vxl.Clone
+
+                Loop Until int_count > 50
+
+                If int_count > 50 Then
+                    Throw New Exception("Chemical Equilibrium Solver error: Reached the maximum number of external iterations without converging.")
                 End If
 
             End If
@@ -473,7 +483,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     tmpx = x
                     tmpdx = dx
                     df = 1
-                    fval = brentsolver.brentoptimize(0.1, 2, 0.0001, df)
+                    fval = brentsolver.brentoptimize(0.01, 0.5, 0.0001, df)
 
                     For i = 0 To r
                         x(i) -= dx(i) * df
@@ -486,7 +496,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     End If
 
                     If niter > 999 Then
-                        Throw New Exception("Chemical Equilibrium Solver error: Reached the maximum number of iterations without converging.")
+                        Throw New Exception("Chemical Equilibrium Solver error: Reached the maximum number of internal iterations without converging.")
                     End If
 
                 Loop
@@ -630,7 +640,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
             Next
 
-            Dim pen_val As Double = ReturnPenaltyValue()
+            Dim pen_val As Double = 0 'ReturnPenaltyValue()
 
             For i = 0 To Me.Reactions.Count - 1
                 With proppack.CurrentMaterialStream.Flowsheet.Options.Reactions(Me.Reactions(i))

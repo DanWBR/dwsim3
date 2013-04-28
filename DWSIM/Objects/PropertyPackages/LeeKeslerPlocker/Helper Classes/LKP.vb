@@ -49,7 +49,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
     <System.Serializable()> Public Class LeeKeslerPlocker
 
         Dim m_pr As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-        <System.NonSerialized()> Dim km As CudafyModule
 
         Private _ip As Dictionary(Of String, Dictionary(Of String, LKP_IPData))
 
@@ -913,13 +912,9 @@ Final3:
             Dim vcjk(n, n), tcjk(n, n) As Double
             Dim sum1(n, n), sum2(n, n) As Double
 
-            If km Is Nothing Then
-                km = CudafyTranslator.Cudafy()
-                km.Serialize()
-            End If
+            Dim gpu As GPGPU = My.MyApplication.gpu
 
-            Dim gpu As GPGPU = CudafyHost.GetDevice(My.Settings.CudafyTarget)
-            gpu.LoadModule(km)
+            If gpu.IsMultithreadingEnabled Then gpu.Lock()
 
             ' allocate the memory on the GPU
             Dim dev_vcjk As Double(,) = gpu.Allocate(Of Double)(vcjk)
@@ -977,7 +972,19 @@ Final3:
             gpu.CopyFromDevice(dev_dzcmdx, dZcmdx)
 
             ' free the memory allocated on the GPU
-            gpu.FreeAll()
+            gpu.Free(dev_suma)
+            gpu.Free(dev_sumb)
+            gpu.Free(dev_sumc)
+            gpu.Free(dev_vcjk)
+            gpu.Free(dev_tcjk)
+            gpu.Free(dev_sum1)
+            gpu.Free(dev_sum2)
+            gpu.Free(dev_dtcmdx)
+            gpu.Free(dev_dvcmdx)
+            gpu.Free(dev_dpcmdx)
+            gpu.Free(dev_dzcmdx)
+
+            If gpu.IsMultithreadingEnabled Then gpu.Unlock()
 
         End Sub
 

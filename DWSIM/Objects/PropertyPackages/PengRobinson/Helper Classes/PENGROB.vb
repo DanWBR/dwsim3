@@ -413,6 +413,166 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function H_PR_MIX(ByVal TIPO As String, ByVal T As Double, ByVal P As Double, ByVal Vz As Object, ByVal VKij As Object, ByVal VTc As Object, ByVal VPc As Object, ByVal Vw As Object, ByVal VMM As Object, ByVal Hid As Double) As Double
 
+            Dim H As Double = 0.0#
+            If My.Settings.EnableGPUProcessing Then
+                H = H_PR_MIX_GPU(TIPO, T, P, Vz, VKij, VTc, VPc, Vw, VMM, Hid)
+            Else
+                H = H_PR_MIX_CPU(TIPO, T, P, Vz, VKij, VTc, VPc, Vw, VMM, Hid)
+            End If
+
+            Return H
+
+        End Function
+
+        Function H_PR_MIX_GPU(ByVal TIPO As String, ByVal T As Double, ByVal P As Double, ByVal Vz As Object, ByVal VKij As Object, ByVal VTc As Object, ByVal VPc As Object, ByVal Vw As Object, ByVal VMM As Object, ByVal Hid As Double) As Double
+
+            Dim ai(), bi(), ci(), am, bm As Double
+            Dim n, R As Double
+            Dim Tc(), Pc(), Vc(), w(), Zc(), alpha(), m(), a(,), b(,), Z, Tr() As Double
+            Dim i, j, dadT
+
+            n = UBound(Vz)
+
+            ReDim ai(n), bi(n), ci(n), a(n, n), b(n, n)
+            ReDim Tc(n), Pc(n), Vc(n), Zc(n), w(n), alpha(n), m(n), Tr(n)
+
+            R = 8.314
+
+            i = 0
+            Do
+                Tc(i) = VTc(i)
+                Tr(i) = T / Tc(i)
+                Pc(i) = VPc(i)
+                w(i) = Vw(i)
+                i = i + 1
+            Loop Until i = n + 1
+
+            i = 0
+            Dim MMm = 0
+            Do
+                MMm += Vz(i) * VMM(i)
+                i += 1
+            Loop Until i = n + 1
+
+            Dim aml_temp(n), aml2_temp(n), bml_temp(n) As Double
+
+            ThermoPlugs.PR.pr_gpu_func(n, Vz, VKij, Tc, Pc, w, T, alpha, ai, bi, a, aml_temp, bml_temp, aml2_temp)
+
+            am = MathEx.Common.Sum(aml_temp)
+            bm = MathEx.Common.Sum(bml_temp)
+
+            Dim AG1 = am * P / (R * T) ^ 2
+            Dim BG1 = bm * P / (R * T)
+
+            Dim coeff(3) As Double
+
+            coeff(0) = -AG1 * BG1 + BG1 ^ 2 + BG1 ^ 3
+            coeff(1) = AG1 - 3 * BG1 ^ 2 - 2 * BG1
+            coeff(2) = BG1 - 1
+            coeff(3) = 1
+
+            Dim temp1 = Poly_Roots(coeff)
+            Dim tv
+            Dim tv2
+
+            If Not IsNumeric(temp1) Then
+
+                If temp1(0, 0) > temp1(1, 0) Then
+                    tv = temp1(1, 0)
+                    tv2 = temp1(1, 1)
+                    temp1(1, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    temp1(1, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(0, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(1, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(1, 0)
+                    temp1(1, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(1, 1)
+                    temp1(1, 1) = tv2
+                End If
+
+                If TIPO = "L" Then
+                    Z = temp1(0, 0)
+                    If temp1(0, 1) <> 0 Then
+                        Z = temp1(1, 0)
+                        If temp1(1, 1) <> 0 Then
+                            Z = temp1(2, 0)
+                        End If
+                    End If
+                    If Z < 0 Then Z = temp1(1, 0)
+                ElseIf TIPO = "V" Then
+                    Z = temp1(2, 0)
+                    If temp1(2, 1) <> 0 Then
+                        Z = temp1(1, 0)
+                        If temp1(1, 1) <> 0 Then
+                            Z = temp1(0, 0)
+                        End If
+                    End If
+                End If
+
+            Else
+
+                Dim findZV, dfdz, zant As Double
+                If TIPO = "V" Then Z = 1 Else Z = 0.05
+                Do
+                    findZV = coeff(3) * Z ^ 3 + coeff(2) * Z ^ 2 + coeff(1) * Z + coeff(0)
+                    dfdz = 3 * coeff(3) * Z ^ 2 + 2 * coeff(2) * Z + coeff(1)
+                    zant = Z
+                    Z = Z - findZV / dfdz
+                    If Z < 0 Then Z = 1
+                Loop Until Math.Abs(findZV) < 0.0001 Or Double.IsNaN(Z)
+
+
+            End If
+
+            Dim V = (Z * R * T / P) ' m3/mol
+
+            Dim tmp1 = MMm / V / 1000
+
+            Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
+            i = 0
+            Dim aux2 = 0
+            Do
+                j = 0
+                Do
+                    aux2 += Vz(i) * Vz(j) * (1 - VKij(i, j)) * ((0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2) * (ai(i) * Tc(j) / Pc(j)) ^ 0.5 + (0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2) * (ai(j) * Tc(i) / Pc(i)) ^ 0.5)
+                    j = j + 1
+                Loop Until j = n + 1
+                i = i + 1
+            Loop Until i = n + 1
+
+            dadT = aux1 * aux2
+
+            Dim uu, ww As Double
+            uu = 2
+            ww = -1
+
+            Dim DAres = am / (bm * (uu ^ 2 - 4 * ww) ^ 0.5) * Math.Log((2 * Z + BG1 * (uu - (uu ^ 2 - 4 * ww) ^ 0.5)) / (2 * Z + BG1 * (uu + (uu ^ 2 - 4 * ww) ^ 0.5))) - R * T * Math.Log((Z - BG1) / Z) - R * T * Math.Log(Z)
+            Dim V0 As Double = R * 298.15 / 101325
+            Dim DSres = R * Math.Log((Z - BG1) / Z) + R * Math.Log(Z) - 1 / (8 ^ 0.5 * bm) * dadT * Math.Log((2 * Z + BG1 * (2 - 8 ^ 0.5)) / (2 * Z + BG1 * (2 + 8 ^ 0.5)))
+            Dim DHres = DAres + T * (DSres) + R * T * (Z - 1)
+
+            If MathEx.Common.Sum(Vz) = 0.0# Then
+                Return 0.0#
+            Else
+                Return Hid + DHres / MMm '/ 1000
+            End If
+
+        End Function
+
+        Function H_PR_MIX_CPU(ByVal TIPO As String, ByVal T As Double, ByVal P As Double, ByVal Vz As Object, ByVal VKij As Object, ByVal VTc As Object, ByVal VPc As Object, ByVal Vw As Object, ByVal VMM As Object, ByVal Hid As Double) As Double
+
             Dim ai(), bi(), ci() As Double
             Dim n, R As Double
             Dim Tc(), Pc(), Vc(), w(), Zc(), alpha(), m(), a(,), b(,), Z, Tr() As Double
@@ -581,9 +741,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Dim DHres = DAres + T * (DSres) + R * T * (Z - 1)
 
             If MathEx.Common.Sum(Vz) = 0.0# Then
-                H_PR_MIX = 0.0#
+                Return 0.0#
             Else
-                H_PR_MIX = Hid + DHres / MMm '/ 1000
+                Return Hid + DHres / MMm '/ 1000
             End If
 
         End Function
@@ -751,7 +911,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             'Dim DSres = R * Math.Log((Z - BG1) / Z) + R * Math.Log(V / V0) - 1 / (8 ^ 0.5 * bm) * dadT * Math.Log((2 * Z + BG1 * (2 - 8 ^ 0.5)) / (2 * Z + BG1 * (2 + 8 ^ 0.5)))
             Dim DSres = R * Math.Log((Z - BG1) / Z) + R * Math.Log(Z) - 1 / (8 ^ 0.5 * bm) * dadT * Math.Log((2 * Z + BG1 * (2 - 8 ^ 0.5)) / (2 * Z + BG1 * (2 + 8 ^ 0.5)))
 
-             If MathEx.Common.Sum(Vz) = 0.0# Then
+            If MathEx.Common.Sum(Vz) = 0.0# Then
                 S_PR_MIX = 0.0#
             Else
                 S_PR_MIX = Sid + DSres / MMm '/ 1000

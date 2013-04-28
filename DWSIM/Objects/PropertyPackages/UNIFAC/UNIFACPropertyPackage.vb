@@ -592,7 +592,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Dim obj As Object = Me.m_uni.RET_EKI(Me.RET_VN(subst), sum)
                 Dim j As Integer = 0
                 Do
-                    VEKI(i, j) = obj(j)
+                    If Not Double.IsNaN(obj(j)) Then VEKI(i, j) = obj(j) Else VEKI(i, j) = 0.0#
                     j += 1
                 Loop Until j = Me.m_uni.UnifGroups.Groups.Count
                 i += 1

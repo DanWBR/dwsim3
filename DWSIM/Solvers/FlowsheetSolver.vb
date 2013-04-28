@@ -287,6 +287,9 @@ Namespace DWSIM.Flowsheet
                     End If
                     If doparallel Then
                         My.Application.IsRunningParallelTasks = True
+                        If My.Settings.EnableGPUProcessing Then
+                            My.MyApplication.gpu.EnableMultithreading()
+                        End If
                         Try
                             Dim task1 As Task = New Task(Sub()
                                                              If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
@@ -374,8 +377,13 @@ Namespace DWSIM.Flowsheet
                             End Select
                         Catch ae As AggregateException
                             For Each ex As Exception In ae.InnerExceptions
-                                Throw
+                                Throw ex
                             Next
+                        Finally
+                            If My.Settings.EnableGPUProcessing Then
+                                My.MyApplication.gpu.DisableMultithreading()
+                                My.MyApplication.gpu.FreeAll()
+                            End If
                         End Try
                         My.Application.IsRunningParallelTasks = False
                     Else
@@ -813,6 +821,8 @@ Namespace DWSIM.Flowsheet
             form.FormSurface.calcstart = Date.Now
             form.FormSurface.PictureBox3.Image = My.Resources.weather_lightning
             form.FormSurface.PictureBox4.Visible = True
+
+            If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
             While form.CalculationQueue.Count >= 1
 

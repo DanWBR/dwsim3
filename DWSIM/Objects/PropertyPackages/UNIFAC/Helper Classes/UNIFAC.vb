@@ -17,6 +17,10 @@
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports Microsoft.VisualBasic.FileIO
+Imports DWSIM.DWSIM.MathEx
+Imports Cudafy
+Imports Cudafy.Translator
+Imports Cudafy.Host
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
@@ -141,7 +145,185 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-      Function GAMMA_MR(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI)
+        Function GAMMA_MR(ByVal T As Double, ByVal Vx As Double(), ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As Double(,))
+
+            If My.Settings.EnableGPUProcessing Then
+                Return GAMMA_MR_GPU(T, Vx, VQ, VR, VEKI)
+            Else
+                Return GAMMA_MR_CPU(T, Vx, VQ, VR, VEKI)
+            End If
+
+        End Function
+
+        Private Sub unifac_gpu_func(n As Integer, n2 As Integer, beta As Double(,), VTAU As Double(,), VEKI As Double(,), T As Double, Vx As Double(), s As Double(), teta As Double(), VQ As Double(), VR As Double(), Vgamma As Double())
+
+            Dim sum1(n), sum2(n), soma_xq, soma_xr As Double
+
+            Dim gpu As GPGPU = My.MyApplication.gpu
+
+            If gpu.IsMultithreadingEnabled Then gpu.Lock()
+
+            ' allocate the memory on the GPU
+            Dim dev_beta As Double(,) = gpu.Allocate(Of Double)(beta)
+            Dim dev_VEKI As Double(,) = gpu.Allocate(Of Double)(VEKI)
+            Dim dev_VTAU As Double(,) = gpu.Allocate(Of Double)(VTAU)
+            Dim dev_sum1 As Double() = gpu.Allocate(Of Double)(sum1)
+            Dim dev_sum2 As Double() = gpu.Allocate(Of Double)(sum2)
+            Dim dev_Vx As Double() = gpu.Allocate(Of Double)(Vx)
+            Dim dev_VQ As Double() = gpu.Allocate(Of Double)(VQ)
+            Dim dev_VR As Double() = gpu.Allocate(Of Double)(VR)
+            Dim dev_s As Double() = gpu.Allocate(Of Double)(s)
+            Dim dev_teta As Double() = gpu.Allocate(Of Double)(teta)
+            Dim dev_Vgamma As Double() = gpu.Allocate(Of Double)(Vgamma)
+
+            ' copy the arrays to the GPU
+            gpu.CopyToDevice(beta, dev_beta)
+            gpu.CopyToDevice(VEKI, dev_VEKI)
+            gpu.CopyToDevice(VTAU, dev_VTAU)
+            gpu.CopyToDevice(sum1, dev_sum1)
+            gpu.CopyToDevice(sum2, dev_sum2)
+            gpu.CopyToDevice(Vx, dev_Vx)
+            gpu.CopyToDevice(VQ, dev_VQ)
+            gpu.CopyToDevice(VR, dev_VR)
+            gpu.CopyToDevice(s, dev_s)
+            gpu.CopyToDevice(teta, dev_teta)
+            gpu.CopyToDevice(Vgamma, dev_Vgamma)
+
+            ' launch subs
+            gpu.Launch(New dim3(n + 1, n2 + 1), 1).unifac_gpu_sum1(dev_beta, dev_VEKI, dev_VTAU, T)
+            gpu.Launch(n + 1, 1).unifac_gpu_sum2(dev_sum1, dev_Vx, dev_VQ)
+            gpu.CopyFromDevice(dev_sum1, sum1)
+            soma_xq = MathEx.Common.Sum(sum1)
+            gpu.Launch(n2 + 1, 1).unifac_gpu_sum3(dev_Vx, dev_teta, dev_VQ, dev_VEKI, soma_xq)
+            gpu.Launch(n2 + 1, 1).unifac_gpu_sum4(dev_s, dev_teta, dev_VQ, dev_VTAU)
+            gpu.Launch(n + 1, 1).unifac_gpu_sum5(dev_sum2, dev_Vx, dev_VR)
+            gpu.CopyFromDevice(dev_sum2, sum2)
+            soma_xr = MathEx.Common.Sum(sum2)
+            gpu.Launch(n + 1, 1).unifac_gpu_sum6(dev_Vgamma, dev_s, dev_VR, dev_VQ, dev_teta, dev_beta, dev_VEKI, soma_xq, soma_xr, n, n2)
+
+            ' copy the arrays back from the GPU to the CPU
+            gpu.CopyFromDevice(dev_s, s)
+            gpu.CopyFromDevice(dev_teta, teta)
+            gpu.CopyFromDevice(dev_Vgamma, Vgamma)
+
+            ' free the memory allocated on the GPU
+            gpu.Free(dev_beta)
+            gpu.Free(dev_VEKI)
+            gpu.Free(dev_VTAU)
+            gpu.Free(dev_sum1)
+            gpu.Free(dev_sum2)
+            gpu.Free(dev_Vx)
+            gpu.Free(dev_VQ)
+            gpu.Free(dev_VR)
+            gpu.Free(dev_s)
+            gpu.Free(dev_teta)
+            gpu.Free(dev_Vgamma)
+
+            If gpu.IsMultithreadingEnabled Then gpu.Unlock()
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub unifac_gpu_sum1(thread As Cudafy.GThread, beta As Double(,), VEKI As Double(,), VTAU As Double(,), T As Double)
+
+            Dim i As Integer = thread.blockIdx.x
+            Dim k As Integer = thread.blockIdx.y
+            Dim m As Integer
+            Dim n As Integer = beta.GetLength(0)
+            Dim n2 As Integer = VEKI.GetLength(1)
+
+            beta(i, k) = 0
+            m = 0
+            Do
+                beta(i, k) = beta(i, k) + VEKI(i, m) * VTAU(m, k)
+                m = m + 1
+            Loop Until m = n2
+            
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub unifac_gpu_sum2(thread As Cudafy.GThread, sum1 As Double(), Vx As Double(), VQ As Double())
+
+            Dim i As Integer = thread.blockIdx.x
+
+            sum1(i) = Vx(i) * VQ(i)
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub unifac_gpu_sum3(thread As Cudafy.GThread, Vx As Double(), teta As Double(), Q As Double(), VEKI As Double(,), soma_xq As Double)
+
+            Dim k As Integer = thread.blockIdx.x
+            Dim n As Integer = Vx.GetLength(0)
+
+            Dim i As Integer = 0
+            Do
+                teta(k) = teta(k) + Vx(i) * Q(i) * VEKI(i, k)
+                i = i + 1
+            Loop Until i = n
+            teta(k) = teta(k) / soma_xq
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub unifac_gpu_sum4(thread As Cudafy.GThread, s As Double(), teta As Double(), Q As Double(), VTAU As Double(,))
+
+            Dim k As Integer = thread.blockIdx.x
+            Dim n2 As Integer = VTAU.GetLength(1)
+            Dim m As Integer
+
+            s(k) = 0.0#
+            m = 0
+            Do
+                s(k) = s(k) + teta(m) * VTAU(m, k)
+                m = m + 1
+            Loop Until m = n2
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub unifac_gpu_sum5(thread As Cudafy.GThread, sum2 As Double(), Vx As Double(), VR As Double())
+
+            Dim i As Integer = thread.blockIdx.x
+
+            sum2(i) = Vx(i) * VR(i)
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub unifac_gpu_sum6(thread As Cudafy.GThread, Vgamma As Double(), s As Double(), VR As Double(), VQ As Double(), teta As Double(), beta As Double(,), VEKI As Double(,), soma_xq As Double, soma_xr As Double, n As Integer, n2 As Integer)
+
+            Dim i As Integer = thread.blockIdx.x
+            Dim k As Integer = 0
+            Dim tmpsum As Double = 0
+            Do
+                tmpsum = tmpsum + teta(k) * beta(i, k) / s(k) - VEKI(i, k) * Math.Log(beta(i, k) / s(k))
+                k = k + 1
+            Loop Until k = n2 + 1
+            Vgamma(i) = Math.Exp(1 - VR(i) / soma_xr + Math.Log(VR(i) / soma_xr) - 5 * VQ(i) * (1 - VR(i) / soma_xr / (VQ(i) / soma_xq) + Math.Log((VR(i) / soma_xr) / (VQ(i) / soma_xq))) + VQ(i) * (1 - tmpsum))
+            
+        End Sub
+
+        Function GAMMA_MR_GPU(ByVal T As Double, ByVal Vx As Double(), ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As Double(,))
+
+            CheckParameters(VEKI)
+
+            Dim k, m As Integer
+
+            Dim n As Integer = UBound(Vx)
+            Dim n2 As Integer = UBound(VEKI, 2)
+
+            Dim teta(n2), s(n2) As Double
+            Dim beta(n, n2), Vgammac(n), Vgammar(n), Vgamma(n), b(n, n2), VTAU(n2, n2) As Double
+            Dim Q(n), R(n), j(n), L(n) As Double
+
+            For k = 0 To n2
+                For m = 0 To n2
+                    VTAU(m, k) = TAU(m, k, T)
+                Next
+            Next
+
+            unifac_gpu_func(n, n2, beta, VTAU, VEKI, T, Vx, s, teta, VQ, VR, Vgamma)
+
+            Return Vgamma
+
+        End Function
+
+        Function GAMMA_MR_CPU(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI)
 
             CheckParameters(VEKI)
 
@@ -293,7 +475,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 End If
             Else
                 res = 0
-             End If
+            End If
 
             Return Math.Exp(-res / T)
 

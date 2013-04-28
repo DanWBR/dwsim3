@@ -3,6 +3,9 @@ Imports Nini.Config
 Imports System.Globalization
 Imports System.Reflection
 Imports System.Linq
+Imports Cudafy.Translator
+Imports Cudafy
+Imports Cudafy.Host
 
 '    Shared Functions
 '    Copyright 2008 Daniel Wagner O. de Medeiros
@@ -140,7 +143,7 @@ Namespace DWSIM
 
             Dim configfile As String = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "dwsim.ini"
             If Not File.Exists(configfile) Then File.Copy(My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "default.ini", configfile)
-            
+
             Dim source As New IniConfigSource(configfile)
             Dim col() As String
 
@@ -201,7 +204,7 @@ Namespace DWSIM
             Dim configfile As String = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "dwsim.ini"
 
             File.Copy(My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "default.ini", configfile, True)
-            
+
             Dim source As New IniConfigSource(configfile)
 
             For Each Str As String In My.Settings.MostRecentFiles
@@ -235,6 +238,32 @@ Namespace DWSIM
             source.Configs("Misc").Set("RedirectConsoleOutput", My.Settings.RedirectOutput)
 
             source.Save(configfile)
+
+        End Sub
+
+        Shared Sub InitComputeDevice()
+
+            If My.MyApplication.gpu Is Nothing Then
+
+                Select Case My.Settings.CudafyTarget
+                    Case 0, 1
+                        CudafyTranslator.Language = eLanguage.Cuda
+                    Case 2
+                        CudafyTranslator.Language = eLanguage.OpenCL
+                End Select
+
+                My.MyApplication.gpu = CudafyHost.GetDevice(My.Settings.CudafyTarget, My.Settings.CudafyDeviceID)
+
+                If My.MyApplication.gpumod Is Nothing Then
+                    My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
+                                GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR), _
+                                GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac), _
+                                GetType(DWSIM.MathEx.Broyden))
+                End If
+
+                If Not My.MyApplication.gpu.IsModuleLoaded(My.MyApplication.gpumod.Name) Then My.MyApplication.gpu.LoadModule(My.MyApplication.gpumod)
+
+            End If
 
         End Sub
 
