@@ -23,26 +23,34 @@ Partial Class CompositionEditorForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CompositionEditorForm))
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.GridComp = New System.Windows.Forms.DataGridView()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox38 = New System.Windows.Forms.GroupBox()
+        Me.ButtonEqualize = New System.Windows.Forms.Button()
         Me.KButton23 = New System.Windows.Forms.Button()
         Me.KButton1 = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.RadioButton7 = New System.Windows.Forms.RadioButton()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.RadioButton6 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton5 = New System.Windows.Forms.RadioButton()
         Me.RadioButton4 = New System.Windows.Forms.RadioButton()
         Me.RadioButton3 = New System.Windows.Forms.RadioButton()
         Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.RadioButton1 = New System.Windows.Forms.RadioButton()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.KButton3 = New System.Windows.Forms.Button()
         Me.KButton2 = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.col2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1.SuspendLayout()
         CType(Me.GridComp, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox38.SuspendLayout()
@@ -61,140 +69,176 @@ Partial Class CompositionEditorForm
         '
         'GridComp
         '
-        resources.ApplyResources(Me.GridComp, "GridComp")
         Me.GridComp.AllowUserToAddRows = False
         Me.GridComp.AllowUserToDeleteRows = False
         Me.GridComp.AllowUserToResizeRows = False
-        Me.GridComp.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.GridComp.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridComp.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.GridComp.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column2})
+        resources.ApplyResources(Me.GridComp, "GridComp")
+        Me.GridComp.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column2, Me.col2})
         Me.GridComp.Name = "GridComp"
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GridComp.RowHeadersDefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GridComp.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.GridComp.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.GridComp.ShowCellToolTips = False
         '
-        'Column2
-        '
-        Me.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle7.Format = "N4"
-        DataGridViewCellStyle7.FormatProvider = New System.Globalization.CultureInfo("pt-BR")
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle7
-        resources.ApplyResources(Me.Column2, "Column2")
-        Me.Column2.Name = "Column2"
-        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
-        '
         'GroupBox38
         '
-        resources.ApplyResources(Me.GroupBox38, "GroupBox38")
+        Me.GroupBox38.Controls.Add(Me.ButtonEqualize)
         Me.GroupBox38.Controls.Add(Me.KButton23)
         Me.GroupBox38.Controls.Add(Me.KButton1)
+        resources.ApplyResources(Me.GroupBox38, "GroupBox38")
         Me.GroupBox38.Name = "GroupBox38"
         Me.GroupBox38.TabStop = False
+        '
+        'ButtonEqualize
+        '
+        resources.ApplyResources(Me.ButtonEqualize, "ButtonEqualize")
+        Me.ButtonEqualize.Name = "ButtonEqualize"
         '
         'KButton23
         '
         resources.ApplyResources(Me.KButton23, "KButton23")
-        Me.KButton23.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KButton23.Name = "KButton23"
         '
         'KButton1
         '
         resources.ApplyResources(Me.KButton1, "KButton1")
-        Me.KButton1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KButton1.Name = "KButton1"
         '
         'GroupBox2
         '
-        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
+        Me.GroupBox2.Controls.Add(Me.RadioButton7)
+        Me.GroupBox2.Controls.Add(Me.Label4)
+        Me.GroupBox2.Controls.Add(Me.ComboBox1)
+        Me.GroupBox2.Controls.Add(Me.RadioButton6)
+        Me.GroupBox2.Controls.Add(Me.RadioButton5)
         Me.GroupBox2.Controls.Add(Me.RadioButton4)
         Me.GroupBox2.Controls.Add(Me.RadioButton3)
         Me.GroupBox2.Controls.Add(Me.RadioButton2)
         Me.GroupBox2.Controls.Add(Me.RadioButton1)
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
+        '
+        'RadioButton7
+        '
+        resources.ApplyResources(Me.RadioButton7, "RadioButton7")
+        Me.RadioButton7.Name = "RadioButton7"
+        '
+        'Label4
+        '
+        resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.Name = "Label4"
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox1.FormattingEnabled = True
+        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
+        Me.ComboBox1.Name = "ComboBox1"
+        '
+        'RadioButton6
+        '
+        resources.ApplyResources(Me.RadioButton6, "RadioButton6")
+        Me.RadioButton6.Name = "RadioButton6"
+        '
+        'RadioButton5
+        '
+        resources.ApplyResources(Me.RadioButton5, "RadioButton5")
+        Me.RadioButton5.Name = "RadioButton5"
         '
         'RadioButton4
         '
         resources.ApplyResources(Me.RadioButton4, "RadioButton4")
-        Me.RadioButton4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.RadioButton4.Name = "RadioButton4"
         '
         'RadioButton3
         '
         resources.ApplyResources(Me.RadioButton3, "RadioButton3")
-        Me.RadioButton3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.RadioButton3.Name = "RadioButton3"
         '
         'RadioButton2
         '
         resources.ApplyResources(Me.RadioButton2, "RadioButton2")
-        Me.RadioButton2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.RadioButton2.Name = "RadioButton2"
         '
         'RadioButton1
         '
         resources.ApplyResources(Me.RadioButton1, "RadioButton1")
         Me.RadioButton1.Checked = True
-        Me.RadioButton1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.RadioButton1.Name = "RadioButton1"
         Me.RadioButton1.TabStop = True
         '
         'GroupBox3
         '
-        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
+        Me.GroupBox3.Controls.Add(Me.Label5)
         Me.GroupBox3.Controls.Add(Me.Label3)
-        Me.GroupBox3.Controls.Add(Me.Label4)
         Me.GroupBox3.Controls.Add(Me.KButton3)
         Me.GroupBox3.Controls.Add(Me.KButton2)
         Me.GroupBox3.Controls.Add(Me.Label2)
         Me.GroupBox3.Controls.Add(Me.Label1)
+        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.TabStop = False
+        '
+        'Label5
+        '
+        resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.Name = "Label5"
         '
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label3.Name = "Label3"
-        '
-        'Label4
-        '
-        resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
-        Me.Label4.Name = "Label4"
         '
         'KButton3
         '
         resources.ApplyResources(Me.KButton3, "KButton3")
-        Me.KButton3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KButton3.Name = "KButton3"
         '
         'KButton2
         '
         resources.ApplyResources(Me.KButton2, "KButton2")
-        Me.KButton2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KButton2.Name = "KButton2"
         '
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label2.Name = "Label2"
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label1.Name = "Label1"
+        '
+        'Column2
+        '
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle1.Format = "N4"
+        DataGridViewCellStyle1.FormatProvider = New System.Globalization.CultureInfo("pt-BR")
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Column2.FillWeight = 50.0!
+        resources.ApplyResources(Me.Column2, "Column2")
+        Me.Column2.Name = "Column2"
+        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'col2
+        '
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Format = "N4"
+        Me.col2.DefaultCellStyle = DataGridViewCellStyle2
+        Me.col2.FillWeight = 50.0!
+        resources.ApplyResources(Me.col2, "col2")
+        Me.col2.Name = "col2"
+        Me.col2.ReadOnly = True
         '
         'CompositionEditorForm
         '
@@ -204,7 +248,7 @@ Partial Class CompositionEditorForm
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox38)
         Me.Controls.Add(Me.GroupBox1)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "CompositionEditorForm"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
@@ -235,5 +279,12 @@ Partial Class CompositionEditorForm
     Public WithEvents Label4 As System.Windows.Forms.Label
     Public WithEvents RadioButton4 As System.Windows.Forms.RadioButton
     Public WithEvents RadioButton3 As System.Windows.Forms.RadioButton
+    Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
+    Public WithEvents RadioButton6 As System.Windows.Forms.RadioButton
+    Public WithEvents RadioButton5 As System.Windows.Forms.RadioButton
+    Public WithEvents ButtonEqualize As System.Windows.Forms.Button
+    Public WithEvents RadioButton7 As System.Windows.Forms.RadioButton
+    Public WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents col2 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

@@ -822,19 +822,28 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             Dim Vz = result("LiquidPhaseMolarComposition")
 
-                            i = 0
-                            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                                subst.MolarFlow = Vz(i) * Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow
-                                i += 1
-                            Next
+                            'i = 0
+                            'For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                            '    subst.MolarFlow = Vz(i) * Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow
+                            '    i += 1
+                            'Next
 
-                            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                                subst.MassFlow = subst.MolarFlow * subst.ConstantProperties.Molar_Weight / 1000
-                            Next
+                            'For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                            '    subst.MassFlow = subst.MolarFlow * subst.ConstantProperties.Molar_Weight / 1000
+                            'Next
 
                             M = result("MoleSum")
 
                             Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow *= M
+
+                            Dim Vnf = result("MixtureMoleFlows")
+
+                            For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
+                                subst.FracaoMolar = Vnf(i) / M
+                            Next
+                            For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
+                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 0)
+                            Next
 
                             Dim Vx = result("LiquidPhaseMolarComposition")
                             Dim Vy = result("VaporPhaseMolarComposition")

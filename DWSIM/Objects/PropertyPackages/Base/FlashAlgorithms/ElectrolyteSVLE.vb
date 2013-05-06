@@ -66,7 +66,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'Vxv = vapor phase molar fractions
             'Vxs = solid phase molar fractions
             'V, S, L = phase molar amounts (F = 1 = V + S + L)
-            Dim Vnf(n), Vnl(n), Vxl(n), Vns(n), Vxs(n), Vnv(n), Vxv(n), V, S, L As Double
+            Dim Vnf(n), Vnl(n), Vxl(n), Vns(n), Vxs(n), Vnv(n), Vxv(n), Vf(n), V, S, L As Double
             Dim sumN As Double = 0
 
             'get water index in the array.
@@ -274,14 +274,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             sumN = 0
             For i = 0 To n
-                sumN += Vnv(i) + Vnl(i) + Vns(i)
+                Vf(i) = Vnv(i) + Vnl(i) + Vns(i)
+                sumN += Vf(i)
             Next
 
             'return flash calculation results.
 
             Dim results As New Dictionary(Of String, Object)
 
-            results.Add("MixtureMoleFlows", Vnf)
+            results.Add("MixtureMoleFlows", Vf)
             results.Add("VaporPhaseMoleFraction", V)
             results.Add("LiquidPhaseMoleFraction", L)
             results.Add("SolidPhaseMoleFraction", S)

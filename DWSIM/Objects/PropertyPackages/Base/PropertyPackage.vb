@@ -5740,6 +5740,23 @@ Final3:
 
         End Function
 
+        Public Overridable Function AUX_LIQDENSi(ByVal subst As Substancia, ByVal T As Double) As Double
+
+            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
+
+            Dim val As Double
+
+            If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
+                val = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
+                val = subst.ConstantProperties.Molar_Weight * val
+            Else
+                val = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, 101325, Me.AUX_PVAPi(subst.Nome, T))
+            End If
+
+            Return val
+
+        End Function
+
         Public MustOverride Function AUX_VAPDENS(ByVal T As Double, ByVal P As Double) As Double
 
         Public Function AUX_INT_CPDTi(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String)

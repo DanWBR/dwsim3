@@ -51,11 +51,15 @@ Namespace DWSIM.Editors.Composition
                 selectionControl.SU = form.Options.SelectedUnitSystem
                 selectionControl.Q = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Fases(0).SPMProperties.molarflow.GetValueOrDefault
                 selectionControl.W = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
+                selectionControl.Solvent = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).ReferenceSolvent
+                selectionControl.InitialComposition = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).InputComposition
 
                 editorService.ShowDialog(selectionControl)
 
                 form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Fases(0).SPMProperties.molarflow = selectionControl.Q
                 form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Fases(0).SPMProperties.massflow = selectionControl.W
+                form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).ReferenceSolvent = selectionControl.Solvent
+                form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).InputComposition = selectionControl.InitialComposition
 
                 value = selectionControl.Componentes
 

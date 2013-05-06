@@ -190,6 +190,8 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Public Shared Sub CalculateMaterialStream(ByVal form As FormFlowsheet, ByVal ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False, Optional ByVal OnlyMe As Boolean = False)
 
+            If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
+
             If ms.Fases.Count <= 3 Then
                 ms.Fases.Add("3", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid1"), ""))
                 ms.Fases.Add("4", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid2"), ""))
@@ -822,8 +824,6 @@ Namespace DWSIM.Flowsheet
             form.FormSurface.PictureBox3.Image = My.Resources.weather_lightning
             form.FormSurface.PictureBox4.Visible = True
 
-            If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
-
             While form.CalculationQueue.Count >= 1
 
                 My.MyApplication.CalculatorStopRequested = False
@@ -845,6 +845,7 @@ Namespace DWSIM.Flowsheet
                     If myinfo.Tipo = TipoObjeto.MaterialStream Then
                         CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome))
                     Else
+                        If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
                         CalculateFlowsheet(form, myinfo, Nothing)
                     End If
                 Catch ex As Exception

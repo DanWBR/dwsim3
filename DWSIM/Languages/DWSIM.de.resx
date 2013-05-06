@@ -4619,4 +4619,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Solid" xml:space="preserve">
     <value>Feststoff</value>
   </data>
+  <data name="MolalityUnits" xml:space="preserve">
+    <value>Einheiten: Mol pro kg Lösungsmittel (m)</value>
+  </data>
+  <data name="MolarityUnits" xml:space="preserve">
+    <value>Einheiten: Mol pro Liter Lösung (M)</value>
+  </data>
 </root>

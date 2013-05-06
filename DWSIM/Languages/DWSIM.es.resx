@@ -4623,4 +4623,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Solid" xml:space="preserve">
     <value>Solido</value>
   </data>
+  <data name="MolalityUnits" xml:space="preserve">
+    <value>Unidades: moles por kg de disolvente (m)</value>
+  </data>
+  <data name="MolarityUnits" xml:space="preserve">
+    <value>Unidades: moles por litro de solución (M)</value>
+  </data>
 </root>

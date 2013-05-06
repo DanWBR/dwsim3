@@ -245,6 +245,8 @@ Namespace DWSIM
 
             If My.MyApplication.gpu Is Nothing Then
 
+                'set target language
+
                 Select Case My.Settings.CudafyTarget
                     Case 0, 1
                         CudafyTranslator.Language = eLanguage.Cuda
@@ -252,7 +254,11 @@ Namespace DWSIM
                         CudafyTranslator.Language = eLanguage.OpenCL
                 End Select
 
+                'get the gpu instance
+
                 My.MyApplication.gpu = CudafyHost.GetDevice(My.Settings.CudafyTarget, My.Settings.CudafyDeviceID)
+
+                'cudafy all classes that contain a gpu function
 
                 If My.MyApplication.gpumod Is Nothing Then
                     My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
@@ -260,6 +266,8 @@ Namespace DWSIM
                                 GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac), _
                                 GetType(DWSIM.MathEx.Broyden))
                 End If
+
+                'load cudafy module
 
                 If Not My.MyApplication.gpu.IsModuleLoaded(My.MyApplication.gpumod.Name) Then My.MyApplication.gpu.LoadModule(My.MyApplication.gpumod)
 

@@ -334,7 +334,7 @@ Public Class FormDataRegression
                                         task1.Wait()
                                     Catch ae As AggregateException
                                         For Each ex As Exception In ae.InnerExceptions
-                                            Throw
+                                            Throw ex
                                         Next
                                     End Try
                                     My.Application.IsRunningParallelTasks = False
@@ -362,7 +362,7 @@ Public Class FormDataRegression
                                         task1.Wait()
                                     Catch ae As AggregateException
                                         For Each ex As Exception In ae.InnerExceptions
-                                            Throw
+                                            Throw ex
                                         Next
                                     End Try
                                     My.Application.IsRunningParallelTasks = False
@@ -395,7 +395,7 @@ Public Class FormDataRegression
                                         task1.Wait()
                                     Catch ae As AggregateException
                                         For Each ex As Exception In ae.InnerExceptions
-                                            Throw
+                                            Throw ex
                                         Next
                                     End Try
                                     My.Application.IsRunningParallelTasks = False
@@ -423,7 +423,7 @@ Public Class FormDataRegression
                                         task1.Wait()
                                     Catch ae As AggregateException
                                         For Each ex As Exception In ae.InnerExceptions
-                                            Throw
+                                            Throw ex
                                         Next
                                     End Try
                                     My.Application.IsRunningParallelTasks = False
@@ -457,7 +457,7 @@ Public Class FormDataRegression
                                         task1.Wait()
                                     Catch ae As AggregateException
                                         For Each ex As Exception In ae.InnerExceptions
-                                            Throw
+                                            Throw ex
                                         Next
                                     End Try
                                     My.Application.IsRunningParallelTasks = False
@@ -485,7 +485,7 @@ Public Class FormDataRegression
                                         task1.Wait()
                                     Catch ae As AggregateException
                                         For Each ex As Exception In ae.InnerExceptions
-                                            Throw
+                                            Throw ex
                                         Next
                                     End Try
                                     My.Application.IsRunningParallelTasks = False
@@ -519,7 +519,7 @@ Public Class FormDataRegression
                                         task1.Wait()
                                     Catch ae As AggregateException
                                         For Each ex As Exception In ae.InnerExceptions
-                                            Throw
+                                            Throw ex
                                         Next
                                     End Try
                                     My.Application.IsRunningParallelTasks = False
@@ -547,7 +547,7 @@ Public Class FormDataRegression
                                         task1.Wait()
                                     Catch ae As AggregateException
                                         For Each ex As Exception In ae.InnerExceptions
-                                            Throw
+                                            Throw ex
                                         Next
                                     End Try
                                     My.Application.IsRunningParallelTasks = False
@@ -634,7 +634,7 @@ Public Class FormDataRegression
                                     task1.Wait()
                                 Catch ae As AggregateException
                                     For Each ex As Exception In ae.InnerExceptions
-                                        Throw
+                                        Throw ex
                                     Next
                                 End Try
                                 My.Application.IsRunningParallelTasks = False
@@ -675,7 +675,7 @@ Public Class FormDataRegression
                                     task1.Wait()
                                 Catch ae As AggregateException
                                     For Each ex As Exception In ae.InnerExceptions
-                                        Throw
+                                        Throw ex
                                     Next
                                 End Try
                                 My.Application.IsRunningParallelTasks = False
@@ -717,7 +717,7 @@ Public Class FormDataRegression
                                     task1.Wait()
                                 Catch ae As AggregateException
                                     For Each ex As Exception In ae.InnerExceptions
-                                        Throw
+                                        Throw ex
                                     Next
                                 End Try
                                 My.Application.IsRunningParallelTasks = False
@@ -759,7 +759,7 @@ Public Class FormDataRegression
                                     task1.Wait()
                                 Catch ae As AggregateException
                                     For Each ex As Exception In ae.InnerExceptions
-                                        Throw
+                                        Throw ex
                                     Next
                                 End Try
                                 My.Application.IsRunningParallelTasks = False

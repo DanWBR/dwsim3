@@ -3009,10 +3009,20 @@ Public Class frmSurface
                 Dim selectionControl As New CompositionEditorForm
                 selectionControl.Text = mystr.GraphicObject.Tag & DWSIM.App.GetLocalString("EditComp")
                 selectionControl.Componentes = mystr.Fases(0).Componentes
+                selectionControl.NF = My.Application.ActiveSimulation.Options.NumberFormat
+                selectionControl.SU = My.Application.ActiveSimulation.Options.SelectedUnitSystem
+                selectionControl.Q = mystr.Fases(0).SPMProperties.molarflow.GetValueOrDefault
+                selectionControl.W = mystr.Fases(0).SPMProperties.massflow.GetValueOrDefault
+                selectionControl.Solvent = mystr.ReferenceSolvent
+                selectionControl.InitialComposition = mystr.InputComposition
 
                 selectionControl.ShowDialog(Me)
 
                 mystr.Fases(0).Componentes = selectionControl.Componentes
+                mystr.Fases(0).SPMProperties.molarflow = selectionControl.Q
+                mystr.Fases(0).SPMProperties.massflow = selectionControl.W
+                mystr.ReferenceSolvent = selectionControl.Solvent
+                mystr.InputComposition = selectionControl.InitialComposition
 
                 selectionControl.Dispose()
                 selectionControl = Nothing

@@ -111,6 +111,10 @@ Namespace DWSIM.SimulationObjects.Streams
             End Set
         End Property
 
+        Public Property IsElectrolyteStream As Boolean = False
+        Public Property ReferenceSolvent As String = ""
+        Public Property InputComposition As Dictionary(Of String, Double) = New Dictionary(Of String, Double)
+
         Public Property AtEquilibrium() As Boolean
             Get
                 Return _inequilibrium
