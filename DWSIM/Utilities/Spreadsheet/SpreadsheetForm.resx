@@ -342,9 +342,6 @@
   <data name="G.Width" type="System.Int32, mscorlib">
     <value>64</value>
   </data>
-  <data name="CopiarToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+C</value>
-  </data>
   <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>296, 8</value>
   </data>

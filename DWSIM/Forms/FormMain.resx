@@ -225,9 +225,6 @@
   <data name="&gt;&gt;ToolStripButton8.Name" xml:space="preserve">
     <value>ToolStripButton8</value>
   </data>
-  <data name="NewToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
-    <value>Ctrl+N</value>
-  </data>
   <data name="&gt;&gt;NewToolStripButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

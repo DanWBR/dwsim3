@@ -136,7 +136,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\Ciloci.Flee.dll</HintPath>
     </Reference>
-    <Reference Include="Cudafy.NET, Version=1.12.4695.21111, Culture=neutral, PublicKeyToken=63a4c9931616906b, processorArchitecture=MSIL">
+    <Reference Include="Cudafy.NET, Version=1.20.4797.29543, Culture=neutral, PublicKeyToken=63a4c9931616906b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\Cudafy.NET.dll</HintPath>
     </Reference>
