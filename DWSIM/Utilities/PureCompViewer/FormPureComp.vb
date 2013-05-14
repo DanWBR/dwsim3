@@ -1,4 +1,6 @@
 ﻿Imports com.ggasoftware.indigo
+Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
+Imports DWSIM.DWSIM.SimulationObjects.Streams
 
 '    Copyright 2008 Daniel Wagner O. de Medeiros
 '
@@ -20,6 +22,8 @@
 Public Class FormPureComp
 
     Inherits System.Windows.Forms.Form
+
+    Dim MatStream As DWSIM.SimulationObjects.Streams.MaterialStream
 
     Public ChildParent As FormFlowsheet
 
@@ -45,7 +49,13 @@ Public Class FormPureComp
                 Next
             End With
         End If
-        Me.ComboBox1.SelectedIndex = 0
+
+        If ChildParent.Options.SelectedPropertyPackage Is Nothing Then
+            MessageBox.Show("Kein Property Package definiert")
+            Me.Close()
+        Else
+            Me.ComboBox1.SelectedIndex = 0
+        End If
 
     End Sub
 
@@ -56,9 +66,23 @@ Public Class FormPureComp
         Dim nf As String = ChildParent.Options.NumberFormat
         Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = ChildParent.Options.SelectedPropertyPackage
 
-        For Each mat As DWSIM.SimulationObjects.Streams.MaterialStream In Me.ChildParent.Collections.CLCS_MaterialStreamCollection.Values
-            pp.CurrentMaterialStream = mat
-            Exit For
+
+
+
+
+        Me.MatStream = New MaterialStream("", "")
+        pp.CurrentMaterialStream = MatStream
+
+        For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In MatStream.Fases.Values
+            For Each cp As ConstantProperties In Me.ChildParent.Options.SelectedComponents.Values
+                If DWSIM.App.GetComponentName(cp.Name) = constprop.Name Then
+                    With phase
+                        .Componentes.Add(cp.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(cp.Name, ""))
+                        .Componentes(cp.Name).ConstantProperties = cp
+                    End With
+                    Exit For
+                End If
+            Next
         Next
 
         'setting up curves
@@ -213,12 +237,12 @@ Public Class FormPureComp
         tbSMILES.Text = constprop.SMILES
         tbInChI.Text = constprop.InChI
 
+
         'Render molecule / Calculate InChI from SMILES
+        If Not constprop.SMILES Is Nothing And Not constprop.SMILES = "" Then
 
-        If Not constprop.SMILES Is Nothing Then
-
+            'definition available, render molecule
             Try
-
                 Dim ind As New Indigo()
                 Dim mol As IndigoObject = ind.loadMolecule(constprop.SMILES)
                 Dim renderer As New IndigoRenderer(ind)
@@ -238,10 +262,12 @@ Public Class FormPureComp
                 pbRender.Image = renderer.renderToBitmap(mol)
 
             Catch ex As Exception
-
                 MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             End Try
+        Else
+            'no definition available, delete old picture
+            pbRender.Image = Nothing
 
         End If
 
@@ -278,7 +304,7 @@ Public Class FormPureComp
             .Add(New Object() {DWSIM.App.GetLocalString("HydrationNumber"), constprop.HydrationNumber, ""})
             .Add(New Object() {DWSIM.App.GetLocalString("PositiveIon"), constprop.PositiveIon, ""})
             .Add(New Object() {DWSIM.App.GetLocalString("NegativeIon"), constprop.NegativeIon, ""})
-            
+
         End With
 
         chkEnableEdit_CheckedChanged(Me, New EventArgs)
@@ -417,5 +443,4 @@ Public Class FormPureComp
         Next
 
     End Sub
-
 End Class
