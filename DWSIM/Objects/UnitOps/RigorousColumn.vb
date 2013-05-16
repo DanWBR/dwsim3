@@ -2435,7 +2435,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 With cspecv
                                     .Add(DWSIM.App.GetLocalString("DCVaporFlowRate"), Me, "VaporFlowRate", False, DWSIM.App.GetLocalString("DCCondenserSpec"), "", True)
                                     .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me, "VaporFlowRateUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                     With .Item(.Count - 1)
                                         .Choices = New PropertyGridEx.CustomChoices(units, False)
                                     End With
@@ -2465,7 +2465,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                                     units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                 Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                 Case ColumnSpec.SpecType.Component_Recovery
                                     units = New String() {"% M/M", "% W/W"}
                                 Case ColumnSpec.SpecType.Heat_Duty
@@ -2473,7 +2473,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
                                     units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                 Case ColumnSpec.SpecType.Stream_Ratio
                                     units = New String() {""}
                                 Case ColumnSpec.SpecType.Temperature
@@ -2510,7 +2510,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                                     units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                 Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                 Case ColumnSpec.SpecType.Component_Recovery
                                     units = New String() {"% M/M", "% W/W"}
                                 Case ColumnSpec.SpecType.Heat_Duty
@@ -2518,7 +2518,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
                                     units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                 Case ColumnSpec.SpecType.Stream_Ratio
                                     units = New String() {""}
                                 Case ColumnSpec.SpecType.Temperature
@@ -2567,7 +2567,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                                     units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                 Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                 Case ColumnSpec.SpecType.Component_Recovery
                                     units = New String() {"% M/M", "% W/W"}
                                 Case ColumnSpec.SpecType.Heat_Duty
@@ -2575,7 +2575,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
                                     units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                 Case ColumnSpec.SpecType.Stream_Ratio
                                     units = New String() {""}
                                 Case ColumnSpec.SpecType.Temperature
@@ -2610,7 +2610,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     With cspecv
                                         .Add(DWSIM.App.GetLocalString("DCVaporFlowRate"), Me, "VaporFlowRate", False, DWSIM.App.GetLocalString("DCCondenserSpec"), "", True)
                                         .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me, "VaporFlowRateUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                        units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                        units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                         With .Item(.Count - 1)
                                             .Choices = New PropertyGridEx.CustomChoices(units, False)
                                         End With
@@ -2641,7 +2641,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                                         units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                     Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                                        units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                        units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                     Case ColumnSpec.SpecType.Component_Recovery
                                         units = New String() {"% M/M", "% W/W"}
                                     Case ColumnSpec.SpecType.Heat_Duty
@@ -2649,7 +2649,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
                                         units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                     Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                                        units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                        units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                     Case ColumnSpec.SpecType.Stream_Ratio
                                         units = New String() {""}
                                     Case ColumnSpec.SpecType.Temperature
