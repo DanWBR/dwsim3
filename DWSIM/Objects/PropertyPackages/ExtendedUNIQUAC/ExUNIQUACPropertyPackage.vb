@@ -822,16 +822,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             Dim Vz = result("LiquidPhaseMolarComposition")
 
-                            'i = 0
-                            'For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                            '    subst.MolarFlow = Vz(i) * Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow
-                            '    i += 1
-                            'Next
-
-                            'For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                            '    subst.MassFlow = subst.MolarFlow * subst.ConstantProperties.Molar_Weight / 1000
-                            'Next
-
                             M = result("MoleSum")
 
                             Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow *= M

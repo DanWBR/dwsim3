@@ -262,7 +262,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     If Math.Abs(L - L_ant) < 0.001 Then Exit Do
 
-                    Vx = Vxl.Clone
+                    sumN = 0
+                    For i = 0 To n
+                        Vf(i) = Vnv(i) + Vnl(i) + Vns(i)
+                        sumN += Vf(i)
+                    Next
+
+                    For i = 0 To n
+                        Vx(i) = Vf(i) / sumN
+                    Next
 
                 Loop Until int_count > 50
 
@@ -272,11 +280,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             End If
 
-            sumN = 0
-            For i = 0 To n
-                Vf(i) = Vnv(i) + Vnl(i) + Vns(i)
-                sumN += Vf(i)
-            Next
+            
 
             'return flash calculation results.
 
@@ -484,7 +488,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     tmpx = x
                     tmpdx = dx
                     df = 1
-                    fval = brentsolver.brentoptimize(0.01, 0.5, 0.0001, df)
+                    fval = brentsolver.brentoptimize(0.01, 1.0#, 0.0001, df)
 
                     For i = 0 To r
                         x(i) -= dx(i) * df
@@ -496,7 +500,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Throw New Exception("Chemical Equilibrium Solver error: No solution found - reached a stationary point of the objective function (singular gradient matrix).")
                     End If
 
-                    If niter > 999 Then
+                    If niter > 250 Then
                         Throw New Exception("Chemical Equilibrium Solver error: Reached the maximum number of internal iterations without converging.")
                     End If
 
@@ -658,7 +662,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Private Function FunctionGradient2N(ByVal x() As Double) As Double(,)
 
-            Dim epsilon As Double = 0.000001
+            Dim epsilon As Double = 0.001
 
             Dim f1(), f2() As Double
             Dim g(x.Length - 1, x.Length - 1), x2(x.Length - 1) As Double
@@ -670,7 +674,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     If i <> j Then
                         x2(j) = x(j)
                     Else
-                        x2(j) = x(j) + epsilon
+                        If x(j) = 0.0# Then
+                            x2(j) = x(j) + epsilon
+                        Else
+                            x2(j) = x(j) * (1 + epsilon)
+                        End If
                     End If
                 Next
                 f2 = FunctionValue2N(x2)
