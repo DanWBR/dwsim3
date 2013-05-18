@@ -1,4 +1,6 @@
 ﻿Imports com.ggasoftware.indigo
+Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
+Imports DWSIM.DWSIM.SimulationObjects.Streams
 
 '    Copyright 2008 Daniel Wagner O. de Medeiros
 '
@@ -20,6 +22,8 @@
 Public Class FormPureComp
 
     Inherits System.Windows.Forms.Form
+
+    Dim MatStream As DWSIM.SimulationObjects.Streams.MaterialStream
 
     Public ChildParent As FormFlowsheet
 
@@ -45,7 +49,14 @@ Public Class FormPureComp
                 Next
             End With
         End If
-        Me.ComboBox1.SelectedIndex = 0
+
+        If ChildParent.Options.SelectedPropertyPackage Is Nothing Then
+            MessageBox.Show(DWSIM.App.GetLocalString("NoPropPackDefined"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Me.Close()
+        Else
+            Me.ComboBox1.SelectedIndex = 0
+        End If
 
     End Sub
 
@@ -55,29 +66,65 @@ Public Class FormPureComp
         Dim cv As New DWSIM.SistemasDeUnidades.Conversor
         Dim nf As String = ChildParent.Options.NumberFormat
         Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = ChildParent.Options.SelectedPropertyPackage
+       
 
-        For Each mat As DWSIM.SimulationObjects.Streams.MaterialStream In Me.ChildParent.Collections.CLCS_MaterialStreamCollection.Values
-            pp.CurrentMaterialStream = mat
-            Exit For
+
+
+        Me.MatStream = New MaterialStream("", "")
+        pp.CurrentMaterialStream = MatStream
+
+        For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In MatStream.Fases.Values
+            For Each cp As ConstantProperties In Me.ChildParent.Options.SelectedComponents.Values
+                If DWSIM.App.GetComponentName(cp.Name) = constprop.Name Then
+                    With phase
+                        .Componentes.Add(cp.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(cp.Name, ""))
+                        .Componentes(cp.Name).ConstantProperties = cp
+                    End With
+                    Exit For
+                End If
+            Next
         Next
+
+        'setting up datatable
+        Dim Row As Integer
+        Dim TD, VD As Double
+        Me.DataTable.Rows.Clear()
+        Me.DataTable.Rows.Add(51)
+        Me.DataTable.Columns.Item(0).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTable.Columns.Item(2).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTable.Columns.Item(4).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTable.Columns.Item(6).HeaderText = "Temp " & su.spmp_temperature
+
+        Me.DataTable.Columns.Item(1).HeaderText = DWSIM.App.GetLocalString("CapacidadeCalorficaP2") & " " & su.spmp_heatCapacityCp
+        Me.DataTable.Columns.Item(3).HeaderText = DWSIM.App.GetLocalString("PressodeVapor") & " " & su.spmp_pressure
+        Me.DataTable.Columns.Item(5).HeaderText = DWSIM.App.GetLocalString("ViscosidadeLquido") & " " & su.spmp_viscosity
+        Me.DataTable.Columns.Item(7).HeaderText = DWSIM.App.GetLocalString("EntalpiadeVaporizao") & " " & su.spmp_enthalpy
+
 
         'setting up curves
         Dim T As Double
         Dim Tmin, Tmax, delta As Double
 
+        'gas heat capacity
         Tmin = 200
         Tmax = 1500
         delta = (Tmax - Tmin) / 50
 
         T = Tmin
+        Row = 0
         vxCp.Clear()
         vyCp.Clear()
 
         If Not constprop.IsIon Or Not constprop.IsSalt Then
             Do
-                vxCp.Add(cv.ConverterDoSI(su.spmp_temperature, T))
-                vyCp.Add(cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_CPi(constprop.Name, T)))
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_CPi(constprop.Name, T))
+                vxCp.Add(TD)
+                vyCp.Add(VD)
+                Me.DataTable.Item(0, Row).Value = Format(TD, nf)
+                Me.DataTable.Item(1, Row).Value = Format(VD, nf)
                 T += delta
+                Row += 1
             Loop Until T > Tmax
         End If
 
@@ -90,14 +137,20 @@ Public Class FormPureComp
             delta = (Tmax - Tmin) / 50
         End With
         T = Tmin
+        Row = 0
         vxPvap.Clear()
         vyPvap.Clear()
         If Not constprop.IsIon And Not constprop.IsSalt Then
             Do
-                vxPvap.Add(cv.ConverterDoSI(su.spmp_temperature, T))
-                vyPvap.Add(cv.ConverterDoSI(su.spmp_pressure, pp.AUX_PVAPi(constprop.Name, T)))
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_PVAPi(constprop.Name, T))
+                vxPvap.Add(TD)
+                vyPvap.Add(VD)
+                Me.DataTable.Item(2, Row).Value = Format(TD, nf)
+                Me.DataTable.Item(3, Row).Value = Format(VD, nf)
                 T += delta
-            Loop Until T > Tmax
+                Row += 1
+            Loop Until Row = 51
         End If
 
         'viscosidade liquido
@@ -107,14 +160,20 @@ Public Class FormPureComp
             delta = (Tmax - Tmin) / 50
         End With
         T = Tmin
+        Row = 0
         vxVisc.Clear()
         vyVisc.Clear()
         If Not constprop.IsIon And Not constprop.IsSalt Then
             Do
-                vxVisc.Add(cv.ConverterDoSI(su.spmp_temperature, T))
-                vyVisc.Add(cv.ConverterDoSI(su.spmp_viscosity, pp.AUX_LIQVISCi(constprop.Name, T)))
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_viscosity, pp.AUX_LIQVISCi(constprop.Name, T))
+                vxVisc.Add(TD)
+                vyVisc.Add(VD)
+                Me.DataTable.Item(4, Row).Value = Format(TD, nf)
+                Me.DataTable.Item(5, Row).Value = Format(VD, nf)
                 T += delta
-            Loop Until T > Tmax
+                Row += 1
+            Loop Until Row = 51
         End If
 
         'entalpia vaporizacao
@@ -126,16 +185,20 @@ Public Class FormPureComp
             delta = (Tmax - Tmin) / 50
         End With
         T = Tmin
+        Row = 0
         vxDHvap.Clear()
         vyDHvap.Clear()
-        Dim Tr As Double
         If Not constprop.IsIon And Not constprop.IsSalt Then
             Do
-                Tr = T / constprop.Critical_Temperature
-                vxDHvap.Add(cv.ConverterDoSI(su.spmp_temperature, T))
-                vyDHvap.Add(cv.ConverterDoSI(su.spmp_enthalpy, pp.AUX_HVAPi(constprop.Name, T)))
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_enthalpy, pp.AUX_HVAPi(constprop.Name, T))
+                vxDHvap.Add(TD)
+                vyDHvap.Add(VD)
+                Me.DataTable.Item(6, Row).Value = Format(TD, nf)
+                Me.DataTable.Item(7, Row).Value = Format(VD, nf)
                 T += delta
-            Loop Until T > Tmax
+                Row += 1
+            Loop Until Row = 51
         End If
 
         With Me.GraphCp.GraphPane
@@ -213,12 +276,12 @@ Public Class FormPureComp
         tbSMILES.Text = constprop.SMILES
         tbInChI.Text = constprop.InChI
 
+
         'Render molecule / Calculate InChI from SMILES
+        If Not constprop.SMILES Is Nothing And Not constprop.SMILES = "" Then
 
-        If Not constprop.SMILES Is Nothing Then
-
+            'definition available, render molecule
             Try
-
                 Dim ind As New Indigo()
                 Dim mol As IndigoObject = ind.loadMolecule(constprop.SMILES)
                 Dim renderer As New IndigoRenderer(ind)
@@ -238,10 +301,12 @@ Public Class FormPureComp
                 pbRender.Image = renderer.renderToBitmap(mol)
 
             Catch ex As Exception
-
                 MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             End Try
+        Else
+            'no definition available, delete old picture
+            pbRender.Image = Nothing
 
         End If
 
@@ -278,7 +343,7 @@ Public Class FormPureComp
             .Add(New Object() {DWSIM.App.GetLocalString("HydrationNumber"), constprop.HydrationNumber, ""})
             .Add(New Object() {DWSIM.App.GetLocalString("PositiveIon"), constprop.PositiveIon, ""})
             .Add(New Object() {DWSIM.App.GetLocalString("NegativeIon"), constprop.NegativeIon, ""})
-            
+
         End With
 
         chkEnableEdit_CheckedChanged(Me, New EventArgs)
@@ -417,5 +482,4 @@ Public Class FormPureComp
         Next
 
     End Sub
-
 End Class
