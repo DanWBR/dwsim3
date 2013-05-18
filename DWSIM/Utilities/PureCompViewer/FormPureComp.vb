@@ -51,7 +51,8 @@ Public Class FormPureComp
         End If
 
         If ChildParent.Options.SelectedPropertyPackage Is Nothing Then
-            MessageBox.Show("Kein Property Package definiert")
+            MessageBox.Show(DWSIM.App.GetLocalString("NoPropPackDefined"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+
             Me.Close()
         Else
             Me.ComboBox1.SelectedIndex = 0
@@ -65,8 +66,7 @@ Public Class FormPureComp
         Dim cv As New DWSIM.SistemasDeUnidades.Conversor
         Dim nf As String = ChildParent.Options.NumberFormat
         Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = ChildParent.Options.SelectedPropertyPackage
-
-
+       
 
 
 
@@ -85,23 +85,46 @@ Public Class FormPureComp
             Next
         Next
 
+        'setting up datatable
+        Dim Row As Integer
+        Dim TD, VD As Double
+        Me.DataTable.Rows.Clear()
+        Me.DataTable.Rows.Add(51)
+        Me.DataTable.Columns.Item(0).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTable.Columns.Item(2).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTable.Columns.Item(4).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTable.Columns.Item(6).HeaderText = "Temp " & su.spmp_temperature
+
+        Me.DataTable.Columns.Item(1).HeaderText = DWSIM.App.GetLocalString("CapacidadeCalorficaP2") & " " & su.spmp_heatCapacityCp
+        Me.DataTable.Columns.Item(3).HeaderText = DWSIM.App.GetLocalString("PressodeVapor") & " " & su.spmp_pressure
+        Me.DataTable.Columns.Item(5).HeaderText = DWSIM.App.GetLocalString("ViscosidadeLquido") & " " & su.spmp_viscosity
+        Me.DataTable.Columns.Item(7).HeaderText = DWSIM.App.GetLocalString("EntalpiadeVaporizao") & " " & su.spmp_enthalpy
+
+
         'setting up curves
         Dim T As Double
         Dim Tmin, Tmax, delta As Double
 
+        'gas heat capacity
         Tmin = 200
         Tmax = 1500
         delta = (Tmax - Tmin) / 50
 
         T = Tmin
+        Row = 0
         vxCp.Clear()
         vyCp.Clear()
 
         If Not constprop.IsIon Or Not constprop.IsSalt Then
             Do
-                vxCp.Add(cv.ConverterDoSI(su.spmp_temperature, T))
-                vyCp.Add(cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_CPi(constprop.Name, T)))
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_CPi(constprop.Name, T))
+                vxCp.Add(TD)
+                vyCp.Add(VD)
+                Me.DataTable.Item(0, Row).Value = Format(TD, nf)
+                Me.DataTable.Item(1, Row).Value = Format(VD, nf)
                 T += delta
+                Row += 1
             Loop Until T > Tmax
         End If
 
@@ -114,14 +137,20 @@ Public Class FormPureComp
             delta = (Tmax - Tmin) / 50
         End With
         T = Tmin
+        Row = 0
         vxPvap.Clear()
         vyPvap.Clear()
         If Not constprop.IsIon And Not constprop.IsSalt Then
             Do
-                vxPvap.Add(cv.ConverterDoSI(su.spmp_temperature, T))
-                vyPvap.Add(cv.ConverterDoSI(su.spmp_pressure, pp.AUX_PVAPi(constprop.Name, T)))
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_PVAPi(constprop.Name, T))
+                vxPvap.Add(TD)
+                vyPvap.Add(VD)
+                Me.DataTable.Item(2, Row).Value = Format(TD, nf)
+                Me.DataTable.Item(3, Row).Value = Format(VD, nf)
                 T += delta
-            Loop Until T > Tmax
+                Row += 1
+            Loop Until Row = 51
         End If
 
         'viscosidade liquido
@@ -131,14 +160,20 @@ Public Class FormPureComp
             delta = (Tmax - Tmin) / 50
         End With
         T = Tmin
+        Row = 0
         vxVisc.Clear()
         vyVisc.Clear()
         If Not constprop.IsIon And Not constprop.IsSalt Then
             Do
-                vxVisc.Add(cv.ConverterDoSI(su.spmp_temperature, T))
-                vyVisc.Add(cv.ConverterDoSI(su.spmp_viscosity, pp.AUX_LIQVISCi(constprop.Name, T)))
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_viscosity, pp.AUX_LIQVISCi(constprop.Name, T))
+                vxVisc.Add(TD)
+                vyVisc.Add(VD)
+                Me.DataTable.Item(4, Row).Value = Format(TD, nf)
+                Me.DataTable.Item(5, Row).Value = Format(VD, nf)
                 T += delta
-            Loop Until T > Tmax
+                Row += 1
+            Loop Until Row = 51
         End If
 
         'entalpia vaporizacao
@@ -150,16 +185,20 @@ Public Class FormPureComp
             delta = (Tmax - Tmin) / 50
         End With
         T = Tmin
+        Row = 0
         vxDHvap.Clear()
         vyDHvap.Clear()
-        Dim Tr As Double
         If Not constprop.IsIon And Not constprop.IsSalt Then
             Do
-                Tr = T / constprop.Critical_Temperature
-                vxDHvap.Add(cv.ConverterDoSI(su.spmp_temperature, T))
-                vyDHvap.Add(cv.ConverterDoSI(su.spmp_enthalpy, pp.AUX_HVAPi(constprop.Name, T)))
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_enthalpy, pp.AUX_HVAPi(constprop.Name, T))
+                vxDHvap.Add(TD)
+                vyDHvap.Add(VD)
+                Me.DataTable.Item(6, Row).Value = Format(TD, nf)
+                Me.DataTable.Item(7, Row).Value = Format(VD, nf)
                 T += delta
-            Loop Until T > Tmax
+                Row += 1
+            Loop Until Row = 51
         End If
 
         With Me.GraphCp.GraphPane

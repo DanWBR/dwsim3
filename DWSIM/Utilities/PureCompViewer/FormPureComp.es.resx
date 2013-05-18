@@ -200,4 +200,7 @@
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM-Utilidades: Propiedades de componentes puros</value>
   </data>
+  <data name="FaTabStripItem7.Title" xml:space="preserve">
+    <value>Data table</value>
+  </data>
 </root>

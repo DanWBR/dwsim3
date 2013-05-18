@@ -145,56 +145,8 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Komponente</value>
   </data>
-  <data name="Column1.HeaderText" xml:space="preserve">
-    <value>Eigenschaft</value>
-  </data>
-  <data name="Column2.HeaderText" xml:space="preserve">
-    <value>Wert</value>
-  </data>
-  <data name="Column3.HeaderText" xml:space="preserve">
-    <value>Einheit</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Eigenschaften</value>
-  </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Konstanten</value>
-  </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>2D Darstellung</value>
-  </data>
-  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 13</value>
-  </data>
-  <data name="Label7.Text" xml:space="preserve">
-    <value>InChI Zeichenfolge</value>
-  </data>
-  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 13</value>
-  </data>
-  <data name="Label6.Text" xml:space="preserve">
-    <value>SMILES Zeichenfolge</value>
-  </data>
-  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 13</value>
-  </data>
-  <data name="Label5.Text" xml:space="preserve">
-    <value>MODFAC Gruppen</value>
-  </data>
-  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>89, 13</value>
-  </data>
-  <data name="Label4.Text" xml:space="preserve">
-    <value>UNIFAC Gruppen</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 13</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>Formel</value>
-  </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>Molekülstruktur</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="FaTabStripItem6.TabIndex" type="System.Int32, mscorlib">
@@ -227,8 +179,65 @@
   <data name="FaTabStripItem5.Title" xml:space="preserve">
     <value>Verdampfungsenthalpie</value>
   </data>
+  <data name="FaTabStripItem7.Title" xml:space="preserve">
+    <value>Datentabelle</value>
+  </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Anzeige</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Eigenschaften</value>
+  </data>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Eigenschaft</value>
+  </data>
+  <data name="Column2.HeaderText" xml:space="preserve">
+    <value>Wert</value>
+  </data>
+  <data name="Column3.HeaderText" xml:space="preserve">
+    <value>Einheit</value>
+  </data>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>2D Darstellung</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>Molekülstruktur</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>98, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>InChI Zeichenfolge</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>SMILES Zeichenfolge</value>
+  </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 13</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>MODFAC Gruppen</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>UNIFAC Gruppen</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 13</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Formel</value>
+  </data>
+  <data name="DataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
+    <value>T0</value>
+  </data>
+  <data name="DataGridViewTextBoxColumn2.HeaderText" xml:space="preserve">
+    <value>CpGas</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM: Eigenschaften reiner Komponenten</value>
