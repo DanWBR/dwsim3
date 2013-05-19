@@ -3112,7 +3112,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     vaprate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_
                     distrate = 0.0
                 ElseIf Me.CondenserType = condtype.Partial_Condenser Then
-                    distrate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_ - vaprate
+                    If Me.Specs("C").SType = ColumnSpec.SpecType.Product_Molar_Flow_Rate Then
+                        distrate = cv.ConverterParaSI(Me.Specs("C").SpecUnit, Me.Specs("C").SpecValue)
+                    Else
+                        distrate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_ - vaprate
+                    End If
+
                 Else
                     distrate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_
                     vaprate = 0.0
