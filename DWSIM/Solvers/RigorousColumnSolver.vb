@@ -171,8 +171,8 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
         Dim ndeps As Double = 0.01
 
-        Dim _ns, _nc As Integer
-        Dim _Bj, _Aj, _Cj, _Dj, _Ej, _Fj, _eff, _T_, _Tj, _Lj, _Vj, _LSSj, _VSSj, _LSS, _VSS, _Rlj, _Rvj, _F, _P, _HF, _Q As Double()
+        Dim _ns, _nc, _el As Integer
+        Dim _Bj, _Aj, _Cj, _Dj, _Ej, _Fj, _eff, _T_, _Tj, _Lj, _Vj, _LSSj, _VSSj, _LSS, _VSS, _Rlj, _Rvj, _F, _P, _HF, _Q, Vjj As Double()
         Dim _S, _alpha As Double(,)
         Dim _fc, _xc, _yc, _lc, _vc, _zc As Double()()
         Dim _Kbj As Object()
@@ -239,7 +239,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                     _Rlj(m2 - 1) = Exp(x(i))
                 Next
             End If
-
+            If _condtype = Column.condtype.Partial_Condenser Then
+                For j = 0 To _nc - 1
+                    _S(0, j) = Exp(x(_el)) * _alpha(0, j) * _Sb
+                Next
+            End If
             'step4
 
             'find component liquid flows by the tridiagonal matrix method
@@ -615,7 +619,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                     Next
                 End If
             Next
-
+            If _condtype = Column.condtype.Partial_Condenser Then errors(_el) = (_Vj(0) - Vjj(0))
             Return errors
 
         End Function
@@ -704,7 +708,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                     _Rlj(m2 - 1) = Exp(_bx(i) + _dbx(i) * t)
                 Next
             End If
-
+            If _condtype = Column.condtype.Partial_Condenser Then
+                For j = 0 To _nc - 1
+                    _S(0, j) = Exp(_bx(_el) + _dbx(_el) * t) * _alpha(0, j) * _Sb
+                Next
+            End If
 
             'step4
 
@@ -1079,10 +1087,10 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                     Next
                 End If
             Next
-
+            If _condtype = Column.condtype.Partial_Condenser Then errors(_el) = (_Vj(0) - Vjj(0))
 
             Dim il_err As Double = 0
-            For i = 0 To _bx.Length - 1
+            For i = 0 To _el
                 il_err += errors(i) ^ 2
             Next
 
@@ -1132,6 +1140,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
             _ns = ns
             _nc = nc
+
 
             Dim ic, ec, iic As Integer
             Dim Tj(ns), Tj_ant(ns), T_(ns) As Double
@@ -1192,6 +1201,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                     lsi.Add(i)
                 End If
             Next
+            If condt = Column.condtype.Partial_Condenser Then el += 1
 
             Dim hes(el, el) As Double
             Dim bx(el), bxb(el), bf(el), bfb(el), bp(el), bp_ant(el) As Double
@@ -1465,6 +1475,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 _T_ = T_.Clone
                 _Lj = Lj.Clone
                 _Vj = Vj.Clone
+                Vjj = V.Clone
                 _LSSj = LSS.Clone
                 _VSSj = VSS.Clone
                 _LSS = LSS.Clone
@@ -1494,6 +1505,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 _lcnt = lcnt
                 _specs = specs
                 _maxF = maxF
+                _el = el
 
                 'solve using newton's method
 
@@ -1532,6 +1544,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                         xvar(i) = lnRlj(m2 - 1)
                     Next
                 End If
+                If condt = Column.condtype.Partial_Condenser Then xvar(el) = lnSbj(0)
 
                 ic0 = 0
 
@@ -1692,7 +1705,14 @@ restart:            fx = Me.FunctionValue(xvar)
                         Rlj(m2 - 1) = Exp(lnRlj(m2 - 1))
                     Next
                 End If
-
+                If condt = Column.condtype.Partial_Condenser Then
+                    lnSbj_ant(0) = lnSbj(0)
+                    lnSbj(0) = xvar(el)
+                    Sbj(0) = Exp(lnSbj(0))
+                    For j = 0 To nc - 1
+                        S(0, j) = Sbj(0) * alpha(0, j) * Sb
+                    Next
+                End If
                 ic += 1
                 iic += 1
 
