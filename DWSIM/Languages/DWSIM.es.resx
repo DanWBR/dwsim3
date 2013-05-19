@@ -4629,4 +4629,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="MolarityUnits" xml:space="preserve">
     <value>Unidades: moles por litro de solución (M)</value>
   </data>
+  <data name="NoPropPackDefined" xml:space="preserve">
+    <value>Por favor, seleccione el paquete de propiedades para continuar.</value>
+  </data>
 </root>

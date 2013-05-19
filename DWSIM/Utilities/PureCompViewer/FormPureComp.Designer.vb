@@ -410,7 +410,6 @@ Partial Class FormPureComp
         Me.DataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataTable.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7, Me.DataGridViewTextBoxColumn8})
         resources.ApplyResources(Me.DataTable, "DataTable")
-        Me.DataTable.EnableHeadersVisualStyles = False
         Me.DataTable.Name = "DataTable"
         Me.DataTable.RowHeadersVisible = False
         Me.DataTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect

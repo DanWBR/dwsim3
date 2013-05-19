@@ -130,7 +130,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>628, 16</value>
+    <value>690, 16</value>
   </data>
   <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 23</value>
@@ -160,7 +160,7 @@
     <value>True</value>
   </data>
   <data name="chkEnableEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>398, 19</value>
+    <value>460, 19</value>
   </data>
   <data name="chkEnableEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>225, 17</value>
@@ -268,7 +268,7 @@
     <value>3, 17</value>
   </data>
   <data name="GridProps.Size" type="System.Drawing.Size, System.Drawing">
-    <value>734, 387</value>
+    <value>796, 387</value>
   </data>
   <data name="GridProps.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -289,7 +289,7 @@
     <value>8, 3</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>740, 407</value>
+    <value>802, 407</value>
   </data>
   <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -310,7 +310,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>755, 421</value>
+    <value>817, 421</value>
   </data>
   <data name="FaTabStripItem1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -337,7 +337,7 @@
     <value>3, 17</value>
   </data>
   <data name="pbRender.Size" type="System.Drawing.Size, System.Drawing">
-    <value>733, 222</value>
+    <value>799, 222</value>
   </data>
   <data name="pbRender.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -358,7 +358,7 @@
     <value>8, 170</value>
   </data>
   <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>739, 242</value>
+    <value>805, 242</value>
   </data>
   <data name="GroupBox3.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -382,7 +382,7 @@
     <value>133, 131</value>
   </data>
   <data name="tbInChI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 21</value>
+    <value>666, 21</value>
   </data>
   <data name="tbInChI.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -433,7 +433,7 @@
     <value>133, 104</value>
   </data>
   <data name="tbSMILES.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 21</value>
+    <value>666, 21</value>
   </data>
   <data name="tbSMILES.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -484,7 +484,7 @@
     <value>133, 77</value>
   </data>
   <data name="tbMODFAC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 21</value>
+    <value>666, 21</value>
   </data>
   <data name="tbMODFAC.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -535,7 +535,7 @@
     <value>133, 50</value>
   </data>
   <data name="tbUNIFAC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 21</value>
+    <value>666, 21</value>
   </data>
   <data name="tbUNIFAC.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -586,7 +586,7 @@
     <value>133, 23</value>
   </data>
   <data name="tbFormula.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 21</value>
+    <value>666, 21</value>
   </data>
   <data name="tbFormula.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -634,7 +634,7 @@
     <value>8, 5</value>
   </data>
   <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>739, 164</value>
+    <value>805, 164</value>
   </data>
   <data name="GroupBox5.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -655,7 +655,7 @@
     <value>1</value>
   </data>
   <data name="FaTabStripItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>755, 421</value>
+    <value>817, 421</value>
   </data>
   <data name="FaTabStripItem6.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -946,7 +946,7 @@
     <value>0, 0</value>
   </data>
   <data name="DataTable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>755, 421</value>
+    <value>817, 421</value>
   </data>
   <data name="DataTable.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -964,13 +964,13 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>755, 421</value>
+    <value>817, 421</value>
   </data>
   <data name="FaTabStripItem7.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
   <data name="FaTabStripItem7.Title" xml:space="preserve">
-    <value>Data table</value>
+    <value>Tabela de Dados</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem7.Name" xml:space="preserve">
     <value>FaTabStripItem7</value>
@@ -988,7 +988,7 @@
     <value>3, 43</value>
   </data>
   <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>757, 442</value>
+    <value>819, 442</value>
   </data>
   <data name="FaTabStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1012,7 +1012,7 @@
     <value>5, 5</value>
   </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>763, 488</value>
+    <value>825, 488</value>
   </data>
   <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1039,7 +1039,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>772, 496</value>
+    <value>834, 496</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

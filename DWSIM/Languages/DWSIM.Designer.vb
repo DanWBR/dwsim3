@@ -8294,6 +8294,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Por favor selecione um Pacote de Propriedades para continuar..
+        '''</summary>
+        Friend Shared ReadOnly Property NoPropPackDefined() As String
+            Get
+                Return ResourceManager.GetString("NoPropPackDefined", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Regressão não disponível..
         '''</summary>
         Friend Shared ReadOnly Property NoRegressionAvailable() As String

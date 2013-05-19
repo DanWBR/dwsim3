@@ -66,24 +66,13 @@ Public Class FormPureComp
         Dim cv As New DWSIM.SistemasDeUnidades.Conversor
         Dim nf As String = ChildParent.Options.NumberFormat
         Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = ChildParent.Options.SelectedPropertyPackage
-       
-
-
 
         Me.MatStream = New MaterialStream("", "")
-        pp.CurrentMaterialStream = MatStream
 
-        For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In MatStream.Fases.Values
-            For Each cp As ConstantProperties In Me.ChildParent.Options.SelectedComponents.Values
-                If DWSIM.App.GetComponentName(cp.Name) = constprop.Name Then
-                    With phase
-                        .Componentes.Add(cp.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(cp.Name, ""))
-                        .Componentes(cp.Name).ConstantProperties = cp
-                    End With
-                    Exit For
-                End If
-            Next
-        Next
+        'add simulation compounds to the dummy material stream
+        Me.ChildParent.AddComponentsRows(Me.MatStream)
+
+        pp.CurrentMaterialStream = MatStream
 
         'setting up datatable
         Dim Row As Integer
@@ -99,7 +88,6 @@ Public Class FormPureComp
         Me.DataTable.Columns.Item(3).HeaderText = DWSIM.App.GetLocalString("PressodeVapor") & " " & su.spmp_pressure
         Me.DataTable.Columns.Item(5).HeaderText = DWSIM.App.GetLocalString("ViscosidadeLquido") & " " & su.spmp_viscosity
         Me.DataTable.Columns.Item(7).HeaderText = DWSIM.App.GetLocalString("EntalpiadeVaporizao") & " " & su.spmp_enthalpy
-
 
         'setting up curves
         Dim T As Double

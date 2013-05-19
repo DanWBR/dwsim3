@@ -4663,4 +4663,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="MolarityUnits" xml:space="preserve">
     <value>Unidade: mol soluto / L de solução</value>
   </data>
+  <data name="NoPropPackDefined" xml:space="preserve">
+    <value>Por favor selecione um Pacote de Propriedades para continuar.</value>
+  </data>
 </root>
