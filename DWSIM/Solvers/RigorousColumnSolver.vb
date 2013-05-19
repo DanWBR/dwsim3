@@ -203,7 +203,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim i, j As Integer
 
             For i = 0 To _ns
-                If i = 0 And _condtype = Column.condtype.Total_Condenser Then
+                If i = 0 And _condtype = Column.condtype.Total_Condenser Or i = 0 And _condtype = Column.condtype.Partial_Condenser Then
                     _Rlj(i) = Exp(x(i))
                 Else
                     For j = 0 To _nc - 1
@@ -463,7 +463,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             'Condenser Specs
             Select Case _specs("C").SType
                 Case ColumnSpec.SpecType.Component_Fraction
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         If _specs("C").SpecUnit = "M" Then
                             spfval1 = _xc(0)(spci1) - spval1
                         Else 'W
@@ -477,13 +477,13 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                         End If
                     End If
                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         spfval1 = _LSSj(0) * _xc(0)(spci1) - spval1 / _pp.RET_VMM()(spci1) * 1000 / _maxF
                     Else
                         spfval1 = _Vj(0) * _yc(0)(spci1) - spval1 / _pp.RET_VMM()(spci1) * 1000 / _maxF
                     End If
                 Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         spfval1 = _LSSj(0) * _xc(0)(spci1) - spval1 / _maxF
                     Else
                         spfval1 = _Vj(0) * _yc(0)(spci1) - spval1 / _maxF
@@ -495,7 +495,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                         sumc += _fc(j)(spci1)
                     Next
                     sumc *= rec
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         If _specs("C").SpecUnit = "% M/M" Then
                             spfval1 = _xc(0)(spci1) * _LSSj(0) - sumc
                         Else '% W/W
@@ -511,19 +511,19 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 Case ColumnSpec.SpecType.Heat_Duty
                     _Q(0) = spval1 / _maxF
                 Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         spfval1 = _LSSj(0) - spval1 / _pp.AUX_MMM(_xc(0)) * 1000 / _maxF
                     Else
                         spfval1 = _Vj(0) - spval1 / _pp.AUX_MMM(_yc(0)) * 1000 / _maxF
                     End If
                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         spfval1 = _LSSj(0) - spval1 / _maxF
                     Else
                         spfval1 = _Vj(0) - spval1 / _maxF
                     End If
                 Case ColumnSpec.SpecType.Stream_Ratio
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         spfval1 = _Lj(0) - spval1 * _LSSj(0)
                     Else
                         spfval1 = _Lj(0) - spval1 * _Vj(0)
@@ -666,7 +666,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim i, j As Integer
 
             For i = 0 To _ns
-                If i = 0 And _condtype = Column.condtype.Total_Condenser Then
+                If i = 0 And _condtype = Column.condtype.Total_Condenser Or i = 0 And _condtype = Column.condtype.Partial_Condenser Then
                     _Rlj(i) = Exp(_bx(i) + _dbx(i) * t)
                 Else
                     For j = 0 To _nc - 1
@@ -927,7 +927,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             'Condenser Specs
             Select Case _specs("C").SType
                 Case ColumnSpec.SpecType.Component_Fraction
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         If _specs("C").SpecUnit = "M" Then
                             spfval1 = _xc(0)(spci1) - spval1
                         Else 'W
@@ -941,13 +941,13 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                         End If
                     End If
                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         spfval1 = _LSSj(0) * _xc(0)(spci1) - spval1 / _pp.RET_VMM()(spci1) * 1000 / _maxF
                     Else
                         spfval1 = _Vj(0) * _yc(0)(spci1) - spval1 / _pp.RET_VMM()(spci1) * 1000 / _maxF
                     End If
                 Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         spfval1 = _LSSj(0) * _xc(0)(spci1) - spval1 / _maxF
                     Else
                         spfval1 = _Vj(0) * _yc(0)(spci1) - spval1 / _maxF
@@ -959,7 +959,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                         sumc += _fc(j)(spci1)
                     Next
                     sumc *= rec
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         If _specs("C").SpecUnit = "% M/M" Then
                             spfval1 = _xc(0)(spci1) * _LSSj(0) - sumc
                         Else '% W/W
@@ -975,19 +975,19 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 Case ColumnSpec.SpecType.Heat_Duty
                     _Q(0) = spval1 / _maxF
                 Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         spfval1 = _LSSj(0) - spval1 / _pp.AUX_MMM(_xc(0)) * 1000 / _maxF
                     Else
                         spfval1 = _Vj(0) - spval1 / _pp.AUX_MMM(_yc(0)) * 1000 / _maxF
                     End If
                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         spfval1 = _LSSj(0) - spval1 / _maxF
                     Else
                         spfval1 = _Vj(0) - spval1 / _maxF
                     End If
                 Case ColumnSpec.SpecType.Stream_Ratio
-                    If _condtype = Column.condtype.Total_Condenser Then
+                    If _condtype = Column.condtype.Total_Condenser Or _condtype = Column.condtype.Partial_Condenser Then
                         spfval1 = _Lj(0) - spval1 * _LSSj(0)
                     Else
                         spfval1 = _Lj(0) - spval1 * _Vj(0)
@@ -1499,7 +1499,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 'solve using newton's method
 
                 For i = 0 To ns
-                    If i = 0 And condt = Column.condtype.Total_Condenser Then
+                    If i = 0 And condt = Column.condtype.Total_Condenser Or i = 0 And condt = Column.condtype.Partial_Condenser Then
                         xvar(i) = lnRlj(i)
                     Else
                         xvar(i) = lnSbj(i)
