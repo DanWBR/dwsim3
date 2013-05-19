@@ -122,7 +122,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim wi(ns, nc - 1), ti(ns, nc - 1), sumwi(ns), sumti(ns) As Double
             For i = 0 To ns
                 Array.Resize(Kw11(i), nc)
-                Array.Resize(Kw11(i), nc)
+                Array.Resize(Kw21(i), nc)
             Next
 
             For i = 0 To ns
@@ -203,9 +203,13 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim i, j As Integer
 
             For i = 0 To _ns
-                For j = 0 To _nc - 1
-                    _S(i, j) = Exp(x(i)) * _alpha(i, j) * _Sb
-                Next
+                If i = 0 And _condtype = Column.condtype.Total_Condenser Then
+                    _Rlj(i) = Exp(x(i))
+                Else
+                    For j = 0 To _nc - 1
+                        _S(i, j) = Exp(x(i)) * _alpha(i, j) * _Sb
+                    Next
+                End If
             Next
 
             Dim m1, m2 As Integer
@@ -213,7 +217,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             m2 = 0
 
             If _vcnt > 0 Then
-                For i = _ns To _vcnt + _ns
+                For i = _ns + 1 To _vcnt + _ns
                     For j = m1 To _ns
                         If _Rvj(j) <> 1 Then
                             m1 = j + 1
@@ -255,7 +259,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
             For i = 0 To _ns
                 For j = 0 To _nc - 1
-                    Bs(i, j) = -(_Rlj(i) + _S(i, j) * _Rvj(i))
+                    If i = 0 And _condtype = Column.condtype.Total_Condenser Then
+                        Bs(i, j) = -(_Rlj(i))
+                    Else
+                        Bs(i, j) = -(_Rlj(i) + _S(i, j) * _Rvj(i))
+                    End If
                     If i < _ns Then Cs(i, j) = _S(i + 1, j)
                 Next
             Next
@@ -292,9 +300,9 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                     _lc(i)(j) = xt(j)(i)
                     _Lj(i) += _lc(i)(j)
                 Next
-                If _Lj(i) < 0 Then
-                    _Lj(i) = 1.0E-20
-                End If
+                'If _Lj(i) < 0 Then
+                '    _Lj(i) = 1.0E-20
+                'End If
             Next
 
             For i = 0 To _ns
@@ -307,54 +315,63 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 _Vj(i) = 0
                 For j = 0 To _nc - 1
                     If i < _ns Then
-                        ' _vc(i)(j) = _eff(i) * (_S(i, j) * _lc(i)(j) - _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)) + _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)
+                        '_vc(i)(j) = _eff(i) * (_S(i, j) * _lc(i)(j) - _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)) + _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)
                         _vc(i)(j) = _S(i, j) * _lc(i)(j)
                     Else
                         _vc(i)(j) = _S(i, j) * _lc(i)(j)
                     End If
                     _Vj(i) += _vc(i)(j)
                 Next
-                If _Vj(i) < 0 Then
-                    _Vj(i) = 1.0E-20
-                End If
+                'If _Vj(i) < 0 Then
+                '    _Vj(i) = 1.0E-20
+                'End If
             Next
 
             'departures from product flows
 
             Dim sumLSS As Double = 0
             Dim sumVSS As Double = 0
-            For i = 1 To _ns
-                sumLSS += _LSSj(i)
-            Next
+            Dim sumF As Double = 0
             For i = 0 To _ns
+                If i > 0 Then sumLSS += _LSSj(i)
                 sumVSS += _VSSj(i)
+                sumF += _F(i)
             Next
             If _condtype = Column.condtype.Total_Condenser Then
-                _LSSj(0) = 1 - sumLSS - sumVSS - _Lj(_ns)
+                _LSSj(0) = sumF - sumLSS - sumVSS - _Lj(_ns)
+                _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
+            ElseIf _condtype = Column.condtype.Partial_Condenser Then
+                _LSSj(0) = sumF - sumLSS - sumVSS - _Vj(0) - _Lj(_ns)
+                _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
             Else
-                _LSSj(0) = 1 - sumLSS - sumVSS - _Vj(0) - _Lj(_ns)
+                _LSSj(0) = 0.0
+                _Rlj(0) = 1
             End If
-            _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
+            'If _Lj(0) <> 0 Or Not Double.IsNaN(_Lj(0)) Or Not Double.IsInfinity(_Lj(0)) Then
+            '    _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
+            'Else
+            '    _Rlj(0) = 1
+            'End If
 
             For i = 0 To _ns
                 _VSSj(i) = (_Rvj(i) - 1) * _Vj(i)
                 If i > 0 Then _LSSj(i) = (_Rlj(i) - 1) * _Lj(i)
             Next
 
-            For i = 0 To _ns
-                sum1(i) = 0
-                For j = 0 To i
-                    sum1(i) += _F(j) - _LSSj(j) - _VSSj(j)
-                Next
-            Next
+            'For i = 0 To _ns
+            '    sum1(i) = 0
+            '    For j = 0 To i
+            '        sum1(i) += _F(j) - _LSSj(j) - _VSSj(j)
+            '    Next
+            'Next
 
-            'Ljs
-            For i = 0 To _ns
-                If i < _ns Then _Lj(i) = _Vj(i + 1) + sum1(i) - _Vj(0) Else _Lj(i) = sum1(i) - _Vj(0)
-                If _Lj(i) < 0 Then
-                    _Lj(i) = 0.0000000001
-                End If
-            Next
+            ''Ljs
+            'For i = 0 To _ns
+            '    If i < _ns Then _Lj(i) = _Vj(i + 1) + sum1(i) - _Vj(0) Else _Lj(i) = sum1(i) - _Vj(0)
+            '    If _Lj(i) < 0 Then
+            '        _Lj(i) = 0.0000000001
+            '    End If
+            'Next
 
             For i = 0 To _ns
                 For j = 0 To _nc - 1
@@ -443,17 +460,34 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
             'handle user specs
 
+            'Condenser Specs
             Select Case _specs("C").SType
                 Case ColumnSpec.SpecType.Component_Fraction
-                    If _specs("C").SpecUnit = "M" Then
-                        spfval1 = -_xc(0)(spci1) + spval1
-                    Else 'W
-                        spfval1 = -_pp.AUX_CONVERT_MOL_TO_MASS(_xc(0))(spci1) + spval1
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        If _specs("C").SpecUnit = "M" Then
+                            spfval1 = _xc(0)(spci1) - spval1
+                        Else 'W
+                            spfval1 = _pp.AUX_CONVERT_MOL_TO_MASS(_xc(0))(spci1) - spval1
+                        End If
+                    Else
+                        If _specs("C").SpecUnit = "M" Then
+                            spfval1 = _yc(0)(spci1) - spval1
+                        Else 'W
+                            spfval1 = _pp.AUX_CONVERT_MOL_TO_MASS(_yc(0))(spci1) - spval1
+                        End If
                     End If
                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
-                    spfval1 = _LSSj(0) * _xc(0)(spci1) - spval1 / _pp.RET_VMM()(spci1) * 1000 / _maxF
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        spfval1 = _LSSj(0) * _xc(0)(spci1) - spval1 / _pp.RET_VMM()(spci1) * 1000 / _maxF
+                    Else
+                        spfval1 = _Vj(0) * _yc(0)(spci1) - spval1 / _pp.RET_VMM()(spci1) * 1000 / _maxF
+                    End If
                 Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                    spfval1 = _LSSj(0) * _xc(0)(spci1) - spval1 / _maxF
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        spfval1 = _LSSj(0) * _xc(0)(spci1) - spval1 / _maxF
+                    Else
+                        spfval1 = _Vj(0) * _yc(0)(spci1) - spval1 / _maxF
+                    End If
                 Case ColumnSpec.SpecType.Component_Recovery
                     Dim rec As Double = spval1 / 100
                     Dim sumc As Double = 0
@@ -461,29 +495,50 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                         sumc += _fc(j)(spci1)
                     Next
                     sumc *= rec
-                    If _specs("C").SpecUnit = "% M/M" Then
-                        spfval1 = _xc(0)(spci1) * _LSSj(0) - sumc
-                    Else '% W/W
-                        spfval1 = _pp.RET_VMM()(spci1) * 1000 * (_xc(0)(spci1) * _LSSj(0) - sumc)
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        If _specs("C").SpecUnit = "% M/M" Then
+                            spfval1 = _xc(0)(spci1) * _LSSj(0) - sumc
+                        Else '% W/W
+                            spfval1 = _pp.RET_VMM()(spci1) * 1000 * (_xc(0)(spci1) * _LSSj(0) - sumc)
+                        End If
+                    Else
+                        If _specs("C").SpecUnit = "% M/M" Then
+                            spfval1 = _yc(0)(spci1) * _Vj(0) - sumc
+                        Else '% W/W
+                            spfval1 = _pp.RET_VMM()(spci1) * 1000 * (_yc(0)(spci1) * _Vj(0) - sumc)
+                        End If
                     End If
                 Case ColumnSpec.SpecType.Heat_Duty
                     _Q(0) = spval1 / _maxF
                 Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
-                    spfval1 = _LSSj(0) - spval1 / _pp.AUX_MMM(_xc(0)) * 1000 / _maxF
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        spfval1 = _LSSj(0) - spval1 / _pp.AUX_MMM(_xc(0)) * 1000 / _maxF
+                    Else
+                        spfval1 = _Vj(0) - spval1 / _pp.AUX_MMM(_yc(0)) * 1000 / _maxF
+                    End If
                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                    spfval1 = _LSSj(0) - spval1 / _maxF
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        spfval1 = _LSSj(0) - spval1 / _maxF
+                    Else
+                        spfval1 = _Vj(0) - spval1 / _maxF
+                    End If
                 Case ColumnSpec.SpecType.Stream_Ratio
-                    spfval1 = -_Lj(0) + spval1 * _LSSj(0)
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        spfval1 = _Lj(0) - spval1 * _LSSj(0)
+                    Else
+                        spfval1 = _Lj(0) - spval1 * _Vj(0)
+                    End If
                 Case ColumnSpec.SpecType.Temperature
                     spfval1 = _Tj(0) - spval1
             End Select
 
+            'Reboiler Specs
             Select Case _specs("R").SType
                 Case ColumnSpec.SpecType.Component_Fraction
                     If _specs("R").SpecUnit = "M" Then
-                        spfval2 = -_xc(_ns)(spci2) + spval2
+                        spfval2 = _xc(_ns)(spci2) - spval2
                     Else 'W
-                        spfval2 = -_pp.AUX_CONVERT_MOL_TO_MASS(_xc(_ns))(spci2) + spval2
+                        spfval2 = _pp.AUX_CONVERT_MOL_TO_MASS(_xc(_ns))(spci2) - spval2
                     End If
                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                     spfval2 = _Lj(_ns) * _xc(_ns)(spci2) - spval2 / _pp.RET_VMM()(spci2) * 1000 / _maxF
@@ -508,7 +563,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
                     spfval2 = _Lj(_ns) - spval2 / _maxF
                 Case ColumnSpec.SpecType.Stream_Ratio
-                    spfval2 = -_Vj(_ns) + spval2 * _Lj(_ns)
+                    spfval2 = _Vj(_ns) - spval2 * _Lj(_ns)
                 Case ColumnSpec.SpecType.Temperature
                     spfval2 = _Tj(_ns) - spval2
             End Select
@@ -546,14 +601,15 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 ElseIf i > _ns And i <= _vcnt + _ns Then
                     For j = 0 To _ns
                         If _Rvj(j) <> 1 Then
-                            errors(i) = (_VSS(j) - _VSSj(j)) / _VSS(j)
+                            errors(i) = (_VSS(j) - _VSSj(j)) '/ _VSS(j)
                             i += 1
                         End If
                     Next
-                ElseIf i > _vcnt + _ns And i <= _vcnt + _lcnt + _ns Then
+                End If
+                If i > _vcnt + _ns And i <= _vcnt + _lcnt + _ns Then
                     For j = 1 To _ns
                         If _Rlj(j) <> 1 Then
-                            errors(i) = (_LSS(j) - _LSSj(j)) / _LSS(j)
+                            errors(i) = (_LSS(j) - _LSSj(j)) '/ _LSS(j)
                             i += 1
                         End If
                     Next
@@ -567,32 +623,27 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
         Private Function FunctionGradient(ByVal x() As Double) As Double(,)
 
             Dim epsilon As Double = ndeps
-
-            Dim f2(), f3() As Double
-            Dim g(x.Length - 1, x.Length - 1), x1(x.Length - 1), x2(x.Length - 1), x3(x.Length - 1), x4(x.Length - 1) As Double
+            Dim hs As Double
+            Dim f1(), f2() As Double
+            Dim g(x.Length - 1, x.Length - 1), x1(x.Length - 1), x2(x.Length - 1) As Double
             Dim i, j, k As Integer
 
+            f1 = FunctionValue(x)
             For i = 0 To x.Length - 1
                 For j = 0 To x.Length - 1
                     If i <> j Then
-                        x1(j) = x(j)
+                        'x1(j) = x(j)
                         x2(j) = x(j)
-                        x3(j) = x(j)
-                        x4(j) = x(j)
                     Else
-                        'x1(j) = x(j) + 2 * epsilon
-                        x2(j) = x(j) * (1 + epsilon)
-                        x3(j) = x(j) * (1 - epsilon)
-                        'x4(j) = x(j) - 2 * epsilon
+                        'x1(j) = x(j)
+                        'x2(j) = x(j) * (1 + epsilon) + (epsilon / 2) ^ 2
+                        x2(j) = x(j) + epsilon
                     End If
                 Next
-                'f1 = FunctionValue(x1)
                 f2 = FunctionValue(x2)
-                f3 = FunctionValue(x3)
-                'f4 = FunctionValue(x4)
                 For k = 0 To x.Length - 1
-                    g(k, i) = (f2(k) - f3(k)) / (x2(i) - x3(i))
-                    'g(k, i) = (-f1(k) + 8 * f2(k) - 8 * f3(k) + f4(k)) / (12 * epsilon)
+                    hs = epsilon
+                    g(k, i) = (f2(k) - f1(k)) / hs
                 Next
             Next
 
@@ -615,9 +666,14 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim i, j As Integer
 
             For i = 0 To _ns
-                For j = 0 To _nc - 1
-                    _S(i, j) = Exp(_bx(i) + _dbx(i) * t) * _alpha(i, j) * _Sb
-                Next
+                If i = 0 And _condtype = Column.condtype.Total_Condenser Then
+                    _Rlj(i) = Exp(_bx(i) + _dbx(i) * t)
+                Else
+                    For j = 0 To _nc - 1
+                        _S(i, j) = Exp(_bx(i) + _dbx(i) * t) * _alpha(i, j) * _Sb
+                    Next
+                End If
+
             Next
 
             Dim m1, m2 As Integer
@@ -626,7 +682,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             m2 = 0
 
             If _vcnt > 0 Then
-                For i = _ns To _vcnt + _ns
+                For i = _ns + 1 To _vcnt + _ns
                     For j = m1 To _ns
                         If _Rvj(j) <> 1 Then
                             m1 = j + 1
@@ -669,7 +725,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
             For i = 0 To _ns
                 For j = 0 To _nc - 1
-                    Bs(i, j) = -(_Rlj(i) + _S(i, j) * _Rvj(i))
+                    If i = 0 And _condtype = Column.condtype.Total_Condenser Then
+                        Bs(i, j) = -(_Rlj(i))
+                    Else
+                        Bs(i, j) = -(_Rlj(i) + _S(i, j) * _Rvj(i))
+                    End If
                     If i < _ns Then Cs(i, j) = _S(i + 1, j)
                 Next
             Next
@@ -706,7 +766,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 For j = 0 To _nc - 1
                     'lc(i)(j) = lm(j)(i, 0)
                     _lc(i)(j) = xt(j)(i)
-                    If _lc(i)(j) < 0 Then _lc(i)(j) = 0
+                    'If _lc(i)(j) < 0 Then _lc(i)(j) = 0
                     _Lj(i) += _lc(i)(j)
                 Next
                 'If _Lj(i) < 0 Then _Lj(i) = 0.0000000001
@@ -716,7 +776,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 _Vj(i) = 0
                 For j = 0 To _nc - 1
                     _xc(i)(j) = _lc(i)(j) / _Lj(i)
-                    If Double.IsNaN(_xc(i)(j)) Then _xc(i)(j) = 0
+                    'If Double.IsNaN(_xc(i)(j)) Then _xc(i)(j) = 0
                 Next
             Next
 
@@ -724,11 +784,12 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 _Vj(i) = 0
                 For j = 0 To _nc - 1
                     If i < _ns Then
-                        _vc(i)(j) = _eff(i) * (_S(i, j) * _lc(i)(j) - _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)) + _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)
+                        '_vc(i)(j) = _eff(i) * (_S(i, j) * _lc(i)(j) - _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)) + _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)
+                        _vc(i)(j) = _S(i, j) * _lc(i)(j)
                     Else
                         _vc(i)(j) = _S(i, j) * _lc(i)(j)
                     End If
-                    If _vc(i)(j) < 0 Or Double.IsNaN(_vc(i)(j)) Then _vc(i)(j) = 0
+                    'If _vc(i)(j) < 0 Or Double.IsNaN(_vc(i)(j)) Then _vc(i)(j) = 0
                     _Vj(i) += _vc(i)(j)
                 Next
                 'If _Vj(i) < 0 Then _Vj(i) = 0.0000000001
@@ -738,33 +799,44 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
             Dim sumLSS As Double = 0
             Dim sumVSS As Double = 0
+            Dim sumF As Double = 0
             For i = 0 To _ns
                 If i > 0 Then sumLSS += _LSSj(i)
                 sumVSS += _VSSj(i)
+                sumF += _F(i)
             Next
             If _condtype = Column.condtype.Total_Condenser Then
-                _LSSj(0) = 1 - sumLSS - sumVSS - _Lj(_ns)
+                _LSSj(0) = sumF - sumLSS - sumVSS - _Lj(_ns)
+                _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
+            ElseIf _condtype = Column.condtype.Partial_Condenser Then
+                _LSSj(0) = sumF - sumLSS - sumVSS - _Vj(0) - _Lj(_ns)
+                _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
             Else
-                _LSSj(0) = 1 - sumLSS - sumVSS - _Vj(0) - _Lj(_ns)
+                _LSSj(0) = 0.0
+                _Rlj(0) = 1
             End If
-            _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
+            'If _Lj(0) <> 0 Or Not Double.IsNaN(_Lj(0)) Or Not Double.IsInfinity(_Lj(0)) Then
+            '    _Rlj(0) = 1 + _LSSj(0) / _Lj(0)
+            'Else
+            '    _Rlj(0) = 1
+            'End If
 
             For i = 0 To _ns
                 _VSSj(i) = (_Rvj(i) - 1) * _Vj(i)
                 If i > 0 Then _LSSj(i) = (_Rlj(i) - 1) * _Lj(i)
             Next
 
-            For i = 0 To _ns
-                sum1(i) = 0
-                For j = 0 To i
-                    sum1(i) += _F(j) - _LSSj(j) - _VSSj(j)
-                Next
-            Next
+            'For i = 0 To _ns
+            '    sum1(i) = 0
+            '    For j = 0 To i
+            '        sum1(i) += _F(j) - _LSSj(j) - _VSSj(j)
+            '    Next
+            'Next
 
-            'Ljs
-            For i = 0 To _ns
-                If i < _ns Then _Lj(i) = _Vj(i + 1) + sum1(i) - _Vj(0) Else _Lj(i) = sum1(i) - _Vj(0)
-            Next
+            ''Ljs
+            'For i = 0 To _ns
+            '    If i < _ns Then _Lj(i) = _Vj(i + 1) + sum1(i) - _Vj(0) Else _Lj(i) = sum1(i) - _Vj(0)
+            'Next
 
             For i = 0 To _ns
                 For j = 0 To _nc - 1
@@ -852,17 +924,34 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
             'handle user specs
 
+            'Condenser Specs
             Select Case _specs("C").SType
                 Case ColumnSpec.SpecType.Component_Fraction
-                    If _specs("C").SpecUnit = "M" Then
-                        spfval1 = -_xc(0)(spci1) / spval1 + 1
-                    Else 'W
-                        spfval1 = -_pp.AUX_CONVERT_MOL_TO_MASS(_xc(0))(spci1) / spval1 + 1
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        If _specs("C").SpecUnit = "M" Then
+                            spfval1 = _xc(0)(spci1) - spval1
+                        Else 'W
+                            spfval1 = _pp.AUX_CONVERT_MOL_TO_MASS(_xc(0))(spci1) - spval1
+                        End If
+                    Else
+                        If _specs("C").SpecUnit = "M" Then
+                            spfval1 = _yc(0)(spci1) - spval1
+                        Else 'W
+                            spfval1 = _pp.AUX_CONVERT_MOL_TO_MASS(_yc(0))(spci1) - spval1
+                        End If
                     End If
                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
-                    spfval1 = _LSSj(0) * _xc(0)(spci1) - spval1 / _pp.RET_VMM()(spci1) * 1000 / _maxF
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        spfval1 = _LSSj(0) * _xc(0)(spci1) - spval1 / _pp.RET_VMM()(spci1) * 1000 / _maxF
+                    Else
+                        spfval1 = _Vj(0) * _yc(0)(spci1) - spval1 / _pp.RET_VMM()(spci1) * 1000 / _maxF
+                    End If
                 Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                    spfval1 = _LSSj(0) * _xc(0)(spci1) - spval1 / _maxF
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        spfval1 = _LSSj(0) * _xc(0)(spci1) - spval1 / _maxF
+                    Else
+                        spfval1 = _Vj(0) * _yc(0)(spci1) - spval1 / _maxF
+                    End If
                 Case ColumnSpec.SpecType.Component_Recovery
                     Dim rec As Double = spval1 / 100
                     Dim sumc As Double = 0
@@ -870,29 +959,50 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                         sumc += _fc(j)(spci1)
                     Next
                     sumc *= rec
-                    If _specs("C").SpecUnit = "% M/M" Then
-                        spfval1 = _xc(0)(spci1) * _LSSj(0) - sumc
-                    Else '% W/W
-                        spfval1 = _pp.RET_VMM()(spci1) * 1000 * (_xc(0)(spci1) * _LSSj(0) - sumc)
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        If _specs("C").SpecUnit = "% M/M" Then
+                            spfval1 = _xc(0)(spci1) * _LSSj(0) - sumc
+                        Else '% W/W
+                            spfval1 = _pp.RET_VMM()(spci1) * 1000 * (_xc(0)(spci1) * _LSSj(0) - sumc)
+                        End If
+                    Else
+                        If _specs("C").SpecUnit = "% M/M" Then
+                            spfval1 = _yc(0)(spci1) * _Vj(0) - sumc
+                        Else '% W/W
+                            spfval1 = _pp.RET_VMM()(spci1) * 1000 * (_yc(0)(spci1) * _Vj(0) - sumc)
+                        End If
                     End If
                 Case ColumnSpec.SpecType.Heat_Duty
                     _Q(0) = spval1 / _maxF
                 Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
-                    spfval1 = _LSSj(0) - spval1 / _pp.AUX_MMM(_xc(0)) * 1000 / _maxF
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        spfval1 = _LSSj(0) - spval1 / _pp.AUX_MMM(_xc(0)) * 1000 / _maxF
+                    Else
+                        spfval1 = _Vj(0) - spval1 / _pp.AUX_MMM(_yc(0)) * 1000 / _maxF
+                    End If
                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                    spfval1 = _LSSj(0) - spval1 / _maxF
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        spfval1 = _LSSj(0) - spval1 / _maxF
+                    Else
+                        spfval1 = _Vj(0) - spval1 / _maxF
+                    End If
                 Case ColumnSpec.SpecType.Stream_Ratio
-                    spfval1 = _Lj(0) / _LSSj(0) - spval1
+                    If _condtype = Column.condtype.Total_Condenser Then
+                        spfval1 = _Lj(0) - spval1 * _LSSj(0)
+                    Else
+                        spfval1 = _Lj(0) - spval1 * _Vj(0)
+                    End If
                 Case ColumnSpec.SpecType.Temperature
                     spfval1 = _Tj(0) - spval1
             End Select
 
+            'Reboiler Specs
             Select Case _specs("R").SType
                 Case ColumnSpec.SpecType.Component_Fraction
                     If _specs("R").SpecUnit = "M" Then
-                        spfval2 = -_xc(_ns)(spci2) / spval2 + 1
+                        spfval2 = _xc(_ns)(spci2) - spval2
                     Else 'W
-                        spfval2 = -_pp.AUX_CONVERT_MOL_TO_MASS(_xc(_ns))(spci2) / spval2 + 1
+                        spfval2 = _pp.AUX_CONVERT_MOL_TO_MASS(_xc(_ns))(spci2) - spval2
                     End If
                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                     spfval2 = _Lj(_ns) * _xc(_ns)(spci2) - spval2 / _pp.RET_VMM()(spci2) * 1000 / _maxF
@@ -917,7 +1027,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
                     spfval2 = _Lj(_ns) - spval2 / _maxF
                 Case ColumnSpec.SpecType.Stream_Ratio
-                    spfval2 = -_Vj(_ns) / _Lj(_ns) + spval2
+                    spfval2 = _Vj(_ns) - spval2 * _Lj(_ns)
                 Case ColumnSpec.SpecType.Temperature
                     spfval2 = _Tj(_ns) - spval2
             End Select
@@ -947,10 +1057,33 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             For i = 0 To _ns
                 _Tj(i) = _Tj0(i)
             Next
+            Dim errors(_bx.Length - 1) As Double
+
+            For i = 0 To _bx.Length - 1
+                If i <= _ns Then
+                    errors(i) = entbal(i)
+                ElseIf i > _ns And i <= _vcnt + _ns Then
+                    For j = 0 To _ns
+                        If _Rvj(j) <> 1 Then
+                            errors(i) = (_VSS(j) - _VSSj(j)) '/ _VSS(j)
+                            i += 1
+                        End If
+                    Next
+                End If
+                If i > _vcnt + _ns And i <= _vcnt + _lcnt + _ns Then
+                    For j = 1 To _ns
+                        If _Rlj(j) <> 1 Then
+                            errors(i) = (_LSS(j) - _LSSj(j)) '/ _LSS(j)
+                            i += 1
+                        End If
+                    Next
+                End If
+            Next
+
 
             Dim il_err As Double = 0
-            For i = 0 To _ns
-                il_err += Abs(entbal(i)) ^ 2
+            For i = 0 To _bx.Length - 1
+                il_err += errors(i) ^ 2
             Next
 
             Return il_err
@@ -1032,7 +1165,15 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 If i > 0 Then sumLSS += LSS(i)
                 sumVSS += VSS(i)
             Next
-            Dim B As Double = sumF - sumLSS - sumVSS - V(0) - LSS(0)
+
+            Dim B As Double
+            If condt = Column.condtype.Total_Condenser Then
+                B = sumF - sumLSS - sumVSS - LSS(0)
+            ElseIf condt = Column.condtype.Partial_Condenser Then
+                B = sumF - sumLSS - sumVSS - V(0) - LSS(0)
+            Else
+                B = sumF - sumLSS - sumVSS - V(0)
+            End If
 
             'step2
 
@@ -1068,7 +1209,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim wi(ns, nc - 1), ti(ns, nc - 1), sumwi(ns), sumti(ns) As Double
             For i = 0 To ns
                 Array.Resize(Kw1(i), nc)
-                Array.Resize(Kw1(i), nc)
+                Array.Resize(Kw2(i), nc)
             Next
 
             Dim tmp0 As Object = Nothing
@@ -1121,11 +1262,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                     Hv2(i) = pp.DW_CalcEnthalpyDeparture(y(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
                 Else
                     K2(i) = pp.DW_CalcKvalue(x(i), y(i), Tj2(i), P(i))
-                    Hv1(i) = pp.DW_CalcEnthalpyDeparture(y(i), Tj1(i), P(i), PropertyPackages.State.Vapor)
-                    Hv2(i) = pp.DW_CalcEnthalpyDeparture(y(i), Tj2(i), P(i), PropertyPackages.State.Vapor)
+                    'Hv1(i) = pp.DW_CalcEnthalpyDeparture(y(i), Tj1(i), P(i), PropertyPackages.State.Vapor)
+                    'Hv2(i) = pp.DW_CalcEnthalpyDeparture(y(i), Tj2(i), P(i), PropertyPackages.State.Vapor)
                 End If
-                Hl1(i) = pp.DW_CalcEnthalpyDeparture(x(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
-                Hl2(i) = pp.DW_CalcEnthalpyDeparture(x(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
+                'Hl1(i) = pp.DW_CalcEnthalpyDeparture(x(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
+                'Hl2(i) = pp.DW_CalcEnthalpyDeparture(x(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
                 For j = 0 To nc - 1
                     K2j(i, j) = K2(i)(j)
                     If Double.IsNaN(K2(i)(j)) Or Double.IsInfinity(K2(i)(j)) Then K2(i)(j) = pp.AUX_PVAPi(j, T(i)) / P(i)
@@ -1141,10 +1282,10 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             For i = 0 To ns
                 Bj(i) = Log(Kbj1(i) / Kbj2(i)) / (1 / Tj2(i) - 1 / Tj1(i))
                 Aj(i) = Log(Kbj1(i)) + Bj(i) * (1 / Tj1(i))
-                Dj(i) = (Hv1(i) - Hv2(i)) / (Tj1(i) - Tj2(i))
-                Cj(i) = Hv1(i) - Dj(i) * (Tj1(i) - T_(i))
-                Fj(i) = (Hl1(i) - Hl2(i)) / (Tj1(i) - Tj2(i))
-                Ej(i) = Hl1(i) - Fj(i) * (Tj1(i) - T_(i))
+                'Dj(i) = (Hv1(i) - Hv2(i)) / (Tj1(i) - Tj2(i))
+                'Cj(i) = Hv1(i) - Dj(i) * (Tj1(i) - T_(i))
+                'Fj(i) = (Hl1(i) - Hl2(i)) / (Tj1(i) - Tj2(i))
+                'Ej(i) = Hl1(i) - Fj(i) * (Tj1(i) - T_(i))
             Next
 
             'external loop
@@ -1166,10 +1307,29 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
             Dim Sbj(ns), lnSbj0(ns), lnSbj(ns), S(ns, nc - 1) As Double
             Dim Rvj(ns), Rlj(ns), lnRvj(ns), lnRlj(ns), lnRvj0(ns), lnRlj0(ns) As Double
-            Dim VSSj(ns), LSSj(ns) As Double
+            Dim VSSj(ns), LSSj(ns), PSbj As Double
+            Dim Nss As Integer = ns + 1
+            'Calculo de Sbj, Rlj y Rvj del Lazo Externo
 
             For i = 0 To ns
                 Sbj(i) = Kbj(i) * V(i) / L(i)
+            Next
+            If AdjustSb Then
+                SbOK = False
+                PSbj = 1
+                For i = 0 To ns
+                    If i = 0 And condt = Column.condtype.Total_Condenser Then
+                        Nss -= 1
+                    Else
+                        PSbj *= Sbj(i)
+                    End If
+                Next
+                Sb = PSbj ^ (1 / (Nss))
+            Else
+                Sb = 1
+            End If
+
+            For i = 0 To ns
                 If Sbj(i) = 0 Then Sbj(i) = 1.0E-20
                 lnSbj(i) = Log(Sbj(i))
                 If V(i) <> 0 Then Rvj(i) = 1 + VSS(i) / V(i) Else Rvj(i) = 1
@@ -1291,16 +1451,16 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
                 'update inner loop parameters
 
-                Dim lnSbj_ant(ns), lnRvj_ant(ns), lnRlj_ant(ns), df, df_ant As Double
+                Dim lnSbj_ant(ns), lnRvj_ant(ns), lnRlj_ant(ns), df, df_ant, xlowbound As Double
 
                 df_ant = df
 
                 _Bj = Bj.Clone
                 _Aj = Aj.Clone
-                _Cj = Cj.Clone
-                _Dj = Dj.Clone
-                _Ej = Ej.Clone
-                _Fj = Fj.Clone
+                '_Cj = Cj.Clone
+                '_Dj = Dj.Clone
+                '_Ej = Ej.Clone
+                '_Fj = Fj.Clone
                 _eff = eff.Clone
                 _Tj = Tj.Clone
                 _T_ = T_.Clone
@@ -1339,13 +1499,17 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 'solve using newton's method
 
                 For i = 0 To ns
-                    xvar(i) = lnSbj(i)
+                    If i = 0 And condt = Column.condtype.Total_Condenser Then
+                        xvar(i) = lnRlj(i)
+                    Else
+                        xvar(i) = lnSbj(i)
+                    End If
                 Next
 
                 m1 = 0
 
                 If vcnt > 0 Then
-                    For i = ns To vcnt + ns
+                    For i = ns + 1 To vcnt + ns
                         For j = m1 To ns
                             If Rvj(j) <> 1 Then
                                 m1 = j + 1
@@ -1373,7 +1537,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 ic0 = 0
 
                 'first run (to initialize variables)
-                fx = Me.FunctionValue(xvar)
+                'fx = Me.FunctionValue(xvar)
 
                 Do
 
@@ -1429,16 +1593,20 @@ restart:            fx = Me.FunctionValue(xvar)
                     End If
 
                     'this call to the brent solver calculates the damping factor which minimizes the error (fval).
+                    itol = tol(0) * ns
                     df = 1
                     If UseDampingFactor Then fval = brentsolver.brentoptimize(dfmin, dfmax, tol(0), df)
 
                     perturb = False
                     bypass = False
+                    xlowbound = 0.1
                     For i = 0 To el
                         xvar_ant(i) = xvar(i)
                         xvar(i) += dx(i) * df
+
                         If Abs((dx(i) * df) / xvar_ant(i)) > 10 Then
-                            perturb = True
+                            'perturb = True
+                            xvar(i) = xvar_ant(i) - df * (xvar_ant(i) - xlowbound) * 0.5
                         End If
                         If Double.IsNaN(dx(i)) Or Double.IsInfinity(dx(i)) Then
                             bypass = True
@@ -1474,19 +1642,24 @@ restart:            fx = Me.FunctionValue(xvar)
                     If Double.IsNaN(il_err) Then Throw New Exception(DWSIM.App.GetLocalString("DCGeneralError"))
                     If MathEx.Common.AbsSum(dx) = 0.0# Or Abs((il_err - il_err_ant) / il_err) < itol Then Exit Do
 
-                    itol = tol(0) * ns
 
                     CheckCalculatorStatus()
 
                 Loop Until il_err < itol
 
                 For i = 0 To ns
-                    lnSbj_ant(i) = lnSbj(i)
-                    lnSbj(i) = xvar(i)
-                    Sbj(i) = Exp(lnSbj(i))
-                    For j = 0 To nc - 1
-                        S(i, j) = Sbj(i) * alpha(i, j) * Sb
-                    Next
+                    If i = 0 And _condtype = Column.condtype.Total_Condenser Then
+                        lnRlj_ant(i) = lnRlj(i)
+                        lnRlj(i) = xvar(i)
+                        Rlj(i) = Exp(lnRlj(i))
+                    Else
+                        lnSbj_ant(i) = lnSbj(i)
+                        lnSbj(i) = xvar(i)
+                        Sbj(i) = Exp(lnSbj(i))
+                        For j = 0 To nc - 1
+                            S(i, j) = Sbj(i) * alpha(i, j) * Sb
+                        Next
+                    End If
                 Next
 
                 m1 = 0
@@ -1665,11 +1838,11 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                      Hv1(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
                                                                      Hv2(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
                                                                  Else
-                                                                     Hv1(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Vapor)
-                                                                     Hv2(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Vapor)
+                                                                     'Hv1(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Vapor)
+                                                                     'Hv2(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Vapor)
                                                                  End If
-                                                                 Hl1(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
-                                                                 Hl2(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
+                                                                 'Hl1(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
+                                                                 'Hl2(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
                                                              End Sub))
                     While Not task1.IsCompleted
                         Application.DoEvents()
@@ -1683,11 +1856,11 @@ restart:            fx = Me.FunctionValue(xvar)
                             Hv1(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
                             Hv2(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
                         Else
-                            Hv1(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj1(i), P(i), PropertyPackages.State.Vapor)
-                            Hv2(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj2(i), P(i), PropertyPackages.State.Vapor)
+                            'Hv1(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj1(i), P(i), PropertyPackages.State.Vapor)
+                            'Hv2(i) = pp.DW_CalcEnthalpyDeparture(yc(i), Tj2(i), P(i), PropertyPackages.State.Vapor)
                         End If
-                        Hl1(i) = pp.DW_CalcEnthalpyDeparture(xc(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
-                        Hl2(i) = pp.DW_CalcEnthalpyDeparture(xc(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
+                        'Hl1(i) = pp.DW_CalcEnthalpyDeparture(xc(i), Tj1(i), P(i), PropertyPackages.State.Liquid)
+                        'Hl2(i) = pp.DW_CalcEnthalpyDeparture(xc(i), Tj2(i), P(i), PropertyPackages.State.Liquid)
 
                     Next
                 End If
@@ -1707,14 +1880,14 @@ restart:            fx = Me.FunctionValue(xvar)
                     Aj_ant(i) = Aj(i)
                     Aj(i) = Log(Kbj1(i)) + Bj(i) * (1 / Tj1(i))
                     Aerr(i) = Aj(i) - Aj_ant(i)
-                    Dj_ant(i) = Dj(i)
-                    Dj(i) = (Hv1(i) - Hv2(i)) / (Tj1(i) - Tj2(i))
-                    Cj_ant(i) = Cj(i)
-                    Cj(i) = Hv1(i) - Dj(i) * (Tj1(i) - T_(i))
-                    Fj_ant(i) = Fj(i)
-                    Fj(i) = (Hl1(i) - Hl2(i)) / (Tj1(i) - Tj2(i))
-                    Ej_ant(i) = Ej(i)
-                    Ej(i) = Hl1(i) - Fj(i) * (Tj1(i) - T_(i))
+                    'Dj_ant(i) = Dj(i)
+                    'Dj(i) = (Hv1(i) - Hv2(i)) / (Tj1(i) - Tj2(i))
+                    'Cj_ant(i) = Cj(i)
+                    'Cj(i) = Hv1(i) - Dj(i) * (Tj1(i) - T_(i))
+                    'Fj_ant(i) = Fj(i)
+                    'Fj(i) = (Hl1(i) - Hl2(i)) / (Tj1(i) - Tj2(i))
+                    'Ej_ant(i) = Ej(i)
+                    'Ej(i) = Hl1(i) - Fj(i) * (Tj1(i) - T_(i))
                 Next
 
                 ec += 1

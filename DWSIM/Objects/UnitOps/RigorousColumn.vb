@@ -2426,70 +2426,69 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCCondenserDeltaP"), su.spmp_deltaP), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         '.Item.Add(DWSIM.App.GetLocalString("DCRefluxRatio"), Me, "RefluxRatio", False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         Dim units As String() = New String() {}
-                        If Not Me.CondenserType = condtype.Full_Reflux Then
-                            Dim cspec As New PropertyGridEx.CustomPropertyCollection()
-                            With cspec
-                                'condenser spec
-                                If Me.CondenserType = condtype.Full_Reflux Or Me.CondenserType = condtype.Partial_Condenser Then
-                                    Dim cspecv As New PropertyGridEx.CustomPropertyCollection()
-                                    With cspecv
-                                        .Add(DWSIM.App.GetLocalString("DCVaporFlowRate"), Me, "VaporFlowRate", False, DWSIM.App.GetLocalString("DCCondenserSpec"), "", True)
-                                        .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me, "VaporFlowRateUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                        units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
-                                        With .Item(.Count - 1)
-                                            .Choices = New PropertyGridEx.CustomChoices(units, False)
-                                        End With
-                                    End With
-                                    .Add(DWSIM.App.GetLocalString("DCVaporFlowRate"), cspecv, False, DWSIM.App.GetLocalString("DCCondenserSpec"), "", True)
+
+                        Dim cspec As New PropertyGridEx.CustomPropertyCollection()
+                        With cspec
+                            'condenser spec
+                            If Me.CondenserType = condtype.Partial_Condenser Then
+                                Dim cspecv As New PropertyGridEx.CustomPropertyCollection()
+                                With cspecv
+                                    .Add(DWSIM.App.GetLocalString("DCVaporFlowRate"), Me, "VaporFlowRate", False, DWSIM.App.GetLocalString("DCCondenserSpec"), "", True)
+                                    .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me, "VaporFlowRateUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                     With .Item(.Count - 1)
-                                        .IsBrowsable = True
-                                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                        .CustomEditor = New System.Drawing.Design.UITypeEditor
+                                        .Choices = New PropertyGridEx.CustomChoices(units, False)
                                     End With
-                                End If
-                                .Add(DWSIM.App.GetLocalString("DCCondenserSpecType"), Me.Specs("C"), "SType", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                If Me.Specs("C").SType = ColumnSpec.SpecType.Component_Fraction Or _
-                                    Me.Specs("C").SType = ColumnSpec.SpecType.Component_Mass_Flow_Rate Or _
-                                    Me.Specs("C").SType = ColumnSpec.SpecType.Component_Recovery Or _
-                                    Me.Specs("C").SType = ColumnSpec.SpecType.Component_Molar_Flow_Rate Then
-                                    .Add(DWSIM.App.GetLocalString("DCCondenserSpecComp"), DWSIM.App.GetComponentName(Me.Specs("C").ComponentID), False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                    With .Item(.Count - 1)
-                                        .CustomEditor = New DWSIM.Editors.Components.UIComponentSelector
-                                    End With
-                                End If
-                                .Add(DWSIM.App.GetLocalString("DCCondenserSpecValue"), Me.Specs("C"), "SpecValue", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me.Specs("C"), "SpecUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                Select Case Me.Specs("C").SType
-                                    Case ColumnSpec.SpecType.Component_Fraction
-                                        units = New String() {"M", "W"}
-                                    Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
-                                        units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
-                                    Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                                        units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
-                                    Case ColumnSpec.SpecType.Component_Recovery
-                                        units = New String() {"% M/M", "% W/W"}
-                                    Case ColumnSpec.SpecType.Heat_Duty
-                                        units = New String() {"kW", "kcal/h", "BTU/h", "BTU/s", "cal/s", "HP", "kJ/h", "kJ/d", "MW", "W"}
-                                    Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
-                                        units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
-                                    Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                                        units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
-                                    Case ColumnSpec.SpecType.Stream_Ratio
-                                        units = New String() {""}
-                                    Case ColumnSpec.SpecType.Temperature
-                                        units = New String() {"K", "R", "C", "F"}
-                                End Select
-                                With .Item(.Count - 1)
-                                    .Choices = New PropertyGridEx.CustomChoices(units, False)
                                 End With
+                                .Add(DWSIM.App.GetLocalString("DCVaporFlowRate"), cspecv, False, DWSIM.App.GetLocalString("DCCondenserSpec"), "", True)
+                                With .Item(.Count - 1)
+                                    .IsBrowsable = True
+                                    .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
+                                    .CustomEditor = New System.Drawing.Design.UITypeEditor
+                                End With
+                            End If
+                            .Add(DWSIM.App.GetLocalString("DCCondenserSpecType"), Me.Specs("C"), "SType", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
+                            If Me.Specs("C").SType = ColumnSpec.SpecType.Component_Fraction Or _
+                                Me.Specs("C").SType = ColumnSpec.SpecType.Component_Mass_Flow_Rate Or _
+                                Me.Specs("C").SType = ColumnSpec.SpecType.Component_Recovery Or _
+                                Me.Specs("C").SType = ColumnSpec.SpecType.Component_Molar_Flow_Rate Then
+                                .Add(DWSIM.App.GetLocalString("DCCondenserSpecComp"), DWSIM.App.GetComponentName(Me.Specs("C").ComponentID), False, DWSIM.App.GetLocalString("DCCondenserSpec"))
+                                With .Item(.Count - 1)
+                                    .CustomEditor = New DWSIM.Editors.Components.UIComponentSelector
+                                End With
+                            End If
+                            .Add(DWSIM.App.GetLocalString("DCCondenserSpecValue"), Me.Specs("C"), "SpecValue", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
+                            .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me.Specs("C"), "SpecUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
+                            Select Case Me.Specs("C").SType
+                                Case ColumnSpec.SpecType.Component_Fraction
+                                    units = New String() {"M", "We"}
+                                Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
+                                    units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
+                                Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                Case ColumnSpec.SpecType.Component_Recovery
+                                    units = New String() {"% M/M", "% W/W"}
+                                Case ColumnSpec.SpecType.Heat_Duty
+                                    units = New String() {"kW", "kcal/h", "BTU/h", "BTU/s", "cal/s", "HP", "kJ/h", "kJ/d", "MW", "W"}
+                                Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
+                                    units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
+                                Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                Case ColumnSpec.SpecType.Stream_Ratio
+                                    units = New String() {""}
+                                Case ColumnSpec.SpecType.Temperature
+                                    units = New String() {"K", "R", "C", "F"}
+                            End Select
+                            With .Item(.Count - 1)
+                                .Choices = New PropertyGridEx.CustomChoices(units, False)
                             End With
-                            .Item.Add(DWSIM.App.GetLocalString("DCCondenserSpecs"), cspec, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
-                            With .Item(.Item.Count - 1)
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
+                        End With
+                        .Item.Add(DWSIM.App.GetLocalString("DCCondenserSpecs"), cspec, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
+                        With .Item(.Item.Count - 1)
+                            .IsBrowsable = True
+                            .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
+                            .CustomEditor = New System.Drawing.Design.UITypeEditor
+                        End With
                         Dim rspec As New PropertyGridEx.CustomPropertyCollection()
                         With rspec
                             'reboiler spec
@@ -2507,11 +2506,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             .Add(DWSIM.App.GetLocalString("DCReboilerSpecUnit"), Me.Specs("R"), "SpecUnit", False, DWSIM.App.GetLocalString("DCReboilerSpec"))
                             Select Case Me.Specs("R").SType
                                 Case ColumnSpec.SpecType.Component_Fraction
-                                    units = New String() {"M", "W"}
+                                    units = New String() {"M", "We"}
                                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                                     units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                 Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                 Case ColumnSpec.SpecType.Component_Recovery
                                     units = New String() {"% M/M", "% W/W"}
                                 Case ColumnSpec.SpecType.Heat_Duty
@@ -2519,7 +2518,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
                                     units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                 Case ColumnSpec.SpecType.Stream_Ratio
                                     units = New String() {""}
                                 Case ColumnSpec.SpecType.Temperature
@@ -2564,11 +2563,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             .Add(DWSIM.App.GetLocalString("DCReboilerSpecUnit"), Me.Specs("R"), "SpecUnit", False, DWSIM.App.GetLocalString("DCReboilerSpec"))
                             Select Case Me.Specs("R").SType
                                 Case ColumnSpec.SpecType.Component_Fraction
-                                    units = New String() {"M", "W"}
+                                    units = New String() {"M", "We"}
                                 Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                                     units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                 Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                 Case ColumnSpec.SpecType.Component_Recovery
                                     units = New String() {"% M/M", "% W/W"}
                                 Case ColumnSpec.SpecType.Heat_Duty
@@ -2576,7 +2575,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
                                     units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                 Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                                    units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                    units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                 Case ColumnSpec.SpecType.Stream_Ratio
                                     units = New String() {""}
                                 Case ColumnSpec.SpecType.Temperature
@@ -2611,7 +2610,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     With cspecv
                                         .Add(DWSIM.App.GetLocalString("DCVaporFlowRate"), Me, "VaporFlowRate", False, DWSIM.App.GetLocalString("DCCondenserSpec"), "", True)
                                         .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me, "VaporFlowRateUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
-                                        units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                        units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                         With .Item(.Count - 1)
                                             .Choices = New PropertyGridEx.CustomChoices(units, False)
                                         End With
@@ -2638,11 +2637,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 .Add(DWSIM.App.GetLocalString("DCCondenserSpecUnit"), Me.Specs("C"), "SpecUnit", False, DWSIM.App.GetLocalString("DCCondenserSpec"))
                                 Select Case Me.Specs("C").SType
                                     Case ColumnSpec.SpecType.Component_Fraction
-                                        units = New String() {"M", "W"}
+                                        units = New String() {"M", "We"}
                                     Case ColumnSpec.SpecType.Component_Mass_Flow_Rate
                                         units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                     Case ColumnSpec.SpecType.Component_Molar_Flow_Rate
-                                        units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                        units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                     Case ColumnSpec.SpecType.Component_Recovery
                                         units = New String() {"% M/M", "% W/W"}
                                     Case ColumnSpec.SpecType.Heat_Duty
@@ -2650,7 +2649,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     Case ColumnSpec.SpecType.Product_Mass_Flow_Rate
                                         units = New String() {"g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s"}
                                     Case ColumnSpec.SpecType.Product_Molar_Flow_Rate
-                                        units = New String() {"mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
+                                        units = New String() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"}
                                     Case ColumnSpec.SpecType.Stream_Ratio
                                         units = New String() {""}
                                     Case ColumnSpec.SpecType.Temperature
@@ -2813,6 +2812,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Next
                 End If
 
+            ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCCondenserDeltaP")) Then
+
+                Me.CondenserDeltaP = cv.ConverterParaSI(su.spmp_deltaP, e.ChangedItem.Value)
+
             ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCCondenserPressure")) Or _
             e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCFirstStgPressure")) Then
 
@@ -2828,10 +2831,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCDistillateFlowRate")) Then
 
                 Me.DistillateFlowRate = cv.ConverterParaSI(su.spmp_molarflow, e.ChangedItem.Value)
-
-            ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCCondenserDeltaP")) Then
-
-                Me.CondenserDeltaP = cv.ConverterParaSI(su.spmp_deltaP, e.ChangedItem.Value)
 
             ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCCondenserType")) Then
 
@@ -3110,9 +3109,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End If
             If Me.Specs("R").SType = ColumnSpec.SpecType.Product_Molar_Flow_Rate Then
                 If Me.CondenserType = condtype.Full_Reflux Then
-                    vaprate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_ - vaprate
-                Else
+                    vaprate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_
+                    distrate = 0.0
+                ElseIf Me.CondenserType = condtype.Partial_Condenser Then
                     distrate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_ - vaprate
+                Else
+                    distrate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_
+                    vaprate = 0.0
                 End If
             Else
                 If Me.CondenserType = condtype.Full_Reflux Then
@@ -3163,12 +3166,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     T2 = T1
                 Case ColType.DistillationColumn
                     Try
-                        T1 = pp.DW_CalcBubT(zm, P(ns))(4) * 1.01
+                        T1 = pp.DW_CalcBubT(zm, P(0))(4) '* 1.01
                     Catch ex As Exception
                         T1 = MathEx.Common.Max(FT)
                     End Try
                     Try
-                        T2 = pp.DW_CalcDewT(zm, P(0))(4) * 0.99
+                        T2 = pp.DW_CalcDewT(zm, P(ns))(4) '* 0.99
                     Catch ex As Exception
                         T2 = MathEx.Common.Max(FT)
                     End Try
@@ -3181,15 +3184,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Next
             Next
 
-            T(0) = T2
-            T(ns) = T1
+            T(0) = T1
+            T(ns) = T2
 
-            Dim pv(nc - 1) As Double
-            For i = 0 To nc - 1
-                pv(i) = pp.AUX_PVAPi(i, (T1 + T2) / 2)
-            Next
+            'Dim pv(nc - 1) As Double
+            'For i = 0 To nc - 1
+            '    pv(i) = pp.AUX_PVAPi(i, (T1 + T2) / 2)
+            'Next
 
-            Dim vapfrac As Double = Me.CalcIdealVapFrac(zm, pv, (P(0) + P(ns)) / 2)
+            'Dim vapfrac As Double = Me.CalcIdealVapFrac(zm, pv, (P(0) + P(ns)) / 2)
 
             i = 0
             For Each st As Stage In Me.Stages
@@ -3227,7 +3230,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Else
                         Select Case Me.ColumnType
                             Case ColType.DistillationColumn
-                                V(i) = (rr + 1) * distrate - F(0) + V(0)
+                                If Me.CondenserType = condtype.Partial_Condenser Then
+                                    V(i) = (rr + 1) * distrate - F(0) + V(0)
+                                ElseIf Me.CondenserType = condtype.Full_Reflux Then
+                                    V(i) = (rr + 1) * V(0) - F(0)
+                                Else
+                                    V(i) = (rr + 1) * distrate - F(0)
+                                End If
                             Case ColType.RefluxedAbsorber
                                 V(i) = (rr + 1) * distrate - F(0) + V(0)
                             Case ColType.AbsorptionColumn
@@ -3243,9 +3252,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     If i = 0 Then
                         Select Case Me.ColumnType
                             Case ColType.DistillationColumn
-                                If Me.CondenserType = condtype.Partial_Condenser Then
-                                    L(0) = distrate * rr
-                                ElseIf Me.CondenserType = condtype.Full_Reflux Then
+                                If Me.CondenserType = condtype.Full_Reflux Then
+                                    L(0) = vaprate * rr
                                 Else
                                     L(0) = distrate * rr
                                 End If
@@ -3290,37 +3298,38 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         z(i)(j) = zm(j)
                     Next
                 Else
+                    x(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), PropertyPackage)(2)
+                    y(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), PropertyPackage)(3)
+                    z(i) = zm
                     For j = 0 To nc - 1
-                        idealK(i)(j) = pp.AUX_PVAPi(j, T(i)) / P(i)
-                        Pvap(i)(j) = pp.AUX_PVAPi(j, T(i))
+                        Kval(i)(j) = y(i)(j) / x(i)(j)
                     Next
                     'Dim tmp As Object = pp.DW_CalcKvalue(zm, (T1 + T2) / 2, (P(0) + P(ns)) / 2)
-                    For j = 0 To nc - 1
-                        fracv(i) = Me.CalcIdealVapFrac(zm, Pvap(i), P(i))
-                        If fracv(i) < 0 Then fracv(i) = 0.000001
-                        If fracv(i) > 1 Then fracv(i) = 0.999999
-                        y(i)(j) = zm(j) * idealK(i)(j) / ((idealK(i)(j) - 1) * fracv(i) + 1)
-                        x(i)(j) = y(i)(j) / idealK(i)(j)
-                        z(i)(j) = zm(j)
-                    Next
-                    Dim sumx, sumy As Double
-                    sumx = 0
-                    sumy = 0
-                    For j = 0 To nc - 1
-                        sumx += x(i)(j)
-                        sumy += y(i)(j)
-                    Next
-                    For j = 0 To nc - 1
-                        x(i)(j) = x(i)(j) / sumx
-                        y(i)(j) = y(i)(j) / sumy
-                    Next
-                    For j = 0 To nc - 1
-                        Kval(i)(j) = idealK(i)(j)
-                    Next
+                    'For j = 0 To nc - 1
+                    '    fracv(i) = Me.CalcIdealVapFrac(zm, Pvap(i), P(i))
+                    '    If fracv(i) < 0 Then fracv(i) = 0.000001
+                    '    If fracv(i) > 1 Then fracv(i) = 0.999999
+                    '    y(i)(j) = zm(j) * idealK(i)(j) / ((idealK(i)(j) - 1) * fracv(i) + 1)
+                    '    x(i)(j) = y(i)(j) / idealK(i)(j)
+                    '    z(i)(j) = zm(j)
+                    'Next
+                    'Dim sumx, sumy As Double
+                    'sumx = 0
+                    'sumy = 0
+                    'For j = 0 To nc - 1
+                    '    sumx += x(i)(j)
+                    '    sumy += y(i)(j)
+                    'Next
+                    'For j = 0 To nc - 1
+                    '    x(i)(j) = x(i)(j) / sumx
+                    '    y(i)(j) = y(i)(j) / sumy
+                    'Next
+                    'For j = 0 To nc - 1
+                    '    Kval(i)(j) = idealK(i)(j)
+                    'Next
                 End If
                 i = i + 1
             Next
-
             Select Case Me.ColumnType
                 Case ColType.DistillationColumn
                     Q(0) = 0

@@ -156,7 +156,7 @@ Namespace DWSIM.Flowsheet
                                     If TypeOf obj Is Streams.MaterialStream Then
                                         Dim ms As Streams.MaterialStream = CType(obj, Streams.MaterialStream)
                                         Try
-                                            MS.GraphicObject.Calculated = False
+                                            ms.GraphicObject.Calculated = False
                                             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & MS.GraphicObject.Tag & "... (PP: " & MS.PropertyPackage.Tag & " [" & MS.PropertyPackage.ComponentName & "])")
                                             CalculateMaterialStream(form, MS)
                                             MS.GraphicObject.Calculated = True
