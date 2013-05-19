@@ -4625,4 +4625,19 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="MolarityUnits" xml:space="preserve">
     <value>Einheiten: Mol pro Liter Lösung (M)</value>
   </data>
+  <data name="NoPropPackDefined" xml:space="preserve">
+    <value>Kein Thermodynamikpaket definiert!</value>
+  </data>
+  <data name="Charge" xml:space="preserve">
+    <value>[Elektrolyt] Ladung</value>
+  </data>
+  <data name="HydrationNumber" xml:space="preserve">
+    <value>[Elektrolyt] Hydratzahl</value>
+  </data>
+  <data name="NegativeIon" xml:space="preserve">
+    <value>[Elektrolyt] negatives Ion</value>
+  </data>
+  <data name="PositiveIon" xml:space="preserve">
+    <value>[Elektrolyt] positives Ion</value>
+  </data>
 </root>
