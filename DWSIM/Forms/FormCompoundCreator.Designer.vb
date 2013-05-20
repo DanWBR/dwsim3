@@ -38,22 +38,15 @@ Partial Class FormCompoundCreator
         Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnSaveToDB = New System.Windows.Forms.Button()
         Me.chkReplaceComps = New System.Windows.Forms.CheckBox()
         Me.tbDBPath = New System.Windows.Forms.TextBox()
         Me.btnSearch = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnCreateNewDB = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.cbUnits = New System.Windows.Forms.ComboBox()
-        Me.Label47 = New System.Windows.Forms.Label()
-        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.GridUNIFAC = New System.Windows.Forms.DataGridView()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.Label60 = New System.Windows.Forms.Label()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TextBoxID = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.CheckBoxMW = New System.Windows.Forms.CheckBox()
@@ -66,7 +59,12 @@ Partial Class FormCompoundCreator
         Me.Label15 = New System.Windows.Forms.Label()
         Me.TextBoxName = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label60 = New System.Windows.Forms.Label()
+        Me.GridUNIFAC = New System.Windows.Forms.DataGridView()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.CheckBoxCSLV = New System.Windows.Forms.CheckBox()
         Me.CheckBoxCSSP = New System.Windows.Forms.CheckBox()
         Me.CheckBoxCSAF = New System.Windows.Forms.CheckBox()
@@ -99,26 +97,11 @@ Partial Class FormCompoundCreator
         Me.lblDHF = New System.Windows.Forms.Label()
         Me.TextBoxDHF = New System.Windows.Forms.TextBox()
         Me.Label50 = New System.Windows.Forms.Label()
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
-        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
-        Me.TextBoxUNIQUAC_R = New System.Windows.Forms.TextBox()
-        Me.Label48 = New System.Windows.Forms.Label()
-        Me.TextBoxUNIQUAC_Q = New System.Windows.Forms.TextBox()
-        Me.Label49 = New System.Windows.Forms.Label()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.CheckBoxAF = New System.Windows.Forms.CheckBox()
         Me.CheckBoxZRa = New System.Windows.Forms.CheckBox()
         Me.CheckBoxZc = New System.Windows.Forms.CheckBox()
         Me.CheckBoxPc = New System.Windows.Forms.CheckBox()
-        Me.GroupBox12 = New System.Windows.Forms.GroupBox()
-        Me.LabelWithDivider8 = New System.Windows.Forms.LabelWithDivider()
-        Me.TextBoxPCSAFTEpsilon = New System.Windows.Forms.TextBox()
-        Me.Label20 = New System.Windows.Forms.Label()
-        Me.LabelWithDivider9 = New System.Windows.Forms.LabelWithDivider()
-        Me.TextBoxPCSAFTm = New System.Windows.Forms.TextBox()
-        Me.Label25 = New System.Windows.Forms.Label()
-        Me.LabelWithDivider10 = New System.Windows.Forms.LabelWithDivider()
-        Me.TextBoxPCSAFTSigma = New System.Windows.Forms.TextBox()
-        Me.Label27 = New System.Windows.Forms.Label()
         Me.CheckBoxTc = New System.Windows.Forms.CheckBox()
         Me.LabelWithDivider6 = New System.Windows.Forms.LabelWithDivider()
         Me.TextBoxAF = New System.Windows.Forms.TextBox()
@@ -137,7 +120,23 @@ Partial Class FormCompoundCreator
         Me.lblTc = New System.Windows.Forms.Label()
         Me.TextBoxTc = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.LabelWithDivider8 = New System.Windows.Forms.LabelWithDivider()
+        Me.TextBoxPCSAFTEpsilon = New System.Windows.Forms.TextBox()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.LabelWithDivider9 = New System.Windows.Forms.LabelWithDivider()
+        Me.TextBoxPCSAFTm = New System.Windows.Forms.TextBox()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.LabelWithDivider10 = New System.Windows.Forms.LabelWithDivider()
+        Me.TextBoxPCSAFTSigma = New System.Windows.Forms.TextBox()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.TextBoxUNIQUAC_R = New System.Windows.Forms.TextBox()
+        Me.Label48 = New System.Windows.Forms.Label()
+        Me.TextBoxUNIQUAC_Q = New System.Windows.Forms.TextBox()
+        Me.Label49 = New System.Windows.Forms.Label()
+        Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.Label43 = New System.Windows.Forms.Label()
         Me.tbPVAP_E = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -161,31 +160,31 @@ Partial Class FormCompoundCreator
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.rbRegressPVAP = New System.Windows.Forms.RadioButton()
         Me.rbEstimatePVAP = New System.Windows.Forms.RadioButton()
-        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.TabPage7 = New System.Windows.Forms.TabPage()
         Me.Label44 = New System.Windows.Forms.Label()
-        Me.tbCPIG_E = New System.Windows.Forms.TextBox()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.tbCPIG_D = New System.Windows.Forms.TextBox()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.tbCPIG_C = New System.Windows.Forms.TextBox()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.tbCPIG_B = New System.Windows.Forms.TextBox()
-        Me.Label24 = New System.Windows.Forms.Label()
-        Me.tbCPIG_A = New System.Windows.Forms.TextBox()
-        Me.Label26 = New System.Windows.Forms.Label()
-        Me.Label28 = New System.Windows.Forms.Label()
-        Me.cbEqCPIG = New System.Windows.Forms.ComboBox()
-        Me.rbCoeffCPIG = New System.Windows.Forms.RadioButton()
         Me.tbStatusCPIG = New System.Windows.Forms.TextBox()
+        Me.tbCPIG_E = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
         Me.btnViewCPIG = New System.Windows.Forms.Button()
+        Me.tbCPIG_D = New System.Windows.Forms.TextBox()
         Me.btnRegressCPIG = New System.Windows.Forms.Button()
+        Me.Label19 = New System.Windows.Forms.Label()
         Me.GridExpDataCPIG = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.tbCPIG_C = New System.Windows.Forms.TextBox()
         Me.rbRegressCPIG = New System.Windows.Forms.RadioButton()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.rbEstimateCPIG = New System.Windows.Forms.RadioButton()
-        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+        Me.tbCPIG_B = New System.Windows.Forms.TextBox()
+        Me.rbCoeffCPIG = New System.Windows.Forms.RadioButton()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.cbEqCPIG = New System.Windows.Forms.ComboBox()
+        Me.tbCPIG_A = New System.Windows.Forms.TextBox()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.TabPage8 = New System.Windows.Forms.TabPage()
         Me.Label45 = New System.Windows.Forms.Label()
         Me.tbLIQDENS_E = New System.Windows.Forms.TextBox()
         Me.Label31 = New System.Windows.Forms.Label()
@@ -209,7 +208,7 @@ Partial Class FormCompoundCreator
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.rbRegressLIQDENS = New System.Windows.Forms.RadioButton()
         Me.rbEstimateLIQDENS = New System.Windows.Forms.RadioButton()
-        Me.GroupBox10 = New System.Windows.Forms.GroupBox()
+        Me.TabPage9 = New System.Windows.Forms.TabPage()
         Me.Label46 = New System.Windows.Forms.Label()
         Me.tbLIQVISC_E = New System.Windows.Forms.TextBox()
         Me.Label37 = New System.Windows.Forms.Label()
@@ -234,31 +233,35 @@ Partial Class FormCompoundCreator
         Me.rbRegressLIQVISC = New System.Windows.Forms.RadioButton()
         Me.rbEstimateLIQVISC = New System.Windows.Forms.RadioButton()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.cbUnits = New System.Windows.Forms.ComboBox()
         Me.DBOpenDlg = New System.Windows.Forms.OpenFileDialog()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
-        Me.FlowLayoutPanel1.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
+        Me.TabControl1.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
         CType(Me.GridUNIFAC, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox3.SuspendLayout()
-        Me.GroupBox5.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
+        Me.TabPage4.SuspendLayout()
+        Me.TabPage5.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
-        Me.GroupBox12.SuspendLayout()
-        Me.GroupBox7.SuspendLayout()
+        Me.TabPage6.SuspendLayout()
         CType(Me.GridExpDataPVAP, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox8.SuspendLayout()
+        Me.TabPage7.SuspendLayout()
         CType(Me.GridExpDataCPIG, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox9.SuspendLayout()
+        Me.TabPage8.SuspendLayout()
         CType(Me.GridExpDataLIQDENS, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox10.SuspendLayout()
+        Me.TabPage9.SuspendLayout()
         CType(Me.GridExpDataLIQVISC, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox3.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
         resources.ApplyResources(Me.GroupBox1, "GroupBox1")
-        Me.GroupBox1.Controls.Add(Me.Button1)
+        Me.GroupBox1.Controls.Add(Me.btnSaveToDB)
         Me.GroupBox1.Controls.Add(Me.chkReplaceComps)
         Me.GroupBox1.Controls.Add(Me.tbDBPath)
         Me.GroupBox1.Controls.Add(Me.btnSearch)
@@ -267,12 +270,12 @@ Partial Class FormCompoundCreator
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
-        'Button1
+        'btnSaveToDB
         '
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.Image = Global.DWSIM.My.Resources.Resources.disk
-        Me.Button1.Name = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnSaveToDB.Image = Global.DWSIM.My.Resources.Resources.disk
+        resources.ApplyResources(Me.btnSaveToDB, "btnSaveToDB")
+        Me.btnSaveToDB.Name = "btnSaveToDB"
+        Me.btnSaveToDB.UseVisualStyleBackColor = True
         '
         'chkReplaceComps
         '
@@ -290,8 +293,8 @@ Partial Class FormCompoundCreator
         '
         'btnSearch
         '
-        resources.ApplyResources(Me.btnSearch, "btnSearch")
         Me.btnSearch.Image = Global.DWSIM.My.Resources.Resources.folder_go
+        resources.ApplyResources(Me.btnSearch, "btnSearch")
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.UseVisualStyleBackColor = True
         '
@@ -302,111 +305,50 @@ Partial Class FormCompoundCreator
         '
         'btnCreateNewDB
         '
-        resources.ApplyResources(Me.btnCreateNewDB, "btnCreateNewDB")
         Me.btnCreateNewDB.Image = Global.DWSIM.My.Resources.Resources.page_white
+        resources.ApplyResources(Me.btnCreateNewDB, "btnCreateNewDB")
         Me.btnCreateNewDB.Name = "btnCreateNewDB"
         Me.btnCreateNewDB.UseVisualStyleBackColor = True
         '
         'GroupBox2
         '
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.Controls.Add(Me.cbUnits)
-        Me.GroupBox2.Controls.Add(Me.Label47)
-        Me.GroupBox2.Controls.Add(Me.FlowLayoutPanel1)
+        Me.GroupBox2.Controls.Add(Me.TabControl1)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
-        'cbUnits
+        'TabControl1
         '
-        Me.cbUnits.BackColor = System.Drawing.Color.White
-        Me.cbUnits.DropDownHeight = 200
-        Me.cbUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbUnits.DropDownWidth = 300
-        Me.cbUnits.FormattingEnabled = True
-        resources.ApplyResources(Me.cbUnits, "cbUnits")
-        Me.cbUnits.Name = "cbUnits"
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
+        Me.TabControl1.Controls.Add(Me.TabPage4)
+        Me.TabControl1.Controls.Add(Me.TabPage5)
+        Me.TabControl1.Controls.Add(Me.TabPage6)
+        Me.TabControl1.Controls.Add(Me.TabPage7)
+        Me.TabControl1.Controls.Add(Me.TabPage8)
+        Me.TabControl1.Controls.Add(Me.TabPage9)
+        resources.ApplyResources(Me.TabControl1, "TabControl1")
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
         '
-        'Label47
+        'TabPage1
         '
-        resources.ApplyResources(Me.Label47, "Label47")
-        Me.Label47.Name = "Label47"
-        '
-        'FlowLayoutPanel1
-        '
-        resources.ApplyResources(Me.FlowLayoutPanel1, "FlowLayoutPanel1")
-        Me.FlowLayoutPanel1.Controls.Add(Me.GroupBox4)
-        Me.FlowLayoutPanel1.Controls.Add(Me.GroupBox3)
-        Me.FlowLayoutPanel1.Controls.Add(Me.GroupBox5)
-        Me.FlowLayoutPanel1.Controls.Add(Me.GroupBox6)
-        Me.FlowLayoutPanel1.Controls.Add(Me.GroupBox7)
-        Me.FlowLayoutPanel1.Controls.Add(Me.GroupBox8)
-        Me.FlowLayoutPanel1.Controls.Add(Me.GroupBox9)
-        Me.FlowLayoutPanel1.Controls.Add(Me.GroupBox10)
-        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        '
-        'GroupBox4
-        '
-        Me.GroupBox4.Controls.Add(Me.GridUNIFAC)
-        Me.GroupBox4.Controls.Add(Me.Label60)
-        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.TabStop = False
-        '
-        'GridUNIFAC
-        '
-        Me.GridUNIFAC.AllowUserToAddRows = False
-        Me.GridUNIFAC.AllowUserToDeleteRows = False
-        Me.GridUNIFAC.AllowUserToResizeColumns = False
-        Me.GridUNIFAC.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.GridUNIFAC, "GridUNIFAC")
-        Me.GridUNIFAC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.GridUNIFAC.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
-        Me.GridUNIFAC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.GridUNIFAC.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column4, Me.Column1})
-        Me.GridUNIFAC.Name = "GridUNIFAC"
-        Me.GridUNIFAC.RowTemplate.Height = 80
-        Me.GridUNIFAC.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        '
-        'Column4
-        '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle1.Format = "N0"
-        DataGridViewCellStyle1.NullValue = "0"
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
-        resources.ApplyResources(Me.Column4, "Column4")
-        Me.Column4.MaxInputLength = 2
-        Me.Column4.Name = "Column4"
-        '
-        'Column1
-        '
-        Me.Column1.FillWeight = 200.0!
-        resources.ApplyResources(Me.Column1, "Column1")
-        Me.Column1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom
-        Me.Column1.Name = "Column1"
-        Me.Column1.ReadOnly = True
-        '
-        'Label60
-        '
-        resources.ApplyResources(Me.Label60, "Label60")
-        Me.Label60.Name = "Label60"
-        '
-        'GroupBox3
-        '
-        Me.GroupBox3.Controls.Add(Me.TextBoxID)
-        Me.GroupBox3.Controls.Add(Me.Label16)
-        Me.GroupBox3.Controls.Add(Me.CheckBoxMW)
-        Me.GroupBox3.Controls.Add(Me.lblMW)
-        Me.GroupBox3.Controls.Add(Me.TextBoxMW)
-        Me.GroupBox3.Controls.Add(Me.Label22)
-        Me.GroupBox3.Controls.Add(Me.TextBoxFormula)
-        Me.GroupBox3.Controls.Add(Me.Label21)
-        Me.GroupBox3.Controls.Add(Me.TextBoxCAS)
-        Me.GroupBox3.Controls.Add(Me.Label15)
-        Me.GroupBox3.Controls.Add(Me.TextBoxName)
-        Me.GroupBox3.Controls.Add(Me.Label17)
-        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.TabStop = False
+        Me.TabPage1.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage1.Controls.Add(Me.TextBoxID)
+        Me.TabPage1.Controls.Add(Me.Label16)
+        Me.TabPage1.Controls.Add(Me.CheckBoxMW)
+        Me.TabPage1.Controls.Add(Me.lblMW)
+        Me.TabPage1.Controls.Add(Me.TextBoxMW)
+        Me.TabPage1.Controls.Add(Me.Label22)
+        Me.TabPage1.Controls.Add(Me.TextBoxFormula)
+        Me.TabPage1.Controls.Add(Me.Label21)
+        Me.TabPage1.Controls.Add(Me.TextBoxCAS)
+        Me.TabPage1.Controls.Add(Me.Label15)
+        Me.TabPage1.Controls.Add(Me.TextBoxName)
+        Me.TabPage1.Controls.Add(Me.Label17)
+        resources.ApplyResources(Me.TabPage1, "TabPage1")
+        Me.TabPage1.Name = "TabPage1"
         '
         'TextBoxID
         '
@@ -476,43 +418,89 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.Label17, "Label17")
         Me.Label17.Name = "Label17"
         '
-        'GroupBox5
+        'TabPage2
         '
-        Me.GroupBox5.Controls.Add(Me.CheckBoxCSLV)
-        Me.GroupBox5.Controls.Add(Me.CheckBoxCSSP)
-        Me.GroupBox5.Controls.Add(Me.CheckBoxCSAF)
-        Me.GroupBox5.Controls.Add(Me.CheckBoxNBP)
-        Me.GroupBox5.Controls.Add(Me.CheckBoxDGF)
-        Me.GroupBox5.Controls.Add(Me.CheckBoxDHF)
-        Me.GroupBox5.Controls.Add(Me.Label68)
-        Me.GroupBox5.Controls.Add(Me.TextBoxVTCSRK)
-        Me.GroupBox5.Controls.Add(Me.Text1)
-        Me.GroupBox5.Controls.Add(Me.Label67)
-        Me.GroupBox5.Controls.Add(Me.Label66)
-        Me.GroupBox5.Controls.Add(Me.TextBoxVTCPR)
-        Me.GroupBox5.Controls.Add(Me.TextBoxCSLV)
-        Me.GroupBox5.Controls.Add(Me.TextBoxCSSP)
-        Me.GroupBox5.Controls.Add(Me.Label65)
-        Me.GroupBox5.Controls.Add(Me.Label64)
-        Me.GroupBox5.Controls.Add(Me.Label63)
-        Me.GroupBox5.Controls.Add(Me.Label61)
-        Me.GroupBox5.Controls.Add(Me.TextBoxCSAF)
-        Me.GroupBox5.Controls.Add(Me.Label62)
-        Me.GroupBox5.Controls.Add(Me.LabelWithDivider16)
-        Me.GroupBox5.Controls.Add(Me.LabelWithDivider13)
-        Me.GroupBox5.Controls.Add(Me.lblNBP)
-        Me.GroupBox5.Controls.Add(Me.TextBoxNBP)
-        Me.GroupBox5.Controls.Add(Me.Label56)
-        Me.GroupBox5.Controls.Add(Me.lblDGF)
-        Me.GroupBox5.Controls.Add(Me.TextBoxDGF)
-        Me.GroupBox5.Controls.Add(Me.Label53)
-        Me.GroupBox5.Controls.Add(Me.LabelWithDivider12)
-        Me.GroupBox5.Controls.Add(Me.lblDHF)
-        Me.GroupBox5.Controls.Add(Me.TextBoxDHF)
-        Me.GroupBox5.Controls.Add(Me.Label50)
-        resources.ApplyResources(Me.GroupBox5, "GroupBox5")
-        Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.TabStop = False
+        Me.TabPage2.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage2.Controls.Add(Me.Label60)
+        Me.TabPage2.Controls.Add(Me.GridUNIFAC)
+        resources.ApplyResources(Me.TabPage2, "TabPage2")
+        Me.TabPage2.Name = "TabPage2"
+        '
+        'Label60
+        '
+        resources.ApplyResources(Me.Label60, "Label60")
+        Me.Label60.Name = "Label60"
+        '
+        'GridUNIFAC
+        '
+        Me.GridUNIFAC.AllowUserToAddRows = False
+        Me.GridUNIFAC.AllowUserToDeleteRows = False
+        Me.GridUNIFAC.AllowUserToResizeColumns = False
+        Me.GridUNIFAC.AllowUserToResizeRows = False
+        resources.ApplyResources(Me.GridUNIFAC, "GridUNIFAC")
+        Me.GridUNIFAC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.GridUNIFAC.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
+        Me.GridUNIFAC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.GridUNIFAC.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column4, Me.Column1})
+        Me.GridUNIFAC.Name = "GridUNIFAC"
+        Me.GridUNIFAC.RowTemplate.Height = 80
+        Me.GridUNIFAC.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        '
+        'Column4
+        '
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle1.Format = "N0"
+        DataGridViewCellStyle1.NullValue = "0"
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
+        resources.ApplyResources(Me.Column4, "Column4")
+        Me.Column4.MaxInputLength = 2
+        Me.Column4.Name = "Column4"
+        '
+        'Column1
+        '
+        Me.Column1.FillWeight = 200.0!
+        resources.ApplyResources(Me.Column1, "Column1")
+        Me.Column1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        '
+        'TabPage3
+        '
+        Me.TabPage3.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage3.Controls.Add(Me.CheckBoxCSLV)
+        Me.TabPage3.Controls.Add(Me.CheckBoxCSSP)
+        Me.TabPage3.Controls.Add(Me.CheckBoxCSAF)
+        Me.TabPage3.Controls.Add(Me.CheckBoxNBP)
+        Me.TabPage3.Controls.Add(Me.CheckBoxDGF)
+        Me.TabPage3.Controls.Add(Me.CheckBoxDHF)
+        Me.TabPage3.Controls.Add(Me.Label68)
+        Me.TabPage3.Controls.Add(Me.TextBoxVTCSRK)
+        Me.TabPage3.Controls.Add(Me.Text1)
+        Me.TabPage3.Controls.Add(Me.Label67)
+        Me.TabPage3.Controls.Add(Me.Label66)
+        Me.TabPage3.Controls.Add(Me.TextBoxVTCPR)
+        Me.TabPage3.Controls.Add(Me.TextBoxCSLV)
+        Me.TabPage3.Controls.Add(Me.TextBoxCSSP)
+        Me.TabPage3.Controls.Add(Me.Label65)
+        Me.TabPage3.Controls.Add(Me.Label64)
+        Me.TabPage3.Controls.Add(Me.Label63)
+        Me.TabPage3.Controls.Add(Me.Label61)
+        Me.TabPage3.Controls.Add(Me.TextBoxCSAF)
+        Me.TabPage3.Controls.Add(Me.Label62)
+        Me.TabPage3.Controls.Add(Me.LabelWithDivider16)
+        Me.TabPage3.Controls.Add(Me.LabelWithDivider13)
+        Me.TabPage3.Controls.Add(Me.lblNBP)
+        Me.TabPage3.Controls.Add(Me.TextBoxNBP)
+        Me.TabPage3.Controls.Add(Me.Label56)
+        Me.TabPage3.Controls.Add(Me.lblDGF)
+        Me.TabPage3.Controls.Add(Me.TextBoxDGF)
+        Me.TabPage3.Controls.Add(Me.Label53)
+        Me.TabPage3.Controls.Add(Me.LabelWithDivider12)
+        Me.TabPage3.Controls.Add(Me.lblDHF)
+        Me.TabPage3.Controls.Add(Me.TextBoxDHF)
+        Me.TabPage3.Controls.Add(Me.Label50)
+        resources.ApplyResources(Me.TabPage3, "TabPage3")
+        Me.TabPage3.Name = "TabPage3"
         '
         'CheckBoxCSLV
         '
@@ -708,67 +696,33 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.Label50, "Label50")
         Me.Label50.Name = "Label50"
         '
-        'GroupBox6
+        'TabPage4
         '
-        Me.GroupBox6.Controls.Add(Me.GroupBox11)
-        Me.GroupBox6.Controls.Add(Me.CheckBoxAF)
-        Me.GroupBox6.Controls.Add(Me.CheckBoxZRa)
-        Me.GroupBox6.Controls.Add(Me.CheckBoxZc)
-        Me.GroupBox6.Controls.Add(Me.CheckBoxPc)
-        Me.GroupBox6.Controls.Add(Me.GroupBox12)
-        Me.GroupBox6.Controls.Add(Me.CheckBoxTc)
-        Me.GroupBox6.Controls.Add(Me.LabelWithDivider6)
-        Me.GroupBox6.Controls.Add(Me.TextBoxAF)
-        Me.GroupBox6.Controls.Add(Me.Label14)
-        Me.GroupBox6.Controls.Add(Me.LabelWithDivider5)
-        Me.GroupBox6.Controls.Add(Me.TextBoxZRa)
-        Me.GroupBox6.Controls.Add(Me.Label12)
-        Me.GroupBox6.Controls.Add(Me.LabelWithDivider4)
-        Me.GroupBox6.Controls.Add(Me.TextBoxZc)
-        Me.GroupBox6.Controls.Add(Me.Label11)
-        Me.GroupBox6.Controls.Add(Me.LabelWithDivider3)
-        Me.GroupBox6.Controls.Add(Me.lblPc)
-        Me.GroupBox6.Controls.Add(Me.TextBoxPc)
-        Me.GroupBox6.Controls.Add(Me.Label8)
-        Me.GroupBox6.Controls.Add(Me.LabelWithDivider2)
-        Me.GroupBox6.Controls.Add(Me.lblTc)
-        Me.GroupBox6.Controls.Add(Me.TextBoxTc)
-        Me.GroupBox6.Controls.Add(Me.Label4)
-        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
-        Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.TabStop = False
-        '
-        'GroupBox11
-        '
-        Me.GroupBox11.Controls.Add(Me.TextBoxUNIQUAC_R)
-        Me.GroupBox11.Controls.Add(Me.Label48)
-        Me.GroupBox11.Controls.Add(Me.TextBoxUNIQUAC_Q)
-        Me.GroupBox11.Controls.Add(Me.Label49)
-        resources.ApplyResources(Me.GroupBox11, "GroupBox11")
-        Me.GroupBox11.Name = "GroupBox11"
-        Me.GroupBox11.TabStop = False
-        '
-        'TextBoxUNIQUAC_R
-        '
-        Me.TextBoxUNIQUAC_R.BackColor = System.Drawing.Color.LightSteelBlue
-        resources.ApplyResources(Me.TextBoxUNIQUAC_R, "TextBoxUNIQUAC_R")
-        Me.TextBoxUNIQUAC_R.Name = "TextBoxUNIQUAC_R"
-        '
-        'Label48
-        '
-        resources.ApplyResources(Me.Label48, "Label48")
-        Me.Label48.Name = "Label48"
-        '
-        'TextBoxUNIQUAC_Q
-        '
-        Me.TextBoxUNIQUAC_Q.BackColor = System.Drawing.Color.LightSteelBlue
-        resources.ApplyResources(Me.TextBoxUNIQUAC_Q, "TextBoxUNIQUAC_Q")
-        Me.TextBoxUNIQUAC_Q.Name = "TextBoxUNIQUAC_Q"
-        '
-        'Label49
-        '
-        resources.ApplyResources(Me.Label49, "Label49")
-        Me.Label49.Name = "Label49"
+        Me.TabPage4.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage4.Controls.Add(Me.CheckBoxAF)
+        Me.TabPage4.Controls.Add(Me.CheckBoxZRa)
+        Me.TabPage4.Controls.Add(Me.CheckBoxZc)
+        Me.TabPage4.Controls.Add(Me.CheckBoxPc)
+        Me.TabPage4.Controls.Add(Me.CheckBoxTc)
+        Me.TabPage4.Controls.Add(Me.LabelWithDivider6)
+        Me.TabPage4.Controls.Add(Me.TextBoxAF)
+        Me.TabPage4.Controls.Add(Me.Label14)
+        Me.TabPage4.Controls.Add(Me.LabelWithDivider5)
+        Me.TabPage4.Controls.Add(Me.TextBoxZRa)
+        Me.TabPage4.Controls.Add(Me.Label12)
+        Me.TabPage4.Controls.Add(Me.LabelWithDivider4)
+        Me.TabPage4.Controls.Add(Me.TextBoxZc)
+        Me.TabPage4.Controls.Add(Me.Label11)
+        Me.TabPage4.Controls.Add(Me.LabelWithDivider3)
+        Me.TabPage4.Controls.Add(Me.lblPc)
+        Me.TabPage4.Controls.Add(Me.TextBoxPc)
+        Me.TabPage4.Controls.Add(Me.Label8)
+        Me.TabPage4.Controls.Add(Me.LabelWithDivider2)
+        Me.TabPage4.Controls.Add(Me.lblTc)
+        Me.TabPage4.Controls.Add(Me.TextBoxTc)
+        Me.TabPage4.Controls.Add(Me.Label4)
+        resources.ApplyResources(Me.TabPage4, "TabPage4")
+        Me.TabPage4.Name = "TabPage4"
         '
         'CheckBoxAF
         '
@@ -805,72 +759,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxPc.Name = "CheckBoxPc"
         Me.ToolTip1.SetToolTip(Me.CheckBoxPc, resources.GetString("CheckBoxPc.ToolTip"))
         Me.CheckBoxPc.UseVisualStyleBackColor = True
-        '
-        'GroupBox12
-        '
-        Me.GroupBox12.Controls.Add(Me.LabelWithDivider8)
-        Me.GroupBox12.Controls.Add(Me.TextBoxPCSAFTEpsilon)
-        Me.GroupBox12.Controls.Add(Me.Label20)
-        Me.GroupBox12.Controls.Add(Me.LabelWithDivider9)
-        Me.GroupBox12.Controls.Add(Me.TextBoxPCSAFTm)
-        Me.GroupBox12.Controls.Add(Me.Label25)
-        Me.GroupBox12.Controls.Add(Me.LabelWithDivider10)
-        Me.GroupBox12.Controls.Add(Me.TextBoxPCSAFTSigma)
-        Me.GroupBox12.Controls.Add(Me.Label27)
-        resources.ApplyResources(Me.GroupBox12, "GroupBox12")
-        Me.GroupBox12.Name = "GroupBox12"
-        Me.GroupBox12.TabStop = False
-        '
-        'LabelWithDivider8
-        '
-        resources.ApplyResources(Me.LabelWithDivider8, "LabelWithDivider8")
-        Me.LabelWithDivider8.Gap = 5
-        Me.LabelWithDivider8.Name = "LabelWithDivider8"
-        '
-        'TextBoxPCSAFTEpsilon
-        '
-        Me.TextBoxPCSAFTEpsilon.BackColor = System.Drawing.Color.LightSteelBlue
-        resources.ApplyResources(Me.TextBoxPCSAFTEpsilon, "TextBoxPCSAFTEpsilon")
-        Me.TextBoxPCSAFTEpsilon.Name = "TextBoxPCSAFTEpsilon"
-        '
-        'Label20
-        '
-        resources.ApplyResources(Me.Label20, "Label20")
-        Me.Label20.Name = "Label20"
-        '
-        'LabelWithDivider9
-        '
-        resources.ApplyResources(Me.LabelWithDivider9, "LabelWithDivider9")
-        Me.LabelWithDivider9.Gap = 5
-        Me.LabelWithDivider9.Name = "LabelWithDivider9"
-        '
-        'TextBoxPCSAFTm
-        '
-        Me.TextBoxPCSAFTm.BackColor = System.Drawing.Color.LightSteelBlue
-        resources.ApplyResources(Me.TextBoxPCSAFTm, "TextBoxPCSAFTm")
-        Me.TextBoxPCSAFTm.Name = "TextBoxPCSAFTm"
-        '
-        'Label25
-        '
-        resources.ApplyResources(Me.Label25, "Label25")
-        Me.Label25.Name = "Label25"
-        '
-        'LabelWithDivider10
-        '
-        resources.ApplyResources(Me.LabelWithDivider10, "LabelWithDivider10")
-        Me.LabelWithDivider10.Gap = 5
-        Me.LabelWithDivider10.Name = "LabelWithDivider10"
-        '
-        'TextBoxPCSAFTSigma
-        '
-        Me.TextBoxPCSAFTSigma.BackColor = System.Drawing.Color.LightSteelBlue
-        resources.ApplyResources(Me.TextBoxPCSAFTSigma, "TextBoxPCSAFTSigma")
-        Me.TextBoxPCSAFTSigma.Name = "TextBoxPCSAFTSigma"
-        '
-        'Label27
-        '
-        resources.ApplyResources(Me.Label27, "Label27")
-        Me.Label27.Name = "Label27"
         '
         'CheckBoxTc
         '
@@ -976,32 +864,140 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.Label4, "Label4")
         Me.Label4.Name = "Label4"
         '
-        'GroupBox7
+        'TabPage5
         '
-        Me.GroupBox7.Controls.Add(Me.Label43)
-        Me.GroupBox7.Controls.Add(Me.tbPVAP_E)
-        Me.GroupBox7.Controls.Add(Me.Label13)
-        Me.GroupBox7.Controls.Add(Me.tbPVAP_D)
-        Me.GroupBox7.Controls.Add(Me.Label10)
-        Me.GroupBox7.Controls.Add(Me.tbPVAP_C)
-        Me.GroupBox7.Controls.Add(Me.Label6)
-        Me.GroupBox7.Controls.Add(Me.tbPVAP_B)
-        Me.GroupBox7.Controls.Add(Me.Label5)
-        Me.GroupBox7.Controls.Add(Me.tbPVAP_A)
-        Me.GroupBox7.Controls.Add(Me.Label29)
-        Me.GroupBox7.Controls.Add(Me.Label30)
-        Me.GroupBox7.Controls.Add(Me.cbEqPVAP)
-        Me.GroupBox7.Controls.Add(Me.rbCoeffPVAP)
-        Me.GroupBox7.Controls.Add(Me.tbStatusPVAP)
-        Me.GroupBox7.Controls.Add(Me.Label2)
-        Me.GroupBox7.Controls.Add(Me.btnViewPVAP)
-        Me.GroupBox7.Controls.Add(Me.btnRegressPVAP)
-        Me.GroupBox7.Controls.Add(Me.GridExpDataPVAP)
-        Me.GroupBox7.Controls.Add(Me.rbRegressPVAP)
-        Me.GroupBox7.Controls.Add(Me.rbEstimatePVAP)
-        resources.ApplyResources(Me.GroupBox7, "GroupBox7")
-        Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.TabStop = False
+        Me.TabPage5.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage5.Controls.Add(Me.GroupBox6)
+        Me.TabPage5.Controls.Add(Me.GroupBox11)
+        resources.ApplyResources(Me.TabPage5, "TabPage5")
+        Me.TabPage5.Name = "TabPage5"
+        '
+        'GroupBox6
+        '
+        Me.GroupBox6.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.GroupBox6.Controls.Add(Me.LabelWithDivider8)
+        Me.GroupBox6.Controls.Add(Me.TextBoxPCSAFTEpsilon)
+        Me.GroupBox6.Controls.Add(Me.Label20)
+        Me.GroupBox6.Controls.Add(Me.LabelWithDivider9)
+        Me.GroupBox6.Controls.Add(Me.TextBoxPCSAFTm)
+        Me.GroupBox6.Controls.Add(Me.Label25)
+        Me.GroupBox6.Controls.Add(Me.LabelWithDivider10)
+        Me.GroupBox6.Controls.Add(Me.TextBoxPCSAFTSigma)
+        Me.GroupBox6.Controls.Add(Me.Label27)
+        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.TabStop = False
+        '
+        'LabelWithDivider8
+        '
+        resources.ApplyResources(Me.LabelWithDivider8, "LabelWithDivider8")
+        Me.LabelWithDivider8.Gap = 5
+        Me.LabelWithDivider8.Name = "LabelWithDivider8"
+        '
+        'TextBoxPCSAFTEpsilon
+        '
+        Me.TextBoxPCSAFTEpsilon.BackColor = System.Drawing.Color.LightSteelBlue
+        resources.ApplyResources(Me.TextBoxPCSAFTEpsilon, "TextBoxPCSAFTEpsilon")
+        Me.TextBoxPCSAFTEpsilon.Name = "TextBoxPCSAFTEpsilon"
+        '
+        'Label20
+        '
+        resources.ApplyResources(Me.Label20, "Label20")
+        Me.Label20.Name = "Label20"
+        '
+        'LabelWithDivider9
+        '
+        resources.ApplyResources(Me.LabelWithDivider9, "LabelWithDivider9")
+        Me.LabelWithDivider9.Gap = 5
+        Me.LabelWithDivider9.Name = "LabelWithDivider9"
+        '
+        'TextBoxPCSAFTm
+        '
+        Me.TextBoxPCSAFTm.BackColor = System.Drawing.Color.LightSteelBlue
+        resources.ApplyResources(Me.TextBoxPCSAFTm, "TextBoxPCSAFTm")
+        Me.TextBoxPCSAFTm.Name = "TextBoxPCSAFTm"
+        '
+        'Label25
+        '
+        resources.ApplyResources(Me.Label25, "Label25")
+        Me.Label25.Name = "Label25"
+        '
+        'LabelWithDivider10
+        '
+        resources.ApplyResources(Me.LabelWithDivider10, "LabelWithDivider10")
+        Me.LabelWithDivider10.Gap = 5
+        Me.LabelWithDivider10.Name = "LabelWithDivider10"
+        '
+        'TextBoxPCSAFTSigma
+        '
+        Me.TextBoxPCSAFTSigma.BackColor = System.Drawing.Color.LightSteelBlue
+        resources.ApplyResources(Me.TextBoxPCSAFTSigma, "TextBoxPCSAFTSigma")
+        Me.TextBoxPCSAFTSigma.Name = "TextBoxPCSAFTSigma"
+        '
+        'Label27
+        '
+        resources.ApplyResources(Me.Label27, "Label27")
+        Me.Label27.Name = "Label27"
+        '
+        'GroupBox11
+        '
+        Me.GroupBox11.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.GroupBox11.Controls.Add(Me.TextBoxUNIQUAC_R)
+        Me.GroupBox11.Controls.Add(Me.Label48)
+        Me.GroupBox11.Controls.Add(Me.TextBoxUNIQUAC_Q)
+        Me.GroupBox11.Controls.Add(Me.Label49)
+        resources.ApplyResources(Me.GroupBox11, "GroupBox11")
+        Me.GroupBox11.Name = "GroupBox11"
+        Me.GroupBox11.TabStop = False
+        '
+        'TextBoxUNIQUAC_R
+        '
+        Me.TextBoxUNIQUAC_R.BackColor = System.Drawing.Color.LightSteelBlue
+        resources.ApplyResources(Me.TextBoxUNIQUAC_R, "TextBoxUNIQUAC_R")
+        Me.TextBoxUNIQUAC_R.Name = "TextBoxUNIQUAC_R"
+        '
+        'Label48
+        '
+        resources.ApplyResources(Me.Label48, "Label48")
+        Me.Label48.Name = "Label48"
+        '
+        'TextBoxUNIQUAC_Q
+        '
+        Me.TextBoxUNIQUAC_Q.BackColor = System.Drawing.Color.LightSteelBlue
+        resources.ApplyResources(Me.TextBoxUNIQUAC_Q, "TextBoxUNIQUAC_Q")
+        Me.TextBoxUNIQUAC_Q.Name = "TextBoxUNIQUAC_Q"
+        '
+        'Label49
+        '
+        resources.ApplyResources(Me.Label49, "Label49")
+        Me.Label49.Name = "Label49"
+        '
+        'TabPage6
+        '
+        Me.TabPage6.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage6.Controls.Add(Me.Label43)
+        Me.TabPage6.Controls.Add(Me.tbPVAP_E)
+        Me.TabPage6.Controls.Add(Me.Label13)
+        Me.TabPage6.Controls.Add(Me.tbPVAP_D)
+        Me.TabPage6.Controls.Add(Me.Label10)
+        Me.TabPage6.Controls.Add(Me.tbPVAP_C)
+        Me.TabPage6.Controls.Add(Me.Label6)
+        Me.TabPage6.Controls.Add(Me.tbPVAP_B)
+        Me.TabPage6.Controls.Add(Me.Label5)
+        Me.TabPage6.Controls.Add(Me.tbPVAP_A)
+        Me.TabPage6.Controls.Add(Me.Label29)
+        Me.TabPage6.Controls.Add(Me.Label30)
+        Me.TabPage6.Controls.Add(Me.cbEqPVAP)
+        Me.TabPage6.Controls.Add(Me.rbCoeffPVAP)
+        Me.TabPage6.Controls.Add(Me.tbStatusPVAP)
+        Me.TabPage6.Controls.Add(Me.Label2)
+        Me.TabPage6.Controls.Add(Me.btnViewPVAP)
+        Me.TabPage6.Controls.Add(Me.btnRegressPVAP)
+        Me.TabPage6.Controls.Add(Me.GridExpDataPVAP)
+        Me.TabPage6.Controls.Add(Me.rbRegressPVAP)
+        Me.TabPage6.Controls.Add(Me.rbEstimatePVAP)
+        resources.ApplyResources(Me.TabPage6, "TabPage6")
+        Me.TabPage6.Name = "TabPage6"
         '
         'Label43
         '
@@ -1148,114 +1144,37 @@ Partial Class FormCompoundCreator
         Me.rbEstimatePVAP.TabStop = True
         Me.rbEstimatePVAP.UseVisualStyleBackColor = True
         '
-        'GroupBox8
+        'TabPage7
         '
-        Me.GroupBox8.Controls.Add(Me.Label44)
-        Me.GroupBox8.Controls.Add(Me.tbCPIG_E)
-        Me.GroupBox8.Controls.Add(Me.Label18)
-        Me.GroupBox8.Controls.Add(Me.tbCPIG_D)
-        Me.GroupBox8.Controls.Add(Me.Label19)
-        Me.GroupBox8.Controls.Add(Me.tbCPIG_C)
-        Me.GroupBox8.Controls.Add(Me.Label23)
-        Me.GroupBox8.Controls.Add(Me.tbCPIG_B)
-        Me.GroupBox8.Controls.Add(Me.Label24)
-        Me.GroupBox8.Controls.Add(Me.tbCPIG_A)
-        Me.GroupBox8.Controls.Add(Me.Label26)
-        Me.GroupBox8.Controls.Add(Me.Label28)
-        Me.GroupBox8.Controls.Add(Me.cbEqCPIG)
-        Me.GroupBox8.Controls.Add(Me.rbCoeffCPIG)
-        Me.GroupBox8.Controls.Add(Me.tbStatusCPIG)
-        Me.GroupBox8.Controls.Add(Me.Label3)
-        Me.GroupBox8.Controls.Add(Me.btnViewCPIG)
-        Me.GroupBox8.Controls.Add(Me.btnRegressCPIG)
-        Me.GroupBox8.Controls.Add(Me.GridExpDataCPIG)
-        Me.GroupBox8.Controls.Add(Me.rbRegressCPIG)
-        Me.GroupBox8.Controls.Add(Me.rbEstimateCPIG)
-        resources.ApplyResources(Me.GroupBox8, "GroupBox8")
-        Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.TabStop = False
+        Me.TabPage7.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage7.Controls.Add(Me.Label44)
+        Me.TabPage7.Controls.Add(Me.tbStatusCPIG)
+        Me.TabPage7.Controls.Add(Me.tbCPIG_E)
+        Me.TabPage7.Controls.Add(Me.Label3)
+        Me.TabPage7.Controls.Add(Me.Label18)
+        Me.TabPage7.Controls.Add(Me.btnViewCPIG)
+        Me.TabPage7.Controls.Add(Me.tbCPIG_D)
+        Me.TabPage7.Controls.Add(Me.btnRegressCPIG)
+        Me.TabPage7.Controls.Add(Me.Label19)
+        Me.TabPage7.Controls.Add(Me.GridExpDataCPIG)
+        Me.TabPage7.Controls.Add(Me.tbCPIG_C)
+        Me.TabPage7.Controls.Add(Me.rbRegressCPIG)
+        Me.TabPage7.Controls.Add(Me.Label23)
+        Me.TabPage7.Controls.Add(Me.rbEstimateCPIG)
+        Me.TabPage7.Controls.Add(Me.tbCPIG_B)
+        Me.TabPage7.Controls.Add(Me.rbCoeffCPIG)
+        Me.TabPage7.Controls.Add(Me.Label24)
+        Me.TabPage7.Controls.Add(Me.cbEqCPIG)
+        Me.TabPage7.Controls.Add(Me.tbCPIG_A)
+        Me.TabPage7.Controls.Add(Me.Label28)
+        Me.TabPage7.Controls.Add(Me.Label26)
+        resources.ApplyResources(Me.TabPage7, "TabPage7")
+        Me.TabPage7.Name = "TabPage7"
         '
         'Label44
         '
         resources.ApplyResources(Me.Label44, "Label44")
         Me.Label44.Name = "Label44"
-        '
-        'tbCPIG_E
-        '
-        Me.tbCPIG_E.BackColor = System.Drawing.Color.White
-        resources.ApplyResources(Me.tbCPIG_E, "tbCPIG_E")
-        Me.tbCPIG_E.Name = "tbCPIG_E"
-        '
-        'Label18
-        '
-        resources.ApplyResources(Me.Label18, "Label18")
-        Me.Label18.Name = "Label18"
-        '
-        'tbCPIG_D
-        '
-        Me.tbCPIG_D.BackColor = System.Drawing.Color.White
-        resources.ApplyResources(Me.tbCPIG_D, "tbCPIG_D")
-        Me.tbCPIG_D.Name = "tbCPIG_D"
-        '
-        'Label19
-        '
-        resources.ApplyResources(Me.Label19, "Label19")
-        Me.Label19.Name = "Label19"
-        '
-        'tbCPIG_C
-        '
-        Me.tbCPIG_C.BackColor = System.Drawing.Color.White
-        resources.ApplyResources(Me.tbCPIG_C, "tbCPIG_C")
-        Me.tbCPIG_C.Name = "tbCPIG_C"
-        '
-        'Label23
-        '
-        resources.ApplyResources(Me.Label23, "Label23")
-        Me.Label23.Name = "Label23"
-        '
-        'tbCPIG_B
-        '
-        Me.tbCPIG_B.BackColor = System.Drawing.Color.White
-        resources.ApplyResources(Me.tbCPIG_B, "tbCPIG_B")
-        Me.tbCPIG_B.Name = "tbCPIG_B"
-        '
-        'Label24
-        '
-        resources.ApplyResources(Me.Label24, "Label24")
-        Me.Label24.Name = "Label24"
-        '
-        'tbCPIG_A
-        '
-        Me.tbCPIG_A.BackColor = System.Drawing.Color.White
-        resources.ApplyResources(Me.tbCPIG_A, "tbCPIG_A")
-        Me.tbCPIG_A.Name = "tbCPIG_A"
-        '
-        'Label26
-        '
-        resources.ApplyResources(Me.Label26, "Label26")
-        Me.Label26.Name = "Label26"
-        '
-        'Label28
-        '
-        resources.ApplyResources(Me.Label28, "Label28")
-        Me.Label28.Name = "Label28"
-        '
-        'cbEqCPIG
-        '
-        Me.cbEqCPIG.BackColor = System.Drawing.Color.White
-        Me.cbEqCPIG.DropDownHeight = 200
-        Me.cbEqCPIG.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbEqCPIG.DropDownWidth = 300
-        Me.cbEqCPIG.FormattingEnabled = True
-        resources.ApplyResources(Me.cbEqCPIG, "cbEqCPIG")
-        Me.cbEqCPIG.Items.AddRange(New Object() {resources.GetString("cbEqCPIG.Items"), resources.GetString("cbEqCPIG.Items1"), resources.GetString("cbEqCPIG.Items2"), resources.GetString("cbEqCPIG.Items3"), resources.GetString("cbEqCPIG.Items4"), resources.GetString("cbEqCPIG.Items5"), resources.GetString("cbEqCPIG.Items6"), resources.GetString("cbEqCPIG.Items7"), resources.GetString("cbEqCPIG.Items8"), resources.GetString("cbEqCPIG.Items9"), resources.GetString("cbEqCPIG.Items10"), resources.GetString("cbEqCPIG.Items11"), resources.GetString("cbEqCPIG.Items12"), resources.GetString("cbEqCPIG.Items13"), resources.GetString("cbEqCPIG.Items14"), resources.GetString("cbEqCPIG.Items15"), resources.GetString("cbEqCPIG.Items16"), resources.GetString("cbEqCPIG.Items17"), resources.GetString("cbEqCPIG.Items18"), resources.GetString("cbEqCPIG.Items19"), resources.GetString("cbEqCPIG.Items20"), resources.GetString("cbEqCPIG.Items21"), resources.GetString("cbEqCPIG.Items22"), resources.GetString("cbEqCPIG.Items23"), resources.GetString("cbEqCPIG.Items24"), resources.GetString("cbEqCPIG.Items25"), resources.GetString("cbEqCPIG.Items26"), resources.GetString("cbEqCPIG.Items27"), resources.GetString("cbEqCPIG.Items28"), resources.GetString("cbEqCPIG.Items29"), resources.GetString("cbEqCPIG.Items30"), resources.GetString("cbEqCPIG.Items31"), resources.GetString("cbEqCPIG.Items32")})
-        Me.cbEqCPIG.Name = "cbEqCPIG"
-        '
-        'rbCoeffCPIG
-        '
-        resources.ApplyResources(Me.rbCoeffCPIG, "rbCoeffCPIG")
-        Me.rbCoeffCPIG.Name = "rbCoeffCPIG"
-        Me.rbCoeffCPIG.UseVisualStyleBackColor = True
         '
         'tbStatusCPIG
         '
@@ -1263,10 +1182,21 @@ Partial Class FormCompoundCreator
         Me.tbStatusCPIG.Name = "tbStatusCPIG"
         Me.tbStatusCPIG.ReadOnly = True
         '
+        'tbCPIG_E
+        '
+        Me.tbCPIG_E.BackColor = System.Drawing.Color.White
+        resources.ApplyResources(Me.tbCPIG_E, "tbCPIG_E")
+        Me.tbCPIG_E.Name = "tbCPIG_E"
+        '
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
         Me.Label3.Name = "Label3"
+        '
+        'Label18
+        '
+        resources.ApplyResources(Me.Label18, "Label18")
+        Me.Label18.Name = "Label18"
         '
         'btnViewCPIG
         '
@@ -1274,11 +1204,22 @@ Partial Class FormCompoundCreator
         Me.btnViewCPIG.Name = "btnViewCPIG"
         Me.btnViewCPIG.UseVisualStyleBackColor = True
         '
+        'tbCPIG_D
+        '
+        Me.tbCPIG_D.BackColor = System.Drawing.Color.White
+        resources.ApplyResources(Me.tbCPIG_D, "tbCPIG_D")
+        Me.tbCPIG_D.Name = "tbCPIG_D"
+        '
         'btnRegressCPIG
         '
         resources.ApplyResources(Me.btnRegressCPIG, "btnRegressCPIG")
         Me.btnRegressCPIG.Name = "btnRegressCPIG"
         Me.btnRegressCPIG.UseVisualStyleBackColor = True
+        '
+        'Label19
+        '
+        resources.ApplyResources(Me.Label19, "Label19")
+        Me.Label19.Name = "Label19"
         '
         'GridExpDataCPIG
         '
@@ -1306,11 +1247,22 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.DataGridViewTextBoxColumn4, "DataGridViewTextBoxColumn4")
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
         '
+        'tbCPIG_C
+        '
+        Me.tbCPIG_C.BackColor = System.Drawing.Color.White
+        resources.ApplyResources(Me.tbCPIG_C, "tbCPIG_C")
+        Me.tbCPIG_C.Name = "tbCPIG_C"
+        '
         'rbRegressCPIG
         '
         resources.ApplyResources(Me.rbRegressCPIG, "rbRegressCPIG")
         Me.rbRegressCPIG.Name = "rbRegressCPIG"
         Me.rbRegressCPIG.UseVisualStyleBackColor = True
+        '
+        'Label23
+        '
+        resources.ApplyResources(Me.Label23, "Label23")
+        Me.Label23.Name = "Label23"
         '
         'rbEstimateCPIG
         '
@@ -1320,32 +1272,76 @@ Partial Class FormCompoundCreator
         Me.rbEstimateCPIG.TabStop = True
         Me.rbEstimateCPIG.UseVisualStyleBackColor = True
         '
-        'GroupBox9
+        'tbCPIG_B
         '
-        Me.GroupBox9.Controls.Add(Me.Label45)
-        Me.GroupBox9.Controls.Add(Me.tbLIQDENS_E)
-        Me.GroupBox9.Controls.Add(Me.Label31)
-        Me.GroupBox9.Controls.Add(Me.tbLIQDENS_D)
-        Me.GroupBox9.Controls.Add(Me.Label32)
-        Me.GroupBox9.Controls.Add(Me.tbLIQDENS_C)
-        Me.GroupBox9.Controls.Add(Me.Label33)
-        Me.GroupBox9.Controls.Add(Me.tbLIQDENS_B)
-        Me.GroupBox9.Controls.Add(Me.Label34)
-        Me.GroupBox9.Controls.Add(Me.tbLIQDENS_A)
-        Me.GroupBox9.Controls.Add(Me.Label35)
-        Me.GroupBox9.Controls.Add(Me.Label36)
-        Me.GroupBox9.Controls.Add(Me.cbEqLIQDENS)
-        Me.GroupBox9.Controls.Add(Me.rbCoeffLIQDENS)
-        Me.GroupBox9.Controls.Add(Me.tbStatusLIQDENS)
-        Me.GroupBox9.Controls.Add(Me.Label7)
-        Me.GroupBox9.Controls.Add(Me.btnViewLIQDENS)
-        Me.GroupBox9.Controls.Add(Me.btnRegressLIQDENS)
-        Me.GroupBox9.Controls.Add(Me.GridExpDataLIQDENS)
-        Me.GroupBox9.Controls.Add(Me.rbRegressLIQDENS)
-        Me.GroupBox9.Controls.Add(Me.rbEstimateLIQDENS)
-        resources.ApplyResources(Me.GroupBox9, "GroupBox9")
-        Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.TabStop = False
+        Me.tbCPIG_B.BackColor = System.Drawing.Color.White
+        resources.ApplyResources(Me.tbCPIG_B, "tbCPIG_B")
+        Me.tbCPIG_B.Name = "tbCPIG_B"
+        '
+        'rbCoeffCPIG
+        '
+        resources.ApplyResources(Me.rbCoeffCPIG, "rbCoeffCPIG")
+        Me.rbCoeffCPIG.Name = "rbCoeffCPIG"
+        Me.rbCoeffCPIG.UseVisualStyleBackColor = True
+        '
+        'Label24
+        '
+        resources.ApplyResources(Me.Label24, "Label24")
+        Me.Label24.Name = "Label24"
+        '
+        'cbEqCPIG
+        '
+        Me.cbEqCPIG.BackColor = System.Drawing.Color.White
+        Me.cbEqCPIG.DropDownHeight = 200
+        Me.cbEqCPIG.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbEqCPIG.DropDownWidth = 300
+        Me.cbEqCPIG.FormattingEnabled = True
+        resources.ApplyResources(Me.cbEqCPIG, "cbEqCPIG")
+        Me.cbEqCPIG.Items.AddRange(New Object() {resources.GetString("cbEqCPIG.Items"), resources.GetString("cbEqCPIG.Items1"), resources.GetString("cbEqCPIG.Items2"), resources.GetString("cbEqCPIG.Items3"), resources.GetString("cbEqCPIG.Items4"), resources.GetString("cbEqCPIG.Items5"), resources.GetString("cbEqCPIG.Items6"), resources.GetString("cbEqCPIG.Items7"), resources.GetString("cbEqCPIG.Items8"), resources.GetString("cbEqCPIG.Items9"), resources.GetString("cbEqCPIG.Items10"), resources.GetString("cbEqCPIG.Items11"), resources.GetString("cbEqCPIG.Items12"), resources.GetString("cbEqCPIG.Items13"), resources.GetString("cbEqCPIG.Items14"), resources.GetString("cbEqCPIG.Items15"), resources.GetString("cbEqCPIG.Items16"), resources.GetString("cbEqCPIG.Items17"), resources.GetString("cbEqCPIG.Items18"), resources.GetString("cbEqCPIG.Items19"), resources.GetString("cbEqCPIG.Items20"), resources.GetString("cbEqCPIG.Items21"), resources.GetString("cbEqCPIG.Items22"), resources.GetString("cbEqCPIG.Items23"), resources.GetString("cbEqCPIG.Items24"), resources.GetString("cbEqCPIG.Items25"), resources.GetString("cbEqCPIG.Items26"), resources.GetString("cbEqCPIG.Items27"), resources.GetString("cbEqCPIG.Items28"), resources.GetString("cbEqCPIG.Items29"), resources.GetString("cbEqCPIG.Items30"), resources.GetString("cbEqCPIG.Items31"), resources.GetString("cbEqCPIG.Items32")})
+        Me.cbEqCPIG.Name = "cbEqCPIG"
+        '
+        'tbCPIG_A
+        '
+        Me.tbCPIG_A.BackColor = System.Drawing.Color.White
+        resources.ApplyResources(Me.tbCPIG_A, "tbCPIG_A")
+        Me.tbCPIG_A.Name = "tbCPIG_A"
+        '
+        'Label28
+        '
+        resources.ApplyResources(Me.Label28, "Label28")
+        Me.Label28.Name = "Label28"
+        '
+        'Label26
+        '
+        resources.ApplyResources(Me.Label26, "Label26")
+        Me.Label26.Name = "Label26"
+        '
+        'TabPage8
+        '
+        Me.TabPage8.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage8.Controls.Add(Me.Label45)
+        Me.TabPage8.Controls.Add(Me.tbLIQDENS_E)
+        Me.TabPage8.Controls.Add(Me.Label31)
+        Me.TabPage8.Controls.Add(Me.tbLIQDENS_D)
+        Me.TabPage8.Controls.Add(Me.Label32)
+        Me.TabPage8.Controls.Add(Me.tbLIQDENS_C)
+        Me.TabPage8.Controls.Add(Me.Label33)
+        Me.TabPage8.Controls.Add(Me.tbLIQDENS_B)
+        Me.TabPage8.Controls.Add(Me.Label34)
+        Me.TabPage8.Controls.Add(Me.tbLIQDENS_A)
+        Me.TabPage8.Controls.Add(Me.Label35)
+        Me.TabPage8.Controls.Add(Me.Label36)
+        Me.TabPage8.Controls.Add(Me.cbEqLIQDENS)
+        Me.TabPage8.Controls.Add(Me.rbCoeffLIQDENS)
+        Me.TabPage8.Controls.Add(Me.tbStatusLIQDENS)
+        Me.TabPage8.Controls.Add(Me.Label7)
+        Me.TabPage8.Controls.Add(Me.btnViewLIQDENS)
+        Me.TabPage8.Controls.Add(Me.btnRegressLIQDENS)
+        Me.TabPage8.Controls.Add(Me.GridExpDataLIQDENS)
+        Me.TabPage8.Controls.Add(Me.rbRegressLIQDENS)
+        Me.TabPage8.Controls.Add(Me.rbEstimateLIQDENS)
+        resources.ApplyResources(Me.TabPage8, "TabPage8")
+        Me.TabPage8.Name = "TabPage8"
         '
         'Label45
         '
@@ -1492,32 +1488,32 @@ Partial Class FormCompoundCreator
         Me.rbEstimateLIQDENS.TabStop = True
         Me.rbEstimateLIQDENS.UseVisualStyleBackColor = True
         '
-        'GroupBox10
+        'TabPage9
         '
-        Me.GroupBox10.Controls.Add(Me.Label46)
-        Me.GroupBox10.Controls.Add(Me.tbLIQVISC_E)
-        Me.GroupBox10.Controls.Add(Me.Label37)
-        Me.GroupBox10.Controls.Add(Me.tbLIQVISC_D)
-        Me.GroupBox10.Controls.Add(Me.Label38)
-        Me.GroupBox10.Controls.Add(Me.tbLIQVISC_C)
-        Me.GroupBox10.Controls.Add(Me.Label39)
-        Me.GroupBox10.Controls.Add(Me.tbLIQVISC_B)
-        Me.GroupBox10.Controls.Add(Me.Label40)
-        Me.GroupBox10.Controls.Add(Me.tbLIQVISC_A)
-        Me.GroupBox10.Controls.Add(Me.Label41)
-        Me.GroupBox10.Controls.Add(Me.Label42)
-        Me.GroupBox10.Controls.Add(Me.cbEqLIQVISC)
-        Me.GroupBox10.Controls.Add(Me.rbCoeffLIQVISC)
-        Me.GroupBox10.Controls.Add(Me.tbStatusLIQVISC)
-        Me.GroupBox10.Controls.Add(Me.Label9)
-        Me.GroupBox10.Controls.Add(Me.btnViewLIQVISC)
-        Me.GroupBox10.Controls.Add(Me.btnRegressLIQVISC)
-        Me.GroupBox10.Controls.Add(Me.GridExpDataLIQVISC)
-        Me.GroupBox10.Controls.Add(Me.rbRegressLIQVISC)
-        Me.GroupBox10.Controls.Add(Me.rbEstimateLIQVISC)
-        resources.ApplyResources(Me.GroupBox10, "GroupBox10")
-        Me.GroupBox10.Name = "GroupBox10"
-        Me.GroupBox10.TabStop = False
+        Me.TabPage9.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage9.Controls.Add(Me.Label46)
+        Me.TabPage9.Controls.Add(Me.tbLIQVISC_E)
+        Me.TabPage9.Controls.Add(Me.Label37)
+        Me.TabPage9.Controls.Add(Me.tbLIQVISC_D)
+        Me.TabPage9.Controls.Add(Me.Label38)
+        Me.TabPage9.Controls.Add(Me.tbLIQVISC_C)
+        Me.TabPage9.Controls.Add(Me.Label39)
+        Me.TabPage9.Controls.Add(Me.tbLIQVISC_B)
+        Me.TabPage9.Controls.Add(Me.Label40)
+        Me.TabPage9.Controls.Add(Me.tbLIQVISC_A)
+        Me.TabPage9.Controls.Add(Me.Label41)
+        Me.TabPage9.Controls.Add(Me.Label42)
+        Me.TabPage9.Controls.Add(Me.cbEqLIQVISC)
+        Me.TabPage9.Controls.Add(Me.rbCoeffLIQVISC)
+        Me.TabPage9.Controls.Add(Me.tbStatusLIQVISC)
+        Me.TabPage9.Controls.Add(Me.Label9)
+        Me.TabPage9.Controls.Add(Me.btnViewLIQVISC)
+        Me.TabPage9.Controls.Add(Me.btnRegressLIQVISC)
+        Me.TabPage9.Controls.Add(Me.GridExpDataLIQVISC)
+        Me.TabPage9.Controls.Add(Me.rbRegressLIQVISC)
+        Me.TabPage9.Controls.Add(Me.rbEstimateLIQVISC)
+        resources.ApplyResources(Me.TabPage9, "TabPage9")
+        Me.TabPage9.Name = "TabPage9"
         '
         'Label46
         '
@@ -1664,6 +1660,23 @@ Partial Class FormCompoundCreator
         Me.rbEstimateLIQVISC.TabStop = True
         Me.rbEstimateLIQVISC.UseVisualStyleBackColor = True
         '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.cbUnits)
+        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.TabStop = False
+        '
+        'cbUnits
+        '
+        Me.cbUnits.BackColor = System.Drawing.Color.White
+        Me.cbUnits.DropDownHeight = 200
+        Me.cbUnits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbUnits.DropDownWidth = 300
+        Me.cbUnits.FormattingEnabled = True
+        resources.ApplyResources(Me.cbUnits, "cbUnits")
+        Me.cbUnits.Name = "cbUnits"
+        '
         'DBOpenDlg
         '
         Me.DBOpenDlg.CheckFileExists = False
@@ -1673,38 +1686,41 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Name = "FormCompoundCreator"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
-        Me.FlowLayoutPanel1.ResumeLayout(False)
-        Me.GroupBox4.ResumeLayout(False)
+        Me.TabControl1.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
         CType(Me.GridUNIFAC, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
-        Me.GroupBox5.ResumeLayout(False)
-        Me.GroupBox5.PerformLayout()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
+        Me.TabPage4.ResumeLayout(False)
+        Me.TabPage4.PerformLayout()
+        Me.TabPage5.ResumeLayout(False)
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
         Me.GroupBox11.ResumeLayout(False)
         Me.GroupBox11.PerformLayout()
-        Me.GroupBox12.ResumeLayout(False)
-        Me.GroupBox12.PerformLayout()
-        Me.GroupBox7.ResumeLayout(False)
-        Me.GroupBox7.PerformLayout()
+        Me.TabPage6.ResumeLayout(False)
+        Me.TabPage6.PerformLayout()
         CType(Me.GridExpDataPVAP, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox8.ResumeLayout(False)
-        Me.GroupBox8.PerformLayout()
+        Me.TabPage7.ResumeLayout(False)
+        Me.TabPage7.PerformLayout()
         CType(Me.GridExpDataCPIG, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox9.ResumeLayout(False)
-        Me.GroupBox9.PerformLayout()
+        Me.TabPage8.ResumeLayout(False)
+        Me.TabPage8.PerformLayout()
         CType(Me.GridExpDataLIQDENS, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox10.ResumeLayout(False)
-        Me.GroupBox10.PerformLayout()
+        Me.TabPage9.ResumeLayout(False)
+        Me.TabPage9.PerformLayout()
         CType(Me.GridExpDataLIQVISC, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -1715,8 +1731,32 @@ Partial Class FormCompoundCreator
     Friend WithEvents btnCreateNewDB As System.Windows.Forms.Button
     Friend WithEvents chkReplaceComps As System.Windows.Forms.CheckBox
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
-    Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
-    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
+    Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
+    Friend WithEvents DBOpenDlg As System.Windows.Forms.OpenFileDialog
+    Public WithEvents tbCPIG_E As System.Windows.Forms.TextBox
+    Public WithEvents Label18 As System.Windows.Forms.Label
+    Public WithEvents tbCPIG_D As System.Windows.Forms.TextBox
+    Public WithEvents Label19 As System.Windows.Forms.Label
+    Public WithEvents tbCPIG_C As System.Windows.Forms.TextBox
+    Public WithEvents Label23 As System.Windows.Forms.Label
+    Public WithEvents tbCPIG_B As System.Windows.Forms.TextBox
+    Public WithEvents Label24 As System.Windows.Forms.Label
+    Public WithEvents tbCPIG_A As System.Windows.Forms.TextBox
+    Public WithEvents Label26 As System.Windows.Forms.Label
+    Public WithEvents Label28 As System.Windows.Forms.Label
+    Public WithEvents cbEqCPIG As System.Windows.Forms.ComboBox
+    Friend WithEvents rbCoeffCPIG As System.Windows.Forms.RadioButton
+    Public WithEvents Label44 As System.Windows.Forms.Label
+    Friend WithEvents btnSaveToDB As System.Windows.Forms.Button
+    Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
+    Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
+    Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
+    Public WithEvents GridUNIFAC As System.Windows.Forms.DataGridView
+    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewImageColumn
+    Public WithEvents TextBoxID As System.Windows.Forms.TextBox
+    Public WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents CheckBoxMW As System.Windows.Forms.CheckBox
     Public WithEvents lblMW As System.Windows.Forms.Label
     Public WithEvents TextBoxMW As System.Windows.Forms.TextBox
     Public WithEvents Label22 As System.Windows.Forms.Label
@@ -1726,10 +1766,16 @@ Partial Class FormCompoundCreator
     Public WithEvents Label15 As System.Windows.Forms.Label
     Public WithEvents TextBoxName As System.Windows.Forms.TextBox
     Public WithEvents Label17 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
-    Public WithEvents GridUNIFAC As System.Windows.Forms.DataGridView
     Public WithEvents Label60 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
+    Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
+    Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
+    Friend WithEvents TabPage5 As System.Windows.Forms.TabPage
+    Friend WithEvents CheckBoxCSLV As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckBoxCSSP As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckBoxCSAF As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckBoxNBP As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckBoxDGF As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckBoxDHF As System.Windows.Forms.CheckBox
     Public WithEvents Label68 As System.Windows.Forms.Label
     Public WithEvents TextBoxVTCSRK As System.Windows.Forms.TextBox
     Public WithEvents Text1 As System.Windows.Forms.Label
@@ -1756,14 +1802,11 @@ Partial Class FormCompoundCreator
     Public WithEvents lblDHF As System.Windows.Forms.Label
     Public WithEvents TextBoxDHF As System.Windows.Forms.TextBox
     Public WithEvents Label50 As System.Windows.Forms.Label
-    Friend WithEvents CheckBoxMW As System.Windows.Forms.CheckBox
-    Friend WithEvents CheckBoxCSLV As System.Windows.Forms.CheckBox
-    Friend WithEvents CheckBoxCSSP As System.Windows.Forms.CheckBox
-    Friend WithEvents CheckBoxCSAF As System.Windows.Forms.CheckBox
-    Friend WithEvents CheckBoxNBP As System.Windows.Forms.CheckBox
-    Friend WithEvents CheckBoxDGF As System.Windows.Forms.CheckBox
-    Friend WithEvents CheckBoxDHF As System.Windows.Forms.CheckBox
-    Friend WithEvents GroupBox6 As System.Windows.Forms.GroupBox
+    Friend WithEvents CheckBoxAF As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckBoxZRa As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckBoxZc As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckBoxPc As System.Windows.Forms.CheckBox
+    Friend WithEvents CheckBoxTc As System.Windows.Forms.CheckBox
     Public WithEvents LabelWithDivider6 As System.Windows.Forms.LabelWithDivider
     Public WithEvents TextBoxAF As System.Windows.Forms.TextBox
     Public WithEvents Label14 As System.Windows.Forms.Label
@@ -1781,55 +1824,12 @@ Partial Class FormCompoundCreator
     Public WithEvents lblTc As System.Windows.Forms.Label
     Public WithEvents TextBoxTc As System.Windows.Forms.TextBox
     Public WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents CheckBoxAF As System.Windows.Forms.CheckBox
-    Friend WithEvents CheckBoxZRa As System.Windows.Forms.CheckBox
-    Friend WithEvents CheckBoxZc As System.Windows.Forms.CheckBox
-    Friend WithEvents CheckBoxPc As System.Windows.Forms.CheckBox
-    Friend WithEvents CheckBoxTc As System.Windows.Forms.CheckBox
-    Friend WithEvents GroupBox7 As System.Windows.Forms.GroupBox
-    Friend WithEvents rbEstimatePVAP As System.Windows.Forms.RadioButton
-    Friend WithEvents rbRegressPVAP As System.Windows.Forms.RadioButton
-    Friend WithEvents tbStatusPVAP As System.Windows.Forms.TextBox
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents btnViewPVAP As System.Windows.Forms.Button
-    Friend WithEvents btnRegressPVAP As System.Windows.Forms.Button
-    Public WithEvents GridExpDataPVAP As System.Windows.Forms.DataGridView
-    Public WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents GroupBox8 As System.Windows.Forms.GroupBox
-    Friend WithEvents tbStatusCPIG As System.Windows.Forms.TextBox
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents btnViewCPIG As System.Windows.Forms.Button
-    Friend WithEvents btnRegressCPIG As System.Windows.Forms.Button
-    Public WithEvents GridExpDataCPIG As System.Windows.Forms.DataGridView
-    Friend WithEvents rbRegressCPIG As System.Windows.Forms.RadioButton
-    Friend WithEvents rbEstimateCPIG As System.Windows.Forms.RadioButton
-    Friend WithEvents GroupBox9 As System.Windows.Forms.GroupBox
-    Friend WithEvents tbStatusLIQDENS As System.Windows.Forms.TextBox
-    Friend WithEvents Label7 As System.Windows.Forms.Label
-    Friend WithEvents btnViewLIQDENS As System.Windows.Forms.Button
-    Friend WithEvents btnRegressLIQDENS As System.Windows.Forms.Button
-    Public WithEvents GridExpDataLIQDENS As System.Windows.Forms.DataGridView
-    Friend WithEvents rbRegressLIQDENS As System.Windows.Forms.RadioButton
-    Friend WithEvents rbEstimateLIQDENS As System.Windows.Forms.RadioButton
-    Friend WithEvents GroupBox10 As System.Windows.Forms.GroupBox
-    Friend WithEvents tbStatusLIQVISC As System.Windows.Forms.TextBox
-    Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents btnViewLIQVISC As System.Windows.Forms.Button
-    Friend WithEvents btnRegressLIQVISC As System.Windows.Forms.Button
-    Public WithEvents GridExpDataLIQVISC As System.Windows.Forms.DataGridView
-    Friend WithEvents rbRegressLIQVISC As System.Windows.Forms.RadioButton
-    Friend WithEvents rbEstimateLIQVISC As System.Windows.Forms.RadioButton
-    Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn4 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn5 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn6 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn7 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn8 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
-    Public WithEvents TextBoxID As System.Windows.Forms.TextBox
-    Public WithEvents Label16 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox12 As System.Windows.Forms.GroupBox
+    Friend WithEvents GroupBox6 As System.Windows.Forms.GroupBox
+    Friend WithEvents GroupBox11 As System.Windows.Forms.GroupBox
+    Public WithEvents TextBoxUNIQUAC_R As System.Windows.Forms.TextBox
+    Public WithEvents Label48 As System.Windows.Forms.Label
+    Public WithEvents TextBoxUNIQUAC_Q As System.Windows.Forms.TextBox
+    Public WithEvents Label49 As System.Windows.Forms.Label
     Public WithEvents LabelWithDivider8 As System.Windows.Forms.LabelWithDivider
     Public WithEvents TextBoxPCSAFTEpsilon As System.Windows.Forms.TextBox
     Public WithEvents Label20 As System.Windows.Forms.Label
@@ -1839,46 +1839,20 @@ Partial Class FormCompoundCreator
     Public WithEvents LabelWithDivider10 As System.Windows.Forms.LabelWithDivider
     Public WithEvents TextBoxPCSAFTSigma As System.Windows.Forms.TextBox
     Public WithEvents Label27 As System.Windows.Forms.Label
-    Friend WithEvents DBOpenDlg As System.Windows.Forms.OpenFileDialog
-    Friend WithEvents rbCoeffPVAP As System.Windows.Forms.RadioButton
-    Public WithEvents Label30 As System.Windows.Forms.Label
-    Public WithEvents cbEqPVAP As System.Windows.Forms.ComboBox
-    Public WithEvents tbPVAP_A As System.Windows.Forms.TextBox
-    Public WithEvents Label29 As System.Windows.Forms.Label
-    Public WithEvents tbPVAP_E As System.Windows.Forms.TextBox
-    Public WithEvents Label13 As System.Windows.Forms.Label
-    Public WithEvents tbPVAP_D As System.Windows.Forms.TextBox
-    Public WithEvents Label10 As System.Windows.Forms.Label
-    Public WithEvents tbPVAP_C As System.Windows.Forms.TextBox
-    Public WithEvents Label6 As System.Windows.Forms.Label
-    Public WithEvents tbPVAP_B As System.Windows.Forms.TextBox
-    Public WithEvents Label5 As System.Windows.Forms.Label
-    Public WithEvents tbCPIG_E As System.Windows.Forms.TextBox
-    Public WithEvents Label18 As System.Windows.Forms.Label
-    Public WithEvents tbCPIG_D As System.Windows.Forms.TextBox
-    Public WithEvents Label19 As System.Windows.Forms.Label
-    Public WithEvents tbCPIG_C As System.Windows.Forms.TextBox
-    Public WithEvents Label23 As System.Windows.Forms.Label
-    Public WithEvents tbCPIG_B As System.Windows.Forms.TextBox
-    Public WithEvents Label24 As System.Windows.Forms.Label
-    Public WithEvents tbCPIG_A As System.Windows.Forms.TextBox
-    Public WithEvents Label26 As System.Windows.Forms.Label
-    Public WithEvents Label28 As System.Windows.Forms.Label
-    Public WithEvents cbEqCPIG As System.Windows.Forms.ComboBox
-    Friend WithEvents rbCoeffCPIG As System.Windows.Forms.RadioButton
-    Public WithEvents tbLIQDENS_E As System.Windows.Forms.TextBox
-    Public WithEvents Label31 As System.Windows.Forms.Label
-    Public WithEvents tbLIQDENS_D As System.Windows.Forms.TextBox
-    Public WithEvents Label32 As System.Windows.Forms.Label
-    Public WithEvents tbLIQDENS_C As System.Windows.Forms.TextBox
-    Public WithEvents Label33 As System.Windows.Forms.Label
-    Public WithEvents tbLIQDENS_B As System.Windows.Forms.TextBox
-    Public WithEvents Label34 As System.Windows.Forms.Label
-    Public WithEvents tbLIQDENS_A As System.Windows.Forms.TextBox
-    Public WithEvents Label35 As System.Windows.Forms.Label
-    Public WithEvents Label36 As System.Windows.Forms.Label
-    Public WithEvents cbEqLIQDENS As System.Windows.Forms.ComboBox
-    Friend WithEvents rbCoeffLIQDENS As System.Windows.Forms.RadioButton
+    Friend WithEvents TabPage6 As System.Windows.Forms.TabPage
+    Friend WithEvents TabPage7 As System.Windows.Forms.TabPage
+    Friend WithEvents TabPage8 As System.Windows.Forms.TabPage
+    Friend WithEvents tbStatusLIQDENS As System.Windows.Forms.TextBox
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents btnViewLIQDENS As System.Windows.Forms.Button
+    Friend WithEvents btnRegressLIQDENS As System.Windows.Forms.Button
+    Public WithEvents GridExpDataLIQDENS As System.Windows.Forms.DataGridView
+    Friend WithEvents DataGridViewTextBoxColumn5 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn6 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents rbRegressLIQDENS As System.Windows.Forms.RadioButton
+    Friend WithEvents rbEstimateLIQDENS As System.Windows.Forms.RadioButton
+    Friend WithEvents TabPage9 As System.Windows.Forms.TabPage
+    Public WithEvents Label46 As System.Windows.Forms.Label
     Public WithEvents tbLIQVISC_E As System.Windows.Forms.TextBox
     Public WithEvents Label37 As System.Windows.Forms.Label
     Public WithEvents tbLIQVISC_D As System.Windows.Forms.TextBox
@@ -1892,18 +1866,61 @@ Partial Class FormCompoundCreator
     Public WithEvents Label42 As System.Windows.Forms.Label
     Public WithEvents cbEqLIQVISC As System.Windows.Forms.ComboBox
     Friend WithEvents rbCoeffLIQVISC As System.Windows.Forms.RadioButton
+    Friend WithEvents tbStatusLIQVISC As System.Windows.Forms.TextBox
+    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents btnViewLIQVISC As System.Windows.Forms.Button
+    Friend WithEvents btnRegressLIQVISC As System.Windows.Forms.Button
+    Public WithEvents GridExpDataLIQVISC As System.Windows.Forms.DataGridView
+    Friend WithEvents DataGridViewTextBoxColumn7 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn8 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents rbRegressLIQVISC As System.Windows.Forms.RadioButton
+    Friend WithEvents rbEstimateLIQVISC As System.Windows.Forms.RadioButton
     Public WithEvents Label43 As System.Windows.Forms.Label
-    Public WithEvents Label44 As System.Windows.Forms.Label
+    Public WithEvents tbPVAP_E As System.Windows.Forms.TextBox
+    Public WithEvents Label13 As System.Windows.Forms.Label
+    Public WithEvents tbPVAP_D As System.Windows.Forms.TextBox
+    Public WithEvents Label10 As System.Windows.Forms.Label
+    Public WithEvents tbPVAP_C As System.Windows.Forms.TextBox
+    Public WithEvents Label6 As System.Windows.Forms.Label
+    Public WithEvents tbPVAP_B As System.Windows.Forms.TextBox
+    Public WithEvents Label5 As System.Windows.Forms.Label
+    Public WithEvents tbPVAP_A As System.Windows.Forms.TextBox
+    Public WithEvents Label29 As System.Windows.Forms.Label
+    Public WithEvents Label30 As System.Windows.Forms.Label
+    Public WithEvents cbEqPVAP As System.Windows.Forms.ComboBox
+    Friend WithEvents rbCoeffPVAP As System.Windows.Forms.RadioButton
+    Friend WithEvents tbStatusPVAP As System.Windows.Forms.TextBox
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents btnViewPVAP As System.Windows.Forms.Button
+    Friend WithEvents btnRegressPVAP As System.Windows.Forms.Button
+    Public WithEvents GridExpDataPVAP As System.Windows.Forms.DataGridView
+    Public WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Public WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents rbRegressPVAP As System.Windows.Forms.RadioButton
+    Friend WithEvents rbEstimatePVAP As System.Windows.Forms.RadioButton
+    Friend WithEvents tbStatusCPIG As System.Windows.Forms.TextBox
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents btnViewCPIG As System.Windows.Forms.Button
+    Friend WithEvents btnRegressCPIG As System.Windows.Forms.Button
+    Public WithEvents GridExpDataCPIG As System.Windows.Forms.DataGridView
+    Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn4 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents rbRegressCPIG As System.Windows.Forms.RadioButton
+    Friend WithEvents rbEstimateCPIG As System.Windows.Forms.RadioButton
     Public WithEvents Label45 As System.Windows.Forms.Label
-    Public WithEvents Label46 As System.Windows.Forms.Label
-    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewImageColumn
-    Friend WithEvents GroupBox11 As System.Windows.Forms.GroupBox
-    Public WithEvents TextBoxUNIQUAC_R As System.Windows.Forms.TextBox
-    Public WithEvents Label48 As System.Windows.Forms.Label
-    Public WithEvents TextBoxUNIQUAC_Q As System.Windows.Forms.TextBox
-    Public WithEvents Label49 As System.Windows.Forms.Label
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Public WithEvents tbLIQDENS_E As System.Windows.Forms.TextBox
+    Public WithEvents Label31 As System.Windows.Forms.Label
+    Public WithEvents tbLIQDENS_D As System.Windows.Forms.TextBox
+    Public WithEvents Label32 As System.Windows.Forms.Label
+    Public WithEvents tbLIQDENS_C As System.Windows.Forms.TextBox
+    Public WithEvents Label33 As System.Windows.Forms.Label
+    Public WithEvents tbLIQDENS_B As System.Windows.Forms.TextBox
+    Public WithEvents Label34 As System.Windows.Forms.Label
+    Public WithEvents tbLIQDENS_A As System.Windows.Forms.TextBox
+    Public WithEvents Label35 As System.Windows.Forms.Label
+    Public WithEvents Label36 As System.Windows.Forms.Label
+    Public WithEvents cbEqLIQDENS As System.Windows.Forms.ComboBox
+    Friend WithEvents rbCoeffLIQDENS As System.Windows.Forms.RadioButton
+    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Public WithEvents cbUnits As System.Windows.Forms.ComboBox
-    Friend WithEvents Label47 As System.Windows.Forms.Label
 End Class
