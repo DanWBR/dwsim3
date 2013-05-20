@@ -401,7 +401,7 @@ Public Class FormCompoundCreator
 
     End Sub
 
-    Private Sub GridUNIFAC_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridUNIFAC.CellValueChanged
+    Private Sub GridUNIFAC_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
         If loaded Then
             'get group amounts
             If Not populating Then
@@ -737,7 +737,7 @@ Public Class FormCompoundCreator
 
     End Function
 
-    Private Sub btnRegressCPIG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressCPIG.Click
+    Private Sub btnRegressCPIG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
         mycase.DataCPIG.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataCPIG.Rows
@@ -774,7 +774,7 @@ Public Class FormCompoundCreator
 
     End Sub
 
-    Private Sub btnRegressLIQDENS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressLIQDENS.Click
+    Private Sub btnRegressLIQDENS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
         mycase.DataLDENS.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataLIQDENS.Rows
@@ -811,7 +811,7 @@ Public Class FormCompoundCreator
 
     End Sub
 
-    Private Sub btnRegressLIQVISC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressLIQVISC.Click
+    Private Sub btnRegressLIQVISC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
         mycase.DataLVISC.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataLIQVISC.Rows
@@ -849,7 +849,7 @@ Public Class FormCompoundCreator
 
     End Sub
 
-    Private Sub GridExpData_KeyDown1(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles GridExpDataCPIG.KeyDown, GridExpDataLIQDENS.KeyDown, GridExpDataLIQVISC.KeyDown, GridExpDataPVAP.KeyDown
+    Private Sub GridExpData_KeyDown1(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
 
         If e.KeyCode = Keys.Delete And e.Modifiers = Keys.Shift Then
             Dim toremove As New ArrayList
@@ -886,35 +886,35 @@ Public Class FormCompoundCreator
         End If
     End Sub
 
-    Private Sub rbEstimatePVAP_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbEstimatePVAP.CheckedChanged
+    Private Sub rbEstimatePVAP_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If rbEstimatePVAP.Checked Then
             mycase.cp.VaporPressureEquation = 0
             tbStatusPVAP.Text = "OK"
         End If
     End Sub
 
-    Private Sub rbEstimateCPIG_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbEstimateCPIG.CheckedChanged
+    Private Sub rbEstimateCPIG_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If rbEstimateCPIG.Checked Then
             mycase.cp.IdealgasCpEquation = 0
             tbStatusCPIG.Text = "OK"
         End If
     End Sub
 
-    Private Sub rbEstimateLIQDENS_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbEstimateLIQDENS.CheckedChanged
+    Private Sub rbEstimateLIQDENS_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If rbEstimateLIQDENS.Checked Then
             mycase.cp.LiquidDensityEquation = 0
             tbStatusLIQDENS.Text = "OK"
         End If
     End Sub
 
-    Private Sub rbEstimateLIQVISC_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbEstimateLIQVISC.CheckedChanged
+    Private Sub rbEstimateLIQVISC_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If rbEstimateLIQVISC.Checked Then
             mycase.cp.LiquidViscosityEquation = 0
             tbStatusLIQVISC.Text = "OK"
         End If
     End Sub
 
-    Private Sub btnViewPVAP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewPVAP.Click
+    Private Sub btnViewPVAP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
         If tbStatusPVAP.Text = "" And rbRegressPVAP.Checked Then
             MessageBox.Show(DWSIM.App.GetLocalString("NoRegressionAvailable"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -954,7 +954,7 @@ Public Class FormCompoundCreator
 
     End Sub
 
-    Private Sub btnViewCPIG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewCPIG.Click
+    Private Sub btnViewCPIG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
         If tbStatusCPIG.Text = "" And rbRegressCPIG.Checked Then
             MessageBox.Show(DWSIM.App.GetLocalString("NoRegressionAvailable"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -993,7 +993,7 @@ Public Class FormCompoundCreator
 
     End Sub
 
-    Private Sub btnViewLIQDENS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewLIQDENS.Click
+    Private Sub btnViewLIQDENS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
         If tbStatusLIQDENS.Text = "" And rbRegressLIQDENS.Checked Then
             MessageBox.Show(DWSIM.App.GetLocalString("NoRegressionAvailable"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -1032,7 +1032,7 @@ Public Class FormCompoundCreator
 
     End Sub
 
-    Private Sub btnViewLIQVISC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewLIQVISC.Click
+    Private Sub btnViewLIQVISC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
         If tbStatusLIQVISC.Text = "" And rbRegressLIQVISC.Checked Then
             MessageBox.Show(DWSIM.App.GetLocalString("NoRegressionAvailable"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -1162,7 +1162,7 @@ Public Class FormCompoundCreator
 
     End Function
 
-    Private Sub rbCoeffPVAP_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbCoeffPVAP.CheckedChanged
+    Private Sub rbCoeffPVAP_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.EqPVAP = rbCoeffPVAP.Checked
     End Sub
 
@@ -1170,15 +1170,15 @@ Public Class FormCompoundCreator
         mycase.EqCPIG = rbCoeffCPIG.Checked
     End Sub
 
-    Private Sub rbCoeffLIQDENS_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbCoeffLIQDENS.CheckedChanged
+    Private Sub rbCoeffLIQDENS_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.EqLDENS = rbCoeffLIQDENS.Checked
     End Sub
 
-    Private Sub rbCoeffLIQVISC_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbCoeffLIQVISC.CheckedChanged
+    Private Sub rbCoeffLIQVISC_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.EqLVISC = rbCoeffLIQVISC.Checked
     End Sub
 
-    Private Sub cbEqPVAP_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbEqPVAP.SelectedIndexChanged
+    Private Sub cbEqPVAP_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqPVAP Then mycase.cp.VaporPressureEquation = cbEqPVAP.SelectedItem.ToString.Split(":")(0)
     End Sub
 
@@ -1186,31 +1186,31 @@ Public Class FormCompoundCreator
         If mycase.EqCPIG Then mycase.cp.IdealgasCpEquation = cbEqCPIG.SelectedItem.ToString.Split(":")(0)
     End Sub
 
-    Private Sub cbEqLIQDENS_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbEqLIQDENS.SelectedIndexChanged
+    Private Sub cbEqLIQDENS_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqLDENS Then mycase.cp.LiquidDensityEquation = cbEqLIQDENS.SelectedItem.ToString.Split(":")(0)
     End Sub
 
-    Private Sub cbEqLIQVISC_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbEqLIQVISC.SelectedIndexChanged
+    Private Sub cbEqLIQVISC_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqLVISC Then mycase.cp.LiquidViscosityEquation = cbEqLIQVISC.SelectedItem.ToString.Split(":")(0)
     End Sub
 
-    Private Sub tbPVAP_A_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbPVAP_A.TextChanged
+    Private Sub tbPVAP_A_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqPVAP Then mycase.cp.Vapor_Pressure_Constant_A = tbPVAP_A.Text
     End Sub
 
-    Private Sub tbPVAP_B_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbPVAP_B.TextChanged
+    Private Sub tbPVAP_B_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqPVAP Then mycase.cp.Vapor_Pressure_Constant_B = tbPVAP_B.Text
     End Sub
 
-    Private Sub tbPVAP_C_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbPVAP_C.TextChanged
+    Private Sub tbPVAP_C_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqPVAP Then mycase.cp.Vapor_Pressure_Constant_C = tbPVAP_C.Text
     End Sub
 
-    Private Sub tbPVAP_D_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbPVAP_D.TextChanged
+    Private Sub tbPVAP_D_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqPVAP Then mycase.cp.Vapor_Pressure_Constant_D = tbPVAP_D.Text
     End Sub
 
-    Private Sub tbPVAP_E_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbPVAP_E.TextChanged
+    Private Sub tbPVAP_E_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqPVAP Then mycase.cp.Vapor_Pressure_Constant_E = tbPVAP_E.Text
     End Sub
 
@@ -1234,109 +1234,108 @@ Public Class FormCompoundCreator
         If mycase.EqCPIG Then mycase.cp.Ideal_Gas_Heat_Capacity_Const_E = tbCPIG_E.Text
     End Sub
 
-    Private Sub tbLIQDENS_A_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQDENS_A.TextChanged
+    Private Sub tbLIQDENS_A_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqLDENS Then mycase.cp.Liquid_Density_Const_A = tbLIQDENS_A.Text
     End Sub
 
-    Private Sub tbLIQDENS_b_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQDENS_B.TextChanged
+    Private Sub tbLIQDENS_b_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqLDENS Then mycase.cp.Liquid_Density_Const_B = tbLIQDENS_B.Text
     End Sub
 
-    Private Sub tbLIQDENS_c_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQDENS_C.TextChanged
+    Private Sub tbLIQDENS_c_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqLDENS Then mycase.cp.Liquid_Density_Const_C = tbLIQDENS_C.Text
     End Sub
 
-    Private Sub tbLIQDENS_d_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQDENS_D.TextChanged
+    Private Sub tbLIQDENS_d_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqLDENS Then mycase.cp.Liquid_Density_Const_D = tbLIQDENS_D.Text
     End Sub
 
-    Private Sub tbLIQDENS_e_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQDENS_E.TextChanged
+    Private Sub tbLIQDENS_e_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqLDENS Then mycase.cp.Liquid_Density_Const_E = tbLIQDENS_E.Text
     End Sub
 
-    Private Sub tbLIQVISC_A_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQVISC_A.TextChanged
+    Private Sub tbLIQVISC_A_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqLVISC Then mycase.cp.Liquid_Viscosity_Const_A = tbLIQVISC_A.Text
     End Sub
 
-    Private Sub tbLIQVISC_B_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQVISC_B.TextChanged
+    Private Sub tbLIQVISC_B_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqLVISC Then mycase.cp.Liquid_Viscosity_Const_B = tbLIQVISC_B.Text
     End Sub
 
-    Private Sub tbLIQVISC_C_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQVISC_C.TextChanged
+    Private Sub tbLIQVISC_C_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqLVISC Then mycase.cp.Liquid_Viscosity_Const_C = tbLIQVISC_C.Text
     End Sub
 
-    Private Sub tbLIQVISC_D_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQVISC_D.TextChanged
+    Private Sub tbLIQVISC_D_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqLVISC Then mycase.cp.Liquid_Viscosity_Const_D = tbLIQVISC_D.Text
     End Sub
 
-    Private Sub tbLIQVISC_E_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbLIQVISC_E.TextChanged
+    Private Sub tbLIQVISC_E_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If mycase.EqLVISC Then mycase.cp.Liquid_Viscosity_Const_E = tbLIQVISC_E.Text
     End Sub
 
-    Private Sub CheckBoxTc_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxTc.CheckedChanged
+    Private Sub CheckBoxTc_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.CalcTC = CheckBoxTc.Checked
     End Sub
 
-    Private Sub CheckBoxPc_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxPc.CheckedChanged
+    Private Sub CheckBoxPc_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.CalcPC = CheckBoxPc.Checked
     End Sub
 
-    Private Sub CheckBoxZc_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxZc.CheckedChanged
+    Private Sub CheckBoxZc_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.CalcZC = CheckBoxZc.Checked
     End Sub
 
-    Private Sub CheckBoxZRa_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxZRa.CheckedChanged
+    Private Sub CheckBoxZRa_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.CalcZRA = CheckBoxZRa.Checked
     End Sub
 
-    Private Sub CheckBoxAF_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxAF.CheckedChanged
+    Private Sub CheckBoxAF_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.CalcAF = CheckBoxAF.Checked
     End Sub
 
-    Private Sub CheckBoxMW_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxMW.CheckedChanged
+    Private Sub CheckBoxMW_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.CalcMW = CheckBoxMW.Checked
     End Sub
 
-    Private Sub CheckBoxDHF_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxDHF.CheckedChanged
+    Private Sub CheckBoxDHF_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.CalcHF = CheckBoxDHF.Checked
     End Sub
 
-    Private Sub CheckBoxDGF_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxDGF.CheckedChanged
+    Private Sub CheckBoxDGF_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.CalcGF = CheckBoxDGF.Checked
     End Sub
 
-    Private Sub CheckBoxNBP_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxNBP.CheckedChanged
+    Private Sub CheckBoxNBP_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.CalcNBP = CheckBoxNBP.Checked
     End Sub
 
-    Private Sub CheckBoxCSAF_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxCSAF.CheckedChanged
+    Private Sub CheckBoxCSAF_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.CalcCSAF = CheckBoxCSAF.Checked
     End Sub
 
-    Private Sub CheckBoxCSSP_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxCSSP.CheckedChanged
+    Private Sub CheckBoxCSSP_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.CalcCSSP = CheckBoxCSSP.Checked
     End Sub
 
-    Private Sub CheckBoxCSLV_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxCSLV.CheckedChanged
+    Private Sub CheckBoxCSLV_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.CalcCSMV = CheckBoxCSLV.Checked
     End Sub
 
-    Private Sub TextBoxUNIQUAC_Q_TextChanged(sender As System.Object, e As System.EventArgs) Handles TextBoxUNIQUAC_Q.TextChanged
+    Private Sub TextBoxUNIQUAC_Q_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If Double.TryParse(TextBoxUNIQUAC_Q.Text, New Double()) Then
             mycase.cp.UNIQUAC_Q = TextBoxUNIQUAC_Q.Text
         End If
     End Sub
 
-    Private Sub TextBoxUNIQUAC_R_TextChanged(sender As System.Object, e As System.EventArgs) Handles TextBoxUNIQUAC_R.TextChanged
+    Private Sub TextBoxUNIQUAC_R_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If Double.TryParse(TextBoxUNIQUAC_R.Text, New Double()) Then
             mycase.cp.UNIQUAC_R = TextBoxUNIQUAC_R.Text
         End If
     End Sub
 
-    Private Sub rb_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbCoeffCPIG.CheckedChanged, rbCoeffLIQDENS.CheckedChanged, rbCoeffLIQVISC.CheckedChanged, rbCoeffPVAP.CheckedChanged, _
-                                                                                        rbEstimateCPIG.CheckedChanged, rbEstimateLIQDENS.CheckedChanged, rbEstimateLIQVISC.CheckedChanged, rbEstimatePVAP.CheckedChanged, _
-                                                                                        rbRegressCPIG.CheckedChanged, rbRegressLIQDENS.CheckedChanged, rbRegressLIQVISC.CheckedChanged, rbRegressPVAP.CheckedChanged
+    Private Sub rb_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbCoeffCPIG.CheckedChanged, rbCoeffLIQDENS.CheckedChanged, rbCoeffLIQVISC.CheckedChanged, rbCoeffPVAP.CheckedChanged, _
+                                                                                        rbEstimateCPIG.CheckedChanged, rbEstimateLIQDENS.CheckedChanged, rbEstimateLIQVISC.CheckedChanged, rbEstimatePVAP.CheckedChanged
         If loaded Then StoreData()
 
     End Sub
@@ -1347,7 +1346,7 @@ Public Class FormCompoundCreator
 
     End Sub
 
-    Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSaveToDB.Click
         Try
             StoreData()
             DWSIM.Databases.UserDB.AddCompounds(New DWSIM.ClassesBasicasTermodinamica.ConstantProperties() {mycase.cp}, tbDBPath.Text, chkReplaceComps.Checked)
@@ -1357,7 +1356,7 @@ Public Class FormCompoundCreator
         End Try
     End Sub
 
-    Private Sub cbUnits_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles cbUnits.SelectedIndexChanged
+    Private Sub cbUnits_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cbUnits.SelectedIndexChanged
         If loaded Then
             StoreData()
         End If
@@ -1370,7 +1369,6 @@ Public Class FormCompoundCreator
             WriteData()
         End If
     End Sub
-
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase

@@ -118,14 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>732, 17</value>
+  <data name="btnSaveToDB.Location" type="System.Drawing.Point, System.Drawing">
+    <value>218, 47</value>
   </data>
-  <data name="Button1.Text" xml:space="preserve">
-    <value>Speichern Komponente in die Datenbank</value>
+  <data name="btnSaveToDB.Text" xml:space="preserve">
+    <value>Speichere Komponente in Datenbank</value>
   </data>
   <data name="chkReplaceComps.Location" type="System.Drawing.Point, System.Drawing">
-    <value>966, 23</value>
+    <value>586, 53</value>
   </data>
   <data name="chkReplaceComps.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 17</value>
@@ -133,14 +133,9 @@
   <data name="chkReplaceComps.Text" xml:space="preserve">
     <value>Ersetze Komponente mit selber ID</value>
   </data>
-  <data name="tbDBPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>43, 21</value>
-  </data>
-  <data name="tbDBPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>475, 20</value>
-  </data>
-  <data name="btnSearch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>524, 17</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tbDBPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left</value>
   </data>
   <data name="btnSearch.Text" xml:space="preserve">
     <value>Suche</value>
@@ -151,9 +146,6 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Pfad</value>
   </data>
-  <data name="btnCreateNewDB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>605, 17</value>
-  </data>
   <data name="btnCreateNewDB.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 26</value>
   </data>
@@ -162,42 +154,6 @@
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Komponentendatenbank</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Komponenten Eigenschaften</value>
-  </data>
-  <data name="cbUnits.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 21</value>
-  </data>
-  <data name="Label47.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 13</value>
-  </data>
-  <data name="Label47.Text" xml:space="preserve">
-    <value>Einheitensystem</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>UNIFAC Struktur</value>
-  </data>
-  <data name="GridUNIFAC.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 58</value>
-  </data>
-  <data name="GridUNIFAC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>436, 239</value>
-  </data>
-  <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Anzahl</value>
-  </data>
-  <data name="Column1.HeaderText" xml:space="preserve">
-    <value>Beispiel</value>
-  </data>
-  <data name="Label60.Size" type="System.Drawing.Size, System.Drawing">
-    <value>438, 32</value>
-  </data>
-  <data name="Label60.Text" xml:space="preserve">
-    <value>Tragen Sie die Anzahl aller UNIFAC Gruppen der Komponentenstruktur ein, falls vorhanden.</value>
-  </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Identifikation</value>
   </data>
   <data name="Label22.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 13</value>
@@ -220,8 +176,20 @@
   <data name="Label17.Text" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>Diverse Eigenschaften</value>
+  <data name="TabPage1.Text" xml:space="preserve">
+    <value>Identifikation</value>
+  </data>
+  <data name="Label60.Size" type="System.Drawing.Size, System.Drawing">
+    <value>439, 13</value>
+  </data>
+  <data name="Label60.Text" xml:space="preserve">
+    <value>Tragen Sie die Anzahl aller UNIFAC Gruppen der Komponentenstruktur ein, falls vorhanden.</value>
+  </data>
+  <data name="Column4.HeaderText" xml:space="preserve">
+    <value>Anzahl</value>
+  </data>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Beispiel</value>
   </data>
   <data name="CheckBoxCSLV.ToolTip" xml:space="preserve">
     <value>Abschätzung aufgrund UNIFAC-Strukturinformation</value>
@@ -298,11 +266,8 @@
   <data name="Label50.Text" xml:space="preserve">
     <value>Bildungsenthalpy (Ideales Gas, 25 C)</value>
   </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Kritische Daten</value>
-  </data>
-  <data name="GroupBox11.Text" xml:space="preserve">
-    <value>UNIQUAC Parameter</value>
+  <data name="TabPage3.Text" xml:space="preserve">
+    <value>Diverse Eigenschaften</value>
   </data>
   <data name="CheckBoxAF.ToolTip" xml:space="preserve">
     <value>Abschätzung aufgrund UNIFAC-Struktur</value>
@@ -315,18 +280,6 @@
   </data>
   <data name="CheckBoxPc.ToolTip" xml:space="preserve">
     <value>Abschätzung aufgrund UNIFAC-Struktur</value>
-  </data>
-  <data name="GroupBox12.Text" xml:space="preserve">
-    <value>PC-SAFT Parameter</value>
-  </data>
-  <data name="LabelWithDivider8.Text" xml:space="preserve">
-    <value>Attraktions-Parameter</value>
-  </data>
-  <data name="LabelWithDivider9.Text" xml:space="preserve">
-    <value>Segment Nummer</value>
-  </data>
-  <data name="LabelWithDivider10.Text" xml:space="preserve">
-    <value>Segment Durchmesser</value>
   </data>
   <data name="CheckBoxTc.ToolTip" xml:space="preserve">
     <value>Abschätzung aufgrund UNIFAC-Struktur</value>
@@ -346,8 +299,23 @@
   <data name="LabelWithDivider2.Text" xml:space="preserve">
     <value>Kritische Temperatur</value>
   </data>
-  <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Dampfdruck</value>
+  <data name="TabPage4.Text" xml:space="preserve">
+    <value>Kritische Daten</value>
+  </data>
+  <data name="LabelWithDivider8.Text" xml:space="preserve">
+    <value>Attraktions-Parameter</value>
+  </data>
+  <data name="LabelWithDivider9.Text" xml:space="preserve">
+    <value>Segment Nummer</value>
+  </data>
+  <data name="LabelWithDivider10.Text" xml:space="preserve">
+    <value>Segment Durchmesser</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>PC-SAFT Parameter</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>UNIQUAC Parameter</value>
   </data>
   <data name="Label43.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 13</value>
@@ -362,7 +330,7 @@
     <value>Gleichung</value>
   </data>
   <data name="cbEqPVAP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>71, 325</value>
+    <value>311, 38</value>
   </data>
   <data name="cbEqPVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 21</value>
@@ -391,32 +359,14 @@
   <data name="rbEstimatePVAP.Text" xml:space="preserve">
     <value>Schätze (Lee Kesler)</value>
   </data>
-  <data name="GroupBox8.Text" xml:space="preserve">
-    <value>Wärmekapazität (Cp, Ideales Gas)</value>
+  <data name="TabPage6.Text" xml:space="preserve">
+    <value>Dampfdruck</value>
   </data>
   <data name="Label44.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 13</value>
   </data>
   <data name="Label44.Text" xml:space="preserve">
     <value>* Cp in J/[kmol.K], T in K</value>
-  </data>
-  <data name="Label28.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 13</value>
-  </data>
-  <data name="Label28.Text" xml:space="preserve">
-    <value>Gleichung</value>
-  </data>
-  <data name="cbEqCPIG.Location" type="System.Drawing.Point, System.Drawing">
-    <value>71, 325</value>
-  </data>
-  <data name="cbEqCPIG.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 21</value>
-  </data>
-  <data name="rbCoeffCPIG.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 17</value>
-  </data>
-  <data name="rbCoeffCPIG.Text" xml:space="preserve">
-    <value>Einzufügen Koeffizienten *</value>
   </data>
   <data name="btnViewCPIG.Text" xml:space="preserve">
     <value>Zeige Regression</value>
@@ -436,8 +386,26 @@
   <data name="rbEstimateCPIG.Text" xml:space="preserve">
     <value>Schätze (Joback/UNIFAC)</value>
   </data>
-  <data name="GroupBox9.Text" xml:space="preserve">
-    <value>Flüssigkeitsdichte</value>
+  <data name="rbCoeffCPIG.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 17</value>
+  </data>
+  <data name="rbCoeffCPIG.Text" xml:space="preserve">
+    <value>Einzufügen Koeffizienten *</value>
+  </data>
+  <data name="cbEqCPIG.Location" type="System.Drawing.Point, System.Drawing">
+    <value>311, 39</value>
+  </data>
+  <data name="cbEqCPIG.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 21</value>
+  </data>
+  <data name="Label28.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 13</value>
+  </data>
+  <data name="Label28.Text" xml:space="preserve">
+    <value>Gleichung</value>
+  </data>
+  <data name="TabPage7.Text" xml:space="preserve">
+    <value>Wärmekapazität (Cp, Ideales Gas)</value>
   </data>
   <data name="Label45.Size" type="System.Drawing.Size, System.Drawing">
     <value>118, 13</value>
@@ -452,7 +420,7 @@
     <value>Gleichung</value>
   </data>
   <data name="cbEqLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
-    <value>69, 325</value>
+    <value>311, 39</value>
   </data>
   <data name="cbEqLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 21</value>
@@ -481,8 +449,8 @@
   <data name="rbEstimateLIQDENS.Text" xml:space="preserve">
     <value>Schätze (Rackett)</value>
   </data>
-  <data name="GroupBox10.Text" xml:space="preserve">
-    <value>Viskosität Flüssigkeit</value>
+  <data name="TabPage8.Text" xml:space="preserve">
+    <value>Flüssigkeitsdichte</value>
   </data>
   <data name="Label46.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 13</value>
@@ -497,7 +465,7 @@
     <value>Gleichung</value>
   </data>
   <data name="cbEqLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
-    <value>69, 325</value>
+    <value>311, 39</value>
   </data>
   <data name="cbEqLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 21</value>
@@ -525,6 +493,19 @@
   </data>
   <data name="rbEstimateLIQVISC.Text" xml:space="preserve">
     <value>Schätze (Letsou-Stiel)</value>
+  </data>
+  <data name="TabPage9.Text" xml:space="preserve">
+    <value>Viskosität Flüssigkeit</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Komponenten Eigenschaften</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="cbUnits.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Einheitensystem</value>
   </data>
   <data name="DBOpenDlg.Filter" xml:space="preserve">
     <value>XML Files|*.xml</value>
