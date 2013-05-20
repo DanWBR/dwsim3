@@ -122,13 +122,20 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkReplaceComps.Location" type="System.Drawing.Point, System.Drawing">
-    <value>565, 53</value>
+    <value>680, 53</value>
   </data>
   <data name="chkReplaceComps.Size" type="System.Drawing.Size, System.Drawing">
     <value>206, 17</value>
   </data>
   <data name="chkReplaceComps.Text" xml:space="preserve">
     <value>Replace compounds with the same ID</value>
+  </data>
+  <data name="tbDBPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>824, 20</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnSearch.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="btnSearch.Text" xml:space="preserve">
     <value>Search</value>
@@ -139,8 +146,14 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Path</value>
   </data>
+  <data name="btnCreateNewDB.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="btnCreateNewDB.Text" xml:space="preserve">
     <value>Create New</value>
+  </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>905, 84</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Compound Database</value>
@@ -157,6 +170,9 @@
   <data name="Label17.Text" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="TabPage1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>875, 337</value>
+  </data>
   <data name="TabPage1.Text" xml:space="preserve">
     <value>Identification</value>
   </data>
@@ -171,6 +187,12 @@
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Example</value>
+  </data>
+  <data name="GridUNIFAC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>560, 287</value>
+  </data>
+  <data name="TabPage2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>875, 337</value>
   </data>
   <data name="CheckBoxCSLV.ToolTip" xml:space="preserve">
     <value>Estimate using UNIFAC structure information</value>
@@ -217,8 +239,14 @@
   <data name="Label62.Text" xml:space="preserve">
     <value>Chao-Seader Acentric Factor</value>
   </data>
+  <data name="LabelWithDivider16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>562, 18</value>
+  </data>
   <data name="LabelWithDivider16.Text" xml:space="preserve">
     <value>Model Parameters</value>
+  </data>
+  <data name="LabelWithDivider13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>562, 18</value>
   </data>
   <data name="LabelWithDivider13.Text" xml:space="preserve">
     <value>Normal Boiling Point</value>
@@ -235,6 +263,9 @@
   <data name="Label53.Text" xml:space="preserve">
     <value>Gibbs Energy of Formation (Ideal Gas, 25 C)</value>
   </data>
+  <data name="LabelWithDivider12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>562, 18</value>
+  </data>
   <data name="LabelWithDivider12.Text" xml:space="preserve">
     <value>Formation Properties</value>
   </data>
@@ -243,6 +274,9 @@
   </data>
   <data name="Label50.Text" xml:space="preserve">
     <value>Enthalpy of Formation (Ideal Gas, 25 C)</value>
+  </data>
+  <data name="TabPage3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>875, 337</value>
   </data>
   <data name="TabPage3.Text" xml:space="preserve">
     <value>Misc Properties</value>
@@ -262,20 +296,38 @@
   <data name="CheckBoxTc.ToolTip" xml:space="preserve">
     <value>Estimate using UNIFAC structure information</value>
   </data>
+  <data name="LabelWithDivider6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>580, 18</value>
+  </data>
   <data name="LabelWithDivider6.Text" xml:space="preserve">
     <value>Acentric Factor</value>
+  </data>
+  <data name="LabelWithDivider5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>580, 18</value>
   </data>
   <data name="LabelWithDivider5.Text" xml:space="preserve">
     <value>Rackett Parameter</value>
   </data>
+  <data name="LabelWithDivider4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>581, 18</value>
+  </data>
   <data name="LabelWithDivider4.Text" xml:space="preserve">
     <value>Critical Compressibility Factor</value>
+  </data>
+  <data name="LabelWithDivider3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>580, 18</value>
   </data>
   <data name="LabelWithDivider3.Text" xml:space="preserve">
     <value>Critical Pressure</value>
   </data>
+  <data name="LabelWithDivider2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>580, 18</value>
+  </data>
   <data name="LabelWithDivider2.Text" xml:space="preserve">
     <value>Critical Temperature</value>
+  </data>
+  <data name="TabPage4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>875, 337</value>
   </data>
   <data name="TabPage4.Text" xml:space="preserve">
     <value>Critical Properties</value>
@@ -295,17 +347,62 @@
   <data name="GroupBox11.Text" xml:space="preserve">
     <value>UNIQUAC Parameters</value>
   </data>
+  <data name="TabPage5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>875, 337</value>
+  </data>
+  <data name="Label43.Location" type="System.Drawing.Point, System.Drawing">
+    <value>252, 202</value>
+  </data>
   <data name="Label43.Size" type="System.Drawing.Size, System.Drawing">
     <value>82, 13</value>
   </data>
   <data name="Label43.Text" xml:space="preserve">
     <value>* P in Pa, T in K</value>
   </data>
+  <data name="tbPVAP_E.Location" type="System.Drawing.Point, System.Drawing">
+    <value>272, 174</value>
+  </data>
+  <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>252, 177</value>
+  </data>
+  <data name="tbPVAP_D.Location" type="System.Drawing.Point, System.Drawing">
+    <value>272, 148</value>
+  </data>
+  <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>252, 151</value>
+  </data>
+  <data name="tbPVAP_C.Location" type="System.Drawing.Point, System.Drawing">
+    <value>272, 122</value>
+  </data>
+  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>252, 125</value>
+  </data>
+  <data name="tbPVAP_B.Location" type="System.Drawing.Point, System.Drawing">
+    <value>272, 96</value>
+  </data>
+  <data name="Label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>252, 99</value>
+  </data>
+  <data name="tbPVAP_A.Location" type="System.Drawing.Point, System.Drawing">
+    <value>272, 70</value>
+  </data>
+  <data name="Label29.Location" type="System.Drawing.Point, System.Drawing">
+    <value>252, 73</value>
+  </data>
+  <data name="Label30.Location" type="System.Drawing.Point, System.Drawing">
+    <value>252, 41</value>
+  </data>
   <data name="Label30.Size" type="System.Drawing.Size, System.Drawing">
     <value>49, 13</value>
   </data>
   <data name="Label30.Text" xml:space="preserve">
     <value>Equation</value>
+  </data>
+  <data name="cbEqPVAP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>306, 38</value>
+  </data>
+  <data name="rbCoeffPVAP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>255, 13</value>
   </data>
   <data name="rbCoeffPVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>161, 17</value>
@@ -319,6 +416,9 @@
   <data name="btnRegressPVAP.Text" xml:space="preserve">
     <value>Regress Data</value>
   </data>
+  <data name="GridExpDataPVAP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 170</value>
+  </data>
   <data name="rbRegressPVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 17</value>
   </data>
@@ -331,12 +431,17 @@
   <data name="rbEstimatePVAP.Text" xml:space="preserve">
     <value>Estimate (Lee Kesler)</value>
   </data>
+  <data name="TabPage6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>875, 337</value>
+  </data>
   <data name="TabPage6.Text" xml:space="preserve">
     <value>Vapor Pressure</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Label44.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
+  </data>
+  <data name="Label44.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 203</value>
   </data>
   <data name="Label44.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 13</value>
@@ -344,11 +449,26 @@
   <data name="Label44.Text" xml:space="preserve">
     <value>* Cp in J/[kmol.K], T in K</value>
   </data>
+  <data name="tbCPIG_E.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 175</value>
+  </data>
+  <data name="Label18.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 178</value>
+  </data>
   <data name="btnViewCPIG.Text" xml:space="preserve">
     <value>View Regression</value>
   </data>
+  <data name="tbCPIG_D.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 149</value>
+  </data>
   <data name="btnRegressCPIG.Text" xml:space="preserve">
     <value>Regress Data</value>
+  </data>
+  <data name="Label19.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 152</value>
+  </data>
+  <data name="tbCPIG_C.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 123</value>
   </data>
   <data name="rbRegressCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 17</value>
@@ -356,11 +476,20 @@
   <data name="rbRegressCPIG.Text" xml:space="preserve">
     <value>Regress Experimental Data</value>
   </data>
+  <data name="Label23.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 126</value>
+  </data>
   <data name="rbEstimateCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 17</value>
   </data>
   <data name="rbEstimateCPIG.Text" xml:space="preserve">
     <value>Estimate (Joback/UNIFAC)</value>
+  </data>
+  <data name="tbCPIG_B.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 97</value>
+  </data>
+  <data name="rbCoeffCPIG.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 14</value>
   </data>
   <data name="rbCoeffCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>161, 17</value>
@@ -368,11 +497,29 @@
   <data name="rbCoeffCPIG.Text" xml:space="preserve">
     <value>Insert Equation Coefficients *</value>
   </data>
+  <data name="Label24.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 100</value>
+  </data>
+  <data name="cbEqCPIG.Location" type="System.Drawing.Point, System.Drawing">
+    <value>291, 39</value>
+  </data>
+  <data name="tbCPIG_A.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 71</value>
+  </data>
+  <data name="Label28.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 42</value>
+  </data>
   <data name="Label28.Size" type="System.Drawing.Size, System.Drawing">
     <value>49, 13</value>
   </data>
   <data name="Label28.Text" xml:space="preserve">
     <value>Equation</value>
+  </data>
+  <data name="Label26.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 74</value>
+  </data>
+  <data name="TabPage7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>875, 337</value>
   </data>
   <data name="TabPage7.Text" xml:space="preserve">
     <value>Heat Capacity (Cp, Ideal Gas)</value>
@@ -401,6 +548,9 @@
   <data name="btnRegressLIQDENS.Text" xml:space="preserve">
     <value>Regress Data</value>
   </data>
+  <data name="GridExpDataLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 170</value>
+  </data>
   <data name="rbRegressLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 17</value>
   </data>
@@ -413,8 +563,14 @@
   <data name="rbEstimateLIQDENS.Text" xml:space="preserve">
     <value>Estimate (Rackett)</value>
   </data>
+  <data name="TabPage8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>875, 337</value>
+  </data>
   <data name="TabPage8.Text" xml:space="preserve">
     <value>Liquid Density</value>
+  </data>
+  <data name="Label46.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 203</value>
   </data>
   <data name="Label46.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 13</value>
@@ -422,11 +578,50 @@
   <data name="Label46.Text" xml:space="preserve">
     <value>* Visc in Pa.s, T in K</value>
   </data>
+  <data name="tbLIQVISC_E.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 175</value>
+  </data>
+  <data name="Label37.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 178</value>
+  </data>
+  <data name="tbLIQVISC_D.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 149</value>
+  </data>
+  <data name="Label38.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 152</value>
+  </data>
+  <data name="tbLIQVISC_C.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 123</value>
+  </data>
+  <data name="Label39.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 126</value>
+  </data>
+  <data name="tbLIQVISC_B.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 97</value>
+  </data>
+  <data name="Label40.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 100</value>
+  </data>
+  <data name="tbLIQVISC_A.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 71</value>
+  </data>
+  <data name="Label41.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 74</value>
+  </data>
+  <data name="Label42.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 42</value>
+  </data>
   <data name="Label42.Size" type="System.Drawing.Size, System.Drawing">
     <value>49, 13</value>
   </data>
   <data name="Label42.Text" xml:space="preserve">
     <value>Equation</value>
+  </data>
+  <data name="cbEqLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
+    <value>291, 39</value>
+  </data>
+  <data name="rbCoeffLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 14</value>
   </data>
   <data name="rbCoeffLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>161, 17</value>
@@ -452,15 +647,30 @@
   <data name="rbEstimateLIQVISC.Text" xml:space="preserve">
     <value>Estimate (Letsou-Stiel)</value>
   </data>
+  <data name="TabPage9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>875, 337</value>
+  </data>
   <data name="TabPage9.Text" xml:space="preserve">
     <value>Liquid Viscosity</value>
+  </data>
+  <data name="TabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>883, 363</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>905, 389</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Compound Properties</value>
   </data>
+  <data name="GroupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="cbUnits.TabIndex" type="System.Int32, mscorlib">
     <value>41</value>
+  </data>
+  <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>905, 51</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>System of Units</value>
@@ -470,6 +680,9 @@
   </data>
   <data name="DBOpenDlg.Title" xml:space="preserve">
     <value>Open/Create Database</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>925, 551</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

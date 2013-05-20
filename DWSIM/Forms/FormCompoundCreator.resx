@@ -126,7 +126,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnSaveToDB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>188, 47</value>
+    <value>194, 47</value>
   </data>
   <data name="btnSaveToDB.Size" type="System.Drawing.Size, System.Drawing">
     <value>228, 26</value>
@@ -160,7 +160,7 @@
     <value>True</value>
   </data>
   <data name="chkReplaceComps.Location" type="System.Drawing.Point, System.Drawing">
-    <value>553, 53</value>
+    <value>575, 53</value>
   </data>
   <data name="chkReplaceComps.Size" type="System.Drawing.Size, System.Drawing">
     <value>218, 17</value>
@@ -190,7 +190,7 @@
     <value>62, 21</value>
   </data>
   <data name="tbDBPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>709, 20</value>
+    <value>731, 20</value>
   </data>
   <data name="tbDBPath.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -211,7 +211,7 @@
     <value>11, 47</value>
   </data>
   <data name="btnSearch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 26</value>
+    <value>81, 26</value>
   </data>
   <data name="btnSearch.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -262,7 +262,7 @@
     <value>4</value>
   </data>
   <data name="btnCreateNewDB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>92, 47</value>
+    <value>98, 47</value>
   </data>
   <data name="btnCreateNewDB.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 26</value>
@@ -292,7 +292,7 @@
     <value>8, 69</value>
   </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>790, 84</value>
+    <value>812, 84</value>
   </data>
   <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -313,6 +313,9 @@
     <value>2</value>
   </data>
   <data name="GroupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="TabControl1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="TextBoxID.Location" type="System.Drawing.Point, System.Drawing">
@@ -380,12 +383,6 @@
   </data>
   <data name="CheckBoxMW.TabIndex" type="System.Int32, mscorlib">
     <value>43</value>
-  </data>
-  <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>132, 17</value>
-  </metadata>
-  <data name="CheckBoxMW.ToolTip" xml:space="preserve">
-    <value>Estimate using UNIFAC structure information</value>
   </data>
   <data name="&gt;&gt;CheckBoxMW.Name" xml:space="preserve">
     <value>CheckBoxMW</value>
@@ -649,7 +646,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 403</value>
+    <value>782, 344</value>
   </data>
   <data name="TabPage1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -703,7 +700,7 @@
     <value>0</value>
   </data>
   <data name="GridUNIFAC.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+    <value>Top, Bottom, Left</value>
   </data>
   <metadata name="Column4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -724,7 +721,7 @@
     <value>120</value>
   </data>
   <data name="GridUNIFAC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>438, 353</value>
+    <value>571, 294</value>
   </data>
   <data name="GridUNIFAC.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
@@ -748,7 +745,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 403</value>
+    <value>782, 344</value>
   </data>
   <data name="TabPage2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -783,9 +780,6 @@
   <data name="CheckBoxCSLV.TabIndex" type="System.Int32, mscorlib">
     <value>102</value>
   </data>
-  <data name="CheckBoxCSLV.ToolTip" xml:space="preserve">
-    <value>Calcular a partir da estrutura UNIFAC / Joback</value>
-  </data>
   <data name="&gt;&gt;CheckBoxCSLV.Name" xml:space="preserve">
     <value>CheckBoxCSLV</value>
   </data>
@@ -812,9 +806,6 @@
   </data>
   <data name="CheckBoxCSSP.TabIndex" type="System.Int32, mscorlib">
     <value>101</value>
-  </data>
-  <data name="CheckBoxCSSP.ToolTip" xml:space="preserve">
-    <value>Calcular a partir da estrutura UNIFAC / Joback</value>
   </data>
   <data name="&gt;&gt;CheckBoxCSSP.Name" xml:space="preserve">
     <value>CheckBoxCSSP</value>
@@ -843,9 +834,6 @@
   <data name="CheckBoxCSAF.TabIndex" type="System.Int32, mscorlib">
     <value>100</value>
   </data>
-  <data name="CheckBoxCSAF.ToolTip" xml:space="preserve">
-    <value>Calcular a partir da estrutura UNIFAC / Joback</value>
-  </data>
   <data name="&gt;&gt;CheckBoxCSAF.Name" xml:space="preserve">
     <value>CheckBoxCSAF</value>
   </data>
@@ -872,9 +860,6 @@
   </data>
   <data name="CheckBoxNBP.TabIndex" type="System.Int32, mscorlib">
     <value>99</value>
-  </data>
-  <data name="CheckBoxNBP.ToolTip" xml:space="preserve">
-    <value>Calcular a partir da estrutura UNIFAC / Joback</value>
   </data>
   <data name="&gt;&gt;CheckBoxNBP.Name" xml:space="preserve">
     <value>CheckBoxNBP</value>
@@ -903,9 +888,6 @@
   <data name="CheckBoxDGF.TabIndex" type="System.Int32, mscorlib">
     <value>98</value>
   </data>
-  <data name="CheckBoxDGF.ToolTip" xml:space="preserve">
-    <value>Calcular a partir da estrutura UNIFAC / Joback</value>
-  </data>
   <data name="&gt;&gt;CheckBoxDGF.Name" xml:space="preserve">
     <value>CheckBoxDGF</value>
   </data>
@@ -932,9 +914,6 @@
   </data>
   <data name="CheckBoxDHF.TabIndex" type="System.Int32, mscorlib">
     <value>97</value>
-  </data>
-  <data name="CheckBoxDHF.ToolTip" xml:space="preserve">
-    <value>Calcular a partir da estrutura UNIFAC / Joback</value>
   </data>
   <data name="&gt;&gt;CheckBoxDHF.Name" xml:space="preserve">
     <value>CheckBoxDHF</value>
@@ -1366,7 +1345,7 @@
     <value>11, 140</value>
   </data>
   <data name="LabelWithDivider16.Size" type="System.Drawing.Size, System.Drawing">
-    <value>440, 18</value>
+    <value>510, 18</value>
   </data>
   <data name="LabelWithDivider16.TabIndex" type="System.Int32, mscorlib">
     <value>82</value>
@@ -1399,7 +1378,7 @@
     <value>11, 92</value>
   </data>
   <data name="LabelWithDivider13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>440, 18</value>
+    <value>510, 18</value>
   </data>
   <data name="LabelWithDivider13.TabIndex" type="System.Int32, mscorlib">
     <value>78</value>
@@ -1606,7 +1585,7 @@
     <value>11, 17</value>
   </data>
   <data name="LabelWithDivider12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>440, 18</value>
+    <value>510, 18</value>
   </data>
   <data name="LabelWithDivider12.TabIndex" type="System.Int32, mscorlib">
     <value>71</value>
@@ -1720,7 +1699,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 403</value>
+    <value>782, 344</value>
   </data>
   <data name="TabPage3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1755,9 +1734,6 @@
   <data name="CheckBoxAF.TabIndex" type="System.Int32, mscorlib">
     <value>95</value>
   </data>
-  <data name="CheckBoxAF.ToolTip" xml:space="preserve">
-    <value>Calcular a partir da estrutura UNIFAC / Joback</value>
-  </data>
   <data name="&gt;&gt;CheckBoxAF.Name" xml:space="preserve">
     <value>CheckBoxAF</value>
   </data>
@@ -1784,9 +1760,6 @@
   </data>
   <data name="CheckBoxZRa.TabIndex" type="System.Int32, mscorlib">
     <value>94</value>
-  </data>
-  <data name="CheckBoxZRa.ToolTip" xml:space="preserve">
-    <value>Calcular a partir da estrutura UNIFAC / Joback</value>
   </data>
   <data name="&gt;&gt;CheckBoxZRa.Name" xml:space="preserve">
     <value>CheckBoxZRa</value>
@@ -1815,9 +1788,6 @@
   <data name="CheckBoxZc.TabIndex" type="System.Int32, mscorlib">
     <value>93</value>
   </data>
-  <data name="CheckBoxZc.ToolTip" xml:space="preserve">
-    <value>Calcular a partir da estrutura UNIFAC / Joback</value>
-  </data>
   <data name="&gt;&gt;CheckBoxZc.Name" xml:space="preserve">
     <value>CheckBoxZc</value>
   </data>
@@ -1844,9 +1814,6 @@
   </data>
   <data name="CheckBoxPc.TabIndex" type="System.Int32, mscorlib">
     <value>92</value>
-  </data>
-  <data name="CheckBoxPc.ToolTip" xml:space="preserve">
-    <value>Calcular a partir da estrutura UNIFAC / Joback</value>
   </data>
   <data name="&gt;&gt;CheckBoxPc.Name" xml:space="preserve">
     <value>CheckBoxPc</value>
@@ -1875,9 +1842,6 @@
   <data name="CheckBoxTc.TabIndex" type="System.Int32, mscorlib">
     <value>91</value>
   </data>
-  <data name="CheckBoxTc.ToolTip" xml:space="preserve">
-    <value>Calcular a partir da estrutura UNIFAC / Joback</value>
-  </data>
   <data name="&gt;&gt;CheckBoxTc.Name" xml:space="preserve">
     <value>CheckBoxTc</value>
   </data>
@@ -1903,7 +1867,7 @@
     <value>6, 192</value>
   </data>
   <data name="LabelWithDivider6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>458, 18</value>
+    <value>528, 18</value>
   </data>
   <data name="LabelWithDivider6.TabIndex" type="System.Int32, mscorlib">
     <value>88</value>
@@ -1996,7 +1960,7 @@
     <value>6, 148</value>
   </data>
   <data name="LabelWithDivider5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>458, 18</value>
+    <value>528, 18</value>
   </data>
   <data name="LabelWithDivider5.TabIndex" type="System.Int32, mscorlib">
     <value>85</value>
@@ -2086,7 +2050,7 @@
     <value>5, 104</value>
   </data>
   <data name="LabelWithDivider4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>459, 18</value>
+    <value>529, 18</value>
   </data>
   <data name="LabelWithDivider4.TabIndex" type="System.Int32, mscorlib">
     <value>82</value>
@@ -2176,7 +2140,7 @@
     <value>6, 60</value>
   </data>
   <data name="LabelWithDivider3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>458, 18</value>
+    <value>528, 18</value>
   </data>
   <data name="LabelWithDivider3.TabIndex" type="System.Int32, mscorlib">
     <value>78</value>
@@ -2296,7 +2260,7 @@
     <value>6, 16</value>
   </data>
   <data name="LabelWithDivider2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>458, 18</value>
+    <value>528, 18</value>
   </data>
   <data name="LabelWithDivider2.TabIndex" type="System.Int32, mscorlib">
     <value>74</value>
@@ -2410,7 +2374,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 403</value>
+    <value>782, 344</value>
   </data>
   <data name="TabPage4.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -2869,7 +2833,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 403</value>
+    <value>782, 344</value>
   </data>
   <data name="TabPage5.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -3495,9 +3459,6 @@
   <data name="&gt;&gt;btnRegressPVAP.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
-  <data name="GridExpDataPVAP.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <metadata name="DataGridViewTextBoxColumn1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -3598,7 +3559,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 403</value>
+    <value>782, 344</value>
   </data>
   <data name="TabPage6.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -3622,7 +3583,7 @@
     <value>True</value>
   </data>
   <data name="Label44.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 203</value>
+    <value>253, 203</value>
   </data>
   <data name="Label44.Size" type="System.Drawing.Size, System.Drawing">
     <value>135, 13</value>
@@ -3670,7 +3631,7 @@
     <value>1</value>
   </data>
   <data name="tbCPIG_E.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 175</value>
+    <value>273, 175</value>
   </data>
   <data name="tbCPIG_E.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -3784,7 +3745,7 @@
     <value>5</value>
   </data>
   <data name="tbCPIG_D.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 149</value>
+    <value>273, 149</value>
   </data>
   <data name="tbCPIG_D.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -3867,9 +3828,6 @@
   <data name="&gt;&gt;Label19.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="GridExpDataCPIG.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <metadata name="DataGridViewTextBoxColumn3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -3904,7 +3862,7 @@
     <value>9</value>
   </data>
   <data name="tbCPIG_C.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 123</value>
+    <value>273, 123</value>
   </data>
   <data name="tbCPIG_C.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -4021,7 +3979,7 @@
     <value>13</value>
   </data>
   <data name="tbCPIG_B.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 97</value>
+    <value>273, 97</value>
   </data>
   <data name="tbCPIG_B.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -4054,7 +4012,7 @@
     <value>NoControl</value>
   </data>
   <data name="rbCoeffCPIG.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 14</value>
+    <value>253, 14</value>
   </data>
   <data name="rbCoeffCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 17</value>
@@ -4210,7 +4168,7 @@
     <value>211: A * ((B - T) / (B - C)) ^ D</value>
   </data>
   <data name="cbEqCPIG.Location" type="System.Drawing.Point, System.Drawing">
-    <value>304, 39</value>
+    <value>307, 39</value>
   </data>
   <data name="cbEqCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 21</value>
@@ -4231,7 +4189,7 @@
     <value>17</value>
   </data>
   <data name="tbCPIG_A.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 71</value>
+    <value>273, 71</value>
   </data>
   <data name="tbCPIG_A.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -4264,7 +4222,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label28.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 42</value>
+    <value>253, 42</value>
   </data>
   <data name="Label28.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 13</value>
@@ -4324,7 +4282,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 403</value>
+    <value>782, 344</value>
   </data>
   <data name="TabPage7.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -4351,7 +4309,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label45.Location" type="System.Drawing.Point, System.Drawing">
-    <value>252, 203</value>
+    <value>255, 203</value>
   </data>
   <data name="Label45.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 13</value>
@@ -4375,7 +4333,7 @@
     <value>0</value>
   </data>
   <data name="tbLIQDENS_E.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 175</value>
+    <value>273, 175</value>
   </data>
   <data name="tbLIQDENS_E.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -4432,7 +4390,7 @@
     <value>2</value>
   </data>
   <data name="tbLIQDENS_D.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 149</value>
+    <value>273, 149</value>
   </data>
   <data name="tbLIQDENS_D.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -4489,7 +4447,7 @@
     <value>4</value>
   </data>
   <data name="tbLIQDENS_C.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 123</value>
+    <value>273, 123</value>
   </data>
   <data name="tbLIQDENS_C.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -4546,7 +4504,7 @@
     <value>6</value>
   </data>
   <data name="tbLIQDENS_B.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 97</value>
+    <value>273, 97</value>
   </data>
   <data name="tbLIQDENS_B.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -4603,7 +4561,7 @@
     <value>8</value>
   </data>
   <data name="tbLIQDENS_A.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 71</value>
+    <value>273, 71</value>
   </data>
   <data name="tbLIQDENS_A.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -4666,7 +4624,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label36.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 42</value>
+    <value>253, 42</value>
   </data>
   <data name="Label36.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 13</value>
@@ -4792,7 +4750,7 @@
     <value>211: A * ((B - T) / (B - C)) ^ D</value>
   </data>
   <data name="cbEqLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
-    <value>304, 39</value>
+    <value>307, 39</value>
   </data>
   <data name="cbEqLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 21</value>
@@ -4819,7 +4777,7 @@
     <value>NoControl</value>
   </data>
   <data name="rbCoeffLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 14</value>
+    <value>253, 14</value>
   </data>
   <data name="rbCoeffLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 17</value>
@@ -4950,9 +4908,6 @@
   <data name="&gt;&gt;btnRegressLIQDENS.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
-  <data name="GridExpDataLIQDENS.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <metadata name="DataGridViewTextBoxColumn5.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -4969,7 +4924,7 @@
     <value>6, 60</value>
   </data>
   <data name="GridExpDataLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 170</value>
+    <value>207, 170</value>
   </data>
   <data name="GridExpDataLIQDENS.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -5053,7 +5008,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 403</value>
+    <value>782, 344</value>
   </data>
   <data name="TabPage8.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -5080,7 +5035,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label46.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 203</value>
+    <value>253, 203</value>
   </data>
   <data name="Label46.Size" type="System.Drawing.Size, System.Drawing">
     <value>115, 13</value>
@@ -5104,7 +5059,7 @@
     <value>0</value>
   </data>
   <data name="tbLIQVISC_E.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 175</value>
+    <value>273, 175</value>
   </data>
   <data name="tbLIQVISC_E.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -5161,7 +5116,7 @@
     <value>2</value>
   </data>
   <data name="tbLIQVISC_D.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 149</value>
+    <value>273, 149</value>
   </data>
   <data name="tbLIQVISC_D.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -5218,7 +5173,7 @@
     <value>4</value>
   </data>
   <data name="tbLIQVISC_C.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 123</value>
+    <value>273, 123</value>
   </data>
   <data name="tbLIQVISC_C.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -5275,7 +5230,7 @@
     <value>6</value>
   </data>
   <data name="tbLIQVISC_B.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 97</value>
+    <value>273, 97</value>
   </data>
   <data name="tbLIQVISC_B.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -5332,7 +5287,7 @@
     <value>8</value>
   </data>
   <data name="tbLIQVISC_A.Location" type="System.Drawing.Point, System.Drawing">
-    <value>270, 71</value>
+    <value>273, 71</value>
   </data>
   <data name="tbLIQVISC_A.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 20</value>
@@ -5395,7 +5350,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label42.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 42</value>
+    <value>253, 42</value>
   </data>
   <data name="Label42.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 13</value>
@@ -5521,7 +5476,7 @@
     <value>211: A * ((B - T) / (B - C)) ^ D</value>
   </data>
   <data name="cbEqLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
-    <value>304, 39</value>
+    <value>307, 39</value>
   </data>
   <data name="cbEqLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 21</value>
@@ -5548,7 +5503,7 @@
     <value>NoControl</value>
   </data>
   <data name="rbCoeffLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 14</value>
+    <value>253, 14</value>
   </data>
   <data name="rbCoeffLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 17</value>
@@ -5679,9 +5634,6 @@
   <data name="&gt;&gt;btnRegressLIQVISC.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
-  <data name="GridExpDataLIQVISC.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <metadata name="DataGridViewTextBoxColumn7.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -5782,7 +5734,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 403</value>
+    <value>782, 344</value>
   </data>
   <data name="TabPage9.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -5806,7 +5758,7 @@
     <value>14, 19</value>
   </data>
   <data name="TabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>761, 429</value>
+    <value>790, 370</value>
   </data>
   <data name="TabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -5827,7 +5779,7 @@
     <value>8, 159</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>790, 455</value>
+    <value>812, 396</value>
   </data>
   <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -5914,7 +5866,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>810, 617</value>
+    <value>832, 558</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -7422,12 +7374,6 @@
   </data>
   <data name="&gt;&gt;DataGridViewTextBoxColumn8.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ToolTip1.Name" xml:space="preserve">
-    <value>ToolTip1</value>
-  </data>
-  <data name="&gt;&gt;ToolTip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;DBOpenDlg.Name" xml:space="preserve">
     <value>DBOpenDlg</value>

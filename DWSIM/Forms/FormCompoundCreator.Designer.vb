@@ -22,7 +22,6 @@ Partial Class FormCompoundCreator
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormCompoundCreator))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -232,7 +231,6 @@ Partial Class FormCompoundCreator
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.rbRegressLIQVISC = New System.Windows.Forms.RadioButton()
         Me.rbEstimateLIQVISC = New System.Windows.Forms.RadioButton()
-        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.cbUnits = New System.Windows.Forms.ComboBox()
         Me.DBOpenDlg = New System.Windows.Forms.OpenFileDialog()
@@ -319,6 +317,7 @@ Partial Class FormCompoundCreator
         '
         'TabControl1
         '
+        resources.ApplyResources(Me.TabControl1, "TabControl1")
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
@@ -328,7 +327,6 @@ Partial Class FormCompoundCreator
         Me.TabControl1.Controls.Add(Me.TabPage7)
         Me.TabControl1.Controls.Add(Me.TabPage8)
         Me.TabControl1.Controls.Add(Me.TabPage9)
-        resources.ApplyResources(Me.TabControl1, "TabControl1")
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         '
@@ -366,7 +364,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxMW.Checked = True
         Me.CheckBoxMW.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxMW.Name = "CheckBoxMW"
-        Me.ToolTip1.SetToolTip(Me.CheckBoxMW, resources.GetString("CheckBoxMW.ToolTip"))
         Me.CheckBoxMW.UseVisualStyleBackColor = True
         '
         'lblMW
@@ -508,7 +505,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxCSLV.Checked = True
         Me.CheckBoxCSLV.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxCSLV.Name = "CheckBoxCSLV"
-        Me.ToolTip1.SetToolTip(Me.CheckBoxCSLV, resources.GetString("CheckBoxCSLV.ToolTip"))
         Me.CheckBoxCSLV.UseVisualStyleBackColor = True
         '
         'CheckBoxCSSP
@@ -517,7 +513,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxCSSP.Checked = True
         Me.CheckBoxCSSP.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxCSSP.Name = "CheckBoxCSSP"
-        Me.ToolTip1.SetToolTip(Me.CheckBoxCSSP, resources.GetString("CheckBoxCSSP.ToolTip"))
         Me.CheckBoxCSSP.UseVisualStyleBackColor = True
         '
         'CheckBoxCSAF
@@ -526,7 +521,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxCSAF.Checked = True
         Me.CheckBoxCSAF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxCSAF.Name = "CheckBoxCSAF"
-        Me.ToolTip1.SetToolTip(Me.CheckBoxCSAF, resources.GetString("CheckBoxCSAF.ToolTip"))
         Me.CheckBoxCSAF.UseVisualStyleBackColor = True
         '
         'CheckBoxNBP
@@ -535,7 +529,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxNBP.Checked = True
         Me.CheckBoxNBP.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxNBP.Name = "CheckBoxNBP"
-        Me.ToolTip1.SetToolTip(Me.CheckBoxNBP, resources.GetString("CheckBoxNBP.ToolTip"))
         Me.CheckBoxNBP.UseVisualStyleBackColor = True
         '
         'CheckBoxDGF
@@ -544,7 +537,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxDGF.Checked = True
         Me.CheckBoxDGF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxDGF.Name = "CheckBoxDGF"
-        Me.ToolTip1.SetToolTip(Me.CheckBoxDGF, resources.GetString("CheckBoxDGF.ToolTip"))
         Me.CheckBoxDGF.UseVisualStyleBackColor = True
         '
         'CheckBoxDHF
@@ -553,7 +545,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxDHF.Checked = True
         Me.CheckBoxDHF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxDHF.Name = "CheckBoxDHF"
-        Me.ToolTip1.SetToolTip(Me.CheckBoxDHF, resources.GetString("CheckBoxDHF.ToolTip"))
         Me.CheckBoxDHF.UseVisualStyleBackColor = True
         '
         'Label68
@@ -730,7 +721,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxAF.Checked = True
         Me.CheckBoxAF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxAF.Name = "CheckBoxAF"
-        Me.ToolTip1.SetToolTip(Me.CheckBoxAF, resources.GetString("CheckBoxAF.ToolTip"))
         Me.CheckBoxAF.UseVisualStyleBackColor = True
         '
         'CheckBoxZRa
@@ -739,7 +729,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxZRa.Checked = True
         Me.CheckBoxZRa.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxZRa.Name = "CheckBoxZRa"
-        Me.ToolTip1.SetToolTip(Me.CheckBoxZRa, resources.GetString("CheckBoxZRa.ToolTip"))
         Me.CheckBoxZRa.UseVisualStyleBackColor = True
         '
         'CheckBoxZc
@@ -748,7 +737,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxZc.Checked = True
         Me.CheckBoxZc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxZc.Name = "CheckBoxZc"
-        Me.ToolTip1.SetToolTip(Me.CheckBoxZc, resources.GetString("CheckBoxZc.ToolTip"))
         Me.CheckBoxZc.UseVisualStyleBackColor = True
         '
         'CheckBoxPc
@@ -757,7 +745,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxPc.Checked = True
         Me.CheckBoxPc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxPc.Name = "CheckBoxPc"
-        Me.ToolTip1.SetToolTip(Me.CheckBoxPc, resources.GetString("CheckBoxPc.ToolTip"))
         Me.CheckBoxPc.UseVisualStyleBackColor = True
         '
         'CheckBoxTc
@@ -766,7 +753,6 @@ Partial Class FormCompoundCreator
         Me.CheckBoxTc.Checked = True
         Me.CheckBoxTc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxTc.Name = "CheckBoxTc"
-        Me.ToolTip1.SetToolTip(Me.CheckBoxTc, resources.GetString("CheckBoxTc.ToolTip"))
         Me.CheckBoxTc.UseVisualStyleBackColor = True
         '
         'LabelWithDivider6
@@ -1108,10 +1094,10 @@ Partial Class FormCompoundCreator
         '
         DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
         Me.GridExpDataPVAP.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
-        resources.ApplyResources(Me.GridExpDataPVAP, "GridExpDataPVAP")
         Me.GridExpDataPVAP.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataPVAP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataPVAP.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2})
+        resources.ApplyResources(Me.GridExpDataPVAP, "GridExpDataPVAP")
         Me.GridExpDataPVAP.Name = "GridExpDataPVAP"
         Me.GridExpDataPVAP.RowHeadersVisible = False
         '
@@ -1225,10 +1211,10 @@ Partial Class FormCompoundCreator
         '
         DataGridViewCellStyle5.BackColor = System.Drawing.Color.WhiteSmoke
         Me.GridExpDataCPIG.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
-        resources.ApplyResources(Me.GridExpDataCPIG, "GridExpDataCPIG")
         Me.GridExpDataCPIG.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataCPIG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataCPIG.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4})
+        resources.ApplyResources(Me.GridExpDataCPIG, "GridExpDataCPIG")
         Me.GridExpDataCPIG.Name = "GridExpDataCPIG"
         Me.GridExpDataCPIG.RowHeadersVisible = False
         '
@@ -1452,10 +1438,10 @@ Partial Class FormCompoundCreator
         '
         DataGridViewCellStyle8.BackColor = System.Drawing.Color.WhiteSmoke
         Me.GridExpDataLIQDENS.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle8
-        resources.ApplyResources(Me.GridExpDataLIQDENS, "GridExpDataLIQDENS")
         Me.GridExpDataLIQDENS.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataLIQDENS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataLIQDENS.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6})
+        resources.ApplyResources(Me.GridExpDataLIQDENS, "GridExpDataLIQDENS")
         Me.GridExpDataLIQDENS.Name = "GridExpDataLIQDENS"
         Me.GridExpDataLIQDENS.RowHeadersVisible = False
         '
@@ -1624,10 +1610,10 @@ Partial Class FormCompoundCreator
         '
         DataGridViewCellStyle11.BackColor = System.Drawing.Color.WhiteSmoke
         Me.GridExpDataLIQVISC.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle11
-        resources.ApplyResources(Me.GridExpDataLIQVISC, "GridExpDataLIQVISC")
         Me.GridExpDataLIQVISC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataLIQVISC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataLIQVISC.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn7, Me.DataGridViewTextBoxColumn8})
+        resources.ApplyResources(Me.GridExpDataLIQVISC, "GridExpDataLIQVISC")
         Me.GridExpDataLIQVISC.Name = "GridExpDataLIQVISC"
         Me.GridExpDataLIQVISC.RowHeadersVisible = False
         '
@@ -1731,7 +1717,6 @@ Partial Class FormCompoundCreator
     Friend WithEvents btnCreateNewDB As System.Windows.Forms.Button
     Friend WithEvents chkReplaceComps As System.Windows.Forms.CheckBox
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
-    Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
     Friend WithEvents DBOpenDlg As System.Windows.Forms.OpenFileDialog
     Public WithEvents tbCPIG_E As System.Windows.Forms.TextBox
     Public WithEvents Label18 As System.Windows.Forms.Label
