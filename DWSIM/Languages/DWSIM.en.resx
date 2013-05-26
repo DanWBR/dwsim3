@@ -4660,4 +4660,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="NoPropPackDefined" xml:space="preserve">
     <value>Please select a Property Package to continue.</value>
   </data>
+  <data name="Modified" xml:space="preserve">
+    <value>Modified</value>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
 </root>

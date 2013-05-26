@@ -4640,4 +4640,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PositiveIon" xml:space="preserve">
     <value>[Elektrolyt] positives Ion</value>
   </data>
+  <data name="Modified" xml:space="preserve">
+    <value>Geändert</value>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Gespeichert</value>
+  </data>
 </root>
