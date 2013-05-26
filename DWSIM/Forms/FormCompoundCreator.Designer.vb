@@ -22,6 +22,8 @@ Partial Class FormCompoundCreator
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Dim ToolStripLabel2 As System.Windows.Forms.ToolStripStatusLabel
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormCompoundCreator))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -46,6 +48,13 @@ Partial Class FormCompoundCreator
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
+        Me.btnRenderSMILES = New System.Windows.Forms.Button()
+        Me.LinkPubChem = New System.Windows.Forms.LinkLabel()
+        Me.TextBoxSMILES = New System.Windows.Forms.TextBox()
+        Me.Label51 = New System.Windows.Forms.Label()
+        Me.Label47 = New System.Windows.Forms.Label()
+        Me.pbRender = New System.Windows.Forms.PictureBox()
         Me.TextBoxID = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.CheckBoxMW = New System.Windows.Forms.CheckBox()
@@ -55,7 +64,6 @@ Partial Class FormCompoundCreator
         Me.TextBoxFormula = New System.Windows.Forms.TextBox()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.TextBoxCAS = New System.Windows.Forms.TextBox()
-        Me.Label15 = New System.Windows.Forms.Label()
         Me.TextBoxName = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
@@ -231,13 +239,31 @@ Partial Class FormCompoundCreator
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.rbRegressLIQVISC = New System.Windows.Forms.RadioButton()
         Me.rbEstimateLIQVISC = New System.Windows.Forms.RadioButton()
+        Me.TabPage10 = New System.Windows.Forms.TabPage()
+        Me.CheckBoxEnthOfFusion = New System.Windows.Forms.CheckBox()
+        Me.lblEnthOfFusion = New System.Windows.Forms.Label()
+        Me.TextBoxEnthOfFusion = New System.Windows.Forms.TextBox()
+        Me.Label55 = New System.Windows.Forms.Label()
+        Me.CheckBoxMeltingTemp = New System.Windows.Forms.CheckBox()
+        Me.LabelWithDivider1 = New System.Windows.Forms.LabelWithDivider()
+        Me.lblMeltingTemp = New System.Windows.Forms.Label()
+        Me.TextBoxMeltingTemp = New System.Windows.Forms.TextBox()
+        Me.Label52 = New System.Windows.Forms.Label()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.cbUnits = New System.Windows.Forms.ComboBox()
         Me.DBOpenDlg = New System.Windows.Forms.OpenFileDialog()
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusDWSIM = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripSpace1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusUserDB = New System.Windows.Forms.ToolStripStatusLabel()
+        ToolStripLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        CType(Me.pbRender, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
         CType(Me.GridUNIFAC, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
@@ -253,8 +279,15 @@ Partial Class FormCompoundCreator
         CType(Me.GridExpDataLIQDENS, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage9.SuspendLayout()
         CType(Me.GridExpDataLIQVISC, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage10.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
+        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
+        '
+        'ToolStripLabel2
+        '
+        ToolStripLabel2.Name = "ToolStripLabel2"
+        resources.ApplyResources(ToolStripLabel2, "ToolStripLabel2")
         '
         'GroupBox1
         '
@@ -327,12 +360,20 @@ Partial Class FormCompoundCreator
         Me.TabControl1.Controls.Add(Me.TabPage7)
         Me.TabControl1.Controls.Add(Me.TabPage8)
         Me.TabControl1.Controls.Add(Me.TabPage9)
+        Me.TabControl1.Controls.Add(Me.TabPage10)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         '
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage1.Controls.Add(Me.LinkLabel1)
+        Me.TabPage1.Controls.Add(Me.btnRenderSMILES)
+        Me.TabPage1.Controls.Add(Me.LinkPubChem)
+        Me.TabPage1.Controls.Add(Me.TextBoxSMILES)
+        Me.TabPage1.Controls.Add(Me.Label51)
+        Me.TabPage1.Controls.Add(Me.Label47)
+        Me.TabPage1.Controls.Add(Me.pbRender)
         Me.TabPage1.Controls.Add(Me.TextBoxID)
         Me.TabPage1.Controls.Add(Me.Label16)
         Me.TabPage1.Controls.Add(Me.CheckBoxMW)
@@ -342,11 +383,52 @@ Partial Class FormCompoundCreator
         Me.TabPage1.Controls.Add(Me.TextBoxFormula)
         Me.TabPage1.Controls.Add(Me.Label21)
         Me.TabPage1.Controls.Add(Me.TextBoxCAS)
-        Me.TabPage1.Controls.Add(Me.Label15)
         Me.TabPage1.Controls.Add(Me.TextBoxName)
         Me.TabPage1.Controls.Add(Me.Label17)
         resources.ApplyResources(Me.TabPage1, "TabPage1")
         Me.TabPage1.Name = "TabPage1"
+        '
+        'LinkLabel1
+        '
+        resources.ApplyResources(Me.LinkLabel1, "LinkLabel1")
+        Me.LinkLabel1.Name = "LinkLabel1"
+        Me.LinkLabel1.TabStop = True
+        Me.LinkLabel1.UseCompatibleTextRendering = True
+        '
+        'btnRenderSMILES
+        '
+        resources.ApplyResources(Me.btnRenderSMILES, "btnRenderSMILES")
+        Me.btnRenderSMILES.Name = "btnRenderSMILES"
+        Me.btnRenderSMILES.UseVisualStyleBackColor = True
+        '
+        'LinkPubChem
+        '
+        resources.ApplyResources(Me.LinkPubChem, "LinkPubChem")
+        Me.LinkPubChem.Name = "LinkPubChem"
+        Me.LinkPubChem.TabStop = True
+        Me.LinkPubChem.UseCompatibleTextRendering = True
+        '
+        'TextBoxSMILES
+        '
+        resources.ApplyResources(Me.TextBoxSMILES, "TextBoxSMILES")
+        Me.TextBoxSMILES.Name = "TextBoxSMILES"
+        '
+        'Label51
+        '
+        resources.ApplyResources(Me.Label51, "Label51")
+        Me.Label51.Name = "Label51"
+        '
+        'Label47
+        '
+        resources.ApplyResources(Me.Label47, "Label47")
+        Me.Label47.Name = "Label47"
+        '
+        'pbRender
+        '
+        Me.pbRender.BackColor = System.Drawing.SystemColors.ControlLight
+        resources.ApplyResources(Me.pbRender, "pbRender")
+        Me.pbRender.Name = "pbRender"
+        Me.pbRender.TabStop = False
         '
         'TextBoxID
         '
@@ -364,6 +446,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxMW.Checked = True
         Me.CheckBoxMW.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxMW.Name = "CheckBoxMW"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxMW, resources.GetString("CheckBoxMW.ToolTip"))
         Me.CheckBoxMW.UseVisualStyleBackColor = True
         '
         'lblMW
@@ -376,6 +459,7 @@ Partial Class FormCompoundCreator
         Me.TextBoxMW.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.TextBoxMW, "TextBoxMW")
         Me.TextBoxMW.Name = "TextBoxMW"
+        Me.ToolTip1.SetToolTip(Me.TextBoxMW, resources.GetString("TextBoxMW.ToolTip"))
         '
         'Label22
         '
@@ -398,11 +482,6 @@ Partial Class FormCompoundCreator
         Me.TextBoxCAS.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxCAS, "TextBoxCAS")
         Me.TextBoxCAS.Name = "TextBoxCAS"
-        '
-        'Label15
-        '
-        resources.ApplyResources(Me.Label15, "Label15")
-        Me.Label15.Name = "Label15"
         '
         'TextBoxName
         '
@@ -505,6 +584,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxCSLV.Checked = True
         Me.CheckBoxCSLV.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxCSLV.Name = "CheckBoxCSLV"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxCSLV, resources.GetString("CheckBoxCSLV.ToolTip"))
         Me.CheckBoxCSLV.UseVisualStyleBackColor = True
         '
         'CheckBoxCSSP
@@ -513,6 +593,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxCSSP.Checked = True
         Me.CheckBoxCSSP.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxCSSP.Name = "CheckBoxCSSP"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxCSSP, resources.GetString("CheckBoxCSSP.ToolTip"))
         Me.CheckBoxCSSP.UseVisualStyleBackColor = True
         '
         'CheckBoxCSAF
@@ -521,6 +602,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxCSAF.Checked = True
         Me.CheckBoxCSAF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxCSAF.Name = "CheckBoxCSAF"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxCSAF, resources.GetString("CheckBoxCSAF.ToolTip"))
         Me.CheckBoxCSAF.UseVisualStyleBackColor = True
         '
         'CheckBoxNBP
@@ -529,6 +611,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxNBP.Checked = True
         Me.CheckBoxNBP.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxNBP.Name = "CheckBoxNBP"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxNBP, resources.GetString("CheckBoxNBP.ToolTip"))
         Me.CheckBoxNBP.UseVisualStyleBackColor = True
         '
         'CheckBoxDGF
@@ -537,6 +620,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxDGF.Checked = True
         Me.CheckBoxDGF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxDGF.Name = "CheckBoxDGF"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxDGF, resources.GetString("CheckBoxDGF.ToolTip"))
         Me.CheckBoxDGF.UseVisualStyleBackColor = True
         '
         'CheckBoxDHF
@@ -545,6 +629,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxDHF.Checked = True
         Me.CheckBoxDHF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxDHF.Name = "CheckBoxDHF"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxDHF, resources.GetString("CheckBoxDHF.ToolTip"))
         Me.CheckBoxDHF.UseVisualStyleBackColor = True
         '
         'Label68
@@ -721,6 +806,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxAF.Checked = True
         Me.CheckBoxAF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxAF.Name = "CheckBoxAF"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxAF, resources.GetString("CheckBoxAF.ToolTip"))
         Me.CheckBoxAF.UseVisualStyleBackColor = True
         '
         'CheckBoxZRa
@@ -729,6 +815,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxZRa.Checked = True
         Me.CheckBoxZRa.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxZRa.Name = "CheckBoxZRa"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxZRa, resources.GetString("CheckBoxZRa.ToolTip"))
         Me.CheckBoxZRa.UseVisualStyleBackColor = True
         '
         'CheckBoxZc
@@ -737,6 +824,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxZc.Checked = True
         Me.CheckBoxZc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxZc.Name = "CheckBoxZc"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxZc, resources.GetString("CheckBoxZc.ToolTip"))
         Me.CheckBoxZc.UseVisualStyleBackColor = True
         '
         'CheckBoxPc
@@ -745,6 +833,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxPc.Checked = True
         Me.CheckBoxPc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxPc.Name = "CheckBoxPc"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxPc, resources.GetString("CheckBoxPc.ToolTip"))
         Me.CheckBoxPc.UseVisualStyleBackColor = True
         '
         'CheckBoxTc
@@ -753,6 +842,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxTc.Checked = True
         Me.CheckBoxTc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxTc.Name = "CheckBoxTc"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxTc, resources.GetString("CheckBoxTc.ToolTip"))
         Me.CheckBoxTc.UseVisualStyleBackColor = True
         '
         'LabelWithDivider6
@@ -1646,6 +1736,77 @@ Partial Class FormCompoundCreator
         Me.rbEstimateLIQVISC.TabStop = True
         Me.rbEstimateLIQVISC.UseVisualStyleBackColor = True
         '
+        'TabPage10
+        '
+        Me.TabPage10.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage10.Controls.Add(Me.CheckBoxEnthOfFusion)
+        Me.TabPage10.Controls.Add(Me.lblEnthOfFusion)
+        Me.TabPage10.Controls.Add(Me.TextBoxEnthOfFusion)
+        Me.TabPage10.Controls.Add(Me.Label55)
+        Me.TabPage10.Controls.Add(Me.CheckBoxMeltingTemp)
+        Me.TabPage10.Controls.Add(Me.LabelWithDivider1)
+        Me.TabPage10.Controls.Add(Me.lblMeltingTemp)
+        Me.TabPage10.Controls.Add(Me.TextBoxMeltingTemp)
+        Me.TabPage10.Controls.Add(Me.Label52)
+        resources.ApplyResources(Me.TabPage10, "TabPage10")
+        Me.TabPage10.Name = "TabPage10"
+        '
+        'CheckBoxEnthOfFusion
+        '
+        resources.ApplyResources(Me.CheckBoxEnthOfFusion, "CheckBoxEnthOfFusion")
+        Me.CheckBoxEnthOfFusion.Checked = True
+        Me.CheckBoxEnthOfFusion.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBoxEnthOfFusion.Name = "CheckBoxEnthOfFusion"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxEnthOfFusion, resources.GetString("CheckBoxEnthOfFusion.ToolTip"))
+        Me.CheckBoxEnthOfFusion.UseVisualStyleBackColor = True
+        '
+        'lblEnthOfFusion
+        '
+        resources.ApplyResources(Me.lblEnthOfFusion, "lblEnthOfFusion")
+        Me.lblEnthOfFusion.Name = "lblEnthOfFusion"
+        '
+        'TextBoxEnthOfFusion
+        '
+        Me.TextBoxEnthOfFusion.BackColor = System.Drawing.Color.White
+        resources.ApplyResources(Me.TextBoxEnthOfFusion, "TextBoxEnthOfFusion")
+        Me.TextBoxEnthOfFusion.Name = "TextBoxEnthOfFusion"
+        '
+        'Label55
+        '
+        resources.ApplyResources(Me.Label55, "Label55")
+        Me.Label55.Name = "Label55"
+        '
+        'CheckBoxMeltingTemp
+        '
+        resources.ApplyResources(Me.CheckBoxMeltingTemp, "CheckBoxMeltingTemp")
+        Me.CheckBoxMeltingTemp.Checked = True
+        Me.CheckBoxMeltingTemp.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBoxMeltingTemp.Name = "CheckBoxMeltingTemp"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxMeltingTemp, resources.GetString("CheckBoxMeltingTemp.ToolTip"))
+        Me.CheckBoxMeltingTemp.UseVisualStyleBackColor = True
+        '
+        'LabelWithDivider1
+        '
+        resources.ApplyResources(Me.LabelWithDivider1, "LabelWithDivider1")
+        Me.LabelWithDivider1.Gap = 5
+        Me.LabelWithDivider1.Name = "LabelWithDivider1"
+        '
+        'lblMeltingTemp
+        '
+        resources.ApplyResources(Me.lblMeltingTemp, "lblMeltingTemp")
+        Me.lblMeltingTemp.Name = "lblMeltingTemp"
+        '
+        'TextBoxMeltingTemp
+        '
+        Me.TextBoxMeltingTemp.BackColor = System.Drawing.Color.White
+        resources.ApplyResources(Me.TextBoxMeltingTemp, "TextBoxMeltingTemp")
+        Me.TextBoxMeltingTemp.Name = "TextBoxMeltingTemp"
+        '
+        'Label52
+        '
+        resources.ApplyResources(Me.Label52, "Label52")
+        Me.Label52.Name = "Label52"
+        '
         'GroupBox3
         '
         Me.GroupBox3.Controls.Add(Me.cbUnits)
@@ -1668,10 +1829,41 @@ Partial Class FormCompoundCreator
         Me.DBOpenDlg.CheckFileExists = False
         resources.ApplyResources(Me.DBOpenDlg, "DBOpenDlg")
         '
+        'StatusStrip1
+        '
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripStatusDWSIM, Me.ToolStripSpace1, ToolStripLabel2, Me.ToolStripStatusUserDB})
+        resources.ApplyResources(Me.StatusStrip1, "StatusStrip1")
+        Me.StatusStrip1.Name = "StatusStrip1"
+        '
+        'ToolStripLabel1
+        '
+        Me.ToolStripLabel1.Name = "ToolStripLabel1"
+        resources.ApplyResources(Me.ToolStripLabel1, "ToolStripLabel1")
+        '
+        'ToolStripStatusDWSIM
+        '
+        Me.ToolStripStatusDWSIM.BackColor = System.Drawing.Color.Green
+        Me.ToolStripStatusDWSIM.ForeColor = System.Drawing.Color.White
+        Me.ToolStripStatusDWSIM.Name = "ToolStripStatusDWSIM"
+        resources.ApplyResources(Me.ToolStripStatusDWSIM, "ToolStripStatusDWSIM")
+        '
+        'ToolStripSpace1
+        '
+        Me.ToolStripSpace1.Name = "ToolStripSpace1"
+        resources.ApplyResources(Me.ToolStripSpace1, "ToolStripSpace1")
+        '
+        'ToolStripStatusUserDB
+        '
+        Me.ToolStripStatusUserDB.BackColor = System.Drawing.Color.Green
+        Me.ToolStripStatusUserDB.ForeColor = System.Drawing.Color.White
+        resources.ApplyResources(Me.ToolStripStatusUserDB, "ToolStripStatusUserDB")
+        Me.ToolStripStatusUserDB.Name = "ToolStripStatusUserDB"
+        '
         'FormCompoundCreator
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
@@ -1682,6 +1874,7 @@ Partial Class FormCompoundCreator
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
+        CType(Me.pbRender, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
         CType(Me.GridUNIFAC, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1706,8 +1899,13 @@ Partial Class FormCompoundCreator
         Me.TabPage9.ResumeLayout(False)
         Me.TabPage9.PerformLayout()
         CType(Me.GridExpDataLIQVISC, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage10.ResumeLayout(False)
+        Me.TabPage10.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
@@ -1748,7 +1946,6 @@ Partial Class FormCompoundCreator
     Public WithEvents TextBoxFormula As System.Windows.Forms.TextBox
     Public WithEvents Label21 As System.Windows.Forms.Label
     Public WithEvents TextBoxCAS As System.Windows.Forms.TextBox
-    Public WithEvents Label15 As System.Windows.Forms.Label
     Public WithEvents TextBoxName As System.Windows.Forms.TextBox
     Public WithEvents Label17 As System.Windows.Forms.Label
     Public WithEvents Label60 As System.Windows.Forms.Label
@@ -1908,4 +2105,27 @@ Partial Class FormCompoundCreator
     Friend WithEvents rbCoeffLIQDENS As System.Windows.Forms.RadioButton
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Public WithEvents cbUnits As System.Windows.Forms.ComboBox
+    Friend WithEvents Label51 As System.Windows.Forms.Label
+    Friend WithEvents Label47 As System.Windows.Forms.Label
+    Friend WithEvents pbRender As System.Windows.Forms.PictureBox
+    Public WithEvents TextBoxSMILES As System.Windows.Forms.TextBox
+    Friend WithEvents LinkPubChem As System.Windows.Forms.LinkLabel
+    Friend WithEvents btnRenderSMILES As System.Windows.Forms.Button
+    Friend WithEvents LinkLabel1 As System.Windows.Forms.LinkLabel
+    Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
+    Friend WithEvents TabPage10 As System.Windows.Forms.TabPage
+    Friend WithEvents CheckBoxMeltingTemp As System.Windows.Forms.CheckBox
+    Public WithEvents LabelWithDivider1 As System.Windows.Forms.LabelWithDivider
+    Public WithEvents lblMeltingTemp As System.Windows.Forms.Label
+    Public WithEvents TextBoxMeltingTemp As System.Windows.Forms.TextBox
+    Public WithEvents Label52 As System.Windows.Forms.Label
+    Friend WithEvents CheckBoxEnthOfFusion As System.Windows.Forms.CheckBox
+    Public WithEvents lblEnthOfFusion As System.Windows.Forms.Label
+    Public WithEvents TextBoxEnthOfFusion As System.Windows.Forms.TextBox
+    Public WithEvents Label55 As System.Windows.Forms.Label
+    Friend WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
+    Friend WithEvents ToolStripStatusDWSIM As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents ToolStripLabel1 As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents ToolStripSpace1 As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents ToolStripStatusUserDB As System.Windows.Forms.ToolStripStatusLabel
 End Class
