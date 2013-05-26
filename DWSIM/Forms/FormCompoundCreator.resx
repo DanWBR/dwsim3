@@ -117,6 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="ToolStripLabel2.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ToolStripLabel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 17</value>
+  </data>
+  <data name="ToolStripLabel2.Text" xml:space="preserve">
+    <value>UserDB:</value>
+  </data>
+  <data name="ToolStripLabel2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="GroupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -124,7 +137,6 @@
   <data name="btnSaveToDB.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnSaveToDB.Location" type="System.Drawing.Point, System.Drawing">
     <value>194, 47</value>
   </data>
@@ -310,13 +322,199 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;GroupBox1.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="GroupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="TabControl1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="LinkLabel1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LinkLabel1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LinkLabel1.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+    <value>0, 50</value>
+  </data>
+  <data name="LinkLabel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 97</value>
+  </data>
+  <data name="LinkLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 17</value>
+  </data>
+  <data name="LinkLabel1.TabIndex" type="System.Int32, mscorlib">
+    <value>52</value>
+  </data>
+  <data name="LinkLabel1.Text" xml:space="preserve">
+    <value>Número CAS</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel1.Name" xml:space="preserve">
+    <value>LinkLabel1</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel1.Parent" xml:space="preserve">
+    <value>TabPage1</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnRenderSMILES.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="btnRenderSMILES.Location" type="System.Drawing.Point, System.Drawing">
+    <value>666, 46</value>
+  </data>
+  <data name="btnRenderSMILES.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 23</value>
+  </data>
+  <data name="btnRenderSMILES.TabIndex" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="btnRenderSMILES.Text" xml:space="preserve">
+    <value>SMILES Render</value>
+  </data>
+  <data name="&gt;&gt;btnRenderSMILES.Name" xml:space="preserve">
+    <value>btnRenderSMILES</value>
+  </data>
+  <data name="&gt;&gt;btnRenderSMILES.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnRenderSMILES.Parent" xml:space="preserve">
+    <value>TabPage1</value>
+  </data>
+  <data name="&gt;&gt;btnRenderSMILES.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="LinkPubChem.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LinkPubChem.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+    <value>0, 50</value>
+  </data>
+  <data name="LinkPubChem.Location" type="System.Drawing.Point, System.Drawing">
+    <value>328, 46</value>
+  </data>
+  <data name="LinkPubChem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>247, 17</value>
+  </data>
+  <data name="LinkPubChem.TabIndex" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="LinkPubChem.Text" xml:space="preserve">
+    <value>http://pubchem.ncbi.nlm.nih.gov/edit2/index.html</value>
+  </data>
+  <data name="&gt;&gt;LinkPubChem.Name" xml:space="preserve">
+    <value>LinkPubChem</value>
+  </data>
+  <data name="&gt;&gt;LinkPubChem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LinkPubChem.Parent" xml:space="preserve">
+    <value>TabPage1</value>
+  </data>
+  <data name="&gt;&gt;LinkPubChem.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="TextBoxSMILES.Location" type="System.Drawing.Point, System.Drawing">
+    <value>298, 20</value>
+  </data>
+  <data name="TextBoxSMILES.Size" type="System.Drawing.Size, System.Drawing">
+    <value>477, 20</value>
+  </data>
+  <data name="TextBoxSMILES.TabIndex" type="System.Int32, mscorlib">
+    <value>49</value>
+  </data>
+  <data name="&gt;&gt;TextBoxSMILES.Name" xml:space="preserve">
+    <value>TextBoxSMILES</value>
+  </data>
+  <data name="&gt;&gt;TextBoxSMILES.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxSMILES.Parent" xml:space="preserve">
+    <value>TabPage1</value>
+  </data>
+  <data name="&gt;&gt;TextBoxSMILES.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="Label51.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label51.Location" type="System.Drawing.Point, System.Drawing">
+    <value>239, 23</value>
+  </data>
+  <data name="Label51.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 13</value>
+  </data>
+  <data name="Label51.TabIndex" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="Label51.Text" xml:space="preserve">
+    <value>SMILES</value>
+  </data>
+  <data name="&gt;&gt;Label51.Name" xml:space="preserve">
+    <value>Label51</value>
+  </data>
+  <data name="&gt;&gt;Label51.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label51.Parent" xml:space="preserve">
+    <value>TabPage1</value>
+  </data>
+  <data name="&gt;&gt;Label51.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="Label47.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label47.Location" type="System.Drawing.Point, System.Drawing">
+    <value>239, 46</value>
+  </data>
+  <data name="Label47.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 13</value>
+  </data>
+  <data name="Label47.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="Label47.Text" xml:space="preserve">
+    <value>PubChem Editor</value>
+  </data>
+  <data name="&gt;&gt;Label47.Name" xml:space="preserve">
+    <value>Label47</value>
+  </data>
+  <data name="&gt;&gt;Label47.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label47.Parent" xml:space="preserve">
+    <value>TabPage1</value>
+  </data>
+  <data name="&gt;&gt;Label47.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="pbRender.Location" type="System.Drawing.Point, System.Drawing">
+    <value>242, 75</value>
+  </data>
+  <data name="pbRender.Size" type="System.Drawing.Size, System.Drawing">
+    <value>534, 263</value>
+  </data>
+  <data name="pbRender.TabIndex" type="System.Int32, mscorlib">
+    <value>46</value>
+  </data>
+  <data name="&gt;&gt;pbRender.Name" xml:space="preserve">
+    <value>pbRender</value>
+  </data>
+  <data name="&gt;&gt;pbRender.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pbRender.Parent" xml:space="preserve">
+    <value>TabPage1</value>
+  </data>
+  <data name="&gt;&gt;pbRender.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="TextBoxID.Location" type="System.Drawing.Point, System.Drawing">
     <value>78, 20</value>
@@ -337,7 +535,7 @@
     <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;TextBoxID.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>7</value>
   </data>
   <data name="Label16.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -367,7 +565,7 @@
     <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;Label16.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>8</value>
   </data>
   <data name="CheckBoxMW.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -384,6 +582,12 @@
   <data name="CheckBoxMW.TabIndex" type="System.Int32, mscorlib">
     <value>43</value>
   </data>
+  <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>598, 17</value>
+  </metadata>
+  <data name="CheckBoxMW.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
+  </data>
   <data name="&gt;&gt;CheckBoxMW.Name" xml:space="preserve">
     <value>CheckBoxMW</value>
   </data>
@@ -394,7 +598,7 @@
     <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;CheckBoxMW.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>9</value>
   </data>
   <data name="lblMW.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -424,7 +628,7 @@
     <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;lblMW.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>10</value>
   </data>
   <data name="TextBoxMW.Location" type="System.Drawing.Point, System.Drawing">
     <value>78, 146</value>
@@ -441,6 +645,9 @@
   <data name="TextBoxMW.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Right</value>
   </data>
+  <data name="TextBoxMW.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
+  </data>
   <data name="&gt;&gt;TextBoxMW.Name" xml:space="preserve">
     <value>TextBoxMW</value>
   </data>
@@ -451,7 +658,7 @@
     <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;TextBoxMW.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>11</value>
   </data>
   <data name="Label22.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -481,7 +688,7 @@
     <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;Label22.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>12</value>
   </data>
   <data name="TextBoxFormula.Location" type="System.Drawing.Point, System.Drawing">
     <value>78, 120</value>
@@ -502,7 +709,7 @@
     <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;TextBoxFormula.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>13</value>
   </data>
   <data name="Label21.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -532,7 +739,7 @@
     <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;Label21.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>14</value>
   </data>
   <data name="TextBoxCAS.Location" type="System.Drawing.Point, System.Drawing">
     <value>78, 94</value>
@@ -553,37 +760,7 @@
     <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;TextBoxCAS.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="Label15.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="Label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="Label15.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 97</value>
-  </data>
-  <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 13</value>
-  </data>
-  <data name="Label15.TabIndex" type="System.Int32, mscorlib">
-    <value>36</value>
-  </data>
-  <data name="Label15.Text" xml:space="preserve">
-    <value>Número CAS</value>
-  </data>
-  <data name="&gt;&gt;Label15.Name" xml:space="preserve">
-    <value>Label15</value>
-  </data>
-  <data name="&gt;&gt;Label15.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label15.Parent" xml:space="preserve">
-    <value>TabPage1</value>
-  </data>
-  <data name="&gt;&gt;Label15.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>15</value>
   </data>
   <data name="TextBoxName.Location" type="System.Drawing.Point, System.Drawing">
     <value>78, 46</value>
@@ -607,7 +784,7 @@
     <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;TextBoxName.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>16</value>
   </data>
   <data name="Label17.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -637,7 +814,7 @@
     <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;Label17.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>17</value>
   </data>
   <data name="TabPage1.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -646,7 +823,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>782, 344</value>
+    <value>782, 370</value>
   </data>
   <data name="TabPage1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -721,7 +898,7 @@
     <value>120</value>
   </data>
   <data name="GridUNIFAC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>571, 294</value>
+    <value>571, 320</value>
   </data>
   <data name="GridUNIFAC.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
@@ -745,7 +922,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>782, 344</value>
+    <value>782, 370</value>
   </data>
   <data name="TabPage2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -780,6 +957,9 @@
   <data name="CheckBoxCSLV.TabIndex" type="System.Int32, mscorlib">
     <value>102</value>
   </data>
+  <data name="CheckBoxCSLV.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
+  </data>
   <data name="&gt;&gt;CheckBoxCSLV.Name" xml:space="preserve">
     <value>CheckBoxCSLV</value>
   </data>
@@ -806,6 +986,9 @@
   </data>
   <data name="CheckBoxCSSP.TabIndex" type="System.Int32, mscorlib">
     <value>101</value>
+  </data>
+  <data name="CheckBoxCSSP.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
   </data>
   <data name="&gt;&gt;CheckBoxCSSP.Name" xml:space="preserve">
     <value>CheckBoxCSSP</value>
@@ -834,6 +1017,9 @@
   <data name="CheckBoxCSAF.TabIndex" type="System.Int32, mscorlib">
     <value>100</value>
   </data>
+  <data name="CheckBoxCSAF.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
+  </data>
   <data name="&gt;&gt;CheckBoxCSAF.Name" xml:space="preserve">
     <value>CheckBoxCSAF</value>
   </data>
@@ -860,6 +1046,9 @@
   </data>
   <data name="CheckBoxNBP.TabIndex" type="System.Int32, mscorlib">
     <value>99</value>
+  </data>
+  <data name="CheckBoxNBP.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
   </data>
   <data name="&gt;&gt;CheckBoxNBP.Name" xml:space="preserve">
     <value>CheckBoxNBP</value>
@@ -888,6 +1077,9 @@
   <data name="CheckBoxDGF.TabIndex" type="System.Int32, mscorlib">
     <value>98</value>
   </data>
+  <data name="CheckBoxDGF.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
+  </data>
   <data name="&gt;&gt;CheckBoxDGF.Name" xml:space="preserve">
     <value>CheckBoxDGF</value>
   </data>
@@ -914,6 +1106,9 @@
   </data>
   <data name="CheckBoxDHF.TabIndex" type="System.Int32, mscorlib">
     <value>97</value>
+  </data>
+  <data name="CheckBoxDHF.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
   </data>
   <data name="&gt;&gt;CheckBoxDHF.Name" xml:space="preserve">
     <value>CheckBoxDHF</value>
@@ -1699,7 +1894,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>782, 344</value>
+    <value>782, 370</value>
   </data>
   <data name="TabPage3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1734,6 +1929,9 @@
   <data name="CheckBoxAF.TabIndex" type="System.Int32, mscorlib">
     <value>95</value>
   </data>
+  <data name="CheckBoxAF.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
+  </data>
   <data name="&gt;&gt;CheckBoxAF.Name" xml:space="preserve">
     <value>CheckBoxAF</value>
   </data>
@@ -1760,6 +1958,9 @@
   </data>
   <data name="CheckBoxZRa.TabIndex" type="System.Int32, mscorlib">
     <value>94</value>
+  </data>
+  <data name="CheckBoxZRa.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
   </data>
   <data name="&gt;&gt;CheckBoxZRa.Name" xml:space="preserve">
     <value>CheckBoxZRa</value>
@@ -1788,6 +1989,9 @@
   <data name="CheckBoxZc.TabIndex" type="System.Int32, mscorlib">
     <value>93</value>
   </data>
+  <data name="CheckBoxZc.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
+  </data>
   <data name="&gt;&gt;CheckBoxZc.Name" xml:space="preserve">
     <value>CheckBoxZc</value>
   </data>
@@ -1815,6 +2019,9 @@
   <data name="CheckBoxPc.TabIndex" type="System.Int32, mscorlib">
     <value>92</value>
   </data>
+  <data name="CheckBoxPc.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
+  </data>
   <data name="&gt;&gt;CheckBoxPc.Name" xml:space="preserve">
     <value>CheckBoxPc</value>
   </data>
@@ -1841,6 +2048,9 @@
   </data>
   <data name="CheckBoxTc.TabIndex" type="System.Int32, mscorlib">
     <value>91</value>
+  </data>
+  <data name="CheckBoxTc.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
   </data>
   <data name="&gt;&gt;CheckBoxTc.Name" xml:space="preserve">
     <value>CheckBoxTc</value>
@@ -2374,7 +2584,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>782, 344</value>
+    <value>782, 370</value>
   </data>
   <data name="TabPage4.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -2833,7 +3043,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>782, 344</value>
+    <value>782, 370</value>
   </data>
   <data name="TabPage5.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -3559,7 +3769,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>782, 344</value>
+    <value>782, 370</value>
   </data>
   <data name="TabPage6.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -4282,7 +4492,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>782, 344</value>
+    <value>782, 370</value>
   </data>
   <data name="TabPage7.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -5008,7 +5218,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>782, 344</value>
+    <value>782, 370</value>
   </data>
   <data name="TabPage8.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -5734,7 +5944,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>782, 344</value>
+    <value>782, 370</value>
   </data>
   <data name="TabPage9.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -5754,11 +5964,305 @@
   <data name="&gt;&gt;TabPage9.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
+  <data name="CheckBoxEnthOfFusion.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CheckBoxEnthOfFusion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="CheckBoxEnthOfFusion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>275, 68</value>
+  </data>
+  <data name="CheckBoxEnthOfFusion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 14</value>
+  </data>
+  <data name="CheckBoxEnthOfFusion.TabIndex" type="System.Int32, mscorlib">
+    <value>106</value>
+  </data>
+  <data name="CheckBoxEnthOfFusion.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxEnthOfFusion.Name" xml:space="preserve">
+    <value>CheckBoxEnthOfFusion</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxEnthOfFusion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxEnthOfFusion.Parent" xml:space="preserve">
+    <value>TabPage10</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxEnthOfFusion.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lblEnthOfFusion.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblEnthOfFusion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblEnthOfFusion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>220, 69</value>
+  </data>
+  <data name="lblEnthOfFusion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 13</value>
+  </data>
+  <data name="lblEnthOfFusion.TabIndex" type="System.Int32, mscorlib">
+    <value>105</value>
+  </data>
+  <data name="lblEnthOfFusion.Text" xml:space="preserve">
+    <value>kJ/kg</value>
+  </data>
+  <data name="&gt;&gt;lblEnthOfFusion.Name" xml:space="preserve">
+    <value>lblEnthOfFusion</value>
+  </data>
+  <data name="&gt;&gt;lblEnthOfFusion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblEnthOfFusion.Parent" xml:space="preserve">
+    <value>TabPage10</value>
+  </data>
+  <data name="&gt;&gt;lblEnthOfFusion.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="TextBoxEnthOfFusion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>145, 66</value>
+  </data>
+  <data name="TextBoxEnthOfFusion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 20</value>
+  </data>
+  <data name="TextBoxEnthOfFusion.TabIndex" type="System.Int32, mscorlib">
+    <value>104</value>
+  </data>
+  <data name="TextBoxEnthOfFusion.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TextBoxEnthOfFusion.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="&gt;&gt;TextBoxEnthOfFusion.Name" xml:space="preserve">
+    <value>TextBoxEnthOfFusion</value>
+  </data>
+  <data name="&gt;&gt;TextBoxEnthOfFusion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxEnthOfFusion.Parent" xml:space="preserve">
+    <value>TabPage10</value>
+  </data>
+  <data name="&gt;&gt;TextBoxEnthOfFusion.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Label55.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label55.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label55.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 73</value>
+  </data>
+  <data name="Label55.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 13</value>
+  </data>
+  <data name="Label55.TabIndex" type="System.Int32, mscorlib">
+    <value>103</value>
+  </data>
+  <data name="Label55.Text" xml:space="preserve">
+    <value>Entalpia de Fusão</value>
+  </data>
+  <data name="&gt;&gt;Label55.Name" xml:space="preserve">
+    <value>Label55</value>
+  </data>
+  <data name="&gt;&gt;Label55.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label55.Parent" xml:space="preserve">
+    <value>TabPage10</value>
+  </data>
+  <data name="&gt;&gt;Label55.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="CheckBoxMeltingTemp.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CheckBoxMeltingTemp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="CheckBoxMeltingTemp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>275, 38</value>
+  </data>
+  <data name="CheckBoxMeltingTemp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 14</value>
+  </data>
+  <data name="CheckBoxMeltingTemp.TabIndex" type="System.Int32, mscorlib">
+    <value>102</value>
+  </data>
+  <data name="CheckBoxMeltingTemp.ToolTip" xml:space="preserve">
+    <value>Joback Calculation</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxMeltingTemp.Name" xml:space="preserve">
+    <value>CheckBoxMeltingTemp</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxMeltingTemp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxMeltingTemp.Parent" xml:space="preserve">
+    <value>TabPage10</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxMeltingTemp.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="LabelWithDivider1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="LabelWithDivider1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 8.25pt, style=Bold</value>
+  </data>
+  <data name="LabelWithDivider1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LabelWithDivider1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 18</value>
+  </data>
+  <data name="LabelWithDivider1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>510, 18</value>
+  </data>
+  <data name="LabelWithDivider1.TabIndex" type="System.Int32, mscorlib">
+    <value>98</value>
+  </data>
+  <data name="LabelWithDivider1.Text" xml:space="preserve">
+    <value>Dados de Fusão</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider1.Name" xml:space="preserve">
+    <value>LabelWithDivider1</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider1.Parent" xml:space="preserve">
+    <value>TabPage10</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="lblMeltingTemp.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblMeltingTemp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblMeltingTemp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>220, 39</value>
+  </data>
+  <data name="lblMeltingTemp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 13</value>
+  </data>
+  <data name="lblMeltingTemp.TabIndex" type="System.Int32, mscorlib">
+    <value>101</value>
+  </data>
+  <data name="lblMeltingTemp.Text" xml:space="preserve">
+    <value>kJ/kg</value>
+  </data>
+  <data name="&gt;&gt;lblMeltingTemp.Name" xml:space="preserve">
+    <value>lblMeltingTemp</value>
+  </data>
+  <data name="&gt;&gt;lblMeltingTemp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMeltingTemp.Parent" xml:space="preserve">
+    <value>TabPage10</value>
+  </data>
+  <data name="&gt;&gt;lblMeltingTemp.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="TextBoxMeltingTemp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>145, 36</value>
+  </data>
+  <data name="TextBoxMeltingTemp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 20</value>
+  </data>
+  <data name="TextBoxMeltingTemp.TabIndex" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
+  <data name="TextBoxMeltingTemp.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TextBoxMeltingTemp.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="&gt;&gt;TextBoxMeltingTemp.Name" xml:space="preserve">
+    <value>TextBoxMeltingTemp</value>
+  </data>
+  <data name="&gt;&gt;TextBoxMeltingTemp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxMeltingTemp.Parent" xml:space="preserve">
+    <value>TabPage10</value>
+  </data>
+  <data name="&gt;&gt;TextBoxMeltingTemp.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="Label52.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label52.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label52.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 43</value>
+  </data>
+  <data name="Label52.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 13</value>
+  </data>
+  <data name="Label52.TabIndex" type="System.Int32, mscorlib">
+    <value>99</value>
+  </data>
+  <data name="Label52.Text" xml:space="preserve">
+    <value>Temperatura de Fusão</value>
+  </data>
+  <data name="&gt;&gt;Label52.Name" xml:space="preserve">
+    <value>Label52</value>
+  </data>
+  <data name="&gt;&gt;Label52.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label52.Parent" xml:space="preserve">
+    <value>TabPage10</value>
+  </data>
+  <data name="&gt;&gt;Label52.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="TabPage10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="TabPage10.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="TabPage10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>782, 370</value>
+  </data>
+  <data name="TabPage10.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="TabPage10.Text" xml:space="preserve">
+    <value>Sólido</value>
+  </data>
+  <data name="&gt;&gt;TabPage10.Name" xml:space="preserve">
+    <value>TabPage10</value>
+  </data>
+  <data name="&gt;&gt;TabPage10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TabPage10.Parent" xml:space="preserve">
+    <value>TabControl1</value>
+  </data>
+  <data name="&gt;&gt;TabPage10.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
   <data name="TabControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>14, 19</value>
   </data>
   <data name="TabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>790, 370</value>
+    <value>790, 396</value>
   </data>
   <data name="TabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -5779,7 +6283,7 @@
     <value>8, 159</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>812, 396</value>
+    <value>812, 422</value>
   </data>
   <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -5797,7 +6301,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;GroupBox2.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="cbUnits.IntegralHeight" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -5827,7 +6331,7 @@
     <value>8, 12</value>
   </data>
   <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>790, 51</value>
+    <value>812, 51</value>
   </data>
   <data name="GroupBox3.TabIndex" type="System.Int32, mscorlib">
     <value>40</value>
@@ -5845,7 +6349,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;GroupBox3.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <metadata name="DBOpenDlg.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>482, 17</value>
@@ -5855,6 +6359,60 @@
   </data>
   <data name="DBOpenDlg.Title" xml:space="preserve">
     <value>Abrir/Criar Banco de Dados</value>
+  </data>
+  <metadata name="StatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>697, 17</value>
+  </metadata>
+  <data name="ToolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 17</value>
+  </data>
+  <data name="ToolStripLabel1.Text" xml:space="preserve">
+    <value>DWSIM-File:</value>
+  </data>
+  <data name="ToolStripLabel1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="ToolStripStatusDWSIM.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 17</value>
+  </data>
+  <data name="ToolStripStatusDWSIM.Text" xml:space="preserve">
+    <value>salvar</value>
+  </data>
+  <data name="ToolStripSpace1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>25, 17</value>
+  </data>
+  <data name="ToolStripSpace1.Text" xml:space="preserve">
+    <value>   |  </value>
+  </data>
+  <data name="ToolStripStatusUserDB.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="ToolStripStatusUserDB.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 17</value>
+  </data>
+  <data name="ToolStripStatusUserDB.Text" xml:space="preserve">
+    <value>salvar</value>
+  </data>
+  <data name="StatusStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 584</value>
+  </data>
+  <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>832, 22</value>
+  </data>
+  <data name="StatusStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.Name" xml:space="preserve">
+    <value>StatusStrip1</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -5866,7 +6424,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>832, 558</value>
+    <value>832, 606</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -7315,6 +7873,12 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Criador de Componentes</value>
   </data>
+  <data name="&gt;&gt;ToolStripLabel2.Name" xml:space="preserve">
+    <value>ToolStripLabel2</value>
+  </data>
+  <data name="&gt;&gt;ToolStripLabel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;Column4.Name" xml:space="preserve">
     <value>Column4</value>
   </data>
@@ -7380,6 +7944,36 @@
   </data>
   <data name="&gt;&gt;DBOpenDlg.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolTip1.Name" xml:space="preserve">
+    <value>ToolTip1</value>
+  </data>
+  <data name="&gt;&gt;ToolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripLabel1.Name" xml:space="preserve">
+    <value>ToolStripLabel1</value>
+  </data>
+  <data name="&gt;&gt;ToolStripLabel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripStatusDWSIM.Name" xml:space="preserve">
+    <value>ToolStripStatusDWSIM</value>
+  </data>
+  <data name="&gt;&gt;ToolStripStatusDWSIM.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripSpace1.Name" xml:space="preserve">
+    <value>ToolStripSpace1</value>
+  </data>
+  <data name="&gt;&gt;ToolStripSpace1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripStatusUserDB.Name" xml:space="preserve">
+    <value>ToolStripStatusUserDB</value>
+  </data>
+  <data name="&gt;&gt;ToolStripStatusUserDB.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormCompoundCreator</value>

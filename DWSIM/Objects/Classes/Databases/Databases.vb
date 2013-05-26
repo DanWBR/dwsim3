@@ -735,6 +735,7 @@ Namespace DWSIM.Databases
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "CAS_Number", "")).InnerText = comp.CAS_Number
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "ID", "")).InnerText = comp.ID
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Formula", "")).InnerText = comp.Formula
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "SMILES", "")).InnerText = comp.SMILES
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Molar_Weight", "")).InnerText = comp.Molar_Weight.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Critical_Temperature", "")).InnerText = comp.Critical_Temperature.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Critical_Pressure", "")).InnerText = comp.Critical_Pressure.ToString(cult)
@@ -776,6 +777,8 @@ Namespace DWSIM.Databases
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Normal_Boiling_Point", "")).InnerText = comp.Normal_Boiling_Point.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "UNIQUAC_q", "")).InnerText = comp.UNIQUAC_R.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "UNIQUAC_r", "")).InnerText = comp.UNIQUAC_Q.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Temperature_of_fusion", "")).InnerText = comp.TemperatureOfFusion.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Enthalpy_of_fusion", "")).InnerText = comp.EnthalpyOfFusionAtTf.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "PC_SAFT_sigma", "")).InnerText = comp.PC_SAFT_sigma.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "PC_SAFT_m", "")).InnerText = comp.PC_SAFT_m.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "PC_SAFT_epsilon_k", "")).InnerText = comp.PC_SAFT_epsilon_k.ToString(cult)
@@ -938,6 +941,12 @@ Namespace DWSIM.Databases
                                 .Liquid_Density_Const_E = Double.Parse(node2.InnerText, nf)
                             Case "Normal_Boiling_Point"
                                 .Normal_Boiling_Point = Double.Parse(node2.InnerText, nf)
+                            Case "Temperature_of_fusion"
+                                .TemperatureOfFusion = Double.Parse(node2.InnerText, nf)
+                            Case "Enthalpy_of_fusion"
+                                .EnthalpyOfFusionAtTf = Double.Parse(node2.InnerText, nf)
+                            Case "SMILES"
+                                .SMILES = node2.InnerText
                             Case "ID"
                                 .ID = Integer.Parse(node2.InnerText)
                             Case "UNIQUAC_r"
