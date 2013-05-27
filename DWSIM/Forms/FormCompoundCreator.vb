@@ -465,7 +465,7 @@ Public Class FormCompoundCreator
             Next
             Dim vnd As Int32() = vn.ToArray(Type.GetType("System.Int32"))
 
-            Dim Tb, Tc, Pc, Vc, MM, w, Hvb, MP As Double
+            Dim Tb, Tc, Pc, Vc, MM, w, Hvb, MP, Hf As Double
 
             Tb = jb.CalcTb(vnd)
             If CheckBoxNBP.Checked Then Me.TextBoxNBP.Text = cv.ConverterDoSI(su.spmp_temperature, Tb)
@@ -516,8 +516,8 @@ Public Class FormCompoundCreator
             If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, MP)
 
             'enthalpy of fusion - not yet implemented
-            'Hf = jb.CalcHf(vnd)
-            'If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, MP)
+            Hf = jb.CalcHf(vnd)
+            If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = cv.ConverterDoSI(su.spmp_temperature, Hf / MM)
         End If
     End Sub
 

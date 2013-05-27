@@ -47,7 +47,7 @@ Namespace DWSIM.Utilities.Hypos.Methods
                     Double.Parse(fields(5), cult), Double.Parse(fields(6), cult), Double.Parse(fields(7), cult), _
                     Double.Parse(fields(8), cult), Double.Parse(fields(9), cult), Double.Parse(fields(10), cult), _
                     Double.Parse(fields(15), cult), Double.Parse(fields(16), cult), Double.Parse(fields(12), cult), _
-                    Double.Parse(fields(11), cult), Double.Parse(fields(13), cult), Double.Parse(fields(14), cult)))
+                    Double.Parse(fields(11), cult), Double.Parse(fields(13), cult), Double.Parse(fields(14), cult), Double.Parse(fields(17), cult)))
                 End While
             End Using
 
@@ -166,6 +166,25 @@ Namespace DWSIM.Utilities.Hypos.Methods
             fval = 122.5 + sum1
 
             Return fval 'K
+
+        End Function
+
+        Public Function CalcHf(ByVal n() As Integer) As Double
+
+            Dim sum1 As Double
+            Dim i As Integer
+
+            sum1 = 0
+            For Each jg As JobackGroup In Me.Groups.Values
+                sum1 += jg.HF * n(i)
+                i = i + 1
+            Next
+
+            Dim fval As Double
+
+            fval = (-0.88 + sum1) * 1000
+
+            Return fval 'KJ/kmol
 
         End Function
 
@@ -289,13 +308,13 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         Private m_group As String
         Private m_groupid As Integer
-        Private _mw, _a, _b, _c, _d, _dh, _dg, _tc, _pc, _tb, _tf, _na, _vc As Double
+        Private _mw, _a, _b, _c, _d, _dh, _dg, _tc, _pc, _tb, _tf, _na, _vc, _hf As Double
 
         Sub New()
 
         End Sub
 
-        Sub New(ByVal group As String, ByVal id As Integer, ByVal mw As Double, ByVal a As Double, ByVal b As Double, ByVal c As Double, ByVal d As Double, ByVal dh As Double, ByVal dg As Double, ByVal tc As Double, ByVal pc As Double, ByVal vc As Double, ByVal na As Double, ByVal tb As Double, ByVal tf As Double)
+        Sub New(ByVal group As String, ByVal id As Integer, ByVal mw As Double, ByVal a As Double, ByVal b As Double, ByVal c As Double, ByVal d As Double, ByVal dh As Double, ByVal dg As Double, ByVal tc As Double, ByVal pc As Double, ByVal vc As Double, ByVal na As Double, ByVal tb As Double, ByVal tf As Double, ByVal hf As Double)
 
             Me.Group = group
             Me.ID = id
@@ -306,12 +325,13 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Me.DH = dh
             Me.DG = dg
             Me.TC = tc
-            Me.tb = tb
+            Me.TB = tb
             Me.PC = pc
             Me.VC = vc
             Me.TF = tf
             Me.NA = na
             Me.MW = mw
+            Me.HF = hf
 
         End Sub
 
@@ -332,7 +352,14 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 _tb = value
             End Set
         End Property
-
+        Public Property HF() As Double
+            Get
+                Return _hf
+            End Get
+            Set(ByVal value As Double)
+                _hf = value
+            End Set
+        End Property
         Public Property TF() As Double
             Get
                 Return _tf
