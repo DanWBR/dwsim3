@@ -40,6 +40,8 @@ Partial Class AboutBoxNET
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label1
@@ -58,7 +60,7 @@ Partial Class AboutBoxNET
         '
         Me.LinkLabel1.AutoSize = True
         Me.LinkLabel1.BackColor = System.Drawing.Color.Transparent
-        Me.LinkLabel1.Location = New System.Drawing.Point(138, 164)
+        Me.LinkLabel1.Location = New System.Drawing.Point(138, 201)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(144, 13)
         Me.LinkLabel1.TabIndex = 2
@@ -67,7 +69,7 @@ Partial Class AboutBoxNET
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(566, 479)
+        Me.Button1.Location = New System.Drawing.Point(566, 518)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 3
@@ -100,7 +102,7 @@ Partial Class AboutBoxNET
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.Transparent
         Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label2.Location = New System.Drawing.Point(17, 164)
+        Me.Label2.Location = New System.Drawing.Point(17, 201)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(54, 13)
         Me.Label2.TabIndex = 6
@@ -110,7 +112,7 @@ Partial Class AboutBoxNET
         '
         Me.LinkLabel2.AutoSize = True
         Me.LinkLabel2.BackColor = System.Drawing.Color.Transparent
-        Me.LinkLabel2.Location = New System.Drawing.Point(138, 188)
+        Me.LinkLabel2.Location = New System.Drawing.Point(138, 224)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(215, 13)
         Me.LinkLabel2.TabIndex = 7
@@ -122,7 +124,7 @@ Partial Class AboutBoxNET
         Me.Label5.AutoSize = True
         Me.Label5.BackColor = System.Drawing.Color.Transparent
         Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label5.Location = New System.Drawing.Point(17, 116)
+        Me.Label5.Location = New System.Drawing.Point(17, 155)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(62, 13)
         Me.Label5.TabIndex = 10
@@ -133,7 +135,7 @@ Partial Class AboutBoxNET
         Me.Label6.AutoSize = True
         Me.Label6.BackColor = System.Drawing.Color.Transparent
         Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label6.Location = New System.Drawing.Point(138, 116)
+        Me.Label6.Location = New System.Drawing.Point(138, 155)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(503, 13)
         Me.Label6.TabIndex = 11
@@ -147,7 +149,7 @@ Partial Class AboutBoxNET
         Me.LabelLicense.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.LabelLicense.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelLicense.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.LabelLicense.Location = New System.Drawing.Point(17, 266)
+        Me.LabelLicense.Location = New System.Drawing.Point(17, 305)
         Me.LabelLicense.Name = "LabelLicense"
         Me.LabelLicense.Size = New System.Drawing.Size(422, 13)
         Me.LabelLicense.TabIndex = 12
@@ -158,7 +160,7 @@ Partial Class AboutBoxNET
         '
         Me.TextBox1.BackColor = System.Drawing.Color.White
         Me.TextBox1.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(20, 286)
+        Me.TextBox1.Location = New System.Drawing.Point(20, 325)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
@@ -172,7 +174,7 @@ Partial Class AboutBoxNET
         Me.Label7.AutoSize = True
         Me.Label7.BackColor = System.Drawing.Color.Transparent
         Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label7.Location = New System.Drawing.Point(17, 212)
+        Me.Label7.Location = New System.Drawing.Point(17, 251)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(46, 13)
         Me.Label7.TabIndex = 14
@@ -183,7 +185,7 @@ Partial Class AboutBoxNET
         Me.LblOSInfo.AutoSize = True
         Me.LblOSInfo.BackColor = System.Drawing.Color.Transparent
         Me.LblOSInfo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.LblOSInfo.Location = New System.Drawing.Point(138, 212)
+        Me.LblOSInfo.Location = New System.Drawing.Point(138, 251)
         Me.LblOSInfo.Name = "LblOSInfo"
         Me.LblOSInfo.Size = New System.Drawing.Size(41, 13)
         Me.LblOSInfo.TabIndex = 15
@@ -194,7 +196,7 @@ Partial Class AboutBoxNET
         Me.LblCLRInfo.AutoSize = True
         Me.LblCLRInfo.BackColor = System.Drawing.Color.Transparent
         Me.LblCLRInfo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.LblCLRInfo.Location = New System.Drawing.Point(138, 236)
+        Me.LblCLRInfo.Location = New System.Drawing.Point(138, 275)
         Me.LblCLRInfo.Name = "LblCLRInfo"
         Me.LblCLRInfo.Size = New System.Drawing.Size(41, 13)
         Me.LblCLRInfo.TabIndex = 17
@@ -205,7 +207,7 @@ Partial Class AboutBoxNET
         Me.Label4.AutoSize = True
         Me.Label4.BackColor = System.Drawing.Color.Transparent
         Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label4.Location = New System.Drawing.Point(17, 236)
+        Me.Label4.Location = New System.Drawing.Point(17, 275)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(52, 13)
         Me.Label4.TabIndex = 16
@@ -216,7 +218,7 @@ Partial Class AboutBoxNET
         Me.Label3.AutoSize = True
         Me.Label3.BackColor = System.Drawing.Color.Transparent
         Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label3.Location = New System.Drawing.Point(17, 140)
+        Me.Label3.Location = New System.Drawing.Point(17, 178)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(115, 13)
         Me.Label3.TabIndex = 18
@@ -227,19 +229,43 @@ Partial Class AboutBoxNET
         Me.Label8.AutoSize = True
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label8.Location = New System.Drawing.Point(138, 140)
+        Me.Label8.Location = New System.Drawing.Point(138, 178)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(210, 13)
         Me.Label8.TabIndex = 19
         Me.Label8.Text = "Wendel Marcus (wendel@inforside.com.br)"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.BackColor = System.Drawing.Color.Transparent
+        Me.Label9.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label9.Location = New System.Drawing.Point(138, 132)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(253, 13)
+        Me.Label9.TabIndex = 21
+        Me.Label9.Text = "Daniel Wagner, Gustavo León  and Gregor Reichert"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.BackColor = System.Drawing.Color.Transparent
+        Me.Label10.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label10.Location = New System.Drawing.Point(17, 132)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(64, 13)
+        Me.Label10.TabIndex = 20
+        Me.Label10.Text = "Developers:"
         '
         'AboutBoxNET
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(648, 511)
+        Me.ClientSize = New System.Drawing.Size(657, 553)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Label9)
+        Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.LblCLRInfo)
@@ -285,4 +311,6 @@ Partial Class AboutBoxNET
     Public WithEvents Label4 As System.Windows.Forms.Label
     Public WithEvents Label3 As System.Windows.Forms.Label
     Public WithEvents Label8 As System.Windows.Forms.Label
+    Public WithEvents Label9 As System.Windows.Forms.Label
+    Public WithEvents Label10 As System.Windows.Forms.Label
 End Class

@@ -38,6 +38,8 @@ Partial Class AboutBoxMONO
         Me.LblOSInfo = New System.Windows.Forms.Label()
         Me.LblCLRInfo = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label1
@@ -56,7 +58,7 @@ Partial Class AboutBoxMONO
         '
         Me.LinkLabel1.AutoSize = True
         Me.LinkLabel1.BackColor = System.Drawing.Color.Transparent
-        Me.LinkLabel1.Location = New System.Drawing.Point(137, 136)
+        Me.LinkLabel1.Location = New System.Drawing.Point(137, 166)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(144, 13)
         Me.LinkLabel1.TabIndex = 2
@@ -65,7 +67,7 @@ Partial Class AboutBoxMONO
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(565, 471)
+        Me.Button1.Location = New System.Drawing.Point(565, 502)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 3
@@ -98,7 +100,7 @@ Partial Class AboutBoxMONO
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.Transparent
         Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label2.Location = New System.Drawing.Point(16, 136)
+        Me.Label2.Location = New System.Drawing.Point(16, 166)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(54, 13)
         Me.Label2.TabIndex = 6
@@ -108,7 +110,7 @@ Partial Class AboutBoxMONO
         '
         Me.LinkLabel2.AutoSize = True
         Me.LinkLabel2.BackColor = System.Drawing.Color.Transparent
-        Me.LinkLabel2.Location = New System.Drawing.Point(137, 160)
+        Me.LinkLabel2.Location = New System.Drawing.Point(137, 189)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(215, 13)
         Me.LinkLabel2.TabIndex = 7
@@ -120,7 +122,7 @@ Partial Class AboutBoxMONO
         Me.Label5.AutoSize = True
         Me.Label5.BackColor = System.Drawing.Color.Transparent
         Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label5.Location = New System.Drawing.Point(16, 112)
+        Me.Label5.Location = New System.Drawing.Point(16, 142)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(62, 13)
         Me.Label5.TabIndex = 10
@@ -131,7 +133,7 @@ Partial Class AboutBoxMONO
         Me.Label6.AutoSize = True
         Me.Label6.BackColor = System.Drawing.Color.Transparent
         Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label6.Location = New System.Drawing.Point(137, 112)
+        Me.Label6.Location = New System.Drawing.Point(137, 142)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(503, 13)
         Me.Label6.TabIndex = 11
@@ -145,7 +147,7 @@ Partial Class AboutBoxMONO
         Me.LabelLicense.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.LabelLicense.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelLicense.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.LabelLicense.Location = New System.Drawing.Point(16, 236)
+        Me.LabelLicense.Location = New System.Drawing.Point(16, 267)
         Me.LabelLicense.Name = "LabelLicense"
         Me.LabelLicense.Size = New System.Drawing.Size(422, 13)
         Me.LabelLicense.TabIndex = 12
@@ -156,7 +158,7 @@ Partial Class AboutBoxMONO
         '
         Me.TextBox1.BackColor = System.Drawing.Color.White
         Me.TextBox1.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(19, 259)
+        Me.TextBox1.Location = New System.Drawing.Point(19, 290)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
@@ -170,7 +172,7 @@ Partial Class AboutBoxMONO
         Me.Label7.AutoSize = True
         Me.Label7.BackColor = System.Drawing.Color.Transparent
         Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label7.Location = New System.Drawing.Point(16, 184)
+        Me.Label7.Location = New System.Drawing.Point(16, 215)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(46, 13)
         Me.Label7.TabIndex = 14
@@ -181,7 +183,7 @@ Partial Class AboutBoxMONO
         Me.LblOSInfo.AutoSize = True
         Me.LblOSInfo.BackColor = System.Drawing.Color.Transparent
         Me.LblOSInfo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.LblOSInfo.Location = New System.Drawing.Point(137, 184)
+        Me.LblOSInfo.Location = New System.Drawing.Point(137, 215)
         Me.LblOSInfo.Name = "LblOSInfo"
         Me.LblOSInfo.Size = New System.Drawing.Size(41, 13)
         Me.LblOSInfo.TabIndex = 15
@@ -192,7 +194,7 @@ Partial Class AboutBoxMONO
         Me.LblCLRInfo.AutoSize = True
         Me.LblCLRInfo.BackColor = System.Drawing.Color.Transparent
         Me.LblCLRInfo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.LblCLRInfo.Location = New System.Drawing.Point(137, 208)
+        Me.LblCLRInfo.Location = New System.Drawing.Point(137, 239)
         Me.LblCLRInfo.Name = "LblCLRInfo"
         Me.LblCLRInfo.Size = New System.Drawing.Size(41, 13)
         Me.LblCLRInfo.TabIndex = 17
@@ -203,19 +205,43 @@ Partial Class AboutBoxMONO
         Me.Label4.AutoSize = True
         Me.Label4.BackColor = System.Drawing.Color.Transparent
         Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Label4.Location = New System.Drawing.Point(16, 208)
+        Me.Label4.Location = New System.Drawing.Point(16, 239)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(52, 13)
         Me.Label4.TabIndex = 16
         Me.Label4.Text = "CLR Info:"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.BackColor = System.Drawing.Color.Transparent
+        Me.Label9.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label9.Location = New System.Drawing.Point(137, 118)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(253, 13)
+        Me.Label9.TabIndex = 23
+        Me.Label9.Text = "Daniel Wagner, Gustavo León  and Gregor Reichert"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.BackColor = System.Drawing.Color.Transparent
+        Me.Label10.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label10.Location = New System.Drawing.Point(17, 118)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(64, 13)
+        Me.Label10.TabIndex = 22
+        Me.Label10.Text = "Developers:"
         '
         'AboutBoxMONO
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(653, 523)
+        Me.ClientSize = New System.Drawing.Size(649, 541)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Label9)
+        Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.LblCLRInfo)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.LblOSInfo)
@@ -257,4 +283,6 @@ Partial Class AboutBoxMONO
     Public WithEvents LblOSInfo As System.Windows.Forms.Label
     Public WithEvents LblCLRInfo As System.Windows.Forms.Label
     Public WithEvents Label4 As System.Windows.Forms.Label
+    Public WithEvents Label9 As System.Windows.Forms.Label
+    Public WithEvents Label10 As System.Windows.Forms.Label
 End Class
