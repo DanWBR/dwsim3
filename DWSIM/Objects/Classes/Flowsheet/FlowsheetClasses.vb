@@ -67,6 +67,8 @@ Namespace DWSIM.FormClasses
         Public OrificePlateCollection As Dictionary(Of String, OrificePlateGraphic)
         Public CustomUOCollection As Dictionary(Of String, CustomUOGraphic)
         Public CapeOpenUOCollection As Dictionary(Of String, CapeOpenUOGraphic)
+        Public SolidsSeparatorCollection As Dictionary(Of String, SolidSeparatorGraphic)
+        Public FilterCollection As Dictionary(Of String, FilterGraphic)
 
         Public ObjectCounter As Dictionary(Of String, Integer)
 
@@ -106,6 +108,8 @@ Namespace DWSIM.FormClasses
         Public CLCS_OrificePlateCollection As Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.OrificePlate)
         Public CLCS_CustomUOCollection As Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.CustomUO)
         Public CLCS_CapeOpenUOCollection As Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.CapeOpenUO)
+        Public CLCS_SolidsSeparatorCollection As Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.SolidsSeparator)
+        Public CLCS_FilterCollection As Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.Filter)
 
         Public OPT_SensAnalysisCollection As List(Of DWSIM.Optimization.SensitivityAnalysisCase)
         Public OPT_OptimizationCollection As List(Of DWSIM.Optimization.OptimizationCase)
@@ -148,6 +152,8 @@ Namespace DWSIM.FormClasses
             OrificePlateCollection = New Dictionary(Of String, OrificePlateGraphic)
             CustomUOCollection = New Dictionary(Of String, CustomUOGraphic)
             CapeOpenUOCollection = New Dictionary(Of String, CapeOpenUOGraphic)
+            SolidsSeparatorCollection = New Dictionary(Of String, SolidSeparatorGraphic)
+            FilterCollection = New Dictionary(Of String, FilterGraphic)
 
             ObjectCollection = New Dictionary(Of String, SimulationObjects_BaseClass)
 
@@ -185,6 +191,8 @@ Namespace DWSIM.FormClasses
             CLCS_OrificePlateCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.OrificePlate)
             CLCS_CustomUOCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.CustomUO)
             CLCS_CapeOpenUOCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.CapeOpenUO)
+            CLCS_SolidsSeparatorCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.SolidsSeparator)
+            CLCS_FilterCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.Filter)
 
             OPT_SensAnalysisCollection = New List(Of DWSIM.Optimization.SensitivityAnalysisCase)
             OPT_OptimizationCollection = New List(Of DWSIM.Optimization.OptimizationCase)
@@ -230,6 +238,8 @@ Namespace DWSIM.FormClasses
                 .Add("ORIF", Me.OrificePlateCollection.Count)
                 .Add("CUOP", Me.CustomUOCollection.Count)
                 .Add("COOP", Me.CapeOpenUOCollection.Count)
+                .Add("SOLS", Me.SolidsSeparatorCollection.Count)
+                .Add("FILT", Me.FilterCollection.Count)
             End With
 
         End Sub

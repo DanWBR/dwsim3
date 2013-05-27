@@ -117,6 +117,8 @@ Partial Class FormFlowsheet
         Me.TSMITank = New System.Windows.Forms.ToolStripMenuItem()
         Me.TSMICUO = New System.Windows.Forms.ToolStripMenuItem()
         Me.TSMICOUO = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TSMISolidsSeparator = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TSMIFilter = New System.Windows.Forms.ToolStripMenuItem()
         Me.ColunasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TSMIColShortcut = New System.Windows.Forms.ToolStripMenuItem()
         Me.TSMIColDist = New System.Windows.Forms.ToolStripMenuItem()
@@ -172,9 +174,9 @@ Partial Class FormFlowsheet
         Me.bgCalc = New System.ComponentModel.BackgroundWorker()
         Me.StatusBarTextProvider1 = New EWSoftware.StatusBarText.StatusBarTextProvider(Me.components)
         Me.dckPanel = New WeifenLuo.WinFormsUI.Docking.DockPanel()
+        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.OpenFileName = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.ToolStrip4.SuspendLayout()
         Me.ToolStrip7.SuspendLayout()
         Me.ToolStrip6.SuspendLayout()
@@ -622,7 +624,7 @@ Partial Class FormFlowsheet
         '
         'OperaçõesUnitáriasToolStripMenuItem
         '
-        Me.OperaçõesUnitáriasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMIMixer, Me.TSMISplitter, Me.TSMICompressor, Me.TSMIExpander, Me.TSMIPump, Me.TSMIPipe, Me.TSMIValve, Me.TSMISeparator, Me.TSMIHeater, Me.TSMICooler, Me.TSMIOrificePlate, Me.TSMIComponentSeparator, Me.TSMIHeatExchanger, Me.TSMITank, Me.TSMICUO, Me.TSMICOUO})
+        Me.OperaçõesUnitáriasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMIMixer, Me.TSMISplitter, Me.TSMICompressor, Me.TSMIExpander, Me.TSMIPump, Me.TSMIPipe, Me.TSMIValve, Me.TSMISeparator, Me.TSMIHeater, Me.TSMICooler, Me.TSMIOrificePlate, Me.TSMIComponentSeparator, Me.TSMIHeatExchanger, Me.TSMITank, Me.TSMICUO, Me.TSMICOUO, Me.TSMISolidsSeparator, Me.TSMIFilter})
         Me.OperaçõesUnitáriasToolStripMenuItem.Name = "OperaçõesUnitáriasToolStripMenuItem"
         resources.ApplyResources(Me.OperaçõesUnitáriasToolStripMenuItem, "OperaçõesUnitáriasToolStripMenuItem")
         '
@@ -721,6 +723,18 @@ Partial Class FormFlowsheet
         Me.TSMICOUO.Image = Global.DWSIM.My.Resources.Resources.colan2
         Me.TSMICOUO.Name = "TSMICOUO"
         resources.ApplyResources(Me.TSMICOUO, "TSMICOUO")
+        '
+        'TSMISolidsSeparator
+        '
+        Me.TSMISolidsSeparator.Image = Global.DWSIM.My.Resources.Resources.comp_separator
+        Me.TSMISolidsSeparator.Name = "TSMISolidsSeparator"
+        resources.ApplyResources(Me.TSMISolidsSeparator, "TSMISolidsSeparator")
+        '
+        'TSMIFilter
+        '
+        Me.TSMIFilter.Image = Global.DWSIM.My.Resources.Resources.comp_separator
+        Me.TSMIFilter.Name = "TSMIFilter"
+        resources.ApplyResources(Me.TSMIFilter, "TSMIFilter")
         '
         'ColunasToolStripMenuItem
         '
@@ -1112,11 +1126,6 @@ Partial Class FormFlowsheet
         DockPanelSkin1.DockPaneStripSkin = DockPaneStripSkin1
         Me.dckPanel.Skin = DockPanelSkin1
         '
-        'SaveFileDialog1
-        '
-        Me.SaveFileDialog1.DefaultExt = "png"
-        resources.ApplyResources(Me.SaveFileDialog1, "SaveFileDialog1")
-        '
         'FlowLayoutPanel1
         '
         resources.ApplyResources(Me.FlowLayoutPanel1, "FlowLayoutPanel1")
@@ -1126,6 +1135,11 @@ Partial Class FormFlowsheet
         Me.FlowLayoutPanel1.Controls.Add(Me.ToolStrip4)
         Me.FlowLayoutPanel1.Controls.Add(Me.ToolStrip1)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.DefaultExt = "png"
+        resources.ApplyResources(Me.SaveFileDialog1, "SaveFileDialog1")
         '
         'FormFlowsheet
         '
@@ -1292,4 +1306,6 @@ Partial Class FormFlowsheet
     Friend WithEvents tsbClearStates As System.Windows.Forms.ToolStripButton
     Friend WithEvents tsbSimultAdjustSolver As System.Windows.Forms.ToolStripButton
     Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
+    Friend WithEvents TSMISolidsSeparator As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents TSMIFilter As System.Windows.Forms.ToolStripMenuItem
 End Class

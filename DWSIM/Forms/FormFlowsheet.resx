@@ -1029,6 +1029,18 @@
   <data name="TSMICOUO.Text" xml:space="preserve">
     <value>Operação Unitária CAPE-OPEN</value>
   </data>
+  <data name="TSMISolidsSeparator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 22</value>
+  </data>
+  <data name="TSMISolidsSeparator.Text" xml:space="preserve">
+    <value>Separador de Sólidos</value>
+  </data>
+  <data name="TSMIFilter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 22</value>
+  </data>
+  <data name="TSMIFilter.Text" xml:space="preserve">
+    <value>Filtro</value>
+  </data>
   <data name="OperaçõesUnitáriasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 22</value>
   </data>
@@ -1396,13 +1408,13 @@
     <value>&amp;Utilitários</value>
   </data>
   <data name="AnáliseDeSensibilidadeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>282, 22</value>
+    <value>205, 22</value>
   </data>
   <data name="AnáliseDeSensibilidadeToolStripMenuItem.Text" xml:space="preserve">
     <value>Análise de Sensibilidade</value>
   </data>
   <data name="MultivariateOptimizerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>282, 22</value>
+    <value>205, 22</value>
   </data>
   <data name="MultivariateOptimizerToolStripMenuItem.Text" xml:space="preserve">
     <value>Otimização Multivariável</value>
@@ -1414,7 +1426,7 @@
     <value>&amp;Otimização</value>
   </data>
   <data name="GerarRelatórioToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>225, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="GerarRelatórioToolStripMenuItem.StatusBarText" xml:space="preserve">
     <value>Clique para gerar um relatório personalizado da simulação atual</value>
@@ -1519,7 +1531,7 @@
     <value>0, 0</value>
   </data>
   <data name="MenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>775, 24</value>
+    <value>683, 24</value>
   </data>
   <data name="MenuStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1593,18 +1605,6 @@
   <data name="&gt;&gt;dckPanel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <metadata name="OpenFileName.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1167, 17</value>
-  </metadata>
-  <metadata name="SaveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1300, 17</value>
-  </metadata>
-  <data name="SaveFileDialog1.Filter" xml:space="preserve">
-    <value>PNG Image|*.png</value>
-  </data>
-  <data name="SaveFileDialog1.Title" xml:space="preserve">
-    <value>Save Flowsheet as Image</value>
-  </data>
   <data name="FlowLayoutPanel1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1631,6 +1631,18 @@
   </data>
   <data name="&gt;&gt;FlowLayoutPanel1.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <metadata name="OpenFileName.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1167, 17</value>
+  </metadata>
+  <metadata name="SaveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1300, 17</value>
+  </metadata>
+  <data name="SaveFileDialog1.Filter" xml:space="preserve">
+    <value>PNG Image|*.png</value>
+  </data>
+  <data name="SaveFileDialog1.Title" xml:space="preserve">
+    <value>Save Flowsheet as Image</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -2065,6 +2077,18 @@
     <value>TSMICOUO</value>
   </data>
   <data name="&gt;&gt;TSMICOUO.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TSMISolidsSeparator.Name" xml:space="preserve">
+    <value>TSMISolidsSeparator</value>
+  </data>
+  <data name="&gt;&gt;TSMISolidsSeparator.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TSMIFilter.Name" xml:space="preserve">
+    <value>TSMIFilter</value>
+  </data>
+  <data name="&gt;&gt;TSMIFilter.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ColunasToolStripMenuItem.Name" xml:space="preserve">

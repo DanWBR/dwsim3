@@ -59,6 +59,8 @@ Namespace GraphicObjects
         CustomUO
         CapeOpenUO
         GO_MasterTable
+        SolidSeparator
+        Filter
 
     End Enum
 

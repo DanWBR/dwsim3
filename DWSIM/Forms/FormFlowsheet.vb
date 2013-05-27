@@ -659,6 +659,8 @@ Imports DWSIM.DWSIM.GraphicObjects
         If Collections.ComponentSeparatorCollection Is Nothing Then Collections.ComponentSeparatorCollection = New Dictionary(Of String, ComponentSeparatorGraphic)
         If Collections.OrificePlateCollection Is Nothing Then Collections.OrificePlateCollection = New Dictionary(Of String, OrificePlateGraphic)
         If Collections.CustomUOCollection Is Nothing Then Collections.CustomUOCollection = New Dictionary(Of String, CustomUOGraphic)
+        If Collections.SolidsSeparatorCollection Is Nothing Then Collections.SolidsSeparatorCollection = New Dictionary(Of String, SolidSeparatorGraphic)
+        If Collections.FilterCollection Is Nothing Then Collections.FilterCollection = New Dictionary(Of String, FilterGraphic)
 
         If Collections.ObjectCollection Is Nothing Then Collections.ObjectCollection = New Dictionary(Of String, SimulationObjects_BaseClass)
 
@@ -695,6 +697,8 @@ Imports DWSIM.DWSIM.GraphicObjects
         If Collections.CLCS_ComponentSeparatorCollection Is Nothing Then Collections.CLCS_ComponentSeparatorCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.ComponentSeparator)
         If Collections.CLCS_OrificePlateCollection Is Nothing Then Collections.CLCS_OrificePlateCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.OrificePlate)
         If Collections.CLCS_CustomUOCollection Is Nothing Then Collections.CLCS_CustomUOCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.CustomUO)
+        If Collections.CLCS_SolidsSeparatorCollection Is Nothing Then Collections.CLCS_SolidsSeparatorCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.SolidsSeparator)
+        If Collections.CLCS_FilterCollection Is Nothing Then Collections.CLCS_FilterCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.Filter)
 
         If Collections.OPT_SensAnalysisCollection Is Nothing Then Collections.OPT_SensAnalysisCollection = New List(Of DWSIM.Optimization.SensitivityAnalysisCase)
         If Collections.OPT_OptimizationCollection Is Nothing Then Collections.OPT_OptimizationCollection = New List(Of DWSIM.Optimization.OptimizationCase)
@@ -712,7 +716,8 @@ Imports DWSIM.DWSIM.GraphicObjects
      TSMIHeatExchanger.Click, TSMIMaterialStream.Click, TSMIMixer.Click, TSMIOrificePlate.Click, _
      TSMIPipe.Click, TSMIPump.Click, TSMIReactorConv.Click, TSMIReactorCSTR.Click, TSMIReactorEquilibrium.Click, _
      TSMIReactorGibbs.Click, TSMIReactorPFR.Click, TSMIRecycle.Click, TSMISeparator.Click, _
-     TSMISpecification.Click, TSMISplitter.Click, TSMITank.Click, TSMIValve.Click, TSMICUO.Click, TSMICOUO.Click
+     TSMISpecification.Click, TSMISplitter.Click, TSMITank.Click, TSMIValve.Click, TSMICUO.Click, TSMICOUO.Click, _
+     TSMISolidsSeparator.Click, TSMIFilter.Click
 
         Me.InsertingObjectToPFD = True
         Me.FormSurface.FlowsheetDesignSurface.Cursor = Cursors.Hand
@@ -1489,6 +1494,18 @@ Imports DWSIM.DWSIM.GraphicObjects
                                     'DWSIM
                                     Me.Collections.CLCS_CapeOpenUOCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.SolidSeparator
+                                    Me.Collections.SolidsSeparatorCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_SolidsSeparatorCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.Filter
+                                    Me.Collections.FilterCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_FilterCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
                             End Select
 
                             Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
@@ -1705,6 +1722,10 @@ Imports DWSIM.DWSIM.GraphicObjects
                             Case TipoObjeto.OT_EnergyRecycle
                                 GoTo 100
                             Case TipoObjeto.ComponentSeparator
+                                GoTo 100
+                            Case TipoObjeto.SolidSeparator
+                                GoTo 100
+                            Case TipoObjeto.Filter
                                 GoTo 100
                             Case TipoObjeto.CustomUO
                                 GoTo 100

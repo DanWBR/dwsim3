@@ -752,6 +752,7 @@
     <Compile Include="Objects\UnitOps\Compressor.vb" />
     <Compile Include="Objects\UnitOps\Cooler.vb" />
     <Compile Include="Objects\UnitOps\CustomUO.vb" />
+    <Compile Include="Objects\UnitOps\Filter.vb" />
     <Compile Include="Objects\UnitOps\OrificePlate.vb" />
     <Compile Include="Objects\UnitOps\RigorousColumn.vb" />
     <Compile Include="Objects\UnitOps\HeatExchanger.vb" />
@@ -762,6 +763,7 @@
     <Compile Include="Objects\PropertyPackages\Base\PropertyPackage.vb" />
     <Compile Include="Objects\UnitOps\Pump.vb" />
     <Compile Include="Objects\UnitOps\ShortcutColumn.vb" />
+    <Compile Include="Objects\UnitOps\SolidsSeparator.vb" />
     <Compile Include="Objects\UnitOps\Splitter.vb" />
     <Compile Include="Objects\Streams\Streams.vb" />
     <Compile Include="Objects\Base\BaseThermoClasses.vb" />

@@ -4666,4 +4666,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Saved" xml:space="preserve">
     <value>Saved</value>
   </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="SolidsSeparator" xml:space="preserve">
+    <value>Solids Separator</value>
+  </data>
 </root>

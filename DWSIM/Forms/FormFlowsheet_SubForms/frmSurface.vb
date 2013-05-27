@@ -500,6 +500,10 @@ Public Class frmSurface
                             tobj = TipoObjeto.CustomUO
                         Case "TSMICOUO"
                             tobj = TipoObjeto.CapeOpenUO
+                        Case "TSMISolidsSeparator"
+                            tobj = TipoObjeto.SolidSeparator
+                        Case "TSMIFilter"
+                            tobj = TipoObjeto.Filter
                     End Select
 
                     AddObjectToSurface(tobj, mpx, mpy)
@@ -1870,6 +1874,70 @@ Public Class frmSurface
                 ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 ChildParent.Collections.CLCS_ComponentSeparatorCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
+            Case TipoObjeto.SolidSeparator
+                Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.SolidsSeparator = CType(newobj, DWSIM.SimulationObjects.UnitOps.SolidsSeparator)
+                With myDWOBJ.GraphicObject
+                    .Calculated = False
+                    .Name = "SS-" & Guid.NewGuid.ToString
+                    .Tag = gObj.Tag & "_CLONE"
+                    .X = mpx
+                    .Y = mpy
+                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    For Each con As ConnectionPoint In .InputConnectors
+                        con.AttachedConnector = Nothing
+                        con.IsAttached = False
+                    Next
+                    For Each con As ConnectionPoint In .OutputConnectors
+                        con.AttachedConnector = Nothing
+                        con.IsAttached = False
+                    Next
+                    If Not .SpecialConnectors Is Nothing Then
+                        For Each con As ConnectionPoint In .SpecialConnectors
+                            con.AttachedConnector = Nothing
+                            con.IsAttached = False
+                        Next
+                    End If
+                    .EnergyConnector.AttachedConnector = Nothing
+                    .EnergyConnector.IsAttached = False
+                End With
+                myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
+                ChildParent.Collections.SolidsSeparatorCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                ChildParent.Collections.CLCS_SolidsSeparatorCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
+            Case TipoObjeto.Filter
+                Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Filter = CType(newobj, DWSIM.SimulationObjects.UnitOps.Filter)
+                With myDWOBJ.GraphicObject
+                    .Calculated = False
+                    .Name = "FT-" & Guid.NewGuid.ToString
+                    .Tag = gObj.Tag & "_CLONE"
+                    .X = mpx
+                    .Y = mpy
+                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    For Each con As ConnectionPoint In .InputConnectors
+                        con.AttachedConnector = Nothing
+                        con.IsAttached = False
+                    Next
+                    For Each con As ConnectionPoint In .OutputConnectors
+                        con.AttachedConnector = Nothing
+                        con.IsAttached = False
+                    Next
+                    If Not .SpecialConnectors Is Nothing Then
+                        For Each con As ConnectionPoint In .SpecialConnectors
+                            con.AttachedConnector = Nothing
+                            con.IsAttached = False
+                        Next
+                    End If
+                    .EnergyConnector.AttachedConnector = Nothing
+                    .EnergyConnector.IsAttached = False
+                End With
+                myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
+                ChildParent.Collections.FilterCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                ChildParent.Collections.CLCS_FilterCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.OrificePlate
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.OrificePlate = CType(newobj, DWSIM.SimulationObjects.UnitOps.OrificePlate)
                 With myDWOBJ.GraphicObject
@@ -2770,6 +2838,58 @@ Public Class frmSurface
                 ChildParent.Collections.ObjectCollection.Add(myCSep.Name, myCOCSEP)
                 ChildParent.Collections.CLCS_ComponentSeparatorCollection.Add(myCSep.Name, myCOCSEP)
 
+            Case TipoObjeto.SolidSeparator
+                Dim myCSep As New SolidSeparatorGraphic(mpx, mpy, 50, 50, 0)
+                myCSep.LineWidth = 2
+                myCSep.Fill = True
+                myCSep.FillColor = fillclr
+                myCSep.LineColor = lineclr
+                If Not ChildParent.Collections.ObjectCounter.ContainsKey("SOLS") Then
+                    ChildParent.Collections.ObjectCounter.Add("SOLS", 0)
+                End If
+                myCSep.Tag = "SS-" & Format(ChildParent.Collections.ObjectCounter("SOLS"), "00#")
+                ChildParent.Collections.UpdateCounter("SOLS")
+                If tag <> "" Then myCSep.Tag = tag
+                gObj = myCSep
+                gObj.Name = "SS-" & Guid.NewGuid.ToString
+                ChildParent.Collections.SolidsSeparatorCollection.Add(gObj.Name, myCSep)
+                Try
+                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Catch ex As Exception
+                End Try
+                'OBJETO DWSIM
+                Dim myCOCSEP As DWSIM.SimulationObjects.UnitOps.SolidsSeparator = New DWSIM.SimulationObjects.UnitOps.SolidsSeparator(myCSep.Name, "SolidsSeparator")
+                myCOCSEP.GraphicObject = myCSep
+                ChildParent.Collections.ObjectCollection.Add(myCSep.Name, myCOCSEP)
+                ChildParent.Collections.CLCS_SolidsSeparatorCollection.Add(myCSep.Name, myCOCSEP)
+
+            Case TipoObjeto.Filter
+                Dim myCSep As New FilterGraphic(mpx, mpy, 50, 50, 0)
+                myCSep.LineWidth = 2
+                myCSep.Fill = True
+                myCSep.FillColor = fillclr
+                myCSep.LineColor = lineclr
+                If Not ChildParent.Collections.ObjectCounter.ContainsKey("FILT") Then
+                    ChildParent.Collections.ObjectCounter.Add("FILT", 0)
+                End If
+                myCSep.Tag = "FT-" & Format(ChildParent.Collections.ObjectCounter("FILT"), "00#")
+                ChildParent.Collections.UpdateCounter("FILT")
+                If tag <> "" Then myCSep.Tag = tag
+                gObj = myCSep
+                gObj.Name = "FT-" & Guid.NewGuid.ToString
+                ChildParent.Collections.FilterCollection.Add(gObj.Name, myCSep)
+                Try
+                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Catch ex As Exception
+                End Try
+                'OBJETO DWSIM
+                Dim myCOCSEP As DWSIM.SimulationObjects.UnitOps.Filter = New DWSIM.SimulationObjects.UnitOps.Filter(myCSep.Name, "Filter")
+                myCOCSEP.GraphicObject = myCSep
+                ChildParent.Collections.ObjectCollection.Add(myCSep.Name, myCOCSEP)
+                ChildParent.Collections.CLCS_FilterCollection.Add(myCSep.Name, myCOCSEP)
+
             Case TipoObjeto.OrificePlate
                 Dim myOPL As New OrificePlateGraphic(mpx, mpy, 25, 25, 0)
                 myOPL.LineWidth = 2
@@ -2964,6 +3084,10 @@ Public Class frmSurface
                     tobj = TipoObjeto.CustomUO
                 Case "CapeOpenUnitOperation"
                     tobj = TipoObjeto.CapeOpenUO
+                Case "SolidsSeparator"
+                    tobj = TipoObjeto.SolidSeparator
+                Case "Filter"
+                    tobj = TipoObjeto.Filter
             End Select
 
             AddObjectToSurface(tobj, mpx, mpy)

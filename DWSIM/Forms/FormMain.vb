@@ -1035,6 +1035,12 @@ Public Class FormMain
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                                 .CLCS_CapeOpenUOCollection(gObj.Name).GraphicObject = gObj
                                 .CapeOpenUOCollection(gObj.Name) = gObj
+                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                                .CLCS_SolidsSeparatorCollection(gObj.Name).GraphicObject = gObj
+                                .SolidsSeparatorCollection(gObj.Name) = gObj
+                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Filter
+                                .CLCS_FilterCollection(gObj.Name).GraphicObject = gObj
+                                .FilterCollection(gObj.Name) = gObj
                         End Select
                     Next
                 End With
@@ -1350,6 +1356,12 @@ Public Class FormMain
                         Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                             .CLCS_CapeOpenUOCollection(gObj.Name).GraphicObject = gObj
                             .CapeOpenUOCollection(gObj.Name) = gObj
+                        Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                            .CLCS_SolidsSeparatorCollection(gObj.Name).GraphicObject = gObj
+                            .SolidsSeparatorCollection(gObj.Name) = gObj
+                        Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Filter
+                            .CLCS_FilterCollection(gObj.Name).GraphicObject = gObj
+                            .FilterCollection(gObj.Name) = gObj
                     End Select
                 Next
             End With
@@ -1692,6 +1704,12 @@ Public Class FormMain
                         Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_EnergyRecycle
                             .CLCS_EnergyRecycleCollection(gObj.Name).GraphicObject = gObj
                             .EnergyRecycleCollection(gObj.Name) = gObj
+                        Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                            .CLCS_SolidsSeparatorCollection(gObj.Name).GraphicObject = gObj
+                            .SolidsSeparatorCollection(gObj.Name) = gObj
+                        Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Filter
+                            .CLCS_FilterCollection(gObj.Name).GraphicObject = gObj
+                            .FilterCollection(gObj.Name) = gObj
                     End Select
                 Next
             End With
@@ -1871,6 +1889,10 @@ Public Class FormMain
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                                 obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
                                 .CapeOpenUOCollection.Add(obj.Name, obj)
+                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                                .SolidsSeparatorCollection.Add(obj.Name, obj)
+                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Filter
+                                .FilterCollection.Add(obj.Name, obj)
                         End Select
                         If Not DWSIM.App.IsRunningOnMono Then
                             Select Case obj.TipoObjeto
@@ -1964,6 +1986,12 @@ Public Class FormMain
                                 Case TipoObjeto.CapeOpenUO
                                     form.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
                                     form.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.SolidSeparator
+                                    form.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.Filter
+                                    form.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
                             End Select
                         End If
                     End With
@@ -2150,6 +2178,10 @@ Public Class FormMain
                                 .CLCS_CustomUOCollection.Add(id, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                                 .CLCS_CapeOpenUOCollection.Add(id, obj)
+                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                                .CLCS_SolidsSeparatorCollection.Add(id, obj)
+                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Filter
+                                .CLCS_FilterCollection.Add(id, obj)
                         End Select
                     End With
                 End If

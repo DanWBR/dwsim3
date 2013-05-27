@@ -112,20 +112,17 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="ToolStripLabel4.Size" type="System.Drawing.Size, System.Drawing">
     <value>52, 22</value>
   </data>
   <data name="ToolStripLabel4.Text" xml:space="preserve">
     <value>Fließbild</value>
-  </data>
-  <data name="TSBtabela.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
   </data>
   <data name="TSBtabela.Text" xml:space="preserve">
     <value>Bild einfügen</value>
@@ -133,23 +130,14 @@
   <data name="TSBtabela.ToolTipText" xml:space="preserve">
     <value>Bild einfügen</value>
   </data>
-  <data name="TSBTexto.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
   <data name="TSBTexto.Text" xml:space="preserve">
     <value>Text einfügen</value>
   </data>
   <data name="TSBTexto.ToolTipText" xml:space="preserve">
     <value>Text einfügen</value>
   </data>
-  <data name="ToolStripButton19.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
   <data name="ToolStripButton19.Text" xml:space="preserve">
     <value>Master Property Table</value>
-  </data>
-  <data name="ToolStripButton12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
   </data>
   <data name="ToolStripButton12.Text" xml:space="preserve">
     <value>Rechteck einfügen</value>
@@ -157,65 +145,32 @@
   <data name="ToolStripButton12.ToolTipText" xml:space="preserve">
     <value>Rechteck einfügen</value>
   </data>
-  <data name="ToolStripButton1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
   <data name="ToolStripButton1.Text" xml:space="preserve">
     <value>Fließbild verkleinern</value>
-  </data>
-  <data name="TSTBZoom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 25</value>
   </data>
   <data name="TSTBZoom.ToolTipText" xml:space="preserve">
     <value>Fließbild vergrößern</value>
   </data>
-  <data name="ToolStripButton2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
   <data name="ToolStripButton2.Text" xml:space="preserve">
     <value>Fließbild vergrößern</value>
-  </data>
-  <data name="ToolStripButton20.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
-  <data name="ToolStripButton18.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
   </data>
   <data name="ToolStripButton18.Text" xml:space="preserve">
     <value>Als Grafik speichern</value>
   </data>
-  <data name="ToolStripButton6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
   <data name="ToolStripButton6.Text" xml:space="preserve">
     <value>Seite einrichten</value>
-  </data>
-  <data name="ToolStripButton11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
   </data>
   <data name="ToolStripButton11.Text" xml:space="preserve">
     <value>Drucker einstellen</value>
   </data>
-  <data name="ToolStripButton10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
   <data name="ToolStripButton10.Text" xml:space="preserve">
     <value>Fließbild anzeigen und drucken</value>
-  </data>
-  <data name="ToolStripButton16.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
   </data>
   <data name="ToolStripButton16.Text" xml:space="preserve">
     <value>Raster ausrichten</value>
   </data>
-  <data name="ToolStripButton17.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
-  </data>
   <data name="ToolStripButton17.Text" xml:space="preserve">
     <value>Schnellkupplung</value>
-  </data>
-  <data name="ToolStrip4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>665, 0</value>
   </data>
   <data name="ToolStrip4.Size" type="System.Drawing.Size, System.Drawing">
     <value>395, 25</value>
@@ -224,55 +179,37 @@
     <value>Fließbild</value>
   </data>
   <data name="ToolStrip7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1060, 0</value>
+    <value>128, 0</value>
   </data>
   <data name="ToolStrip7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 25</value>
+    <value>200, 25</value>
   </data>
   <data name="ToolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 15</value>
+    <value>50, 22</value>
   </data>
   <data name="ToolStripLabel1.Text" xml:space="preserve">
     <value>Rechner</value>
   </data>
-  <data name="tsbAtivar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 20</value>
-  </data>
   <data name="tsbAtivar.Text" xml:space="preserve">
     <value>Aktivieren</value>
-  </data>
-  <data name="tsbDesat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 20</value>
   </data>
   <data name="tsbDesat.Text" xml:space="preserve">
     <value>Deaktivieren</value>
   </data>
-  <data name="ToolStripButton13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 20</value>
-  </data>
   <data name="ToolStripButton13.Text" xml:space="preserve">
     <value>Alles neu berechnen</value>
-  </data>
-  <data name="ToolStripButton14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 20</value>
   </data>
   <data name="ToolStripButton14.Text" xml:space="preserve">
     <value>Berechnung abbrechen</value>
   </data>
-  <data name="ToolStripButton15.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 20</value>
-  </data>
   <data name="ToolStripButton15.Text" xml:space="preserve">
     <value>Rechnerausgabe löschen</value>
-  </data>
-  <data name="tsbSimultAdjustSolver.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 20</value>
   </data>
   <data name="tsbSimultAdjustSolver.Text" xml:space="preserve">
     <value>Aktivieren Löser Simultane Anpassungen</value>
   </data>
-  <data name="ToolStrip6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1129, 0</value>
+  <data name="ToolStrip6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 25</value>
   </data>
   <data name="ToolStrip6.Text" xml:space="preserve">
     <value>Simulation</value>
@@ -289,32 +226,8 @@
   <data name="ToolStripButton8.Text" xml:space="preserve">
     <value>Ergebnisse - Bericht</value>
   </data>
-  <data name="ToolStrip5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="ToolStrip5.Text" xml:space="preserve">
-    <value>Steuerelemente</value>
-  </data>
-  <data name="ToolStripLabel5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>89, 22</value>
-  </data>
-  <data name="ToolStripLabel5.Text" xml:space="preserve">
-    <value>Steuerelemente</value>
-  </data>
-  <data name="ToolStripButton4.Text" xml:space="preserve">
-    <value>Einstellung</value>
-  </data>
-  <data name="ToolStripButton3.Text" xml:space="preserve">
-    <value>Spezifikation</value>
-  </data>
-  <data name="ToolStripButton9.Text" xml:space="preserve">
-    <value>Rückführung</value>
-  </data>
   <data name="ToolStrip2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1179, 0</value>
-  </data>
-  <data name="ToolStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 25</value>
+    <value>328, 0</value>
   </data>
   <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>662, 25</value>
@@ -340,29 +253,71 @@
   <data name="ToolStripLabel7.Text" xml:space="preserve">
     <value>Anteilformat</value>
   </data>
-  <data name="MenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>691, 24</value>
-  </data>
   <data name="ConfiguraçõesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 20</value>
   </data>
   <data name="ConfiguraçõesToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Einstellungen</value>
   </data>
+  <data name="ExibirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 20</value>
+  </data>
+  <data name="ExibirToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Zeigen</value>
+  </data>
+  <data name="InserirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 20</value>
+  </data>
+  <data name="InserirToolStripMenuItem.Text" xml:space="preserve">
+    <value>E&amp;infügen</value>
+  </data>
+  <data name="SuplementosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 20</value>
+  </data>
+  <data name="SuplementosToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Hilfsmittel</value>
+  </data>
+  <data name="OtimizaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 20</value>
+  </data>
+  <data name="OtimizaToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Optimierung</value>
+  </data>
+  <data name="ResultadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="ResultadosToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Ergebnisse</value>
+  </data>
+  <data name="ArquivoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 20</value>
+  </data>
+  <data name="ArquivoToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Datei</value>
+  </data>
+  <data name="FerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 20</value>
+  </data>
+  <data name="FerramentasToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Werkzeuge</value>
+  </data>
+  <data name="ScriptsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 20</value>
+  </data>
+  <data name="ScriptsToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Skripte</value>
+  </data>
+  <data name="MenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>691, 24</value>
+  </data>
   <data name="ComponentesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>279, 22</value>
+    <value>207, 22</value>
   </data>
   <data name="ComponentesToolStripMenuItem.StatusBarText" xml:space="preserve">
     <value>Öffnet das Konfigurationsfenster für die aktive Simulation</value>
   </data>
   <data name="ComponentesToolStripMenuItem.Text" xml:space="preserve">
     <value>Simulationseinstellungen</value>
-  </data>
-  <data name="ExibirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 20</value>
-  </data>
-  <data name="ExibirToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Zeigen</value>
   </data>
   <data name="ExibirSaídaDoConsoleToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>223, 22</value>
@@ -387,12 +342,6 @@
   </data>
   <data name="ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.Text" xml:space="preserve">
     <value>Bericht Objekte CAPE-OPEN</value>
-  </data>
-  <data name="InserirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 20</value>
-  </data>
-  <data name="InserirToolStripMenuItem.Text" xml:space="preserve">
-    <value>E&amp;infügen</value>
   </data>
   <data name="CorrentesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 22</value>
@@ -514,6 +463,18 @@
   <data name="TSMICOUO.Text" xml:space="preserve">
     <value>CAPE-OPEN Grundoperation</value>
   </data>
+  <data name="TSMISolidsSeparator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 22</value>
+  </data>
+  <data name="TSMISolidsSeparator.Text" xml:space="preserve">
+    <value>Feststoffabscheider</value>
+  </data>
+  <data name="TSMIFilter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>226, 22</value>
+  </data>
+  <data name="TSMIFilter.Text" xml:space="preserve">
+    <value>Filter</value>
+  </data>
   <data name="ColunasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 22</value>
   </data>
@@ -610,12 +571,6 @@
   <data name="TSMISpecification.Text" xml:space="preserve">
     <value>Spezifikation</value>
   </data>
-  <data name="SuplementosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 20</value>
-  </data>
-  <data name="SuplementosToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Hilfsmittel</value>
-  </data>
   <data name="PontoCríticoRealToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>308, 22</value>
   </data>
@@ -637,19 +592,19 @@
   <data name="PropriedadesDosComponentesToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAApdJREFUOE91U09L
-        OlEUFT+Aez9C38ONGyHbhLqxgrCwcGNkJFkNIQktyoUZkZQZ/oEKVBTLspqsnP6hUqQuUhkSdOV25v7u
-        faD+ihqQGd9759xzzr1PAQCK334PDw/jt7e32evr6yw+43+d+wZ+eXkZenx8VCFYieBWs9mERqMB0Wi0
-        lUgklKenp6pYLDb0P1mfAMF+BEv39/ciz/PqXC4n1mo1qFargEDx5OREjURiKBSS9vf3/T0SRvD8/LxQ
-        qVSg3W7Dx8cHILh7fn4ul8tlKBaLcHx8LCO4i8pAFEVIJpOwvr6+QFhGgFUX0atMJAR4f39nRD0C+v/6
-        +gpEkM/nYX5+XrbZbIt9Avq4ubnhCFwoFODu7g7S6TTs7OxAIBAgRYC24PLyklV3u91c3wIyCli9fnFx
-        0Xl7ewNBECCTycDy8jI/NzencTqdmo2NDf7q6ooR0b7H4+msra3VV1ZWBAWCpa+vLyaXKmOQEAwGYXV1
-        VdOrsr29rcEMAM8yZaSGwp2enpYU2GPp8/OTeaQNqoCJw+bmZp/A6/Vqjo6OmAKygGrZebPZLCmwJQJK
-        rO/t7XWenp4YCeWwu7vL+3w+zdbWFrNA/slaKpWCiYmJzujoaH1kZETozwFK5DBIFhS9cZAgHA4D9p2t
-        YVshHo+zNYvFMgiRfEYikcXDw0O5VCoxMLULB4tlQkSkiNbPzs7Y3szMjDw5OTlo48HBwQLJo8lDIsB0
-        uxzHyRQa+bZarTKCurRH3peWlkCv1w8GiVS4XC7/7OyshP5Eu92uRhKRqpGCsbEx0WAwqNG3qNPpJK1W
-        +32Ue+1CgqGpqSmVw+FQImGLJOM9AKPR2EICpclkUiHB75fp53VF2eNYMTs8PJxFuX9e539xW973Whuq
-        rgAAAABJRU5ErkJggg==
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAApNJREFUOE91U09L
+        OlEUFT+Aez+C38NNG0HdRLXRBDGpaJOkJPZnCElokS5KiaKyqAQNLJTKUlMrR1NUiqyFfxgScuV25v7u
+        faBl9BOuw8x759xzzn1PBgB/1tPT02Q2m02k0+kE/ib/2kM19FIqlVSFQkGBYDmCO+12G1qtFpydnXUu
+        Li7k5+fnilAopPqJ+Qn2I1h8fHwUMpmMMplMCh8fH/D+/g4IFCKRiBKJhKOjI3F/f98/RPD8/Oyo1+vw
+        9fUFb29vgODezc2NVKvVoFKpQDgclhDcQ2UgCAJcXl7C+vq6Y0CAXRfRq0QkBHh9fWVEfQJ6L5fLQAS5
+        XA4WFhakubm5xQEB1f39PUeb8/k8PDw8QDweh0AgAHt7e6QI0Bbc3d2x7m63m+vjZMjIY/fm7e1t9+Xl
+        BXieh6urK1heXs7YbDa10+lUb2xsZFKpFCOidY/H011bW2uurKzwMgSLn5+fTC51xiDh8PAQVldX1f0u
+        29vbaswAcC9TRmooXKvVKspwxmKj0WAeaYE6YOKwubk5IPD5fOrj42OmgCygWrbfYDCIMhwJjxKbu7u7
+        3WKxyEgoh52dnczW1pba6/UyC+SfrMViMTCZTN3R0dGmXq/nByGiRA6DZEHREw8SnJycAM6dfcOxQjQa
+        Zd8sFst3iPR3enq6GAwGpWq1ysA0LjxYLBMiIkX0/fr6mq3NzMxIZrP5e4wHBwcOkkcnD4kA0+1xHCdR
+        aOR7enpaQlCP1si7y+UCnU73fZColpaW/LOzsyL6E+bn55VIIlA3UmA0GoWxsTEl+hY0Go04MjIyfJT7
+        hQSqqakphd1ulyNhhyTjPYDx8fEOEsgnJiYUSPD3ZfpdKHsSOya0Wm0C5f7nOoPsH3Fb3vfrTVUpAAAA
+        AElFTkSuQmCC
 </value>
   </data>
   <data name="PropriedadesDosComponentesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -664,19 +619,19 @@
   <data name="AnáliseDePetróleosToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAApdJREFUOE91U09L
-        OlEUFT+Aez9C38ONGyHbhLqxgrCwcGNkJFkNIQktyoUZkZQZ/oEKVBTLspqsnP6hUqQuUhkSdOV25v7u
-        faD+ihqQGd9759xzzr1PAQCK334PDw/jt7e32evr6yw+43+d+wZ+eXkZenx8VCFYieBWs9mERqMB0Wi0
-        lUgklKenp6pYLDb0P1mfAMF+BEv39/ciz/PqXC4n1mo1qFargEDx5OREjURiKBSS9vf3/T0SRvD8/LxQ
-        qVSg3W7Dx8cHILh7fn4ul8tlKBaLcHx8LCO4i8pAFEVIJpOwvr6+QFhGgFUX0atMJAR4f39nRD0C+v/6
-        +gpEkM/nYX5+XrbZbIt9Avq4ubnhCFwoFODu7g7S6TTs7OxAIBAgRYC24PLyklV3u91c3wIyCli9fnFx
-        0Xl7ewNBECCTycDy8jI/NzencTqdmo2NDf7q6ooR0b7H4+msra3VV1ZWBAWCpa+vLyaXKmOQEAwGYXV1
-        VdOrsr29rcEMAM8yZaSGwp2enpYU2GPp8/OTeaQNqoCJw+bmZp/A6/Vqjo6OmAKygGrZebPZLCmwJQJK
-        rO/t7XWenp4YCeWwu7vL+3w+zdbWFrNA/slaKpWCiYmJzujoaH1kZETozwFK5DBIFhS9cZAgHA4D9p2t
-        YVshHo+zNYvFMgiRfEYikcXDw0O5VCoxMLULB4tlQkSkiNbPzs7Y3szMjDw5OTlo48HBwQLJo8lDIsB0
-        uxzHyRQa+bZarTKCurRH3peWlkCv1w8GiVS4XC7/7OyshP5Eu92uRhKRqpGCsbEx0WAwqNG3qNPpJK1W
-        +32Ue+1CgqGpqSmVw+FQImGLJOM9AKPR2EICpclkUiHB75fp53VF2eNYMTs8PJxFuX9e539xW973Whuq
-        rgAAAABJRU5ErkJggg==
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAApNJREFUOE91U09L
+        OlEUFT+Aez+C38NNG0HdRLXRBDGpaJOkJPZnCElokS5KiaKyqAQNLJTKUlMrR1NUiqyFfxgScuV25v7u
+        faBl9BOuw8x759xzzn1PBgB/1tPT02Q2m02k0+kE/ib/2kM19FIqlVSFQkGBYDmCO+12G1qtFpydnXUu
+        Li7k5+fnilAopPqJ+Qn2I1h8fHwUMpmMMplMCh8fH/D+/g4IFCKRiBKJhKOjI3F/f98/RPD8/Oyo1+vw
+        9fUFb29vgODezc2NVKvVoFKpQDgclhDcQ2UgCAJcXl7C+vq6Y0CAXRfRq0QkBHh9fWVEfQJ6L5fLQAS5
+        XA4WFhakubm5xQEB1f39PUeb8/k8PDw8QDweh0AgAHt7e6QI0Bbc3d2x7m63m+vjZMjIY/fm7e1t9+Xl
+        BXieh6urK1heXs7YbDa10+lUb2xsZFKpFCOidY/H011bW2uurKzwMgSLn5+fTC51xiDh8PAQVldX1f0u
+        29vbaswAcC9TRmooXKvVKspwxmKj0WAeaYE6YOKwubk5IPD5fOrj42OmgCygWrbfYDCIMhwJjxKbu7u7
+        3WKxyEgoh52dnczW1pba6/UyC+SfrMViMTCZTN3R0dGmXq/nByGiRA6DZEHREw8SnJycAM6dfcOxQjQa
+        Zd8sFst3iPR3enq6GAwGpWq1ysA0LjxYLBMiIkX0/fr6mq3NzMxIZrP5e4wHBwcOkkcnD4kA0+1xHCdR
+        aOR7enpaQlCP1si7y+UCnU73fZColpaW/LOzsyL6E+bn55VIIlA3UmA0GoWxsTEl+hY0Go04MjIyfJT7
+        hQSqqakphd1ulyNhhyTjPYDx8fEOEsgnJiYUSPD3ZfpdKHsSOya0Wm0C5f7nOoPsH3Fb3vfrTVUpAAAA
+        AElFTkSuQmCC
 </value>
   </data>
   <data name="AnáliseDePetróleosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -691,19 +646,19 @@
   <data name="DiagramaDeFasesToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAApdJREFUOE91U09L
-        OlEUFT+Aez9C38ONGyHbhLqxgrCwcGNkJFkNIQktyoUZkZQZ/oEKVBTLspqsnP6hUqQuUhkSdOV25v7u
-        faD+ihqQGd9759xzzr1PAQCK334PDw/jt7e32evr6yw+43+d+wZ+eXkZenx8VCFYieBWs9mERqMB0Wi0
-        lUgklKenp6pYLDb0P1mfAMF+BEv39/ciz/PqXC4n1mo1qFargEDx5OREjURiKBSS9vf3/T0SRvD8/LxQ
-        qVSg3W7Dx8cHILh7fn4ul8tlKBaLcHx8LCO4i8pAFEVIJpOwvr6+QFhGgFUX0atMJAR4f39nRD0C+v/6
-        +gpEkM/nYX5+XrbZbIt9Avq4ubnhCFwoFODu7g7S6TTs7OxAIBAgRYC24PLyklV3u91c3wIyCli9fnFx
-        0Xl7ewNBECCTycDy8jI/NzencTqdmo2NDf7q6ooR0b7H4+msra3VV1ZWBAWCpa+vLyaXKmOQEAwGYXV1
-        VdOrsr29rcEMAM8yZaSGwp2enpYU2GPp8/OTeaQNqoCJw+bmZp/A6/Vqjo6OmAKygGrZebPZLCmwJQJK
-        rO/t7XWenp4YCeWwu7vL+3w+zdbWFrNA/slaKpWCiYmJzujoaH1kZETozwFK5DBIFhS9cZAgHA4D9p2t
-        YVshHo+zNYvFMgiRfEYikcXDw0O5VCoxMLULB4tlQkSkiNbPzs7Y3szMjDw5OTlo48HBwQLJo8lDIsB0
-        uxzHyRQa+bZarTKCurRH3peWlkCv1w8GiVS4XC7/7OyshP5Eu92uRhKRqpGCsbEx0WAwqNG3qNPpJK1W
-        +32Ue+1CgqGpqSmVw+FQImGLJOM9AKPR2EICpclkUiHB75fp53VF2eNYMTs8PJxFuX9e539xW973Whuq
-        rgAAAABJRU5ErkJggg==
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAApNJREFUOE91U09L
+        OlEUFT+Aez+C38NNG0HdRLXRBDGpaJOkJPZnCElokS5KiaKyqAQNLJTKUlMrR1NUiqyFfxgScuV25v7u
+        faBl9BOuw8x759xzzn1PBgB/1tPT02Q2m02k0+kE/ib/2kM19FIqlVSFQkGBYDmCO+12G1qtFpydnXUu
+        Li7k5+fnilAopPqJ+Qn2I1h8fHwUMpmMMplMCh8fH/D+/g4IFCKRiBKJhKOjI3F/f98/RPD8/Oyo1+vw
+        9fUFb29vgODezc2NVKvVoFKpQDgclhDcQ2UgCAJcXl7C+vq6Y0CAXRfRq0QkBHh9fWVEfQJ6L5fLQAS5
+        XA4WFhakubm5xQEB1f39PUeb8/k8PDw8QDweh0AgAHt7e6QI0Bbc3d2x7m63m+vjZMjIY/fm7e1t9+Xl
+        BXieh6urK1heXs7YbDa10+lUb2xsZFKpFCOidY/H011bW2uurKzwMgSLn5+fTC51xiDh8PAQVldX1f0u
+        29vbaswAcC9TRmooXKvVKspwxmKj0WAeaYE6YOKwubk5IPD5fOrj42OmgCygWrbfYDCIMhwJjxKbu7u7
+        3WKxyEgoh52dnczW1pba6/UyC+SfrMViMTCZTN3R0dGmXq/nByGiRA6DZEHREw8SnJycAM6dfcOxQjQa
+        Zd8sFst3iPR3enq6GAwGpWq1ysA0LjxYLBMiIkX0/fr6mq3NzMxIZrP5e4wHBwcOkkcnD4kA0+1xHCdR
+        aOR7enpaQlCP1si7y+UCnU73fZColpaW/LOzsyL6E+bn55VIIlA3UmA0GoWxsTEl+hY0Go04MjIyfJT7
+        hQSqqakphd1ulyNhhyTjPYDx8fEOEsgnJiYUSPD3ZfpdKHsSOya0Wm0C5f7nOoPsH3Fb3vfrTVUpAAAA
+        AElFTkSuQmCC
 </value>
   </data>
   <data name="DiagramaDeFasesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -745,19 +700,19 @@
   <data name="PSVSizingToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAApdJREFUOE91U09L
-        OlEUFT+Aez9C38ONGyHbhLqxgrCwcGNkJFkNIQktyoUZkZQZ/oEKVBTLspqsnP6hUqQuUhkSdOV25v7u
-        faD+ihqQGd9759xzzr1PAQCK334PDw/jt7e32evr6yw+43+d+wZ+eXkZenx8VCFYieBWs9mERqMB0Wi0
-        lUgklKenp6pYLDb0P1mfAMF+BEv39/ciz/PqXC4n1mo1qFargEDx5OREjURiKBSS9vf3/T0SRvD8/LxQ
-        qVSg3W7Dx8cHILh7fn4ul8tlKBaLcHx8LCO4i8pAFEVIJpOwvr6+QFhGgFUX0atMJAR4f39nRD0C+v/6
-        +gpEkM/nYX5+XrbZbIt9Avq4ubnhCFwoFODu7g7S6TTs7OxAIBAgRYC24PLyklV3u91c3wIyCli9fnFx
-        0Xl7ewNBECCTycDy8jI/NzencTqdmo2NDf7q6ooR0b7H4+msra3VV1ZWBAWCpa+vLyaXKmOQEAwGYXV1
-        VdOrsr29rcEMAM8yZaSGwp2enpYU2GPp8/OTeaQNqoCJw+bmZp/A6/Vqjo6OmAKygGrZebPZLCmwJQJK
-        rO/t7XWenp4YCeWwu7vL+3w+zdbWFrNA/slaKpWCiYmJzujoaH1kZETozwFK5DBIFhS9cZAgHA4D9p2t
-        YVshHo+zNYvFMgiRfEYikcXDw0O5VCoxMLULB4tlQkSkiNbPzs7Y3szMjDw5OTlo48HBwQLJo8lDIsB0
-        uxzHyRQa+bZarTKCurRH3peWlkCv1w8GiVS4XC7/7OyshP5Eu92uRhKRqpGCsbEx0WAwqNG3qNPpJK1W
-        +32Ue+1CgqGpqSmVw+FQImGLJOM9AKPR2EICpclkUiHB75fp53VF2eNYMTs8PJxFuX9e539xW973Whuq
-        rgAAAABJRU5ErkJggg==
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAApNJREFUOE91U09L
+        OlEUFT+Aez+C38NNG0HdRLXRBDGpaJOkJPZnCElokS5KiaKyqAQNLJTKUlMrR1NUiqyFfxgScuV25v7u
+        faBl9BOuw8x759xzzn1PBgB/1tPT02Q2m02k0+kE/ib/2kM19FIqlVSFQkGBYDmCO+12G1qtFpydnXUu
+        Li7k5+fnilAopPqJ+Qn2I1h8fHwUMpmMMplMCh8fH/D+/g4IFCKRiBKJhKOjI3F/f98/RPD8/Oyo1+vw
+        9fUFb29vgODezc2NVKvVoFKpQDgclhDcQ2UgCAJcXl7C+vq6Y0CAXRfRq0QkBHh9fWVEfQJ6L5fLQAS5
+        XA4WFhakubm5xQEB1f39PUeb8/k8PDw8QDweh0AgAHt7e6QI0Bbc3d2x7m63m+vjZMjIY/fm7e1t9+Xl
+        BXieh6urK1heXs7YbDa10+lUb2xsZFKpFCOidY/H011bW2uurKzwMgSLn5+fTC51xiDh8PAQVldX1f0u
+        29vbaswAcC9TRmooXKvVKspwxmKj0WAeaYE6YOKwubk5IPD5fOrj42OmgCygWrbfYDCIMhwJjxKbu7u7
+        3WKxyEgoh52dnczW1pba6/UyC+SfrMViMTCZTN3R0dGmXq/nByGiRA6DZEHREw8SnJycAM6dfcOxQjQa
+        Zd8sFst3iPR3enq6GAwGpWq1ysA0LjxYLBMiIkX0/fr6mq3NzMxIZrP5e4wHBwcOkkcnD4kA0+1xHCdR
+        aOR7enpaQlCP1si7y+UCnU73fZColpaW/LOzsyL6E+bn55VIIlA3UmA0GoWxsTEl+hY0Go04MjIyfJT7
+        hQSqqakphd1ulyNhhyTjPYDx8fEOEsgnJiYUSPD3ZfpdKHsSOya0Wm0C5f7nOoPsH3Fb3vfrTVUpAAAA
+        AElFTkSuQmCC
 </value>
   </data>
   <data name="PSVSizingToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -772,19 +727,19 @@
   <data name="FlashVesselSizingToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAApdJREFUOE91U09L
-        OlEUFT+Aez9C38ONGyHbhLqxgrCwcGNkJFkNIQktyoUZkZQZ/oEKVBTLspqsnP6hUqQuUhkSdOV25v7u
-        faD+ihqQGd9759xzzr1PAQCK334PDw/jt7e32evr6yw+43+d+wZ+eXkZenx8VCFYieBWs9mERqMB0Wi0
-        lUgklKenp6pYLDb0P1mfAMF+BEv39/ciz/PqXC4n1mo1qFargEDx5OREjURiKBSS9vf3/T0SRvD8/LxQ
-        qVSg3W7Dx8cHILh7fn4ul8tlKBaLcHx8LCO4i8pAFEVIJpOwvr6+QFhGgFUX0atMJAR4f39nRD0C+v/6
-        +gpEkM/nYX5+XrbZbIt9Avq4ubnhCFwoFODu7g7S6TTs7OxAIBAgRYC24PLyklV3u91c3wIyCli9fnFx
-        0Xl7ewNBECCTycDy8jI/NzencTqdmo2NDf7q6ooR0b7H4+msra3VV1ZWBAWCpa+vLyaXKmOQEAwGYXV1
-        VdOrsr29rcEMAM8yZaSGwp2enpYU2GPp8/OTeaQNqoCJw+bmZp/A6/Vqjo6OmAKygGrZebPZLCmwJQJK
-        rO/t7XWenp4YCeWwu7vL+3w+zdbWFrNA/slaKpWCiYmJzujoaH1kZETozwFK5DBIFhS9cZAgHA4D9p2t
-        YVshHo+zNYvFMgiRfEYikcXDw0O5VCoxMLULB4tlQkSkiNbPzs7Y3szMjDw5OTlo48HBwQLJo8lDIsB0
-        uxzHyRQa+bZarTKCurRH3peWlkCv1w8GiVS4XC7/7OyshP5Eu92uRhKRqpGCsbEx0WAwqNG3qNPpJK1W
-        +32Ue+1CgqGpqSmVw+FQImGLJOM9AKPR2EICpclkUiHB75fp53VF2eNYMTs8PJxFuX9e539xW973Whuq
-        rgAAAABJRU5ErkJggg==
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAApNJREFUOE91U09L
+        OlEUFT+Aez+C38NNG0HdRLXRBDGpaJOkJPZnCElokS5KiaKyqAQNLJTKUlMrR1NUiqyFfxgScuV25v7u
+        faBl9BOuw8x759xzzn1PBgB/1tPT02Q2m02k0+kE/ib/2kM19FIqlVSFQkGBYDmCO+12G1qtFpydnXUu
+        Li7k5+fnilAopPqJ+Qn2I1h8fHwUMpmMMplMCh8fH/D+/g4IFCKRiBKJhKOjI3F/f98/RPD8/Oyo1+vw
+        9fUFb29vgODezc2NVKvVoFKpQDgclhDcQ2UgCAJcXl7C+vq6Y0CAXRfRq0QkBHh9fWVEfQJ6L5fLQAS5
+        XA4WFhakubm5xQEB1f39PUeb8/k8PDw8QDweh0AgAHt7e6QI0Bbc3d2x7m63m+vjZMjIY/fm7e1t9+Xl
+        BXieh6urK1heXs7YbDa10+lUb2xsZFKpFCOidY/H011bW2uurKzwMgSLn5+fTC51xiDh8PAQVldX1f0u
+        29vbaswAcC9TRmooXKvVKspwxmKj0WAeaYE6YOKwubk5IPD5fOrj42OmgCygWrbfYDCIMhwJjxKbu7u7
+        3WKxyEgoh52dnczW1pba6/UyC+SfrMViMTCZTN3R0dGmXq/nByGiRA6DZEHREw8SnJycAM6dfcOxQjQa
+        Zd8sFst3iPR3enq6GAwGpWq1ysA0LjxYLBMiIkX0/fr6mq3NzMxIZrP5e4wHBwcOkkcnD4kA0+1xHCdR
+        aOR7enpaQlCP1si7y+UCnU73fZColpaW/LOzsyL6E+bn55VIIlA3UmA0GoWxsTEl+hY0Go04MjIyfJT7
+        hQSqqakphd1ulyNhhyTjPYDx8fEOEsgnJiYUSPD3ZfpdKHsSOya0Wm0C5f7nOoPsH3Fb3vfrTVUpAAAA
+        AElFTkSuQmCC
 </value>
   </data>
   <data name="FlashVesselSizingToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -805,26 +760,14 @@
   <data name="PropriedadesDePetróleosToolStripMenuItem.Text" xml:space="preserve">
     <value>kalte Fließeigenschaften von Erdölfraktionen</value>
   </data>
-  <data name="OtimizaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 20</value>
-  </data>
-  <data name="OtimizaToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Optimierung</value>
-  </data>
   <data name="AnáliseDeSensibilidadeToolStripMenuItem.Text" xml:space="preserve">
     <value>Sensitivitätsanalyse</value>
   </data>
   <data name="MultivariateOptimizerToolStripMenuItem.Text" xml:space="preserve">
     <value>Mehrvariablenoptimierer</value>
   </data>
-  <data name="ResultadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 20</value>
-  </data>
-  <data name="ResultadosToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Ergebnisse</value>
-  </data>
   <data name="GerarRelatórioToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 22</value>
+    <value>158, 22</value>
   </data>
   <data name="GerarRelatórioToolStripMenuItem.StatusBarText" xml:space="preserve">
     <value>Erstellt einen Bericht mit den Ergebnissen der aktiven Simulation</value>
@@ -832,23 +775,11 @@
   <data name="GerarRelatórioToolStripMenuItem.Text" xml:space="preserve">
     <value>Bericht erstellen</value>
   </data>
-  <data name="ArquivoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 20</value>
-  </data>
-  <data name="ArquivoToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Datei</value>
-  </data>
   <data name="CloseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>246, 22</value>
   </data>
   <data name="CloseToolStripMenuItem.Text" xml:space="preserve">
     <value>Schließen der aktiven Simulation</value>
-  </data>
-  <data name="FerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 20</value>
-  </data>
-  <data name="FerramentasToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Werkzeuge</value>
   </data>
   <data name="CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>392, 22</value>
@@ -886,22 +817,16 @@
   <data name="GerenciadorDeReaçõesToolStripMenuItem.Text" xml:space="preserve">
     <value>Reaktionsmanager</value>
   </data>
-  <data name="ScriptsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 20</value>
-  </data>
-  <data name="ScriptsToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Skripte</value>
-  </data>
   <data name="ToolStripMenuItem3.Text" xml:space="preserve">
     <value>This.toolStripMenuItem3</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="dckPanel.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
+    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Simulation</value>
