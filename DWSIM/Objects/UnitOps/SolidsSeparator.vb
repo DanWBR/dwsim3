@@ -45,6 +45,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Property SeparationEfficiency() As Double
 
+        Public Sub New()
+            MyBase.New()
+        End Sub
+
         Public Sub New(ByVal nome As String, ByVal descricao As String)
 
             MyBase.CreateNew()

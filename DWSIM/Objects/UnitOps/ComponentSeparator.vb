@@ -149,6 +149,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End Set
         End Property
 
+        Public Sub New()
+            MyBase.New()
+        End Sub
+
         Public Sub New(ByVal nome As String, ByVal descricao As String)
 
             MyBase.CreateNew()
