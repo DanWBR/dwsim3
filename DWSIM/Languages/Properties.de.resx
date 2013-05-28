@@ -177,10 +177,6 @@
     <value>Druckverlust</value>
     <comment>1</comment>
   </data>
-  <data name="PROP_CS_01" xml:space="preserve">
-    <value>Druckverlust</value>
-    <comment>1</comment>
-  </data>
   <data name="PROP_DC_0" xml:space="preserve">
     <value>Kondensatordruck</value>
     <comment>1</comment>
@@ -1032,6 +1028,10 @@
   <data name="PROP_SC_9" xml:space="preserve">
     <value>Molenstrom Rektifizierflüssigkeit</value>
     <comment>0</comment>
+  </data>
+  <data name="PROP_SS_0" xml:space="preserve">
+    <value>Druckverlust</value>
+    <comment>1</comment>
   </data>
   <data name="PROP_SV_0" xml:space="preserve">
     <value>Separatortemperatur</value>

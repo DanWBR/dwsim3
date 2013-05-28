@@ -99,6 +99,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     L = 1.0#
                     S = 0.0#
                     Vxl(wid) = 1.0#
+                    Vf = Vnf
+                    sumN = 1.0#
 
                 Else
 
@@ -108,6 +110,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     L = 0.0#
                     S = 0.0#
                     Vxv(wid) = 1.0#
+                    Vf = Vnf
+                    sumN = 1.0#
 
                 End If
 
@@ -121,6 +125,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 For i = 0 To n
                     Vxs(i) = Vnf(i)
                 Next
+                Vf = Vnf
+                sumN = 1.0#
 
             Else
 

@@ -4678,4 +4678,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SolidsSeparator" xml:space="preserve">
     <value>Separador de Sólidos</value>
   </data>
+  <data name="SolidSepEfficiency" xml:space="preserve">
+    <value>Eficiência de Separação (0 a 1)</value>
+  </data>
 </root>

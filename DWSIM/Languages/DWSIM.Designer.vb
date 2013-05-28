@@ -11678,6 +11678,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Eficiência de Separação (0 a 1).
+        '''</summary>
+        Friend Shared ReadOnly Property SolidSepEfficiency() As String
+            Get
+                Return ResourceManager.GetString("SolidSepEfficiency", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Separador de Sólidos.
         '''</summary>
         Friend Shared ReadOnly Property SolidsSeparator() As String

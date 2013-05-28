@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PROP_AC_0" xml:space="preserve">
     <value>Pressão do Estágio de Topo</value>
@@ -1022,6 +1022,10 @@
   </data>
   <data name="PROP_SC_9" xml:space="preserve">
     <value>Vazão Molar do Líquido de Retificação</value>
+    <comment>0</comment>
+  </data>
+  <data name="PROP_SS_0" xml:space="preserve">
+    <value>Balanço de Energia</value>
     <comment>0</comment>
   </data>
   <data name="PROP_SV_0" xml:space="preserve">
