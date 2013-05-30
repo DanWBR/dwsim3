@@ -43,7 +43,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Property EnergyImb() As Double
 
-        Public Property SeparationEfficiency() As Double
+        Public Property SeparationEfficiency() As Double = 1.0#
 
         Public Sub New()
             MyBase.New()
@@ -117,7 +117,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Fases(0).SPMProperties.massflow = Wout
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     For Each comp In .Fases(0).Componentes.Values
-                        comp.MassFlow = instr.Fases(3).Componentes(comp.Nome).MassFlow + instr.Fases(7).Componentes(comp.Nome).MassFlow * (1 - Me.SeparationEfficiency)
+                        comp.MassFlow = instr.Fases(0).Componentes(comp.Nome).MassFlow - instr.Fases(7).Componentes(comp.Nome).MassFlow * Me.SeparationEfficiency
                         comp.FracaoMassica = comp.MassFlow / Wout
                     Next
                     mw = 0.0#

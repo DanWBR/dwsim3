@@ -71,7 +71,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'Vxv = vapor phase molar fractions
             'Vxs = solid phase molar fractions
             'V, S, L = phase molar amounts (F = 1 = V + S + L)
-            Dim Vnf(n), Vnl(n), Vxl(n), Vxl_ant(n), Vns(n), Vxs(n), Vnv(n), Vxv(n), V, S, L As Double
+            Dim Vnf(n), Vnl(n), Vxl(n), Vxl_ant(n), Vns(n), Vxs(n), Vnv(n), Vxv(n), V, S, L, L_ant As Double
             Dim sumN As Double = 0
 
             Vnf = Vz.Clone
@@ -85,7 +85,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Vxl = Vz.Clone
 
-            L = 1
+            'initial estimates for L and S.
+
+            L = 0.0#
 
             'calculate liquid phase activity coefficients.
 
@@ -121,7 +123,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 sumfis = 0
                 sumlis = 0
                 For i = 0 To n
-                    If Vnf(i) > Vxlmax(i) Then
+                    If Vxl(i) > Vxlmax(i) Then
                         hassolids = True
                         Vxl(i) = Vxlmax(i)
                         sumfis += Vnf(i)
@@ -129,6 +131,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     End If
                 Next
 
+                L_ant = L
                 If hassolids Then L = (1 - sumfis) / (1 - sumlis) Else L = 1
                 S = 1 - L
 
@@ -144,14 +147,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
 
                 For i = 0 To n
-                    Vxl_ant(i) = Vxl(i)
-                    If Sum(Vnl) <> 0.0# Then Vxl(i) = Vnl(i) / Sum(Vnl)
-                    If Sum(Vns) <> 0.0# Then Vxs(i) = Vns(i) / Sum(Vns)
+                    If Sum(Vnl) <> 0.0# Then Vxl(i) = Vnl(i) / Sum(Vnl) Else Vxl(i) = 0.0#
+                    If Sum(Vns) <> 0.0# Then Vxs(i) = Vns(i) / Sum(Vns) Else Vxs(i) = 0.0#
                 Next
 
                 errfunc = 0.0#
                 For i = 0 To n
-                    errfunc += Abs(Vxl(i) - Vxl_ant(i)) ^ 2
+                    errfunc += Abs(L - L_ant) ^ 2
                 Next
 
                 If errfunc <= etol * 0.1 Then Exit Do
@@ -219,7 +221,7 @@ out:        Return New Object() {L, V, Vxl, Vxv, ecount, 0.0#, PP.RET_NullVector
 
             Dim cnt As Integer = 0
 
-            If Tref = 0 Then Tref = 298.15
+            If Tref = 0 Then Tref = 100.0#
             x1 = Tref
             Do
                 fx = Herror(x1, {P, Vz, PP})
@@ -231,7 +233,7 @@ out:        Return New Object() {L, V, Vxl, Vxv, ecount, 0.0#, PP.RET_NullVector
                 cnt += 1
             Loop Until cnt > 20 Or Double.IsNaN(x1)
             If Double.IsNaN(x1) Then
-alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
+alt:            T = bo.BrentOpt(Tinf, Tsup, 100, tolEXT, maxitEXT, {P, Vz, PP})
             Else
                 T = x1
             End If
@@ -446,7 +448,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Dim mmg, mml, mms As Double
             If V > 0 Then Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
             If L > 0 Then Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-            If S > 0 Then Hs = pp.DW_CalcEnthalpy(Vs, T, P, State.Solid)
+            If S > 0 Then Hs = pp.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties)
             mmg = pp.AUX_MMM(Vy)
             mml = pp.AUX_MMM(Vx)
             mms = pp.AUX_MMM(Vs)
@@ -480,7 +482,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             If V > 0 Then Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
             If L > 0 Then Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
-            If Ssf > 0 Then Ss = pp.DW_CalcEntropy(Vs, T, P, State.Solid)
+            If Ssf > 0 Then Ss = pp.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties) / (T - 298.15)
             mmg = pp.AUX_MMM(Vy)
             mml = pp.AUX_MMM(Vx)
             mms = pp.AUX_MMM(Vs)

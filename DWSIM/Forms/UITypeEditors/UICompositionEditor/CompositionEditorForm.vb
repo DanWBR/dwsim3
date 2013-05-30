@@ -271,7 +271,7 @@ Public Class CompositionEditorForm
 
             End If
 
-            Me.Solvent = Me.ComboBox1.SelectedItem.ToString
+            If Not Me.ComboBox1.SelectedItem Is Nothing Then Me.Solvent = Me.ComboBox1.SelectedItem.ToString
 
             Me.InitialComposition.Clear()
             For Each comp In Me.Componentes.Values
