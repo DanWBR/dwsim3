@@ -1,4 +1,4 @@
-﻿'    Copyright 2008 Daniel Wagner O. de Medeiros
+﻿'    Copyright 2008-2013 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -139,10 +139,9 @@ Public Class FormMain
         'Check if DWSIM is running in Portable/Mono mode, then save settings to file.
         If File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "default.ini") Or DWSIM.App.IsRunningOnMono Then
             DWSIM.App.SaveSettings()
-            My.Application.SaveMySettingsOnExit = True
-        Else
-            My.Application.SaveMySettingsOnExit = True
         End If
+        My.Application.SaveMySettingsOnExit = True
+        My.Settings.Save()
 
     End Sub
 

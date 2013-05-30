@@ -43,7 +43,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Property EnergyImb() As Double
 
-        Public Property SeparationEfficiency() As Double = 1.0#
+        Public Property SeparationEfficiency() As Double = 100.0#
 
         Public Sub New()
             MyBase.New()
@@ -101,7 +101,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Dim W As Double = instr.Fases(0).SPMProperties.massflow.GetValueOrDefault
             Dim Wsin As Double = instr.Fases(7).SPMProperties.massflow.GetValueOrDefault
-            Dim Wsout As Double = Me.SeparationEfficiency * Wsin
+            Dim Wsout As Double = Me.SeparationEfficiency / 100 * Wsin
             Dim Wsresid As Double = Wsin - Wsout
             Dim Wout As Double = W - Wsout
 
@@ -117,7 +117,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Fases(0).SPMProperties.massflow = Wout
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     For Each comp In .Fases(0).Componentes.Values
-                        comp.MassFlow = instr.Fases(0).Componentes(comp.Nome).MassFlow - instr.Fases(7).Componentes(comp.Nome).MassFlow * Me.SeparationEfficiency
+                        comp.MassFlow = instr.Fases(0).Componentes(comp.Nome).MassFlow - instr.Fases(7).Componentes(comp.Nome).MassFlow * Me.SeparationEfficiency / 100
                         comp.FracaoMassica = comp.MassFlow / Wout
                     Next
                     mw = 0.0#
@@ -141,7 +141,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Fases(0).SPMProperties.massflow = Wsout
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     For Each comp In .Fases(0).Componentes.Values
-                        comp.MassFlow = instr.Fases(7).Componentes(comp.Nome).MassFlow * Me.SeparationEfficiency
+                        comp.MassFlow = instr.Fases(7).Componentes(comp.Nome).MassFlow * Me.SeparationEfficiency / 100
                         comp.FracaoMassica = comp.MassFlow / Wsout
                     Next
                     mw = 0.0#
@@ -400,7 +400,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputESSelector
                 End With
 
-                .Item.Add(DWSIM.App.GetLocalString("SolidSepEfficiency"), Me, "SeparationEfficiency", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "Min 0.00, Max 1.00", True)
+                .Item.Add(DWSIM.App.GetLocalString("SolidSepEfficiency"), Me, "SeparationEfficiency", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("SolidSepEfficiencyDesc"), True)
 
                 .Item.Add(FT(DWSIM.App.GetLocalString("CSepEnergyImbalance"), su.spmp_heatflow), Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), "", True)
 

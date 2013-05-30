@@ -4645,6 +4645,9 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Separador de Sólidos</value>
   </data>
   <data name="SolidSepEfficiency" xml:space="preserve">
-    <value>Grado de Separación (0-1)</value>
+    <value>Grado de Separación (%)</value>
+  </data>
+  <data name="SolidSepEfficiencyDesc" xml:space="preserve">
+    <value>Determina la % en peso de sólidos de la corriente de entrada a ser separada y enviada a la segunda corriente de salida (sólidos).</value>
   </data>
 </root>

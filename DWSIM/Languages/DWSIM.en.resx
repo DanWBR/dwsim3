@@ -4673,6 +4673,9 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Solids Separator</value>
   </data>
   <data name="SolidSepEfficiency" xml:space="preserve">
-    <value>Separation Efficiency (0 to 1)</value>
+    <value>Separation Efficiency (%)</value>
+  </data>
+  <data name="SolidSepEfficiencyDesc" xml:space="preserve">
+    <value>Sets the mass percentage of solids separated from the inlet stream that is sent to the solids stream (outlet stream 2).</value>
   </data>
 </root>
