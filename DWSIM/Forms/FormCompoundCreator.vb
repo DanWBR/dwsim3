@@ -448,7 +448,9 @@ Public Class FormCompoundCreator
 
 
     End Sub
+
     Private Sub CalcJobackParams()
+
         If loaded Then
             jb = New DWSIM.Utilities.Hypos.Methods.Joback
             methods2 = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
@@ -1491,14 +1493,12 @@ Public Class FormCompoundCreator
         End If
     End Sub
 
-
     Private Sub GridExpData_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridExpDataPVAP.CellValueChanged, _
                 GridExpDataLIQVISC.CellValueChanged, GridExpDataLIQDENS.CellValueChanged, GridExpDataCPIG.CellValueChanged
         If loaded Then
             SetCompCreatorSaveStatus(False)
         End If
     End Sub
-
 
 End Class
 

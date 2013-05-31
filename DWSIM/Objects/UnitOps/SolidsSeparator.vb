@@ -44,6 +44,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Property EnergyImb() As Double
 
         Public Property SeparationEfficiency() As Double = 100.0#
+        Public Property LiquidSeparationEfficiency() As Double = 100.0#
 
         Public Sub New()
             MyBase.New()
@@ -101,9 +102,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Dim W As Double = instr.Fases(0).SPMProperties.massflow.GetValueOrDefault
             Dim Wsin As Double = instr.Fases(7).SPMProperties.massflow.GetValueOrDefault
-            Dim Wsout As Double = Me.SeparationEfficiency / 100 * Wsin
-            Dim Wsresid As Double = Wsin - Wsout
-            Dim Wout As Double = W - Wsout
+            Dim Wlin As Double = W - Wsin
+            Dim Wsout As Double = Me.SeparationEfficiency / 100 * Wsin + (100 - Me.LiquidSeparationEfficiency) / 100 * Wlin
+            Dim Wlout As Double = (100 - Me.SeparationEfficiency) / 100 * Wsin + Me.LiquidSeparationEfficiency / 100 * Wlin
 
             Dim mw As Double
 
@@ -114,11 +115,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 outstr1 = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
                 With outstr1
                     .ClearAllProps()
-                    .Fases(0).SPMProperties.massflow = Wout
+                    .Fases(0).SPMProperties.massflow = Wlout
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     For Each comp In .Fases(0).Componentes.Values
-                        comp.MassFlow = instr.Fases(0).Componentes(comp.Nome).MassFlow - instr.Fases(7).Componentes(comp.Nome).MassFlow * Me.SeparationEfficiency / 100
-                        comp.FracaoMassica = comp.MassFlow / Wout
+                        comp.MassFlow = (100 - Me.SeparationEfficiency) / 100 * instr.Fases(7).Componentes(comp.Nome).MassFlow + Me.LiquidSeparationEfficiency / 100 * instr.Fases(1).Componentes(comp.Nome).MassFlow
+                        comp.FracaoMassica = comp.MassFlow / Wlout
                     Next
                     mw = 0.0#
                     For Each comp In .Fases(0).Componentes.Values
@@ -141,7 +142,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Fases(0).SPMProperties.massflow = Wsout
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     For Each comp In .Fases(0).Componentes.Values
-                        comp.MassFlow = instr.Fases(7).Componentes(comp.Nome).MassFlow * Me.SeparationEfficiency / 100
+                        comp.MassFlow = Me.SeparationEfficiency / 100 * instr.Fases(7).Componentes(comp.Nome).MassFlow + (100 - Me.LiquidSeparationEfficiency) / 100 * instr.Fases(1).Componentes(comp.Nome).MassFlow
                         comp.FracaoMassica = comp.MassFlow / Wsout
                     Next
                     mw = 0.0#
@@ -401,7 +402,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End With
 
                 .Item.Add(DWSIM.App.GetLocalString("SolidSepEfficiency"), Me, "SeparationEfficiency", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("SolidSepEfficiencyDesc"), True)
-
+                .Item.Add(DWSIM.App.GetLocalString("LiquidSepEfficiency"), Me, "LiquidSeparationEfficiency", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("LiquidSepEfficiencyDesc"), True)
+                
                 .Item.Add(FT(DWSIM.App.GetLocalString("CSepEnergyImbalance"), su.spmp_heatflow), Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), "", True)
 
                 If Me.IsSpecAttached = True Then
@@ -430,11 +432,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-
                     value = cv.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb)
-
+                Case 1
+                    value = Me.SeparationEfficiency
+                Case 2
+                    value = Me.LiquidSeparationEfficiency
             End Select
 
             Return value
@@ -446,9 +449,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim proplist As New ArrayList
             Select Case proptype
                 Case PropertyType.RW
-                Case PropertyType.WR
-                Case PropertyType.ALL
                     For i = 0 To 0
+                        proplist.Add("PROP_SS_" + CStr(i))
+                    Next
+                Case PropertyType.WR
+                    For i = 1 To 2
+                        proplist.Add("PROP_SS_" + CStr(i))
+                    Next
+                Case PropertyType.ALL
+                    For i = 0 To 2
                         proplist.Add("PROP_SS_" + CStr(i))
                     Next
                 Case PropertyType.RO
@@ -466,7 +475,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
+                Case 0
+                    'PROP_SS_1	Solid Separation Efficiency
+                    Me.SeparationEfficiency = propval
+                Case 1
+                    'PROP_SS_2	Liquid Separation Efficiency
+                    Me.LiquidSeparationEfficiency = propval
             End Select
 
             Return 1
@@ -480,11 +494,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-
                     value = su.spmp_heatflow
-
+                Case Else
+                    value = "%"
             End Select
 
             Return value

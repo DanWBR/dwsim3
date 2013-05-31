@@ -4650,4 +4650,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SolidSepEfficiencyDesc" xml:space="preserve">
     <value>Determina la % en peso de sólidos de la corriente de entrada a ser separada y enviada a la segunda corriente de salida (sólidos).</value>
   </data>
+  <data name="LiquidSepEfficiency" xml:space="preserve">
+    <value>Eficiência de Separação de Líquido (%)</value>
+  </data>
+  <data name="LiquidSepEfficiencyDesc" xml:space="preserve">
+    <value>Determina a % em massa de líquidos da corrente de entrada que será separada e enviada à corrente 1 (líquidos).</value>
+  </data>
 </root>

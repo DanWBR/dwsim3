@@ -7016,6 +7016,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Eficiência de Separação de Líquido (%).
+        '''</summary>
+        Friend Shared ReadOnly Property LiquidSepEfficiency() As String
+            Get
+                Return ResourceManager.GetString("LiquidSepEfficiency", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Determina a % em massa de líquidos da corrente de entrada que será separada e enviada à corrente 1 (líquidos)..
+        '''</summary>
+        Friend Shared ReadOnly Property LiquidSepEfficiencyDesc() As String
+            Get
+                Return ResourceManager.GetString("LiquidSepEfficiencyDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to LIQ Vazão mássica.
         '''</summary>
         Friend Shared ReadOnly Property LIQVazomssica() As String
@@ -11678,7 +11696,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Eficiência de Separação (%).
+        '''  Looks up a localized string similar to Eficiência de Separação de Sólidos (%).
         '''</summary>
         Friend Shared ReadOnly Property SolidSepEfficiency() As String
             Get

@@ -4653,9 +4653,15 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Feststoffabscheider</value>
   </data>
   <data name="SolidSepEfficiency" xml:space="preserve">
-    <value>Abtrennung Wirkungsgrad (%)</value>
+    <value>Feststoff Abtrennung Wirkungsgrad (%)</value>
   </data>
   <data name="SolidSepEfficiencyDesc" xml:space="preserve">
     <value>Sets the mass percentage of solids separated from the inlet stream that is sent to the solids stream (outlet stream 2).</value>
+  </data>
+  <data name="LiquidSepEfficiency" xml:space="preserve">
+    <value>Liquids Separation Efficiency (%)</value>
+  </data>
+  <data name="LiquidSepEfficiencyDesc" xml:space="preserve">
+    <value>Sets the mass percentage of liquids separated from the inlet stream that is sent to the liquids stream (outlet stream 1).</value>
   </data>
 </root>

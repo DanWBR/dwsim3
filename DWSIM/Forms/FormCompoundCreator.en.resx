@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Compound Database</value>
+  </data>
   <data name="btnSaveToDB.Text" xml:space="preserve">
     <value>Save component to database</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkReplaceComps.Location" type="System.Drawing.Point, System.Drawing">
-    <value>587, 53</value>
-  </data>
   <data name="chkReplaceComps.Size" type="System.Drawing.Size, System.Drawing">
     <value>206, 17</value>
   </data>
@@ -149,71 +149,71 @@
   <data name="btnCreateNewDB.Text" xml:space="preserve">
     <value>Create New</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Compound Database</value>
-  </data>
-  <data name="TabPage1.Text" xml:space="preserve">
-    <value>Identification</value>
-  </data>
-  <data name="TabPage3.Text" xml:space="preserve">
-    <value>Misc Properties</value>
-  </data>
-  <data name="TabPage4.Text" xml:space="preserve">
-    <value>Critical Properties</value>
-  </data>
-  <data name="TabPage6.Text" xml:space="preserve">
-    <value>Vapor Pressure</value>
-  </data>
-  <data name="TabPage7.Text" xml:space="preserve">
-    <value>Heat Capacity (Cp, Ideal Gas)</value>
-  </data>
-  <data name="TabPage8.Text" xml:space="preserve">
-    <value>Liquid Density</value>
-  </data>
-  <data name="TabPage9.Text" xml:space="preserve">
-    <value>Liquid Viscosity</value>
-  </data>
-  <data name="Label55.Size" type="System.Drawing.Size, System.Drawing">
-    <value>85, 13</value>
-  </data>
-  <data name="Label55.Text" xml:space="preserve">
-    <value>Enthaly of fusion</value>
-  </data>
-  <data name="LabelWithDivider1.Text" xml:space="preserve">
-    <value>Fusion data</value>
-  </data>
-  <data name="Label52.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 13</value>
-  </data>
-  <data name="Label52.Text" xml:space="preserve">
-    <value>Temperature of fusion</value>
-  </data>
-  <data name="TabPage10.Text" xml:space="preserve">
-    <value>Solid</value>
-  </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Compound Properties</value>
+  </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Identification</value>
+  </data>
+  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>896, 420</value>
+  </data>
+  <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>896, 420</value>
+  </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Misc Properties</value>
+  </data>
+  <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>896, 420</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Critical Properties</value>
+  </data>
+  <data name="FaTabStripItem5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>896, 420</value>
+  </data>
+  <data name="FaTabStripItem10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>896, 420</value>
+  </data>
+  <data name="FaTabStripItem10.Title" xml:space="preserve">
+    <value>Solid Properties</value>
+  </data>
+  <data name="FaTabStripItem6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>896, 420</value>
+  </data>
+  <data name="FaTabStripItem6.Title" xml:space="preserve">
+    <value>Vapor Pressure</value>
+  </data>
+  <data name="FaTabStripItem7.Title" xml:space="preserve">
+    <value>Ideal Gas Heat Capacity</value>
+  </data>
+  <data name="FaTabStripItem8.Title" xml:space="preserve">
+    <value>Liquid Density</value>
+  </data>
+  <data name="FaTabStripItem9.Title" xml:space="preserve">
+    <value>Liquid Viscosity</value>
   </data>
   <data name="LinkLabel1.Text" xml:space="preserve">
     <value>CAS Number</value>
   </data>
-  <data name="Label22.Text" xml:space="preserve">
-    <value>Mole Weight</value>
+  <data name="Label17.Text" xml:space="preserve">
+    <value>Name</value>
   </data>
   <data name="Label21.Text" xml:space="preserve">
     <value>Formula</value>
   </data>
-  <data name="Label17.Text" xml:space="preserve">
-    <value>Name</value>
+  <data name="Label22.Text" xml:space="preserve">
+    <value>Mole Weight</value>
   </data>
   <data name="Label60.Size" type="System.Drawing.Size, System.Drawing">
-    <value>384, 13</value>
+    <value>393, 13</value>
   </data>
   <data name="Label60.Text" xml:space="preserve">
     <value>Enter the amount of each UNIFAC group in the compound structure, if available.</value>
   </data>
   <data name="GridUNIFAC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>560, 287</value>
+    <value>560, 333</value>
   </data>
   <data name="Column4.HeaderText" xml:space="preserve">
     <value>Amount</value>
@@ -221,98 +221,101 @@
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Example</value>
   </data>
-  <data name="Text1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 13</value>
-  </data>
-  <data name="Text1.Text" xml:space="preserve">
-    <value>SRK Volume Translation Coefficient</value>
-  </data>
-  <data name="Label65.Size" type="System.Drawing.Size, System.Drawing">
-    <value>226, 13</value>
-  </data>
-  <data name="Label65.Text" xml:space="preserve">
-    <value>Peng-Robinson Volume Translation Coefficient</value>
-  </data>
-  <data name="Label64.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 13</value>
-  </data>
-  <data name="Label64.Text" xml:space="preserve">
-    <value>Chao-Seader Liquid Molar Volume</value>
-  </data>
-  <data name="Label63.Size" type="System.Drawing.Size, System.Drawing">
-    <value>164, 13</value>
-  </data>
-  <data name="Label63.Text" xml:space="preserve">
-    <value>Chao-Seader Solubility Parameter</value>
-  </data>
-  <data name="Label62.Text" xml:space="preserve">
-    <value>Chao-Seader Acentric Factor</value>
-  </data>
-  <data name="LabelWithDivider16.Size" type="System.Drawing.Size, System.Drawing">
-    <value>562, 18</value>
-  </data>
-  <data name="LabelWithDivider16.Text" xml:space="preserve">
-    <value>Model Parameters</value>
-  </data>
-  <data name="LabelWithDivider13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>562, 18</value>
-  </data>
-  <data name="LabelWithDivider13.Text" xml:space="preserve">
-    <value>Normal Boiling Point</value>
-  </data>
-  <data name="Label56.Size" type="System.Drawing.Size, System.Drawing">
-    <value>136, 13</value>
-  </data>
-  <data name="Label56.Text" xml:space="preserve">
-    <value>Normal Boiling Point (1 atm)</value>
-  </data>
-  <data name="Label53.Size" type="System.Drawing.Size, System.Drawing">
-    <value>213, 13</value>
-  </data>
-  <data name="Label53.Text" xml:space="preserve">
-    <value>Gibbs Energy of Formation (Ideal Gas, 25 C)</value>
-  </data>
   <data name="LabelWithDivider12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>562, 18</value>
+    <value>574, 18</value>
   </data>
   <data name="LabelWithDivider12.Text" xml:space="preserve">
     <value>Formation Properties</value>
   </data>
   <data name="Label50.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 13</value>
+    <value>198, 13</value>
   </data>
   <data name="Label50.Text" xml:space="preserve">
     <value>Enthalpy of Formation (Ideal Gas, 25 C)</value>
   </data>
+  <data name="Label53.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 13</value>
+  </data>
+  <data name="Label53.Text" xml:space="preserve">
+    <value>Gibbs Energy of Formation (Ideal Gas, 25 C)</value>
+  </data>
+  <data name="Label56.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 13</value>
+  </data>
+  <data name="Label56.Text" xml:space="preserve">
+    <value>Normal Boiling Point (1 atm)</value>
+  </data>
+  <data name="Text1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>174, 13</value>
+  </data>
+  <data name="Text1.Text" xml:space="preserve">
+    <value>SRK Volume Translation Coefficient</value>
+  </data>
+  <data name="LabelWithDivider13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>574, 18</value>
+  </data>
+  <data name="LabelWithDivider13.Text" xml:space="preserve">
+    <value>Normal Boiling Point</value>
+  </data>
+  <data name="LabelWithDivider16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>574, 18</value>
+  </data>
+  <data name="LabelWithDivider16.Text" xml:space="preserve">
+    <value>Model Parameters</value>
+  </data>
+  <data name="Label62.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 13</value>
+  </data>
+  <data name="Label62.Text" xml:space="preserve">
+    <value>Chao-Seader Acentric Factor</value>
+  </data>
+  <data name="Label65.Size" type="System.Drawing.Size, System.Drawing">
+    <value>227, 13</value>
+  </data>
+  <data name="Label65.Text" xml:space="preserve">
+    <value>Peng-Robinson Volume Translation Coefficient</value>
+  </data>
+  <data name="Label64.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 13</value>
+  </data>
+  <data name="Label64.Text" xml:space="preserve">
+    <value>Chao-Seader Liquid Molar Volume</value>
+  </data>
+  <data name="Label63.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 13</value>
+  </data>
+  <data name="Label63.Text" xml:space="preserve">
+    <value>Chao-Seader Solubility Parameter</value>
+  </data>
+  <data name="LabelWithDivider2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>592, 18</value>
+  </data>
+  <data name="LabelWithDivider2.Text" xml:space="preserve">
+    <value>Critical Temperature</value>
+  </data>
   <data name="LabelWithDivider6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>580, 18</value>
+    <value>592, 18</value>
   </data>
   <data name="LabelWithDivider6.Text" xml:space="preserve">
     <value>Acentric Factor</value>
   </data>
+  <data name="LabelWithDivider3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>592, 18</value>
+  </data>
+  <data name="LabelWithDivider3.Text" xml:space="preserve">
+    <value>Critical Pressure</value>
+  </data>
   <data name="LabelWithDivider5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>580, 18</value>
+    <value>592, 18</value>
   </data>
   <data name="LabelWithDivider5.Text" xml:space="preserve">
     <value>Rackett Parameter</value>
   </data>
   <data name="LabelWithDivider4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>581, 18</value>
+    <value>593, 18</value>
   </data>
   <data name="LabelWithDivider4.Text" xml:space="preserve">
     <value>Critical Compressibility Factor</value>
-  </data>
-  <data name="LabelWithDivider3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>580, 18</value>
-  </data>
-  <data name="LabelWithDivider3.Text" xml:space="preserve">
-    <value>Critical Pressure</value>
-  </data>
-  <data name="LabelWithDivider2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>580, 18</value>
-  </data>
-  <data name="LabelWithDivider2.Text" xml:space="preserve">
-    <value>Critical Temperature</value>
   </data>
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>PC-SAFT Parameters</value>
@@ -329,26 +332,65 @@
   <data name="GroupBox11.Text" xml:space="preserve">
     <value>UNIQUAC Parameters</value>
   </data>
+  <data name="LabelWithDivider1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 18</value>
+  </data>
+  <data name="LabelWithDivider1.Text" xml:space="preserve">
+    <value>Fusion data</value>
+  </data>
+  <data name="Label52.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 13</value>
+  </data>
+  <data name="Label52.Text" xml:space="preserve">
+    <value>Temperature of fusion</value>
+  </data>
+  <data name="Label55.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 13</value>
+  </data>
+  <data name="Label55.Text" xml:space="preserve">
+    <value>Enthaly of fusion</value>
+  </data>
   <data name="Label43.Location" type="System.Drawing.Point, System.Drawing">
     <value>252, 202</value>
   </data>
   <data name="Label43.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 13</value>
+    <value>81, 13</value>
   </data>
   <data name="Label43.Text" xml:space="preserve">
     <value>* P in Pa, T in K</value>
   </data>
+  <data name="rbEstimatePVAP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>126, 17</value>
+  </data>
+  <data name="rbEstimatePVAP.Text" xml:space="preserve">
+    <value>Estimate (Lee Kesler)</value>
+  </data>
   <data name="tbPVAP_E.Location" type="System.Drawing.Point, System.Drawing">
     <value>272, 174</value>
+  </data>
+  <data name="rbRegressPVAP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 17</value>
+  </data>
+  <data name="rbRegressPVAP.Text" xml:space="preserve">
+    <value>Regress Experimental Data</value>
   </data>
   <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
     <value>252, 177</value>
   </data>
+  <data name="GridExpDataPVAP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 170</value>
+  </data>
   <data name="tbPVAP_D.Location" type="System.Drawing.Point, System.Drawing">
     <value>272, 148</value>
   </data>
+  <data name="btnRegressPVAP.Text" xml:space="preserve">
+    <value>Regress Data</value>
+  </data>
   <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
     <value>252, 151</value>
+  </data>
+  <data name="btnViewPVAP.Text" xml:space="preserve">
+    <value>View Regression</value>
   </data>
   <data name="tbPVAP_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>272, 122</value>
@@ -359,14 +401,23 @@
   <data name="tbPVAP_B.Location" type="System.Drawing.Point, System.Drawing">
     <value>272, 96</value>
   </data>
+  <data name="rbCoeffPVAP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>255, 13</value>
+  </data>
+  <data name="rbCoeffPVAP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 17</value>
+  </data>
+  <data name="rbCoeffPVAP.Text" xml:space="preserve">
+    <value>Insert Equation Coefficients *</value>
+  </data>
   <data name="Label5.Location" type="System.Drawing.Point, System.Drawing">
     <value>252, 99</value>
   </data>
+  <data name="cbEqPVAP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>306, 38</value>
+  </data>
   <data name="tbPVAP_A.Location" type="System.Drawing.Point, System.Drawing">
     <value>272, 70</value>
-  </data>
-  <data name="Label29.Location" type="System.Drawing.Point, System.Drawing">
-    <value>252, 73</value>
   </data>
   <data name="Label30.Location" type="System.Drawing.Point, System.Drawing">
     <value>252, 41</value>
@@ -377,38 +428,8 @@
   <data name="Label30.Text" xml:space="preserve">
     <value>Equation</value>
   </data>
-  <data name="cbEqPVAP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>306, 38</value>
-  </data>
-  <data name="rbCoeffPVAP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>255, 13</value>
-  </data>
-  <data name="rbCoeffPVAP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 17</value>
-  </data>
-  <data name="rbCoeffPVAP.Text" xml:space="preserve">
-    <value>Insert Equation Coefficients *</value>
-  </data>
-  <data name="btnViewPVAP.Text" xml:space="preserve">
-    <value>View Regression</value>
-  </data>
-  <data name="btnRegressPVAP.Text" xml:space="preserve">
-    <value>Regress Data</value>
-  </data>
-  <data name="GridExpDataPVAP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 170</value>
-  </data>
-  <data name="rbRegressPVAP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 17</value>
-  </data>
-  <data name="rbRegressPVAP.Text" xml:space="preserve">
-    <value>Regress Experimental Data</value>
-  </data>
-  <data name="rbEstimatePVAP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 17</value>
-  </data>
-  <data name="rbEstimatePVAP.Text" xml:space="preserve">
-    <value>Estimate (Lee Kesler)</value>
+  <data name="Label29.Location" type="System.Drawing.Point, System.Drawing">
+    <value>252, 73</value>
   </data>
   <data name="Label44.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -417,67 +438,22 @@
     <value>237, 203</value>
   </data>
   <data name="Label44.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 13</value>
+    <value>124, 13</value>
   </data>
   <data name="Label44.Text" xml:space="preserve">
     <value>* Cp in J/[kmol.K], T in K</value>
   </data>
-  <data name="tbCPIG_E.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 175</value>
-  </data>
-  <data name="Label18.Location" type="System.Drawing.Point, System.Drawing">
-    <value>234, 178</value>
-  </data>
-  <data name="btnViewCPIG.Text" xml:space="preserve">
-    <value>View Regression</value>
-  </data>
-  <data name="tbCPIG_D.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 149</value>
-  </data>
-  <data name="btnRegressCPIG.Text" xml:space="preserve">
-    <value>Regress Data</value>
-  </data>
-  <data name="Label19.Location" type="System.Drawing.Point, System.Drawing">
-    <value>234, 152</value>
-  </data>
-  <data name="tbCPIG_C.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 123</value>
-  </data>
-  <data name="rbRegressCPIG.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 17</value>
-  </data>
-  <data name="rbRegressCPIG.Text" xml:space="preserve">
-    <value>Regress Experimental Data</value>
-  </data>
-  <data name="Label23.Location" type="System.Drawing.Point, System.Drawing">
-    <value>234, 126</value>
-  </data>
   <data name="rbEstimateCPIG.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 17</value>
+    <value>152, 17</value>
   </data>
   <data name="rbEstimateCPIG.Text" xml:space="preserve">
     <value>Estimate (Joback/UNIFAC)</value>
   </data>
-  <data name="tbCPIG_B.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 97</value>
+  <data name="Label26.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 74</value>
   </data>
-  <data name="rbCoeffCPIG.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 14</value>
-  </data>
-  <data name="rbCoeffCPIG.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 17</value>
-  </data>
-  <data name="rbCoeffCPIG.Text" xml:space="preserve">
-    <value>Insert Equation Coefficients *</value>
-  </data>
-  <data name="Label24.Location" type="System.Drawing.Point, System.Drawing">
-    <value>234, 100</value>
-  </data>
-  <data name="cbEqCPIG.Location" type="System.Drawing.Point, System.Drawing">
-    <value>291, 39</value>
-  </data>
-  <data name="tbCPIG_A.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 71</value>
+  <data name="tbCPIG_E.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 175</value>
   </data>
   <data name="Label28.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 42</value>
@@ -488,14 +464,86 @@
   <data name="Label28.Text" xml:space="preserve">
     <value>Equation</value>
   </data>
-  <data name="Label26.Location" type="System.Drawing.Point, System.Drawing">
-    <value>234, 74</value>
+  <data name="tbCPIG_A.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 71</value>
+  </data>
+  <data name="Label18.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 178</value>
+  </data>
+  <data name="cbEqCPIG.Location" type="System.Drawing.Point, System.Drawing">
+    <value>291, 39</value>
+  </data>
+  <data name="btnViewCPIG.Text" xml:space="preserve">
+    <value>View Regression</value>
+  </data>
+  <data name="Label24.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 100</value>
+  </data>
+  <data name="tbCPIG_D.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 149</value>
+  </data>
+  <data name="rbCoeffCPIG.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 14</value>
+  </data>
+  <data name="rbCoeffCPIG.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 17</value>
+  </data>
+  <data name="rbCoeffCPIG.Text" xml:space="preserve">
+    <value>Insert Equation Coefficients *</value>
+  </data>
+  <data name="btnRegressCPIG.Text" xml:space="preserve">
+    <value>Regress Data</value>
+  </data>
+  <data name="tbCPIG_B.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 97</value>
+  </data>
+  <data name="Label19.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 152</value>
+  </data>
+  <data name="Label23.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 126</value>
+  </data>
+  <data name="rbRegressCPIG.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 17</value>
+  </data>
+  <data name="rbRegressCPIG.Text" xml:space="preserve">
+    <value>Regress Experimental Data</value>
+  </data>
+  <data name="tbCPIG_C.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 123</value>
   </data>
   <data name="Label45.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 13</value>
+    <value>116, 13</value>
   </data>
   <data name="Label45.Text" xml:space="preserve">
     <value>* Dens in kg/m3, T in K</value>
+  </data>
+  <data name="rbEstimateLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 17</value>
+  </data>
+  <data name="rbEstimateLIQDENS.Text" xml:space="preserve">
+    <value>Estimate (Rackett)</value>
+  </data>
+  <data name="rbRegressLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 17</value>
+  </data>
+  <data name="rbRegressLIQDENS.Text" xml:space="preserve">
+    <value>Regress Experimental Data</value>
+  </data>
+  <data name="GridExpDataLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 170</value>
+  </data>
+  <data name="btnRegressLIQDENS.Text" xml:space="preserve">
+    <value>Regress Data</value>
+  </data>
+  <data name="btnViewLIQDENS.Text" xml:space="preserve">
+    <value>View Regression</value>
+  </data>
+  <data name="rbCoeffLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 17</value>
+  </data>
+  <data name="rbCoeffLIQDENS.Text" xml:space="preserve">
+    <value>Insert Equation Coefficients *</value>
   </data>
   <data name="Label36.Size" type="System.Drawing.Size, System.Drawing">
     <value>49, 13</value>
@@ -503,44 +551,29 @@
   <data name="Label36.Text" xml:space="preserve">
     <value>Equation</value>
   </data>
-  <data name="rbCoeffLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 17</value>
-  </data>
-  <data name="rbCoeffLIQDENS.Text" xml:space="preserve">
-    <value>Insert Equation Coefficients *</value>
-  </data>
-  <data name="btnViewLIQDENS.Text" xml:space="preserve">
-    <value>View Regression</value>
-  </data>
-  <data name="btnRegressLIQDENS.Text" xml:space="preserve">
-    <value>Regress Data</value>
-  </data>
-  <data name="GridExpDataLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 170</value>
-  </data>
-  <data name="rbRegressLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 17</value>
-  </data>
-  <data name="rbRegressLIQDENS.Text" xml:space="preserve">
-    <value>Regress Experimental Data</value>
-  </data>
-  <data name="rbEstimateLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 17</value>
-  </data>
-  <data name="rbEstimateLIQDENS.Text" xml:space="preserve">
-    <value>Estimate (Rackett)</value>
-  </data>
   <data name="Label46.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 203</value>
   </data>
   <data name="Label46.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 13</value>
+    <value>102, 13</value>
   </data>
   <data name="Label46.Text" xml:space="preserve">
     <value>* Visc in Pa.s, T in K</value>
   </data>
+  <data name="rbEstimateLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 17</value>
+  </data>
+  <data name="rbEstimateLIQVISC.Text" xml:space="preserve">
+    <value>Estimate (Letsou-Stiel)</value>
+  </data>
   <data name="tbLIQVISC_E.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 175</value>
+  </data>
+  <data name="rbRegressLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 17</value>
+  </data>
+  <data name="rbRegressLIQVISC.Text" xml:space="preserve">
+    <value>Regress Experimental Data</value>
   </data>
   <data name="Label37.Location" type="System.Drawing.Point, System.Drawing">
     <value>234, 178</value>
@@ -548,8 +581,14 @@
   <data name="tbLIQVISC_D.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 149</value>
   </data>
+  <data name="btnRegressLIQVISC.Text" xml:space="preserve">
+    <value>Regress Data</value>
+  </data>
   <data name="Label38.Location" type="System.Drawing.Point, System.Drawing">
     <value>234, 152</value>
+  </data>
+  <data name="btnViewLIQVISC.Text" xml:space="preserve">
+    <value>View Regression</value>
   </data>
   <data name="tbLIQVISC_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 123</value>
@@ -560,14 +599,23 @@
   <data name="tbLIQVISC_B.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 97</value>
   </data>
+  <data name="rbCoeffLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 14</value>
+  </data>
+  <data name="rbCoeffLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 17</value>
+  </data>
+  <data name="rbCoeffLIQVISC.Text" xml:space="preserve">
+    <value>Insert Equation Coefficients *</value>
+  </data>
   <data name="Label40.Location" type="System.Drawing.Point, System.Drawing">
     <value>234, 100</value>
   </data>
+  <data name="cbEqLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
+    <value>291, 39</value>
+  </data>
   <data name="tbLIQVISC_A.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 71</value>
-  </data>
-  <data name="Label41.Location" type="System.Drawing.Point, System.Drawing">
-    <value>234, 74</value>
   </data>
   <data name="Label42.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 42</value>
@@ -578,41 +626,20 @@
   <data name="Label42.Text" xml:space="preserve">
     <value>Equation</value>
   </data>
-  <data name="cbEqLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
-    <value>291, 39</value>
-  </data>
-  <data name="rbCoeffLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 14</value>
-  </data>
-  <data name="rbCoeffLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 17</value>
-  </data>
-  <data name="rbCoeffLIQVISC.Text" xml:space="preserve">
-    <value>Insert Equation Coefficients *</value>
-  </data>
-  <data name="btnViewLIQVISC.Text" xml:space="preserve">
-    <value>View Regression</value>
-  </data>
-  <data name="btnRegressLIQVISC.Text" xml:space="preserve">
-    <value>Regress Data</value>
-  </data>
-  <data name="rbRegressLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 17</value>
-  </data>
-  <data name="rbRegressLIQVISC.Text" xml:space="preserve">
-    <value>Regress Experimental Data</value>
-  </data>
-  <data name="rbEstimateLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>129, 17</value>
-  </data>
-  <data name="rbEstimateLIQVISC.Text" xml:space="preserve">
-    <value>Estimate (Letsou-Stiel)</value>
-  </data>
-  <data name="GroupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="Label41.Location" type="System.Drawing.Point, System.Drawing">
+    <value>234, 74</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>System of Units</value>
+  </data>
+  <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 13</value>
+  </data>
+  <data name="Label15.Text" xml:space="preserve">
+    <value>System of Units:</value>
+  </data>
+  <data name="cbUnits.Size" type="System.Drawing.Size, System.Drawing">
+    <value>218, 21</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="cbUnits.TabIndex" type="System.Int32, mscorlib">

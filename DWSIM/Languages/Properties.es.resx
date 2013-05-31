@@ -1008,6 +1008,12 @@
     <value>Balanço de Energia</value>
     <comment>0</comment>
   </data>
+  <data name="PROP_SS_1" xml:space="preserve">
+    <value>Eficiência de Separação de Sólidos</value>
+  </data>
+  <data name="PROP_SS_2" xml:space="preserve">
+    <value>Eficiência de Separação de Líquidos</value>
+  </data>
   <data name="PROP_SV_0" xml:space="preserve">
     <value>Temperatura de Separación</value>
     <comment>1</comment>
