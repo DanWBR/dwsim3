@@ -223,6 +223,18 @@ Public Class FormUnitGen
             .Add(New Object() {DWSIM.App.GetLocalString("HXFoulingFactor")})
             .Item(.Count - 1).Cells(1) = cb
 
+            cb = New DataGridViewComboBoxCell
+            cb.Items.AddRange(New String() {"m/kg", "ft/lbm", "cm/g"})
+            cb.Value = currentset.cakeresistance
+            .Add(New Object() {DWSIM.App.GetLocalString("FilterSpecificCakeResistance")})
+            .Item(.Count - 1).Cells(1) = cb
+
+            cb = New DataGridViewComboBoxCell
+            cb.Items.AddRange(New String() {"m-1", "cm-1", "ft-1"})
+            cb.Value = currentset.mediumresistance
+            .Add(New Object() {DWSIM.App.GetLocalString("FilterMediumResistance")})
+            .Item(.Count - 1).Cells(1) = cb
+
         End With
     End Sub
 

@@ -743,7 +743,7 @@ Imports System.Runtime.InteropServices
                         End If
                     End If
                 End If
-            ElseIf sobj.TipoObjeto = TipoObjeto.ComponentSeparator Or sobj.TipoObjeto = TipoObjeto.SolidSeparator Then
+            ElseIf sobj.TipoObjeto = TipoObjeto.ComponentSeparator Or sobj.TipoObjeto = TipoObjeto.SolidSeparator Or sobj.TipoObjeto = TipoObjeto.Filter Then
                 If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then

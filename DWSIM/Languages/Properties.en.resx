@@ -233,6 +233,30 @@
     <value>Power</value>
     <comment>1</comment>
   </data>
+  <data name="PROP_FT_0" xml:space="preserve">
+    <value>Energy Balance</value>
+  </data>
+  <data name="PROP_FT_1" xml:space="preserve">
+    <value>Total Filter Area</value>
+  </data>
+  <data name="PROP_FT_2" xml:space="preserve">
+    <value>Cake Relative Humidity (%)</value>
+  </data>
+  <data name="PROP_FT_3" xml:space="preserve">
+    <value>Cycle Time</value>
+  </data>
+  <data name="PROP_FT_4" xml:space="preserve">
+    <value>Filter Medium Resistance</value>
+  </data>
+  <data name="PROP_FT_5" xml:space="preserve">
+    <value>Specific Cake Resistance</value>
+  </data>
+  <data name="PROP_FT_6" xml:space="preserve">
+    <value>Submerged Area Fraction</value>
+  </data>
+  <data name="PROP_FT_7" xml:space="preserve">
+    <value>Total Pressure Drop</value>
+  </data>
   <data name="PROP_GR_0" xml:space="preserve">
     <value>Pressure Drop</value>
     <comment>1</comment>

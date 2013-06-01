@@ -1947,6 +1947,7 @@
     <None Include="Resources\dwsim31.png" />
     <None Include="Resources\dwsim3bg.jpg" />
     <None Include="Resources\DWSIM-branco.png" />
+    <None Include="Resources\dwsim 3 bg.png" />
     <Content Include="Resources\es.png" />
     <Content Include="Resources\fr.png" />
     <None Include="Resources\green_down.png" />

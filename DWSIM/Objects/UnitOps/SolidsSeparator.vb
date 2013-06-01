@@ -71,7 +71,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 With objargs
                     .Calculado = False
                     .Nome = Me.Nome
-                    .Tipo = TipoObjeto.Vessel
+                    .Tipo = TipoObjeto.SolidSeparator
                 End With
                 CalculateFlowsheet(FlowSheet, objargs, Nothing)
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
@@ -80,7 +80,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 With objargs
                     .Calculado = False
                     .Nome = Me.Nome
-                    .Tipo = TipoObjeto.Vessel
+                    .Tipo = TipoObjeto.SolidSeparator
                 End With
                 CalculateFlowsheet(FlowSheet, objargs, Nothing)
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
@@ -89,7 +89,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 With objargs
                     .Calculado = False
                     .Nome = Me.Nome
-                    .Tipo = TipoObjeto.Vessel
+                    .Tipo = TipoObjeto.SolidSeparator
                 End With
                 CalculateFlowsheet(FlowSheet, objargs, Nothing)
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))

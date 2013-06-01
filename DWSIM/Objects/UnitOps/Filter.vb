@@ -1,4 +1,9 @@
-﻿'    Filter Calculation Routines 
+﻿'    Continuous Cake Filter Unit Operation Calculation Routines 
+'
+'    Model based on the Cake Filter equations of Chapter 29 - 
+'    "Mechanical Separations" from the "Unit Operations of Chemical Engineering" 
+'    book by McCabe, Smith and Harriott, Seventh Edition. 
+'
 '    Copyright 2013 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -20,6 +25,7 @@ Imports Microsoft.MSDN.Samples.GraphicObjects
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.SimulationObjects.Streams
 Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 
 Namespace DWSIM.SimulationObjects.UnitOps
 
@@ -28,8 +34,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Inherits SimulationObjects_UnitOpBaseClass
 
         Protected m_ei As Double
-        Protected _compsepspeccollection As Dictionary(Of String, ComponentSeparationSpec)
-        Protected _streamindex As Byte = 0
 
         Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
             Return MyBase.LoadData(data)
@@ -40,47 +44,24 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim elements As System.Collections.Generic.List(Of System.Xml.Linq.XElement) = MyBase.SaveData()
             Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
 
-            With elements
-                .Add(New XElement("SeparationSpecs"))
-                For Each kvp As KeyValuePair(Of String, ComponentSeparationSpec) In _compsepspeccollection
-                    .Item(.Count - 1).Add(New XElement("SeparationSpec", New XAttribute("ID", kvp.Key),
-                                                       New XAttribute("CompID", kvp.Value.ComponentID),
-                                                       New XAttribute("SepSpec", kvp.Value.SepSpec),
-                                                       New XAttribute("SpecUnit", kvp.Value.SpecUnit),
-                                                       New XAttribute("SpecValue", kvp.Value.SpecValue.ToString(ci))))
-                Next
-            End With
-
             Return elements
 
         End Function
 
-        Public Property SpecifiedStreamIndex() As Byte
-            Get
-                Return _streamindex
-            End Get
-            Set(ByVal value As Byte)
-                _streamindex = value
-            End Set
-        End Property
+        Public Enum CalculationMode
+            Design = 0
+            Simulation = 1
+        End Enum
 
-        Public Property ComponentSepSpecs() As Dictionary(Of String, ComponentSeparationSpec)
-            Get
-                Return _compsepspeccollection
-            End Get
-            Set(ByVal value As Dictionary(Of String, ComponentSeparationSpec))
-                _compsepspeccollection = value
-            End Set
-        End Property
-
-        Public Property EnergyImb() As Double
-            Get
-                Return m_ei
-            End Get
-            Set(ByVal value As Double)
-                m_ei = value
-            End Set
-        End Property
+        Public Property EnergyImb As Double = 0.0#
+        Public Property PressureDrop As Double = 0.0#
+        Public Property TotalFilterArea As Double = 1.0#
+        Public Property SubmergedAreaFraction As Double = 0.3#
+        Public Property SpecificCakeResistance As Double = 10000000000.0
+        Public Property FilterMediumResistance As Double = 0.000000001
+        Public Property FilterCycleTime As Double = 300.0#
+        Public Property CakeRelativeHumidity As Double = 0.0#
+        Public Property CalcMode As CalculationMode = CalculationMode.Simulation
 
         Public Sub New()
             MyBase.New()
@@ -94,7 +75,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Me.FillNodeItems()
             Me.QTFillNodeItems()
             Me.ShowQuickTable = True
-            Me.ComponentSepSpecs = New Dictionary(Of String, ComponentSeparationSpec)
 
         End Sub
 
@@ -103,97 +83,146 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim form As FormFlowsheet = Me.FlowSheet
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
 
-            Dim su As SistemasDeUnidades.Unidades = form.Options.SelectedUnitSystem
-            Dim cv As New SistemasDeUnidades.Conversor
+            If Not Me.GraphicObject.InputConnectors(0).IsAttached Then
+                'Call function to calculate flowsheet
+                With objargs
+                    .Calculado = False
+                    .Nome = Me.Nome
+                    .Tipo = TipoObjeto.Filter
+                End With
+                CalculateFlowsheet(FlowSheet, objargs, Nothing)
+                Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
+            ElseIf Not Me.GraphicObject.OutputConnectors(0).IsAttached Then
+                'Call function to calculate flowsheet
+                With objargs
+                    .Calculado = False
+                    .Nome = Me.Nome
+                    .Tipo = TipoObjeto.Filter
+                End With
+                CalculateFlowsheet(FlowSheet, objargs, Nothing)
+                Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
+            ElseIf Not Me.GraphicObject.OutputConnectors(1).IsAttached Then
+                'Call function to calculate flowsheet
+                With objargs
+                    .Calculado = False
+                    .Nome = Me.Nome
+                    .Tipo = TipoObjeto.Filter
+                End With
+                CalculateFlowsheet(FlowSheet, objargs, Nothing)
+                Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
+            End If
 
-            Dim instr, outstr1, outstr2, specstr, otherstr As Streams.MaterialStream
+            Dim instr, outstr1, outstr2 As Streams.MaterialStream
             instr = FlowSheet.Collections.ObjectCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
             outstr1 = FlowSheet.Collections.ObjectCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
             outstr2 = FlowSheet.Collections.ObjectCollection(Me.GraphicObject.OutputConnectors(1).AttachedConnector.AttachedTo.Name)
 
-            'get component ids
+            Dim W As Double = instr.Fases(0).SPMProperties.massflow.GetValueOrDefault
+            Dim Wsin As Double = instr.Fases(7).SPMProperties.massflow.GetValueOrDefault
+            Dim Wlin As Double = W - Wsin
 
-            Dim namesS, namesC As New ArrayList
+            Dim n, At, c, alpha, Rm, f, tc, mf_mc, dp As Double
 
-            For Each sb As Substancia In instr.Fases(0).Componentes.Values
-                namesS.Add(sb.Nome)
-            Next
-            For Each cs As ComponentSeparationSpec In Me.ComponentSepSpecs.Values
-                namesC.Add(cs.ComponentID)
-            Next
+            tc = Me.FilterCycleTime
+            n = 1 / tc
+            f = Me.SubmergedAreaFraction
+            alpha = Me.SpecificCakeResistance
+            Rm = Me.FilterMediumResistance
+            mf_mc = 100 / (100 - Me.CakeRelativeHumidity)
 
-            If namesC.Count > namesS.Count Then
+            Dim rho, mu, cf, frh, crh As Double
 
-            ElseIf namesC.Count < namesS.Count Then
+            rho = instr.Fases(1).SPMProperties.density.GetValueOrDefault
+            mu = instr.Fases(1).SPMProperties.viscosity.GetValueOrDefault
+            cf = instr.Fases(7).SPMProperties.massflow.GetValueOrDefault / instr.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
+            frh = instr.Fases(1).SPMProperties.massflow.GetValueOrDefault / (instr.Fases(1).SPMProperties.massflow.GetValueOrDefault + instr.Fases(7).SPMProperties.massflow.GetValueOrDefault)
+            crh = Me.CakeRelativeHumidity / 100
 
+            If crh > frh Then
+                'Call function to calculate flowsheet
+                With objargs
+                    .Calculado = False
+                    .Nome = Me.Nome
+                    .Tipo = TipoObjeto.Filter
+                End With
+                CalculateFlowsheet(FlowSheet, objargs, Nothing)
+                Throw New Exception(DWSIM.App.GetLocalString("FilterInvalidCakeHumidity"))
             End If
 
-            If Me.SpecifiedStreamIndex = 0 Then
-                specstr = outstr1
-                otherstr = outstr2
-            Else
-                specstr = outstr2
-                otherstr = outstr1
+            c = cf / (1 - (mf_mc - 1) * cf / rho)
+
+            Select Case CalcMode
+                Case CalculationMode.Design
+                    dp = Me.PressureDrop
+                    At = Wsin * alpha / ((2 * c * alpha * dp * f * n / mu + (n * Rm) ^ 2) ^ 0.5 - n * Rm)
+                    Me.TotalFilterArea = At
+                Case CalculationMode.Simulation
+                    At = Me.TotalFilterArea
+                    dp = ((n * Rm) ^ 2 + (n * Rm + Wsin * alpha / At) ^ 2) / (2 * c * alpha * f * n / mu)
+                    Me.PressureDrop = dp
+            End Select
+
+            Dim Wsout As Double = Wsin / (1 - crh)
+            Dim Wlout As Double = W - Wsout
+
+            Dim mw As Double
+
+            Dim cp As ConnectionPoint
+
+            cp = Me.GraphicObject.OutputConnectors(0)
+            If cp.IsAttached Then
+                outstr1 = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
+                With outstr1
+                    .ClearAllProps()
+                    .Fases(0).SPMProperties.massflow = Wlout
+                    Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                    For Each comp In .Fases(0).Componentes.Values
+                        comp.MassFlow = instr.Fases(1).Componentes(comp.Nome).MassFlow * Wlout / W
+                        comp.FracaoMassica = comp.MassFlow / Wlout
+                    Next
+                    mw = 0.0#
+                    For Each comp In .Fases(0).Componentes.Values
+                        mw += comp.FracaoMassica / comp.ConstantProperties.Molar_Weight
+                    Next
+                    For Each comp In .Fases(0).Componentes.Values
+                        comp.FracaoMolar = comp.FracaoMassica / comp.ConstantProperties.Molar_Weight / mw
+                    Next
+                    For Each comp In .Fases(0).Componentes.Values
+                        comp.MolarFlow = comp.MassFlow / comp.ConstantProperties.Molar_Weight / 1000
+                    Next
+                End With
             End If
 
-            'separate components according to specifications
-
-            For Each cs As ComponentSeparationSpec In Me.ComponentSepSpecs.Values
-                With specstr.Fases(0).Componentes(cs.ComponentID)
-                    Select Case cs.SepSpec
-                        Case SeparationSpec.MassFlow
-                            .MassFlow = cv.ConverterParaSI(su.spmp_massflow, cs.SpecValue)
-                            .MolarFlow = .MassFlow / .ConstantProperties.Molar_Weight * 1000
-                        Case SeparationSpec.MolarFlow
-                            .MolarFlow = cv.ConverterParaSI(su.spmp_molarflow, cs.SpecValue)
-                            .MassFlow = .MolarFlow * .ConstantProperties.Molar_Weight / 1000
-                        Case SeparationSpec.PercentInletMassFlow
-                            .MassFlow = cs.SpecValue / 100 * instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
-                            .MolarFlow = .MassFlow / .ConstantProperties.Molar_Weight * 1000
-                        Case SeparationSpec.PercentInletMolarFlow
-                            .MolarFlow = cs.SpecValue / 100 * instr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault
-                            .MassFlow = .MolarFlow * .ConstantProperties.Molar_Weight / 1000
-                    End Select
+            cp = Me.GraphicObject.OutputConnectors(1)
+            If cp.IsAttached Then
+                outstr2 = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
+                With outstr2
+                    .ClearAllProps()
+                    .Fases(0).SPMProperties.massflow = Wsout
+                    Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                    For Each comp In .Fases(0).Componentes.Values
+                        comp.MassFlow = instr.Fases(1).Componentes(comp.Nome).MassFlow * (W - Wlout) / W + instr.Fases(7).Componentes(comp.Nome).MassFlow
+                        comp.FracaoMassica = comp.MassFlow / Wsout
+                    Next
+                    mw = 0.0#
+                    For Each comp In .Fases(0).Componentes.Values
+                        mw += comp.FracaoMassica / comp.ConstantProperties.Molar_Weight
+                    Next
+                    For Each comp In .Fases(0).Componentes.Values
+                        comp.FracaoMolar = comp.FracaoMassica / comp.ConstantProperties.Molar_Weight / mw
+                    Next
+                    For Each comp In .Fases(0).Componentes.Values
+                        comp.MolarFlow = comp.MassFlow / comp.ConstantProperties.Molar_Weight / 1000
+                    Next
                 End With
-                With otherstr.Fases(0).Componentes(cs.ComponentID)
-                    .MassFlow = instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
-                    .MolarFlow = instr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault
-                End With
-            Next
-
-            Dim summ, sumw As Double
-
-            summ = 0
-            sumw = 0
-            For Each sb As Substancia In specstr.Fases(0).Componentes.Values
-                summ += sb.MolarFlow.GetValueOrDefault
-                sumw += sb.MassFlow.GetValueOrDefault
-            Next
-            specstr.Fases(0).SPMProperties.molarflow = summ
-            specstr.Fases(0).SPMProperties.massflow = sumw
-            For Each sb As Substancia In specstr.Fases(0).Componentes.Values
-                sb.FracaoMolar = sb.MolarFlow.GetValueOrDefault / summ
-                sb.FracaoMassica = sb.MassFlow.GetValueOrDefault / sumw
-            Next
-            summ = 0
-            sumw = 0
-            For Each sb As Substancia In otherstr.Fases(0).Componentes.Values
-                summ += sb.MolarFlow.GetValueOrDefault
-                sumw += sb.MassFlow.GetValueOrDefault
-            Next
-            otherstr.Fases(0).SPMProperties.molarflow = summ
-            otherstr.Fases(0).SPMProperties.massflow = sumw
-            For Each sb As Substancia In otherstr.Fases(0).Componentes.Values
-                sb.FracaoMolar = sb.MolarFlow.GetValueOrDefault / summ
-                sb.FracaoMassica = sb.MassFlow.GetValueOrDefault / sumw
-            Next
+            End If
 
             'pass conditions
 
             outstr1.Fases(0).SPMProperties.temperature = instr.Fases(0).SPMProperties.temperature.GetValueOrDefault
-            outstr1.Fases(0).SPMProperties.pressure = instr.Fases(0).SPMProperties.pressure.GetValueOrDefault
+            outstr1.Fases(0).SPMProperties.pressure = instr.Fases(0).SPMProperties.pressure.GetValueOrDefault - dp
             outstr2.Fases(0).SPMProperties.temperature = instr.Fases(0).SPMProperties.temperature.GetValueOrDefault
-            outstr2.Fases(0).SPMProperties.pressure = instr.Fases(0).SPMProperties.pressure.GetValueOrDefault
+            outstr2.Fases(0).SPMProperties.pressure = instr.Fases(0).SPMProperties.pressure.GetValueOrDefault - dp
 
             'do a flash calculation on streams to calculate energy imbalance
 
@@ -213,7 +242,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             'calculate imbalance
 
-            m_ei = Hi * Wi - Ho1 * Wo1 - Ho2 * Wo2
+            Me.EnergyImb = Hi * Wi - Ho1 * Wo1 - Ho2 * Wo2
 
             'update energy stream power value
 
@@ -236,10 +265,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Function
 
         Public Overrides Function DeCalculate() As Integer
-
-            'If Not Me.GraphicObject.InputConnectors(0).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac10"))
-            'If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac11"))
-            'If Not Me.GraphicObject.OutputConnectors(1).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac11"))
 
             Dim form As Global.DWSIM.FormFlowsheet = Me.FlowSheet
 
@@ -379,7 +404,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
 
-            Dim Conversor As New DWSIM.SistemasDeUnidades.Conversor
+            Dim Converter As New DWSIM.SistemasDeUnidades.Conversor
 
             With pgrid
 
@@ -435,18 +460,38 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputESSelector
                 End With
 
-                .Item.Add(DWSIM.App.GetLocalString("CSepSpecStream"), Me, "SpecifiedStreamIndex", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
-                With .Item(.Item.Count - 1)
-                    .DefaultValue = 0
-                End With
+                Dim value As Double
 
-                .Item.Add(DWSIM.App.GetLocalString("CSepSeparationSpecs"), Me, "ComponentSepSpecs", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
-                With .Item(.Item.Count - 1)
-                    .IsBrowsable = False
-                    .CustomEditor = New DWSIM.Editors.ComponentSeparator.UICSepSpecEditor
-                End With
+                value = Converter.ConverterDoSI(su.mediumresistance, Me.FilterMediumResistance)
+                .Item.Add(FT(DWSIM.App.GetLocalString("FilterMediumResistance"), su.mediumresistance), Format(value, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterMediumResistanceDesc"), True)
+                value = Converter.ConverterDoSI(su.cakeresistance, Me.SpecificCakeResistance)
+                .Item.Add(FT(DWSIM.App.GetLocalString("FilterSpecificCakeResistance"), su.cakeresistance), Format(value, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterSpecificCakeResistanceDesc"), True)
+                value = Converter.ConverterDoSI(su.time, Me.FilterCycleTime)
+                .Item.Add(FT(DWSIM.App.GetLocalString("FilterCycleTime"), su.time), Format(value, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterCycleTimeDesc"), True)
 
-                .Item.Add(FT(DWSIM.App.GetLocalString("CSepEnergyImbalance"), su.spmp_heatflow), Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), "", True)
+                .Item.Add(DWSIM.App.GetLocalString("FilterSubmergedAreaFraction"), Me, "SubmergedAreaFraction", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterSubmergedAreaFractionDesc"), True)
+                .Item.Add(DWSIM.App.GetLocalString("FilterCakeRelativeHumidity"), Me, "CakeRelativeHumidity", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterCakeRelativeHumidityDesc"), True)
+
+                .Item.Add(DWSIM.App.GetLocalString("FilterCalculationMode"), Me, "CalcMode", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterCalculationModeDesc"), True)
+
+                Select Case Me.CalcMode
+                    Case CalculationMode.Design
+                        value = Converter.ConverterDoSI(su.spmp_deltaP, Me.PressureDrop)
+                        .Item.Add(FT(DWSIM.App.GetLocalString("FilterPressureDrop"), su.spmp_deltaP), Format(value, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterPressureDropDesc"), True)
+                    Case CalculationMode.Simulation
+                        value = Converter.ConverterDoSI(su.area, Me.TotalFilterArea)
+                        .Item.Add(FT(DWSIM.App.GetLocalString("FilterArea"), su.area), Format(value, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterAreaDesc"), True)
+                End Select
+
+                If Me.GraphicObject.Calculated Then
+                    Select Case Me.CalcMode
+                        Case CalculationMode.Design
+                            .Item.Add(FT(DWSIM.App.GetLocalString("FilterArea"), su.area), Format(Converter.ConverterDoSI(su.area, Me.TotalFilterArea), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterAreaDesc"), True)
+                        Case CalculationMode.Simulation
+                            .Item.Add(FT(DWSIM.App.GetLocalString("FilterPressureDrop"), su.spmp_deltaP), Format(Converter.ConverterDoSI(su.spmp_deltaP, Me.PressureDrop), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterPressureDropDesc"), True)
+                    End Select
+                    .Item.Add(FT(DWSIM.App.GetLocalString("CSepEnergyImbalance"), su.spmp_heatflow), Format(Converter.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), "", True)
+                End If
 
                 If Me.IsSpecAttached = True Then
                     .Item.Add(DWSIM.App.GetLocalString("ObjetoUtilizadopor"), FlowSheet.Collections.ObjectCollection(Me.AttachedSpecId).GraphicObject.Tag, True, DWSIM.App.GetLocalString("Miscelnea2"), "", True)
@@ -474,11 +519,30 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-
+                    'PROP_FT_0	Energy Balance	
                     value = cv.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb)
-
+                Case 1
+                    'PROP_FT_1	Total Filter Area	
+                    value = cv.ConverterDoSI(su.area, Me.TotalFilterArea)
+                Case 2
+                    'PROP_FT_2	Cake Relative Humidity (%)	
+                    value = Me.CakeRelativeHumidity
+                Case 3
+                    'PROP_FT_3	Cycle Time	
+                    value = cv.ConverterDoSI(su.time, Me.FilterCycleTime)
+                Case 4
+                    'PROP_FT_4	Filter Medium Resistance	
+                    value = cv.ConverterDoSI(su.mediumresistance, Me.FilterMediumResistance)
+                Case 5
+                    'PROP_FT_5	Specific Cake Resistance	
+                    value = cv.ConverterDoSI(su.cakeresistance, Me.SpecificCakeResistance)
+                Case 6
+                    'PROP_FT_6	Submerged Area Fraction	
+                    value = Me.SubmergedAreaFraction
+                Case 7
+                    'PROP_FT_7	Total Pressure Drop	
+                    value = cv.ConverterDoSI(su.spmp_pressure, Me.PressureDrop)
             End Select
 
             Return value
@@ -488,18 +552,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
             Dim i As Integer = 0
             Dim proplist As New ArrayList
-            Select Case proptype
-                Case PropertyType.RW
-                Case PropertyType.WR
-                Case PropertyType.ALL
-                    For i = 0 To 0
-                        proplist.Add("PROP_CP_" + CStr(i))
-                    Next
-                Case PropertyType.RO
-                    For i = 0 To 0
-                        proplist.Add("PROP_CP_" + CStr(i))
-                    Next
-            End Select
+            For i = 0 To 7
+                proplist.Add("PROP_FT_" + CStr(i))
+            Next
             Return proplist.ToArray(GetType(System.String))
             proplist = Nothing
         End Function
@@ -510,7 +565,29 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
+                Case 0
+                    'PROP_FT_0	Energy Balance	
+                Case 1
+                    'PROP_FT_1	Total Filter Area	
+                    Me.TotalFilterArea = cv.ConverterParaSI(su.area, propval)
+                Case 2
+                    'PROP_FT_2	Cake Relative Humidity (%)	
+                    Me.CakeRelativeHumidity = propval
+                Case 3
+                    'PROP_FT_3	Cycle Time	
+                    Me.FilterCycleTime = cv.ConverterParaSI(su.time, propval)
+                Case 4
+                    'PROP_FT_4	Filter Medium Resistance	
+                    Me.FilterMediumResistance = cv.ConverterParaSI(su.mediumresistance, propval)
+                Case 5
+                    'PROP_FT_5	Specific Cake Resistance	
+                    Me.SpecificCakeResistance = cv.ConverterParaSI(su.cakeresistance, propval)
+                Case 6
+                    'PROP_FT_6	Submerged Area Fraction	
+                    Me.SubmergedAreaFraction = propval
+                Case 7
+                    'PROP_FT_7	Total Pressure Drop	
+                    Me.PressureDrop = cv.ConverterParaSI(su.spmp_deltaP, propval)
             End Select
 
             Return 1
@@ -524,11 +601,30 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-
+                    'PROP_FT_0	Energy Balance	
                     value = su.spmp_heatflow
-
+                Case 1
+                    'PROP_FT_1	Total Filter Area	
+                    value = su.area
+                Case 2
+                    'PROP_FT_2	Cake Relative Humidity (%)	
+                    value = "%"
+                Case 3
+                    'PROP_FT_3	Cycle Time	
+                    value = su.time
+                Case 4
+                    'PROP_FT_4	Filter Medium Resistance	
+                    value = su.mediumresistance
+                Case 5
+                    'PROP_FT_5	Specific Cake Resistance	
+                    value = su.cakeresistance
+                Case 6
+                    'PROP_FT_6	Submerged Area Fraction	
+                    value = ""
+                Case 7
+                    'PROP_FT_7	Total Pressure Drop	
+                    value = su.spmp_deltaP
             End Select
 
             Return value

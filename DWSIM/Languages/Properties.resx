@@ -229,6 +229,30 @@
     <value>Energia por Unidade de Tempo</value>
     <comment>1</comment>
   </data>
+  <data name="PROP_FT_0" xml:space="preserve">
+    <value>Balanço de energia</value>
+  </data>
+  <data name="PROP_FT_1" xml:space="preserve">
+    <value>Área Total de Filtragem</value>
+  </data>
+  <data name="PROP_FT_2" xml:space="preserve">
+    <value>Umidade Relativa (%) da Torta</value>
+  </data>
+  <data name="PROP_FT_3" xml:space="preserve">
+    <value>Tempo de Ciclagem</value>
+  </data>
+  <data name="PROP_FT_4" xml:space="preserve">
+    <value>Resistência do Meio Filtrante</value>
+  </data>
+  <data name="PROP_FT_5" xml:space="preserve">
+    <value>Resistência Específica da Torta</value>
+  </data>
+  <data name="PROP_FT_6" xml:space="preserve">
+    <value>Fração de Área Submergida</value>
+  </data>
+  <data name="PROP_FT_7" xml:space="preserve">
+    <value>Perda de Carga Total</value>
+  </data>
   <data name="PROP_GR_0" xml:space="preserve">
     <value>Perda de Carga</value>
     <comment>1</comment>

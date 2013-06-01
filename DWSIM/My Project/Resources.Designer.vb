@@ -809,6 +809,13 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property dwsim_3_bg() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("dwsim 3 bg", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend ReadOnly Property DWSIM_branco() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("DWSIM-branco", resourceCulture)

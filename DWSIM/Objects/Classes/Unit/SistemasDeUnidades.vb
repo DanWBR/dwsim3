@@ -23,7 +23,7 @@ Namespace DWSIM.SistemasDeUnidades
         Public nome As String
 
         Public area, distance, time, volume, molar_volume, diameter, thickness, molar_conc, mass_conc, _
-                heat_transf_coeff, force, accel, spec_vol, reac_rate, velocity, foulingfactor As String
+                heat_transf_coeff, force, accel, spec_vol, reac_rate, velocity, foulingfactor, cakeresistance, mediumresistance As String
 
         Public molar_enthalpy, molar_entropy As String
 
@@ -109,6 +109,9 @@ Namespace DWSIM.SistemasDeUnidades
                 .velocity = "m/s"
                 .foulingfactor = "K.m2/W"
 
+                .cakeresistance = "m/kg"
+                .mediumresistance = "m-1"
+
                 .pdp_boilingPointTemperature = "K"
                 .pdp_meltingTemperature = "K"
                 .spmp_activity = "Pa"
@@ -187,6 +190,9 @@ Namespace DWSIM.SistemasDeUnidades
                 .molar_entropy = "kJ/[kmol.K]"
                 .velocity = "m/s"
                 .foulingfactor = "K.m2/W"
+
+                .cakeresistance = "m/kg"
+                .mediumresistance = "m-1"
 
                 .pdp_boilingPointTemperature = "C"
                 .pdp_meltingTemperature = "C"
@@ -267,6 +273,9 @@ Namespace DWSIM.SistemasDeUnidades
                 .velocity = "m/s"
                 .foulingfactor = "K.m2/W"
 
+                .cakeresistance = "m/kg"
+                .mediumresistance = "m-1"
+
                 .pdp_boilingPointTemperature = "C"
                 .pdp_meltingTemperature = "C"
                 .spmp_activity = "Pa"
@@ -345,6 +354,9 @@ Namespace DWSIM.SistemasDeUnidades
                 .molar_entropy = "kJ/[kmol.K]"
                 .velocity = "m/s"
                 .foulingfactor = "K.m2/W"
+
+                .cakeresistance = "m/kg"
+                .mediumresistance = "m-1"
 
                 .pdp_boilingPointTemperature = "C"
                 .pdp_meltingTemperature = "C"
@@ -425,6 +437,9 @@ Namespace DWSIM.SistemasDeUnidades
                 .velocity = "m/s"
                 .foulingfactor = "K.m2/W"
 
+                .cakeresistance = "m/kg"
+                .mediumresistance = "m-1"
+
                 .pdp_boilingPointTemperature = "C"
                 .pdp_meltingTemperature = "C"
                 .spmp_activity = "Pa"
@@ -504,6 +519,9 @@ Namespace DWSIM.SistemasDeUnidades
                 .velocity = "ft/s"
                 .foulingfactor = "ft2.h.F/BTU"
 
+                .cakeresistance = "ft/lbm"
+                .mediumresistance = "ft-1"
+
                 .pdp_boilingPointTemperature = "R"
                 .pdp_meltingTemperature = "R"
                 .spmp_activity = "lbf/ft2"
@@ -582,6 +600,9 @@ Namespace DWSIM.SistemasDeUnidades
                 .molar_entropy = "cal/[mol.C]"
                 .velocity = "cm/s"
                 .foulingfactor = "C.cm2.s/cal"
+
+                .cakeresistance = "cm/g"
+                .mediumresistance = "cm-1"
 
                 .pdp_boilingPointTemperature = "C"
                 .pdp_meltingTemperature = "C"
@@ -784,6 +805,18 @@ Namespace DWSIM.SistemasDeUnidades
                 Case "ft2.h.F/BTU"
                     Return valor * 0.17611
 
+                Case "m/kg"
+                    Return valor
+                Case "ft/lb"
+                    Return valor / 3.28084 * 2.20462
+                Case "cm/g"
+                    Return valor * 10
+                Case "m-1"
+                    Return valor
+                Case "ft-1"
+                    Return valor * 3.28084
+                Case "cm-1"
+                    Return valor * 100
 
                 Case "m2"                               'area
                     Return valor
@@ -1156,6 +1189,19 @@ Namespace DWSIM.SistemasDeUnidades
                     Return valor / 0.000023885
                 Case "ft2.h.F/BTU"
                     Return valor / 0.17611
+
+                Case "m/kg"
+                    Return valor
+                Case "ft/lb"
+                    Return valor * 3.28084 / 2.20462
+                Case "cm/g"
+                    Return valor / 10
+                Case "m-1"
+                    Return valor
+                Case "ft-1"
+                    Return valor / 3.28084
+                Case "cm-1"
+                    Return valor / 100
 
                 Case "m2"                               'area
                     Return valor

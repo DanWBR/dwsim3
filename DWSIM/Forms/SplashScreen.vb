@@ -40,21 +40,21 @@ Public NotInheritable Class SplashScreen
                             AddDays(My.Application.Info.Version.Build). _
                             AddSeconds(My.Application.Info.Version.Revision * 2)
         Version.Text = "Version " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor
-        Data.Text = "Build " & My.Application.Info.Version.Build & " (" & Format(dt, "dd/MM/yyyy") & ")"
+        Version.Text += ", Build " & My.Application.Info.Version.Build & " (" & Format(dt, "dd/MM/yyyy") & ")"
 
         'Copyright info
-        Copyright.Text = My.Application.Info.Copyright
+        'Copyright.Text = My.Application.Info.Copyright
     End Sub
 
     Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
         ' Do nothing here!
     End Sub
 
-    Protected Overrides Sub OnPaintBackground(ByVal pevent As System.Windows.Forms.PaintEventArgs)
-        Dim gfx As Graphics = pevent.Graphics
-        Dim mypng As System.Drawing.Bitmap = My.Resources.DWSIM_branco
-        'mypng.MakeTransparent()
-        gfx.DrawImage(mypng, New Rectangle(0, 0, Me.Width, Me.Height))
-    End Sub
+    'Protected Overrides Sub OnPaintBackground(ByVal pevent As System.Windows.Forms.PaintEventArgs)
+    '    Dim gfx As Graphics = pevent.Graphics
+    '    Dim mypng As System.Drawing.Bitmap = My.Resources.dwsim_3_bg
+    '    mypng.MakeTransparent(Color.Red)
+    '    gfx.DrawImage(mypng, New Rectangle(0, 0, Me.Width, Me.Height))
+    'End Sub
 
 End Class

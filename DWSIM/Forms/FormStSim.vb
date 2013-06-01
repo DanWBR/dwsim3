@@ -333,6 +333,7 @@ Public Class FormStSim
             .Add(New Object() {DWSIM.App.GetLocalString("TaxadeReao"), su.reac_rate, DWSIM.App.GetLocalString("VolEspecfico"), su.spec_vol})
             .Add(New Object() {DWSIM.App.GetLocalString("MolarEnthalpy"), su.molar_enthalpy, DWSIM.App.GetLocalString("MolarEntropy"), su.molar_entropy})
             .Add(New Object() {DWSIM.App.GetLocalString("Velocity"), su.velocity, DWSIM.App.GetLocalString("HXFoulingFactor"), su.foulingfactor})
+            .Add(New Object() {DWSIM.App.GetLocalString("FilterSpecificCakeResistance"), su.cakeresistance, DWSIM.App.GetLocalString("FilterMediumResistance"), su.mediumresistance})
         End With
 
         If ComboBox2.SelectedIndex <= 2 Then
@@ -585,6 +586,20 @@ Public Class FormStSim
             '.Add(New Object() {DWSIM.App.GetLocalString("HXFoulingFactor")})
             .Item(16).Cells(3) = cb
 
+            cb = New DataGridViewComboBoxCell
+            cb.Items.AddRange(New String() {"m/kg", "ft/lbm", "cm/g"})
+            cb.Value = su.cakeresistance
+            cb.Style.Tag = 35
+            '.Add(New Object() {DWSIM.App.GetLocalString("FilterSpecificCakeResistance")})
+            .Item(17).Cells(1) = cb
+
+            cb = New DataGridViewComboBoxCell
+            cb.Items.AddRange(New String() {"m-1", "cm-1", "ft-1"})
+            cb.Value = su.mediumresistance
+            cb.Style.Tag = 36
+            '.Add(New Object() {DWSIM.App.GetLocalString("FilterMediumResistance")})
+            .Item(17).Cells(3) = cb
+
         End With
 
         FrmChild.ToolStripComboBoxUnitSystem.SelectedItem = ComboBox2.SelectedItem
@@ -668,6 +683,10 @@ Public Class FormStSim
                     su.velocity = cell.Value
                 Case 34
                     su.foulingfactor = cell.Value
+                Case 35
+                    su.cakeresistance = cell.Value
+                Case 36
+                    su.mediumresistance = cell.Value
             End Select
 
             Me.FrmChild.FormSurface.UpdateSelectedObject()

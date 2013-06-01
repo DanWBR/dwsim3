@@ -4656,4 +4656,55 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="LiquidSepEfficiencyDesc" xml:space="preserve">
     <value>Determina a % em massa de líquidos da corrente de entrada que será separada e enviada à corrente 1 (líquidos).</value>
   </data>
+  <data name="FilterArea" xml:space="preserve">
+    <value>Área Total de Filtragem</value>
+  </data>
+  <data name="FilterAreaDesc" xml:space="preserve">
+    <value>Área total de Filtragem</value>
+  </data>
+  <data name="FilterCakeRelativeHumidity" xml:space="preserve">
+    <value>Umidade Relativa (%) da Torta</value>
+  </data>
+  <data name="FilterCakeRelativeHumidityDesc" xml:space="preserve">
+    <value>Quantidade relativa de massa de líquido (em base úmida) que está presente na torta, e por conseqüencia, na corrente de sólidos)</value>
+  </data>
+  <data name="FilterCycleTime" xml:space="preserve">
+    <value>Tempo de Ciclagem</value>
+  </data>
+  <data name="FilterCycleTimeDesc" xml:space="preserve">
+    <value>Tempo de Ciclagem, inverso da velocidade do tambor</value>
+  </data>
+  <data name="FilterMediumResistance" xml:space="preserve">
+    <value>Resistência do Meio Filtrante</value>
+  </data>
+  <data name="FilterMediumResistanceDesc" xml:space="preserve">
+    <value>Resistência do Meio Filtrante</value>
+  </data>
+  <data name="FilterPressureDrop" xml:space="preserve">
+    <value>Perda de Carga Total</value>
+  </data>
+  <data name="FilterPressureDropDesc" xml:space="preserve">
+    <value>Perda de carga total no filtro, incluindo meio filtrante e torta</value>
+  </data>
+  <data name="FilterSpecificCakeResistance" xml:space="preserve">
+    <value>Resistência Específica da Torta</value>
+  </data>
+  <data name="FilterSpecificCakeResistanceDesc" xml:space="preserve">
+    <value>Resistência Específica da Torta</value>
+  </data>
+  <data name="FilterSubmergedAreaFraction" xml:space="preserve">
+    <value>Fração de Área Submergida</value>
+  </data>
+  <data name="FilterSubmergedAreaFractionDesc" xml:space="preserve">
+    <value>Fração do ciclo de filtragem disponível para formação da torta</value>
+  </data>
+  <data name="FilterCalculationMode" xml:space="preserve">
+    <value>Modo de cálculo</value>
+  </data>
+  <data name="FilterCalculationModeDesc" xml:space="preserve">
+    <value>Modo de cálculo</value>
+  </data>
+  <data name="FilterInvalidCakeHumidity" xml:space="preserve">
+    <value>A umidade relativa informada para a torta é maior que a da corrente de entrada.</value>
+  </data>
 </root>

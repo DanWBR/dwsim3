@@ -4667,7 +4667,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Saved</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>Filter</value>
+    <value>Continuous Cake Filter</value>
   </data>
   <data name="SolidsSeparator" xml:space="preserve">
     <value>Solids Separator</value>
@@ -4683,5 +4683,56 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   </data>
   <data name="LiquidSepEfficiencyDesc" xml:space="preserve">
     <value>Sets the mass percentage of liquids separated from the inlet stream that is sent to the liquids stream (outlet stream 1).</value>
+  </data>
+  <data name="FilterArea" xml:space="preserve">
+    <value>Total Filter Area</value>
+  </data>
+  <data name="FilterAreaDesc" xml:space="preserve">
+    <value>Total Filter Area</value>
+  </data>
+  <data name="FilterCakeRelativeHumidity" xml:space="preserve">
+    <value>Cake Relative Humidity (%)</value>
+  </data>
+  <data name="FilterCakeRelativeHumidityDesc" xml:space="preserve">
+    <value>Relative amount of liquid in the cake (% wet basis)</value>
+  </data>
+  <data name="FilterCycleTime" xml:space="preserve">
+    <value>Cycle Time</value>
+  </data>
+  <data name="FilterCycleTimeDesc" xml:space="preserve">
+    <value>Cycle time, inverse of drum speed</value>
+  </data>
+  <data name="FilterMediumResistance" xml:space="preserve">
+    <value>Filter Medium Resistance</value>
+  </data>
+  <data name="FilterMediumResistanceDesc" xml:space="preserve">
+    <value>Filter Medium Resistance</value>
+  </data>
+  <data name="FilterPressureDrop" xml:space="preserve">
+    <value>Total Pressure Drop</value>
+  </data>
+  <data name="FilterPressureDropDesc" xml:space="preserve">
+    <value>Total pressure drop, including cake and filter media</value>
+  </data>
+  <data name="FilterSpecificCakeResistance" xml:space="preserve">
+    <value>Specific Cake Resistance</value>
+  </data>
+  <data name="FilterSpecificCakeResistanceDesc" xml:space="preserve">
+    <value>Specific Cake Resistance</value>
+  </data>
+  <data name="FilterSubmergedAreaFraction" xml:space="preserve">
+    <value>Submerged Area Fraction</value>
+  </data>
+  <data name="FilterSubmergedAreaFractionDesc" xml:space="preserve">
+    <value>Fraction of filter cycle available for cake formation</value>
+  </data>
+  <data name="FilterCalculationMode" xml:space="preserve">
+    <value>Filter Calculation Mode</value>
+  </data>
+  <data name="FilterCalculationModeDesc" xml:space="preserve">
+    <value>Filter Calculation Mode</value>
+  </data>
+  <data name="FilterInvalidCakeHumidity" xml:space="preserve">
+    <value>The specified cake relative humidity is higher than the one in the inlet stream.</value>
   </data>
 </root>

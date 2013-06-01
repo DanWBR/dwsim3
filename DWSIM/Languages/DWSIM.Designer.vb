@@ -5441,6 +5441,159 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Área Total de Filtragem.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterArea() As String
+            Get
+                Return ResourceManager.GetString("FilterArea", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Área total de Filtragem.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterAreaDesc() As String
+            Get
+                Return ResourceManager.GetString("FilterAreaDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Umidade Relativa (%) da Torta.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterCakeRelativeHumidity() As String
+            Get
+                Return ResourceManager.GetString("FilterCakeRelativeHumidity", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Quantidade relativa de massa de líquido (em base úmida) que está presente na torta, e por conseqüencia, na corrente de sólidos).
+        '''</summary>
+        Friend Shared ReadOnly Property FilterCakeRelativeHumidityDesc() As String
+            Get
+                Return ResourceManager.GetString("FilterCakeRelativeHumidityDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Modo de cálculo.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterCalculationMode() As String
+            Get
+                Return ResourceManager.GetString("FilterCalculationMode", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Modo de cálculo.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterCalculationModeDesc() As String
+            Get
+                Return ResourceManager.GetString("FilterCalculationModeDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Tempo de Ciclagem.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterCycleTime() As String
+            Get
+                Return ResourceManager.GetString("FilterCycleTime", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Tempo de Ciclagem, inverso da velocidade do tambor.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterCycleTimeDesc() As String
+            Get
+                Return ResourceManager.GetString("FilterCycleTimeDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to A umidade relativa informada para a torta é maior que a da corrente de entrada..
+        '''</summary>
+        Friend Shared ReadOnly Property FilterInvalidCakeHumidity() As String
+            Get
+                Return ResourceManager.GetString("FilterInvalidCakeHumidity", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Resistência do Meio Filtrante.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterMediumResistance() As String
+            Get
+                Return ResourceManager.GetString("FilterMediumResistance", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Resistência do Meio Filtrante.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterMediumResistanceDesc() As String
+            Get
+                Return ResourceManager.GetString("FilterMediumResistanceDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Perda de Carga Total.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterPressureDrop() As String
+            Get
+                Return ResourceManager.GetString("FilterPressureDrop", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Perda de carga total no filtro, incluindo meio filtrante e torta.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterPressureDropDesc() As String
+            Get
+                Return ResourceManager.GetString("FilterPressureDropDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Resistência Específica da Torta.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterSpecificCakeResistance() As String
+            Get
+                Return ResourceManager.GetString("FilterSpecificCakeResistance", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Resistência Específica da Torta.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterSpecificCakeResistanceDesc() As String
+            Get
+                Return ResourceManager.GetString("FilterSpecificCakeResistanceDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Fração de Área Submergida.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterSubmergedAreaFraction() As String
+            Get
+                Return ResourceManager.GetString("FilterSubmergedAreaFraction", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Fração do ciclo de filtragem disponível para formação da torta.
+        '''</summary>
+        Friend Shared ReadOnly Property FilterSubmergedAreaFractionDesc() As String
+            Get
+                Return ResourceManager.GetString("FilterSubmergedAreaFractionDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Fluxo de Calor.
         '''</summary>
         Friend Shared ReadOnly Property FluxodeCalor() As String
