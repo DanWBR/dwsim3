@@ -4684,4 +4684,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="LiquidSepEfficiencyDesc" xml:space="preserve">
     <value>Sets the mass percentage of liquids separated from the inlet stream that is sent to the liquids stream (outlet stream 1).</value>
   </data>
+  <data name="DesejaSalvaroUserDB" xml:space="preserve">
+    <value>Save component to User Database?</value>
+  </data>
 </root>
