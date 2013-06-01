@@ -103,8 +103,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim W As Double = instr.Fases(0).SPMProperties.massflow.GetValueOrDefault
             Dim Wsin As Double = instr.Fases(7).SPMProperties.massflow.GetValueOrDefault
             Dim Wlin As Double = W - Wsin
-            Dim Wsout As Double = Me.SeparationEfficiency / 100 * Wsin + (100 - Me.LiquidSeparationEfficiency) / 100 * Wlin
-            Dim Wlout As Double = (100 - Me.SeparationEfficiency) / 100 * Wsin + Me.LiquidSeparationEfficiency / 100 * Wlin
+            Dim sse, lse As Double
+            sse = Me.SeparationEfficiency / 100
+            lse = Me.LiquidSeparationEfficiency / 100
+            Dim Wsout As Double = sse * Wsin + (1 - lse) * Wlin
+            Dim Wlout As Double = (1 - sse) * Wsin + lse * Wlin
 
             Dim mw As Double
 
@@ -118,7 +121,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Fases(0).SPMProperties.massflow = Wlout
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     For Each comp In .Fases(0).Componentes.Values
-                        comp.MassFlow = (100 - Me.SeparationEfficiency) / 100 * instr.Fases(7).Componentes(comp.Nome).MassFlow + Me.LiquidSeparationEfficiency / 100 * instr.Fases(1).Componentes(comp.Nome).MassFlow
+                        comp.MassFlow = (1 - sse) * instr.Fases(7).Componentes(comp.Nome).MassFlow + lse * instr.Fases(1).Componentes(comp.Nome).MassFlow
                         comp.FracaoMassica = comp.MassFlow / Wlout
                     Next
                     mw = 0.0#
@@ -142,7 +145,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Fases(0).SPMProperties.massflow = Wsout
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     For Each comp In .Fases(0).Componentes.Values
-                        comp.MassFlow = Me.SeparationEfficiency / 100 * instr.Fases(7).Componentes(comp.Nome).MassFlow + (100 - Me.LiquidSeparationEfficiency) / 100 * instr.Fases(1).Componentes(comp.Nome).MassFlow
+                        comp.MassFlow = sse * instr.Fases(7).Componentes(comp.Nome).MassFlow + (1 - lse) * instr.Fases(1).Componentes(comp.Nome).MassFlow
                         comp.FracaoMassica = comp.MassFlow / Wsout
                     Next
                     mw = 0.0#

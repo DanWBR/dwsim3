@@ -184,33 +184,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                         'mass balance.
 
-                        Dim sumfis, sumlis As Double
                         Dim hassolids As Boolean = False
 
-                        sumfis = 0
-                        sumlis = 0
                         For i = 0 To n
                             If Vnf(i) / Sum(Vnf) > Vxlmax(i) Then
                                 hassolids = True
                                 Vxl(i) = Vxlmax(i)
-                                sumfis += Vnf(i)
-                                sumlis += Vxl(i)
+                                S += Vnf(i) - Vxl(i) * L
                             End If
                         Next
 
                         L_ant = L
-                        If hassolids Then L = (1 - sumfis) / (1 - sumlis) Else L = 1
-                        S = 1 - L
-
+                        If hassolids Then L = 1 - S Else L = 1
+                        
                         For i = 0 To n
-                            If Vnf(i) > Vxlmax(i) Then
-                                Vns(i) = Vnf(i) - Vxl(i) * L
-                            End If
-                            If Vxl(i) <> 0.0# Then
-                                Vnl(i) = Vxl(i) * L
-                            Else
-                                Vnl(i) = Vnf(i)
-                            End If
+                            Vns(i) = Vnf(i) - Vxl(i) * L
+                            Vnl(i) = Vxl(i) * L
                         Next
 
                         For i = 0 To n
@@ -266,7 +255,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     End If
 
-                    If Math.Abs(L - L_ant) < 0.001 Then Exit Do
+                    If Math.Abs(L - L_ant) < 0.0000000001 Then Exit Do
 
                     sumN = 0
                     For i = 0 To n

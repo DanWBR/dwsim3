@@ -457,37 +457,38 @@ Public Class frmProps
                     ChildParent.CalculationQueue.Enqueue(objargs)
 
                 End If
-                ElseIf sobj.TipoObjeto = TipoObjeto.Compressor Then
 
-                    Dim bb As DWSIM.SimulationObjects.UnitOps.Compressor = ChildParent.Collections.CLCS_CompressorCollection.Item(sobj.Name)
+            ElseIf sobj.TipoObjeto = TipoObjeto.Compressor Then
 
-                    If e.ChangedItem.Label.Contains("Delta P") Then
+                Dim bb As DWSIM.SimulationObjects.UnitOps.Compressor = ChildParent.Collections.CLCS_CompressorCollection.Item(sobj.Name)
 
-                        If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                        bb.DeltaP = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                If e.ChangedItem.Label.Contains("Delta P") Then
 
-                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
-                        If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
 
-                    End If
+                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
-                    If ChildParent.Options.CalculatorActivated Then
+                End If
 
-                        'Call function to calculate flowsheet
-                        Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                        With objargs
-                            .Calculado = False
-                            .Tag = sobj.Tag
-                            .Nome = sobj.Name
-                            .Tipo = TipoObjeto.Compressor
-                            .Emissor = "PropertyGrid"
-                        End With
+                If ChildParent.Options.CalculatorActivated Then
 
-                        If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then ChildParent.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
-                        ChildParent.CalculationQueue.Enqueue(objargs)
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.Compressor
+                        .Emissor = "PropertyGrid"
+                    End With
 
-                    End If
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then ChildParent.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    ChildParent.CalculationQueue.Enqueue(objargs)
+
+                End If
 
                 ElseIf sobj.TipoObjeto = TipoObjeto.Expander Then
 

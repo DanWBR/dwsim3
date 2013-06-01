@@ -177,7 +177,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Fases(0).SPMProperties.massflow = Wlout
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     For Each comp In .Fases(0).Componentes.Values
-                        comp.MassFlow = instr.Fases(1).Componentes(comp.Nome).MassFlow * Wlout / W
+                        comp.MassFlow = instr.Fases(1).Componentes(comp.Nome).MassFlow * Wlout / Wlin
                         comp.FracaoMassica = comp.MassFlow / Wlout
                     Next
                     mw = 0.0#
@@ -201,7 +201,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Fases(0).SPMProperties.massflow = Wsout
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     For Each comp In .Fases(0).Componentes.Values
-                        comp.MassFlow = instr.Fases(1).Componentes(comp.Nome).MassFlow * (W - Wlout) / W + instr.Fases(7).Componentes(comp.Nome).MassFlow
+                        comp.MassFlow = instr.Fases(1).Componentes(comp.Nome).MassFlow * (Wlin - Wlout) / Wlin + instr.Fases(7).Componentes(comp.Nome).MassFlow
                         comp.FracaoMassica = comp.MassFlow / Wsout
                     Next
                     mw = 0.0#
