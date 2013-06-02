@@ -4708,6 +4708,6 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>A umidade relativa informada para a torta é maior que a da corrente de entrada.</value>
   </data>
   <data name="DesejaSalvaroUserDB" xml:space="preserve">
-    <value>Save component to user database?</value>
+    <value>Deseja salvar o componente no banco de dados?</value>
   </data>
 </root>

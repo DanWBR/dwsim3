@@ -464,13 +464,79 @@
   <data name="PROP_MS_130" xml:space="preserve">
     <value>Phases</value>
   </data>
+  <data name="PROP_MS_131" xml:space="preserve">
+    <value>Massa Específica da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_132" xml:space="preserve">
+    <value>Massa Molar da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_133" xml:space="preserve">
+    <value>Entalpia Específica da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_134" xml:space="preserve">
+    <value>Entropia Especifica da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_135" xml:space="preserve">
+    <value>Entalpia Molar da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_136" xml:space="preserve">
+    <value>Entropia Molar da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_137" xml:space="preserve">
+    <value>Condutividade Térmica da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_138" xml:space="preserve">
+    <value>Viscosidade Cinemática da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_139" xml:space="preserve">
+    <value>Viscosidade Dinâmica da Fase Sólida</value>
+  </data>
   <data name="PROP_MS_14" xml:space="preserve">
     <value>Entalpía específica de la fase vapor</value>
     <comment>0</comment>
   </data>
+  <data name="PROP_MS_140" xml:space="preserve">
+    <value>Capacidade Calorífica (Cp) da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_141" xml:space="preserve">
+    <value>Razão entre as Capacidades Caloríficas da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_142" xml:space="preserve">
+    <value>Vazão Mássica da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_143" xml:space="preserve">
+    <value>Vazão Molar da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_144" xml:space="preserve">
+    <value>Vazão Volumétrica da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_145" xml:space="preserve">
+    <value>Fator de Compressibilidade da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_146" xml:space="preserve">
+    <value>Fração Molar da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_147" xml:space="preserve">
+    <value>Fração Mássica da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_148" xml:space="preserve">
+    <value>Fração Volumétrica da Fase Sólida</value>
+  </data>
+  <data name="PROP_MS_149" xml:space="preserve">
+    <value>Fração Molar (Fase Sólida)</value>
+  </data>
   <data name="PROP_MS_15" xml:space="preserve">
     <value>Entropía especifica la fase vapor</value>
     <comment>0</comment>
+  </data>
+  <data name="PROP_MS_150" xml:space="preserve">
+    <value>Fração Mássica (Fase Sólida)</value>
+  </data>
+  <data name="PROP_MS_151" xml:space="preserve">
+    <value>Fluxo Molar (Fase Sólida)</value>
+  </data>
+  <data name="PROP_MS_152" xml:space="preserve">
+    <value>Fluxo Mássico (Fase Sólida)</value>
   </data>
   <data name="PROP_MS_16" xml:space="preserve">
     <value>Entalpía molar de la fase vapor</value>

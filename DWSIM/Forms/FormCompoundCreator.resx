@@ -960,9 +960,6 @@
   <data name="&gt;&gt;CheckBoxCSLV.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="LabelWithDivider12.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <data name="LabelWithDivider12.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
   </data>
@@ -1551,9 +1548,6 @@
   <data name="&gt;&gt;Label66.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
-  <data name="LabelWithDivider13.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <data name="LabelWithDivider13.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
   </data>
@@ -1610,9 +1604,6 @@
   </data>
   <data name="&gt;&gt;TextBoxVTCPR.ZOrder" xml:space="preserve">
     <value>22</value>
-  </data>
-  <data name="LabelWithDivider16.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
   </data>
   <data name="LabelWithDivider16.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
@@ -1926,9 +1917,6 @@
   <data name="&gt;&gt;CheckBoxAF.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="LabelWithDivider2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <data name="LabelWithDivider2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
   </data>
@@ -2196,9 +2184,6 @@
   <data name="&gt;&gt;Label8.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="LabelWithDivider6.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <data name="LabelWithDivider6.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
   </data>
@@ -2346,9 +2331,6 @@
   <data name="&gt;&gt;Label14.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
-  <data name="LabelWithDivider3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <data name="LabelWithDivider3.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
   </data>
@@ -2378,9 +2360,6 @@
   </data>
   <data name="&gt;&gt;LabelWithDivider3.ZOrder" xml:space="preserve">
     <value>15</value>
-  </data>
-  <data name="LabelWithDivider5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
   </data>
   <data name="LabelWithDivider5.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
@@ -2525,9 +2504,6 @@
   </data>
   <data name="&gt;&gt;Label12.ZOrder" xml:space="preserve">
     <value>20</value>
-  </data>
-  <data name="LabelWithDivider4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
   </data>
   <data name="LabelWithDivider4.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
@@ -7912,18 +7888,6 @@
   <data name="&gt;&gt;ToolStripLabel2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;DataGridViewTextBoxColumn3.Name" xml:space="preserve">
-    <value>DataGridViewTextBoxColumn3</value>
-  </data>
-  <data name="&gt;&gt;DataGridViewTextBoxColumn3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;DataGridViewTextBoxColumn4.Name" xml:space="preserve">
-    <value>DataGridViewTextBoxColumn4</value>
-  </data>
-  <data name="&gt;&gt;DataGridViewTextBoxColumn4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;Column4.Name" xml:space="preserve">
     <value>Column4</value>
   </data>
@@ -7946,6 +7910,18 @@
     <value>DataGridViewTextBoxColumn2</value>
   </data>
   <data name="&gt;&gt;DataGridViewTextBoxColumn2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DataGridViewTextBoxColumn3.Name" xml:space="preserve">
+    <value>DataGridViewTextBoxColumn3</value>
+  </data>
+  <data name="&gt;&gt;DataGridViewTextBoxColumn3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DataGridViewTextBoxColumn4.Name" xml:space="preserve">
+    <value>DataGridViewTextBoxColumn4</value>
+  </data>
+  <data name="&gt;&gt;DataGridViewTextBoxColumn4.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;DataGridViewTextBoxColumn5.Name" xml:space="preserve">

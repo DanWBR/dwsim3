@@ -4665,10 +4665,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Massenanteil [%] der Flüssigkeit, welche vom Eintrittsstrom abgetrennt und zum Flüssigkeitsaustritt (Austrittstrom 1) geleitet werden.</value>
   </data>
   <data name="FilterArea" xml:space="preserve">
-    <value>totale Filterfläche</value>
+    <value>Totale Filterfläche</value>
   </data>
   <data name="FilterAreaDesc" xml:space="preserve">
-    <value>totale Filterfläche</value>
+    <value>Totale Filterfläche</value>
   </data>
   <data name="FilterCakeRelativeHumidity" xml:space="preserve">
     <value>Relative Kuchenfeuchte (%)</value>
@@ -4689,7 +4689,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Widerstand Filtermedium</value>
   </data>
   <data name="FilterPressureDrop" xml:space="preserve">
-    <value>gesamter Druckverlust</value>
+    <value>Gesamter Druckverlust</value>
   </data>
   <data name="FilterPressureDropDesc" xml:space="preserve">
     <value>Gesamter Druckverlust, inclusive Kuchen und Filtermedium</value>

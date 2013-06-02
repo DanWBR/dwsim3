@@ -1059,7 +1059,133 @@ Namespace DWSIM.SimulationObjects.Streams
                         Else
                             value = 0
                         End If
-                    Case 103, 111, 112, 113, 114, 115
+                    Case 131
+                        'PROP_MS_131	Solid Phase Density
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.spmp_density, Me.Fases(7).SPMProperties.density.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 132
+                        'PROP_MS_132	Solid Phase Molar Weight
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.spmp_molecularWeight, Me.Fases(7).SPMProperties.molecularWeight.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 133
+                        'PROP_MS_133	Solid Phase Specific Enthalpy
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.spmp_enthalpy, Me.Fases(7).SPMProperties.enthalpy.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 134
+                        'PROP_MS_134	Solid Phase Specific Entropy
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.spmp_entropy, Me.Fases(7).SPMProperties.entropy.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 135
+                        'PROP_MS_135	Solid Phase Molar Enthalpy
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.molar_enthalpy, Me.Fases(7).SPMProperties.molar_enthalpy.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 136
+                        'PROP_MS_136	Solid Phase Molar Entropy
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.molar_entropy, Me.Fases(7).SPMProperties.molar_entropy.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 137
+                        'PROP_MS_137	Solid Phase Thermal Conductivity
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.spmp_thermalConductivity, Me.Fases(7).SPMProperties.thermalConductivity.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 138
+                        'PROP_MS_138	Solid Phase Kinematic Viscosity
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.spmp_cinematic_viscosity, Me.Fases(7).SPMProperties.kinematic_viscosity.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 139
+                        'PROP_MS_139	Solid Phase Dynamic Viscosity
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.spmp_viscosity, Me.Fases(7).SPMProperties.viscosity.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 140
+                        'PROP_MS_140	Solid Phase Heat Capacity (Cp)
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.spmp_heatCapacityCp, Me.Fases(7).SPMProperties.heatCapacityCp.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 141
+                        'PROP_MS_141	Solid Phase Heat Capacity Ratio (Cp/Cv)
+                        If Me.Fases.ContainsKey(7) Then
+                            value = Me.Fases(7).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.Fases(7).SPMProperties.heatCapacityCv.GetValueOrDefault
+                        Else
+                            value = 0
+                        End If
+                    Case 142
+                        'PROP_MS_142	Solid Phase Mass Flow
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.spmp_massflow, Me.Fases(7).SPMProperties.massflow.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 143
+                        'PROP_MS_143	Solid Phase Molar Flow
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.spmp_molarflow, Me.Fases(7).SPMProperties.molarflow.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 144
+                        'PROP_MS_144	Solid Phase Volumetric Flow
+                        If Me.Fases.ContainsKey(7) Then
+                            value = cv.ConverterDoSI(su.spmp_volumetricFlow, Me.Fases(7).SPMProperties.volumetric_flow.GetValueOrDefault)
+                        Else
+                            value = 0
+                        End If
+                    Case 145
+                        'PROP_MS_145	Solid Phase Compressibility Factor
+                        If Me.Fases.ContainsKey(7) Then
+                            value = Me.Fases(7).SPMProperties.compressibilityFactor.GetValueOrDefault
+                        Else
+                            value = 0
+                        End If
+                    Case 146
+                        'PROP_MS_146	Solid Phase Molar Fraction
+                        If Me.Fases.ContainsKey(7) Then
+                            value = Me.Fases(7).SPMProperties.molarfraction.GetValueOrDefault
+                        Else
+                            value = 0
+                        End If
+                    Case 147
+                        'PROP_MS_147	Solid Phase Mass Fraction
+                        If Me.Fases.ContainsKey(7) Then
+                            value = Me.Fases(7).SPMProperties.massfraction.GetValueOrDefault
+                        Else
+                            value = 0
+                        End If
+                    Case 148
+                        'PROP_MS_148	Solid Phase Volumetric Fraction
+                        If Me.Fases.ContainsKey(7) Then
+                            value = Me.Fases(7).SPMProperties.volumetric_flow.GetValueOrDefault / Me.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
+                        Else
+                            value = 0
+                        End If
+                    Case 103, 111, 112, 113, 114, 115, 150
                         If Me.Fases(0).Componentes.ContainsKey(sname) Then
                             If propidx = 103 Then
                                 value = Me.Fases(0).Componentes(sname).FracaoMassica.GetValueOrDefault
@@ -1073,11 +1199,13 @@ Namespace DWSIM.SimulationObjects.Streams
                                 value = Me.Fases(4).Componentes(sname).FracaoMassica.GetValueOrDefault
                             ElseIf propidx = 115 Then
                                 value = Me.Fases(5).Componentes(sname).FracaoMassica.GetValueOrDefault
+                            ElseIf propidx = 150 Then
+                                value = Me.Fases(7).Componentes(sname).FracaoMassica.GetValueOrDefault
                             End If
                         Else
                             value = 0
                         End If
-                    Case 102, 106, 107, 108, 109, 110
+                    Case 102, 106, 107, 108, 109, 110, 149
                         If Me.Fases(0).Componentes.ContainsKey(sname) Then
                             If propidx = 102 Then
                                 value = Me.Fases(0).Componentes(sname).FracaoMolar.GetValueOrDefault
@@ -1091,11 +1219,13 @@ Namespace DWSIM.SimulationObjects.Streams
                                 value = Me.Fases(4).Componentes(sname).FracaoMolar.GetValueOrDefault
                             ElseIf propidx = 110 Then
                                 value = Me.Fases(5).Componentes(sname).FracaoMolar.GetValueOrDefault
+                            ElseIf propidx = 149 Then
+                                value = Me.Fases(7).Componentes(sname).FracaoMolar.GetValueOrDefault
                             End If
                         Else
                             value = 0
                         End If
-                    Case 104, 116, 117, 118, 119, 120
+                    Case 104, 116, 117, 118, 119, 151
                         If Me.Fases(0).Componentes.ContainsKey(sname) Then
                             If propidx = 104 Then
                                 value = cv.ConverterDoSI(su.spmp_molarflow, Me.Fases(0).Componentes(sname).MolarFlow.GetValueOrDefault)
@@ -1109,11 +1239,13 @@ Namespace DWSIM.SimulationObjects.Streams
                                 value = cv.ConverterDoSI(su.spmp_molarflow, Me.Fases(4).Componentes(sname).MolarFlow.GetValueOrDefault)
                             ElseIf propidx = 120 Then
                                 value = cv.ConverterDoSI(su.spmp_molarflow, Me.Fases(5).Componentes(sname).MolarFlow.GetValueOrDefault)
+                            ElseIf propidx = 151 Then
+                                value = cv.ConverterDoSI(su.spmp_molarflow, Me.Fases(7).Componentes(sname).MolarFlow.GetValueOrDefault)
                             End If
                         Else
                             value = 0
                         End If
-                    Case 105, 121, 122, 123, 124, 125
+                    Case 105, 121, 122, 123, 124, 125, 152
                         If Me.Fases(0).Componentes.ContainsKey(sname) Then
                             If propidx = 105 Then
                                 value = cv.ConverterDoSI(su.spmp_massflow, Me.Fases(0).Componentes(sname).MassFlow.GetValueOrDefault)
@@ -1127,6 +1259,8 @@ Namespace DWSIM.SimulationObjects.Streams
                                 value = cv.ConverterDoSI(su.spmp_massflow, Me.Fases(4).Componentes(sname).MassFlow.GetValueOrDefault)
                             ElseIf propidx = 125 Then
                                 value = cv.ConverterDoSI(su.spmp_massflow, Me.Fases(5).Componentes(sname).MassFlow.GetValueOrDefault)
+                            ElseIf propidx = 152 Then
+                                value = cv.ConverterDoSI(su.spmp_massflow, Me.Fases(7).Componentes(sname).MassFlow.GetValueOrDefault)
                             End If
                         Else
                             value = 0
@@ -1175,31 +1309,38 @@ Namespace DWSIM.SimulationObjects.Streams
                     For i = 5 To 101
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
+                    For i = 131 To 148
+                        proplist.Add("PROP_MS_" + CStr(i))
+                    Next
                     For Each subst As ConstantProperties In Flowsheet.Options.SelectedComponents.Values
                         proplist.Add("PROP_MS_102" + "," + subst.Name)
                         proplist.Add("PROP_MS_103" + "," + subst.Name)
                         proplist.Add("PROP_MS_104" + "," + subst.Name)
                         proplist.Add("PROP_MS_105" + "," + subst.Name)
-                        proplist.Add("PROP_MS_107" + "," + subst.Name)
-                        proplist.Add("PROP_MS_112" + "," + subst.Name)
-                        proplist.Add("PROP_MS_117" + "," + subst.Name)
-                        proplist.Add("PROP_MS_122" + "," + subst.Name)
                         proplist.Add("PROP_MS_106" + "," + subst.Name)
-                        proplist.Add("PROP_MS_111" + "," + subst.Name)
-                        proplist.Add("PROP_MS_116" + "," + subst.Name)
-                        proplist.Add("PROP_MS_121" + "," + subst.Name)
+                        proplist.Add("PROP_MS_107" + "," + subst.Name)
                         proplist.Add("PROP_MS_108" + "," + subst.Name)
-                        proplist.Add("PROP_MS_113" + "," + subst.Name)
-                        proplist.Add("PROP_MS_118" + "," + subst.Name)
-                        proplist.Add("PROP_MS_123" + "," + subst.Name)
                         proplist.Add("PROP_MS_109" + "," + subst.Name)
-                        proplist.Add("PROP_MS_114" + "," + subst.Name)
-                        proplist.Add("PROP_MS_119" + "," + subst.Name)
-                        proplist.Add("PROP_MS_124" + "," + subst.Name)
                         proplist.Add("PROP_MS_110" + "," + subst.Name)
+                        proplist.Add("PROP_MS_111" + "," + subst.Name)
+                        proplist.Add("PROP_MS_112" + "," + subst.Name)
+                        proplist.Add("PROP_MS_113" + "," + subst.Name)
+                        proplist.Add("PROP_MS_114" + "," + subst.Name)
                         proplist.Add("PROP_MS_115" + "," + subst.Name)
+                        proplist.Add("PROP_MS_116" + "," + subst.Name)
+                        proplist.Add("PROP_MS_117" + "," + subst.Name)
+                        proplist.Add("PROP_MS_118" + "," + subst.Name)
+                        proplist.Add("PROP_MS_119" + "," + subst.Name)
                         proplist.Add("PROP_MS_120" + "," + subst.Name)
+                        proplist.Add("PROP_MS_121" + "," + subst.Name)
+                        proplist.Add("PROP_MS_122" + "," + subst.Name)
+                        proplist.Add("PROP_MS_123" + "," + subst.Name)
+                        proplist.Add("PROP_MS_124" + "," + subst.Name)
                         proplist.Add("PROP_MS_125" + "," + subst.Name)
+                        proplist.Add("PROP_MS_149" + "," + subst.Name)
+                        proplist.Add("PROP_MS_150" + "," + subst.Name)
+                        proplist.Add("PROP_MS_151" + "," + subst.Name)
+                        proplist.Add("PROP_MS_152" + "," + subst.Name)
                     Next
                     For i = 126 To 130
                         proplist.Add("PROP_MS_" + CStr(i))
@@ -1217,31 +1358,38 @@ Namespace DWSIM.SimulationObjects.Streams
                     For i = 0 To 101
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
+                    For i = 131 To 148
+                        proplist.Add("PROP_MS_" + CStr(i))
+                    Next
                     For Each subst As ConstantProperties In Me.Flowsheet.Options.SelectedComponents.Values
                         proplist.Add("PROP_MS_102" + "," + subst.Name)
                         proplist.Add("PROP_MS_103" + "," + subst.Name)
                         proplist.Add("PROP_MS_104" + "," + subst.Name)
                         proplist.Add("PROP_MS_105" + "," + subst.Name)
-                        proplist.Add("PROP_MS_107" + "," + subst.Name)
-                        proplist.Add("PROP_MS_112" + "," + subst.Name)
-                        proplist.Add("PROP_MS_117" + "," + subst.Name)
-                        proplist.Add("PROP_MS_122" + "," + subst.Name)
                         proplist.Add("PROP_MS_106" + "," + subst.Name)
-                        proplist.Add("PROP_MS_111" + "," + subst.Name)
-                        proplist.Add("PROP_MS_116" + "," + subst.Name)
-                        proplist.Add("PROP_MS_121" + "," + subst.Name)
+                        proplist.Add("PROP_MS_107" + "," + subst.Name)
                         proplist.Add("PROP_MS_108" + "," + subst.Name)
-                        proplist.Add("PROP_MS_113" + "," + subst.Name)
-                        proplist.Add("PROP_MS_118" + "," + subst.Name)
-                        proplist.Add("PROP_MS_123" + "," + subst.Name)
                         proplist.Add("PROP_MS_109" + "," + subst.Name)
-                        proplist.Add("PROP_MS_114" + "," + subst.Name)
-                        proplist.Add("PROP_MS_119" + "," + subst.Name)
-                        proplist.Add("PROP_MS_124" + "," + subst.Name)
                         proplist.Add("PROP_MS_110" + "," + subst.Name)
+                        proplist.Add("PROP_MS_111" + "," + subst.Name)
+                        proplist.Add("PROP_MS_112" + "," + subst.Name)
+                        proplist.Add("PROP_MS_113" + "," + subst.Name)
+                        proplist.Add("PROP_MS_114" + "," + subst.Name)
                         proplist.Add("PROP_MS_115" + "," + subst.Name)
+                        proplist.Add("PROP_MS_116" + "," + subst.Name)
+                        proplist.Add("PROP_MS_117" + "," + subst.Name)
+                        proplist.Add("PROP_MS_118" + "," + subst.Name)
+                        proplist.Add("PROP_MS_119" + "," + subst.Name)
                         proplist.Add("PROP_MS_120" + "," + subst.Name)
+                        proplist.Add("PROP_MS_121" + "," + subst.Name)
+                        proplist.Add("PROP_MS_122" + "," + subst.Name)
+                        proplist.Add("PROP_MS_123" + "," + subst.Name)
+                        proplist.Add("PROP_MS_124" + "," + subst.Name)
                         proplist.Add("PROP_MS_125" + "," + subst.Name)
+                        proplist.Add("PROP_MS_149" + "," + subst.Name)
+                        proplist.Add("PROP_MS_150" + "," + subst.Name)
+                        proplist.Add("PROP_MS_151" + "," + subst.Name)
+                        proplist.Add("PROP_MS_152" + "," + subst.Name)
                     Next
                     For i = 126 To 130
                         proplist.Add("PROP_MS_" + CStr(i))
@@ -1288,13 +1436,6 @@ Namespace DWSIM.SimulationObjects.Streams
                 Case 102
                     If Me.Fases(0).Componentes.ContainsKey(sname) Then
                         Me.Fases(0).Componentes(sname).FracaoMolar = propval
-                        'Dim sumfm As Double = 0
-                        'For Each comp As Substancia In Me.Fases(0).Componentes.Values
-                        '    sumfm += comp.FracaoMolar
-                        'Next
-                        'For Each comp As Substancia In Me.Fases(0).Componentes.Values
-                        '    comp.FracaoMolar /= sumfm
-                        'Next
                         Dim mtotal As Double = 0
                         Me.PropertyPackage.DW_CalcCompMolarFlow(0)
                         For Each comp As Substancia In Me.Fases(0).Componentes.Values
@@ -1308,13 +1449,6 @@ Namespace DWSIM.SimulationObjects.Streams
                 Case 103
                     If Me.Fases(0).Componentes.ContainsKey(sname) Then
                         Me.Fases(0).Componentes(sname).FracaoMassica = propval
-                        'Dim sumfm As Double = 0
-                        'For Each comp As Substancia In Me.Fases(0).Componentes.Values
-                        '    sumfm += comp.FracaoMassica
-                        'Next
-                        'For Each comp As Substancia In Me.Fases(0).Componentes.Values
-                        '    comp.FracaoMassica /= sumfm
-                        'Next
                         Dim mtotal As Double = 0
                         Me.PropertyPackage.DW_CalcCompMassFlow(0)
                         For Each comp As Substancia In Me.Fases(0).Componentes.Values
@@ -1378,329 +1512,329 @@ Namespace DWSIM.SimulationObjects.Streams
 
             If prop <> "" Then
 
-            Dim propidx As Integer = CInt(prop.Split(",")(0).Split("_")(2))
+                Dim propidx As Integer = CInt(prop.Split(",")(0).Split("_")(2))
 
-            Select Case propidx
+                Select Case propidx
 
-                Case 0
-                    'PROP_MS_0 Temperature
-                    value = su.spmp_temperature
-                Case 1
-                    'PROP_MS_1 Pressure
-                    value = su.spmp_pressure
-                Case 2
-                    'PROP_MS_2	Mass Flow
-                    value = su.spmp_massflow
-                Case 3
-                    'PROP_MS_3	Molar Flow
-                    value = su.spmp_molarflow
-                Case 4
-                    'PROP_MS_4	Volumetric Flow
-                    value = su.spmp_volumetricFlow
-                Case 5
-                    'PROP_MS_5	Mixture Density
-                    value = su.spmp_density
-                Case 6
-                    'PROP_MS_6	Mixture Molar Weight
-                    value = su.spmp_molecularWeight
-                Case 7
-                    'PROP_MS_7	Mixture Specific Enthalpy
-                    value = su.spmp_enthalpy
-                Case 8
-                    'PROP_MS_8	Mixture Specific Entropy
-                    value = su.spmp_entropy
-                Case 9
-                    'PROP_MS_9	Mixture Molar Enthalpy
-                    value = su.molar_enthalpy
-                Case 10
-                    'PROP_MS_10	Mixture Molar Entropy
-                    value = su.molar_entropy
-                Case 11
-                    'PROP_MS_11	Mixture Thermal Conductivity
-                    value = su.spmp_thermalConductivity
-                Case 12
-                    'PROP_MS_12	Vapor Phase Density
-                    value = su.spmp_density
-                Case 13
-                    'PROP_MS_13	Vapor Phase Molar Weight
-                    value = su.spmp_molecularWeight
-                Case 14
-                    'PROP_MS_14	Vapor Phase Specific Enthalpy
-                    value = su.spmp_enthalpy
-                Case 15
-                    'PROP_MS_15	Vapor Phase Specific Entropy
-                    value = su.spmp_entropy
-                Case 16
-                    'PROP_MS_16	Vapor Phase Molar Enthalpy
-                    value = su.molar_enthalpy
-                Case 17
-                    'PROP_MS_17	Vapor Phase Molar Entropy
-                    value = su.molar_entropy
-                Case 18
-                    'PROP_MS_18	Vapor Phase Thermal Conductivity
-                    value = su.spmp_thermalConductivity
-                Case 19
-                    'PROP_MS_19	Vapor Phase Kinematic Viscosity
-                    value = su.spmp_cinematic_viscosity
-                Case 20
-                    'PROP_MS_20	Vapor Phase Dynamic Viscosity
-                    value = su.spmp_viscosity
-                Case 21
-                    'PROP_MS_21	Vapor Phase Heat Capacity (Cp)
-                    value = su.spmp_heatCapacityCp
-                Case 22
-                    'PROP_MS_22	Vapor Phase Heat Capacity Ratio (Cp/Cv)
-                    value = ""
-                Case 23
-                    'PROP_MS_23	Vapor Phase Mass Flow
-                    value = su.spmp_massflow
-                Case 24
-                    'PROP_MS_24	Vapor Phase Molar Flow
-                    value = su.spmp_molarflow
-                Case 25
-                    'PROP_MS_25	Vapor Phase Volumetric Flow
-                    value = su.spmp_volumetricFlow
-                Case 26
-                    'PROP_MS_26	Vapor Phase Compressibility Factor
-                    value = ""
-                Case 27
-                    'PROP_MS_27	Vapor Phase Molar Fraction
-                    value = ""
-                Case 28
-                    'PROP_MS_28	Vapor Phase Mass Fraction
-                    value = ""
-                Case 29
-                    'PROP_MS_29	Vapor Phase Volumetric Fraction
-                    value = ""
-                Case 30
-                    'PROP_MS_30	Liquid Phase (Mixture) Density
-                    value = su.spmp_density
-                Case 31
-                    'PROP_MS_31	Liquid Phase (Mixture) Molar Weight
-                    value = su.spmp_molecularWeight
-                Case 32
-                    'PROP_MS_32	Liquid Phase (Mixture) Specific Enthalpy
-                    value = su.spmp_enthalpy
-                Case 33
-                    'PROP_MS_33	Liquid Phase (Mixture) Specific Entropy
-                    value = su.spmp_entropy
-                Case 34
-                    'PROP_MS_34	Liquid Phase (Mixture) Molar Enthalpy
-                    value = su.molar_enthalpy
-                Case 35
-                    'PROP_MS_35	Liquid Phase (Mixture) Molar Entropy
-                    value = su.molar_entropy
-                Case 36
-                    'PROP_MS_36	Liquid Phase (Mixture) Thermal Conductivity
-                    value = su.spmp_thermalConductivity
-                Case 37
-                    'PROP_MS_37	Liquid Phase (Mixture) Kinematic Viscosity
-                    value = su.spmp_cinematic_viscosity
-                Case 38
-                    'PROP_MS_38	Liquid Phase (Mixture) Dynamic Viscosity
-                    value = su.spmp_viscosity
-                Case 39
-                    'PROP_MS_39	Liquid Phase (Mixture) Heat Capacity (Cp)
-                    value = su.spmp_heatCapacityCp
-                Case 40
-                    'PROP_MS_40	Liquid Phase (Mixture) Heat Capacity Ratio (Cp/Cv)
-                    value = ""
-                Case 41
-                    'PROP_MS_41	Liquid Phase (Mixture) Mass Flow
-                    value = su.spmp_massflow
-                Case 42
-                    'PROP_MS_42	Liquid Phase (Mixture) Molar Flow
-                    value = su.spmp_molarflow
-                Case 43
-                    'PROP_MS_43	Liquid Phase (Mixture) Volumetric Flow
-                    value = su.spmp_volumetricFlow
-                Case 44
-                    'PROP_MS_44	Liquid Phase (Mixture) Compressibility Factor
-                    value = ""
-                Case 45
-                    'PROP_MS_45	Liquid Phase (Mixture) Molar Fraction
-                    value = ""
-                Case 46
-                    'PROP_MS_46	Liquid Phase (Mixture) Mass Fraction
-                    value = ""
-                Case 47
-                    'PROP_MS_47	Liquid Phase (Mixture) Volumetric Fraction
-                    value = ""
-                Case 48
-                    'PROP_MS_48	Liquid Phase (1) Density
-                    value = su.spmp_density
-                Case 49
-                    'PROP_MS_49	Liquid Phase (1) Molar Weight
-                    value = su.spmp_molecularWeight
-                Case 50
-                    'PROP_MS_50	Liquid Phase (1) Specific Enthalpy
-                    value = su.spmp_enthalpy
-                Case 51
-                    'PROP_MS_51	Liquid Phase (1) Specific Entropy
-                    value = su.spmp_entropy
-                Case 52
-                    'PROP_MS_52	Liquid Phase (1) Molar Enthalpy
-                    value = su.molar_enthalpy
-                Case 53
-                    'PROP_MS_53	Liquid Phase (1) Molar Entropy
-                    value = su.molar_entropy
-                Case 54
-                    'PROP_MS_54	Liquid Phase (1) Thermal Conductivity
-                    value = su.spmp_thermalConductivity
-                Case 55
-                    'PROP_MS_55	Liquid Phase (1) Kinematic Viscosity
-                    value = su.spmp_cinematic_viscosity
-                Case 56
-                    'PROP_MS_56	Liquid Phase (1) Dynamic Viscosity
-                    value = su.spmp_viscosity
-                Case 57
-                    'PROP_MS_57	Liquid Phase (1) Heat Capacity (Cp)
-                    value = su.spmp_heatCapacityCp
-                Case 58
-                    'PROP_MS_58	Liquid Phase (1) Heat Capacity Ratio (Cp/Cv)
-                    value = ""
-                Case 59
-                    'PROP_MS_59	Liquid Phase (1) Mass Flow
-                    value = su.spmp_massflow
-                Case 60
-                    'PROP_MS_60	Liquid Phase (1) Molar Flow
-                    value = su.spmp_molarflow
-                Case 61
-                    'PROP_MS_61	Liquid Phase (1) Volumetric Flow
-                    value = su.spmp_volumetricFlow
-                Case 62
-                    'PROP_MS_62	Liquid Phase (1) Compressibility Factor
-                    value = ""
-                Case 63
-                    'PROP_MS_63	Liquid Phase (1) Molar Fraction
-                    value = ""
-                Case 64
-                    'PROP_MS_64	Liquid Phase (1) Mass Fraction
-                    value = ""
-                Case 65
-                    'PROP_MS_65	Liquid Phase (1) Volumetric Fraction
-                    value = ""
-                Case 66
-                    'PROP_MS_66	Liquid Phase (2) Density
-                    value = su.spmp_density
-                Case 67
-                    'PROP_MS_67	Liquid Phase (2) Molar Weight
-                    value = su.spmp_molecularWeight
-                Case 68
-                    'PROP_MS_68	Liquid Phase (2) Specific Enthalpy
-                    value = su.spmp_enthalpy
-                Case 69
-                    'PROP_MS_69	Liquid Phase (2) Specific Entropy
-                    value = su.spmp_entropy
-                Case 70
-                    'PROP_MS_70	Liquid Phase (2) Molar Enthalpy
-                    value = su.molar_enthalpy
-                Case 71
-                    'PROP_MS_71	Liquid Phase (2) Molar Entropy
-                    value = su.molar_entropy
-                Case 72
-                    'PROP_MS_72	Liquid Phase (2) Thermal Conductivity
-                    value = su.spmp_thermalConductivity
-                Case 73
-                    'PROP_MS_73	Liquid Phase (2) Kinematic Viscosity
-                    value = su.spmp_cinematic_viscosity
-                Case 74
-                    'PROP_MS_74	Liquid Phase (2) Dynamic Viscosity
-                    value = su.spmp_viscosity
-                Case 75
-                    'PROP_MS_75	Liquid Phase (2) Heat Capacity (Cp)
-                    value = su.spmp_heatCapacityCp
-                Case 76
-                    'PROP_MS_76	Liquid Phase (2) Heat Capacity Ratio (Cp/Cv)
-                    value = ""
-                Case 77
-                    'PROP_MS_77	Liquid Phase (2) Mass Flow
-                    value = su.spmp_massflow
-                Case 78
-                    'PROP_MS_78	Liquid Phase (2) Molar Flow
-                    value = su.spmp_molarflow
-                Case 79
-                    'PROP_MS_79	Liquid Phase (2) Volumetric Flow
-                    value = su.spmp_volumetricFlow
-                Case 80
-                    'PROP_MS_80	Liquid Phase (2) Compressibility Factor
-                    value = ""
-                Case 81
-                    'PROP_MS_81	Liquid Phase (2) Molar Fraction
-                    value = ""
-                Case 82
-                    'PROP_MS_82	Liquid Phase (2) Mass Fraction
-                    value = ""
-                Case 83
-                    'PROP_MS_83	Liquid Phase (2) Volumetric Fraction
-                    value = ""
-                Case 84
-                    'PROP_MS_84	Aqueous Phase Density
-                    value = su.spmp_density
-                Case 85
-                    'PROP_MS_85	Aqueous Phase Molar Weight
-                    value = su.spmp_molecularWeight
-                Case 86
-                    'PROP_MS_86	Aqueous Phase Specific Enthalpy
-                    value = su.spmp_enthalpy
-                Case 87
-                    'PROP_MS_87	Aqueous Phase Specific Entropy
-                    value = su.spmp_entropy
-                Case 88
-                    'PROP_MS_88	Aqueous Phase Molar Enthalpy
-                    value = su.molar_enthalpy
-                Case 89
-                    'PROP_MS_89	Aqueous Phase Molar Entropy
-                    value = su.molar_entropy
-                Case 90
-                    'PROP_MS_90	Aqueous Phase Thermal Conductivity
-                    value = su.spmp_thermalConductivity
-                Case 91
-                    'PROP_MS_91	Aqueous Phase Kinematic Viscosity
-                    value = su.spmp_cinematic_viscosity
-                Case 92
-                    'PROP_MS_92	Aqueous Phase Dynamic Viscosity
-                    value = su.spmp_viscosity
-                Case 93
-                    'PROP_MS_93	Aqueous Phase Heat Capacity (Cp)
-                    value = su.spmp_heatCapacityCp
-                Case 94
-                    'PROP_MS_94	Aqueous Phase Heat Capacity Ratio (Cp/Cv)
-                    value = ""
-                Case 95
-                    'PROP_MS_95	Aqueous Phase Mass Flow
-                    value = su.spmp_massflow
-                Case 96
-                    'PROP_MS_96	Aqueous Phase Molar Flow
-                    value = su.spmp_molarflow
-                Case 97
-                    'PROP_MS_97	Aqueous Phase Volumetric Flow
-                    value = su.spmp_volumetricFlow
-                Case 98
-                    'PROP_MS_98	Aqueous Phase Compressibility Factor
-                    value = ""
-                Case 99
-                    'PROP_MS_99	Aqueous Phase Molar Fraction
-                    value = ""
-                Case 100
-                    'PROP_MS_100	Aqueous Phase Mass Fraction
-                    value = ""
-                Case 101
-                    'PROP_MS_101	Aqueous Phase Volumetric Fraction
-                    value = ""
-                Case 102, 103, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115
-                    value = ""
-                Case 104, 116, 117, 118, 119, 120
-                    value = su.spmp_molarflow
-                Case 105, 121, 122, 123, 124, 125
-                    value = su.spmp_massflow
-                Case 126, 127
-                    value = su.spmp_pressure
-                Case 128, 129
-                    value = su.spmp_temperature
-                Case 130
-                    value = ""
-            End Select
+                    Case 0
+                        'PROP_MS_0 Temperature
+                        value = su.spmp_temperature
+                    Case 1
+                        'PROP_MS_1 Pressure
+                        value = su.spmp_pressure
+                    Case 2
+                        'PROP_MS_2	Mass Flow
+                        value = su.spmp_massflow
+                    Case 3
+                        'PROP_MS_3	Molar Flow
+                        value = su.spmp_molarflow
+                    Case 4
+                        'PROP_MS_4	Volumetric Flow
+                        value = su.spmp_volumetricFlow
+                    Case 5
+                        'PROP_MS_5	Mixture Density
+                        value = su.spmp_density
+                    Case 6
+                        'PROP_MS_6	Mixture Molar Weight
+                        value = su.spmp_molecularWeight
+                    Case 7
+                        'PROP_MS_7	Mixture Specific Enthalpy
+                        value = su.spmp_enthalpy
+                    Case 8
+                        'PROP_MS_8	Mixture Specific Entropy
+                        value = su.spmp_entropy
+                    Case 9
+                        'PROP_MS_9	Mixture Molar Enthalpy
+                        value = su.molar_enthalpy
+                    Case 10
+                        'PROP_MS_10	Mixture Molar Entropy
+                        value = su.molar_entropy
+                    Case 11
+                        'PROP_MS_11	Mixture Thermal Conductivity
+                        value = su.spmp_thermalConductivity
+                    Case 12
+                        'PROP_MS_12	Vapor Phase Density
+                        value = su.spmp_density
+                    Case 13
+                        'PROP_MS_13	Vapor Phase Molar Weight
+                        value = su.spmp_molecularWeight
+                    Case 14
+                        'PROP_MS_14	Vapor Phase Specific Enthalpy
+                        value = su.spmp_enthalpy
+                    Case 15
+                        'PROP_MS_15	Vapor Phase Specific Entropy
+                        value = su.spmp_entropy
+                    Case 16
+                        'PROP_MS_16	Vapor Phase Molar Enthalpy
+                        value = su.molar_enthalpy
+                    Case 17
+                        'PROP_MS_17	Vapor Phase Molar Entropy
+                        value = su.molar_entropy
+                    Case 18
+                        'PROP_MS_18	Vapor Phase Thermal Conductivity
+                        value = su.spmp_thermalConductivity
+                    Case 19
+                        'PROP_MS_19	Vapor Phase Kinematic Viscosity
+                        value = su.spmp_cinematic_viscosity
+                    Case 20
+                        'PROP_MS_20	Vapor Phase Dynamic Viscosity
+                        value = su.spmp_viscosity
+                    Case 21
+                        'PROP_MS_21	Vapor Phase Heat Capacity (Cp)
+                        value = su.spmp_heatCapacityCp
+                    Case 22
+                        'PROP_MS_22	Vapor Phase Heat Capacity Ratio (Cp/Cv)
+                        value = ""
+                    Case 23
+                        'PROP_MS_23	Vapor Phase Mass Flow
+                        value = su.spmp_massflow
+                    Case 24
+                        'PROP_MS_24	Vapor Phase Molar Flow
+                        value = su.spmp_molarflow
+                    Case 25
+                        'PROP_MS_25	Vapor Phase Volumetric Flow
+                        value = su.spmp_volumetricFlow
+                    Case 26
+                        'PROP_MS_26	Vapor Phase Compressibility Factor
+                        value = ""
+                    Case 27
+                        'PROP_MS_27	Vapor Phase Molar Fraction
+                        value = ""
+                    Case 28
+                        'PROP_MS_28	Vapor Phase Mass Fraction
+                        value = ""
+                    Case 29
+                        'PROP_MS_29	Vapor Phase Volumetric Fraction
+                        value = ""
+                    Case 30
+                        'PROP_MS_30	Liquid Phase (Mixture) Density
+                        value = su.spmp_density
+                    Case 31
+                        'PROP_MS_31	Liquid Phase (Mixture) Molar Weight
+                        value = su.spmp_molecularWeight
+                    Case 32
+                        'PROP_MS_32	Liquid Phase (Mixture) Specific Enthalpy
+                        value = su.spmp_enthalpy
+                    Case 33
+                        'PROP_MS_33	Liquid Phase (Mixture) Specific Entropy
+                        value = su.spmp_entropy
+                    Case 34
+                        'PROP_MS_34	Liquid Phase (Mixture) Molar Enthalpy
+                        value = su.molar_enthalpy
+                    Case 35
+                        'PROP_MS_35	Liquid Phase (Mixture) Molar Entropy
+                        value = su.molar_entropy
+                    Case 36
+                        'PROP_MS_36	Liquid Phase (Mixture) Thermal Conductivity
+                        value = su.spmp_thermalConductivity
+                    Case 37
+                        'PROP_MS_37	Liquid Phase (Mixture) Kinematic Viscosity
+                        value = su.spmp_cinematic_viscosity
+                    Case 38
+                        'PROP_MS_38	Liquid Phase (Mixture) Dynamic Viscosity
+                        value = su.spmp_viscosity
+                    Case 39
+                        'PROP_MS_39	Liquid Phase (Mixture) Heat Capacity (Cp)
+                        value = su.spmp_heatCapacityCp
+                    Case 40
+                        'PROP_MS_40	Liquid Phase (Mixture) Heat Capacity Ratio (Cp/Cv)
+                        value = ""
+                    Case 41
+                        'PROP_MS_41	Liquid Phase (Mixture) Mass Flow
+                        value = su.spmp_massflow
+                    Case 42
+                        'PROP_MS_42	Liquid Phase (Mixture) Molar Flow
+                        value = su.spmp_molarflow
+                    Case 43
+                        'PROP_MS_43	Liquid Phase (Mixture) Volumetric Flow
+                        value = su.spmp_volumetricFlow
+                    Case 44
+                        'PROP_MS_44	Liquid Phase (Mixture) Compressibility Factor
+                        value = ""
+                    Case 45
+                        'PROP_MS_45	Liquid Phase (Mixture) Molar Fraction
+                        value = ""
+                    Case 46
+                        'PROP_MS_46	Liquid Phase (Mixture) Mass Fraction
+                        value = ""
+                    Case 47
+                        'PROP_MS_47	Liquid Phase (Mixture) Volumetric Fraction
+                        value = ""
+                    Case 48
+                        'PROP_MS_48	Liquid Phase (1) Density
+                        value = su.spmp_density
+                    Case 49
+                        'PROP_MS_49	Liquid Phase (1) Molar Weight
+                        value = su.spmp_molecularWeight
+                    Case 50
+                        'PROP_MS_50	Liquid Phase (1) Specific Enthalpy
+                        value = su.spmp_enthalpy
+                    Case 51
+                        'PROP_MS_51	Liquid Phase (1) Specific Entropy
+                        value = su.spmp_entropy
+                    Case 52
+                        'PROP_MS_52	Liquid Phase (1) Molar Enthalpy
+                        value = su.molar_enthalpy
+                    Case 53
+                        'PROP_MS_53	Liquid Phase (1) Molar Entropy
+                        value = su.molar_entropy
+                    Case 54
+                        'PROP_MS_54	Liquid Phase (1) Thermal Conductivity
+                        value = su.spmp_thermalConductivity
+                    Case 55
+                        'PROP_MS_55	Liquid Phase (1) Kinematic Viscosity
+                        value = su.spmp_cinematic_viscosity
+                    Case 56
+                        'PROP_MS_56	Liquid Phase (1) Dynamic Viscosity
+                        value = su.spmp_viscosity
+                    Case 57
+                        'PROP_MS_57	Liquid Phase (1) Heat Capacity (Cp)
+                        value = su.spmp_heatCapacityCp
+                    Case 58
+                        'PROP_MS_58	Liquid Phase (1) Heat Capacity Ratio (Cp/Cv)
+                        value = ""
+                    Case 59
+                        'PROP_MS_59	Liquid Phase (1) Mass Flow
+                        value = su.spmp_massflow
+                    Case 60
+                        'PROP_MS_60	Liquid Phase (1) Molar Flow
+                        value = su.spmp_molarflow
+                    Case 61
+                        'PROP_MS_61	Liquid Phase (1) Volumetric Flow
+                        value = su.spmp_volumetricFlow
+                    Case 62
+                        'PROP_MS_62	Liquid Phase (1) Compressibility Factor
+                        value = ""
+                    Case 63
+                        'PROP_MS_63	Liquid Phase (1) Molar Fraction
+                        value = ""
+                    Case 64
+                        'PROP_MS_64	Liquid Phase (1) Mass Fraction
+                        value = ""
+                    Case 65
+                        'PROP_MS_65	Liquid Phase (1) Volumetric Fraction
+                        value = ""
+                    Case 66
+                        'PROP_MS_66	Liquid Phase (2) Density
+                        value = su.spmp_density
+                    Case 67
+                        'PROP_MS_67	Liquid Phase (2) Molar Weight
+                        value = su.spmp_molecularWeight
+                    Case 68
+                        'PROP_MS_68	Liquid Phase (2) Specific Enthalpy
+                        value = su.spmp_enthalpy
+                    Case 69
+                        'PROP_MS_69	Liquid Phase (2) Specific Entropy
+                        value = su.spmp_entropy
+                    Case 70
+                        'PROP_MS_70	Liquid Phase (2) Molar Enthalpy
+                        value = su.molar_enthalpy
+                    Case 71
+                        'PROP_MS_71	Liquid Phase (2) Molar Entropy
+                        value = su.molar_entropy
+                    Case 72
+                        'PROP_MS_72	Liquid Phase (2) Thermal Conductivity
+                        value = su.spmp_thermalConductivity
+                    Case 73
+                        'PROP_MS_73	Liquid Phase (2) Kinematic Viscosity
+                        value = su.spmp_cinematic_viscosity
+                    Case 74
+                        'PROP_MS_74	Liquid Phase (2) Dynamic Viscosity
+                        value = su.spmp_viscosity
+                    Case 75
+                        'PROP_MS_75	Liquid Phase (2) Heat Capacity (Cp)
+                        value = su.spmp_heatCapacityCp
+                    Case 76
+                        'PROP_MS_76	Liquid Phase (2) Heat Capacity Ratio (Cp/Cv)
+                        value = ""
+                    Case 77
+                        'PROP_MS_77	Liquid Phase (2) Mass Flow
+                        value = su.spmp_massflow
+                    Case 78
+                        'PROP_MS_78	Liquid Phase (2) Molar Flow
+                        value = su.spmp_molarflow
+                    Case 79
+                        'PROP_MS_79	Liquid Phase (2) Volumetric Flow
+                        value = su.spmp_volumetricFlow
+                    Case 80
+                        'PROP_MS_80	Liquid Phase (2) Compressibility Factor
+                        value = ""
+                    Case 81
+                        'PROP_MS_81	Liquid Phase (2) Molar Fraction
+                        value = ""
+                    Case 82
+                        'PROP_MS_82	Liquid Phase (2) Mass Fraction
+                        value = ""
+                    Case 83
+                        'PROP_MS_83	Liquid Phase (2) Volumetric Fraction
+                        value = ""
+                    Case 84, 131
+                        'PROP_MS_84	Aqueous Phase Density
+                        value = su.spmp_density
+                    Case 85, 132
+                        'PROP_MS_85	Aqueous Phase Molar Weight
+                        value = su.spmp_molecularWeight
+                    Case 86, 133
+                        'PROP_MS_86	Aqueous Phase Specific Enthalpy
+                        value = su.spmp_enthalpy
+                    Case 87, 134
+                        'PROP_MS_87	Aqueous Phase Specific Entropy
+                        value = su.spmp_entropy
+                    Case 88, 135
+                        'PROP_MS_88	Aqueous Phase Molar Enthalpy
+                        value = su.molar_enthalpy
+                    Case 89, 136
+                        'PROP_MS_89	Aqueous Phase Molar Entropy
+                        value = su.molar_entropy
+                    Case 90, 137
+                        'PROP_MS_90	Aqueous Phase Thermal Conductivity
+                        value = su.spmp_thermalConductivity
+                    Case 91, 138
+                        'PROP_MS_91	Aqueous Phase Kinematic Viscosity
+                        value = su.spmp_cinematic_viscosity
+                    Case 92, 139
+                        'PROP_MS_92	Aqueous Phase Dynamic Viscosity
+                        value = su.spmp_viscosity
+                    Case 93, 140
+                        'PROP_MS_93	Aqueous Phase Heat Capacity (Cp)
+                        value = su.spmp_heatCapacityCp
+                    Case 94, 141
+                        'PROP_MS_94	Aqueous Phase Heat Capacity Ratio (Cp/Cv)
+                        value = ""
+                    Case 95, 142
+                        'PROP_MS_95	Aqueous Phase Mass Flow
+                        value = su.spmp_massflow
+                    Case 96, 143
+                        'PROP_MS_96	Aqueous Phase Molar Flow
+                        value = su.spmp_molarflow
+                    Case 97, 144
+                        'PROP_MS_97	Aqueous Phase Volumetric Flow
+                        value = su.spmp_volumetricFlow
+                    Case 98, 145
+                        'PROP_MS_98	Aqueous Phase Compressibility Factor
+                        value = ""
+                    Case 99, 146
+                        'PROP_MS_99	Aqueous Phase Molar Fraction
+                        value = ""
+                    Case 100, 147
+                        'PROP_MS_100	Aqueous Phase Mass Fraction
+                        value = ""
+                    Case 101, 148
+                        'PROP_MS_101	Aqueous Phase Volumetric Fraction
+                        value = ""
+                    Case 102, 103, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 149, 150
+                        value = ""
+                    Case 104, 116, 117, 118, 119, 120, 151
+                        value = su.spmp_molarflow
+                    Case 105, 121, 122, 123, 124, 125, 152
+                        value = su.spmp_massflow
+                    Case 126, 127
+                        value = su.spmp_pressure
+                    Case 128, 129
+                        value = su.spmp_temperature
+                    Case 130
+                        value = ""
+                End Select
 
                 Return value
 

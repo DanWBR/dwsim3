@@ -485,13 +485,79 @@
     <value>Phases</value>
     <comment>0</comment>
   </data>
+  <data name="PROP_MS_131" xml:space="preserve">
+    <value>Solid Phase Density</value>
+  </data>
+  <data name="PROP_MS_132" xml:space="preserve">
+    <value>Solid Phase Molar Weight</value>
+  </data>
+  <data name="PROP_MS_133" xml:space="preserve">
+    <value>Solid Phase Specific Enthalpy</value>
+  </data>
+  <data name="PROP_MS_134" xml:space="preserve">
+    <value>Solid Phase Specific Entropy</value>
+  </data>
+  <data name="PROP_MS_135" xml:space="preserve">
+    <value>Solid Phase Molar Enthalpy</value>
+  </data>
+  <data name="PROP_MS_136" xml:space="preserve">
+    <value>Solid Phase Molar Entropy</value>
+  </data>
+  <data name="PROP_MS_137" xml:space="preserve">
+    <value>Solid Phase Thermal Conductivity</value>
+  </data>
+  <data name="PROP_MS_138" xml:space="preserve">
+    <value>Solid Phase Kinematic Viscosity</value>
+  </data>
+  <data name="PROP_MS_139" xml:space="preserve">
+    <value>Solid Phase Dynamic Viscosity</value>
+  </data>
   <data name="PROP_MS_14" xml:space="preserve">
     <value>Spezifische Enthalpie Dampfphase</value>
     <comment>0</comment>
   </data>
+  <data name="PROP_MS_140" xml:space="preserve">
+    <value>Solid Phase Heat Capacity (Cp)</value>
+  </data>
+  <data name="PROP_MS_141" xml:space="preserve">
+    <value>Solid Phase Heat Capacity Ratio (Cp/Cv)</value>
+  </data>
+  <data name="PROP_MS_142" xml:space="preserve">
+    <value>Solid Phase Mass Flow</value>
+  </data>
+  <data name="PROP_MS_143" xml:space="preserve">
+    <value>Solid Phase Molar Flow</value>
+  </data>
+  <data name="PROP_MS_144" xml:space="preserve">
+    <value>Solid Phase Volumetric Flow</value>
+  </data>
+  <data name="PROP_MS_145" xml:space="preserve">
+    <value>Solid Phase Compressibility Factor</value>
+  </data>
+  <data name="PROP_MS_146" xml:space="preserve">
+    <value>Solid Phase Molar Fraction</value>
+  </data>
+  <data name="PROP_MS_147" xml:space="preserve">
+    <value>Solid Phase Mass Fraction</value>
+  </data>
+  <data name="PROP_MS_148" xml:space="preserve">
+    <value>Solid Phase Volumetric Fraction</value>
+  </data>
+  <data name="PROP_MS_149" xml:space="preserve">
+    <value>Mole Fraction (Solid Phase)</value>
+  </data>
   <data name="PROP_MS_15" xml:space="preserve">
     <value>Spezifische Entropie Dampfphase</value>
     <comment>0</comment>
+  </data>
+  <data name="PROP_MS_150" xml:space="preserve">
+    <value>Mass Fraction (Solid Phase)</value>
+  </data>
+  <data name="PROP_MS_151" xml:space="preserve">
+    <value>Mole Flow (Solid Phase)</value>
+  </data>
+  <data name="PROP_MS_152" xml:space="preserve">
+    <value>Mass Flow (Solid Phase)</value>
   </data>
   <data name="PROP_MS_16" xml:space="preserve">
     <value>Molare Enthalpie Dampfphase</value>
