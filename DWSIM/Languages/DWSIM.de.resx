@@ -4653,66 +4653,69 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Feststoffabscheider</value>
   </data>
   <data name="SolidSepEfficiency" xml:space="preserve">
-    <value>Feststoff Abtrennung Wirkungsgrad (%)</value>
+    <value>Wirkungsgrad Feststoffabtrennung (%)</value>
   </data>
   <data name="SolidSepEfficiencyDesc" xml:space="preserve">
-    <value>Sets the mass percentage of solids separated from the inlet stream that is sent to the solids stream (outlet stream 2).</value>
+    <value>Massenanteil [%] der Feststoffe, welche vom Eintrittsstrom abgetrennt und zum Feststoffaustritt (Austrittsstrom 2) geleitet werden.</value>
   </data>
   <data name="LiquidSepEfficiency" xml:space="preserve">
-    <value>Liquids Separation Efficiency (%)</value>
+    <value>Wirkungsgrad Flüssigkeitsabtrennung (%)</value>
   </data>
   <data name="LiquidSepEfficiencyDesc" xml:space="preserve">
-    <value>Sets the mass percentage of liquids separated from the inlet stream that is sent to the liquids stream (outlet stream 1).</value>
+    <value>Massenanteil [%] der Flüssigkeit, welche vom Eintrittsstrom abgetrennt und zum Flüssigkeitsaustritt (Austrittstrom 1) geleitet werden.</value>
   </data>
   <data name="FilterArea" xml:space="preserve">
-    <value>Total Filter Area</value>
+    <value>totale Filterfläche</value>
   </data>
   <data name="FilterAreaDesc" xml:space="preserve">
-    <value>Total Filter Area</value>
+    <value>totale Filterfläche</value>
   </data>
   <data name="FilterCakeRelativeHumidity" xml:space="preserve">
-    <value>Cake Relative Humidity (%)</value>
+    <value>Relative Kuchenfeuchte (%)</value>
   </data>
   <data name="FilterCakeRelativeHumidityDesc" xml:space="preserve">
-    <value>Relative amount of liquid in the cake (% wet basis)</value>
+    <value>Relativer Anteil Flüssigkeit im Kuchen (% nasse Basis)</value>
   </data>
   <data name="FilterCycleTime" xml:space="preserve">
-    <value>Cycle Time</value>
+    <value>Zykluszeit</value>
   </data>
   <data name="FilterCycleTimeDesc" xml:space="preserve">
-    <value>Cycle time, inverse of drum speed</value>
+    <value>Zykluszeit, inverse Trommelgeschwindigkeit</value>
   </data>
   <data name="FilterMediumResistance" xml:space="preserve">
-    <value>Filter Medium Resistance</value>
+    <value>Widerstand Filtermedium</value>
   </data>
   <data name="FilterMediumResistanceDesc" xml:space="preserve">
-    <value>Filter Media Resistance</value>
+    <value>Widerstand Filtermedium</value>
   </data>
   <data name="FilterPressureDrop" xml:space="preserve">
-    <value>Total Pressure Drop</value>
+    <value>gesamter Druckverlust</value>
   </data>
   <data name="FilterPressureDropDesc" xml:space="preserve">
-    <value>Total pressure drop, including cake and filter media</value>
+    <value>Gesamter Druckverlust, inclusive Kuchen und Filtermedium</value>
   </data>
   <data name="FilterSpecificCakeResistance" xml:space="preserve">
-    <value>Specific Cake Resistance</value>
+    <value>Spezifischer Filterkuchenwiderstand</value>
   </data>
   <data name="FilterSpecificCakeResistanceDesc" xml:space="preserve">
-    <value>Specific Cake Resistance</value>
+    <value>Spezifischer Filterkuchenwiderstand</value>
   </data>
   <data name="FilterSubmergedAreaFraction" xml:space="preserve">
-    <value>Submerged Area Fraction</value>
+    <value>Eingetauchter Flächenanteil</value>
   </data>
   <data name="FilterSubmergedAreaFractionDesc" xml:space="preserve">
-    <value>Fraction of filter cycle available for cake formation</value>
+    <value>Anteil am Filterzyklus welcher für den Kuchenaufbau zur Verfügung steht.</value>
   </data>
   <data name="FilterCalculationMode" xml:space="preserve">
-    <value>Filter Calculation Mode</value>
+    <value>Berechnungsmodus Filter</value>
   </data>
   <data name="FilterCalculationModeDesc" xml:space="preserve">
-    <value>Filter Calculation Mode</value>
+    <value>Berechnungsmodus Filter</value>
   </data>
   <data name="FilterInvalidCakeHumidity" xml:space="preserve">
-    <value>The specified cake relative humidity is higher than the one in the inlet stream.</value>
+    <value>Die spezifizierte relative Kuchenfeuchte ist höher als im Einlaufstrom.</value>
+  </data>
+  <data name="DesejaSalvaroUserDB" xml:space="preserve">
+    <value>Komponente in Anwenderdatenbank speichern?</value>
   </data>
 </root>

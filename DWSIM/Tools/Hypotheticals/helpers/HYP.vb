@@ -85,7 +85,7 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
             Dim fval As Double
 
-            fval = 198 + sum1
+            fval = 198.2 + sum1
 
             Return fval 'K
 
@@ -125,7 +125,7 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
             Dim fval As Double
 
-            fval = 101325 * (0.113 + 0.0032 * sum2 - sum1) ^ -2
+            fval = 100000 * (0.113 + 0.0032 * sum2 - sum1) ^ -2
 
             Return fval 'Pa
 
