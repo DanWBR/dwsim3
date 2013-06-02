@@ -4707,4 +4707,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="FilterInvalidCakeHumidity" xml:space="preserve">
     <value>A umidade relativa informada para a torta é maior que a da corrente de entrada.</value>
   </data>
+  <data name="DesejaSalvaroUserDB" xml:space="preserve">
+    <value>Save component to user database?</value>
+  </data>
 </root>
