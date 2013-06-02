@@ -103,7 +103,7 @@ Public Class FormCompoundCreator
         If Not forceclose Then
             'CompoundCeator case file
             If Not isDWSimSaved Then
-                Dim x = MessageBox.Show(DWSIM.App.GetLocalString("Desejasalvarasaltera"), DWSIM.App.GetLocalString("Fechando") & " " & Me.Text, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+                Dim x = MessageBox.Show(DWSIM.App.GetLocalString("Desejasalvarasaltera") & Chr(13) & " " & Me.Text, DWSIM.App.GetLocalString("Fechando"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
                 If x = MsgBoxResult.Yes Then
                     FormMain.SaveStudyDlg.FileName = mycase.Filename
                     FormMain.SaveFileDialog()
@@ -114,7 +114,7 @@ Public Class FormCompoundCreator
 
             'User database
             If Not isUserDBSaved Then
-                Dim y = MessageBox.Show(DWSIM.App.GetLocalString("Desejasalvarasaltera"), DWSIM.App.GetLocalString("Fechando") & " " & DWSIM.App.GetLocalString("BancodeDados"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+                Dim y = MessageBox.Show(DWSIM.App.GetLocalString("DesejaSalvaroUserDB"), DWSIM.App.GetLocalString("Fechando") & " " & DWSIM.App.GetLocalString("BancodeDados"), MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
                 If y = MsgBoxResult.Yes Then
                     btnSaveToDB_Click(sender, e)
                 ElseIf y = MsgBoxResult.Cancel Then
@@ -227,6 +227,8 @@ Public Class FormCompoundCreator
             CheckBoxZRa.Checked = .CalcZRA
             CheckBoxDHF.Checked = .CalcHF
             CheckBoxDGF.Checked = .CalcGF
+            CheckBoxMeltingTemp.Checked = .CalcMW
+            CheckBoxEnthOfFusion.Checked = .CalcEM
 
             For Each it As Object In cbEqPVAP.Items
                 If it.ToString.Split(":")(0) = .cp.VaporPressureEquation Then
@@ -452,6 +454,9 @@ Public Class FormCompoundCreator
     Private Sub CalcJobackParams()
 
         If loaded Then
+
+            loaded = False 'prevent recalculation due to edit field event procedures
+
             jb = New DWSIM.Utilities.Hypos.Methods.Joback
             methods2 = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
             methods = New DWSIM.Utilities.Hypos.Methods.HYP()
@@ -505,11 +510,26 @@ Public Class FormCompoundCreator
                 Dim result As Object = RegressData(1, True)
                 With mycase.cp
                     .IdealgasCpEquation = 5
+
+                    For Each it As Object In cbEqCPIG.Items
+                        If it.ToString.Split(":")(0) = .IdealgasCpEquation Then
+                            cbEqCPIG.SelectedIndex = cbEqCPIG.Items.IndexOf(it)
+                            Exit For
+                        End If
+                    Next
+
                     .Ideal_Gas_Heat_Capacity_Const_A = result(0)(0) * 1000
                     .Ideal_Gas_Heat_Capacity_Const_B = result(0)(1) * 1000
                     .Ideal_Gas_Heat_Capacity_Const_C = result(0)(2) * 1000
                     .Ideal_Gas_Heat_Capacity_Const_D = result(0)(3) * 1000
                     .Ideal_Gas_Heat_Capacity_Const_E = result(0)(4) * 1000
+
+                    tbCPIG_A.Text = .Ideal_Gas_Heat_Capacity_Const_A
+                    tbCPIG_B.Text = .Ideal_Gas_Heat_Capacity_Const_B
+                    tbCPIG_C.Text = .Ideal_Gas_Heat_Capacity_Const_C
+                    tbCPIG_D.Text = .Ideal_Gas_Heat_Capacity_Const_D
+                    tbCPIG_E.Text = .Ideal_Gas_Heat_Capacity_Const_E
+
                 End With
             End If
 
@@ -517,9 +537,11 @@ Public Class FormCompoundCreator
             MP = jb.CalcTf(vnd) 'melting temperature -> temperature of fusion
             If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, MP)
 
-            'enthalpy of fusion - not yet implemented
+            'enthalpy of fusion
             Hf = jb.CalcHf(vnd)
-            If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = cv.ConverterDoSI(su.spmp_temperature, Hf / MM)
+            If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = cv.ConverterDoSI(su.spmp_enthalpy, Hf / MM)
+
+            loaded = True 'reset old status
         End If
     End Sub
 
@@ -542,10 +564,8 @@ Public Class FormCompoundCreator
             Next
 
             CalcJobackParams()
-
-            SetCompCreatorSaveStatus(False)
-            SetUserDBSaveStatus(False)
         End If
+        BothSaveStatusModified(sender, e)
     End Sub
 
     Private Sub SalvarNoBancoDeDadosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -1441,37 +1461,11 @@ Public Class FormCompoundCreator
         System.Diagnostics.Process.Start("http://webbook.nist.gov/cgi/cbook.cgi?ID=" & TextBoxCAS.Text)
     End Sub
 
-
-    Private Sub TextBoxNBP_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxNBP.TextChanged
-        If loaded Then
-            'get group amounts
-            Dim vn As New ArrayList
-            For Each row As DataGridViewRow In Me.GridUNIFAC.Rows
-                If Not row.Cells(0).Value Is Nothing Then
-                    vn.Add(Integer.Parse(row.Cells(0).Value))
-                Else
-                    vn.Add(0)
-                End If
-            Next
-
-            Dim vnd As Int32() = vn.ToArray(Type.GetType("System.Int32"))
-            Dim tb, tc As Double
-            tb = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxNBP.Text)
-            tc = jb.CalcTc(tb, vnd)
-            If CheckBoxTc.Checked Then Me.TextBoxTc.Text = cv.ConverterDoSI(su.spmp_temperature, tc)
-            tc = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxTc.Text)
-
-            SetCompCreatorSaveStatus(False)
-            SetUserDBSaveStatus(False)
-        End If
-    End Sub
-
     Private Sub btnSaveToDB_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSaveToDB.Click
         Try
             StoreData()
             DWSIM.Databases.UserDB.AddCompounds(New DWSIM.ClassesBasicasTermodinamica.ConstantProperties() {mycase.cp}, tbDBPath.Text, chkReplaceComps.Checked)
             SetUserDBSaveStatus(True)
-            MessageBox.Show("Compound saved to the database.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
             MessageBox.Show("Error adding compound to the database: " & ex.Message.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -1481,12 +1475,14 @@ Public Class FormCompoundCreator
             SetCompCreatorSaveStatus(False)
         End If
     End Sub
-    Private Sub BothSaveStatusModified(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxMeltingTemp.TextChanged, TextBoxEnthOfFusion.TextChanged, _
-                TextBoxUNIQUAC_R.TextChanged, TextBoxUNIQUAC_Q.TextChanged, TextBoxZRa.TextChanged, TextBoxZc.TextChanged, TextBoxTc.TextChanged, TextBoxPCSAFTSigma.TextChanged, _
-                TextBoxPCSAFTm.TextChanged, TextBoxPCSAFTEpsilon.TextChanged, TextBoxPc.TextChanged, TextBoxDHF.TextChanged, TextBoxDGF.TextChanged, TextBoxAF.TextChanged, _
+    Private Sub BothSaveStatusModified(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxMeltingTemp.TextChanged, _
+                TextBoxUNIQUAC_R.TextChanged, TextBoxUNIQUAC_Q.TextChanged, TextBoxZRa.TextChanged, TextBoxZc.TextChanged, TextBoxPCSAFTSigma.TextChanged, _
+                TextBoxPCSAFTm.TextChanged, TextBoxPCSAFTEpsilon.TextChanged, TextBoxDHF.TextChanged, TextBoxDGF.TextChanged, _
                 TextBoxVTCSRK.TextChanged, TextBoxVTCPR.TextChanged, TextBoxCSSP.TextChanged, TextBoxCSLV.TextChanged, TextBoxCSAF.TextChanged, TextBoxName.TextChanged, _
-                TextBoxMW.TextChanged, TextBoxID.TextChanged, TextBoxFormula.TextChanged, TextBoxCAS.TextChanged, tbPVAP_D.TextChanged, tbPVAP_C.TextChanged, _
-                tbPVAP_B.TextChanged, tbPVAP_A.TextChanged, tbPVAP_E.TextChanged, tbCPIG_E.TextChanged, tbCPIG_D.TextChanged, tbCPIG_C.TextChanged, tbCPIG_B.TextChanged, tbCPIG_A.TextChanged, tbLIQVISC_E.TextChanged, tbLIQVISC_D.TextChanged, tbLIQVISC_C.TextChanged, tbLIQVISC_B.TextChanged, tbLIQVISC_A.TextChanged, tbLIQDENS_E.TextChanged, tbLIQDENS_D.TextChanged, tbLIQDENS_C.TextChanged, tbLIQDENS_B.TextChanged, tbLIQDENS_A.TextChanged
+                 TextBoxID.TextChanged, TextBoxFormula.TextChanged, TextBoxCAS.TextChanged, tbPVAP_D.TextChanged, tbPVAP_C.TextChanged, _
+                tbPVAP_B.TextChanged, tbPVAP_A.TextChanged, tbPVAP_E.TextChanged, tbCPIG_E.TextChanged, tbCPIG_D.TextChanged, tbCPIG_C.TextChanged, tbCPIG_B.TextChanged, _
+                tbCPIG_A.TextChanged, tbLIQVISC_E.TextChanged, tbLIQVISC_D.TextChanged, tbLIQVISC_C.TextChanged, tbLIQVISC_B.TextChanged, tbLIQVISC_A.TextChanged, _
+                tbLIQDENS_E.TextChanged, tbLIQDENS_D.TextChanged, tbLIQDENS_C.TextChanged, tbLIQDENS_B.TextChanged, tbLIQDENS_A.TextChanged
         If loaded Then
             SetCompCreatorSaveStatus(False)
             SetUserDBSaveStatus(False)
@@ -1498,6 +1494,20 @@ Public Class FormCompoundCreator
         If loaded Then
             SetCompCreatorSaveStatus(False)
         End If
+    End Sub
+
+    Private Sub TextBoxEnthOfFusion_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxEnthOfFusion.TextChanged
+        Try
+            TextBoxEnthOfFusion2.Text = cv.ConverterDoSI(su.spmp_enthalpy, TextBoxEnthOfFusion.Text) * mycase.cp.Molar_Weight / 1000
+        Catch ex As Exception
+            TextBoxEnthOfFusion2.Text = ""
+        End Try
+        BothSaveStatusModified(sender, e)
+    End Sub
+
+    Private Sub TextBoxChanged_recalc(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxNBP.TextChanged, TextBoxMW.TextChanged, TextBoxTc.TextChanged, TextBoxPc.TextChanged, TextBoxAF.TextChanged
+        CalcJobackParams()
+        BothSaveStatusModified(sender, e)
     End Sub
 
 End Class
