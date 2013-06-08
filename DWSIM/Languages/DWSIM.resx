@@ -4744,4 +4744,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="DesejaSalvaroUserDB" xml:space="preserve">
     <value>Deseja salvar o componente no banco de dados?</value>
   </data>
+  <data name="FilterVaporPhaseNotSupported" xml:space="preserve">
+    <value>O Filtro não é compatível com correntes de entrada contendo vapor.</value>
+  </data>
 </root>

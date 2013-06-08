@@ -5603,6 +5603,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to O Filtro não é compatível com correntes de entrada contendo vapor..
+        '''</summary>
+        Friend Shared ReadOnly Property FilterVaporPhaseNotSupported() As String
+            Get
+                Return ResourceManager.GetString("FilterVaporPhaseNotSupported", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Fluxo de Calor.
         '''</summary>
         Friend Shared ReadOnly Property FluxodeCalor() As String

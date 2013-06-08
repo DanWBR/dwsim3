@@ -117,6 +117,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
             outstr1 = FlowSheet.Collections.ObjectCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
             outstr2 = FlowSheet.Collections.ObjectCollection(Me.GraphicObject.OutputConnectors(1).AttachedConnector.AttachedTo.Name)
 
+            'the filter doesn't support a vapor phase in the inlet stream.
+            If instr.Fases(2).SPMProperties.massflow.GetValueOrDefault > 0.0# Then
+                Throw New Exception(DWSIM.App.GetLocalString("FilterVaporPhaseNotSupported"))
+            End If
+
             Dim W As Double = instr.Fases(0).SPMProperties.massflow.GetValueOrDefault
             Dim Wsin As Double = instr.Fases(7).SPMProperties.massflow.GetValueOrDefault
             Dim Wlin As Double = W - Wsin

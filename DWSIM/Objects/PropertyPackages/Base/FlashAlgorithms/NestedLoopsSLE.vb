@@ -1,4 +1,4 @@
-﻿'    DWSIM Nested Loops Flash Algorithms for Solid-LIquid Equilibria (SLE)
+﻿'    DWSIM Nested Loops Flash Algorithms for Solid-Liquid Equilibria (SLE)
 '    Copyright 2013 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -71,7 +71,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'Vxv = vapor phase molar fractions
             'Vxs = solid phase molar fractions
             'V, S, L = phase molar amounts (F = 1 = V + S + L)
-            Dim Vnf(n), Vnl(n), Vxl(n), Vxl_ant(n), Vns(n), Vxs(n), Vnv(n), Vxv(n), V, S, L, L_ant As Double
+            Dim Vnf(n), Vnl(n), Vxl(n), Vxl_ant(n), Vns(n), Vxs(n), Vnv(n), Vxv(n), V, S, L, L_ant, Vp(n) As Double
             Dim sumN As Double = 0
 
             Vnf = Vz.Clone
@@ -81,6 +81,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim ids As New List(Of String)
             For i = 0 To n
                 ids.Add(CompoundProperties(i).Name)
+                Vp(i) = PP.AUX_PVAPi(i, T)
             Next
 
             Vxl = Vz.Clone
@@ -128,24 +129,32 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     End If
                 Next
 
+                'check for vapors
+                V = 0.0#
+                For i = 0 To n
+                    If P < Vp(i) Then
+                        V += Vnf(i)
+                        Vxl(i) = 0
+                        Vnv(i) = Vnf(i)
+                    End If
+                Next
+
                 L_ant = L
-                If hassolids Then L = 1 - S Else L = 1
+                If hassolids Then L = 1 - S - V Else L = 1 - V
 
                 For i = 0 To n
-                    Vns(i) = Vnf(i) - Vxl(i) * L
+                    Vns(i) = Vnf(i) - Vxl(i) * L - Vnv(i)
                     Vnl(i) = Vxl(i) * L
                 Next
 
                 For i = 0 To n
                     If Sum(Vnl) <> 0.0# Then Vxl(i) = Vnl(i) / Sum(Vnl) Else Vxl(i) = 0.0#
                     If Sum(Vns) <> 0.0# Then Vxs(i) = Vns(i) / Sum(Vns) Else Vxs(i) = 0.0#
+                    If Sum(Vnv) <> 0.0# Then Vxv(i) = Vnv(i) / Sum(Vnv) Else Vxv(i) = 0.0#
                 Next
 
-                errfunc = 0.0#
-                For i = 0 To n
-                    errfunc += Abs(L - L_ant) ^ 2
-                Next
-
+                errfunc = Abs(L - L_ant) ^ 2
+                
                 If errfunc <= 0.0000000001 Then Exit Do
 
                 If Double.IsNaN(S) Then Throw New Exception(DWSIM.App.GetLocalString("PP_FlashTPSolidFracError"))
