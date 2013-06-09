@@ -38,6 +38,8 @@ Partial Class FormCompoundCreator
         Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btnSaveToDB = New System.Windows.Forms.Button()
         Me.chkReplaceComps = New System.Windows.Forms.CheckBox()
@@ -67,10 +69,20 @@ Partial Class FormCompoundCreator
         Me.lblMW = New System.Windows.Forms.Label()
         Me.CheckBoxMW = New System.Windows.Forms.CheckBox()
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
+        Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.Label60 = New System.Windows.Forms.Label()
         Me.GridUNIFAC = New System.Windows.Forms.DataGridView()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.FaTabStripItem11 = New FarsiLibrary.Win.FATabStripItem()
+        Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
+        Me.Label58 = New System.Windows.Forms.Label()
+        Me.Label57 = New System.Windows.Forms.Label()
+        Me.GridJoback = New System.Windows.Forms.DataGridView()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColumnGroupName = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColumnCountUNIFAC = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColumnCountJoback = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
         Me.CheckBoxCSLV = New System.Windows.Forms.CheckBox()
         Me.LabelWithDivider12 = New System.Windows.Forms.LabelWithDivider()
@@ -240,6 +252,8 @@ Partial Class FormCompoundCreator
         Me.Label42 = New System.Windows.Forms.Label()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.FaTabStripItem10 = New FarsiLibrary.Win.FATabStripItem()
+        Me.LabelWithDivider11 = New System.Windows.Forms.LabelWithDivider()
+        Me.LabelWithDivider7 = New System.Windows.Forms.LabelWithDivider()
         Me.Label54 = New System.Windows.Forms.Label()
         Me.TextBoxEnthOfFusion2 = New System.Windows.Forms.TextBox()
         Me.CheckBoxEnthOfFusion = New System.Windows.Forms.CheckBox()
@@ -270,6 +284,8 @@ Partial Class FormCompoundCreator
         CType(Me.pbRender, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStripItem2.SuspendLayout()
         CType(Me.GridUNIFAC, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.FaTabStripItem11.SuspendLayout()
+        CType(Me.GridJoback, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStripItem3.SuspendLayout()
         Me.FaTabStripItem4.SuspendLayout()
         Me.FaTabStripItem5.SuspendLayout()
@@ -356,7 +372,7 @@ Partial Class FormCompoundCreator
         '
         Me.FaTabStrip2.AlwaysShowClose = False
         resources.ApplyResources(Me.FaTabStrip2, "FaTabStrip2")
-        Me.FaTabStrip2.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2, Me.FaTabStripItem3, Me.FaTabStripItem4, Me.FaTabStripItem5, Me.FaTabStripItem6, Me.FaTabStripItem7, Me.FaTabStripItem8, Me.FaTabStripItem9, Me.FaTabStripItem10})
+        Me.FaTabStrip2.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2, Me.FaTabStripItem11, Me.FaTabStripItem3, Me.FaTabStripItem4, Me.FaTabStripItem5, Me.FaTabStripItem6, Me.FaTabStripItem7, Me.FaTabStripItem8, Me.FaTabStripItem9, Me.FaTabStripItem10})
         Me.FaTabStrip2.Name = "FaTabStrip2"
         Me.FaTabStrip2.SelectedItem = Me.FaTabStripItem1
         '
@@ -391,6 +407,7 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.LinkLabel1, "LinkLabel1")
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.TabStop = True
+        Me.ToolTip1.SetToolTip(Me.LinkLabel1, resources.GetString("LinkLabel1.ToolTip"))
         Me.LinkLabel1.UseCompatibleTextRendering = True
         '
         'Label16
@@ -495,11 +512,20 @@ Partial Class FormCompoundCreator
         'FaTabStripItem2
         '
         Me.FaTabStripItem2.CanClose = False
+        Me.FaTabStripItem2.Controls.Add(Me.LinkLabel2)
         Me.FaTabStripItem2.Controls.Add(Me.Label60)
         Me.FaTabStripItem2.Controls.Add(Me.GridUNIFAC)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
         resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
+        '
+        'LinkLabel2
+        '
+        resources.ApplyResources(Me.LinkLabel2, "LinkLabel2")
+        Me.LinkLabel2.Name = "LinkLabel2"
+        Me.LinkLabel2.TabStop = True
+        Me.ToolTip1.SetToolTip(Me.LinkLabel2, resources.GetString("LinkLabel2.ToolTip"))
+        Me.LinkLabel2.UseCompatibleTextRendering = True
         '
         'Label60
         '
@@ -538,6 +564,82 @@ Partial Class FormCompoundCreator
         Me.Column1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
+        '
+        'FaTabStripItem11
+        '
+        Me.FaTabStripItem11.Controls.Add(Me.LinkLabel3)
+        Me.FaTabStripItem11.Controls.Add(Me.Label58)
+        Me.FaTabStripItem11.Controls.Add(Me.Label57)
+        Me.FaTabStripItem11.Controls.Add(Me.GridJoback)
+        Me.FaTabStripItem11.IsDrawn = True
+        Me.FaTabStripItem11.Name = "FaTabStripItem11"
+        resources.ApplyResources(Me.FaTabStripItem11, "FaTabStripItem11")
+        '
+        'LinkLabel3
+        '
+        resources.ApplyResources(Me.LinkLabel3, "LinkLabel3")
+        Me.LinkLabel3.Name = "LinkLabel3"
+        Me.LinkLabel3.TabStop = True
+        Me.ToolTip1.SetToolTip(Me.LinkLabel3, resources.GetString("LinkLabel3.ToolTip"))
+        Me.LinkLabel3.UseCompatibleTextRendering = True
+        '
+        'Label58
+        '
+        resources.ApplyResources(Me.Label58, "Label58")
+        Me.Label58.ForeColor = System.Drawing.Color.Red
+        Me.Label58.Name = "Label58"
+        '
+        'Label57
+        '
+        resources.ApplyResources(Me.Label57, "Label57")
+        Me.Label57.Name = "Label57"
+        '
+        'GridJoback
+        '
+        Me.GridJoback.AllowUserToAddRows = False
+        Me.GridJoback.AllowUserToDeleteRows = False
+        Me.GridJoback.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.GridJoback.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.GridJoback.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column2, Me.ColumnGroupName, Me.ColumnCountUNIFAC, Me.ColumnCountJoback})
+        resources.ApplyResources(Me.GridJoback, "GridJoback")
+        Me.GridJoback.Name = "GridJoback"
+        '
+        'Column2
+        '
+        Me.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        resources.ApplyResources(Me.Column2, "Column2")
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
+        Me.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'ColumnGroupName
+        '
+        Me.ColumnGroupName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.ColumnGroupName.DefaultCellStyle = DataGridViewCellStyle2
+        resources.ApplyResources(Me.ColumnGroupName, "ColumnGroupName")
+        Me.ColumnGroupName.Name = "ColumnGroupName"
+        Me.ColumnGroupName.ReadOnly = True
+        Me.ColumnGroupName.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ColumnGroupName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'ColumnCountUNIFAC
+        '
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.ColumnCountUNIFAC.DefaultCellStyle = DataGridViewCellStyle3
+        resources.ApplyResources(Me.ColumnCountUNIFAC, "ColumnCountUNIFAC")
+        Me.ColumnCountUNIFAC.Name = "ColumnCountUNIFAC"
+        Me.ColumnCountUNIFAC.ReadOnly = True
+        Me.ColumnCountUNIFAC.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ColumnCountUNIFAC.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'ColumnCountJoback
+        '
+        resources.ApplyResources(Me.ColumnCountJoback, "ColumnCountJoback")
+        Me.ColumnCountJoback.Name = "ColumnCountJoback"
+        Me.ColumnCountJoback.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ColumnCountJoback.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'FaTabStripItem3
         '
@@ -1108,8 +1210,8 @@ Partial Class FormCompoundCreator
         '
         'GridExpDataPVAP
         '
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpDataPVAP.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpDataPVAP.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
         Me.GridExpDataPVAP.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataPVAP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataPVAP.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2})
@@ -1119,16 +1221,16 @@ Partial Class FormCompoundCreator
         '
         'DataGridViewTextBoxColumn1
         '
-        DataGridViewCellStyle3.NullValue = "0"
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle5.NullValue = "0"
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle5
         resources.ApplyResources(Me.DataGridViewTextBoxColumn1, "DataGridViewTextBoxColumn1")
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle4.NullValue = "0"
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle6.NullValue = "0"
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle6
         resources.ApplyResources(Me.DataGridViewTextBoxColumn2, "DataGridViewTextBoxColumn2")
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         '
@@ -1357,8 +1459,8 @@ Partial Class FormCompoundCreator
         '
         'GridExpDataCPIG
         '
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpDataCPIG.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle7.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpDataCPIG.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
         Me.GridExpDataCPIG.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataCPIG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataCPIG.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4})
@@ -1368,16 +1470,16 @@ Partial Class FormCompoundCreator
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle6.NullValue = "0"
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle8.NullValue = "0"
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle8
         resources.ApplyResources(Me.DataGridViewTextBoxColumn3, "DataGridViewTextBoxColumn3")
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
         '
         'DataGridViewTextBoxColumn4
         '
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle7.NullValue = "0"
-        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle9.NullValue = "0"
+        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle9
         resources.ApplyResources(Me.DataGridViewTextBoxColumn4, "DataGridViewTextBoxColumn4")
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
         '
@@ -1452,8 +1554,8 @@ Partial Class FormCompoundCreator
         '
         'GridExpDataLIQDENS
         '
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpDataLIQDENS.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle10.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpDataLIQDENS.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle10
         Me.GridExpDataLIQDENS.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataLIQDENS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataLIQDENS.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6})
@@ -1463,16 +1565,16 @@ Partial Class FormCompoundCreator
         '
         'DataGridViewTextBoxColumn5
         '
-        DataGridViewCellStyle9.NullValue = "0"
-        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle11.NullValue = "0"
+        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle11
         resources.ApplyResources(Me.DataGridViewTextBoxColumn5, "DataGridViewTextBoxColumn5")
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
         '
         'DataGridViewTextBoxColumn6
         '
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle10.NullValue = "0"
-        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle12.NullValue = "0"
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle12
         resources.ApplyResources(Me.DataGridViewTextBoxColumn6, "DataGridViewTextBoxColumn6")
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
         '
@@ -1624,8 +1726,8 @@ Partial Class FormCompoundCreator
         '
         'GridExpDataLIQVISC
         '
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpDataLIQVISC.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle13.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpDataLIQVISC.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle13
         Me.GridExpDataLIQVISC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataLIQVISC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataLIQVISC.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn7, Me.DataGridViewTextBoxColumn8})
@@ -1635,16 +1737,16 @@ Partial Class FormCompoundCreator
         '
         'DataGridViewTextBoxColumn7
         '
-        DataGridViewCellStyle12.NullValue = "0"
-        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle14.NullValue = "0"
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle14
         resources.ApplyResources(Me.DataGridViewTextBoxColumn7, "DataGridViewTextBoxColumn7")
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
         '
         'DataGridViewTextBoxColumn8
         '
-        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle13.NullValue = "0"
-        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle15.NullValue = "0"
+        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle15
         resources.ApplyResources(Me.DataGridViewTextBoxColumn8, "DataGridViewTextBoxColumn8")
         Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
         '
@@ -1740,6 +1842,8 @@ Partial Class FormCompoundCreator
         'FaTabStripItem10
         '
         Me.FaTabStripItem10.CanClose = False
+        Me.FaTabStripItem10.Controls.Add(Me.LabelWithDivider11)
+        Me.FaTabStripItem10.Controls.Add(Me.LabelWithDivider7)
         Me.FaTabStripItem10.Controls.Add(Me.Label54)
         Me.FaTabStripItem10.Controls.Add(Me.TextBoxEnthOfFusion2)
         Me.FaTabStripItem10.Controls.Add(Me.CheckBoxEnthOfFusion)
@@ -1753,6 +1857,18 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem10.Controls.Add(Me.CheckBoxMeltingTemp)
         Me.FaTabStripItem10.Name = "FaTabStripItem10"
         resources.ApplyResources(Me.FaTabStripItem10, "FaTabStripItem10")
+        '
+        'LabelWithDivider11
+        '
+        resources.ApplyResources(Me.LabelWithDivider11, "LabelWithDivider11")
+        Me.LabelWithDivider11.Gap = 5
+        Me.LabelWithDivider11.Name = "LabelWithDivider11"
+        '
+        'LabelWithDivider7
+        '
+        resources.ApplyResources(Me.LabelWithDivider7, "LabelWithDivider7")
+        Me.LabelWithDivider7.Gap = 5
+        Me.LabelWithDivider7.Name = "LabelWithDivider7"
         '
         'Label54
         '
@@ -1899,6 +2015,9 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem2.ResumeLayout(False)
         Me.FaTabStripItem2.PerformLayout()
         CType(Me.GridUNIFAC, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.FaTabStripItem11.ResumeLayout(False)
+        Me.FaTabStripItem11.PerformLayout()
+        CType(Me.GridJoback, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStripItem3.ResumeLayout(False)
         Me.FaTabStripItem3.PerformLayout()
         Me.FaTabStripItem4.ResumeLayout(False)
@@ -2153,4 +2272,16 @@ Partial Class FormCompoundCreator
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Public WithEvents Label54 As System.Windows.Forms.Label
     Public WithEvents TextBoxEnthOfFusion2 As System.Windows.Forms.TextBox
+    Friend WithEvents FaTabStripItem11 As FarsiLibrary.Win.FATabStripItem
+    Friend WithEvents GridJoback As System.Windows.Forms.DataGridView
+    Public WithEvents Label57 As System.Windows.Forms.Label
+    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ColumnGroupName As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ColumnCountUNIFAC As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ColumnCountJoback As System.Windows.Forms.DataGridViewTextBoxColumn
+    Public WithEvents LabelWithDivider7 As System.Windows.Forms.LabelWithDivider
+    Public WithEvents LabelWithDivider11 As System.Windows.Forms.LabelWithDivider
+    Public WithEvents Label58 As System.Windows.Forms.Label
+    Friend WithEvents LinkLabel2 As System.Windows.Forms.LinkLabel
+    Friend WithEvents LinkLabel3 As System.Windows.Forms.LinkLabel
 End Class

@@ -39,38 +39,77 @@ Public Class FormCompoundCreator
     Friend mycase As New CompoundGeneratorCase
 
     Friend loaded As Boolean = False
+    Friend PureUNIFACCompound As Boolean = True
     Friend isDWSimSaved As Boolean = True
     Friend isUserDBSaved As Boolean = True
     Private forceclose As Boolean = False
     Private populating As Boolean = False
+    Private UNIFAClines(), JOBACKlines() As String
+
 
     Private Sub FormCompoundCreator_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-        'jb = New DWSIM.Utilities.Hypos.Methods.Joback
-        'methods2 = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
-        'methods = New DWSIM.Utilities.Hypos.Methods.HYP()
 
         'Grid UNIFAC
         Dim pathsep = System.IO.Path.DirectorySeparatorChar
         Dim picpath As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac" & pathsep
         Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac.txt"
-        Dim lines() As String = IO.File.ReadAllLines(filename)
+
         Dim i As Integer
+        Dim US As String
+
+        UNIFAClines = IO.File.ReadAllLines(filename)
         With Me.GridUNIFAC.Rows
             .Clear()
-            For i = 2 To lines.Length - 1
-                .Add(New Object() {CInt(0), Image.FromFile(picpath & lines(i).Split(",")(7) & ".png")})
-                .Item(.Count - 1).HeaderCell.Value = lines(i).Split(",")(3)
-                .Item(.Count - 1).HeaderCell.Tag = lines(i).Split(",")(2)
-                .Item(.Count - 1).Cells(1).ToolTipText = "Main Group: " & lines(i).Split(",")(2) & vbCrLf & _
-                                                        "Subgroup: " & lines(i).Split(",")(3) & vbCrLf & _
-                                                        "Rk / Qk: " & lines(i).Split(",")(4) & " / " & lines(i).Split(",")(5) & vbCrLf & _
-                                                        "Example Compound: " & lines(i).Split(",")(6)
+            For i = 2 To UNIFAClines.Length - 1
+                US = UNIFAClines(i).Split(",")(8) 'Joback Subgroup List
+
+                .Add(New Object() {CInt(0), Image.FromFile(picpath & UNIFAClines(i).Split(",")(7) & ".png")})
+                .Item(.Count - 1).HeaderCell.Value = UNIFAClines(i).Split(",")(3)
+                .Item(.Count - 1).HeaderCell.Tag = UNIFAClines(i).Split(",")(2)
+                .Item(.Count - 1).Cells(1).ToolTipText = "Main Group: " & UNIFAClines(i).Split(",")(2) & vbCrLf & _
+                                                        "Subgroup: " & UNIFAClines(i).Split(",")(3) & vbCrLf & _
+                                                        "Rk / Qk: " & UNIFAClines(i).Split(",")(4) & " / " & UNIFAClines(i).Split(",")(5) & vbCrLf & _
+                                                        "Example Compound: " & UNIFAClines(i).Split(",")(6) & vbCrLf & US
+
+                
             Next
         End With
 
-        mycase = New CompoundGeneratorCase
+        'Grid Joback
+        filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "JobackGroups.txt"
+        JOBACKlines = IO.File.ReadAllLines(filename)
+
+        Dim ID, GroupType, GroupName As String
+        Dim L As Boolean = True
+
+        GroupType = ""
+
+        With Me.GridJoback.Rows
+            .Clear()
+            For i = 1 To JOBACKlines.Length - 1
+
+                ID = JOBACKlines(i).Split(";")(0)
+
+                If Not ID = "X" Then
+                    .Add(New Object())
+                    .Item(.Count - 1).HeaderCell.Value = "ID " & ID
+                    .Item(.Count - 1).Cells(0).Value = GroupType
+                    GroupName = JOBACKlines(i).Split(";")(1)
+                    .Item(.Count - 1).Cells(1).Value = GroupName
+
+                    If L Then
+                        .Item(.Count - 1).Cells(0).Style.BackColor = Color.CadetBlue
+                    Else
+                        .Item(.Count - 1).Cells(0).Style.BackColor = Color.CornflowerBlue
+                    End If
+                Else
+                    GroupType = JOBACKlines(i).Split(";")(1)
+                    L = Not L
+                End If
+            Next
+
+        End With
+
         With mycase
             .cp.VaporPressureEquation = 0
             .cp.IdealgasCpEquation = 0
@@ -286,7 +325,18 @@ Public Class FormCompoundCreator
             For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
                 r.Cells(0).Value = .cp.UNIFACGroups.Collection(r.HeaderCell.Value)
             Next
+
+            FillUnifacSubGroups()
+            'populating Joback Grid with additional Joback groups
+            For i = 0 To .JobackGroups.Count - 1
+                Me.GridJoback.Rows.Item(.JobackGroups.Item(i)(0)).Cells(3).Value = .JobackGroups.Item(i)(1)
+                If .JobackGroups.Item(i)(1) > 0 Then PureUNIFACCompound = False
+            Next
+
+
             populating = False
+
+
             Me.GridExpDataPVAP.Rows.Clear()
             For i = 0 To .DataPVAP.Count - 1
                 Me.GridExpDataPVAP.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataPVAP(i)(0)), cv.ConverterDoSI(su.spmp_pressure, .DataPVAP(i)(1))})
@@ -309,6 +359,33 @@ Public Class FormCompoundCreator
             If .RegressOKLVISC Then tbStatusLIQVISC.Text = "OK" Else tbStatusLIQVISC.Text = .ErrorMsgLVISC
         End With
 
+    End Sub
+    Sub FillUnifacSubGroups()
+        'fill Joback groups table with UNIFAC subgoups
+        Dim k, ugc, usgc, usgid, oc As Integer
+        Dim JG, JSG As String
+
+        For Each r As DataGridViewRow In Me.GridJoback.Rows
+            r.Cells(2).Value = Nothing
+        Next
+        For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
+            ugc = mycase.cp.UNIFACGroups.Collection(r.HeaderCell.Value)
+
+            'Joback groups from UNIFAC subgroups
+            JG = UNIFAClines(r.Index + 2).Split(",")(8) 'Joback Subgroup List
+            If r.Cells(0).Value > 0 Then
+                For k = 0 To 3
+                    JSG = JG.Split("/")(k)
+                    If Not JSG = "" Then
+                        usgc = JSG.Split(":")(0) 'Joback subgroup count
+                        usgid = JSG.Split(":")(1) 'Joback subgroup ID
+                        oc = Me.GridJoback.Rows.Item(usgid - 1).Cells(2).Value
+                        Me.GridJoback.Rows.Item(usgid - 1).Cells(2).Value = oc + usgc * ugc
+                    End If
+                Next
+
+            End If
+        Next
     End Sub
     Function CheckEmptyCell(ByVal val As String) As String
         If val = "" Then
@@ -426,6 +503,14 @@ Public Class FormCompoundCreator
                 End If
             Next
 
+            Dim JC As Integer
+            If mycase.JobackGroups Is Nothing Then .JobackGroups = New ArrayList 'for old file versions where field was not defined
+            .JobackGroups.Clear()
+            For Each r As DataGridViewRow In Me.GridJoback.Rows
+                JC = r.Cells(3).Value
+                If JC > 0 Then .JobackGroups.Add(New Integer() {r.Index, JC})
+            Next
+
             mycase.DataPVAP.Clear()
             For Each row As DataGridViewRow In Me.GridExpDataPVAP.Rows
                 If row.Index < Me.GridExpDataPVAP.Rows.Count - 1 Then mycase.DataPVAP.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_pressure, row.Cells(1).Value)})
@@ -461,7 +546,7 @@ Public Class FormCompoundCreator
             methods2 = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
             methods = New DWSIM.Utilities.Hypos.Methods.HYP()
 
-            'get group amounts
+            'get UNIFAC group amounts
             Dim vn As New ArrayList
             For Each row As DataGridViewRow In GridUNIFAC.Rows
                 If Not row.Cells(0).Value Is Nothing Then
@@ -472,25 +557,37 @@ Public Class FormCompoundCreator
             Next
             Dim vnd As Int32() = vn.ToArray(Type.GetType("System.Int32"))
 
+            'get Joback group amounts
+            Dim JC As Integer
+            Dim JG As New ArrayList
+
+            PureUNIFACCompound = True
+            For Each r As DataGridViewRow In Me.GridJoback.Rows
+                JC = r.Cells(3).Value 'additional Joback groups
+                JG.Add(JC)
+                If JC > 0 Then PureUNIFACCompound = False
+            Next
+            Dim JGD As Int32() = JG.ToArray(Type.GetType("System.Int32"))
+
             Dim Tb, Tc, Pc, Vc, MM, w, Hvb, MP, Hf As Double
 
-            Tb = jb.CalcTb(vnd)
+            Tb = jb.CalcTb(vnd, JGD)
             If CheckBoxNBP.Checked Then Me.TextBoxNBP.Text = cv.ConverterDoSI(su.spmp_temperature, Tb)
             Tb = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxNBP.Text)
 
-            MM = jb.CalcMW(vnd)
+            MM = jb.CalcMW(vnd, JGD)
             If CheckBoxMW.Checked Then Me.TextBoxMW.Text = MM
             MM = Me.TextBoxMW.Text
 
-            Tc = jb.CalcTc(Tb, vnd)
+            Tc = jb.CalcTc(Tb, vnd, JGD)
             If CheckBoxTc.Checked Then Me.TextBoxTc.Text = cv.ConverterDoSI(su.spmp_temperature, Tc)
             Tc = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxTc.Text)
 
-            Pc = jb.CalcPc(vnd)
+            Pc = jb.CalcPc(vnd, JGD)
             If CheckBoxPc.Checked Then Me.TextBoxPc.Text = cv.ConverterDoSI(su.spmp_pressure, Pc)
             Pc = cv.ConverterParaSI(su.spmp_pressure, Me.TextBoxPc.Text)
 
-            Vc = jb.CalcVc(vnd)
+            Vc = jb.CalcVc(vnd, JGD)
             If CheckBoxZc.Checked Then Me.TextBoxZc.Text = Pc * Vc / Tc / 8.314 / 1000
             If CheckBoxZRa.Checked Then Me.TextBoxZRa.Text = Pc * Vc / Tc / 8.314 / 1000
 
@@ -499,9 +596,9 @@ Public Class FormCompoundCreator
             If CheckBoxAF.Checked Then Me.TextBoxAF.Text = w
             w = Me.TextBoxAF.Text
 
-            If CheckBoxDHF.Checked Then Me.TextBoxDHF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDHf(vnd) / MM)
+            If CheckBoxDHF.Checked Then Me.TextBoxDHF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDHf(vnd, JGD) / MM)
             Hvb = methods.DHvb_Vetere(Tc, Pc, Tb) / MM
-            If CheckBoxDGF.Checked Then Me.TextBoxDGF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDGf(vnd) / MM)
+            If CheckBoxDGF.Checked Then Me.TextBoxDGF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDGf(vnd, JGD) / MM)
             If CheckBoxCSAF.Checked Then Me.TextBoxCSAF.Text = w
             If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = ((Hvb * MM - 8.314 * Tb) * 238.846 * methods2.liq_dens_rackett(Tb, Tc, Pc, w, MM) / MM / 1000000.0) ^ 0.5
             If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = 1 / methods2.liq_dens_rackett(Tb, Tc, Pc, w, MM) * MM / 1000 * 1000000.0
@@ -534,11 +631,11 @@ Public Class FormCompoundCreator
             End If
 
             'melting data
-            MP = jb.CalcTf(vnd) 'melting temperature -> temperature of fusion
+            MP = jb.CalcTf(vnd, JGD) 'melting temperature -> temperature of fusion
             If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, MP)
 
             'enthalpy of fusion
-            Hf = jb.CalcHf(vnd)
+            Hf = jb.CalcHf(vnd, JGD)
             If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = cv.ConverterDoSI(su.spmp_enthalpy, Hf / MM)
 
             loaded = True 'reset old status
@@ -552,6 +649,8 @@ Public Class FormCompoundCreator
                 mycase.cp.UNIFACGroups.Collection.Clear()
                 mycase.cp.MODFACGroups.Collection.Clear()
             End If
+
+            
             For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
                 If Not r.Cells(0).Value Is Nothing Then
                     If CInt(r.Cells(0).Value) <> 0 Then
@@ -562,10 +661,19 @@ Public Class FormCompoundCreator
                     End If
                 End If
             Next
-
+            loaded = False
+            FillUnifacSubGroups()
+            loaded = True
             CalcJobackParams()
         End If
         BothSaveStatusModified(sender, e)
+    End Sub
+
+    Private Sub GridJoback_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridJoback.CellValueChanged
+        If loaded Then
+            CalcJobackParams()
+            BothSaveStatusModified(sender, e)
+        End If
     End Sub
 
     Private Sub SalvarNoBancoDeDadosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -654,10 +762,20 @@ Public Class FormCompoundCreator
                         End If
                     Next
                     Dim vnd As Int32() = vn.ToArray(Type.GetType("System.Int32"))
-                    c_cp(0) = Me.jb.CalcCpA(vnd)
-                    c_cp(1) = Me.jb.CalcCpB(vnd)
-                    c_cp(2) = Me.jb.CalcCpC(vnd)
-                    c_cp(3) = Me.jb.CalcCpD(vnd)
+                    'get Joback group amounts
+                    Dim JC As Integer
+                    Dim JG As New ArrayList
+
+                    For Each r As DataGridViewRow In Me.GridJoback.Rows
+                        JC = r.Cells(3).Value 'additional Joback groups
+                        JG.Add(JC)
+                    Next
+                    Dim JGD As Int32() = JG.ToArray(Type.GetType("System.Int32"))
+
+                    c_cp(0) = Me.jb.CalcCpA(vnd, JGD)
+                    c_cp(1) = Me.jb.CalcCpB(vnd, JGD)
+                    c_cp(2) = Me.jb.CalcCpC(vnd, JGD)
+                    c_cp(3) = Me.jb.CalcCpD(vnd, JGD)
                     obj = New Integer() {0, 0, 0, 10}
                 Else
                     'regressão dos dados
@@ -1436,7 +1554,6 @@ Public Class FormCompoundCreator
             btnRenderSMILES.Enabled = False
 
         Catch ex As Exception
-            'MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             MessageBox.Show(DWSIM.App.GetLocalString("SMILESRenderError"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
@@ -1449,21 +1566,21 @@ Public Class FormCompoundCreator
         End If
     End Sub
 
-    Private Sub LinkPubChem_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkPubChem.LinkClicked
-        System.Diagnostics.Process.Start("http://pubchem.ncbi.nlm.nih.gov/edit2/index.html")
-    End Sub
-
     Private Sub btnRenderSMILES_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRenderSMILES.Click
         RenderSMILES()
-    End Sub
-
-    Private Sub LinkLabel1_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        System.Diagnostics.Process.Start("http://webbook.nist.gov/cgi/cbook.cgi?ID=" & TextBoxCAS.Text)
     End Sub
 
     Private Sub btnSaveToDB_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSaveToDB.Click
         Try
             StoreData()
+
+            'In case of additionalt Joback groups no UNIFAC calculation is possible anymore.
+            'Delete groups to prevent wrong calculations.
+            If Not PureUNIFACCompound Then
+                mycase.cp.UNIFACGroups.Collection.Clear()
+                mycase.cp.MODFACGroups.Collection.Clear()
+            End If
+
             DWSIM.Databases.UserDB.AddCompounds(New DWSIM.ClassesBasicasTermodinamica.ConstantProperties() {mycase.cp}, tbDBPath.Text, chkReplaceComps.Checked)
             SetUserDBSaveStatus(True)
         Catch ex As Exception
@@ -1510,6 +1627,20 @@ Public Class FormCompoundCreator
         BothSaveStatusModified(sender, e)
     End Sub
 
+    Private Sub LinkPubChem_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkPubChem.LinkClicked
+        System.Diagnostics.Process.Start("http://pubchem.ncbi.nlm.nih.gov/edit2/index.html")
+    End Sub
+
+    Private Sub LinkLabel1_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        System.Diagnostics.Process.Start("http://webbook.nist.gov/cgi/cbook.cgi?ID=" & TextBoxCAS.Text)
+    End Sub
+
+    Private Sub LinkLabel2_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
+        System.Diagnostics.Process.Start("http://www.ddbst.com/unifacga.html")
+    End Sub
+    Private Sub LinkLabel3_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
+        System.Diagnostics.Process.Start("http://chemeo.com/")
+    End Sub
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase
@@ -1524,6 +1655,8 @@ End Class
     Public cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
     Public database As String = ""
     Public su As DWSIM.SistemasDeUnidades.Unidades
+
+
     Public nf As String = My.Computer.Info.InstalledUICulture.NumberFormat.ToString
 
     Public CalcMW As Boolean = True
@@ -1561,9 +1694,13 @@ End Class
     Public ErrorMsgLVISC As String = ""
     Public ErrorMsgLDENS As String = ""
 
+    Public JobackGroups As New ArrayList
+
     Public DataPVAP As New ArrayList
     Public DataCPIG As New ArrayList
     Public DataLVISC As New ArrayList
     Public DataLDENS As New ArrayList
+
+
 
 End Class
