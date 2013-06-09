@@ -1,5 +1,6 @@
 ﻿'    Hypotheticals Calculation Routines 
-'    Copyright 2008/2009 Daniel Wagner O. de Medeiros
+'    Copyright 2008/2013 Daniel Wagner O. de Medeiros
+'              2013 Gregor Reichert   
 '
 '    This file is part of DWSIM.
 '
@@ -16,24 +17,39 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Namespace DWSIM.Utilities.Hypos.Methods
 
+Namespace DWSIM.Utilities.Hypos.Methods
     <System.Serializable()> Public Class Joback
 
-        Protected m_groups As System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
+        Protected m_Ugroups As System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
+        Protected m_Jgroups As System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
 
-        Public ReadOnly Property Groups() As System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
+        Public ReadOnly Property UGroups() As System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
             Get
-                Return m_groups
+                Return m_Ugroups
             End Get
         End Property
-
+        Public ReadOnly Property JGroups() As System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
+            Get
+                Return m_Jgroups
+            End Get
+        End Property
+        Function CheckEmptyCell(ByVal val As String) As String
+            If val = "X" Or val = "" Then
+                CheckEmptyCell = Nothing
+            Else
+                CheckEmptyCell = val
+            End If
+        End Function
         Sub New()
 
             Dim pathsep = System.IO.Path.DirectorySeparatorChar
             Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
+            Dim JOBACKlines() As String
+            Dim i As Integer
 
-            m_groups = New System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
+            'Load UNIFAC-groups data
+            m_Ugroups = New System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
 
             Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "joback.txt"
             Dim fields As String()
@@ -41,9 +57,10 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Using parser As New FileIO.TextFieldParser(filename)
                 parser.SetDelimiters(delimiter)
                 fields = parser.ReadFields()
+                
                 While Not parser.EndOfData
                     fields = parser.ReadFields()
-                    Me.Groups.Add(fields(0), New JobackGroup(fields(1), fields(0), Double.Parse(fields(4), cult), _
+                    Me.UGroups.Add(fields(0), New JobackGroup(fields(1), fields(0), Double.Parse(fields(4), cult), _
                     Double.Parse(fields(5), cult), Double.Parse(fields(6), cult), Double.Parse(fields(7), cult), _
                     Double.Parse(fields(8), cult), Double.Parse(fields(9), cult), Double.Parse(fields(10), cult), _
                     Double.Parse(fields(15), cult), Double.Parse(fields(16), cult), Double.Parse(fields(12), cult), _
@@ -51,18 +68,56 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 End While
             End Using
 
+            'Load Joback-groups data
+            m_Jgroups = New System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
+            filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "JobackGroups.txt"
+
+            JOBACKlines = IO.File.ReadAllLines(filename)
+            For i = 2 To JOBACKlines.Length - 1
+                With JOBACKlines(i)
+                    If Not .Split(";")(0) = "X" Then
+                        Dim JG As New JobackGroup
+                        JG.ID = .Split(";")(0)
+                        JG.Group = .Split(";")(1)
+                        JG.TC = CheckEmptyCell(.Split(";")(2))
+                        JG.PC = CheckEmptyCell(.Split(";")(3))
+                        JG.VC = CheckEmptyCell(.Split(";")(4))
+                        JG.TB = CheckEmptyCell(.Split(";")(5))
+                        JG.TF = CheckEmptyCell(.Split(";")(6))
+                        JG.DH = CheckEmptyCell(.Split(";")(7))
+                        JG.DG = CheckEmptyCell(.Split(";")(8))
+                        JG.A = CheckEmptyCell(.Split(";")(9))
+                        JG.B = CheckEmptyCell(.Split(";")(10))
+                        JG.C = CheckEmptyCell(.Split(";")(11))
+                        JG.D = CheckEmptyCell(.Split(";")(12))
+                        JG.HF = CheckEmptyCell(.Split(";")(13))
+                        JG.MW = CheckEmptyCell(.Split(";")(17))
+                        JG.NA = CheckEmptyCell(.Split(";")(18))
+
+                        Me.JGroups.Add(JG.ID, JG)
+                    End If
+                End With
+            Next
         End Sub
 
-        Public Function CalcMW(ByVal n() As Integer) As Double
+        Public Function CalcMW(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
             sum1 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.MW * n(i)
-                i = i + 1
+                i += 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.MW * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 
@@ -72,16 +127,24 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         End Function
 
-        Public Function CalcTb(ByVal n() As Integer) As Double
+        Public Function CalcTb(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
             sum1 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.TB * n(i)
-                i = i + 1
+                i += 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.TB * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 
@@ -91,16 +154,24 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         End Function
 
-        Public Function CalcTc(ByVal Tb As Double, ByVal n() As Integer) As Double
+        Public Function CalcTc(ByVal Tb As Double, ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
             sum1 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.TC * n(i)
-                i = i + 1
+                i += 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.TC * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 
@@ -110,18 +181,27 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         End Function
 
-        Public Function CalcPc(ByVal n() As Integer) As Double
+        Public Function CalcPc(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1, sum2 As Double
             Dim i As Integer
 
             sum1 = 0
             sum2 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.PC * n(i)
                 sum2 += jg.NA * n(i)
-                i = i + 1
+                i += 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.PC * JC(i)
+                    sum2 += jg.NA * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 
@@ -131,16 +211,24 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         End Function
 
-        Public Function CalcVc(ByVal n() As Integer) As Double
+        Public Function CalcVc(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
             sum1 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.VC * n(i)
                 i = i + 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.VC * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 
@@ -150,16 +238,24 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         End Function
 
-        Public Function CalcTf(ByVal n() As Integer) As Double
+        Public Function CalcTf(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
             sum1 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.TF * n(i)
-                i = i + 1
+                i += 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.TF * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 
@@ -169,16 +265,24 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         End Function
 
-        Public Function CalcHf(ByVal n() As Integer) As Double
+        Public Function CalcHf(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
             sum1 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.HF * n(i)
                 i = i + 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.HF * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 
@@ -188,16 +292,24 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         End Function
 
-        Public Function CalcDHf(ByVal n() As Integer) As Double
+        Public Function CalcDHf(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
             sum1 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.DH * n(i)
-                i = i + 1
+                i += 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.DH * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 
@@ -207,16 +319,24 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         End Function
 
-        Public Function CalcDGf(ByVal n() As Integer) As Double
+        Public Function CalcDGf(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
             sum1 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.DG * n(i)
-                i = i + 1
+                i += 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.DG * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 
@@ -226,16 +346,24 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         End Function
 
-        Public Function CalcCpA(ByVal n() As Integer) As Double
+        Public Function CalcCpA(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
             sum1 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.A * n(i)
-                i = i + 1
+                i += 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.A * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 
@@ -245,16 +373,24 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         End Function
 
-        Public Function CalcCpB(ByVal n() As Integer) As Double
+        Public Function CalcCpB(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
             sum1 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.B * n(i)
-                i = i + 1
+                i += 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.B * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 
@@ -264,16 +400,24 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         End Function
 
-        Public Function CalcCpC(ByVal n() As Integer) As Double
+        Public Function CalcCpC(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
             sum1 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.C * n(i)
-                i = i + 1
+                i += 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.C * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 
@@ -283,16 +427,24 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
         End Function
 
-        Public Function CalcCpD(ByVal n() As Integer) As Double
+        Public Function CalcCpD(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
             sum1 = 0
-            For Each jg As JobackGroup In Me.Groups.Values
+            For Each jg As JobackGroup In Me.UGroups.Values
                 sum1 += jg.D * n(i)
-                i = i + 1
+                i += 1
             Next
+
+            i = 0
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    sum1 += jg.D * JC(i)
+                    i += 1
+                Next
+            End If
 
             Dim fval As Double
 

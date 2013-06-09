@@ -35,7 +35,7 @@ Public Class FormCompCreator
         jb = New DWSIM.Utilities.Hypos.Methods.Joback
         With Me.GridUNIFAC.Rows
             .Clear()
-            For Each jg As JobackGroup In jb.Groups.Values
+            For Each jg As JobackGroup In jb.UGroups.Values
                 .Add(New Object() {CInt(0)})
                 .Item(.Count - 1).HeaderCell.Value = jg.Group
                 .Item(.Count - 1).HeaderCell.Tag = jg.ID

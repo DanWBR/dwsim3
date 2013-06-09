@@ -230,28 +230,28 @@
     <comment>1</comment>
   </data>
   <data name="PROP_FT_0" xml:space="preserve">
-    <value>Energy Balance</value>
+    <value>Energiebilanz</value>
   </data>
   <data name="PROP_FT_1" xml:space="preserve">
-    <value>Total Filter Area</value>
+    <value>gesamte Filterfläche</value>
   </data>
   <data name="PROP_FT_2" xml:space="preserve">
-    <value>Cake Relative Humidity (%)</value>
+    <value>relative Kuchenfeuchte (%)</value>
   </data>
   <data name="PROP_FT_3" xml:space="preserve">
-    <value>Cycle Time</value>
+    <value>Zykluszeit</value>
   </data>
   <data name="PROP_FT_4" xml:space="preserve">
-    <value>Filter Medium Resistance</value>
+    <value>Widerstand Filtermedium</value>
   </data>
   <data name="PROP_FT_5" xml:space="preserve">
-    <value>Specific Cake Resistance</value>
+    <value>spezifischer Kuchenwiderstand</value>
   </data>
   <data name="PROP_FT_6" xml:space="preserve">
-    <value>Submerged Area Fraction</value>
+    <value>Anteil eingetauchte Filterfläche</value>
   </data>
   <data name="PROP_FT_7" xml:space="preserve">
-    <value>Total Pressure Drop</value>
+    <value>gesamter Druckverlust</value>
   </data>
   <data name="PROP_GR_0" xml:space="preserve">
     <value>Druckverlust</value>
@@ -458,23 +458,23 @@
     <comment>0</comment>
   </data>
   <data name="PROP_MS_125" xml:space="preserve">
-    <value>Massenstrom (Aqueous Phase)</value>
+    <value>Massenstrom (wässrige Phase)</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_126" xml:space="preserve">
-    <value>Bubble Pressure at Stream Temperature</value>
+    <value>Siededruck bei Stromtemperatur</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_127" xml:space="preserve">
-    <value>Dew Pressure at Stream Temperature</value>
+    <value>Kondensatinsdruck bei Stromtemperatur</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_128" xml:space="preserve">
-    <value>Bubble Temperature at Stream Pressure</value>
+    <value>Siedetemperatur bei Stromdruck</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_129" xml:space="preserve">
-    <value>Dew Temperature at Stream Pressure</value>
+    <value>Kondensationstemperatur bei Stromdruck</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_13" xml:space="preserve">
@@ -482,7 +482,7 @@
     <comment>0</comment>
   </data>
   <data name="PROP_MS_130" xml:space="preserve">
-    <value>Phases</value>
+    <value>Phasen</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_14" xml:space="preserve">
@@ -1058,10 +1058,10 @@
     <comment>1</comment>
   </data>
   <data name="PROP_SS_1" xml:space="preserve">
-    <value>Solids Separation Efficiency</value>
+    <value>Feststoffabscheidegrad</value>
   </data>
   <data name="PROP_SS_2" xml:space="preserve">
-    <value>Liquids Separation Efficiency</value>
+    <value>Flüssigkeitsabscheidegrad</value>
   </data>
   <data name="PROP_SV_0" xml:space="preserve">
     <value>Separatortemperatur</value>
