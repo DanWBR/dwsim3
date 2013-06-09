@@ -861,12 +861,6 @@
     <Compile Include="Tools\AssayManager\FormAssayManager.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tools\ComponentCreator\FormCompCreator.Designer.vb">
-      <DependentUpon>FormCompCreator.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\ComponentCreator\FormCompCreator.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Tools\DCCharacterization\Auxiliary\CurveConversion.vb" />
     <Compile Include="Tools\DCCharacterization\Auxiliary\Fitting.vb" />
     <Compile Include="Tools\DCCharacterization\Auxiliary\PropertyMethods.vb" />
@@ -1069,19 +1063,7 @@
     <Compile Include="Utilities\HYD+\Helper Classes\HYDR_CG.vb" />
     <Compile Include="Utilities\HYD+\Helper Classes\HYDR_KS.vb" />
     <Compile Include="Utilities\HYD+\Helper Classes\HYDR_vdwP_PP.vb" />
-    <Compile Include="Tools\Hypotheticals\FormCheckHypData.Designer.vb">
-      <DependentUpon>FormCheckHypData.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\Hypotheticals\FormCheckHypData.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\Hypotheticals\FormHypGen.Designer.vb">
-      <DependentUpon>FormHypGen.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\Hypotheticals\FormHypGen.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\Hypotheticals\helpers\HYP.vb" />
+    <Compile Include="Objects\PropertyPackages\Base\HYP.vb" />
     <Compile Include="Utilities\PHASE_ENVEL\FormPEC.Designer.vb">
       <DependentUpon>FormPEC.vb</DependentUpon>
     </Compile>
@@ -1657,22 +1639,6 @@
     <EmbeddedResource Include="Utilities\HYD+\FormHYD.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormHYD.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\Hypotheticals\FormCheckHypData.en.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormCheckHypData.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\Hypotheticals\FormCheckHypData.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormCheckHypData.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\Hypotheticals\FormHypGen.en.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormHypGen.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\Hypotheticals\FormHypGen.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormHypGen.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\PHASE_ENVEL\FormPEC.en.resx">
       <SubType>Designer</SubType>
@@ -2658,20 +2624,6 @@
     <EmbeddedResource Include="Tools\AssayManager\FormAssayManager.resx">
       <DependentUpon>FormAssayManager.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tools\ComponentCreator\FormCompCreator.de.resx">
-      <DependentUpon>FormCompCreator.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\ComponentCreator\FormCompCreator.en.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormCompCreator.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\ComponentCreator\FormCompCreator.es.resx">
-      <DependentUpon>FormCompCreator.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\ComponentCreator\FormCompCreator.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormCompCreator.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Tools\DCCharacterization\DCCharacterizationWizard.de.resx">
       <DependentUpon>DCCharacterizationWizard.vb</DependentUpon>
     </EmbeddedResource>
@@ -2685,18 +2637,6 @@
     <EmbeddedResource Include="Tools\DCCharacterization\DCCharacterizationWizard.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DCCharacterizationWizard.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\Hypotheticals\FormCheckHypData.de.resx">
-      <DependentUpon>FormCheckHypData.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\Hypotheticals\FormCheckHypData.es.resx">
-      <DependentUpon>FormCheckHypData.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\Hypotheticals\FormHypGen.de.resx">
-      <DependentUpon>FormHypGen.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\Hypotheticals\FormHypGen.es.resx">
-      <DependentUpon>FormHypGen.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\PetroleumCharacterization\FormPCBulk.de.resx">
       <DependentUpon>FormPCBulk.vb</DependentUpon>

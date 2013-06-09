@@ -24,11 +24,11 @@ Partial Class FormStSim
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormStSim))
-        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Button9 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -55,7 +55,6 @@ Partial Class FormStSim
         Me.Column4 = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.KryptonButton1 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.NavigationPane1 = New Ascend.Windows.Forms.NavigationPane()
         Me.NavigationPanePage1 = New Ascend.Windows.Forms.NavigationPanePage()
@@ -124,8 +123,6 @@ Partial Class FormStSim
         Me.CheckBox3 = New System.Windows.Forms.CheckBox()
         Me.PanelOptions = New System.Windows.Forms.Panel()
         Me.PanelUnits = New System.Windows.Forms.Panel()
-        Me.PanelHyp = New System.Windows.Forms.Panel()
-        Me.Button4 = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
@@ -167,7 +164,6 @@ Partial Class FormStSim
         Me.GroupBox3.SuspendLayout()
         Me.PanelOptions.SuspendLayout()
         Me.PanelUnits.SuspendLayout()
-        Me.PanelHyp.SuspendLayout()
         Me.PanelReactions.SuspendLayout()
         Me.PanelPPAdv.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
@@ -335,24 +331,24 @@ Partial Class FormStSim
         Me.DataGridView1.AllowUserToResizeRows = False
         Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle21.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4})
-        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle24.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle24
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle4
         Me.DataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.Name = "DataGridView1"
@@ -363,8 +359,8 @@ Partial Class FormStSim
         '
         'Column1
         '
-        DataGridViewCellStyle22.BackColor = System.Drawing.Color.Gainsboro
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle22
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.Gainsboro
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle2
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
@@ -379,8 +375,8 @@ Partial Class FormStSim
         '
         'Column3
         '
-        DataGridViewCellStyle23.BackColor = System.Drawing.Color.Gainsboro
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle23
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.Gainsboro
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle3
         resources.ApplyResources(Me.Column3, "Column3")
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
@@ -408,13 +404,6 @@ Partial Class FormStSim
         Me.Label7.Name = "Label7"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label7, System.Drawing.Color.Empty)
-        '
-        'KryptonButton1
-        '
-        resources.ApplyResources(Me.KryptonButton1, "KryptonButton1")
-        Me.KryptonButton1.Name = "KryptonButton1"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton1, System.Drawing.Color.Empty)
         '
         'Button1
         '
@@ -482,8 +471,8 @@ Partial Class FormStSim
         Me.NavigationPanePage1.ImageFooter = Nothing
         Me.NavigationPanePage1.ImageIndex = 1
         Me.NavigationPanePage1.ImageIndexFooter = -1
-        Me.NavigationPanePage1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
-        Me.NavigationPanePage1.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.NavigationPanePage1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage1.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
         Me.NavigationPanePage1.ImageList = Nothing
         Me.NavigationPanePage1.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage1.Key = "NavigationPanePage1"
@@ -502,7 +491,7 @@ Partial Class FormStSim
         Me.TreeView2.ImageList = Me.ImageList1
         Me.TreeView2.ItemHeight = 30
         Me.TreeView2.Name = "TreeView2"
-        Me.TreeView2.Nodes.AddRange(New System.Windows.Forms.TreeNode() {CType(resources.GetObject("TreeView2.Nodes"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeView2.Nodes1"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeView2.Nodes2"), System.Windows.Forms.TreeNode)})
+        Me.TreeView2.Nodes.AddRange(New System.Windows.Forms.TreeNode() {CType(resources.GetObject("TreeView2.Nodes"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeView2.Nodes1"), System.Windows.Forms.TreeNode)})
         Me.TreeView2.Scrollable = False
         Me.TreeView2.ShowLines = False
         Me.TreeView2.ShowNodeToolTips = True
@@ -544,8 +533,8 @@ Partial Class FormStSim
         Me.NavigationPanePage5.ImageFooter = Nothing
         Me.NavigationPanePage5.ImageIndex = 2
         Me.NavigationPanePage5.ImageIndexFooter = -1
-        Me.NavigationPanePage5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
-        Me.NavigationPanePage5.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.NavigationPanePage5.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage5.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
         Me.NavigationPanePage5.ImageList = Nothing
         Me.NavigationPanePage5.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage5.Key = "NavigationPanePage5"
@@ -591,8 +580,8 @@ Partial Class FormStSim
         Me.NavigationPanePage3.ImageFooter = Nothing
         Me.NavigationPanePage3.ImageIndex = 6
         Me.NavigationPanePage3.ImageIndexFooter = -1
-        Me.NavigationPanePage3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
-        Me.NavigationPanePage3.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.NavigationPanePage3.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage3.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
         Me.NavigationPanePage3.ImageList = Nothing
         Me.NavigationPanePage3.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage3.Key = "NavigationPanePage3"
@@ -638,8 +627,8 @@ Partial Class FormStSim
         Me.NavigationPanePage4.ImageFooter = Nothing
         Me.NavigationPanePage4.ImageIndex = 0
         Me.NavigationPanePage4.ImageIndexFooter = -1
-        Me.NavigationPanePage4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
-        Me.NavigationPanePage4.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.NavigationPanePage4.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage4.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
         Me.NavigationPanePage4.ImageList = Nothing
         Me.NavigationPanePage4.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage4.Key = "NavigationPanePage4"
@@ -792,8 +781,8 @@ Partial Class FormStSim
         Me.ogc1.AllowUserToAddRows = False
         Me.ogc1.AllowUserToDeleteRows = False
         Me.ogc1.AllowUserToResizeRows = False
-        DataGridViewCellStyle25.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
-        Me.ogc1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle25
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.ogc1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
         Me.ogc1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.ogc1.CollapseIcon = Global.DWSIM.My.Resources.Resources.minus
         Me.ogc1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -1177,24 +1166,6 @@ Partial Class FormStSim
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelUnits, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.PanelUnits, System.Drawing.Color.Empty)
         '
-        'PanelHyp
-        '
-        Me.PanelHyp.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.PanelHyp.Controls.Add(Me.Button4)
-        Me.PanelHyp.Controls.Add(Me.KryptonButton1)
-        resources.ApplyResources(Me.PanelHyp, "PanelHyp")
-        Me.PanelHyp.Name = "PanelHyp"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelHyp, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.PanelHyp, System.Drawing.Color.Empty)
-        '
-        'Button4
-        '
-        resources.ApplyResources(Me.Button4, "Button4")
-        Me.Button4.Name = "Button4"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button4, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button4, System.Drawing.Color.Empty)
-        Me.Button4.UseVisualStyleBackColor = True
-        '
         'OpenFileDialog1
         '
         resources.ApplyResources(Me.OpenFileDialog1, "OpenFileDialog1")
@@ -1325,7 +1296,6 @@ Partial Class FormStSim
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.PanelComps)
         Me.Controls.Add(Me.PanelOptions)
-        Me.Controls.Add(Me.PanelHyp)
         Me.Controls.Add(Me.PanelReactions)
         Me.Controls.Add(Me.NavigationPane1)
         Me.Controls.Add(Me.Button1)
@@ -1372,7 +1342,6 @@ Partial Class FormStSim
         Me.GroupBox3.PerformLayout()
         Me.PanelOptions.ResumeLayout(False)
         Me.PanelUnits.ResumeLayout(False)
-        Me.PanelHyp.ResumeLayout(False)
         Me.PanelReactions.ResumeLayout(False)
         Me.PanelPPAdv.ResumeLayout(False)
         Me.GroupBox11.ResumeLayout(False)
@@ -1396,7 +1365,6 @@ Partial Class FormStSim
     Public WithEvents ComboBox2 As System.Windows.Forms.ComboBox
     Public WithEvents Label7 As System.Windows.Forms.Label
     Public WithEvents Button1 As System.Windows.Forms.Button
-    Public WithEvents KryptonButton1 As System.Windows.Forms.Button
     Public WithEvents TreeView1 As System.Windows.Forms.TreeView
     Public WithEvents TreeView2 As System.Windows.Forms.TreeView
     Public WithEvents PanelCarPet As System.Windows.Forms.Panel
@@ -1419,7 +1387,6 @@ Partial Class FormStSim
     Public WithEvents PanelPP As System.Windows.Forms.Panel
     Public WithEvents PanelOptions As System.Windows.Forms.Panel
     Public WithEvents PanelUnits As System.Windows.Forms.Panel
-    Public WithEvents PanelHyp As System.Windows.Forms.Panel
     Public WithEvents TreeView4 As System.Windows.Forms.TreeView
     Public WithEvents TreeView5 As System.Windows.Forms.TreeView
     Public WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
@@ -1458,7 +1425,6 @@ Partial Class FormStSim
     Public WithEvents CheckBox3 As System.Windows.Forms.CheckBox
     Public WithEvents GroupBox6 As System.Windows.Forms.GroupBox
     Public WithEvents Button8 As System.Windows.Forms.Button
-    Public WithEvents Button4 As System.Windows.Forms.Button
     Public WithEvents Column18 As System.Windows.Forms.DataGridViewTextBoxColumn
     Public WithEvents Column16 As System.Windows.Forms.DataGridViewTextBoxColumn
     Public WithEvents Column17 As System.Windows.Forms.DataGridViewTextBoxColumn

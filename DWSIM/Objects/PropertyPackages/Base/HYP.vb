@@ -19,6 +19,7 @@
 
 
 Namespace DWSIM.Utilities.Hypos.Methods
+
     <System.Serializable()> Public Class Joback
 
         Protected m_Ugroups As System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
@@ -57,7 +58,7 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Using parser As New FileIO.TextFieldParser(filename)
                 parser.SetDelimiters(delimiter)
                 fields = parser.ReadFields()
-                
+
                 While Not parser.EndOfData
                     fields = parser.ReadFields()
                     Me.UGroups.Add(fields(0), New JobackGroup(fields(1), fields(0), Double.Parse(fields(4), cult), _

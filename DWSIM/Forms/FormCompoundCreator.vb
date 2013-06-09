@@ -46,7 +46,6 @@ Public Class FormCompoundCreator
     Private populating As Boolean = False
     Private UNIFAClines(), JOBACKlines() As String
 
-
     Private Sub FormCompoundCreator_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         'Grid UNIFAC
@@ -134,9 +133,8 @@ Public Class FormCompoundCreator
 
         SetCompCreatorSaveStatus(True)
         SetUserDBSaveStatus(True)
+
     End Sub
-
-
 
     Private Sub FormCompoundCreator_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
         If Not forceclose Then
@@ -188,6 +186,7 @@ Public Class FormCompoundCreator
             ToolStripStatusUserDB.BackColor = Color.Red
         End If
     End Sub
+
     Sub WriteData()
 
         Dim i As Integer
@@ -327,15 +326,17 @@ Public Class FormCompoundCreator
             Next
 
             FillUnifacSubGroups()
+
+            'check if the JobackGroups array exists, when loading older files
+            If .JobackGroups Is Nothing Then .JobackGroups = New ArrayList()
+
             'populating Joback Grid with additional Joback groups
             For i = 0 To .JobackGroups.Count - 1
                 Me.GridJoback.Rows.Item(.JobackGroups.Item(i)(0)).Cells(3).Value = .JobackGroups.Item(i)(1)
                 If .JobackGroups.Item(i)(1) > 0 Then PureUNIFACCompound = False
             Next
 
-
             populating = False
-
 
             Me.GridExpDataPVAP.Rows.Clear()
             For i = 0 To .DataPVAP.Count - 1
@@ -357,10 +358,13 @@ Public Class FormCompoundCreator
             If .RegressOKCPIG Then tbStatusCPIG.Text = "OK" Else tbStatusCPIG.Text = .ErrorMsgCPIG
             If .RegressOKLDENS Then tbStatusLIQDENS.Text = "OK" Else tbStatusLIQDENS.Text = .ErrorMsgLDENS
             If .RegressOKLVISC Then tbStatusLIQVISC.Text = "OK" Else tbStatusLIQVISC.Text = .ErrorMsgLVISC
+
         End With
 
     End Sub
+
     Sub FillUnifacSubGroups()
+
         'fill Joback groups table with UNIFAC subgoups
         Dim k, ugc, usgc, usgid, oc As Integer
         Dim JG, JSG As String
@@ -387,6 +391,7 @@ Public Class FormCompoundCreator
             End If
         Next
     End Sub
+
     Function CheckEmptyCell(ByVal val As String) As String
         If val = "" Then
             CheckEmptyCell = "0"
@@ -394,6 +399,7 @@ Public Class FormCompoundCreator
             CheckEmptyCell = val
         End If
     End Function
+
     Sub StoreData()
 
         With mycase
@@ -1519,6 +1525,8 @@ Public Class FormCompoundCreator
 
         loaded = True
 
+        UpdateUnits()
+
     End Sub
 
     Private Sub cbUnits_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cbUnits.SelectedIndexChanged
@@ -1655,7 +1663,6 @@ End Class
     Public cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
     Public database As String = ""
     Public su As DWSIM.SistemasDeUnidades.Unidades
-
 
     Public nf As String = My.Computer.Info.InstalledUICulture.NumberFormat.ToString
 

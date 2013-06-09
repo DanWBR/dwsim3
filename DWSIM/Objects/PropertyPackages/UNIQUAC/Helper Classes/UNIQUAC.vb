@@ -87,11 +87,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim uniquacip As UNIQUAC_IPData
             Dim uniquacipc() As UNIQUAC_IPData
-            'Dim uniquacipc2() As UNIQUAC_IPData
+            Dim uniquacipc2() As UNIQUAC_IPData
             Dim fh1 As New FileHelperEngine(Of UNIQUAC_IPData)
-            'Dim fh2 As New FileHelperEngine(Of UNIQUAC_IPData)
             uniquacipc = fh1.ReadFile(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "uniquac.dat")
-            'uniquacipc2 = fh2.ReadFile(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "uniquacip.dat")
+            uniquacipc2 = fh1.ReadFile(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "uniquacip.dat")
 
             Dim csdb As New DWSIM.Databases.ChemSep
 
@@ -128,6 +127,43 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 End If
             Next
 
+            For Each uniquacip In uniquacipc2
+                uniquacip.A12 *= 1.98721
+                uniquacip.A21 *= 1.98721
+            Next
+
+            For Each uniquacip In uniquacipc2
+                If Me.InteractionParameters.ContainsKey(csdb.GetDWSIMName(uniquacip.ID1)) Then
+                    If Not Me.InteractionParameters(csdb.GetDWSIMName(uniquacip.ID1)).ContainsKey(csdb.GetDWSIMName(uniquacip.ID2)) Then
+                        Me.InteractionParameters(csdb.GetDWSIMName(uniquacip.ID1)).Add(csdb.GetDWSIMName(uniquacip.ID2), uniquacip.Clone)
+                    End If
+                    If Not Me.InteractionParameters(csdb.GetDWSIMName(uniquacip.ID1)).ContainsKey(csdb.GetCSName(uniquacip.ID2)) Then
+                        Me.InteractionParameters(csdb.GetDWSIMName(uniquacip.ID1)).Add(csdb.GetCSName(uniquacip.ID2), uniquacip.Clone)
+                    End If
+                Else
+                    Me.InteractionParameters.Add(csdb.GetDWSIMName(uniquacip.ID1), New Dictionary(Of String, UNIQUAC_IPData))
+                    Me.InteractionParameters(csdb.GetDWSIMName(uniquacip.ID1)).Add(csdb.GetDWSIMName(uniquacip.ID2), uniquacip.Clone)
+                    If Not Me.InteractionParameters(csdb.GetDWSIMName(uniquacip.ID1)).ContainsKey(csdb.GetCSName(uniquacip.ID2)) Then
+                        Me.InteractionParameters(csdb.GetDWSIMName(uniquacip.ID1)).Add(csdb.GetCSName(uniquacip.ID2), uniquacip.Clone)
+                    End If
+                End If
+            Next
+            For Each uniquacip In uniquacipc2
+                If Me.InteractionParameters.ContainsKey(csdb.GetCSName(uniquacip.ID1)) Then
+                    If Not Me.InteractionParameters(csdb.GetCSName(uniquacip.ID1)).ContainsKey(csdb.GetCSName(uniquacip.ID2)) Then
+                        Me.InteractionParameters(csdb.GetCSName(uniquacip.ID1)).Add(csdb.GetCSName(uniquacip.ID2), uniquacip.Clone)
+                    End If
+                    If Not Me.InteractionParameters(csdb.GetCSName(uniquacip.ID1)).ContainsKey(csdb.GetDWSIMName(uniquacip.ID2)) Then
+                        Me.InteractionParameters(csdb.GetCSName(uniquacip.ID1)).Add(csdb.GetDWSIMName(uniquacip.ID2), uniquacip.Clone)
+                    End If
+                Else
+                    Me.InteractionParameters.Add(csdb.GetCSName(uniquacip.ID1), New Dictionary(Of String, UNIQUAC_IPData))
+                    Me.InteractionParameters(csdb.GetCSName(uniquacip.ID1)).Add(csdb.GetCSName(uniquacip.ID2), uniquacip.Clone)
+                    If Not Me.InteractionParameters(csdb.GetCSName(uniquacip.ID1)).ContainsKey(csdb.GetDWSIMName(uniquacip.ID2)) Then
+                        Me.InteractionParameters(csdb.GetCSName(uniquacip.ID1)).Add(csdb.GetDWSIMName(uniquacip.ID2), uniquacip.Clone)
+                    End If
+                End If
+            Next
 
             uniquacip = Nothing
             uniquacipc = Nothing

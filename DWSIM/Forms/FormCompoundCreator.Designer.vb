@@ -252,8 +252,6 @@ Partial Class FormCompoundCreator
         Me.Label42 = New System.Windows.Forms.Label()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.FaTabStripItem10 = New FarsiLibrary.Win.FATabStripItem()
-        Me.LabelWithDivider11 = New System.Windows.Forms.LabelWithDivider()
-        Me.LabelWithDivider7 = New System.Windows.Forms.LabelWithDivider()
         Me.Label54 = New System.Windows.Forms.Label()
         Me.TextBoxEnthOfFusion2 = New System.Windows.Forms.TextBox()
         Me.CheckBoxEnthOfFusion = New System.Windows.Forms.CheckBox()
@@ -598,7 +596,7 @@ Partial Class FormCompoundCreator
         '
         Me.GridJoback.AllowUserToAddRows = False
         Me.GridJoback.AllowUserToDeleteRows = False
-        Me.GridJoback.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.GridJoback.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridJoback.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridJoback.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column2, Me.ColumnGroupName, Me.ColumnCountUNIFAC, Me.ColumnCountJoback})
         resources.ApplyResources(Me.GridJoback, "GridJoback")
@@ -1842,8 +1840,6 @@ Partial Class FormCompoundCreator
         'FaTabStripItem10
         '
         Me.FaTabStripItem10.CanClose = False
-        Me.FaTabStripItem10.Controls.Add(Me.LabelWithDivider11)
-        Me.FaTabStripItem10.Controls.Add(Me.LabelWithDivider7)
         Me.FaTabStripItem10.Controls.Add(Me.Label54)
         Me.FaTabStripItem10.Controls.Add(Me.TextBoxEnthOfFusion2)
         Me.FaTabStripItem10.Controls.Add(Me.CheckBoxEnthOfFusion)
@@ -1857,18 +1853,6 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem10.Controls.Add(Me.CheckBoxMeltingTemp)
         Me.FaTabStripItem10.Name = "FaTabStripItem10"
         resources.ApplyResources(Me.FaTabStripItem10, "FaTabStripItem10")
-        '
-        'LabelWithDivider11
-        '
-        resources.ApplyResources(Me.LabelWithDivider11, "LabelWithDivider11")
-        Me.LabelWithDivider11.Gap = 5
-        Me.LabelWithDivider11.Name = "LabelWithDivider11"
-        '
-        'LabelWithDivider7
-        '
-        resources.ApplyResources(Me.LabelWithDivider7, "LabelWithDivider7")
-        Me.LabelWithDivider7.Gap = 5
-        Me.LabelWithDivider7.Name = "LabelWithDivider7"
         '
         'Label54
         '
@@ -2275,13 +2259,11 @@ Partial Class FormCompoundCreator
     Friend WithEvents FaTabStripItem11 As FarsiLibrary.Win.FATabStripItem
     Friend WithEvents GridJoback As System.Windows.Forms.DataGridView
     Public WithEvents Label57 As System.Windows.Forms.Label
+    Public WithEvents Label58 As System.Windows.Forms.Label
+    Friend WithEvents LinkLabel2 As System.Windows.Forms.LinkLabel
+    Friend WithEvents LinkLabel3 As System.Windows.Forms.LinkLabel
     Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ColumnGroupName As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ColumnCountUNIFAC As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ColumnCountJoback As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents LabelWithDivider7 As System.Windows.Forms.LabelWithDivider
-    Public WithEvents LabelWithDivider11 As System.Windows.Forms.LabelWithDivider
-    Public WithEvents Label58 As System.Windows.Forms.Label
-    Friend WithEvents LinkLabel2 As System.Windows.Forms.LinkLabel
-    Friend WithEvents LinkLabel3 As System.Windows.Forms.LinkLabel
 End Class

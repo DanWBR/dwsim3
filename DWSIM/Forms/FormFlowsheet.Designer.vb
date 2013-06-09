@@ -159,8 +159,6 @@ Partial Class FormFlowsheet
         Me.CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GerenciadorDeAmostrasDePetróleoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GeradorDeHipotéticosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CriadorDeComponenteDoUsuárioToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GerenciadorDeReaçõesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PluginsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -445,7 +443,7 @@ Partial Class FormFlowsheet
         Me.TSTable.IsDrawn = True
         Me.TSTable.Name = "TSTable"
         resources.ApplyResources(Me.TSTable, "TSTable")
-        Me.TSTable.Title = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.TSTable.Title = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'ToolStrip2
         '
@@ -972,7 +970,7 @@ Partial Class FormFlowsheet
         '
         'FerramentasToolStripMenuItem
         '
-        Me.FerramentasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem, Me.CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem, Me.GerenciadorDeAmostrasDePetróleoToolStripMenuItem, Me.GeradorDeHipotéticosToolStripMenuItem, Me.CriadorDeComponenteDoUsuárioToolStripMenuItem, Me.GerenciadorDeReaçõesToolStripMenuItem})
+        Me.FerramentasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem, Me.CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem, Me.GerenciadorDeAmostrasDePetróleoToolStripMenuItem, Me.GerenciadorDeReaçõesToolStripMenuItem})
         Me.FerramentasToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.FerramentasToolStripMenuItem.MergeIndex = 3
         Me.FerramentasToolStripMenuItem.Name = "FerramentasToolStripMenuItem"
@@ -995,18 +993,6 @@ Partial Class FormFlowsheet
         Me.GerenciadorDeAmostrasDePetróleoToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.Experiments_Badge
         Me.GerenciadorDeAmostrasDePetróleoToolStripMenuItem.Name = "GerenciadorDeAmostrasDePetróleoToolStripMenuItem"
         resources.ApplyResources(Me.GerenciadorDeAmostrasDePetróleoToolStripMenuItem, "GerenciadorDeAmostrasDePetróleoToolStripMenuItem")
-        '
-        'GeradorDeHipotéticosToolStripMenuItem
-        '
-        Me.GeradorDeHipotéticosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.lightning
-        Me.GeradorDeHipotéticosToolStripMenuItem.Name = "GeradorDeHipotéticosToolStripMenuItem"
-        resources.ApplyResources(Me.GeradorDeHipotéticosToolStripMenuItem, "GeradorDeHipotéticosToolStripMenuItem")
-        '
-        'CriadorDeComponenteDoUsuárioToolStripMenuItem
-        '
-        Me.CriadorDeComponenteDoUsuárioToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.lightning
-        Me.CriadorDeComponenteDoUsuárioToolStripMenuItem.Name = "CriadorDeComponenteDoUsuárioToolStripMenuItem"
-        resources.ApplyResources(Me.CriadorDeComponenteDoUsuárioToolStripMenuItem, "CriadorDeComponenteDoUsuárioToolStripMenuItem")
         '
         'GerenciadorDeReaçõesToolStripMenuItem
         '
@@ -1129,6 +1115,7 @@ Partial Class FormFlowsheet
         'FlowLayoutPanel1
         '
         resources.ApplyResources(Me.FlowLayoutPanel1, "FlowLayoutPanel1")
+        Me.FlowLayoutPanel1.Controls.Add(Me.MenuStrip1)
         Me.FlowLayoutPanel1.Controls.Add(Me.ToolStrip6)
         Me.FlowLayoutPanel1.Controls.Add(Me.ToolStrip7)
         Me.FlowLayoutPanel1.Controls.Add(Me.ToolStrip2)
@@ -1147,7 +1134,6 @@ Partial Class FormFlowsheet
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Controls.Add(Me.dckPanel)
-        Me.Controls.Add(Me.MenuStrip1)
         Me.DoubleBuffered = True
         Me.Name = "FormFlowsheet"
         Me.ToolStrip4.ResumeLayout(False)
@@ -1266,8 +1252,6 @@ Partial Class FormFlowsheet
     Public WithEvents FerramentasToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Public WithEvents GeradorDeHipotéticosToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Public WithEvents CriadorDeComponenteDoUsuárioToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents GerenciadorDeReaçõesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Public WithEvents ToolStripLabel3 As System.Windows.Forms.ToolStripLabel

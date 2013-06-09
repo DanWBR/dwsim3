@@ -44,7 +44,6 @@ Imports DWSIM.DWSIM.GraphicObjects
 
     Public FrmStSim1 As New FormStSim
     Public FrmPCBulk As New FormPCBulk
-    Public FrmHypGen As New FormHypGen
     Public FrmReport As New FormReportConfig
 
     Public m_IsLoadedFromFile As Boolean = False
@@ -930,16 +929,6 @@ Imports DWSIM.DWSIM.GraphicObjects
     Private Sub CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem.Click
         Dim frmdc As New DCCharacterizationWizard
         frmdc.ShowDialog(Me)
-    End Sub
-
-    Private Sub GeradorDeHipotéticosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GeradorDeHipotéticosToolStripMenuItem.Click
-        Me.FrmHypGen = New FormHypGen
-        Me.FrmHypGen.ShowDialog(Me)
-    End Sub
-
-    Private Sub CriadorDeComponenteDoUsuárioToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CriadorDeComponenteDoUsuárioToolStripMenuItem.Click
-        Dim fcc As New FormCompCreator
-        fcc.ShowDialog(Me)
     End Sub
 
     Private Sub ToolStripComboBoxNumberFormatting_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles ToolStripComboBoxNumberFormatting.SelectedIndexChanged

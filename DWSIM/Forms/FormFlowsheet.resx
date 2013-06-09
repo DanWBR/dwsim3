@@ -304,7 +304,7 @@
     <value>FlowLayoutPanel1</value>
   </data>
   <data name="&gt;&gt;ToolStrip4.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <metadata name="ToolStrip7.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>346, 17</value>
@@ -394,7 +394,7 @@
     <value>FlowLayoutPanel1</value>
   </data>
   <data name="&gt;&gt;ToolStrip7.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <metadata name="ToolStrip6.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>560, 17</value>
@@ -454,7 +454,7 @@
     <value>FlowLayoutPanel1</value>
   </data>
   <data name="&gt;&gt;ToolStrip6.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="DataGridView1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -559,7 +559,7 @@
     <value>FlowLayoutPanel1</value>
   </data>
   <data name="&gt;&gt;ToolStrip2.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <metadata name="ToolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>453, 17</value>
@@ -811,7 +811,7 @@
     <value>FlowLayoutPanel1</value>
   </data>
   <data name="&gt;&gt;ToolStrip1.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <metadata name="MenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -1470,18 +1470,6 @@
   <data name="GerenciadorDeAmostrasDePetróleoToolStripMenuItem.Text" xml:space="preserve">
     <value>Gerenciador de Amostras de Petróleos</value>
   </data>
-  <data name="GeradorDeHipotéticosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>339, 22</value>
-  </data>
-  <data name="GeradorDeHipotéticosToolStripMenuItem.Text" xml:space="preserve">
-    <value>Gerador de Hipotéticos</value>
-  </data>
-  <data name="CriadorDeComponenteDoUsuárioToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>339, 22</value>
-  </data>
-  <data name="CriadorDeComponenteDoUsuárioToolStripMenuItem.Text" xml:space="preserve">
-    <value>Criador de Componente do Usuário</value>
-  </data>
   <data name="GerenciadorDeReaçõesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>339, 22</value>
   </data>
@@ -1531,7 +1519,7 @@
     <value>0, 0</value>
   </data>
   <data name="MenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>683, 24</value>
+    <value>775, 24</value>
   </data>
   <data name="MenuStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1549,10 +1537,10 @@
     <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;MenuStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>FlowLayoutPanel1</value>
   </data>
   <data name="&gt;&gt;MenuStrip1.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>0</value>
   </data>
   <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 22</value>
@@ -2329,18 +2317,6 @@
     <value>GerenciadorDeAmostrasDePetróleoToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;GerenciadorDeAmostrasDePetróleoToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GeradorDeHipotéticosToolStripMenuItem.Name" xml:space="preserve">
-    <value>GeradorDeHipotéticosToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;GeradorDeHipotéticosToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;CriadorDeComponenteDoUsuárioToolStripMenuItem.Name" xml:space="preserve">
-    <value>CriadorDeComponenteDoUsuárioToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;CriadorDeComponenteDoUsuárioToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;GerenciadorDeReaçõesToolStripMenuItem.Name" xml:space="preserve">

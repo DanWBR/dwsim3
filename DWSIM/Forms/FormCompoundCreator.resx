@@ -820,7 +820,7 @@
     <value>17</value>
   </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>896, 420</value>
+    <value>805, 420</value>
   </data>
   <data name="FaTabStripItem1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1018,13 +1018,13 @@
     <value>15, 31</value>
   </data>
   <data name="Label58.Size" type="System.Drawing.Size, System.Drawing">
-    <value>509, 13</value>
+    <value>666, 13</value>
   </data>
   <data name="Label58.TabIndex" type="System.Int32, mscorlib">
     <value>27</value>
   </data>
   <data name="Label58.Text" xml:space="preserve">
-    <value>Attention! Definition of additional Joback groups will prevent use of UNIFAC/MODFAC property package!</value>
+    <value>Atenção! A definição de grupos Joback adicionais implicará na impossibilidade de se utilizar os Pacotes de Propriedades UNIFAC/MODFAC!</value>
   </data>
   <data name="&gt;&gt;Label58.Name" xml:space="preserve">
     <value>Label58</value>
@@ -1075,43 +1075,37 @@
     <value>True</value>
   </metadata>
   <data name="Column2.HeaderText" xml:space="preserve">
-    <value>Type</value>
+    <value>Tipo</value>
   </data>
   <data name="Column2.Width" type="System.Int32, mscorlib">
-    <value>37</value>
+    <value>33</value>
   </data>
   <metadata name="ColumnGroupName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="ColumnGroupName.HeaderText" xml:space="preserve">
-    <value>Group Name</value>
+    <value>Nome do Grupo</value>
   </data>
   <data name="ColumnGroupName.Width" type="System.Int32, mscorlib">
-    <value>72</value>
+    <value>78</value>
   </data>
   <metadata name="ColumnCountUNIFAC.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="ColumnCountUNIFAC.HeaderText" xml:space="preserve">
-    <value>Count UNIFAC</value>
+    <value>Qtde UNIFAC</value>
   </data>
   <data name="ColumnCountUNIFAC.ToolTipText" xml:space="preserve">
     <value>Count of Joback subgroups inside UNIFAC groups</value>
-  </data>
-  <data name="ColumnCountUNIFAC.Width" type="System.Int32, mscorlib">
-    <value>83</value>
   </data>
   <metadata name="ColumnCountJoback.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="ColumnCountJoback.HeaderText" xml:space="preserve">
-    <value>Count Joback</value>
+    <value>Qtde Joback</value>
   </data>
   <data name="ColumnCountJoback.ToolTipText" xml:space="preserve">
     <value>Count of additional Joback groups which are not defined already as UNIFAC subgroups.</value>
-  </data>
-  <data name="ColumnCountJoback.Width" type="System.Int32, mscorlib">
-    <value>78</value>
   </data>
   <data name="GridJoback.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 53</value>
@@ -1120,7 +1114,7 @@
     <value>80</value>
   </data>
   <data name="GridJoback.Size" type="System.Drawing.Size, System.Drawing">
-    <value>864, 353</value>
+    <value>468, 353</value>
   </data>
   <data name="GridJoback.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2095,7 +2089,7 @@
     <value>31</value>
   </data>
   <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>896, 420</value>
+    <value>1417, 420</value>
   </data>
   <data name="FaTabStripItem3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2764,7 +2758,7 @@
     <value>21</value>
   </data>
   <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>896, 420</value>
+    <value>1417, 420</value>
   </data>
   <data name="FaTabStripItem4.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -3217,7 +3211,7 @@
     <value>1</value>
   </data>
   <data name="FaTabStripItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>896, 420</value>
+    <value>1417, 420</value>
   </data>
   <data name="FaTabStripItem5.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -3937,7 +3931,7 @@
     <value>20</value>
   </data>
   <data name="FaTabStripItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>896, 420</value>
+    <value>1417, 420</value>
   </data>
   <data name="FaTabStripItem6.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -4654,7 +4648,7 @@
     <value>20</value>
   </data>
   <data name="FaTabStripItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>896, 420</value>
+    <value>1417, 420</value>
   </data>
   <data name="FaTabStripItem7.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -5374,7 +5368,7 @@
     <value>20</value>
   </data>
   <data name="FaTabStripItem8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>896, 420</value>
+    <value>1417, 420</value>
   </data>
   <data name="FaTabStripItem8.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -6094,7 +6088,7 @@
     <value>20</value>
   </data>
   <data name="FaTabStripItem9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>896, 420</value>
+    <value>1417, 420</value>
   </data>
   <data name="FaTabStripItem9.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -6114,66 +6108,6 @@
   <data name="&gt;&gt;FaTabStripItem9.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="LabelWithDivider11.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="LabelWithDivider11.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 8.25pt, style=Bold</value>
-  </data>
-  <data name="LabelWithDivider11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="LabelWithDivider11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 138</value>
-  </data>
-  <data name="LabelWithDivider11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 2</value>
-  </data>
-  <data name="LabelWithDivider11.TabIndex" type="System.Int32, mscorlib">
-    <value>110</value>
-  </data>
-  <data name="&gt;&gt;LabelWithDivider11.Name" xml:space="preserve">
-    <value>LabelWithDivider11</value>
-  </data>
-  <data name="&gt;&gt;LabelWithDivider11.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;LabelWithDivider11.Parent" xml:space="preserve">
-    <value>FaTabStripItem10</value>
-  </data>
-  <data name="&gt;&gt;LabelWithDivider11.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="LabelWithDivider7.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="LabelWithDivider7.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 8.25pt, style=Bold</value>
-  </data>
-  <data name="LabelWithDivider7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="LabelWithDivider7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 67</value>
-  </data>
-  <data name="LabelWithDivider7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 2</value>
-  </data>
-  <data name="LabelWithDivider7.TabIndex" type="System.Int32, mscorlib">
-    <value>109</value>
-  </data>
-  <data name="&gt;&gt;LabelWithDivider7.Name" xml:space="preserve">
-    <value>LabelWithDivider7</value>
-  </data>
-  <data name="&gt;&gt;LabelWithDivider7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;LabelWithDivider7.Parent" xml:space="preserve">
-    <value>FaTabStripItem10</value>
-  </data>
-  <data name="&gt;&gt;LabelWithDivider7.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="Label54.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -6181,7 +6115,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label54.Location" type="System.Drawing.Point, System.Drawing">
-    <value>230, 108</value>
+    <value>230, 96</value>
   </data>
   <data name="Label54.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 13</value>
@@ -6202,13 +6136,13 @@
     <value>FaTabStripItem10</value>
   </data>
   <data name="&gt;&gt;Label54.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>0</value>
   </data>
   <data name="TextBoxEnthOfFusion2.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="TextBoxEnthOfFusion2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>155, 105</value>
+    <value>155, 93</value>
   </data>
   <data name="TextBoxEnthOfFusion2.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -6232,7 +6166,7 @@
     <value>FaTabStripItem10</value>
   </data>
   <data name="&gt;&gt;TextBoxEnthOfFusion2.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>1</value>
   </data>
   <data name="CheckBoxEnthOfFusion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -6241,7 +6175,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBoxEnthOfFusion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>285, 80</value>
+    <value>281, 69</value>
   </data>
   <data name="CheckBoxEnthOfFusion.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -6262,10 +6196,7 @@
     <value>FaTabStripItem10</value>
   </data>
   <data name="&gt;&gt;CheckBoxEnthOfFusion.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="LabelWithDivider1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+    <value>2</value>
   </data>
   <data name="LabelWithDivider1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
@@ -6277,7 +6208,7 @@
     <value>16, 16</value>
   </data>
   <data name="LabelWithDivider1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 18</value>
+    <value>280, 18</value>
   </data>
   <data name="LabelWithDivider1.TabIndex" type="System.Int32, mscorlib">
     <value>98</value>
@@ -6295,7 +6226,7 @@
     <value>FaTabStripItem10</value>
   </data>
   <data name="&gt;&gt;LabelWithDivider1.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>3</value>
   </data>
   <data name="lblEnthOfFusion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -6304,7 +6235,7 @@
     <value>NoControl</value>
   </data>
   <data name="lblEnthOfFusion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>230, 81</value>
+    <value>230, 69</value>
   </data>
   <data name="lblEnthOfFusion.Size" type="System.Drawing.Size, System.Drawing">
     <value>32, 13</value>
@@ -6325,7 +6256,7 @@
     <value>FaTabStripItem10</value>
   </data>
   <data name="&gt;&gt;lblEnthOfFusion.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>4</value>
   </data>
   <data name="Label52.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -6334,7 +6265,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label52.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 41</value>
+    <value>16, 42</value>
   </data>
   <data name="Label52.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 13</value>
@@ -6355,10 +6286,10 @@
     <value>FaTabStripItem10</value>
   </data>
   <data name="&gt;&gt;Label52.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>5</value>
   </data>
   <data name="TextBoxEnthOfFusion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>155, 78</value>
+    <value>155, 66</value>
   </data>
   <data name="TextBoxEnthOfFusion.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -6382,10 +6313,10 @@
     <value>FaTabStripItem10</value>
   </data>
   <data name="&gt;&gt;TextBoxEnthOfFusion.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>6</value>
   </data>
   <data name="TextBoxMeltingTemp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>155, 34</value>
+    <value>155, 39</value>
   </data>
   <data name="TextBoxMeltingTemp.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -6409,7 +6340,7 @@
     <value>FaTabStripItem10</value>
   </data>
   <data name="&gt;&gt;TextBoxMeltingTemp.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>7</value>
   </data>
   <data name="Label55.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -6418,7 +6349,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label55.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 85</value>
+    <value>16, 69</value>
   </data>
   <data name="Label55.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 13</value>
@@ -6439,7 +6370,7 @@
     <value>FaTabStripItem10</value>
   </data>
   <data name="&gt;&gt;Label55.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>8</value>
   </data>
   <data name="lblMeltingTemp.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -6448,7 +6379,7 @@
     <value>NoControl</value>
   </data>
   <data name="lblMeltingTemp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>230, 37</value>
+    <value>230, 42</value>
   </data>
   <data name="lblMeltingTemp.Size" type="System.Drawing.Size, System.Drawing">
     <value>32, 13</value>
@@ -6469,7 +6400,7 @@
     <value>FaTabStripItem10</value>
   </data>
   <data name="&gt;&gt;lblMeltingTemp.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>9</value>
   </data>
   <data name="CheckBoxMeltingTemp.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -6478,7 +6409,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBoxMeltingTemp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>285, 36</value>
+    <value>281, 42</value>
   </data>
   <data name="CheckBoxMeltingTemp.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -6499,10 +6430,10 @@
     <value>FaTabStripItem10</value>
   </data>
   <data name="&gt;&gt;CheckBoxMeltingTemp.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>10</value>
   </data>
   <data name="FaTabStripItem10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>896, 420</value>
+    <value>1417, 420</value>
   </data>
   <data name="FaTabStripItem10.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -6526,7 +6457,7 @@
     <value>3, 16</value>
   </data>
   <data name="FaTabStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>898, 441</value>
+    <value>807, 441</value>
   </data>
   <data name="FaTabStrip2.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -6547,7 +6478,7 @@
     <value>8, 96</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>904, 460</value>
+    <value>813, 460</value>
   </data>
   <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -6628,7 +6559,7 @@
     <value>679, 6</value>
   </data>
   <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>233, 84</value>
+    <value>142, 84</value>
   </data>
   <data name="GroupBox3.TabIndex" type="System.Int32, mscorlib">
     <value>40</value>
@@ -6694,7 +6625,7 @@
     <value>0, 559</value>
   </data>
   <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>924, 22</value>
+    <value>833, 22</value>
   </data>
   <data name="StatusStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>41</value>
@@ -6721,7 +6652,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>924, 581</value>
+    <value>833, 581</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -701,8 +701,6 @@ Public Class FormStSim
                 Me.PanelComps.BringToFront()
             Case 1
                 Me.PanelCarPet.BringToFront()
-            Case 2
-                Me.PanelHyp.BringToFront()
         End Select
     End Sub
 
@@ -720,11 +718,6 @@ Public Class FormStSim
             Case 1
                 Me.PanelOptions.BringToFront()
         End Select
-    End Sub
-
-    Private Sub KryptonButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton1.Click
-        Me.FrmChild.FrmHypGen = New FormHypGen
-        Me.FrmChild.FrmHypGen.ShowDialog(Me)
     End Sub
 
     Private Sub TreeView5_NodeMouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.TreeNodeMouseClickEventArgs) Handles TreeView5.NodeMouseClick
@@ -1078,11 +1071,6 @@ Public Class FormStSim
     Private Sub Button9_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button9.Click
         Dim frmdc As New DCCharacterizationWizard
         frmdc.ShowDialog(Me)
-    End Sub
-
-    Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
-        Dim fcc As New FormCompCreator
-        fcc.ShowDialog(Me)
     End Sub
 
     Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
