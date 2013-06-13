@@ -452,13 +452,13 @@
     <value>About DWSIM</value>
   </data>
   <data name="OpenFileDialog1.Filter" xml:space="preserve">
-    <value>Steady-state Simulation (XML) (*.dwxml)|*.dwxml|Steady-state Simulation (*.dwsim)|*.dwsim|Compound Creator Study (*.dwcsd)|*.dwcsd|Data Regression Study (*.dwrsd)|*.dwrsd|All DWSIM Files (*.dwxml, *.dwsim, *.dwcsd, *.dwrsd)|*.dwxml;*.dwsim;*.dwcsd;*.dwrsd</value>
+    <value>Steady-state Simulation (XML) (*.dwxml)|*.dwxml|Steady-state Simulation (Compressed XML) (*.dwxmz)|*.dwxmz|Steady-state Simulation (*.dwsim)|*.dwsim|Compound Creator Study (*.dwcsd)|*.dwcsd|Data Regression Study (*.dwrsd)|*.dwrsd|All DWSIM Files (*.dwxml, *.dwsim, *.dwcsd, *.dwrsd)|*.dwxml;*.dwxmz;*.dwsim;*.dwcsd;*.dwrsd</value>
   </data>
   <data name="OpenFileDialog1.Title" xml:space="preserve">
     <value>Open existing simulation</value>
   </data>
   <data name="SaveFileDialog1.Filter" xml:space="preserve">
-    <value>Steady-state simulation (XML) (*.dwxml)|*.dwxml|Steady-state simulation (*.dwsim)|*.dwsim</value>
+    <value>Steady-state simulation (XML) (*.dwxml)|*.dwxml|Steady-state simulation (Compressed XML) (*.dwxmz)|*.dwxmz|Steady-state simulation (*.dwsim)|*.dwsim</value>
   </data>
   <data name="SaveFileDialog1.Title" xml:space="preserve">
     <value>Save active simulation</value>

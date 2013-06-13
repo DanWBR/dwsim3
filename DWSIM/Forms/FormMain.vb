@@ -86,6 +86,10 @@ Public Class FormMain
                         Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + MyFiles(i) + "..."
                         Application.DoEvents()
                         Me.LoadXML(MyFiles(i))
+                    Case ".dwxmz"
+                        Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + MyFiles(i) + "..."
+                        Application.DoEvents()
+                        Me.LoadAndExtractXMLZIP(MyFiles(i))
                     Case ".dwsim"
                         Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + MyFiles(i) + "..."
                         Application.DoEvents()
@@ -546,6 +550,8 @@ Public Class FormMain
                             Me.LoadF(Me.filename)
                         Case ".dwxml"
                             Me.LoadXML(Me.filename)
+                        Case ".dwxmz"
+                            Me.LoadAndExtractXMLZIP(Me.filename)
                         Case ".dwcsd"
                             Dim NewMDIChild As New FormCompoundCreator()
                             NewMDIChild.MdiParent = Me
@@ -2797,6 +2803,54 @@ Label_00CC:
 
     End Function
 
+    Function LoadAndExtractXMLZIP(ByVal caminho As String) As Boolean
+
+        Dim pathtosave As String = My.Computer.FileSystem.SpecialDirectories.Temp + Path.DirectorySeparatorChar
+        Dim fullname As String = ""
+
+        Dim pwd As String = Nothing
+        If IsZipFilePasswordProtected(caminho) Then
+            Dim fp As New FormPassword
+            If fp.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                pwd = fp.tbPassword.Text
+            End If
+        End If
+
+        Try
+            Using stream As ZipInputStream = New ZipInputStream(File.OpenRead(caminho))
+                stream.Password = pwd
+                Dim entry As ZipEntry
+Label_00CC:
+                entry = stream.GetNextEntry()
+                Do While (Not entry Is Nothing)
+                    Dim fileName As String = Path.GetFileName(entry.Name)
+                    If (fileName <> String.Empty) Then
+                        Using stream2 As FileStream = File.Create(pathtosave + Path.GetFileName(entry.Name))
+                            Dim count As Integer = 2048
+                            Dim buffer As Byte() = New Byte(2048) {}
+                            Do While True
+                                count = stream.Read(buffer, 0, buffer.Length)
+                                If (count <= 0) Then
+                                    fullname = pathtosave + Path.GetFileName(entry.Name)
+                                    GoTo Label_00CC
+                                End If
+                                stream2.Write(buffer, 0, count)
+                            Loop
+                        End Using
+                    End If
+                    entry = stream.GetNextEntry
+                Loop
+            End Using
+            LoadXML(fullname)
+            File.Delete(fullname)
+            Return true
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+
+    End Function
+
     Sub SaveZIP(ByVal caminho As String, ByVal filespath As String, ByVal password As String)
 
         Dim i_Files As ArrayList = New ArrayList()
@@ -2860,6 +2914,52 @@ Label_00CC:
 
     End Sub
 
+    Sub SaveXMLZIP(ByVal zipfilename As String, ByVal form As FormFlowsheet)
+
+        Dim xmlfile As String = My.Computer.FileSystem.GetTempFileName
+        Me.SaveXML(xmlfile, form)
+
+        Dim i_Files As ArrayList = New ArrayList()
+        If File.Exists(xmlfile) Then i_Files.Add(xmlfile)
+
+        Dim astrFileNames() As String = i_Files.ToArray(GetType(String))
+        Dim strmZipOutputStream As ZipOutputStream
+
+        strmZipOutputStream = New ZipOutputStream(File.Create(zipfilename))
+
+        ' Compression Level: 0-9
+        ' 0: no(Compression)
+        ' 9: maximum compression
+        strmZipOutputStream.SetLevel(9)
+
+        'save with password, if set
+        If form.Options.UsePassword Then strmZipOutputStream.Password = form.Options.Password
+
+        Dim strFile As String
+
+        For Each strFile In astrFileNames
+
+            Dim strmFile As FileStream = File.OpenRead(strFile)
+            Dim abyBuffer(strmFile.Length - 1) As Byte
+
+            strmFile.Read(abyBuffer, 0, abyBuffer.Length)
+            Dim objZipEntry As ZipEntry = New ZipEntry(strFile)
+
+            objZipEntry.DateTime = DateTime.Now
+            objZipEntry.Size = strmFile.Length
+            strmFile.Close()
+            strmZipOutputStream.PutNextEntry(objZipEntry)
+            strmZipOutputStream.Write(abyBuffer, 0, abyBuffer.Length)
+
+        Next
+
+        strmZipOutputStream.Finish()
+        strmZipOutputStream.Close()
+
+        File.Delete(xmlfile)
+
+    End Sub
+
     Sub LoadFileDialog()
 
         If Me.OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
@@ -2876,6 +2976,17 @@ simx:               Dim myStream As System.IO.FileStream
                         Me.LoadXML(Me.filename)
                     End If
                 Case 2
+simx2:              Dim myStream As System.IO.FileStream
+                    myStream = Me.OpenFileDialog1.OpenFile()
+                    If Not (myStream Is Nothing) Then
+                        Dim nome = myStream.Name
+                        myStream.Close()
+                        Me.filename = nome
+                        Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + nome + "..."
+                        Application.DoEvents()
+                        Me.LoadAndExtractXMLZIP(Me.filename)
+                    End If
+                Case 3
 sim:                Dim myStream As System.IO.FileStream
                     myStream = Me.OpenFileDialog1.OpenFile()
                     If Not (myStream Is Nothing) Then
@@ -2886,7 +2997,7 @@ sim:                Dim myStream As System.IO.FileStream
                         Application.DoEvents()
                         Me.LoadF(Me.filename)
                     End If
-                Case 3
+                Case 4
 csd:                Dim NewMDIChild As New FormCompoundCreator()
                     NewMDIChild.MdiParent = Me
                     NewMDIChild.Show()
@@ -2900,7 +3011,7 @@ csd:                Dim NewMDIChild As New FormCompoundCreator()
                         My.Settings.MostRecentFiles.Add(Me.OpenFileDialog1.FileName)
                         Me.UpdateMRUList()
                     End If
-                Case 4
+                Case 5
 rsd:                Dim NewMDIChild As New FormDataRegression()
                     NewMDIChild.MdiParent = Me
                     NewMDIChild.Show()
@@ -2913,10 +3024,12 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                         My.Settings.MostRecentFiles.Add(Me.OpenFileDialog1.FileName)
                         Me.UpdateMRUList()
                     End If
-                Case 5
+                Case 6
                     Select Case Path.GetExtension(Me.OpenFileDialog1.FileName).ToLower()
                         Case ".dwxml"
                             GoTo simx
+                        Case ".dwxmz"
+                            GoTo simx2
                         Case ".dwsim"
                             GoTo sim
                         Case ".dwcsd"
@@ -2943,6 +3056,13 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                     If Path.GetExtension(Me.filename).ToLower = ".dwxml" Then
                         Dim t As Task = Task.Factory.StartNew(Sub()
                                                                   Me.SaveXML(Me.filename, Me.ActiveMdiChild)
+                                                              End Sub)
+                        While Not t.IsCompleted
+                            Application.DoEvents()
+                        End While
+                    ElseIf Path.GetExtension(Me.filename).ToLower = ".dwxmz" Then
+                        Dim t As Task = Task.Factory.StartNew(Sub()
+                                                                  Me.SaveXMLZIP(Me.filename, Me.ActiveMdiChild)
                                                               End Sub)
                         While Not t.IsCompleted
                             Application.DoEvents()

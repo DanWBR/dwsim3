@@ -36,7 +36,7 @@ Public Class FormWelcome
                 Select Case Path.GetExtension(f).ToLower
                     Case ".dwsim"
                         Me.lvlatest.Items(Me.lvlatest.Items.Count - 1).ImageIndex = 0
-                    Case ".dwxml"
+                    Case ".dwxml", ".dwxmz"
                         Me.lvlatest.Items(Me.lvlatest.Items.Count - 1).ImageIndex = 1
                     Case ".dwcsd"
                         Me.lvlatest.Items(Me.lvlatest.Items.Count - 1).ImageIndex = 2
@@ -94,6 +94,11 @@ Public Class FormWelcome
                     Application.DoEvents()
                     Application.DoEvents()
                     FormMain.LoadXML(Me.lvlatest.SelectedItems(0).Tag)
+                Case ".dwxmz"
+                    FormMain.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + Me.lvlatest.SelectedItems(0).Tag + "..."
+                    Application.DoEvents()
+                    Application.DoEvents()
+                    FormMain.LoadAndExtractXMLZIP(Me.lvlatest.SelectedItems(0).Tag)
                 Case ".dwsim"
                     FormMain.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + Me.lvlatest.SelectedItems(0).Tag + "..."
                     Application.DoEvents()

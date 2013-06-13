@@ -118,6 +118,36 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="FileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 20</value>
+  </data>
+  <data name="FileToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Datei</value>
+  </data>
+  <data name="VerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 20</value>
+  </data>
+  <data name="VerToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Einstellungen</value>
+  </data>
+  <data name="WindowsMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 20</value>
+  </data>
+  <data name="WindowsMenu.Text" xml:space="preserve">
+    <value>&amp;Fenster</value>
+  </data>
+  <data name="HelpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
+  </data>
+  <data name="HelpToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Hilfe</value>
+  </data>
+  <data name="NovoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>264, 22</value>
+  </data>
+  <data name="NovoToolStripMenuItem.Text" xml:space="preserve">
+    <value>Neu</value>
+  </data>
   <data name="NewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>243, 22</value>
   </data>
@@ -135,12 +165,6 @@
   </data>
   <data name="NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Text" xml:space="preserve">
     <value>Neue Datenregression (VLE/LLE)</value>
-  </data>
-  <data name="NovoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>264, 22</value>
-  </data>
-  <data name="NovoToolStripMenuItem.Text" xml:space="preserve">
-    <value>Neu</value>
   </data>
   <data name="OpenToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>264, 22</value>
@@ -187,12 +211,6 @@
   <data name="ExitToolStripMenuItem.Text" xml:space="preserve">
     <value>DWSIM &amp;beenden</value>
   </data>
-  <data name="FileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 20</value>
-  </data>
-  <data name="FileToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Datei</value>
-  </data>
   <data name="PreferênciasDoDWSIMToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 22</value>
   </data>
@@ -204,12 +222,6 @@
   </data>
   <data name="MostrarBarraDeFerramentasToolStripMenuItem.Text" xml:space="preserve">
     <value>Zeige Tooltips</value>
-  </data>
-  <data name="VerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 20</value>
-  </data>
-  <data name="VerToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Einstellungen</value>
   </data>
   <data name="CascadeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 22</value>
@@ -229,12 +241,6 @@
   <data name="TileHorizontalToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Nebeneinander</value>
   </data>
-  <data name="WindowsMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 20</value>
-  </data>
-  <data name="WindowsMenu.Text" xml:space="preserve">
-    <value>&amp;Fenster</value>
-  </data>
   <data name="ContentsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
   </data>
@@ -243,6 +249,12 @@
   </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
     <value>172, 6</value>
+  </data>
+  <data name="DWSIMNaInternetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="DWSIMNaInternetToolStripMenuItem.Text" xml:space="preserve">
+    <value>DWSIM im Netz</value>
   </data>
   <data name="BlogDeDesenvolvimentoToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -373,11 +385,11 @@
   <data name="RastreamentoDeBugsToolStripMenuItem.Text" xml:space="preserve">
     <value>Bug Tracking / Feature und Unterstützung anfordern</value>
   </data>
-  <data name="DWSIMNaInternetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="RegistroToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
   </data>
-  <data name="DWSIMNaInternetToolStripMenuItem.Text" xml:space="preserve">
-    <value>DWSIM im Netz</value>
+  <data name="RegistroToolStripMenuItem.Text" xml:space="preserve">
+    <value>Registry</value>
   </data>
   <data name="RegistrarTiposCOMToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>237, 22</value>
@@ -391,12 +403,6 @@
   <data name="DeToolStripMenuItem.Text" xml:space="preserve">
     <value>Unregister types</value>
   </data>
-  <data name="RegistroToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="RegistroToolStripMenuItem.Text" xml:space="preserve">
-    <value>Registry</value>
-  </data>
   <data name="DonateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
   </data>
@@ -408,12 +414,6 @@
   </data>
   <data name="AboutToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Über DWSIM...</value>
-  </data>
-  <data name="HelpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
-  </data>
-  <data name="HelpToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Hilfe</value>
   </data>
   <data name="NewToolStripButton.Text" xml:space="preserve">
     <value>Neue stationäre Simulation</value>
@@ -452,13 +452,13 @@
     <value>Über DWSIM</value>
   </data>
   <data name="OpenFileDialog1.Filter" xml:space="preserve">
-    <value>Steady-state Simulation (*.dwxml)|*.dwxml|Steady-state Simulation (*.dwsim)|*.dwsim|Compound Creator Study (*.dwcsd)|*.dwcsd|Data Regression Study (*.dwrsd)|*.dwrsd|All DWSIM Files (*dwxml, *.dwsim, *.dwcsd, *.dwrsd)|*.dwxml;*.dwsim;*.dwcsd;*.dwrsd</value>
+    <value>Steady-state Simulation (XML) (*.dwxml)|*.dwxml|Steady-state Simulation (Compressed XML) (*.dwxmz)|*.dwxmz|Steady-state Simulation (*.dwsim)|*.dwsim|Compound Creator Study (*.dwcsd)|*.dwcsd|Data Regression Study (*.dwrsd)|*.dwrsd|All DWSIM Files (*.dwxml, *.dwsim, *.dwcsd, *.dwrsd)|*.dwxml;*.dwxmz;*.dwsim;*.dwcsd;*.dwrsd</value>
   </data>
   <data name="OpenFileDialog1.Title" xml:space="preserve">
     <value>Öffnen einer existierenden Simulation</value>
   </data>
   <data name="SaveFileDialog1.Filter" xml:space="preserve">
-    <value>DWSIM Simulationen (*.dwsim)|*.dwsim</value>
+    <value>Steady-state simulation (XML) (*.dwxml)|*.dwxml|Steady-state simulation (Compressed XML) (*.dwxmz)|*.dwxmz|Steady-state simulation (*.dwsim)|*.dwsim</value>
   </data>
   <data name="SaveFileDialog1.Title" xml:space="preserve">
     <value>Aktive Simularion speichern</value>
