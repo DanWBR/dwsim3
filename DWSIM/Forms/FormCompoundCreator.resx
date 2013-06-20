@@ -8245,30 +8245,6 @@
   <data name="&gt;&gt;Column1.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewImageColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Atom.Name" xml:space="preserve">
-    <value>Atom</value>
-  </data>
-  <data name="&gt;&gt;Atom.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Count.Name" xml:space="preserve">
-    <value>Count</value>
-  </data>
-  <data name="&gt;&gt;Count.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ColAtom.Name" xml:space="preserve">
-    <value>ColAtom</value>
-  </data>
-  <data name="&gt;&gt;ColAtom.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ColCount.Name" xml:space="preserve">
-    <value>ColCount</value>
-  </data>
-  <data name="&gt;&gt;ColCount.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;Column2.Name" xml:space="preserve">
     <value>Column2</value>
   </data>
@@ -8376,6 +8352,30 @@
   </data>
   <data name="&gt;&gt;ToolStripStatusUserDB.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ColAtom.Name" xml:space="preserve">
+    <value>ColAtom</value>
+  </data>
+  <data name="&gt;&gt;ColAtom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ColCount.Name" xml:space="preserve">
+    <value>ColCount</value>
+  </data>
+  <data name="&gt;&gt;ColCount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Atom.Name" xml:space="preserve">
+    <value>Atom</value>
+  </data>
+  <data name="&gt;&gt;Atom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Count.Name" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="&gt;&gt;Count.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormCompoundCreator</value>

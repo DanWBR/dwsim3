@@ -608,6 +608,8 @@ Public Class FormCompoundCreator
             Dim Sy As String 'Element Symbol
             Dim AC As Integer 'Atom count
             Dim Formula As String
+            Dim SpecialDefinition As Boolean = False 'special definition -> no joback calculation possible
+
             ACL = jb.GetAtomCountList(JGD) 'Atoms from Joback groups
 
             'add additional atoms from datatable
@@ -616,6 +618,7 @@ Public Class FormCompoundCreator
                 AC = r.Cells(1).Value
                 If AC > 0 Then
                     PureUNIFACCompound = False
+                    SpecialDefinition = True
                     If Not ACL.ContainsKey(Sy) Then
                         ACL.Add(Sy, AC)
                     Else
@@ -630,6 +633,7 @@ Public Class FormCompoundCreator
             For i = 2 To UNIFAClines.Length - 1
                 s = UNIFAClines(i).Split(",")(9)
                 If Not s = "" And vnd(i - 2) > 0 Then
+                    SpecialDefinition = True 
                     n = 0
                     For k = 0 To s.Length - 1 'count atom types in group
                         If s.Chars(k) = "/" Then n += 1
@@ -671,7 +675,7 @@ Public Class FormCompoundCreator
                 If CheckBoxMW.Checked Then Me.TextBoxMW.Text = ""
             End If
 
-            If GC > 0 Then
+            If GC > 0 And Not SpecialDefinition Then
                 Tb = jb.CalcTb(JGD)
                 If CheckBoxNBP.Checked Then Me.TextBoxNBP.Text = cv.ConverterDoSI(su.spmp_temperature, Tb)
                 Tb = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxNBP.Text)
@@ -1740,7 +1744,6 @@ Public Class FormCompoundCreator
     Private Sub LinkLabel3_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
         System.Diagnostics.Process.Start("http://chemeo.com/")
     End Sub
-
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase
