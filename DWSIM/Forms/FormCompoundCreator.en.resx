@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Compound Database</value>
-  </data>
   <data name="btnSaveToDB.Text" xml:space="preserve">
     <value>Save component to database</value>
   </data>
@@ -149,47 +146,8 @@
   <data name="btnCreateNewDB.Text" xml:space="preserve">
     <value>Create New</value>
   </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1170, 460</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Compound Properties</value>
-  </data>
-  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1162, 420</value>
-  </data>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Identification</value>
-  </data>
-  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1417, 420</value>
-  </data>
-  <data name="FaTabStripItem11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1417, 420</value>
-  </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Misc Properties</value>
-  </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Critical Properties</value>
-  </data>
-  <data name="FaTabStripItem6.Title" xml:space="preserve">
-    <value>Vapor Pressure</value>
-  </data>
-  <data name="FaTabStripItem7.Title" xml:space="preserve">
-    <value>Ideal Gas Heat Capacity</value>
-  </data>
-  <data name="FaTabStripItem8.Title" xml:space="preserve">
-    <value>Liquid Density</value>
-  </data>
-  <data name="FaTabStripItem9.Title" xml:space="preserve">
-    <value>Liquid Viscosity</value>
-  </data>
-  <data name="FaTabStripItem10.Title" xml:space="preserve">
-    <value>Solid Properties</value>
-  </data>
-  <data name="FaTabStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1164, 441</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Compound Database</value>
   </data>
   <data name="LinkLabel1.Text" xml:space="preserve">
     <value>CAS Number</value>
@@ -203,6 +161,9 @@
   <data name="Label22.Text" xml:space="preserve">
     <value>Mole Weight</value>
   </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Identification</value>
+  </data>
   <data name="Label60.Size" type="System.Drawing.Size, System.Drawing">
     <value>393, 13</value>
   </data>
@@ -215,20 +176,54 @@
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Example</value>
   </data>
-  <data name="LinkLabel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>566, 31</value>
+  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1417, 420</value>
   </data>
   <data name="Label58.Size" type="System.Drawing.Size, System.Drawing">
-    <value>526, 13</value>
+    <value>111, 13</value>
   </data>
   <data name="Label58.Text" xml:space="preserve">
+    <value>Atom count additional</value>
+  </data>
+  <data name="Count.HeaderText" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="TextBox1.Text" xml:space="preserve">
     <value>Attention! Definition of additional Joback groups will prevent usage of UNIFAC/MODFAC Property Packages!</value>
+  </data>
+  <data name="Label59.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 13</value>
+  </data>
+  <data name="Label59.Text" xml:space="preserve">
+    <value>Atom count UNIFAC</value>
+  </data>
+  <data name="ColCount.HeaderText" xml:space="preserve">
+    <value>Count</value>
   </data>
   <data name="Label57.Size" type="System.Drawing.Size, System.Drawing">
     <value>437, 13</value>
   </data>
   <data name="Label57.Text" xml:space="preserve">
     <value>Enter the amount of each additional Joback group in the compound structure, if available.</value>
+  </data>
+  <data name="Column2.HeaderText" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Column2.Width" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="ColumnGroupName.HeaderText" xml:space="preserve">
+    <value>Group Name</value>
+  </data>
+  <data name="ColumnGroupName.Width" type="System.Int32, mscorlib">
+    <value>72</value>
+  </data>
+  <data name="ColumnCountUNIFAC.HeaderText" xml:space="preserve">
+    <value>Count UNIFAC</value>
+  </data>
+  <data name="ColumnCountJoback.HeaderText" xml:space="preserve">
+    <value>Count Joback</value>
   </data>
   <data name="LabelWithDivider12.Size" type="System.Drawing.Size, System.Drawing">
     <value>438, 18</value>
@@ -296,6 +291,9 @@
   <data name="Label63.Text" xml:space="preserve">
     <value>Chao-Seader Solubility Parameter</value>
   </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Misc Properties</value>
+  </data>
   <data name="LabelWithDivider2.Size" type="System.Drawing.Size, System.Drawing">
     <value>207, 18</value>
   </data>
@@ -326,8 +324,8 @@
   <data name="LabelWithDivider4.Text" xml:space="preserve">
     <value>Critical Compressibility Factor</value>
   </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>PC-SAFT Parameters</value>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Critical Properties</value>
   </data>
   <data name="LabelWithDivider8.Text" xml:space="preserve">
     <value>Attraction Parameter</value>
@@ -337,6 +335,9 @@
   </data>
   <data name="LabelWithDivider10.Text" xml:space="preserve">
     <value>Segment Diameter</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>PC-SAFT Parameters</value>
   </data>
   <data name="GroupBox11.Text" xml:space="preserve">
     <value>UNIQUAC Parameters</value>
@@ -422,6 +423,9 @@
   <data name="Label29.Location" type="System.Drawing.Point, System.Drawing">
     <value>236, 76</value>
   </data>
+  <data name="FaTabStripItem6.Title" xml:space="preserve">
+    <value>Vapor Pressure</value>
+  </data>
   <data name="Label44.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -502,6 +506,9 @@
   </data>
   <data name="tbCPIG_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 123</value>
+  </data>
+  <data name="FaTabStripItem7.Title" xml:space="preserve">
+    <value>Ideal Gas Heat Capacity</value>
   </data>
   <data name="Label45.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 205</value>
@@ -584,6 +591,9 @@
   <data name="Label35.Location" type="System.Drawing.Point, System.Drawing">
     <value>233, 76</value>
   </data>
+  <data name="FaTabStripItem8.Title" xml:space="preserve">
+    <value>Liquid Density</value>
+  </data>
   <data name="Label46.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 205</value>
   </data>
@@ -662,6 +672,9 @@
   <data name="Label41.Location" type="System.Drawing.Point, System.Drawing">
     <value>234, 76</value>
   </data>
+  <data name="FaTabStripItem9.Title" xml:space="preserve">
+    <value>Liquid Viscosity</value>
+  </data>
   <data name="LabelWithDivider1.Text" xml:space="preserve">
     <value>Fusion data</value>
   </data>
@@ -677,11 +690,11 @@
   <data name="Label55.Text" xml:space="preserve">
     <value>Enthalpy of fusion</value>
   </data>
-  <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>499, 84</value>
+  <data name="FaTabStripItem10.Title" xml:space="preserve">
+    <value>Solid Properties</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>System of Units</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Compound Properties</value>
   </data>
   <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
     <value>83, 13</value>
@@ -689,42 +702,17 @@
   <data name="Label15.Text" xml:space="preserve">
     <value>System of Units:</value>
   </data>
-  <data name="cbUnits.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 21</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="cbUnits.TabIndex" type="System.Int32, mscorlib">
     <value>41</value>
+  </data>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>System of Units</value>
   </data>
   <data name="DBOpenDlg.Filter" xml:space="preserve">
     <value>XML Files|*.xml</value>
   </data>
   <data name="DBOpenDlg.Title" xml:space="preserve">
     <value>Open/Create Database</value>
-  </data>
-  <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1190, 22</value>
-  </data>
-  <data name="Column2.HeaderText" xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data name="Column2.Width" type="System.Int32, mscorlib">
-    <value>37</value>
-  </data>
-  <data name="ColumnGroupName.HeaderText" xml:space="preserve">
-    <value>Group Name</value>
-  </data>
-  <data name="ColumnGroupName.Width" type="System.Int32, mscorlib">
-    <value>72</value>
-  </data>
-  <data name="ColumnCountUNIFAC.HeaderText" xml:space="preserve">
-    <value>Count UNIFAC</value>
-  </data>
-  <data name="ColumnCountJoback.HeaderText" xml:space="preserve">
-    <value>Count Joback</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1190, 581</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

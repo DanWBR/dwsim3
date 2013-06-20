@@ -22,62 +22,43 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
     <System.Serializable()> Public Class Joback
 
-        Protected m_Ugroups As System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
         Protected m_Jgroups As System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
-
-        Public ReadOnly Property UGroups() As System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
-            Get
-                Return m_Ugroups
-            End Get
-        End Property
-        Public ReadOnly Property JGroups() As System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
-            Get
-                Return m_Jgroups
-            End Get
-        End Property
-        Function CheckEmptyCell(ByVal val As String) As String
-            If val = "X" Or val = "" Then
-                CheckEmptyCell = Nothing
-            Else
-                CheckEmptyCell = val
-            End If
-        End Function
+        Protected m_JElements As System.Collections.Generic.Dictionary(Of String, Element)
         Sub New()
 
             Dim pathsep = System.IO.Path.DirectorySeparatorChar
-            Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
-            Dim JOBACKlines() As String
+            Dim ElementLines(), JOBACKlines() As String
             Dim i As Integer
 
-            'Load UNIFAC-groups data
-            m_Ugroups = New System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
+            'Load Elements data
+            m_JElements = New System.Collections.Generic.Dictionary(Of String, Element)
+            Dim ElementsFilename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "Elements.txt"
+            ElementLines = IO.File.ReadAllLines(ElementsFilename)
 
-            Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "joback.txt"
-            Dim fields As String()
-            Dim delimiter As String = vbTab
-            Using parser As New FileIO.TextFieldParser(filename)
-                parser.SetDelimiters(delimiter)
-                fields = parser.ReadFields()
-
-                While Not parser.EndOfData
-                    fields = parser.ReadFields()
-                    Me.UGroups.Add(fields(0), New JobackGroup(fields(1), fields(0), Double.Parse(fields(4), cult), _
-                    Double.Parse(fields(5), cult), Double.Parse(fields(6), cult), Double.Parse(fields(7), cult), _
-                    Double.Parse(fields(8), cult), Double.Parse(fields(9), cult), Double.Parse(fields(10), cult), _
-                    Double.Parse(fields(15), cult), Double.Parse(fields(16), cult), Double.Parse(fields(12), cult), _
-                    Double.Parse(fields(11), cult), Double.Parse(fields(13), cult), Double.Parse(fields(14), cult), Double.Parse(fields(17), cult)))
-                End While
-            End Using
+            For i = 1 To ElementLines.Length - 1
+                With ElementLines(i)
+                    Dim El As New Element
+                    'ID;Name;Symbol;MW
+                    El.ID = .Split(";")(0)
+                    El.ElementName = .Split(";")(1)
+                    El.ElementSymbol = .Split(";")(2)
+                    El.MW = .Split(";")(3)
+                    Me.JElements.Add(El.ElementSymbol, El)
+                End With
+            Next
 
             'Load Joback-groups data
             m_Jgroups = New System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
-            filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "JobackGroups.txt"
-
+            Dim filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "JobackGroups.txt"
             JOBACKlines = IO.File.ReadAllLines(filename)
+
+
             For i = 2 To JOBACKlines.Length - 1
                 With JOBACKlines(i)
                     If Not .Split(";")(0) = "X" Then
                         Dim JG As New JobackGroup
+
+                        'ID;Group;Tc;Pc;Vc;Tb;Tm;Hf;Gf;a;b;c;d;Hm;Hv;DVa;DVb;MW;Na;Elements
                         JG.ID = .Split(";")(0)
                         JG.Group = .Split(";")(1)
                         JG.TC = CheckEmptyCell(.Split(";")(2))
@@ -92,31 +73,38 @@ Namespace DWSIM.Utilities.Hypos.Methods
                         JG.C = CheckEmptyCell(.Split(";")(11))
                         JG.D = CheckEmptyCell(.Split(";")(12))
                         JG.HF = CheckEmptyCell(.Split(";")(13))
-                        JG.MW = CheckEmptyCell(.Split(";")(17))
-                        JG.NA = CheckEmptyCell(.Split(";")(18))
+                        JG.NA = CheckEmptyCell(.Split(";")(17))
+                        JG.Elements = CheckEmptyCell(.Split(";")(18))
 
                         Me.JGroups.Add(JG.ID, JG)
                     End If
                 End With
             Next
         End Sub
-
-        Public Function CalcMW(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public ReadOnly Property JGroups() As System.Collections.Generic.Dictionary(Of Integer, JobackGroup)
+            Get
+                Return m_Jgroups
+            End Get
+        End Property
+        Public ReadOnly Property JElements() As System.Collections.Generic.Dictionary(Of String, Element)
+            Get
+                Return m_JElements
+            End Get
+        End Property
+        Function CheckEmptyCell(ByVal val As String) As String
+            If val = "X" Or val = "" Then
+                CheckEmptyCell = Nothing
+            Else
+                CheckEmptyCell = val
+            End If
+        End Function
+        Public Function CalcMW(ByVal ACL As System.Collections.Generic.Dictionary(Of String, Integer)) As Double
 
             Dim sum1 As Double
-            Dim i As Integer
 
-            sum1 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.MW * n(i)
-                i += 1
-            Next
-
-            i = 0
-            If Not JC Is Nothing Then
-                For Each jg As JobackGroup In Me.JGroups.Values
-                    sum1 += jg.MW * JC(i)
-                    i += 1
+            If Not ACL Is Nothing Then
+                For Each A As String In ACL.Keys
+                    sum1 += m_JElements.Item(A).MW * ACL.Item(A)
                 Next
             End If
 
@@ -127,19 +115,11 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'kg/kmol
 
         End Function
-
-        Public Function CalcTb(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public Function CalcTb(ByVal JC() As Integer) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
-            sum1 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.TB * n(i)
-                i += 1
-            Next
-
-            i = 0
             If Not JC Is Nothing Then
                 For Each jg As JobackGroup In Me.JGroups.Values
                     sum1 += jg.TB * JC(i)
@@ -154,19 +134,11 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'K
 
         End Function
-
-        Public Function CalcTc(ByVal Tb As Double, ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public Function CalcTc(ByVal Tb As Double, ByVal JC() As Integer) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
-            sum1 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.TC * n(i)
-                i += 1
-            Next
-
-            i = 0
             If Not JC Is Nothing Then
                 For Each jg As JobackGroup In Me.JGroups.Values
                     sum1 += jg.TC * JC(i)
@@ -181,21 +153,11 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'K
 
         End Function
-
-        Public Function CalcPc(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public Function CalcPc(ByVal JC() As Integer) As Double
 
             Dim sum1, sum2 As Double
             Dim i As Integer
 
-            sum1 = 0
-            sum2 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.PC * n(i)
-                sum2 += jg.NA * n(i)
-                i += 1
-            Next
-
-            i = 0
             If Not JC Is Nothing Then
                 For Each jg As JobackGroup In Me.JGroups.Values
                     sum1 += jg.PC * JC(i)
@@ -211,19 +173,11 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'Pa
 
         End Function
-
-        Public Function CalcVc(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public Function CalcVc(ByVal JC() As Integer) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
-            sum1 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.VC * n(i)
-                i = i + 1
-            Next
-
-            i = 0
             If Not JC Is Nothing Then
                 For Each jg As JobackGroup In Me.JGroups.Values
                     sum1 += jg.VC * JC(i)
@@ -238,19 +192,11 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'm3/kmol
 
         End Function
-
-        Public Function CalcTf(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public Function CalcTf(ByVal JC() As Integer) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
-            sum1 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.TF * n(i)
-                i += 1
-            Next
-
-            i = 0
             If Not JC Is Nothing Then
                 For Each jg As JobackGroup In Me.JGroups.Values
                     sum1 += jg.TF * JC(i)
@@ -265,19 +211,11 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'K
 
         End Function
-
-        Public Function CalcHf(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public Function CalcHf(ByVal JC() As Integer) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
-            sum1 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.HF * n(i)
-                i = i + 1
-            Next
-
-            i = 0
             If Not JC Is Nothing Then
                 For Each jg As JobackGroup In Me.JGroups.Values
                     sum1 += jg.HF * JC(i)
@@ -292,19 +230,11 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'KJ/kmol
 
         End Function
-
-        Public Function CalcDHf(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public Function CalcDHf(ByVal JC() As Integer) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
-            sum1 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.DH * n(i)
-                i += 1
-            Next
-
-            i = 0
             If Not JC Is Nothing Then
                 For Each jg As JobackGroup In Me.JGroups.Values
                     sum1 += jg.DH * JC(i)
@@ -319,19 +249,11 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'kJ/kmol
 
         End Function
-
-        Public Function CalcDGf(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public Function CalcDGf(ByVal JC() As Integer) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
-            sum1 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.DG * n(i)
-                i += 1
-            Next
-
-            i = 0
             If Not JC Is Nothing Then
                 For Each jg As JobackGroup In Me.JGroups.Values
                     sum1 += jg.DG * JC(i)
@@ -346,19 +268,11 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'kJ/kmol
 
         End Function
-
-        Public Function CalcCpA(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public Function CalcCpA(ByVal JC() As Integer) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
-            sum1 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.A * n(i)
-                i += 1
-            Next
-
-            i = 0
             If Not JC Is Nothing Then
                 For Each jg As JobackGroup In Me.JGroups.Values
                     sum1 += jg.A * JC(i)
@@ -373,19 +287,11 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'for Cp in kJ/kmol.K
 
         End Function
-
-        Public Function CalcCpB(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public Function CalcCpB(ByVal JC() As Integer) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
-            sum1 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.B * n(i)
-                i += 1
-            Next
-
-            i = 0
             If Not JC Is Nothing Then
                 For Each jg As JobackGroup In Me.JGroups.Values
                     sum1 += jg.B * JC(i)
@@ -400,19 +306,11 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'for Cp in kJ/kmol.K
 
         End Function
-
-        Public Function CalcCpC(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public Function CalcCpC(ByVal JC() As Integer) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
-            sum1 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.C * n(i)
-                i += 1
-            Next
-
-            i = 0
             If Not JC Is Nothing Then
                 For Each jg As JobackGroup In Me.JGroups.Values
                     sum1 += jg.C * JC(i)
@@ -427,19 +325,11 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'for Cp in kJ/kmol.K
 
         End Function
-
-        Public Function CalcCpD(ByVal n() As Integer, Optional ByVal JC() As Integer = Nothing) As Double
+        Public Function CalcCpD(ByVal JC() As Integer) As Double
 
             Dim sum1 As Double
             Dim i As Integer
 
-            sum1 = 0
-            For Each jg As JobackGroup In Me.UGroups.Values
-                sum1 += jg.D * n(i)
-                i += 1
-            Next
-
-            i = 0
             If Not JC Is Nothing Then
                 For Each jg As JobackGroup In Me.JGroups.Values
                     sum1 += jg.D * JC(i)
@@ -454,49 +344,94 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return fval 'for Cp in kJ/kmol.K
 
         End Function
+        Public Function GetAtomCountList(ByVal JC() As Integer) As System.Collections.Generic.Dictionary(Of String, Integer)
+            'generate atom count list from UNIFAC/Joback groups
+            Dim ACL As New System.Collections.Generic.Dictionary(Of String, Integer)
+            Dim i, k, n, AtomCount As Integer
+            Dim ElemList, AtomTypeCount, AtomName As String
+            If Not JC Is Nothing Then
+                For Each jg As JobackGroup In Me.JGroups.Values
+                    If JC(i) > 0 Then
+                        ElemList = jg.Elements ' get element list
+                        n = 0
+                        For k = 0 To ElemList.Length - 1 'count atom types in group
+                            If ElemList.Chars(k) = "/" Then n += 1
+                        Next
+                        For k = 0 To n 'generate atom count list
+                            AtomTypeCount = ElemList.Split("/")(k) 'get type and count of Atom
+                            AtomName = AtomTypeCount.Split(":")(0)
+                            AtomCount = AtomTypeCount.Split(":")(1) * JC(i)
 
+                            If Not ACL.ContainsKey(AtomName) Then
+                                ACL.Add(AtomName, AtomCount)
+                            Else
+                                ACL.Item(AtomName) = ACL.Item(AtomName) + AtomCount
+                            End If
+                        Next
+                    End If
+                    i += 1
+                Next
+            End If
+
+            Return ACL
+
+        End Function
+    End Class
+    <System.Serializable()> Public Class Element
+        Private _ID As Integer
+        Private _ElementName, _Symbol As String
+        Private _MW As Double
+        Public Property ID() As Integer
+            Get
+                Return _ID
+            End Get
+            Set(ByVal value As Integer)
+                _ID = value
+            End Set
+        End Property
+        Public Property MW() As Double
+            Get
+                Return _MW
+            End Get
+            Set(ByVal value As Double)
+                _MW = value
+            End Set
+        End Property
+        Public Property ElementName() As String
+            Get
+                Return _ElementName
+            End Get
+            Set(ByVal value As String)
+                _ElementName = value
+            End Set
+        End Property
+        Public Property ElementSymbol() As String
+            Get
+                Return _Symbol
+            End Get
+            Set(ByVal value As String)
+                _Symbol = value
+            End Set
+        End Property
     End Class
 
     <System.Serializable()> Public Class JobackGroup
 
-        Private m_group As String
+        Private m_group, m_groupType, m_Elements As String
         Private m_groupid As Integer
-        Private _mw, _a, _b, _c, _d, _dh, _dg, _tc, _pc, _tb, _tf, _na, _vc, _hf As Double
+        Private _a, _b, _c, _d, _dh, _dg, _tc, _pc, _tb, _tf, _na, _vc, _hf As Double
 
         Sub New()
 
         End Sub
-
-        Sub New(ByVal group As String, ByVal id As Integer, ByVal mw As Double, ByVal a As Double, ByVal b As Double, ByVal c As Double, ByVal d As Double, ByVal dh As Double, ByVal dg As Double, ByVal tc As Double, ByVal pc As Double, ByVal vc As Double, ByVal na As Double, ByVal tb As Double, ByVal tf As Double, ByVal hf As Double)
-
-            Me.Group = group
-            Me.ID = id
-            Me.A = a
-            Me.B = b
-            Me.C = c
-            Me.D = d
-            Me.DH = dh
-            Me.DG = dg
-            Me.TC = tc
-            Me.TB = tb
-            Me.PC = pc
-            Me.VC = vc
-            Me.TF = tf
-            Me.NA = na
-            Me.MW = mw
-            Me.HF = hf
-
-        End Sub
-
-        Public Property MW() As Double
+        Public Property Elements() As String
             Get
-                Return _mw
+                Return m_Elements
             End Get
-            Set(ByVal value As Double)
-                _mw = value
+            Set(ByVal value As String)
+                m_Elements = value
             End Set
         End Property
-
         Public Property TB() As Double
             Get
                 Return _tb
@@ -521,7 +456,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 _tf = value
             End Set
         End Property
-
         Public Property NA() As Double
             Get
                 Return _na
@@ -530,7 +464,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 _na = value
             End Set
         End Property
-
         Public Property VC() As Double
             Get
                 Return _vc
@@ -539,7 +472,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 _vc = value
             End Set
         End Property
-
         Public Property PC() As Double
             Get
                 Return _pc
@@ -548,7 +480,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 _pc = value
             End Set
         End Property
-
         Public Property TC() As Double
             Get
                 Return _tc
@@ -557,7 +488,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 _tc = value
             End Set
         End Property
-
         Public Property DG() As Double
             Get
                 Return _dg
@@ -566,7 +496,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 _dg = value
             End Set
         End Property
-
         Public Property DH() As Double
             Get
                 Return _dh
@@ -575,7 +504,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 _dh = value
             End Set
         End Property
-
         Public Property D() As Double
             Get
                 Return _d
@@ -584,7 +512,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 _d = value
             End Set
         End Property
-
         Public Property C() As Double
             Get
                 Return _c
@@ -593,7 +520,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 _c = value
             End Set
         End Property
-
         Public Property B() As Double
             Get
                 Return _b
@@ -602,7 +528,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 _b = value
             End Set
         End Property
-
         Public Property A() As Double
             Get
                 Return _a
@@ -611,7 +536,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 _a = value
             End Set
         End Property
-
         Public Property ID() As Integer
             Get
                 Return m_groupid
@@ -620,7 +544,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 m_groupid = value
             End Set
         End Property
-
         Public Property Group() As String
             Get
                 Return m_group
@@ -629,15 +552,22 @@ Namespace DWSIM.Utilities.Hypos.Methods
                 m_group = value
             End Set
         End Property
+        Public Property GroupType() As String
+            Get
+                Return m_groupType
+            End Get
+            Set(ByVal value As String)
+                m_groupType = value
+            End Set
+        End Property
 
+       
     End Class
 
     <System.Serializable()> Public Class HYP
-
         Sub New()
 
         End Sub
-
         Function Tc_Joback(ByVal Tb As Double, ByVal nCH3 As Integer, ByVal nCH2 As Integer, ByVal nCH As Integer, ByVal nOH As Integer, _
                             ByVal nACH As Integer, ByVal nACCH2 As Integer, ByVal nACCH3 As Integer, ByVal nACOH As Integer, _
                             ByVal nCH3CO As Integer, ByVal nCH2CO As Integer)
@@ -665,7 +595,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return Tc
 
         End Function
-
         Function Pc_Joback(ByVal nCH3 As Integer, ByVal nCH2 As Integer, ByVal nCH As Integer, ByVal nOH As Integer, _
                             ByVal nACH As Integer, ByVal nACCH2 As Integer, ByVal nACCH3 As Integer, ByVal nACOH As Integer, _
                             ByVal nCH3CO As Integer, ByVal nCH2CO As Integer)
@@ -698,7 +627,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return Pc * 100000
 
         End Function
-
         Function Vc_Joback(ByVal nCH3 As Integer, ByVal nCH2 As Integer, ByVal nCH As Integer, ByVal nOH As Integer, _
                             ByVal nACH As Integer, ByVal nACCH2 As Integer, ByVal nACCH3 As Integer, ByVal nACOH As Integer, _
                             ByVal nCH3CO As Integer, ByVal nCH2CO As Integer)
@@ -726,7 +654,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return Vc * 0.000001 * 1000
 
         End Function
-
         Function Tb_Joback(ByVal nCH3 As Integer, ByVal nCH2 As Integer, ByVal nCH As Integer, ByVal nOH As Integer, _
                             ByVal nACH As Integer, ByVal nACCH2 As Integer, ByVal nACCH3 As Integer, ByVal nACOH As Integer, _
                             ByVal nCH3CO As Integer, ByVal nCH2CO As Integer)
@@ -754,7 +681,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return Tb
 
         End Function
-
         Function Hf298_Marrero_Gani(ByVal nCH3 As Integer, ByVal nCH2 As Integer, ByVal nCH As Integer, ByVal nOH As Integer, _
                                    ByVal nACH As Integer, ByVal nACCH2 As Integer, ByVal nACCH3 As Integer, ByVal nACOH As Integer, _
                                    ByVal nCH3CO As Integer, ByVal nCH2CO As Integer)
@@ -782,7 +708,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return Hf298 'kJ/mol
 
         End Function
-
         Function Gf298_Marrero_Gani(ByVal nCH3 As Integer, ByVal nCH2 As Integer, ByVal nCH As Integer, ByVal nOH As Integer, _
                                    ByVal nACH As Integer, ByVal nACCH2 As Integer, ByVal nACCH3 As Integer, ByVal nACOH As Integer, _
                                    ByVal nCH3CO As Integer, ByVal nCH2CO As Integer)
@@ -810,7 +735,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return Gf298 'kJ/mol
 
         End Function
-
         Function Sf298_Marrero_Gani(ByVal nCH3 As Integer, ByVal nCH2 As Integer, ByVal nCH As Integer, ByVal nOH As Integer, _
                                    ByVal nACH As Integer, ByVal nACCH2 As Integer, ByVal nACCH3 As Integer, ByVal nACOH As Integer, _
                                    ByVal nCH3CO As Integer, ByVal nCH2CO As Integer)
@@ -838,7 +762,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return Sf298 'kJ/mol.K
 
         End Function
-
         Function MM_UNIFAC(ByVal nCH3 As Integer, ByVal nCH2 As Integer, ByVal nCH As Integer, ByVal nOH As Integer, _
                                    ByVal nACH As Integer, ByVal nACCH2 As Integer, ByVal nACCH3 As Integer, ByVal nACOH As Integer, _
                                    ByVal nCH3CO As Integer, ByVal nCH2CO As Integer)
@@ -862,7 +785,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
             Return sum 'kg/kmol
 
         End Function
-
         Function DHvb_Vetere(ByVal Tc As Double, ByVal Pc As Double, ByVal Tb As Double) As Double
 
             Dim R = 8.314
@@ -874,7 +796,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
             'kJ/kmol
 
         End Function
-
         Function Element_UNIFAC(ByVal element As String, ByVal nCH3 As Integer, ByVal nCH2 As Integer, ByVal nCH As Integer, ByVal nOH As Integer, _
                                    ByVal nACH As Integer, ByVal nACCH2 As Integer, ByVal nACCH3 As Integer, ByVal nACOH As Integer, _
                                    ByVal nCH3CO As Integer, ByVal nCH2CO As Integer)
@@ -975,7 +896,6 @@ Namespace DWSIM.Utilities.Hypos.Methods
             End Select
 
         End Function
-
     End Class
 
 End Namespace

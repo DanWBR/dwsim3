@@ -176,9 +176,6 @@
   <data name="Label22.Text" xml:space="preserve">
     <value>Molgewicht</value>
   </data>
-  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>829, 420</value>
-  </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Identifikation</value>
   </data>
@@ -200,17 +197,29 @@
   <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
     <value>1417, 420</value>
   </data>
-  <data name="LinkLabel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>591, 31</value>
+  <data name="Label58.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 13</value>
+  </data>
+  <data name="Label58.Text" xml:space="preserve">
+    <value>Atom Anzahl zusätzlich</value>
+  </data>
+  <data name="Count.HeaderText" xml:space="preserve">
+    <value>Anzahl</value>
+  </data>
+  <data name="TextBox1.Text" xml:space="preserve">
+    <value>Achtung! Die Definition von zusätzlichen Jobackgruppen oder Atomen wird die  Verwendung der UNIFAC/MODFAC Packete verhindern!</value>
+  </data>
+  <data name="Label59.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 13</value>
+  </data>
+  <data name="Label59.Text" xml:space="preserve">
+    <value>Atom Anzahl UNIFAC</value>
+  </data>
+  <data name="ColCount.HeaderText" xml:space="preserve">
+    <value>Anzahl</value>
   </data>
   <data name="LinkLabel3.ToolTip" xml:space="preserve">
     <value>Aufruf der Chemeo-Dataenbank zur Unterstützung bei der Joback-Gruppenzuordnung.</value>
-  </data>
-  <data name="Label58.Size" type="System.Drawing.Size, System.Drawing">
-    <value>570, 13</value>
-  </data>
-  <data name="Label58.Text" xml:space="preserve">
-    <value>Achtung! Definition von zusätzlichen Jobackgruppen wird die  Verwendung der UNIFAC/MODFAC Packete verhindern!</value>
   </data>
   <data name="Label57.Size" type="System.Drawing.Size, System.Drawing">
     <value>500, 13</value>
@@ -242,9 +251,6 @@
   </data>
   <data name="ColumnCountJoback.ToolTipText" xml:space="preserve">
     <value>Anzahl zusätzlicher Joback-Gruppen welche nicht bereits als UNIFAC-Untergruppe definiert sind.</value>
-  </data>
-  <data name="FaTabStripItem11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1417, 420</value>
   </data>
   <data name="LabelWithDivider12.Text" xml:space="preserve">
     <value>Bildungseigenschaften</value>
@@ -696,12 +702,6 @@
   <data name="FaTabStripItem10.Title" xml:space="preserve">
     <value>Feststoff</value>
   </data>
-  <data name="FaTabStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>831, 441</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>837, 460</value>
-  </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Komponenten Eigenschaften</value>
   </data>
@@ -711,14 +711,8 @@
   <data name="Label15.Text" xml:space="preserve">
     <value>Einheitensystem:</value>
   </data>
-  <data name="cbUnits.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 21</value>
-  </data>
   <data name="cbUnits.TabIndex" type="System.Int32, mscorlib">
     <value>41</value>
-  </data>
-  <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 84</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Einheitensystem</value>
@@ -728,12 +722,6 @@
   </data>
   <data name="DBOpenDlg.Title" xml:space="preserve">
     <value>Öffne/Erzeuge Database</value>
-  </data>
-  <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>857, 22</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>857, 581</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

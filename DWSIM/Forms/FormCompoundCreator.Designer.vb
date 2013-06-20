@@ -75,8 +75,16 @@ Partial Class FormCompoundCreator
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.FaTabStripItem11 = New FarsiLibrary.Win.FATabStripItem()
-        Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
         Me.Label58 = New System.Windows.Forms.Label()
+        Me.AddAtomDataGrid = New System.Windows.Forms.DataGridView()
+        Me.Atom = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Count = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label59 = New System.Windows.Forms.Label()
+        Me.AtomDataGrid = New System.Windows.Forms.DataGridView()
+        Me.ColAtom = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ColCount = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
         Me.Label57 = New System.Windows.Forms.Label()
         Me.GridJoback = New System.Windows.Forms.DataGridView()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -283,6 +291,8 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem2.SuspendLayout()
         CType(Me.GridUNIFAC, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStripItem11.SuspendLayout()
+        CType(Me.AddAtomDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.AtomDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridJoback, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStripItem3.SuspendLayout()
         Me.FaTabStripItem4.SuspendLayout()
@@ -565,13 +575,87 @@ Partial Class FormCompoundCreator
         '
         'FaTabStripItem11
         '
-        Me.FaTabStripItem11.Controls.Add(Me.LinkLabel3)
         Me.FaTabStripItem11.Controls.Add(Me.Label58)
+        Me.FaTabStripItem11.Controls.Add(Me.AddAtomDataGrid)
+        Me.FaTabStripItem11.Controls.Add(Me.TextBox1)
+        Me.FaTabStripItem11.Controls.Add(Me.Label59)
+        Me.FaTabStripItem11.Controls.Add(Me.AtomDataGrid)
+        Me.FaTabStripItem11.Controls.Add(Me.LinkLabel3)
         Me.FaTabStripItem11.Controls.Add(Me.Label57)
         Me.FaTabStripItem11.Controls.Add(Me.GridJoback)
         Me.FaTabStripItem11.IsDrawn = True
         Me.FaTabStripItem11.Name = "FaTabStripItem11"
         resources.ApplyResources(Me.FaTabStripItem11, "FaTabStripItem11")
+        '
+        'Label58
+        '
+        resources.ApplyResources(Me.Label58, "Label58")
+        Me.Label58.Name = "Label58"
+        '
+        'AddAtomDataGrid
+        '
+        Me.AddAtomDataGrid.AllowUserToAddRows = False
+        Me.AddAtomDataGrid.AllowUserToDeleteRows = False
+        Me.AddAtomDataGrid.AllowUserToResizeColumns = False
+        Me.AddAtomDataGrid.AllowUserToResizeRows = False
+        Me.AddAtomDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.AddAtomDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.AddAtomDataGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Atom, Me.Count})
+        resources.ApplyResources(Me.AddAtomDataGrid, "AddAtomDataGrid")
+        Me.AddAtomDataGrid.MultiSelect = False
+        Me.AddAtomDataGrid.Name = "AddAtomDataGrid"
+        Me.AddAtomDataGrid.RowHeadersVisible = False
+        '
+        'Atom
+        '
+        Me.Atom.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        resources.ApplyResources(Me.Atom, "Atom")
+        Me.Atom.Name = "Atom"
+        Me.Atom.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        '
+        'Count
+        '
+        Me.Count.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        resources.ApplyResources(Me.Count, "Count")
+        Me.Count.Name = "Count"
+        '
+        'TextBox1
+        '
+        Me.TextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.TextBox1.ForeColor = System.Drawing.Color.Red
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
+        Me.TextBox1.Name = "TextBox1"
+        '
+        'Label59
+        '
+        resources.ApplyResources(Me.Label59, "Label59")
+        Me.Label59.Name = "Label59"
+        '
+        'AtomDataGrid
+        '
+        Me.AtomDataGrid.AllowUserToAddRows = False
+        Me.AtomDataGrid.AllowUserToDeleteRows = False
+        Me.AtomDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.AtomDataGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColAtom, Me.ColCount})
+        resources.ApplyResources(Me.AtomDataGrid, "AtomDataGrid")
+        Me.AtomDataGrid.Name = "AtomDataGrid"
+        Me.AtomDataGrid.RowHeadersVisible = False
+        '
+        'ColAtom
+        '
+        Me.ColAtom.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        resources.ApplyResources(Me.ColAtom, "ColAtom")
+        Me.ColAtom.Name = "ColAtom"
+        Me.ColAtom.ReadOnly = True
+        Me.ColAtom.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        '
+        'ColCount
+        '
+        Me.ColCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        resources.ApplyResources(Me.ColCount, "ColCount")
+        Me.ColCount.Name = "ColCount"
+        Me.ColCount.ReadOnly = True
+        Me.ColCount.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         '
         'LinkLabel3
         '
@@ -580,12 +664,6 @@ Partial Class FormCompoundCreator
         Me.LinkLabel3.TabStop = True
         Me.ToolTip1.SetToolTip(Me.LinkLabel3, resources.GetString("LinkLabel3.ToolTip"))
         Me.LinkLabel3.UseCompatibleTextRendering = True
-        '
-        'Label58
-        '
-        resources.ApplyResources(Me.Label58, "Label58")
-        Me.Label58.ForeColor = System.Drawing.Color.Red
-        Me.Label58.Name = "Label58"
         '
         'Label57
         '
@@ -596,6 +674,8 @@ Partial Class FormCompoundCreator
         '
         Me.GridJoback.AllowUserToAddRows = False
         Me.GridJoback.AllowUserToDeleteRows = False
+        Me.GridJoback.AllowUserToResizeColumns = False
+        Me.GridJoback.AllowUserToResizeRows = False
         Me.GridJoback.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridJoback.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridJoback.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column2, Me.ColumnGroupName, Me.ColumnCountUNIFAC, Me.ColumnCountJoback})
@@ -2001,6 +2081,8 @@ Partial Class FormCompoundCreator
         CType(Me.GridUNIFAC, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStripItem11.ResumeLayout(False)
         Me.FaTabStripItem11.PerformLayout()
+        CType(Me.AddAtomDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.AtomDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridJoback, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStripItem3.ResumeLayout(False)
         Me.FaTabStripItem3.PerformLayout()
@@ -2259,11 +2341,19 @@ Partial Class FormCompoundCreator
     Friend WithEvents FaTabStripItem11 As FarsiLibrary.Win.FATabStripItem
     Friend WithEvents GridJoback As System.Windows.Forms.DataGridView
     Public WithEvents Label57 As System.Windows.Forms.Label
-    Public WithEvents Label58 As System.Windows.Forms.Label
     Friend WithEvents LinkLabel2 As System.Windows.Forms.LinkLabel
     Friend WithEvents LinkLabel3 As System.Windows.Forms.LinkLabel
     Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ColumnGroupName As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ColumnCountUNIFAC As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ColumnCountJoback As System.Windows.Forms.DataGridViewTextBoxColumn
+    Public WithEvents Label59 As System.Windows.Forms.Label
+    Friend WithEvents AtomDataGrid As System.Windows.Forms.DataGridView
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents ColAtom As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ColCount As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents AddAtomDataGrid As System.Windows.Forms.DataGridView
+    Public WithEvents Label58 As System.Windows.Forms.Label
+    Friend WithEvents Atom As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Count As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class
