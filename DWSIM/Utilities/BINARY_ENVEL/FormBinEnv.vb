@@ -407,23 +407,23 @@ Public Class FormBinEnv
                 .CurveList.Clear()
                 With .AddCurve(DWSIM.App.GetLocalString("PontosdeBolha"), vx1.ToArray(GetType(Double)), vy1.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                     .Color = Color.SteelBlue
-                    .Line.IsSmooth = True
+                    .Line.IsSmooth = False
                     .Symbol.Fill.Type = ZedGraph.FillType.Solid
                 End With
                 With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), vx2.ToArray(GetType(Double)), vy2.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
                     .Color = Color.YellowGreen
-                    .Line.IsSmooth = True
+                    .Line.IsSmooth = False
                     .Symbol.Fill.Type = ZedGraph.FillType.Solid
                 End With
                 With .AddCurve(DWSIM.App.GetLocalString("Ideal"), vxi.ToArray(GetType(Double)), vy1i.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                     .Color = Color.SteelBlue
-                    .Line.IsSmooth = True
+                    .Line.IsSmooth = False
                     .Line.Style = Drawing2D.DashStyle.Dash
                     .Symbol.IsVisible = False
                 End With
                 With .AddCurve(DWSIM.App.GetLocalString("Ideal"), vxi.ToArray(GetType(Double)), vy2i.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
                     .Color = Color.YellowGreen
-                    .Line.IsSmooth = True
+                    .Line.IsSmooth = False
                     .Line.Style = Drawing2D.DashStyle.Dash
                     .Symbol.IsVisible = False
                 End With
@@ -431,33 +431,33 @@ Public Class FormBinEnv
                     With .AddCurve(DWSIM.App.GetLocalString("LLE LP1"), vx1l1.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Circle)
                         .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         .Line.IsVisible = True
-                        .Line.IsSmooth = True
+                        .Line.IsSmooth = False
                     End With
                     With .AddCurve(DWSIM.App.GetLocalString("LLE LP2"), vx1l2.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.DarkRed, ZedGraph.SymbolType.Circle)
                         .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         .Line.IsVisible = True
-                        .Line.IsSmooth = True
+                        .Line.IsSmooth = False
                     End With
                 End If
                 If pys1.Count > 0 Then
                     With .AddCurve(DWSIM.App.GetLocalString("SLE L/SL"), vxs1.ToArray(GetType(Double)), vys1.ToArray(GetType(Double)), Color.Magenta, ZedGraph.SymbolType.Circle)
                         .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         .Line.IsVisible = True
-                        .Line.IsSmooth = True
+                        .Line.IsSmooth = False
                     End With
                 End If
                 If pys2.Count > 0 Then
                     With .AddCurve(DWSIM.App.GetLocalString("SLE SL/S"), vxs2.ToArray(GetType(Double)), vys2.ToArray(GetType(Double)), Color.DarkMagenta, ZedGraph.SymbolType.Circle)
                         .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         .Line.IsVisible = True
-                        .Line.IsSmooth = True
+                        .Line.IsSmooth = False
                     End With
                 End If
                 If pxc.Count > 0 Then
                     With .AddCurve(DWSIM.App.GetLocalString("Critical"), vxc.ToArray(GetType(Double)), vyc.ToArray(GetType(Double)), Color.Black, ZedGraph.SymbolType.Circle)
                         .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         .Line.IsVisible = True
-                        .Line.IsSmooth = True
+                        .Line.IsSmooth = False
                     End With
                 End If
                 .XAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " / " & c(0)
