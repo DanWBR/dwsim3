@@ -118,8 +118,41 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkCritical.Location" type="System.Drawing.Point, System.Drawing">
+    <value>305, 106</value>
+  </data>
+  <data name="chkCritical.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 17</value>
+  </data>
+  <data name="chkCritical.Text" xml:space="preserve">
+    <value>Kritischen Punkte</value>
+  </data>
+  <data name="chkSLE.Location" type="System.Drawing.Point, System.Drawing">
+    <value>253, 106</value>
+  </data>
+  <data name="chkSLE.Text" xml:space="preserve">
+    <value>SLE</value>
+  </data>
+  <data name="chkLLE.Location" type="System.Drawing.Point, System.Drawing">
+    <value>202, 106</value>
+  </data>
+  <data name="chkLLE.Text" xml:space="preserve">
+    <value>LLE</value>
+  </data>
+  <data name="chkVLE.Location" type="System.Drawing.Point, System.Drawing">
+    <value>150, 106</value>
+  </data>
+  <data name="chkVLE.Text" xml:space="preserve">
+    <value>VLE</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>126, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Txy Darstellung-Optionen</value>
+  </data>
   <data name="cbPropPack.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 184</value>
+    <value>150, 211</value>
   </data>
   <data name="cbPropPack.Size" type="System.Drawing.Size, System.Drawing">
     <value>409, 21</value>
@@ -131,16 +164,16 @@
     <value>Thermodynamische Pakete</value>
   </data>
   <data name="lblT.Location" type="System.Drawing.Point, System.Drawing">
-    <value>260, 161</value>
+    <value>260, 188</value>
   </data>
   <data name="lblP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>260, 134</value>
+    <value>260, 161</value>
   </data>
   <data name="tbT.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 158</value>
+    <value>150, 185</value>
   </data>
   <data name="tbP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 131</value>
+    <value>150, 158</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 13</value>
@@ -167,7 +200,7 @@
     <value>Massenprozent</value>
   </data>
   <data name="cbXAxisBasis.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 103</value>
+    <value>150, 128</value>
   </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 13</value>
@@ -185,25 +218,25 @@
     <value>Komponent 2</value>
   </data>
   <data name="RadioButton4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>306, 77</value>
+    <value>308, 77</value>
   </data>
   <data name="RadioButton4.Text" xml:space="preserve">
     <value>(P)xy</value>
   </data>
   <data name="RadioButton3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>251, 77</value>
+    <value>253, 77</value>
   </data>
   <data name="RadioButton3.Text" xml:space="preserve">
     <value>(T)xy</value>
   </data>
   <data name="RadioButton2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>202, 77</value>
+    <value>204, 77</value>
   </data>
   <data name="RadioButton2.Text" xml:space="preserve">
     <value>Pxy</value>
   </data>
   <data name="RadioButton1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>148, 77</value>
+    <value>150, 77</value>
   </data>
   <data name="RadioButton1.Text" xml:space="preserve">
     <value>Txy</value>
@@ -215,7 +248,7 @@
     <value>Envelope-Typ</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>565, 183</value>
+    <value>565, 210</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Berechnen</value>

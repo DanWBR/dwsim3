@@ -41,11 +41,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Sub New(ByVal comode As Boolean)
             MyBase.New(comode)
+            With Me.Parameters
+                .Add("PP_IDEAL_VAPOR_PHASE_FUG", 0)
+            End With
         End Sub
 
         Public Sub New()
 
             MyBase.New()
+
+            With Me.Parameters
+                .Add("PP_IDEAL_VAPOR_PHASE_FUG", 0)
+            End With
 
             Me.IsConfigurable = True
             Me.ConfigForm = New FormConfigPP
@@ -839,7 +846,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     End If
                 Next
             Else
-                lnfug = prn.CalcLnFug(T, P, Vx, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, Nothing, "V")
+                If Not Me.Parameters.ContainsKey("PP_IDEAL_VAPOR_PHASE_FUG") Then Me.Parameters.Add("PP_IDEAL_VAPOR_PHASE_FUG", 0)
+                If Me.Parameters("PP_IDEAL_VAPOR_PHASE_FUG") = 1 Then
+                    For i = 0 To n
+                        lnfug(i) = 0.0#
+                    Next
+                Else
+                    lnfug = prn.CalcLnFug(T, P, Vx, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, Nothing, "V")
+                End If
             End If
 
             For i = 0 To n

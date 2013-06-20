@@ -127,6 +127,15 @@
     <value>Regression Informationen</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkIdealVaporPhase.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 133</value>
+  </data>
+  <data name="chkIdealVaporPhase.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 17</value>
+  </data>
+  <data name="chkIdealVaporPhase.Text" xml:space="preserve">
+    <value>Verwenden Ideal Dampf Phase Modell</value>
+  </data>
   <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 13</value>
   </data>

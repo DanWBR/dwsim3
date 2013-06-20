@@ -53,7 +53,7 @@ Public Class FormConfigNRTL
 
         Dim ppu As DWSIM.SimulationObjects.PropertyPackages.NRTLPropertyPackage = _pp
 
-        Dim nf As String = "#.0000"
+        Dim nf As String = "0.0000"
 
         For Each cp As ConstantProperties In _comps.Values
 gt0:        If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then

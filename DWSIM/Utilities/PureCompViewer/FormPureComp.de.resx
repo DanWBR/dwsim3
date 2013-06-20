@@ -145,6 +145,9 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Komponente</value>
   </data>
+  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1039, 503</value>
+  </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Konstanten</value>
   </data>
@@ -179,14 +182,32 @@
   <data name="FaTabStripItem5.Title" xml:space="preserve">
     <value>Verdampfungsenthalpie</value>
   </data>
+  <data name="FaTabStripItem9.Title" xml:space="preserve">
+    <value>Flüssigkeitsdichte</value>
+  </data>
+  <data name="FaTabStripItem8.Title" xml:space="preserve">
+    <value>Feststoffdichte</value>
+  </data>
   <data name="FaTabStripItem7.Title" xml:space="preserve">
     <value>Datentabelle</value>
+  </data>
+  <data name="FaTabStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 45</value>
+  </data>
+  <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1041, 524</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Anzeige</value>
   </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1024, 489</value>
+  </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Eigenschaften</value>
+  </data>
+  <data name="GridProps.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1018, 469</value>
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Eigenschaft</value>
@@ -238,6 +259,9 @@
   </data>
   <data name="DataGridViewTextBoxColumn2.HeaderText" xml:space="preserve">
     <value>CpGas</value>
+  </data>
+  <data name="DataGridViewTextBoxColumn2.Width" type="System.Int32, mscorlib">
+    <value>47</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM: Eigenschaften reiner Komponenten</value>

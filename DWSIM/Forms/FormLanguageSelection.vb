@@ -20,6 +20,7 @@ Public Class FormLanguageSelection
     Inherits System.Windows.Forms.Form
 
     Sub UpdateLanguage()
+
         'carrega o idioma atual
         My.MyApplication._CultureInfo = New Globalization.CultureInfo(My.Settings.CultureInfo)
         My.Application.ChangeUICulture(My.Settings.CultureInfo)
@@ -37,7 +38,7 @@ Public Class FormLanguageSelection
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-        My.Settings.CultureInfo = "en-US"
+        My.Settings.CultureInfo = "en"
         My.Settings.ShowLangForm = False
         UpdateLanguage()
         Me.Close()

@@ -29,7 +29,7 @@ Public Class FormPureComp
 
     Public OnlyViewing As Boolean = True
 
-    Dim vxCp, vyCp, vxPvap, vyPvap, vxVisc, vyVisc, vxDHvap, vyDHvap As New ArrayList
+    Dim vxCp, vyCp, vxPvap, vyPvap, vxVisc, vyVisc, vxDHvap, vyDHvap, vxLD, vyLD, vxSD, vySD As New ArrayList
     Public constprop As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
     Public constprop_orig As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
 
@@ -83,17 +83,21 @@ Public Class FormPureComp
         Me.DataTable.Columns.Item(2).HeaderText = "Temp " & su.spmp_temperature
         Me.DataTable.Columns.Item(4).HeaderText = "Temp " & su.spmp_temperature
         Me.DataTable.Columns.Item(6).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTable.Columns.Item(8).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTable.Columns.Item(10).HeaderText = "Temp " & su.spmp_temperature
 
         Me.DataTable.Columns.Item(1).HeaderText = DWSIM.App.GetLocalString("CapacidadeCalorficaP2") & " " & su.spmp_heatCapacityCp
         Me.DataTable.Columns.Item(3).HeaderText = DWSIM.App.GetLocalString("PressodeVapor") & " " & su.spmp_pressure
         Me.DataTable.Columns.Item(5).HeaderText = DWSIM.App.GetLocalString("ViscosidadeLquido") & " " & su.spmp_viscosity
         Me.DataTable.Columns.Item(7).HeaderText = DWSIM.App.GetLocalString("EntalpiadeVaporizao") & " " & su.spmp_enthalpy
+        Me.DataTable.Columns.Item(9).HeaderText = DWSIM.App.GetLocalString("LiquidDensity") & " " & su.spmp_density
+        Me.DataTable.Columns.Item(11).HeaderText = DWSIM.App.GetLocalString("SolidDensity") & " " & su.spmp_density
 
         'setting up curves
         Dim T As Double
         Dim Tmin, Tmax, delta As Double
 
-        'gas heat capacity
+        'ideal gas heat capacity
         Tmin = 200
         Tmax = 1500
         delta = (Tmax - Tmin) / 50
@@ -116,7 +120,7 @@ Public Class FormPureComp
             Loop Until T > Tmax
         End If
 
-        'pressao de vapor
+        'vapor pressure
         With constprop
             Tmin = .Vapor_Pressure_TMIN
             Tmax = .Vapor_Pressure_TMAX
@@ -141,7 +145,7 @@ Public Class FormPureComp
             Loop Until Row = 51
         End If
 
-        'viscosidade liquido
+        'liquid viscosity
         With constprop
             Tmin = 0.6 * .Critical_Temperature
             Tmax = .Critical_Temperature
@@ -164,12 +168,12 @@ Public Class FormPureComp
             Loop Until Row = 51
         End If
 
-        'entalpia vaporizacao
+        'vaporization enthalpy
         With constprop
             Tmin = .HVap_TMIN
             Tmax = .HVap_TMAX
             If Tmin = 0 Then Tmin = 0.6 * .Critical_Temperature
-            If Tmax = 0 Then Tmax = .Critical_Temperature
+            If Tmax = 0 Then Tmax = .Critical_Temperature * 0.999
             delta = (Tmax - Tmin) / 50
         End With
         T = Tmin
@@ -184,6 +188,58 @@ Public Class FormPureComp
                 vyDHvap.Add(VD)
                 Me.DataTable.Item(6, Row).Value = Format(TD, nf)
                 Me.DataTable.Item(7, Row).Value = Format(VD, nf)
+                T += delta
+                Row += 1
+            Loop Until Row = 51
+        End If
+
+        'liquid density
+        With constprop
+            Tmin = .Liquid_Density_Tmin
+            Tmax = .Liquid_Density_Tmax
+            If Tmin = 0 Then Tmin = .TemperatureOfFusion
+            If Tmin = 0 Then Tmin = .Normal_Boiling_Point * 0.6
+            If Tmax = 0 Then Tmax = .Normal_Boiling_Point * 0.999
+            delta = (Tmax - Tmin) / 50
+        End With
+        T = Tmin
+        Row = 0
+        vxLD.Clear()
+        vyLD.Clear()
+        If Not constprop.IsIon And Not constprop.IsSalt Then
+            Do
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_density, pp.AUX_LIQDENSi(constprop, T))
+                vxLD.Add(TD)
+                vyLD.Add(VD)
+                Me.DataTable.Item(8, Row).Value = Format(TD, nf)
+                Me.DataTable.Item(9, Row).Value = Format(VD, nf)
+                T += delta
+                Row += 1
+            Loop Until Row = 51
+        End If
+
+        'solid density
+        With constprop
+            Tmin = .Solid_Density_Tmin
+            Tmax = .Solid_Density_Tmax
+            If Tmin = 0 Then Tmin = 50
+            If Tmax = 0 Then Tmax = .TemperatureOfFusion
+            If Tmax = 0 Then Tmax = .Normal_Boiling_Point * 0.3
+            delta = (Tmax - Tmin) / 50
+        End With
+        T = Tmin
+        Row = 0
+        vxSD.Clear()
+        vySD.Clear()
+        If Not constprop.IsIon And Not constprop.IsSalt Then
+            Do
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_density, pp.AUX_SOLIDDENSi(constprop, T))
+                vxSD.Add(TD)
+                vySD.Add(VD)
+                Me.DataTable.Item(10, Row).Value = Format(TD, nf)
+                Me.DataTable.Item(11, Row).Value = Format(VD, nf)
                 T += delta
                 Row += 1
             Loop Until Row = 51
@@ -241,6 +297,32 @@ Public Class FormPureComp
             .AxisChange(Me.CreateGraphics)
         End With
         Me.GraphDHVAP.Invalidate()
+        With Me.GraphLiqDens.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxLD.ToArray(GetType(Double)), Me.vyLD.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.Text = DWSIM.App.GetLocalString("LiquidDensity")
+            .XAxis.Title.Text = "T / " & su.spmp_temperature
+            .YAxis.Title.Text = DWSIM.App.GetLocalString("LiquidDensity") & " / " & su.spmp_density
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphLiqDens.Invalidate()
+        With Me.GraphSolidDens.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxSD.ToArray(GetType(Double)), Me.vySD.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.Text = DWSIM.App.GetLocalString("SolidDensity")
+            .XAxis.Title.Text = "T / " & su.spmp_temperature
+            .YAxis.Title.Text = DWSIM.App.GetLocalString("SolidDensity") & " / " & su.spmp_density
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphSolidDens.Invalidate()
 
         'UNIFAC
         tbUNIFAC.Text = ""
@@ -280,7 +362,7 @@ Public Class FormPureComp
                 End If
 
                 With renderer
-                    ind.setOption("render-image-size", 733, 222)
+                    ind.setOption("render-image-size", pbRender.Width, pbRender.Height)
                     ind.setOption("render-margins", 15, 15)
                     ind.setOption("render-coloring", True)
                     ind.setOption("render-background-color", Color.White)
@@ -292,14 +374,16 @@ Public Class FormPureComp
                 MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             End Try
+
         Else
+
             'no definition available, delete old picture
             pbRender.Image = Nothing
 
         End If
 
 
-        'Grid Propriedades
+        'Property Grid
         With Me.GridProps.Rows
             .Clear()
             .Add(New Object() {DWSIM.App.GetLocalString("Database"), constprop.OriginalDB, ""})

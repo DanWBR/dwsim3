@@ -139,7 +139,7 @@ Public Class FormBinEnv
                 tipocalc = "(P)x-y"
             End If
 
-            Me.BackgroundWorker1.RunWorkerAsync(New Object() {tipocalc, P, T})
+            Me.BackgroundWorker1.RunWorkerAsync(New Object() {tipocalc, P, T, chkVLE.Checked, chkLLE.Checked, chkSLE.Checked, chkCritical.Checked})
 
             fpec = New FormPEC
             Try
@@ -166,7 +166,7 @@ Public Class FormBinEnv
         mat.SetFlowsheet(Me.Frm)
         pp.CurrentMaterialStream = mat
         pp2.CurrentMaterialStream = mat
-        e.Result = New Object() {pp.DW_ReturnBinaryEnvelope(e.Argument), pp2.DW_ReturnBinaryEnvelope(e.Argument)}
+        e.Result = New Object() {pp.DW_ReturnBinaryEnvelope(e.Argument), pp2.DW_ReturnBinaryEnvelope(New Object() {e.Argument(0), e.Argument(1), e.Argument(2), e.Argument(3), False, False, False})}
 
     End Sub
 
@@ -238,7 +238,7 @@ Public Class FormBinEnv
 
         If Me.RadioButton1.Checked Then
 
-            Dim px, py1, py2, pxi, py1i, py2i, px1l1, px1l2, py3, pxs1, pys1, pxs2, pys2 As New ArrayList
+            Dim px, py1, py2, pxi, py1i, py2i, px1l1, px1l2, py3, pxs1, pys1, pxs2, pys2, pxc, pyc As New ArrayList
             px = r(0)
             py1 = r(1)
             py2 = r(2)
@@ -253,8 +253,11 @@ Public Class FormBinEnv
             pys1 = r(7)
             pxs2 = r(8)
             pys2 = r(9)
+            pxs2 = r(8)
+            pxc = r(10)
+            pyc = r(11)
 
-            Dim vx1, vx2, vy1, vy2, vxi, vy1i, vy2i, vx1l1, vx1l2, vy3, vxs1, vys1, vxs2, vys2 As New ArrayList
+            Dim vx1, vx2, vy1, vy2, vxi, vy1i, vy2i, vx1l1, vx1l2, vy3, vxs1, vys1, vxs2, vys2, vxc, vyc As New ArrayList
 
             i = 0
             Do
@@ -305,20 +308,40 @@ Public Class FormBinEnv
                 Loop Until i = pys2.Count
             End If
 
+            If pxc.Count > 0 Then
+                i = 0
+                Do
+                    vxc.Add(pxc(i))
+                    vyc.Add(cv.ConverterDoSI(su.spmp_temperature, pyc(i)))
+                    i += 1
+                Loop Until i = pxc.Count
+            End If
+
             With Me.Grid1.Columns
                 .Clear()
-                .Add("c1", "x (" & c(0) & ")")
-                .Add("c2", "Tbub (" & su.spmp_temperature & ")")
-                .Add("c3", "x (" & c(0) & ")")
-                .Add("c4", "Tdew (" & su.spmp_temperature & ")")
+                .Add("c1", "VLE x (" & c(0) & ")")
+                .Add("c2", "VLE Tbub (" & su.spmp_temperature & ")")
+                .Add("c3", "VLE x (" & c(0) & ")")
+                .Add("c4", "VLE Tdew (" & su.spmp_temperature & ")")
+                .Add("c5", "LLE x' (" & c(0) & ")")
+                .Add("c6", "LLE T (" & su.spmp_temperature & ")")
+                .Add("c7", "LLE x'' (" & c(0) & ")")
+                .Add("c8", "LLE T (" & su.spmp_temperature & ")")
+                .Add("c9", "SLE x (" & c(0) & ")")
+                .Add("c10", "SLE L/SL T (" & su.spmp_temperature & ")")
+                .Add("c11", "SLE x (" & c(0) & ")")
+                .Add("c12", "SLE S/SL T (" & su.spmp_temperature & ")")
+                .Add("c13", "CRIT x (" & c(0) & ")")
+                .Add("c14", "CRIT T (" & su.spmp_temperature & ")")
             End With
+
             For Each co As DataGridViewColumn In Me.Grid1.Columns
                 co.SortMode = DataGridViewColumnSortMode.NotSortable
                 co.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                 co.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
             Next
             Dim j, k As Integer
-            Dim data(11, Math.Max(vx1.Count - 1, vx2.Count - 1)) As String
+            Dim data(13, 100) As String
             j = 0
             For Each d As Double In vx1
                 data(0, j) = vx1(j)
@@ -329,6 +352,36 @@ Public Class FormBinEnv
             For Each d As Double In vx2
                 data(2, j) = vx2(j)
                 data(3, j) = vy2(j)
+                j = j + 1
+            Next
+            j = 0
+            For Each d As Double In vx1l1
+                data(4, j) = vx1l1(j)
+                data(5, j) = vy3(j)
+                j = j + 1
+            Next
+            j = 0
+            For Each d As Double In vx1l2
+                data(6, j) = vx1l2(j)
+                data(7, j) = vy3(j)
+                j = j + 1
+            Next
+            j = 0
+            For Each d As Double In vxs1
+                data(8, j) = vxs1(j)
+                data(9, j) = vys1(j)
+                j = j + 1
+            Next
+            j = 0
+            For Each d As Double In vxs2
+                data(10, j) = vxs2(j)
+                data(11, j) = vys2(j)
+                j = j + 1
+            Next
+            j = 0
+            For Each d As Double In vxc
+                data(12, j) = vxc(j)
+                data(13, j) = vyc(j)
                 j = j + 1
             Next
             With Me.Grid1.Rows
@@ -344,9 +397,9 @@ Public Class FormBinEnv
                             .Item(k).Cells(j).Value = data(j, k)
                         End If
                         j = j + 1
-                    Loop Until j = 4
+                    Loop Until j = 14
                     k = k + 1
-                Loop Until k = Math.Max(vx1.Count, vx2.Count)
+                Loop Until k = 100
             End With
 
             With Me.GraphControl.GraphPane
@@ -395,6 +448,13 @@ Public Class FormBinEnv
                 End If
                 If pys2.Count > 0 Then
                     With .AddCurve(DWSIM.App.GetLocalString("SLE SL/S"), vxs2.ToArray(GetType(Double)), vys2.ToArray(GetType(Double)), Color.DarkMagenta, ZedGraph.SymbolType.Circle)
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        .Line.IsVisible = True
+                        .Line.IsSmooth = True
+                    End With
+                End If
+                If pxc.Count > 0 Then
+                    With .AddCurve(DWSIM.App.GetLocalString("Critical"), vxc.ToArray(GetType(Double)), vyc.ToArray(GetType(Double)), Color.Black, ZedGraph.SymbolType.Circle)
                         .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         .Line.IsVisible = True
                         .Line.IsSmooth = True
@@ -798,6 +858,15 @@ Public Class FormBinEnv
             End With
 
         End If
+
+    End Sub
+
+    Private Sub RadioButton1_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged, RadioButton3.CheckedChanged, RadioButton4.CheckedChanged
+
+        chkVLE.Enabled = RadioButton1.Checked
+        chkLLE.Enabled = RadioButton1.Checked
+        chkSLE.Enabled = RadioButton1.Checked
+        chkCritical.Enabled = RadioButton1.Checked
 
     End Sub
 

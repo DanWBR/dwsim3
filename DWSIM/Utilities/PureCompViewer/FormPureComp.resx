@@ -130,7 +130,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>690, 16</value>
+    <value>860, 15</value>
   </data>
   <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 23</value>
@@ -160,7 +160,7 @@
     <value>True</value>
   </data>
   <data name="chkEnableEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>460, 19</value>
+    <value>634, 19</value>
   </data>
   <data name="chkEnableEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>225, 17</value>
@@ -268,7 +268,7 @@
     <value>3, 17</value>
   </data>
   <data name="GridProps.Size" type="System.Drawing.Size, System.Drawing">
-    <value>796, 387</value>
+    <value>970, 471</value>
   </data>
   <data name="GridProps.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -289,7 +289,7 @@
     <value>8, 3</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>802, 407</value>
+    <value>976, 491</value>
   </data>
   <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -310,7 +310,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>817, 421</value>
+    <value>991, 505</value>
   </data>
   <data name="FaTabStripItem1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -330,6 +330,9 @@
   <data name="&gt;&gt;FaTabStripItem1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="GroupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
   <data name="pbRender.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -337,7 +340,7 @@
     <value>3, 17</value>
   </data>
   <data name="pbRender.Size" type="System.Drawing.Size, System.Drawing">
-    <value>799, 222</value>
+    <value>1020, 310</value>
   </data>
   <data name="pbRender.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -358,7 +361,7 @@
     <value>8, 170</value>
   </data>
   <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>805, 242</value>
+    <value>1026, 330</value>
   </data>
   <data name="GroupBox3.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -378,11 +381,17 @@
   <data name="&gt;&gt;GroupBox3.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="GroupBox5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="tbInChI.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
   <data name="tbInChI.Location" type="System.Drawing.Point, System.Drawing">
     <value>133, 131</value>
   </data>
   <data name="tbInChI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>666, 21</value>
+    <value>873, 21</value>
   </data>
   <data name="tbInChI.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -429,11 +438,14 @@
   <data name="&gt;&gt;Label7.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="tbSMILES.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
   <data name="tbSMILES.Location" type="System.Drawing.Point, System.Drawing">
     <value>133, 104</value>
   </data>
   <data name="tbSMILES.Size" type="System.Drawing.Size, System.Drawing">
-    <value>666, 21</value>
+    <value>873, 21</value>
   </data>
   <data name="tbSMILES.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -480,11 +492,14 @@
   <data name="&gt;&gt;Label6.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="tbMODFAC.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
   <data name="tbMODFAC.Location" type="System.Drawing.Point, System.Drawing">
     <value>133, 77</value>
   </data>
   <data name="tbMODFAC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>666, 21</value>
+    <value>873, 21</value>
   </data>
   <data name="tbMODFAC.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -531,11 +546,14 @@
   <data name="&gt;&gt;Label5.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="tbUNIFAC.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
   <data name="tbUNIFAC.Location" type="System.Drawing.Point, System.Drawing">
     <value>133, 50</value>
   </data>
   <data name="tbUNIFAC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>666, 21</value>
+    <value>873, 21</value>
   </data>
   <data name="tbUNIFAC.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -582,11 +600,14 @@
   <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="tbFormula.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
   <data name="tbFormula.Location" type="System.Drawing.Point, System.Drawing">
     <value>133, 23</value>
   </data>
   <data name="tbFormula.Size" type="System.Drawing.Size, System.Drawing">
-    <value>666, 21</value>
+    <value>873, 21</value>
   </data>
   <data name="tbFormula.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -634,7 +655,7 @@
     <value>8, 5</value>
   </data>
   <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>805, 164</value>
+    <value>1026, 164</value>
   </data>
   <data name="GroupBox5.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -655,7 +676,7 @@
     <value>1</value>
   </data>
   <data name="FaTabStripItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>817, 421</value>
+    <value>1039, 505</value>
   </data>
   <data name="FaTabStripItem6.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -685,7 +706,7 @@
     <value>0, 0</value>
   </data>
   <data name="GraphCp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>755, 421</value>
+    <value>746, 505</value>
   </data>
   <data name="GraphCp.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -703,7 +724,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>755, 421</value>
+    <value>746, 505</value>
   </data>
   <data name="FaTabStripItem2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -733,7 +754,7 @@
     <value>0, 0</value>
   </data>
   <data name="GraphPvap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>755, 421</value>
+    <value>746, 505</value>
   </data>
   <data name="GraphPvap.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -751,7 +772,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>755, 421</value>
+    <value>746, 505</value>
   </data>
   <data name="FaTabStripItem3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -781,7 +802,7 @@
     <value>0, 0</value>
   </data>
   <data name="GraphVisc.Size" type="System.Drawing.Size, System.Drawing">
-    <value>755, 421</value>
+    <value>746, 505</value>
   </data>
   <data name="GraphVisc.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -799,7 +820,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>755, 421</value>
+    <value>746, 505</value>
   </data>
   <data name="FaTabStripItem4.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -829,7 +850,7 @@
     <value>0, 0</value>
   </data>
   <data name="GraphDHVAP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>755, 421</value>
+    <value>1282, 505</value>
   </data>
   <data name="GraphDHVAP.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -847,7 +868,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>755, 421</value>
+    <value>1282, 505</value>
   </data>
   <data name="FaTabStripItem5.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -866,6 +887,102 @@
   </data>
   <data name="&gt;&gt;FaTabStripItem5.ZOrder" xml:space="preserve">
     <value>5</value>
+  </data>
+  <data name="GraphLiqDens.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="GraphLiqDens.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Arial, 8.25pt</value>
+  </data>
+  <data name="GraphLiqDens.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="GraphLiqDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1282, 505</value>
+  </data>
+  <data name="GraphLiqDens.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;GraphLiqDens.Name" xml:space="preserve">
+    <value>GraphLiqDens</value>
+  </data>
+  <data name="&gt;&gt;GraphLiqDens.Type" xml:space="preserve">
+    <value>ZedGraph.ZedGraphControl, ZedGraph, Version=5.1.0.32336, Culture=neutral, PublicKeyToken=02a83cbd123fcd60</value>
+  </data>
+  <data name="&gt;&gt;GraphLiqDens.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;GraphLiqDens.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="FaTabStripItem9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1282, 505</value>
+  </data>
+  <data name="FaTabStripItem9.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="FaTabStripItem9.Title" xml:space="preserve">
+    <value>Densidade (Líquido)</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem9.Name" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem9.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem9.Parent" xml:space="preserve">
+    <value>FaTabStrip1</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem9.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="GraphSolidDens.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="GraphSolidDens.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Arial, 8.25pt</value>
+  </data>
+  <data name="GraphSolidDens.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="GraphSolidDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1282, 505</value>
+  </data>
+  <data name="GraphSolidDens.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;GraphSolidDens.Name" xml:space="preserve">
+    <value>GraphSolidDens</value>
+  </data>
+  <data name="&gt;&gt;GraphSolidDens.Type" xml:space="preserve">
+    <value>ZedGraph.ZedGraphControl, ZedGraph, Version=5.1.0.32336, Culture=neutral, PublicKeyToken=02a83cbd123fcd60</value>
+  </data>
+  <data name="&gt;&gt;GraphSolidDens.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;GraphSolidDens.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="FaTabStripItem8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1282, 505</value>
+  </data>
+  <data name="FaTabStripItem8.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="FaTabStripItem8.Title" xml:space="preserve">
+    <value>Densidade (Sólido)</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem8.Name" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem8.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem8.Parent" xml:space="preserve">
+    <value>FaTabStrip1</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem8.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <metadata name="DataGridViewTextBoxColumn1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -937,7 +1054,43 @@
     <value>VapEnth</value>
   </data>
   <data name="DataGridViewTextBoxColumn8.Width" type="System.Int32, mscorlib">
+    <value>56</value>
+  </data>
+  <metadata name="Column4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Column4.HeaderText" xml:space="preserve">
+    <value>T4</value>
+  </data>
+  <data name="Column4.Width" type="System.Int32, mscorlib">
+    <value>70</value>
+  </data>
+  <metadata name="Column5.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Column5.HeaderText" xml:space="preserve">
+    <value>LiqDens</value>
+  </data>
+  <data name="Column5.Width" type="System.Int32, mscorlib">
     <value>53</value>
+  </data>
+  <metadata name="Column6.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Column6.HeaderText" xml:space="preserve">
+    <value>T5</value>
+  </data>
+  <data name="Column6.Width" type="System.Int32, mscorlib">
+    <value>70</value>
+  </data>
+  <metadata name="Column7.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Column7.HeaderText" xml:space="preserve">
+    <value>SolidDens</value>
+  </data>
+  <data name="Column7.Width" type="System.Int32, mscorlib">
+    <value>59</value>
   </data>
   <data name="DataTable.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -946,7 +1099,7 @@
     <value>0, 0</value>
   </data>
   <data name="DataTable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>817, 421</value>
+    <value>1039, 505</value>
   </data>
   <data name="DataTable.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -964,7 +1117,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>817, 421</value>
+    <value>1039, 505</value>
   </data>
   <data name="FaTabStripItem7.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -982,13 +1135,13 @@
     <value>FaTabStrip1</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem7.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="FaTabStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 43</value>
   </data>
   <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>819, 442</value>
+    <value>993, 526</value>
   </data>
   <data name="FaTabStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1012,7 +1165,7 @@
     <value>5, 5</value>
   </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>825, 488</value>
+    <value>999, 572</value>
   </data>
   <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1039,7 +1192,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>834, 496</value>
+    <value>1008, 580</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
@@ -1111,6 +1264,30 @@
     <value>DataGridViewTextBoxColumn8</value>
   </data>
   <data name="&gt;&gt;DataGridViewTextBoxColumn8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Column4.Name" xml:space="preserve">
+    <value>Column4</value>
+  </data>
+  <data name="&gt;&gt;Column4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Column5.Name" xml:space="preserve">
+    <value>Column5</value>
+  </data>
+  <data name="&gt;&gt;Column5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Column6.Name" xml:space="preserve">
+    <value>Column6</value>
+  </data>
+  <data name="&gt;&gt;Column6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Column7.Name" xml:space="preserve">
+    <value>Column7</value>
+  </data>
+  <data name="&gt;&gt;Column7.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

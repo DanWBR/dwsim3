@@ -273,14 +273,14 @@ Public Class FormOptions
         path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "dwsim.xml"
         If File.Exists(path2) Then Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString("Remove")})
         Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
-        'name = "Biodiesel"
-        'path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "biod_db.xml"
-        'If File.Exists(path2) Then Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString("Remove")})
-        'Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
-        'name = "CheResources"
-        'path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "cheres.xml"
-        'If File.Exists(path2) Then Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString("Remove")})
-        'Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
+        name = "Biodiesel"
+        path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "biod_db.xml"
+        If File.Exists(path2) Then Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString("Remove")})
+        Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
+        name = "Electrolyte"
+        path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "electrolyte.xml"
+        If File.Exists(path2) Then Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString("Remove")})
+        Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
 
         'chemsep database
         If FormMain.loadedCSDB Then
@@ -309,7 +309,7 @@ Public Class FormOptions
 
     Private Sub dgvdb_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvdb.CellContentClick
 
-        If e.ColumnIndex = 4 And e.RowIndex > 0 Then
+        If e.ColumnIndex = 4 And e.RowIndex > 3 Then
 
             If Me.dgvdb.Rows(e.RowIndex).Cells(2).Value = "ChemSep" Then
 
@@ -327,7 +327,6 @@ Public Class FormOptions
 
             End If
 
-
         End If
 
     End Sub
@@ -338,7 +337,7 @@ Public Class FormOptions
                 Case 0
                     My.Settings.CultureInfo = "pt-BR"
                 Case 1
-                    My.Settings.CultureInfo = "en-US"
+                    My.Settings.CultureInfo = "en"
                 Case 2
                     My.Settings.CultureInfo = "es"
                 Case 3

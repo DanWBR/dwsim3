@@ -4741,4 +4741,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="FilterVaporPhaseNotSupported" xml:space="preserve">
     <value>The Cake Filter model doesn't support a vapor phase in the inlet stream.</value>
   </data>
+  <data name="PP_IDEAL_VAPOR_PHASE_FUG" xml:space="preserve">
+    <value>Use Ideal Vapor Phase Fugacity Model</value>
+  </data>
+  <data name="LiquidDensity" xml:space="preserve">
+    <value>Liquid Density</value>
+  </data>
+  <data name="SolidDensity" xml:space="preserve">
+    <value>Solid Density</value>
+  </data>
 </root>

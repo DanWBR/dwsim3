@@ -2602,114 +2602,179 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Dim result As Object
             Dim P, T As Double
             Dim calcP, calcT As Double
+            Dim VLE, SLE, LLE, Critical As Boolean
 
             tipocalc = parameters(0)
             P = parameters(1)
             T = parameters(2)
+            VLE = parameters(3)
+            LLE = parameters(4)
+            SLE = parameters(5)
+            Critical = parameters(6)
 
             Select Case tipocalc
 
                 Case "T-x-y"
 
-                    Dim px, py1, py2, px1l1, px1l2, py3 As New ArrayList
+                    Dim px, py1, py2, px1l1, px1l2, py3 As New ArrayList 'vle, lle
+                    Dim pxs1, pys1, pxs2, pys2 As New ArrayList 'sle
+                    Dim pxc, pyc As New ArrayList 'critical
                     Dim unstable As Boolean = False
                     Dim ui, ut As New ArrayList
                     Dim x, y1, y2, Test1, Test2 As Double
                     Dim tmp As Object = Nothing
 
-                    i = 0
-                    Do
-                        Try
-                            If i = 0 Then
-                                tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)
-                                calcT = tmp(4)
-                                Test1 = calcT
-                                tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, 0, Me)
-                                y2 = tmp(4)
-                                Test2 = y2
-                            Else
-                                tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, Test1, Me)
-                                calcT = tmp(4)
-                                Test1 = calcT
-                                tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, Test2, Me)
-                                y2 = tmp(4)
-                                Test2 = y2
-                            End If
-                            x = i * dx
-                            y1 = calcT
-                            px.Add(x)
-                            py1.Add(y1)
-                            py2.Add(y2)
-                            'check if liquid phase is stable.
-                            result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, P, calcT, Me)
-                            If result(5) > 0.0# Then
-                                unstable = True
-                                ui.Add(px.Count - 1)
-                                ut.Add(calcT)
-                            End If
-                        Catch ex As Exception
-                        End Try
-                        i = i + 1
-                    Loop Until (i - 1) * dx >= 1
-
-                    If unstable Then
-                        Dim ti, tf, uim As Double, tit As Integer
-                        ti = (ut(0) + ut(ut.Count - 1)) / 2
-                        uim = ui(0) ' (ui(0) + ui(ui.Count - 1)) / 2
-                        tf = MathEx.Common.Max(Me.RET_VTF())
-                        If tf = 0.0# Then tf = ti * 0.7
-                        For tit = tf To ti Step (ti - tf) / 25
-                            result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, P, tit, Me)
-                            If result(5) > 0.0# Then
-                                If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
-                                    px1l1.Add(result(2)(0))
-                                    px1l2.Add(result(6)(0))
-                                    py3.Add(tit)
+                    If VLE Then
+                        i = 0
+                        Do
+                            Try
+                                If i = 0 Then
+                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)
+                                    calcT = tmp(4)
+                                    Test1 = calcT
+                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, 0, Me)
+                                    y2 = tmp(4)
+                                    Test2 = y2
+                                Else
+                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, Test1, Me)
+                                    calcT = tmp(4)
+                                    Test1 = calcT
+                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, Test2, Me)
+                                    y2 = tmp(4)
+                                    Test2 = y2
                                 End If
-                            End If
-                        Next
-                        'For i = 0 To ui.Count - 1
-                        '    py1(ui(i)) = ut(0)
-                        'Next
+                                x = i * dx
+                                y1 = calcT
+                                px.Add(x)
+                                py1.Add(y1)
+                                py2.Add(y2)
+                                If LLE Then
+                                    'check if liquid phase is stable.
+                                    result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, P, calcT, Me)
+                                    If result(5) > 0.0# Then
+                                        unstable = True
+                                        ui.Add(px.Count - 1)
+                                        ut.Add(calcT)
+                                    End If
+                                End If
+                            Catch ex As Exception
+                            End Try
+                            i = i + 1
+                        Loop Until (i - 1) * dx >= 1
                     End If
 
-                    Dim pxs1, pys1, pxs2, pys2 As New ArrayList
+                    If VLE And LLE Then
+                        If unstable Then
+                            Dim ti, tf, uim As Double, tit As Integer
+                            ti = (ut(0) + ut(ut.Count - 1)) / 2
+                            uim = ui(0) ' (ui(0) + ui(ui.Count - 1)) / 2
+                            tf = MathEx.Common.Max(Me.RET_VTF())
+                            If tf = 0.0# Then tf = ti * 0.7
+                            For tit = tf To ti Step (ti - tf) / 25
+                                result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, P, tit, Me)
+                                If result(5) > 0.0# Then
+                                    If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
+                                        px1l1.Add(result(2)(0))
+                                        px1l2.Add(result(6)(0))
+                                        py3.Add(tit)
+                                    End If
+                                End If
+                            Next
+                        End If
+                    End If
 
-                    Dim nlsle As New Auxiliary.FlashAlgorithms.NestedLoopsSLE
-                    Dim constprops As New List(Of ConstantProperties)
-                    For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                        constprops.Add(su.ConstantProperties)
-                    Next
-                    nlsle.CompoundProperties = constprops
+                    If SLE Then
+                        Dim nlsle As New Auxiliary.FlashAlgorithms.NestedLoopsSLE
+                        Dim constprops As New List(Of ConstantProperties)
+                        For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                            constprops.Add(su.ConstantProperties)
+                        Next
+                        nlsle.CompoundProperties = constprops
 
-                    i = 0
-                    Do
-                        Try
-                            tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0.001, 0, Me)
-                            y1 = tmp(4)
-                            x = i * dx
-                            pxs1.Add(x)
-                            pys1.Add(y1)
-                        Catch ex As Exception
-                        End Try
-                        i = i + 1
-                    Loop Until (i - 1) * dx >= 1
+                        i = 0
+                        Do
+                            Try
+                                tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0.001, 0, Me)
+                                y1 = tmp(4)
+                                x = i * dx
+                                pxs1.Add(x)
+                                pys1.Add(y1)
+                            Catch ex As Exception
+                            End Try
+                            i = i + 1
+                        Loop Until (i - 1) * dx >= 1
 
-                    i = 0
-                    Do
-                        Try
-                            tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0.999, 0, Me)
-                            y2 = tmp(4)
-                            Test2 = y2
-                            x = i * dx
-                            pxs2.Add(x)
-                            pys2.Add(y2)
-                        Catch ex As Exception
-                        End Try
-                        i = i + 1
-                    Loop Until (i - 1) * dx >= 1
+                        i = 0
+                        Do
+                            Try
+                                tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0.999, 0, Me)
+                                y2 = tmp(4)
+                                Test2 = y2
+                                x = i * dx
+                                pxs2.Add(x)
+                                pys2.Add(y2)
+                            Catch ex As Exception
+                            End Try
+                            i = i + 1
+                        Loop Until (i - 1) * dx >= 1
+                    End If
 
-                    Return New Object() {px, py1, py2, px1l1, px1l2, py3, pxs1, pys1, pxs2, pys2}
+                    If Critical Then
+
+                        Dim cpc As New DWSIM.Utilities.TCP.Methods
+                        Dim cpcs As New DWSIM.Utilities.TCP.Methods_SRK
+                        Dim CP As New ArrayList
+                        Dim TCR, PCR, VCR As Double
+
+                        i = 0
+                        Do
+                            Try
+                                If TypeOf Me Is PengRobinsonPropertyPackage Then
+                                    If i = 0 Or (i * dx) >= 1 Then
+                                        Dim Tc As Double() = Me.RET_VTC
+                                        TCR = (i * dx) * Tc(0) + (1 - i * dx) * Tc(1)
+                                        PCR = 0.0#
+                                        VCR = 0.0#
+                                        CP.Clear()
+                                        CP.Add(New Double() {TCR, PCR, VCR})
+                                    Else
+                                        CP = cpc.CRITPT_PR(New Double() {i * dx, 1 - i * dx}, Me.RET_VTC, Me.RET_VPC, Me.RET_VVC, Me.RET_VW, Me.RET_VKij)
+                                    End If
+                                ElseIf TypeOf Me Is SRKPropertyPackage Then
+                                    If i = 0 Or (i * dx) >= 1 Then
+                                        Dim Tc As Double() = Me.RET_VTC
+                                        TCR = (i * dx) * Tc(0) + (1 - i * dx) * Tc(1)
+                                        PCR = 0.0#
+                                        VCR = 0.0#
+                                        CP.Clear()
+                                        CP.Add(New Double() {TCR, PCR, VCR})
+                                    Else
+                                        CP = cpcs.CRITPT_PR(New Double() {i * dx, 1 - i * dx}, Me.RET_VTC, Me.RET_VPC, Me.RET_VVC, Me.RET_VW, Me.RET_VKij)
+                                    End If
+                                Else
+                                    Dim Tc As Double() = Me.RET_VTC
+                                    TCR = (i * dx) * Tc(0) + (1 - i * dx) * Tc(1)
+                                    PCR = 0.0#
+                                    VCR = 0.0#
+                                    CP.Clear()
+                                    CP.Add(New Double() {TCR, PCR, VCR})
+                                End If
+                                If CP.Count > 0 Then
+                                    Dim cp0 = CP(0)
+                                    TCR = cp0(0)
+                                    PCR = cp0(1)
+                                    VCR = cp0(2)
+                                    x = i * dx
+                                    pxc.Add(x)
+                                    pyc.Add(TCR)
+                                End If
+                            Catch ex As Exception
+                            End Try
+                            i = i + 1
+                        Loop Until (i - 1) * dx >= 1
+                    End If
+
+                    Return New Object() {px, py1, py2, px1l1, px1l2, py3, pxs1, pys1, pxs2, pys2, pxc, pyc}
 
                 Case "P-x-y"
 
@@ -2759,8 +2824,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                     If unstable Then
                         Dim pi, pf, uim As Double, pit As Integer
-                        pi = up(0) '(up(0) + up(up.Count - 1)) / 2
-                        uim = ui(0) '(ui(0) + ui(ui.Count - 1)) / 2
+                        pi = up(0)
+                        uim = ui(0)
                         pf = 2 * pi
                         For pit = pi To pf Step (pf - pi) / 10
                             result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, pit, T, Me)
@@ -2772,9 +2837,6 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 End If
                             End If
                         Next
-                        'For i = 0 To ui.Count - 1
-                        '    py1(ui(i)) = up(0)
-                        'Next
                     End If
 
                     Return New Object() {px, py1, py2, px1l1, px1l2, py3}
@@ -5577,6 +5639,34 @@ Final3:
 
         End Function
 
+        Public Overridable Function AUX_SOLIDDENSi(cprop As ConstantProperties, T As Double) As Double
+
+            Dim val As Double
+            Dim zerodens As Double = 0
+
+            If cprop.OriginalDB = "ChemSep" Then
+                Dim A, B, C, D, E, result As Double
+                Dim eqno As String = cprop.SolidDensityEquation
+                Dim mw As Double = cprop.Molar_Weight
+                A = cprop.Solid_Density_Const_A
+                B = cprop.Solid_Density_Const_B
+                C = cprop.Solid_Density_Const_C
+                D = cprop.Solid_Density_Const_D
+                E = cprop.Solid_Density_Const_E
+                result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'kmol/m3
+                val = 1 / (result * mw)
+            Else
+                If cprop.SolidDensityAtTs <> 0.0# Then
+                    val = 1 / cprop.SolidDensityAtTs
+                Else
+                    val = 1.0E+20
+                End If
+            End If
+
+            Return 1 / val
+
+        End Function
+
         Public Overridable Function AUX_LIQDENS(ByVal T As Double, Optional ByVal P As Double = 0, Optional ByVal Pvp As Double = 0, Optional ByVal phaseid As Integer = 3, Optional ByVal FORCE_EOS As Boolean = False) As Double
 
             If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
@@ -5828,6 +5918,23 @@ Final3:
                 val = subst.ConstantProperties.Molar_Weight * val
             Else
                 val = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, 101325, Me.AUX_PVAPi(subst.Nome, T))
+            End If
+
+            Return val
+
+        End Function
+
+        Public Overridable Function AUX_LIQDENSi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
+
+            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
+
+            Dim val As Double
+
+            If cprop.LiquidDensityEquation <> "" And cprop.LiquidDensityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
+                val = Me.CalcCSTDepProp(cprop.LiquidDensityEquation, cprop.Liquid_Density_Const_A, cprop.Liquid_Density_Const_B, cprop.Liquid_Density_Const_C, cprop.Liquid_Density_Const_D, cprop.Liquid_Density_Const_E, T, cprop.Critical_Temperature)
+                val = cprop.Molar_Weight * val
+            Else
+                val = Me.m_props.liq_dens_rackett(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight, cprop.Z_Rackett, 101325, Me.AUX_PVAPi(cprop.Name, T))
             End If
 
             Return val

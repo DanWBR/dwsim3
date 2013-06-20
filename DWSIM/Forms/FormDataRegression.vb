@@ -98,6 +98,7 @@ Public Class FormDataRegression
             .comp2 = Me.cbCompound2.SelectedItem.ToString
             .model = Me.cbModel.SelectedItem.ToString
             .includesd = Me.chkIncludeSD.Checked
+            .idealvapormodel = Me.chkIdealVaporPhase.Checked
             .datatype = Me.cbDataType.SelectedIndex
             .method = Me.cbRegMethod.SelectedItem.ToString
             .objfunction = Me.cbObjFunc.SelectedItem.ToString
@@ -163,6 +164,7 @@ Public Class FormDataRegression
                     gridInEst.Rows.Add(New Object() {"alpha12", .iepar3})
             End Select
             Me.chkIncludeSD.Checked = .includesd
+            Me.chkIdealVaporPhase.Checked = .idealvapormodel
             Me.cbDataType.SelectedIndex = .datatype
             Me.cbRegMethod.SelectedItem = .method
             Me.cbObjFunc.SelectedItem = .objfunction
@@ -1118,6 +1120,10 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             proppack = ppm.GetPropertyPackage(ppname)
             proppack.ComponentName = ppname
             proppack._availablecomps = FormMain.AvailableComponents
+
+            If proppack.Parameters.ContainsKey("PP_IDEAL_VAPOR_PHASE_FUG") Then
+                proppack.Parameters("PP_IDEAL_VAPOR_PHASE_FUG") = Me.chkIdealVaporPhase.CheckState
+            End If
 
             Select Case currcase.method
                 Case "Limited Memory BFGS"
@@ -2078,6 +2084,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
                 Button1.Enabled = False
                 Button2.Enabled = False
+                chkIdealVaporPhase.Enabled = False
             Case "Lee-Kesler-Plöcker"
                 With gridInEst.Rows
                     .Clear()
@@ -2085,6 +2092,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
                 Button1.Enabled = False
                 Button2.Enabled = False
+                chkIdealVaporPhase.Enabled = False
             Case "PRSV2-M"
                 With gridInEst.Rows
                     .Clear()
@@ -2093,6 +2101,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
                 Button1.Enabled = False
                 Button2.Enabled = False
+                chkIdealVaporPhase.Enabled = False
             Case "PRSV2-VL"
                 With gridInEst.Rows
                     .Clear()
@@ -2101,6 +2110,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
                 Button1.Enabled = False
                 Button2.Enabled = False
+                chkIdealVaporPhase.Enabled = False
             Case "UNIQUAC"
                 With gridInEst.Rows
                     .Clear()
@@ -2109,6 +2119,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
                 Button1.Enabled = True
                 Button2.Enabled = True
+                chkIdealVaporPhase.Enabled = True
             Case "NRTL"
                 With gridInEst.Rows
                     .Clear()
@@ -2118,6 +2129,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
                 Button1.Enabled = True
                 Button2.Enabled = True
+                chkIdealVaporPhase.Enabled = True
         End Select
     End Sub
 
@@ -2630,6 +2642,7 @@ Namespace DWSIM.Optimization.DatRegression
         Public iepar3 As Double = 0.0#
         Public title As String = ""
         Public description As String = ""
+        Public idealvapormodel As Boolean = False
 
     End Class
 

@@ -665,6 +665,7 @@ Partial Class FormMain
         If DWSIM.App.IsRunningOnMono() Then
             Using spsh As New SplashScreen
                 spsh.Show()
+                Application.DoEvents()
                 Threading.Thread.Sleep(3000)
             End Using
         End If
