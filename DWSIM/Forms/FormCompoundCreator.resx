@@ -586,7 +586,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label21.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 116</value>
+    <value>15, 144</value>
   </data>
   <data name="Label21.Size" type="System.Drawing.Size, System.Drawing">
     <value>45, 13</value>
@@ -637,7 +637,7 @@
     <value>10</value>
   </data>
   <data name="TextBoxFormula.Location" type="System.Drawing.Point, System.Drawing">
-    <value>88, 113</value>
+    <value>88, 141</value>
   </data>
   <data name="TextBoxFormula.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 21</value>
@@ -685,7 +685,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label22.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 142</value>
+    <value>15, 117</value>
   </data>
   <data name="Label22.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 13</value>
@@ -730,7 +730,7 @@
     <value>14</value>
   </data>
   <data name="TextBoxMW.Location" type="System.Drawing.Point, System.Drawing">
-    <value>88, 139</value>
+    <value>88, 114</value>
   </data>
   <data name="TextBoxMW.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 21</value>
@@ -766,7 +766,7 @@
     <value>NoControl</value>
   </data>
   <data name="lblMW.Location" type="System.Drawing.Point, System.Drawing">
-    <value>157, 142</value>
+    <value>157, 117</value>
   </data>
   <data name="lblMW.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 13</value>
@@ -796,7 +796,7 @@
     <value>NoControl</value>
   </data>
   <data name="CheckBoxMW.Location" type="System.Drawing.Point, System.Drawing">
-    <value>210, 142</value>
+    <value>210, 117</value>
   </data>
   <data name="CheckBoxMW.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -949,7 +949,7 @@
     <value>2</value>
   </data>
   <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>896, 420</value>
+    <value>805, 420</value>
   </data>
   <data name="FaTabStripItem2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -969,6 +969,162 @@
   <data name="&gt;&gt;FaTabStripItem2.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="Label58.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label58.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label58.Location" type="System.Drawing.Point, System.Drawing">
+    <value>643, 62</value>
+  </data>
+  <data name="Label58.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 13</value>
+  </data>
+  <data name="Label58.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="Label58.Text" xml:space="preserve">
+    <value>Atom Qtde adicional</value>
+  </data>
+  <data name="&gt;&gt;Label58.Name" xml:space="preserve">
+    <value>Label58</value>
+  </data>
+  <data name="&gt;&gt;Label58.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label58.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;Label58.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="Atom.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Atom.HeaderText" xml:space="preserve">
+    <value>Atom</value>
+  </data>
+  <metadata name="Count.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Count.HeaderText" xml:space="preserve">
+    <value>Qtde</value>
+  </data>
+  <data name="AddAtomDataGrid.Location" type="System.Drawing.Point, System.Drawing">
+    <value>646, 78</value>
+  </data>
+  <data name="AddAtomDataGrid.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="AddAtomDataGrid.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 328</value>
+  </data>
+  <data name="AddAtomDataGrid.TabIndex" type="System.Int32, mscorlib">
+    <value>58</value>
+  </data>
+  <data name="&gt;&gt;AddAtomDataGrid.Name" xml:space="preserve">
+    <value>AddAtomDataGrid</value>
+  </data>
+  <data name="&gt;&gt;AddAtomDataGrid.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AddAtomDataGrid.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;AddAtomDataGrid.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 9</value>
+  </data>
+  <data name="TextBox1.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="TextBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>468, 35</value>
+  </data>
+  <data name="TextBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>57</value>
+  </data>
+  <data name="TextBox1.Text" xml:space="preserve">
+    <value>Atenção! A definição de grupos Joback ou Atoms adicionais implicará na impossibilidade de se utilizar os Pacotes de Propriedades UNIFAC/MODFAC!</value>
+  </data>
+  <data name="&gt;&gt;TextBox1.Name" xml:space="preserve">
+    <value>TextBox1</value>
+  </data>
+  <data name="&gt;&gt;TextBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBox1.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;TextBox1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Label59.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label59.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label59.Location" type="System.Drawing.Point, System.Drawing">
+    <value>519, 62</value>
+  </data>
+  <data name="Label59.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 13</value>
+  </data>
+  <data name="Label59.TabIndex" type="System.Int32, mscorlib">
+    <value>56</value>
+  </data>
+  <data name="Label59.Text" xml:space="preserve">
+    <value>Atom Qtde UNIFAC</value>
+  </data>
+  <data name="&gt;&gt;Label59.Name" xml:space="preserve">
+    <value>Label59</value>
+  </data>
+  <data name="&gt;&gt;Label59.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label59.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;Label59.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <metadata name="ColAtom.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="ColAtom.HeaderText" xml:space="preserve">
+    <value>Atom</value>
+  </data>
+  <metadata name="ColCount.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="ColCount.HeaderText" xml:space="preserve">
+    <value>Qtde</value>
+  </data>
+  <data name="AtomDataGrid.Location" type="System.Drawing.Point, System.Drawing">
+    <value>522, 78</value>
+  </data>
+  <data name="AtomDataGrid.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 328</value>
+  </data>
+  <data name="AtomDataGrid.TabIndex" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
+  <data name="&gt;&gt;AtomDataGrid.Name" xml:space="preserve">
+    <value>AtomDataGrid</value>
+  </data>
+  <data name="&gt;&gt;AtomDataGrid.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AtomDataGrid.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;AtomDataGrid.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="LinkLabel3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -979,7 +1135,7 @@
     <value>0, 50</value>
   </data>
   <data name="LinkLabel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>781, 31</value>
+    <value>522, 9</value>
   </data>
   <data name="LinkLabel3.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 18</value>
@@ -1003,40 +1159,7 @@
     <value>FaTabStripItem11</value>
   </data>
   <data name="&gt;&gt;LinkLabel3.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="Label58.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="Label58.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="Label58.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="Label58.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 31</value>
-  </data>
-  <data name="Label58.Size" type="System.Drawing.Size, System.Drawing">
-    <value>666, 13</value>
-  </data>
-  <data name="Label58.TabIndex" type="System.Int32, mscorlib">
-    <value>27</value>
-  </data>
-  <data name="Label58.Text" xml:space="preserve">
-    <value>Atenção! A definição de grupos Joback adicionais implicará na impossibilidade de se utilizar os Pacotes de Propriedades UNIFAC/MODFAC!</value>
-  </data>
-  <data name="&gt;&gt;Label58.Name" xml:space="preserve">
-    <value>Label58</value>
-  </data>
-  <data name="&gt;&gt;Label58.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label58.Parent" xml:space="preserve">
-    <value>FaTabStripItem11</value>
-  </data>
-  <data name="&gt;&gt;Label58.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>5</value>
   </data>
   <data name="Label57.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -1048,7 +1171,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label57.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 12</value>
+    <value>15, 62</value>
   </data>
   <data name="Label57.Size" type="System.Drawing.Size, System.Drawing">
     <value>496, 13</value>
@@ -1069,7 +1192,7 @@
     <value>FaTabStripItem11</value>
   </data>
   <data name="&gt;&gt;Label57.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>6</value>
   </data>
   <metadata name="Column2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1108,13 +1231,13 @@
     <value>Count of additional Joback groups which are not defined already as UNIFAC subgroups.</value>
   </data>
   <data name="GridJoback.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 53</value>
+    <value>18, 78</value>
   </data>
   <data name="GridJoback.RowHeadersWidth" type="System.Int32, mscorlib">
     <value>80</value>
   </data>
   <data name="GridJoback.Size" type="System.Drawing.Size, System.Drawing">
-    <value>468, 353</value>
+    <value>468, 328</value>
   </data>
   <data name="GridJoback.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1129,10 +1252,10 @@
     <value>FaTabStripItem11</value>
   </data>
   <data name="&gt;&gt;GridJoback.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="FaTabStripItem11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>896, 420</value>
+    <value>805, 420</value>
   </data>
   <data name="FaTabStripItem11.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -2089,7 +2212,7 @@
     <value>31</value>
   </data>
   <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1417, 420</value>
+    <value>805, 420</value>
   </data>
   <data name="FaTabStripItem3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2758,7 +2881,7 @@
     <value>21</value>
   </data>
   <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1417, 420</value>
+    <value>805, 420</value>
   </data>
   <data name="FaTabStripItem4.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -3211,7 +3334,7 @@
     <value>1</value>
   </data>
   <data name="FaTabStripItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1417, 420</value>
+    <value>805, 420</value>
   </data>
   <data name="FaTabStripItem5.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -3931,7 +4054,7 @@
     <value>20</value>
   </data>
   <data name="FaTabStripItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1417, 420</value>
+    <value>805, 420</value>
   </data>
   <data name="FaTabStripItem6.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -6538,7 +6661,7 @@
     <value>9, 47</value>
   </data>
   <data name="cbUnits.Size" type="System.Drawing.Size, System.Drawing">
-    <value>206, 21</value>
+    <value>127, 21</value>
   </data>
   <data name="cbUnits.TabIndex" type="System.Int32, mscorlib">
     <value>40</value>
@@ -8229,6 +8352,30 @@
   </data>
   <data name="&gt;&gt;ToolStripStatusUserDB.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ColAtom.Name" xml:space="preserve">
+    <value>ColAtom</value>
+  </data>
+  <data name="&gt;&gt;ColAtom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ColCount.Name" xml:space="preserve">
+    <value>ColCount</value>
+  </data>
+  <data name="&gt;&gt;ColCount.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Atom.Name" xml:space="preserve">
+    <value>Atom</value>
+  </data>
+  <data name="&gt;&gt;Atom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Count.Name" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="&gt;&gt;Count.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormCompoundCreator</value>

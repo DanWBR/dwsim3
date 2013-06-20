@@ -44,7 +44,7 @@ Public Class FormCompoundCreator
     Friend isUserDBSaved As Boolean = True
     Private forceclose As Boolean = False
     Private populating As Boolean = False
-    Private UNIFAClines(), JOBACKlines() As String
+    Private UNIFAClines(), JOBACKlines(), ElementLines() As String
 
     Private Sub FormCompoundCreator_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -54,21 +54,20 @@ Public Class FormCompoundCreator
         Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac.txt"
 
         Dim i As Integer
-        Dim US As String
 
         UNIFAClines = IO.File.ReadAllLines(filename)
         With Me.GridUNIFAC.Rows
             .Clear()
             For i = 2 To UNIFAClines.Length - 1
-                US = UNIFAClines(i).Split(",")(8) 'Joback Subgroup List
 
                 .Add(New Object() {CInt(0), Image.FromFile(picpath & UNIFAClines(i).Split(",")(7) & ".png")})
                 .Item(.Count - 1).HeaderCell.Value = UNIFAClines(i).Split(",")(3)
                 .Item(.Count - 1).HeaderCell.Tag = UNIFAClines(i).Split(",")(2)
                 .Item(.Count - 1).Cells(1).ToolTipText = "Main Group: " & UNIFAClines(i).Split(",")(2) & vbCrLf & _
-                                                        "Subgroup: " & UNIFAClines(i).Split(",")(3) & vbCrLf & _
-                                                        "Rk / Qk: " & UNIFAClines(i).Split(",")(4) & " / " & UNIFAClines(i).Split(",")(5) & vbCrLf & _
-                                                        "Example Compound: " & UNIFAClines(i).Split(",")(6) & vbCrLf & US
+                                                         "Subgroup: " & UNIFAClines(i).Split(",")(3) & vbCrLf & _
+                                                         "Rk / Qk: " & UNIFAClines(i).Split(",")(4) & " / " & UNIFAClines(i).Split(",")(5) & vbCrLf & _
+                                                         "Example Compound: " & UNIFAClines(i).Split(",")(6) & vbCrLf & _
+                                                         "Joback subgroups: " & UNIFAClines(i).Split(",")(8)
 
                 
             Next
@@ -108,6 +107,20 @@ Public Class FormCompoundCreator
             Next
 
         End With
+
+        'Grid addition Elements
+        filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "Elements.txt"
+        ElementLines = IO.File.ReadAllLines(filename)
+        With Me.AddAtomDataGrid.Rows
+            .Clear()
+            For i = 1 To ElementLines.Length - 1
+                .Add(New Object())
+                .Item(.Count - 1).Cells(0).Value = ElementLines(i).Split(";")(2)
+                .Item(.Count - 1).Cells(0).ToolTipText = "Element # " & ElementLines(i).Split(";")(0) & vbCrLf & _
+                                    ElementLines(i).Split(";")(1) & vbCrLf & "MW: " & ElementLines(i).Split(";")(3)
+            Next
+        End With
+
 
         With mycase
             .cp.VaporPressureEquation = 0
@@ -244,6 +257,8 @@ Public Class FormCompoundCreator
                 RenderSMILES()
             End If
 
+
+
             If .RegressPVAP Then rbRegressPVAP.Checked = True
             If .RegressCPIG Then rbRegressCPIG.Checked = True
             If .RegressLDENS Then rbRegressLIQDENS.Checked = True
@@ -267,6 +282,11 @@ Public Class FormCompoundCreator
             CheckBoxDGF.Checked = .CalcGF
             CheckBoxMeltingTemp.Checked = .CalcMW
             CheckBoxEnthOfFusion.Checked = .CalcEM
+
+            AtomDataGrid.Rows.Clear()
+            For i = 0 To .cp.Elements.Collection.Count - 1
+                AtomDataGrid.Rows.Add(New Object() {.cp.Elements.Collection.GetKey(i), .cp.Elements.Collection.GetByIndex(i)})
+            Next
 
             For Each it As Object In cbEqPVAP.Items
                 If it.ToString.Split(":")(0) = .cp.VaporPressureEquation Then
@@ -387,7 +407,6 @@ Public Class FormCompoundCreator
                         Me.GridJoback.Rows.Item(usgid - 1).Cells(2).Value = oc + usgc * ugc
                     End If
                 Next
-
             End If
         Next
     End Sub
@@ -517,6 +536,12 @@ Public Class FormCompoundCreator
                 If JC > 0 Then .JobackGroups.Add(New Integer() {r.Index, JC})
             Next
 
+            .cp.Elements.Collection.Clear()
+            For Each r As DataGridViewRow In Me.AtomDataGrid.Rows
+                .cp.Elements.Collection.Add(r.Cells(0).Value, r.Cells(1).Value)
+            Next
+
+
             mycase.DataPVAP.Clear()
             For Each row As DataGridViewRow In Me.GridExpDataPVAP.Rows
                 If row.Index < Me.GridExpDataPVAP.Rows.Count - 1 Then mycase.DataPVAP.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_pressure, row.Cells(1).Value)})
@@ -564,85 +589,168 @@ Public Class FormCompoundCreator
             Dim vnd As Int32() = vn.ToArray(Type.GetType("System.Int32"))
 
             'get Joback group amounts
-            Dim JC As Integer
+            Dim JC, UC, GC As Integer 'JC=UnifacGroupCount; UC=UnifacGroupCount; GC=GlobalGroupCount
             Dim JG As New ArrayList
+
 
             PureUNIFACCompound = True
             For Each r As DataGridViewRow In Me.GridJoback.Rows
                 JC = r.Cells(3).Value 'additional Joback groups
-                JG.Add(JC)
+                UC = r.Cells(2).Value 'Joback groups from UNIFAC subgoups
+                JG.Add(JC + UC)
+                GC += JC + UC
                 If JC > 0 Then PureUNIFACCompound = False
             Next
             Dim JGD As Int32() = JG.ToArray(Type.GetType("System.Int32"))
 
+            'Calculate atoms list
+            Dim ACL As New System.Collections.Generic.Dictionary(Of String, Integer) ' => Atom Count List
+            Dim Sy As String 'Element Symbol
+            Dim AC As Integer 'Atom count
+            Dim Formula As String
+            Dim SpecialDefinition As Boolean = False 'special definition -> no joback calculation possible
+
+            ACL = jb.GetAtomCountList(JGD) 'Atoms from Joback groups
+
+            'add additional atoms from datatable
+            For Each r As DataGridViewRow In Me.AddAtomDataGrid.Rows
+                Sy = r.Cells(0).Value
+                AC = r.Cells(1).Value
+                If AC > 0 Then
+                    PureUNIFACCompound = False
+                    SpecialDefinition = True
+                    If Not ACL.ContainsKey(Sy) Then
+                        ACL.Add(Sy, AC)
+                    Else
+                        ACL.Item(Sy) = ACL.Item(Sy) + AC
+                    End If
+                End If
+            Next
+
+            'add atoms from special UNIFAC groups to list where no Joback subgroup is defined -> e.g. silanes
+            Dim i, n, k, AtomCount As Integer
+            Dim s, AtomTypeCount, AtomName As String
+            For i = 2 To UNIFAClines.Length - 1
+                s = UNIFAClines(i).Split(",")(9)
+                If Not s = "" And vnd(i - 2) > 0 Then
+                    SpecialDefinition = True 
+                    n = 0
+                    For k = 0 To s.Length - 1 'count atom types in group
+                        If s.Chars(k) = "/" Then n += 1
+                    Next
+                    For k = 0 To n 'insert atoms in list
+                        AtomTypeCount = s.Split("/")(k) 'get type and count of Atom
+                        AtomName = AtomTypeCount.Split(":")(0)
+                        AtomCount = AtomTypeCount.Split(":")(1) * vnd(i - 2)
+
+                        If Not ACL.ContainsKey(AtomName) Then
+                            ACL.Add(AtomName, AtomCount)
+                        Else
+                            ACL.Item(AtomName) = ACL.Item(AtomName) + AtomCount
+                        End If
+                    Next
+                End If
+            Next
+
+            'Calculation of chemical formula
+            Me.AtomDataGrid.Rows.Clear()
+            Formula = ""
+
+            For Each A As String In ACL.Keys
+                Formula = Formula & A
+                AC = ACL.Item(A)
+                If AC > 1 Then Formula = Formula & AC
+                Me.AtomDataGrid.Rows.Add(New Object() {A, AC})
+            Next
+
+            Me.TextBoxFormula.Text = Formula
+
             Dim Tb, Tc, Pc, Vc, MM, w, Hvb, MP, Hf As Double
 
-            Tb = jb.CalcTb(vnd, JGD)
-            If CheckBoxNBP.Checked Then Me.TextBoxNBP.Text = cv.ConverterDoSI(su.spmp_temperature, Tb)
-            Tb = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxNBP.Text)
+            If ACL.Count > 0 Then
+                MM = jb.CalcMW(ACL)
+                If CheckBoxMW.Checked Then Me.TextBoxMW.Text = MM
+                MM = Me.TextBoxMW.Text
+            Else
+                If CheckBoxMW.Checked Then Me.TextBoxMW.Text = ""
+            End If
 
-            MM = jb.CalcMW(vnd, JGD)
-            If CheckBoxMW.Checked Then Me.TextBoxMW.Text = MM
-            MM = Me.TextBoxMW.Text
+            If GC > 0 And Not SpecialDefinition Then
+                Tb = jb.CalcTb(JGD)
+                If CheckBoxNBP.Checked Then Me.TextBoxNBP.Text = cv.ConverterDoSI(su.spmp_temperature, Tb)
+                Tb = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxNBP.Text)
 
-            Tc = jb.CalcTc(Tb, vnd, JGD)
-            If CheckBoxTc.Checked Then Me.TextBoxTc.Text = cv.ConverterDoSI(su.spmp_temperature, Tc)
-            Tc = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxTc.Text)
 
-            Pc = jb.CalcPc(vnd, JGD)
-            If CheckBoxPc.Checked Then Me.TextBoxPc.Text = cv.ConverterDoSI(su.spmp_pressure, Pc)
-            Pc = cv.ConverterParaSI(su.spmp_pressure, Me.TextBoxPc.Text)
+                Tc = jb.CalcTc(Tb, JGD)
+                If CheckBoxTc.Checked Then Me.TextBoxTc.Text = cv.ConverterDoSI(su.spmp_temperature, Tc)
+                Tc = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxTc.Text)
 
-            Vc = jb.CalcVc(vnd, JGD)
-            If CheckBoxZc.Checked Then Me.TextBoxZc.Text = Pc * Vc / Tc / 8.314 / 1000
-            If CheckBoxZRa.Checked Then Me.TextBoxZRa.Text = Pc * Vc / Tc / 8.314 / 1000
+                Pc = jb.CalcPc(JGD)
+                If CheckBoxPc.Checked Then Me.TextBoxPc.Text = cv.ConverterDoSI(su.spmp_pressure, Pc)
+                Pc = cv.ConverterParaSI(su.spmp_pressure, Me.TextBoxPc.Text)
 
-            w = (-Math.Log(Pc / 100000) - 5.92714 + 6.09648 / (Tb / Tc) + 1.28862 * Math.Log(Tb / Tc) - 0.169347 * (Tb / Tc) ^ 6) / (15.2518 - 15.6875 / (Tb / Tc) - 13.4721 * Math.Log(Tb / Tc) + 0.43577 * (Tb / Tc) ^ 6)
+                Vc = jb.CalcVc(JGD)
+                If CheckBoxZc.Checked Then Me.TextBoxZc.Text = Pc * Vc / Tc / 8.314 / 1000
+                If CheckBoxZRa.Checked Then Me.TextBoxZRa.Text = Pc * Vc / Tc / 8.314 / 1000
 
-            If CheckBoxAF.Checked Then Me.TextBoxAF.Text = w
-            w = Me.TextBoxAF.Text
+                w = (-Math.Log(Pc / 100000) - 5.92714 + 6.09648 / (Tb / Tc) + 1.28862 * Math.Log(Tb / Tc) - 0.169347 * (Tb / Tc) ^ 6) / (15.2518 - 15.6875 / (Tb / Tc) - 13.4721 * Math.Log(Tb / Tc) + 0.43577 * (Tb / Tc) ^ 6)
+                If CheckBoxAF.Checked Then Me.TextBoxAF.Text = w
+                w = Me.TextBoxAF.Text
 
-            If CheckBoxDHF.Checked Then Me.TextBoxDHF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDHf(vnd, JGD) / MM)
-            Hvb = methods.DHvb_Vetere(Tc, Pc, Tb) / MM
-            If CheckBoxDGF.Checked Then Me.TextBoxDGF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDGf(vnd, JGD) / MM)
-            If CheckBoxCSAF.Checked Then Me.TextBoxCSAF.Text = w
-            If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = ((Hvb * MM - 8.314 * Tb) * 238.846 * methods2.liq_dens_rackett(Tb, Tc, Pc, w, MM) / MM / 1000000.0) ^ 0.5
-            If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = 1 / methods2.liq_dens_rackett(Tb, Tc, Pc, w, MM) * MM / 1000 * 1000000.0
+                If CheckBoxDHF.Checked Then Me.TextBoxDHF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDHf(JGD) / MM)
+                Hvb = methods.DHvb_Vetere(Tc, Pc, Tb) / MM
 
-            If rbEstimateCPIG.Checked Then
-                Dim result As Object = RegressData(1, True)
-                With mycase.cp
-                    .IdealgasCpEquation = 5
+                If CheckBoxDGF.Checked Then Me.TextBoxDGF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDGf(JGD) / MM)
+                If CheckBoxCSAF.Checked Then Me.TextBoxCSAF.Text = w
+                If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = ((Hvb * MM - 8.314 * Tb) * 238.846 * methods2.liq_dens_rackett(Tb, Tc, Pc, w, MM) / MM / 1000000.0) ^ 0.5
+                If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = 1 / methods2.liq_dens_rackett(Tb, Tc, Pc, w, MM) * MM / 1000 * 1000000.0
+
+                'melting data
+                MP = jb.CalcTf(JGD) 'melting temperature -> temperature of fusion
+                If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, MP)
+
+                'enthalpy of fusion
+                Hf = jb.CalcHf(JGD)
+                If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = cv.ConverterDoSI(su.spmp_enthalpy, Hf / MM)
+
+                If rbEstimateCPIG.Checked Then
+                    Dim result As Object = RegressData(1, True)
 
                     For Each it As Object In cbEqCPIG.Items
-                        If it.ToString.Split(":")(0) = .IdealgasCpEquation Then
+                        If it.ToString.Split(":")(0) = 5 Then
                             cbEqCPIG.SelectedIndex = cbEqCPIG.Items.IndexOf(it)
                             Exit For
                         End If
                     Next
 
-                    .Ideal_Gas_Heat_Capacity_Const_A = result(0)(0) * 1000
-                    .Ideal_Gas_Heat_Capacity_Const_B = result(0)(1) * 1000
-                    .Ideal_Gas_Heat_Capacity_Const_C = result(0)(2) * 1000
-                    .Ideal_Gas_Heat_Capacity_Const_D = result(0)(3) * 1000
-                    .Ideal_Gas_Heat_Capacity_Const_E = result(0)(4) * 1000
-
-                    tbCPIG_A.Text = .Ideal_Gas_Heat_Capacity_Const_A
-                    tbCPIG_B.Text = .Ideal_Gas_Heat_Capacity_Const_B
-                    tbCPIG_C.Text = .Ideal_Gas_Heat_Capacity_Const_C
-                    tbCPIG_D.Text = .Ideal_Gas_Heat_Capacity_Const_D
-                    tbCPIG_E.Text = .Ideal_Gas_Heat_Capacity_Const_E
-
-                End With
+                    tbCPIG_A.Text = result(0)(0) * 1000
+                    tbCPIG_B.Text = result(0)(1) * 1000
+                    tbCPIG_C.Text = result(0)(2) * 1000
+                    tbCPIG_D.Text = result(0)(3) * 1000
+                    tbCPIG_E.Text = result(0)(4) * 1000
+                End If
+            Else
+                If CheckBoxNBP.Checked Then Me.TextBoxNBP.Text = ""
+                If CheckBoxTc.Checked Then Me.TextBoxTc.Text = ""
+                If CheckBoxPc.Checked Then Me.TextBoxPc.Text = ""
+                If CheckBoxZc.Checked Then Me.TextBoxZc.Text = ""
+                If CheckBoxZRa.Checked Then Me.TextBoxZRa.Text = ""
+                If CheckBoxAF.Checked Then Me.TextBoxAF.Text = ""
+                If CheckBoxDHF.Checked Then Me.TextBoxDHF.Text = ""
+                If CheckBoxDGF.Checked Then Me.TextBoxDGF.Text = ""
+                If CheckBoxCSAF.Checked Then Me.TextBoxCSAF.Text = ""
+                If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = ""
+                If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = ""
+                If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = ""
+                If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = ""
+                If rbEstimateCPIG.Checked Then
+                    tbCPIG_A.Text = ""
+                    tbCPIG_B.Text = ""
+                    tbCPIG_C.Text = ""
+                    tbCPIG_D.Text = ""
+                    tbCPIG_E.Text = ""
+                End If
             End If
-
-            'melting data
-            MP = jb.CalcTf(vnd, JGD) 'melting temperature -> temperature of fusion
-            If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, MP)
-
-            'enthalpy of fusion
-            Hf = jb.CalcHf(vnd, JGD)
-            If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = cv.ConverterDoSI(su.spmp_enthalpy, Hf / MM)
 
             loaded = True 'reset old status
         End If
@@ -675,7 +783,7 @@ Public Class FormCompoundCreator
         BothSaveStatusModified(sender, e)
     End Sub
 
-    Private Sub GridJoback_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridJoback.CellValueChanged
+    Private Sub Grid_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridJoback.CellValueChanged, AddAtomDataGrid.CellValueChanged
         If loaded Then
             CalcJobackParams()
             BothSaveStatusModified(sender, e)
@@ -758,30 +866,21 @@ Public Class FormCompoundCreator
                 n_pv = obj(3)
             Case 1
                 If calcular Then
-                    'get group amounts
-                    Dim vn As New ArrayList
-                    For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
-                        If Not r.Cells(0).Value Is Nothing Then
-                            vn.Add(Integer.Parse(r.Cells(0).Value))
-                        Else
-                            vn.Add(0)
-                        End If
-                    Next
-                    Dim vnd As Int32() = vn.ToArray(Type.GetType("System.Int32"))
                     'get Joback group amounts
-                    Dim JC As Integer
+                    Dim JC, UC As Integer
                     Dim JG As New ArrayList
 
                     For Each r As DataGridViewRow In Me.GridJoback.Rows
                         JC = r.Cells(3).Value 'additional Joback groups
-                        JG.Add(JC)
+                        UC = r.Cells(2).Value 'Joback groups from UNIFAC subgoups
+                        JG.Add(JC + UC)
                     Next
                     Dim JGD As Int32() = JG.ToArray(Type.GetType("System.Int32"))
 
-                    c_cp(0) = Me.jb.CalcCpA(vnd, JGD)
-                    c_cp(1) = Me.jb.CalcCpB(vnd, JGD)
-                    c_cp(2) = Me.jb.CalcCpC(vnd, JGD)
-                    c_cp(3) = Me.jb.CalcCpD(vnd, JGD)
+                    c_cp(0) = Me.jb.CalcCpA(JGD)
+                    c_cp(1) = Me.jb.CalcCpB(JGD)
+                    c_cp(2) = Me.jb.CalcCpC(JGD)
+                    c_cp(3) = Me.jb.CalcCpD(JGD)
                     obj = New Integer() {0, 0, 0, 10}
                 Else
                     'regressão dos dados
@@ -1522,11 +1621,7 @@ Public Class FormCompoundCreator
     End Sub
 
     Private Sub FormCompoundCreator_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Shown
-
         loaded = True
-
-        UpdateUnits()
-
     End Sub
 
     Private Sub cbUnits_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cbUnits.SelectedIndexChanged
@@ -1707,7 +1802,4 @@ End Class
     Public DataCPIG As New ArrayList
     Public DataLVISC As New ArrayList
     Public DataLDENS As New ArrayList
-
-
-
 End Class

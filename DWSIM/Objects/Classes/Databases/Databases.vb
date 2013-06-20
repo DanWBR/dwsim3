@@ -782,11 +782,20 @@ Namespace DWSIM.Databases
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "PC_SAFT_sigma", "")).InnerText = comp.PC_SAFT_sigma.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "PC_SAFT_m", "")).InnerText = comp.PC_SAFT_m.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "PC_SAFT_epsilon_k", "")).InnerText = comp.PC_SAFT_epsilon_k.ToString(cult)
+
                     With .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "UNIFAC", ""))
                         For Each kvp As DictionaryEntry In comp.UNIFACGroups.Collection
                             .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "", "UNIFACGroup", "")).InnerText = kvp.Value
                             .ChildNodes(.ChildNodes.Count - 1).Attributes.Append(xmldoc.CreateAttribute("name"))
                             .ChildNodes(.ChildNodes.Count - 1).Attributes("name").Value = kvp.Key
+                        Next
+                    End With
+
+                    With .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "elements", ""))
+                        For Each el As DictionaryEntry In comp.Elements.Collection
+                            .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "", "element", "")).InnerText = el.Value
+                            .ChildNodes(.ChildNodes.Count - 1).Attributes.Append(xmldoc.CreateAttribute("name"))
+                            .ChildNodes(.ChildNodes.Count - 1).Attributes("name").Value = el.Key
                         Next
                     End With
                 End With

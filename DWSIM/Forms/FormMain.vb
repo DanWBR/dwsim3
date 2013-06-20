@@ -3475,8 +3475,8 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                     x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
                     objStreamWriter.Close()
                     CType(Me.ActiveMdiChild, FormCompoundCreator).SetCompCreatorSaveStatus(True)
-                    Me.filename = Me.SaveStudyDlg.FileName
-                    Me.ActiveMdiChild.Text = Me.filename
+                    Me.filename = filename
+                    Me.ActiveMdiChild.Text = filename
                 End If
             ElseIf TypeOf Me.ActiveMdiChild Is FormDataRegression Then
                 If Me.SaveRegStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
