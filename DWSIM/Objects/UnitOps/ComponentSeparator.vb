@@ -20,6 +20,7 @@ Imports Microsoft.MSDN.Samples.GraphicObjects
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.SimulationObjects.Streams
 Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary
 
@@ -99,7 +100,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected _streamindex As Byte = 0
 
         Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
-            Return MyBase.LoadData(data)
+
+            MyBase.LoadData(data)
+
+            Me.ComponentSepSpecs = New Dictionary(Of String, ComponentSeparationSpec)
+
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "SeparationSpecs").SingleOrDefault.Elements.ToList
+                Dim spec As New ComponentSeparationSpec With {.ComponentID = xel.@CompID, .SepSpec = [Enum].Parse(Type.GetType("DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SeparationSpec"), xel.@SepSpec), .SpecUnit = xel.@SpecUnit, .SpecValue = xel.@SpecValue}
+                _compsepspeccollection.Add(xel.@ID, spec)
+            Next
+
         End Function
 
         Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
