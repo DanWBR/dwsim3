@@ -28,8 +28,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Inherits FlashAlgorithm
 
-        Private _io As New BostonBrittInsideOut
-
         Dim i, j, k, n, ecount As Integer
         Dim etol As Double = 0.000001
         Dim itol As Double = 0.000001
@@ -52,6 +50,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             d1 = Date.Now
 
             ' try a two-phase flash first.
+
+            Dim _io As New BostonBrittInsideOut
 
             Dim result As Object = _io.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
 
@@ -100,7 +100,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     ' liquid phase NOT stable. proceed to three-phase flash.
 
                     Dim vx2est(UBound(Vz)) As Double
-                    Dim m As Double = UBound(stresult(1), 1)
+                    Dim m As Integer = UBound(stresult(1), 1)
                     Dim gl, hl, sl, gv, hv, sv, gli As Double
 
                     If StabSearchSeverity = 2 Then
@@ -196,6 +196,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim d1, d2 As Date, dt As TimeSpan
 
             d1 = Date.Now
+
+            Dim _io As New BostonBrittInsideOut
+
 
             Dim result As Object = _io.Flash_PH(Vz, P, H, Tref, PP, ReuseKI, PrevKi)
 
@@ -327,6 +330,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             d1 = Date.Now
 
+            Dim _io As New BostonBrittInsideOut
+
             Dim result As Object = _io.Flash_PS(Vz, P, S, Tref, PP, ReuseKI, PrevKi)
 
             If result(0) > 0 Then
@@ -457,6 +462,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             d1 = Date.Now
 
+            Dim _io As New BostonBrittInsideOut
+
             Dim result As Object = _io.Flash_TV(Vz, T, V, Pref, PP, ReuseKI, PrevKi)
 
             If result(0) > 0 Then
@@ -555,6 +562,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim d1, d2 As Date, dt As TimeSpan
 
             d1 = Date.Now
+
+            Dim _io As New BostonBrittInsideOut
 
             Dim result As Object = _io.Flash_PV(Vz, P, V, Tref, PP, ReuseKI, PrevKi)
 

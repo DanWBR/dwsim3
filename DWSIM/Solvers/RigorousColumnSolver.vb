@@ -1750,7 +1750,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 Dim tmp(ns) As Object
 
                 If doparallel Then
-                    My.Application.IsRunningParallelTasks = True
+                    My.MyApplication.IsRunningParallelTasks = True
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  If llextr Then
@@ -1769,7 +1769,7 @@ restart:            fx = Me.FunctionValue(xvar)
                         Next
                         Kbj_ant(i) = Kbj(i)
                     Next
-                    My.Application.IsRunningParallelTasks = False
+                    My.MyApplication.IsRunningParallelTasks = False
                 Else
                     For i = 0 To ns
                         If llextr Then
@@ -1819,7 +1819,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 'update A/B/C/D/E/F
 
                 If doparallel Then
-                    My.Application.IsRunningParallelTasks = True
+                    My.MyApplication.IsRunningParallelTasks = True
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  'new Ks
@@ -1834,7 +1834,7 @@ restart:            fx = Me.FunctionValue(xvar)
                             If Double.IsNaN(K2(i)(j)) Or Double.IsInfinity(K2(i)(j)) Then K2(i)(j) = pp.AUX_PVAPi(j, Tj(i)) / P(i)
                         Next
                     Next
-                    My.Application.IsRunningParallelTasks = False
+                    My.MyApplication.IsRunningParallelTasks = False
                 Else
                     For i = 0 To ns
 
@@ -1850,7 +1850,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 End If
 
                 If doparallel Then
-                    My.Application.IsRunningParallelTasks = True
+                    My.MyApplication.IsRunningParallelTasks = True
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  'enthalpies
@@ -1867,7 +1867,7 @@ restart:            fx = Me.FunctionValue(xvar)
                     While Not task1.IsCompleted
                         Application.DoEvents()
                     End While
-                    My.Application.IsRunningParallelTasks = False
+                    My.MyApplication.IsRunningParallelTasks = False
                 Else
                     For i = 0 To ns
 
@@ -2057,7 +2057,7 @@ restart:            fx = Me.FunctionValue(xvar)
             Next
 
             If doparallel Then
-                My.Application.IsRunningParallelTasks = True
+                My.MyApplication.IsRunningParallelTasks = True
                 Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                          Sub(ipar)
                                                              Hl(ipar) = pp.DW_CalcEnthalpy(x(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(x(ipar)) / 1000
@@ -2066,7 +2066,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 While Not task1.IsCompleted
                     Application.DoEvents()
                 End While
-                My.Application.IsRunningParallelTasks = False
+                My.MyApplication.IsRunningParallelTasks = False
             Else
                 For i = 0 To ns
                     CheckCalculatorStatus()
@@ -2175,7 +2175,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 'tomich
                 If doparallel Then
-                    My.Application.IsRunningParallelTasks = True
+                    My.MyApplication.IsRunningParallelTasks = True
                     Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, nc, poptions,
                                                              Sub(ipar)
                                                                  xt(ipar) = Tomich.TDMASolve(at(ipar), bt(ipar), ct(ipar), dt(ipar))
@@ -2183,7 +2183,7 @@ restart:            fx = Me.FunctionValue(xvar)
                     While Not t1.IsCompleted
                         Application.DoEvents()
                     End While
-                    My.Application.IsRunningParallelTasks = False
+                    My.MyApplication.IsRunningParallelTasks = False
                 Else
                     For i = 0 To nc - 1
                         xt(i) = Tomich.TDMASolve(at(i), bt(i), ct(i), dt(i))
@@ -2225,7 +2225,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 Next
 
                 If doparallel Then
-                    My.Application.IsRunningParallelTasks = True
+                    My.MyApplication.IsRunningParallelTasks = True
                     Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  Dim tmpvar As Object = pp.DW_CalcBubT(xc(ipar), P(ipar), Tj(ipar), K(ipar), True)
@@ -2235,7 +2235,7 @@ restart:            fx = Me.FunctionValue(xvar)
                     While Not t1.IsCompleted
                         Application.DoEvents()
                     End While
-                    My.Application.IsRunningParallelTasks = False
+                    My.MyApplication.IsRunningParallelTasks = False
                 Else
                     For i = 0 To ns
                         CheckCalculatorStatus()
@@ -2276,7 +2276,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 ''''''''''''''''''''
 
                 If doparallel Then
-                    My.Application.IsRunningParallelTasks = True
+                    My.MyApplication.IsRunningParallelTasks = True
                     Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
@@ -2285,7 +2285,7 @@ restart:            fx = Me.FunctionValue(xvar)
                     While Not t1.IsCompleted
                         Application.DoEvents()
                     End While
-                    My.Application.IsRunningParallelTasks = False
+                    My.MyApplication.IsRunningParallelTasks = False
                 Else
                     For i = 0 To ns
                         CheckCalculatorStatus()
@@ -2634,7 +2634,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 Dim H(ns), dHldT(ns), dHvdT(ns), dHdTa(ns), dHdTb(ns), dHdTc(ns), dHl(ns), dHv(ns) As Double
 
                 If doparallel Then
-                    My.Application.IsRunningParallelTasks = True
+                    My.MyApplication.IsRunningParallelTasks = True
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
@@ -2650,7 +2650,7 @@ restart:            fx = Me.FunctionValue(xvar)
                     While Not task1.IsCompleted
                         Application.DoEvents()
                     End While
-                    My.Application.IsRunningParallelTasks = False
+                    My.MyApplication.IsRunningParallelTasks = False
                 Else
                     For i = 0 To ns
                         Hl(i) = pp.DW_CalcEnthalpy(xc(i), Tj(i), P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(i)) / 1000
@@ -2879,7 +2879,7 @@ restart:            fx = Me.FunctionValue(xvar)
             'calculate K-values
 
             If doparallel Then
-                My.Application.IsRunningParallelTasks = True
+                My.MyApplication.IsRunningParallelTasks = True
                 Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                          Sub(ipar)
                                                              Dim tmp0 As Object
@@ -2896,7 +2896,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 While Not task1.IsCompleted
                     Application.DoEvents()
                 End While
-                My.Application.IsRunningParallelTasks = False
+                My.MyApplication.IsRunningParallelTasks = False
             Else
                 Dim tmp0 As Object
                 For i = 0 To ns
@@ -2917,7 +2917,7 @@ restart:            fx = Me.FunctionValue(xvar)
             'calculate enthalpies
 
             If doparallel Then
-                My.Application.IsRunningParallelTasks = True
+                My.MyApplication.IsRunningParallelTasks = True
                 Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                          Sub(ipar)
                                                              If Vj(ipar) <> 0 Then
@@ -2938,7 +2938,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 While Not task1.IsCompleted
                     Application.DoEvents()
                 End While
-                My.Application.IsRunningParallelTasks = False
+                My.MyApplication.IsRunningParallelTasks = False
             Else
                 For i = 0 To ns
                     If Vj(i) <> 0 Then

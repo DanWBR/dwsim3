@@ -288,7 +288,7 @@ Namespace DWSIM.Flowsheet
                         End If
                     End If
                     If doparallel Then
-                        My.Application.IsRunningParallelTasks = True
+                        My.MyApplication.IsRunningParallelTasks = True
                         If My.Settings.EnableGPUProcessing Then
                             My.MyApplication.gpu.EnableMultithreading()
                         End If
@@ -387,7 +387,7 @@ Namespace DWSIM.Flowsheet
                                 My.MyApplication.gpu.FreeAll()
                             End If
                         End Try
-                        My.Application.IsRunningParallelTasks = False
+                        My.MyApplication.IsRunningParallelTasks = False
                     Else
                         If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                             .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
@@ -478,7 +478,7 @@ Namespace DWSIM.Flowsheet
                         End If
                     End If
                     If doparallel Then
-                        My.Application.IsRunningParallelTasks = True
+                        My.MyApplication.IsRunningParallelTasks = True
                         Try
                             Dim task1 As Task = New Task(Sub()
                                                              If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
@@ -569,7 +569,7 @@ Namespace DWSIM.Flowsheet
                                 Throw
                             Next
                         End Try
-                        My.Application.IsRunningParallelTasks = False
+                        My.MyApplication.IsRunningParallelTasks = False
                     Else
                         If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                             .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
@@ -969,7 +969,7 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Public Shared Sub CheckCalculatorStatus()
 
-            If Not My.Application.IsRunningParallelTasks Then
+            If Not My.MyApplication.IsRunningParallelTasks Then
                 Application.DoEvents()
                 If Not My.Application.CAPEOPENMode Then
                     If My.MyApplication.CalculatorStopRequested = True Then

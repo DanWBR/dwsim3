@@ -343,7 +343,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             x1 = Tref
             Do
                 If My.Settings.EnableParallelProcessing Then
-                    My.Application.IsRunningParallelTasks = True
+                    My.MyApplication.IsRunningParallelTasks = True
                     Try
                         Dim task1 As Task = New Task(Sub()
                                                          fx = Herror(x1, {P, Vz, PP})
@@ -359,7 +359,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                             Throw
                         Next
                     End Try
-                    My.Application.IsRunningParallelTasks = False
+                    My.MyApplication.IsRunningParallelTasks = False
                 Else
                     fx = Herror(x1, {P, Vz, PP})
                     fx2 = Herror(x1 + 1, {P, Vz, PP})
@@ -449,7 +449,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             x1 = Tref
             Do
                 If My.Settings.EnableParallelProcessing Then
-                    My.Application.IsRunningParallelTasks = True
+                    My.MyApplication.IsRunningParallelTasks = True
                     Try
                         Dim task1 As Task = New Task(Sub()
                                                          fx = Serror(x1, {P, Vz, PP})
@@ -465,7 +465,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                             Throw
                         Next
                     End Try
-                    My.Application.IsRunningParallelTasks = False
+                    My.MyApplication.IsRunningParallelTasks = False
                 Else
                     fx = Serror(x1, {P, Vz, PP})
                     fx2 = Serror(x1 + 1, {P, Vz, PP})

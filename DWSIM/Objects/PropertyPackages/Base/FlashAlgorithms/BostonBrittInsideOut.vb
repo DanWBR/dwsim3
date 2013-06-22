@@ -493,7 +493,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, Vx, 0.0#, PP.RET_Nu
             Next
 
             If My.Settings.EnableParallelProcessing Then
-                My.Application.IsRunningParallelTasks = True
+                My.MyApplication.IsRunningParallelTasks = True
                 Try
                     Dim task1 As Task = New Task(Sub()
                                                      DHv1 = PP.DW_CalcEnthalpyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
@@ -520,7 +520,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, Vx, 0.0#, PP.RET_Nu
                         Throw
                     Next
                 End Try
-                My.Application.IsRunningParallelTasks = False
+                My.MyApplication.IsRunningParallelTasks = False
             Else
                 DHv1 = PP.DW_CalcEnthalpyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
                 DHv2 = PP.DW_CalcEnthalpyDeparture(Vy, Tref, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
@@ -601,7 +601,7 @@ restart:    Do
                 Ac = Log(Kb) - Bc * (1 / T - 1 / T_)
 
                 If My.Settings.EnableParallelProcessing Then
-                    My.Application.IsRunningParallelTasks = True
+                    My.MyApplication.IsRunningParallelTasks = True
                     Try
                         Dim task1 As Task = New Task(Sub()
                                                          DHv1 = PP.DW_CalcEnthalpyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
@@ -628,7 +628,7 @@ restart:    Do
                             Throw
                         Next
                     End Try
-                    My.Application.IsRunningParallelTasks = False
+                    My.MyApplication.IsRunningParallelTasks = False
                 Else
                     DHv1 = PP.DW_CalcEnthalpyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
                     DHv2 = PP.DW_CalcEnthalpyDeparture(Vy, T0, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy) / 1000
@@ -935,7 +935,7 @@ restart:    Do
             Next
 
             If My.Settings.EnableParallelProcessing Then
-                My.Application.IsRunningParallelTasks = True
+                My.MyApplication.IsRunningParallelTasks = True
                 Try
                     Dim task1 As Task = New Task(Sub()
                                                      DSv1 = PP.DW_CalcEntropyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
@@ -962,7 +962,7 @@ restart:    Do
                         Throw
                     Next
                 End Try
-                My.Application.IsRunningParallelTasks = False
+                My.MyApplication.IsRunningParallelTasks = False
             Else
                 DSv1 = PP.DW_CalcEntropyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
                 DSv2 = PP.DW_CalcEntropyDeparture(Vy, Tref, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
@@ -1040,7 +1040,7 @@ restart:    Do
                 Ac = Log(Kb) - Bc * (1 / T - 1 / T_)
 
                 If My.Settings.EnableParallelProcessing Then
-                    My.Application.IsRunningParallelTasks = True
+                    My.MyApplication.IsRunningParallelTasks = True
                     Try
                         Dim task1 As Task = New Task(Sub()
                                                          DSv1 = PP.DW_CalcEntropyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
@@ -1067,7 +1067,7 @@ restart:    Do
                             Throw
                         Next
                     End Try
-                    My.Application.IsRunningParallelTasks = False
+                    My.MyApplication.IsRunningParallelTasks = False
                 Else
                     DSv1 = PP.DW_CalcEntropyDeparture(Vy, T, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)
                     DSv2 = PP.DW_CalcEntropyDeparture(Vy, T0, P, PropertyPackages.State.Vapor) * PP.AUX_MMM(Vy)

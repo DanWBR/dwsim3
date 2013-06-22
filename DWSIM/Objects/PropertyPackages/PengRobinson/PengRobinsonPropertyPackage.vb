@@ -859,7 +859,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim TCR, PCR, VCR As Double
             Dim CP As New ArrayList
 
-            My.Application.IsRunningParallelTasks = True
+            My.MyApplication.IsRunningParallelTasks = True
 
             Dim tasks(4) As task
 
