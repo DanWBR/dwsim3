@@ -24,10 +24,10 @@ Partial Class FormDataRegression
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormDataRegression))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.tbRegResults = New System.Windows.Forms.TextBox()
         Me.btnDoReg = New System.Windows.Forms.Button()
@@ -46,7 +46,7 @@ Partial Class FormDataRegression
         Me.cbTunit = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.chkIncludeSD = New System.Windows.Forms.CheckBox()
-        Me.btnAdvConfig = New System.Windows.Forms.Button()
+        Me.btnCalcOnce = New System.Windows.Forms.Button()
         Me.cbObjFunc = New System.Windows.Forms.ComboBox()
         Me.LabelWithDivider12 = New System.Windows.Forms.LabelWithDivider()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -145,7 +145,7 @@ Partial Class FormDataRegression
         'btnDoReg
         '
         resources.ApplyResources(Me.btnDoReg, "btnDoReg")
-        Me.btnDoReg.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.btnDoReg.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.btnDoReg.Name = "btnDoReg"
         Me.btnDoReg.UseVisualStyleBackColor = True
         '
@@ -170,7 +170,7 @@ Partial Class FormDataRegression
         Me.Panel1.Controls.Add(Me.cbTunit)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.chkIncludeSD)
-        Me.Panel1.Controls.Add(Me.btnAdvConfig)
+        Me.Panel1.Controls.Add(Me.btnCalcOnce)
         Me.Panel1.Controls.Add(Me.cbObjFunc)
         Me.Panel1.Controls.Add(Me.LabelWithDivider12)
         Me.Panel1.Controls.Add(Me.Label7)
@@ -194,28 +194,28 @@ Partial Class FormDataRegression
         'chkIdealVaporPhase
         '
         resources.ApplyResources(Me.chkIdealVaporPhase, "chkIdealVaporPhase")
-        Me.chkIdealVaporPhase.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkIdealVaporPhase.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.chkIdealVaporPhase.Name = "chkIdealVaporPhase"
         Me.chkIdealVaporPhase.UseVisualStyleBackColor = True
         '
         'Button2
         '
         resources.ApplyResources(Me.Button2, "Button2")
-        Me.Button2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button2.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Button2.Name = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Label9
         '
         resources.ApplyResources(Me.Label9, "Label9")
-        Me.Label9.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label9.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label9.Name = "Label9"
         '
         'gridInEst
@@ -224,8 +224,8 @@ Partial Class FormDataRegression
         Me.gridInEst.AllowUserToAddRows = False
         Me.gridInEst.AllowUserToDeleteRows = False
         Me.gridInEst.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.gridInEst.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.gridInEst.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
         Me.gridInEst.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridInEst.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridInEst.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colpar, Me.colval})
@@ -238,21 +238,21 @@ Partial Class FormDataRegression
         Me.colpar.Name = "colpar"
         Me.colpar.ReadOnly = True
         Me.colpar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.colpar.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.colpar.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'colval
         '
-        DataGridViewCellStyle2.Format = "N4"
-        Me.colval.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.Format = "N4"
+        Me.colval.DefaultCellStyle = DataGridViewCellStyle6
         resources.ApplyResources(Me.colval, "colval")
         Me.colval.Name = "colval"
         Me.colval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.colval.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.colval.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'btnCancel
         '
         resources.ApplyResources(Me.btnCancel, "btnCancel")
-        Me.btnCancel.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.btnCancel.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.UseVisualStyleBackColor = True
         '
@@ -267,7 +267,7 @@ Partial Class FormDataRegression
         'Label8
         '
         resources.ApplyResources(Me.Label8, "Label8")
-        Me.Label8.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label8.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label8.Name = "Label8"
         '
         'cbTunit
@@ -281,22 +281,22 @@ Partial Class FormDataRegression
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label1.Name = "Label1"
         '
         'chkIncludeSD
         '
         resources.ApplyResources(Me.chkIncludeSD, "chkIncludeSD")
-        Me.chkIncludeSD.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkIncludeSD.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.chkIncludeSD.Name = "chkIncludeSD"
         Me.chkIncludeSD.UseVisualStyleBackColor = True
         '
-        'btnAdvConfig
+        'btnCalcOnce
         '
-        resources.ApplyResources(Me.btnAdvConfig, "btnAdvConfig")
-        Me.btnAdvConfig.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
-        Me.btnAdvConfig.Name = "btnAdvConfig"
-        Me.btnAdvConfig.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.btnCalcOnce, "btnCalcOnce")
+        Me.btnCalcOnce.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.btnCalcOnce.Name = "btnCalcOnce"
+        Me.btnCalcOnce.UseVisualStyleBackColor = True
         '
         'cbObjFunc
         '
@@ -310,19 +310,19 @@ Partial Class FormDataRegression
         '
         resources.ApplyResources(Me.LabelWithDivider12, "LabelWithDivider12")
         Me.LabelWithDivider12.Gap = 5
-        Me.LabelWithDivider12.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.LabelWithDivider12.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.LabelWithDivider12.Name = "LabelWithDivider12"
         '
         'Label7
         '
         resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label7.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label7.Name = "Label7"
         '
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label2.Name = "Label2"
         '
         'cbRegMethod
@@ -336,13 +336,13 @@ Partial Class FormDataRegression
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label3.Name = "Label3"
         '
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label6.Name = "Label6"
         '
         'cbCompound1
@@ -356,20 +356,20 @@ Partial Class FormDataRegression
         '
         resources.ApplyResources(Me.LabelWithDivider3, "LabelWithDivider3")
         Me.LabelWithDivider3.Gap = 5
-        Me.LabelWithDivider3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.LabelWithDivider3.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.LabelWithDivider3.Name = "LabelWithDivider3"
         '
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label4.Name = "Label4"
         '
         'GridExpData
         '
         resources.ApplyResources(Me.GridExpData, "GridExpData")
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpData.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle7.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpData.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle7
         Me.GridExpData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpData.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colx1, Me.colx2, Me.coly1, Me.colT, Me.colP})
@@ -396,13 +396,13 @@ Partial Class FormDataRegression
         '
         resources.ApplyResources(Me.colT, "colT")
         Me.colT.Name = "colT"
-        Me.colT.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.colT.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'colP
         '
         resources.ApplyResources(Me.colP, "colP")
         Me.colP.Name = "colP"
-        Me.colP.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.colP.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'ContextMenuStrip1
         '
@@ -478,21 +478,21 @@ Partial Class FormDataRegression
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label5.Name = "Label5"
         '
         'LabelWithDivider1
         '
         resources.ApplyResources(Me.LabelWithDivider1, "LabelWithDivider1")
         Me.LabelWithDivider1.Gap = 5
-        Me.LabelWithDivider1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.LabelWithDivider1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.LabelWithDivider1.Name = "LabelWithDivider1"
         '
         'LabelWithDivider2
         '
         resources.ApplyResources(Me.LabelWithDivider2, "LabelWithDivider2")
         Me.LabelWithDivider2.Gap = 5
-        Me.LabelWithDivider2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.LabelWithDivider2.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.LabelWithDivider2.Name = "LabelWithDivider2"
         '
         'graph
@@ -525,7 +525,7 @@ Partial Class FormDataRegression
         'Label11
         '
         resources.ApplyResources(Me.Label11, "Label11")
-        Me.Label11.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label11.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label11.Name = "Label11"
         '
         'tbTitle
@@ -536,7 +536,7 @@ Partial Class FormDataRegression
         'Label10
         '
         resources.ApplyResources(Me.Label10, "Label10")
-        Me.Label10.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label10.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label10.Name = "Label10"
         '
         'FaTabStrip1
@@ -588,8 +588,8 @@ Partial Class FormDataRegression
         'gridstats
         '
         resources.ApplyResources(Me.gridstats, "gridstats")
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.gridstats.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.gridstats.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
         Me.gridstats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridstats.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.gridstats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -610,7 +610,7 @@ Partial Class FormDataRegression
         resources.ApplyResources(Me.x1l1calc, "x1l1calc")
         Me.x1l1calc.Name = "x1l1calc"
         Me.x1l1calc.ReadOnly = True
-        Me.x1l1calc.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.x1l1calc.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'x1l2
         '
@@ -623,7 +623,7 @@ Partial Class FormDataRegression
         resources.ApplyResources(Me.x1l2calc, "x1l2calc")
         Me.x1l2calc.Name = "x1l2calc"
         Me.x1l2calc.ReadOnly = True
-        Me.x1l2calc.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.x1l2calc.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'y1
         '
@@ -636,140 +636,140 @@ Partial Class FormDataRegression
         resources.ApplyResources(Me.y1c, "y1c")
         Me.y1c.Name = "y1c"
         Me.y1c.ReadOnly = True
-        Me.y1c.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.y1c.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         't
         '
         resources.ApplyResources(Me.t, "t")
         Me.t.Name = "t"
         Me.t.ReadOnly = True
-        Me.t.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.t.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'tcalc
         '
         resources.ApplyResources(Me.tcalc, "tcalc")
         Me.tcalc.Name = "tcalc"
         Me.tcalc.ReadOnly = True
-        Me.tcalc.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.tcalc.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'p
         '
         resources.ApplyResources(Me.p, "p")
         Me.p.Name = "p"
         Me.p.ReadOnly = True
-        Me.p.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.p.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'pcalc
         '
         resources.ApplyResources(Me.pcalc, "pcalc")
         Me.pcalc.Name = "pcalc"
         Me.pcalc.ReadOnly = True
-        Me.pcalc.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.pcalc.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dy
         '
         resources.ApplyResources(Me.dy, "dy")
         Me.dy.Name = "dy"
         Me.dy.ReadOnly = True
-        Me.dy.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dy.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dyy
         '
         resources.ApplyResources(Me.dyy, "dyy")
         Me.dyy.Name = "dyy"
         Me.dyy.ReadOnly = True
-        Me.dyy.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dyy.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dyp
         '
         resources.ApplyResources(Me.dyp, "dyp")
         Me.dyp.Name = "dyp"
         Me.dyp.ReadOnly = True
-        Me.dyp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dyp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dp
         '
         resources.ApplyResources(Me.dp, "dp")
         Me.dp.Name = "dp"
         Me.dp.ReadOnly = True
-        Me.dp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dpp
         '
         resources.ApplyResources(Me.dpp, "dpp")
         Me.dpp.Name = "dpp"
         Me.dpp.ReadOnly = True
-        Me.dpp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dpp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dppp
         '
         resources.ApplyResources(Me.dppp, "dppp")
         Me.dppp.Name = "dppp"
         Me.dppp.ReadOnly = True
-        Me.dppp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dppp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dt
         '
         resources.ApplyResources(Me.dt, "dt")
         Me.dt.Name = "dt"
         Me.dt.ReadOnly = True
-        Me.dt.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dt.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dtt
         '
         resources.ApplyResources(Me.dtt, "dtt")
         Me.dtt.Name = "dtt"
         Me.dtt.ReadOnly = True
-        Me.dtt.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dtt.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dttp
         '
         resources.ApplyResources(Me.dttp, "dttp")
         Me.dttp.Name = "dttp"
         Me.dttp.ReadOnly = True
-        Me.dttp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dttp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dx1l1
         '
         resources.ApplyResources(Me.dx1l1, "dx1l1")
         Me.dx1l1.Name = "dx1l1"
         Me.dx1l1.ReadOnly = True
-        Me.dx1l1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dx1l1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dxx1
         '
         resources.ApplyResources(Me.dxx1, "dxx1")
         Me.dxx1.Name = "dxx1"
         Me.dxx1.ReadOnly = True
-        Me.dxx1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dxx1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dxxp
         '
         resources.ApplyResources(Me.dxxp, "dxxp")
         Me.dxxp.Name = "dxxp"
         Me.dxxp.ReadOnly = True
-        Me.dxxp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dxxp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dx2
         '
         resources.ApplyResources(Me.dx2, "dx2")
         Me.dx2.Name = "dx2"
         Me.dx2.ReadOnly = True
-        Me.dx2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dx2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dxx2
         '
         resources.ApplyResources(Me.dxx2, "dxx2")
         Me.dxx2.Name = "dxx2"
         Me.dxx2.ReadOnly = True
-        Me.dxx2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dxx2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'dxx2p
         '
         resources.ApplyResources(Me.dxx2p, "dxx2p")
         Me.dxx2p.Name = "dxx2p"
         Me.dxx2p.ReadOnly = True
-        Me.dxx2p.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.dxx2p.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'FormDataRegression
         '
@@ -822,7 +822,7 @@ Partial Class FormDataRegression
     Public WithEvents GridExpData As System.Windows.Forms.DataGridView
     Friend WithEvents graph As ZedGraph.ZedGraphControl
     Friend WithEvents tbRegResults As System.Windows.Forms.TextBox
-    Friend WithEvents btnAdvConfig As System.Windows.Forms.Button
+    Friend WithEvents btnCalcOnce As System.Windows.Forms.Button
     Friend WithEvents chkIncludeSD As System.Windows.Forms.CheckBox
     Friend WithEvents cbPunit As System.Windows.Forms.ComboBox
     Friend WithEvents Label8 As System.Windows.Forms.Label

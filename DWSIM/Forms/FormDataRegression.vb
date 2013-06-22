@@ -151,16 +151,16 @@ Public Class FormDataRegression
                     gridInEst.Rows.Add(New Object() {"kij", .iepar1})
                 Case "UNIQUAC"
                     gridInEst.Rows.Clear()
-                    gridInEst.Rows.Add(New Object() {"A12", .iepar1})
-                    gridInEst.Rows.Add(New Object() {"A21", .iepar2})
+                    gridInEst.Rows.Add(New Object() {"A12 (cal/mol)", .iepar1})
+                    gridInEst.Rows.Add(New Object() {"A21 (cal/mol)", .iepar2})
                 Case "PRSV2-M", "PRSV2-VL"
                     gridInEst.Rows.Clear()
                     gridInEst.Rows.Add(New Object() {"kij", .iepar1})
                     gridInEst.Rows.Add(New Object() {"kji", .iepar2})
                 Case "NRTL"
                     gridInEst.Rows.Clear()
-                    gridInEst.Rows.Add(New Object() {"A12", .iepar1})
-                    gridInEst.Rows.Add(New Object() {"A21", .iepar2})
+                    gridInEst.Rows.Add(New Object() {"A12 (cal/mol)", .iepar1})
+                    gridInEst.Rows.Add(New Object() {"A21 (cal/mol)", .iepar2})
                     gridInEst.Rows.Add(New Object() {"alpha12", .iepar3})
             End Select
             Me.chkIncludeSD.Checked = .includesd
@@ -629,7 +629,7 @@ Public Class FormDataRegression
                                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                              Sub(ipar)
                                                                                  Dim result2 As Object
-                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
+                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {(Vx1(ipar) + Vx2(ipar)) / 2, 1 - (Vx1(ipar) + Vx2(ipar)) / 2}, VP(0), VT(ipar), proppack)
                                                                                  Vx1c(ipar) = result(2)(0)
                                                                                  Vx2c(ipar) = result(6)(0)
                                                                              End Sub))
@@ -648,7 +648,7 @@ Public Class FormDataRegression
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
                                 For i = 0 To np - 1
-                                    result = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(i), proppack)
+                                    result = proppack.FlashBase.Flash_PT(New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, VP(0), VT(i), proppack)
                                     Vx1c(i) = result(2)(0)
                                     Vx2c(i) = result(6)(0)
                                 Next
@@ -670,7 +670,7 @@ Public Class FormDataRegression
                                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                              Sub(ipar)
                                                                                  Dim result2 As Object
-                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
+                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {(Vx1(ipar) + Vx2(ipar)) / 2, 1 - (Vx1(ipar) + Vx2(ipar)) / 2}, VP(0), VT(ipar), proppack)
                                                                                  Vx1c(ipar) = result2(2)(0)
                                                                                  Vx2c(ipar) = result2(6)(0)
                                                                              End Sub))
@@ -690,7 +690,7 @@ Public Class FormDataRegression
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
                                 For i = 0 To np - 1
-                                    result = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(i), proppack)
+                                    result = proppack.FlashBase.Flash_PT(New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, VP(0), VT(i), proppack)
                                     Vx1c(i) = result(2)(0)
                                     Vx2c(i) = result(6)(0)
                                 Next
@@ -712,7 +712,7 @@ Public Class FormDataRegression
                                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                              Sub(ipar)
                                                                                  Dim result2 As Object
-                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
+                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {(Vx1(ipar) + Vx2(ipar)) / 2, 1 - (Vx1(ipar) + Vx2(ipar)) / 2}, VP(0), VT(ipar), proppack)
                                                                                  Vx1c(ipar) = result2(2)(0)
                                                                                  Vx2c(ipar) = result2(6)(0)
                                                                              End Sub))
@@ -731,7 +731,7 @@ Public Class FormDataRegression
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
                                 For i = 0 To np - 1
-                                    result = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(i), proppack)
+                                    result = proppack.FlashBase.Flash_PT(New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, VP(0), VT(i), proppack)
                                     Vx1c(i) = result(2)(0)
                                     Vx2c(i) = result(6)(0)
                                 Next
@@ -754,7 +754,7 @@ Public Class FormDataRegression
                                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                              Sub(ipar)
                                                                                  Dim result2 As Object
-                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(ipar), proppack)
+                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {(Vx1(ipar) + Vx2(ipar)) / 2, 1 - (Vx1(ipar) + Vx2(ipar)) / 2}, VP(0), VT(ipar), proppack)
                                                                                  Vx1c(ipar) = result2(2)(0)
                                                                                  Vx2c(ipar) = result2(6)(0)
                                                                              End Sub))
@@ -773,7 +773,7 @@ Public Class FormDataRegression
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
                                 For i = 0 To np - 1
-                                    result = proppack.FlashBase.Flash_PT(New Double() {0.5, 0.5}, VP(0), VT(i), proppack)
+                                    result = proppack.FlashBase.Flash_PT(New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, VP(0), VT(i), proppack)
                                     Vx1c(i) = result(2)(0)
                                     Vx2c(i) = result(6)(0)
                                 Next
@@ -814,7 +814,7 @@ Public Class FormDataRegression
                     Select Case currcase.model
                         Case "PRSV2-M"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
                                 Vx1c(i) = result(2, 1)
                                 Vx2c(i) = result(2, 2)
                             Next
@@ -824,7 +824,7 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "PRSV2-VL"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
                                 Vx1c(i) = result(2, 1)
                                 Vx2c(i) = result(2, 2)
                             Next
@@ -834,7 +834,7 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "UNIQUAC"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
                                 Vx1c(i) = result(2, 1)
                                 Vx2c(i) = result(2, 2)
                             Next
@@ -844,7 +844,7 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "NRTL"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
                                 Vx1c(i) = result(2, 1)
                                 Vx2c(i) = result(2, 2)
                             Next
@@ -855,7 +855,7 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "Lee-Kesler-Plöcker"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
                                 Vx1c(i) = result(2, 1)
                                 Vx2c(i) = result(2, 2)
                             Next
@@ -866,7 +866,7 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "Peng-Robinson"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
                                 Vx1c(i) = result(2, 1)
                                 Vx2c(i) = result(2, 2)
                             Next
@@ -877,7 +877,7 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "Soave-Redlich-Kwong"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
                                 Vx1c(i) = result(2, 1)
                                 Vx2c(i) = result(2, 2)
                             Next
@@ -888,7 +888,7 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "PC-SAFT"
                             For i = 0 To np - 1
-                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {0.5, 0.5}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                                result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
                                 Vx1c(i) = result(2, 1)
                                 Vx2c(i) = result(2, 2)
                             Next
@@ -1040,6 +1040,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         cancel = False
 
         Me.btnDoReg.Enabled = False
+        Me.btnCalcOnce.Enabled = False
         Me.btnCancel.Enabled = True
 
         Try
@@ -1180,6 +1181,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
             Me.btnDoReg.Enabled = True
             Me.btnCancel.Enabled = False
+            Me.btnCalcOnce.Enabled = True
 
         End Try
 
@@ -1511,7 +1513,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                             .Symbol.Size = 5
                         Case 3
                             .Line.IsVisible = True
-                            .Line.IsSmooth = True
+                            .Line.IsSmooth = False
                             .Color = Color.Blue
                             .Symbol.IsVisible = False
                         Case 4
@@ -1580,7 +1582,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                                 .Symbol.Size = 5
                             Case 3
                                 .Line.IsVisible = True
-                                .Line.IsSmooth = True
+                                .Line.IsSmooth = False
                                 .Color = Color.LightBlue
                                 .Symbol.IsVisible = False
                             Case 4
@@ -1649,7 +1651,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                                 .Symbol.Size = 5
                             Case 3
                                 .Line.IsVisible = True
-                                .Line.IsSmooth = True
+                                .Line.IsSmooth = False
                                 .Color = Color.Red
                                 .Symbol.IsVisible = False
                             Case 4
@@ -1718,7 +1720,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                                 .Symbol.Size = 5
                             Case 3
                                 .Line.IsVisible = True
-                                .Line.IsSmooth = True
+                                .Line.IsSmooth = False
                                 .Color = Color.LightSalmon
                                 .Symbol.IsVisible = False
                             Case 4
@@ -2114,8 +2116,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "UNIQUAC"
                 With gridInEst.Rows
                     .Clear()
-                    .Add(New Object() {"A12", 0.0#})
-                    .Add(New Object() {"A21", 0.0#})
+                    .Add(New Object() {"A12 (cal/mol)", 0.0#})
+                    .Add(New Object() {"A21 (cal/mol)", 0.0#})
                 End With
                 Button1.Enabled = True
                 Button2.Enabled = True
@@ -2123,8 +2125,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "NRTL"
                 With gridInEst.Rows
                     .Clear()
-                    .Add(New Object() {"A12", 0.0#})
-                    .Add(New Object() {"A21", 0.0#})
+                    .Add(New Object() {"A12 (cal/mol)", 0.0#})
+                    .Add(New Object() {"A21 (cal/mol)", 0.0#})
                     .Add(New Object() {"alpha12", 0.3#})
                 End With
                 Button1.Enabled = True
@@ -2613,6 +2615,95 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             End Try
 
         Next
+
+    End Sub
+
+    Private Sub btnCalcOnce_Click(sender As System.Object, e As System.EventArgs) Handles btnCalcOnce.Click
+
+        cancel = False
+
+        Me.btnDoReg.Enabled = False
+        Me.btnCancel.Enabled = True
+        Me.btnCalcOnce.Enabled = False
+
+        currcase = Me.StoreCase()
+
+        Dim nvar As Integer = 0
+
+        Dim initval2() As Double = Nothing
+
+        Try
+
+            Select Case currcase.model
+                Case "PC-SAFT"
+                    initval2 = New Double() {currcase.iepar1}
+                    nvar = 1
+                Case "Peng-Robinson"
+                    initval2 = New Double() {currcase.iepar1}
+                    nvar = 1
+                Case "PRSV2-M", "PRSV2-VL"
+                    nvar = 2
+                    initval2 = New Double() {currcase.iepar1, currcase.iepar2}
+                Case "Soave-Redlich-Kwong"
+                    initval2 = New Double() {currcase.iepar1}
+                    nvar = 1
+                Case "UNIQUAC"
+                    nvar = 2
+                    initval2 = New Double() {currcase.iepar1, currcase.iepar2}
+                Case "NRTL"
+                    nvar = 3
+                    initval2 = New Double() {currcase.iepar1, currcase.iepar2, currcase.iepar3}
+                Case "Lee-Kesler-Plöcker"
+                    initval2 = New Double() {currcase.iepar1}
+                    nvar = 1
+            End Select
+
+            Me.tbRegResults.AppendText("Starting one-time calc for " & currcase.model & " model parameter estimation..." & vbCrLf)
+
+            Dim ppm As New CAPEOPENPropertyPackageManager()
+
+            Select Case currcase.model
+                Case "PC-SAFT"
+                    ppname = "PC-SAFT"
+                Case "Peng-Robinson"
+                    ppname = "Peng-Robinson (PR)"
+                Case "Soave-Redlich-Kwong"
+                    ppname = "Soave-Redlich-Kwong (SRK)"
+                Case "UNIQUAC"
+                    ppname = "UNIQUAC"
+                Case "PRSV2-M"
+                    ppname = "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)"
+                Case "PRSV2-VL"
+                    ppname = "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)"
+                Case "NRTL"
+                    ppname = "NRTL"
+                Case "Lee-Kesler-Plöcker"
+                    ppname = "Lee-Kesler-Plöcker"
+            End Select
+
+            proppack = ppm.GetPropertyPackage(ppname)
+            proppack.ComponentName = ppname
+            proppack._availablecomps = FormMain.AvailableComponents
+
+            If proppack.Parameters.ContainsKey("PP_IDEAL_VAPOR_PHASE_FUG") Then
+                proppack.Parameters("PP_IDEAL_VAPOR_PHASE_FUG") = Me.chkIdealVaporPhase.CheckState
+            End If
+
+            FunctionValue(initval2)
+
+        Catch ex As Exception
+
+            Me.tbRegResults.AppendText(ex.ToString)
+
+        Finally
+
+            currcase.results = Me.tbRegResults.Text
+
+            Me.btnDoReg.Enabled = True
+            Me.btnCancel.Enabled = False
+            Me.btnCalcOnce.Enabled = True
+
+        End Try
 
     End Sub
 

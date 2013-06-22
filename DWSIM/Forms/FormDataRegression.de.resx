@@ -120,13 +120,19 @@
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Regression Ergebnisse</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnDoReg.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 597</value>
+  </data>
+  <data name="btnDoReg.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 23</value>
+  </data>
   <data name="btnDoReg.Text" xml:space="preserve">
     <value>Regression starten</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Regression Informationen</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkIdealVaporPhase.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 133</value>
   </data>
@@ -156,6 +162,12 @@
   <data name="btnCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>233, 597</value>
+  </data>
+  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 23</value>
+  </data>
   <data name="btnCancel.Text" xml:space="preserve">
     <value>Abbruch</value>
   </data>
@@ -177,8 +189,11 @@
   <data name="chkIncludeSD.Text" xml:space="preserve">
     <value>Standardabweichungen berücksichtigen</value>
   </data>
-  <data name="btnAdvConfig.Text" xml:space="preserve">
-    <value>Fortgeschritten</value>
+  <data name="btnCalcOnce.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 23</value>
+  </data>
+  <data name="btnCalcOnce.Text" xml:space="preserve">
+    <value>Berechnung einmal</value>
   </data>
   <data name="LabelWithDivider12.Text" xml:space="preserve">
     <value>Komponenten</value>

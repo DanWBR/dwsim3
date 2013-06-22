@@ -123,6 +123,9 @@
   <data name="btnDoReg.Text" xml:space="preserve">
     <value>Run Regression</value>
   </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Regression Information</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkIdealVaporPhase.Size" type="System.Drawing.Size, System.Drawing">
     <value>167, 17</value>
@@ -171,8 +174,8 @@
   <data name="chkIncludeSD.Text" xml:space="preserve">
     <value>Include standard deviations</value>
   </data>
-  <data name="btnAdvConfig.Text" xml:space="preserve">
-    <value>Advanced</value>
+  <data name="btnCalcOnce.Text" xml:space="preserve">
+    <value>Calc Once</value>
   </data>
   <data name="LabelWithDivider12.Text" xml:space="preserve">
     <value>Compounds</value>
@@ -206,6 +209,9 @@
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Model</value>
+  </data>
+  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>222, 158</value>
   </data>
   <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>221, 22</value>
@@ -249,9 +255,6 @@
   <data name="ToolStripMenuItem7.Text" xml:space="preserve">
     <value>Generate Points (PRSV2-VL)</value>
   </data>
-  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>222, 158</value>
-  </data>
   <data name="cbDataType.Items" xml:space="preserve">
     <value>Txy (VLE)</value>
   </data>
@@ -282,8 +285,8 @@
   <data name="LabelWithDivider2.Text" xml:space="preserve">
     <value>Experimental Data</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Regression Information</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="tbDescription.Location" type="System.Drawing.Point, System.Drawing">
     <value>344, 19</value>
@@ -308,9 +311,6 @@
   </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>Title</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Information</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
