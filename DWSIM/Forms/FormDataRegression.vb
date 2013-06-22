@@ -321,7 +321,7 @@ Public Class FormDataRegression
                         Case "PC-SAFT", "Peng-Robinson", "Soave-Redlich-Kwong", "Lee-Kesler-Plöcker"
                             If PVF Then
                                 If doparallel Then
-                                    My.Application.IsRunningParallelTasks = True
+                                    My.MyApplication.IsRunningParallelTasks = True
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
@@ -339,7 +339,7 @@ Public Class FormDataRegression
                                             Throw ex
                                         Next
                                     End Try
-                                    My.Application.IsRunningParallelTasks = False
+                                    My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
@@ -349,7 +349,7 @@ Public Class FormDataRegression
                                 End If
                             Else
                                 If doparallel Then
-                                    My.Application.IsRunningParallelTasks = True
+                                    My.MyApplication.IsRunningParallelTasks = True
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
@@ -367,7 +367,7 @@ Public Class FormDataRegression
                                             Throw ex
                                         Next
                                     End Try
-                                    My.Application.IsRunningParallelTasks = False
+                                    My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
@@ -382,7 +382,7 @@ Public Class FormDataRegression
                         Case "UNIQUAC"
                             If PVF Then
                                 If doparallel Then
-                                    My.Application.IsRunningParallelTasks = True
+                                    My.MyApplication.IsRunningParallelTasks = True
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
@@ -400,7 +400,7 @@ Public Class FormDataRegression
                                             Throw ex
                                         Next
                                     End Try
-                                    My.Application.IsRunningParallelTasks = False
+                                    My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
@@ -410,7 +410,7 @@ Public Class FormDataRegression
                                 End If
                             Else
                                 If doparallel Then
-                                    My.Application.IsRunningParallelTasks = True
+                                    My.MyApplication.IsRunningParallelTasks = True
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
@@ -428,7 +428,7 @@ Public Class FormDataRegression
                                             Throw ex
                                         Next
                                     End Try
-                                    My.Application.IsRunningParallelTasks = False
+                                    My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
@@ -444,7 +444,7 @@ Public Class FormDataRegression
                         Case "PRSV2-M", "PRSV2-VL"
                             If PVF Then
                                 If doparallel Then
-                                    My.Application.IsRunningParallelTasks = True
+                                    My.MyApplication.IsRunningParallelTasks = True
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
@@ -462,7 +462,7 @@ Public Class FormDataRegression
                                             Throw ex
                                         Next
                                     End Try
-                                    My.Application.IsRunningParallelTasks = False
+                                    My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
@@ -472,7 +472,7 @@ Public Class FormDataRegression
                                 End If
                             Else
                                 If doparallel Then
-                                    My.Application.IsRunningParallelTasks = True
+                                    My.MyApplication.IsRunningParallelTasks = True
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
@@ -490,7 +490,7 @@ Public Class FormDataRegression
                                             Throw ex
                                         Next
                                     End Try
-                                    My.Application.IsRunningParallelTasks = False
+                                    My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
@@ -506,7 +506,7 @@ Public Class FormDataRegression
                         Case "NRTL"
                             If PVF Then
                                 If doparallel Then
-                                    My.Application.IsRunningParallelTasks = True
+                                    My.MyApplication.IsRunningParallelTasks = True
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
@@ -524,7 +524,7 @@ Public Class FormDataRegression
                                             Throw ex
                                         Next
                                     End Try
-                                    My.Application.IsRunningParallelTasks = False
+                                    My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
@@ -534,7 +534,7 @@ Public Class FormDataRegression
                                 End If
                             Else
                                 If doparallel Then
-                                    My.Application.IsRunningParallelTasks = True
+                                    My.MyApplication.IsRunningParallelTasks = True
                                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                     Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
@@ -552,7 +552,7 @@ Public Class FormDataRegression
                                             Throw ex
                                         Next
                                     End Try
-                                    My.Application.IsRunningParallelTasks = False
+                                    My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
@@ -618,7 +618,7 @@ Public Class FormDataRegression
                     Select Case currcase.model
                         Case "PRSV2-M", "PRSV2-VL"
                             If doparallel Then
-                                My.Application.IsRunningParallelTasks = True
+                                My.MyApplication.IsRunningParallelTasks = True
                                 proppack.Parameters("PP_FLASHALGORITHM") = 3
                                 proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
                                 proppack._tpcompids = New String() {currcase.comp1, currcase.comp2}
@@ -639,7 +639,7 @@ Public Class FormDataRegression
                                         Throw ex
                                     Next
                                 End Try
-                                My.Application.IsRunningParallelTasks = False
+                                My.MyApplication.IsRunningParallelTasks = False
                             Else
                                 proppack.Parameters("PP_FLASHALGORITHM") = 5
                                 proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
@@ -659,7 +659,7 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "UNIQUAC"
                             If doparallel Then
-                                My.Application.IsRunningParallelTasks = True
+                                My.MyApplication.IsRunningParallelTasks = True
                                 proppack.Parameters("PP_FLASHALGORITHM") = 3
                                 proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
                                 proppack._tpcompids = New String() {currcase.comp1, currcase.comp2}
@@ -680,7 +680,7 @@ Public Class FormDataRegression
                                         Throw ex
                                     Next
                                 End Try
-                                My.Application.IsRunningParallelTasks = False
+                                My.MyApplication.IsRunningParallelTasks = False
                                 Application.DoEvents()
                             Else
                                 proppack.Parameters("PP_FLASHALGORITHM") = 5
@@ -701,7 +701,7 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "NRTL"
                             If doparallel Then
-                                My.Application.IsRunningParallelTasks = True
+                                My.MyApplication.IsRunningParallelTasks = True
                                 proppack.Parameters("PP_FLASHALGORITHM") = 3
                                 proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
                                 proppack._tpcompids = New String() {currcase.comp1, currcase.comp2}
@@ -722,7 +722,7 @@ Public Class FormDataRegression
                                         Throw ex
                                     Next
                                 End Try
-                                My.Application.IsRunningParallelTasks = False
+                                My.MyApplication.IsRunningParallelTasks = False
                             Else
                                 proppack.Parameters("PP_FLASHALGORITHM") = 5
                                 proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
@@ -743,7 +743,7 @@ Public Class FormDataRegression
                             vartext += "}"
                         Case "Lee-Kesler-Plöcker", "Peng-Robinson", "Soave-Redlich-Kwong", "PC-SAFT"
                             If doparallel Then
-                                My.Application.IsRunningParallelTasks = True
+                                My.MyApplication.IsRunningParallelTasks = True
                                 proppack.Parameters("PP_FLASHALGORITHM") = 3
                                 proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
                                 proppack._tpcompids = New String() {currcase.comp1, currcase.comp2}
@@ -764,7 +764,7 @@ Public Class FormDataRegression
                                         Throw ex
                                     Next
                                 End Try
-                                My.Application.IsRunningParallelTasks = False
+                                My.MyApplication.IsRunningParallelTasks = False
                             Else
                                 proppack.Parameters("PP_FLASHALGORITHM") = 5
                                 proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P

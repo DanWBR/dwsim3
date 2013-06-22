@@ -17,7 +17,9 @@ Namespace My
         Public Shared _CultureInfo As System.Globalization.CultureInfo
         Public Shared CalculatorStopRequested As Boolean = False
         Public Shared CommandLineMode As Boolean = False
-        Public IsRunningParallelTasks As Boolean = False
+        
+        Public Shared IsRunningParallelTasks As Boolean = False
+        
         Public ActiveSimulation As FormFlowsheet
         Public CAPEOPENMode As Boolean = False
         Public Shared gpu As Cudafy.Host.GPGPU
