@@ -314,7 +314,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         ''' <remarks></remarks>
         Public ReadOnly Property FlashBase() As Auxiliary.FlashAlgorithms.FlashAlgorithm
             Get
-                If Not My.Application.CAPEOPENMode And Not My.Application.IsRunningParallelTasks Then
+                If Not My.Application.CAPEOPENMode And Not My.MyApplication.IsRunningParallelTasks Then
                     If Not Me.Parameters.ContainsKey("PP_FLASHALGORITHM") Then
                         Me.Parameters.Add("PP_FLASHALGORITHM", 2)
                     End If
@@ -323,24 +323,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Select Case FlashAlgorithm
                     Case FlashMethod.DWSIMDefault
                         If _dwdf Is Nothing Then _dwdf = New Auxiliary.FlashAlgorithms.DWSIMDefault
-                        Return _dwdf
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.DWSIMDefault Else Return _dwdf
                     Case FlashMethod.InsideOut
                         If _bbio Is Nothing Then _bbio = New Auxiliary.FlashAlgorithms.BostonBrittInsideOut
-                        Return _bbio
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.BostonBrittInsideOut Else Return _bbio
                     Case FlashMethod.InsideOut3P
                         If _brio3 Is Nothing Then _brio3 = New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P
-                        Return _brio3
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P Else Return _brio3
                     Case FlashMethod.GibbsMin2P
                         If _gm3 Is Nothing Then _gm3 = New Auxiliary.FlashAlgorithms.GibbsMinimization3P
                         _gm3.ForceTwoPhaseOnly = True
-                        Return _gm3
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.GibbsMinimization3P With {.ForceTwoPhaseOnly = True} Else Return _gm3
                     Case FlashMethod.GibbsMin3P
                         If _gm3 Is Nothing Then _gm3 = New Auxiliary.FlashAlgorithms.GibbsMinimization3P
                         _gm3.ForceTwoPhaseOnly = False
-                        Return _gm3
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.GibbsMinimization3P With {.ForceTwoPhaseOnly = False} Else Return _gm3
                     Case FlashMethod.NestedLoops3P
                         If _nl3 Is Nothing Then _nl3 = New Auxiliary.FlashAlgorithms.NestedLoops3P
-                        Return _nl3
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoops3P Else Return _nl3
                     Case FlashMethod.NestedLoopsSLE
                         If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE
                         Dim constprops As New List(Of ConstantProperties)
@@ -348,7 +348,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             constprops.Add(su.ConstantProperties)
                         Next
                         _nlsle.CompoundProperties = constprops
-                        Return _nlsle
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops} Else Return _nlsle
                     Case FlashMethod.NestedLoopsImmiscible
                         If _nli Is Nothing Then _nli = New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
                         Dim constprops As New List(Of ConstantProperties)
@@ -356,9 +356,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             constprops.Add(su.ConstantProperties)
                         Next
                         _nli.CompoundProperties = constprops
-                        Return _nli
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible With {.CompoundProperties = constprops} Else Return _nli
                     Case Else
                         If _dwdf Is Nothing Then _dwdf = New Auxiliary.FlashAlgorithms.DWSIMDefault
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.DWSIMDefault Else Return _nli
                         Return _dwdf
                 End Select
             End Get
@@ -536,7 +537,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim fugliq As Object = Nothing
 
             If My.Settings.EnableParallelProcessing Then
-                My.Application.IsRunningParallelTasks = True
+                My.MyApplication.IsRunningParallelTasks = True
                 If My.Settings.EnableGPUProcessing Then
                     My.MyApplication.gpu.EnableMultithreading()
                 End If
@@ -566,7 +567,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         My.MyApplication.gpu.FreeAll()
                     End If
                 End Try
-                My.Application.IsRunningParallelTasks = False
+                My.MyApplication.IsRunningParallelTasks = False
             Else
                 fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
                 If type = "LV" Then
@@ -854,7 +855,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             If Not My.Application.CAPEOPENMode And Not My.Application.ActiveSimulation Is Nothing Then
                 If My.Application.ActiveSimulation.Options.CalculateBubbleAndDewPoints Then
                     If My.Settings.EnableParallelProcessing Then
-                        My.Application.IsRunningParallelTasks = True
+                        My.MyApplication.IsRunningParallelTasks = True
                         Try
                             Dim Vz As Double() = Me.RET_VMOL(Fase.Mixture)
                             Dim task1 As Task = New Task(Sub()
@@ -905,7 +906,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Saturation point calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
                             Next
                         End Try
-                        My.Application.IsRunningParallelTasks = False
+                        My.MyApplication.IsRunningParallelTasks = False
                     Else
                         Try
                             result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.P, FlashSpec.VAP, P, 0, 0)(2)
@@ -1122,7 +1123,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             xv = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             H = Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
             S = Me.CurrentMaterialStream.Fases(0).SPMProperties.entropy.GetValueOrDefault
-            
+
             Me.DW_ZerarPhaseProps(Fase.Vapor)
             Me.DW_ZerarPhaseProps(Fase.Liquid)
             Me.DW_ZerarPhaseProps(Fase.Liquid1)
