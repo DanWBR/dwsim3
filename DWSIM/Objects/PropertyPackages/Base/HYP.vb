@@ -42,7 +42,7 @@ Namespace DWSIM.Utilities.Hypos.Methods
                     El.ID = .Split(";")(0)
                     El.ElementName = .Split(";")(1)
                     El.ElementSymbol = .Split(";")(2)
-                    El.MW = .Split(";")(3)
+                    El.MW = Double.Parse(.Split(";")(3), Globalization.CultureInfo.InvariantCulture)
                     Me.JElements.Add(El.ElementSymbol, El)
                 End With
             Next
@@ -74,7 +74,7 @@ Namespace DWSIM.Utilities.Hypos.Methods
                         JG.D = CheckEmptyCell(.Split(";")(12))
                         JG.HF = CheckEmptyCell(.Split(";")(13))
                         JG.NA = CheckEmptyCell(.Split(";")(17))
-                        JG.Elements = CheckEmptyCell(.Split(";")(18))
+                        JG.Elements = .Split(";")(18)
 
                         Me.JGroups.Add(JG.ID, JG)
                     End If
@@ -95,7 +95,7 @@ Namespace DWSIM.Utilities.Hypos.Methods
             If val = "X" Or val = "" Then
                 CheckEmptyCell = Nothing
             Else
-                CheckEmptyCell = val
+                CheckEmptyCell = Double.Parse(val, Globalization.CultureInfo.InvariantCulture)
             End If
         End Function
         Public Function CalcMW(ByVal ACL As System.Collections.Generic.Dictionary(Of String, Integer)) As Double
@@ -561,7 +561,7 @@ Namespace DWSIM.Utilities.Hypos.Methods
             End Set
         End Property
 
-       
+
     End Class
 
     <System.Serializable()> Public Class HYP
