@@ -226,6 +226,11 @@ Public Class FormCompoundCreator
             Else
                 .su = Me.su
             End If
+            If cbUnits.Items.Contains(.su.nome) Then
+                cbUnits.SelectedIndex = cbUnits.Items.IndexOf(.su.nome)
+            Else : cbUnits.SelectedIndex = 0
+            End If
+
             tbDBPath.Text = .database
             TextBoxAF.Text = .cp.Acentric_Factor
             TextBoxCAS.Text = .cp.CAS_Number
@@ -411,13 +416,7 @@ Public Class FormCompoundCreator
         Next
     End Sub
 
-    Function CheckEmptyCell(ByVal val As String) As String
-        If val = "" Then
-            CheckEmptyCell = "0"
-        Else
-            CheckEmptyCell = val
-        End If
-    End Function
+    
 
     Sub StoreData()
 
@@ -567,6 +566,23 @@ Public Class FormCompoundCreator
 
     End Sub
 
+    Function CheckEmptyCell(ByVal val As String) As Double
+        Try
+            CheckEmptyCell = val
+        Catch ex As Exception
+            CheckEmptyCell = Nothing
+        End Try
+    End Function
+    Function CheckValidDF(ByVal val As String) As Boolean
+        Dim DN As Double
+        Try
+            DN = val
+            CheckValidDF = True
+        Catch ex As Exception
+            CheckValidDF = False
+        End Try
+    End Function
+
     Private Sub CalcJobackParams()
 
         If loaded Then
@@ -633,7 +649,7 @@ Public Class FormCompoundCreator
             For i = 2 To UNIFAClines.Length - 1
                 s = UNIFAClines(i).Split(",")(9)
                 If Not s = "" And vnd(i - 2) > 0 Then
-                    SpecialDefinition = True 
+                    SpecialDefinition = True
                     n = 0
                     For k = 0 To s.Length - 1 'count atom types in group
                         If s.Chars(k) = "/" Then n += 1
@@ -665,7 +681,7 @@ Public Class FormCompoundCreator
 
             Me.TextBoxFormula.Text = Formula
 
-            Dim Tb, Tc, Pc, Vc, MM, w, Hvb, MP, Hf As Double
+            Dim Tb, Tc, Pc, Vc, MM, w, Hvb As Double
 
             If ACL.Count > 0 Then
                 MM = jb.CalcMW(ACL)
@@ -676,42 +692,81 @@ Public Class FormCompoundCreator
             End If
 
             If GC > 0 And Not SpecialDefinition Then
+                'boiling point
                 Tb = jb.CalcTb(JGD)
                 If CheckBoxNBP.Checked Then Me.TextBoxNBP.Text = cv.ConverterDoSI(su.spmp_temperature, Tb)
-                Tb = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxNBP.Text)
+                If CheckValidDF(Me.TextBoxNBP.Text) Then
+                    Tb = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxNBP.Text)
+                Else : Tb = -1
+                End If
 
+                'critical temperature
+                If Tb > 0 Then
+                    Tc = jb.CalcTc(Tb, JGD)
+                    If CheckBoxTc.Checked Then Me.TextBoxTc.Text = cv.ConverterDoSI(su.spmp_temperature, Tc)
+                    If CheckValidDF(Me.TextBoxTc.Text) Then
+                        Tc = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxTc.Text)
+                    Else : Tc = -1
+                    End If
+                Else
+                    Tc = -1
+                    If CheckBoxTc.Checked Then Me.TextBoxTc.Text = ""
+                End If
 
-                Tc = jb.CalcTc(Tb, JGD)
-                If CheckBoxTc.Checked Then Me.TextBoxTc.Text = cv.ConverterDoSI(su.spmp_temperature, Tc)
-                Tc = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxTc.Text)
-
+                'critical pressure
                 Pc = jb.CalcPc(JGD)
                 If CheckBoxPc.Checked Then Me.TextBoxPc.Text = cv.ConverterDoSI(su.spmp_pressure, Pc)
-                Pc = cv.ConverterParaSI(su.spmp_pressure, Me.TextBoxPc.Text)
+                If CheckValidDF(Me.TextBoxPc.Text) Then
+                    Pc = cv.ConverterParaSI(su.spmp_pressure, Me.TextBoxPc.Text)
+                Else : Pc = -1
+                End If
 
-                Vc = jb.CalcVc(JGD)
-                If CheckBoxZc.Checked Then Me.TextBoxZc.Text = Pc * Vc / Tc / 8.314 / 1000
-                If CheckBoxZRa.Checked Then Me.TextBoxZRa.Text = Pc * Vc / Tc / 8.314 / 1000
+                'critical compressibility
+                If Tc > 0 And Pc > 0 Then
+                    Vc = jb.CalcVc(JGD)
+                    If CheckBoxZc.Checked Then Me.TextBoxZc.Text = Pc * Vc / Tc / 8.314 / 1000
+                    If CheckBoxZRa.Checked Then Me.TextBoxZRa.Text = Pc * Vc / Tc / 8.314 / 1000
+                Else
+                    If CheckBoxZc.Checked Then Me.TextBoxZc.Text = ""
+                    If CheckBoxZRa.Checked Then Me.TextBoxZRa.Text = ""
+                End If
 
-                w = (-Math.Log(Pc / 100000) - 5.92714 + 6.09648 / (Tb / Tc) + 1.28862 * Math.Log(Tb / Tc) - 0.169347 * (Tb / Tc) ^ 6) / (15.2518 - 15.6875 / (Tb / Tc) - 13.4721 * Math.Log(Tb / Tc) + 0.43577 * (Tb / Tc) ^ 6)
-                If CheckBoxAF.Checked Then Me.TextBoxAF.Text = w
-                w = Me.TextBoxAF.Text
+                'acentric factor
+                If Tb > 0 And Tc > 0 And Pc > 0 Then
+                    w = (-Math.Log(Pc / 100000) - 5.92714 + 6.09648 / (Tb / Tc) + 1.28862 * Math.Log(Tb / Tc) - 0.169347 * (Tb / Tc) ^ 6) / (15.2518 - 15.6875 / (Tb / Tc) - 13.4721 * Math.Log(Tb / Tc) + 0.43577 * (Tb / Tc) ^ 6)
+                    If CheckBoxAF.Checked Then Me.TextBoxAF.Text = w
+                    If CheckValidDF(Me.TextBoxAF.Text) Then
+                        w = Me.TextBoxAF.Text
+                    Else
+                        w = -1
+                    End If
+                Else
+                    w = -1
+                    If CheckBoxAF.Checked Then Me.TextBoxAF.Text = ""
+                End If
+                
 
                 If CheckBoxDHF.Checked Then Me.TextBoxDHF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDHf(JGD) / MM)
-                Hvb = methods.DHvb_Vetere(Tc, Pc, Tb) / MM
-
                 If CheckBoxDGF.Checked Then Me.TextBoxDGF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDGf(JGD) / MM)
-                If CheckBoxCSAF.Checked Then Me.TextBoxCSAF.Text = w
-                If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = ((Hvb * MM - 8.314 * Tb) * 238.846 * methods2.liq_dens_rackett(Tb, Tc, Pc, w, MM) / MM / 1000000.0) ^ 0.5
-                If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = 1 / methods2.liq_dens_rackett(Tb, Tc, Pc, w, MM) * MM / 1000 * 1000000.0
+                If CheckBoxCSAF.Checked Then
+                    If w > 0 Then
+                        Me.TextBoxCSAF.Text = w
+                    Else
+                        Me.TextBoxCSAF.Text = ""
+                    End If
+                End If
 
-                'melting data
-                MP = jb.CalcTf(JGD) 'melting temperature -> temperature of fusion
-                If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, MP)
+                If Tc > 0 And Pc > 0 And Tb > 0 And MM > 0 And w > 0 Then
+                    Hvb = methods.DHvb_Vetere(Tc, Pc, Tb) / MM
+                    If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = ((Hvb * MM - 8.314 * Tb) * 238.846 * methods2.liq_dens_rackett(Tb, Tc, Pc, w, MM) / MM / 1000000.0) ^ 0.5
+                    If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = 1 / methods2.liq_dens_rackett(Tb, Tc, Pc, w, MM) * MM / 1000 * 1000000.0
+                Else
+                    If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = ""
+                    If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = ""
+                End If
 
-                'enthalpy of fusion
-                Hf = jb.CalcHf(JGD)
-                If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = cv.ConverterDoSI(su.spmp_enthalpy, Hf / MM)
+                If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, jb.CalcTf(JGD)) 'melting temperature - temperature of fusion
+                If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcHf(JGD) / MM) 'enthalpy of fusion
 
                 If rbEstimateCPIG.Checked Then
                     Dim result As Object = RegressData(1, True)
@@ -764,7 +819,7 @@ Public Class FormCompoundCreator
                 mycase.cp.MODFACGroups.Collection.Clear()
             End If
 
-            
+
             For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
                 If Not r.Cells(0).Value Is Nothing Then
                     If CInt(r.Cells(0).Value) <> 0 Then
@@ -1718,7 +1773,7 @@ Public Class FormCompoundCreator
 
     Private Sub TextBoxEnthOfFusion_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxEnthOfFusion.TextChanged
         Try
-            TextBoxEnthOfFusion2.Text = cv.ConverterDoSI(su.spmp_enthalpy, TextBoxEnthOfFusion.Text) * mycase.cp.Molar_Weight / 1000
+            TextBoxEnthOfFusion2.Text = cv.ConverterParaSI(su.spmp_enthalpy, TextBoxEnthOfFusion.Text) * Me.TextBoxMW.Text / 1000
         Catch ex As Exception
             TextBoxEnthOfFusion2.Text = ""
         End Try
@@ -1744,6 +1799,7 @@ Public Class FormCompoundCreator
     Private Sub LinkLabel3_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
         System.Diagnostics.Process.Start("http://chemeo.com/")
     End Sub
+
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase
