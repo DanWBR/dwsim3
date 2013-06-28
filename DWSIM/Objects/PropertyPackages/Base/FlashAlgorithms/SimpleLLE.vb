@@ -65,7 +65,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If Vz(i) <> 0.0# And Vz(i) < minn Then minn = Vz(i)
             Next
 
-            L2 = minn / 1.34
+            L2 = minn / 2
             L1 = 1 - L2
 
             If UseInitialEstimatesForPhase1 Then
@@ -119,8 +119,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 If Double.IsNaN(err) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                If ecount > 0 And Abs(err / n) < 0.000001 Then Exit Do
-                If ecount > 0 And Abs(err - err_ant) < 0.0000000001 Then Exit Do
+                If ecount > 0 And Abs(err) < 0.000001 Then Exit Do
 
                 For i = 0 To n
                     Vn2(i) = Vn1(i) * L2 * gamma1(i) / (L1 * gamma2(i))

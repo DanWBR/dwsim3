@@ -778,17 +778,41 @@ Public Class FormDataRegression
                         Me.currcase.calcy.Add(0.0#)
                         Select Case currcase.objfunction
                             Case "Least Squares (min T/P+y/x)"
-                                f += ((Vx1c(i) - Vx1(i)) * 100) ^ 2 + ((Vx2c(i) - Vx2(i)) * 100) ^ 2
+                                If Abs(Vx1c(i) - Vx2c(i)) < 0.001 Then
+                                    f += (-Vx1c(i) + Vx1(i)) ^ 2 * 10000000000.0
+                                Else
+                                    f += (-Vx1c(i) + Vx1(i) - Vx2c(i) + Vx2(i)) ^ 2
+                                End If
                             Case "Least Squares (min T/P)"
-                                f += ((Vx1c(i) - Vx1(i)) * 100) ^ 2 + ((Vx2c(i) - Vx2(i)) * 100) ^ 2
+                                If Abs(Vx1c(i) - Vx2c(i)) < 0.001 Then
+                                    f += (-Vx1c(i) + Vx1(i)) ^ 2 * 10000000000.0
+                                Else
+                                    f += (-Vx1c(i) + Vx1(i) - Vx2c(i) + Vx2(i)) ^ 2
+                                End If
                             Case "Least Squares (min y/x)"
-                                f += ((Vx1c(i) - Vx1(i)) * 100) ^ 2 + ((Vx2c(i) - Vx2(i)) * 100) ^ 2
+                                If Abs(Vx1c(i) - Vx2c(i)) < 0.001 Then
+                                    f += (-Vx1c(i) + Vx1(i)) ^ 2 * 10000000000.0
+                                Else
+                                    f += (-Vx1c(i) + Vx1(i) - Vx2c(i) + Vx2(i)) ^ 2
+                                End If
                             Case "Weighted Least Squares (min T/P+y/x)"
-                                f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
+                                If Abs(Vx1c(i) - Vx2c(i)) < 0.001 Then
+                                    f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 * 10000000000.0
+                                Else
+                                    f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
+                                End If
                             Case "Weighted Least Squares (min T/P)"
-                                f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
+                                If Abs(Vx1c(i) - Vx2c(i)) < 0.001 Then
+                                    f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 * 10000000000.0
+                                Else
+                                    f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
+                                End If
                             Case "Weighted Least Squares (min y/x)"
-                                f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
+                                If Abs(Vx1c(i) - Vx2c(i)) < 0.001 Then
+                                    f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 * 10000000000.0
+                                Else
+                                    f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
+                                End If
                             Case "Chi Square"
                         End Select
                     Next
