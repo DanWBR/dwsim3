@@ -93,6 +93,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         NestedLoops3P = 6
         NestedLoopsSLE = 7
         NestedLoopsImmiscible = 8
+        SimpleLLE = 9
     End Enum
 
 #End Region
@@ -148,6 +149,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public _nl3 As New Auxiliary.FlashAlgorithms.NestedLoops3P
         Public _nlsle As New Auxiliary.FlashAlgorithms.NestedLoopsSLE
         Public _nli As New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
+        Public _simplelle As New Auxiliary.FlashAlgorithms.SimpleLLE
 
         Public _ioquick As Boolean = True
         Public _tpseverity As Integer = 0
@@ -357,6 +359,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Next
                         _nli.CompoundProperties = constprops
                         If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible With {.CompoundProperties = constprops} Else Return _nli
+                    Case FlashMethod.SimpleLLE
+                        If _simplelle Is Nothing Then _simplelle = New Auxiliary.FlashAlgorithms.SimpleLLE
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.SimpleLLE Else Return _simplelle
                     Case Else
                         If _dwdf Is Nothing Then _dwdf = New Auxiliary.FlashAlgorithms.DWSIMDefault
                         If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.DWSIMDefault Else Return _nli

@@ -634,6 +634,7 @@
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoops3P.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoopsImmiscible.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoopsSLE.vb" />
+    <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\SimpleLLE.vb" />
     <Compile Include="Objects\PropertyPackages\Base\MichelsenBase.vb" />
     <Compile Include="Objects\PropertyPackages\CAPE-OPEN\CAPEOPENPropertyPackageManager.vb" />
     <Compile Include="Objects\PropertyPackages\CAPE-OPEN\CAPEOPENPropertyPackageSocket.vb" />
