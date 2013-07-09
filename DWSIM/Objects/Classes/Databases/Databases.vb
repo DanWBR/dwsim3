@@ -774,6 +774,22 @@ Namespace DWSIM.Databases
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Density_Const_C", "")).InnerText = comp.Liquid_Density_Const_C.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Density_Const_D", "")).InnerText = comp.Liquid_Density_Const_D.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Density_Const_E", "")).InnerText = comp.Liquid_Density_Const_E.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Heat_Capacity_EqNo", "")).InnerText = comp.SolidHeatCapacityEquation
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Heat_Capacity_Constant_A", "")).InnerText = comp.Solid_Heat_Capacity_Const_A.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Heat_Capacity_Constant_B", "")).InnerText = comp.Solid_Heat_Capacity_Const_B.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Heat_Capacity_Constant_C", "")).InnerText = comp.Solid_Heat_Capacity_Const_C.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Heat_Capacity_Constant_D", "")).InnerText = comp.Solid_Heat_Capacity_Const_D.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Heat_Capacity_Constant_E", "")).InnerText = comp.Solid_Heat_Capacity_Const_E.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Heat_Capacity_TMin", "")).InnerText = comp.Solid_Heat_Capacity_Tmin.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Heat_Capacity_TMax", "")).InnerText = comp.Solid_Heat_Capacity_Tmax.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Density_EqNo", "")).InnerText = comp.SolidDensityEquation
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Density_Constant_A", "")).InnerText = comp.Solid_Density_Const_A.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Density_Constant_B", "")).InnerText = comp.Solid_Density_Const_B.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Density_Constant_C", "")).InnerText = comp.Solid_Density_Const_C.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Density_Constant_D", "")).InnerText = comp.Solid_Density_Const_D.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Density_Constant_E", "")).InnerText = comp.Solid_Density_Const_E.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Density_TMin", "")).InnerText = comp.Solid_Density_Tmin.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Solid_Density_TMax", "")).InnerText = comp.Solid_Density_Tmax.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Normal_Boiling_Point", "")).InnerText = comp.Normal_Boiling_Point.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "UNIQUAC_q", "")).InnerText = comp.UNIQUAC_R.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "UNIQUAC_r", "")).InnerText = comp.UNIQUAC_Q.ToString(cult)
@@ -948,6 +964,39 @@ Namespace DWSIM.Databases
                                 .Liquid_Density_Const_D = Double.Parse(node2.InnerText, nf)
                             Case "Liquid_Density_Const_E"
                                 .Liquid_Density_Const_E = Double.Parse(node2.InnerText, nf)
+
+                            Case "Solid_Heat_Capacity_EqNo"
+                                .SolidHeatCapacityEquation = Integer.Parse(node2.InnerText, nf)
+                            Case "Solid_Heat_Capacity_Constant_A"
+                                .Solid_Heat_Capacity_Const_A = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Heat_Capacity_Constant_B"
+                                .Solid_Heat_Capacity_Const_B = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Heat_Capacity_Constant_C"
+                                .Solid_Heat_Capacity_Const_C = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Heat_Capacity_Constant_D"
+                                .Solid_Heat_Capacity_Const_D = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Heat_Capacity_Constant_E"
+                                .Solid_Heat_Capacity_Const_E = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Heat_Capacity_TMin"
+                                .Solid_Heat_Capacity_Tmin = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Heat_Capacity_TMax"
+                                .Solid_Heat_Capacity_Tmax = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Density_EqNo"
+                                .SolidDensityEquation = Integer.Parse(node2.InnerText, nf)
+                            Case "Solid_Density_Constant_A"
+                                .Solid_Density_Const_A = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Density_Constant_B"
+                                .Solid_Density_Const_B = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Density_Constant_C"
+                                .Solid_Density_Const_C = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Density_Constant_D"
+                                .Solid_Density_Const_D = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Density_Constant_E"
+                                .Solid_Density_Const_E = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Density_TMin"
+                                .Solid_Density_Tmin = Double.Parse(node2.InnerText, nf)
+                            Case "Solid_Density_TMax"
+                                .Solid_Density_Tmax = Double.Parse(node2.InnerText, nf)
                             Case "Normal_Boiling_Point"
                                 .Normal_Boiling_Point = Double.Parse(node2.InnerText, nf)
                             Case "Temperature_of_fusion"
@@ -967,16 +1016,22 @@ Namespace DWSIM.Databases
                                 For Each node3 As XmlNode In node2.ChildNodes
                                     .UNIFACGroups.Collection.Add(node3.Attributes("name").InnerText, Integer.Parse(node3.InnerText))
                                 Next
-                                .MODFACGroups.Collection = New SortedList
-                                For Each node3 As XmlNode In node2.ChildNodes
-                                    .MODFACGroups.Collection.Add(node3.Attributes("name").InnerText, Integer.Parse(node3.InnerText))
-                                Next
+                                'Case "MODFAC" 'MODFAC not yet implemented for UserDB
+                                '.MODFACGroups.Collection = New SortedList
+                                'For Each node3 As XmlNode In node2.ChildNodes
+                                '    .MODFACGroups.Collection.Add(node3.Attributes("name").InnerText, Integer.Parse(node3.InnerText))
+                                'Next
                             Case "PC_SAFT_sigma"
                                 .PC_SAFT_sigma = Double.Parse(node2.InnerText, nf)
                             Case "PC_SAFT_m"
                                 .PC_SAFT_m = Double.Parse(node2.InnerText, nf)
                             Case "PC_SAFT_epsilon_k"
                                 .PC_SAFT_epsilon_k = Double.Parse(node2.InnerText, nf)
+                            Case "elements"
+                                .Elements.Collection = New SortedList
+                                For Each node3 As XmlNode In node2.ChildNodes
+                                    .Elements.Collection.Add(node3.Attributes("name").InnerText, Integer.Parse(node3.InnerText))
+                                Next
                         End Select
                     Next
                 End With

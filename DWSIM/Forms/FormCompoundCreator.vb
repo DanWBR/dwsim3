@@ -321,6 +321,32 @@ Public Class FormCompoundCreator
                 End If
             Next
 
+            For Each it As Object In cbEqCpS.Items
+                If it.ToString.Split(":")(0) = .cp.SolidHeatCapacityEquation Then
+                    cbEqCpS.SelectedIndex = cbEqCpS.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
+            For Each it As Object In cbEqSolidDENS.Items
+                If it.ToString.Split(":")(0) = .cp.SolidDensityEquation Then
+                    cbEqSolidDENS.SelectedIndex = cbEqSolidDENS.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
+            tbCpS_A.Text = .cp.Solid_Heat_Capacity_Const_A
+            tbCpS_B.Text = .cp.Solid_Heat_Capacity_Const_B
+            tbCpS_C.Text = .cp.Solid_Heat_Capacity_Const_C
+            tbCpS_D.Text = .cp.Solid_Heat_Capacity_Const_D
+            tbCpS_E.Text = .cp.Solid_Heat_Capacity_Const_E
+
+            tbRoS_A.Text = .cp.Solid_Density_Const_A
+            tbRoS_B.Text = .cp.Solid_Density_Const_B
+            tbRoS_C.Text = .cp.Solid_Density_Const_C
+            tbRoS_D.Text = .cp.Solid_Density_Const_D
+            tbRoS_E.Text = .cp.Solid_Density_Const_E
+
             tbPVAP_A.Text = .cp.Vapor_Pressure_Constant_A
             tbPVAP_B.Text = .cp.Vapor_Pressure_Constant_B
             tbPVAP_C.Text = .cp.Vapor_Pressure_Constant_C
@@ -477,6 +503,24 @@ Public Class FormCompoundCreator
             .cp.VaporPressureEquation = cbEqPVAP.SelectedItem.ToString.Split(":")(0)
             .cp.LiquidDensityEquation = cbEqLIQDENS.SelectedItem.ToString.Split(":")(0)
             .cp.LiquidViscosityEquation = cbEqLIQVISC.SelectedItem.ToString.Split(":")(0)
+            .cp.SolidHeatCapacityEquation = cbEqCpS.SelectedIndex.ToString.Split(":")(0)
+            .cp.SolidDensityEquation = cbEqSolidDENS.SelectedIndex.ToString.Split(":")(0)
+
+            .cp.Solid_Heat_Capacity_Const_A = CheckEmptyCell(tbCpS_A.Text)
+            .cp.Solid_Heat_Capacity_Const_B = CheckEmptyCell(tbCpS_B.Text)
+            .cp.Solid_Heat_Capacity_Const_C = CheckEmptyCell(tbCpS_C.Text)
+            .cp.Solid_Heat_Capacity_Const_D = CheckEmptyCell(tbCpS_D.Text)
+            .cp.Solid_Heat_Capacity_Const_E = CheckEmptyCell(tbCpS_E.Text)
+            .cp.Solid_Heat_Capacity_Tmin = 0
+            .cp.Solid_Heat_Capacity_Tmax = .cp.TemperatureOfFusion
+
+            .cp.Solid_Density_Const_A = CheckEmptyCell(tbRoS_A.Text)
+            .cp.Solid_Density_Const_B = CheckEmptyCell(tbRoS_B.Text)
+            .cp.Solid_Density_Const_C = CheckEmptyCell(tbRoS_C.Text)
+            .cp.Solid_Density_Const_D = CheckEmptyCell(tbRoS_D.Text)
+            .cp.Solid_Density_Const_E = CheckEmptyCell(tbRoS_E.Text)
+            .cp.Solid_Density_Tmin = 0
+            .cp.Solid_Density_Tmax = .cp.TemperatureOfFusion
 
             .cp.Vapor_Pressure_Constant_A = CheckEmptyCell(tbPVAP_A.Text)
             .cp.Vapor_Pressure_Constant_B = CheckEmptyCell(tbPVAP_B.Text)
@@ -516,14 +560,15 @@ Public Class FormCompoundCreator
             For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
                 If CInt(r.Cells(0).Value) <> 0 Then
                     .cp.UNIFACGroups.Collection(r.HeaderCell.Value) = r.Cells(0).Value
-                    .cp.MODFACGroups.Collection(r.HeaderCell.Value) = r.Cells(0).Value
+                    '.cp.MODFACGroups.Collection(r.HeaderCell.Value) = r.Cells(0).Value
                 Else
                     If .cp.UNIFACGroups.Collection.ContainsKey(r.HeaderCell.Value) Then
                         .cp.UNIFACGroups.Collection.Remove(r.HeaderCell.Value)
                     End If
-                    If .cp.MODFACGroups.Collection.ContainsKey(r.HeaderCell.Value) Then
-                        .cp.MODFACGroups.Collection.Remove(r.HeaderCell.Value)
-                    End If
+                    'MODFAC groups need to be defined separately! Not yet implemented!
+                    'If .cp.MODFACGroups.Collection.ContainsKey(r.HeaderCell.Value) Then
+                    '    .cp.MODFACGroups.Collection.Remove(r.HeaderCell.Value)
+                    'End If
                 End If
             Next
 
@@ -866,14 +911,19 @@ Public Class FormCompoundCreator
             lblDGF.Text = .spmp_enthalpy
             lblMeltingTemp.Text = .spmp_temperature
             lblEnthOfFusion.Text = .spmp_enthalpy
-            Me.GridExpDataPVAP.Columns(0).HeaderText = "T (" & su.spmp_temperature & ")"
-            Me.GridExpDataCPIG.Columns(0).HeaderText = "T (" & su.spmp_temperature & ")"
-            Me.GridExpDataLIQDENS.Columns(0).HeaderText = "T (" & su.spmp_temperature & ")"
-            Me.GridExpDataLIQVISC.Columns(0).HeaderText = "T (" & su.spmp_temperature & ")"
-            Me.GridExpDataPVAP.Columns(1).HeaderText = "Pvap (" & su.spmp_pressure & ")"
-            Me.GridExpDataCPIG.Columns(1).HeaderText = "Cpig (" & su.spmp_heatCapacityCp & ")"
-            Me.GridExpDataLIQDENS.Columns(1).HeaderText = "Dens (" & su.spmp_density & ")"
-            Me.GridExpDataLIQVISC.Columns(1).HeaderText = "Visc (" & su.spmp_viscosity & ")"
+            Me.GridExpDataPVAP.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
+            Me.GridExpDataCPIG.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
+            Me.GridExpDataLIQDENS.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
+            Me.GridExpDataLIQVISC.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
+            Me.GridExpDataCpS.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
+            Me.GridExpDataRoS.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
+
+            Me.GridExpDataPVAP.Columns(1).HeaderText = "Pvap [" & su.spmp_pressure & "]"
+            Me.GridExpDataCPIG.Columns(1).HeaderText = "Cpig [" & su.spmp_heatCapacityCp & "]"
+            Me.GridExpDataLIQDENS.Columns(1).HeaderText = "Dens [" & su.spmp_density & "]"
+            Me.GridExpDataLIQVISC.Columns(1).HeaderText = "Visc [" & su.spmp_viscosity & "]"
+            Me.GridExpDataCpS.Columns(1).HeaderText = "CpS [" & su.spmp_heatCapacityCp & "]"
+            Me.GridExpDataRoS.Columns(1).HeaderText = "DensS [" & su.spmp_density & "]"
         End With
     End Sub
 
@@ -886,8 +936,8 @@ Public Class FormCompoundCreator
 
         m_props = New PROPS()
 
-        Dim c_pv(4), c_cp(4), c_vi(4), c_de(4) As Double
-        Dim r_cp, r_vi, r_pv, n_cp, n_pv, n_vi, r_de, n_de As Double
+        Dim c_pv(4), c_cp(4), c_vi(4), c_de(4), c_sd(4) As Double
+        Dim r_cp, r_vi, r_pv, r_sd, n_cp, n_pv, n_vi, r_de, n_de, n_sd As Double
 
         c_pv(0) = 25
         c_pv(1) = 2000
@@ -911,6 +961,12 @@ Public Class FormCompoundCreator
         c_de(2) = 647.3
         c_de(1) = 0.14056
         c_de(0) = -141.26
+
+        c_sd(0) = 1
+        c_sd(1) = 0.1
+        c_sd(2) = 0
+        c_sd(3) = 0
+        c_sd(4) = 0
 
         Select Case tipo
             Case 0
@@ -944,12 +1000,14 @@ Public Class FormCompoundCreator
                     r_cp = obj(2)
                     n_cp = obj(3)
                 End If
+
             Case 2
                 'regressão dos dados
                 obj = lmfit.GetCoeffs(CopyToVector(mycase.DataLVISC, 0), CopyToVector(mycase.DataLVISC, 1), c_vi, DWSIM.Utilities.PetroleumCharacterization.LMFit.FitType.LiqVisc, 0.0000000001, 0.0000000001, 0.0000000001, 10000)
                 c_vi = obj(0)
                 r_vi = obj(2)
                 n_vi = obj(3)
+
             Case 3
 
                 Dim x1, x2, y1, y2, rhoc, al, bl As Double
@@ -974,6 +1032,13 @@ Public Class FormCompoundCreator
                 c_de = obj(0)
                 r_de = obj(2)
                 n_de = obj(3)
+
+            Case 4
+                'regressão dos dados
+                obj = lmfit.GetCoeffs(CopyToVector(mycase.DataRoS, 0), CopyToVector(mycase.DataRoS, 1), c_sd, DWSIM.Utilities.PetroleumCharacterization.LMFit.FitType.LiqVisc, 0.0000000001, 0.0000000001, 0.0000000001, 10000)
+                c_sd = obj(0)
+                r_sd = obj(2)
+                n_sd = obj(3)
         End Select
 
         Select Case tipo
@@ -1133,6 +1198,14 @@ Public Class FormCompoundCreator
         End With
     End Sub
 
+    Private Sub btnRegressSolidDens_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressSolidDens.Click
+        mycase.DataCpS.Clear()
+        For Each row As DataGridViewRow In Me.GridExpDataRoS.Rows
+            If row.Index < Me.GridExpDataRoS.Rows.Count - 1 Then mycase.DataCpS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value)})
+        Next
+        Dim result As Object = RegressData(2, False)
+
+    End Sub
     Private Sub GridExpData_KeyDown1(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
 
         If e.KeyCode = Keys.Delete And e.Modifiers = Keys.Shift Then
@@ -1463,7 +1536,20 @@ Public Class FormCompoundCreator
     Private Sub rbCoeffLIQVISC_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.EqLVISC = rbCoeffLIQVISC.Checked
     End Sub
-
+    Private Sub cbEqCpS_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        If mycase.EqCpS Then mycase.cp.SolidHeatCapacityEquation = cbEqCpS.SelectedItem.ToString.Split(":")(0)
+        If loaded Then
+            SetCompCreatorSaveStatus(False)
+            SetUserDBSaveStatus(False)
+        End If
+    End Sub
+    Private Sub cbEqSolidDENS_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        If mycase.EqSDens Then mycase.cp.SolidDensityEquation = cbEqSolidDENS.SelectedItem.ToString.Split(":")(0)
+        If loaded Then
+            SetCompCreatorSaveStatus(False)
+            SetUserDBSaveStatus(False)
+        End If
+    End Sub
     Private Sub cbEqPVAP_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbEqPVAP.SelectedIndexChanged
         If mycase.EqPVAP Then mycase.cp.VaporPressureEquation = cbEqPVAP.SelectedItem.ToString.Split(":")(0)
         If loaded Then
@@ -1765,7 +1851,7 @@ Public Class FormCompoundCreator
     End Sub
 
     Private Sub GridExpData_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridExpDataPVAP.CellValueChanged, _
-                GridExpDataLIQVISC.CellValueChanged, GridExpDataLIQDENS.CellValueChanged, GridExpDataCPIG.CellValueChanged
+                GridExpDataLIQVISC.CellValueChanged, GridExpDataLIQDENS.CellValueChanged, GridExpDataCPIG.CellValueChanged, GridExpDataRoS.CellValueChanged
         If loaded Then
             SetCompCreatorSaveStatus(False)
         End If
@@ -1836,21 +1922,26 @@ End Class
     Public RegressCPIG As Boolean = False
     Public RegressLVISC As Boolean = False
     Public RegressLDENS As Boolean = False
+    Public RegressCpS As Boolean = False
 
     Public EqPVAP As Boolean = False
     Public EqCPIG As Boolean = False
     Public EqLVISC As Boolean = False
     Public EqLDENS As Boolean = False
+    Public EqCpS As Boolean = False
+    Public EqSDens As Boolean = False
 
     Public RegressOKPVAP As Boolean = False
     Public RegressOKCPIG As Boolean = False
     Public RegressOKLVISC As Boolean = False
     Public RegressOKLDENS As Boolean = False
+    Public RegressOKCpS As Boolean = False
 
     Public ErrorMsgPVAP As String = ""
     Public ErrorMsgCPIG As String = ""
     Public ErrorMsgLVISC As String = ""
     Public ErrorMsgLDENS As String = ""
+    Public ErrorMsgCpS As String = ""
 
     Public JobackGroups As New ArrayList
 
@@ -1858,4 +1949,6 @@ End Class
     Public DataCPIG As New ArrayList
     Public DataLVISC As New ArrayList
     Public DataLDENS As New ArrayList
+    Public DataCpS As New ArrayList
+    Public DataRoS As New ArrayList
 End Class
