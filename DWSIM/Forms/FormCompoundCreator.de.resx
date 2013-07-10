@@ -155,89 +155,66 @@
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Komponentendatenbank</value>
   </data>
-  <data name="Label46.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 202</value>
+  <data name="Label58.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 13</value>
   </data>
-  <data name="Label46.Size" type="System.Drawing.Size, System.Drawing">
-    <value>102, 13</value>
+  <data name="Label58.Text" xml:space="preserve">
+    <value>Atom Anzahl zusätzlich</value>
   </data>
-  <data name="Label46.Text" xml:space="preserve">
-    <value>* Visc in Pa.s, T in K</value>
+  <data name="Atom.HeaderText" xml:space="preserve">
+    <value>Atom</value>
   </data>
-  <data name="rbEstimateLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 17</value>
+  <data name="Count.HeaderText" xml:space="preserve">
+    <value>Anzahl</value>
   </data>
-  <data name="rbEstimateLIQVISC.Text" xml:space="preserve">
-    <value>Schätze (Letsou-Stiel)</value>
+  <data name="TextBox1.Text" xml:space="preserve">
+    <value>Achtung! Die Definition von zusätzlichen Jobackgruppen oder Atomen wird die  Verwendung der UNIFAC/MODFAC Packete verhindern!</value>
   </data>
-  <data name="tbLIQVISC_E.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 174</value>
+  <data name="Label59.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 13</value>
   </data>
-  <data name="rbRegressLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 17</value>
+  <data name="Label59.Text" xml:space="preserve">
+    <value>Atom Anzahl UNIFAC</value>
   </data>
-  <data name="rbRegressLIQVISC.Text" xml:space="preserve">
-    <value>Regression Versuchsdaten</value>
+  <data name="ColAtom.HeaderText" xml:space="preserve">
+    <value>Atom</value>
   </data>
-  <data name="Label37.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 180</value>
+  <data name="ColCount.HeaderText" xml:space="preserve">
+    <value>Anzahl</value>
   </data>
-  <data name="tbLIQVISC_D.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 148</value>
+  <data name="LinkLabel3.ToolTip" xml:space="preserve">
+    <value>Aufruf der Chemeo-Dataenbank zur Unterstützung bei der Joback-Gruppenzuordnung.</value>
   </data>
-  <data name="btnRegressLIQVISC.Text" xml:space="preserve">
-    <value>Datenregression</value>
+  <data name="Label57.Size" type="System.Drawing.Size, System.Drawing">
+    <value>500, 13</value>
   </data>
-  <data name="Label38.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 154</value>
+  <data name="Label57.Text" xml:space="preserve">
+    <value>Tragen Sie die Anzahl aller zusätzlicher Joback Gruppen der Komponentenstruktur ein, falls vorhanden.</value>
   </data>
-  <data name="btnViewLIQVISC.Text" xml:space="preserve">
-    <value>Diagramm</value>
+  <data name="Column2.HeaderText" xml:space="preserve">
+    <value>Typ</value>
   </data>
-  <data name="tbLIQVISC_C.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 122</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Column2.Width" type="System.Int32, mscorlib">
+    <value>31</value>
   </data>
-  <data name="Label39.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 128</value>
+  <data name="ColumnGroupName.HeaderText" xml:space="preserve">
+    <value>Gruppe</value>
   </data>
-  <data name="tbLIQVISC_B.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 96</value>
+  <data name="ColumnGroupName.Width" type="System.Int32, mscorlib">
+    <value>48</value>
   </data>
-  <data name="rbCoeffLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
-    <value>240, 16</value>
+  <data name="ColumnCountUNIFAC.HeaderText" xml:space="preserve">
+    <value>Anzahl UNIFAC</value>
   </data>
-  <data name="rbCoeffLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 17</value>
+  <data name="ColumnCountUNIFAC.ToolTipText" xml:space="preserve">
+    <value>Anzahl Joback Untergruppen innerhalb von UNIFAC-Gruppen</value>
   </data>
-  <data name="rbCoeffLIQVISC.Text" xml:space="preserve">
-    <value>Eingabe der Koeffizienten *</value>
+  <data name="ColumnCountJoback.HeaderText" xml:space="preserve">
+    <value>Anzahl Joback</value>
   </data>
-  <data name="Label40.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 102</value>
-  </data>
-  <data name="cbEqLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
-    <value>298, 38</value>
-  </data>
-  <data name="cbEqLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>146, 21</value>
-  </data>
-  <data name="tbLIQVISC_A.Location" type="System.Drawing.Point, System.Drawing">
-    <value>257, 70</value>
-  </data>
-  <data name="Label42.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 41</value>
-  </data>
-  <data name="Label42.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 13</value>
-  </data>
-  <data name="Label42.Text" xml:space="preserve">
-    <value>Gleichung</value>
-  </data>
-  <data name="Label41.Location" type="System.Drawing.Point, System.Drawing">
-    <value>237, 76</value>
-  </data>
-  <data name="FaTabStripItem9.Title" xml:space="preserve">
-    <value>Viskositat Flüssigkeit</value>
+  <data name="ColumnCountJoback.ToolTipText" xml:space="preserve">
+    <value>Anzahl zusätzlicher Joback-Gruppen welche nicht bereits als UNIFAC-Untergruppe definiert sind.</value>
   </data>
   <data name="tbStatusSolidCp.Size" type="System.Drawing.Size, System.Drawing">
     <value>161, 21</value>
@@ -328,6 +305,90 @@
   </data>
   <data name="FaTabStripItem10.Title" xml:space="preserve">
     <value>Feststoff</value>
+  </data>
+  <data name="Label46.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 202</value>
+  </data>
+  <data name="Label46.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 13</value>
+  </data>
+  <data name="Label46.Text" xml:space="preserve">
+    <value>* Visc in Pa.s, T in K</value>
+  </data>
+  <data name="rbEstimateLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 17</value>
+  </data>
+  <data name="rbEstimateLIQVISC.Text" xml:space="preserve">
+    <value>Schätze (Letsou-Stiel)</value>
+  </data>
+  <data name="tbLIQVISC_E.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 174</value>
+  </data>
+  <data name="rbRegressLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 17</value>
+  </data>
+  <data name="rbRegressLIQVISC.Text" xml:space="preserve">
+    <value>Regression Versuchsdaten</value>
+  </data>
+  <data name="Label37.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 180</value>
+  </data>
+  <data name="tbLIQVISC_D.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 148</value>
+  </data>
+  <data name="btnRegressLIQVISC.Text" xml:space="preserve">
+    <value>Datenregression</value>
+  </data>
+  <data name="Label38.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 154</value>
+  </data>
+  <data name="btnViewLIQVISC.Text" xml:space="preserve">
+    <value>Diagramm</value>
+  </data>
+  <data name="tbLIQVISC_C.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 122</value>
+  </data>
+  <data name="Label39.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 128</value>
+  </data>
+  <data name="tbLIQVISC_B.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 96</value>
+  </data>
+  <data name="rbCoeffLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
+    <value>240, 16</value>
+  </data>
+  <data name="rbCoeffLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 17</value>
+  </data>
+  <data name="rbCoeffLIQVISC.Text" xml:space="preserve">
+    <value>Eingabe der Koeffizienten *</value>
+  </data>
+  <data name="Label40.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 102</value>
+  </data>
+  <data name="cbEqLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
+    <value>298, 38</value>
+  </data>
+  <data name="cbEqLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 21</value>
+  </data>
+  <data name="tbLIQVISC_A.Location" type="System.Drawing.Point, System.Drawing">
+    <value>257, 70</value>
+  </data>
+  <data name="Label42.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 41</value>
+  </data>
+  <data name="Label42.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 13</value>
+  </data>
+  <data name="Label42.Text" xml:space="preserve">
+    <value>Gleichung</value>
+  </data>
+  <data name="Label41.Location" type="System.Drawing.Point, System.Drawing">
+    <value>237, 76</value>
+  </data>
+  <data name="FaTabStripItem9.Title" xml:space="preserve">
+    <value>Viskositat Flüssigkeit</value>
   </data>
   <data name="Label45.Location" type="System.Drawing.Point, System.Drawing">
     <value>241, 203</value>
@@ -497,9 +558,6 @@
   <data name="tbCPIG_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 123</value>
   </data>
-  <data name="FaTabStripItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>805, 435</value>
-  </data>
   <data name="FaTabStripItem7.Title" xml:space="preserve">
     <value>Wärmekapazität (Cp, Ideales Gas)</value>
   </data>
@@ -584,9 +642,6 @@
   <data name="Label29.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 68</value>
   </data>
-  <data name="FaTabStripItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>805, 435</value>
-  </data>
   <data name="FaTabStripItem6.Title" xml:space="preserve">
     <value>Dampfdruck</value>
   </data>
@@ -605,99 +660,23 @@
   <data name="GroupBox11.Text" xml:space="preserve">
     <value>UNIQUAC Parameter</value>
   </data>
-  <data name="LinkLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 18</value>
+  <data name="LabelWithDivider2.Text" xml:space="preserve">
+    <value>Kritische Temperatur</value>
   </data>
-  <data name="LinkLabel1.Text" xml:space="preserve">
-    <value>CAS Nummer</value>
+  <data name="LabelWithDivider6.Text" xml:space="preserve">
+    <value>Azentrischer Faktor</value>
   </data>
-  <data name="Label17.Text" xml:space="preserve">
-    <value>Name</value>
+  <data name="LabelWithDivider3.Text" xml:space="preserve">
+    <value>Kritischer Druck</value>
   </data>
-  <data name="Label21.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 13</value>
+  <data name="LabelWithDivider5.Text" xml:space="preserve">
+    <value>Rackett Parameter</value>
   </data>
-  <data name="Label21.Text" xml:space="preserve">
-    <value>Formel</value>
+  <data name="LabelWithDivider4.Text" xml:space="preserve">
+    <value>Kritische Kompressibilität</value>
   </data>
-  <data name="Label22.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 13</value>
-  </data>
-  <data name="Label22.Text" xml:space="preserve">
-    <value>Molgewicht</value>
-  </data>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Identifikation</value>
-  </data>
-  <data name="LinkLabel2.ToolTip" xml:space="preserve">
-    <value>Aufruf der Dortmund-Dataenbank zur Unterstützung bei der UNIFAC-Gruppenzuordnung.</value>
-  </data>
-  <data name="Label60.Size" type="System.Drawing.Size, System.Drawing">
-    <value>446, 13</value>
-  </data>
-  <data name="Label60.Text" xml:space="preserve">
-    <value>Tragen Sie die Anzahl aller UNIFAC Gruppen der Komponentenstruktur ein, falls vorhanden.</value>
-  </data>
-  <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Anzahl</value>
-  </data>
-  <data name="Column1.HeaderText" xml:space="preserve">
-    <value>Beispiel</value>
-  </data>
-  <data name="Label58.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 13</value>
-  </data>
-  <data name="Label58.Text" xml:space="preserve">
-    <value>Atom Anzahl zusätzlich</value>
-  </data>
-  <data name="Count.HeaderText" xml:space="preserve">
-    <value>Anzahl</value>
-  </data>
-  <data name="TextBox1.Text" xml:space="preserve">
-    <value>Achtung! Die Definition von zusätzlichen Jobackgruppen oder Atomen wird die  Verwendung der UNIFAC/MODFAC Packete verhindern!</value>
-  </data>
-  <data name="Label59.Size" type="System.Drawing.Size, System.Drawing">
-    <value>108, 13</value>
-  </data>
-  <data name="Label59.Text" xml:space="preserve">
-    <value>Atom Anzahl UNIFAC</value>
-  </data>
-  <data name="ColCount.HeaderText" xml:space="preserve">
-    <value>Anzahl</value>
-  </data>
-  <data name="LinkLabel3.ToolTip" xml:space="preserve">
-    <value>Aufruf der Chemeo-Dataenbank zur Unterstützung bei der Joback-Gruppenzuordnung.</value>
-  </data>
-  <data name="Label57.Size" type="System.Drawing.Size, System.Drawing">
-    <value>500, 13</value>
-  </data>
-  <data name="Label57.Text" xml:space="preserve">
-    <value>Tragen Sie die Anzahl aller zusätzlicher Joback Gruppen der Komponentenstruktur ein, falls vorhanden.</value>
-  </data>
-  <data name="Column2.HeaderText" xml:space="preserve">
-    <value>Typ</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Column2.Width" type="System.Int32, mscorlib">
-    <value>31</value>
-  </data>
-  <data name="ColumnGroupName.HeaderText" xml:space="preserve">
-    <value>Gruppe</value>
-  </data>
-  <data name="ColumnGroupName.Width" type="System.Int32, mscorlib">
-    <value>48</value>
-  </data>
-  <data name="ColumnCountUNIFAC.HeaderText" xml:space="preserve">
-    <value>Anzahl UNIFAC</value>
-  </data>
-  <data name="ColumnCountUNIFAC.ToolTipText" xml:space="preserve">
-    <value>Anzahl Joback Untergruppen innerhalb von UNIFAC-Gruppen</value>
-  </data>
-  <data name="ColumnCountJoback.HeaderText" xml:space="preserve">
-    <value>Anzahl Joback</value>
-  </data>
-  <data name="ColumnCountJoback.ToolTipText" xml:space="preserve">
-    <value>Anzahl zusätzlicher Joback-Gruppen welche nicht bereits als UNIFAC-Untergruppe definiert sind.</value>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Kritische Daten</value>
   </data>
   <data name="LabelWithDivider12.Text" xml:space="preserve">
     <value>Bildungseigenschaften</value>
@@ -759,23 +738,44 @@
   <data name="FaTabStripItem3.Title" xml:space="preserve">
     <value>Diverse Eigenschaften</value>
   </data>
-  <data name="LabelWithDivider2.Text" xml:space="preserve">
-    <value>Kritische Temperatur</value>
+  <data name="LinkLabel2.ToolTip" xml:space="preserve">
+    <value>Aufruf der Dortmund-Dataenbank zur Unterstützung bei der UNIFAC-Gruppenzuordnung.</value>
   </data>
-  <data name="LabelWithDivider6.Text" xml:space="preserve">
-    <value>Azentrischer Faktor</value>
+  <data name="Label60.Size" type="System.Drawing.Size, System.Drawing">
+    <value>446, 13</value>
   </data>
-  <data name="LabelWithDivider3.Text" xml:space="preserve">
-    <value>Kritischer Druck</value>
+  <data name="Label60.Text" xml:space="preserve">
+    <value>Tragen Sie die Anzahl aller UNIFAC Gruppen der Komponentenstruktur ein, falls vorhanden.</value>
   </data>
-  <data name="LabelWithDivider5.Text" xml:space="preserve">
-    <value>Rackett Parameter</value>
+  <data name="Column4.HeaderText" xml:space="preserve">
+    <value>Anzahl</value>
   </data>
-  <data name="LabelWithDivider4.Text" xml:space="preserve">
-    <value>Kritische Kompressibilität</value>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Beispiel</value>
   </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Kritische Daten</value>
+  <data name="LinkLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 18</value>
+  </data>
+  <data name="LinkLabel1.Text" xml:space="preserve">
+    <value>CAS Nummer</value>
+  </data>
+  <data name="Label17.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Label21.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 13</value>
+  </data>
+  <data name="Label21.Text" xml:space="preserve">
+    <value>Formel</value>
+  </data>
+  <data name="Label22.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 13</value>
+  </data>
+  <data name="Label22.Text" xml:space="preserve">
+    <value>Molgewicht</value>
+  </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Identifikation</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Komponenten Eigenschaften</value>

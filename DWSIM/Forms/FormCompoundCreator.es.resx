@@ -118,6 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>805, 435</value>
+  </data>
+  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>891, 420</value>
+  </data>
+  <data name="gbCPs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 105</value>
+  </data>
+  <data name="gbSolidDens.Location" type="System.Drawing.Point, System.Drawing">
+    <value>375, 105</value>
+  </data>
   <data name="Label46.Location" type="System.Drawing.Point, System.Drawing">
     <value>253, 203</value>
   </data>
@@ -144,33 +156,6 @@
   </data>
   <data name="Label42.Location" type="System.Drawing.Point, System.Drawing">
     <value>253, 42</value>
-  </data>
-  <data name="FaTabStripItem9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>805, 435</value>
-  </data>
-  <data name="tbStatusSolidCp.Text" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="btnRegressSolidCp.Text" xml:space="preserve">
-    <value>Fazer Regressão</value>
-  </data>
-  <data name="btnViewSolidCp.Text" xml:space="preserve">
-    <value>Visualizar</value>
-  </data>
-  <data name="gbCPs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>19, 105</value>
-  </data>
-  <data name="tbStatusSolidDens.Text" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="btnRegressSolidDens.Text" xml:space="preserve">
-    <value>Fazer Regressão</value>
-  </data>
-  <data name="btnViewSolidDens.Text" xml:space="preserve">
-    <value>Visualizar</value>
-  </data>
-  <data name="gbSolidDens.Location" type="System.Drawing.Point, System.Drawing">
-    <value>375, 105</value>
   </data>
   <data name="Label45.Location" type="System.Drawing.Point, System.Drawing">
     <value>255, 203</value>
@@ -258,9 +243,6 @@
   </data>
   <data name="Label30.Location" type="System.Drawing.Point, System.Drawing">
     <value>250, 41</value>
-  </data>
-  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>891, 420</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
