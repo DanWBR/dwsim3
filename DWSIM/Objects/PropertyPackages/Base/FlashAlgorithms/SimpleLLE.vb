@@ -122,9 +122,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If ecount > 0 And Abs(err) < 0.000001 Then Exit Do
 
                 For i = 0 To n
-                    Vn2(i) = Vn1(i) * L2 * gamma1(i) / (L1 * gamma2(i))
+                    Vn1(i) = Vz(i) / (1 + gamma1(i) * L2 / (gamma2(i) * L1))
                 Next
-
+                
                 L1 = 0
                 L2 = 0
                 For i = 0 To n
@@ -133,7 +133,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
 
                 For i = 0 To n
-                    Vn1(i) = Vz(i) / (1 + gamma1(i) * L2 / (gamma2(i) * L1))
+                    Vn2(i) = Vn1(i) * L2 * gamma1(i) / (L1 * gamma2(i))
                 Next
 
                 ecount += 1

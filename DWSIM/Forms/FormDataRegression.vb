@@ -622,6 +622,9 @@ Public Class FormDataRegression
                     Next
                 Case DataType.TPxy
                 Case DataType.Pxx, DataType.Txx
+
+
+
                     proppack.Parameters("PP_FLASHALGORITHM") = 9
                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.SimpleLLE
                     Dim flashinstance As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.SimpleLLE = TryCast(proppack.FlashBase, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.SimpleLLE)
@@ -770,6 +773,11 @@ Public Class FormDataRegression
                             Next
                             vartext += "}"
                     End Select
+                    If Abs(Vx1(0) - Vx1c(0)) > Abs(Vx1(0) - Vx2c(0)) Then
+                        Dim tmpvec As Double() = Vx1c.Clone
+                        Vx1c = Vx2c.Clone
+                        Vx2c = tmpvec
+                    End If
                     For i = 0 To np - 1
                         Me.currcase.calcx1l1.Add(Vx1c(i))
                         Me.currcase.calcx1l2.Add(Vx2c(i))
@@ -908,6 +916,11 @@ Public Class FormDataRegression
                             Next
                             vartext += "}"
                     End Select
+                    If Abs(Vx1(0) - Vx1c(0)) > Abs(Vx1(0) - Vx2c(0)) Then
+                        Dim tmpvec As Double() = Vx1c.Clone
+                        Vx1c = Vx2c.Clone
+                        Vx2c = tmpvec
+                    End If
                     For i = 0 To np - 1
                         Me.currcase.calcx1l1.Add(Vx1c(i))
                         Me.currcase.calcx1l2.Add(Vx2c(i))

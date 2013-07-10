@@ -1775,7 +1775,7 @@ Public Class FormMain
         Return builder.ToString()
     End Function 'RandomString 
 
-    Sub LoadXML(ByVal path As String)
+    Sub LoadXML(ByVal path As String, Optional ByVal simulationfilename As String = "")
 
         Dim fls As New FormLS
 
@@ -1801,7 +1801,7 @@ Public Class FormMain
 
             form.Options.LoadData(data)
 
-            Me.filename = path
+            If simulationfilename <> "" Then Me.filename = simulationfilename Else Me.filename = path
 
             fls.Label2.Text = "Loading Flowsheet Graphic Objects..."
             Application.DoEvents()
@@ -1894,9 +1894,9 @@ Public Class FormMain
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                                 obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
                                 .CapeOpenUOCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
                                 .SolidsSeparatorCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Filter
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
                                 .FilterCollection.Add(obj.Name, obj)
                         End Select
                         If Not DWSIM.App.IsRunningOnMono Then
@@ -2183,9 +2183,9 @@ Public Class FormMain
                                 .CLCS_CustomUOCollection.Add(id, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                                 .CLCS_CapeOpenUOCollection.Add(id, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
                                 .CLCS_SolidsSeparatorCollection.Add(id, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Filter
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
                                 .CLCS_FilterCollection.Add(id, obj)
                         End Select
                     End With
@@ -2387,8 +2387,10 @@ Public Class FormMain
             Me.Invalidate()
             Application.DoEvents()
 
-            If Not My.Settings.MostRecentFiles.Contains([path]) And IO.Path.GetExtension([path]).ToLower <> ".dwbcs" Then
-                My.Settings.MostRecentFiles.Add([path])
+            Dim mypath As String = simulationfilename
+            If mypath = "" Then mypath = [path]
+            If Not My.Settings.MostRecentFiles.Contains(mypath) And IO.Path.GetExtension(mypath).ToLower <> ".dwbcs" Then
+                My.Settings.MostRecentFiles.Add(mypath)
                 Me.UpdateMRUList()
             End If
 
@@ -2436,7 +2438,7 @@ Public Class FormMain
 
     End Sub
 
-    Sub SaveXML(ByVal path As String, ByVal form As FormFlowsheet)
+    Sub SaveXML(ByVal path As String, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "")
 
         Dim xdoc As New XDocument()
         Dim xel As XElement
@@ -2543,30 +2545,12 @@ Public Class FormMain
 
         xdoc.Save(path)
 
-        'lista dos mais recentes, modificar
-        With My.Settings.MostRecentFiles
-            If Not .Contains(Me.filename) Then
-                If My.Settings.MostRecentFiles.Count = 3 Then
-                    .Item(2) = .Item(1)
-                    .Item(1) = .Item(0)
-                    .Item(0) = Me.filename
-                ElseIf My.Settings.MostRecentFiles.Count = 2 Then
-                    .Add(.Item(1))
-                    .Item(1) = .Item(0)
-                    .Item(0) = Me.filename
-                ElseIf My.Settings.MostRecentFiles.Count = 1 Then
-                    .Add(.Item(0))
-                    .Item(0) = Me.filename
-                ElseIf My.Settings.MostRecentFiles.Count = 0 Then
-                    .Add(Me.filename)
-                End If
-            End If
-        End With
-
         Me.UIThread(New Action(Sub()
-                                   'processar lista de arquivos recentes
-                                   If Not My.Settings.MostRecentFiles.Contains([path]) Then
-                                       My.Settings.MostRecentFiles.Add([path])
+                                   Dim mypath As String = simulationfilename
+                                   If mypath = "" Then mypath = [path]
+                                   'process recent files list
+                                   If Not My.Settings.MostRecentFiles.Contains(mypath) Then
+                                       My.Settings.MostRecentFiles.Add(mypath)
                                        If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
                                    End If
                                    form.Options.FilePath = Me.filename
@@ -2841,9 +2825,9 @@ Label_00CC:
                     entry = stream.GetNextEntry
                 Loop
             End Using
-            LoadXML(fullname)
+            LoadXML(fullname, caminho)
             File.Delete(fullname)
-            Return true
+            Return True
         Catch ex As Exception
             MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return False
@@ -2917,7 +2901,7 @@ Label_00CC:
     Sub SaveXMLZIP(ByVal zipfilename As String, ByVal form As FormFlowsheet)
 
         Dim xmlfile As String = My.Computer.FileSystem.GetTempFileName
-        Me.SaveXML(xmlfile, form)
+        Me.SaveXML(xmlfile, form, zipfilename)
 
         Dim i_Files As ArrayList = New ArrayList()
         If File.Exists(xmlfile) Then i_Files.Add(xmlfile)
