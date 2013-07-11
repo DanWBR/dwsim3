@@ -997,11 +997,11 @@ Public Class FormCompoundCreator
         c_de(1) = 0.14056
         c_de(0) = -141.26
 
-        c_sd(0) = 1100
-        c_sd(1) = -1
-        c_sd(2) = 0
-        c_sd(3) = 0
-        c_sd(4) = 0
+        c_sd(0) = 11.5
+        c_sd(1) = -0.01
+        c_sd(2) = 0.0#
+        c_sd(3) = 0.0#
+        c_sd(4) = 0.0#
 
         c_scp(0) = 0
         c_scp(1) = 0.1
@@ -1076,7 +1076,7 @@ Public Class FormCompoundCreator
 
             Case 4
                 'regressão dos dados
-                obj = lmfit.GetCoeffs(CopyToVector(mycase.DataRoS, 0), CopyToVector(mycase.DataRoS, 1), c_sd, DWSIM.Utilities.PetroleumCharacterization.LMFit.FitType.Cp, 0.0000000001, 0.0000000001, 0.0000000001, 10000)
+                obj = lmfit.GetCoeffs(CopyToVector(mycase.DataRoS, 0), CopyToVector(mycase.DataRoS, 1), c_sd, DWSIM.Utilities.PetroleumCharacterization.LMFit.FitType.Cp, 0.0000000000001, 0.0000000000001, 0.0000000000001, 10000)
                 c_sd = obj(0)
                 r_sd = obj(2)
                 n_sd = obj(3)
@@ -1142,9 +1142,10 @@ Public Class FormCompoundCreator
     End Sub
 
     Private Sub btnRegressSolidCp_Click(sender As System.Object, e As System.EventArgs) Handles btnRegressSolidCp.Click
+        Dim MW As Double = Me.TextBoxMW.Text
         mycase.DataCpS.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataCpS.Rows
-            If row.Index < Me.GridExpDataCpS.Rows.Count - 1 Then mycase.DataCpS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value)})
+            If row.Index < Me.GridExpDataCpS.Rows.Count - 1 Then mycase.DataCpS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value) * MW / 1000})
         Next
         Dim result As Object = RegressData(5, False)
         tbStatusSolidCp.Text = GetInfo(result(3))
@@ -1174,9 +1175,10 @@ Public Class FormCompoundCreator
         End With
     End Sub
     Private Sub btnRegressSolidDens_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressSolidDens.Click
+        Dim MW As Double = Me.TextBoxMW.Text
         mycase.DataRoS.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataRoS.Rows
-            If row.Index < Me.GridExpDataRoS.Rows.Count - 1 Then mycase.DataRoS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value)})
+            If row.Index < Me.GridExpDataRoS.Rows.Count - 1 Then mycase.DataRoS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value) / MW})
         Next
         Dim result As Object = RegressData(4, False)
         tbStatusSolidDens.Text = GetInfo(result(3))
@@ -1551,11 +1553,11 @@ Public Class FormCompoundCreator
         For Each d As Double() In mycase.DataRoS
             x = cv.ConverterDoSI(su.spmp_temperature, d(0))
             px.Add(x)
-            y1 = cv.ConverterDoSI(su.spmp_density, d(1))
+            y1 = cv.ConverterDoSI(su.spmp_density, d(1)) * mycase.cp.Molar_Weight
             py1.Add(y1)
             Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
             With mycase.cp
-                y2 = cv.ConverterDoSI(su.spmp_density, pp.CalcCSTDepProp(.SolidDensityEquation, .Solid_Density_Const_A, .Solid_Density_Const_B, .Solid_Density_Const_C, .Solid_Density_Const_D, .Solid_Density_Const_E, d(0), 0))
+                y2 = cv.ConverterDoSI(su.spmp_density, pp.CalcCSTDepProp(.SolidDensityEquation, .Solid_Density_Const_A, .Solid_Density_Const_B, .Solid_Density_Const_C, .Solid_Density_Const_D, .Solid_Density_Const_E, d(0), 0) * .Molar_Weight)
                 py2.Add(y2)
             End With
             mytext.AppendLine(x & vbTab & y1 & vbTab & y2)
