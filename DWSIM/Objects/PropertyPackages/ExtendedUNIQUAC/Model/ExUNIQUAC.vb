@@ -170,6 +170,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 If cprops(i).IsIon Then
                     Vids(i) = cprops(i).Formula
                     charge(i) = cprops(i).Charge
+                    If Vx(i) = 0.0# Then Vx(i) = 0.0000000001
                 Else
                     Vids(i) = cprops(i).Name
                     charge(i) = 0.0#
