@@ -112,42 +112,11 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Button3.Text" xml:space="preserve">
-    <value>Estimate</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="KryptonDataGridView2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 54</value>
-  </data>
-  <data name="KryptonDataGridView2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>621, 326</value>
-  </data>
-  <data name="LabelWithDivider2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>626, 10</value>
-  </data>
-  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>309, 13</value>
-  </data>
-  <data name="Label3.Text" xml:space="preserve">
-    <value>Activate cell editing by clicking on it with the left mouse button.</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>636, 332</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Interaction Parameters</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>111, 13</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>Action in deployment.</value>
-  </data>
   <data name="Button5.Text" xml:space="preserve">
     <value>Estimate (UNIFAC-LL)</value>
   </data>
@@ -174,5 +143,39 @@
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>General Options</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 13</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Convergence tolerance</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 13</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Maximum number of iterations</value>
+  </data>
+  <data name="chkCalcChemEq.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 17</value>
+  </data>
+  <data name="chkCalcChemEq.Text" xml:space="preserve">
+    <value>Calculate Chemical Equilibrium</value>
+  </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 13</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Reaction Set</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>636, 332</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Chemical Equilibrium</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Advanced Settings</value>
   </data>
 </root>

@@ -24,6 +24,7 @@ Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.MathEx
 Imports DWSIM.DWSIM.MathEx.Common
 Imports Ciloci.Flee
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -45,6 +46,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Property ComponentIDs As List(Of String)
         Public Property CompoundProperties As List(Of ConstantProperties)
         Public Property ComponentConversions As Dictionary(Of String, Double)
+
+        Public Property MaximumIterations As Integer = 250
+        Public Property Tolerance As Double = 0.00001
+
+        Public Property CalculateChemicalEquilibria As Boolean = False
 
         Private Vx0 As Double()
 
@@ -139,8 +145,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 'get the default reaction set.
 
-                Me.ReactionSet = proppack.CurrentMaterialStream.Flowsheet.Options.ReactionSets.First.Key
-
                 Me.Vx0 = Vx.Clone
 
                 Dim int_count As Integer = 0
@@ -151,7 +155,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     'calculate chemical equilibria between ions, salts and water. 
                     ''SolveChemicalEquilibria' returns the equilibrium molar amounts in the liquid phase, including precipitates.
 
-                    Vnf = SolveChemicalEquilibria(Vx, T, P, ids).Clone
+                    If CalculateChemicalEquilibria Then Vnf = SolveChemicalEquilibria(Vx, T, P, ids).Clone
 
                     'calculate activity coefficients.
 
@@ -255,7 +259,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     End If
 
-                    If Math.Abs(L - L_ant) < 0.0000000001 Then Exit Do
+                    If Math.Abs(L - L_ant) < Tolerance Then Exit Do
 
                     sumN = 0
                     For i = 0 To n
@@ -267,9 +271,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Vx(i) = Vf(i) / sumN
                     Next
 
-                Loop Until int_count > 50
+                Loop Until int_count > MaximumIterations
 
-                If int_count > 50 Then
+                If int_count > MaximumIterations Then
                     Throw New Exception("Chemical Equilibrium Solver error: Reached the maximum number of external iterations without converging.")
                 End If
 
@@ -467,7 +471,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     fx = Me.FunctionValue2N(x)
 
-                    If AbsSum(fx) < 0.00001 Then Exit Do
+                    If AbsSum(fx) < Tolerance Then Exit Do
 
                     dfdx_ant = dfdx.Clone
                     dfdx = Me.FunctionGradient2N(x)
@@ -495,9 +499,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Throw New Exception("Chemical Equilibrium Solver error: No solution found - reached a stationary point of the objective function (singular gradient matrix).")
                     End If
 
-                    If niter > 250 Then
+                    If niter > MaximumIterations Then
                         Throw New Exception("Chemical Equilibrium Solver error: Reached the maximum number of internal iterations without converging.")
                     End If
+
+                    CheckCalculatorStatus()
+
 
                 Loop
 

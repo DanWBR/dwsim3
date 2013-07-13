@@ -4304,7 +4304,7 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
     <value>Calculando Fator de Ajuste</value>
   </data>
   <data name="PP_FLASHALGORITHM" xml:space="preserve">
-    <value>Algoritmo Flash (0 = Padrão, 1 = Inside-Out, 2 = Config. Global)</value>
+    <value>Algoritmo Flash (2 = Definição Global, 0 = LA ELV, 1 = IO ELV, 3 = IO ELLV, 4 = Gibbs ELV, 5 = Gibbs ELLV, 6 = NL ELLV, 7 = NL ESL, 8 = NL Imisc., 9 = LLE Simples)</value>
   </data>
   <data name="AbsorptionColumn_Desc" xml:space="preserve">
     <value>Modelo rigoroso para coluna de absorção.</value>

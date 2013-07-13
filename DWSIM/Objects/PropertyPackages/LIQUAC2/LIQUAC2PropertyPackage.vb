@@ -37,11 +37,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Private m_props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
         Public m_uni As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LIQUAC2
         Public m_elec As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Electrolyte
-        Public m_elecflash As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.ElectrolyteSVLE
+        Public Property ElectrolyteFlash As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.ElectrolyteSVLE
         Private m_id As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Ideal
 
         Public Sub New(ByVal comode As Boolean)
+
             MyBase.New(comode)
+
+            Me.IsConfigurable = True
+            Me.ConfigForm = New FormConfigLIQUAC
+            Me._packagetype = PropertyPackages.PackageType.ActivityCoefficient
+            Me.IsElectrolytePP = True
+
+            Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
+
         End Sub
 
         Public Sub New()
@@ -51,7 +60,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Me.IsConfigurable = True
             Me.ConfigForm = New FormConfigLIQUAC
             Me._packagetype = PropertyPackages.PackageType.ActivityCoefficient
-            Me.iselectrolytePP = True
+            Me.IsElectrolytePP = True
+
+            Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
 
         End Sub
 
@@ -794,9 +805,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Next
 
             Me.m_elec = New Auxiliary.Electrolyte
-            Me.m_elecflash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
-            Me.m_elecflash.CompoundProperties = constprops
-            Me.m_elecflash.proppack = Me
+            If Me.ElectrolyteFlash Is Nothing Then Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
+            Me.ElectrolyteFlash.CompoundProperties = constprops
+            Me.ElectrolyteFlash.proppack = Me
 
             Select Case spec1
 
@@ -809,7 +820,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
-                            result = Me.m_elecflash.Flash_PT(RET_VMOL(Fase.Mixture), T, P)
+                            result = Me.ElectrolyteFlash.Flash_PT(RET_VMOL(Fase.Mixture), T, P)
 
                             xl = result("LiquidPhaseMoleFraction")
                             xv = result("VaporPhaseMoleFraction")

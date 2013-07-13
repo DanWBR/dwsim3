@@ -158,13 +158,6 @@ Public Class FormStSim
                 End If
             Next
 
-            Try
-                Me.ogc1.GroupTemplate = Nothing
-                Me.ogc1.Sort(ogc1.Columns(1), System.ComponentModel.ListSortDirection.Ascending)
-            Catch ex As Exception
-                'FrmChild.WriteToLog(ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-            End Try
-
         End If
 
         With Me.dgvpp.Rows
@@ -872,7 +865,7 @@ Public Class FormStSim
             Try
                 Dim r As New OutlookGridRow
                 translatedname = DWSIM.App.GetComponentName(comp.Name)
-                r.CreateCells(ogc1, New Object() {comp.Name, translatedname, comp.OriginalDB, DWSIM.App.GetComponentType(comp), comp.Formula})
+                r.CreateCells(ogc1, New Object() {comp.Name, translatedname, comp.CAS_Number, DWSIM.App.GetComponentType(comp), comp.Formula, comp.OriginalDB})
                 ogc1.Rows.Add(r)
                 Return ogc1.Rows.Count - 1
             Catch ex As Exception
@@ -880,6 +873,8 @@ Public Class FormStSim
                 Return -1
             Finally
                 ACSC1.Add(translatedname)
+                ACSC1.Add(comp.CAS_Number)
+                ACSC1.Add(comp.Formula)
                 Me.TextBox1.AutoCompleteCustomSource = ACSC1
             End Try
         Else
@@ -898,122 +893,33 @@ Public Class FormStSim
 
     End Function
 
-    Private Sub ogc1_CellClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles ogc1.CellClick
-        If e.RowIndex < 0 And e.ColumnIndex > 0 Then
-            Dim direction As System.ComponentModel.ListSortDirection
-            If Me.prevsort = System.ComponentModel.ListSortDirection.Ascending Then
-                direction = System.ComponentModel.ListSortDirection.Descending
-            Else
-                direction = System.ComponentModel.ListSortDirection.Ascending
-            End If
-            '// remember the column that was clicked and in which direction is ordered
-            prevcol = e.ColumnIndex
-            prevsort = direction
-            '// set the column to be grouped
-            If ogc1.GroupTemplate Is Nothing Then
-                ogc1.GroupTemplate = New OutlookgGridDefaultGroup
-            End If
-            ogc1.GroupTemplate.Column = ogc1.Columns(e.ColumnIndex)
-            Select Case e.ColumnIndex
-                Case 1
-                    prevgroup = ogc1.GroupTemplate
-                    '// set the column to be grouped
-                    ogc1.GroupTemplate = New OutlookGridAlphabeticGroup()
-                    ogc1.GroupTemplate.Collapsed = prevgroup.Collapsed
-                    ogc1.GroupTemplate.Column = ogc1.Columns(e.ColumnIndex)
-                    ogc1.Sort(ogc1.Columns(e.ColumnIndex), direction)
-                    ogc1.GroupTemplate = prevgroup
-                Case Else
-                    ogc1.Sort(ogc1.Columns(e.ColumnIndex), direction)
-            End Select
-        End If
-    End Sub
-
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
-    End Sub
-
-    'Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-    '    Dim myStream As System.IO.FileStream
-    '    If Me.OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
-    '        myStream = Me.OpenFileDialog1.OpenFile()
-    '        If Not (myStream Is Nothing) Then
-    '            Dim nome = myStream.Name
-    '            myStream.Close()
-    '            Dim myFileStream As IO.FileStream = New IO.FileStream(nome, IO.FileMode.Open)
-    '            Try
-    '                Dim componentes As ConstantPropertiesCollection
-    '                Dim mySerializer As XmlSerializer = New XmlSerializer(GetType(ConstantPropertiesCollection))
-    '                componentes = CType(mySerializer.Deserialize(myFileStream), ConstantPropertiesCollection)
-    '                If Me.cbudb.Checked Then
-    '                    If componentes.Collection.GetLength(0) > 0 Then
-    '                        Me.AddDatabase(componentes.Collection(0).OriginalDB, "User", nome)
-    '                    End If
-    '                    For Each c As ConstantProperties In componentes.Collection
-    '                        If Not FrmChild.Options.NotSelectedComponents.ContainsKey(c.Name) Then
-    '                            If Not FrmChild.Options.SelectedComponents.ContainsKey(c.Name) Then
-    '                                FrmChild.Options.NotSelectedComponents.Add(c.Name, c)
-    '                                Me.AddCompToGrid(c)
-    '                            Else
-    '                                FrmChild.Options.SelectedComponents(c.Name) = c
-    '                            End If
-    '                        Else
-    '                            FrmChild.Options.NotSelectedComponents(c.Name) = c
-    '                        End If
-    '                    Next
-    '                Else
-    '                    For Each c As ConstantProperties In componentes.Collection
-    '                        If Not FrmChild.Options.NotSelectedComponents.ContainsKey(c.Name) Then
-    '                            If Not FrmChild.Options.SelectedComponents.ContainsKey(c.Name) Then
-    '                                FrmChild.Options.NotSelectedComponents.Add(c.Name, c)
-    '                                Me.AddCompToGrid(c)
-    '                            End If
-    '                        End If
-    '                    Next
-    '                End If
-    '            Catch ex As System.Runtime.Serialization.SerializationException
-    '                MessageBox.Show(DWSIM.App.GetLocalString("OarquivoXMLinformado") & vbCrLf & ex.Message, DWSIM.App.GetLocalString("ErroaoleroarquivoXML"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-    '            Finally
-    '                myFileStream.Close()
-    '            End Try
-
-    '        End If
-    '    End If
-    'End Sub
-
-    'Sub AddDatabase(ByVal id As String, ByVal name As String, ByVal path As String)
-    '    If Not FrmChild.Options.Databases.ContainsKey(id) Then
-    '        FrmChild.Options.Databases.Add(id, New String() {name, path})
-    '        With Me.dgvdb.Rows
-    '            .Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path, DWSIM.App.GetLocalString("Remove")})
-    '        End With
-    '        For Each r As DataGridViewRow In Me.dgvdb.Rows
-    '            r.Height = "40"
-    '        Next
-    '    End If
-    'End Sub
-
-    Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button6.Click
-        Me.ogc1.GroupTemplate = Nothing
-        Me.ogc1.Sort(ogc1.Columns(1), System.ComponentModel.ListSortDirection.Ascending)
     End Sub
 
     Private Sub TextBox1_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBox1.TextChanged
         For Each r As DataGridViewRow In ogc1.Rows
             If Not r.Cells(1).Value Is Nothing Then
-                If r.Cells(1).Value.ToString = Me.TextBox1.Text Then
-                    r.Selected = True
-                    If r.Visible Then ogc1.FirstDisplayedScrollingRowIndex = r.Index
+                If r.Cells(1).Value.ToString.Contains(Me.TextBox1.Text) Or
+                   r.Cells(2).Value.ToString.Contains(Me.TextBox1.Text) Or
+                   r.Cells(4).Value.ToString.Contains(Me.TextBox1.Text) Then
+                    r.Visible = True
+                    If r.Cells(1).Value.ToString.Equals(Me.TextBox1.Text) Or
+                                       r.Cells(2).Value.ToString.Equals(Me.TextBox1.Text) Or
+                                       r.Cells(4).Value.ToString.Equals(Me.TextBox1.Text) Then
+                        r.Selected = True
+                    End If
                 Else
                     r.Selected = False
+                    r.Visible = False
                 End If
-
             End If
         Next
         If TextBox1.Text = "" Then
             ogc1.FirstDisplayedScrollingRowIndex = 0
             For Each r As DataGridViewRow In ogc1.Rows
                 r.Selected = False
+                r.Visible = True
             Next
         End If
 
@@ -1024,6 +930,7 @@ Public Class FormStSim
         pp.ReconfigureConfigForm()
         pp.ConfigForm._pp = pp
         pp.ConfigForm._comps = FrmChild.Options.SelectedComponents
+        pp.ConfigForm._form = FrmChild
         pp.ShowConfigForm(FrmChild)
     End Sub
 
@@ -1077,6 +984,11 @@ Public Class FormStSim
         If Me.ogc1.SelectedRows.Count > 0 Then
             Me.AddCompToSimulation(Me.ogc1.SelectedRows(0).Index)
         End If
+        'If Me.ogc1.SelectedRows.Count > 0 Then
+        '    For Each r As DataGridViewRow In Me.ogc1.SelectedRows
+        '        Me.AddCompToSimulation(r.Index)
+        '    Next
+        'End If
     End Sub
 
     Sub AddComponent(ByVal compID As String)

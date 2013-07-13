@@ -71,7 +71,7 @@ Partial Class FormRecoverFiles
         Me.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
         Me.Column1.FalseValue = "0"
         Me.Column1.FillWeight = 3.75628!
-        Me.Column1.HeaderText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column1.HeaderText = ""
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
         Me.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.[True]

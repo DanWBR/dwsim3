@@ -4298,7 +4298,7 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>Calculating Adjustment Factor</value>
   </data>
   <data name="PP_FLASHALGORITHM" xml:space="preserve">
-    <value>Flash Algorithm (0 = Default, 1 = Inside-Out, 2 = Global Setting, 3 = Three-Phase Inside-Out)</value>
+    <value>Flash Algorithm (2 = Global Def., 0 = NL VLE, 1 = IO VLE, 3 = IO VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = NL VLLE, 7 = NL SLE, 8 = NL Immisc., 9 = Simple LLE)</value>
   </data>
   <data name="AbsorptionColumn_Desc" xml:space="preserve">
     <value>Rigorous model for an absorption column.</value>

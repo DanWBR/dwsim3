@@ -126,9 +126,6 @@
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Composition</value>
   </data>
-  <data name="GroupBox38.Text" xml:space="preserve">
-    <value>Tasks</value>
-  </data>
   <data name="ButtonEqualize.Text" xml:space="preserve">
     <value>Equalize</value>
   </data>
@@ -138,8 +135,8 @@
   <data name="KButton1.Text" xml:space="preserve">
     <value>Erase</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Basis</value>
+  <data name="GroupBox38.Text" xml:space="preserve">
+    <value>Tasks</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="RadioButton7.Size" type="System.Drawing.Size, System.Drawing">
@@ -190,8 +187,8 @@
   <data name="RadioButton1.Text" xml:space="preserve">
     <value>Mole Fractions</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Actions</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Basis</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Label5.AutoSize" type="System.Boolean, mscorlib">
@@ -218,5 +215,8 @@
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Undefined</value>
+  </data>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Actions</value>
   </data>
 </root>

@@ -17,7 +17,9 @@
 
 
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
+Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 Imports System.IO
+Imports System.Linq
 
 Public Class FormConfigExUNIQUAC
 
@@ -90,6 +92,23 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
             End If
         Next
 
+        Me.cbReacSets.Items.Clear()
+        For Each rset As ReactionSet In Me._form.Options.ReactionSets.Values
+            cbReacSets.Items.Add(rset.Name)
+        Next
+
+        Me.tbMaxIts.Text = ppu.ElectrolyteFlash.MaximumIterations
+        Me.tbTol.Text = ppu.ElectrolyteFlash.Tolerance
+
+        Me.chkCalcChemEq.Checked = ppu.ElectrolyteFlash.CalculateChemicalEquilibria
+
+        Try
+            Dim reacsetname As String = (From rset As ReactionSet In _form.Options.ReactionSets.Values Select rset Where rset.ID = ppu.ElectrolyteFlash.ReactionSet).FirstOrDefault.Name
+            Me.cbReacSets.SelectedItem = reacsetname
+        Catch ex As Exception
+
+        End Try
+
         Loaded = True
 
     End Sub
@@ -129,6 +148,45 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
 
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
         Process.Start(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "data" & Path.DirectorySeparatorChar & "ExUNIQUAC_uij.txt")
+    End Sub
+
+    Private Sub TextBox1_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbMaxIts.TextChanged
+        If Loaded Then
+            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.ExUNIQUACPropertyPackage = _pp
+            If Integer.TryParse(tbMaxIts.Text, New Integer) Then
+                tbMaxIts.ForeColor = Color.Blue
+                ppu.ElectrolyteFlash.MaximumIterations = tbMaxIts.Text
+            Else
+                tbMaxIts.ForeColor = Color.Red
+            End If
+        End If
+    End Sub
+
+    Private Sub tbTol_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbTol.TextChanged
+        If Loaded Then
+            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.ExUNIQUACPropertyPackage = _pp
+            If Double.TryParse(tbTol.Text, New Double) Then
+                tbTol.ForeColor = Color.Blue
+                ppu.ElectrolyteFlash.Tolerance = tbTol.Text
+            Else
+                tbTol.ForeColor = Color.Red
+            End If
+        End If
+    End Sub
+
+    Private Sub chkCalcChemEq_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkCalcChemEq.CheckedChanged
+        If Loaded Then
+            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.ExUNIQUACPropertyPackage = _pp
+            ppu.ElectrolyteFlash.CalculateChemicalEquilibria = chkCalcChemEq.Checked
+        End If
+    End Sub
+
+    Private Sub cbReacSets_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbReacSets.SelectedIndexChanged
+        If Loaded Then
+            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.ExUNIQUACPropertyPackage = _pp
+            Dim reacsetID As String = (From rset As ReactionSet In _form.Options.ReactionSets.Values Select rset Where rset.Name = cbReacSets.SelectedItem.ToString).FirstOrDefault.ID
+            ppu.ElectrolyteFlash.ReactionSet = reacsetID
+        End If
     End Sub
 
 End Class

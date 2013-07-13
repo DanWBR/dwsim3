@@ -377,7 +377,7 @@ Public Class frmSurface
         ChildParent.TSTBZoom.Text = Format(FlowsheetDesignSurface.Zoom, "#%")
     End Sub
 
-    Private Sub FlowsheetDesignSurface_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles FlowsheetDesignSurface.MouseDown
+    Private Sub FlowsheetDesignSurface_MouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles FlowsheetDesignSurface.MouseDown
 
         If e.Button = Windows.Forms.MouseButtons.Left Then
 
@@ -3118,10 +3118,6 @@ Public Class frmSurface
 
     End Sub
 
-    Private Sub FlowsheetDesignSurface_MouseEnter(ByVal sender As Object, ByVal e As System.EventArgs) Handles FlowsheetDesignSurface.MouseEnter
-
-    End Sub
-
     Private Sub EditCompTSMI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EditCompTSMI.Click
 
         If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.MaterialStream Then
@@ -3140,7 +3136,7 @@ Public Class frmSurface
                 selectionControl.Solvent = mystr.ReferenceSolvent
                 selectionControl.InitialComposition = mystr.InputComposition
 
-                selectionControl.ShowDialog(Me)
+                selectionControl.ShowDialog()
 
                 mystr.Fases(0).Componentes = selectionControl.Componentes
                 mystr.Fases(0).SPMProperties.molarflow = selectionControl.Q
@@ -3151,16 +3147,22 @@ Public Class frmSurface
                 selectionControl.Dispose()
                 selectionControl = Nothing
 
+                Me.FlowsheetDesignSurface.SelectedObject = Nothing
+                Me.FlowsheetDesignSurface.SelectedObjects.Clear()
+
                 Application.DoEvents()
                 CalculateMaterialStream(ChildParent, mystr)
+                Application.DoEvents()
                 Call ChildParent.FormSurface.UpdateSelectedObject()
+                Application.DoEvents()
                 Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
                 Application.DoEvents()
                 ProcessCalculationQueue(ChildParent)
+                Application.DoEvents()
 
             Else
 
-                MessageBox.Show("The composition of this Material Stream is not editable.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBox.Show("This Material Stream's composition is read-only.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             End If
 
@@ -3249,6 +3251,13 @@ Public Class frmSurface
 
         ' This call is required by the designer.
         InitializeComponent()
+
+    End Sub
+
+    Private Sub FlowsheetDesignSurface_MouseDoubleClick(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles FlowsheetDesignSurface.MouseDoubleClick
+
+        Application.DoEvents()
+        EditCompTSMI_Click(sender, e)
 
     End Sub
 

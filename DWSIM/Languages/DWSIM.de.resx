@@ -4298,7 +4298,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Berechne Korrekturfaktor</value>
   </data>
   <data name="PP_FLASHALGORITHM" xml:space="preserve">
-    <value>Flashalgorithmus (0 = Vorauswahl, 1 = Inside-Out, 2 = Globale Einstellungen)</value>
+    <value>Flashalgorithmus (2 = Global Def., 0 = NL VLE, 1 = IO VLE, 3 = IO VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = NL VLLE, 7 = NL SLE, 8 = NL Immisc., 9 = Simple LLE)</value>
   </data>
   <data name="AbsorptionColumn_Desc" xml:space="preserve">
     <value>Rigoroses Modell für eine Absorptionskolonne.</value>

@@ -546,7 +546,7 @@ Imports System.Runtime.Serialization
         Return myNewPoint
     End Function
 
-    Private Sub GraphicsSurface_MouseDown(ByVal sender As Object, _
+    Private Sub GraphicsSurface_MouseClick(ByVal sender As Object, _
             ByVal e As MouseEventArgs) _
             Handles MyBase.MouseDown
 

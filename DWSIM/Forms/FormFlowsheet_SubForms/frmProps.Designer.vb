@@ -81,13 +81,13 @@ Partial Class frmProps
         '
         '
         '
-        Me.PGEx1.DocCommentDescription.AccessibleName = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.PGEx1.DocCommentDescription.AccessibleName = ""
         Me.PGEx1.DocCommentDescription.AutoEllipsis = True
         Me.PGEx1.DocCommentDescription.BackColor = System.Drawing.Color.Transparent
         Me.PGEx1.DocCommentDescription.Cursor = System.Windows.Forms.Cursors.Default
         Me.PGEx1.DocCommentDescription.ImeMode = CType(resources.GetObject("PGEx1.DocCommentDescription.ImeMode"), System.Windows.Forms.ImeMode)
         Me.PGEx1.DocCommentDescription.Location = CType(resources.GetObject("PGEx1.DocCommentDescription.Location"), System.Drawing.Point)
-        Me.PGEx1.DocCommentDescription.Name = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.PGEx1.DocCommentDescription.Name = ""
         Me.PGEx1.DocCommentDescription.Size = CType(resources.GetObject("PGEx1.DocCommentDescription.Size"), System.Drawing.Size)
         Me.PGEx1.DocCommentDescription.TabIndex = CType(resources.GetObject("PGEx1.DocCommentDescription.TabIndex"), Integer)
         Me.PGEx1.DocCommentImage = Nothing
@@ -99,7 +99,7 @@ Partial Class frmProps
         Me.PGEx1.DocCommentTitle.Font = CType(resources.GetObject("PGEx1.DocCommentTitle.Font"), System.Drawing.Font)
         Me.PGEx1.DocCommentTitle.ImeMode = CType(resources.GetObject("PGEx1.DocCommentTitle.ImeMode"), System.Windows.Forms.ImeMode)
         Me.PGEx1.DocCommentTitle.Location = CType(resources.GetObject("PGEx1.DocCommentTitle.Location"), System.Drawing.Point)
-        Me.PGEx1.DocCommentTitle.Name = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.PGEx1.DocCommentTitle.Name = ""
         Me.PGEx1.DocCommentTitle.Size = CType(resources.GetObject("PGEx1.DocCommentTitle.Size"), System.Drawing.Size)
         Me.PGEx1.DocCommentTitle.TabIndex = CType(resources.GetObject("PGEx1.DocCommentTitle.TabIndex"), Integer)
         Me.PGEx1.DocCommentTitle.UseMnemonic = False
@@ -121,7 +121,7 @@ Partial Class frmProps
         Me.PGEx1.ToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.PGEx1.ToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1})
         Me.PGEx1.ToolStrip.Location = CType(resources.GetObject("PGEx1.ToolStrip.Location"), System.Drawing.Point)
-        Me.PGEx1.ToolStrip.Name = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.PGEx1.ToolStrip.Name = ""
         Me.PGEx1.ToolStrip.Padding = CType(resources.GetObject("PGEx1.ToolStrip.Padding"), System.Windows.Forms.Padding)
         Me.PGEx1.ToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.PGEx1.ToolStrip.Size = CType(resources.GetObject("PGEx1.ToolStrip.Size"), System.Drawing.Size)
@@ -150,13 +150,13 @@ Partial Class frmProps
         '
         '
         '
-        Me.PGEx2.DocCommentDescription.AccessibleName = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.PGEx2.DocCommentDescription.AccessibleName = ""
         Me.PGEx2.DocCommentDescription.AutoEllipsis = True
         Me.PGEx2.DocCommentDescription.BackColor = System.Drawing.Color.Transparent
         Me.PGEx2.DocCommentDescription.Cursor = System.Windows.Forms.Cursors.Default
         Me.PGEx2.DocCommentDescription.ImeMode = CType(resources.GetObject("PGEx2.DocCommentDescription.ImeMode"), System.Windows.Forms.ImeMode)
         Me.PGEx2.DocCommentDescription.Location = CType(resources.GetObject("PGEx2.DocCommentDescription.Location"), System.Drawing.Point)
-        Me.PGEx2.DocCommentDescription.Name = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.PGEx2.DocCommentDescription.Name = ""
         Me.PGEx2.DocCommentDescription.Size = CType(resources.GetObject("PGEx2.DocCommentDescription.Size"), System.Drawing.Size)
         Me.PGEx2.DocCommentDescription.TabIndex = CType(resources.GetObject("PGEx2.DocCommentDescription.TabIndex"), Integer)
         Me.PGEx2.DocCommentImage = Nothing
@@ -168,7 +168,7 @@ Partial Class frmProps
         Me.PGEx2.DocCommentTitle.Font = CType(resources.GetObject("PGEx2.DocCommentTitle.Font"), System.Drawing.Font)
         Me.PGEx2.DocCommentTitle.ImeMode = CType(resources.GetObject("PGEx2.DocCommentTitle.ImeMode"), System.Windows.Forms.ImeMode)
         Me.PGEx2.DocCommentTitle.Location = CType(resources.GetObject("PGEx2.DocCommentTitle.Location"), System.Drawing.Point)
-        Me.PGEx2.DocCommentTitle.Name = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.PGEx2.DocCommentTitle.Name = ""
         Me.PGEx2.DocCommentTitle.Size = CType(resources.GetObject("PGEx2.DocCommentTitle.Size"), System.Drawing.Size)
         Me.PGEx2.DocCommentTitle.TabIndex = CType(resources.GetObject("PGEx2.DocCommentTitle.TabIndex"), Integer)
         Me.PGEx2.DocCommentTitle.UseMnemonic = False
@@ -190,7 +190,7 @@ Partial Class frmProps
         Me.PGEx2.ToolStrip.Font = CType(resources.GetObject("PGEx2.ToolStrip.Font"), System.Drawing.Font)
         Me.PGEx2.ToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.PGEx2.ToolStrip.Location = CType(resources.GetObject("PGEx2.ToolStrip.Location"), System.Drawing.Point)
-        Me.PGEx2.ToolStrip.Name = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.PGEx2.ToolStrip.Name = ""
         Me.PGEx2.ToolStrip.Padding = CType(resources.GetObject("PGEx2.ToolStrip.Padding"), System.Windows.Forms.Padding)
         Me.PGEx2.ToolStrip.Size = CType(resources.GetObject("PGEx2.ToolStrip.Size"), System.Drawing.Size)
         Me.PGEx2.ToolStrip.TabIndex = CType(resources.GetObject("PGEx2.ToolStrip.TabIndex"), Integer)

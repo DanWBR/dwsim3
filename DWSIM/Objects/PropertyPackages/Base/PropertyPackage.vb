@@ -96,6 +96,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         SimpleLLE = 9
     End Enum
 
+    '' Algoritmo Flash (2 = Global Def., 0 = NL VLE, 1 = IO VLE, 3 = IO VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = NL VLLE, 7 = NL SLE, 8 = NL Immisc., 9 = Simple LLE)
+
 #End Region
 
     ''' <summary>
