@@ -2,7 +2,7 @@
 'http://www.ggasoftware.com/opensource/indigo
 
 '    Copyright 2011 Daniel Wagner O. de Medeiros
-'
+'              2013 Gregor Reichert
 '    This file is part of DWSIM.
 '
 '    DWSIM is free software: you can redistribute it and/or modify
@@ -46,8 +46,8 @@ Public Class FormCompoundCreator
     Private populating As Boolean = False
     Private UNIFAClines(), JOBACKlines(), ElementLines() As String
 
-    Private Sub FormCompoundCreator_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+    Private Sub FormCompoundCreator_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'Grid UNIFAC
         Dim pathsep = System.IO.Path.DirectorySeparatorChar
         Dim picpath As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac" & pathsep
@@ -133,6 +133,8 @@ Public Class FormCompoundCreator
         cbEqCPIG.SelectedIndex = 0
         cbEqLIQDENS.SelectedIndex = 0
         cbEqLIQVISC.SelectedIndex = 0
+        cbEqSolidDENS.SelectedIndex = 0
+        cbEqCpS.SelectedIndex = 0
 
         Me.cbUnits.Items.Clear()
 
@@ -268,10 +270,15 @@ Public Class FormCompoundCreator
             If .RegressCPIG Then rbRegressCPIG.Checked = True
             If .RegressLDENS Then rbRegressLIQDENS.Checked = True
             If .RegressLVISC Then rbRegressLIQVISC.Checked = True
+            If .RegressCpS Then rbRegressSolidCp.Checked = True
+            If .RegressRoS Then rbRegressSolidDens.Checked = True
+
             If .EqPVAP Then rbCoeffPVAP.Checked = True
             If .EqCPIG Then rbCoeffCPIG.Checked = True
             If .EqLDENS Then rbCoeffLIQDENS.Checked = True
             If .EqLVISC Then rbCoeffLIQVISC.Checked = True
+            If .EqCpS Then rbCoeffSolidCp.Checked = True
+            If .EqSDens Then rbCoeffSolidDens.Checked = True
 
             CheckBoxMW.Checked = .CalcMW
             CheckBoxNBP.Checked = .CalcNBP
@@ -285,7 +292,7 @@ Public Class FormCompoundCreator
             CheckBoxZRa.Checked = .CalcZRA
             CheckBoxDHF.Checked = .CalcHF
             CheckBoxDGF.Checked = .CalcGF
-            CheckBoxMeltingTemp.Checked = .CalcMW
+            CheckBoxMeltingTemp.Checked = .CalcMP
             CheckBoxEnthOfFusion.Checked = .CalcEM
 
             AtomDataGrid.Rows.Clear()
@@ -321,6 +328,32 @@ Public Class FormCompoundCreator
                 End If
             Next
 
+            For Each it As Object In cbEqCpS.Items
+                If it.ToString.Split(":")(0) = .cp.SolidHeatCapacityEquation Then
+                    cbEqCpS.SelectedIndex = cbEqCpS.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
+            For Each it As Object In cbEqSolidDENS.Items
+                If it.ToString.Split(":")(0) = .cp.SolidDensityEquation Then
+                    cbEqSolidDENS.SelectedIndex = cbEqSolidDENS.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
+            tbCpS_A.Text = .cp.Solid_Heat_Capacity_Const_A
+            tbCpS_B.Text = .cp.Solid_Heat_Capacity_Const_B
+            tbCpS_C.Text = .cp.Solid_Heat_Capacity_Const_C
+            tbCpS_D.Text = .cp.Solid_Heat_Capacity_Const_D
+            tbCpS_E.Text = .cp.Solid_Heat_Capacity_Const_E
+
+            tbRoS_A.Text = .cp.Solid_Density_Const_A
+            tbRoS_B.Text = .cp.Solid_Density_Const_B
+            tbRoS_C.Text = .cp.Solid_Density_Const_C
+            tbRoS_D.Text = .cp.Solid_Density_Const_D
+            tbRoS_E.Text = .cp.Solid_Density_Const_E
+
             tbPVAP_A.Text = .cp.Vapor_Pressure_Constant_A
             tbPVAP_B.Text = .cp.Vapor_Pressure_Constant_B
             tbPVAP_C.Text = .cp.Vapor_Pressure_Constant_C
@@ -352,8 +385,11 @@ Public Class FormCompoundCreator
 
             FillUnifacSubGroups()
 
-            'check if the JobackGroups array exists, when loading older files
+            'check for updated elements when loading older files and create them if not existing
             If .JobackGroups Is Nothing Then .JobackGroups = New ArrayList()
+            If .DataRoS Is Nothing Then .DataRoS = New ArrayList
+            If .DataCpS Is Nothing Then .DataCpS = New ArrayList
+
 
             'populating Joback Grid with additional Joback groups
             For i = 0 To .JobackGroups.Count - 1
@@ -379,10 +415,20 @@ Public Class FormCompoundCreator
             For i = 0 To .DataLVISC.Count - 1
                 Me.GridExpDataLIQVISC.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataLVISC(i)(0)), cv.ConverterDoSI(su.spmp_viscosity, .DataLVISC(i)(1))})
             Next
+            Me.GridExpDataRoS.Rows.Clear()
+            For i = 0 To .DataRoS.Count - 1
+                Me.GridExpDataRoS.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataRoS(i)(0)), cv.ConverterDoSI(su.spmp_density, .DataRoS(i)(1)) * .cp.Molar_Weight})
+            Next
+            Me.GridExpDataCpS.Rows.Clear()
+            For i = 0 To .DataCpS.Count - 1
+                Me.GridExpDataCpS.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataCpS(i)(0)), cv.ConverterDoSI(su.spmp_heatCapacityCp, .DataCpS(i)(1)) / .cp.Molar_Weight})
+            Next
             If .RegressOKPVAP Then tbStatusPVAP.Text = "OK" Else tbStatusPVAP.Text = .ErrorMsgPVAP
             If .RegressOKCPIG Then tbStatusCPIG.Text = "OK" Else tbStatusCPIG.Text = .ErrorMsgCPIG
             If .RegressOKLDENS Then tbStatusLIQDENS.Text = "OK" Else tbStatusLIQDENS.Text = .ErrorMsgLDENS
             If .RegressOKLVISC Then tbStatusLIQVISC.Text = "OK" Else tbStatusLIQVISC.Text = .ErrorMsgLVISC
+            If .RegressOKRoS Then tbStatusSolidDens.Text = "OK" Else tbStatusSolidDens.Text = .ErrorMsgRoS
+            If .RegressOKCpS Then tbStatusSolidCp.Text = "OK" Else tbStatusSolidCp.Text = .ErrorMsgCpS
 
         End With
 
@@ -454,10 +500,15 @@ Public Class FormCompoundCreator
             .RegressCPIG = rbRegressCPIG.Checked
             .RegressLDENS = rbRegressLIQDENS.Checked
             .RegressLVISC = rbRegressLIQVISC.Checked
+            .RegressRoS = rbRegressSolidDens.Checked
+            .RegressCpS = rbRegressSolidCp.Checked
+
             .EqPVAP = rbCoeffPVAP.Checked
             .EqCPIG = rbCoeffCPIG.Checked
             .EqLDENS = rbCoeffLIQDENS.Checked
             .EqLVISC = rbCoeffLIQVISC.Checked
+            .EqSDens = rbCoeffSolidDens.Checked
+            .EqCpS = rbCoeffSolidCp.Checked
 
             .CalcMW = CheckBoxMW.Checked
             .CalcNBP = CheckBoxNBP.Checked
@@ -477,6 +528,24 @@ Public Class FormCompoundCreator
             .cp.VaporPressureEquation = cbEqPVAP.SelectedItem.ToString.Split(":")(0)
             .cp.LiquidDensityEquation = cbEqLIQDENS.SelectedItem.ToString.Split(":")(0)
             .cp.LiquidViscosityEquation = cbEqLIQVISC.SelectedItem.ToString.Split(":")(0)
+            .cp.SolidHeatCapacityEquation = cbEqCpS.SelectedIndex.ToString.Split(":")(0)
+            .cp.SolidDensityEquation = cbEqSolidDENS.SelectedIndex.ToString.Split(":")(0)
+
+            .cp.Solid_Heat_Capacity_Const_A = CheckEmptyCell(tbCpS_A.Text)
+            .cp.Solid_Heat_Capacity_Const_B = CheckEmptyCell(tbCpS_B.Text)
+            .cp.Solid_Heat_Capacity_Const_C = CheckEmptyCell(tbCpS_C.Text)
+            .cp.Solid_Heat_Capacity_Const_D = CheckEmptyCell(tbCpS_D.Text)
+            .cp.Solid_Heat_Capacity_Const_E = CheckEmptyCell(tbCpS_E.Text)
+            .cp.Solid_Heat_Capacity_Tmin = 0
+            .cp.Solid_Heat_Capacity_Tmax = .cp.TemperatureOfFusion
+
+            .cp.Solid_Density_Const_A = CheckEmptyCell(tbRoS_A.Text)
+            .cp.Solid_Density_Const_B = CheckEmptyCell(tbRoS_B.Text)
+            .cp.Solid_Density_Const_C = CheckEmptyCell(tbRoS_C.Text)
+            .cp.Solid_Density_Const_D = CheckEmptyCell(tbRoS_D.Text)
+            .cp.Solid_Density_Const_E = CheckEmptyCell(tbRoS_E.Text)
+            .cp.Solid_Density_Tmin = 0
+            .cp.Solid_Density_Tmax = .cp.TemperatureOfFusion
 
             .cp.Vapor_Pressure_Constant_A = CheckEmptyCell(tbPVAP_A.Text)
             .cp.Vapor_Pressure_Constant_B = CheckEmptyCell(tbPVAP_B.Text)
@@ -516,14 +585,15 @@ Public Class FormCompoundCreator
             For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
                 If CInt(r.Cells(0).Value) <> 0 Then
                     .cp.UNIFACGroups.Collection(r.HeaderCell.Value) = r.Cells(0).Value
-                    .cp.MODFACGroups.Collection(r.HeaderCell.Value) = r.Cells(0).Value
+                    '.cp.MODFACGroups.Collection(r.HeaderCell.Value) = r.Cells(0).Value
                 Else
                     If .cp.UNIFACGroups.Collection.ContainsKey(r.HeaderCell.Value) Then
                         .cp.UNIFACGroups.Collection.Remove(r.HeaderCell.Value)
                     End If
-                    If .cp.MODFACGroups.Collection.ContainsKey(r.HeaderCell.Value) Then
-                        .cp.MODFACGroups.Collection.Remove(r.HeaderCell.Value)
-                    End If
+                    'MODFAC groups need to be defined separately! Not yet implemented!
+                    'If .cp.MODFACGroups.Collection.ContainsKey(r.HeaderCell.Value) Then
+                    '    .cp.MODFACGroups.Collection.Remove(r.HeaderCell.Value)
+                    'End If
                 End If
             Next
 
@@ -559,6 +629,16 @@ Public Class FormCompoundCreator
             mycase.DataLVISC.Clear()
             For Each row As DataGridViewRow In Me.GridExpDataLIQVISC.Rows
                 If row.Index < Me.GridExpDataLIQVISC.Rows.Count - 1 Then mycase.DataLVISC.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_viscosity, row.Cells(1).Value)})
+            Next
+
+            mycase.DataRoS.Clear()
+            For Each row As DataGridViewRow In Me.GridExpDataRoS.Rows
+                If row.Index < Me.GridExpDataRoS.Rows.Count - 1 Then mycase.DataRoS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value) / .cp.Molar_Weight})
+            Next
+
+            mycase.DataCpS.Clear()
+            For Each row As DataGridViewRow In Me.GridExpDataCpS.Rows
+                If row.Index < Me.GridExpDataCpS.Rows.Count - 1 Then mycase.DataCpS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value) * .cp.Molar_Weight})
             Next
 
         End With
@@ -681,7 +761,7 @@ Public Class FormCompoundCreator
 
             Me.TextBoxFormula.Text = Formula
 
-            Dim Tb, Tc, Pc, Vc, MM, w, Hvb As Double
+            Dim Tb, Tc, Pc, Vc, MM, w, Hvb, ZRa, Tf As Double
 
             If ACL.Count > 0 Then
                 MM = jb.CalcMW(ACL)
@@ -726,6 +806,7 @@ Public Class FormCompoundCreator
                     Vc = jb.CalcVc(JGD)
                     If CheckBoxZc.Checked Then Me.TextBoxZc.Text = Pc * Vc / Tc / 8.314 / 1000
                     If CheckBoxZRa.Checked Then Me.TextBoxZRa.Text = Pc * Vc / Tc / 8.314 / 1000
+                    ZRa = Me.TextBoxZRa.Text
                 Else
                     If CheckBoxZc.Checked Then Me.TextBoxZc.Text = ""
                     If CheckBoxZRa.Checked Then Me.TextBoxZRa.Text = ""
@@ -765,8 +846,13 @@ Public Class FormCompoundCreator
                     If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = ""
                 End If
 
+
                 If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, jb.CalcTf(JGD)) 'melting temperature - temperature of fusion
                 If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcHf(JGD) / MM) 'enthalpy of fusion
+                If CheckValidDF(Me.TextBoxPc.Text) Then
+                    Tf = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxMeltingTemp.Text)
+                Else : Tf = -1
+                End If
 
                 If rbEstimateCPIG.Checked Then
                     Dim result As Object = RegressData(1, True)
@@ -783,6 +869,18 @@ Public Class FormCompoundCreator
                     tbCPIG_C.Text = result(0)(2) * 1000
                     tbCPIG_D.Text = result(0)(3) * 1000
                     tbCPIG_E.Text = result(0)(4) * 1000
+                End If
+
+                'estimate solid density - DWSIM-Method
+                If rbEstimateSolidDens.Checked Then
+                    Dim RoSMP, RoLMP As Double 'solid+liquid density at melting point
+                    RoLMP = methods2.liq_dens_rackett(Tf, Tc, Pc, w, MM, ZRa, 101325, methods2.Pvp_leekesler(Tf, Tc, Pc, w))
+                    RoSMP = RoLMP * 1.0933 + 0.000037886 * RoLMP ^ 2
+                    tbRoS_A.Text = RoSMP / MM + 0.005 * Tf
+                    tbRoS_B.Text = -0.005
+                    tbRoS_C.Text = 0
+                    tbRoS_D.Text = 0
+                    tbRoS_E.Text = 0
                 End If
             Else
                 If CheckBoxNBP.Checked Then Me.TextBoxNBP.Text = ""
@@ -866,14 +964,19 @@ Public Class FormCompoundCreator
             lblDGF.Text = .spmp_enthalpy
             lblMeltingTemp.Text = .spmp_temperature
             lblEnthOfFusion.Text = .spmp_enthalpy
-            Me.GridExpDataPVAP.Columns(0).HeaderText = "T (" & su.spmp_temperature & ")"
-            Me.GridExpDataCPIG.Columns(0).HeaderText = "T (" & su.spmp_temperature & ")"
-            Me.GridExpDataLIQDENS.Columns(0).HeaderText = "T (" & su.spmp_temperature & ")"
-            Me.GridExpDataLIQVISC.Columns(0).HeaderText = "T (" & su.spmp_temperature & ")"
-            Me.GridExpDataPVAP.Columns(1).HeaderText = "Pvap (" & su.spmp_pressure & ")"
-            Me.GridExpDataCPIG.Columns(1).HeaderText = "Cpig (" & su.spmp_heatCapacityCp & ")"
-            Me.GridExpDataLIQDENS.Columns(1).HeaderText = "Dens (" & su.spmp_density & ")"
-            Me.GridExpDataLIQVISC.Columns(1).HeaderText = "Visc (" & su.spmp_viscosity & ")"
+            Me.GridExpDataPVAP.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
+            Me.GridExpDataCPIG.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
+            Me.GridExpDataLIQDENS.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
+            Me.GridExpDataLIQVISC.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
+            Me.GridExpDataCpS.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
+            Me.GridExpDataRoS.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
+
+            Me.GridExpDataPVAP.Columns(1).HeaderText = "Pvap [" & su.spmp_pressure & "]"
+            Me.GridExpDataCPIG.Columns(1).HeaderText = "Cpig [" & su.spmp_heatCapacityCp & "]"
+            Me.GridExpDataLIQDENS.Columns(1).HeaderText = "Dens [" & su.spmp_density & "]"
+            Me.GridExpDataLIQVISC.Columns(1).HeaderText = "Visc [" & su.spmp_viscosity & "]"
+            Me.GridExpDataCpS.Columns(1).HeaderText = "CpS [" & su.spmp_heatCapacityCp & "]"
+            Me.GridExpDataRoS.Columns(1).HeaderText = "DensS [" & su.spmp_density & "]"
         End With
     End Sub
 
@@ -886,8 +989,8 @@ Public Class FormCompoundCreator
 
         m_props = New PROPS()
 
-        Dim c_pv(4), c_cp(4), c_vi(4), c_de(4) As Double
-        Dim r_cp, r_vi, r_pv, n_cp, n_pv, n_vi, r_de, n_de As Double
+        Dim c_pv(4), c_cp(4), c_vi(4), c_de(4), c_sd(4), c_scp(4) As Double
+        Dim r_cp, r_vi, r_pv, r_de, r_sd, r_scp, n_cp, n_pv, n_de, n_vi, n_sd, n_scp As Double
 
         c_pv(0) = 25
         c_pv(1) = 2000
@@ -911,6 +1014,18 @@ Public Class FormCompoundCreator
         c_de(2) = 647.3
         c_de(1) = 0.14056
         c_de(0) = -141.26
+
+        c_sd(0) = 11
+        c_sd(1) = -0.005
+        c_sd(2) = 0.0#
+        c_sd(3) = 0.0#
+        c_sd(4) = 0.0#
+
+        c_scp(0) = 0
+        c_scp(1) = 0.1
+        c_scp(2) = 0
+        c_scp(3) = 0
+        c_scp(4) = 0
 
         Select Case tipo
             Case 0
@@ -944,12 +1059,14 @@ Public Class FormCompoundCreator
                     r_cp = obj(2)
                     n_cp = obj(3)
                 End If
+
             Case 2
                 'regressão dos dados
                 obj = lmfit.GetCoeffs(CopyToVector(mycase.DataLVISC, 0), CopyToVector(mycase.DataLVISC, 1), c_vi, DWSIM.Utilities.PetroleumCharacterization.LMFit.FitType.LiqVisc, 0.0000000001, 0.0000000001, 0.0000000001, 10000)
                 c_vi = obj(0)
                 r_vi = obj(2)
                 n_vi = obj(3)
+
             Case 3
 
                 Dim x1, x2, y1, y2, rhoc, al, bl As Double
@@ -974,6 +1091,20 @@ Public Class FormCompoundCreator
                 c_de = obj(0)
                 r_de = obj(2)
                 n_de = obj(3)
+
+            Case 4
+                'regressão dos dados - solid density
+                obj = lmfit.GetCoeffs(CopyToVector(mycase.DataRoS, 0), CopyToVector(mycase.DataRoS, 1), c_sd, DWSIM.Utilities.PetroleumCharacterization.LMFit.FitType.Cp, 0.0000000000001, 0.0000000000001, 0.0000000000001, 10000)
+                c_sd = obj(0)
+                r_sd = obj(2)
+                n_sd = obj(3)
+
+            Case 5
+                'regressão dos dados - solid heat capacity
+                obj = lmfit.GetCoeffs(CopyToVector(mycase.DataCpS, 0), CopyToVector(mycase.DataCpS, 1), c_scp, DWSIM.Utilities.PetroleumCharacterization.LMFit.FitType.Cp, 0.0000000001, 0.0000000001, 0.0000000001, 10000)
+                c_scp = obj(0)
+                r_scp = obj(2)
+                n_scp = obj(3)
         End Select
 
         Select Case tipo
@@ -985,6 +1116,10 @@ Public Class FormCompoundCreator
                 Return New Object() {c_vi, r_vi, n_vi, obj(1)}
             Case 3
                 Return New Object() {c_de, r_de, n_de, obj(1)}
+            Case 4
+                Return New Object() {c_sd, r_sd, n_sd, obj(1)}
+            Case 5
+                Return New Object() {c_scp, r_scp, n_scp, obj(1)}
             Case Else
                 Return Nothing
         End Select
@@ -1024,11 +1159,103 @@ Public Class FormCompoundCreator
         End With
     End Sub
 
-    Private Sub btnRegressCPIG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressCPIG.Click
+    Private Sub btnRegressSolidCp_Click(sender As System.Object, e As System.EventArgs) Handles btnRegressSolidCp.Click
+        Dim MW As Double = Me.TextBoxMW.Text
+        Dim XL, YL As Double
+        loaded = False
+        mycase.DataCpS.Clear()
+        For Each row As DataGridViewRow In Me.GridExpDataCpS.Rows
+            If row.Index < Me.GridExpDataCpS.Rows.Count - 1 Then
+                XL = cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value)
+                YL = cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value) * MW
+                mycase.DataCpS.Add(New Double() {XL, YL})
+            End If
+        Next
+        'Workaround: it's necessary to add 2 more points as last 2 points are not incorporated in regression -> bug in regression algorithm?
+        mycase.DataCpS.Add(New Double() {XL, YL})
+        mycase.DataCpS.Add(New Double() {XL, YL})
 
+        Dim result As Object = RegressData(5, False)
+        tbStatusSolidCp.Text = GetInfo(result(3))
+
+        With mycase.cp
+            .SolidHeatCapacityEquation = 5
+
+            For Each it As Object In cbEqCpS.Items
+                If it.ToString.Split(":")(0) = .SolidHeatCapacityEquation Then
+                    cbEqCpS.SelectedIndex = cbEqCpS.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
+            .Solid_Heat_Capacity_Const_A = result(0)(0) * 1000
+            .Solid_Heat_Capacity_Const_B = result(0)(1) * 1000
+            .Solid_Heat_Capacity_Const_C = result(0)(2) * 1000
+            .Solid_Heat_Capacity_Const_D = result(0)(3) * 1000
+            .Solid_Heat_Capacity_Const_E = result(0)(4) * 1000
+
+            tbCpS_A.Text = .Solid_Heat_Capacity_Const_A
+            tbCpS_B.Text = .Solid_Heat_Capacity_Const_B
+            tbCpS_C.Text = .Solid_Heat_Capacity_Const_C
+            tbCpS_D.Text = .Solid_Heat_Capacity_Const_D
+            tbCpS_E.Text = .Solid_Heat_Capacity_Const_E
+
+        End With
+        rbRegressSolidCp.Checked = True
+        loaded = True
+        BothSaveStatusModified(sender, e)
+    End Sub
+    Private Sub btnRegressSolidDens_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressSolidDens.Click
+        Dim MW As Double = Me.TextBoxMW.Text
+        Dim XL, YL As Double
+        loaded = False
+        mycase.DataRoS.Clear()
+        For Each row As DataGridViewRow In Me.GridExpDataRoS.Rows
+            If row.Index < Me.GridExpDataRoS.Rows.Count - 1 Then
+                XL = cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value)
+                YL = cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value) / MW
+                mycase.DataRoS.Add(New Double() {XL, YL})
+            End If
+        Next
+        'Workaround: it's necessary to add 2 more points as last 2 points are not incorporated in regression -> bug in regression algorithm?
+        mycase.DataRoS.Add(New Double() {XL, YL})
+        mycase.DataRoS.Add(New Double() {XL, YL})
+
+        Dim result As Object = RegressData(4, False)
+        tbStatusSolidDens.Text = GetInfo(result(3))
+
+        With mycase.cp
+            .SolidDensityEquation = 5
+
+            For Each it As Object In cbEqSolidDENS.Items
+                If it.ToString.Split(":")(0) = .SolidDensityEquation Then
+                    cbEqSolidDENS.SelectedIndex = cbEqSolidDENS.Items.IndexOf(it)
+                    Exit For
+                End If
+            Next
+
+            .Solid_Density_Const_A = result(0)(0)
+            .Solid_Density_Const_B = result(0)(1)
+            .Solid_Density_Const_C = result(0)(2)
+            .Solid_Density_Const_D = result(0)(3)
+            .Solid_Density_Const_E = result(0)(4)
+
+            tbRoS_A.Text = .Solid_Density_Const_A
+            tbRoS_B.Text = .Solid_Density_Const_B
+            tbRoS_C.Text = .Solid_Density_Const_C
+            tbRoS_D.Text = .Solid_Density_Const_D
+            tbRoS_E.Text = .Solid_Density_Const_E
+
+        End With
+        rbRegressSolidDens.Checked = True
+        loaded = True
+        BothSaveStatusModified(sender, e)
+    End Sub
+    Private Sub btnRegressCPIG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressCPIG.Click
+        Dim MW As Double = Me.TextBoxMW.Text
         mycase.DataCPIG.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataCPIG.Rows
-            If row.Index < Me.GridExpDataCPIG.Rows.Count - 1 Then mycase.DataCPIG.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value)})
+            If row.Index < Me.GridExpDataCPIG.Rows.Count - 1 Then mycase.DataCPIG.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value) * MW})
         Next
 
         Dim result As Object = RegressData(1, False)
@@ -1058,6 +1285,7 @@ Public Class FormCompoundCreator
             tbCPIG_E.Text = .Ideal_Gas_Heat_Capacity_Const_E
 
         End With
+
     End Sub
 
     Private Sub btnRegressLIQDENS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressLIQDENS.Click
@@ -1133,7 +1361,8 @@ Public Class FormCompoundCreator
         End With
     End Sub
 
-    Private Sub GridExpData_KeyDown1(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+  
+    Private Sub GridExpData_KeyDown1(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles GridExpDataRoS.KeyDown, GridExpDataCpS.KeyDown
 
         If e.KeyCode = Keys.Delete And e.Modifiers = Keys.Shift Then
             Dim toremove As New ArrayList
@@ -1318,6 +1547,66 @@ Public Class FormCompoundCreator
 
     End Sub
 
+    Private Sub btnViewSolidCp_Click(sender As System.Object, e As System.EventArgs) Handles btnViewSolidCp.Click
+        Dim mytext As New System.Text.StringBuilder
+        mytext.AppendLine("Data Points")
+        mytext.AppendLine("x" & vbTab & "yEXP" & vbTab & "yCALC")
+        Dim px, py1, py2 As New ArrayList, x, y1, y2 As Double
+        For Each d As Double() In mycase.DataCpS
+            x = cv.ConverterDoSI(su.spmp_temperature, d(0))
+            px.Add(x)
+            y1 = cv.ConverterDoSI(su.spmp_heatCapacityCp, d(1)) / TextBoxMW.Text
+            py1.Add(y1)
+            Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
+            y2 = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.CalcCSTDepProp(cbEqCpS.SelectedIndex.ToString.Split(":")(0), tbCpS_A.Text, tbCpS_B.Text, tbCpS_C.Text, tbCpS_D.Text, tbCpS_E.Text, d(0), 0)) / TextBoxMW.Text / 1000
+            py2.Add(y2)
+            mytext.AppendLine(x & vbTab & y1 & vbTab & y2)
+        Next
+
+        Dim frc As New FormChart
+        With frc
+            .tbtext = mytext.ToString
+            .px = px
+            .py1 = py1
+            .py2 = py2
+            .xformat = 1
+            .ytitle = "Cp [ " & su.spmp_heatCapacityCp & " ]"
+            .xtitle = "T [ " & su.spmp_temperature & " ]"
+            .ycurvetypes = New ArrayList(New Integer() {1, 3})
+            .title = "Solid Heat Capacity Fitting Results"
+            .ShowDialog(Me)
+        End With
+    End Sub
+    Private Sub btnViewSolidDens_Click(sender As System.Object, e As System.EventArgs) Handles btnViewSolidDens.Click
+        Dim mytext As New System.Text.StringBuilder
+        mytext.AppendLine("Data Points")
+        mytext.AppendLine("x" & vbTab & "yEXP" & vbTab & "yCALC")
+        Dim px, py1, py2 As New ArrayList, x, y1, y2 As Double
+        For Each d As Double() In mycase.DataRoS
+            x = cv.ConverterDoSI(su.spmp_temperature, d(0))
+            px.Add(x)
+            y1 = cv.ConverterDoSI(su.spmp_density, d(1)) * TextBoxMW.Text
+            py1.Add(y1)
+            Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
+            y2 = cv.ConverterDoSI(su.spmp_density, pp.CalcCSTDepProp(cbEqSolidDENS.SelectedIndex.ToString.Split(":")(0), tbRoS_A.Text, tbRoS_B.Text, tbRoS_C.Text, tbRoS_D.Text, tbRoS_E.Text, d(0), 0) * TextBoxMW.Text)
+            py2.Add(y2)
+            mytext.AppendLine(x & vbTab & y1 & vbTab & y2)
+        Next
+
+        Dim frc As New FormChart
+        With frc
+            .tbtext = mytext.ToString
+            .px = px
+            .py1 = py1
+            .py2 = py2
+            .xformat = 1
+            .ytitle = "Rho [ " & su.spmp_density & " ]"
+            .xtitle = "T [ " & su.spmp_temperature & " ]"
+            .ycurvetypes = New ArrayList(New Integer() {1, 3})
+            .title = "Solid Density Fitting Results"
+            .ShowDialog(Me)
+        End With
+    End Sub
     Private Sub btnViewLIQVISC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewLIQVISC.Click
 
         If tbStatusLIQVISC.Text = "" And rbRegressLIQVISC.Checked Then
@@ -1463,7 +1752,20 @@ Public Class FormCompoundCreator
     Private Sub rbCoeffLIQVISC_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         mycase.EqLVISC = rbCoeffLIQVISC.Checked
     End Sub
-
+    Private Sub cbEqCpS_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        If mycase.EqCpS Then mycase.cp.SolidHeatCapacityEquation = cbEqCpS.SelectedItem.ToString.Split(":")(0)
+        If loaded Then
+            SetCompCreatorSaveStatus(False)
+            SetUserDBSaveStatus(False)
+        End If
+    End Sub
+    Private Sub cbEqSolidDENS_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        If mycase.EqSDens Then mycase.cp.SolidDensityEquation = cbEqSolidDENS.SelectedItem.ToString.Split(":")(0)
+        If loaded Then
+            SetCompCreatorSaveStatus(False)
+            SetUserDBSaveStatus(False)
+        End If
+    End Sub
     Private Sub cbEqPVAP_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbEqPVAP.SelectedIndexChanged
         If mycase.EqPVAP Then mycase.cp.VaporPressureEquation = cbEqPVAP.SelectedItem.ToString.Split(":")(0)
         If loaded Then
@@ -1757,7 +2059,7 @@ Public Class FormCompoundCreator
                  TextBoxID.TextChanged, TextBoxFormula.TextChanged, TextBoxCAS.TextChanged, tbPVAP_D.TextChanged, tbPVAP_C.TextChanged, _
                 tbPVAP_B.TextChanged, tbPVAP_A.TextChanged, tbPVAP_E.TextChanged, tbCPIG_E.TextChanged, tbCPIG_D.TextChanged, tbCPIG_C.TextChanged, tbCPIG_B.TextChanged, _
                 tbCPIG_A.TextChanged, tbLIQVISC_E.TextChanged, tbLIQVISC_D.TextChanged, tbLIQVISC_C.TextChanged, tbLIQVISC_B.TextChanged, tbLIQVISC_A.TextChanged, _
-                tbLIQDENS_E.TextChanged, tbLIQDENS_D.TextChanged, tbLIQDENS_C.TextChanged, tbLIQDENS_B.TextChanged, tbLIQDENS_A.TextChanged
+                tbLIQDENS_E.TextChanged, tbLIQDENS_D.TextChanged, tbLIQDENS_C.TextChanged, tbLIQDENS_B.TextChanged, tbLIQDENS_A.TextChanged, tbRoS_A.TextChanged, tbRoS_E.TextChanged, tbRoS_D.TextChanged, tbRoS_C.TextChanged, tbRoS_B.TextChanged, tbCpS_E.TextChanged, tbCpS_D.TextChanged, tbCpS_C.TextChanged, tbCpS_B.TextChanged, tbCpS_A.TextChanged, cbEqSolidDENS.SelectedIndexChanged, cbEqCpS.SelectedIndexChanged
         If loaded Then
             SetCompCreatorSaveStatus(False)
             SetUserDBSaveStatus(False)
@@ -1765,7 +2067,7 @@ Public Class FormCompoundCreator
     End Sub
 
     Private Sub GridExpData_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridExpDataPVAP.CellValueChanged, _
-                GridExpDataLIQVISC.CellValueChanged, GridExpDataLIQDENS.CellValueChanged, GridExpDataCPIG.CellValueChanged
+                GridExpDataLIQVISC.CellValueChanged, GridExpDataLIQDENS.CellValueChanged, GridExpDataCPIG.CellValueChanged, GridExpDataRoS.CellValueChanged, GridExpDataCpS.CellValueChanged
         If loaded Then
             SetCompCreatorSaveStatus(False)
         End If
@@ -1800,6 +2102,14 @@ Public Class FormCompoundCreator
         System.Diagnostics.Process.Start("http://chemeo.com/")
     End Sub
 
+    Private Sub rbEstimateSolidDens_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbEstimateSolidDens.CheckedChanged
+        If loaded Then
+            If rbEstimateSolidDens.Checked Then
+                CalcJobackParams()
+            End If
+            BothSaveStatusModified(sender, e)
+        End If
+    End Sub
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase
@@ -1836,21 +2146,29 @@ End Class
     Public RegressCPIG As Boolean = False
     Public RegressLVISC As Boolean = False
     Public RegressLDENS As Boolean = False
+    Public RegressCpS As Boolean = False
+    Public RegressRoS As Boolean = False
 
     Public EqPVAP As Boolean = False
     Public EqCPIG As Boolean = False
     Public EqLVISC As Boolean = False
     Public EqLDENS As Boolean = False
+    Public EqCpS As Boolean = False
+    Public EqSDens As Boolean = False
 
     Public RegressOKPVAP As Boolean = False
     Public RegressOKCPIG As Boolean = False
     Public RegressOKLVISC As Boolean = False
     Public RegressOKLDENS As Boolean = False
+    Public RegressOKCpS As Boolean = False
+    Public RegressOKRoS As Boolean = False
 
     Public ErrorMsgPVAP As String = ""
     Public ErrorMsgCPIG As String = ""
     Public ErrorMsgLVISC As String = ""
     Public ErrorMsgLDENS As String = ""
+    Public ErrorMsgCpS As String = ""
+    Public ErrorMsgRoS As String = ""
 
     Public JobackGroups As New ArrayList
 
@@ -1858,4 +2176,6 @@ End Class
     Public DataCPIG As New ArrayList
     Public DataLVISC As New ArrayList
     Public DataLDENS As New ArrayList
+    Public DataCpS As New ArrayList
+    Public DataRoS As New ArrayList
 End Class

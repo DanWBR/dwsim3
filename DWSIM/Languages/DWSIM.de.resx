@@ -4730,4 +4730,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SolidDensity" xml:space="preserve">
     <value>Feststoffdichte</value>
   </data>
+  <data name="SolidCp" xml:space="preserve">
+    <value>Wärmekapazität Feststoff</value>
+  </data>
 </root>

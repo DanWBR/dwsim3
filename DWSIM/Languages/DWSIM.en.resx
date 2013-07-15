@@ -4750,4 +4750,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SolidDensity" xml:space="preserve">
     <value>Solid Density</value>
   </data>
+  <data name="SolidCp" xml:space="preserve">
+    <value>Heat Capacity Solid</value>
+  </data>
 </root>

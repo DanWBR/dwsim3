@@ -5620,10 +5620,12 @@ Final3:
             Dim val As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim zerodens As Double = 0
+            Dim db As String
             Dim T As Double = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
             For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
-                If subst.ConstantProperties.OriginalDB = "ChemSep" Then
+                db = subst.ConstantProperties.OriginalDB
+                If db = "ChemSep" Or (db = "User" And subst.ConstantProperties.SolidDensityEquation > 0) Then
                     Dim A, B, C, D, E, result As Double
                     Dim eqno As String = subst.ConstantProperties.SolidDensityEquation
                     Dim mw As Double = subst.ConstantProperties.Molar_Weight
@@ -5652,7 +5654,7 @@ Final3:
             Dim val As Double
             Dim zerodens As Double = 0
 
-            If cprop.OriginalDB = "ChemSep" Then
+            If cprop.OriginalDB = "ChemSep" Or (cprop.OriginalDB = "User" And cprop.SolidDensityEquation > 0) Then
                 Dim A, B, C, D, E, result As Double
                 Dim eqno As String = cprop.SolidDensityEquation
                 Dim mw As Double = cprop.Molar_Weight
@@ -5672,6 +5674,29 @@ Final3:
             End If
 
             Return 1 / val
+
+        End Function
+
+        Public Overridable Function AUX_SolidHeatCapacity(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
+
+            Dim val As Double
+
+            If cprop.OriginalDB = "ChemSep" Or (cprop.OriginalDB = "User" And cprop.SolidDensityEquation > 0) Then
+                Dim A, B, C, D, E, result As Double
+                Dim eqno As String = cprop.SolidHeatCapacityEquation
+                Dim mw As Double = cprop.Molar_Weight
+                A = cprop.Solid_Heat_Capacity_Const_A
+                B = cprop.Solid_Heat_Capacity_Const_B
+                C = cprop.Solid_Heat_Capacity_Const_C
+                D = cprop.Solid_Heat_Capacity_Const_D
+                E = cprop.Solid_Heat_Capacity_Const_E
+                result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'J/kmol/K
+                val = result / 1000 / mw 'kJ/kg.K
+            Else
+                val = 3 ' replacement if no params available
+            End If
+
+            Return val
 
         End Function
 
@@ -6232,7 +6257,7 @@ Final3:
             Dim Cpi As Double
 
             For i = 0 To n
-                If cprops(i).OriginalDB = "ChemSep" Then
+                If cprops(i).OriginalDB = "ChemSep" Or cprops(i).OriginalDB = "User" Then
                     Dim A, B, C, D, E, result As Double
                     Dim eqno As String = cprops(i).SolidHeatCapacityEquation
                     Dim mw As Double = cprops(i).Molar_Weight
@@ -6262,7 +6287,7 @@ Final3:
             Dim Cpi As Double
 
             For i = 0 To n
-                If cprops(i).OriginalDB = "ChemSep" Then
+                If cprops(i).OriginalDB = "ChemSep" Or cprops(i).OriginalDB = "User" Then
                     Dim A, B, C, D, E, result As Double
                     Dim eqno As String = cprops(i).SolidHeatCapacityEquation
                     Dim mw As Double = cprops(i).Molar_Weight

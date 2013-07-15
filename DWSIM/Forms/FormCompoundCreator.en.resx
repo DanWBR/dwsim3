@@ -149,20 +149,11 @@
   <data name="btnCreateNewDB.Text" xml:space="preserve">
     <value>Create New</value>
   </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>812, 460</value>
-  </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Compound Properties</value>
   </data>
-  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>804, 420</value>
-  </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Identification</value>
-  </data>
-  <data name="FaTabStripItem11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>804, 420</value>
   </data>
   <data name="FaTabStripItem3.Title" xml:space="preserve">
     <value>Misc Properties</value>
@@ -170,14 +161,26 @@
   <data name="FaTabStripItem4.Title" xml:space="preserve">
     <value>Critical Properties</value>
   </data>
+  <data name="FaTabStripItem5.Title" xml:space="preserve">
+    <value>Critical Properties</value>
+  </data>
+  <data name="FaTabStripItem6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>804, 420</value>
+  </data>
   <data name="FaTabStripItem6.Title" xml:space="preserve">
     <value>Vapor Pressure</value>
   </data>
   <data name="FaTabStripItem7.Title" xml:space="preserve">
     <value>Ideal Gas Heat Capacity</value>
   </data>
+  <data name="FaTabStripItem8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>804, 420</value>
+  </data>
   <data name="FaTabStripItem8.Title" xml:space="preserve">
     <value>Liquid Density</value>
+  </data>
+  <data name="FaTabStripItem9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>804, 420</value>
   </data>
   <data name="FaTabStripItem9.Title" xml:space="preserve">
     <value>Liquid Viscosity</value>
@@ -185,8 +188,8 @@
   <data name="FaTabStripItem10.Title" xml:space="preserve">
     <value>Solid Properties</value>
   </data>
-  <data name="FaTabStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>806, 441</value>
+  <data name="FaTabStripItem11.Title" xml:space="preserve">
+    <value>Solid Properties</value>
   </data>
   <data name="LinkLabel1.Text" xml:space="preserve">
     <value>CAS Number</value>
@@ -218,6 +221,9 @@
   <data name="Label58.Text" xml:space="preserve">
     <value>Atom count additional</value>
   </data>
+  <data name="Atom.HeaderText" xml:space="preserve">
+    <value>Atom</value>
+  </data>
   <data name="Count.HeaderText" xml:space="preserve">
     <value>Count</value>
   </data>
@@ -232,6 +238,9 @@
   </data>
   <data name="Label59.Text" xml:space="preserve">
     <value>Atom count UNIFAC</value>
+  </data>
+  <data name="ColAtom.HeaderText" xml:space="preserve">
+    <value>Atom</value>
   </data>
   <data name="ColCount.HeaderText" xml:space="preserve">
     <value>Count</value>
@@ -693,6 +702,60 @@
   <data name="Label41.Location" type="System.Drawing.Point, System.Drawing">
     <value>234, 76</value>
   </data>
+  <data name="gbCPs.Text" xml:space="preserve">
+    <value>Heat Capacity ( Solid phase)</value>
+  </data>
+  <data name="btnRegressSolidCp.Text" xml:space="preserve">
+    <value>Regress Data</value>
+  </data>
+  <data name="btnViewSolidCp.Text" xml:space="preserve">
+    <value>View Regression</value>
+  </data>
+  <data name="rbCoeffSolidCp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 17</value>
+  </data>
+  <data name="rbCoeffSolidCp.Text" xml:space="preserve">
+    <value>Insert Equation Coefficients *</value>
+  </data>
+  <data name="rbRegressSolidCp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 17</value>
+  </data>
+  <data name="rbRegressSolidCp.Text" xml:space="preserve">
+    <value>Regress Experimental Data</value>
+  </data>
+  <data name="Label74.Text" xml:space="preserve">
+    <value>Equation</value>
+  </data>
+  <data name="gbSolidDens.Text" xml:space="preserve">
+    <value>Density (Solid Phase)</value>
+  </data>
+  <data name="rbEstimateSolidDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 17</value>
+  </data>
+  <data name="rbEstimateSolidDens.Text" xml:space="preserve">
+    <value>Estimate (DWSIM)</value>
+  </data>
+  <data name="btnRegressSolidDens.Text" xml:space="preserve">
+    <value>Regress Data</value>
+  </data>
+  <data name="btnViewSolidDens.Text" xml:space="preserve">
+    <value>View Regression</value>
+  </data>
+  <data name="rbCoeffSolidDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 17</value>
+  </data>
+  <data name="rbCoeffSolidDens.Text" xml:space="preserve">
+    <value>Insert Equation Coefficients *</value>
+  </data>
+  <data name="rbRegressSolidDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>155, 17</value>
+  </data>
+  <data name="rbRegressSolidDens.Text" xml:space="preserve">
+    <value>Regress Experimental Data</value>
+  </data>
+  <data name="Label76.Text" xml:space="preserve">
+    <value>Equation</value>
+  </data>
   <data name="LabelWithDivider1.Text" xml:space="preserve">
     <value>Fusion data</value>
   </data>
@@ -707,9 +770,6 @@
   </data>
   <data name="Label55.Text" xml:space="preserve">
     <value>Enthalpy of fusion</value>
-  </data>
-  <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 84</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>System of Units</value>
@@ -728,12 +788,6 @@
   </data>
   <data name="DBOpenDlg.Title" xml:space="preserve">
     <value>Open/Create Database</value>
-  </data>
-  <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>832, 22</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>832, 581</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
