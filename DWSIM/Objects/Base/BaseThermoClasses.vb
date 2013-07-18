@@ -2138,6 +2138,12 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public EnthalpyOfFusionAtTf As Double = 0.0#
         Public SolidTs As Double = 0.0#
         Public SolidDensityAtTs As Double = 0.0#
+        Public StandardStateMolarVolume As Double = 0.0#
+        Public MolarVolume_v2i As Double = 0.0#
+        Public MolarVolume_v3i As Double = 0.0#
+        Public MolarVolume_k1i As Double = 0.0#
+        Public MolarVolume_k2i As Double = 0.0#
+        Public MolarVolume_k3i As Double = 0.0#
 
         'the following properties are no longer used but kept for compatibility reasons
         Public UNIFAC_Ri As Double

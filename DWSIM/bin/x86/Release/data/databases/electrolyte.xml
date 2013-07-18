@@ -168,6 +168,12 @@
   <Hfus_at_Tf_kJ_mol>0</Hfus_at_Tf_kJ_mol>
   <DenS_T_C>-273.15</DenS_T_C>
   <DenS_g_mL>0</DenS_g_mL>
+  <StandardStateMolarVolume_cm3_mol>17.8</StandardStateMolarVolume_cm3_mol>
+  <MolarVolume_v2i>3.692E-2</MolarVolume_v2i>
+  <MolarVolume_v3i>-7.407E-4</MolarVolume_v3i>
+  <MolarVolume_k1i>0.9454</MolarVolume_k1i>
+  <MolarVolume_k2i>-0.0979E-3</MolarVolume_k2i>
+  <MolarVolume_k3i>0.9162E-4</MolarVolume_k3i>
 </compound>
 <compound>
   <Name>Perchlorate (ion)</Name>
@@ -378,6 +384,12 @@
   <Hfus_at_Tf_kJ_mol>0</Hfus_at_Tf_kJ_mol>
   <DenS_T_C>-273.15</DenS_T_C>
   <DenS_g_mL>0</DenS_g_mL>
+  <StandardStateMolarVolume_cm3_mol>-9</StandardStateMolarVolume_cm3_mol>
+  <MolarVolume_v2i>6.331E-2</MolarVolume_v2i>
+  <MolarVolume_v3i>-7.502E-4</MolarVolume_v3i>
+  <MolarVolume_k1i>1.094</MolarVolume_k1i>
+  <MolarVolume_k2i>-2.689E-3</MolarVolume_k2i>
+  <MolarVolume_k3i>3.919E-4</MolarVolume_k3i>
 </compound>
 <compound>
   <Name>Potassium Carbonate___1</Name>
@@ -822,6 +834,12 @@
   <Hfus_at_Tf_kJ_mol>8.48</Hfus_at_Tf_kJ_mol>
   <DenS_T_C>25</DenS_T_C>
   <DenS_g_mL>1.74</DenS_g_mL>
+  <StandardStateMolarVolume_cm3_mol>-21.2</StandardStateMolarVolume_cm3_mol>
+  <MolarVolume_v2i>1.096E-2</MolarVolume_v2i>
+  <MolarVolume_v3i>-9.093E-4</MolarVolume_v3i>
+  <MolarVolume_k1i>1.493</MolarVolume_k1i>
+  <MolarVolume_k2i>-2.144E-3</MolarVolume_k2i>
+  <MolarVolume_k3i>4.751E-4</MolarVolume_k3i>
 </compound>
 <compound>
   <Name>Magnesium Bromide</Name>
@@ -927,6 +945,12 @@
   <Hfus_at_Tf_kJ_mol>0</Hfus_at_Tf_kJ_mol>
   <DenS_T_C>-273.15</DenS_T_C>
   <DenS_g_mL>0</DenS_g_mL>
+  <StandardStateMolarVolume_cm3_mol>-1.2</StandardStateMolarVolume_cm3_mol>
+  <MolarVolume_v2i>7.748E-2</MolarVolume_v2i>
+  <MolarVolume_v3i>-13.8E-4</MolarVolume_v3i>
+  <MolarVolume_k1i>0.9758</MolarVolume_k1i>
+  <MolarVolume_k2i>-2.628E-3</MolarVolume_k2i>
+  <MolarVolume_k3i>6.309E-4</MolarVolume_k3i>
 </compound>
 <compound>
   <Name>Sodium Carbonate___1</Name>
@@ -1312,6 +1336,12 @@
   <Hfus_at_Tf_kJ_mol>0</Hfus_at_Tf_kJ_mol>
   <DenS_T_C>-273.15</DenS_T_C>
   <DenS_g_mL>0</DenS_g_mL>
+  <StandardStateMolarVolume_cm3_mol>18.2</StandardStateMolarVolume_cm3_mol>
+  <MolarVolume_v2i>1.604E-2</MolarVolume_v2i>
+  <MolarVolume_v3i>-1.957E-4</MolarVolume_v3i>
+  <MolarVolume_k1i>0.4435</MolarVolume_k1i>
+  <MolarVolume_k2i>-0.7984E-3</MolarVolume_k2i>
+  <MolarVolume_k3i>0.5941E-4</MolarVolume_k3i>
 </compound>
 <compound>
   <Name>Ammonium Bromide</Name>
@@ -1438,6 +1468,12 @@
   <Hfus_at_Tf_kJ_mol>0</Hfus_at_Tf_kJ_mol>
   <DenS_T_C>-273.15</DenS_T_C>
   <DenS_g_mL>0</DenS_g_mL>
+  <StandardStateMolarVolume_cm3_mol>29</StandardStateMolarVolume_cm3_mol>
+  <MolarVolume_v2i>10.78E-2</MolarVolume_v2i>
+  <MolarVolume_v3i>-4.537E-4</MolarVolume_v3i>
+  <MolarVolume_k1i>1.307</MolarVolume_k1i>
+  <MolarVolume_k2i>-2.751E-3</MolarVolume_k2i>
+  <MolarVolume_k3i>0.0439E-4</MolarVolume_k3i>
 </compound>
 <compound>
   <Name>Sulfate (ion)</Name>
@@ -1459,5 +1495,11 @@
   <Hfus_at_Tf_kJ_mol>0</Hfus_at_Tf_kJ_mol>
   <DenS_T_C>-273.15</DenS_T_C>
   <DenS_g_mL>0</DenS_g_mL>
+  <StandardStateMolarVolume_cm3_mol>14</StandardStateMolarVolume_cm3_mol>
+  <MolarVolume_v2i>13.36E-2</MolarVolume_v2i>
+  <MolarVolume_v3i>-27.39E-4</MolarVolume_v3i>
+  <MolarVolume_k1i>4.837</MolarVolume_k1i>
+  <MolarVolume_k2i>-2.927E-3</MolarVolume_k2i>
+  <MolarVolume_k3i>6.793E-4</MolarVolume_k3i>
 </compound>
 </compounds>

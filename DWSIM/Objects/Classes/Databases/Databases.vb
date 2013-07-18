@@ -1128,6 +1128,18 @@ Namespace DWSIM.Databases
                                 .SolidTs = Double.Parse(node2.InnerText, nf) + 273.15 'K
                             Case "DenS_g_mL"
                                 .SolidDensityAtTs = Double.Parse(node2.InnerText, nf) * 1000 'kg/m3
+                            Case "StandardStateMolarVolume_cm3_mol"
+                                .StandardStateMolarVolume = Double.Parse(node2.InnerText, nf)
+                            Case "MolarVolume_v2i"
+                                .MolarVolume_v2i = Double.Parse(node2.InnerText, nf)
+                            Case "MolarVolume_v3i"
+                                .MolarVolume_v3i = Double.Parse(node2.InnerText, nf)
+                            Case "MolarVolume_k1i"
+                                .MolarVolume_k1i = Double.Parse(node2.InnerText, nf)
+                            Case "MolarVolume_k2i"
+                                .MolarVolume_k2i = Double.Parse(node2.InnerText, nf)
+                            Case "MolarVolume_k3i"
+                                .MolarVolume_k3i = Double.Parse(node2.InnerText, nf)
                         End Select
                     Next
                     .ID = i

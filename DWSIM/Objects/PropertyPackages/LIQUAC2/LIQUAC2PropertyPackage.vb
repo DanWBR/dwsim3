@@ -73,6 +73,32 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "    DWSIM Functions"
 
+        Public Overrides Function AUX_LIQDENS(T As Double, Optional P As Double = 0.0, Optional Pvp As Double = 0.0, Optional phaseid As Integer = 3, Optional FORCE_EOS As Boolean = False) As Double
+
+            Dim phase As Fase
+
+            Select Case phaseid
+                Case 1
+                    phase = Fase.Liquid
+                Case 3
+                    phase = Fase.Liquid1
+                Case 4
+                    phase = Fase.Liquid2
+                Case 5
+                    phase = Fase.Liquid3
+                Case 6
+                    phase = Fase.Aqueous
+            End Select
+
+            Dim constprops As New List(Of ConstantProperties)
+            For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                constprops.Add(su.ConstantProperties)
+            Next
+
+            Return Me.m_elec.LiquidDensity(RET_VMOL(phase), T, constprops)
+            
+        End Function
+
         Public Function RET_KIJ(ByVal id1 As String, ByVal id2 As String) As Double
             Return 0
         End Function

@@ -109,6 +109,66 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
+        Function LiquidDensity(Vx As Double(), T As Double, cprops As List(Of ConstantProperties)) As Double
+
+            Dim wid As Integer = cprops.IndexOf((From c As ConstantProperties In cprops Select c Where c.Name = "Water").SingleOrDefault)
+
+            Dim n As Integer = UBound(Vx)
+            Dim molality(n) As Double
+            Dim i As Integer
+            Dim vol As Double = 0.0#
+            Dim MW As Double = 0.0#
+            Dim Tr As Double = 0
+
+            Dim wtotal As Double = 0
+
+            i = 0
+            Do
+                If cprops(i).Name = "Water" Then
+                    wtotal += Vx(i) * cprops(i).Molar_Weight / 1000
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            Dim Xsolv As Double = 1
+
+            i = 0
+            Do
+                molality(i) = Vx(i) / wtotal
+                'salt-free mole fractions
+                If cprops(i).Name <> "Water" Then
+                    Xsolv -= Vx(i)
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            i = 0
+            Dim Im As Double = 0.0#
+            Do
+                Im += cprops(i).Charge ^ 2 * molality(i) / 2
+                i += 1
+            Loop Until i = n + 1
+
+            vol = 0.0#
+            For i = 0 To n
+                If i = wid Then
+                    Tr = T / cprops(i).Critical_Temperature
+                    vol += Vx(i) * (1 / (32.51621 * (1 - Tr) ^ (-3.213004 + 7.92411 * Tr + -7.359898 * Tr ^ 2 + 2.703522 * Tr ^ 3))) 'm3/kmol
+                ElseIf cprops(i).IsIon Then
+                    With cprops(i)
+                        vol += Vx(i) * ((.StandardStateMolarVolume + .MolarVolume_v2i * (T - 298.15) + .MolarVolume_v3i * (T - 298.15) ^ 2) +
+                                (.MolarVolume_k1i + .MolarVolume_k2i * (T - 298.15) + .MolarVolume_k3i * (T - 298.15) ^ 2) * Im ^ 0.5) * 0.001 'm3/kmol
+                    End With
+                Else
+                    vol += 0.0#
+                End If
+                MW += Vx(i) * cprops(i).Molar_Weight
+            Next
+
+            Return MW / vol 'kg/m3
+
+        End Function
+
     End Class
 
 End Namespace

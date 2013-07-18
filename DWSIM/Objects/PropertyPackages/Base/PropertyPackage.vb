@@ -4491,7 +4491,6 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 Next
             End If
 
-
         End Sub
 
         Public Sub DW_CalcCompFugCoeff(ByVal f As Fase)
@@ -5625,7 +5624,7 @@ Final3:
 
             For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
                 db = subst.ConstantProperties.OriginalDB
-                If db = "ChemSep" Or (db = "User" And subst.ConstantProperties.SolidDensityEquation > 0) Then
+                If db = "ChemSep" Or (db = "User" And subst.ConstantProperties.SolidDensityEquation <> "") Then
                     Dim A, B, C, D, E, result As Double
                     Dim eqno As String = subst.ConstantProperties.SolidDensityEquation
                     Dim mw As Double = subst.ConstantProperties.Molar_Weight
