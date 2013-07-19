@@ -107,7 +107,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 i += 1
             Loop Until i = n + 1
 
-            Dim phvalue As Double = -Log10(molality(hid) * activcoeff(hid))
+            Dim phvalue As Double = 0.0#
+
+            If hid <> -1 Then phvalue = -Log10(molality(hid) * activcoeff(hid))
 
             Return phvalue
 

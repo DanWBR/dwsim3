@@ -120,25 +120,28 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Me.Vx0 = Vx.Clone
 
-                Vxl = Vx.Clone
+                Vnl = Vx.Clone
 
                 Dim int_count As Integer = 0
                 Dim L_ant As Double = 0.0#
 
-                'calculate chemical equilibria between ions, salts and water. 
-                ''SolveChemicalEquilibria' returns the equilibrium molar amounts in the liquid phase, including precipitates.
+                Do
 
-                If CalculateChemicalEquilibria And Not Vnf(wid) <= 0.5 Then
+                    'calculate chemical equilibria between ions, salts and water. 
+                    ''SolveChemicalEquilibria' returns the equilibrium molar amounts in the liquid phase, including precipitates.
 
-                    Vnf = SolveChemicalEquilibria(Vx, T, P, ids).Clone
+                    If CalculateChemicalEquilibria And Not Vnf(wid) <= 0.5 Then
+                        Vnl = SolveChemicalEquilibria(Vnl, T, P, ids).Clone
+                    End If
 
                     For i = 0 To n
-                        Vxl(i) = Vnf(i) / Sum(Vnf)
+                        Vxl(i) = Vnl(i) / Sum(Vnl)
                     Next
 
-                End If
+                    L_ant = L
+                    L = Sum(Vnl)
 
-                Do
+                    If Math.Abs(L - L_ant) < Tolerance Then Exit Do
 
                     'calculate activity coefficients.
 
@@ -177,7 +180,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     For i = 0 To n
                         If Vxl(i) > Vxlmax(i) Then
                             Vxl(i) = Vxlmax(i)
-                            Vns(i) = Vnf(i) - Vxl(i) * L
+                            Vnl(i) = Vxl(i) * L
+                            Vns(i) = Vnf(i) - Vnl(i)
                         Else
                             Vns(i) = 0
                         End If
@@ -189,19 +193,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         If P < Vp(i) Then
                             V += Vnf(i)
                             Vxl(i) = 0
+                            Vnl(i) = 0
                             Vnv(i) = Vnf(i)
                         End If
                     Next
 
                     'liquid mole amounts
 
-                    For i = 0 To n
-                        Vnl(i) = Vnf(i) - Vns(i) - Vnv(i)
-                    Next
-
                     S = Sum(Vns)
-                    L_ant = L
-                    L = Sum(Vnl)
 
                     For i = 0 To n
                         If Sum(Vnl) <> 0.0# Then Vxl(i) = Vnl(i) / Sum(Vnl) Else Vxl(i) = 0.0#
@@ -215,12 +214,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         sumN += Vf(i)
                     Next
 
-                    For i = 0 To n
-                        Vx(i) = Vf(i) / sumN
-                    Next
-
-                    If Math.Abs(L - L_ant) < Tolerance Then Exit Do
-
                     int_count += 1
 
                 Loop Until int_count > MaximumIterations
@@ -231,6 +224,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             End If
 
+            L = L / sumN
+            S = S / sumN
+            V = V / sumN
 
             'return flash calculation results.
 
