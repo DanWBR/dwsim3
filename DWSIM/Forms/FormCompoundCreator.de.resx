@@ -155,6 +155,33 @@
   <data name="btnCreateNewDB.Text" xml:space="preserve">
     <value>Neue Datenbank</value>
   </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Komponenten Eigenschaften</value>
+  </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Identifikation</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Eigenschaften</value>
+  </data>
+  <data name="FaTabStripItem11.Title" xml:space="preserve">
+    <value>Feststoff</value>
+  </data>
+  <data name="FaTabStripItem7.Title" xml:space="preserve">
+    <value>Dampfdruck</value>
+  </data>
+  <data name="FaTabStripItem8.Title" xml:space="preserve">
+    <value>Cp (Ideales Gas)</value>
+  </data>
+  <data name="FaTabStripItem9.Title" xml:space="preserve">
+    <value>Flüssigkeitsdichte</value>
+  </data>
+  <data name="FaTabStripItem10.Title" xml:space="preserve">
+    <value>Viskositat Flüssigkeit</value>
+  </data>
+  <data name="FaTabStripItem5.Title" xml:space="preserve">
+    <value>Kritische Daten</value>
+  </data>
   <data name="LinkLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 18</value>
   </data>
@@ -176,9 +203,6 @@
   <data name="Label22.Text" xml:space="preserve">
     <value>Molgewicht</value>
   </data>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Identifikation</value>
-  </data>
   <data name="LinkLabel2.ToolTip" xml:space="preserve">
     <value>Aufruf der Dortmund-Dataenbank zur Unterstützung bei der UNIFAC-Gruppenzuordnung.</value>
   </data>
@@ -188,11 +212,23 @@
   <data name="Label60.Text" xml:space="preserve">
     <value>Tragen Sie die Anzahl aller UNIFAC Gruppen der Komponentenstruktur ein, falls vorhanden.</value>
   </data>
+  <data name="Column4.HeaderText" xml:space="preserve">
+    <value>Anzahl</value>
+  </data>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Beispiel</value>
+  </data>
   <data name="Label58.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 13</value>
   </data>
   <data name="Label58.Text" xml:space="preserve">
     <value>Atom Anzahl zusätzlich</value>
+  </data>
+  <data name="Atom.HeaderText" xml:space="preserve">
+    <value>Atom</value>
+  </data>
+  <data name="Count.HeaderText" xml:space="preserve">
+    <value>Anzahl</value>
   </data>
   <data name="TextBox1.Text" xml:space="preserve">
     <value>Achtung! Die Definition von zusätzlichen Jobackgruppen oder Atomen wird die  Verwendung der UNIFAC/MODFAC Packete verhindern!</value>
@@ -203,6 +239,12 @@
   <data name="Label59.Text" xml:space="preserve">
     <value>Atom Anzahl UNIFAC</value>
   </data>
+  <data name="ColAtom.HeaderText" xml:space="preserve">
+    <value>Atom</value>
+  </data>
+  <data name="ColCount.HeaderText" xml:space="preserve">
+    <value>Anzahl</value>
+  </data>
   <data name="LinkLabel3.ToolTip" xml:space="preserve">
     <value>Aufruf der Chemeo-Dataenbank zur Unterstützung bei der Joback-Gruppenzuordnung.</value>
   </data>
@@ -212,17 +254,60 @@
   <data name="Label57.Text" xml:space="preserve">
     <value>Tragen Sie die Anzahl aller zusätzlicher Joback Gruppen der Komponentenstruktur ein, falls vorhanden.</value>
   </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Diverse Eigenschaften</value>
+  <data name="Column2.HeaderText" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Column2.Width" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="ColumnGroupName.HeaderText" xml:space="preserve">
+    <value>Gruppe</value>
+  </data>
+  <data name="ColumnGroupName.Width" type="System.Int32, mscorlib">
+    <value>48</value>
+  </data>
+  <data name="ColumnCountUNIFAC.HeaderText" xml:space="preserve">
+    <value>Anzahl UNIFAC</value>
+  </data>
+  <data name="ColumnCountUNIFAC.ToolTipText" xml:space="preserve">
+    <value>Anzahl Joback Untergruppen innerhalb von UNIFAC-Gruppen</value>
+  </data>
+  <data name="ColumnCountJoback.HeaderText" xml:space="preserve">
+    <value>Anzahl Joback</value>
+  </data>
+  <data name="ColumnCountJoback.ToolTipText" xml:space="preserve">
+    <value>Anzahl zusätzlicher Joback-Gruppen welche nicht bereits als UNIFAC-Untergruppe definiert sind.</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>PC-SAFT Parameter</value>
+  </data>
+  <data name="LabelWithDivider8.Text" xml:space="preserve">
+    <value>Attraktions-Parameter</value>
+  </data>
+  <data name="LabelWithDivider9.Text" xml:space="preserve">
+    <value>Segment Nummer</value>
+  </data>
+  <data name="LabelWithDivider10.Text" xml:space="preserve">
+    <value>Segment Durchmesser</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>UNIQUAC Parameter</value>
   </data>
   <data name="LabelWithDivider12.Text" xml:space="preserve">
     <value>Bildungseigenschaften</value>
+  </data>
+  <data name="LabelWithDivider2.Text" xml:space="preserve">
+    <value>Kritische Temperatur</value>
   </data>
   <data name="Label50.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 13</value>
   </data>
   <data name="Label50.Text" xml:space="preserve">
     <value>Bildungsenthalpy (Ideales Gas, 25 C)</value>
+  </data>
+  <data name="LabelWithDivider4.Text" xml:space="preserve">
+    <value>Kritische Kompressibilität</value>
   </data>
   <data name="Label53.Size" type="System.Drawing.Size, System.Drawing">
     <value>207, 13</value>
@@ -241,6 +326,15 @@
   </data>
   <data name="Text1.Text" xml:space="preserve">
     <value>SRK Volumen-Translationskoeffizient</value>
+  </data>
+  <data name="LabelWithDivider6.Text" xml:space="preserve">
+    <value>Azentrischer Faktor</value>
+  </data>
+  <data name="LabelWithDivider5.Text" xml:space="preserve">
+    <value>Rackett Parameter</value>
+  </data>
+  <data name="LabelWithDivider3.Text" xml:space="preserve">
+    <value>Kritischer Druck</value>
   </data>
   <data name="LabelWithDivider13.Text" xml:space="preserve">
     <value>Normaler Siedepunkt</value>
@@ -272,41 +366,89 @@
   <data name="Label63.Text" xml:space="preserve">
     <value>Chao-Seader Löslichkeitsparameter</value>
   </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Diverse Eigenschaften</value>
+  <data name="LabelWithDivider7.Text" xml:space="preserve">
+    <value>Dichte / Wärmekapazität</value>
   </data>
-  <data name="LabelWithDivider2.Text" xml:space="preserve">
-    <value>Kritische Temperatur</value>
+  <data name="gbCPs.Text" xml:space="preserve">
+    <value>Wärmekapazität (Feststoff)</value>
   </data>
-  <data name="LabelWithDivider6.Text" xml:space="preserve">
-    <value>Azentrischer Faktor</value>
+  <data name="btnRegressSolidCp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="LabelWithDivider3.Text" xml:space="preserve">
-    <value>Kritischer Druck</value>
+  <data name="btnRegressSolidCp.Text" xml:space="preserve">
+    <value>Datenregression</value>
   </data>
-  <data name="LabelWithDivider5.Text" xml:space="preserve">
-    <value>Rackett Parameter</value>
+  <data name="btnViewSolidCp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="LabelWithDivider4.Text" xml:space="preserve">
-    <value>Kritische Kompressibilität</value>
+  <data name="btnViewSolidCp.Text" xml:space="preserve">
+    <value>Diagramm</value>
   </data>
-  <data name="FaTabStripItem5.Title" xml:space="preserve">
-    <value>Kritische Daten</value>
+  <data name="rbCoeffSolidCp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 17</value>
   </data>
-  <data name="LabelWithDivider8.Text" xml:space="preserve">
-    <value>Attraktions-Parameter</value>
+  <data name="rbCoeffSolidCp.Text" xml:space="preserve">
+    <value>Eingabe der Koeffizienten *</value>
   </data>
-  <data name="LabelWithDivider9.Text" xml:space="preserve">
-    <value>Segment Nummer</value>
+  <data name="rbRegressSolidCp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 17</value>
   </data>
-  <data name="LabelWithDivider10.Text" xml:space="preserve">
-    <value>Segment Durchmesser</value>
+  <data name="rbRegressSolidCp.Text" xml:space="preserve">
+    <value>Regression Versuchsdaten</value>
   </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>PC-SAFT Parameter</value>
+  <data name="Label74.Text" xml:space="preserve">
+    <value>Gleichung</value>
   </data>
-  <data name="GroupBox11.Text" xml:space="preserve">
-    <value>UNIQUAC Parameter</value>
+  <data name="gbSolidDens.Text" xml:space="preserve">
+    <value>Dichte (Feststoff)</value>
+  </data>
+  <data name="rbEstimateSolidDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 17</value>
+  </data>
+  <data name="rbEstimateSolidDens.Text" xml:space="preserve">
+    <value>Schätze (DWSIM)</value>
+  </data>
+  <data name="btnRegressSolidDens.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnRegressSolidDens.Text" xml:space="preserve">
+    <value>Datenregression</value>
+  </data>
+  <data name="btnViewSolidDens.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnViewSolidDens.Text" xml:space="preserve">
+    <value>Diagramm</value>
+  </data>
+  <data name="rbCoeffSolidDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 17</value>
+  </data>
+  <data name="rbCoeffSolidDens.Text" xml:space="preserve">
+    <value>Eingabe der Koeffizienten *</value>
+  </data>
+  <data name="rbRegressSolidDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 17</value>
+  </data>
+  <data name="rbRegressSolidDens.Text" xml:space="preserve">
+    <value>Regression Versuchsdaten</value>
+  </data>
+  <data name="Label76.Text" xml:space="preserve">
+    <value>Gleichung</value>
+  </data>
+  <data name="LabelWithDivider1.Text" xml:space="preserve">
+    <value>Schmelzpunkt Daten</value>
+  </data>
+  <data name="Label52.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 13</value>
+  </data>
+  <data name="Label52.Text" xml:space="preserve">
+    <value>Schmelzpunkt</value>
+  </data>
+  <data name="Label55.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 13</value>
+  </data>
+  <data name="Label55.Text" xml:space="preserve">
+    <value>Schmelzenthalpie</value>
   </data>
   <data name="Label43.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 197</value>
@@ -389,9 +531,6 @@
   <data name="Label29.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 68</value>
   </data>
-  <data name="FaTabStripItem7.Title" xml:space="preserve">
-    <value>Dampfdruck</value>
-  </data>
   <data name="Label44.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 203</value>
   </data>
@@ -472,9 +611,6 @@
   </data>
   <data name="tbCPIG_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 123</value>
-  </data>
-  <data name="FaTabStripItem8.Title" xml:space="preserve">
-    <value>Wärmekapazität (Cp, Ideales Gas)</value>
   </data>
   <data name="Label45.Location" type="System.Drawing.Point, System.Drawing">
     <value>241, 203</value>
@@ -560,9 +696,6 @@
   <data name="Label35.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 76</value>
   </data>
-  <data name="FaTabStripItem9.Title" xml:space="preserve">
-    <value>Flüssigkeitsdichte</value>
-  </data>
   <data name="Label46.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 202</value>
   </data>
@@ -643,139 +776,6 @@
   </data>
   <data name="Label41.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 76</value>
-  </data>
-  <data name="FaTabStripItem10.Title" xml:space="preserve">
-    <value>Viskositat Flüssigkeit</value>
-  </data>
-  <data name="btnRegressSolidCp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnRegressSolidCp.Text" xml:space="preserve">
-    <value>Datenregression</value>
-  </data>
-  <data name="btnViewSolidCp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnViewSolidCp.Text" xml:space="preserve">
-    <value>Diagramm</value>
-  </data>
-  <data name="rbCoeffSolidCp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 17</value>
-  </data>
-  <data name="rbCoeffSolidCp.Text" xml:space="preserve">
-    <value>Eingabe der Koeffizienten *</value>
-  </data>
-  <data name="rbRegressSolidCp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 17</value>
-  </data>
-  <data name="rbRegressSolidCp.Text" xml:space="preserve">
-    <value>Regression Versuchsdaten</value>
-  </data>
-  <data name="Label74.Text" xml:space="preserve">
-    <value>Gleichung</value>
-  </data>
-  <data name="gbCPs.Text" xml:space="preserve">
-    <value>Wärmekapazität (Feststoff)</value>
-  </data>
-  <data name="rbEstimateSolidDens.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 17</value>
-  </data>
-  <data name="rbEstimateSolidDens.Text" xml:space="preserve">
-    <value>Schätze (DWSIM)</value>
-  </data>
-  <data name="btnRegressSolidDens.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnRegressSolidDens.Text" xml:space="preserve">
-    <value>Datenregression</value>
-  </data>
-  <data name="btnViewSolidDens.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnViewSolidDens.Text" xml:space="preserve">
-    <value>Diagramm</value>
-  </data>
-  <data name="rbCoeffSolidDens.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 17</value>
-  </data>
-  <data name="rbCoeffSolidDens.Text" xml:space="preserve">
-    <value>Eingabe der Koeffizienten *</value>
-  </data>
-  <data name="rbRegressSolidDens.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 17</value>
-  </data>
-  <data name="rbRegressSolidDens.Text" xml:space="preserve">
-    <value>Regression Versuchsdaten</value>
-  </data>
-  <data name="Label76.Text" xml:space="preserve">
-    <value>Gleichung</value>
-  </data>
-  <data name="gbSolidDens.Text" xml:space="preserve">
-    <value>Dichte (Feststoff)</value>
-  </data>
-  <data name="LabelWithDivider1.Text" xml:space="preserve">
-    <value>Schmelzpunkt Daten</value>
-  </data>
-  <data name="Label52.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 13</value>
-  </data>
-  <data name="Label52.Text" xml:space="preserve">
-    <value>Schmelzpunkt</value>
-  </data>
-  <data name="Label55.Size" type="System.Drawing.Size, System.Drawing">
-    <value>89, 13</value>
-  </data>
-  <data name="Label55.Text" xml:space="preserve">
-    <value>Schmelzenthalpie</value>
-  </data>
-  <data name="FaTabStripItem11.Title" xml:space="preserve">
-    <value>Feststoff</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Komponenten Eigenschaften</value>
-  </data>
-  <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Anzahl</value>
-  </data>
-  <data name="Column1.HeaderText" xml:space="preserve">
-    <value>Beispiel</value>
-  </data>
-  <data name="Atom.HeaderText" xml:space="preserve">
-    <value>Atom</value>
-  </data>
-  <data name="Count.HeaderText" xml:space="preserve">
-    <value>Anzahl</value>
-  </data>
-  <data name="ColAtom.HeaderText" xml:space="preserve">
-    <value>Atom</value>
-  </data>
-  <data name="ColCount.HeaderText" xml:space="preserve">
-    <value>Anzahl</value>
-  </data>
-  <data name="Column2.HeaderText" xml:space="preserve">
-    <value>Typ</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Column2.Width" type="System.Int32, mscorlib">
-    <value>31</value>
-  </data>
-  <data name="ColumnGroupName.HeaderText" xml:space="preserve">
-    <value>Gruppe</value>
-  </data>
-  <data name="ColumnGroupName.Width" type="System.Int32, mscorlib">
-    <value>48</value>
-  </data>
-  <data name="ColumnCountUNIFAC.HeaderText" xml:space="preserve">
-    <value>Anzahl UNIFAC</value>
-  </data>
-  <data name="ColumnCountUNIFAC.ToolTipText" xml:space="preserve">
-    <value>Anzahl Joback Untergruppen innerhalb von UNIFAC-Gruppen</value>
-  </data>
-  <data name="ColumnCountJoback.HeaderText" xml:space="preserve">
-    <value>Anzahl Joback</value>
-  </data>
-  <data name="ColumnCountJoback.ToolTipText" xml:space="preserve">
-    <value>Anzahl zusätzlicher Joback-Gruppen welche nicht bereits als UNIFAC-Untergruppe definiert sind.</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Einheitensystem</value>

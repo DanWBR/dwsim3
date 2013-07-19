@@ -1502,4 +1502,28 @@
   <MolarVolume_k2i>-2.927E-3</MolarVolume_k2i>
   <MolarVolume_k3i>6.793E-4</MolarVolume_k3i>
 </compound>
+<compound>
+  <Name>Hydron</Name>
+  <Formula>H+</Formula>
+  <MW>1</MW>
+  <Ion>True</Ion>
+  <Salt>False</Salt>
+  <HydratedSalt>False</HydratedSalt>
+  <Charge>+1</Charge>
+  <DelGF_kJ_mol>0</DelGF_kJ_mol>
+  <DelHf_kJ_mol>0</DelHf_kJ_mol>
+  <Cp_J_mol_K>0</Cp_J_mol_K>
+</compound>
+<compound>
+  <Name>Hydroxide</Name>
+  <Formula>OH-</Formula>
+  <MW>17.008</MW>
+  <Ion>True</Ion>
+  <Salt>False</Salt>
+  <HydratedSalt>False</HydratedSalt>
+  <Charge>-1</Charge>
+  <DelGF_kJ_mol>-157.244</DelGF_kJ_mol>
+  <DelHf_kJ_mol>-229.994</DelHf_kJ_mol>
+  <Cp_J_mol_K>-148.8</Cp_J_mol_K>
+</compound>
 </compounds>

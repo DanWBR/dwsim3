@@ -48,7 +48,9 @@ Public Class FormCompoundCreator
 
 
     Private Sub FormCompoundCreator_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
         'Grid UNIFAC
+
         Dim pathsep = System.IO.Path.DirectorySeparatorChar
         Dim picpath As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac" & pathsep
         Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac.txt"
@@ -232,6 +234,8 @@ Public Class FormCompoundCreator
                 cbUnits.SelectedIndex = cbUnits.Items.IndexOf(.su.nome)
             Else : cbUnits.SelectedIndex = 0
             End If
+
+            UpdateUnits()
 
             tbDBPath.Text = .database
             TextBoxAF.Text = .cp.Acentric_Factor
@@ -1251,7 +1255,9 @@ Public Class FormCompoundCreator
         loaded = True
         BothSaveStatusModified(sender, e)
     End Sub
+
     Private Sub btnRegressCPIG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressCPIG.Click
+
         Dim MW As Double = Me.TextBoxMW.Text
         mycase.DataCPIG.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataCPIG.Rows

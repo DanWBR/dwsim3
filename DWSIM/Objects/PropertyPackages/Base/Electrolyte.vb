@@ -77,6 +77,42 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
+        Function pH(Vx As Double(), T As Double, activcoeff As Double(), cprops As List(Of ConstantProperties)) As Double
+
+            Dim n As Integer = UBound(Vx)
+            Dim i As Integer
+            Dim molality(n), summ As Double
+
+            Dim wid As Integer = cprops.IndexOf((From c As ConstantProperties In cprops Select c Where c.Name = "Water").SingleOrDefault)
+            Dim hid As Integer = cprops.IndexOf((From c As ConstantProperties In cprops Select c Where c.Name = "Hydron").SingleOrDefault)
+
+            'calculate molality considering 1 mol of mixture.
+
+            Dim wtotal As Double = 0
+
+            i = 0
+            Do
+                If cprops(i).Name = "Water" Then
+                    wtotal += Vx(i) * cprops(i).Molar_Weight / 1000
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            i = 0
+            Do
+                If cprops(i).IsIon Then
+                    molality(i) = Vx(i) / wtotal
+                    summ += molality(i)
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            Dim phvalue As Double = -Log10(molality(hid) * activcoeff(hid))
+
+            Return phvalue
+
+        End Function
+
         Function SolidEnthalpy(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double
 
             Dim n As Integer = UBound(Vx)

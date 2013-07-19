@@ -4109,6 +4109,10 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
                         End With
 
+                        refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.pH.GetValueOrDefault
+                        If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
+                        pl.Add(DWSIM.App.GetLocalString("pH"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("pH"), True)
+
                         refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.osmoticCoefficient.GetValueOrDefault
                         If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
                         pl.Add(DWSIM.App.GetLocalString("OsmoticCoefficient"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("OsmoticCoefficient"), True)

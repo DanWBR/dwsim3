@@ -1614,6 +1614,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public Property freezingPointDepression As Nullable(Of Double)
         Public Property freezingPoint As Nullable(Of Double)
         Public Property ionicStrength As Nullable(Of Double)
+        Public Property pH As Nullable(Of Double)
 
         Protected _dewtemperature As Nullable(Of Double) = Nothing
         Public Property dewTemperature() As Nullable(Of Double)

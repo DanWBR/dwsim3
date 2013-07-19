@@ -5,6 +5,7 @@ Public Class CompositionEditorForm
     Inherits System.Windows.Forms.Form
     Public Componentes As Dictionary(Of String, Substancia)
     Public InitialComposition As Dictionary(Of String, Double)
+    Public Stream As MaterialStream
     Public Solvent As String = ""
     Public Q, W, T As Double
     Public SU As DWSIM.SistemasDeUnidades.Unidades
@@ -150,6 +151,7 @@ Public Class CompositionEditorForm
                 Dim n As Integer = Me.Componentes.Count
                 Dim liqdens(n - 1), nbp(n - 1) As Double
                 Dim ipp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
+                ipp.CurrentMaterialStream = Stream
                 Dim i As Integer = 0
                 For Each s As Substancia In Me.Componentes.Values
                     nbp(i) = s.ConstantProperties.Normal_Boiling_Point
@@ -237,6 +239,7 @@ Public Class CompositionEditorForm
                 Dim n As Integer = Me.Componentes.Count
                 Dim liqdens(n - 1), nbp(n - 1), volfrac(n - 1), totalvol As Double
                 Dim ipp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
+                ipp.CurrentMaterialStream = Stream
                 Dim T As Double = 273.15 + 15.56 'standard temperature
                 Dim i As Integer = 0
                 totalvol = 0.0#
@@ -306,6 +309,7 @@ Public Class CompositionEditorForm
                     Dim n As Integer = Me.Componentes.Count
                     Dim liqdens(n - 1), nbp(n - 1), volfrac(n - 1), totalvol As Double
                     Dim ipp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
+                    ipp.CurrentMaterialStream = Stream
                     Dim i As Integer = 0
                     totalvol = 0.0#
                     For Each s As Substancia In Me.Componentes.Values
@@ -422,6 +426,7 @@ Public Class CompositionEditorForm
                     Dim n As Integer = Me.Componentes.Count
                     Dim liqdens(n - 1), nbp(n - 1) As Double
                     Dim ipp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
+                    ipp.CurrentMaterialStream = Stream
                     Dim i As Integer = 0
                     For Each s As Substancia In Me.Componentes.Values
                         nbp(i) = s.ConstantProperties.Normal_Boiling_Point
@@ -457,6 +462,7 @@ Public Class CompositionEditorForm
                     Dim n As Integer = Me.Componentes.Count
                     Dim liqdens(n - 1), nbp(n - 1), volfrac(n - 1), totalvol As Double
                     Dim ipp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
+                    ipp.CurrentMaterialStream = Stream
                     Dim i As Integer = 0
                     totalvol = 0.0#
                     For Each s As Substancia In Me.Componentes.Values

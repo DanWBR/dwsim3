@@ -330,6 +330,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         constprops.Add(su.ConstantProperties)
                     Next
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.freezingPointDepression = Me.m_elec.FreezingPointDepression(RET_VMOL(phase), Me.m_uni.GAMMA_MR(T, RET_VMOL(phase), constprops), constprops)(1)
+                Case "ph"
+                    Dim constprops As New List(Of ConstantProperties)
+                    For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                        constprops.Add(su.ConstantProperties)
+                    Next
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.pH = Me.m_elec.pH(RET_VMOL(phase), T, Me.m_uni.GAMMA_MR(T, RET_VMOL(phase), constprops), constprops)
                 Case Else
                     Dim ex As Exception = New CapeOpen.CapeThrmPropertyNotAvailableException
                     ThrowCAPEException(ex, "Error", ex.Message, "ICapeThermoMaterial", ex.Source, ex.StackTrace, "CalcSinglePhaseProp/CalcTwoPhaseProp/CalcProp", ex.GetHashCode)
@@ -396,6 +402,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Me.DW_CalcProp("osmoticcoefficient", PropertyPackages.Fase.Liquid1)
                 Me.DW_CalcProp("freezingpoint", PropertyPackages.Fase.Liquid1)
                 Me.DW_CalcProp("freezingpointdepression", PropertyPackages.Fase.Liquid1)
+                Me.DW_CalcProp("ph", PropertyPackages.Fase.Liquid1)
 
             End If
 

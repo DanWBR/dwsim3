@@ -64,7 +64,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
             Dim info As Integer = 56
 
             its = 0
-            lmsolve.levenbergmarquardtminimize(inest.Length, _x.Length - 1, newc, epsg, epsf, epsx, maxits, info)
+            lmsolve.levenbergmarquardtminimize(inest.Length, _x.Length, newc, epsg, epsf, epsx, maxits, info)
 
             Dim coeffs(UBound(inest)) As Double
 
@@ -91,7 +91,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
                     fvec(i) = -_y(i - 1) + (Math.Exp(x(1) + x(2) / _x(i - 1) + x(3) * Math.Log(_x(i - 1)) + x(4) * _x(i - 1) ^ x(5)))
                     sum += (fvec(i)) ^ 2
                     i = i + 1
-                Loop Until i = UBound(_y)
+                Loop Until i = UBound(_y) + 2
             ElseIf iflag = 2 Then
                 Dim fval As Double = 0
                 i = 1
@@ -104,7 +104,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
                     fjac(i, 4) = fval * _x(i - 1) ^ x(5)
                     fjac(i, 5) = fval * x(5) * _x(i - 1) ^ x(5) * Math.Log(_x(i - 1))
                     i = i + 1
-                Loop Until i = UBound(_y)
+                Loop Until i = UBound(_y) + 2
             End If
 
             its += 1
@@ -125,7 +125,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
                     fvec(i) = -_y(i - 1) + (x(1) + x(2) * _x(i - 1) + x(3) * _x(i - 1) ^ 2 + x(4) * _x(i - 1) ^ 3 + x(5) * _x(i - 1) ^ 4)
                     sum += (fvec(i)) ^ 2
                     i = i + 1
-                Loop Until i = UBound(_y)
+                Loop Until i = UBound(_y) + 2
             ElseIf iflag = 2 Then
                 i = 1
                 Do
@@ -136,7 +136,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
                     fjac(i, 4) = _x(i - 1) ^ 3
                     fjac(i, 5) = _x(i - 1) ^ 4
                     i = i + 1
-                Loop Until i = UBound(_y)
+                Loop Until i = UBound(_y) + 2
             End If
 
             its += 1
@@ -156,7 +156,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
                     fvec(i) = -_y(i - 1) + (Math.Exp(x(1) + x(2) / _x(i - 1) + x(3) * Math.Log(_x(i - 1)) + x(4) * _x(i - 1) ^ x(5)))
                     sum += (fvec(i)) ^ 2
                     i = i + 1
-                Loop Until i = UBound(_y)
+                Loop Until i = UBound(_y) + 2
             ElseIf iflag = 2 Then
                 Dim fval As Double = 0
                 i = 1
@@ -169,7 +169,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
                     fjac(i, 4) = fval * _x(i - 1) ^ x(5)
                     fjac(i, 5) = fval * x(5) * _x(i - 1) ^ x(5) * Math.Log(_x(i - 1))
                     i = i + 1
-                Loop Until i = UBound(_y)
+                Loop Until i = UBound(_y) + 2
             End If
 
             its += 1
@@ -190,7 +190,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
                     fvec(i) = -_y(i - 1) + (x(1) * (1 - _x(i - 1)) ^ (x(2) + x(3) * _x(i - 1) + x(4) * _x(i - 1) ^ 2))
                     sum += (fvec(i)) ^ 2
                     i = i + 1
-                Loop Until i = UBound(_y)
+                Loop Until i = UBound(_y) + 2
             ElseIf iflag = 2 Then
                 i = 1
                 Do
@@ -202,7 +202,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
                     fjac(i, 3) = fval * _x(i - 1)
                     fjac(i, 4) = fval * _x(i - 1) ^ 2
                     i = i + 1
-                Loop Until i = UBound(_y)
+                Loop Until i = UBound(_y) + 2
             End If
 
             its += 1
@@ -223,7 +223,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
                     fvec(i) = -_y(i - 1) + (x(1) / x(2) ^ (1 + (1 - _x(i - 1) / x(3)) ^ x(4)))
                     sum += (fvec(i)) ^ 2
                     i = i + 1
-                Loop Until i = UBound(_y)
+                Loop Until i = UBound(_y) + 2
             ElseIf iflag = 2 Then
                 i = 1
                 Do
@@ -234,7 +234,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
                     fjac(i, 4) = -(x(1) * Log(x(2)) * Log(x(3) - _x(i - 1)) - x(1) * Log(x(2)) * Log(x(3))) * (x(3) - _x(i - 1)) ^ x(4) / (x(2) ^ (((x(3) - _x(i - 1)) ^ x(4) + x(3) ^ x(4)) / x(3) ^ x(4)) * x(3) ^ x(4))
                     fjac(i, 5) = 0
                     i = i + 1
-                Loop Until i = UBound(_y)
+                Loop Until i = UBound(_y) + 2
             End If
 
             its += 1

@@ -53,6 +53,7 @@ Namespace DWSIM.Editors.Composition
                 selectionControl.W = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
                 selectionControl.Solvent = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).ReferenceSolvent
                 selectionControl.InitialComposition = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).InputComposition
+                selectionControl.Stream = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
 
                 editorService.ShowDialog(selectionControl)
 

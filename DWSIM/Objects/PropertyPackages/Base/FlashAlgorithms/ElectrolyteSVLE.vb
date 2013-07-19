@@ -93,35 +93,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 End If
             Next
 
-            If Vnf(wid) = 1.0# Then
-
-                'only water in the stream. calculate vapor pressure and compare it with system pressure to determine the phase.
-
-                If P > Psat Then
-
-                    'liquid only.
-
-                    V = 0.0#
-                    L = 1.0#
-                    S = 0.0#
-                    Vxl(wid) = 1.0#
-                    Vf = Vnf
-                    sumN = 1.0#
-
-                Else
-
-                    'vapor only. 
-
-                    V = 1.0#
-                    L = 0.0#
-                    S = 0.0#
-                    Vxv(wid) = 1.0#
-                    Vf = Vnf
-                    sumN = 1.0#
-
-                End If
-
-            ElseIf Vnf(wid) = 0.0# Then
+           If Vnf(wid) = 0.0# Then
 
                 'only solids in the stream (no liquid water).
 
