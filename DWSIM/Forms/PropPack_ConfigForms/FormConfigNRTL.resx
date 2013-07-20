@@ -132,7 +132,7 @@
     <value>NoControl</value>
   </data>
   <data name="Button3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>445, 17</value>
+    <value>864, 17</value>
   </data>
   <data name="Button3.Size" type="System.Drawing.Size, System.Drawing">
     <value>94, 23</value>
@@ -181,7 +181,7 @@
     <value>8, 54</value>
   </data>
   <data name="KryptonDataGridView2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>531, 286</value>
+    <value>950, 370</value>
   </data>
   <data name="KryptonDataGridView2.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -208,7 +208,7 @@
     <value>6, 48</value>
   </data>
   <data name="LabelWithDivider2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>533, 10</value>
+    <value>952, 10</value>
   </data>
   <data name="LabelWithDivider2.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -259,7 +259,7 @@
     <value>5, 3</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>546, 336</value>
+    <value>965, 420</value>
   </data>
   <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -310,7 +310,7 @@
     <value>1</value>
   </data>
   <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>558, 346</value>
+    <value>977, 430</value>
   </data>
   <data name="FaTabStripItem2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -337,7 +337,7 @@
     <value>NoControl</value>
   </data>
   <data name="Button5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>198, 17</value>
+    <value>532, 17</value>
   </data>
   <data name="Button5.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 23</value>
@@ -391,7 +391,7 @@
     <value>NoControl</value>
   </data>
   <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>466, 17</value>
+    <value>800, 17</value>
   </data>
   <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>158, 23</value>
@@ -415,7 +415,7 @@
     <value>2</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>332, 17</value>
+    <value>666, 17</value>
   </data>
   <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 23</value>
@@ -465,6 +465,30 @@
   <data name="Column6.HeaderText" xml:space="preserve">
     <value>a21 (cal/mol)</value>
   </data>
+  <metadata name="b12.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="b12.HeaderText" xml:space="preserve">
+    <value>b12 (cal/[mol.K])</value>
+  </data>
+  <metadata name="b21.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="b21.HeaderText" xml:space="preserve">
+    <value>b21 (cal/[mol.K])</value>
+  </data>
+  <metadata name="c12.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="c12.HeaderText" xml:space="preserve">
+    <value>c12 (cal/[mol.K^2])</value>
+  </data>
+  <metadata name="c21.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="c21.HeaderText" xml:space="preserve">
+    <value>c21 (cal/[mol.K^2])</value>
+  </data>
   <metadata name="Column7.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -475,7 +499,7 @@
     <value>8, 55</value>
   </data>
   <data name="dgvu1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>616, 277</value>
+    <value>950, 361</value>
   </data>
   <data name="dgvu1.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -502,7 +526,7 @@
     <value>6, 48</value>
   </data>
   <data name="LabelWithDivider3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>618, 10</value>
+    <value>952, 10</value>
   </data>
   <data name="LabelWithDivider3.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -523,7 +547,7 @@
     <value>6, 5</value>
   </data>
   <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>631, 338</value>
+    <value>965, 422</value>
   </data>
   <data name="GroupBox3.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -544,7 +568,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>643, 346</value>
+    <value>977, 430</value>
   </data>
   <data name="FaTabStripItem3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -601,7 +625,7 @@
     <value>Vertical</value>
   </data>
   <data name="KryptonDataGridView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>532, 312</value>
+    <value>951, 396</value>
   </data>
   <data name="KryptonDataGridView1.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -622,7 +646,7 @@
     <value>5, 3</value>
   </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>547, 336</value>
+    <value>966, 420</value>
   </data>
   <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -643,7 +667,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>558, 346</value>
+    <value>977, 430</value>
   </data>
   <data name="FaTabStripItem1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -667,7 +691,7 @@
     <value>0, 0</value>
   </data>
   <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>645, 367</value>
+    <value>979, 451</value>
   </data>
   <data name="FaTabStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -694,7 +718,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>645, 367</value>
+    <value>979, 451</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
@@ -718,24 +742,6 @@
     <value>DataGridViewTextBoxColumn3</value>
   </data>
   <data name="&gt;&gt;DataGridViewTextBoxColumn3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ID.Name" xml:space="preserve">
-    <value>ID</value>
-  </data>
-  <data name="&gt;&gt;ID.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Column2.Name" xml:space="preserve">
-    <value>Column2</value>
-  </data>
-  <data name="&gt;&gt;Column2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Column1.Name" xml:space="preserve">
-    <value>Column1</value>
-  </data>
-  <data name="&gt;&gt;Column1.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Column3.Name" xml:space="preserve">
@@ -762,16 +768,58 @@
   <data name="&gt;&gt;Column6.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;b12.Name" xml:space="preserve">
+    <value>b12</value>
+  </data>
+  <data name="&gt;&gt;b12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;b21.Name" xml:space="preserve">
+    <value>b21</value>
+  </data>
+  <data name="&gt;&gt;b21.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;c12.Name" xml:space="preserve">
+    <value>c12</value>
+  </data>
+  <data name="&gt;&gt;c12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;c21.Name" xml:space="preserve">
+    <value>c21</value>
+  </data>
+  <data name="&gt;&gt;c21.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;Column7.Name" xml:space="preserve">
     <value>Column7</value>
   </data>
   <data name="&gt;&gt;Column7.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;ID.Name" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="&gt;&gt;ID.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Column2.Name" xml:space="preserve">
+    <value>Column2</value>
+  </data>
+  <data name="&gt;&gt;Column2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Column1.Name" xml:space="preserve">
+    <value>Column1</value>
+  </data>
+  <data name="&gt;&gt;Column1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormConfigNRTL</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>DWSIM.FormConfigBase, DWSIM, Version=3.0.4917.25544, Culture=neutral, PublicKeyToken=null</value>
+    <value>DWSIM.FormConfigBase, DWSIM, Version=3.0.4948.31741, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

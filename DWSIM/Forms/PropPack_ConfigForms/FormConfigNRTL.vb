@@ -101,8 +101,12 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                                     ppu.m_uni.InteractionParameters(cp.Name).Add(cp2.Name, New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData)
                                     Dim a12 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).A12
                                     Dim a21 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).A21
+                                    Dim b12 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).B12
+                                    Dim b21 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).B21
+                                    Dim c12 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).C12
+                                    Dim c21 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).C21
                                     Dim alpha12 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).alpha12
-                                    dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(cp.Name), DWSIM.App.GetComponentName(cp2.Name), Format(a12, nf), Format(a21, nf), Format(alpha12, nf)})
+                                    dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(cp.Name), DWSIM.App.GetComponentName(cp2.Name), Format(a12, nf), Format(a21, nf), Format(b12, nf), Format(b21, nf), Format(c12, nf), Format(c21, nf), Format(alpha12, nf)})
                                     With dgvu1.Rows(dgvu1.Rows.Count - 1)
                                         .Cells(0).Tag = cp.Name
                                         .Cells(1).Tag = cp2.Name
@@ -112,8 +116,12 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                         Else
                             Dim a12 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).A12
                             Dim a21 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).A21
+                            Dim b12 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).B12
+                            Dim b21 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).B21
+                            Dim c12 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).C12
+                            Dim c21 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).C21
                             Dim alpha12 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).alpha12
-                            dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(cp.Name), DWSIM.App.GetComponentName(cp2.Name), Format(a12, nf), Format(a21, nf), Format(alpha12, nf)})
+                            dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(cp.Name), DWSIM.App.GetComponentName(cp2.Name), Format(a12, nf), Format(a21, nf), Format(b12, nf), Format(b21, nf), Format(c12, nf), Format(c21, nf), Format(alpha12, nf)})
                             With dgvu1.Rows(dgvu1.Rows.Count - 1)
                                 .Cells(0).Tag = cp.Name
                                 .Cells(1).Tag = cp2.Name
@@ -186,6 +194,14 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                 Case 3
                     ppu.m_uni.InteractionParameters(id1)(id2).A21 = value
                 Case 4
+                    ppu.m_uni.InteractionParameters(id1)(id2).B12 = value
+                Case 5
+                    ppu.m_uni.InteractionParameters(id1)(id2).B21 = value
+                Case 6
+                    ppu.m_uni.InteractionParameters(id1)(id2).C12 = value
+                Case 7
+                    ppu.m_uni.InteractionParameters(id1)(id2).C21 = value
+                Case 8
                     ppu.m_uni.InteractionParameters(id1)(id2).alpha12 = value
             End Select
         End If
@@ -339,13 +355,18 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
         If count < 500 Then
             dgvu1.Rows(row).Cells(2).Value = x0(0)
             dgvu1.Rows(row).Cells(3).Value = x0(1)
-            dgvu1.Rows(row).Cells(4).Value = 0.3
+            dgvu1.Rows(row).Cells(8).Value = 0.3
         Else
             If Not Double.IsNaN(x0(0)) Then dgvu1.Rows(row).Cells(2).Value = x0(0) Else dgvu1.Rows(row).Cells(2).Value = 0.0#
             If Not Double.IsNaN(x0(1)) Then dgvu1.Rows(row).Cells(3).Value = x0(1) Else dgvu1.Rows(row).Cells(3).Value = 0.0#
-            dgvu1.Rows(row).Cells(4).Value = 0.3
+            dgvu1.Rows(row).Cells(8).Value = 0.3
             MessageBox.Show("Parameter estimation through UNIFAC failed: Reached the maximum number of iterations.", "UNIFAC Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
+
+        dgvu1.Rows(row).Cells(4).Value = 0.0#
+        dgvu1.Rows(row).Cells(5).Value = 0.0#
+        dgvu1.Rows(row).Cells(6).Value = 0.0#
+        dgvu1.Rows(row).Cells(7).Value = 0.0#
 
     End Sub
 

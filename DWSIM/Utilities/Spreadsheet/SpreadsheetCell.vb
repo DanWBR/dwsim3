@@ -68,7 +68,11 @@ Namespace DWSIM.Utilities.Spreadsheet
         End Function
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
-            Return XMLSerializer.XMLSerializer.Serialize(Me, True)
+            If Expression <> "" Then
+                Return XMLSerializer.XMLSerializer.Serialize(Me, True)
+            Else
+                Return New List(Of XElement)
+            End If
         End Function
     End Class
 

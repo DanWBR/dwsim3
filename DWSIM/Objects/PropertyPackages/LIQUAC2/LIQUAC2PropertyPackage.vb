@@ -1481,6 +1481,46 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #End Region
 
+#Region "    XML Load/Save Override"
+
+        Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
+
+            MyBase.LoadData(data)
+
+            Me.ElectrolyteFlash = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.ElectrolyteSVLE
+
+            Dim xel0 As XElement = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_ReactionSetID").SingleOrDefault
+            If Not xel0 Is Nothing Then Me.ElectrolyteFlash.ReactionSet = xel0.Value
+
+            Dim xel As XElement = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_CalculateChemicalEquilibria").SingleOrDefault
+            If Not xel Is Nothing Then Me.ElectrolyteFlash.CalculateChemicalEquilibria = xel.Value
+
+            Dim xel2 As XElement = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_Tolerance").SingleOrDefault
+            If Not xel2 Is Nothing Then Me.ElectrolyteFlash.Tolerance = xel2.Value
+
+            Dim xel3 As XElement = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_MaximumIterations").SingleOrDefault
+            If Not xel3 Is Nothing Then Me.ElectrolyteFlash.MaximumIterations = xel3.Value
+
+        End Function
+
+        Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
+
+            Dim elements As System.Collections.Generic.List(Of System.Xml.Linq.XElement) = MyBase.SaveData()
+            Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
+
+            With elements
+                .Add(New XElement("ElectrolyteFlash_ReactionSetID", Me.ElectrolyteFlash.ReactionSet))
+                .Add(New XElement("ElectrolyteFlash_CalculateChemicalEquilibria", Me.ElectrolyteFlash.CalculateChemicalEquilibria))
+                .Add(New XElement("ElectrolyteFlash_Tolerance", Me.ElectrolyteFlash.Tolerance))
+                .Add(New XElement("ElectrolyteFlash_MaximumIterations", Me.ElectrolyteFlash.MaximumIterations))
+            End With
+
+            Return elements
+
+        End Function
+
+#End Region
+
     End Class
 
 End Namespace
