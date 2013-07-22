@@ -32,6 +32,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
         Public A21 As Double = 0
         Public alpha12 As Double = 0
         Public comment As String = ""
+        <FieldIgnored()> Public B12 As Double = 0
+        <FieldIgnored()> Public B21 As Double = 0
+        <FieldIgnored()> Public C12 As Double = 0
+        <FieldIgnored()> Public C21 As Double = 0
 
         Public Function Clone() As Object Implements System.ICloneable.Clone
 
@@ -41,6 +45,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 .ID2 = Me.ID2
                 .A12 = Me.A12
                 .A21 = Me.A21
+                .B12 = Me.B12
+                .B21 = Me.B21
+                .C12 = Me.C12
+                .C21 = Me.C21
                 .alpha12 = Me.alpha12
                 .comment = Me.comment
             End With
@@ -163,14 +171,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 Do
                     If Me.InteractionParameters.ContainsKey(Vids(i)) Then
                         If Me.InteractionParameters(Vids(i)).ContainsKey(Vids(j)) Then
-                            tau_ij(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A12 / (1.98721 * T)
-                            tau_ji(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A21 / (1.98721 * T)
+                            tau_ij(i, j) = (Me.InteractionParameters(Vids(i))(Vids(j)).A12 + Me.InteractionParameters(Vids(i))(Vids(j)).B12 * T + Me.InteractionParameters(Vids(i))(Vids(j)).C12 * T ^ 2) / (1.98721 * T)
+                            tau_ji(i, j) = (Me.InteractionParameters(Vids(i))(Vids(j)).A21 + Me.InteractionParameters(Vids(i))(Vids(j)).B21 * T + Me.InteractionParameters(Vids(i))(Vids(j)).C21 * T ^ 2) / (1.98721 * T)
                             alpha12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).alpha12
                         Else
                             If Me.InteractionParameters.ContainsKey(Vids(j)) Then
                                 If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
-                                    tau_ji(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12 / (1.98721 * T)
-                                    tau_ij(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21 / (1.98721 * T)
+                                    tau_ji(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A12 + Me.InteractionParameters(Vids(j))(Vids(i)).B12 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C12 * T ^ 2) / (1.98721 * T)
+                                    tau_ij(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A21 + Me.InteractionParameters(Vids(j))(Vids(i)).B21 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C21 * T ^ 2) / (1.98721 * T)
                                     alpha12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).alpha12
                                 Else
                                     tau_ij(i, j) = 0
@@ -185,8 +193,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         End If
                     ElseIf Me.InteractionParameters.ContainsKey(Vids(j)) Then
                         If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
-                            tau_ji(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12 / (1.98721 * T)
-                            tau_ij(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21 / (1.98721 * T)
+                            tau_ji(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A12 + Me.InteractionParameters(Vids(j))(Vids(i)).B12 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C12 * T ^ 2) / (1.98721 * T)
+                            tau_ij(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A21 + Me.InteractionParameters(Vids(j))(Vids(i)).B21 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C21 * T ^ 2) / (1.98721 * T)
                             alpha12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).alpha12
                         Else
                             tau_ij(i, j) = 0
@@ -262,14 +270,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 Do
                     If Me.InteractionParameters.ContainsKey(Vids(i)) Then
                         If Me.InteractionParameters(Vids(i)).ContainsKey(Vids(j)) Then
-                            tau_ij(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A12 / (1.98721 * T)
-                            tau_ji(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A21 / (1.98721 * T)
+                            tau_ij(i, j) = (Me.InteractionParameters(Vids(i))(Vids(j)).A12 + Me.InteractionParameters(Vids(i))(Vids(j)).B12 * T + Me.InteractionParameters(Vids(i))(Vids(j)).C12 * T ^ 2) / (1.98721 * T)
+                            tau_ji(i, j) = (Me.InteractionParameters(Vids(i))(Vids(j)).A21 + Me.InteractionParameters(Vids(i))(Vids(j)).B21 * T + Me.InteractionParameters(Vids(i))(Vids(j)).C21 * T ^ 2) / (1.98721 * T)
                             alpha12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).alpha12
                         Else
                             If Me.InteractionParameters.ContainsKey(Vids(j)) Then
                                 If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
-                                    tau_ji(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12 / (1.98721 * T)
-                                    tau_ij(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21 / (1.98721 * T)
+                                    tau_ji(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A12 + Me.InteractionParameters(Vids(j))(Vids(i)).B12 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C12 * T ^ 2) / (1.98721 * T)
+                                    tau_ij(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A21 + Me.InteractionParameters(Vids(j))(Vids(i)).B21 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C21 * T ^ 2) / (1.98721 * T)
                                     alpha12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).alpha12
                                 Else
                                     tau_ij(i, j) = 0
@@ -284,8 +292,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         End If
                     ElseIf Me.InteractionParameters.ContainsKey(Vids(j)) Then
                         If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
-                            tau_ji(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12 / (1.98721 * T)
-                            tau_ij(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21 / (1.98721 * T)
+                            tau_ji(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A12 + Me.InteractionParameters(Vids(j))(Vids(i)).B12 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C12 * T ^ 2) / (1.98721 * T)
+                            tau_ij(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A21 + Me.InteractionParameters(Vids(j))(Vids(i)).B21 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C21 * T ^ 2) / (1.98721 * T)
                             alpha12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).alpha12
                         Else
                             tau_ij(i, j) = 0
@@ -370,14 +378,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 Do
                     If Me.InteractionParameters.ContainsKey(Vids(i)) Then
                         If Me.InteractionParameters(Vids(i)).ContainsKey(Vids(j)) Then
-                            tau_ij(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A12 / (1.98721 * T)
-                            tau_ji(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A21 / (1.98721 * T)
+                            tau_ij(i, j) = (Me.InteractionParameters(Vids(i))(Vids(j)).A12 + Me.InteractionParameters(Vids(i))(Vids(j)).B12 * T + Me.InteractionParameters(Vids(i))(Vids(j)).C12 * T ^ 2) / (1.98721 * T)
+                            tau_ji(i, j) = (Me.InteractionParameters(Vids(i))(Vids(j)).A21 + Me.InteractionParameters(Vids(i))(Vids(j)).B21 * T + Me.InteractionParameters(Vids(i))(Vids(j)).C21 * T ^ 2) / (1.98721 * T)
                             alpha12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).alpha12
                         Else
                             If Me.InteractionParameters.ContainsKey(Vids(j)) Then
                                 If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
-                                    tau_ji(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12 / (1.98721 * T)
-                                    tau_ij(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21 / (1.98721 * T)
+                                    tau_ji(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A12 + Me.InteractionParameters(Vids(j))(Vids(i)).B12 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C12 * T ^ 2) / (1.98721 * T)
+                                    tau_ij(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A21 + Me.InteractionParameters(Vids(j))(Vids(i)).B21 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C21 * T ^ 2) / (1.98721 * T)
                                     alpha12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).alpha12
                                 Else
                                     tau_ij(i, j) = 0
@@ -392,8 +400,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         End If
                     ElseIf Me.InteractionParameters.ContainsKey(Vids(j)) Then
                         If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
-                            tau_ji(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12 / (1.98721 * T)
-                            tau_ij(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21 / (1.98721 * T)
+                            tau_ji(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A12 + Me.InteractionParameters(Vids(j))(Vids(i)).B12 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C12 * T ^ 2) / (1.98721 * T)
+                            tau_ij(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A21 + Me.InteractionParameters(Vids(j))(Vids(i)).B21 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C21 * T ^ 2) / (1.98721 * T)
                             alpha12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).alpha12
                         Else
                             tau_ij(i, j) = 0
@@ -469,14 +477,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 Do
                     If Me.InteractionParameters.ContainsKey(Vids(i)) Then
                         If Me.InteractionParameters(Vids(i)).ContainsKey(Vids(j)) Then
-                            tau_ij(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A12 / (1.98721 * T)
-                            tau_ji(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A21 / (1.98721 * T)
+                            tau_ij(i, j) = (Me.InteractionParameters(Vids(i))(Vids(j)).A12 + Me.InteractionParameters(Vids(i))(Vids(j)).B12 * T + Me.InteractionParameters(Vids(i))(Vids(j)).C12 * T ^ 2) / (1.98721 * T)
+                            tau_ji(i, j) = (Me.InteractionParameters(Vids(i))(Vids(j)).A21 + Me.InteractionParameters(Vids(i))(Vids(j)).B21 * T + Me.InteractionParameters(Vids(i))(Vids(j)).C21 * T ^ 2) / (1.98721 * T)
                             alpha12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).alpha12
                         Else
                             If Me.InteractionParameters.ContainsKey(Vids(j)) Then
                                 If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
-                                    tau_ji(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12 / (1.98721 * T)
-                                    tau_ij(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21 / (1.98721 * T)
+                                    tau_ji(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A12 + Me.InteractionParameters(Vids(j))(Vids(i)).B12 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C12 * T ^ 2) / (1.98721 * T)
+                                    tau_ij(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A21 + Me.InteractionParameters(Vids(j))(Vids(i)).B21 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C21 * T ^ 2) / (1.98721 * T)
                                     alpha12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).alpha12
                                 Else
                                     tau_ij(i, j) = 0
@@ -491,8 +499,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         End If
                     ElseIf Me.InteractionParameters.ContainsKey(Vids(j)) Then
                         If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
-                            tau_ji(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12 / (1.98721 * T)
-                            tau_ij(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21 / (1.98721 * T)
+                            tau_ji(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A12 + Me.InteractionParameters(Vids(j))(Vids(i)).B12 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C12 * T ^ 2) / (1.98721 * T)
+                            tau_ij(i, j) = (Me.InteractionParameters(Vids(j))(Vids(i)).A21 + Me.InteractionParameters(Vids(j))(Vids(i)).B21 * T + Me.InteractionParameters(Vids(j))(Vids(i)).C21 * T ^ 2) / (1.98721 * T)
                             alpha12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).alpha12
                         Else
                             tau_ij(i, j) = 0

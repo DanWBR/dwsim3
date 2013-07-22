@@ -31,6 +31,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
         Public A12 As Double = 0
         Public A21 As Double = 0
         Public comment As String = ""
+        <FieldIgnored()> Public B12 As Double = 0
+        <FieldIgnored()> Public B21 As Double = 0
+        <FieldIgnored()> Public C12 As Double = 0
+        <FieldIgnored()> Public C21 As Double = 0
 
         Public Function Clone() As Object Implements System.ICloneable.Clone
 
@@ -40,6 +44,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 .ID2 = Me.ID2
                 .A12 = Me.A12
                 .A21 = Me.A21
+                .B12 = Me.B12
+                .B21 = Me.B21
+                .C12 = Me.C12
+                .C21 = Me.C21
                 .comment = Me.comment
             End With
             Return newclass
@@ -177,7 +185,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim n As Integer = UBound(Vx)
 
-            Dim tau_ij(n, n), tau_ji(n, n), a12(n, n), a21(n, n) As Double
+            Dim tau_ij(n, n), tau_ji(n, n), a12(n, n), a21(n, n), b12(n, n), b21(n, n), c12(n, n), c21(n, n) As Double
 
             Dim i, j As Integer
 
@@ -189,23 +197,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         If Me.InteractionParameters(Vids(i)).ContainsKey(Vids(j)) Then
                             a12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A12
                             a21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A21
+                            b12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).B12
+                            b21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).B21
+                            c12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).C12
+                            c21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).C21
                         Else
                             If Me.InteractionParameters.ContainsKey(Vids(j)) Then
                                 If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
                                     a12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21
                                     a21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12
-                                Else
-                                    a12(i, j) = 0
-                                    a21(i, j) = 0
+                                    b12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).B21
+                                    b21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).B12
+                                    c12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).C21
+                                    c21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).C12
                                 End If
-                            Else
-                                a12(i, j) = 0
-                                a21(i, j) = 0
                             End If
                         End If
-                    Else
-                        a12(i, j) = 0
-                        a21(i, j) = 0
                     End If
                     j = j + 1
                 Loop Until j = n + 1
@@ -216,8 +223,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Do
                 j = 0
                 Do
-                    tau_ij(i, j) = Math.Exp(-a12(i, j) / (1.98721 * T))
-                    tau_ji(j, i) = Math.Exp(-a21(i, j) / (1.98721 * T))
+                    tau_ij(i, j) = Math.Exp(-(a12(i, j) + b12(i, j) * T + c12(i, j) * T ^ 2) / (1.98721 * T))
+                    tau_ji(j, i) = Math.Exp(-(a21(i, j) + b21(i, j) * T + c21(i, j) * T ^ 2) / (1.98721 * T))
                     j = j + 1
                 Loop Until j = n + 1
                 i = i + 1
@@ -288,7 +295,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim n As Integer = UBound(Vx)
 
-            Dim tau_ij(n, n), tau_ji(n, n), a12(n, n), a21(n, n), Vx2(n) As Double
+            Dim Vx2(n) As Double
+            Dim tau_ij(n, n), tau_ji(n, n), a12(n, n), a21(n, n), b12(n, n), b21(n, n), c12(n, n), c21(n, n) As Double
 
             Dim i, j As Integer
 
@@ -300,23 +308,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         If Me.InteractionParameters(Vids(i)).ContainsKey(Vids(j)) Then
                             a12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A12
                             a21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A21
+                            b12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).B12
+                            b21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).B21
+                            c12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).C12
+                            c21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).C21
                         Else
                             If Me.InteractionParameters.ContainsKey(Vids(j)) Then
                                 If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
                                     a12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21
                                     a21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12
-                                Else
-                                    a12(i, j) = 0
-                                    a21(i, j) = 0
+                                    b12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).B21
+                                    b21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).B12
+                                    c12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).C21
+                                    c21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).C12
                                 End If
-                            Else
-                                a12(i, j) = 0
-                                a21(i, j) = 0
                             End If
                         End If
-                    Else
-                        a12(i, j) = 0
-                        a21(i, j) = 0
                     End If
                     j = j + 1
                 Loop Until j = n + 1
@@ -327,8 +334,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Do
                 j = 0
                 Do
-                    tau_ij(i, j) = Math.Exp(-a12(i, j) / (1.98721 * T))
-                    tau_ji(j, i) = Math.Exp(-a21(i, j) / (1.98721 * T))
+                    tau_ij(i, j) = Math.Exp(-(a12(i, j) + b12(i, j) * T + c12(i, j) * T ^ 2) / (1.98721 * T))
+                    tau_ji(j, i) = Math.Exp(-(a21(i, j) + b21(i, j) * T + c21(i, j) * T ^ 2) / (1.98721 * T))
                     j = j + 1
                 Loop Until j = n + 1
                 i = i + 1
@@ -406,7 +413,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim n As Integer = UBound(Vx)
 
-            Dim tau_ij(n, n), tau_ji(n, n), a12(n, n), a21(n, n) As Double
+             Dim tau_ij(n, n), tau_ji(n, n), a12(n, n), a21(n, n), b12(n, n), b21(n, n), c12(n, n), c21(n, n) As Double
 
             Dim i, j As Integer
 
@@ -418,23 +425,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         If Me.InteractionParameters(Vids(i)).ContainsKey(Vids(j)) Then
                             a12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A12
                             a21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A21
+                            b12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).B12
+                            b21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).B21
+                            c12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).C12
+                            c21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).C21
                         Else
                             If Me.InteractionParameters.ContainsKey(Vids(j)) Then
                                 If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
                                     a12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21
                                     a21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12
-                                Else
-                                    a12(i, j) = 0
-                                    a21(i, j) = 0
+                                    b12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).B21
+                                    b21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).B12
+                                    c12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).C21
+                                    c21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).C12
                                 End If
-                            Else
-                                a12(i, j) = 0
-                                a21(i, j) = 0
                             End If
                         End If
-                    Else
-                        a12(i, j) = 0
-                        a21(i, j) = 0
                     End If
                     j = j + 1
                 Loop Until j = n + 1
@@ -445,8 +451,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Do
                 j = 0
                 Do
-                    tau_ij(i, j) = Math.Exp(-a12(i, j) / (1.98721 * T))
-                    tau_ji(j, i) = Math.Exp(-a21(i, j) / (1.98721 * T))
+                    tau_ij(i, j) = Math.Exp(-(a12(i, j) + b12(i, j) * T + c12(i, j) * T ^ 2) / (1.98721 * T))
+                    tau_ji(j, i) = Math.Exp(-(a21(i, j) + b21(i, j) * T + c21(i, j) * T ^ 2) / (1.98721 * T))
                     j = j + 1
                 Loop Until j = n + 1
                 i = i + 1
@@ -514,7 +520,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim n As Integer = UBound(Vx)
 
-            Dim tau_ij(n, n), tau_ji(n, n), a12(n, n), a21(n, n), Vx2(n) As Double
+            Dim Vx2(n) As Double
+            Dim tau_ij(n, n), tau_ji(n, n), a12(n, n), a21(n, n), b12(n, n), b21(n, n), c12(n, n), c21(n, n) As Double
 
             Dim i, j As Integer
 
@@ -526,23 +533,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         If Me.InteractionParameters(Vids(i)).ContainsKey(Vids(j)) Then
                             a12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A12
                             a21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A21
+                            b12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).B12
+                            b21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).B21
+                            c12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).C12
+                            c21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).C21
                         Else
                             If Me.InteractionParameters.ContainsKey(Vids(j)) Then
                                 If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
                                     a12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21
                                     a21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12
-                                Else
-                                    a12(i, j) = 0
-                                    a21(i, j) = 0
+                                    b12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).B21
+                                    b21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).B12
+                                    c12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).C21
+                                    c21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).C12
                                 End If
-                            Else
-                                a12(i, j) = 0
-                                a21(i, j) = 0
                             End If
                         End If
-                    Else
-                        a12(i, j) = 0
-                        a21(i, j) = 0
                     End If
                     j = j + 1
                 Loop Until j = n + 1
@@ -553,8 +559,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Do
                 j = 0
                 Do
-                    tau_ij(i, j) = Math.Exp(-a12(i, j) / (1.98721 * T))
-                    tau_ji(j, i) = Math.Exp(-a21(i, j) / (1.98721 * T))
+                    tau_ij(i, j) = Math.Exp(-(a12(i, j) + b12(i, j) * T + c12(i, j) * T ^ 2) / (1.98721 * T))
+                    tau_ji(j, i) = Math.Exp(-(a21(i, j) + b21(i, j) * T + c21(i, j) * T ^ 2) / (1.98721 * T))
                     j = j + 1
                 Loop Until j = n + 1
                 i = i + 1
