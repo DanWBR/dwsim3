@@ -3,13 +3,17 @@
     Public px, py1, py2, py3, py4 As ArrayList
     Public xtitle, ytitle, title, y1ctitle, y2ctitle, y3ctitle, y4ctitle As String
     Public ycurvetypes As ArrayList
-    Public xformat As Integer
+    Public xformat, yformat As Integer
     Public tbtext As String
 
     'xformat:
     '1 - double number
     '2 - integer
     '3 - date (dd/MM)
+
+    'yformat:
+    '1 - linear
+    '2 - logarithmic
 
     'ycurvetypes:
     '1 - points only
@@ -310,6 +314,7 @@
                 .FontSpec.Size = 10
             End With
 
+
             With .XAxis
                 .Title.Text = xtitle
                 .Title.FontSpec.Size = 11
@@ -326,6 +331,13 @@
                         .Scale.Format = "dd/MM/yy"
                 End Select
             End With
+
+            Select Case yformat
+                Case 1
+                    .YAxis.Type = ZedGraph.AxisType.Linear
+                Case 2
+                    .YAxis.Type = ZedGraph.AxisType.Log
+            End Select
 
             With .Legend
                 .Border.IsVisible = False
