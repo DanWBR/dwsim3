@@ -1123,6 +1123,9 @@
     <EmbeddedResource Include="Forms\AboutBoxMono.resx">
       <DependentUpon>AboutBoxMono.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormChart.de.resx">
+      <DependentUpon>FormChart.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCompoundCreator.de.resx">
       <DependentUpon>FormCompoundCreator.vb</DependentUpon>
     </EmbeddedResource>

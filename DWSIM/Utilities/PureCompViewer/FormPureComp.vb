@@ -137,7 +137,7 @@ Public Class FormPureComp
         If Not constprop.IsIon And Not constprop.IsSalt Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
-                VD = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_PVAPi(constprop.Name, T))
+                VD = cv.ConverterDoSI(su.spmp_pressure, pp.AUX_PVAPi(constprop.Name, T))
                 vxPvap.Add(TD)
                 vyPvap.Add(VD)
                 Me.DataTable.Item(2, Row).Value = Format(TD, nf)
@@ -296,6 +296,7 @@ Public Class FormPureComp
             .Title.Text = DWSIM.App.GetLocalString("PressodeVapor")
             .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
             .YAxis.Title.Text = "Pvap [ " & su.spmp_pressure & " ] "
+            .YAxis.Type = ZedGraph.AxisType.Log
             .AxisChange(Me.CreateGraphics)
         End With
         Me.GraphPvap.Invalidate()

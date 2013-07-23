@@ -22,76 +22,54 @@ Partial Class FormChart
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormChart))
-        Me.graph = New ZedGraph.ZedGraphControl
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.tbinfo = New System.Windows.Forms.TextBox
+        Me.graph = New ZedGraph.ZedGraphControl()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.tbinfo = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
         '
         'graph
         '
-        Me.graph.AccessibleDescription = Nothing
-        Me.graph.AccessibleName = Nothing
         resources.ApplyResources(Me.graph, "graph")
-        Me.graph.BackgroundImage = Nothing
-        Me.graph.Font = Nothing
         Me.graph.Name = "graph"
-        Me.graph.ScrollGrace = 0
-        Me.graph.ScrollMaxX = 0
-        Me.graph.ScrollMaxY = 0
-        Me.graph.ScrollMaxY2 = 0
-        Me.graph.ScrollMinX = 0
-        Me.graph.ScrollMinY = 0
-        Me.graph.ScrollMinY2 = 0
+        Me.graph.ScrollGrace = 0.0R
+        Me.graph.ScrollMaxX = 0.0R
+        Me.graph.ScrollMaxY = 0.0R
+        Me.graph.ScrollMaxY2 = 0.0R
+        Me.graph.ScrollMinX = 0.0R
+        Me.graph.ScrollMinY = 0.0R
+        Me.graph.ScrollMinY2 = 0.0R
         '
         'GroupBox1
         '
-        Me.GroupBox1.AccessibleDescription = Nothing
-        Me.GroupBox1.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox1, "GroupBox1")
-        Me.GroupBox1.BackgroundImage = Nothing
         Me.GroupBox1.Controls.Add(Me.graph)
-        Me.GroupBox1.Font = Nothing
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
         'GroupBox2
         '
-        Me.GroupBox2.AccessibleDescription = Nothing
-        Me.GroupBox2.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.BackgroundImage = Nothing
         Me.GroupBox2.Controls.Add(Me.tbinfo)
-        Me.GroupBox2.Font = Nothing
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
         'tbinfo
         '
-        Me.tbinfo.AccessibleDescription = Nothing
-        Me.tbinfo.AccessibleName = Nothing
         resources.ApplyResources(Me.tbinfo, "tbinfo")
-        Me.tbinfo.BackgroundImage = Nothing
-        Me.tbinfo.Font = Nothing
         Me.tbinfo.Name = "tbinfo"
         Me.tbinfo.ReadOnly = True
         '
         'FormChart
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Font = Nothing
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.Icon = Nothing
         Me.Name = "FormChart"
         Me.ShowIcon = False
         Me.GroupBox1.ResumeLayout(False)

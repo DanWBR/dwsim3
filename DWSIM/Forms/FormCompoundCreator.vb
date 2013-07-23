@@ -557,23 +557,13 @@ Public Class FormCompoundCreator
             .cp.Vapor_Pressure_Constant_D = CheckEmptyCell(tbPVAP_D.Text)
             .cp.Vapor_Pressure_Constant_E = CheckEmptyCell(tbPVAP_E.Text)
 
-            If rbEstimateCPIG.Checked Then
-                Dim result As Object = RegressData(1, True)
-                .cp.IdealgasCpEquation = 5
-                .cp.Ideal_Gas_Heat_Capacity_Const_A = result(0)(0) * 1000
-                .cp.Ideal_Gas_Heat_Capacity_Const_B = result(0)(1) * 1000
-                .cp.Ideal_Gas_Heat_Capacity_Const_C = result(0)(2) * 1000
-                .cp.Ideal_Gas_Heat_Capacity_Const_D = result(0)(3) * 1000
-                .cp.Ideal_Gas_Heat_Capacity_Const_E = result(0)(4) * 1000
-            Else
-                .cp.IdealgasCpEquation = cbEqCPIG.SelectedItem.ToString.Split(":")(0)
-                .cp.Ideal_Gas_Heat_Capacity_Const_A = CheckEmptyCell(tbCPIG_A.Text)
-                .cp.Ideal_Gas_Heat_Capacity_Const_B = CheckEmptyCell(tbCPIG_B.Text)
-                .cp.Ideal_Gas_Heat_Capacity_Const_C = CheckEmptyCell(tbCPIG_C.Text)
-                .cp.Ideal_Gas_Heat_Capacity_Const_D = CheckEmptyCell(tbCPIG_D.Text)
-                .cp.Ideal_Gas_Heat_Capacity_Const_E = CheckEmptyCell(tbCPIG_E.Text)
-            End If
-
+            .cp.IdealgasCpEquation = cbEqCPIG.SelectedItem.ToString.Split(":")(0)
+            .cp.Ideal_Gas_Heat_Capacity_Const_A = CheckEmptyCell(tbCPIG_A.Text)
+            .cp.Ideal_Gas_Heat_Capacity_Const_B = CheckEmptyCell(tbCPIG_B.Text)
+            .cp.Ideal_Gas_Heat_Capacity_Const_C = CheckEmptyCell(tbCPIG_C.Text)
+            .cp.Ideal_Gas_Heat_Capacity_Const_D = CheckEmptyCell(tbCPIG_D.Text)
+            .cp.Ideal_Gas_Heat_Capacity_Const_E = CheckEmptyCell(tbCPIG_E.Text)
+       
             .cp.Liquid_Density_Const_A = CheckEmptyCell(tbLIQDENS_A.Text)
             .cp.Liquid_Density_Const_B = CheckEmptyCell(tbLIQDENS_B.Text)
             .cp.Liquid_Density_Const_C = CheckEmptyCell(tbLIQDENS_C.Text)
@@ -862,7 +852,7 @@ Public Class FormCompoundCreator
                     Dim result As Object = RegressData(1, True)
 
                     For Each it As Object In cbEqCPIG.Items
-                        If it.ToString.Split(":")(0) = 5 Then
+                        If it.ToString.Split(":")(0) = 4 Then
                             cbEqCPIG.SelectedIndex = cbEqCPIG.Items.IndexOf(it)
                             Exit For
                         End If
@@ -872,7 +862,7 @@ Public Class FormCompoundCreator
                     tbCPIG_B.Text = result(0)(1) * 1000
                     tbCPIG_C.Text = result(0)(2) * 1000
                     tbCPIG_D.Text = result(0)(3) * 1000
-                    tbCPIG_E.Text = result(0)(4) * 1000
+                    tbCPIG_E.Text = "0"
                 End If
 
                 'estimate solid density - DWSIM-Method
@@ -885,6 +875,12 @@ Public Class FormCompoundCreator
                     tbRoS_C.Text = 0
                     tbRoS_D.Text = 0
                     tbRoS_E.Text = 0
+                    For Each it As Object In cbEqSolidDENS.Items
+                        If it.ToString.Split(":")(0) = 2 Then
+                            cbEqSolidDENS.SelectedIndex = cbEqSolidDENS.Items.IndexOf(it)
+                            Exit For
+                        End If
+                    Next
                 End If
             Else
                 If CheckBoxNBP.Checked Then Me.TextBoxNBP.Text = ""
@@ -1130,10 +1126,12 @@ Public Class FormCompoundCreator
 
     End Function
     Private Sub btnRegressPVAP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressPVAP.Click
+        loaded = False
         mycase.DataPVAP.Clear()
-
         For Each row As DataGridViewRow In Me.GridExpDataPVAP.Rows
-            If row.Index < Me.GridExpDataPVAP.Rows.Count - 1 Then mycase.DataPVAP.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_pressure, row.Cells(1).Value)})
+            If row.Index < Me.GridExpDataPVAP.Rows.Count - 1 Then
+                mycase.DataPVAP.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_pressure, row.Cells(1).Value)})
+            End If
         Next
 
         Dim result As Object = RegressData(0, False)
@@ -1161,6 +1159,9 @@ Public Class FormCompoundCreator
             tbPVAP_D.Text = .Vapor_Pressure_Constant_D
             tbPVAP_E.Text = .Vapor_Pressure_Constant_E
         End With
+        rbRegressPVAP.Checked = True
+        loaded = True
+        BothSaveStatusModified(sender, e)
     End Sub
 
     Private Sub btnRegressSolidCp_Click(sender As System.Object, e As System.EventArgs) Handles btnRegressSolidCp.Click
@@ -1175,9 +1176,6 @@ Public Class FormCompoundCreator
                 mycase.DataCpS.Add(New Double() {XL, YL})
             End If
         Next
-        'Workaround: it's necessary to add 2 more points as last 2 points are not incorporated in regression -> bug in regression algorithm?
-        mycase.DataCpS.Add(New Double() {XL, YL})
-        mycase.DataCpS.Add(New Double() {XL, YL})
 
         Dim result As Object = RegressData(5, False)
         tbStatusSolidCp.Text = GetInfo(result(3))
@@ -1221,9 +1219,6 @@ Public Class FormCompoundCreator
                 mycase.DataRoS.Add(New Double() {XL, YL})
             End If
         Next
-        'Workaround: it's necessary to add 2 more points as last 2 points are not incorporated in regression -> bug in regression algorithm?
-        mycase.DataRoS.Add(New Double() {XL, YL})
-        mycase.DataRoS.Add(New Double() {XL, YL})
 
         Dim result As Object = RegressData(4, False)
         tbStatusSolidDens.Text = GetInfo(result(3))
@@ -1257,8 +1252,9 @@ Public Class FormCompoundCreator
     End Sub
 
     Private Sub btnRegressCPIG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressCPIG.Click
-
         Dim MW As Double = Me.TextBoxMW.Text
+
+        loaded = False
         mycase.DataCPIG.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataCPIG.Rows
             If row.Index < Me.GridExpDataCPIG.Rows.Count - 1 Then mycase.DataCPIG.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value) * MW})
@@ -1291,11 +1287,13 @@ Public Class FormCompoundCreator
             tbCPIG_E.Text = .Ideal_Gas_Heat_Capacity_Const_E
 
         End With
-
+        rbRegressCPIG.Checked = True
+        loaded = True
+        BothSaveStatusModified(sender, e)
     End Sub
 
     Private Sub btnRegressLIQDENS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressLIQDENS.Click
-
+        loaded = False
         mycase.DataLDENS.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataLIQDENS.Rows
             If row.Index < Me.GridExpDataLIQDENS.Rows.Count - 1 Then mycase.DataLDENS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value)})
@@ -1328,10 +1326,13 @@ Public Class FormCompoundCreator
             tbLIQDENS_E.Text = .Liquid_Density_Const_E
 
         End With
+        rbRegressLIQDENS.Checked = True
+        loaded = True
+        BothSaveStatusModified(sender, e)
     End Sub
 
     Private Sub btnRegressLIQVISC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRegressLIQVISC.Click
-
+        loaded = False
         mycase.DataLVISC.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataLIQVISC.Rows
             If row.Index < Me.GridExpDataLIQVISC.Rows.Count - 1 Then mycase.DataLVISC.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_viscosity, row.Cells(1).Value)})
@@ -1365,10 +1366,13 @@ Public Class FormCompoundCreator
             tbLIQVISC_E.Text = .Liquid_Viscosity_Const_E
 
         End With
+        rbRegressLIQVISC.Checked = True
+        loaded = True
+        BothSaveStatusModified(sender, e)
     End Sub
 
   
-    Private Sub GridExpData_KeyDown1(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles GridExpDataRoS.KeyDown, GridExpDataCpS.KeyDown
+    Private Sub GridExpData_KeyDown1(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles GridExpDataRoS.KeyDown, GridExpDataCpS.KeyDown, GridExpDataPVAP.KeyDown, GridExpDataLIQVISC.KeyDown, GridExpDataLIQDENS.KeyDown, GridExpDataCPIG.KeyDown
 
         If e.KeyCode = Keys.Delete And e.Modifiers = Keys.Shift Then
             Dim toremove As New ArrayList
@@ -1407,249 +1411,598 @@ Public Class FormCompoundCreator
         End If
     End Sub
 
-    Private Sub rbEstimatePVAP_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub rbEstimatePVAP_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbEstimatePVAP.CheckedChanged
         If rbEstimatePVAP.Checked Then
             mycase.cp.VaporPressureEquation = 0
             tbStatusPVAP.Text = "OK"
+            If loaded Then cbEqPVAP.SelectedIndex = 0
         End If
     End Sub
 
-    Private Sub rbEstimateCPIG_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        If rbEstimateCPIG.Checked Then
-            mycase.cp.IdealgasCpEquation = 0
-            tbStatusCPIG.Text = "OK"
+    Private Sub rbEstimateCPIG_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbEstimateCPIG.CheckedChanged
+        If loaded Then
+            If rbEstimateCPIG.Checked Then
+                mycase.cp.IdealgasCpEquation = 0
+                tbStatusCPIG.Text = "OK"
+                CalcJobackParams()
+            End If
+            BothSaveStatusModified(sender, e)
         End If
     End Sub
 
-    Private Sub rbEstimateLIQDENS_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        If rbEstimateLIQDENS.Checked Then
-            mycase.cp.LiquidDensityEquation = 0
-            tbStatusLIQDENS.Text = "OK"
+    Private Sub rbEstimateLIQDENS_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbEstimateLIQDENS.CheckedChanged
+        If loaded Then
+            If rbEstimateLIQDENS.Checked Then
+                mycase.cp.LiquidDensityEquation = 0
+                tbStatusLIQDENS.Text = "OK"
+                CalcJobackParams()
+            End If
+            BothSaveStatusModified(sender, e)
         End If
     End Sub
 
-    Private Sub rbEstimateLIQVISC_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        If rbEstimateLIQVISC.Checked Then
-            mycase.cp.LiquidViscosityEquation = 0
-            tbStatusLIQVISC.Text = "OK"
+    Private Sub rbEstimateLIQVISC_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbEstimateLIQVISC.CheckedChanged
+        If loaded Then
+            If rbEstimateLIQVISC.Checked Then
+                mycase.cp.LiquidViscosityEquation = 0
+                tbStatusLIQVISC.Text = "OK"
+                CalcJobackParams()
+            End If
+            BothSaveStatusModified(sender, e)
         End If
     End Sub
-
+    Private Sub rbEstimateSolidDens_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbEstimateSolidDens.CheckedChanged
+        If loaded Then
+            If rbEstimateSolidDens.Checked Then
+                CalcJobackParams()
+            End If
+            BothSaveStatusModified(sender, e)
+        End If
+    End Sub
     Private Sub btnViewPVAP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewPVAP.Click
+        Dim mytext As New System.Text.StringBuilder
+        Dim px, py1, py2, py3, LT As New ArrayList, x, y, T, T1, T2, dT As Double
+        Dim Eq, Heading1, Heading2 As String
+        Dim CurveCount As Integer
+        Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
+        Dim frc As New FormChart
+        Me.methods2 = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
-        If tbStatusPVAP.Text = "" And rbRegressPVAP.Checked Then
-            MessageBox.Show(DWSIM.App.GetLocalString("NoRegressionAvailable"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Exit Sub
+        StoreData()
+        Eq = cbEqPVAP.SelectedItem.Split(":")(0)
+
+        'Fill x() table and add experimental data if available
+        If mycase.DataPVAP.Count = 0 Then
+            T2 = TextBoxTc.Text
+            T1 = TextBoxMeltingTemp.Text
+            dT = (T2 - T1) / 25
+            T = T1
+            Do
+                px.Add(T)
+                T += dT
+            Loop While T <= T2
+            Heading1 = "T"
+            Heading2 = "[" & su.spmp_temperature & "]"
+        Else
+            For Each d As Double() In mycase.DataPVAP
+                x = cv.ConverterDoSI(su.spmp_temperature, d(0))
+                px.Add(x)
+                y = cv.ConverterDoSI(su.spmp_pressure, d(1))
+                py1.Add(y)
+            Next
+            CurveCount = +1
+            frc.y1ctitle = "Experiment"
+            Heading1 = "T" & vbTab & "yExp"
+            Heading2 = "[" & su.spmp_temperature & "]" & vbTab & "[" & su.spmp_pressure & "]"
+            LT.Add(1) 'Point type curve
         End If
 
-        Dim mytext As New System.Text.StringBuilder
-        mytext.AppendLine("Data Points")
-        mytext.AppendLine("x" & vbTab & "yEXP" & vbTab & "yCALC")
-        Dim px, py1, py2 As New ArrayList, x, y1, y2 As Double
-        For Each d As Double() In mycase.DataPVAP
-            x = cv.ConverterDoSI(su.spmp_temperature, d(0))
-            px.Add(x)
-            y1 = cv.ConverterDoSI(su.spmp_pressure, d(1))
-            py1.Add(y1)
-            Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
-            With mycase.cp
-                y2 = cv.ConverterDoSI(su.spmp_pressure, pp.CalcCSTDepProp(.VaporPressureEquation, .Vapor_Pressure_Constant_A, .Vapor_Pressure_Constant_B, .Vapor_Pressure_Constant_C, .Vapor_Pressure_Constant_D, .Vapor_Pressure_Constant_E, d(0), 0))
-                py2.Add(y2)
-            End With
-            mytext.AppendLine(x & vbTab & y1 & vbTab & y2)
+        'Add calculated Lee-Kesler Data
+        For k = 0 To px.Count - 1
+            T = cv.ConverterParaSI(su.spmp_temperature, px(k))
+            y = cv.ConverterDoSI(su.spmp_pressure, methods2.Pvp_leekesler(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text))
+            Select Case CurveCount
+                Case 0
+                    py1.Add(y)
+                Case 1
+                    py2.Add(y)
+            End Select
+        Next
+        Select Case CurveCount
+            Case 0
+                frc.y1ctitle = "Lee-Kesler"
+            Case 1
+                frc.y2ctitle = "Lee-Kesler"
+        End Select
+        CurveCount += 1
+        Heading1 = Heading1 & vbTab & vbTab & "Y Lee-Kesler"
+        Heading2 = Heading2 & vbTab & vbTab & "[" & su.spmp_pressure & "]"
+        LT.Add(4) 'dashed line type curve
+
+        'Add regressed/user curve
+        If Not Eq = "0" Then
+            For k = 0 To px.Count - 1
+                T = cv.ConverterParaSI(su.spmp_temperature, px(k))
+                y = cv.ConverterDoSI(su.spmp_pressure, pp.CalcCSTDepProp(Eq, tbPVAP_A.Text, tbPVAP_B.Text, tbPVAP_C.Text, tbPVAP_D.Text, tbPVAP_E.Text, T, 0))
+
+                Select Case CurveCount
+                    Case 1
+                        py2.Add(y)
+                    Case 2
+                        py3.Add(y)
+                End Select
+            Next
+            Select Case CurveCount
+                Case 1
+                    frc.y2ctitle = "Regression/User"
+                Case 2
+                    frc.y3ctitle = "Regression/User"
+            End Select
+            CurveCount += 1
+            Heading1 = Heading1 & vbTab & "YCalc"
+            Heading2 = Heading2 & vbTab & vbTab & "[" & su.spmp_pressure & "]"
+            LT.Add(3) 'solid line type curve
+        End If
+
+        'fill data log box
+        mytext.AppendLine(Heading1)
+        mytext.AppendLine(Heading2)
+        For k = 0 To px.Count - 1
+            If CurveCount = 1 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 2))
+            If CurveCount = 2 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 2) & vbTab & vbTab & FormatNumber(py2(k), 2))
+            If CurveCount = 3 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 2) & vbTab & vbTab & FormatNumber(py2(k), 2) & vbTab & vbTab & FormatNumber(py3(k), 2))
         Next
 
-        Dim frc As New FormChart
         With frc
+            .py1 = py1
+            If CurveCount > 1 Then .py2 = py2
+            If CurveCount > 2 Then .py3 = py3
+            Select Case CurveCount
+                Case 1
+                    .ycurvetypes = New ArrayList(New Integer() {LT(0)})
+                Case 2
+                    .ycurvetypes = New ArrayList(New Integer() {LT(0), LT(1)})
+                Case 3
+                    .ycurvetypes = New ArrayList(New Integer() {LT(0), LT(1), LT(2)})
+            End Select
+
+            .title = "Vapour Pressure Results"
             .tbtext = mytext.ToString
             .px = px
-            .py1 = py1
-            .py2 = py2
             .xformat = 1
-            .ytitle = "Pvap / " & su.spmp_pressure
-            .xtitle = "T / " & su.spmp_temperature
-            .ycurvetypes = New ArrayList(New Integer() {1, 3})
-            .title = "Vapor Pressure Fitting Results"
+            .yformat = 2
+            .ytitle = "Pvap [" & su.spmp_pressure & "]"
+            .xtitle = "T [" & su.spmp_temperature & "]"
             .ShowDialog(Me)
         End With
-
     End Sub
-
     Private Sub btnViewCPIG_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewCPIG.Click
+        Dim mytext As New System.Text.StringBuilder
+        Dim px, py1, py2 As New ArrayList, x, y1, y2, T As Double
+        Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
+        Dim frc As New FormChart
+        StoreData()
+        ' in case of missing experimental data - draw only calculated curve
+        If mycase.DataCPIG.Count = 0 Then
+            mytext.AppendLine("T" & vbTab & "yCALC")
+            mytext.AppendLine("[" & su.spmp_temperature & "]" & vbTab & "[" & su.spmp_heatCapacityCp & "]")
+            For T = 200 To 1500 Step 25
+                x = cv.ConverterDoSI(su.spmp_temperature, T)
+                px.Add(x)
+                y1 = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.CalcCSTDepProp(cbEqCPIG.SelectedItem.Split(":")(0), tbCPIG_A.Text, tbCPIG_B.Text, tbCPIG_C.Text, tbCPIG_D.Text, tbCPIG_E.Text, T, 0) / 1000) / TextBoxMW.Text
+                py1.Add(y1)
+                mytext.AppendLine(FormatNumber(x, 2) & vbTab & FormatNumber(y1, 2))
+            Next
 
-        If tbStatusCPIG.Text = "" And rbRegressCPIG.Checked Then
-            MessageBox.Show(DWSIM.App.GetLocalString("NoRegressionAvailable"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Exit Sub
+            With frc
+                .px = px
+                .py1 = py1
+                .ycurvetypes = New ArrayList(New Integer() {3})
+                .y1ctitle = "Formula"
+                .title = "Ideal Gas Heat Capacity Estimation Results"
+            End With
+        Else
+            mytext.AppendLine("T" & vbTab & "yEXP" & vbTab & vbTab & "yCALC")
+            mytext.AppendLine("[" & su.spmp_temperature & "]" & vbTab & "[" & su.spmp_heatCapacityCp & "]" & vbTab & "[" & su.spmp_heatCapacityCp & "]")
+            For Each d As Double() In mycase.DataCPIG
+                x = d(0)
+                px.Add(x)
+                y1 = d(1)
+                py1.Add(y1)
+                T = cv.ConverterParaSI(su.spmp_temperature, x)
+                y2 = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.CalcCSTDepProp(cbEqCPIG.SelectedItem.Split(":")(0), tbCPIG_A.Text, tbCPIG_B.Text, tbCPIG_C.Text, tbCPIG_D.Text, tbCPIG_E.Text, T, 0) / 1000) / TextBoxMW.Text
+                py2.Add(y2)
+                mytext.AppendLine(FormatNumber(x, 2) & vbTab & FormatNumber(y1, 2) & vbTab & vbTab & FormatNumber(y2, 2))
+            Next
+            With frc
+                .px = px
+                .py1 = py1
+                .py2 = py2
+                .ycurvetypes = New ArrayList(New Integer() {1, 3})
+                .y1ctitle = "Experiment"
+                .y2ctitle = "Formula"
+                .title = "Ideal Gas Heat Capacity Calculation Results"
+            End With
         End If
 
-        Dim mytext As New System.Text.StringBuilder
-        mytext.AppendLine("Data Points")
-        mytext.AppendLine("x" & vbTab & "yEXP" & vbTab & "yCALC")
-        Dim px, py1, py2 As New ArrayList, x, y1, y2 As Double
-        For Each d As Double() In mycase.DataCPIG
-            x = cv.ConverterDoSI(su.spmp_temperature, d(0))
-            px.Add(x)
-            y1 = cv.ConverterDoSI(su.spmp_heatCapacityCp, d(1))
-            py1.Add(y1)
-            Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
-            With mycase.cp
-                y2 = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.CalcCSTDepProp(.IdealgasCpEquation, .Ideal_Gas_Heat_Capacity_Const_A, .Ideal_Gas_Heat_Capacity_Const_B, .Ideal_Gas_Heat_Capacity_Const_C, .Ideal_Gas_Heat_Capacity_Const_D, .Ideal_Gas_Heat_Capacity_Const_E, d(0), 0))
-                py2.Add(y2)
-            End With
-        Next
-
-        Dim frc As New FormChart
         With frc
             .tbtext = mytext.ToString
-            .px = px
-            .py1 = py1
-            .py2 = py2
             .xformat = 1
-            .ytitle = "Cpig / " & su.spmp_heatCapacityCp
-            .xtitle = "T / " & su.spmp_temperature
-            .ycurvetypes = New ArrayList(New Integer() {1, 3})
+            .yformat = 1
+            .ytitle = "Cpig [" & su.spmp_heatCapacityCp & "]"
+            .xtitle = "T [" & su.spmp_temperature & "]"
             .title = "Ideal Gas Heat Capacity Fitting Results"
             .ShowDialog(Me)
         End With
 
     End Sub
-
     Private Sub btnViewLIQDENS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewLIQDENS.Click
+        Dim mytext As New System.Text.StringBuilder
+        Dim px, py1, py2, py3, LT As New ArrayList, y, T, T1, T2, dT, PV As Double
+        Dim Eq, Heading1, Heading2 As String
+        Dim CurveCount As Integer
+        Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
+        Dim frc As New FormChart
+        Me.methods2 = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
-        If tbStatusLIQDENS.Text = "" And rbRegressLIQDENS.Checked Then
-            MessageBox.Show(DWSIM.App.GetLocalString("NoRegressionAvailable"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Exit Sub
+        StoreData()
+        Eq = cbEqLIQDENS.SelectedItem.Split(":")(0)
+
+        'Fill x() table and add experimental data if available
+        If mycase.DataLDENS.Count = 0 Then
+            T2 = TextBoxTc.Text * 0.999
+            T1 = TextBoxMeltingTemp.Text
+            dT = (T2 - T1) / 25
+            T = T1
+            Do
+                px.Add(T)
+                T += dT
+            Loop While T <= T2
+            Heading1 = "T"
+            Heading2 = "[" & su.spmp_temperature & "]"
+        Else
+            For Each d As Double() In mycase.DataLDENS
+                px.Add(cv.ConverterDoSI(su.spmp_temperature, d(0)))
+                py1.Add(cv.ConverterDoSI(su.spmp_density, d(1)))
+            Next
+            CurveCount = +1
+            frc.y1ctitle = "Experiment"
+            Heading1 = "T" & vbTab & "yExp"
+            Heading2 = "[" & su.spmp_temperature & "]" & vbTab & "[" & su.spmp_density & "]"
+            LT.Add(1) 'Point type curve
         End If
 
-        Dim mytext As New System.Text.StringBuilder
-        mytext.AppendLine("Data Points")
-        mytext.AppendLine("x" & vbTab & "yEXP" & vbTab & "yCALC")
-        Dim px, py1, py2 As New ArrayList, x, y1, y2 As Double
-        For Each d As Double() In mycase.DataLDENS
-            x = cv.ConverterDoSI(su.spmp_temperature, d(0))
-            px.Add(x)
-            y1 = cv.ConverterDoSI(su.spmp_density, d(1))
-            py1.Add(y1)
-            Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
-            With mycase.cp
-                y2 = cv.ConverterDoSI(su.spmp_density, pp.CalcCSTDepProp(.LiquidDensityEquation, .Liquid_Density_Const_A, .Liquid_Density_Const_B, .Liquid_Density_Const_C, .Liquid_Density_Const_D, .Liquid_Density_Const_E, d(0), 0))
-                py2.Add(y2)
-            End With
+        'Add calculated Rackett Data
+        For k = 0 To px.Count - 1
+            T = cv.ConverterParaSI(su.spmp_temperature, px(k))
+            PV = methods2.Pvp_leekesler(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text)
+            y = cv.ConverterDoSI(su.spmp_density, methods2.liq_dens_rackett(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text, TextBoxMW.Text, TextBoxZRa.Text, 101325, PV))
+
+            Select Case CurveCount
+                Case 0
+                    py1.Add(y)
+                Case 1
+                    py2.Add(y)
+            End Select
+        Next
+        Select Case CurveCount
+            Case 0
+                frc.y1ctitle = "Rackett"
+            Case 1
+                frc.y2ctitle = "Rackett"
+        End Select
+        CurveCount += 1
+        Heading1 = Heading1 & vbTab & "Y Rackett"
+        Heading2 = Heading2 & vbTab & "[" & su.spmp_density & "]"
+        LT.Add(4) 'dashed line type curve
+
+        'Add regressed/user curve
+        If Not Eq = "0" Then
+            For k = 0 To px.Count - 1
+                T = cv.ConverterParaSI(su.spmp_temperature, px(k))
+                y = cv.ConverterDoSI(su.spmp_density, pp.CalcCSTDepProp(Eq, tbLIQDENS_A.Text, tbLIQDENS_B.Text, tbLIQDENS_C.Text, tbLIQDENS_D.Text, tbLIQDENS_E.Text, T, 0))
+
+                Select Case CurveCount
+                    Case 1
+                        py2.Add(y)
+                    Case 2
+                        py3.Add(y)
+                End Select
+            Next
+            Select Case CurveCount
+                Case 1
+                    frc.y2ctitle = "Regression/User"
+                Case 2
+                    frc.y3ctitle = "Regression/User"
+            End Select
+            CurveCount += 1
+            Heading1 = Heading1 & vbTab & "YCalc"
+            Heading2 = Heading2 & vbTab & vbTab & "[" & su.spmp_density & "]"
+            LT.Add(3) 'solid line type curve
+        End If
+
+        'fill data log box
+        mytext.AppendLine(Heading1)
+        mytext.AppendLine(Heading2)
+        For k = 0 To px.Count - 1
+            If CurveCount = 1 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 2))
+            If CurveCount = 2 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 2) & vbTab & FormatNumber(py2(k), 2))
+            If CurveCount = 3 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 2) & vbTab & FormatNumber(py2(k), 2) & vbTab & vbTab & FormatNumber(py3(k), 2))
         Next
 
-        Dim frc As New FormChart
         With frc
+            .py1 = py1
+            If CurveCount > 1 Then .py2 = py2
+            If CurveCount > 2 Then .py3 = py3
+            Select Case CurveCount
+                Case 1
+                    .ycurvetypes = New ArrayList(New Integer() {LT(0)})
+                Case 2
+                    .ycurvetypes = New ArrayList(New Integer() {LT(0), LT(1)})
+                Case 3
+                    .ycurvetypes = New ArrayList(New Integer() {LT(0), LT(1), LT(2)})
+            End Select
+
+            .title = "Liquid Density Results"
             .tbtext = mytext.ToString
             .px = px
-            .py1 = py1
-            .py2 = py2
             .xformat = 1
-            .ytitle = "Rho / " & su.spmp_density
-            .xtitle = "T / " & su.spmp_temperature
-            .ycurvetypes = New ArrayList(New Integer() {1, 3})
-            .title = "Liquid Density Fitting Results"
+            .yformat = 1
+            .ytitle = "Rho [" & su.spmp_density & "]"
+            .xtitle = "T [" & su.spmp_temperature & "]"
             .ShowDialog(Me)
         End With
-
     End Sub
-
     Private Sub btnViewSolidCp_Click(sender As System.Object, e As System.EventArgs) Handles btnViewSolidCp.Click
-        Dim mytext As New System.Text.StringBuilder
-        mytext.AppendLine("Data Points")
-        mytext.AppendLine("x" & vbTab & "yEXP" & vbTab & "yCALC")
-        Dim px, py1, py2 As New ArrayList, x, y1, y2 As Double
-        For Each d As Double() In mycase.DataCpS
-            x = cv.ConverterDoSI(su.spmp_temperature, d(0))
-            px.Add(x)
-            y1 = cv.ConverterDoSI(su.spmp_heatCapacityCp, d(1)) / TextBoxMW.Text
-            py1.Add(y1)
-            Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
-            y2 = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.CalcCSTDepProp(cbEqCpS.SelectedIndex.ToString.Split(":")(0), tbCpS_A.Text, tbCpS_B.Text, tbCpS_C.Text, tbCpS_D.Text, tbCpS_E.Text, d(0), 0)) / TextBoxMW.Text / 1000
-            py2.Add(y2)
-            mytext.AppendLine(x & vbTab & y1 & vbTab & y2)
-        Next
 
+        Dim mytext As New System.Text.StringBuilder
+        Dim px, py1, py2 As New ArrayList, x, y1, y2, T, dT As Double
+        Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
         Dim frc As New FormChart
+        Dim Eq As String
+
+        StoreData()
+        Eq = cbEqCpS.SelectedIndex.ToString.Split(":")(0)
+        If mycase.DataCpS.Count = 0 Then
+            T = 0
+            mytext.AppendLine("T" & vbTab & "yCALC")
+            mytext.AppendLine("[" & su.spmp_temperature & "]" & vbTab & "[" & su.spmp_heatCapacityCp & "]")
+            dT = cv.ConverterParaSI(su.spmp_temperature, TextBoxMeltingTemp.Text) / 25
+            Do
+                x = cv.ConverterDoSI(su.spmp_temperature, T)
+                px.Add(x)
+                If Eq = "0" Then
+                    y1 = 0
+                Else
+                    y1 = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.CalcCSTDepProp(Eq, tbCpS_A.Text, tbCpS_B.Text, tbCpS_C.Text, tbCpS_D.Text, tbCpS_E.Text, T, 0)) / TextBoxMW.Text / 1000
+                End If
+                py1.Add(y1)
+                mytext.AppendLine(FormatNumber(x, 2) & vbTab & FormatNumber(y1, 2))
+                T += dT
+            Loop Until T > cv.ConverterParaSI(su.spmp_temperature, TextBoxMeltingTemp.Text)
+            With frc
+                .px = px
+                .py1 = py1
+                .ycurvetypes = New ArrayList(New Integer() {3})
+                .y1ctitle = "Formula"
+                .title = "Solid Heat Capacity estimation"
+            End With
+        Else
+            mytext.AppendLine("T" & vbTab & "yEXP" & vbTab & vbTab & "yCALC")
+            mytext.AppendLine("[" & su.spmp_temperature & "]" & vbTab & "[" & su.spmp_heatCapacityCp & "]" & vbTab & "[" & su.spmp_heatCapacityCp & "]")
+            For Each d As Double() In mycase.DataCpS
+                x = cv.ConverterDoSI(su.spmp_temperature, d(0))
+                px.Add(x)
+                y1 = cv.ConverterDoSI(su.spmp_heatCapacityCp, d(1)) / TextBoxMW.Text
+                py1.Add(y1)
+                If Eq = "0" Then
+                    y2 = 0
+                Else
+                    y2 = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.CalcCSTDepProp(Eq, tbCpS_A.Text, tbCpS_B.Text, tbCpS_C.Text, tbCpS_D.Text, tbCpS_E.Text, d(0), 0)) / TextBoxMW.Text / 1000
+                End If
+                py2.Add(y2)
+                mytext.AppendLine(x & vbTab & FormatNumber(y1, 2) & vbTab & vbTab & FormatNumber(y2, 2))
+            Next
+            With frc
+                .px = px
+                .py1 = py1
+                .py2 = py2
+                .ycurvetypes = New ArrayList(New Integer() {1, 3})
+                .y1ctitle = "Experiment"
+                .y2ctitle = "Formula"
+                .title = "Solid Heat Capacity Fitting Results"
+            End With
+        End If
+
         With frc
             .tbtext = mytext.ToString
-            .px = px
-            .py1 = py1
-            .py2 = py2
             .xformat = 1
+            .yformat = 1
             .ytitle = "Cp [ " & su.spmp_heatCapacityCp & " ]"
             .xtitle = "T [ " & su.spmp_temperature & " ]"
-            .ycurvetypes = New ArrayList(New Integer() {1, 3})
-            .title = "Solid Heat Capacity Fitting Results"
             .ShowDialog(Me)
         End With
     End Sub
     Private Sub btnViewSolidDens_Click(sender As System.Object, e As System.EventArgs) Handles btnViewSolidDens.Click
         Dim mytext As New System.Text.StringBuilder
-        mytext.AppendLine("Data Points")
-        mytext.AppendLine("x" & vbTab & "yEXP" & vbTab & "yCALC")
-        Dim px, py1, py2 As New ArrayList, x, y1, y2 As Double
-        For Each d As Double() In mycase.DataRoS
-            x = cv.ConverterDoSI(su.spmp_temperature, d(0))
-            px.Add(x)
-            y1 = cv.ConverterDoSI(su.spmp_density, d(1)) * TextBoxMW.Text
-            py1.Add(y1)
-            Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
-            y2 = cv.ConverterDoSI(su.spmp_density, pp.CalcCSTDepProp(cbEqSolidDENS.SelectedIndex.ToString.Split(":")(0), tbRoS_A.Text, tbRoS_B.Text, tbRoS_C.Text, tbRoS_D.Text, tbRoS_E.Text, d(0), 0) * TextBoxMW.Text)
-            py2.Add(y2)
-            mytext.AppendLine(x & vbTab & y1 & vbTab & y2)
-        Next
-
+        Dim px, py1, py2 As New ArrayList, x, y1, y2, T, dT As Double
+        Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
         Dim frc As New FormChart
+        Dim Eq As String
+        Eq = cbEqSolidDENS.SelectedIndex.ToString.Split(":")(0)
+        If mycase.DataRoS.Count = 0 Then
+            T = 0
+            mytext.AppendLine("T" & vbTab & "yCALC")
+            mytext.AppendLine("[" & su.spmp_temperature & "]" & vbTab & "[" & su.spmp_density & "]")
+            dT = cv.ConverterParaSI(su.spmp_temperature, TextBoxMeltingTemp.Text) / 25
+            Do
+                x = cv.ConverterDoSI(su.spmp_temperature, T)
+                px.Add(x)
+                If Eq = "0" Then
+                    y1 = 0
+                Else
+                    y1 = cv.ConverterDoSI(su.spmp_density, pp.CalcCSTDepProp(Eq, tbRoS_A.Text, tbRoS_B.Text, tbRoS_C.Text, tbRoS_D.Text, tbRoS_E.Text, T, 0) * TextBoxMW.Text)
+                End If
+                py1.Add(y1)
+                mytext.AppendLine(FormatNumber(x, 2) & vbTab & FormatNumber(y1, 2))
+                T += dT
+            Loop Until T > cv.ConverterParaSI(su.spmp_temperature, TextBoxMeltingTemp.Text)
+            With frc
+                .py1 = py1
+                .ycurvetypes = New ArrayList(New Integer() {3})
+                .y1ctitle = "Formula"
+                .title = "Solid Density Formula"
+            End With
+        Else
+            mytext.AppendLine("T" & vbTab & "yEXP" & vbTab & "  yCALC")
+            mytext.AppendLine("[" & su.spmp_temperature & "]" & vbTab & "[" & su.spmp_density & "]" & vbTab & "  [" & su.spmp_density & "]")
+            For Each d As Double() In mycase.DataRoS
+                x = cv.ConverterDoSI(su.spmp_temperature, d(0))
+                px.Add(x)
+                y1 = cv.ConverterDoSI(su.spmp_density, d(1)) * TextBoxMW.Text
+                py1.Add(y1)
+                If Eq = "0" Then
+                    y2 = 0
+                Else
+                    y2 = cv.ConverterDoSI(su.spmp_density, pp.CalcCSTDepProp(Eq, tbRoS_A.Text, tbRoS_B.Text, tbRoS_C.Text, tbRoS_D.Text, tbRoS_E.Text, d(0), 0) * TextBoxMW.Text)
+                End If
+                py2.Add(y2)
+                mytext.AppendLine(FormatNumber(x, 2) & vbTab & FormatNumber(y1, 2) & vbTab & "  " & FormatNumber(y2, 2))
+            Next
+            With frc
+                .py1 = py1
+                .py2 = py2
+                .y1ctitle = "Experiment"
+                .y2ctitle = "Formula"
+                .ycurvetypes = New ArrayList(New Integer() {1, 3})
+                .title = "Solid Density Fitting Results"
+            End With
+        End If
+
         With frc
             .tbtext = mytext.ToString
             .px = px
-            .py1 = py1
-            .py2 = py2
             .xformat = 1
-            .ytitle = "Rho [ " & su.spmp_density & " ]"
-            .xtitle = "T [ " & su.spmp_temperature & " ]"
-            .ycurvetypes = New ArrayList(New Integer() {1, 3})
-            .title = "Solid Density Fitting Results"
+            .yformat = 1
+            .ytitle = "Rho [" & su.spmp_density & "]"
+            .xtitle = "T [" & su.spmp_temperature & "]"
             .ShowDialog(Me)
         End With
     End Sub
     Private Sub btnViewLIQVISC_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnViewLIQVISC.Click
+        Dim mytext As New System.Text.StringBuilder
+        Dim px, py1, py2, py3, LT As New ArrayList, y, T, T1, T2, dT As Double
+        Dim Eq, Heading1, Heading2 As String
+        Dim CurveCount As Integer
+        Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
+        Dim frc As New FormChart
+        Me.methods2 = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
-        If tbStatusLIQVISC.Text = "" And rbRegressLIQVISC.Checked Then
-            MessageBox.Show(DWSIM.App.GetLocalString("NoRegressionAvailable"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Exit Sub
+        StoreData()
+        Eq = cbEqLIQVISC.SelectedItem.Split(":")(0)
+
+        'Fill x() table and add experimental data if available
+        If mycase.DataLVISC.Count = 0 Then
+            T2 = TextBoxNBP.Text * 0.999
+            T1 = TextBoxMeltingTemp.Text
+            dT = (T2 - T1) / 25
+            T = T1
+            Do
+                px.Add(T)
+                T += dT
+            Loop While T <= T2
+            Heading1 = "T"
+            Heading2 = "[" & su.spmp_temperature & "]"
+        Else
+            For Each d As Double() In mycase.DataLVISC
+                px.Add(cv.ConverterDoSI(su.spmp_temperature, d(0)))
+                py1.Add(cv.ConverterDoSI(su.spmp_viscosity, d(1)))
+            Next
+            CurveCount = +1
+            frc.y1ctitle = "Experiment"
+            Heading1 = "T" & vbTab & "yExp"
+            Heading2 = "[" & su.spmp_temperature & "]" & vbTab & "[" & su.spmp_viscosity & "]"
+            LT.Add(1) 'Point type curve
         End If
 
-        Dim mytext As New System.Text.StringBuilder
-        mytext.AppendLine("Data Points")
-        mytext.AppendLine("x" & vbTab & "yEXP" & vbTab & "yCALC")
-        Dim px, py1, py2 As New ArrayList, x, y1, y2 As Double
-        For Each d As Double() In mycase.DataLVISC
-            x = cv.ConverterDoSI(su.spmp_temperature, d(0))
-            px.Add(x)
-            y1 = cv.ConverterDoSI(su.spmp_viscosity, d(1))
-            py1.Add(y1)
-            Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
-            With mycase.cp
-                y2 = cv.ConverterDoSI(su.spmp_viscosity, pp.CalcCSTDepProp(.LiquidViscosityEquation, .Liquid_Viscosity_Const_A, .Liquid_Viscosity_Const_B, .Liquid_Viscosity_Const_C, .Liquid_Viscosity_Const_D, .Liquid_Viscosity_Const_E, d(0), 0))
-                py2.Add(y2)
-            End With
+        'Add calculated Letsou-Stiel Data
+        For k = 0 To px.Count - 1
+            T = cv.ConverterParaSI(su.spmp_temperature, px(k))
+            y = cv.ConverterDoSI(su.spmp_viscosity, methods2.viscl_letsti(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text, TextBoxMW.Text))
+            Select Case CurveCount
+                Case 0
+                    py1.Add(y)
+                Case 1
+                    py2.Add(y)
+            End Select
+        Next
+        Select Case CurveCount
+            Case 0
+                frc.y1ctitle = "Letsou-Stiel"
+            Case 1
+                frc.y2ctitle = "Letsou-Stiel"
+        End Select
+        CurveCount += 1
+        Heading1 = Heading1 & vbTab & "Y Letsou-Stiel"
+        Heading2 = Heading2 & vbTab & "[" & su.spmp_viscosity & "]"
+        LT.Add(4) 'dashed line type curve
+
+        'Add regressed/user curve
+        If Not Eq = "0" Then
+            For k = 0 To px.Count - 1
+                T = cv.ConverterParaSI(su.spmp_temperature, px(k))
+                y = cv.ConverterDoSI(su.spmp_viscosity, pp.CalcCSTDepProp(Eq, tbLIQVISC_A.Text, tbLIQVISC_B.Text, tbLIQVISC_C.Text, tbLIQVISC_D.Text, tbLIQVISC_E.Text, T, 0))
+
+                Select Case CurveCount
+                    Case 1
+                        py2.Add(y)
+                    Case 2
+                        py3.Add(y)
+                End Select
+            Next
+            Select Case CurveCount
+                Case 1
+                    frc.y2ctitle = "Regression/User"
+                Case 2
+                    frc.y3ctitle = "Regression/User"
+            End Select
+            CurveCount += 1
+            Heading1 = Heading1 & vbTab & "YCalc"
+            Heading2 = Heading2 & vbTab & vbTab & "[" & su.spmp_viscosity & "]"
+            LT.Add(3) 'solid line type curve
+        End If
+
+        'fill data log box
+        mytext.AppendLine(Heading1)
+        mytext.AppendLine(Heading2)
+        For k = 0 To px.Count - 1
+            If CurveCount = 1 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 5))
+            If CurveCount = 2 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 5) & vbTab & FormatNumber(py2(k), 5))
+            If CurveCount = 3 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 5) & vbTab & FormatNumber(py2(k), 5) & vbTab & vbTab & FormatNumber(py3(k), 5))
         Next
 
-        Dim frc As New FormChart
         With frc
+            .py1 = py1
+            If CurveCount > 0 Then .py2 = py2
+            If CurveCount > 1 Then .py3 = py3
+            Select Case CurveCount
+                Case 1
+                    .ycurvetypes = New ArrayList(New Integer() {LT(0)})
+                Case 2
+                    .ycurvetypes = New ArrayList(New Integer() {LT(0), LT(1)})
+                Case 3
+                    .ycurvetypes = New ArrayList(New Integer() {LT(0), LT(1), LT(2)})
+            End Select
+
+            .title = "Liquid Viscosity Results"
             .tbtext = mytext.ToString
             .px = px
-            .py1 = py1
-            .py2 = py2
             .xformat = 1
-            .ytitle = "Rho / " & su.spmp_viscosity
-            .xtitle = "T / " & su.spmp_temperature
-            .ycurvetypes = New ArrayList(New Integer() {1, 3})
-            .title = "Liquid Viscosity Fitting Results"
+            .yformat = 1
+            .ytitle = "Visc. [" & su.spmp_viscosity & "]"
+            .xtitle = "T [" & su.spmp_temperature & "]"
             .ShowDialog(Me)
         End With
-
     End Sub
 
     Function GetInfo(ByVal code As Integer) As String
@@ -1972,9 +2325,9 @@ Public Class FormCompoundCreator
     End Sub
 
     Private Sub rb_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbCoeffCPIG.CheckedChanged, rbCoeffLIQDENS.CheckedChanged, _
-                                    rbRegressLIQVISC.CheckedChanged, rbRegressLIQDENS.CheckedChanged, rbEstimateLIQVISC.CheckedChanged, rbEstimateLIQDENS.CheckedChanged, _
-                                    rbCoeffLIQVISC.CheckedChanged, rbRegressPVAP.CheckedChanged, rbRegressCPIG.CheckedChanged, rbEstimatePVAP.CheckedChanged, _
-                                    rbEstimateCPIG.CheckedChanged, rbCoeffPVAP.CheckedChanged
+                                    rbRegressLIQVISC.CheckedChanged, rbRegressLIQDENS.CheckedChanged, _
+                                    rbCoeffLIQVISC.CheckedChanged, rbRegressPVAP.CheckedChanged, rbRegressCPIG.CheckedChanged, _
+                                     rbCoeffPVAP.CheckedChanged
 
         If loaded Then
             StoreData()
@@ -2041,7 +2394,7 @@ Public Class FormCompoundCreator
             StoreData()
 
             'In case of additionalt Joback groups no UNIFAC calculation is possible anymore.
-            'Delete groups to prevent wrong calculations.
+            'Delete UNIFAC groups to prevent wrong calculations.
             If Not PureUNIFACCompound Then
                 mycase.cp.UNIFACGroups.Collection.Clear()
                 mycase.cp.MODFACGroups.Collection.Clear()
@@ -2108,14 +2461,9 @@ Public Class FormCompoundCreator
         System.Diagnostics.Process.Start("http://chemeo.com/")
     End Sub
 
-    Private Sub rbEstimateSolidDens_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbEstimateSolidDens.CheckedChanged
-        If loaded Then
-            If rbEstimateSolidDens.Checked Then
-                CalcJobackParams()
-            End If
-            BothSaveStatusModified(sender, e)
-        End If
-    End Sub
+    
+
+   
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase
