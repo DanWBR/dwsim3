@@ -34,6 +34,23 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected m_T As Double = 0
         Protected m_P As Double = 0
 
+        Public Enum PressureBehavior
+            Average
+            Maximum
+            Minimum
+        End Enum
+
+        Protected m_pressurebehavior As PressureBehavior = PressureBehavior.Minimum
+
+        Public Property PressureCalculation() As PressureBehavior
+            Get
+                Return Me.m_pressurebehavior
+            End Get
+            Set(ByVal value As PressureBehavior)
+                Me.m_pressurebehavior = value
+            End Set
+        End Property
+
         Public Enum OperationMode
             TwoPhase = 0
             ThreePhase = 1
@@ -113,16 +130,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim form As FormFlowsheet = Me.FlowSheet
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
 
-            If Not Me.GraphicObject.InputConnectors(0).IsAttached Then
-                'Call function to calculate flowsheet
-                With objargs
-                    .Calculado = False
-                    .Nome = Me.Nome
-                    .Tipo = TipoObjeto.Vessel
-                End With
-                CalculateFlowsheet(FlowSheet, objargs, Nothing)
-                Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
-            ElseIf Not Me.GraphicObject.OutputConnectors(0).IsAttached Then
+           If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then
                 'Call function to calculate flowsheet
                 With objargs
                     .Calculado = False
@@ -151,14 +159,162 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
             End If
 
+            Dim H, Hs, T, W, We, P As Double
+            H = 0
+            Hs = 0
+            T = 0
+            W = 0
+            We = 0
+            P = 0
+
+            Dim i As Integer = 1
+            Dim nc As Integer = 0
+
+            Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
+            Dim mix As New DWSIM.SimulationObjects.Streams.MaterialStream("", "", Me.FlowSheet, Me.PropertyPackage)
+            Me.FlowSheet.AddComponentsRows(mix)
+            Dim cp As ConnectionPoint
+
+            For Each cp In Me.GraphicObject.InputConnectors
+                If cp.IsAttached Then
+                    nc += 1
+                    If cp.AttachedConnector.AttachedFrom.Calculated = False Then Throw New Exception(DWSIM.App.GetLocalString("Umaoumaiscorrentesna"))
+                    ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedFrom.Name)
+                    If Me.PressureCalculation = PressureBehavior.Minimum Then
+                        If ms.Fases(0).SPMProperties.pressure.GetValueOrDefault < P Then
+                            P = ms.Fases(0).SPMProperties.pressure
+                        ElseIf P = 0 Then
+                            P = ms.Fases(0).SPMProperties.pressure
+                        End If
+                    ElseIf Me.PressureCalculation = PressureBehavior.Maximum Then
+                        If ms.Fases(0).SPMProperties.pressure.GetValueOrDefault > P Then
+                            P = ms.Fases(0).SPMProperties.pressure
+                        ElseIf P = 0 Then
+                            P = ms.Fases(0).SPMProperties.pressure
+                        End If
+                    Else
+                        P = P + ms.Fases(0).SPMProperties.pressure.GetValueOrDefault
+                        i += 1
+                    End If
+                    We = ms.Fases(0).SPMProperties.massflow.GetValueOrDefault
+                    W += We
+                    If Not Double.IsNaN(ms.Fases(0).SPMProperties.enthalpy.GetValueOrDefault) Then H += We * ms.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+                End If
+            Next
+
+            If W <> 0.0# Then Hs = H / W Else Hs = 0.0#
+
+            If Me.PressureCalculation = PressureBehavior.Average Then P = P / (i - 1)
+
+            T = 0
+
+            Dim n As Integer = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name).Fases(0).Componentes.Count
+            Dim Vw As New Dictionary(Of String, Double)
+            For Each cp In Me.GraphicObject.InputConnectors
+                If cp.IsAttached Then
+                    ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedFrom.Name)
+                    Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                    For Each comp In ms.Fases(0).Componentes.Values
+                        If Not Vw.ContainsKey(comp.Nome) Then
+                            Vw.Add(comp.Nome, 0)
+                        End If
+                        Vw(comp.Nome) += comp.FracaoMassica.GetValueOrDefault * ms.Fases(0).SPMProperties.massflow.GetValueOrDefault
+                    Next
+                    If W <> 0.0# Then T += ms.Fases(0).SPMProperties.massflow.GetValueOrDefault / W * ms.Fases(0).SPMProperties.temperature.GetValueOrDefault
+                End If
+            Next
+
+            If W = 0.0# Then T = 273.15
+
+            With mix
+
+                If W <> 0.0# Then .Fases(0).SPMProperties.enthalpy = Hs
+                .Fases(0).SPMProperties.pressure = P
+                .Fases(0).SPMProperties.massflow = W
+                .Fases(0).SPMProperties.molarfraction = 1
+                .Fases(0).SPMProperties.massfraction = 1
+                Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                For Each comp In .Fases(0).Componentes.Values
+                    If W <> 0.0# Then comp.FracaoMassica = Vw(comp.Nome) / W
+                Next
+                Dim mass_div_mm As Double = 0
+                Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
+                For Each sub1 In .Fases(0).Componentes.Values
+                    mass_div_mm += sub1.FracaoMassica.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight
+                Next
+                For Each sub1 In .Fases(0).Componentes.Values
+                    If W <> 0.0# Then
+                        sub1.FracaoMolar = sub1.FracaoMassica.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight / mass_div_mm
+                    Else
+                        sub1.FracaoMolar = 0.0#
+                    End If
+                Next
+                Me.PropertyPackage.CurrentMaterialStream = mix
+                If W <> 0.0# Then
+                    If nc > 1 Then
+                        'do a PH-Flash only if there is more than one inlet stream, otherwise the temperature won't change
+                        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P, Hs, T)
+                        T = tmp(2)
+                    End If
+                End If
+                .Fases(0).SPMProperties.temperature = T
+                .Fases(0).SPMProperties.molarflow = W / Me.PropertyPackage.AUX_MMM(PropertyPackages.Fase.Mixture) * 1000
+            End With
+
+            With Me.PropertyPackage
+
+                'calculate mixture stream
+                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                If mix.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                Else
+                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                End If
+                If mix.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                Else
+                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                End If
+                If mix.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                Else
+                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                End If
+                If mix.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                Else
+                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                End If
+                If mix.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                Else
+                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                End If
+                If mix.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                Else
+                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                End If
+                If mix.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And mix.Fases(2).SPMProperties.molarfraction.GetValueOrDefault < 1 Then
+                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                Else
+                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                End If
+                .DW_CalcCompMolarFlow(-1)
+                .DW_CalcCompMassFlow(-1)
+                .DW_CalcCompVolFlow(-1)
+                .DW_CalcOverallProps()
+                .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                .DW_CalcVazaoVolumetrica()
+                .DW_CalcKvalue()
+
+            End With
+
             If Me.OverrideT = False And Me.OverrideP = False Then
 
-                Dim ems As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
-                Dim W As Double = ems.Fases(0).SPMProperties.massflow.GetValueOrDefault
+                Dim ems As DWSIM.SimulationObjects.Streams.MaterialStream = mix
+                W = ems.Fases(0).SPMProperties.massflow.GetValueOrDefault
                 Dim j As Integer = 0
-
-                Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
-                Dim cp As ConnectionPoint
 
                 cp = Me.GraphicObject.OutputConnectors(0)
                 If cp.IsAttached Then
@@ -207,7 +363,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             j += 1
                         Next
                         For Each comp In .Fases(3).Componentes.Values
-                            comp.FracaoMolar = ems.Fases(3).Componentes(comp.Nome).FracaoMolar
+                            comp.FracaoMolar = ems.Fases(1).Componentes(comp.Nome).FracaoMolar
                             comp.FracaoMassica = ems.Fases(3).Componentes(comp.Nome).FracaoMassica
                             j += 1
                         Next
@@ -281,9 +437,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Else
 
-                Dim xl, xv, T, P, H, Hv, Hl, Tv, Tl, S, wtotalx, wtotaly As Double
-                Dim ems As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
-                Dim W As Double = ems.Fases(0).SPMProperties.massflow.GetValueOrDefault
+                Dim xl, xv, Hv, Hl, Tv, Tl, S, wtotalx, wtotaly As Double
+                Dim ems As DWSIM.SimulationObjects.Streams.MaterialStream = mix
+                W = ems.Fases(0).SPMProperties.massflow.GetValueOrDefault
                 Dim tmp As Object
 
                 If Me.OverrideP Then
@@ -332,11 +488,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Hv = Me.PropertyPackage.DW_CalcEnthalpy(Vy, T, P, PropertyPackages.State.Vapor)
                 Hl = Me.PropertyPackage.DW_CalcEnthalpy(Vx, T, P, PropertyPackages.State.Liquid)
 
-                Dim i As Integer = 0
+                i = 0
                 Dim j As Integer = 0
 
-                Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
-                Dim cp As ConnectionPoint
                 cp = Me.GraphicObject.InputConnectors(0)
                 If cp.IsAttached Then
                     ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedFrom.Name)
@@ -527,11 +681,36 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 MyBase.PopulatePropertyGrid(pgrid, su)
 
-                Dim ent, saida1, saida2, saida3 As String
+                Dim ent1, ent2, ent3, ent4, ent5, ent6, saida1, saida2, saida3 As String
                 If Me.GraphicObject.InputConnectors(0).IsAttached = True Then
-                    ent = Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Tag
+                    ent1 = Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Tag
                 Else
-                    ent = ""
+                    ent1 = ""
+                End If
+                If Me.GraphicObject.InputConnectors(1).IsAttached = True Then
+                    ent2 = Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent2 = ""
+                End If
+                If Me.GraphicObject.InputConnectors(2).IsAttached = True Then
+                    ent3 = Me.GraphicObject.InputConnectors(2).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent3 = ""
+                End If
+                If Me.GraphicObject.InputConnectors(3).IsAttached = True Then
+                    ent4 = Me.GraphicObject.InputConnectors(3).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent4 = ""
+                End If
+                If Me.GraphicObject.InputConnectors(4).IsAttached = True Then
+                    ent5 = Me.GraphicObject.InputConnectors(4).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent5 = ""
+                End If
+                If Me.GraphicObject.InputConnectors(5).IsAttached = True Then
+                    ent6 = Me.GraphicObject.InputConnectors(5).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent6 = ""
                 End If
                 If Me.GraphicObject.OutputConnectors(0).IsAttached = True Then
                     saida1 = Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Tag
@@ -549,7 +728,32 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     saida3 = ""
                 End If
 
-                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada"), ent, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada1"), ent1, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada2"), ent2, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada3"), ent3, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada4"), ent4, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada5"), ent5, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada6"), ent6, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                     .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
@@ -571,6 +775,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
+                End With
+
+                .Item.Add(DWSIM.App.GetLocalString("Pressoajusante"), Me, "PressureCalculation", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Selecioneumaopoquein"), True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
                 End With
 
                 .Item.Add(DWSIM.App.GetLocalString("VesselOperatingMode"), Me, "OpMode", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("VesselOperatingModeDesc"), True)

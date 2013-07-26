@@ -4722,4 +4722,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SolidDensity" xml:space="preserve">
     <value>Massa Específica do Sólido</value>
   </data>
+  <data name="Correntedeentrada4" xml:space="preserve">
+    <value>Corriente de entrada (4) </value>
+  </data>
+  <data name="Correntedeentrada5" xml:space="preserve">
+    <value>Corriente de entrada (5) </value>
+  </data>
+  <data name="Correntedeentrada6" xml:space="preserve">
+    <value>Corriente de entrada (6) </value>
+  </data>
 </root>

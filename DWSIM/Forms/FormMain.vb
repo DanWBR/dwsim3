@@ -1193,6 +1193,18 @@ Public Class FormMain
                 form.Collections = DirectCast(mySerializer.Deserialize(fs), DWSIM.FormClasses.ClsObjectCollections)
             End Using
 
+            If Not My.Settings.ReplaceCompoundConstantProperties Then
+                For Each ms As Streams.MaterialStream In form.Collections.CLCS_MaterialStreamCollection.Values
+                    For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                        For Each c As ConstantProperties In form.Options.SelectedComponents.Values
+                            If Me.AvailableComponents.ContainsKey(c.Name) Then
+                                phase.Componentes(c.Name).ConstantProperties = Me.AvailableComponents(c.Name)
+                            End If
+                        Next
+                    Next
+                Next
+            End If
+
             Dim fs2 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\2.bin", FileMode.Open)
 
             Using fs2
@@ -1200,6 +1212,14 @@ Public Class FormMain
                 form.Options = DirectCast(mySerializer.Deserialize(fs2), DWSIM.FormClasses.ClsFormOptions)
                 If form.Options.PropertyPackages.Count = 0 Then form.Options.PropertyPackages = Me.PropertyPackages
             End Using
+
+            If Not My.Settings.ReplaceCompoundConstantProperties Then
+                For Each c As ConstantProperties In form.Options.SelectedComponents.Values
+                    If Me.AvailableComponents.ContainsKey(c.Name) Then
+                        c = Me.AvailableComponents(c.Name)
+                    End If
+                Next
+            End If
 
             form.FormObjList.TreeViewObj.Nodes.Clear()
             TreeViewDataAccess.LoadTreeViewData(form.FormObjList.TreeViewObj, My.Computer.FileSystem.SpecialDirectories.Temp & "\5.bin")
@@ -1361,10 +1381,10 @@ Public Class FormMain
                         Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                             .CLCS_CapeOpenUOCollection(gObj.Name).GraphicObject = gObj
                             .CapeOpenUOCollection(gObj.Name) = gObj
-                        Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
                             .CLCS_SolidsSeparatorCollection(gObj.Name).GraphicObject = gObj
                             .SolidsSeparatorCollection(gObj.Name) = gObj
-                        Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Filter
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
                             .CLCS_FilterCollection(gObj.Name).GraphicObject = gObj
                             .FilterCollection(gObj.Name) = gObj
                     End Select
@@ -2065,6 +2085,11 @@ Public Class FormMain
             For Each xel As XElement In data
                 Dim obj As New ConstantProperties
                 obj.LoadData(xel.Elements.ToList)
+                If Not My.Settings.ReplaceCompoundConstantProperties Then
+                    If Me.AvailableComponents.ContainsKey(obj.Name) Then
+                        obj = Me.AvailableComponents(obj.Name)
+                    End If
+                End If
                 form.Options.SelectedComponents.Add(obj.Name, obj)
             Next
 
@@ -2103,9 +2128,9 @@ Public Class FormMain
                     obj.LoadData(xel.Elements.ToList)
                     If TypeOf obj Is Streams.MaterialStream Then
                         For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
-                            For Each c As ConstantProperties In form.Options.SelectedComponents.Values
-                                phase.Componentes(c.Name).ConstantProperties = c
-                            Next
+                                For Each c As ConstantProperties In form.Options.SelectedComponents.Values
+                                    phase.Componentes(c.Name).ConstantProperties = c
+                                Next
                         Next
                     End If
                     With form.Collections

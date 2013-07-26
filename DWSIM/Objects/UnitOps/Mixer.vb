@@ -234,7 +234,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 MyBase.PopulatePropertyGrid(pgrid, su)
 
-                Dim ent1, ent2, ent3, saida As String
+                Dim ent1, ent2, ent3, ent4, ent5, ent6, saida As String
 
                 If Me.GraphicObject.InputConnectors(0).IsAttached = True Then
                     ent1 = Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Tag
@@ -251,7 +251,21 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Else
                     ent3 = ""
                 End If
-
+                If Me.GraphicObject.InputConnectors(3).IsAttached = True Then
+                    ent4 = Me.GraphicObject.InputConnectors(3).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent4 = ""
+                End If
+                If Me.GraphicObject.InputConnectors(4).IsAttached = True Then
+                    ent5 = Me.GraphicObject.InputConnectors(4).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent5 = ""
+                End If
+                If Me.GraphicObject.InputConnectors(5).IsAttached = True Then
+                    ent6 = Me.GraphicObject.InputConnectors(5).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent6 = ""
+                End If
 
                 If Me.GraphicObject.OutputConnectors(0).IsAttached = True Then
                     saida = Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Tag
@@ -270,6 +284,21 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
                 End With
                 .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada3"), ent3, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada4"), ent4, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada5"), ent5, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada6"), ent6, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                     .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector

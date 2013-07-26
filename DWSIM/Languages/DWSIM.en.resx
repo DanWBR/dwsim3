@@ -4753,4 +4753,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SolidCp" xml:space="preserve">
     <value>Heat Capacity Solid</value>
   </data>
+  <data name="Correntedeentrada4" xml:space="preserve">
+    <value>Inlet Stream 4</value>
+  </data>
+  <data name="Correntedeentrada5" xml:space="preserve">
+    <value>Inlet Stream 5</value>
+  </data>
+  <data name="Correntedeentrada6" xml:space="preserve">
+    <value>Inlet Stream 6</value>
+  </data>
 </root>

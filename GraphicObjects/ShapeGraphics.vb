@@ -53,23 +53,28 @@ Namespace GraphicObjects
             color3 = Color.YellowGreen
 
             If Conn.AttachedFrom.Status = GraphicObjects.Status.Calculated And Conn.AttachedTo.Status = GraphicObjects.Status.Calculated Then
-                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color1, color1), 1.5)
+                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color1, color1), Me.LineWidth)
             ElseIf Conn.AttachedFrom.Status = GraphicObjects.Status.Calculated And Conn.AttachedTo.Status = GraphicObjects.Status.ErrorCalculating Then
-                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color1, color2), 1.5)
+                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color1, color2), Me.LineWidth)
             ElseIf Conn.AttachedFrom.Status = GraphicObjects.Status.ErrorCalculating And Conn.AttachedTo.Status = GraphicObjects.Status.Calculated Then
-                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color2, color1), 1.5)
+                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color2, color1), Me.LineWidth)
             ElseIf Conn.AttachedFrom.Status = GraphicObjects.Status.ErrorCalculating And Conn.AttachedTo.Status = GraphicObjects.Status.ErrorCalculating Then
-                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color2, color2), 1.5)
+                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color2, color2), Me.LineWidth)
             ElseIf Conn.AttachedFrom.Status = GraphicObjects.Status.Calculating And Conn.AttachedTo.Status = GraphicObjects.Status.ErrorCalculating Then
-                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color3, color2), 1.5)
+                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color3, color2), Me.LineWidth)
             ElseIf Conn.AttachedFrom.Status = GraphicObjects.Status.ErrorCalculating And Conn.AttachedTo.Status = GraphicObjects.Status.Calculating Then
-                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color2, color3), 1.5)
+                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color2, color3), Me.LineWidth)
             ElseIf Conn.AttachedFrom.Status = GraphicObjects.Status.Calculating And Conn.AttachedTo.Status = GraphicObjects.Status.Calculated Then
-                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color3, color1), 1.5)
+                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color3, color1), Me.LineWidth)
             ElseIf Conn.AttachedFrom.Status = GraphicObjects.Status.Calculated And Conn.AttachedTo.Status = GraphicObjects.Status.Calculating Then
-                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color1, color3), 1.5)
+                ConnPen = New Pen(New LinearGradientBrush(p1, p2, color1, color3), Me.LineWidth)
             End If
 
+            With ConnPen
+                .EndCap = Drawing2D.LineCap.ArrowAnchor
+                .StartCap = Drawing2D.LineCap.NoAnchor
+                .LineJoin = LineJoin.Round
+            End With
 
         End Sub
 
@@ -1197,16 +1202,28 @@ Namespace GraphicObjects
 
         Public Overrides Sub CreateConnectors(InCount As Integer, OutCount As Integer)
             Dim myIC1 As New ConnectionPoint
-            myIC1.Position = New Point(X, Y + 0.5 * Height)
+            myIC1.Position = New Point(X, Y + 0.0 * Height)
             myIC1.Type = ConType.ConIn
 
             Dim myIC2 As New ConnectionPoint
-            myIC2.Position = New Point(X + 0.5 * Width, Y)
+            myIC2.Position = New Point(X, Y + 0.2 * Height)
             myIC2.Type = ConType.ConIn
 
             Dim myIC3 As New ConnectionPoint
-            myIC3.Position = New Point(X + 0.5 * Width, Y + Height)
+            myIC3.Position = New Point(X, Y + 0.4 * Height)
             myIC3.Type = ConType.ConIn
+
+            Dim myIC4 As New ConnectionPoint
+            myIC4.Position = New Point(X, Y + 0.6 * Height)
+            myIC4.Type = ConType.ConIn
+
+            Dim myIC5 As New ConnectionPoint
+            myIC5.Position = New Point(X, Y + 0.8 * Height)
+            myIC5.Type = ConType.ConIn
+
+            Dim myIC6 As New ConnectionPoint
+            myIC6.Position = New Point(X, Y + 1.0 * Height)
+            myIC6.Type = ConType.ConIn
 
             Dim myOC1 As New ConnectionPoint
             myOC1.Position = New Point(X + Width, Y + 0.5 * Height)
@@ -1215,19 +1232,33 @@ Namespace GraphicObjects
             With InputConnectors
 
                 If .Count <> 0 Then
+                    If .Count = 3 Then
+                        .Add(myIC4)
+                        .Add(myIC5)
+                        .Add(myIC6)
+                    End If
                     If Me.FlippedH Then
                         .Item(0).Position = New Point(X + Width, Y)
-                        .Item(1).Position = New Point(X + Width, Y + 0.5 * Height)
-                        .Item(2).Position = New Point(X + Width, Y + Height)
+                        .Item(1).Position = New Point(X + Width, Y + 0.2 * Height)
+                        .Item(2).Position = New Point(X + Width, Y + 0.4 * Height)
+                        .Item(3).Position = New Point(X + Width, Y + 0.6 * Height)
+                        .Item(4).Position = New Point(X + Width, Y + 0.8 * Height)
+                        .Item(5).Position = New Point(X + Width, Y + 1.0 * Height)
                     Else
                         .Item(0).Position = New Point(X, Y)
-                        .Item(1).Position = New Point(X, Y + 0.5 * Height)
-                        .Item(2).Position = New Point(X, Y + Height)
+                        .Item(1).Position = New Point(X, Y + 0.2 * Height)
+                        .Item(2).Position = New Point(X, Y + 0.4 * Height)
+                        .Item(3).Position = New Point(X, Y + 0.6 * Height)
+                        .Item(4).Position = New Point(X, Y + 0.8 * Height)
+                        .Item(5).Position = New Point(X, Y + 1.0 * Height)
                     End If
                 Else
                     .Add(myIC1)
                     .Add(myIC2)
                     .Add(myIC3)
+                    .Add(myIC4)
+                    .Add(myIC5)
+                    .Add(myIC6)
                 End If
 
             End With
@@ -1788,8 +1819,28 @@ Namespace GraphicObjects
         Public Overrides Sub CreateConnectors(InCount As Integer, OutCount As Integer)
 
             Dim myIC1 As New ConnectionPoint
-            myIC1.Position = New Point(X + 0.125 * Width, Y + 0.5 * Height)
+            myIC1.Position = New Point(X + 0.25 * Width, Y + 0.2 * Height)
             myIC1.Type = ConType.ConIn
+
+            Dim myIC2 As New ConnectionPoint
+            myIC2.Position = New Point(X + 0.25 * Width, Y + 0.3 * Height)
+            myIC2.Type = ConType.ConIn
+
+            Dim myIC3 As New ConnectionPoint
+            myIC3.Position = New Point(X + 0.25 * Width, Y + 0.4 * Height)
+            myIC3.Type = ConType.ConIn
+
+            Dim myIC4 As New ConnectionPoint
+            myIC4.Position = New Point(X + 0.25 * Width, Y + 0.5 * Height)
+            myIC4.Type = ConType.ConIn
+
+            Dim myIC5 As New ConnectionPoint
+            myIC5.Position = New Point(X + 0.25 * Width, Y + 0.6 * Height)
+            myIC5.Type = ConType.ConIn
+
+            Dim myIC6 As New ConnectionPoint
+            myIC6.Position = New Point(X + 0.25 * Width, Y + 0.7 * Height)
+            myIC6.Type = ConType.ConIn
 
             Dim myOC1 As New ConnectionPoint
             myOC1.Position = New Point(X + 0.827 * Width, Y + (0.1 + 0.127 / 2) * Height)
@@ -1809,13 +1860,35 @@ Namespace GraphicObjects
             With InputConnectors
 
                 If .Count <> 0 Then
-                    If Me.FlippedH Then
-                        .Item(0).Position = New Point(X + 0.875 * Width, Y + 0.5 * Height)
+                    If .Count = 1 Then
+                        .Add(myIC2)
+                        .Add(myIC3)
+                        .Add(myIC4)
+                        .Add(myIC5)
+                        .Add(myIC6)
+                    End If
+                    If Not Me.FlippedH Then
+                        .Item(0).Position = New Point(X + 0.25 * Width, Y + 0.2 * Height)
+                        .Item(1).Position = New Point(X + 0.25 * Width, Y + 0.3 * Height)
+                        .Item(2).Position = New Point(X + 0.25 * Width, Y + 0.4 * Height)
+                        .Item(3).Position = New Point(X + 0.25 * Width, Y + 0.5 * Height)
+                        .Item(4).Position = New Point(X + 0.25 * Width, Y + 0.6 * Height)
+                        .Item(5).Position = New Point(X + 0.25 * Width, Y + 0.7 * Height)
                     Else
-                        .Item(0).Position = New Point(X + 0.125 * Width, Y + 0.5 * Height)
+                        .Item(0).Position = New Point(X + (1 - 0.25) * Width, Y + 0.2 * Height)
+                        .Item(1).Position = New Point(X + (1 - 0.25) * Width, Y + 0.3 * Height)
+                        .Item(2).Position = New Point(X + (1 - 0.25) * Width, Y + 0.4 * Height)
+                        .Item(3).Position = New Point(X + (1 - 0.25) * Width, Y + 0.5 * Height)
+                        .Item(4).Position = New Point(X + (1 - 0.25) * Width, Y + 0.6 * Height)
+                        .Item(5).Position = New Point(X + (1 - 0.25) * Width, Y + 0.7 * Height)
                     End If
                 Else
                     .Add(myIC1)
+                    .Add(myIC2)
+                    .Add(myIC3)
+                    .Add(myIC4)
+                    .Add(myIC5)
+                    .Add(myIC6)
                 End If
 
             End With
@@ -1886,11 +1959,9 @@ Namespace GraphicObjects
                 g.Transform = myMatrix
             End If
 
-            Dim rect2 As New Rectangle(X + 0.123 * Width, Y + 0.5 * Height, 0.127 * Width, 0.127 * Height)
             Dim rect3 As New Rectangle(X + 0.7 * Width, Y + 0.1 * Height, 0.127 * Width, 0.127 * Height)
             Dim rect4 As New Rectangle(X + 0.7 * Width, Y + 0.773 * Height, 0.127 * Width, 0.127 * Height)
             If Me.FlippedH = True Then
-                rect2 = New Rectangle(X + (1 - 0.123) * Width, Y + 0.5 * Height, 0.127 * Width, 0.127 * Height)
                 rect3 = New Rectangle(X + 0.3 * Width, Y + 0.1 * Height, 0.127 * Width, 0.127 * Height)
                 rect4 = New Rectangle(X + 0.3 * Width, Y + 0.773 * Height, 0.127 * Width, 0.127 * Height)
             End If
@@ -1908,7 +1979,6 @@ Namespace GraphicObjects
             Else
                 Me.DrawRoundRect(g, myPen, X + 0.25 * Width, Y, 0.45 * Width, Height, 10, Brushes.Transparent)
             End If
-            g.DrawRectangle(myPen, rect2)
             g.DrawRectangle(myPen, rect3)
             g.DrawRectangle(myPen, rect4)
 
@@ -1935,19 +2005,15 @@ Namespace GraphicObjects
             'lgb1.SurroundColors = New Color() {Me.GradientColor2}
             'lgb1.WrapMode = WrapMode.Tile
             If Me.Fill Then
+                g.FillRectangle(New SolidBrush(Me.FillColor), rect3)
+                g.FillRectangle(New SolidBrush(Me.FillColor), rect4)
                 If Me.GradientMode = False Then
-                    g.FillRectangle(New SolidBrush(Me.FillColor), rect3)
-                    g.FillRectangle(New SolidBrush(Me.FillColor), rect4)
-                    g.FillRectangle(New SolidBrush(Me.FillColor), rect2)
                     If Me.FlippedH = True Then
                         Me.DrawRoundRect(g, myPen, X + 0.4 * Width, Y, 0.45 * Width, Height, 6, New SolidBrush(Me.FillColor))
                     Else
                         Me.DrawRoundRect(g, myPen, X + 0.25 * Width, Y, 0.45 * Width, Height, 6, New SolidBrush(Me.FillColor))
                     End If
                 Else
-                    g.FillRectangle(New SolidBrush(Me.FillColor), rect3)
-                    g.FillRectangle(New SolidBrush(Me.FillColor), rect4)
-                    g.FillRectangle(New SolidBrush(Me.FillColor), rect2)
                     If Me.FlippedH = True Then
                         Me.DrawRoundRect(g, myPen, X + 0.4 * Width, Y, 0.45 * Width, Height, 6, lgb1)
                     Else

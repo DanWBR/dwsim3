@@ -4733,4 +4733,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SolidCp" xml:space="preserve">
     <value>Wärmekapazität Feststoff</value>
   </data>
+  <data name="Correntedeentrada4" xml:space="preserve">
+    <value>Eintrittsstrom 4</value>
+  </data>
+  <data name="Correntedeentrada5" xml:space="preserve">
+    <value>Eintrittsstrom 5</value>
+  </data>
+  <data name="Correntedeentrada6" xml:space="preserve">
+    <value>Eintrittsstrom 6</value>
+  </data>
 </root>

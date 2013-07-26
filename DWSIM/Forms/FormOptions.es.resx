@@ -126,45 +126,21 @@
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Seguridad</value>
   </data>
-  <data name="GroupBox11.Text" xml:space="preserve">
-    <value>Tareas</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>383, 17</value>
-  </data>
-  <data name="cbudb.Text" xml:space="preserve">
-    <value>Reemplazar componentes presentes mientras se importa la base de datos.</value>
-  </data>
-  <data name="Button11.Text" xml:space="preserve">
-    <value>Agregar la base de datos de ChemSep ™</value>
-  </data>
-  <data name="Button7.Text" xml:space="preserve">
-    <value>Agregar la base de datos de usuario</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Bases de datos</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>415, 13</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>Administrar las bases de datos de las sustancias disponibles para la simulación actual.</value>
-  </data>
   <data name="GroupBox7.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 123</value>
   </data>
   <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>611, 190</value>
+    <value>745, 262</value>
   </data>
   <data name="GroupBox7.Text" xml:space="preserve">
     <value>Recursos</value>
   </data>
   <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>227, 51</value>
+    <value>260, 50</value>
   </data>
   <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>227, 24</value>
+    <value>258, 24</value>
   </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 13</value>
@@ -198,6 +174,24 @@
   </data>
   <data name="KryptonCheckBox1.Text" xml:space="preserve">
     <value>Mostrar consejos al inicio</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>Tareas</value>
+  </data>
+  <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>383, 17</value>
+  </data>
+  <data name="cbudb.Text" xml:space="preserve">
+    <value>Reemplazar componentes presentes mientras se importa la base de datos.</value>
+  </data>
+  <data name="Button11.Text" xml:space="preserve">
+    <value>Agregar la base de datos de ChemSep ™</value>
+  </data>
+  <data name="Button7.Text" xml:space="preserve">
+    <value>Agregar la base de datos de usuario</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Bases de datos</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Idioma de interfaz</value>
@@ -277,7 +271,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABo
-        KgAAAk1TRnQBSQFMAgEBCgEAAWQBAAFkAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAWwBAAFsAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKfAd4CnAHe
         ApwB3AKaAdoCmAHaApgB2gKYAdoCmAHkAqIB4gKgAeECnwHeApwB3AGcAZoB2gKYAdoCmAHZApcB1wKV
         AdYClAHTApEB0wKRAdECjwHPAo0BzwKNAc8CjWAABvYD9APzAfIB8wHyA/ED8APuA+0D6wPpA+gB5wLm
