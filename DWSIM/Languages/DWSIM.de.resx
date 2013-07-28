@@ -4742,4 +4742,16 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Correntedeentrada6" xml:space="preserve">
     <value>Eintrittsstrom 6</value>
   </data>
+  <data name="ActivityCoefficients" xml:space="preserve">
+    <value>Activity Coefficients</value>
+  </data>
+  <data name="FreezingPoint" xml:space="preserve">
+    <value>Freezing Point</value>
+  </data>
+  <data name="FreezingPointDepression" xml:space="preserve">
+    <value>Freezing Point Depression</value>
+  </data>
+  <data name="OsmoticCoefficient" xml:space="preserve">
+    <value>Osmotic Coefficient</value>
+  </data>
 </root>

@@ -161,7 +161,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Dim tau_ji(n, n), uij0(n, n), uijT(n, n), uii(n, n) As Double
             Dim Vids(n) As String, VQ(n), VR(n), vsolv(n), charge(n), molality(n), solvdensity(n), solvvfrac(n), solvmfrac(n) As Double
             Dim Msolv, DCsolv, dsolv, Xsolv, Im, A, b, a1(n, n), a2(n, n), Bij(n, n), Bref(n, n), dBdIm(n, n) As Double
-            Dim teta(n), fi(n), S(n), lngc(n), lngr(n), lnglr(n), lngsr(n), lng(n), g(n), sum1(n), sum0 As Double
+            Dim teta(n), fi(n), S(n), lngc(n), lngr(n), lnglr(n), lngsr(n), lng(n), g(n), sum1(n), sum0, sigma As Double
 
             Dim i, j, k, l, wi As Integer
 
@@ -262,7 +262,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                     If .IsIon Then
                         lnglr(i) = -A * .Charge ^ 2 * Im ^ 0.5 / (1 + b * Im ^ 0.5)
                     ElseIf .Name = "Water" Then
-                        lnglr(i) = 2 * A * .Molar_Weight / 1000 * dsolv / (b ^ 3 * solvdensity(i)) * (1 + b * Im ^ 0.5 - 1 / (b * Im ^ 0.5) - 2 * Log(b * Im ^ 0.5))
+                        sigma = 3 / Vx(i) ^ 3 * (1 + Vx(i) - 1 / (1 + Vx(i)) - 2 * Log(1 + Vx(i)))
+                        lnglr(i) = 2 / 3 * A * .Molar_Weight / 1000 * Im ^ (3 / 2) * sigma * (b * Im ^ 0.5)
                     Else
                         lnglr(i) = 0.0#
                     End If

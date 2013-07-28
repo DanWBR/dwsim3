@@ -33,10 +33,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Dim Tnfp, DHm, DT, Td As Double
 
             Tnfp = cprops(wid).TemperatureOfFusion
-            DHm = cprops(wid).EnthalpyOfFusionAtTf * cprops(wid).Molar_Weight
+            DHm = cprops(wid).EnthalpyOfFusionAtTf
 
-            DT = 8.314 * Tnfp ^ 2 / DHm * Math.Log(Vx(wid) * activcoeff(wid))
-            Td = DT + Tnfp
+            DT = 0.00831447 * Tnfp ^ 2 / DHm * Math.Log(Vx(wid) * activcoeff(wid))
+            Td = Tnfp - DT
 
             Return New Double() {Td, DT}
 

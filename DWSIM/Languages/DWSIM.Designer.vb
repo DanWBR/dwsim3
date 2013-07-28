@@ -470,6 +470,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Coeficientes de Atividade.
+        '''</summary>
+        Friend Shared ReadOnly Property ActivityCoefficients() As String
+            Get
+                Return ResourceManager.GetString("ActivityCoefficients", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Adicionar.
         '''</summary>
         Friend Shared ReadOnly Property Add() As String
@@ -6305,6 +6314,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Ponto de Fusão.
+        '''</summary>
+        Friend Shared ReadOnly Property FreezingPoint() As String
+            Get
+                Return ResourceManager.GetString("FreezingPoint", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Delta do Ponto de Fusão.
+        '''</summary>
+        Friend Shared ReadOnly Property FreezingPointDepression() As String
+            Get
+                Return ResourceManager.GetString("FreezingPointDepression", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to 3. Fundo.
         '''</summary>
         Friend Shared ReadOnly Property Fundo() As String
@@ -8866,6 +8893,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property OrificePlate_Desc() As String
             Get
                 Return ResourceManager.GetString("OrificePlate_Desc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Coeficiente Osmótico.
+        '''</summary>
+        Friend Shared ReadOnly Property OsmoticCoefficient() As String
+            Get
+                Return ResourceManager.GetString("OsmoticCoefficient", resourceCulture)
             End Get
         End Property
         
