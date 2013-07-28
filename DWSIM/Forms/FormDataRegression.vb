@@ -622,9 +622,6 @@ Public Class FormDataRegression
                     Next
                 Case DataType.TPxy
                 Case DataType.Pxx, DataType.Txx
-
-
-
                     proppack.Parameters("PP_FLASHALGORITHM") = 9
                     proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.SimpleLLE
                     Dim flashinstance As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.SimpleLLE = TryCast(proppack.FlashBase, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.SimpleLLE)
@@ -632,141 +629,70 @@ Public Class FormDataRegression
                         With flashinstance
                             .UseInitialEstimatesForPhase1 = True
                             .UseInitialEstimatesForPhase2 = True
-                            .InitialEstimatesForPhase1 = Vx1
-                            .InitialEstimatesForPhase2 = Vx2
                         End With
                     End If
                     Select Case currcase.model
                         Case "PRSV2-M", "PRSV2-VL"
-                            If doparallel Then
-                                My.MyApplication.IsRunningParallelTasks = True
-                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
-                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                Try
-                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
-                                                                             Sub(ipar)
-                                                                                 Dim result2 As Object
-                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {(Vx1(ipar) + Vx2(ipar)) / 2, 1 - (Vx1(ipar) + Vx2(ipar)) / 2}, VP(0), VT(ipar), proppack)
-                                                                                 Vx1c(ipar) = result(2)(0)
-                                                                                 Vx2c(ipar) = result(6)(0)
-                                                                             End Sub))
-                                    task1.Wait()
-                                Catch ae As AggregateException
-                                    For Each ex As Exception In ae.InnerExceptions
-                                        Throw ex
-                                    Next
-                                End Try
-                                My.MyApplication.IsRunningParallelTasks = False
-                            Else
-                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
-                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
-                                For i = 0 To np - 1
-                                    result = proppack.FlashBase.Flash_PT(New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, VP(0), VT(i), proppack)
-                                    Vx1c(i) = result(2)(0)
-                                    Vx2c(i) = result(6)(0)
-                                Next
-                            End If
+                            Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                            Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing)
+                            For i = 0 To np - 1
+                                With flashinstance
+                                    .InitialEstimatesForPhase1 = New Double() {Vx1(i), 1 - Vx1(i)}
+                                    .InitialEstimatesForPhase2 = New Double() {Vx2(i), 1 - Vx2(i)}
+                                End With
+                                result = proppack.FlashBase.Flash_PT(New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, VP(0), VT(i), proppack)
+                                Vx1c(i) = result(2)(0)
+                                Vx2c(i) = result(6)(0)
+                            Next
                             vartext = ", Interaction parameters = {"
                             vartext += "kij = " & x(0).ToString("N4") & ", "
                             vartext += "kji = " & x(1).ToString("N4")
                             vartext += "}"
                         Case "UNIQUAC"
-                            If doparallel Then
-                                My.MyApplication.IsRunningParallelTasks = True
-                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
-                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
-                                Try
-                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
-                                                                             Sub(ipar)
-                                                                                 Dim result2 As Object
-                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {(Vx1(ipar) + Vx2(ipar)) / 2, 1 - (Vx1(ipar) + Vx2(ipar)) / 2}, VP(0), VT(ipar), proppack)
-                                                                                 Vx1c(ipar) = result2(2)(0)
-                                                                                 Vx2c(ipar) = result2(6)(0)
-                                                                             End Sub))
-                                    task1.Wait()
-                                Catch ae As AggregateException
-                                    For Each ex As Exception In ae.InnerExceptions
-                                        Throw ex
-                                    Next
-                                End Try
-                                My.MyApplication.IsRunningParallelTasks = False
-                                Application.DoEvents()
-                            Else
-                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
-                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
-                                For i = 0 To np - 1
-                                    result = proppack.FlashBase.Flash_PT(New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, VP(0), VT(i), proppack)
-                                    Vx1c(i) = result(2)(0)
-                                    Vx2c(i) = result(6)(0)
-                                Next
-                            End If
+                            Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                            Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing)
+                            For i = 0 To np - 1
+                                With flashinstance
+                                    .InitialEstimatesForPhase1 = New Double() {Vx1(i), 1 - Vx1(i)}
+                                    .InitialEstimatesForPhase2 = New Double() {Vx2(i), 1 - Vx2(i)}
+                                End With
+                                result = proppack.FlashBase.Flash_PT(New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, VP(0), VT(i), proppack)
+                                Vx1c(i) = result(2)(0)
+                                Vx2c(i) = result(6)(0)
+                            Next
                             vartext = ", Interaction parameters = {"
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
                             vartext += "A21 = " & x(1).ToString("N4")
                             vartext += "}"
                         Case "NRTL"
-                            If doparallel Then
-                                My.MyApplication.IsRunningParallelTasks = True
-                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
-                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                Try
-                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
-                                                                             Sub(ipar)
-                                                                                 Dim result2 As Object
-                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {(Vx1(ipar) + Vx2(ipar)) / 2, 1 - (Vx1(ipar) + Vx2(ipar)) / 2}, VP(0), VT(ipar), proppack)
-                                                                                 Vx1c(ipar) = result2(2)(0)
-                                                                                 Vx2c(ipar) = result2(6)(0)
-                                                                             End Sub))
-                                    task1.Wait()
-                                Catch ae As AggregateException
-                                    For Each ex As Exception In ae.InnerExceptions
-                                        Throw ex
-                                    Next
-                                End Try
-                                My.MyApplication.IsRunningParallelTasks = False
-                            Else
-                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
-                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
-                                For i = 0 To np - 1
-                                    result = proppack.FlashBase.Flash_PT(New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, VP(0), VT(i), proppack)
-                                    Vx1c(i) = result(2)(0)
-                                    Vx2c(i) = result(6)(0)
-                                Next
-                            End If
+                            Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                            Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}})
+                            For i = 0 To np - 1
+                                With flashinstance
+                                    .InitialEstimatesForPhase1 = New Double() {Vx1(i), 1 - Vx1(i)}
+                                    .InitialEstimatesForPhase2 = New Double() {Vx2(i), 1 - Vx2(i)}
+                                End With
+                                result = proppack.FlashBase.Flash_PT(New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, VP(0), VT(i), proppack)
+                                Vx1c(i) = result(2)(0)
+                                Vx2c(i) = result(6)(0)
+                            Next
                             vartext = ", Interaction parameters = {"
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
                             vartext += "A21 = " & x(1).ToString("N4") & ", "
                             vartext += "alpha12 = " & x(2).ToString("N4")
                             vartext += "}"
                         Case "Lee-Kesler-Plöcker", "Peng-Robinson", "Soave-Redlich-Kwong", "PC-SAFT"
-                            If doparallel Then
-                                My.MyApplication.IsRunningParallelTasks = True
-                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
-                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                Try
-                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
-                                                                             Sub(ipar)
-                                                                                 Dim result2 As Object
-                                                                                 result2 = proppack.FlashBase.Flash_PT(New Double() {(Vx1(ipar) + Vx2(ipar)) / 2, 1 - (Vx1(ipar) + Vx2(ipar)) / 2}, VP(0), VT(ipar), proppack)
-                                                                                 Vx1c(ipar) = result2(2)(0)
-                                                                                 Vx2c(ipar) = result2(6)(0)
-                                                                             End Sub))
-                                    task1.Wait()
-                                Catch ae As AggregateException
-                                    For Each ex As Exception In ae.InnerExceptions
-                                        Throw ex
-                                    Next
-                                End Try
-                                My.MyApplication.IsRunningParallelTasks = False
-                            Else
-                                Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
-                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
-                                For i = 0 To np - 1
-                                    result = proppack.FlashBase.Flash_PT(New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, VP(0), VT(i), proppack)
-                                    Vx1c(i) = result(2)(0)
-                                    Vx2c(i) = result(6)(0)
-                                Next
-                            End If
+                            Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                            Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing)
+                            For i = 0 To np - 1
+                                With flashinstance
+                                    .InitialEstimatesForPhase1 = New Double() {Vx1(i), 1 - Vx1(i)}
+                                    .InitialEstimatesForPhase2 = New Double() {Vx2(i), 1 - Vx2(i)}
+                                End With
+                                result = proppack.FlashBase.Flash_PT(New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, VP(0), VT(i), proppack)
+                                Vx1c(i) = result(2)(0)
+                                Vx2c(i) = result(6)(0)
+                            Next
                             vartext = ", Interaction parameters = {kij = "
                             For i = 0 To x.Length - 1
                                 vartext += x(i).ToString("N4")

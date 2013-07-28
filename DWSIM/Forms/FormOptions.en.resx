@@ -134,19 +134,19 @@
     <value>8, 6</value>
   </data>
   <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>745, 333</value>
+    <value>745, 266</value>
   </data>
   <data name="GroupBox7.Text" xml:space="preserve">
     <value>Calculation Engine</value>
   </data>
   <data name="GroupBox8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>733, 254</value>
+    <value>733, 186</value>
   </data>
   <data name="GroupBox8.Text" xml:space="preserve">
     <value>OpenCL/CUDA device info</value>
   </data>
   <data name="tbGPUCaps.Size" type="System.Drawing.Size, System.Drawing">
-    <value>727, 234</value>
+    <value>727, 166</value>
   </data>
   <data name="cbGPU.Location" type="System.Drawing.Point, System.Drawing">
     <value>383, 47</value>
@@ -197,7 +197,7 @@
     <value>Enable CPU Parallel Processing</value>
   </data>
   <data name="GroupBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 200</value>
+    <value>8, 320</value>
   </data>
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Other</value>
@@ -215,7 +215,7 @@
     <value>Redirect console output</value>
   </data>
   <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 342</value>
+    <value>8, 273</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
     <value>745, 44</value>
@@ -370,7 +370,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABw
-        KgAAAk1TRnQBSQFMAgEBCgEAAdwBAAHcAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAeQBAAHkAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAeQCogHiAqAB4QKfAd4CnAHcAZwBmgHaApgB2gKYAdkClwHXApUB1gKU
         AdMCkQHTApEB0QKPAc8CjQHPAo0BzwKNAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKf
         Ad4CnAHeApwB3AKaAdoCmAHaApgB2gKYAdoCmGAAA+wD8APuA+0B6gHrAeoD6APnAuUB5gLjAeQD4gPh

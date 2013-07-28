@@ -1159,20 +1159,39 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             result = Me.FlashBase.Flash_PT(RET_VMOL(Fase.Mixture), P, T, Me)
 
+                            'do a density calculation check to order liquid phases from lighter to heavier
+
                             xl = result(0)
                             xv = result(1)
                             xl2 = result(5)
                             xs = result(7)
 
-                            Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                            Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = xl2
-                            Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-                            Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction = xs
-
                             Dim Vx = result(2)
                             Dim Vy = result(3)
                             Dim Vx2 = result(6)
                             Dim Vs = result(8)
+
+                            If xl2 <> 0.0# And xl = 0.0# Then
+                                xl = result(5)
+                                xl2 = 0.0#
+                                Vx = result(6)
+                                Vx2 = result(2)
+                            ElseIf xl2 <> 0.0# And xl <> 0.0# Then
+                                Dim dens1, dens2 As Double
+                                dens1 = Me.AUX_LIQDENS(T, Vx, P, 0, False)
+                                dens2 = Me.AUX_LIQDENS(T, Vx2, P, 0, False)
+                                If dens2 < dens1 Then
+                                    xl = result(5)
+                                    xl2 = result(0)
+                                    Vx = result(6)
+                                    Vx2 = result(2)
+                                End If
+                            End If
+
+                            Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
+                            Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = xl2
+                            Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
+                            Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction = xs
 
                             Dim FCL = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
                             Dim FCL2 = Me.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
@@ -5936,6 +5955,45 @@ Final3:
 
                 End If
             End If
+
+            m_pr2 = Nothing
+
+            Return val
+
+        End Function
+
+        Public Overridable Function AUX_LIQDENS(ByVal T As Double, ByVal Vx As Array, Optional ByVal P As Double = 0, Optional ByVal Pvp As Double = 0, Optional ByVal FORCE_EOS As Boolean = False) As Double
+
+            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
+
+            Dim val As Double
+            Dim m_pr2 As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PengRobinson
+
+            Dim i As Integer
+            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            i = 0
+            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
+                If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
+                    If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
+                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
+                            vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
+                            vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
+                        Else
+                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                        End If
+                    Else
+                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                    End If
+                Else
+                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                End If
+                If T > subst.ConstantProperties.Critical_Temperature Then
+                    vk(i) = 1.0E+20
+                End If
+                If Not Double.IsNaN(vk(i)) Then vk(i) = Vx(i) / vk(i) Else vk(i) = 0.0#
+                i = i + 1
+            Next
+            val = 1 / MathEx.Common.Sum(vk)
 
             m_pr2 = Nothing
 

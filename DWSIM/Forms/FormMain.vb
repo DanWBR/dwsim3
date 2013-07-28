@@ -1193,18 +1193,6 @@ Public Class FormMain
                 form.Collections = DirectCast(mySerializer.Deserialize(fs), DWSIM.FormClasses.ClsObjectCollections)
             End Using
 
-            If Not My.Settings.ReplaceCompoundConstantProperties Then
-                For Each ms As Streams.MaterialStream In form.Collections.CLCS_MaterialStreamCollection.Values
-                    For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
-                        For Each c As ConstantProperties In form.Options.SelectedComponents.Values
-                            If Me.AvailableComponents.ContainsKey(c.Name) Then
-                                phase.Componentes(c.Name).ConstantProperties = Me.AvailableComponents(c.Name)
-                            End If
-                        Next
-                    Next
-                Next
-            End If
-
             Dim fs2 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\2.bin", FileMode.Open)
 
             Using fs2
@@ -1218,6 +1206,18 @@ Public Class FormMain
                     If Me.AvailableComponents.ContainsKey(c.Name) Then
                         c = Me.AvailableComponents(c.Name)
                     End If
+                Next
+            End If
+
+            If Not My.Settings.ReplaceCompoundConstantProperties Then
+                For Each ms As Streams.MaterialStream In form.Collections.CLCS_MaterialStreamCollection.Values
+                    For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                        For Each c As ConstantProperties In form.Options.SelectedComponents.Values
+                            If Me.AvailableComponents.ContainsKey(c.Name) Then
+                                phase.Componentes(c.Name).ConstantProperties = Me.AvailableComponents(c.Name)
+                            End If
+                        Next
+                    Next
                 Next
             End If
 
