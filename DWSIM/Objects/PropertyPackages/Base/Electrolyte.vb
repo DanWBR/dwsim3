@@ -127,23 +127,36 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 MW += Vx(i) * cprops(i).Molar_Weight
             Next
 
-            Return HS * 1000 / MW 'kJ/kg
+            Return HS / MW 'kJ/kg
 
         End Function
 
         Function HeatCapacityCp(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double
 
+            Dim wid As Integer = cprops.IndexOf((From c2 As ConstantProperties In cprops Select c2 Where c2.Name = "Water").SingleOrDefault)
+
             Dim n As Integer = UBound(Vx)
             Dim i As Integer
             Dim Cp As Double = 0.0#
             Dim MW As Double = 0.0#
+            Dim A, B, C, D, E As Double
 
             For i = 0 To n
-                Cp += Vx(i) * cprops(i).Electrolyte_Cp0
-                MW += Vx(i) * cprops(i).Molar_Weight
+                If i = wid Then
+                    A = cprops(i).Liquid_Heat_Capacity_Const_A
+                    B = cprops(i).Liquid_Heat_Capacity_Const_B
+                    C = cprops(i).Liquid_Heat_Capacity_Const_C
+                    D = cprops(i).Liquid_Heat_Capacity_Const_D
+                    E = cprops(i).Liquid_Heat_Capacity_Const_E
+                    Cp += Vx(i) * (A + Exp(B / T + C + D * T + E * T ^ 2)) / 1000
+                    MW += Vx(i) * cprops(i).Molar_Weight
+                Else
+                    Cp += Vx(i) * cprops(i).Electrolyte_Cp0
+                    MW += Vx(i) * cprops(i).Molar_Weight
+                End If
             Next
 
-            Return Cp * 1000 / MW 'kJ/kg
+            Return Cp / MW 'kJ/kg
 
         End Function
 

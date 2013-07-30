@@ -163,7 +163,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     'calculate maximum solubilities for solids/precipitates.
 
                     For i = 0 To n
-                        If CompoundProperties(i).TemperatureOfFusion <> 0.0# Then
+                        If CompoundProperties(i).TemperatureOfFusion <> 0.0# And i <> wid Then
                             Vxlmax(i) = (1 / activcoeff(i)) * Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
                             If Vxlmax(i) > 1 Then Vxlmax(i) = 1.0#
                         Else

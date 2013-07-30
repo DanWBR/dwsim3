@@ -5703,7 +5703,7 @@ Final3:
 
             Dim val As Double
 
-            If cprop.OriginalDB = "ChemSep" Or (cprop.OriginalDB = "User" And cprop.SolidDensityEquation > 0) Then
+            If cprop.OriginalDB = "ChemSep" Or (cprop.OriginalDB = "User" And cprop.SolidDensityEquation <> "") Then
                 Dim A, B, C, D, E, result As Double
                 Dim eqno As String = cprop.SolidHeatCapacityEquation
                 Dim mw As Double = cprop.Molar_Weight
@@ -5718,6 +5718,17 @@ Final3:
                 val = 3 ' replacement if no params available
             End If
 
+            Return val
+
+        End Function
+
+        Public Function AUX_SOLIDCP(ByVal Vxm As Array, ByVal cprops As List(Of ConstantProperties), ByVal T As Double) As Double
+
+            Dim n As Integer = UBound(Vxm)
+            Dim val As Double = 0
+            For i As Integer = 0 To n
+                val += Vxm(i) * AUX_SolidHeatCapacity(cprops(i), T)
+            Next
             Return val
 
         End Function
@@ -6035,6 +6046,19 @@ Final3:
 
         End Function
 
+        Public Overridable Function AUX_LIQ_Cpi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
+
+            Dim val As Double
+
+            If cprop.LiquidDensityEquation <> "" And cprop.LiquidDensityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
+                val = Me.CalcCSTDepProp(cprop.LiquidHeatCapacityEquation, cprop.Liquid_Heat_Capacity_Const_A, cprop.Liquid_Heat_Capacity_Const_B, cprop.Liquid_Heat_Capacity_Const_C, cprop.Liquid_Heat_Capacity_Const_D, cprop.Liquid_Heat_Capacity_Const_E, T, cprop.Critical_Temperature)
+                val = cprop.Molar_Weight * val / 1000 'kJ/kg.K
+            End If
+
+            Return val
+
+        End Function
+
         Public MustOverride Function AUX_VAPDENS(ByVal T As Double, ByVal P As Double) As Double
 
         Public Function AUX_INT_CPDTi(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String)
@@ -6181,7 +6205,7 @@ Final3:
 
                 dHr = .IG_Enthalpy_of_Formation_25C
                 dGr = .IG_Gibbs_Energy_of_Formation_25C
-                
+
                 If mode2 Then
                     If .IsIon Or .IsSalt Then
                         term3 = .Electrolyte_Cp0 * 1000 / .Molar_Weight * (Log(T2 / T1) + (T1 / T2) - 1) / R
@@ -9886,7 +9910,10 @@ Final3:
 
                     pp.m_uni.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters_NRTL").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.NRTL_IPData() With {.ID1 = xel.@ID1, .ID2 = xel.@ID2, .A12 = Double.Parse(xel.@A12, ci), .A21 = Double.Parse(xel.@A21, ci), .alpha12 = Double.Parse(xel.@alpha12, ci)}
+                        Dim ip As New Auxiliary.NRTL_IPData() With {.ID1 = xel.@ID1, .ID2 = xel.@ID2, .A12 = Double.Parse(xel.@A12, ci), .A21 = Double.Parse(xel.@A21, ci),
+                                                                    .B12 = Double.Parse(xel.@B12, ci), .B21 = Double.Parse(xel.@B21, ci),
+                                                                    .C12 = Double.Parse(xel.@C12, ci), .C21 = Double.Parse(xel.@C21, ci),
+                                                                    .alpha12 = Double.Parse(xel.@alpha12, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.NRTL_IPData)
                         dic.Add(xel.@Compound2, ip)
                         If Not pp.m_uni.InteractionParameters.ContainsKey(xel.@Compound1) Then
@@ -9914,7 +9941,9 @@ Final3:
 
                     pp.m_uni.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters_UNIQUAC").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.UNIQUAC_IPData() With {.ID1 = xel.@ID1, .ID2 = xel.@ID2, .A12 = Double.Parse(xel.@A12, ci), .A21 = Double.Parse(xel.@A21, ci)}
+                        Dim ip As New Auxiliary.UNIQUAC_IPData() With {.ID1 = xel.@ID1, .ID2 = xel.@ID2, .A12 = Double.Parse(xel.@A12, ci), .A21 = Double.Parse(xel.@A21, ci),
+                                                                       .B12 = Double.Parse(xel.@B12, ci), .B21 = Double.Parse(xel.@B21, ci),
+                                                                       .C12 = Double.Parse(xel.@C12, ci), .C21 = Double.Parse(xel.@C21, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.UNIQUAC_IPData)
                         dic.Add(xel.@Compound2, ip)
                         If Not pp.m_uni.InteractionParameters.ContainsKey(xel.@Compound1) Then
@@ -10113,6 +10142,10 @@ Final3:
                                                                    New XAttribute("ID2", kvp2.Value.ID2),
                                                                    New XAttribute("A12", kvp2.Value.A12.ToString(ci)),
                                                                    New XAttribute("A21", kvp2.Value.A21.ToString(ci)),
+                                                                   New XAttribute("B12", kvp2.Value.B12.ToString(ci)),
+                                                                   New XAttribute("B21", kvp2.Value.B21.ToString(ci)),
+                                                                   New XAttribute("C12", kvp2.Value.C12.ToString(ci)),
+                                                                   New XAttribute("C21", kvp2.Value.C21.ToString(ci)),
                                                                    New XAttribute("alpha12", kvp2.Value.alpha12.ToString(ci))))
                             Next
                         Next
@@ -10140,7 +10173,11 @@ Final3:
                                                                    New XAttribute("ID1", kvp2.Value.ID1),
                                                                    New XAttribute("ID2", kvp2.Value.ID2),
                                                                    New XAttribute("A12", kvp2.Value.A12.ToString(ci)),
-                                                                   New XAttribute("A21", kvp2.Value.A21.ToString(ci))))
+                                                                   New XAttribute("A21", kvp2.Value.A21.ToString(ci)),
+                                                                   New XAttribute("B12", kvp2.Value.B12.ToString(ci)),
+                                                                   New XAttribute("B21", kvp2.Value.B21.ToString(ci)),
+                                                                   New XAttribute("C12", kvp2.Value.C12.ToString(ci)),
+                                                                   New XAttribute("C21", kvp2.Value.C21.ToString(ci))))
                             Next
                         Next
 
