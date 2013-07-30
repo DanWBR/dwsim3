@@ -23,55 +23,48 @@ Partial Class FormPEC
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormPEC))
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.SpinningProgress1 = New CircularProgress.SpinningProgress.SpinningProgress
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.SpinningProgress1 = New CircularProgress.SpinningProgress.SpinningProgress()
+        Me.btnCancel = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label2
         '
-        Me.Label2.AccessibleDescription = Nothing
-        Me.Label2.AccessibleName = Nothing
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.Font = Nothing
         Me.Label2.Name = "Label2"
         '
         'Label1
         '
-        Me.Label1.AccessibleDescription = Nothing
-        Me.Label1.AccessibleName = Nothing
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.Name = "Label1"
         '
         'SpinningProgress1
         '
-        Me.SpinningProgress1.AccessibleDescription = Nothing
-        Me.SpinningProgress1.AccessibleName = Nothing
         Me.SpinningProgress1.ActiveSegmentColour = System.Drawing.Color.RoyalBlue
-        resources.ApplyResources(Me.SpinningProgress1, "SpinningProgress1")
-        Me.SpinningProgress1.AutoIncrementFrequency = 75
-        Me.SpinningProgress1.BackgroundImage = Nothing
-        Me.SpinningProgress1.BehindTransistionSegmentIsActive = False
-        Me.SpinningProgress1.Font = Nothing
+        Me.SpinningProgress1.AutoIncrementFrequency = 75.0R
         Me.SpinningProgress1.InactiveSegmentColour = System.Drawing.Color.LightSteelBlue
+        resources.ApplyResources(Me.SpinningProgress1, "SpinningProgress1")
         Me.SpinningProgress1.Name = "SpinningProgress1"
-        Me.SpinningProgress1.TransistionSegment = 1
+        Me.SpinningProgress1.TransistionSegment = 4
         Me.SpinningProgress1.TransistionSegmentColour = System.Drawing.Color.LightSteelBlue
+        '
+        'btnCancel
+        '
+        resources.ApplyResources(Me.btnCancel, "btnCancel")
+        Me.btnCancel.Name = "btnCancel"
+        Me.btnCancel.UseVisualStyleBackColor = True
         '
         'FormPEC
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Nothing
         Me.ControlBox = False
+        Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.SpinningProgress1)
-        Me.Font = Nothing
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Icon = Nothing
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormPEC"
@@ -85,4 +78,5 @@ Partial Class FormPEC
     Public WithEvents Label2 As System.Windows.Forms.Label
     Public WithEvents Label1 As System.Windows.Forms.Label
     Public WithEvents SpinningProgress1 As CircularProgress.SpinningProgress.SpinningProgress
+    Friend WithEvents btnCancel As System.Windows.Forms.Button
 End Class

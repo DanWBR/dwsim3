@@ -22,29 +22,29 @@ Partial Class FormPhEnv
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormPhEnv))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox
-        Me.CheckBox2 = New System.Windows.Forms.CheckBox
-        Me.CheckBox4 = New System.Windows.Forms.CheckBox
-        Me.CheckBox3 = New System.Windows.Forms.CheckBox
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.ComboBox3 = New System.Windows.Forms.ComboBox
-        Me.Label23 = New System.Windows.Forms.Label
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip
-        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem
-        Me.GraphControl = New ZedGraph.ZedGraphControl
-        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem
-        Me.Grid1 = New System.Windows.Forms.DataGridView
-        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker
-        Me.TextBox1 = New System.Windows.Forms.NumericUpDown
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.TextBox1 = New System.Windows.Forms.NumericUpDown()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox4 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.ComboBox3 = New System.Windows.Forms.ComboBox()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
+        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GraphControl = New ZedGraph.ZedGraphControl()
+        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
+        Me.Grid1 = New System.Windows.Forms.DataGridView()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.GroupBox6.SuspendLayout()
+        CType(Me.TextBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -52,7 +52,6 @@ Partial Class FormPhEnv
         Me.FaTabStripItem1.SuspendLayout()
         Me.FaTabStripItem2.SuspendLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.TextBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox6
@@ -68,6 +67,14 @@ Partial Class FormPhEnv
         Me.GroupBox6.Controls.Add(Me.Label23)
         Me.GroupBox6.Name = "GroupBox6"
         Me.GroupBox6.TabStop = False
+        '
+        'TextBox1
+        '
+        Me.TextBox1.DecimalPlaces = 2
+        Me.TextBox1.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
+        Me.TextBox1.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.TextBox1.Name = "TextBox1"
         '
         'CheckBox2
         '
@@ -160,13 +167,13 @@ Partial Class FormPhEnv
         Me.GraphControl.IsAntiAlias = True
         Me.GraphControl.IsAutoScrollRange = True
         Me.GraphControl.Name = "GraphControl"
-        Me.GraphControl.ScrollGrace = 0
-        Me.GraphControl.ScrollMaxX = 0
-        Me.GraphControl.ScrollMaxY = 0
-        Me.GraphControl.ScrollMaxY2 = 0
-        Me.GraphControl.ScrollMinX = 0
-        Me.GraphControl.ScrollMinY = 0
-        Me.GraphControl.ScrollMinY2 = 0
+        Me.GraphControl.ScrollGrace = 0.0R
+        Me.GraphControl.ScrollMaxX = 0.0R
+        Me.GraphControl.ScrollMaxY = 0.0R
+        Me.GraphControl.ScrollMaxY2 = 0.0R
+        Me.GraphControl.ScrollMinX = 0.0R
+        Me.GraphControl.ScrollMinY = 0.0R
+        Me.GraphControl.ScrollMinY2 = 0.0R
         '
         'FaTabStripItem2
         '
@@ -195,14 +202,8 @@ Partial Class FormPhEnv
         '
         'BackgroundWorker1
         '
-        '
-        'TextBox1
-        '
-        Me.TextBox1.DecimalPlaces = 2
-        Me.TextBox1.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
-        resources.ApplyResources(Me.TextBox1, "TextBox1")
-        Me.TextBox1.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.TextBox1.Name = "TextBox1"
+        Me.BackgroundWorker1.WorkerReportsProgress = True
+        Me.BackgroundWorker1.WorkerSupportsCancellation = True
         '
         'FormPhEnv
         '
@@ -217,6 +218,7 @@ Partial Class FormPhEnv
         Me.ShowInTaskbar = False
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
+        CType(Me.TextBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
@@ -225,7 +227,6 @@ Partial Class FormPhEnv
         Me.FaTabStripItem1.ResumeLayout(False)
         Me.FaTabStripItem2.ResumeLayout(False)
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.TextBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

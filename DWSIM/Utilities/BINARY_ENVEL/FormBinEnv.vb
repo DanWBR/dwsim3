@@ -142,6 +142,8 @@ Public Class FormBinEnv
             Me.BackgroundWorker1.RunWorkerAsync(New Object() {tipocalc, P, T, chkVLE.Checked, chkLLE.Checked, chkSLE.Checked, chkCritical.Checked})
 
             fpec = New FormPEC
+            fpec.Label2.Tag = fpec.Label2.Text
+            fpec.bw = Me.BackgroundWorker1
             Try
                 fpec.ShowDialog(Me)
             Catch ex As Exception
@@ -166,8 +168,12 @@ Public Class FormBinEnv
         mat.SetFlowsheet(Me.Frm)
         pp.CurrentMaterialStream = mat
         pp2.CurrentMaterialStream = mat
-        e.Result = New Object() {pp.DW_ReturnBinaryEnvelope(e.Argument), pp2.DW_ReturnBinaryEnvelope(New Object() {e.Argument(0), e.Argument(1), e.Argument(2), e.Argument(3), False, False, False})}
+        e.Result = New Object() {pp.DW_ReturnBinaryEnvelope(e.Argument, Me.BackgroundWorker1), pp2.DW_ReturnBinaryEnvelope(New Object() {e.Argument(0), e.Argument(1), e.Argument(2), e.Argument(3), False, False, False})}
 
+    End Sub
+
+    Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
+        fpec.Label2.Text = fpec.Label2.Tag.ToString + " " + e.UserState.ToString
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted

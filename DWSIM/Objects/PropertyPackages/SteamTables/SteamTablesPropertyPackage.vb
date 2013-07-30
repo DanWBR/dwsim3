@@ -735,67 +735,6 @@ FINAL:
 
         End Function
 
-        Public Overrides Function DW_ReturnPhaseEnvelope(ByVal parameters As Object) As Object
-
-            Dim i As Integer
-
-            Dim n As Integer = Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1
-
-            Dim Pmin, Tmin, dP, dT, T, P As Double
-            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ As New ArrayList
-
-            Dim TCR = Me.CurrentMaterialStream.Fases(0).Componentes(DWSIM.App.GetLocalString("guaH2O")).ConstantProperties.Critical_Temperature
-            Dim PCR = Me.CurrentMaterialStream.Fases(0).Componentes(DWSIM.App.GetLocalString("guaH2O")).ConstantProperties.Critical_Pressure
-            Dim VCR = Me.CurrentMaterialStream.Fases(0).Componentes(DWSIM.App.GetLocalString("guaH2O")).ConstantProperties.Critical_Volume
-
-            Pmin = 101325
-            Tmin = 273.15
-
-            dP = 3 * 101325 '(PCR - Pmin) / 7
-            dT = 5 '(Tmax - Tmin) / 7
-
-            Dim beta As Double = 10
-
-            i = 0
-            P = Pmin
-            T = Tmin
-            Do
-                TVB.Add(T)
-                PB.Add(m_iapws97.pSatW(T) * 100000.0)
-                HB.Add(m_iapws97.enthalpySatLiqTW(T))
-                SB.Add(m_iapws97.entropySatLiqTW(T))
-                VB.Add(1 / (Me.m_iapws97.densSatLiqTW(T) / 18) / 1000)
-                T = T + dT
-                i = i + 1
-            Loop Until i >= 300 Or T >= TCR Or PB(i - 1) = 0 Or T >= TCR Or Double.IsNaN(PB(i - 1)) = True Or Double.IsNaN(TVB(i - 1)) = True Or Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02
-
-            i = 0
-            P = Pmin
-            T = Tmin
-            Do
-                TVD.Add(T)
-                PO.Add(m_iapws97.pSatW(T) * 100000.0)
-                HO.Add(m_iapws97.enthalpySatVapTW(T))
-                SO.Add(m_iapws97.entropySatVapTW(T))
-                VO.Add(1 / (Me.m_iapws97.densSatVapTW(T) / 18) / 1000)
-                T = T + dT
-                i = i + 1
-            Loop Until i >= 300 Or T >= TCR Or PO(i - 1) = 0 Or Double.IsNaN(PO(i - 1)) = True Or Double.IsNaN(TVD(i - 1)) = True Or Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02
-
-            TE.Add(0)
-            PE.Add(0)
-
-            TQ.Add(0)
-            PQ.Add(0)
-
-            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, TCR, PCR, VCR, TQ, PQ}
-
-        End Function
-
-        Public Overrides Function DW_ReturnBinaryEnvelope(ByVal parameters As Object) As Object
-            Return Nothing
-        End Function
-
         Public Overrides Function DW_CalcEnthalpy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
             Select Case st
                 Case State.Liquid

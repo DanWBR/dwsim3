@@ -104,11 +104,13 @@ exec:       With Me.GraphControl.GraphPane.Legend
             Me.Enabled = False
             Me.BackgroundWorker1.RunWorkerAsync(New Object() {0, Me.TextBox1.Text, Me.CheckBox1.Checked, Me.CheckBox3.Checked, Me.CheckBox4.Checked})
             fpec = New FormPEC
+            fpec.bw = Me.BackgroundWorker1
+            fpec.Label2.Tag = fpec.Label2.Text
             Try
                 fpec.ShowDialog(Me)
             Catch ex As Exception
                 fpec.Close()
-                Throw ex
+                Me.Frm.WriteToLog(ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
             End Try
         End If
 
@@ -810,61 +812,6 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
         If Me.CheckBox4.Checked Then
 
-    '    If mat.Fases(0).Componentes.ContainsKey(DWSIM.App.GetLocalString("guaH2O")) Then
-
-    '        If mat.Fases(0).Componentes(DWSIM.App.GetLocalString("guaH2O")).FracaoMolar.GetValueOrDefault > 0 Then
-
-    '            Dim n As Integer = mat.Fases(0).Componentes.Count - 1
-    '            Dim Vz(n) As Double
-    '            Dim nomes(mat.Fases(0).Componentes.Count - 1) As String
-    '            Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-    '            Dim i As Integer = 0
-    '            For Each comp In mat.Fases(0).Componentes.Values
-    '                Vz(i) = comp.FracaoMolar.GetValueOrDefault
-    '                nomes(i) = comp.Nome
-    '                i += 1
-    '            Next
-    '            Dim t, t0, tn, delta As Double
-    '            Dim p(1) As Object
-    '            t0 = 250
-    '            tn = 320
-    '            delta = (tn - t0) / 10
-    '            Dim hid As New DWSIM.Utilities.HYD.KlaudaSandler(mat)
-    '            i = 0
-    '            Do
-    '                t = t0 + i * delta
-    '                p = hid.HYD_KS2(t, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-    '                If CDbl(p(0)) < 600 * 101325 Then
-    '                    ph1.Add(p(0))
-    '                    th1.Add(t)
-    '                End If
-    '                If CDbl(p(1)) < 600 * 101325 Then
-    '                    ph2.Add(p(1))
-    '                    th2.Add(t)
-    '                End If
-    '                i = i + 1
-    '            Loop Until t >= tn
-    '            If th1.Count = 0 Then
-    '                th1.Add(CDbl(0))
-    '                ph1.Add(CDbl(0))
-    '            End If
-    '            If th2.Count = 0 Then
-    '                th2.Add(CDbl(0))
-    '                ph2.Add(CDbl(0))
-    '            End If
-    '        Else
-    '            th1.Add(CDbl(0))
-    '            th2.Add(CDbl(0))
-    '            ph1.Add(CDbl(0))
-    '            ph2.Add(CDbl(0))
-    '        End If
-
-    '    Else
-    '        th1.Add(CDbl(0))
-    '        th2.Add(CDbl(0))
-    '        ph1.Add(CDbl(0))
-    '        ph2.Add(CDbl(0))
-    '    End If
         Else
             th1.Add(CDbl(0))
             th2.Add(CDbl(0))
@@ -872,8 +819,12 @@ exec:       With Me.GraphControl.GraphPane.Legend
             ph2.Add(CDbl(0))
         End If
 
-        e.Result = New Object() {pp.DW_ReturnPhaseEnvelope(e.Argument), ph1, th1, ph2, th2}
+        e.Result = New Object() {pp.DW_ReturnPhaseEnvelope(e.Argument, Me.BackgroundWorker1), ph1, th1, ph2, th2}
 
+    End Sub
+
+    Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
+        fpec.Label2.Text = fpec.Label2.Tag.ToString + " " + e.UserState.ToString
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted

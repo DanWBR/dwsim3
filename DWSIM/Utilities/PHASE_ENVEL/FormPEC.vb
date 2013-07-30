@@ -1,4 +1,6 @@
-﻿'    Copyright 2008 Daniel Wagner O. de Medeiros
+﻿Imports System.ComponentModel
+
+'    Copyright 2008 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -19,7 +21,15 @@ Public Class FormPEC
 
     Inherits System.Windows.Forms.Form
 
+    Public bw As BackgroundWorker
+
     Private Sub FormPEC_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
     End Sub
+
+    Private Sub btnCancel_Click(sender As System.Object, e As System.EventArgs) Handles btnCancel.Click
+        My.MyApplication.CalculatorStopRequested = True
+        If Not bw Is Nothing Then bw.CancelAsync()
+    End Sub
+
 End Class

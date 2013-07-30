@@ -430,17 +430,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
-        Public Overrides Function DW_ReturnPhaseEnvelope(ByVal parameters As Object) As Object
+        Public Overrides Function DW_ReturnPhaseEnvelope(ByVal parameters As Object, Optional ByVal bw As System.ComponentModel.BackgroundWorker = Nothing) As Object
 
             If My.Settings.EnableParallelProcessing Then
-                Return DW_ReturnPhaseEnvelopeParallel(parameters)
+                Return DW_ReturnPhaseEnvelopeParallel(parameters, bw)
             Else
-                Return DW_ReturnPhaseEnvelopeSequential(parameters)
+                Return DW_ReturnPhaseEnvelopeSequential(parameters, bw)
             End If
 
         End Function
 
-        Public Function DW_ReturnPhaseEnvelopeSequential(ByVal parameters As Object) As Object
+        Public Function DW_ReturnPhaseEnvelopeSequential(ByVal parameters As Object, Optional ByVal bw As System.ComponentModel.BackgroundWorker = Nothing) As Object
 
             Dim cpc As New DWSIM.Utilities.TCP.Methods
 
@@ -541,6 +541,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             P = Pmin
             T = Tmin
             Do
+                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Bubble Points (" & i + 1 & "/200)")
                 If i < 2 Then
                     Try
                         tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 0, 0, Me)
@@ -617,6 +618,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             i = 0
             P = Pmin
             Do
+                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Dew Points (" & i + 1 & "/200)")
                 If i < 2 Then
                     Try
                         tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 1, 0, Me)
@@ -706,6 +708,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 P = 400000
                 T = TVD(0)
                 Do
+                    If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Quality Line (" & i + 1 & "/200)")
                     If i < 2 Then
                         Try
                             tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, parameters(1), 0, Me, False, KI)
@@ -764,6 +767,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             End If
 
             If n > 0 And CBool(parameters(3)) = True Then
+                If bw IsNot Nothing Then If bw.CancellationPending Then bw.ReportProgress(0, "Stability Line")
                 Dim res As ArrayList = cpc.STABILITY_CURVE(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
                 i = 0
                 Do
@@ -809,7 +813,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
-        Public Function DW_ReturnPhaseEnvelopeParallel(ByVal parameters As Object) As Object
+        Public Function DW_ReturnPhaseEnvelopeParallel(ByVal parameters As Object, Optional ByVal bw As System.ComponentModel.BackgroundWorker = Nothing) As Object
 
             Dim cpc As New DWSIM.Utilities.TCP.Methods
             Dim i, j, k, l As Integer
@@ -885,7 +889,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                              End Sub)
 
 
-            
+
             Dim beta As Double = 10
 
             Task.WaitAll(tasks(0))
@@ -1130,7 +1134,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Throw
                 Next
             End Try
-            
+
             If TVB.Count > 1 Then TVB.RemoveAt(TVB.Count - 1)
             If PB.Count > 1 Then PB.RemoveAt(PB.Count - 1)
             If HB.Count > 1 Then HB.RemoveAt(HB.Count - 1)

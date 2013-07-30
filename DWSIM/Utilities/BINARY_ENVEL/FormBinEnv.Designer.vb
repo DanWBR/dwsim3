@@ -313,6 +313,8 @@ Partial Class FormBinEnv
         '
         'BackgroundWorker1
         '
+        Me.BackgroundWorker1.WorkerReportsProgress = True
+        Me.BackgroundWorker1.WorkerSupportsCancellation = True
         '
         'FormBinEnv
         '
