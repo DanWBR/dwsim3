@@ -1617,13 +1617,13 @@ restart:            fx = Me.FunctionValue(xvar)
                         xvar_ant(i) = xvar(i)
                         xvar(i) += dx(i) * df
 
-                        If Abs((dx(i) * df) / xvar_ant(i)) > 10 Then
-                            'perturb = True
-                            xvar(i) = xvar_ant(i) - df * (xvar_ant(i) - xlowbound) * 0.5
-                        End If
-                        If Double.IsNaN(dx(i)) Or Double.IsInfinity(dx(i)) Then
-                            bypass = True
-                        End If
+                        'If Abs((dx(i) * df) / xvar_ant(i)) > 10 Then
+                        '    'perturb = True
+                        '    xvar(i) = xvar_ant(i) - df * (xvar_ant(i) - xlowbound) * 0.5
+                        'End If
+                        'If Double.IsNaN(dx(i)) Or Double.IsInfinity(dx(i)) Then
+                        '    bypass = True
+                        'End If
                     Next
 
                     'If perturb Then
