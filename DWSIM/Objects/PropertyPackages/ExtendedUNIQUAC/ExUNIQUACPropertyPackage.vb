@@ -811,7 +811,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Me.CurrentMaterialStream.AtEquilibrium = False
 
-            Dim P, T, H, S, xv, xl, xs, M As Double
+            Dim P, T, H, S, xv, xl, xs, M, W, MW As Double
             Dim result As Dictionary(Of String, Object)
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim n As Integer = Me.CurrentMaterialStream.Fases(0).Componentes.Count
@@ -869,13 +869,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
                             Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction = xs
 
-                            Dim Vz = result("LiquidPhaseMolarComposition")
-
                             M = result("MoleSum")
-
-                            Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow *= M
+                            W = Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
                             Dim Vnf = result("MixtureMoleFlows")
+
+                            MW = Me.AUX_MMM(Vnf)
+
+                            Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow = W / MW * 1000
 
                             For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
                                 subst.FracaoMolar = Vnf(i) / M
@@ -928,7 +929,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Next
 
                             Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl * Me.AUX_MMM(Fase.Liquid1) / (xl * Me.AUX_MMM(Fase.Liquid1) + xs * Me.AUX_MMM(Fase.Solid) + xv * Me.AUX_MMM(Fase.Vapor))
-                            Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = 0.0#
+                            Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction = 0.0#
                             Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction = xs * Me.AUX_MMM(Fase.Solid) / (xl * Me.AUX_MMM(Fase.Liquid1) + xs * Me.AUX_MMM(Fase.Solid) + xv * Me.AUX_MMM(Fase.Vapor))
                             Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv * Me.AUX_MMM(Fase.Vapor) / (xl * Me.AUX_MMM(Fase.Liquid1) + xs * Me.AUX_MMM(Fase.Solid) + xv * Me.AUX_MMM(Fase.Vapor))
 

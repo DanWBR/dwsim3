@@ -380,10 +380,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     For Each comp As ReactionStoichBase In rx.Components.Values
                         var1 = -N0(comp.CompName) / comp.StoichCoeff
                         If j = 0 Then
-                            lbound(i) = var1
+                            lbound(i) = 0.0#
                             ubound(i) = var1
                         Else
-                            If var1 < lbound(i) Then lbound(i) = var1
+                            If var1 < lbound(i) Then lbound(i) = 0.0#
                             If var1 > ubound(i) Then ubound(i) = var1
                         End If
                         j += 1
@@ -396,7 +396,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Dim REx(r) As Double
 
                 For i = 0 To r
-                    REx(i) = ubound(i) * 0.5
+                    REx(i) = ubound(i) * 0.9
                 Next
 
                 Dim REx0(REx.Length - 1) As Double
@@ -434,7 +434,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     tmpx = x
                     tmpdx = dx
                     df = 1
-                    fval = brentsolver.brentoptimize(0.01, 1.0#, 0.0001, df)
+                    fval = brentsolver.brentoptimize(0.1, 2.0#, 0.0001, df)
 
                     For i = 0 To r
                         x(i) -= dx(i) * df
@@ -569,8 +569,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim prod(x.Length - 1) As Double
 
             For i = 0 To nc
-                If CompoundProperties(i).IsIon Or CompoundProperties(i).IsSalt Then
+                If CompoundProperties(i).IsIon Then
                     CP(i) = molality(i) * activcoeff(i)
+                ElseIf CompoundProperties(i).IsSalt Then
+                    CP(i) = 1.0#
                 Else
                     CP(i) = Vx(i) * activcoeff(i)
                 End If
@@ -581,20 +583,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 For Each s As String In Me.ComponentIDs
                     With proppack.CurrentMaterialStream.Flowsheet.Options.Reactions(Me.Reactions(i))
                         If .Components.ContainsKey(s) Then
-                            If .Components(s).StoichCoeff > 0 Then
-                                For j = 0 To nc
-                                    If CompoundProperties(j).Name = s Then
-                                        prod(i) *= CP(j) ^ .Components(s).StoichCoeff
-                                        Exit For
-                                    End If
-                                Next
-                            End If
+                            'If .Components(s).StoichCoeff > 0 Then
+                            For j = 0 To nc
+                                If CompoundProperties(j).Name = s Then
+                                    prod(i) *= CP(j) ^ .Components(s).StoichCoeff
+                                    Exit For
+                                End If
+                            Next
+                            'End If
                         End If
                     End With
                 Next
             Next
 
-            Dim pen_val As Double = 0 'ReturnPenaltyValue()
+            Dim pen_val As Double = ReturnPenaltyValue()
 
             For i = 0 To Me.Reactions.Count - 1
                 With proppack.CurrentMaterialStream.Flowsheet.Options.Reactions(Me.Reactions(i))
