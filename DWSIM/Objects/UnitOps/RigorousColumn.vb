@@ -3236,7 +3236,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Select Case Me.ColumnType
                             Case ColType.DistillationColumn
                                 If Me.CondenserType = condtype.Partial_Condenser Then
-                                    V(i) = (rr + 1) * distrate - F(0) + V(0)
+                                    V(i) = (rr + 1) * (distrate + vaprate) - F(0)
                                 ElseIf Me.CondenserType = condtype.Full_Reflux Then
                                     V(i) = (rr + 1) * V(0) - F(0)
                                 Else
@@ -3257,7 +3257,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     If i = 0 Then
                         Select Case Me.ColumnType
                             Case ColType.DistillationColumn
-                                If Me.CondenserType = condtype.Full_Reflux Then
+                                If Me.CondenserType = condtype.Partial_Condenser Then
+                                    L(0) = (distrate + vaprate) * rr
+                                ElseIf Me.CondenserType = condtype.Full_Reflux Then
                                     L(0) = vaprate * rr
                                 Else
                                     L(0) = distrate * rr
@@ -3413,7 +3415,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             '{Tj, Vj, Lj, VSSj, LSSj, yc, xc, K, Q, ic, t_error}
 
             Me.CondenserDuty = result(8)(0)
-            Me.ReboilerDuty = -result(8)(ns)
+            Me.ReboilerDuty = result(8)(ns)
 
             'store final values
             xf.Clear()
