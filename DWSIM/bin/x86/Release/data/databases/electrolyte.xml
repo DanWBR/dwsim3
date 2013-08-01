@@ -174,6 +174,9 @@
   <MolarVolume_k1i>0.9454</MolarVolume_k1i>
   <MolarVolume_k2i>-0.0979E-3</MolarVolume_k2i>
   <MolarVolume_k3i>0.9162E-4</MolarVolume_k3i>
+  <CpAq_a>400.35</CpAq_a>
+  <CpAq_b>-1.1312</CpAq_b>
+  <CpAq_c>-18574</CpAq_c>
 </compound>
 <compound>
   <Name>Perchlorate (ion)</Name>
@@ -390,6 +393,9 @@
   <MolarVolume_k1i>1.094</MolarVolume_k1i>
   <MolarVolume_k2i>-2.689E-3</MolarVolume_k2i>
   <MolarVolume_k3i>3.919E-4</MolarVolume_k3i>
+  <CpAq_a>415.09</CpAq_a>
+  <CpAq_b>-0.8142</CpAq_b>
+  <CpAq_c>-16316</CpAq_c>
 </compound>
 <compound>
   <Name>Potassium Carbonate___1</Name>
@@ -951,6 +957,9 @@
   <MolarVolume_k1i>0.9758</MolarVolume_k1i>
   <MolarVolume_k2i>-2.628E-3</MolarVolume_k2i>
   <MolarVolume_k3i>6.309E-4</MolarVolume_k3i>
+  <CpAq_a>600.62</CpAq_a>
+  <CpAq_b>-1.1006</CpAq_b>
+  <CpAq_c>-23232</CpAq_c>
 </compound>
 <compound>
   <Name>Sodium Carbonate___1</Name>
@@ -1342,6 +1351,9 @@
   <MolarVolume_k1i>0.4435</MolarVolume_k1i>
   <MolarVolume_k2i>-0.7984E-3</MolarVolume_k2i>
   <MolarVolume_k3i>0.5941E-4</MolarVolume_k3i>
+  <CpAq_a>71.008</CpAq_a>
+  <CpAq_b>0</CpAq_b>
+  <CpAq_c>0</CpAq_c>
 </compound>
 <compound>
   <Name>Ammonium Bromide</Name>
@@ -1474,6 +1486,9 @@
   <MolarVolume_k1i>1.307</MolarVolume_k1i>
   <MolarVolume_k2i>-2.751E-3</MolarVolume_k2i>
   <MolarVolume_k3i>0.0439E-4</MolarVolume_k3i>
+  <CpAq_a>2.2926</CpAq_a>
+  <CpAq_b>0.1211</CpAq_b>
+  <CpAq_c>-9753.2</CpAq_c>
 </compound>
 <compound>
   <Name>Sulfate (ion)</Name>
@@ -1501,6 +1516,9 @@
   <MolarVolume_k1i>4.837</MolarVolume_k1i>
   <MolarVolume_k2i>-2.927E-3</MolarVolume_k2i>
   <MolarVolume_k3i>6.793E-4</MolarVolume_k3i>
+  <CpAq_a>643.3</CpAq_a>
+  <CpAq_b>-1.5857</CpAq_b>
+  <CpAq_c>-17536</CpAq_c>
 </compound>
 <compound>
   <Name>Hydron</Name>
@@ -1513,6 +1531,9 @@
   <DelGF_kJ_mol>0</DelGF_kJ_mol>
   <DelHf_kJ_mol>0</DelHf_kJ_mol>
   <Cp_J_mol_K>0</Cp_J_mol_K>
+  <CpAq_a>0</CpAq_a>
+  <CpAq_b>0</CpAq_b>
+  <CpAq_c>0</CpAq_c>
 </compound>
 <compound>
   <Name>Hydroxide</Name>
@@ -1525,5 +1546,8 @@
   <DelGF_kJ_mol>-157.244</DelGF_kJ_mol>
   <DelHf_kJ_mol>-229.994</DelHf_kJ_mol>
   <Cp_J_mol_K>-148.8</Cp_J_mol_K>
+  <CpAq_a>1418.2</CpAq_a>
+  <CpAq_b>-3.4446</CpAq_b>
+  <CpAq_c>-51473</CpAq_c>
 </compound>
 </compounds>

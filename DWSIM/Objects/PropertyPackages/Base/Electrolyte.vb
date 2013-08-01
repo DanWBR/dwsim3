@@ -131,6 +131,31 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
+        Function LiquidEnthalpy(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties), activcoeffT2 As Double(), activcoeffT1 As Double(), ExcessOnly As Boolean) As Double
+
+            Dim T0, Cp0, CpT As Double
+
+            Dim n As Integer = UBound(Vx)
+
+            T0 = 298.15
+            Cp0 = HeatCapacityCp(T0, Vx, cprops)
+            CpT = HeatCapacityCp(T, Vx, cprops)
+
+            Dim H, Hex As Double
+            Dim MW As Double = 0.0#
+
+            H = (CpT + Cp0) / 2 * (T - T0)
+
+            Hex = 0
+            For i As Integer = 0 To n
+                Hex += -8.314 * T ^ 2 * Vx(i) * (Log(activcoeffT2(i)) - Log(activcoeffT1(i))) / (0.1) 'kJ/kmol
+                MW += Vx(i) * cprops(i).Molar_Weight
+            Next
+
+            If ExcessOnly Then Return Hex / MW Else Return H + Hex / MW 'kJ/kg
+
+        End Function
+
         Function HeatCapacityCp(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double
 
             Dim wid As Integer = cprops.IndexOf((From c2 As ConstantProperties In cprops Select c2 Where c2.Name = "Water").SingleOrDefault)
@@ -139,7 +164,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Dim i As Integer
             Dim Cp As Double = 0.0#
             Dim MW As Double = 0.0#
-            Dim A, B, C, D, E As Double
+            Dim A, B, C, D, E, Cpi As Double
 
             For i = 0 To n
                 If i = wid Then
@@ -148,10 +173,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                     C = cprops(i).Liquid_Heat_Capacity_Const_C
                     D = cprops(i).Liquid_Heat_Capacity_Const_D
                     E = cprops(i).Liquid_Heat_Capacity_Const_E
-                    Cp += Vx(i) * (A + Exp(B / T + C + D * T + E * T ^ 2)) / 1000
+                    Cpi = (A + Exp(B / T + C + D * T + E * T ^ 2)) / 1000
+                    Cp += Vx(i) * Cpi
                     MW += Vx(i) * cprops(i).Molar_Weight
                 Else
-                    Cp += Vx(i) * cprops(i).Electrolyte_Cp0
+                    Cpi = (cprops(i).Ion_CpAq_a + cprops(i).Ion_CpAq_b * T + cprops(i).Ion_CpAq_c / (T - 200))
+                    Cp += Vx(i) * Cpi
                     MW += Vx(i) * cprops(i).Molar_Weight
                 End If
             Next

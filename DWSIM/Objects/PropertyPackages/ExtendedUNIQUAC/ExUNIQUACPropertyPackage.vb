@@ -232,44 +232,53 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = Me.m_elec.HeatCapacityCp(T, RET_VMOL(phase), constprops)
                     End If
                 Case "heatcapacitycv"
+                    Dim constprops As New List(Of ConstantProperties)
+                    For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                        constprops.Add(su.ConstantProperties)
+                    Next
                     If phase = Fase.Solid Then
-                        Dim constprops As New List(Of ConstantProperties)
-                        For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                            constprops.Add(su.ConstantProperties)
-                        Next
                         result = Me.AUX_SOLIDCP(RET_VMAS(phase), constprops, T)
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
                     Else
                         resultObj = m_id.CpCv(state, T, P, RET_VMOL(phase), RET_VKij(), RET_VMAS(phase), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
-                        Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = 0.0# 'resultObj(2)
+                        Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = Me.m_elec.HeatCapacityCp(T, RET_VMOL(phase), constprops)
                     End If
                 Case "enthalpy", "enthalpynf"
+                    Dim constprops As New List(Of ConstantProperties)
+                    For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                        constprops.Add(su.ConstantProperties)
+                    Next
                     If phase = Fase.Solid Then
-                        Dim constprops As New List(Of ConstantProperties)
-                        For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                            constprops.Add(su.ConstantProperties)
-                        Next
                         result = Me.m_elec.SolidEnthalpy(T, RET_VMOL(phase), constprops)
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
                         result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = result
-                    Else
+                    ElseIf phase = Fase.Vapor Then
                         result = m_id.H_RA_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, phase), Me.RET_VHVAP(T))
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
                         result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = result
+                    Else
+                        result = Me.m_elec.LiquidEnthalpy(T, RET_VMOL(phase), constprops, Me.m_uni.GAMMA_MR(T + 0.1, RET_VMOL(phase), constprops), Me.m_uni.GAMMA_MR(T, RET_VMOL(phase), constprops), False)
+                        Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
                     End If
                 Case "entropy", "entropynf"
+                    Dim constprops As New List(Of ConstantProperties)
+                    For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                        constprops.Add(su.ConstantProperties)
+                    Next
                     If phase = Fase.Solid Then
                         result = 0.0#
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
                         result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = result
-                    Else
+                    ElseIf phase = Fase.Vapor Then
                         result = m_id.S_RA_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, phase), Me.RET_VHVAP(T), Me.RET_Hid(298.15, T, phase))
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
                         result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = result
+                    Else
+                        Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = 0.0#
                     End If
                 Case "excessenthalpy"
                     result = m_id.H_RA_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), 0, Me.RET_VHVAP(T))
@@ -417,13 +426,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 result = Me.AUX_LIQDENS(T, P, 0.0#, phaseID, False)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
-                result = Me.m_id.H_RA_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, dwpl), Me.RET_VHVAP(T))
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = 1 / (8.314 * result * 1000 / Me.AUX_MMM(fase) * T / P)
+                result = Me.m_elec.LiquidEnthalpy(T, RET_VMOL(dwpl), constprops, Me.m_uni.GAMMA_MR(T + 0.1, RET_VMOL(dwpl), constprops), Me.m_uni.GAMMA_MR(T, RET_VMOL(dwpl), constprops), False)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
-                result = Me.m_id.S_RA_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, dwpl), Me.RET_VHVAP(T), Me.RET_Hid(298.15, T, dwpl))
+                result = 0.0#
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = 0.0#
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = Me.m_elec.HeatCapacityCp(T, RET_VMOL(dwpl), constprops)
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = 0.0#
+                result = Me.m_elec.HeatCapacityCp(T, RET_VMOL(dwpl), constprops)
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
                 result = Me.AUX_MMM(fase)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = result
                 result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
@@ -617,24 +627,41 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim H As Double
 
-            If st = State.Liquid Then
-                H = Me.m_id.H_RA_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Hid(298.15, T, Vx), Me.RET_VHVAP(T))
-            Else
-                H = Me.m_id.H_RA_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Hid(298.15, T, Vx), Me.RET_VHVAP(T))
-            End If
+            Dim constprops As New List(Of ConstantProperties)
+            For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                constprops.Add(su.ConstantProperties)
+            Next
+
+            Select Case st
+                Case State.Liquid
+                    H = Me.m_elec.LiquidEnthalpy(T, Vx, constprops, Me.m_uni.GAMMA_MR(T + 0.1, Vx, constprops), Me.m_uni.GAMMA_MR(T, Vx, constprops), False)
+                Case State.Solid
+                    H = Me.m_elec.SolidEnthalpy(T, Vx, constprops)
+                Case State.Vapor
+                    H = m_id.H_RA_MIX("V", T, P, Vx, RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, Vx), Me.RET_VHVAP(T))
+            End Select
 
             Return H
 
         End Function
 
         Public Overrides Function DW_CalcEnthalpyDeparture(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
+           
             Dim H As Double
 
-            If st = State.Liquid Then
-                H = Me.m_id.H_RA_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0, Me.RET_VHVAP(T))
-            Else
-                H = Me.m_id.H_RA_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0, Me.RET_VHVAP(T))
-            End If
+            Dim constprops As New List(Of ConstantProperties)
+            For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                constprops.Add(su.ConstantProperties)
+            Next
+
+            Select Case st
+                Case State.Liquid
+                    H = Me.m_elec.LiquidEnthalpy(T, Vx, constprops, Me.m_uni.GAMMA_MR(T + 0.1, Vx, constprops), Me.m_uni.GAMMA_MR(T, Vx, constprops), True)
+                Case State.Solid
+                    H = Me.m_elec.SolidEnthalpy(T, Vx, constprops)
+                Case State.Vapor
+                    H = m_id.H_RA_MIX("V", T, P, Vx, RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), 0.0#, Me.RET_VHVAP(T))
+            End Select
 
             Return H
 
@@ -697,28 +724,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_CalcEntropy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
-            Dim S As Double
-
-            If st = State.Liquid Then
-                S = Me.m_id.S_RA_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Sid(298.15, T, P, Vx), Me.RET_VHVAP(T), Me.RET_Hid(298.15, T, Vx))
-            Else
-                S = Me.m_id.S_RA_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Sid(298.15, T, P, Vx), Me.RET_VHVAP(T), Me.RET_Hid(298.15, T, Vx))
-            End If
-
-            Return S
+            Return 0.0#
 
         End Function
 
         Public Overrides Function DW_CalcEntropyDeparture(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
-            Dim S As Double
-
-            If st = State.Liquid Then
-                S = Me.m_id.S_RA_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0, Me.RET_VHVAP(T), Me.RET_Hid(298.15, T, Vx))
-            Else
-                S = Me.m_id.S_RA_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0, Me.RET_VHVAP(T), Me.RET_Hid(298.15, T, Vx))
-            End If
-
-            Return S
+        
+            Return 0.0#
 
         End Function
 
@@ -876,10 +888,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             MW = Me.AUX_MMM(Vnf)
 
-                            Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow = W / MW * 1000
+                            Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow = M * W / MW * 1000
 
-                            For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
+                            i = 0
+                            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                                 subst.FracaoMolar = Vnf(i) / M
+                                i += 1
                             Next
                             For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
                                 subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 0)
@@ -961,494 +975,116 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                         Case FlashSpec.VAP
 
-                            'Dim KI(n) As Double
-
-                            'i = 0
-                            'Do
-                            '    KI(i) = 0
-                            '    i = i + 1
-                            'Loop Until i = n + 1
-
-                            'T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                            'P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                            'result = Me.FlashBase.Flash_TV(RET_VMOL(Fase.Mixture), T, xv, 0, Me)
-
-                            'P = result(4)
-
-                            'xl = result(0)
-                            'xv = result(1)
-                            'xl2 = result(7)
-
-                            'Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                            'Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = xl2
-                            'Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-
-                            'Dim Vx = result(2)
-                            'Dim Vy = result(3)
-                            'Dim Vx2 = result(8)
-
-                            'Dim FCL = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                            'Dim FCL2 = Me.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                            'Dim FCV = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-
-                            'i = 0
-                            'For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                            '    subst.FracaoMolar = Vx(i)
-                            '    subst.FugacityCoeff = FCL(i)
-                            '    subst.ActivityCoeff = 0
-                            '    subst.PartialVolume = 0
-                            '    subst.PartialPressure = 0
-                            '    i += 1
-                            'Next
-                            'For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                            '    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 3)
-                            'Next
-                            'i = 0
-                            'For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                            '    subst.FracaoMolar = Vx2(i)
-                            '    subst.FugacityCoeff = FCL2(i)
-                            '    subst.ActivityCoeff = 0
-                            '    subst.PartialVolume = 0
-                            '    subst.PartialPressure = 0
-                            '    i += 1
-                            'Next
-                            'For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                            '    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 4)
-                            'Next
-                            'i = 0
-                            'For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                            '    subst.FracaoMolar = Vy(i)
-                            '    subst.FugacityCoeff = FCV(i)
-                            '    subst.ActivityCoeff = 0
-                            '    subst.PartialVolume = 0
-                            '    subst.PartialPressure = 0
-                            '    i += 1
-                            'Next
-                            'For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                            '    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 2)
-                            'Next
-
-                            'Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl * Me.AUX_MMM(Fase.Liquid1) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                            'Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction = xl2 * Me.AUX_MMM(Fase.Liquid2) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                            'Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv * Me.AUX_MMM(Fase.Vapor) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-
-                            'Dim HM, HV, HL, HL2 As Double
-
-                            'If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-                            'If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
-                            'If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-                            'HM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * HL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * HL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * HV
-
-                            'H = HM
-
-                            'Dim SM, SV, SL, SL2 As Double
-
-                            'If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
-                            'If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid)
-                            'If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)
-                            'SM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * SL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * SL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * SV
-
-                            'S = SM
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTVNotSupported"))
 
                     End Select
 
-                    '                Case FlashSpec.P
-
-                    '                    Select Case spec2
-
-                    '                        Case FlashSpec.H
-
-                    '                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                    '                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                    '                            If Double.IsNaN(H) Or Double.IsInfinity(H) Then H = Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_enthalpy.GetValueOrDefault / Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
-
-                    '                            If Me.AUX_IS_SINGLECOMP(Fase.Mixture) Then
-
-                    '                                Dim hl, hv, sl, sv As Double
-                    '                                Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
-                    '                                result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mixture), P, H, 0.0#, Me)
-
-                    '                                T = result(4)
-
-                    '                                hl = Me.DW_CalcEnthalpy(vz, T, P, State.Liquid)
-                    '                                hv = Me.DW_CalcEnthalpy(vz, T, P, State.Vapor)
-                    '                                sl = Me.DW_CalcEntropy(vz, T, P, State.Liquid)
-                    '                                sv = Me.DW_CalcEntropy(vz, T, P, State.Vapor)
-
-                    '                                If Double.IsNaN(hl) Then hl = Double.NegativeInfinity
-                    '                                If Double.IsNaN(sl) Then sl = Double.NegativeInfinity
-
-                    '                                If H < hl Then
-                    '                                    xv = 0
-                    '                                    GoTo redirect
-                    '                                ElseIf H >= hv Then
-                    '                                    xv = 1
-                    '                                    GoTo redirect
-                    '                                Else
-                    '                                    If hl = Double.NegativeInfinity Then
-                    '                                        xv = 1.0#
-                    '                                        S = sv
-                    '                                    Else
-                    '                                        xv = (H - hl) / (hv - hl)
-                    '                                        S = xv * sv + (1 - xv) * sl
-                    '                                    End If
-                    '                                End If
-                    '                                xl = 1 - xv
-
-                    '                                'T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-
-                    '                                Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                    '                                Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-                    '                                Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl
-                    '                                Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv
-
-                    '                                i = 0
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                    '                                    subst.FracaoMolar = vz(i)
-                    '                                    subst.FugacityCoeff = 1
-                    '                                    subst.ActivityCoeff = 1
-                    '                                    subst.PartialVolume = 0
-                    '                                    subst.PartialPressure = P
-                    '                                    subst.FracaoMassica = vz(i)
-                    '                                    i += 1
-                    '                                Next
-                    '                                i = 0
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                    '                                    subst.FracaoMolar = vz(i)
-                    '                                    subst.FugacityCoeff = 1
-                    '                                    subst.ActivityCoeff = 1
-                    '                                    subst.PartialVolume = 0
-                    '                                    subst.PartialPressure = P
-                    '                                    subst.FracaoMassica = vz(i)
-                    '                                    i += 1
-                    '                                Next
-
-                    '                            Else
-
-                    'redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mixture), P, H, 0.0#, Me)
-
-                    '                                T = result(4)
-
-                    '                                xl = result(0)
-                    '                                xv = result(1)
-                    '                                xl2 = result(7)
-
-                    '                                Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                    '                                Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = xl2
-                    '                                Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-
-                    '                                Dim Vx = result(2)
-                    '                                Dim Vy = result(3)
-                    '                                Dim Vx2 = result(8)
-
-                    '                                Dim FCL = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                    '                                Dim FCL2 = Me.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                    '                                Dim FCV = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-
-                    '                                i = 0
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                    '                                    subst.FracaoMolar = Vx(i)
-                    '                                    subst.FugacityCoeff = FCL(i)
-                    '                                    subst.ActivityCoeff = 0
-                    '                                    subst.PartialVolume = 0
-                    '                                    subst.PartialPressure = 0
-                    '                                    i += 1
-                    '                                Next
-                    '                                i = 1
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                    '                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 3)
-                    '                                    i += 1
-                    '                                Next
-                    '                                i = 0
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                    '                                    subst.FracaoMolar = Vx2(i)
-                    '                                    subst.FugacityCoeff = FCL2(i)
-                    '                                    subst.ActivityCoeff = 0
-                    '                                    subst.PartialVolume = 0
-                    '                                    subst.PartialPressure = 0
-                    '                                    i += 1
-                    '                                Next
-                    '                                i = 1
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                    '                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 4)
-                    '                                    i += 1
-                    '                                Next
-                    '                                i = 0
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                    '                                    subst.FracaoMolar = Vy(i)
-                    '                                    subst.FugacityCoeff = FCV(i)
-                    '                                    subst.ActivityCoeff = 0
-                    '                                    subst.PartialVolume = 0
-                    '                                    subst.PartialPressure = 0
-                    '                                    i += 1
-                    '                                Next
-
-                    '                                i = 1
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                    '                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 2)
-                    '                                    i += 1
-                    '                                Next
-
-                    '                                Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl * Me.AUX_MMM(Fase.Liquid1) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                    '                                Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction = xl2 * Me.AUX_MMM(Fase.Liquid2) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                    '                                Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv * Me.AUX_MMM(Fase.Vapor) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-
-                    '                                Dim SM, SV, SL, SL2 As Double
-
-                    '                                If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
-                    '                                If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid)
-                    '                                If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)
-                    '                                SM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * SL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * SL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * SV
-
-                    '                                S = SM
-
-                    '                            End If
-
-                    '                        Case FlashSpec.S
-
-                    '                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                    '                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                    '                            If Double.IsNaN(S) Or Double.IsInfinity(S) Then S = Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_entropy.GetValueOrDefault / Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
-
-                    '                            If Me.AUX_IS_SINGLECOMP(Fase.Mixture) And Me.ComponentName <> "FPROPS" Then
-
-                    '                                Dim hl, hv, sl, sv As Double
-                    '                                Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
-
-                    '                                result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mixture), P, S, 0.0#, Me)
-
-                    '                                T = result(4)
-
-                    '                                hl = Me.DW_CalcEnthalpy(vz, T, P, State.Liquid)
-                    '                                hv = Me.DW_CalcEnthalpy(vz, T, P, State.Vapor)
-                    '                                sl = Me.DW_CalcEntropy(vz, T, P, State.Liquid)
-                    '                                sv = Me.DW_CalcEntropy(vz, T, P, State.Vapor)
-
-                    '                                If Double.IsNaN(hl) Then hl = Double.NegativeInfinity
-                    '                                If Double.IsNaN(sl) Then sl = Double.NegativeInfinity
-
-                    '                                If S < sl Then
-                    '                                    xv = 0
-                    '                                    GoTo redirect2
-                    '                                ElseIf S >= sv Then
-                    '                                    xv = 1
-                    '                                    GoTo redirect2
-                    '                                Else
-                    '                                    If sl = Double.NegativeInfinity Then
-                    '                                        xv = 1.0#
-                    '                                        H = hv
-                    '                                    Else
-                    '                                        xv = (S - sl) / (sv - sl)
-                    '                                        H = xv * hv + (1 - xv) * hl
-                    '                                    End If
-                    '                                End If
-                    '                                xl = 1 - xv
-
-                    '                                'T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-
-                    '                                Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                    '                                Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-                    '                                Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl
-                    '                                Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv
-
-                    '                                i = 0
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                    '                                    subst.FracaoMolar = vz(i)
-                    '                                    subst.FugacityCoeff = 1
-                    '                                    subst.ActivityCoeff = 1
-                    '                                    subst.PartialVolume = 0
-                    '                                    subst.PartialPressure = P
-                    '                                    subst.FracaoMassica = vz(i)
-                    '                                    i += 1
-                    '                                Next
-                    '                                i = 0
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                    '                                    subst.FracaoMolar = vz(i)
-                    '                                    subst.FugacityCoeff = 1
-                    '                                    subst.ActivityCoeff = 1
-                    '                                    subst.PartialVolume = 0
-                    '                                    subst.PartialPressure = P
-                    '                                    subst.FracaoMassica = vz(i)
-                    '                                    i += 1
-                    '                                Next
-
-                    '                            Else
-
-                    'redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mixture), P, S, 0.0#, Me)
-
-                    '                                T = result(4)
-
-                    '                                xl = result(0)
-                    '                                xv = result(1)
-                    '                                xl2 = result(7)
-
-                    '                                Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                    '                                Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = xl2
-                    '                                Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-
-                    '                                Dim Vx = result(2)
-                    '                                Dim Vy = result(3)
-                    '                                Dim Vx2 = result(8)
-
-                    '                                Dim FCL = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                    '                                Dim FCL2 = Me.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                    '                                Dim FCV = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-
-                    '                                i = 0
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                    '                                    subst.FracaoMolar = Vx(i)
-                    '                                    subst.FugacityCoeff = FCL(i)
-                    '                                    subst.ActivityCoeff = 0
-                    '                                    subst.PartialVolume = 0
-                    '                                    subst.PartialPressure = 0
-                    '                                    i += 1
-                    '                                Next
-                    '                                i = 1
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                    '                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 3)
-                    '                                    i += 1
-                    '                                Next
-                    '                                i = 0
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                    '                                    subst.FracaoMolar = Vx2(i)
-                    '                                    subst.FugacityCoeff = FCL2(i)
-                    '                                    subst.ActivityCoeff = 0
-                    '                                    subst.PartialVolume = 0
-                    '                                    subst.PartialPressure = 0
-                    '                                    i += 1
-                    '                                Next
-                    '                                i = 1
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                    '                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 4)
-                    '                                    i += 1
-                    '                                Next
-                    '                                i = 0
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                    '                                    subst.FracaoMolar = Vy(i)
-                    '                                    subst.FugacityCoeff = FCV(i)
-                    '                                    subst.ActivityCoeff = 0
-                    '                                    subst.PartialVolume = 0
-                    '                                    subst.PartialPressure = 0
-                    '                                    i += 1
-                    '                                Next
-
-                    '                                i = 1
-                    '                                For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                    '                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 2)
-                    '                                    i += 1
-                    '                                Next
-
-                    '                                Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl * Me.AUX_MMM(Fase.Liquid1) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                    '                                Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction = xl2 * Me.AUX_MMM(Fase.Liquid2) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                    '                                Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv * Me.AUX_MMM(Fase.Vapor) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-
-                    '                                Dim HM, HV, HL, HL2 As Double
-
-                    '                                If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-                    '                                If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
-                    '                                If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-                    '                                HM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * HL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * HL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * HV
-
-                    '                                H = HM
-
-                    '                            End If
-
-                    '                        Case FlashSpec.VAP
-
-                    '                            Dim KI(n) As Double
-
-                    '                            i = 0
-                    '                            Do
-                    '                                KI(i) = 0
-                    '                                i = i + 1
-                    '                            Loop Until i = n + 1
-
-                    '                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                    '                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                    '                            result = Me.FlashBase.Flash_PV(RET_VMOL(Fase.Mixture), P, xv, 0, Me)
-
-                    '                            T = result(4)
-
-                    '                            xl = result(0)
-                    '                            xv = result(1)
-                    '                            xl2 = result(7)
-
-                    '                            Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                    '                            Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = xl2
-                    '                            Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-
-                    '                            Dim Vx = result(2)
-                    '                            Dim Vy = result(3)
-                    '                            Dim Vx2 = result(8)
-
-                    '                            Dim FCL = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                    '                            Dim FCL2 = Me.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                    '                            Dim FCV = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-
-                    '                            i = 0
-                    '                            For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                    '                                subst.FracaoMolar = Vx(i)
-                    '                                subst.FugacityCoeff = FCL(i)
-                    '                                subst.ActivityCoeff = 0
-                    '                                subst.PartialVolume = 0
-                    '                                subst.PartialPressure = 0
-                    '                                i += 1
-                    '                            Next
-                    '                            For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                    '                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 3)
-                    '                            Next
-                    '                            i = 0
-                    '                            For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                    '                                subst.FracaoMolar = Vx2(i)
-                    '                                subst.FugacityCoeff = FCL2(i)
-                    '                                subst.ActivityCoeff = 0
-                    '                                subst.PartialVolume = 0
-                    '                                subst.PartialPressure = 0
-                    '                                i += 1
-                    '                            Next
-                    '                            For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                    '                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 4)
-                    '                            Next
-                    '                            i = 0
-                    '                            For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                    '                                subst.FracaoMolar = Vy(i)
-                    '                                subst.FugacityCoeff = FCV(i)
-                    '                                subst.ActivityCoeff = 0
-                    '                                subst.PartialVolume = 0
-                    '                                subst.PartialPressure = 0
-                    '                                i += 1
-                    '                            Next
-                    '                            For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                    '                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 2)
-                    '                            Next
-
-                    '                            Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl * Me.AUX_MMM(Fase.Liquid1) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                    '                            Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction = xl2 * Me.AUX_MMM(Fase.Liquid2) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                    '                            Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv * Me.AUX_MMM(Fase.Vapor) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-
-                    '                            Dim HM, HV, HL, HL2 As Double
-
-                    '                            If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-                    '                            If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
-                    '                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-                    '                            HM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * HL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * HL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * HV
-
-                    '                            H = HM
-
-                    '                            Dim SM, SV, SL, SL2 As Double
-
-                    '                            If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
-                    '                            If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid)
-                    '                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)
-                    '                            SM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * SL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * SL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * SV
-
-                    '                            S = SM
-
-                    '                    End Select
+                Case FlashSpec.P
+
+                    Select Case spec2
+
+                        Case FlashSpec.H
+
+                            H = Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+
+                            result = Me.ElectrolyteFlash.Flash_PH(RET_VMOL(Fase.Mixture), P, H, T)
+
+                            T = result("Temperature")
+
+                            xl = result("LiquidPhaseMoleFraction")
+                            xv = result("VaporPhaseMoleFraction")
+                            xs = result("SolidPhaseMoleFraction")
+
+                            Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
+                            Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = 0.0#
+                            Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
+                            Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction = xs
+
+                            M = result("MoleSum")
+                            W = Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault
+
+                            Dim Vnf = result("MixtureMoleFlows")
+
+                            MW = Me.AUX_MMM(Vnf)
+
+                            Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow = M * W / MW * 1000
+
+                            i = 0
+                            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                                subst.FracaoMolar = Vnf(i) / M
+                                i += 1
+                            Next
+                            For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
+                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 0)
+                            Next
+
+                            Dim Vx = result("LiquidPhaseMolarComposition")
+                            Dim Vy = result("VaporPhaseMolarComposition")
+                            Dim Vs = result("SolidPhaseMolarComposition")
+
+                            Dim ACL = result("LiquidPhaseActivityCoefficients")
+
+                            i = 0
+                            For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
+                                subst.FracaoMolar = Vx(i)
+                                subst.FugacityCoeff = 0
+                                subst.ActivityCoeff = ACL(i)
+                                subst.PartialVolume = 0
+                                subst.PartialPressure = 0
+                                i += 1
+                            Next
+                            For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
+                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 3)
+                            Next
+                            i = 0
+                            For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
+                                subst.FracaoMolar = Vs(i)
+                                subst.FugacityCoeff = 0
+                                subst.ActivityCoeff = 0
+                                subst.PartialVolume = 0
+                                subst.PartialPressure = 0
+                                i += 1
+                            Next
+                            For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
+                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 7)
+                            Next
+                            i = 0
+                            For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                                subst.FracaoMolar = Vy(i)
+                                subst.FugacityCoeff = 1.0#
+                                subst.ActivityCoeff = 0
+                                subst.PartialVolume = 0
+                                subst.PartialPressure = 0
+                                i += 1
+                            Next
+                            For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 2)
+                            Next
+
+                            Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl * Me.AUX_MMM(Fase.Liquid1) / (xl * Me.AUX_MMM(Fase.Liquid1) + xs * Me.AUX_MMM(Fase.Solid) + xv * Me.AUX_MMM(Fase.Vapor))
+                            Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction = 0.0#
+                            Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction = xs * Me.AUX_MMM(Fase.Solid) / (xl * Me.AUX_MMM(Fase.Liquid1) + xs * Me.AUX_MMM(Fase.Solid) + xv * Me.AUX_MMM(Fase.Vapor))
+                            Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv * Me.AUX_MMM(Fase.Vapor) / (xl * Me.AUX_MMM(Fase.Liquid1) + xs * Me.AUX_MMM(Fase.Solid) + xv * Me.AUX_MMM(Fase.Vapor))
+
+                            Dim SM, SV, SL, SS As Double
+
+                            If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
+                            If xs <> 0 Then SS = Me.DW_CalcEntropy(Vs, T, P, State.Solid)
+                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)
+                            SM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * SS + Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault * SS + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * SV
+
+                            S = SM
+
+                        Case FlashSpec.S
+
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashPSNotSupported"))
+
+                        Case FlashSpec.VAP
+
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashPVNotSupported"))
+
+                    End Select
 
             End Select
 
@@ -1483,7 +1119,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 
         End Sub
-
 
 #End Region
 

@@ -2145,6 +2145,9 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public MolarVolume_k1i As Double = 0.0#
         Public MolarVolume_k2i As Double = 0.0#
         Public MolarVolume_k3i As Double = 0.0#
+        Public Ion_CpAq_a As Double = 0.0#
+        Public Ion_CpAq_b As Double = 0.0#
+        Public Ion_CpAq_c As Double = 0.0#
 
         'the following properties are no longer used but kept for compatibility reasons
         Public UNIFAC_Ri As Double

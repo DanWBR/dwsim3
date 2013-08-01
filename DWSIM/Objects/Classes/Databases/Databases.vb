@@ -1140,6 +1140,12 @@ Namespace DWSIM.Databases
                                 .MolarVolume_k2i = Double.Parse(node2.InnerText, nf)
                             Case "MolarVolume_k3i"
                                 .MolarVolume_k3i = Double.Parse(node2.InnerText, nf)
+                            Case "CpAq_a"
+                                .Ion_CpAq_a = Double.Parse(node2.InnerText, nf)
+                            Case "CpAq_b"
+                                .Ion_CpAq_b = Double.Parse(node2.InnerText, nf)
+                            Case "CpAq_c"
+                                .Ion_CpAq_c = Double.Parse(node2.InnerText, nf)
                         End Select
                     Next
                     .ID = i
