@@ -112,32 +112,23 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>137, 42</value>
   </data>
   <data name="TextBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 20</value>
   </data>
-  <data name="CheckBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>206, 93</value>
-  </data>
   <data name="CheckBox2.Size" type="System.Drawing.Size, System.Drawing">
     <value>141, 19</value>
   </data>
   <data name="CheckBox2.Text" xml:space="preserve">
     <value>Arbeitspunkt einschließen</value>
-  </data>
-  <data name="CheckBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>191, 19</value>
-  </data>
-  <data name="CheckBox4.Text" xml:space="preserve">
-    <value>Hydratgleichgewichtskurve einschließen</value>
   </data>
   <data name="CheckBox3.Size" type="System.Drawing.Size, System.Drawing">
     <value>224, 19</value>
@@ -163,32 +154,38 @@
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Objektauswahl</value>
   </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>464, 47</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Optionen</value>
+  </data>
   <data name="ComboBox1.Items" xml:space="preserve">
-    <value>Druck als Funktion der Temperatur</value>
+    <value>Temperatur als Funktion der Druck</value>
   </data>
   <data name="ComboBox1.Items1" xml:space="preserve">
-    <value>Druck als Funktion der Enthalpie</value>
-  </data>
-  <data name="ComboBox1.Items2" xml:space="preserve">
-    <value>Druck als Funktion der Entropie</value>
-  </data>
-  <data name="ComboBox1.Items3" xml:space="preserve">
-    <value>Druck als Funktion des molaren Volumens</value>
-  </data>
-  <data name="ComboBox1.Items4" xml:space="preserve">
-    <value>Temperatur als Funktion des Druckes</value>
-  </data>
-  <data name="ComboBox1.Items5" xml:space="preserve">
     <value>Temperatur als Funktion der Enthalpie</value>
   </data>
-  <data name="ComboBox1.Items6" xml:space="preserve">
+  <data name="ComboBox1.Items2" xml:space="preserve">
     <value>Temperatur als Funktion der Entropie</value>
   </data>
+  <data name="ComboBox1.Items3" xml:space="preserve">
+    <value>Temperatur als Funktion des Molaren Volumens</value>
+  </data>
+  <data name="ComboBox1.Items4" xml:space="preserve">
+    <value>Druck als Funktion der Temperatur</value>
+  </data>
+  <data name="ComboBox1.Items5" xml:space="preserve">
+    <value>Druck als Funktion der Enthalpie</value>
+  </data>
+  <data name="ComboBox1.Items6" xml:space="preserve">
+    <value>Druck als Funktion der Entropie</value>
+  </data>
   <data name="ComboBox1.Items7" xml:space="preserve">
-    <value>Temperatur als Funktion des molaren Volumens</value>
+    <value>Druck als Funktion des Molaren Volumens</value>
   </data>
   <data name="ComboBox1.Items8" xml:space="preserve">
-    <value>Molares Volumen als Funktion des Druckes</value>
+    <value>Molares Volumen als Funktion der Drucke</value>
   </data>
   <data name="ComboBox1.Items9" xml:space="preserve">
     <value>Molares Volumen als Funktion der Temperatur</value>
@@ -211,14 +208,14 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Gleichgewichtstyp</value>
   </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>464, 47</value>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 171</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Optionen</value>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>464, 371</value>
   </data>
-  <data name="GraphControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>456, 331</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Ergebnisse</value>
   </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>456, 331</value>
@@ -232,13 +229,7 @@
   <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>458, 352</value>
   </data>
-  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 171</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>464, 371</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Ergebnisse</value>
+  <data name="GraphControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>456, 331</value>
   </data>
 </root>

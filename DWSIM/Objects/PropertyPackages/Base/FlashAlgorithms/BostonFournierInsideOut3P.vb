@@ -185,7 +185,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("PT Flash [IO3P]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("PT Flash [IO3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return result
 
@@ -318,7 +318,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("PH Flash [IO3P]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("PH Flash [IO3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return result
 
@@ -450,7 +450,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("PS Flash [IO3P]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("PS Flash [IO3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return result
 
@@ -551,7 +551,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("TV Flash [IO3P]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("TV Flash [IO3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return result
 
@@ -652,7 +652,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("TV Flash [IO3P]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("TV Flash [IO3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return result
 

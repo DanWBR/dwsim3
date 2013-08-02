@@ -404,7 +404,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("PT Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms")
+            Console.WriteLine("PT Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
 
 out:        Return result
 
@@ -494,7 +494,7 @@ out:        Return result
 
             dt = d2 - d1
 
-            Console.WriteLine("PH Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms")
+            Console.WriteLine("PH Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
 
             Return New Object() {L, V, Vx1, Vy, Tf, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
@@ -584,7 +584,7 @@ out:        Return result
 
             dt = d2 - d1
 
-            Console.WriteLine("PS Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms")
+            Console.WriteLine("PS Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
 
             Return New Object() {L, V, Vx1, Vy, Tf, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
@@ -1067,7 +1067,7 @@ out:        Return result
 
             dt = d2 - d1
 
-            Console.WriteLine("TV Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("TV Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L, V, Vx, Vy, P, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
@@ -1390,7 +1390,7 @@ out:        Return result
 
             dt = d2 - d1
 
-            Console.WriteLine("PV Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("PV Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 

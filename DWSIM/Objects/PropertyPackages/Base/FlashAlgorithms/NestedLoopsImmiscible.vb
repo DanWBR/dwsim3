@@ -202,7 +202,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("PT Flash [NL-I]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("PT Flash [NL-I]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
 out:        Return New Object() {xl1, V, Vx1, Vy, ecount, xl2, Vx2, 0.0#, PP.RET_NullVector}
 
@@ -311,7 +311,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             dt = d2 - d1
 
-            Console.WriteLine("PH Flash [NL-I]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("PH Flash [NL-I]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L1, V, Vx, Vy, T, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
@@ -417,7 +417,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             dt = d2 - d1
 
-            Console.WriteLine("PS Flash [NL-I]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("PS Flash [NL-I]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L1, V, Vx, Vy, T, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
@@ -747,7 +747,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             dt = d2 - d1
 
-            Console.WriteLine("TV Flash [NL-I]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("TV Flash [NL-I]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L, V, Vx, Vy, P, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
@@ -1070,7 +1070,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             dt = d2 - d1
 
-            Console.WriteLine("PV Flash [NL-I]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("PV Flash [NL-I]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 

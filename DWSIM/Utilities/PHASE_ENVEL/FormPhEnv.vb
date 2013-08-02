@@ -102,7 +102,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
             If Me.CheckBox1.Enabled Then Me.qualitycalc = Me.CheckBox1.Checked Else Me.qualitycalc = False
             If Me.CheckBox2.Checked Then Me.showoppoint = True Else Me.showoppoint = False
             Me.Enabled = False
-            Me.BackgroundWorker1.RunWorkerAsync(New Object() {0, Me.TextBox1.Text, Me.CheckBox1.Checked, Me.CheckBox3.Checked, Me.CheckBox4.Checked})
+            Me.BackgroundWorker1.RunWorkerAsync(New Object() {0, Me.TextBox1.Text, Me.CheckBox1.Checked, Me.CheckBox3.Checked})
             fpec = New FormPEC
             fpec.bw = Me.BackgroundWorker1
             fpec.Label2.Tag = fpec.Label2.Text
@@ -128,45 +128,23 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                     Dim i As Integer
 
-                    i = 0
-                    Do
+                    For i = 0 To TVB.Count - 1
                         py1.Add(cv.ConverterDoSI(su.spmp_temperature, TVB(i)))
                         px1.Add(cv.ConverterDoSI(su.spmp_pressure, PB(i)))
-                        'py1.Add(VB(i))
-                        i += 1
-                    Loop Until i = TVB.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To TVD.Count - 1
                         py2.Add(cv.ConverterDoSI(su.spmp_temperature, TVD(i)))
                         px2.Add(cv.ConverterDoSI(su.spmp_pressure, PO(i)))
-                        'py2.Add(VO(i))
-                        i += 1
-                    Loop Until i = TVD.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To TE.Count - 1
                         py3.Add(cv.ConverterDoSI(su.spmp_temperature, TE(i)))
                         px3.Add(cv.ConverterDoSI(su.spmp_pressure, PE(i)))
-                        i += 1
-                    Loop Until i = TE.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To TQ.Count - 1
                         py4.Add(cv.ConverterDoSI(su.spmp_temperature, TQ(i)))
                         px4.Add(cv.ConverterDoSI(su.spmp_pressure, PQ(i)))
-                        i += 1
-                    Loop Until i = TQ.Count
-                    i = 0
-                    Do
-                        ph1.Add(cv.ConverterDoSI(su.spmp_pressure, PHsI(i)))
-                        th1.Add(cv.ConverterDoSI(su.spmp_temperature, THsI(i)))
-                        i += 1
-                    Loop Until i = PHsI.Count
-                    i = 0
-                    Do
-                        ph2.Add(cv.ConverterDoSI(su.spmp_pressure, PHsII(i)))
-                        th2.Add(cv.ConverterDoSI(su.spmp_temperature, THsII(i)))
-                        i += 1
-                    Loop Until i = PHsII.Count
-
+                    Next
+                    
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
                         Dim tmp As Object
@@ -186,18 +164,6 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         If CheckBox3.Checked Then
                             With .AddCurve(DWSIM.App.GetLocalString("LimitedeEstabilidade"), px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Circle)
                                 .Color = Color.DarkOrange
-                                .Line.IsSmooth = False
-                                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-                            End With
-                        End If
-                        If CheckBox4.Checked Then
-                            With .AddCurve(DWSIM.App.GetLocalString("HidratosI"), ph1.ToArray(GetType(Double)), th1.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Circle)
-                                .Color = Color.Yellow
-                                .Line.IsSmooth = False
-                                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-                            End With
-                            With .AddCurve(DWSIM.App.GetLocalString("HidratosII"), ph2.ToArray(GetType(Double)), th2.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Circle)
-                                .Color = Color.DarkGoldenrod
                                 .Line.IsSmooth = False
                                 .Symbol.Fill.Type = ZedGraph.FillType.Solid
                             End With
@@ -228,19 +194,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                     Dim px1, py1, px2, py2 As New ArrayList
                     Dim i As Integer
-                    i = 0
-                    Do
+                    For i = 0 To PB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_pressure, PB(i)))
                         py1.Add(cv.ConverterDoSI(su.spmp_enthalpy, HB(i)))
-                        i += 1
-                    Loop Until i = PB.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To PO.Count - 1
                         px2.Add(cv.ConverterDoSI(su.spmp_pressure, PO(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_enthalpy, HO(i)))
-                        i += 1
-                    Loop Until i = PO.Count
-
+                    Next
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
                         '.AddCurve(DWSIM.App.GetLocalString("PontoCrtico"), New Double() {cv.ConverterDoSI(su.spmp_temperature, TC)}, New Double() {cv.ConverterDoSI(su.spmp_pressure, PC)}, Color.Black, ZedGraph.SymbolType.Circle)
@@ -272,19 +233,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                     Dim px1, py1, px2, py2 As New ArrayList
                     Dim i As Integer
-                    i = 0
-                    Do
+                    For i = 0 To PB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_pressure, PB(i)))
                         py1.Add(cv.ConverterDoSI(su.spmp_entropy, SB(i)))
-                        i += 1
-                    Loop Until i = PB.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To PO.Count - 1
                         px2.Add(cv.ConverterDoSI(su.spmp_pressure, PO(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_entropy, SO(i)))
-                        i += 1
-                    Loop Until i = PO.Count
-
+                    Next
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeBolha"), px1.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
@@ -315,19 +271,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                     Dim px1, py1, px2, py2 As New ArrayList
                     Dim i As Integer
-                    i = 0
-                    Do
+                    For i = 0 To PB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_pressure, PB(i)))
                         py1.Add(cv.ConverterDoSI(su.molar_volume, VB(i)))
-                        i += 1
-                    Loop Until i = PB.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To PO.Count - 1
                         px2.Add(cv.ConverterDoSI(su.spmp_pressure, PO(i)))
                         py2.Add(cv.ConverterDoSI(su.molar_volume, VO(i)))
-                        i += 1
-                    Loop Until i = PO.Count
-
+                    Next
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
                         Dim tmp As Object
@@ -364,44 +315,22 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                     Dim i As Integer
 
-                    i = 0
-                    Do
+                    For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_temperature, TVB(i)))
                         py1.Add(cv.ConverterDoSI(su.spmp_pressure, PB(i)))
-                        'py1.Add(VB(i))
-                        i += 1
-                    Loop Until i = TVB.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To TVD.Count - 1
                         px2.Add(cv.ConverterDoSI(su.spmp_temperature, TVD(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_pressure, PO(i)))
-                        'py2.Add(VO(i))
-                        i += 1
-                    Loop Until i = TVD.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To TE.Count - 1
                         px3.Add(cv.ConverterDoSI(su.spmp_temperature, TE(i)))
                         py3.Add(cv.ConverterDoSI(su.spmp_pressure, PE(i)))
-                        i += 1
-                    Loop Until i = TE.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To TQ.Count - 1
                         px4.Add(cv.ConverterDoSI(su.spmp_temperature, TQ(i)))
                         py4.Add(cv.ConverterDoSI(su.spmp_pressure, PQ(i)))
-                        i += 1
-                    Loop Until i = TQ.Count
-                    i = 0
-                    Do
-                        ph1.Add(cv.ConverterDoSI(su.spmp_pressure, PHsI(i)))
-                        th1.Add(cv.ConverterDoSI(su.spmp_temperature, THsI(i)))
-                        i += 1
-                    Loop Until i = PHsI.Count
-                    i = 0
-                    Do
-                        ph2.Add(cv.ConverterDoSI(su.spmp_pressure, PHsII(i)))
-                        th2.Add(cv.ConverterDoSI(su.spmp_temperature, THsII(i)))
-                        i += 1
-                    Loop Until i = PHsII.Count
+                    Next
 
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -422,18 +351,6 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         If CheckBox3.Checked Then
                             With .AddCurve(DWSIM.App.GetLocalString("LimitedeEstabilidade"), px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Circle)
                                 .Color = Color.DarkOrange
-                                .Line.IsSmooth = False
-                                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-                            End With
-                        End If
-                        If CheckBox4.Checked Then
-                            With .AddCurve(DWSIM.App.GetLocalString("HidratosI"), th1.ToArray(GetType(Double)), ph1.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Circle)
-                                .Color = Color.Yellow
-                                .Line.IsSmooth = False
-                                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-                            End With
-                            With .AddCurve(DWSIM.App.GetLocalString("HidratosII"), th2.ToArray(GetType(Double)), ph2.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Circle)
-                                .Color = Color.DarkGoldenrod
                                 .Line.IsSmooth = False
                                 .Symbol.Fill.Type = ZedGraph.FillType.Solid
                             End With
@@ -463,18 +380,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                     Dim px1, py1, px2, py2 As New ArrayList
                     Dim i As Integer
-                    i = 0
-                    Do
+                    For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_temperature, TVB(i)))
                         py1.Add(cv.ConverterDoSI(su.spmp_enthalpy, HB(i)))
-                        i += 1
-                    Loop Until i = TVB.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To TVD.Count - 1
                         px2.Add(cv.ConverterDoSI(su.spmp_temperature, TVD(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_enthalpy, HO(i)))
-                        i += 1
-                    Loop Until i = TVD.Count
+                    Next
 
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -506,18 +419,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                     Dim px1, py1, px2, py2 As New ArrayList
                     Dim i As Integer
-                    i = 0
-                    Do
+                    For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_temperature, TVB(i)))
                         py1.Add(cv.ConverterDoSI(su.spmp_entropy, SB(i)))
-                        i += 1
-                    Loop Until i = TVB.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To TVD.Count - 1
                         px2.Add(cv.ConverterDoSI(su.spmp_temperature, TVD(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_entropy, SO(i)))
-                        i += 1
-                    Loop Until i = TVD.Count
+                    Next
 
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -549,18 +458,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                     Dim px1, py1, px2, py2 As New ArrayList
                     Dim i As Integer
-                    i = 0
-                    Do
+                    For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_temperature, TVB(i)))
                         py1.Add(cv.ConverterDoSI(su.molar_volume, VB(i)))
-                        i += 1
-                    Loop Until i = TVB.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To TVB.Count - 1
                         px2.Add(cv.ConverterDoSI(su.spmp_temperature, TVD(i)))
                         py2.Add(cv.ConverterDoSI(su.molar_volume, VO(i)))
-                        i += 1
-                    Loop Until i = TVD.Count
+                    Next
 
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -596,18 +501,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                     Dim px1, py1, px2, py2 As New ArrayList
                     Dim i As Integer
-                    i = 0
-                    Do
+                    For i = 0 To PB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.molar_volume, VB(i)))
                         py1.Add(cv.ConverterDoSI(su.spmp_pressure, PB(i)))
-                        i += 1
-                    Loop Until i = PB.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To PO.Count - 1
                         px2.Add(cv.ConverterDoSI(su.molar_volume, VO(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_pressure, PO(i)))
-                        i += 1
-                    Loop Until i = PO.Count
+                    Next
 
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -643,18 +544,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                     Dim px1, py1, px2, py2 As New ArrayList
                     Dim i As Integer
-                    i = 0
-                    Do
+                    For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.molar_volume, VB(i)))
                         py1.Add(cv.ConverterDoSI(su.spmp_temperature, TVB(i)))
-                        i += 1
-                    Loop Until i = TVB.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To TVD.Count - 1
                         px2.Add(cv.ConverterDoSI(su.molar_volume, VO(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_temperature, TVD(i)))
-                        i += 1
-                    Loop Until i = TVD.Count
+                    Next
 
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -690,18 +587,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                     Dim px1, py1, px2, py2 As New ArrayList
                     Dim i As Integer
-                    i = 0
-                    Do
+                    For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.molar_volume, VB(i)))
                         py1.Add(cv.ConverterDoSI(su.spmp_enthalpy, HB(i)))
-                        i += 1
-                    Loop Until i = TVB.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To TVD.Count - 1
                         px2.Add(cv.ConverterDoSI(su.molar_volume, VO(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_enthalpy, HO(i)))
-                        i += 1
-                    Loop Until i = TVD.Count
+                    Next
 
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -733,18 +626,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                     Dim px1, py1, px2, py2 As New ArrayList
                     Dim i As Integer
-                    i = 0
-                    Do
+                    For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.molar_volume, VB(i)))
                         py1.Add(cv.ConverterDoSI(su.spmp_entropy, SB(i)))
-                        i += 1
-                    Loop Until i = TVB.Count
-                    i = 0
-                    Do
+                    Next
+                    For i = 0 To TVD.Count - 1
                         px2.Add(cv.ConverterDoSI(su.molar_volume, VO(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_entropy, SO(i)))
-                        i += 1
-                    Loop Until i = TVD.Count
+                    Next
 
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -810,14 +699,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
         Dim th1, th2, ph1, ph2 As New ArrayList
 
-        If Me.CheckBox4.Checked Then
-
-        Else
-            th1.Add(CDbl(0))
-            th2.Add(CDbl(0))
-            ph1.Add(CDbl(0))
-            ph2.Add(CDbl(0))
-        End If
+        th1.Add(CDbl(0))
+        th2.Add(CDbl(0))
+        ph1.Add(CDbl(0))
+        ph2.Add(CDbl(0))
 
         e.Result = New Object() {pp.DW_ReturnPhaseEnvelope(e.Argument, Me.BackgroundWorker1), ph1, th1, ph2, th2}
 

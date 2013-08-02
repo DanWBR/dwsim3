@@ -326,7 +326,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("PT Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms. Error function value: " & AbsSum(fx))
+            Console.WriteLine("PT Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
 
 out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, Vx, 0.0#, PP.RET_NullVector}
 
@@ -767,7 +767,7 @@ restart:    Do
 
             dt = d2 - d1
 
-            Console.WriteLine("PH Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms. Error function value: " & AbsSum(fx))
+            Console.WriteLine("PH Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
 
             Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
@@ -1206,7 +1206,7 @@ restart:    Do
 
             dt = d2 - d1
 
-            Console.WriteLine("PS Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms. Error function value: " & AbsSum(fx))
+            Console.WriteLine("PS Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
 
             Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
@@ -1269,6 +1269,8 @@ restart:    Do
                 T = 0
                 Do
                     T += Vz(i) * PP.AUX_TSATi(P, i)
+                    Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                    Ki(i) = Vp(i) / P
                     i += 1
                 Loop Until i = n + 1
                 Vx = Vz
@@ -1491,7 +1493,7 @@ final:      d2 = Date.Now
 
             dt = d2 - d1
 
-            Console.WriteLine("PV Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms. Error function value: " & AbsSum(fx))
+            Console.WriteLine("PV Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
 
             Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
@@ -1764,7 +1766,7 @@ final:      d2 = Date.Now
 
             dt = d2 - d1
 
-            Console.WriteLine("TV Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms. Error function value: " & AbsSum(fx))
+            Console.WriteLine("TV Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
 
             Return New Object() {L, V, Vx, Vy, P, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 

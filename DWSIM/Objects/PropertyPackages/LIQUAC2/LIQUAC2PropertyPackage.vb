@@ -982,6 +982,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                         Case FlashSpec.H
 
+                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
                             H = Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 

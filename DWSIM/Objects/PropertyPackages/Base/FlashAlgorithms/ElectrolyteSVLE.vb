@@ -695,7 +695,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Function Flash_PH(ByVal Vz As Array, ByVal P As Double, ByVal H As Double, ByVal Tref As Double) As Dictionary(Of String, Object)
 
-            Dim n, ecount As Integer
+            Dim n As Integer
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L, V, T, S, Pf, sumN As Double
 
@@ -732,26 +732,26 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim cnt As Integer = 0
 
-            If Tref = 0 Then Tref = 100.0#
+            If Tref = 0 Then Tref = 298.15
             x1 = Tref
             Do
                 fx = Herror(x1, {P, Vz})
                 fx2 = Herror(x1 + 1, {P, Vz})
-                If Abs(fx) < maxitEXT Then Exit Do
+                If Abs(fx) < tolINT Then Exit Do
                 dfdx = (fx2 - fx)
                 x1 = x1 - fx / dfdx
                 If x1 < 0 Then GoTo alt
                 cnt += 1
-            Loop Until cnt > 20 Or Double.IsNaN(x1)
+            Loop Until cnt > 100 Or Double.IsNaN(x1)
             If Double.IsNaN(x1) Then
-alt:            T = bo.BrentOpt(Tinf, Tsup, 100, tolEXT, maxitEXT, {P, Vz})
+alt:            T = bo.BrentOpt(Tinf, Tsup, 5, tolEXT, maxitEXT, {P, Vz})
             Else
                 T = x1
             End If
 
             'End If
 
-            Dim tmp As Dictionary(Of String, Object) = Flash_PT(Vz, P, T)
+            Dim tmp As Dictionary(Of String, Object) = Flash_PT(Vz, T, P)
 
             L = tmp("LiquidPhaseMoleFraction")
             V = tmp("VaporPhaseMoleFraction")
@@ -759,14 +759,14 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 100, tolEXT, maxitEXT, {P, Vz})
             Vx = tmp("LiquidPhaseMolarComposition")
             Vy = tmp("VaporPhaseMolarComposition")
             Vs = tmp("SolidPhaseMolarComposition")
-            sumN = tmp("MixtureMoleFlows")
+            sumN = tmp("MoleSum")
             Vz = tmp("MixtureMoleFlows")
 
             d2 = Date.Now
 
             dt = d2 - d1
 
-            Console.WriteLine("PH Flash [Electrolyte]: Converged in " & ecount & " iterations. Time taken: " & dt.Milliseconds & " ms.")
+            Console.WriteLine("PH Flash [Electrolyte]: Converged in " & cnt & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             'return flash calculation results.
 
@@ -781,6 +781,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 100, tolEXT, maxitEXT, {P, Vz})
             results.Add("SolidPhaseMolarComposition", Vs)
             results.Add("MoleSum", sumN)
             results.Add("Temperature", T)
+            results.Add("LiquidPhaseActivityCoefficients", tmp("LiquidPhaseActivityCoefficients"))
 
             Return results
 
@@ -788,20 +789,20 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 100, tolEXT, maxitEXT, {P, Vz})
 
         Function OBJ_FUNC_PH_FLASH(ByVal T As Double, ByVal H As Double, ByVal P As Double, ByVal Vz As Object) As Object
 
-            Dim tmp As Dictionary(Of String, Object) = Flash_PT(Vz, P, T)
+            Dim tmp As Dictionary(Of String, Object) = Flash_PT(Vz, T, P)
 
             Dim L, V, S, Vx(), Vy(), Vs(), sumN As Double
 
             Dim n = UBound(Vz)
 
-            sumN = tmp("MixtureMoleFlows")
-            L = tmp("LiquidPhaseMoleFraction") * sumN
-            V = tmp("VaporPhaseMoleFraction") * sumN
-            S = tmp("SolidPhaseMoleFraction") * sumN
+            sumN = tmp("MoleSum")
+            L = tmp("LiquidPhaseMoleFraction")
+            V = tmp("VaporPhaseMoleFraction")
+            S = tmp("SolidPhaseMoleFraction")
             Vx = tmp("LiquidPhaseMolarComposition")
             Vy = tmp("VaporPhaseMolarComposition")
             Vs = tmp("SolidPhaseMolarComposition")
-            Vz = tmp("MixtureMoleFlows")
+            'Vz = tmp("MixtureMoleFlows")
 
             Hv = 0
             Hl = 0
@@ -815,7 +816,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 100, tolEXT, maxitEXT, {P, Vz})
             mml = proppack.AUX_MMM(Vx)
             mms = proppack.AUX_MMM(Vs)
 
-            Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L + mms * S)) * Hv - (mml * L / (mmg * V + mml * L + mms * S)) * Hl - (mms * S / (mmg * V + mml * L + mms * S)) * Hs
+            Dim herr As Double = Hf - ((mmg * V / (mmg * V + mml * L + mms * S)) * Hv + (mml * L / (mmg * V + mml * L + mms * S)) * Hl + (mms * S / (mmg * V + mml * L + mms * S)) * Hs)
             OBJ_FUNC_PH_FLASH = herr
 
             Console.WriteLine("PH Flash [Electrolyte]: Current T = " & T & ", Current H Error = " & herr)

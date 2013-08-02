@@ -1398,7 +1398,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                                 T = result(4)
 
-                                If T <= Me.AUX_TBM(Fase.Mixture) Then
+                                If T <= Me.AUX_TFM(Fase.Mixture) Then
 
                                     'solid only.
 
@@ -2824,7 +2824,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                     i = 0
                     Do
-                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do
+                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
                         Try
                             If i = 0 Then
                                 tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)
@@ -2867,7 +2867,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         uim = ui(0)
                         pf = 2 * pi
                         For pit = pi To pf Step (pf - pi) / 10
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit For
+                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit For Else bw.ReportProgress(0, "LLE (" & i + 1 & "/26)")
                             result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, pit, T, Me)
                             If result(5) > 0.0# Then
                                 If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
@@ -2887,7 +2887,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                     i = 0
                     Do
-                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do
+                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
                         px.Add(i * dx)
                         Try
                             py.Add(Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)(6)(0) * i * dx)
@@ -2905,7 +2905,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                     i = 0
                     Do
-                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do
+                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
                         px.Add(i * dx)
                         Try
                             py.Add(Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)(6)(0) * i * dx)
@@ -4816,6 +4816,19 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Next
 
             Return Tb
+
+        End Function
+
+        Public Function AUX_TFM(ByVal fase As Fase) As Double
+
+            Dim Tf As Double
+            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+
+            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
+                Tf += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.TemperatureOfFusion
+            Next
+
+            Return Tf
 
         End Function
 
