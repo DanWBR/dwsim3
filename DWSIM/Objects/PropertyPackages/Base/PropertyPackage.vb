@@ -2722,7 +2722,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                     If result(5) > 0.0# Then
                                         unstable = True
                                         ui.Add(px.Count - 1)
-                                        ut.Add(calcT)
+                                        If ut.Count = 0 Then ut.Add(Me.FlashBase.BubbleTemperature_LLE(New Double() {i * dx, 1 - i * dx}, result(2), result(6), P, y1 - 40, y2, Me))
+                                        py1(py1.Count - 1) = ut(0)
                                     End If
                                 End If
                             Catch ex As Exception
@@ -2740,7 +2741,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             If tf = 0.0# Then tf = ti * 0.7
                             i = 0
                             For tit = tf To ti Step (ti - tf) / 25
-                                If bw IsNot Nothing Then If bw.CancellationPending Then Exit For Else bw.ReportProgress(0, "LLE (" & i + 1 & "/26)")
+                                If bw IsNot Nothing Then If bw.CancellationPending Then Exit For Else bw.ReportProgress(0, "LLE (" & i + 1 & "/28)")
                                 result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, P, tit, Me)
                                 If result(5) > 0.0# Then
                                     If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
