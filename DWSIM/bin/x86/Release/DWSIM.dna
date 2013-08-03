@@ -1,3 +1,4 @@
-<DnaLibrary Name="DWSIM" >	
-       <ExternalLibrary ExplicitExports="true" Path="DWSIM.exe" />
+<DnaLibrary Name="DWSIM" RuntimeVersion="v4.0">
+	<ExternalLibrary ExplicitExports="true" Path="DWSIM.exe"/>
+
 </DnaLibrary>

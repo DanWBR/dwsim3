@@ -28,7 +28,9 @@ Namespace Interfaces
 
     Public Class ExcelIntegration
 
-        Public Shared Sub SetIP(ByVal proppack As String, ByVal pp As PropertyPackage, ByVal compounds As Object, ByVal ip1 As Object, ByVal ip2 As Object, ByVal ip3 As Object, ByVal ip4 As Object)
+        Public Shared Sub SetIP(ByVal proppack As String, ByVal pp As PropertyPackage, ByVal compounds As Object, ByVal ip1 As Object, ByVal ip2 As Object,
+                                ByVal ip3 As Object, ByVal ip4 As Object, ByVal ip5 As Object, ByVal ip6 As Object,
+                                ByVal ip7 As Object, ByVal ip8 As Object)
 
             Dim i, j As Integer
 
@@ -223,6 +225,12 @@ Namespace Interfaces
                                         .A12 = ip2(i, j)
                                         .A21 = ip3(i, j)
                                         .alpha12 = ip4(i, j)
+                                        If Not TypeOf ip5 Is ExcelMissing And Not ip5 Is Nothing Then
+                                            .B12 = ip5(i, j)
+                                            .B21 = ip6(i, j)
+                                            .C12 = ip7(i, j)
+                                            .C21 = ip8(i, j)
+                                        End If
                                     End With
                                     j += 1
                                 Next
@@ -261,6 +269,12 @@ Namespace Interfaces
                                     With .Item(c1).Item(c2)
                                         .A12 = ip2(i, j)
                                         .A21 = ip3(i, j)
+                                        If Not TypeOf ip5 Is ExcelMissing And Not ip5 Is Nothing Then
+                                            .B12 = ip4(i, j)
+                                            .B21 = ip5(i, j)
+                                            .C12 = ip6(i, j)
+                                            .C21 = ip7(i, j)
+                                        End If
                                     End With
                                     j += 1
                                 Next
@@ -425,7 +439,11 @@ Namespace Interfaces
         <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
         <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
         <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object) As Object(,)
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -433,7 +451,7 @@ Namespace Interfaces
 
                 Dim pp As PropertyPackages.PropertyPackage = ppm.GetPropertyPackage(proppack)
 
-                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4)
+                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
 
                 ppm.Dispose()
                 ppm = Nothing
@@ -627,7 +645,11 @@ Namespace Interfaces
         <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
         <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
         <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object) As Object(,)
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -636,7 +658,7 @@ Namespace Interfaces
                 Dim pp As PropertyPackages.PropertyPackage
 
                 pp = ppm.GetPropertyPackage(proppack)
-                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4)
+                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
 
                 ppm.Dispose()
                 ppm = Nothing
@@ -737,7 +759,11 @@ Namespace Interfaces
         <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
         <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
         <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object) As Object(,)
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -746,7 +772,7 @@ Namespace Interfaces
                 Dim pp As PropertyPackages.PropertyPackage
 
                 pp = ppm.GetPropertyPackage(proppack)
-                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4)
+                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
 
                 ppm.Dispose()
                 ppm = Nothing
@@ -849,7 +875,11 @@ Namespace Interfaces
         <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
         <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
         <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object) As Object(,)
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -858,7 +888,7 @@ Namespace Interfaces
                 Dim pp As PropertyPackages.PropertyPackage
 
                 pp = ppm.GetPropertyPackage(proppack)
-                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4)
+                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
 
                 ppm.Dispose()
                 ppm = Nothing
@@ -961,7 +991,11 @@ Namespace Interfaces
         <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
         <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
         <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object) As Object(,)
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -970,7 +1004,7 @@ Namespace Interfaces
                 Dim pp As PropertyPackages.PropertyPackage
 
                 pp = ppm.GetPropertyPackage(proppack)
-                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4)
+                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
 
                 ppm.Dispose()
                 ppm = Nothing
@@ -1073,7 +1107,11 @@ Namespace Interfaces
         <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
         <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
         <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object) As Object(,)
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -1082,7 +1120,7 @@ Namespace Interfaces
                 Dim pp As PropertyPackages.PropertyPackage
 
                 pp = ppm.GetPropertyPackage(proppack)
-                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4)
+                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
 
                 ppm.Dispose()
                 ppm = Nothing
@@ -1206,7 +1244,11 @@ Namespace Interfaces
        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-       <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object) As Object(,)
+       <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -1215,7 +1257,7 @@ Namespace Interfaces
                 Dim pp As PropertyPackages.PropertyPackage
 
                 pp = proppack
-                SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4)
+                SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
 
                 ppm.Dispose()
                 ppm = Nothing
@@ -1311,7 +1353,11 @@ Namespace Interfaces
         <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
         <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
         <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object) As Object(,)
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -1320,7 +1366,7 @@ Namespace Interfaces
                 Dim pp As PropertyPackages.PropertyPackage
 
                 pp = proppack
-                SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4)
+                SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
 
                 ppm.Dispose()
                 ppm = Nothing
@@ -1418,7 +1464,11 @@ Namespace Interfaces
         <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
         <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
         <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object) As Object(,)
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -1427,7 +1477,7 @@ Namespace Interfaces
                 Dim pp As PropertyPackages.PropertyPackage
 
                 pp = proppack
-                SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4)
+                SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
 
                 ppm.Dispose()
                 ppm = Nothing
@@ -1525,7 +1575,11 @@ Namespace Interfaces
         <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
         <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
         <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object) As Object(,)
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -1534,7 +1588,7 @@ Namespace Interfaces
                 Dim pp As PropertyPackages.PropertyPackage
 
                 pp = proppack
-                SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4)
+                SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
 
                 ppm.Dispose()
                 ppm = Nothing
@@ -1632,7 +1686,11 @@ Namespace Interfaces
         <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
         <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
         <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object) As Object(,)
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -1641,7 +1699,7 @@ Namespace Interfaces
                 Dim pp As PropertyPackages.PropertyPackage
 
                 pp = proppack
-                SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4)
+                SetIP(pp.ComponentName, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
 
                 ppm.Dispose()
                 ppm = Nothing
