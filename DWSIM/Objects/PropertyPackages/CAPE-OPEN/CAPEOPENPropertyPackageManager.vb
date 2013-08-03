@@ -171,7 +171,7 @@ Public Class CAPEOPENPropertyPackageManager
         key.SetValue("ComponentVersion", My.Application.Info.Version.ToString)
         key.SetValue("VendorURL", "http://dwsim.inforside.com.br")
         key.SetValue("HelpURL", "http://dwsim.inforside.com.br")
-        key.SetValue("About", "DWSIM is open-source software, released under the GPL v3 license. (c) 2011-2012 Daniel Medeiros.")
+        key.SetValue("About", "DWSIM is open-source software, released under the GPL v3 license. (c) 2011-2013 Daniel Medeiros.")
         key.Close()
 
     End Sub

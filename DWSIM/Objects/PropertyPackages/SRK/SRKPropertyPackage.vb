@@ -39,6 +39,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Sub New(ByVal comode As Boolean)
             MyBase.New(comode)
+            With Me.Parameters
+                .Add("PP_USE_EOS_LIQDENS", 0)
+                .Add("PP_USE_EOS_VOLUME_SHIFT", 0)
+            End With
         End Sub
 
         Public Sub New()
@@ -647,7 +651,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             P = Pmin
             T = Tmin
             Do
-                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Bubble Points (" & i + 1 & "/200)")
                 If i < 2 Then
                     Try
                         tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 0, 0, Me)
@@ -705,6 +708,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     End If
                     beta = (Math.Log(PB(i) / 101325) - Math.Log(PB(i - 1) / 101325)) / (Math.Log(TVB(i)) - Math.Log(TVB(i - 1)))
                 End If
+                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Bubble Points (" & i + 1 & "/200)")
                 i = i + 1
             Loop Until i >= 200 Or PB(i - 1) = 0 Or PB(i - 1) < 0 Or TVB(i - 1) < 0 Or _
                         T >= TCR Or Double.IsNaN(PB(i - 1)) = True Or _
@@ -724,7 +728,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             i = 0
             P = Pmin
             Do
-                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Dew Points (" & i + 1 & "/200)")
                 If i < 2 Then
                     Try
                         tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 1, 0, Me)
@@ -795,6 +798,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     beta = (Math.Log(PO(i) / 101325) - Math.Log(PO(i - 1) / 101325)) / (Math.Log(TVD(i)) - Math.Log(TVD(i - 1)))
                     If Double.IsNaN(beta) Or Double.IsInfinity(beta) Then beta = 0
                 End If
+                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Dew Points (" & i + 1 & "/200)")
                 i = i + 1
             Loop Until i >= 200 Or PO(i - 1) = 0 Or PO(i - 1) < 0 Or TVD(i - 1) < 0 Or _
                         Double.IsNaN(PO(i - 1)) = True Or Double.IsNaN(TVD(i - 1)) = True Or _
@@ -814,7 +818,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 P = 400000
                 T = TVD(0)
                 Do
-                    If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Quality Line (" & i + 1 & "/200)")
                     If i < 2 Then
                         Try
                             tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, parameters(1), 0, Me, False, KI)
@@ -860,6 +863,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         End If
                         beta = (Math.Log(PQ(i) / 101325) - Math.Log(PQ(i - 1) / 101325)) / (Math.Log(TQ(i)) - Math.Log(TQ(i - 1)))
                     End If
+                    If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Quality Line (" & i + 1 & "/200)")
                     i = i + 1
                     If i > 2 Then
                         If PQ(i - 1) = PQ(i - 2) Or TQ(i - 1) = TQ(i - 2) Then Exit Do

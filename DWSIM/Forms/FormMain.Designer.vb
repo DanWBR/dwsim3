@@ -617,10 +617,13 @@ Partial Class FormMain
             End If
         End If
 
-        AddPropPacks()
-        GetComponents()
+        If Not My.Application.CAPEOPENMode Then
+            AddPropPacks()
+            GetComponents()
+        End If
 
         With Me.AvailableUnitSystems
+
             .Add(DWSIM.App.GetLocalString("SistemaSI"), New DWSIM.SistemasDeUnidades.UnidadesSI)
             .Add(DWSIM.App.GetLocalString("SistemaCGS"), New DWSIM.SistemasDeUnidades.UnidadesCGS)
             .Add(DWSIM.App.GetLocalString("SistemaIngls"), New DWSIM.SistemasDeUnidades.UnidadesINGLES)
@@ -628,7 +631,9 @@ Partial Class FormMain
             .Add(DWSIM.App.GetLocalString("Personalizado2SC"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv2)
             .Add(DWSIM.App.GetLocalString("Personalizado3CNTP"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv3)
             .Add(DWSIM.App.GetLocalString("Personalizado4"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv4)
+
             Dim myarraylist As New ArrayList
+
             If Not My.Settings.UserUnits = "" Then
                 Dim formatter As New Binary.BinaryFormatter()
                 Dim bytearray() As Byte
@@ -642,6 +647,7 @@ Partial Class FormMain
                     stream.Close()
                 End Try
             End If
+
             If myarraylist.Count > 0 Then
                 Dim su As New DWSIM.SistemasDeUnidades.Unidades
                 Dim i As Integer = 0

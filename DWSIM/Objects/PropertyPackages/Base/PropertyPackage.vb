@@ -96,8 +96,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         SimpleLLE = 9
     End Enum
 
-    '' Algoritmo Flash (2 = Global Def., 0 = NL VLE, 1 = IO VLE, 3 = IO VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = NL VLLE, 7 = NL SLE, 8 = NL Immisc., 9 = Simple LLE)
-
 #End Region
 
     ''' <summary>
@@ -173,7 +171,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Sub New(ByVal capeopenmode As Boolean)
 
-            My.Application.CAPEOPENMode = capeopenmode
+            If capeopenmode Then My.Application.CAPEOPENMode = capeopenmode
 
             If capeopenmode Then
 
@@ -190,7 +188,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 Dim cspath As String = ""
                 Try
-                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93").GetValue("")
+                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95").GetValue("")
                     cspath += Path.DirectorySeparatorChar + "pcd" + Path.DirectorySeparatorChar + "chemsep1.xml"
                     If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
                 Catch ex As Exception
@@ -265,6 +263,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 .Add("Vapor", New PhaseInfo("Vapor", 2, Fase.Vapor))
                 .Add("Liquid1", New PhaseInfo("Liquid", 3, Fase.Liquid1))
                 .Add("Liquid2", New PhaseInfo("Liquid2", 4, Fase.Liquid2))
+                .Add("Solid", New PhaseInfo("Solid", 7, Fase.Solid))
             End With
         End Sub
 
@@ -486,6 +485,44 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public MustOverride Sub DW_CalcProp(ByVal [property] As String, ByVal phase As Fase)
 
         ''' <summary>
+        ''' Provides a default implementation for solid phase property calculations in CAPE-OPEN mode. Should be used by all derived propety packages.
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public Overridable Sub DW_CalcSolidPhaseProps()
+
+            Dim phaseID As Integer = 7
+            Dim result As Double = 0.0#
+
+            Dim T, P As Double
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
+            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure
+
+            result = Me.AUX_SOLIDDENS
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
+            Dim constprops As New List(Of ConstantProperties)
+            For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                constprops.Add(su.ConstantProperties)
+            Next
+            result = Me.DW_CalcSolidEnthalpy(T, RET_VMOL(PropertyPackages.Fase.Solid), constprops)
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result / T
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = 0.0#
+            result = Me.DW_CalcSolidHeatCapacityCp(T, RET_VMOL(PropertyPackages.Fase.Solid), constprops)
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
+            result = Me.AUX_MMM(Fase.Solid)
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = result
+            result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = result
+            result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = result
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = 0.0#
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = 1.0E+20
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = 1.0E+20
+
+        End Sub
+
+        ''' <summary>
         ''' Calculates the enthalpy of a mixture.
         ''' </summary>
         ''' <param name="Vx">Vector of doubles containing the molar composition of the mixture.</param>
@@ -550,7 +587,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 End If
                 Try
                     Dim task1 As Task = New Task(Sub()
-
                                                      fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
                                                  End Sub)
                     Dim task2 As Task = New Task(Sub()
@@ -2345,7 +2381,6 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             P = Pmin
             T = Tmin
             Do
-                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Bubble Points (" & i + 1 & "/200)")
                 If i < 2 Then
                     Try
                         tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 0, 0, Me)
@@ -2403,6 +2438,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     End If
                     beta = (Math.Log(PB(i) / 101325) - Math.Log(PB(i - 1) / 101325)) / (Math.Log(TVB(i)) - Math.Log(TVB(i - 1)))
                 End If
+                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Bubble Points (" & i + 1 & "/200)")
                 i = i + 1
             Loop Until i >= 200 Or PB(i - 1) = 0 Or PB(i - 1) < 0 Or TVB(i - 1) < 0 Or _
                         T >= TCR Or Double.IsNaN(PB(i - 1)) = True Or _
@@ -2422,7 +2458,6 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             i = 0
             P = Pmin
             Do
-                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Dew Points (" & i + 1 & "/200)")
                 If i < 2 Then
                     Try
                         tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 1, 0, Me)
@@ -2493,6 +2528,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     beta = (Math.Log(PO(i) / 101325) - Math.Log(PO(i - 1) / 101325)) / (Math.Log(TVD(i)) - Math.Log(TVD(i - 1)))
                     If Double.IsNaN(beta) Or Double.IsInfinity(beta) Then beta = 0
                 End If
+                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Dew Points (" & i + 1 & "/200)")
                 i = i + 1
             Loop Until i >= 200 Or PO(i - 1) = 0 Or PO(i - 1) < 0 Or TVD(i - 1) < 0 Or _
                         Double.IsNaN(PO(i - 1)) = True Or Double.IsNaN(TVD(i - 1)) = True Or _
@@ -2512,7 +2548,6 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 P = 400000
                 T = TVD(0)
                 Do
-                    If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Quality Line (" & i + 1 & "/200)")
                     If i < 2 Then
                         Try
                             tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, parameters(1), 0, Me, False, KI)
@@ -2558,6 +2593,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         End If
                         beta = (Math.Log(PQ(i) / 101325) - Math.Log(PQ(i - 1) / 101325)) / (Math.Log(TQ(i)) - Math.Log(TQ(i - 1)))
                     End If
+                    If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Quality Line (" & i + 1 & "/200)")
                     i = i + 1
                     If i > 2 Then
                         If PQ(i - 1) = PQ(i - 2) Or TQ(i - 1) = TQ(i - 2) Then Exit Do
@@ -4548,7 +4584,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Dim i As Integer = 0
             For Each subs As Substancia In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(f)).Componentes.Values
                 subs.FugacityCoeff = fc(i)
-                'subs.ActivityCoeff = fc(i) * P / Me.AUX_PVAPi(i, T)
+                subs.ActivityCoeff = fc(i) * P / Me.AUX_PVAPi(i, T)
                 i += 1
             Next
 
@@ -7349,10 +7385,14 @@ Final3:
             For Each f As String In ph
                 For Each pi As PhaseInfo In Me.PhaseMappings.Values
                     If f = pi.PhaseLabel Then
-                        For Each p As String In props
-                            Me.DW_CalcProp(p, pi.DWPhaseID)
-                        Next
-                        Exit For
+                        If pi.DWPhaseID = Fase.Solid Then
+                            For Each p As String In props
+                                Me.DW_CalcProp(p, pi.DWPhaseID)
+                            Next
+                            Exit For
+                        Else
+                            Me.DW_CalcSolidPhaseProps()
+                        End If
                     End If
                 Next
             Next
@@ -7655,7 +7695,7 @@ Final3:
         Public Overridable Sub PropList(ByRef flashType As Object, ByRef props As Object, ByRef phases As Object, ByRef calcType As Object) Implements CapeOpen.ICapeThermoEquilibriumServer.PropList
             props = GetPropList()
             flashType = New String() {"TP", "PH", "PS", "TVF", "PVF", "PT", "HP", "SP", "VFT", "VFP"}
-            phases = New String() {"Vapor", "Liquid1", "Liquid2", "Overall"}
+            phases = New String() {"Vapor", "Liquid1", "Liquid2", "Solid", "Overall"}
             calcType = New String() {"Mixture"}
         End Sub
 
@@ -8046,6 +8086,23 @@ Final3:
                         Case Else
                             retval = Nothing
                     End Select
+                Case "Solid"
+                    Select Case phaseAttribute
+                        Case "StateOfAggregation"
+                            retval = "Solid"
+                        Case "TypeOfSolid"
+                            retval = "SolidSolution"
+                        Case "keyCompoundId"
+                            retval = Nothing
+                        Case "ExcludedCompoundId"
+                            retval = Nothing
+                        Case "DensityDescription"
+                            retval = Nothing
+                        Case "UserDescription"
+                            retval = "Solid Phase"
+                        Case Else
+                            retval = Nothing
+                    End Select
             End Select
             Return retval
         End Function
@@ -8167,6 +8224,8 @@ Final3:
                             lnPhi = Me.DW_CalcFugCoeff(Vx, temperature, pressure, State.Vapor)
                         Case "Liquid"
                             lnPhi = Me.DW_CalcFugCoeff(Vx, temperature, pressure, State.Liquid)
+                        Case "Solid"
+                            lnPhi = Me.DW_CalcFugCoeff(Vx, temperature, pressure, State.Solid)
                     End Select
                     For i As Integer = 0 To moleNumbers.length - 1
                         lnPhi(i) = Log(lnPhi(i))
@@ -8308,7 +8367,11 @@ Final3:
                     Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure = P
                     Me.CurrentMaterialStream.SetPhaseComposition(Vx, phs)
 
-                    Me.DW_CalcProp([property], phs)
+                    If phs = Fase.Solid Then
+                        Me.DW_CalcSolidPhaseProps()
+                    Else
+                        Me.DW_CalcProp([property], phs)
+                    End If
 
                     basis = "Mole"
                     Select Case [property].ToLower
@@ -8333,14 +8396,18 @@ Final3:
                         Case "idealgasheatcapacity"
                             If f = 1 Then
                                 res.Add(Me.CurrentMaterialStream.PropertyPackage.AUX_CPm(PropertyPackages.Fase.Liquid, Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature * 1000))
-                            Else
+                            ElseIf f = 2 Then
                                 res.Add(Me.CurrentMaterialStream.PropertyPackage.AUX_CPm(PropertyPackages.Fase.Vapor, Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature * 1000))
+                            Else
+                                res.Add(Me.CurrentMaterialStream.PropertyPackage.AUX_CPm(PropertyPackages.Fase.Solid, Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature * 1000))
                             End If
                         Case "idealgasenthalpy"
                             If f = 1 Then
                                 res.Add(Me.CurrentMaterialStream.PropertyPackage.RET_Hid(298.15, Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault * 1000, PropertyPackages.Fase.Liquid))
-                            Else
+                            ElseIf f = 2 Then
                                 res.Add(Me.CurrentMaterialStream.PropertyPackage.RET_Hid(298.15, Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault * 1000, PropertyPackages.Fase.Vapor))
+                            Else
+                                res.Add(Me.CurrentMaterialStream.PropertyPackage.RET_Hid(298.15, Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault * 1000, PropertyPackages.Fase.Solid))
                             End If
                         Case "excessenthalpy"
                             Select Case basis
@@ -8958,10 +9025,12 @@ Final3:
                 Dim vok As Boolean = False
                 Dim l1ok As Boolean = False
                 Dim l2ok As Boolean = False
+                Dim sok As Boolean = False
 
                 If ms.Fases(2).SPMProperties.molarfraction.HasValue Then vok = True
                 If ms.Fases(3).SPMProperties.molarfraction.HasValue Then l1ok = True
                 If ms.Fases(4).SPMProperties.molarfraction.HasValue Then l2ok = True
+                If ms.Fases(7).SPMProperties.molarfraction.HasValue Then sok = True
 
                 Dim phases As String() = Nothing
                 Dim statuses As CapePhaseStatus() = Nothing
@@ -8972,6 +9041,9 @@ Final3:
                 ElseIf vok And l1ok And Not l2ok Then
                     phases = New String() {"Vapor", "Liquid"}
                     statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM}
+                ElseIf vok And l1ok And Not l2ok And sok Then
+                    phases = New String() {"Vapor", "Liquid", "Solid"}
+                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM}
                 ElseIf vok And Not l1ok And l2ok Then
                     phases = New String() {"Vapor", "Liquid2"}
                     statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM}
@@ -8984,8 +9056,17 @@ Final3:
                 ElseIf Not vok And l1ok And Not l2ok Then
                     phases = New String() {"Liquid"}
                     statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM}
+                ElseIf vok And Not l1ok And sok Then
+                    phases = New String() {"Vapor", "Solid"}
+                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM}
+                ElseIf Not vok And l1ok And sok Then
+                    phases = New String() {"Liquid", "Solid"}
+                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM}
                 ElseIf Not vok And Not l1ok And l2ok Then
                     phases = New String() {"Liquid2"}
+                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM}
+                ElseIf Not vok And Not l1ok And sok Then
+                    phases = New String() {"Solid"}
                     statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM}
                 End If
 
@@ -9045,6 +9126,22 @@ Final3:
                     mo.SetSinglePhaseProp("pressure", "Liquid2", Nothing, New Double() {P})
                     mo.SetSinglePhaseProp("phasefraction", "Liquid2", "Mole", New Double() {pf})
                     mo.SetSinglePhaseProp("fraction", "Liquid2", "Mole", vz)
+
+                End If
+
+                If sok Then
+
+                    i = 0
+                    For Each s As Substancia In ms.Fases(7).Componentes.Values
+                        vz(i) = s.FracaoMolar.GetValueOrDefault
+                        i += 1
+                    Next
+                    pf = ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault
+
+                    mo.SetSinglePhaseProp("temperature", "Solid", Nothing, New Double() {T})
+                    mo.SetSinglePhaseProp("pressure", "Solid", Nothing, New Double() {P})
+                    mo.SetSinglePhaseProp("phasefraction", "Solid", "Mole", New Double() {pf})
+                    mo.SetSinglePhaseProp("fraction", "Solid", "Mole", vz)
 
                 End If
 
@@ -9188,14 +9285,16 @@ Final3:
 
             Dim mys As ICapeThermoMaterial = material
 
-            Dim Tv, Tl1, Tl2, Pv, Pl1, Pl2, xv, xl1, xl2 As Double
+            Dim Tv, Tl1, Tl2, Ts, Pv, Pl1, Pl2, Ps, xv, xl1, xl2, xs As Double
             Dim Vz As Object = Nothing
             Dim Vy As Object = Nothing
             Dim Vx1 As Object = Nothing
             Dim Vx2 As Object = Nothing
+            Dim Vs As Object = Nothing
             Dim Vwy As Object = Nothing
             Dim Vwx1 As Object = Nothing
             Dim Vwx2 As Object = Nothing
+            Dim Vws As Object = Nothing
             Dim labels As Object = Nothing
             Dim statuses As Object = Nothing
             Dim res As Object = Nothing
@@ -9223,6 +9322,8 @@ Final3:
                             mys.GetTPFraction(labels(i), Tl1, Pl1, Vx1)
                         Case "Liquid2"
                             mys.GetTPFraction(labels(i), Tl2, Pl2, Vx2)
+                        Case "Solid"
+                            mys.GetTPFraction(labels(i), Ts, Ps, Vs)
                     End Select
                     Select Case labels(i)
                         Case "Vapor"
@@ -9234,6 +9335,9 @@ Final3:
                         Case "Liquid2"
                             mys.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
                             xl2 = res(0)
+                        Case "Solid"
+                            mys.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
+                            xs = res(0)
                     End Select
                 Else
                     Select Case labels(i)
@@ -9243,6 +9347,8 @@ Final3:
                             xl1 = 0.0#
                         Case "Liquid2"
                             xl2 = 0.0#
+                        Case "Solid"
+                            xs = 0.0#
                     End Select
                 End If
             Next
@@ -9332,6 +9438,31 @@ Final3:
                     Next
                 End If
                 .Fases(4).SPMProperties.molarfraction = xl2
+                If Vs IsNot Nothing Then
+                    i = 0
+                    For Each s As Substancia In .Fases(7).Componentes.Values
+                        s.FracaoMolar = Vs(i)
+                        i += 1
+                    Next
+                    Vws = Me.AUX_CONVERT_MOL_TO_MASS(Vs)
+                    i = 0
+                    For Each s As Substancia In .Fases(7).Componentes.Values
+                        s.FracaoMassica = Vws(i)
+                        i += 1
+                    Next
+                Else
+                    i = 0
+                    For Each s As Substancia In .Fases(7).Componentes.Values
+                        s.FracaoMolar = 0.0#
+                        i += 1
+                    Next
+                    i = 0
+                    For Each s As Substancia In .Fases(7).Componentes.Values
+                        s.FracaoMassica = 0.0#
+                        i += 1
+                    Next
+                End If
+                .Fases(7).SPMProperties.molarfraction = xs
             End With
 
             Return ms
@@ -9784,6 +9915,8 @@ Final3:
 #End Region
 
 #End Region
+
+#Region "   XML data persistence"
 
         Public Overridable Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
 
@@ -10251,6 +10384,8 @@ Final3:
 
         End Function
 
+#End Region
+
     End Class
 
     ''' <summary>
@@ -10261,7 +10396,7 @@ Final3:
 
         Public PhaseLabel As String = ""
         Public DWPhaseIndex As Integer
-        Public DWPhaseID As Fase = Fase.Aqueous
+        Public DWPhaseID As Fase = Fase.Mixture
 
         Sub New(ByVal pl As String, ByVal pi As Integer, ByVal pid As Fase)
             PhaseLabel = pl

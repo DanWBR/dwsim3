@@ -311,7 +311,7 @@ Public Class FormOptions
 
     Private Sub dgvdb_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvdb.CellContentClick
 
-        If e.ColumnIndex = 4 And e.RowIndex > 3 Then
+        If e.ColumnIndex = 4 And e.RowIndex > 2 Then
 
             If Me.dgvdb.Rows(e.RowIndex).Cells(2).Value = "ChemSep" Then
 

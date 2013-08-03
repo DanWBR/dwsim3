@@ -1154,6 +1154,9 @@
     <EmbeddedResource Include="Forms\FormScriptMono.resx">
       <DependentUpon>FormScriptMono.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigCAPEOPEN2.de.resx">
+      <DependentUpon>FormConfigCAPEOPEN2.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigExUNIQUAC.de.resx">
       <DependentUpon>FormConfigExUNIQUAC.vb</DependentUpon>
     </EmbeddedResource>

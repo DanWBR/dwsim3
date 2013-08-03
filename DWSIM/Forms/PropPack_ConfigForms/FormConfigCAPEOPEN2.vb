@@ -22,10 +22,13 @@ Public Class FormConfigCAPEOPEN2
         Application.EnableVisualStyles()
         Application.DoEvents()
 
+        Me.TextBox1.AutoCompleteSource = AutoCompleteSource.CustomSource
+
         Me.lblName.Text = _pp.ComponentName
         Me.lblDescription.Text = _pp.ComponentDescription
 
         Dim comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+
         If Not loaded Then
 
             ACSC1 = New AutoCompleteStringCollection
@@ -42,8 +45,15 @@ Public Class FormConfigCAPEOPEN2
                             c.ToolTipText = DWSIM.App.GetLocalString("CompMissingData")
                         End If
                     Next
+                    ACSC1.Add(comp.Name)
                 End If
             Next
+
+            Try
+                Me.TextBox1.AutoCompleteCustomSource = ACSC1
+            Catch ex As Exception
+
+            End Try
 
         Else
 
@@ -80,6 +90,10 @@ Public Class FormConfigCAPEOPEN2
                 ComboBoxFlashAlg.SelectedIndex = 4
             Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3P
                 ComboBoxFlashAlg.SelectedIndex = 5
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
+                ComboBoxFlashAlg.SelectedIndex = 6
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
+                ComboBoxFlashAlg.SelectedIndex = 7
             Case Else
                 ComboBoxFlashAlg.SelectedIndex = 0
         End Select
@@ -175,6 +189,14 @@ Public Class FormConfigCAPEOPEN2
                 Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3P
                 Me.chkIOmode.Enabled = True
                 Me.GroupBox11.Enabled = True
+            Case 6
+                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
+                Me.chkIOmode.Enabled = False
+                Me.GroupBox11.Enabled = False
+            Case 7
+                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
+                Me.chkIOmode.Enabled = False
+                Me.GroupBox11.Enabled = True
         End Select
     End Sub
 
@@ -201,8 +223,6 @@ Public Class FormConfigCAPEOPEN2
             Dim r As New OutlookGridRow
             r.CreateCells(ogc1, New Object() {comp.Name, DWSIM.App.GetComponentName(comp.Name), comp.OriginalDB, DWSIM.App.GetComponentType(comp), comp.Formula})
             ogc1.Rows.Add(r)
-            ACSC1.Add(r.Cells(1).Value.ToString)
-            Me.TextBox1.AutoCompleteCustomSource = ACSC1
             Return ogc1.Rows.Count - 1
         Else
             Return -1
@@ -306,7 +326,7 @@ Public Class FormConfigCAPEOPEN2
                 Case 0
                     My.Settings.CultureInfo = "pt-BR"
                 Case 1
-                    My.Settings.CultureInfo = "en-US"
+                    My.Settings.CultureInfo = "en"
                 Case 2
                     My.Settings.CultureInfo = "es"
                 Case 3
@@ -314,7 +334,6 @@ Public Class FormConfigCAPEOPEN2
             End Select
             My.Settings.Save()
             My.Application.ChangeUICulture(My.Settings.CultureInfo)
-            MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
         End If
     End Sub
 
