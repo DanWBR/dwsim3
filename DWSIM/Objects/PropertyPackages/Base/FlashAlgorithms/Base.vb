@@ -56,7 +56,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim bm As New MathEx.BrentOpt.BrentMinimize
             bm.DefineFuncDelegate(AddressOf BubbleTemperature_LLEPerror)
 
-            err = bm.brentoptimize(Tmin, Tmax, 0.01, T)
+            err = bm.brentoptimize(Tmin, Tmax, 0.0001, T)
 
             Return T
 
@@ -80,14 +80,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim i As Integer
 
             For i = 0 To n
-                act1(i) = _P / _pp.AUX_PVAPi(i, x) * fi1(i)
-                act2(i) = _P / _pp.AUX_PVAPi(i, x) * fi2(i)
                 Vp(i) = _pp.AUX_PVAPi(i, x)
+                act1(i) = _P / Vp(i) * fi1(i)
+                act2(i) = _P / Vp(i) * fi2(i)
             Next
 
             Dim err As Double = _P
             For i = 0 To n
-                err -= Vx1(i) * act1(i) * Vp(i)
+                err -= Vx2(i) * act2(i) * Vp(i)
             Next
 
             Return Math.Abs(err)
