@@ -57,6 +57,13 @@ Partial Class FormBinEnv
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
         Me.Grid1 = New System.Windows.Forms.DataGridView()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.TSB_Print = New System.Windows.Forms.ToolStripButton()
+        Me.TSB_PrinterSetup = New System.Windows.Forms.ToolStripButton()
+        Me.TSB_PageSetup = New System.Windows.Forms.ToolStripButton()
+        Me.TSB_Preview = New System.Windows.Forms.ToolStripButton()
+        Me.TSB_Copy = New System.Windows.Forms.ToolStripButton()
+        Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -64,6 +71,7 @@ Partial Class FormBinEnv
         Me.FaTabStripItem1.SuspendLayout()
         Me.FaTabStripItem2.SuspendLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox6
@@ -316,10 +324,57 @@ Partial Class FormBinEnv
         Me.BackgroundWorker1.WorkerReportsProgress = True
         Me.BackgroundWorker1.WorkerSupportsCancellation = True
         '
+        'ToolStrip1
+        '
+        resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
+        Me.ToolStrip1.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSB_Print, Me.TSB_PrinterSetup, Me.TSB_PageSetup, Me.TSB_Preview, Me.TSB_Copy})
+        Me.ToolStrip1.Name = "ToolStrip1"
+        '
+        'TSB_Print
+        '
+        Me.TSB_Print.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.TSB_Print.Image = Global.DWSIM.My.Resources.Resources.printer
+        resources.ApplyResources(Me.TSB_Print, "TSB_Print")
+        Me.TSB_Print.Name = "TSB_Print"
+        '
+        'TSB_PrinterSetup
+        '
+        Me.TSB_PrinterSetup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.TSB_PrinterSetup.Image = Global.DWSIM.My.Resources.Resources.printer_add
+        resources.ApplyResources(Me.TSB_PrinterSetup, "TSB_PrinterSetup")
+        Me.TSB_PrinterSetup.Name = "TSB_PrinterSetup"
+        '
+        'TSB_PageSetup
+        '
+        Me.TSB_PageSetup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.TSB_PageSetup.Image = Global.DWSIM.My.Resources.Resources.page_white_gear
+        resources.ApplyResources(Me.TSB_PageSetup, "TSB_PageSetup")
+        Me.TSB_PageSetup.Name = "TSB_PageSetup"
+        '
+        'TSB_Preview
+        '
+        Me.TSB_Preview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.TSB_Preview.Image = Global.DWSIM.My.Resources.Resources.page_white_magnify
+        resources.ApplyResources(Me.TSB_Preview, "TSB_Preview")
+        Me.TSB_Preview.Name = "TSB_Preview"
+        '
+        'TSB_Copy
+        '
+        Me.TSB_Copy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.TSB_Copy.Image = Global.DWSIM.My.Resources.Resources.copy
+        resources.ApplyResources(Me.TSB_Copy, "TSB_Copy")
+        Me.TSB_Copy.Name = "TSB_Copy"
+        '
+        'PrintDialog1
+        '
+        Me.PrintDialog1.UseEXDialog = True
+        '
         'FormBinEnv
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.ToolStrip1)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox6)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
@@ -334,6 +389,8 @@ Partial Class FormBinEnv
         Me.FaTabStripItem1.ResumeLayout(False)
         Me.FaTabStripItem2.ResumeLayout(False)
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -370,4 +427,11 @@ Partial Class FormBinEnv
     Friend WithEvents chkSLE As System.Windows.Forms.CheckBox
     Friend WithEvents chkLLE As System.Windows.Forms.CheckBox
     Friend WithEvents chkVLE As System.Windows.Forms.CheckBox
+    Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
+    Friend WithEvents TSB_Print As System.Windows.Forms.ToolStripButton
+    Friend WithEvents TSB_PrinterSetup As System.Windows.Forms.ToolStripButton
+    Friend WithEvents PrintDialog1 As System.Windows.Forms.PrintDialog
+    Friend WithEvents TSB_PageSetup As System.Windows.Forms.ToolStripButton
+    Friend WithEvents TSB_Preview As System.Windows.Forms.ToolStripButton
+    Friend WithEvents TSB_Copy As System.Windows.Forms.ToolStripButton
 End Class
