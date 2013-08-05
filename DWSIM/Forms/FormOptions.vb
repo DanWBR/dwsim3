@@ -451,4 +451,5 @@ Public Class FormOptions
     Private Sub CheckBoxConstantProperties_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxConstantProperties.CheckedChanged
         My.Settings.ReplaceCompoundConstantProperties = CheckBoxConstantProperties.Checked
     End Sub
+
 End Class

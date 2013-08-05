@@ -32,8 +32,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Inherits FlashAlgorithm
 
-        Private _io3 As New BostonFournierInsideOut3P
-
         Dim i, j, k, n, ecount As Integer
         Dim etol As Double = 0.000001
         Dim itol As Double = 0.000001
@@ -332,7 +330,7 @@ out:
 
                 ' do a stability test in the liquid phase
 
-                Dim stresult As Object = _io3.StabTest(T, P, result(2), PP, Vtrials, Me.StabSearchSeverity)
+                Dim stresult As Object = StabTest(T, P, result(2), PP, Vtrials, Me.StabSearchSeverity)
 
                 If stresult(0) = False Then
 

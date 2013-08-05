@@ -55,6 +55,16 @@ Partial Class FormConfigCAPEOPEN2
         Me.Label1 = New System.Windows.Forms.Label()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
         Me.Button3 = New System.Windows.Forms.Button()
+        Me.FaTabStripItem7 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.tbGPUCaps = New System.Windows.Forms.TextBox()
+        Me.cbGPU = New System.Windows.Forms.ComboBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.chkEnableGPUProcessing = New System.Windows.Forms.CheckBox()
+        Me.cbParallelism = New System.Windows.Forms.ComboBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.chkEnableParallelCalcs = New System.Windows.Forms.CheckBox()
         Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.Button4 = New System.Windows.Forms.Button()
@@ -90,6 +100,9 @@ Partial Class FormConfigCAPEOPEN2
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.FaTabStripItem3.SuspendLayout()
+        Me.FaTabStripItem7.SuspendLayout()
+        Me.GroupBox7.SuspendLayout()
+        Me.GroupBox8.SuspendLayout()
         Me.FaTabStripItem4.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         Me.FaTabStripItem6.SuspendLayout()
@@ -101,24 +114,25 @@ Partial Class FormConfigCAPEOPEN2
         '
         'FaTabStrip1
         '
+        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
-        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
-        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2, Me.FaTabStripItem3, Me.FaTabStripItem4, Me.FaTabStripItem6})
+        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2, Me.FaTabStripItem3, Me.FaTabStripItem7, Me.FaTabStripItem4, Me.FaTabStripItem6})
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
         '
         'FaTabStripItem1
         '
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         Me.FaTabStripItem1.CanClose = False
         Me.FaTabStripItem1.Controls.Add(Me.GroupBox2)
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
         Me.FaTabStripItem1.Selected = True
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         '
         'GroupBox2
         '
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Controls.Add(Me.Button6)
         Me.GroupBox2.Controls.Add(Me.GroupBox4)
         Me.GroupBox2.Controls.Add(Me.Button11)
@@ -127,20 +141,20 @@ Partial Class FormConfigCAPEOPEN2
         Me.GroupBox2.Controls.Add(Me.TextBox1)
         Me.GroupBox2.Controls.Add(Me.Label3)
         Me.GroupBox2.Controls.Add(Me.ogc1)
-        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
         'Button6
         '
         resources.ApplyResources(Me.Button6, "Button6")
+        Me.Button6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button6.Name = "Button6"
         Me.Button6.UseVisualStyleBackColor = True
         '
         'GroupBox4
         '
-        Me.GroupBox4.Controls.Add(Me.ListViewA)
         resources.ApplyResources(Me.GroupBox4, "GroupBox4")
+        Me.GroupBox4.Controls.Add(Me.ListViewA)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.TabStop = False
         '
@@ -160,35 +174,40 @@ Partial Class FormConfigCAPEOPEN2
         'Button11
         '
         resources.ApplyResources(Me.Button11, "Button11")
+        Me.Button11.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button11.Name = "Button11"
         Me.Button11.UseVisualStyleBackColor = True
         '
         'Button10
         '
         resources.ApplyResources(Me.Button10, "Button10")
+        Me.Button10.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button10.Name = "Button10"
         Me.Button10.UseVisualStyleBackColor = True
         '
         'Button7
         '
         resources.ApplyResources(Me.Button7, "Button7")
+        Me.Button7.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button7.Name = "Button7"
         Me.Button7.UseVisualStyleBackColor = True
         '
         'TextBox1
         '
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
         Me.TextBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.TextBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        resources.ApplyResources(Me.TextBox1, "TextBox1")
         Me.TextBox1.Name = "TextBox1"
         '
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label3.Name = "Label3"
         '
         'ogc1
         '
+        resources.ApplyResources(Me.ogc1, "ogc1")
         Me.ogc1.AllowUserToAddRows = False
         Me.ogc1.AllowUserToDeleteRows = False
         Me.ogc1.AllowUserToResizeRows = False
@@ -199,7 +218,6 @@ Partial Class FormConfigCAPEOPEN2
         Me.ogc1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.ogc1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column11, Me.Column6, Me.Column7, Me.Column8, Me.Column9})
         Me.ogc1.ExpandIcon = Global.DWSIM.My.Resources.Resources.plus
-        resources.ApplyResources(Me.ogc1, "ogc1")
         Me.ogc1.Name = "ogc1"
         Me.ogc1.RowHeadersVisible = False
         Me.ogc1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
@@ -212,6 +230,7 @@ Partial Class FormConfigCAPEOPEN2
         Me.Column11.FillWeight = 5.0!
         resources.ApplyResources(Me.Column11, "Column11")
         Me.Column11.Name = "Column11"
+        Me.Column11.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'Column6
         '
@@ -219,6 +238,7 @@ Partial Class FormConfigCAPEOPEN2
         resources.ApplyResources(Me.Column6, "Column6")
         Me.Column6.Name = "Column6"
         Me.Column6.ReadOnly = True
+        Me.Column6.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'Column7
         '
@@ -226,6 +246,7 @@ Partial Class FormConfigCAPEOPEN2
         resources.ApplyResources(Me.Column7, "Column7")
         Me.Column7.Name = "Column7"
         Me.Column7.ReadOnly = True
+        Me.Column7.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'Column8
         '
@@ -233,6 +254,7 @@ Partial Class FormConfigCAPEOPEN2
         resources.ApplyResources(Me.Column8, "Column8")
         Me.Column8.Name = "Column8"
         Me.Column8.ReadOnly = True
+        Me.Column8.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'Column9
         '
@@ -240,40 +262,42 @@ Partial Class FormConfigCAPEOPEN2
         resources.ApplyResources(Me.Column9, "Column9")
         Me.Column9.Name = "Column9"
         Me.Column9.ReadOnly = True
+        Me.Column9.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'FaTabStripItem2
         '
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         Me.FaTabStripItem2.CanClose = False
         Me.FaTabStripItem2.Controls.Add(Me.GroupBox5)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
-        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         '
         'GroupBox5
         '
+        resources.ApplyResources(Me.GroupBox5, "GroupBox5")
         Me.GroupBox5.Controls.Add(Me.GroupBox3)
         Me.GroupBox5.Controls.Add(Me.chkIOmode)
         Me.GroupBox5.Controls.Add(Me.ComboBoxFlashAlg)
         Me.GroupBox5.Controls.Add(Me.Label1)
-        resources.ApplyResources(Me.GroupBox5, "GroupBox5")
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.TabStop = False
         '
         'GroupBox3
         '
+        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
         Me.GroupBox3.Controls.Add(Me.RadioButton3)
         Me.GroupBox3.Controls.Add(Me.RadioButton2)
         Me.GroupBox3.Controls.Add(Me.RadioButton1)
         Me.GroupBox3.Controls.Add(Me.Label4)
         Me.GroupBox3.Controls.Add(Me.Label6)
         Me.GroupBox3.Controls.Add(Me.ListView2)
-        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.TabStop = False
         '
         'RadioButton3
         '
         resources.ApplyResources(Me.RadioButton3, "RadioButton3")
+        Me.RadioButton3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.RadioButton3.Name = "RadioButton3"
         Me.RadioButton3.TabStop = True
         Me.RadioButton3.UseVisualStyleBackColor = True
@@ -281,6 +305,7 @@ Partial Class FormConfigCAPEOPEN2
         'RadioButton2
         '
         resources.ApplyResources(Me.RadioButton2, "RadioButton2")
+        Me.RadioButton2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.RadioButton2.Name = "RadioButton2"
         Me.RadioButton2.TabStop = True
         Me.RadioButton2.UseVisualStyleBackColor = True
@@ -288,6 +313,7 @@ Partial Class FormConfigCAPEOPEN2
         'RadioButton1
         '
         resources.ApplyResources(Me.RadioButton1, "RadioButton1")
+        Me.RadioButton1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.RadioButton1.Name = "RadioButton1"
         Me.RadioButton1.TabStop = True
         Me.RadioButton1.UseVisualStyleBackColor = True
@@ -295,17 +321,19 @@ Partial Class FormConfigCAPEOPEN2
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label4.Name = "Label4"
         '
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
+        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label6.Name = "Label6"
         '
         'ListView2
         '
-        Me.ListView2.CheckBoxes = True
         resources.ApplyResources(Me.ListView2, "ListView2")
+        Me.ListView2.CheckBoxes = True
         Me.ListView2.Name = "ListView2"
         Me.ListView2.UseCompatibleStateImageBehavior = False
         Me.ListView2.View = System.Windows.Forms.View.List
@@ -313,42 +341,117 @@ Partial Class FormConfigCAPEOPEN2
         'chkIOmode
         '
         resources.ApplyResources(Me.chkIOmode, "chkIOmode")
+        Me.chkIOmode.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.chkIOmode.Name = "chkIOmode"
         '
         'ComboBoxFlashAlg
         '
+        resources.ApplyResources(Me.ComboBoxFlashAlg, "ComboBoxFlashAlg")
         Me.ComboBoxFlashAlg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBoxFlashAlg.FormattingEnabled = True
         Me.ComboBoxFlashAlg.Items.AddRange(New Object() {resources.GetString("ComboBoxFlashAlg.Items"), resources.GetString("ComboBoxFlashAlg.Items1"), resources.GetString("ComboBoxFlashAlg.Items2"), resources.GetString("ComboBoxFlashAlg.Items3"), resources.GetString("ComboBoxFlashAlg.Items4"), resources.GetString("ComboBoxFlashAlg.Items5"), resources.GetString("ComboBoxFlashAlg.Items6"), resources.GetString("ComboBoxFlashAlg.Items7")})
-        resources.ApplyResources(Me.ComboBoxFlashAlg, "ComboBoxFlashAlg")
         Me.ComboBoxFlashAlg.Name = "ComboBoxFlashAlg"
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label1.Name = "Label1"
         '
         'FaTabStripItem3
         '
+        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         Me.FaTabStripItem3.CanClose = False
         Me.FaTabStripItem3.Controls.Add(Me.Button3)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         '
         'Button3
         '
         resources.ApplyResources(Me.Button3, "Button3")
+        Me.Button3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button3.Name = "Button3"
         Me.Button3.UseVisualStyleBackColor = True
         '
+        'FaTabStripItem7
+        '
+        resources.ApplyResources(Me.FaTabStripItem7, "FaTabStripItem7")
+        Me.FaTabStripItem7.CanClose = False
+        Me.FaTabStripItem7.Controls.Add(Me.GroupBox7)
+        Me.FaTabStripItem7.IsDrawn = True
+        Me.FaTabStripItem7.Name = "FaTabStripItem7"
+        '
+        'GroupBox7
+        '
+        resources.ApplyResources(Me.GroupBox7, "GroupBox7")
+        Me.GroupBox7.Controls.Add(Me.GroupBox8)
+        Me.GroupBox7.Controls.Add(Me.cbGPU)
+        Me.GroupBox7.Controls.Add(Me.Label9)
+        Me.GroupBox7.Controls.Add(Me.chkEnableGPUProcessing)
+        Me.GroupBox7.Controls.Add(Me.cbParallelism)
+        Me.GroupBox7.Controls.Add(Me.Label11)
+        Me.GroupBox7.Controls.Add(Me.chkEnableParallelCalcs)
+        Me.GroupBox7.Name = "GroupBox7"
+        Me.GroupBox7.TabStop = False
+        '
+        'GroupBox8
+        '
+        resources.ApplyResources(Me.GroupBox8, "GroupBox8")
+        Me.GroupBox8.Controls.Add(Me.tbGPUCaps)
+        Me.GroupBox8.Name = "GroupBox8"
+        Me.GroupBox8.TabStop = False
+        '
+        'tbGPUCaps
+        '
+        resources.ApplyResources(Me.tbGPUCaps, "tbGPUCaps")
+        Me.tbGPUCaps.Name = "tbGPUCaps"
+        Me.tbGPUCaps.ReadOnly = True
+        '
+        'cbGPU
+        '
+        resources.ApplyResources(Me.cbGPU, "cbGPU")
+        Me.cbGPU.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbGPU.FormattingEnabled = True
+        Me.cbGPU.Name = "cbGPU"
+        '
+        'Label9
+        '
+        resources.ApplyResources(Me.Label9, "Label9")
+        Me.Label9.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label9.Name = "Label9"
+        '
+        'chkEnableGPUProcessing
+        '
+        resources.ApplyResources(Me.chkEnableGPUProcessing, "chkEnableGPUProcessing")
+        Me.chkEnableGPUProcessing.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkEnableGPUProcessing.Name = "chkEnableGPUProcessing"
+        '
+        'cbParallelism
+        '
+        resources.ApplyResources(Me.cbParallelism, "cbParallelism")
+        Me.cbParallelism.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbParallelism.FormattingEnabled = True
+        Me.cbParallelism.Name = "cbParallelism"
+        '
+        'Label11
+        '
+        resources.ApplyResources(Me.Label11, "Label11")
+        Me.Label11.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label11.Name = "Label11"
+        '
+        'chkEnableParallelCalcs
+        '
+        resources.ApplyResources(Me.chkEnableParallelCalcs, "chkEnableParallelCalcs")
+        Me.chkEnableParallelCalcs.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkEnableParallelCalcs.Name = "chkEnableParallelCalcs"
+        '
         'FaTabStripItem4
         '
+        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
         Me.FaTabStripItem4.CanClose = False
         Me.FaTabStripItem4.Controls.Add(Me.GroupBox6)
         Me.FaTabStripItem4.IsDrawn = True
         Me.FaTabStripItem4.Name = "FaTabStripItem4"
-        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
         '
         'GroupBox6
         '
@@ -363,14 +466,15 @@ Partial Class FormConfigCAPEOPEN2
         'Button4
         '
         resources.ApplyResources(Me.Button4, "Button4")
+        Me.Button4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button4.Name = "Button4"
         Me.Button4.UseVisualStyleBackColor = True
         '
         'ListView1
         '
+        resources.ApplyResources(Me.ListView1, "ListView1")
         Me.ListView1.FullRowSelect = True
         Me.ListView1.Items.AddRange(New System.Windows.Forms.ListViewItem() {CType(resources.GetObject("ListView1.Items"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items1"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items2"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items3"), System.Windows.Forms.ListViewItem)})
-        resources.ApplyResources(Me.ListView1, "ListView1")
         Me.ListView1.MultiSelect = False
         Me.ListView1.Name = "ListView1"
         Me.ListView1.UseCompatibleStateImageBehavior = False
@@ -379,15 +483,18 @@ Partial Class FormConfigCAPEOPEN2
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label5.Name = "Label5"
         '
         'Label7
         '
         resources.ApplyResources(Me.Label7, "Label7")
+        Me.Label7.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label7.Name = "Label7"
         '
         'FaTabStripItem6
         '
+        resources.ApplyResources(Me.FaTabStripItem6, "FaTabStripItem6")
         Me.FaTabStripItem6.CanClose = False
         Me.FaTabStripItem6.Controls.Add(Me.lblDescription)
         Me.FaTabStripItem6.Controls.Add(Me.Label10)
@@ -395,78 +502,86 @@ Partial Class FormConfigCAPEOPEN2
         Me.FaTabStripItem6.Controls.Add(Me.Label8)
         Me.FaTabStripItem6.IsDrawn = True
         Me.FaTabStripItem6.Name = "FaTabStripItem6"
-        resources.ApplyResources(Me.FaTabStripItem6, "FaTabStripItem6")
         '
         'lblDescription
         '
         resources.ApplyResources(Me.lblDescription, "lblDescription")
+        Me.lblDescription.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.lblDescription.Name = "lblDescription"
         '
         'Label10
         '
         resources.ApplyResources(Me.Label10, "Label10")
+        Me.Label10.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label10.Name = "Label10"
         '
         'lblName
         '
         resources.ApplyResources(Me.lblName, "lblName")
+        Me.lblName.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.lblName.Name = "lblName"
         '
         'Label8
         '
         resources.ApplyResources(Me.Label8, "Label8")
+        Me.Label8.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label8.Name = "Label8"
         '
         'FaTabStripItem5
         '
+        resources.ApplyResources(Me.FaTabStripItem5, "FaTabStripItem5")
         Me.FaTabStripItem5.Controls.Add(Me.GroupBox11)
         Me.FaTabStripItem5.Controls.Add(Me.GroupBox1)
         Me.FaTabStripItem5.IsDrawn = True
         Me.FaTabStripItem5.Name = "FaTabStripItem5"
-        resources.ApplyResources(Me.FaTabStripItem5, "FaTabStripItem5")
         '
         'GroupBox11
         '
+        resources.ApplyResources(Me.GroupBox11, "GroupBox11")
         Me.GroupBox11.Controls.Add(Me.cbudb)
         Me.GroupBox11.Controls.Add(Me.Button1)
         Me.GroupBox11.Controls.Add(Me.Button2)
-        resources.ApplyResources(Me.GroupBox11, "GroupBox11")
         Me.GroupBox11.Name = "GroupBox11"
         Me.GroupBox11.TabStop = False
         '
         'cbudb
         '
         resources.ApplyResources(Me.cbudb, "cbudb")
+        Me.cbudb.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.cbudb.Name = "cbudb"
         Me.cbudb.UseVisualStyleBackColor = True
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Button2
         '
         resources.ApplyResources(Me.Button2, "Button2")
+        Me.Button2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button2.Name = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.dgvdb)
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label2.Name = "Label2"
         '
         'dgvdb
         '
+        resources.ApplyResources(Me.dgvdb, "dgvdb")
         Me.dgvdb.AllowUserToAddRows = False
         Me.dgvdb.AllowUserToDeleteRows = False
         Me.dgvdb.AllowUserToResizeColumns = False
@@ -478,7 +593,6 @@ Partial Class FormConfigCAPEOPEN2
         Me.dgvdb.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvdb.ColumnHeadersVisible = False
         Me.dgvdb.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column12, Me.Column13, Me.Column14, Me.Column15, Me.Column1})
-        resources.ApplyResources(Me.dgvdb, "dgvdb")
         Me.dgvdb.GridColor = System.Drawing.SystemColors.Control
         Me.dgvdb.Name = "dgvdb"
         Me.dgvdb.ReadOnly = True
@@ -496,6 +610,7 @@ Partial Class FormConfigCAPEOPEN2
         Me.Column12.Name = "Column12"
         Me.Column12.ReadOnly = True
         Me.Column12.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Column12.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'Column13
         '
@@ -505,6 +620,7 @@ Partial Class FormConfigCAPEOPEN2
         Me.Column13.Name = "Column13"
         Me.Column13.ReadOnly = True
         Me.Column13.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Column13.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'Column14
         '
@@ -514,6 +630,7 @@ Partial Class FormConfigCAPEOPEN2
         Me.Column14.Name = "Column14"
         Me.Column14.ReadOnly = True
         Me.Column14.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Column14.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'Column15
         '
@@ -522,6 +639,7 @@ Partial Class FormConfigCAPEOPEN2
         Me.Column15.Name = "Column15"
         Me.Column15.ReadOnly = True
         Me.Column15.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Column15.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'Column1
         '
@@ -529,6 +647,7 @@ Partial Class FormConfigCAPEOPEN2
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
+        Me.Column1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'ofdcs
         '
@@ -558,6 +677,11 @@ Partial Class FormConfigCAPEOPEN2
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         Me.FaTabStripItem3.ResumeLayout(False)
+        Me.FaTabStripItem7.ResumeLayout(False)
+        Me.GroupBox7.ResumeLayout(False)
+        Me.GroupBox7.PerformLayout()
+        Me.GroupBox8.ResumeLayout(False)
+        Me.GroupBox8.PerformLayout()
         Me.FaTabStripItem4.ResumeLayout(False)
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
@@ -628,4 +752,14 @@ Partial Class FormConfigCAPEOPEN2
     Friend WithEvents Column7 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column8 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column9 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents FaTabStripItem7 As FarsiLibrary.Win.FATabStripItem
+    Public WithEvents GroupBox7 As System.Windows.Forms.GroupBox
+    Friend WithEvents GroupBox8 As System.Windows.Forms.GroupBox
+    Friend WithEvents tbGPUCaps As System.Windows.Forms.TextBox
+    Friend WithEvents cbGPU As System.Windows.Forms.ComboBox
+    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Public WithEvents chkEnableGPUProcessing As System.Windows.Forms.CheckBox
+    Friend WithEvents cbParallelism As System.Windows.Forms.ComboBox
+    Friend WithEvents Label11 As System.Windows.Forms.Label
+    Public WithEvents chkEnableParallelCalcs As System.Windows.Forms.CheckBox
 End Class

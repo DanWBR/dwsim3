@@ -1,6 +1,7 @@
-﻿
-Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
+﻿Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports OutlookStyleControls
+Imports Cudafy
+Imports Cudafy.Host
 
 Public Class FormConfigCAPEOPEN2
 
@@ -21,6 +22,62 @@ Public Class FormConfigCAPEOPEN2
 
         Application.EnableVisualStyles()
         Application.DoEvents()
+
+        Me.cbGPU.Items.Clear()
+
+        CudafyModes.Target = eGPUType.Emulator
+        For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+            Me.cbGPU.Items.Add("Emulator | " & prop.Name & " (" & prop.DeviceId & ")")
+        Next
+        Try
+            CudafyModes.Target = eGPUType.Cuda
+            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+                Me.cbGPU.Items.Add("CUDA | " & prop.Name & " (" & prop.DeviceId & ")")
+            Next
+        Catch ex As Exception
+
+        End Try
+        Try
+            CudafyModes.Target = eGPUType.OpenCL
+            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+                Me.cbGPU.Items.Add("OpenCL | " & prop.Name & " (" & prop.DeviceId & ")")
+            Next
+        Catch ex As Exception
+
+        End Try
+
+        CudafyModes.Target = My.Settings.CudafyTarget
+
+        Dim i As Integer = 0
+        Me.cbParallelism.Items.Clear()
+        Me.cbParallelism.Items.Add("Default")
+        For i = 1 To System.Environment.ProcessorCount
+            Me.cbParallelism.Items.Add(i.ToString)
+        Next
+        If My.Settings.MaxDegreeOfParallelism = -1 Then
+            Me.cbParallelism.SelectedIndex = 0
+        ElseIf My.Settings.MaxDegreeOfParallelism <= System.Environment.ProcessorCount Then
+            Me.cbParallelism.SelectedItem = My.Settings.MaxDegreeOfParallelism.ToString
+        Else
+            Me.cbParallelism.SelectedIndex = Me.cbParallelism.Items.Count - 1
+        End If
+
+        Me.chkEnableParallelCalcs.Checked = My.Settings.EnableParallelProcessing
+        Me.chkEnableGPUProcessing.Checked = My.Settings.EnableGPUProcessing
+        Me.cbGPU.Enabled = Me.chkEnableGPUProcessing.Checked
+        Me.tbGPUCaps.Enabled = Me.chkEnableGPUProcessing.Checked
+        Me.cbParallelism.Enabled = Me.chkEnableParallelCalcs.Checked
+
+        If My.Settings.SelectedGPU <> "" Then
+            For Each s As String In Me.cbGPU.Items
+                If s = My.Settings.SelectedGPU Then
+                    Me.cbGPU.SelectedItem = s
+                    Exit For
+                End If
+            Next
+        Else
+            If Me.cbGPU.Items.Count > 0 Then Me.cbGPU.SelectedIndex = 0
+        End If
 
         Me.TextBox1.AutoCompleteSource = AutoCompleteSource.CustomSource
 
@@ -114,7 +171,7 @@ Public Class FormConfigCAPEOPEN2
 
         Me.ListView2.Items.Clear()
 
-        Dim i, n As Integer
+        Dim n As Integer
         n = comps.Count - 1
         For i = 0 To n
             With Me.ListView2.Items.Add(DWSIM.App.GetComponentName(comps(i)))
@@ -361,6 +418,79 @@ Public Class FormConfigCAPEOPEN2
             Call Button7_Click(sender, e)
             Me.TextBox1.Text = ""
         End If
+    End Sub
+
+    Public Sub GetCUDACaps(prop As GPGPUProperties)
+
+        Dim i As Integer = 0
+
+        Me.tbGPUCaps.Text = ""
+
+        Me.tbGPUCaps.AppendText(String.Format("   --- General Information for device {0} ---", i) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Name:  {0}", prop.Name) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Device Id:  {0}", prop.DeviceId) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Compute capability:  {0}.{1}", prop.Capability.Major, prop.Capability.Minor) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Clock rate: {0}", prop.ClockRate) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Simulated: {0}", prop.IsSimulated) & vbCrLf)
+
+        Me.tbGPUCaps.AppendText(String.Format("   --- Memory Information for device {0} ---", i) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Total global mem:  {0}", prop.TotalMemory) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Total constant Mem:  {0}", prop.TotalConstantMemory) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Max mem pitch:  {0}", prop.MemoryPitch) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Texture Alignment:  {0}", prop.TextureAlignment) & vbCrLf)
+
+        Me.tbGPUCaps.AppendText(String.Format("   --- MP Information for device {0} ---", i) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Shared mem per mp: {0}", prop.SharedMemoryPerBlock) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Registers per mp:  {0}", prop.RegistersPerBlock) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Threads in warp:  {0}", prop.WarpSize) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Max threads per block:  {0}", prop.MaxThreadsPerBlock) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Max thread dimensions:  ({0}, {1}, {2})", prop.MaxThreadsSize.x, prop.MaxThreadsSize.y, prop.MaxThreadsSize.z) & vbCrLf)
+        Me.tbGPUCaps.AppendText(String.Format("Max grid dimensions:  ({0}, {1}, {2})", prop.MaxGridSize.x, prop.MaxGridSize.y, prop.MaxGridSize.z) & vbCrLf)
+
+        Me.tbGPUCaps.SelectionStart = 0
+        Me.tbGPUCaps.SelectionLength = 0
+        Me.tbGPUCaps.ScrollToCaret()
+
+    End Sub
+
+    Private Sub chkEnableParallelCalcs_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkEnableParallelCalcs.CheckedChanged
+        My.Settings.EnableParallelProcessing = Me.chkEnableParallelCalcs.Checked
+        Me.cbParallelism.Enabled = Me.chkEnableParallelCalcs.Checked
+    End Sub
+
+    Private Sub cbParallelism_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbParallelism.SelectedIndexChanged
+        If Me.cbParallelism.SelectedIndex = 0 Then
+            My.Settings.MaxDegreeOfParallelism = -1
+        Else
+            My.Settings.MaxDegreeOfParallelism = Me.cbParallelism.SelectedItem
+        End If
+    End Sub
+
+    Private Sub cbGPU_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbGPU.SelectedIndexChanged
+        If loaded Then
+            If cbGPU.SelectedItem.ToString.Contains("Emulator") Then
+                My.Settings.CudafyTarget = eGPUType.Emulator
+            ElseIf cbGPU.SelectedItem.ToString.Contains("CUDA") Then
+                My.Settings.CudafyTarget = eGPUType.Cuda
+            Else
+                My.Settings.CudafyTarget = eGPUType.OpenCL
+            End If
+            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+                If Me.cbGPU.SelectedItem.ToString.Split("|")(1).Contains(prop.Name) Then
+                    My.Settings.SelectedGPU = Me.cbGPU.SelectedItem.ToString
+                    My.Settings.CudafyDeviceID = prop.DeviceId
+                    GetCUDACaps(prop)
+                    Exit For
+                End If
+            Next
+            MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
+        End If
+    End Sub
+
+    Private Sub chkEnableGPUProcessing_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkEnableGPUProcessing.CheckedChanged
+        Me.cbGPU.Enabled = chkEnableGPUProcessing.Checked
+        Me.tbGPUCaps.Enabled = chkEnableGPUProcessing.Checked
+        My.Settings.EnableGPUProcessing = chkEnableGPUProcessing.Checked
     End Sub
 
 End Class
