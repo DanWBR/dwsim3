@@ -134,10 +134,10 @@
     <value>VLE</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>111, 13</value>
+    <value>105, 13</value>
   </data>
   <data name="Label7.Text" xml:space="preserve">
-    <value>Txy Envelope Options</value>
+    <value>Txy Diagram Options</value>
   </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 13</value>
@@ -206,7 +206,7 @@
     <value>Compound 1</value>
   </data>
   <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Envelope Settings</value>
+    <value>Diagram Settings</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Results</value>
@@ -216,5 +216,20 @@
   </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Table</value>
+  </data>
+  <data name="TSB_Print.Text" xml:space="preserve">
+    <value>Print </value>
+  </data>
+  <data name="TSB_PrinterSetup.Text" xml:space="preserve">
+    <value>Printer Setup </value>
+  </data>
+  <data name="TSB_PageSetup.Text" xml:space="preserve">
+    <value>Page Setup </value>
+  </data>
+  <data name="TSB_Preview.Text" xml:space="preserve">
+    <value>Print Preview</value>
+  </data>
+  <data name="TSB_Copy.Text" xml:space="preserve">
+    <value>Copy Chart to Clipboard </value>
   </data>
 </root>
