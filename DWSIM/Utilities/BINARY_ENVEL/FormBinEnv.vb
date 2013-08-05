@@ -74,6 +74,9 @@ Public Class FormBinEnv
             Me.tbP.Text = Format(cv.ConverterDoSI(su.spmp_pressure, 101325), nf)
             Me.tbT.Text = Format(cv.ConverterDoSI(su.spmp_temperature, 298.15), nf)
 
+            Me.GraphControl.IsShowPointValues = True
+
+
         Else
 
             MessageBox.Show(DWSIM.App.GetLocalString("BinEnvError_TwoCompoundsMinimum"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -876,4 +879,23 @@ Public Class FormBinEnv
 
     End Sub
 
+    Private Sub TSB_Print_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TSB_Print.Click
+        Me.GraphControl.DoPrint()
+    End Sub
+
+    Private Sub TSB_PrinterSetup_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TSB_PrinterSetup.Click
+        Me.PrintDialog1.ShowDialog()
+    End Sub
+
+    Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TSB_PageSetup.Click
+        Me.GraphControl.DoPageSetup()
+    End Sub
+
+    Private Sub TSB_Preview_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TSB_Preview.Click
+        Me.GraphControl.DoPrintPreview()
+    End Sub
+
+    Private Sub TSB_Copy_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TSB_Copy.Click
+        Me.GraphControl.Copy(1)
+    End Sub
 End Class

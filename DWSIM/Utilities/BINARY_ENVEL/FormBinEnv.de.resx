@@ -263,15 +263,30 @@
     <value>Komponent 1</value>
   </data>
   <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Envelope-Einstellungen</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Ergebnisse</value>
+    <value>Diagramm-Einstellungen</value>
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Graph</value>
   </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Tabelle</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Ergebnisse</value>
+  </data>
+  <data name="TSB_Print.Text" xml:space="preserve">
+    <value>Drucken</value>
+  </data>
+  <data name="TSB_PrinterSetup.Text" xml:space="preserve">
+    <value>Drucker einrichten</value>
+  </data>
+  <data name="TSB_PageSetup.Text" xml:space="preserve">
+    <value>Seite einrichten</value>
+  </data>
+  <data name="TSB_Preview.Text" xml:space="preserve">
+    <value>Druckvorschau</value>
+  </data>
+  <data name="TSB_Copy.Text" xml:space="preserve">
+    <value>Kopiere Diagramm in Zwischenablage</value>
   </data>
 </root>
