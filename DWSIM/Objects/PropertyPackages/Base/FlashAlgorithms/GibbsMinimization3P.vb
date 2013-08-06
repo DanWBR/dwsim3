@@ -1,4 +1,4 @@
-﻿'    Michelsen's Three-Phase Gibbs Minimization w/ Nested Loops Flash Algorithms
+'    Michelsen's Three-Phase Gibbs Minimization w/ Nested Loops Flash Algorithms
 '    Copyright 2012 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -389,6 +389,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                 'solve the problem 
                                 status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
                             End Using
+
+                            For i = 0 To initval2.Length - 1
+                                If Double.IsNaN(initval2(i)) Then initval2(i) = 0.0#
+                            Next
 
                             FunctionValue(initval2)
 
@@ -1479,10 +1483,10 @@ out:        Return result
 
                         pval = 0.0#
                         For i = 0 To n
-                            If V <> 0.0# Then Vy(i) = (x(i) / V)
-                            If L2 <> 0.0# Then Vx2(i) = (x(i + n + 1) / L2)
-                            If L1 <> 0.0# Then Vx1(i) = ((fi(i) * F - Vy(i) * V - Vx2(i) * L2) / L1)
-                            If Vx1(i) <= 0 Then
+                            If V <> 0.0# Then Vy(i) = (x(i) / V) Else Vy(i) = 0.0#
+                            If L2 <> 0.0# Then Vx2(i) = (x(i + n + 1) / L2) Else Vx2(i) = 0.0#
+                            If L1 <> 0.0# Then Vx1(i) = ((fi(i) * F - Vy(i) * V - Vx2(i) * L2) / L1) Else Vx1(i) = 0.0#
+                            If Vx1(i) < 0 Then
                                 pval += Abs(Vx1(i) * L1)
                                 Vx1(i) = 1.0E-20
                             End If
@@ -1493,7 +1497,7 @@ out:        Return result
                             soma_x1 += Vx1(i)
                         Next
                         For i = 0 To n
-                            Vx1(i) /= soma_x1
+                            If soma_x1 <> 0.0# Then Vx1(i) /= soma_x1
                         Next
 
                         If My.Settings.EnableParallelProcessing Then
