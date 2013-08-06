@@ -414,11 +414,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
         Function H_PR_MIX(ByVal TIPO As String, ByVal T As Double, ByVal P As Double, ByVal Vz As Object, ByVal VKij As Object, ByVal VTc As Object, ByVal VPc As Object, ByVal Vw As Object, ByVal VMM As Object, ByVal Hid As Double) As Double
 
             Dim H As Double = 0.0#
-            If My.Settings.EnableGPUProcessing Then
-                H = H_PR_MIX_GPU(TIPO, T, P, Vz, VKij, VTc, VPc, Vw, VMM, Hid)
-            Else
-                H = H_PR_MIX_CPU(TIPO, T, P, Vz, VKij, VTc, VPc, Vw, VMM, Hid)
-            End If
+            'If My.Settings.EnableGPUProcessing Then
+            '    H = H_PR_MIX_GPU(TIPO, T, P, Vz, VKij, VTc, VPc, Vw, VMM, Hid)
+            'Else
+            H = H_PR_MIX_CPU(TIPO, T, P, Vz, VKij, VTc, VPc, Vw, VMM, Hid)
+            'End If
 
             Return H
 

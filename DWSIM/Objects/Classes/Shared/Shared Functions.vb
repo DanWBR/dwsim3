@@ -256,15 +256,21 @@ Namespace DWSIM
 
                 'get the gpu instance
 
-                My.MyApplication.gpu = CudafyHost.GetDevice(My.Settings.CudafyTarget, My.Settings.CudafyDeviceID)
+                Dim gputype As eGPUType = My.Settings.CudafyTarget
+
+                My.MyApplication.gpu = CudafyHost.GetDevice(gputype, My.Settings.CudafyDeviceID)
 
                 'cudafy all classes that contain a gpu function
 
                 If My.MyApplication.gpumod Is Nothing Then
-                    My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
-                                GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR), _
-                                GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac), _
-                                GetType(DWSIM.MathEx.Broyden))
+                    My.MyApplication.gpumod = CudafyModule.TryDeserialize("gpucode.cdfy")
+                    If My.MyApplication.gpumod Is Nothing OrElse Not My.MyApplication.gpumod.TryVerifyChecksums() Then
+                        My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
+                                    GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR), _
+                                    GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac), _
+                                    GetType(DWSIM.MathEx.Broyden))
+                        My.MyApplication.gpumod.Serialize("gpucode.cdfy")
+                    End If
                 End If
 
                 'load cudafy module

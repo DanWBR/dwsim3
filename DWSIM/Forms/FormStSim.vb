@@ -179,6 +179,8 @@ Public Class FormStSim
 
         CheckBox1.Checked = Me.FrmChild.Options.CalculateBubbleAndDewPoints
 
+        chkValidateEqCalc.Checked = Me.FrmChild.Options.ValidateEquilibriumCalc
+
         Select Case Me.FrmChild.Options.PropertyPackageFlashAlgorithm
             Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                 ComboBoxFlashAlg.SelectedIndex = 0
@@ -1230,4 +1232,9 @@ Public Class FormStSim
         frmam.ShowDialog(Me)
         frmam.Close()
     End Sub
+
+    Private Sub chkValidateEqCalc_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkValidateEqCalc.CheckedChanged
+        Me.FrmChild.Options.ValidateEquilibriumCalc = Me.chkValidateEqCalc.Checked
+    End Sub
+
 End Class

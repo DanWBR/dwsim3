@@ -6917,6 +6917,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to O resultado do cálculo flash nas condições informadas não é válido. Por favor tente novamente com um algoritmo flash diferente e, se o erro persistir, verifique se o modelo termodinâmico selecionado é adequado para o processo simulado..
+        '''</summary>
+        Friend Shared ReadOnly Property InvalidFlashResult() As String
+            Get
+                Return ResourceManager.GetString("InvalidFlashResult", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to IsGradientBackground.
         '''</summary>
         Friend Shared ReadOnly Property IsGradientBackground() As String

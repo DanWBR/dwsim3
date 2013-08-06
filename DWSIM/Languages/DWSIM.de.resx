@@ -4754,4 +4754,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="OsmoticCoefficient" xml:space="preserve">
     <value>Osmotic Coefficient</value>
   </data>
+  <data name="InvalidFlashResult" xml:space="preserve">
+    <value>The result of the flash calculation at the specified conditions is invalid. Please try a different flash algorithm and, if the error condition persists, check if the thermodynamic model is adequate and is correctly configured for your system.</value>
+  </data>
 </root>
