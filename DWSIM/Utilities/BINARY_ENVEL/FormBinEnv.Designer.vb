@@ -327,7 +327,6 @@ Partial Class FormBinEnv
         'ToolStrip1
         '
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
-        Me.ToolStrip1.BackColor = System.Drawing.SystemColors.ControlLight
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSB_Print, Me.TSB_PrinterSetup, Me.TSB_PageSetup, Me.TSB_Preview, Me.TSB_Copy})
         Me.ToolStrip1.Name = "ToolStrip1"
         '
