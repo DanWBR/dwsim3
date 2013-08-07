@@ -206,6 +206,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim uconstr(n) As Double
             Dim finalval(n) As Double
 
+            'F = 1000.0#
+
             Dim maxy As Double = MathEx.Common.Max(Vy)
             Dim imaxy As Integer = Array.IndexOf(Vy, maxy)
 
@@ -213,7 +215,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 V = Vz(imaxy) / maxy * 0.8
             End If
 
-            If V <= 0.0# Then V = 0.0000000001
+            'V = V * F
+
+            If V <= 0.0# Then V = 0.05
 
             For i = 0 To n
                 initval(i) = Vy(i) * V
@@ -244,6 +248,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 'solve the problem 
                 status = problem.SolveProblem(initval, obj, Nothing, Nothing, Nothing, Nothing)
             End Using
+
+            For i = 0 To initval.Length - 1
+                If Double.IsNaN(initval(i)) Then initval(i) = 0.0#
+            Next
 
             FunctionValue(initval)
 
@@ -1422,8 +1430,8 @@ out:        Return result
                         L = 1 - soma_y
 
                         For i = 0 To x.Length - 1
-                            If V <> 0.0# Then Vy(i) = x(i) / V
-                            If L <> 0.0# Then Vx1(i) = (fi(i) - x(i)) / L
+                            If V <> 0.0# Then Vy(i) = x(i) / V Else Vy(i) = 0.0#
+                            If L <> 0.0# Then Vx1(i) = (fi(i) - x(i)) / L Else Vx1(i) = 0.0#
                         Next
 
                         If My.Settings.EnableParallelProcessing Then
@@ -1460,8 +1468,8 @@ out:        Return result
                         Gv = 0
                         Gl1 = 0
                         For i = 0 To x.Length - 1
-                            If Vy(i) <> 0 Then Gv += Vy(i) * V * Log(fcv(i) * Vy(i))
-                            If Vx1(i) <> 0 Then Gl1 += Vx1(i) * L * Log(fcl(i) * Vx1(i))
+                            If Vy(i) <> 0.0# Then Gv += Vy(i) * V * Log(fcv(i) * Vy(i))
+                            If Vx1(i) <> 0.0# Then Gl1 += Vx1(i) * L * Log(fcl(i) * Vx1(i))
                         Next
 
                         Gm = Gv + Gl1
