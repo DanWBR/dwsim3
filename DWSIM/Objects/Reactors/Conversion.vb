@@ -273,8 +273,6 @@ Namespace DWSIM.SimulationObjects.Reactors
                                 End If
                             Next
 
-                            ims.Fases(0).SPMProperties.molarflow = Nsum
-
                             For Each s3 As Substancia In ims.Fases(0).Componentes.Values
                                 If rxn.Components.ContainsKey(s3.Nome) Then
                                     s3.FracaoMolar = N(s3.Nome) / Nsum
@@ -282,6 +280,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                                     s3.FracaoMolar = ims.Fases(0).Componentes(s3.Nome).FracaoMolar.GetValueOrDefault * ims.Fases(0).SPMProperties.molarflow.GetValueOrDefault / Nsum
                                 End If
                             Next
+
+                            ims.Fases(0).SPMProperties.molarflow = Nsum
 
                             Dim mmm As Double = 0
 
@@ -327,7 +327,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         With pp
 
-                            'Calcular corrente de matéria com T e P
+                            'Calcular corrente de matÃ©ria com T e P
                             .DW_CalcVazaoMolar()
                             .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
                             If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
@@ -351,7 +351,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         With pp
 
-                            'Calcular corrente de matéria com T e P
+                            'Calcular corrente de matÃ©ria com T e P
                             .DW_CalcVazaoMolar()
                             .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
                             If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
@@ -480,7 +480,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                 End With
             End If
 
-            'Corrente de energia - atualizar valor da potência (kJ/s)
+            'Corrente de energia - atualizar valor da potÃªncia (kJ/s)
             With form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name)
                 .Energia = Me.DeltaQ.GetValueOrDefault
                 .GraphicObject.Calculated = True
@@ -698,7 +698,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             Select Case propidx
 
                 Case 0
-                    'PROP_HT_0	Pressure Drop
+                    'PROP_HT_0    Pressure Drop
                     value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
 
             End Select
