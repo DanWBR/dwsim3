@@ -2442,6 +2442,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
         ''' <remarks></remarks>
         Public Overridable Function DW_ReturnPhaseEnvelope(ByVal parameters As Object, Optional ByVal bw As System.ComponentModel.BackgroundWorker = Nothing) As Object
 
+            If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
+
             Dim cpc As New DWSIM.Utilities.TCP.Methods
 
             Dim i As Integer
@@ -2818,6 +2820,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overridable Function DW_ReturnBinaryEnvelope(ByVal parameters As Object, Optional ByVal bw As System.ComponentModel.BackgroundWorker = Nothing) As Object
+
+            If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
             Dim n, i As Integer
 

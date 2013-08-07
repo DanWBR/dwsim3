@@ -436,6 +436,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_ReturnPhaseEnvelope(ByVal parameters As Object, Optional ByVal bw As System.ComponentModel.BackgroundWorker = Nothing) As Object
 
+            If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
+
             If My.Settings.EnableParallelProcessing Then
                 Return DW_ReturnPhaseEnvelopeParallel(parameters, bw)
             Else
