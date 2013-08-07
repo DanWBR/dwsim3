@@ -98,8 +98,6 @@ Public Class FormBinEnv
                 .FontSpec.IsDropShadow = False
             End With
 
-            Me.Enabled = False
-
             Me.mat = New MaterialStream("", "")
 
             For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
@@ -142,7 +140,21 @@ Public Class FormBinEnv
                 tipocalc = "(P)x-y"
             End If
 
-            Me.BackgroundWorker1.RunWorkerAsync(New Object() {tipocalc, P, T, chkVLE.Checked, chkLLE.Checked, chkSLE.Checked, chkCritical.Checked})
+            Dim lle As Boolean = False
+
+            If chkLLE.Enabled Then
+                If chkLLE.Checked Then
+                    lle = True
+                Else
+                    lle = False
+                End If
+            Else
+                lle = False
+            End If
+
+            Me.Enabled = False
+
+            Me.BackgroundWorker1.RunWorkerAsync(New Object() {tipocalc, P, T, chkVLE.Checked, lle, chkSLE.Checked, chkCritical.Checked})
 
             fpec = New FormPEC
             fpec.Label2.Tag = fpec.Label2.Text
@@ -897,5 +909,9 @@ Public Class FormBinEnv
 
     Private Sub TSB_Copy_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TSB_Copy.Click
         Me.GraphControl.Copy(1)
+    End Sub
+
+    Private Sub chkVLE_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkVLE.CheckedChanged
+        chkLLE.Enabled = chkVLE.Checked
     End Sub
 End Class

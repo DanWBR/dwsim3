@@ -12713,6 +12713,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to O Algoritmo Flash selecionado não é capaz de calcular o equilíbrio entre duas fases líquidas. Por favor, selecione um algortimo adequado para esta finalidade..
+        '''</summary>
+        Friend Shared ReadOnly Property UnsuitableFlashAlgorithmSelected() As String
+            Get
+                Return ResourceManager.GetString("UnsuitableFlashAlgorithmSelected", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Scripts.
         '''</summary>
         Friend Shared ReadOnly Property UO_ScriptExtension() As String

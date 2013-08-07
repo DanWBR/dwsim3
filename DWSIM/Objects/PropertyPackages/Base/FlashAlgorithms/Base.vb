@@ -97,6 +97,38 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
+        Public Function BubblePressure_LLE(ByVal Vz As Double(), ByVal Vx1est As Double(), ByVal Vx2est As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage) As Double
+
+            Dim n As Integer = UBound(_Vz)
+
+            Dim Vp(n), fi1(n), fi2(n), act1(n), act2(n), Vx1(n), Vx2(n) As Double
+
+            Dim result As Object = New GibbsMinimization3P() With {.ForceTwoPhaseOnly = False,
+                                                                   .StabSearchCompIDs = _pp.RET_VNAMES,
+                                                                   .StabSearchSeverity = 0}.Flash_PT(_Vz, P, T, PP)
+
+            Vx1 = result(2)
+            Vx2 = result(6)
+            fi1 = _pp.DW_CalcFugCoeff(Vx1, T, P, State.Liquid)
+            fi2 = _pp.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
+
+            Dim i As Integer
+
+            For i = 0 To n
+                Vp(i) = _pp.AUX_PVAPi(i, T)
+                act1(i) = P / Vp(i) * fi1(i)
+                act2(i) = P / Vp(i) * fi2(i)
+            Next
+
+            _P = 0.0#
+            For i = 0 To n
+                _P += Vx2(i) * act2(i) * Vp(i)
+            Next
+
+            Return _P
+
+        End Function
+
         Public Function StabTest(ByVal T As Double, ByVal P As Double, ByVal Vz As Array, ByVal pp As PropertyPackage, Optional ByVal VzArray(,) As Double = Nothing, Optional ByVal searchseverity As Integer = 0)
 
             Dim i, j, c, n, o, l, nt, maxits As Integer

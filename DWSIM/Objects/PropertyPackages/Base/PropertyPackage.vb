@@ -580,10 +580,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim fugvap As Object = Nothing
             Dim fugliq As Object = Nothing
 
+            Dim alreadymt As Boolean = False
+
             If My.Settings.EnableParallelProcessing Then
                 My.MyApplication.IsRunningParallelTasks = True
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.EnableMultithreading()
+                    If Not My.MyApplication.gpu.IsMultithreadingEnabled Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    Else
+                        alreadymt = True
+                    End If
                 End If
                 Try
                     Dim task1 As Task = New Task(Sub()
@@ -606,8 +612,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Next
                 Finally
                     If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.DisableMultithreading()
-                        My.MyApplication.gpu.FreeAll()
+                        If Not alreadymt Then
+                            My.MyApplication.gpu.DisableMultithreading()
+                            My.MyApplication.gpu.FreeAll()
+                        End If
                     End If
                 End Try
                 My.MyApplication.IsRunningParallelTasks = False
@@ -959,16 +967,37 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 If My.Application.ActiveSimulation.Options.CalculateBubbleAndDewPoints Then
                     If My.Settings.EnableParallelProcessing Then
                         My.MyApplication.IsRunningParallelTasks = True
+                        If My.Settings.EnableGPUProcessing Then
+                            My.MyApplication.gpu.EnableMultithreading()
+                        End If
                         Try
                             Dim Vz As Double() = Me.RET_VMOL(Fase.Mixture)
                             Dim task1 As Task = New Task(Sub()
-                                                             Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = Me.FlashBase.Flash_PV(Vz, P, 0, 0, Me)(4)
+                                                             Dim myres As Object = Me.FlashBase.Flash_PV(Vz, P, 0, 0, Me)
+                                                             'check if liquid phase is stable.
+                                                             Dim myres2 As Object = Me.FlashBase.Flash_PT(Vz, P, myres(4), Me)
+                                                             If myres2(5) > 0.0# Then
+                                                                 If Abs(myres2(2)(0) - myres2(6)(0)) > 0.01 Then
+                                                                     Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = Me.FlashBase.BubbleTemperature_LLE(Vz, myres2(2), myres2(6), P, myres(4) - 40, myres(4) + 40, Me)
+                                                                 End If
+                                                             Else
+                                                                 Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = myres(4)
+                                                             End If
                                                          End Sub)
                             Dim task2 As Task = New Task(Sub()
                                                              Me.CurrentMaterialStream.Fases(0).SPMProperties.dewTemperature = Me.FlashBase.Flash_PV(Vz, P, 1, 0, Me)(4)
                                                          End Sub)
                             Dim task3 As Task = New Task(Sub()
-                                                             Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = Me.FlashBase.Flash_TV(Vz, T, 0, 0, Me)(4)
+                                                             Dim myres As Object = Me.FlashBase.Flash_TV(Vz, T, 0, 0, Me)
+                                                             'check if liquid phase is stable.
+                                                             Dim myres2 As Object = Me.FlashBase.Flash_PT(Vz, myres(4), T, Me)
+                                                             If myres2(5) > 0.0# Then
+                                                                 If Abs(myres2(2)(0) - myres2(6)(0)) > 0.01 Then
+                                                                     Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = Me.FlashBase.BubblePressure_LLE(Vz, myres2(2), myres2(6), myres(4), T, Me)
+                                                                 End If
+                                                             Else
+                                                                 Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = myres(4)
+                                                             End If
                                                          End Sub)
                             Dim task4 As Task = New Task(Sub()
                                                              Me.CurrentMaterialStream.Fases(0).SPMProperties.dewPressure = Me.FlashBase.Flash_TV(Vz, T, 1, 0, Me)(4)
@@ -1008,12 +1037,26 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             For Each ex As Exception In ae.InnerExceptions
                                 Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Saturation point calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
                             Next
+                        Finally
+                            If My.Settings.EnableGPUProcessing Then
+                                My.MyApplication.gpu.DisableMultithreading()
+                                My.MyApplication.gpu.FreeAll()
+                            End If
                         End Try
                         My.MyApplication.IsRunningParallelTasks = False
                     Else
                         Try
-                            result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.P, FlashSpec.VAP, P, 0, 0)(2)
-                            Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = result
+                            Dim Vz As Double() = Me.RET_VMOL(Fase.Mixture)
+                            Dim myres As Object = Me.FlashBase.Flash_PV(Vz, P, 0, 0, Me)
+                            'check if liquid phase is stable.
+                            Dim myres2 As Object = Me.FlashBase.Flash_PT(Vz, P, myres(4), Me)
+                            If myres2(5) > 0.0# Then
+                                If Abs(myres2(2)(0) - myres2(6)(0)) > 0.01 Then
+                                    Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = Me.FlashBase.BubbleTemperature_LLE(Vz, myres2(2), myres2(6), P, myres(4) - 40, myres(4) + 40, Me)
+                                End If
+                            Else
+                                Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = myres(4)
+                            End If
                         Catch ex As Exception
                             Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Bubble Temperature calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
                         End Try
@@ -1024,8 +1067,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Dew Temperature calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
                         End Try
                         Try
-                            result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.T, FlashSpec.VAP, T, 0, 0)(3)
-                            Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = result
+                            Dim Vz As Double() = Me.RET_VMOL(Fase.Mixture)
+                            Dim myres As Object = Me.FlashBase.Flash_TV(Vz, T, 0, 0, Me)
+                            'check if liquid phase is stable.
+                            Dim myres2 As Object = Me.FlashBase.Flash_PT(Vz, myres(4), T, Me)
+                            If myres2(5) > 0.0# Then
+                                If Abs(myres2(2)(0) - myres2(6)(0)) > 0.01 Then
+                                    Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = Me.FlashBase.BubblePressure_LLE(Vz, myres2(2), myres2(6), myres(4), T, Me)
+                                End If
+                            Else
+                                Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = myres(4)
+                            End If
                         Catch ex As Exception
                             Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Bubble Pressure calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
                         End Try
@@ -2802,7 +2854,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     If VLE Then
                         i = 0
                         Do
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/41)")
+                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
                             Try
                                 If i = 0 Then
                                     tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)
@@ -2824,16 +2876,14 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 px.Add(x)
                                 py1.Add(y1)
                                 py2.Add(y2)
-                                If LLE Then
-                                    'check if liquid phase is stable.
-                                    result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, P, calcT, Me)
-                                    If result(5) > 0.0# Then
-                                        If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
-                                            unstable = True
-                                            ui.Add(px.Count - 1)
-                                            If ut.Count = 0 Then ut.Add(Me.FlashBase.BubbleTemperature_LLE(New Double() {i * dx, 1 - i * dx}, result(2), result(6), P, y1 - 40, y2, Me))
-                                            py1(py1.Count - 1) = ut(0)
-                                        End If
+                                'check if liquid phase is stable.
+                                result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, P, calcT, Me)
+                                If result(5) > 0.0# Then
+                                    If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
+                                        unstable = True
+                                        ui.Add(px.Count - 1)
+                                        If ut.Count = 0 Then ut.Add(Me.FlashBase.BubbleTemperature_LLE(New Double() {i * dx, 1 - i * dx}, result(2), result(6), P, y1 - 40, y2, Me))
+                                        py1(py1.Count - 1) = ut(0)
                                     End If
                                 End If
                             Catch ex As Exception
@@ -2842,7 +2892,13 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         Loop Until (i - 1) * dx >= 1
                     End If
 
-                    If VLE And LLE Then
+                    If LLE Then
+
+                        Select Case Me.FlashAlgorithm
+                            Case FlashMethod.DWSIMDefault, FlashMethod.GibbsMin2P, FlashMethod.InsideOut, FlashMethod.NestedLoopsImmiscible, FlashMethod.NestedLoopsSLE
+                                Throw New Exception(DWSIM.App.GetLocalString("UnsuitableFlashAlgorithmSelected"))
+                        End Select
+
                         If unstable Then
                             Dim ti, tf, uim As Double, tit As Integer
                             ti = (ut(0) + ut(ut.Count - 1)) / 2
@@ -2875,7 +2931,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                         i = 0
                         Do
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 1 (" & i + 1 & "/41)")
+                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 1 (" & i + 1 & "/42)")
                             Try
                                 tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0.001, 0, Me)
                                 y1 = tmp(4)
@@ -2889,7 +2945,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                         i = 0
                         Do
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 2 (" & i + 1 & "/41)")
+                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 2 (" & i + 1 & "/42)")
                             Try
                                 tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0.999, 0, Me)
                                 y2 = tmp(4)
@@ -2912,7 +2968,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                         i = 0
                         Do
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Critical (" & i + 1 & "/41)")
+                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Critical (" & i + 1 & "/42)")
                             Try
                                 If TypeOf Me Is PengRobinsonPropertyPackage Then
                                     If i = 0 Or (i * dx) >= 1 Then
@@ -2971,7 +3027,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                     i = 0
                     Do
-                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/41)")
+                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
                         Try
                             If i = 0 Then
                                 tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)
@@ -3001,7 +3057,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 calcP = result(2)(0) * fcl1(0) * calcP + result(2)(1) * fcl1(1) * calcP
                                 unstable = True
                                 ui.Add(px.Count - 1)
-                                up.Add(calcP)
+                                'up.Add(calcP)
+                                If up.Count = 0 Then up.Add(calcP)
+                                py1(py1.Count - 1) = up(0)
                             End If
                         Catch ex As Exception
                         End Try
@@ -3013,6 +3071,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         pi = up(0)
                         uim = ui(0)
                         pf = 2 * pi
+                        i = 0
                         For pit = pi To pf Step (pf - pi) / 10
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit For Else bw.ReportProgress(0, "LLE (" & i + 1 & "/26)")
                             result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, pit, T, Me)
@@ -3023,6 +3082,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                     py3.Add(pit)
                                 End If
                             End If
+                            i += 1
                         Next
                     End If
 
@@ -3034,7 +3094,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                     i = 0
                     Do
-                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/41)")
+                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
                         px.Add(i * dx)
                         Try
                             py.Add(Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)(6)(0) * i * dx)
@@ -3052,7 +3112,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                     i = 0
                     Do
-                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/41)")
+                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
                         px.Add(i * dx)
                         Try
                             py.Add(Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)(6)(0) * i * dx)

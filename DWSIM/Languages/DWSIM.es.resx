@@ -4746,4 +4746,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="InvalidFlashResult" xml:space="preserve">
     <value>O resultado do cálculo flash nas condições informadas não é válido. Por favor tente novamente com um algoritmo flash diferente e, se o erro persistir, verifique se o modelo termodinâmico selecionado é adequado para o processo simulado.</value>
   </data>
+  <data name="UnsuitableFlashAlgorithmSelected" xml:space="preserve">
+    <value>O Algoritmo Flash selecionado não é capaz de calcular o equilíbrio entre duas fases líquidas. Por favor, selecione um algortimo adequado para esta finalidade.</value>
+  </data>
 </root>
