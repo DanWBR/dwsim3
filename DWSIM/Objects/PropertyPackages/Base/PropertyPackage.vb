@@ -978,37 +978,37 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = myres(4)
                         End If
                     Catch ex As Exception
-                        Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Bubble Temperature calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
+                        Me.CurrentMaterialStream.Flowsheet.WriteToLog("Bubble Temperature calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
                     End Try
-                        Try
-                            result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.P, FlashSpec.VAP, P, 1, 0)(2)
-                            Me.CurrentMaterialStream.Fases(0).SPMProperties.dewTemperature = result
-                        Catch ex As Exception
-                            Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Dew Temperature calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
-                        End Try
-                        Try
-                            Dim Vz As Double() = Me.RET_VMOL(Fase.Mixture)
-                            Dim myres As Object = Me.FlashBase.Flash_TV(Vz, T, 0, 0, Me)
-                            'check if liquid phase is stable.
-                            Dim myres2 As Object = Me.FlashBase.Flash_PT(Vz, myres(4), T, Me)
-                            If myres2(5) > 0.0# Then
-                                If Abs(myres2(2)(0) - myres2(6)(0)) > 0.01 Then
-                                    Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = Me.FlashBase.BubblePressure_LLE(Vz, myres2(2), myres2(6), myres(4), T, Me)
-                                End If
-                            Else
-                                Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = myres(4)
+                    Try
+                        result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.P, FlashSpec.VAP, P, 1, 0)(2)
+                        Me.CurrentMaterialStream.Fases(0).SPMProperties.dewTemperature = result
+                    Catch ex As Exception
+                        Me.CurrentMaterialStream.Flowsheet.WriteToLog("Dew Temperature calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
+                    End Try
+                    Try
+                        Dim Vz As Double() = Me.RET_VMOL(Fase.Mixture)
+                        Dim myres As Object = Me.FlashBase.Flash_TV(Vz, T, 0, 0, Me)
+                        'check if liquid phase is stable.
+                        Dim myres2 As Object = Me.FlashBase.Flash_PT(Vz, myres(4), T, Me)
+                        If myres2(5) > 0.0# Then
+                            If Abs(myres2(2)(0) - myres2(6)(0)) > 0.01 Then
+                                Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = Me.FlashBase.BubblePressure_LLE(Vz, myres2(2), myres2(6), myres(4), T, Me)
                             End If
-                        Catch ex As Exception
-                            Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Bubble Pressure calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
-                        End Try
-                        Try
-                            result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.T, FlashSpec.VAP, T, 1, 0)(3)
-                            Me.CurrentMaterialStream.Fases(0).SPMProperties.dewPressure = result
-                        Catch ex As Exception
-                            Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Dew Pressure calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
-                        End Try
-                    End If
+                        Else
+                            Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = myres(4)
+                        End If
+                    Catch ex As Exception
+                        Me.CurrentMaterialStream.Flowsheet.WriteToLog("Bubble Pressure calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
+                    End Try
+                    Try
+                        result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.T, FlashSpec.VAP, T, 1, 0)(3)
+                        Me.CurrentMaterialStream.Fases(0).SPMProperties.dewPressure = result
+                    Catch ex As Exception
+                        Me.CurrentMaterialStream.Flowsheet.WriteToLog("Dew Pressure calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
+                    End Try
                 End If
+            End If
 
         End Sub
 
