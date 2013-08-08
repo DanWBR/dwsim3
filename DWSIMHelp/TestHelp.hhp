@@ -1,0 +1,25 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=TestHelp.chm
+Contents file=toc.hhc
+Default topic=0 Welcome.htm
+Display compile progress=No
+Error log file=log
+Index file=Index.hhk
+Language=0x407 Deutsch (Deutschland)
+Title=TestHelp
+
+
+[FILES]
+EmptyPage.htm
+Working_with_Scripts.htm
+0 Welcome.htm
+1 Introduction.htm
+1 GPL_v3_License.htm
+1 Disclaimer.htm
+Utilities.htm
+Component Creator.htm
+Component Creator Start.htm
+
+[INFOTYPES]
+
