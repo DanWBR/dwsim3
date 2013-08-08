@@ -141,7 +141,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Case 0
                     ReDim Y(nt, n)
                     tol = 0.01
-                    maxits = 25
+                    maxits = 100
                 Case 1
                     ReDim Y(nt + 1, n)
                     tol = 0.001

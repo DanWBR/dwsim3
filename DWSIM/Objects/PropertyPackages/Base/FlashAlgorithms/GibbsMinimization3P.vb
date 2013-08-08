@@ -217,7 +217,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             'V = V * F
 
-            If V <= 0.0# Then V = 0.05
+            If V <= 0.0# Then V = 0.2
 
             For i = 0 To n
                 initval(i) = Vy(i) * V

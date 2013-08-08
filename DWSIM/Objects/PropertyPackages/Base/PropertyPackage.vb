@@ -965,101 +965,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If Not My.Application.CAPEOPENMode And Not My.Application.ActiveSimulation Is Nothing Then
                 If My.Application.ActiveSimulation.Options.CalculateBubbleAndDewPoints Then
-                    If My.Settings.EnableParallelProcessing Then
-                        My.MyApplication.IsRunningParallelTasks = True
-                        If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.EnableMultithreading()
+                    Try
+                        Dim Vz As Double() = Me.RET_VMOL(Fase.Mixture)
+                        Dim myres As Object = Me.FlashBase.Flash_PV(Vz, P, 0, 0, Me)
+                        'check if liquid phase is stable.
+                        Dim myres2 As Object = Me.FlashBase.Flash_PT(Vz, P, myres(4), Me)
+                        If myres2(5) > 0.0# Then
+                            If Abs(myres2(2)(0) - myres2(6)(0)) > 0.01 Then
+                                Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = Me.FlashBase.BubbleTemperature_LLE(Vz, myres2(2), myres2(6), P, myres(4) - 40, myres(4) + 40, Me)
+                            End If
+                        Else
+                            Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = myres(4)
                         End If
-                        Try
-                            Dim Vz As Double() = Me.RET_VMOL(Fase.Mixture)
-                            Dim task1 As Task = New Task(Sub()
-                                                             Dim myres As Object = Me.FlashBase.Flash_PV(Vz, P, 0, 0, Me)
-                                                             'check if liquid phase is stable.
-                                                             Dim myres2 As Object = Me.FlashBase.Flash_PT(Vz, P, myres(4), Me)
-                                                             If myres2(5) > 0.0# Then
-                                                                 If Abs(myres2(2)(0) - myres2(6)(0)) > 0.01 Then
-                                                                     Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = Me.FlashBase.BubbleTemperature_LLE(Vz, myres2(2), myres2(6), P, myres(4) - 40, myres(4) + 40, Me)
-                                                                 End If
-                                                             Else
-                                                                 Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = myres(4)
-                                                             End If
-                                                         End Sub)
-                            Dim task2 As Task = New Task(Sub()
-                                                             Me.CurrentMaterialStream.Fases(0).SPMProperties.dewTemperature = Me.FlashBase.Flash_PV(Vz, P, 1, 0, Me)(4)
-                                                         End Sub)
-                            Dim task3 As Task = New Task(Sub()
-                                                             Dim myres As Object = Me.FlashBase.Flash_TV(Vz, T, 0, 0, Me)
-                                                             'check if liquid phase is stable.
-                                                             Dim myres2 As Object = Me.FlashBase.Flash_PT(Vz, myres(4), T, Me)
-                                                             If myres2(5) > 0.0# Then
-                                                                 If Abs(myres2(2)(0) - myres2(6)(0)) > 0.01 Then
-                                                                     Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = Me.FlashBase.BubblePressure_LLE(Vz, myres2(2), myres2(6), myres(4), T, Me)
-                                                                 End If
-                                                             Else
-                                                                 Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = myres(4)
-                                                             End If
-                                                         End Sub)
-                            Dim task4 As Task = New Task(Sub()
-                                                             Me.CurrentMaterialStream.Fases(0).SPMProperties.dewPressure = Me.FlashBase.Flash_TV(Vz, T, 1, 0, Me)(4)
-                                                         End Sub)
-                            Select Case My.Settings.MaxDegreeOfParallelism
-                                Case 1
-                                    task1.Start()
-                                    task1.Wait()
-                                    task2.Start()
-                                    task2.Wait()
-                                    task3.Start()
-                                    task3.Wait()
-                                    task4.Start()
-                                    task4.Wait()
-                                Case 2
-                                    task1.Start()
-                                    task2.Start()
-                                    Task.WaitAll(task1, task2)
-                                    task3.Start()
-                                    task4.Start()
-                                    Task.WaitAll(task3, task4)
-                                Case 3
-                                    task1.Start()
-                                    task2.Start()
-                                    task3.Start()
-                                    Task.WaitAll(task1, task2, task3)
-                                    task4.Start()
-                                    Task.WaitAll(task4)
-                                Case Else
-                                    task1.Start()
-                                    task2.Start()
-                                    task3.Start()
-                                    task4.Start()
-                                    Task.WaitAll(task1, task2, task3, task4)
-                            End Select
-                        Catch ae As AggregateException
-                            For Each ex As Exception In ae.InnerExceptions
-                                Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Saturation point calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
-                            Next
-                        Finally
-                            If My.Settings.EnableGPUProcessing Then
-                                My.MyApplication.gpu.DisableMultithreading()
-                                My.MyApplication.gpu.FreeAll()
-                            End If
-                        End Try
-                        My.MyApplication.IsRunningParallelTasks = False
-                    Else
-                        Try
-                            Dim Vz As Double() = Me.RET_VMOL(Fase.Mixture)
-                            Dim myres As Object = Me.FlashBase.Flash_PV(Vz, P, 0, 0, Me)
-                            'check if liquid phase is stable.
-                            Dim myres2 As Object = Me.FlashBase.Flash_PT(Vz, P, myres(4), Me)
-                            If myres2(5) > 0.0# Then
-                                If Abs(myres2(2)(0) - myres2(6)(0)) > 0.01 Then
-                                    Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = Me.FlashBase.BubbleTemperature_LLE(Vz, myres2(2), myres2(6), P, myres(4) - 40, myres(4) + 40, Me)
-                                End If
-                            Else
-                                Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = myres(4)
-                            End If
-                        Catch ex As Exception
-                            Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Bubble Temperature calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
-                        End Try
+                    Catch ex As Exception
+                        Me.CurrentMaterialStream.Flowsheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & " Bubble Temperature calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
+                    End Try
                         Try
                             result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.P, FlashSpec.VAP, P, 1, 0)(2)
                             Me.CurrentMaterialStream.Fases(0).SPMProperties.dewTemperature = result
@@ -1089,7 +1009,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         End Try
                     End If
                 End If
-            End If
 
         End Sub
 
