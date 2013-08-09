@@ -17,7 +17,8 @@
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports Microsoft.MSDN.Samples.GraphicObjects
-Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.UnitOps
 
@@ -26,6 +27,34 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Inherits SimulationObjects_UnitOpBaseClass
 
         Protected m_ratios As New System.Collections.ArrayList(3)
+
+        Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
+
+            MyBase.LoadData(data)
+
+            Me.m_ratios = New ArrayList
+
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "SplitRatios").SingleOrDefault.Elements.ToList
+                m_ratios.Add(xel.Value)
+            Next
+
+        End Function
+
+        Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
+
+            Dim elements As System.Collections.Generic.List(Of System.Xml.Linq.XElement) = MyBase.SaveData()
+            Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
+
+            With elements
+                .Add(New XElement("SplitRatios"))
+                For Each d As Double In m_ratios
+                    .Item(.Count - 1).Add(New XElement("SplitRatio", d))
+                Next
+            End With
+
+            Return elements
+
+        End Function
 
         Public ReadOnly Property Ratios() As System.Collections.ArrayList
             Get
