@@ -263,13 +263,36 @@ Namespace DWSIM
                 'cudafy all classes that contain a gpu function
 
                 If My.MyApplication.gpumod Is Nothing Then
-                    My.MyApplication.gpumod = CudafyModule.TryDeserialize("gpucode.cdfy")
+                    Select Case My.Settings.CudafyTarget
+                        Case 0, 1
+                            My.MyApplication.gpumod = CudafyModule.TryDeserialize("cudacode.cdfy")
+                        Case 2
+                            My.MyApplication.gpumod = CudafyModule.TryDeserialize("openclcode.cdfy")
+                    End Select
                     If My.MyApplication.gpumod Is Nothing OrElse Not My.MyApplication.gpumod.TryVerifyChecksums() Then
-                        My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
-                                    GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR), _
-                                    GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac), _
-                                    GetType(DWSIM.MathEx.Broyden))
-                        My.MyApplication.gpumod.Serialize("gpucode.cdfy")
+                        Select Case My.Settings.CudafyTarget
+                            Case 0, 1
+                                Dim cp As New Cudafy.CompileProperties()
+                                With cp
+                                    .Architecture = eArchitecture.sm_13
+                                    .CompileMode = eCudafyCompileMode.Default
+                                    .Platform = ePlatform.x86
+                                    .WorkingDirectory = My.Computer.FileSystem.SpecialDirectories.Temp
+                                    .CompilerPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\bin\nvcc.exe"
+                                    .IncludeDirectoryPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include"
+                                End With
+                                My.MyApplication.gpumod = CudafyTranslator.Cudafy(cp, GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
+                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR), _
+                                            GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac), _
+                                            GetType(DWSIM.MathEx.Broyden))
+                                My.MyApplication.gpumod.Serialize("cudacode.cdfy")
+                            Case 2
+                                My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
+                                           GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR), _
+                                           GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac), _
+                                           GetType(DWSIM.MathEx.Broyden))
+                                My.MyApplication.gpumod.Serialize("openclcode.cdfy")
+                        End Select
                     End If
                 End If
 
