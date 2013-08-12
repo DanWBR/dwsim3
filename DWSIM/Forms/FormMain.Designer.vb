@@ -631,6 +631,7 @@ Partial Class FormMain
             .Add(DWSIM.App.GetLocalString("Personalizado2SC"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv2)
             .Add(DWSIM.App.GetLocalString("Personalizado3CNTP"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv3)
             .Add(DWSIM.App.GetLocalString("Personalizado4"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv4)
+            .Add(DWSIM.App.GetLocalString("Personalizado5"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv5)
 
             Dim myarraylist As New ArrayList
 
