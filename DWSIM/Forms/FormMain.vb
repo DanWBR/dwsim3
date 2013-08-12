@@ -1,4 +1,4 @@
-﻿'    Copyright 2008-2013 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2013 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -2443,8 +2443,6 @@ Public Class FormMain
             Application.DoEvents()
 
         Catch ex As Exception
-
-            My.Application.Log.WriteException(ex, TraceEventType.Error, ex.ToString)
 
             MessageBox.Show(ex.ToString, "Error loading XML file", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
