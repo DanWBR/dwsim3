@@ -188,7 +188,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 Dim cspath As String = ""
                 Try
-                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95").GetValue("")
+                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96").GetValue("")
                     cspath += Path.DirectorySeparatorChar + "pcd" + Path.DirectorySeparatorChar + "chemsep1.xml"
                     If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
                 Catch ex As Exception

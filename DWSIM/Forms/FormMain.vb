@@ -609,7 +609,7 @@ Public Class FormMain
             My.Settings.ChemSepDatabasePath = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "chemsepdb" & Path.DirectorySeparatorChar & "chemsep1.xml"
         Else
             Try
-                Dim cspath As String = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95").GetValue("")
+                Dim cspath As String = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96").GetValue("")
                 cspath += Path.DirectorySeparatorChar + "pcd" + Path.DirectorySeparatorChar + "chemsep1.xml"
                 If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
             Catch ex As Exception
