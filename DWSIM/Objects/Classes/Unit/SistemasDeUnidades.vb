@@ -344,7 +344,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .heat_transf_coeff = "W/[m2.K]"
                 .mass_conc = "kg/m3"
                 .molar_conc = "kmol/m3"
-                .molar_volume = "m3kmol"
+                .molar_volume = "m3/kmol"
                 .reac_rate = "kmol.[m3.s]"
                 .spec_vol = "m3/kg"
                 .time = "s"
@@ -426,7 +426,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .heat_transf_coeff = "W/[m2.K]"
                 .mass_conc = "kg/m3"
                 .molar_conc = "kmol/m3"
-                .molar_volume = "m3kmol"
+                .molar_volume = "m3/kmol"
                 .reac_rate = "kmol.[m3.s]"
                 .spec_vol = "m3/kg"
                 .time = "s"
@@ -483,6 +483,87 @@ Namespace DWSIM.SistemasDeUnidades
                 .spmp_head = "m"
                 .spmp_deltaP = "kgf/cm2"
                 .spmp_deltaT = "C."
+
+            End With
+
+        End Sub
+
+    End Class
+    <System.Serializable()> Public Class UnidadesSI_Deriv5
+
+        Inherits Unidades
+
+        Public Sub New()
+
+            With Me
+
+                .nome = DWSIM.App.GetLocalString("Personalizado5")
+
+                .accel = "m/s2"
+                .area = "m2"
+                .diameter = "mm"
+                .distance = "m"
+                .force = "N"
+                .heat_transf_coeff = "W/[m2.K]"
+                .mass_conc = "kg/m3"
+                .molar_conc = "kmol/m3"
+                .molar_volume = "m3/kmol"
+                .reac_rate = "kmol.[m3.s]"
+                .spec_vol = "m3/kg"
+                .time = "s"
+                .volume = "m3"
+                .thickness = "mm"
+                .molar_enthalpy = "kJ/kmol"
+                .molar_entropy = "kJ/[kmol.K]"
+                .velocity = "m/s"
+                .foulingfactor = "K.m2/W"
+
+                .cakeresistance = "m/kg"
+                .mediumresistance = "m-1"
+
+                .pdp_boilingPointTemperature = "C"
+                .pdp_meltingTemperature = "C"
+                .spmp_activity = "Pa"
+                .spmp_activityCoefficient = "-"
+                .spmp_compressibility = "Pa-1"
+                .spmp_compressibilityFactor = "-"
+                .spmp_density = "kg/m3"
+                .spmp_enthalpy = "kJ/kg"
+                .spmp_entropy = "kJ/[kg.K]"
+                .spmp_excessEnthalpy = "kJ/kg"
+                .spmp_excessEntropy = "kJ/[kg.K]"
+                .spmp_fugacity = "Pa"
+                .spmp_fugacityCoefficient = "-"
+                .spmp_heatCapacityCp = "kJ/[kg.K]"
+                .spmp_heatCapacityCv = "kJ/[kg.K]"
+                .spmp_jouleThomsonCoefficient = "K/Pa"
+                .spmp_logFugacityCoefficient = "-"
+                .spmp_massflow = "kg/h"
+                .spmp_massfraction = "-"
+                .spmp_molarflow = "kmol/h"
+                .spmp_molarfraction = "-"
+                .spmp_molecularWeight = "kg/kmol"
+                .spmp_pressure = "bar"
+                .spmp_speedOfSound = "m/s"
+                .spmp_temperature = "°C"
+                .spmp_thermalConductivity = "W/[m.K]"
+                .spmp_viscosity = "Pa.s"
+                .spmp_volumetricFlow = "m3/h"
+                .spmp_cinematic_viscosity = "m2/s"
+                .tdp_idealGasHeatCapacity = "kJ/[kg.K]"
+                .tdp_surfaceTension = "N/m"
+                .tdp_thermalConductivityOfLiquid = "W/[m.K]"
+                .tdp_thermalConductivityOfVapor = "W/[m.K]"
+                .tdp_vaporPressure = "bar"
+                .tdp_viscosityOfLiquid = "Pa.s"
+                .tdp_viscosityOfVapor = "Pa.s"
+                .tpmp_kvalue = "-"
+                .tpmp_logKvalue = "-"
+                .tpmp_surfaceTension = "N/m"
+                .spmp_heatflow = "kW"
+                .spmp_head = "m"
+                .spmp_deltaP = "bar"
+                .spmp_deltaT = "°C"
 
             End With
 

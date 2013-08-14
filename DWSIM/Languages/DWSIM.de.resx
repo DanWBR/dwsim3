@@ -4022,7 +4022,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Ln[K-Werte]</value>
   </data>
   <data name="Personalizado4" xml:space="preserve">
-    <value>Persönlich 4</value>
+    <value>Nutzer 4</value>
   </data>
   <data name="OPTFunctionValue" xml:space="preserve">
     <value>Zielfunktionswert</value>
@@ -4759,5 +4759,8 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   </data>
   <data name="UnsuitableFlashAlgorithmSelected" xml:space="preserve">
     <value>The selected Flash Algorithm is unsuitable for LLE calculations. Please select another Flash Algorithm in the Property Package configuration window or in the Advanced Thermo Settings Panel.</value>
+  </data>
+  <data name="Personalizado5" xml:space="preserve">
+    <value>Nutzer 5</value>
   </data>
 </root>

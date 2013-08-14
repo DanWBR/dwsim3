@@ -30,12 +30,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
 
+            Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
+
             MyBase.LoadData(data)
 
             Me.m_ratios = New ArrayList
 
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "SplitRatios").SingleOrDefault.Elements.ToList
-                m_ratios.Add(xel.Value)
+                m_ratios.Add(Double.Parse(xel.Value, ci))
             Next
 
         End Function
@@ -48,7 +50,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             With elements
                 .Add(New XElement("SplitRatios"))
                 For Each d As Double In m_ratios
-                    .Item(.Count - 1).Add(New XElement("SplitRatio", d))
+                    .Item(.Count - 1).Add(New XElement("SplitRatio", d.ToString(ci)))
                 Next
             End With
 
