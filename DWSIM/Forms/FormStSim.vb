@@ -21,7 +21,7 @@ Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Runtime.Serialization.Formatters
 Imports System.IO
-
+Imports DWSIM.DWSIM.Outros
 Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
 
 Public Class FormStSim
@@ -1024,12 +1024,28 @@ Public Class FormStSim
                 Me.FrmChild.Options.SelectedComponents.Add(tmpcomp.Name, tmpcomp)
                 Me.FrmChild.Options.NotSelectedComponents.Remove(tmpcomp.Name)
                 Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
+
+                Dim proplist As New ArrayList
                 For Each ms In FrmChild.Collections.CLCS_MaterialStreamCollection.Values
                     For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
                         phase.Componentes.Add(tmpcomp.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(tmpcomp.Name, ""))
                         phase.Componentes(tmpcomp.Name).ConstantProperties = tmpcomp
                     Next
+
+                    proplist.Clear()
+                    For Each pi As DWSIM.Outros.NodeItem In ms.NodeTableItems.Values
+                        If pi.Checked Then
+                            proplist.Add(pi.Text)
+                        End If
+                    Next
+                    ms.FillNodeItems()
+                    For Each pi As DWSIM.Outros.NodeItem In ms.NodeTableItems.Values
+                        If proplist.Contains(pi.Text) Then
+                            pi.Checked = True
+                        End If
+                    Next
                 Next
+
                 Me.ListViewA.Items.Add(tmpcomp.Name, DWSIM.App.GetComponentName(tmpcomp.Name), 0).Tag = tmpcomp.Name
                 Me.ogc1.Rows.RemoveAt(index)
             End If
@@ -1048,9 +1064,24 @@ Public Class FormStSim
         Me.FrmChild.Options.NotSelectedComponents.Add(tmpcomp.Name, tmpcomp)
         Me.AddCompToGrid(tmpcomp)
         Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
+        Dim proplist As New ArrayList
+
         For Each ms In FrmChild.Collections.CLCS_MaterialStreamCollection.Values
             For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
                 phase.Componentes.Remove(tmpcomp.Name)
+            Next
+
+            proplist.Clear()
+            For Each pi As DWSIM.Outros.NodeItem In ms.NodeTableItems.Values
+                If pi.Checked Then
+                    proplist.Add(pi.Text)
+                End If
+            Next
+            ms.FillNodeItems()
+            For Each pi As DWSIM.Outros.NodeItem In ms.NodeTableItems.Values
+                If proplist.Contains(pi.Text) Then
+                    pi.Checked = True
+                End If
             Next
         Next
         SetupKeyCompounds()
