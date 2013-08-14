@@ -807,7 +807,15 @@ Namespace DWSIM.GraphicObjects
 
         Public Property HeaderText() As String
             Get
-                Return m_Text
+                If Not Me.BaseOwner Is Nothing Then
+                    If Not Me.BaseOwner.GraphicObject Is Nothing Then
+                        Return Me.BaseOwner.GraphicObject.Tag
+                    Else
+                        Return m_Text
+                    End If
+                Else
+                    Return m_Text
+                End If
             End Get
             Set(ByVal Value As String)
                 m_Text = Value

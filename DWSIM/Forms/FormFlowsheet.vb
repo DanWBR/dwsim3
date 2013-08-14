@@ -1495,6 +1495,60 @@ Imports DWSIM.DWSIM.GraphicObjects
                                     'DWSIM
                                     Me.Collections.CLCS_FilterCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.RCT_Conversion
+                                    Me.Collections.ReactorConversionCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_ReactorConversionCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.RCT_CSTR
+                                    Me.Collections.ReactorCSTRCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_ReactorCSTRCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.RCT_Equilibrium
+                                    Me.Collections.ReactorEquilibriumCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_ReactorEquilibriumCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.RCT_Gibbs
+                                    Me.Collections.ReactorGibbsCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_ReactorGibbsCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.RCT_PFR
+                                    Me.Collections.ReactorPFRCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_ReactorPFRCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.DistillationColumn
+                                    Me.Collections.DistillationColumnCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_DistillationColumnCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.AbsorptionColumn
+                                    Me.Collections.AbsorptionColumnCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_AbsorptionColumnCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.RefluxedAbsorber
+                                    Me.Collections.RefluxedAbsorberCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRFAB").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_RefluxedAbsorberCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.ReboiledAbsorber
+                                    Me.Collections.ReboiledAbsorberCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRBAB").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_ReboiledAbsorberCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
                             End Select
 
                             Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
