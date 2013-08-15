@@ -4749,4 +4749,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="UnsuitableFlashAlgorithmSelected" xml:space="preserve">
     <value>O Algoritmo Flash selecionado não é capaz de calcular o equilíbrio entre duas fases líquidas. Por favor, selecione um algortimo adequado para esta finalidade.</value>
   </data>
+  <data name="XLFileSaved" xml:space="preserve">
+    <value>Planilha do Excel salva com sucesso.</value>
+  </data>
 </root>

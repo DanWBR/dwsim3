@@ -15,8 +15,9 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports GemBox.Spreadsheet
 Imports DWSIM.DWSIM.SimulationObjects
+Imports Microsoft.Office.Interop
+Imports System.Text
 
 Public Class FormReportConfig
 
@@ -46,7 +47,7 @@ Public Class FormReportConfig
         Dim baseobj As SimulationObjects_BaseClass
         Dim properties() As String
         Dim description As String
-        Dim objtype As Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto
+        Dim objtype As Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto
         Dim propidx, r1, r2, r3, r4, r5, r6 As Integer
         Dim inclcond, inclcomp, inclmist, inclvap, inclliqm, inclliq1, inclliq2, inclaq As Boolean
         r1 = 5
@@ -283,7 +284,6 @@ Public Class FormReportConfig
         Next
     End Sub
 
-
     Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KButton5.Click
 
         Me.FillDataTable()
@@ -380,68 +380,62 @@ Public Class FormReportConfig
 
     Sub CreateAndSaveExcelFile()
 
-        Dim ef As ExcelFile = New ExcelFile
+        Dim xcl As New Excel.Application
+        Dim mybook As Excel.Workbook = xcl.Workbooks.Add()
+        Dim mysheet As Excel.Worksheet = mybook.Worksheets.Add()
 
-        ef.Worksheets.Add(DWSIM.App.GetLocalString("Relatrio"))
-
-        With ef.Worksheets.Item(0)
-
-            Dim i As Integer = 0
-            Dim j As Integer = 0
-            Dim prevmat, actualmat As String
-            Do
-                actualmat = Me.DT.Rows(i).Item(0).ToString
-                prevmat = Me.DT.Rows(i).Item(0).ToString
-                .Cells(j, 0).Value = DWSIM.App.GetLocalString("Objeto") & ": " & prevmat
-                j = j + 1
+        Try
+            With mysheet
+                .Name = "DWSIM_Report"
+                Dim i As Integer = 0
+                Dim j As Integer = 1
+                Dim prevmat, actualmat As String
                 Do
-                    .Cells(j + 1, 0).Value = Me.DT.Rows(i).Item(2)
-                    .Cells(j + 1, 1).Value = Me.DT.Rows(i).Item(3)
-                    .Cells(j + 1, 2).Value = Me.DT.Rows(i).Item(4)
-                    i = i + 1
+                    actualmat = Me.DT.Rows(i).Item(0).ToString
+                    prevmat = Me.DT.Rows(i).Item(0).ToString
+                    .Cells(j, 1).Value = DWSIM.App.GetLocalString("Objeto") & ": " & prevmat
                     j = j + 1
-                    If i < DT.Rows.Count Then actualmat = Me.DT.Rows(i).Item(0).ToString
-                Loop Until actualmat <> prevmat Or i >= DT.Rows.Count
-                j = j + 2
-            Loop Until i >= DT.Rows.Count
-
-            ef.SaveXls(Me.filename)
-
-        End With
+                    Do
+                        .Cells(j + 1, 1).Value = Me.DT.Rows(i).Item(2)
+                        .Cells(j + 1, 2).Value = Me.DT.Rows(i).Item(3)
+                        .Cells(j + 1, 3).Value = Me.DT.Rows(i).Item(4)
+                        i = i + 1
+                        j = j + 1
+                        If i < DT.Rows.Count Then actualmat = Me.DT.Rows(i).Item(0).ToString
+                    Loop Until actualmat <> prevmat Or i >= DT.Rows.Count
+                    j = j + 2
+                Loop Until i >= DT.Rows.Count
+            End With
+            mybook.SaveAs(Filename:=Me.filename, FileFormat:=Excel.XlFileFormat.xlExcel8)
+            MsgBox(DWSIM.App.GetLocalString("XLFileSaved"), MsgBoxStyle.Information, "DWSIM")
+        Catch ex As Exception
+            MsgBox(ex.ToString, MsgBoxStyle.Exclamation, DWSIM.App.GetLocalString("Erro"))
+        Finally
+            mybook.Close(SaveChanges:=False)
+            xcl.Quit()
+        End Try
 
     End Sub
 
     Sub CreateAndSaveCSVFile()
 
-        Dim ef As ExcelFile = New ExcelFile
+        Dim csvtext As New StringBuilder
 
-        ef.Worksheets.Add(DWSIM.App.GetLocalString("Relatrio"))
-
-        With ef.Worksheets.Item(0)
-
-            Dim i As Integer = 0
-            Dim j As Integer = 0
-            Dim prevmat, actualmat As String
+        Dim i As Integer = 0
+        Dim prevmat, actualmat As String
+        Do
+            actualmat = Me.DT.Rows(i).Item(0).ToString
+            prevmat = Me.DT.Rows(i).Item(0).ToString
+            csvtext.AppendLine(DWSIM.App.GetLocalString("Objeto") & ": " & prevmat)
             Do
-                actualmat = Me.DT.Rows(i).Item(0).ToString
-                prevmat = Me.DT.Rows(i).Item(0).ToString
-                .Cells(j, 0).Value = DWSIM.App.GetLocalString("Objeto") & ": " & prevmat
-                j = j + 1
-                Do
-                    .Cells(j + 1, 0).Value = Me.DT.Rows(i).Item(2)
-                    .Cells(j + 1, 1).Value = Me.DT.Rows(i).Item(3)
-                    .Cells(j + 1, 2).Value = Me.DT.Rows(i).Item(4)
-                    i = i + 1
-                    j = j + 1
-                    If i < DT.Rows.Count Then actualmat = Me.DT.Rows(i).Item(0).ToString
-                Loop Until actualmat <> prevmat Or i >= DT.Rows.Count
-                j = j + 2
-            Loop Until i >= DT.Rows.Count
+                csvtext.AppendLine(Me.DT.Rows(i).Item(2) & vbTab & Me.DT.Rows(i).Item(3) & vbTab & Me.DT.Rows(i).Item(4))
+                i = i + 1
+                If i < DT.Rows.Count Then actualmat = Me.DT.Rows(i).Item(0).ToString
+            Loop Until actualmat <> prevmat Or i >= DT.Rows.Count
+            csvtext.AppendLine()
+        Loop Until i >= DT.Rows.Count
 
-            ef.SaveCsv(Me.filename, CsvType.TabDelimited)
-
-
-        End With
+        IO.File.WriteAllText(Me.filename, csvtext.ToString)
 
     End Sub
 

@@ -4763,4 +4763,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Personalizado5" xml:space="preserve">
     <value>Nutzer 5</value>
   </data>
+  <data name="XLFileSaved" xml:space="preserve">
+    <value>Excel Spreadsheet saved successfully.</value>
+  </data>
 </root>

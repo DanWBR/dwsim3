@@ -13964,6 +13964,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Planilha do Excel salva com sucesso..
+        '''</summary>
+        Friend Shared ReadOnly Property XLFileSaved() As String
+            Get
+                Return ResourceManager.GetString("XLFileSaved", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Z (Fase Líquida).
         '''</summary>
         Friend Shared ReadOnly Property ZFaseLquida() As String

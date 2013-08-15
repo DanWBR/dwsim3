@@ -16,9 +16,7 @@ $NeoDataType.MyNeoReport.Report:Report
 				#MinHeight,1:0
 				#GridSizeX,1:0
 				#GridSizeY,1:0
-					$NeoDataType.MyNeoReport.OleDbDataSource:DataSourceSerializable
-						#Sql,1:
-						#ConnectionString,1:
+					$NeoDataType.MyNeoReport.TableDataSource:DataSourceSerializable
 						$System.String[],1:ParametersInfoSerializable
 						%System.String,1:@
 						$@end-array:
@@ -38,9 +36,7 @@ $NeoDataType.MyNeoReport.Report:Report
 				#MinHeight,1:0
 				#GridSizeX,1:0
 				#GridSizeY,1:0
-					$NeoDataType.MyNeoReport.OleDbDataSource:DataSourceSerializable
-						#Sql,1:
-						#ConnectionString,1:
+					$NeoDataType.MyNeoReport.TableDataSource:DataSourceSerializable
 						$System.String[],1:ParametersInfoSerializable
 						%System.String,1:@
 						$@end-array:
@@ -601,9 +597,7 @@ $NeoDataType.MyNeoReport.Report:Report
 				#MinHeight,1:0
 				#GridSizeX,1:0
 				#GridSizeY,1:0
-					$NeoDataType.MyNeoReport.OleDbDataSource:DataSourceSerializable
-						#Sql,1:
-						#ConnectionString,1:
+					$NeoDataType.MyNeoReport.TableDataSource:DataSourceSerializable
 						$System.String[],1:ParametersInfoSerializable
 						%System.String,1:@
 						$@end-array:
@@ -696,9 +690,7 @@ $NeoDataType.MyNeoReport.Report:Report
 				#MinHeight,1:0
 				#GridSizeX,1:0
 				#GridSizeY,1:0
-					$NeoDataType.MyNeoReport.OleDbDataSource:DataSourceSerializable
-						#Sql,1:
-						#ConnectionString,1:
+					$NeoDataType.MyNeoReport.TableDataSource:DataSourceSerializable
 						$System.String[],1:ParametersInfoSerializable
 						%System.String,1:@
 						$@end-array:
