@@ -947,6 +947,24 @@ Imports DWSIM.DWSIM.GraphicObjects
                 Me.Options.SelectedUnitSystem = FormMain.AvailableUnitSystems.Item(Me.ToolStripComboBoxUnitSystem.SelectedItem.ToString)
             End If
             Me.FormSurface.UpdateSelectedObject()
+
+            Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
+            Dim proplist As New ArrayList
+            For Each MS In Collections.CLCS_MaterialStreamCollection.Values
+                proplist.Clear()
+                For Each pi As DWSIM.Outros.NodeItem In MS.NodeTableItems.Values
+                    If pi.Checked Then
+                        proplist.Add(pi.Text)
+                    End If
+                Next
+                MS.FillNodeItems()
+                For Each pi As DWSIM.Outros.NodeItem In MS.NodeTableItems.Values
+                    If proplist.Contains(pi.Text) Then
+                        pi.Checked = True
+                    End If
+                Next
+            Next
+
         Catch ex As Exception
 
         End Try
