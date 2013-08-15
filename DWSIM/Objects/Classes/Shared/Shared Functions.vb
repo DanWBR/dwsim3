@@ -278,6 +278,7 @@ Namespace DWSIM
                                     .CompileMode = eCudafyCompileMode.Default
                                     .Platform = ePlatform.x86
                                     .WorkingDirectory = My.Computer.FileSystem.SpecialDirectories.Temp
+                                    'CUDA SDK v5.0 path
                                     .CompilerPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\bin\nvcc.exe"
                                     .IncludeDirectoryPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include"
                                 End With

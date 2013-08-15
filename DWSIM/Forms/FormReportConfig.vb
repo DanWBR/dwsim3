@@ -406,7 +406,7 @@ Public Class FormReportConfig
                     j = j + 2
                 Loop Until i >= DT.Rows.Count
             End With
-            mybook.SaveAs(Filename:=Me.filename, FileFormat:=Excel.XlFileFormat.xlExcel8)
+            mybook.SaveAs(Filename:=Me.filename, FileFormat:=Excel.XlFileFormat.xlWorkbookNormal)
             MsgBox(DWSIM.App.GetLocalString("XLFileSaved"), MsgBoxStyle.Information, "DWSIM")
         Catch ex As Exception
             MsgBox(ex.ToString, MsgBoxStyle.Exclamation, DWSIM.App.GetLocalString("Erro"))
