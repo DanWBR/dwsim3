@@ -532,7 +532,7 @@ Public Class CompositionEditorForm
                 cc = c
                 For ii = 0 To arT.Length - 1
                     cc = 0
-                    If cc > dgv.ColumnCount - 1 Then Exit For
+                    If cc > dgv.ColumnCount Then Exit For
                     dgv.Item(cc, r).Value = arT(ii).TrimStart
                     cc = cc + 1
                 Next
