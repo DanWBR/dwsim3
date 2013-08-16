@@ -16,7 +16,9 @@
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports DWSIM.DWSIM.SimulationObjects
-Imports Microsoft.Office.Interop
+Imports NetOffice
+Imports Excel = NetOffice.ExcelApi
+Imports NetOffice.ExcelApi.Enums
 Imports System.Text
 
 Public Class FormReportConfig
@@ -380,7 +382,7 @@ Public Class FormReportConfig
 
     Sub CreateAndSaveExcelFile()
 
-        Dim xcl As New Excel.Application
+        Dim xcl As New Excel.Application()
         Dim mybook As Excel.Workbook = xcl.Workbooks.Add()
         Dim mysheet As Excel.Worksheet = mybook.Worksheets.Add()
 
@@ -406,13 +408,14 @@ Public Class FormReportConfig
                     j = j + 2
                 Loop Until i >= DT.Rows.Count
             End With
-            mybook.SaveAs(Filename:=Me.filename, FileFormat:=Excel.XlFileFormat.xlWorkbookNormal)
+            mybook.SaveAs(filename:=Me.filename, fileFormat:=XlFileFormat.xlWorkbookNormal)
             MsgBox(DWSIM.App.GetLocalString("XLFileSaved"), MsgBoxStyle.Information, "DWSIM")
         Catch ex As Exception
             MsgBox(ex.ToString, MsgBoxStyle.Exclamation, DWSIM.App.GetLocalString("Erro"))
         Finally
             mybook.Close(SaveChanges:=False)
             xcl.Quit()
+            xcl.Dispose()
         End Try
 
     End Sub
