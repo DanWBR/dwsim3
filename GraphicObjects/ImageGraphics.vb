@@ -11,6 +11,8 @@
 'Requires the release version of .NET Framework
 
 Imports System.Drawing
+Imports System.IO
+Imports System.Linq
 
 Namespace GraphicObjects
 
@@ -113,7 +115,7 @@ Namespace GraphicObjects
             container = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
             Dim myImage As Image
@@ -214,7 +216,7 @@ Namespace GraphicObjects
             container = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
             If Not m_Image Is Nothing Then
@@ -233,8 +235,48 @@ Namespace GraphicObjects
             g.EndContainer(container)
         End Sub
 
-    End Class
+        Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
 
+            MyBase.LoadData(data)
+
+            m_Image = Base64ToImage((From xel2 As XElement In data Select xel2 Where xel2.Name = "ImageData").Single)
+
+        End Function
+
+        Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
+
+            Dim elements As System.Collections.Generic.List(Of System.Xml.Linq.XElement) = MyBase.SaveData()
+
+            elements.Add(New XElement("ImageData", ImageToBase64(m_Image, Imaging.ImageFormat.Bmp)))
+
+            Return elements
+
+        End Function
+
+        Public Function ImageToBase64(image As Image, format As System.Drawing.Imaging.ImageFormat) As String
+            Using ms As New MemoryStream()
+                ' Convert Image to byte[]
+                image.Save(ms, format)
+                Dim imageBytes As Byte() = ms.ToArray()
+
+                ' Convert byte[] to Base64 String
+                Dim base64String As String = Convert.ToBase64String(imageBytes)
+                Return base64String
+            End Using
+        End Function
+
+        Public Function Base64ToImage(base64String As String) As Image
+            ' Convert Base64 String to byte[]
+            Dim imageBytes As Byte() = Convert.FromBase64String(base64String)
+            Dim ms As New MemoryStream(imageBytes, 0, imageBytes.Length)
+
+            ' Convert byte[] to Image
+            ms.Write(imageBytes, 0, imageBytes.Length)
+            Dim image__1 As Image = Image.FromStream(ms, True)
+            Return image__1
+        End Function
+
+    End Class
 
     <Serializable()> Public Class EmbeddedAnimationGraphic
         Inherits ImageGraphic
@@ -315,7 +357,7 @@ Namespace GraphicObjects
             container = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
             If Not m_Image Is Nothing Then

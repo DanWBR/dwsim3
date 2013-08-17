@@ -72,7 +72,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'Vxv = vapor phase molar fractions
             'Vxs = solid phase molar fractions
             'V, S, L = phase molar amounts (F = 1 = V + S + L)
-            Dim Vnf(n), Vnl(n), Vxl(n), Vns(n), Vxs(n), Vnv(n), Vxv(n), Vf(n), V, S, L, Vp(n) As Double
+            Dim Vnf(n), Vnl(n), Vnl_ant(n), Vxl(n), Vns(n), Vxs(n), Vnv(n), Vxv(n), Vf(n), V, S, L, Vp(n), err As Double
             Dim sumN As Double = 0
 
             'get water index in the array.
@@ -98,8 +98,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 'only solids in the stream (no liquid water).
 
                 V = 0.0#
-                L = 0.0#
-                S = 1.0#
+                L = 1.0#
+                S = 0.0#
                 For i = 0 To n
                     Vxs(i) = Vnf(i)
                 Next
@@ -121,6 +121,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Me.Vx0 = Vx.Clone
 
                 Vnl = Vx.Clone
+                Vf = Vx.Clone
 
                 Dim int_count As Integer = 0
                 Dim L_ant As Double = 0.0#
@@ -131,17 +132,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     ''SolveChemicalEquilibria' returns the equilibrium molar amounts in the liquid phase, including precipitates.
 
                     If CalculateChemicalEquilibria And Not Vnf(wid) <= 0.5 Then
-                        Vnl = SolveChemicalEquilibria(Vnl, T, P, ids).Clone
+                        Vf = SolveChemicalEquilibria(Vf, T, P, ids).Clone
                     End If
 
                     For i = 0 To n
-                        Vxl(i) = Vnl(i) / Sum(Vnl)
+                        Vxl(i) = Vf(i) / Sum(Vf)
                     Next
-
-                    L_ant = L
-                    L = Sum(Vnl)
-
-                    If Math.Abs(L - L_ant) < Tolerance Then Exit Do
 
                     'calculate activity coefficients.
 
@@ -180,6 +176,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     For i = 0 To n
                         If Vxl(i) > Vxlmax(i) Then
                             Vxl(i) = Vxlmax(i)
+                            Vnl_ant(i) = Vnl(i)
                             Vnl(i) = Vxl(i) * L
                             Vns(i) = Vnf(i) - Vnl(i)
                         Else
@@ -199,6 +196,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Next
 
                     'liquid mole amounts
+
+                    L_ant = L
+                    L = Sum(Vnl)
+
+                    err = 0
+                    For i = 0 To n
+                        err += Abs(Vnl(i) - Vnl_ant(i)) ^ 2
+                    Next
+                    err += (L - L_ant) ^ 2
+
+                    If err < Tolerance Then Exit Do
 
                     S = Sum(Vns)
 
@@ -600,9 +608,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             For i = 0 To Me.Reactions.Count - 1
                 With proppack.CurrentMaterialStream.Flowsheet.Options.Reactions(Me.Reactions(i))
-                    f(i) = prod(i) - .ConstantKeqValue + pen_val
+                    f(i) = (prod(i) - .ConstantKeqValue) * (1 + pen_val)
                     If Double.IsNaN(f(i)) Or Double.IsInfinity(f(i)) Then
-                        f(i) = -.ConstantKeqValue + pen_val
+                        f(i) = pen_val
                     End If
                 End With
             Next

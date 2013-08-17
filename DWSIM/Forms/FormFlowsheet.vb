@@ -805,7 +805,7 @@ Imports DWSIM.DWSIM.GraphicObjects
                 Dim gObj As GraphicObject = Nothing
                 If Not img Is Nothing Then
                     Dim myEmbeddedImage As New EmbeddedImageGraphic(-Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.X, _
-                                    -Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.X, img)
+                                    -Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.Y, img)
                     gObj = myEmbeddedImage
                     gObj.Tag = DWSIM.App.GetLocalString("FIGURA") & Guid.NewGuid.ToString
                     gObj.AutoSize = True
@@ -2083,7 +2083,7 @@ Imports DWSIM.DWSIM.GraphicObjects
                 .ShowCustomProperties = True
                 .Item.Clear()
 
-                .Item.Add(DWSIM.App.GetLocalString("Autodimensionar"), gobj2, DWSIM.App.GetLocalString("AutoSize"), False, "", DWSIM.App.GetLocalString("SelecioLiquidrueparaque"), True)
+                .Item.Add(DWSIM.App.GetLocalString("Autodimensionar"), gobj2, "AutoSize", False, "", DWSIM.App.GetLocalString("SelecioLiquidrueparaque"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Altura"), gobj2, "Height", False, "", DWSIM.App.GetLocalString("Alturadafiguraempixe"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Largura"), gobj2, "Width", False, "", DWSIM.App.GetLocalString("Larguradafiguraempix"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj2, "Rotation", False, "", DWSIM.App.GetLocalString("Rotaodafigurade0a360"), True)
