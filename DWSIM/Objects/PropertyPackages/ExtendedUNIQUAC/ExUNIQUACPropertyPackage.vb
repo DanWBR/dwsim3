@@ -168,6 +168,27 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Return Me.AUX_MMM(fase1)
         End Function
 
+        Public Overrides Sub DW_CalcCompFugCoeff(ByVal f As Fase)
+
+            Dim fc As Object
+            Dim vmol As Object = Me.RET_VMOL(f)
+            Dim P, T As Double
+            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+            Select Case f
+                Case Fase.Vapor
+                    fc = Me.DW_CalcFugCoeff(vmol, T, P, State.Vapor)
+                Case Else
+                    fc = Me.DW_CalcFugCoeff(vmol, T, P, State.Liquid)
+            End Select
+            Dim i As Integer = 0
+            For Each subs As Substancia In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(f)).Componentes.Values
+                subs.FugacityCoeff = fc(i)
+                i += 1
+            Next
+
+        End Sub
+
         Public Overrides Sub DW_CalcOverallProps()
             MyBase.DW_CalcOverallProps()
         End Sub

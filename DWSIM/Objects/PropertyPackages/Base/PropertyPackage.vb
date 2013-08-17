@@ -4662,7 +4662,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         End Sub
 
-        Public Sub DW_CalcCompFugCoeff(ByVal f As Fase)
+        Public Overridable Sub DW_CalcCompFugCoeff(ByVal f As Fase)
 
             Dim fc As Object
             Dim vmol As Object = Me.RET_VMOL(f)

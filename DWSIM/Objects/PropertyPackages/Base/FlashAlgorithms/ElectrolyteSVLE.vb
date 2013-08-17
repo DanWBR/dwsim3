@@ -98,8 +98,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 'only solids in the stream (no liquid water).
 
                 V = 0.0#
-                L = 1.0#
-                S = 0.0#
+                L = 0.0#
+                S = 1.0#
                 For i = 0 To n
                     Vxs(i) = Vnf(i)
                 Next
@@ -107,6 +107,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 sumN = 1.0#
 
             Else
+
+                V = 0.0#
+                L = 1.0#
+                S = 0.0#
 
                 'calculate SLE.
 
@@ -174,12 +178,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     'mass balance.
 
                     For i = 0 To n
+                        Vnl_ant(i) = Vnl(i)
                         If Vxl(i) > Vxlmax(i) Then
                             Vxl(i) = Vxlmax(i)
-                            Vnl_ant(i) = Vnl(i)
                             Vnl(i) = Vxl(i) * L
-                            Vns(i) = Vnf(i) - Vnl(i)
+                            Vns(i) = Vf(i) - Vnl(i)
                         Else
+                            Vnl(i) = Vf(i)
                             Vns(i) = 0
                         End If
                     Next
@@ -188,10 +193,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     V = 0.0#
                     For i = 0 To n
                         If P < Vp(i) Then
-                            V += Vnf(i)
+                            V += Vf(i)
                             Vxl(i) = 0
                             Vnl(i) = 0
-                            Vnv(i) = Vnf(i)
+                            Vnv(i) = Vf(i)
                         End If
                     Next
 
@@ -199,14 +204,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     L_ant = L
                     L = Sum(Vnl)
-
-                    err = 0
-                    For i = 0 To n
-                        err += Abs(Vnl(i) - Vnl_ant(i)) ^ 2
-                    Next
-                    err += (L - L_ant) ^ 2
-
-                    If err < Tolerance Then Exit Do
 
                     S = Sum(Vns)
 
@@ -221,6 +218,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Vf(i) = Vnv(i) + Vnl(i) + Vns(i)
                         sumN += Vf(i)
                     Next
+
+                    err = 0
+                    For i = 0 To n
+                        err += Abs(Vnl(i) - Vnl_ant(i)) ^ 2
+                    Next
+                    err += (L - L_ant) ^ 2
+
+                    If err < Tolerance Then Exit Do
 
                     int_count += 1
 
@@ -608,7 +613,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             For i = 0 To Me.Reactions.Count - 1
                 With proppack.CurrentMaterialStream.Flowsheet.Options.Reactions(Me.Reactions(i))
-                    f(i) = (prod(i) - .ConstantKeqValue) * (1 + pen_val)
+                    f(i) = (prod(i) - .ConstantKeqValue + pen_val) * (1 + pen_val)
                     If Double.IsNaN(f(i)) Or Double.IsInfinity(f(i)) Then
                         f(i) = pen_val
                     End If
