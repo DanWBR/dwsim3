@@ -735,9 +735,6 @@
   <metadata name="CultureManager1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>326, 56</value>
   </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>en</value>
-  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -749,6 +746,12 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>1002, 605</value>
+  </data>
+  <data name="$this.HelpKeyword" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="$this.HelpNavigator" type="System.Windows.Forms.HelpNavigator, System.Windows.Forms">
+    <value>Topic</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1256,7 +1259,7 @@
     <value>CultureManager1</value>
   </data>
   <data name="&gt;&gt;CultureManager1.Type" xml:space="preserve">
-    <value>Infralution.Localization.CultureManager, Infralution.Localization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Infralution.Localization.CultureManager, Infralution.Localization, Version=1.2.2.0, Culture=neutral, PublicKeyToken=af4bb5454ff71782</value>
   </data>
   <data name="&gt;&gt;bgUpdater.Name" xml:space="preserve">
     <value>bgUpdater</value>

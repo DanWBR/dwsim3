@@ -17,10 +17,12 @@
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Disclaimer">
 			<param name="Local" value="1 Disclaimer.htm">
+			<param name="ImageNumber" value="11">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="GPL_V3 License">
 			<param name="Local" value="1 GPL_v3_License.htm">
+			<param name="ImageNumber" value="11">
 			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
@@ -34,8 +36,24 @@
 			</OBJECT>
 		<UL>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Start Component Creator">
-				<param name="Local" value="Component Creator Start.htm">
+				<param name="Name" value="Start">
+				<param name="Local" value="Component Creator 0.htm">
+				<param name="ImageNumber" value="11">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Identification">
+				<param name="Local" value="Component Creator 1.htm">
+				<param name="ImageNumber" value="11">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="UNIFAC">
+				<param name="Local" value="Component Creator 2.htm">
+				<param name="ImageNumber" value="11">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Joback">
+				<param name="Local" value="Component Creator 3.htm">
+				<param name="ImageNumber" value="11">
 				</OBJECT>
 		</UL>
 	</UL>

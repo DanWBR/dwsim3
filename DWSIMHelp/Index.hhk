@@ -6,9 +6,24 @@
 </HEAD><BODY>
 <UL>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="CompoundCreator">
-		<param name="Name" value="User Component Creator">
-		<param name="Local" value="UserCompCreator.htm">
+		<param name="Name" value="Welcome">
+		<param name="Name" value="Introduction">
+		<param name="Local" value="0 Welcome.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Introduction">
+		<param name="Name" value="Introduction">
+		<param name="Local" value="1 Introduction.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Utilities">
+		<param name="Name" value="Utilities">
+		<param name="Local" value="Utilities.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Component_Creator">
+		<param name="Name" value="Component Creator">
+		<param name="Local" value="Component Creator.htm">
 		</OBJECT>
 </UL>
 </BODY></HTML>

@@ -130,6 +130,103 @@
   <data name="ToolStripLabel2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
+  <data name="&gt;&gt;btnSaveToDB.Name" xml:space="preserve">
+    <value>btnSaveToDB</value>
+  </data>
+  <data name="&gt;&gt;btnSaveToDB.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnSaveToDB.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;btnSaveToDB.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;chkReplaceComps.Name" xml:space="preserve">
+    <value>chkReplaceComps</value>
+  </data>
+  <data name="&gt;&gt;chkReplaceComps.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkReplaceComps.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;chkReplaceComps.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tbDBPath.Name" xml:space="preserve">
+    <value>tbDBPath</value>
+  </data>
+  <data name="&gt;&gt;tbDBPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbDBPath.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;tbDBPath.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;btnSearch.Name" xml:space="preserve">
+    <value>btnSearch</value>
+  </data>
+  <data name="&gt;&gt;btnSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnSearch.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;btnSearch.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
+    <value>Label1</value>
+  </data>
+  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;btnCreateNewDB.Name" xml:space="preserve">
+    <value>btnCreateNewDB</value>
+  </data>
+  <data name="&gt;&gt;btnCreateNewDB.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnCreateNewDB.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;btnCreateNewDB.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 6</value>
+  </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>665, 84</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Banco de Dados</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Name" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnSaveToDB.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -140,7 +237,6 @@
   <data name="btnSaveToDB.Size" type="System.Drawing.Size, System.Drawing">
     <value>228, 26</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnSaveToDB.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
@@ -297,32 +393,44 @@
   <data name="&gt;&gt;btnCreateNewDB.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 6</value>
-  </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>665, 84</value>
-  </data>
-  <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Banco de Dados</value>
-  </data>
-  <data name="&gt;&gt;GroupBox1.Name" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;GroupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GroupBox1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GroupBox1.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="GroupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;FaTabStrip2.Name" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStrip2.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStrip2.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStrip2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 96</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1005, 414</value>
+  </data>
+  <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Propriedades do Componente</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.Name" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="FaTabStrip2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -330,6 +438,2415 @@
   <data name="FaTabStrip2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt</value>
   </data>
+  <data name="&gt;&gt;LinkLabel1.Name" xml:space="preserve">
+    <value>LinkLabel1</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel1.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Label16.Name" xml:space="preserve">
+    <value>Label16</value>
+  </data>
+  <data name="&gt;&gt;Label16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label16.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;Label16.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;btnRenderSMILES.Name" xml:space="preserve">
+    <value>btnRenderSMILES</value>
+  </data>
+  <data name="&gt;&gt;btnRenderSMILES.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnRenderSMILES.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;btnRenderSMILES.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Label17.Name" xml:space="preserve">
+    <value>Label17</value>
+  </data>
+  <data name="&gt;&gt;Label17.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label17.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;Label17.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;LinkPubChem.Name" xml:space="preserve">
+    <value>LinkPubChem</value>
+  </data>
+  <data name="&gt;&gt;LinkPubChem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LinkPubChem.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;LinkPubChem.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxName.Name" xml:space="preserve">
+    <value>TextBoxName</value>
+  </data>
+  <data name="&gt;&gt;TextBoxName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxName.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;TextBoxName.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;TextBoxSMILES.Name" xml:space="preserve">
+    <value>TextBoxSMILES</value>
+  </data>
+  <data name="&gt;&gt;TextBoxSMILES.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxSMILES.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;TextBoxSMILES.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCAS.Name" xml:space="preserve">
+    <value>TextBoxCAS</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCAS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCAS.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCAS.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;Label51.Name" xml:space="preserve">
+    <value>Label51</value>
+  </data>
+  <data name="&gt;&gt;Label51.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label51.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;Label51.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;Label21.Name" xml:space="preserve">
+    <value>Label21</value>
+  </data>
+  <data name="&gt;&gt;Label21.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label21.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;Label21.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;Label47.Name" xml:space="preserve">
+    <value>Label47</value>
+  </data>
+  <data name="&gt;&gt;Label47.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label47.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;Label47.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;TextBoxFormula.Name" xml:space="preserve">
+    <value>TextBoxFormula</value>
+  </data>
+  <data name="&gt;&gt;TextBoxFormula.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxFormula.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;TextBoxFormula.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;pbRender.Name" xml:space="preserve">
+    <value>pbRender</value>
+  </data>
+  <data name="&gt;&gt;pbRender.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pbRender.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;pbRender.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;Label22.Name" xml:space="preserve">
+    <value>Label22</value>
+  </data>
+  <data name="&gt;&gt;Label22.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label22.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;Label22.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;TextBoxID.Name" xml:space="preserve">
+    <value>TextBoxID</value>
+  </data>
+  <data name="&gt;&gt;TextBoxID.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxID.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;TextBoxID.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;TextBoxMW.Name" xml:space="preserve">
+    <value>TextBoxMW</value>
+  </data>
+  <data name="&gt;&gt;TextBoxMW.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxMW.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;TextBoxMW.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;lblMW.Name" xml:space="preserve">
+    <value>lblMW</value>
+  </data>
+  <data name="&gt;&gt;lblMW.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMW.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;lblMW.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxMW.Name" xml:space="preserve">
+    <value>CheckBoxMW</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxMW.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxMW.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxMW.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>997, 374</value>
+  </data>
+  <data name="FaTabStripItem1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Identificação</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem1.Name" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem1.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem1.Parent" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel2.Name" xml:space="preserve">
+    <value>LinkLabel2</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel2.Parent" xml:space="preserve">
+    <value>FaTabStripItem2</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Label60.Name" xml:space="preserve">
+    <value>Label60</value>
+  </data>
+  <data name="&gt;&gt;Label60.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label60.Parent" xml:space="preserve">
+    <value>FaTabStripItem2</value>
+  </data>
+  <data name="&gt;&gt;Label60.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;GridUNIFAC.Name" xml:space="preserve">
+    <value>GridUNIFAC</value>
+  </data>
+  <data name="&gt;&gt;GridUNIFAC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GridUNIFAC.Parent" xml:space="preserve">
+    <value>FaTabStripItem2</value>
+  </data>
+  <data name="&gt;&gt;GridUNIFAC.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>997, 374</value>
+  </data>
+  <data name="FaTabStripItem2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>UNIFAC</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem2.Name" xml:space="preserve">
+    <value>FaTabStripItem2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem2.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem2.Parent" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;Label58.Name" xml:space="preserve">
+    <value>Label58</value>
+  </data>
+  <data name="&gt;&gt;Label58.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label58.Parent" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;Label58.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;AddAtomDataGrid.Name" xml:space="preserve">
+    <value>AddAtomDataGrid</value>
+  </data>
+  <data name="&gt;&gt;AddAtomDataGrid.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AddAtomDataGrid.Parent" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;AddAtomDataGrid.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;TextBox1.Name" xml:space="preserve">
+    <value>TextBox1</value>
+  </data>
+  <data name="&gt;&gt;TextBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBox1.Parent" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;TextBox1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Label59.Name" xml:space="preserve">
+    <value>Label59</value>
+  </data>
+  <data name="&gt;&gt;Label59.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label59.Parent" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;Label59.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;AtomDataGrid.Name" xml:space="preserve">
+    <value>AtomDataGrid</value>
+  </data>
+  <data name="&gt;&gt;AtomDataGrid.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AtomDataGrid.Parent" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;AtomDataGrid.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel3.Name" xml:space="preserve">
+    <value>LinkLabel3</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel3.Parent" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;LinkLabel3.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;Label57.Name" xml:space="preserve">
+    <value>Label57</value>
+  </data>
+  <data name="&gt;&gt;Label57.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label57.Parent" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;Label57.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;GridJoback.Name" xml:space="preserve">
+    <value>GridJoback</value>
+  </data>
+  <data name="&gt;&gt;GridJoback.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GridJoback.Parent" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;GridJoback.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>997, 374</value>
+  </data>
+  <data name="FaTabStripItem3.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Joback</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem3.Name" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem3.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem3.Parent" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem3.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.Name" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxAF.Name" xml:space="preserve">
+    <value>CheckBoxAF</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxAF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxAF.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxAF.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxCSLV.Name" xml:space="preserve">
+    <value>CheckBoxCSLV</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxCSLV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxCSLV.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxCSLV.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;GroupBox11.Name" xml:space="preserve">
+    <value>GroupBox11</value>
+  </data>
+  <data name="&gt;&gt;GroupBox11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox11.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;GroupBox11.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider12.Name" xml:space="preserve">
+    <value>LabelWithDivider12</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider12.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider12.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider2.Name" xml:space="preserve">
+    <value>LabelWithDivider2</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider2.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider2.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxZRa.Name" xml:space="preserve">
+    <value>CheckBoxZRa</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxZRa.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxZRa.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxZRa.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxCSSP.Name" xml:space="preserve">
+    <value>CheckBoxCSSP</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxCSSP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxCSSP.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxCSSP.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;Label50.Name" xml:space="preserve">
+    <value>Label50</value>
+  </data>
+  <data name="&gt;&gt;Label50.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label50.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label50.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;Label4.Name" xml:space="preserve">
+    <value>Label4</value>
+  </data>
+  <data name="&gt;&gt;Label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label4.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxCSAF.Name" xml:space="preserve">
+    <value>CheckBoxCSAF</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxCSAF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxCSAF.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxCSAF.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;TextBoxDHF.Name" xml:space="preserve">
+    <value>TextBoxDHF</value>
+  </data>
+  <data name="&gt;&gt;TextBoxDHF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxDHF.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxDHF.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxZc.Name" xml:space="preserve">
+    <value>CheckBoxZc</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxZc.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxZc.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxZc.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxNBP.Name" xml:space="preserve">
+    <value>CheckBoxNBP</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxNBP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxNBP.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxNBP.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;lblDHF.Name" xml:space="preserve">
+    <value>lblDHF</value>
+  </data>
+  <data name="&gt;&gt;lblDHF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblDHF.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;lblDHF.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;TextBoxTc.Name" xml:space="preserve">
+    <value>TextBoxTc</value>
+  </data>
+  <data name="&gt;&gt;TextBoxTc.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxTc.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxTc.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxDGF.Name" xml:space="preserve">
+    <value>CheckBoxDGF</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxDGF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxDGF.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxDGF.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider4.Name" xml:space="preserve">
+    <value>LabelWithDivider4</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider4.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider4.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;Label53.Name" xml:space="preserve">
+    <value>Label53</value>
+  </data>
+  <data name="&gt;&gt;Label53.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label53.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label53.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxPc.Name" xml:space="preserve">
+    <value>CheckBoxPc</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxPc.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxPc.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxPc.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxDHF.Name" xml:space="preserve">
+    <value>CheckBoxDHF</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxDHF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxDHF.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxDHF.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;Label12.Name" xml:space="preserve">
+    <value>Label12</value>
+  </data>
+  <data name="&gt;&gt;Label12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label12.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label12.ZOrder" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="&gt;&gt;TextBoxDGF.Name" xml:space="preserve">
+    <value>TextBoxDGF</value>
+  </data>
+  <data name="&gt;&gt;TextBoxDGF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxDGF.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxDGF.ZOrder" xml:space="preserve">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;lblTc.Name" xml:space="preserve">
+    <value>lblTc</value>
+  </data>
+  <data name="&gt;&gt;lblTc.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblTc.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;lblTc.ZOrder" xml:space="preserve">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;Label68.Name" xml:space="preserve">
+    <value>Label68</value>
+  </data>
+  <data name="&gt;&gt;Label68.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label68.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label68.ZOrder" xml:space="preserve">
+    <value>24</value>
+  </data>
+  <data name="&gt;&gt;TextBoxZc.Name" xml:space="preserve">
+    <value>TextBoxZc</value>
+  </data>
+  <data name="&gt;&gt;TextBoxZc.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxZc.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxZc.ZOrder" xml:space="preserve">
+    <value>25</value>
+  </data>
+  <data name="&gt;&gt;lblDGF.Name" xml:space="preserve">
+    <value>lblDGF</value>
+  </data>
+  <data name="&gt;&gt;lblDGF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblDGF.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;lblDGF.ZOrder" xml:space="preserve">
+    <value>26</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxTc.Name" xml:space="preserve">
+    <value>CheckBoxTc</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxTc.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxTc.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxTc.ZOrder" xml:space="preserve">
+    <value>27</value>
+  </data>
+  <data name="&gt;&gt;TextBoxVTCSRK.Name" xml:space="preserve">
+    <value>TextBoxVTCSRK</value>
+  </data>
+  <data name="&gt;&gt;TextBoxVTCSRK.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxVTCSRK.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxVTCSRK.ZOrder" xml:space="preserve">
+    <value>28</value>
+  </data>
+  <data name="&gt;&gt;TextBoxZRa.Name" xml:space="preserve">
+    <value>TextBoxZRa</value>
+  </data>
+  <data name="&gt;&gt;TextBoxZRa.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxZRa.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxZRa.ZOrder" xml:space="preserve">
+    <value>29</value>
+  </data>
+  <data name="&gt;&gt;Label56.Name" xml:space="preserve">
+    <value>Label56</value>
+  </data>
+  <data name="&gt;&gt;Label56.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label56.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label56.ZOrder" xml:space="preserve">
+    <value>30</value>
+  </data>
+  <data name="&gt;&gt;Label8.Name" xml:space="preserve">
+    <value>Label8</value>
+  </data>
+  <data name="&gt;&gt;Label8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label8.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label8.ZOrder" xml:space="preserve">
+    <value>31</value>
+  </data>
+  <data name="&gt;&gt;Text1.Name" xml:space="preserve">
+    <value>Text1</value>
+  </data>
+  <data name="&gt;&gt;Text1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Text1.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Text1.ZOrder" xml:space="preserve">
+    <value>32</value>
+  </data>
+  <data name="&gt;&gt;Label11.Name" xml:space="preserve">
+    <value>Label11</value>
+  </data>
+  <data name="&gt;&gt;Label11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label11.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label11.ZOrder" xml:space="preserve">
+    <value>33</value>
+  </data>
+  <data name="&gt;&gt;TextBoxNBP.Name" xml:space="preserve">
+    <value>TextBoxNBP</value>
+  </data>
+  <data name="&gt;&gt;TextBoxNBP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxNBP.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxNBP.ZOrder" xml:space="preserve">
+    <value>34</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider6.Name" xml:space="preserve">
+    <value>LabelWithDivider6</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider6.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider6.ZOrder" xml:space="preserve">
+    <value>35</value>
+  </data>
+  <data name="&gt;&gt;Label67.Name" xml:space="preserve">
+    <value>Label67</value>
+  </data>
+  <data name="&gt;&gt;Label67.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label67.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label67.ZOrder" xml:space="preserve">
+    <value>36</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider5.Name" xml:space="preserve">
+    <value>LabelWithDivider5</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider5.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider5.ZOrder" xml:space="preserve">
+    <value>37</value>
+  </data>
+  <data name="&gt;&gt;lblNBP.Name" xml:space="preserve">
+    <value>lblNBP</value>
+  </data>
+  <data name="&gt;&gt;lblNBP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblNBP.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;lblNBP.ZOrder" xml:space="preserve">
+    <value>38</value>
+  </data>
+  <data name="&gt;&gt;TextBoxPc.Name" xml:space="preserve">
+    <value>TextBoxPc</value>
+  </data>
+  <data name="&gt;&gt;TextBoxPc.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxPc.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxPc.ZOrder" xml:space="preserve">
+    <value>39</value>
+  </data>
+  <data name="&gt;&gt;Label66.Name" xml:space="preserve">
+    <value>Label66</value>
+  </data>
+  <data name="&gt;&gt;Label66.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label66.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label66.ZOrder" xml:space="preserve">
+    <value>40</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider3.Name" xml:space="preserve">
+    <value>LabelWithDivider3</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider3.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider3.ZOrder" xml:space="preserve">
+    <value>41</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider13.Name" xml:space="preserve">
+    <value>LabelWithDivider13</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider13.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider13.ZOrder" xml:space="preserve">
+    <value>42</value>
+  </data>
+  <data name="&gt;&gt;TextBoxAF.Name" xml:space="preserve">
+    <value>TextBoxAF</value>
+  </data>
+  <data name="&gt;&gt;TextBoxAF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxAF.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxAF.ZOrder" xml:space="preserve">
+    <value>43</value>
+  </data>
+  <data name="&gt;&gt;TextBoxVTCPR.Name" xml:space="preserve">
+    <value>TextBoxVTCPR</value>
+  </data>
+  <data name="&gt;&gt;TextBoxVTCPR.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxVTCPR.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxVTCPR.ZOrder" xml:space="preserve">
+    <value>44</value>
+  </data>
+  <data name="&gt;&gt;Label14.Name" xml:space="preserve">
+    <value>Label14</value>
+  </data>
+  <data name="&gt;&gt;Label14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label14.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label14.ZOrder" xml:space="preserve">
+    <value>45</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider16.Name" xml:space="preserve">
+    <value>LabelWithDivider16</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider16.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider16.ZOrder" xml:space="preserve">
+    <value>46</value>
+  </data>
+  <data name="&gt;&gt;lblPc.Name" xml:space="preserve">
+    <value>lblPc</value>
+  </data>
+  <data name="&gt;&gt;lblPc.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblPc.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;lblPc.ZOrder" xml:space="preserve">
+    <value>47</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCSLV.Name" xml:space="preserve">
+    <value>TextBoxCSLV</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCSLV.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCSLV.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCSLV.ZOrder" xml:space="preserve">
+    <value>48</value>
+  </data>
+  <data name="&gt;&gt;Label62.Name" xml:space="preserve">
+    <value>Label62</value>
+  </data>
+  <data name="&gt;&gt;Label62.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label62.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label62.ZOrder" xml:space="preserve">
+    <value>49</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCSSP.Name" xml:space="preserve">
+    <value>TextBoxCSSP</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCSSP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCSSP.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCSSP.ZOrder" xml:space="preserve">
+    <value>50</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCSAF.Name" xml:space="preserve">
+    <value>TextBoxCSAF</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCSAF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCSAF.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;TextBoxCSAF.ZOrder" xml:space="preserve">
+    <value>51</value>
+  </data>
+  <data name="&gt;&gt;Label65.Name" xml:space="preserve">
+    <value>Label65</value>
+  </data>
+  <data name="&gt;&gt;Label65.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label65.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label65.ZOrder" xml:space="preserve">
+    <value>52</value>
+  </data>
+  <data name="&gt;&gt;Label61.Name" xml:space="preserve">
+    <value>Label61</value>
+  </data>
+  <data name="&gt;&gt;Label61.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label61.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label61.ZOrder" xml:space="preserve">
+    <value>53</value>
+  </data>
+  <data name="&gt;&gt;Label64.Name" xml:space="preserve">
+    <value>Label64</value>
+  </data>
+  <data name="&gt;&gt;Label64.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label64.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label64.ZOrder" xml:space="preserve">
+    <value>54</value>
+  </data>
+  <data name="&gt;&gt;Label63.Name" xml:space="preserve">
+    <value>Label63</value>
+  </data>
+  <data name="&gt;&gt;Label63.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label63.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;Label63.ZOrder" xml:space="preserve">
+    <value>55</value>
+  </data>
+  <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>997, 374</value>
+  </data>
+  <data name="FaTabStripItem4.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Propriedades</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem4.Name" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem4.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem4.Parent" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem4.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;Label43.Name" xml:space="preserve">
+    <value>Label43</value>
+  </data>
+  <data name="&gt;&gt;Label43.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label43.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;Label43.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;rbEstimatePVAP.Name" xml:space="preserve">
+    <value>rbEstimatePVAP</value>
+  </data>
+  <data name="&gt;&gt;rbEstimatePVAP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbEstimatePVAP.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;rbEstimatePVAP.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_E.Name" xml:space="preserve">
+    <value>tbPVAP_E</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_E.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_E.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_E.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;rbRegressPVAP.Name" xml:space="preserve">
+    <value>rbRegressPVAP</value>
+  </data>
+  <data name="&gt;&gt;rbRegressPVAP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbRegressPVAP.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;rbRegressPVAP.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;Label13.Name" xml:space="preserve">
+    <value>Label13</value>
+  </data>
+  <data name="&gt;&gt;Label13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label13.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;Label13.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataPVAP.Name" xml:space="preserve">
+    <value>GridExpDataPVAP</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataPVAP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataPVAP.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataPVAP.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_D.Name" xml:space="preserve">
+    <value>tbPVAP_D</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_D.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_D.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_D.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;btnRegressPVAP.Name" xml:space="preserve">
+    <value>btnRegressPVAP</value>
+  </data>
+  <data name="&gt;&gt;btnRegressPVAP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnRegressPVAP.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;btnRegressPVAP.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;Label10.Name" xml:space="preserve">
+    <value>Label10</value>
+  </data>
+  <data name="&gt;&gt;Label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label10.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;Label10.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;btnViewPVAP.Name" xml:space="preserve">
+    <value>btnViewPVAP</value>
+  </data>
+  <data name="&gt;&gt;btnViewPVAP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnViewPVAP.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;btnViewPVAP.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_C.Name" xml:space="preserve">
+    <value>tbPVAP_C</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_C.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_C.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_C.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;Label2.Name" xml:space="preserve">
+    <value>Label2</value>
+  </data>
+  <data name="&gt;&gt;Label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;Label6.Name" xml:space="preserve">
+    <value>Label6</value>
+  </data>
+  <data name="&gt;&gt;Label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label6.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;Label6.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;tbStatusPVAP.Name" xml:space="preserve">
+    <value>tbStatusPVAP</value>
+  </data>
+  <data name="&gt;&gt;tbStatusPVAP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbStatusPVAP.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;tbStatusPVAP.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_B.Name" xml:space="preserve">
+    <value>tbPVAP_B</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_B.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_B.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_B.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffPVAP.Name" xml:space="preserve">
+    <value>rbCoeffPVAP</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffPVAP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffPVAP.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffPVAP.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;Label5.Name" xml:space="preserve">
+    <value>Label5</value>
+  </data>
+  <data name="&gt;&gt;Label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label5.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;Label5.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;cbEqPVAP.Name" xml:space="preserve">
+    <value>cbEqPVAP</value>
+  </data>
+  <data name="&gt;&gt;cbEqPVAP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbEqPVAP.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;cbEqPVAP.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_A.Name" xml:space="preserve">
+    <value>tbPVAP_A</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_A.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_A.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;tbPVAP_A.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;Label30.Name" xml:space="preserve">
+    <value>Label30</value>
+  </data>
+  <data name="&gt;&gt;Label30.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label30.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;Label30.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;Label29.Name" xml:space="preserve">
+    <value>Label29</value>
+  </data>
+  <data name="&gt;&gt;Label29.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label29.Parent" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;Label29.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="FaTabStripItem7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>997, 374</value>
+  </data>
+  <data name="FaTabStripItem7.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="FaTabStripItem7.Title" xml:space="preserve">
+    <value>Pressão de Vapor</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem7.Name" xml:space="preserve">
+    <value>FaTabStripItem7</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem7.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem7.Parent" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem7.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;Label3.Name" xml:space="preserve">
+    <value>Label3</value>
+  </data>
+  <data name="&gt;&gt;Label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label3.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Label44.Name" xml:space="preserve">
+    <value>Label44</value>
+  </data>
+  <data name="&gt;&gt;Label44.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label44.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;Label44.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateCPIG.Name" xml:space="preserve">
+    <value>rbEstimateCPIG</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateCPIG.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateCPIG.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateCPIG.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tbStatusCPIG.Name" xml:space="preserve">
+    <value>tbStatusCPIG</value>
+  </data>
+  <data name="&gt;&gt;tbStatusCPIG.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbStatusCPIG.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;tbStatusCPIG.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;Label26.Name" xml:space="preserve">
+    <value>Label26</value>
+  </data>
+  <data name="&gt;&gt;Label26.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label26.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;Label26.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_E.Name" xml:space="preserve">
+    <value>tbCPIG_E</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_E.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_E.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_E.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;Label28.Name" xml:space="preserve">
+    <value>Label28</value>
+  </data>
+  <data name="&gt;&gt;Label28.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label28.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;Label28.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_A.Name" xml:space="preserve">
+    <value>tbCPIG_A</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_A.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_A.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_A.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;Label18.Name" xml:space="preserve">
+    <value>Label18</value>
+  </data>
+  <data name="&gt;&gt;Label18.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label18.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;Label18.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;cbEqCPIG.Name" xml:space="preserve">
+    <value>cbEqCPIG</value>
+  </data>
+  <data name="&gt;&gt;cbEqCPIG.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbEqCPIG.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;cbEqCPIG.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;btnViewCPIG.Name" xml:space="preserve">
+    <value>btnViewCPIG</value>
+  </data>
+  <data name="&gt;&gt;btnViewCPIG.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnViewCPIG.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;btnViewCPIG.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;Label24.Name" xml:space="preserve">
+    <value>Label24</value>
+  </data>
+  <data name="&gt;&gt;Label24.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label24.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;Label24.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_D.Name" xml:space="preserve">
+    <value>tbCPIG_D</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_D.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_D.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_D.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffCPIG.Name" xml:space="preserve">
+    <value>rbCoeffCPIG</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffCPIG.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffCPIG.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffCPIG.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;btnRegressCPIG.Name" xml:space="preserve">
+    <value>btnRegressCPIG</value>
+  </data>
+  <data name="&gt;&gt;btnRegressCPIG.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnRegressCPIG.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;btnRegressCPIG.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_B.Name" xml:space="preserve">
+    <value>tbCPIG_B</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_B.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_B.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_B.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;Label19.Name" xml:space="preserve">
+    <value>Label19</value>
+  </data>
+  <data name="&gt;&gt;Label19.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label19.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;Label19.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;Label23.Name" xml:space="preserve">
+    <value>Label23</value>
+  </data>
+  <data name="&gt;&gt;Label23.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label23.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;Label23.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataCPIG.Name" xml:space="preserve">
+    <value>GridExpDataCPIG</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataCPIG.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataCPIG.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataCPIG.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;rbRegressCPIG.Name" xml:space="preserve">
+    <value>rbRegressCPIG</value>
+  </data>
+  <data name="&gt;&gt;rbRegressCPIG.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbRegressCPIG.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;rbRegressCPIG.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_C.Name" xml:space="preserve">
+    <value>tbCPIG_C</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_C.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_C.Parent" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;tbCPIG_C.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="FaTabStripItem8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>997, 374</value>
+  </data>
+  <data name="FaTabStripItem8.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="FaTabStripItem8.Title" xml:space="preserve">
+    <value>Cp (Gás Ideal)</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem8.Name" xml:space="preserve">
+    <value>FaTabStripItem8</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem8.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem8.Parent" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem8.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;Label45.Name" xml:space="preserve">
+    <value>Label45</value>
+  </data>
+  <data name="&gt;&gt;Label45.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label45.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;Label45.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateLIQDENS.Name" xml:space="preserve">
+    <value>rbEstimateLIQDENS</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateLIQDENS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateLIQDENS.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateLIQDENS.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_E.Name" xml:space="preserve">
+    <value>tbLIQDENS_E</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_E.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_E.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_E.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;rbRegressLIQDENS.Name" xml:space="preserve">
+    <value>rbRegressLIQDENS</value>
+  </data>
+  <data name="&gt;&gt;rbRegressLIQDENS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbRegressLIQDENS.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;rbRegressLIQDENS.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;Label31.Name" xml:space="preserve">
+    <value>Label31</value>
+  </data>
+  <data name="&gt;&gt;Label31.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label31.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;Label31.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataLIQDENS.Name" xml:space="preserve">
+    <value>GridExpDataLIQDENS</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataLIQDENS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataLIQDENS.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataLIQDENS.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_D.Name" xml:space="preserve">
+    <value>tbLIQDENS_D</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_D.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_D.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_D.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;btnRegressLIQDENS.Name" xml:space="preserve">
+    <value>btnRegressLIQDENS</value>
+  </data>
+  <data name="&gt;&gt;btnRegressLIQDENS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnRegressLIQDENS.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;btnRegressLIQDENS.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;Label32.Name" xml:space="preserve">
+    <value>Label32</value>
+  </data>
+  <data name="&gt;&gt;Label32.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label32.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;Label32.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;btnViewLIQDENS.Name" xml:space="preserve">
+    <value>btnViewLIQDENS</value>
+  </data>
+  <data name="&gt;&gt;btnViewLIQDENS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnViewLIQDENS.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;btnViewLIQDENS.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_C.Name" xml:space="preserve">
+    <value>tbLIQDENS_C</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_C.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_C.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_C.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;Label7.Name" xml:space="preserve">
+    <value>Label7</value>
+  </data>
+  <data name="&gt;&gt;Label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label7.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;Label7.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;Label33.Name" xml:space="preserve">
+    <value>Label33</value>
+  </data>
+  <data name="&gt;&gt;Label33.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label33.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;Label33.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;tbStatusLIQDENS.Name" xml:space="preserve">
+    <value>tbStatusLIQDENS</value>
+  </data>
+  <data name="&gt;&gt;tbStatusLIQDENS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbStatusLIQDENS.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;tbStatusLIQDENS.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_B.Name" xml:space="preserve">
+    <value>tbLIQDENS_B</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_B.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_B.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_B.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffLIQDENS.Name" xml:space="preserve">
+    <value>rbCoeffLIQDENS</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffLIQDENS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffLIQDENS.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffLIQDENS.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;Label34.Name" xml:space="preserve">
+    <value>Label34</value>
+  </data>
+  <data name="&gt;&gt;Label34.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label34.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;Label34.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;cbEqLIQDENS.Name" xml:space="preserve">
+    <value>cbEqLIQDENS</value>
+  </data>
+  <data name="&gt;&gt;cbEqLIQDENS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbEqLIQDENS.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;cbEqLIQDENS.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_A.Name" xml:space="preserve">
+    <value>tbLIQDENS_A</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_A.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_A.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;tbLIQDENS_A.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;Label36.Name" xml:space="preserve">
+    <value>Label36</value>
+  </data>
+  <data name="&gt;&gt;Label36.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label36.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;Label36.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;Label35.Name" xml:space="preserve">
+    <value>Label35</value>
+  </data>
+  <data name="&gt;&gt;Label35.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label35.Parent" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;Label35.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="FaTabStripItem9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>997, 374</value>
+  </data>
+  <data name="FaTabStripItem9.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="FaTabStripItem9.Title" xml:space="preserve">
+    <value>Densidade (Líquido)</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem9.Name" xml:space="preserve">
+    <value>FaTabStripItem9</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem9.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem9.Parent" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem9.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;Label46.Name" xml:space="preserve">
+    <value>Label46</value>
+  </data>
+  <data name="&gt;&gt;Label46.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label46.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;Label46.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateLIQVISC.Name" xml:space="preserve">
+    <value>rbEstimateLIQVISC</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateLIQVISC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateLIQVISC.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateLIQVISC.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_E.Name" xml:space="preserve">
+    <value>tbLIQVISC_E</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_E.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_E.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_E.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;rbRegressLIQVISC.Name" xml:space="preserve">
+    <value>rbRegressLIQVISC</value>
+  </data>
+  <data name="&gt;&gt;rbRegressLIQVISC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbRegressLIQVISC.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;rbRegressLIQVISC.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;Label37.Name" xml:space="preserve">
+    <value>Label37</value>
+  </data>
+  <data name="&gt;&gt;Label37.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label37.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;Label37.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataLIQVISC.Name" xml:space="preserve">
+    <value>GridExpDataLIQVISC</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataLIQVISC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataLIQVISC.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataLIQVISC.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_D.Name" xml:space="preserve">
+    <value>tbLIQVISC_D</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_D.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_D.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_D.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;btnRegressLIQVISC.Name" xml:space="preserve">
+    <value>btnRegressLIQVISC</value>
+  </data>
+  <data name="&gt;&gt;btnRegressLIQVISC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnRegressLIQVISC.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;btnRegressLIQVISC.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;Label38.Name" xml:space="preserve">
+    <value>Label38</value>
+  </data>
+  <data name="&gt;&gt;Label38.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label38.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;Label38.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;btnViewLIQVISC.Name" xml:space="preserve">
+    <value>btnViewLIQVISC</value>
+  </data>
+  <data name="&gt;&gt;btnViewLIQVISC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnViewLIQVISC.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;btnViewLIQVISC.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_C.Name" xml:space="preserve">
+    <value>tbLIQVISC_C</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_C.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_C.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_C.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;Label9.Name" xml:space="preserve">
+    <value>Label9</value>
+  </data>
+  <data name="&gt;&gt;Label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label9.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;Label9.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;Label39.Name" xml:space="preserve">
+    <value>Label39</value>
+  </data>
+  <data name="&gt;&gt;Label39.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label39.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;Label39.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;tbStatusLIQVISC.Name" xml:space="preserve">
+    <value>tbStatusLIQVISC</value>
+  </data>
+  <data name="&gt;&gt;tbStatusLIQVISC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbStatusLIQVISC.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;tbStatusLIQVISC.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_B.Name" xml:space="preserve">
+    <value>tbLIQVISC_B</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_B.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_B.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_B.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffLIQVISC.Name" xml:space="preserve">
+    <value>rbCoeffLIQVISC</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffLIQVISC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffLIQVISC.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffLIQVISC.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;Label40.Name" xml:space="preserve">
+    <value>Label40</value>
+  </data>
+  <data name="&gt;&gt;Label40.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label40.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;Label40.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;cbEqLIQVISC.Name" xml:space="preserve">
+    <value>cbEqLIQVISC</value>
+  </data>
+  <data name="&gt;&gt;cbEqLIQVISC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbEqLIQVISC.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;cbEqLIQVISC.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_A.Name" xml:space="preserve">
+    <value>tbLIQVISC_A</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_A.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_A.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;tbLIQVISC_A.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;Label42.Name" xml:space="preserve">
+    <value>Label42</value>
+  </data>
+  <data name="&gt;&gt;Label42.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label42.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;Label42.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;Label41.Name" xml:space="preserve">
+    <value>Label41</value>
+  </data>
+  <data name="&gt;&gt;Label41.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label41.Parent" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;Label41.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="FaTabStripItem10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>997, 374</value>
+  </data>
+  <data name="FaTabStripItem10.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="FaTabStripItem10.Title" xml:space="preserve">
+    <value>Viscosidade (Líquido)</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem10.Name" xml:space="preserve">
+    <value>FaTabStripItem10</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem10.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem10.Parent" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem10.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider7.Name" xml:space="preserve">
+    <value>LabelWithDivider7</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider7.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider7.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;gbCPs.Name" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;gbCPs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gbCPs.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;gbCPs.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;gbSolidDens.Name" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;gbSolidDens.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gbSolidDens.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;gbSolidDens.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Label54.Name" xml:space="preserve">
+    <value>Label54</value>
+  </data>
+  <data name="&gt;&gt;Label54.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label54.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;Label54.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;TextBoxEnthOfFusion2.Name" xml:space="preserve">
+    <value>TextBoxEnthOfFusion2</value>
+  </data>
+  <data name="&gt;&gt;TextBoxEnthOfFusion2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxEnthOfFusion2.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;TextBoxEnthOfFusion2.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxEnthOfFusion.Name" xml:space="preserve">
+    <value>CheckBoxEnthOfFusion</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxEnthOfFusion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxEnthOfFusion.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxEnthOfFusion.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider1.Name" xml:space="preserve">
+    <value>LabelWithDivider1</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider1.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider1.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;lblEnthOfFusion.Name" xml:space="preserve">
+    <value>lblEnthOfFusion</value>
+  </data>
+  <data name="&gt;&gt;lblEnthOfFusion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblEnthOfFusion.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;lblEnthOfFusion.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;Label52.Name" xml:space="preserve">
+    <value>Label52</value>
+  </data>
+  <data name="&gt;&gt;Label52.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label52.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;Label52.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;TextBoxEnthOfFusion.Name" xml:space="preserve">
+    <value>TextBoxEnthOfFusion</value>
+  </data>
+  <data name="&gt;&gt;TextBoxEnthOfFusion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxEnthOfFusion.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;TextBoxEnthOfFusion.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;TextBoxMeltingTemp.Name" xml:space="preserve">
+    <value>TextBoxMeltingTemp</value>
+  </data>
+  <data name="&gt;&gt;TextBoxMeltingTemp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxMeltingTemp.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;TextBoxMeltingTemp.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;Label55.Name" xml:space="preserve">
+    <value>Label55</value>
+  </data>
+  <data name="&gt;&gt;Label55.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label55.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;Label55.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;lblMeltingTemp.Name" xml:space="preserve">
+    <value>lblMeltingTemp</value>
+  </data>
+  <data name="&gt;&gt;lblMeltingTemp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblMeltingTemp.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;lblMeltingTemp.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxMeltingTemp.Name" xml:space="preserve">
+    <value>CheckBoxMeltingTemp</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxMeltingTemp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxMeltingTemp.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;CheckBoxMeltingTemp.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="FaTabStripItem11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>997, 374</value>
+  </data>
+  <data name="FaTabStripItem11.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="FaTabStripItem11.Title" xml:space="preserve">
+    <value>Fase Sólida</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem11.Name" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem11.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem11.Parent" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem11.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="FaTabStrip2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
+  </data>
+  <data name="FaTabStrip2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>999, 395</value>
+  </data>
+  <data name="FaTabStrip2.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;FaTabStrip2.Name" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStrip2.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStrip2.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStrip2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>128, 3</value>
+  </metadata>
   <data name="LinkLabel1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -351,9 +2868,6 @@
   <data name="LinkLabel1.Text" xml:space="preserve">
     <value>Número CAS</value>
   </data>
-  <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>128, 3</value>
-  </metadata>
   <data name="LinkLabel1.ToolTip" xml:space="preserve">
     <value>Call NIST-Webbook with defined CAS-number</value>
   </data>
@@ -819,27 +3333,6 @@
   <data name="&gt;&gt;CheckBoxMW.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
-  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 374</value>
-  </data>
-  <data name="FaTabStripItem1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Identificação</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem1.Name" xml:space="preserve">
-    <value>FaTabStripItem1</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem1.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem1.Parent" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="LinkLabel2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -909,20 +3402,14 @@
   <data name="&gt;&gt;Label60.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="GridUNIFAC.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
   <metadata name="Column4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Quantidade</value>
-  </data>
   <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="Column1.HeaderText" xml:space="preserve">
-    <value>Exemplo</value>
+  <data name="GridUNIFAC.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
   </data>
   <data name="GridUNIFAC.Location" type="System.Drawing.Point, System.Drawing">
     <value>19, 36</value>
@@ -948,26 +3435,17 @@
   <data name="&gt;&gt;GridUNIFAC.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 374</value>
+  <metadata name="Column4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Column4.HeaderText" xml:space="preserve">
+    <value>Quantidade</value>
   </data>
-  <data name="FaTabStripItem2.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>UNIFAC</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem2.Name" xml:space="preserve">
-    <value>FaTabStripItem2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem2.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem2.Parent" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem2.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Exemplo</value>
   </data>
   <data name="Label58.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -999,20 +3477,14 @@
   <data name="&gt;&gt;Label58.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="AddAtomDataGrid.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
   <metadata name="Atom.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="Atom.HeaderText" xml:space="preserve">
-    <value>Átomo</value>
-  </data>
   <metadata name="Count.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="Count.HeaderText" xml:space="preserve">
-    <value>Qtde</value>
+  <data name="AddAtomDataGrid.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
   </data>
   <data name="AddAtomDataGrid.Location" type="System.Drawing.Point, System.Drawing">
     <value>654, 78</value>
@@ -1037,6 +3509,18 @@
   </data>
   <data name="&gt;&gt;AddAtomDataGrid.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <metadata name="Atom.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Atom.HeaderText" xml:space="preserve">
+    <value>Átomo</value>
+  </data>
+  <metadata name="Count.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Count.HeaderText" xml:space="preserve">
+    <value>Qtde</value>
   </data>
   <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>18, 9</value>
@@ -1095,20 +3579,14 @@
   <data name="&gt;&gt;Label59.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="AtomDataGrid.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
   <metadata name="ColAtom.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="ColAtom.HeaderText" xml:space="preserve">
-    <value>Átomo</value>
-  </data>
   <metadata name="ColCount.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="ColCount.HeaderText" xml:space="preserve">
-    <value>Qtde</value>
+  <data name="AtomDataGrid.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
   </data>
   <data name="AtomDataGrid.Location" type="System.Drawing.Point, System.Drawing">
     <value>517, 78</value>
@@ -1130,6 +3608,18 @@
   </data>
   <data name="&gt;&gt;AtomDataGrid.ZOrder" xml:space="preserve">
     <value>4</value>
+  </data>
+  <metadata name="ColAtom.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="ColAtom.HeaderText" xml:space="preserve">
+    <value>Átomo</value>
+  </data>
+  <metadata name="ColCount.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="ColCount.HeaderText" xml:space="preserve">
+    <value>Qtde</value>
   </data>
   <data name="LinkLabel3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1200,8 +3690,44 @@
   <data name="&gt;&gt;Label57.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <metadata name="Column2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColumnGroupName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColumnCountUNIFAC.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="ColumnCountJoback.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="GridJoback.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left</value>
+  </data>
+  <data name="GridJoback.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 78</value>
+  </data>
+  <data name="GridJoback.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>80</value>
+  </data>
+  <data name="GridJoback.Size" type="System.Drawing.Size, System.Drawing">
+    <value>493, 278</value>
+  </data>
+  <data name="GridJoback.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;GridJoback.Name" xml:space="preserve">
+    <value>GridJoback</value>
+  </data>
+  <data name="&gt;&gt;GridJoback.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GridJoback.Parent" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;GridJoback.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <metadata name="Column2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1239,50 +3765,137 @@
   <data name="ColumnCountJoback.ToolTipText" xml:space="preserve">
     <value>Count of additional Joback groups which are not defined already as UNIFAC subgroups.</value>
   </data>
-  <data name="GridJoback.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 78</value>
+  <data name="&gt;&gt;LabelWithDivider8.Name" xml:space="preserve">
+    <value>LabelWithDivider8</value>
   </data>
-  <data name="GridJoback.RowHeadersWidth" type="System.Int32, mscorlib">
-    <value>80</value>
+  <data name="&gt;&gt;LabelWithDivider8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="GridJoback.Size" type="System.Drawing.Size, System.Drawing">
-    <value>493, 278</value>
+  <data name="&gt;&gt;LabelWithDivider8.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
   </data>
-  <data name="GridJoback.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;LabelWithDivider8.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;GridJoback.Name" xml:space="preserve">
-    <value>GridJoback</value>
+  <data name="&gt;&gt;TextBoxPCSAFTEpsilon.Name" xml:space="preserve">
+    <value>TextBoxPCSAFTEpsilon</value>
   </data>
-  <data name="&gt;&gt;GridJoback.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;TextBoxPCSAFTEpsilon.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;GridJoback.Parent" xml:space="preserve">
-    <value>FaTabStripItem3</value>
+  <data name="&gt;&gt;TextBoxPCSAFTEpsilon.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
   </data>
-  <data name="&gt;&gt;GridJoback.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;TextBoxPCSAFTEpsilon.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;Label20.Name" xml:space="preserve">
+    <value>Label20</value>
+  </data>
+  <data name="&gt;&gt;Label20.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label20.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;Label20.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider9.Name" xml:space="preserve">
+    <value>LabelWithDivider9</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider9.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider9.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;TextBoxPCSAFTm.Name" xml:space="preserve">
+    <value>TextBoxPCSAFTm</value>
+  </data>
+  <data name="&gt;&gt;TextBoxPCSAFTm.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxPCSAFTm.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;TextBoxPCSAFTm.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;Label25.Name" xml:space="preserve">
+    <value>Label25</value>
+  </data>
+  <data name="&gt;&gt;Label25.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label25.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;Label25.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider10.Name" xml:space="preserve">
+    <value>LabelWithDivider10</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LabelWithDivider, LabelWithDivider, Version=1.1.0.1, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider10.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;LabelWithDivider10.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;TextBoxPCSAFTSigma.Name" xml:space="preserve">
+    <value>TextBoxPCSAFTSigma</value>
+  </data>
+  <data name="&gt;&gt;TextBoxPCSAFTSigma.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxPCSAFTSigma.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;TextBoxPCSAFTSigma.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 374</value>
+  <data name="&gt;&gt;Label27.Name" xml:space="preserve">
+    <value>Label27</value>
   </data>
-  <data name="FaTabStripItem3.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+  <data name="&gt;&gt;Label27.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Joback</value>
+  <data name="&gt;&gt;Label27.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
   </data>
-  <data name="&gt;&gt;FaTabStripItem3.Name" xml:space="preserve">
-    <value>FaTabStripItem3</value>
+  <data name="&gt;&gt;Label27.ZOrder" xml:space="preserve">
+    <value>8</value>
   </data>
-  <data name="&gt;&gt;FaTabStripItem3.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  <data name="GroupBox6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>762, 13</value>
   </data>
-  <data name="&gt;&gt;FaTabStripItem3.Parent" xml:space="preserve">
-    <value>FaTabStrip2</value>
+  <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 204</value>
   </data>
-  <data name="&gt;&gt;FaTabStripItem3.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="GroupBox6.TabIndex" type="System.Int32, mscorlib">
+    <value>76</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Parâmetros PC-SAFT</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.Name" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;GroupBox6.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="LabelWithDivider8.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -1554,30 +4167,6 @@
   <data name="&gt;&gt;Label27.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="GroupBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>762, 13</value>
-  </data>
-  <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>223, 204</value>
-  </data>
-  <data name="GroupBox6.TabIndex" type="System.Int32, mscorlib">
-    <value>76</value>
-  </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Parâmetros PC-SAFT</value>
-  </data>
-  <data name="&gt;&gt;GroupBox6.Name" xml:space="preserve">
-    <value>GroupBox6</value>
-  </data>
-  <data name="&gt;&gt;GroupBox6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GroupBox6.Parent" xml:space="preserve">
-    <value>FaTabStripItem4</value>
-  </data>
-  <data name="&gt;&gt;GroupBox6.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="CheckBoxAF.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1637,6 +4226,78 @@
   </data>
   <data name="&gt;&gt;CheckBoxCSLV.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="&gt;&gt;TextBoxUNIQUAC_R.Name" xml:space="preserve">
+    <value>TextBoxUNIQUAC_R</value>
+  </data>
+  <data name="&gt;&gt;TextBoxUNIQUAC_R.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxUNIQUAC_R.Parent" xml:space="preserve">
+    <value>GroupBox11</value>
+  </data>
+  <data name="&gt;&gt;TextBoxUNIQUAC_R.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Label48.Name" xml:space="preserve">
+    <value>Label48</value>
+  </data>
+  <data name="&gt;&gt;Label48.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label48.Parent" xml:space="preserve">
+    <value>GroupBox11</value>
+  </data>
+  <data name="&gt;&gt;Label48.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;TextBoxUNIQUAC_Q.Name" xml:space="preserve">
+    <value>TextBoxUNIQUAC_Q</value>
+  </data>
+  <data name="&gt;&gt;TextBoxUNIQUAC_Q.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TextBoxUNIQUAC_Q.Parent" xml:space="preserve">
+    <value>GroupBox11</value>
+  </data>
+  <data name="&gt;&gt;TextBoxUNIQUAC_Q.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Label49.Name" xml:space="preserve">
+    <value>Label49</value>
+  </data>
+  <data name="&gt;&gt;Label49.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label49.Parent" xml:space="preserve">
+    <value>GroupBox11</value>
+  </data>
+  <data name="&gt;&gt;Label49.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="GroupBox11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>762, 223</value>
+  </data>
+  <data name="GroupBox11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>224, 90</value>
+  </data>
+  <data name="GroupBox11.TabIndex" type="System.Int32, mscorlib">
+    <value>75</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>Parâmetros UNIQUAC</value>
+  </data>
+  <data name="&gt;&gt;GroupBox11.Name" xml:space="preserve">
+    <value>GroupBox11</value>
+  </data>
+  <data name="&gt;&gt;GroupBox11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox11.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;GroupBox11.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="TextBoxUNIQUAC_R.Location" type="System.Drawing.Point, System.Drawing">
     <value>42, 52</value>
@@ -1750,30 +4411,6 @@
     <value>GroupBox11</value>
   </data>
   <data name="&gt;&gt;Label49.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="GroupBox11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>762, 223</value>
-  </data>
-  <data name="GroupBox11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>224, 90</value>
-  </data>
-  <data name="GroupBox11.TabIndex" type="System.Int32, mscorlib">
-    <value>75</value>
-  </data>
-  <data name="GroupBox11.Text" xml:space="preserve">
-    <value>Parâmetros UNIQUAC</value>
-  </data>
-  <data name="&gt;&gt;GroupBox11.Name" xml:space="preserve">
-    <value>GroupBox11</value>
-  </data>
-  <data name="&gt;&gt;GroupBox11.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GroupBox11.Parent" xml:space="preserve">
-    <value>FaTabStripItem4</value>
-  </data>
-  <data name="&gt;&gt;GroupBox11.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="LabelWithDivider12.Font" type="System.Drawing.Font, System.Drawing">
@@ -3300,27 +5937,6 @@
   <data name="&gt;&gt;Label63.ZOrder" xml:space="preserve">
     <value>55</value>
   </data>
-  <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 374</value>
-  </data>
-  <data name="FaTabStripItem4.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Propriedades</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem4.Name" xml:space="preserve">
-    <value>FaTabStripItem4</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem4.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem4.Parent" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem4.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="Label43.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -4020,27 +6636,6 @@
   <data name="&gt;&gt;Label29.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
-  <data name="FaTabStripItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 374</value>
-  </data>
-  <data name="FaTabStripItem7.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="FaTabStripItem7.Title" xml:space="preserve">
-    <value>Pressão de Vapor</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem7.Name" xml:space="preserve">
-    <value>FaTabStripItem7</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem7.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem7.Parent" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem7.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="Label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -4736,27 +7331,6 @@
   </data>
   <data name="&gt;&gt;tbCPIG_C.ZOrder" xml:space="preserve">
     <value>20</value>
-  </data>
-  <data name="FaTabStripItem8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 374</value>
-  </data>
-  <data name="FaTabStripItem8.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="FaTabStripItem8.Title" xml:space="preserve">
-    <value>Cp (Gás Ideal)</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem8.Name" xml:space="preserve">
-    <value>FaTabStripItem8</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem8.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem8.Parent" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem8.ZOrder" xml:space="preserve">
-    <value>5</value>
   </data>
   <data name="Label45.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -5457,27 +8031,6 @@
   <data name="&gt;&gt;Label35.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
-  <data name="FaTabStripItem9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 374</value>
-  </data>
-  <data name="FaTabStripItem9.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="FaTabStripItem9.Title" xml:space="preserve">
-    <value>Densidade (Líquido)</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem9.Name" xml:space="preserve">
-    <value>FaTabStripItem9</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem9.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem9.Parent" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem9.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
   <data name="Label46.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -6177,27 +8730,6 @@
   <data name="&gt;&gt;Label41.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
-  <data name="FaTabStripItem10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 374</value>
-  </data>
-  <data name="FaTabStripItem10.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="FaTabStripItem10.Title" xml:space="preserve">
-    <value>Viscosidade (Líquido)</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem10.Name" xml:space="preserve">
-    <value>FaTabStripItem10</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem10.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem10.Parent" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem10.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
   <data name="LabelWithDivider7.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
   </data>
@@ -6227,6 +8759,270 @@
   </data>
   <data name="&gt;&gt;LabelWithDivider7.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;Label84.Name" xml:space="preserve">
+    <value>Label84</value>
+  </data>
+  <data name="&gt;&gt;Label84.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label84.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;Label84.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tbStatusSolidCp.Name" xml:space="preserve">
+    <value>tbStatusSolidCp</value>
+  </data>
+  <data name="&gt;&gt;tbStatusSolidCp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbStatusSolidCp.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;tbStatusSolidCp.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;btnRegressSolidCp.Name" xml:space="preserve">
+    <value>btnRegressSolidCp</value>
+  </data>
+  <data name="&gt;&gt;btnRegressSolidCp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnRegressSolidCp.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;btnRegressSolidCp.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;btnViewSolidCp.Name" xml:space="preserve">
+    <value>btnViewSolidCp</value>
+  </data>
+  <data name="&gt;&gt;btnViewSolidCp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnViewSolidCp.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;btnViewSolidCp.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffSolidCp.Name" xml:space="preserve">
+    <value>rbCoeffSolidCp</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffSolidCp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffSolidCp.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffSolidCp.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;rbRegressSolidCp.Name" xml:space="preserve">
+    <value>rbRegressSolidCp</value>
+  </data>
+  <data name="&gt;&gt;rbRegressSolidCp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbRegressSolidCp.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;rbRegressSolidCp.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataCpS.Name" xml:space="preserve">
+    <value>GridExpDataCpS</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataCpS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataCpS.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataCpS.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;Label75.Name" xml:space="preserve">
+    <value>Label75</value>
+  </data>
+  <data name="&gt;&gt;Label75.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label75.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;Label75.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_E.Name" xml:space="preserve">
+    <value>tbCpS_E</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_E.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_E.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_E.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;Label73.Name" xml:space="preserve">
+    <value>Label73</value>
+  </data>
+  <data name="&gt;&gt;Label73.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label73.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;Label73.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_D.Name" xml:space="preserve">
+    <value>tbCpS_D</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_D.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_D.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_D.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;Label72.Name" xml:space="preserve">
+    <value>Label72</value>
+  </data>
+  <data name="&gt;&gt;Label72.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label72.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;Label72.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_C.Name" xml:space="preserve">
+    <value>tbCpS_C</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_C.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_C.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_C.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;Label71.Name" xml:space="preserve">
+    <value>Label71</value>
+  </data>
+  <data name="&gt;&gt;Label71.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label71.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;Label71.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_B.Name" xml:space="preserve">
+    <value>tbCpS_B</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_B.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_B.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_B.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;Label70.Name" xml:space="preserve">
+    <value>Label70</value>
+  </data>
+  <data name="&gt;&gt;Label70.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label70.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;Label70.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;Label69.Name" xml:space="preserve">
+    <value>Label69</value>
+  </data>
+  <data name="&gt;&gt;Label69.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label69.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;Label69.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_A.Name" xml:space="preserve">
+    <value>tbCpS_A</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_A.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_A.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;tbCpS_A.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;cbEqCpS.Name" xml:space="preserve">
+    <value>cbEqCpS</value>
+  </data>
+  <data name="&gt;&gt;cbEqCpS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbEqCpS.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;cbEqCpS.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;Label74.Name" xml:space="preserve">
+    <value>Label74</value>
+  </data>
+  <data name="&gt;&gt;Label74.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label74.Parent" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;Label74.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="gbCPs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>340, 41</value>
+  </data>
+  <data name="gbCPs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>321, 320</value>
+  </data>
+  <data name="gbCPs.TabIndex" type="System.Int32, mscorlib">
+    <value>154</value>
+  </data>
+  <data name="gbCPs.Text" xml:space="preserve">
+    <value>Capacidade Calorífica ( Sólida)</value>
+  </data>
+  <data name="&gt;&gt;gbCPs.Name" xml:space="preserve">
+    <value>gbCPs</value>
+  </data>
+  <data name="&gt;&gt;gbCPs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gbCPs.Parent" xml:space="preserve">
+    <value>FaTabStripItem11</value>
+  </data>
+  <data name="&gt;&gt;gbCPs.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="Label84.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -6855,29 +9651,281 @@
   <data name="&gt;&gt;Label74.ZOrder" xml:space="preserve">
     <value>19</value>
   </data>
-  <data name="gbCPs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>340, 41</value>
+  <data name="&gt;&gt;rbEstimateSolidDens.Name" xml:space="preserve">
+    <value>rbEstimateSolidDens</value>
   </data>
-  <data name="gbCPs.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="&gt;&gt;rbEstimateSolidDens.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateSolidDens.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;rbEstimateSolidDens.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Label83.Name" xml:space="preserve">
+    <value>Label83</value>
+  </data>
+  <data name="&gt;&gt;Label83.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label83.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;Label83.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tbStatusSolidDens.Name" xml:space="preserve">
+    <value>tbStatusSolidDens</value>
+  </data>
+  <data name="&gt;&gt;tbStatusSolidDens.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbStatusSolidDens.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;tbStatusSolidDens.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;btnRegressSolidDens.Name" xml:space="preserve">
+    <value>btnRegressSolidDens</value>
+  </data>
+  <data name="&gt;&gt;btnRegressSolidDens.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnRegressSolidDens.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;btnRegressSolidDens.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;btnViewSolidDens.Name" xml:space="preserve">
+    <value>btnViewSolidDens</value>
+  </data>
+  <data name="&gt;&gt;btnViewSolidDens.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnViewSolidDens.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;btnViewSolidDens.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffSolidDens.Name" xml:space="preserve">
+    <value>rbCoeffSolidDens</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffSolidDens.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffSolidDens.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;rbCoeffSolidDens.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;rbRegressSolidDens.Name" xml:space="preserve">
+    <value>rbRegressSolidDens</value>
+  </data>
+  <data name="&gt;&gt;rbRegressSolidDens.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rbRegressSolidDens.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;rbRegressSolidDens.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;Label77.Name" xml:space="preserve">
+    <value>Label77</value>
+  </data>
+  <data name="&gt;&gt;Label77.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label77.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;Label77.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;Label78.Name" xml:space="preserve">
+    <value>Label78</value>
+  </data>
+  <data name="&gt;&gt;Label78.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label78.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;Label78.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataRoS.Name" xml:space="preserve">
+    <value>GridExpDataRoS</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataRoS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataRoS.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;GridExpDataRoS.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_E.Name" xml:space="preserve">
+    <value>tbRoS_E</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_E.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_E.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_E.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;Label79.Name" xml:space="preserve">
+    <value>Label79</value>
+  </data>
+  <data name="&gt;&gt;Label79.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label79.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;Label79.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_D.Name" xml:space="preserve">
+    <value>tbRoS_D</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_D.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_D.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_D.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;Label80.Name" xml:space="preserve">
+    <value>Label80</value>
+  </data>
+  <data name="&gt;&gt;Label80.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label80.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;Label80.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_C.Name" xml:space="preserve">
+    <value>tbRoS_C</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_C.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_C.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_C.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;Label81.Name" xml:space="preserve">
+    <value>Label81</value>
+  </data>
+  <data name="&gt;&gt;Label81.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label81.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;Label81.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_B.Name" xml:space="preserve">
+    <value>tbRoS_B</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_B.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_B.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_B.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;Label82.Name" xml:space="preserve">
+    <value>Label82</value>
+  </data>
+  <data name="&gt;&gt;Label82.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label82.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;Label82.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_A.Name" xml:space="preserve">
+    <value>tbRoS_A</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_A.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_A.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;tbRoS_A.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;cbEqSolidDENS.Name" xml:space="preserve">
+    <value>cbEqSolidDENS</value>
+  </data>
+  <data name="&gt;&gt;cbEqSolidDENS.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbEqSolidDENS.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;cbEqSolidDENS.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;Label76.Name" xml:space="preserve">
+    <value>Label76</value>
+  </data>
+  <data name="&gt;&gt;Label76.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label76.Parent" xml:space="preserve">
+    <value>gbSolidDens</value>
+  </data>
+  <data name="&gt;&gt;Label76.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="gbSolidDens.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 41</value>
+  </data>
+  <data name="gbSolidDens.Size" type="System.Drawing.Size, System.Drawing">
     <value>321, 320</value>
   </data>
-  <data name="gbCPs.TabIndex" type="System.Int32, mscorlib">
-    <value>154</value>
+  <data name="gbSolidDens.TabIndex" type="System.Int32, mscorlib">
+    <value>153</value>
   </data>
-  <data name="gbCPs.Text" xml:space="preserve">
-    <value>Capacidade Calorífica ( Sólida)</value>
+  <data name="gbSolidDens.Text" xml:space="preserve">
+    <value>Massa Específica ( Sólida)</value>
   </data>
-  <data name="&gt;&gt;gbCPs.Name" xml:space="preserve">
-    <value>gbCPs</value>
+  <data name="&gt;&gt;gbSolidDens.Name" xml:space="preserve">
+    <value>gbSolidDens</value>
   </data>
-  <data name="&gt;&gt;gbCPs.Type" xml:space="preserve">
+  <data name="&gt;&gt;gbSolidDens.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;gbCPs.Parent" xml:space="preserve">
+  <data name="&gt;&gt;gbSolidDens.Parent" xml:space="preserve">
     <value>FaTabStripItem11</value>
   </data>
-  <data name="&gt;&gt;gbCPs.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;gbSolidDens.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="rbEstimateSolidDens.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -7521,30 +10569,6 @@
   <data name="&gt;&gt;Label76.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
-  <data name="gbSolidDens.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 41</value>
-  </data>
-  <data name="gbSolidDens.Size" type="System.Drawing.Size, System.Drawing">
-    <value>321, 320</value>
-  </data>
-  <data name="gbSolidDens.TabIndex" type="System.Int32, mscorlib">
-    <value>153</value>
-  </data>
-  <data name="gbSolidDens.Text" xml:space="preserve">
-    <value>Massa Específica ( Sólida)</value>
-  </data>
-  <data name="&gt;&gt;gbSolidDens.Name" xml:space="preserve">
-    <value>gbSolidDens</value>
-  </data>
-  <data name="&gt;&gt;gbSolidDens.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;gbSolidDens.Parent" xml:space="preserve">
-    <value>FaTabStripItem11</value>
-  </data>
-  <data name="&gt;&gt;gbSolidDens.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="Label54.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -7869,74 +10893,56 @@
   <data name="&gt;&gt;CheckBoxMeltingTemp.ZOrder" xml:space="preserve">
     <value>13</value>
   </data>
-  <data name="FaTabStripItem11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>997, 374</value>
-  </data>
-  <data name="FaTabStripItem11.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="FaTabStripItem11.Title" xml:space="preserve">
-    <value>Fase Sólida</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem11.Name" xml:space="preserve">
-    <value>FaTabStripItem11</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem11.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem11.Parent" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem11.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="FaTabStrip2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 16</value>
-  </data>
-  <data name="FaTabStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>999, 395</value>
-  </data>
-  <data name="FaTabStrip2.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip2.Name" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip2.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip2.Parent" xml:space="preserve">
-    <value>GroupBox2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 96</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1005, 414</value>
-  </data>
-  <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Propriedades do Componente</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.Name" xml:space="preserve">
-    <value>GroupBox2</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="GroupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;Label15.Name" xml:space="preserve">
+    <value>Label15</value>
+  </data>
+  <data name="&gt;&gt;Label15.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label15.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;Label15.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;cbUnits.Name" xml:space="preserve">
+    <value>cbUnits</value>
+  </data>
+  <data name="&gt;&gt;cbUnits.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbUnits.Parent" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;cbUnits.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="GroupBox3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>679, 6</value>
+  </data>
+  <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>334, 84</value>
+  </data>
+  <data name="GroupBox3.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Sistema de Unidades</value>
+  </data>
+  <data name="&gt;&gt;GroupBox3.Name" xml:space="preserve">
+    <value>GroupBox3</value>
+  </data>
+  <data name="&gt;&gt;GroupBox3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox3.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GroupBox3.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="Label15.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -7992,30 +10998,6 @@
   <data name="&gt;&gt;cbUnits.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="GroupBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>679, 6</value>
-  </data>
-  <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>334, 84</value>
-  </data>
-  <data name="GroupBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>40</value>
-  </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Sistema de Unidades</value>
-  </data>
-  <data name="&gt;&gt;GroupBox3.Name" xml:space="preserve">
-    <value>GroupBox3</value>
-  </data>
-  <data name="&gt;&gt;GroupBox3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GroupBox3.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GroupBox3.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <metadata name="DBOpenDlg.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>10, 1</value>
   </metadata>
@@ -8025,9 +11007,33 @@
   <data name="DBOpenDlg.Title" xml:space="preserve">
     <value>Abrir/Criar Banco de Dados</value>
   </data>
+  <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>128, 3</value>
+  </metadata>
   <metadata name="StatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>215, 2</value>
   </metadata>
+  <data name="StatusStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 513</value>
+  </data>
+  <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1025, 22</value>
+  </data>
+  <data name="StatusStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.Name" xml:space="preserve">
+    <value>StatusStrip1</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="ToolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 17</value>
   </data>
@@ -8057,27 +11063,6 @@
   </data>
   <data name="ToolStripStatusUserDB.Text" xml:space="preserve">
     <value>SALVO</value>
-  </data>
-  <data name="StatusStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 513</value>
-  </data>
-  <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1025, 22</value>
-  </data>
-  <data name="StatusStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>41</value>
-  </data>
-  <data name="&gt;&gt;StatusStrip1.Name" xml:space="preserve">
-    <value>StatusStrip1</value>
-  </data>
-  <data name="&gt;&gt;StatusStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;StatusStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;StatusStrip1.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="ComboBox1.IntegralHeight" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -8196,6 +11181,12 @@
   <data name="&gt;&gt;ComboBox1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <metadata name="HelpProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>332, 2</value>
+  </metadata>
+  <data name="HelpProvider1.HelpNamespace" xml:space="preserve">
+    <value>help\dwsim.chm</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -8207,6 +11198,15 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>1025, 535</value>
+  </data>
+  <data name="$this.HelpKeyword" xml:space="preserve">
+    <value>Component_Creator</value>
+  </data>
+  <data name="$this.HelpNavigator" type="System.Windows.Forms.HelpNavigator, System.Windows.Forms">
+    <value>KeywordIndex</value>
+  </data>
+  <data name="$this.HelpString" xml:space="preserve">
+    <value />
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -9655,6 +12655,9 @@
   <data name="$this.RightToLeftLayout" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="$this.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Criador de Componentes</value>
   </data>
@@ -9831,6 +12834,12 @@
   </data>
   <data name="&gt;&gt;ToolStripStatusUserDB.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;HelpProvider1.Name" xml:space="preserve">
+    <value>HelpProvider1</value>
+  </data>
+  <data name="&gt;&gt;HelpProvider1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.HelpProvider, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormCompoundCreator</value>

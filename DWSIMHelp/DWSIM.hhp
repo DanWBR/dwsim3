@@ -1,13 +1,13 @@
 [OPTIONS]
 Compatibility=1.1 or later
-Compiled file=TestHelp.chm
+Compiled file=DWSIM.chm
 Contents file=toc.hhc
 Default topic=0 Welcome.htm
 Display compile progress=No
 Error log file=log
 Index file=Index.hhk
 Language=0x407 Deutsch (Deutschland)
-Title=TestHelp
+Title=DWSIM
 
 
 [FILES]
@@ -19,7 +19,10 @@ Working_with_Scripts.htm
 1 Disclaimer.htm
 Utilities.htm
 Component Creator.htm
-Component Creator Start.htm
+Component Creator 0.htm
+Component Creator 1.htm
+Component Creator 2.htm
+Component Creator 3.htm
 
 [INFOTYPES]
 
