@@ -154,7 +154,7 @@ Public Class FormBinEnv
 
             Me.Enabled = False
 
-            Me.BackgroundWorker1.RunWorkerAsync(New Object() {tipocalc, P, T, chkVLE.Checked, lle, chkSLE.Checked, chkCritical.Checked})
+            Me.BackgroundWorker1.RunWorkerAsync(New Object() {tipocalc, P, T, chkVLE.Checked, lle, chkSLE.Checked, chkCritical.Checked, rbSolidSolution.Checked})
 
             fpec = New FormPEC
             fpec.Label2.Tag = fpec.Label2.Text
@@ -183,7 +183,7 @@ Public Class FormBinEnv
         mat.SetFlowsheet(Me.Frm)
         pp.CurrentMaterialStream = mat
         pp2.CurrentMaterialStream = mat
-        e.Result = New Object() {pp.DW_ReturnBinaryEnvelope(e.Argument, Me.BackgroundWorker1), pp2.DW_ReturnBinaryEnvelope(New Object() {e.Argument(0), e.Argument(1), e.Argument(2), e.Argument(3), False, False, False})}
+        e.Result = New Object() {pp.DW_ReturnBinaryEnvelope(e.Argument, Me.BackgroundWorker1), pp2.DW_ReturnBinaryEnvelope(New Object() {e.Argument(0), e.Argument(1), e.Argument(2), e.Argument(3), False, False, False, False})}
 
     End Sub
 
@@ -280,26 +280,28 @@ Public Class FormBinEnv
 
             Dim vx1, vx2, vy1, vy2, vxi, vy1i, vy2i, vx1l1, vx1l2, vy3, vxs1, vys1, vxs2, vys2, vxc, vyc As New ArrayList
 
-            i = 0
-            Do
-                If py1(i) <> 0.0# Then
-                    vx1.Add(px(i))
-                    vy1.Add(cv.ConverterDoSI(su.spmp_temperature, py1(i)))
-                End If
-                If py2(i) <> 0.0# Then
-                    vx2.Add(px(i))
-                    vy2.Add(cv.ConverterDoSI(su.spmp_temperature, py2(i)))
-                End If
-                i += 1
-            Loop Until i = px.Count
+            If py1.Count > 0 Then
+                i = 0
+                Do
+                    If py1(i) <> 0.0# Then
+                        vx1.Add(px(i))
+                        vy1.Add(cv.ConverterDoSI(su.spmp_temperature, py1(i)))
+                    End If
+                    If py2(i) <> 0.0# Then
+                        vx2.Add(px(i))
+                        vy2.Add(cv.ConverterDoSI(su.spmp_temperature, py2(i)))
+                    End If
+                    i += 1
+                Loop Until i = px.Count
 
-            i = 0
-            Do
-                vxi.Add(pxi(i))
-                vy1i.Add(cv.ConverterDoSI(su.spmp_temperature, py1i(i)))
-                vy2i.Add(cv.ConverterDoSI(su.spmp_temperature, py2i(i)))
-                i += 1
-            Loop Until i = pxi.Count
+                i = 0
+                Do
+                    vxi.Add(pxi(i))
+                    vy1i.Add(cv.ConverterDoSI(su.spmp_temperature, py1i(i)))
+                    vy2i.Add(cv.ConverterDoSI(su.spmp_temperature, py2i(i)))
+                    i += 1
+                Loop Until i = pxi.Count
+            End If
 
             If px1l1.Count > 0 Then
                 i = 0
@@ -461,14 +463,14 @@ Public Class FormBinEnv
                     End With
                 End If
                 If pys1.Count > 0 Then
-                    With .AddCurve(DWSIM.App.GetLocalString("SLE L/SL"), vxs1.ToArray(GetType(Double)), vys1.ToArray(GetType(Double)), Color.Magenta, ZedGraph.SymbolType.Circle)
+                    With .AddCurve(DWSIM.App.GetLocalString("SLE SL/S"), vxs1.ToArray(GetType(Double)), vys1.ToArray(GetType(Double)), Color.Magenta, ZedGraph.SymbolType.Circle)
                         .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         .Line.IsVisible = True
                         .Line.IsSmooth = False
                     End With
                 End If
                 If pys2.Count > 0 Then
-                    With .AddCurve(DWSIM.App.GetLocalString("SLE SL/S"), vxs2.ToArray(GetType(Double)), vys2.ToArray(GetType(Double)), Color.DarkMagenta, ZedGraph.SymbolType.Circle)
+                    With .AddCurve(DWSIM.App.GetLocalString("SLE L/SL"), vxs2.ToArray(GetType(Double)), vys2.ToArray(GetType(Double)), Color.DarkMagenta, ZedGraph.SymbolType.Circle)
                         .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         .Line.IsVisible = True
                         .Line.IsSmooth = False
@@ -913,5 +915,10 @@ Public Class FormBinEnv
 
     Private Sub chkVLE_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkVLE.CheckedChanged
         chkLLE.Enabled = chkVLE.Checked
+    End Sub
+
+    Private Sub chkSLE_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkSLE.CheckedChanged
+        rbEutectic.Enabled = chkSLE.Checked
+        rbSolidSolution.Enabled = chkSLE.Checked
     End Sub
 End Class

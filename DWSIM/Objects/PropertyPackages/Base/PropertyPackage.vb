@@ -94,6 +94,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         NestedLoopsSLE = 7
         NestedLoopsImmiscible = 8
         SimpleLLE = 9
+        NestedLoopsSLE_SS = 10
     End Enum
 
 #End Region
@@ -352,6 +353,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Next
                         _nlsle.CompoundProperties = constprops
                         If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops} Else Return _nlsle
+                    Case FlashMethod.NestedLoopsSLE_SS
+                        If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.SolidSolution = True}
+                        Dim constprops As New List(Of ConstantProperties)
+                        For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                            constprops.Add(su.ConstantProperties)
+                        Next
+                        _nlsle.CompoundProperties = constprops
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops, .SolidSolution = True} Else Return _nlsle
                     Case FlashMethod.NestedLoopsImmiscible
                         If _nli Is Nothing Then _nli = New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
                         Dim constprops As New List(Of ConstantProperties)
@@ -964,7 +973,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim T As Double = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
             If Not My.Application.CAPEOPENMode And Not My.Application.ActiveSimulation Is Nothing Then
-                If My.Application.ActiveSimulation.Options.CalculateBubbleAndDewPoints Then
+                If My.Application.ActiveSimulation.Options.CalculateBubbleAndDewPoints _
+                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
+                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
                     Try
                         Dim Vz As Double() = Me.RET_VMOL(Fase.Mixture)
                         Dim myres As Object = Me.FlashBase.Flash_PV(Vz, P, 0, 0, Me)
@@ -1228,7 +1239,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Dim fge As Double = 0
                             Dim dge As Double = 0
 
-                            If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc Then
+                            If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
+                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
+                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
 
                                 ige = Me.DW_CalcGibbsEnergy(RET_VMOL(Fase.Mixture), T, P)
 
@@ -1246,7 +1259,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Dim Vx2 = result(6)
                             Dim Vs = result(8)
 
-                            If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc Then
+                            If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
+                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
+                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
 
                                 fge = xl * Me.DW_CalcGibbsEnergy(Vx, T, P)
                                 fge += xl2 * Me.DW_CalcGibbsEnergy(Vx2, T, P)
@@ -2752,7 +2767,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Dim result As Object
             Dim P, T As Double
             Dim calcP, calcT As Double
-            Dim VLE, SLE, LLE, Critical As Boolean
+            Dim VLE, SLE, LLE, Critical, SolidSolution As Boolean
 
             tipocalc = parameters(0)
             P = parameters(1)
@@ -2761,6 +2776,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             LLE = parameters(4)
             SLE = parameters(5)
             Critical = parameters(6)
+            SolidSolution = parameters(7)
 
             Select Case tipocalc
 
@@ -2774,7 +2790,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     Dim x, y1, y2, Test1, Test2 As Double
                     Dim tmp As Object = Nothing
 
-                    If VLE Then
+                    If VLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
                         i = 0
                         Do
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
@@ -2815,7 +2831,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         Loop Until (i - 1) * dx >= 1
                     End If
 
-                    If LLE Then
+                    If LLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
 
                         Select Case Me.FlashAlgorithm
                             Case FlashMethod.DWSIMDefault, FlashMethod.GibbsMin2P, FlashMethod.InsideOut, FlashMethod.NestedLoopsImmiscible, FlashMethod.NestedLoopsSLE
@@ -2845,7 +2861,20 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     End If
 
                     If SLE Then
+
                         Dim nlsle As New Auxiliary.FlashAlgorithms.NestedLoopsSLE
+                        Dim L1, L2 As Double
+
+                        If SolidSolution Then
+                            L1 = 0.0#
+                            L2 = 1.0#
+                        Else
+                            L1 = 0.001
+                            L2 = 0.999
+                        End If
+
+                        nlsle.SolidSolution = SolidSolution
+
                         Dim constprops As New List(Of ConstantProperties)
                         For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                             constprops.Add(su.ConstantProperties)
@@ -2856,7 +2885,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         Do
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 1 (" & i + 1 & "/42)")
                             Try
-                                tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0.001, 0, Me)
+                                tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, L1, 0, Me)
                                 y1 = tmp(4)
                                 x = i * dx
                                 pxs1.Add(x)
@@ -2870,7 +2899,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         Do
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 2 (" & i + 1 & "/42)")
                             Try
-                                tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0.999, 0, Me)
+                                tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, L2, 0, Me)
                                 y2 = tmp(4)
                                 Test2 = y2
                                 x = i * dx
@@ -2948,65 +2977,69 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     Dim x, y1, y2, Pest1, Pest2 As Double
                     Dim tmp As Object = Nothing
 
-                    i = 0
-                    Do
-                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
-                        Try
-                            If i = 0 Then
-                                tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)
-                                calcP = tmp(4)
-                                Pest1 = calcT
-                                tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 1, 0, Me)
-                                y2 = tmp(4)
-                                Pest2 = y2
-                            Else
-                                tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, Pest1, Me)
-                                calcP = tmp(4)
-                                Pest1 = calcT
-                                tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 1, Pest2, Me)
-                                y2 = tmp(4)
-                                Pest2 = y2
-                            End If
-                            x = i * dx
-                            y1 = calcP
-                            px.Add(x)
-                            py1.Add(y1)
-                            py2.Add(y2)
-                            'check if liquid phase is stable.
-                            result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, calcP, T, Me)
-                            If result(5) > 0.0# Then
-                                Dim fcl1(1), fcl2(1) As Double
-                                fcl1 = Me.DW_CalcFugCoeff(result(2), T, calcP, State.Liquid)
-                                calcP = result(2)(0) * fcl1(0) * calcP + result(2)(1) * fcl1(1) * calcP
-                                unstable = True
-                                ui.Add(px.Count - 1)
-                                'up.Add(calcP)
-                                If up.Count = 0 Then up.Add(calcP)
-                                py1(py1.Count - 1) = up(0)
-                            End If
-                        Catch ex As Exception
-                        End Try
-                        i = i + 1
-                    Loop Until (i - 1) * dx >= 1
+                    If Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
 
-                    If unstable Then
-                        Dim pi, pf, uim As Double, pit As Integer
-                        pi = up(0)
-                        uim = ui(0)
-                        pf = 2 * pi
                         i = 0
-                        For pit = pi To pf Step (pf - pi) / 10
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit For Else bw.ReportProgress(0, "LLE (" & i + 1 & "/26)")
-                            result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, pit, T, Me)
-                            If result(5) > 0.0# Then
-                                If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
-                                    px1l1.Add(result(2)(0))
-                                    px1l2.Add(result(6)(0))
-                                    py3.Add(pit)
+                        Do
+                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
+                            Try
+                                If i = 0 Then
+                                    tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)
+                                    calcP = tmp(4)
+                                    Pest1 = calcT
+                                    tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 1, 0, Me)
+                                    y2 = tmp(4)
+                                    Pest2 = y2
+                                Else
+                                    tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, Pest1, Me)
+                                    calcP = tmp(4)
+                                    Pest1 = calcT
+                                    tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 1, Pest2, Me)
+                                    y2 = tmp(4)
+                                    Pest2 = y2
                                 End If
-                            End If
-                            i += 1
-                        Next
+                                x = i * dx
+                                y1 = calcP
+                                px.Add(x)
+                                py1.Add(y1)
+                                py2.Add(y2)
+                                'check if liquid phase is stable.
+                                result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, calcP, T, Me)
+                                If result(5) > 0.0# Then
+                                    Dim fcl1(1), fcl2(1) As Double
+                                    fcl1 = Me.DW_CalcFugCoeff(result(2), T, calcP, State.Liquid)
+                                    calcP = result(2)(0) * fcl1(0) * calcP + result(2)(1) * fcl1(1) * calcP
+                                    unstable = True
+                                    ui.Add(px.Count - 1)
+                                    'up.Add(calcP)
+                                    If up.Count = 0 Then up.Add(calcP)
+                                    py1(py1.Count - 1) = up(0)
+                                End If
+                            Catch ex As Exception
+                            End Try
+                            i = i + 1
+                        Loop Until (i - 1) * dx >= 1
+                    
+                        If unstable Then
+                            Dim pi, pf, uim As Double, pit As Integer
+                            pi = up(0)
+                            uim = ui(0)
+                            pf = 2 * pi
+                            i = 0
+                            For pit = pi To pf Step (pf - pi) / 10
+                                If bw IsNot Nothing Then If bw.CancellationPending Then Exit For Else bw.ReportProgress(0, "LLE (" & i + 1 & "/26)")
+                                result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, pit, T, Me)
+                                If result(5) > 0.0# Then
+                                    If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
+                                        px1l1.Add(result(2)(0))
+                                        px1l2.Add(result(6)(0))
+                                        py3.Add(pit)
+                                    End If
+                                End If
+                                i += 1
+                            Next
+                        End If
+
                     End If
 
                     Return New Object() {px, py1, py2, px1l1, px1l2, py3}
@@ -3015,17 +3048,21 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                     Dim px, py As New ArrayList
 
-                    i = 0
-                    Do
-                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
-                        px.Add(i * dx)
-                        Try
-                            py.Add(Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)(6)(0) * i * dx)
-                        Catch ex As Exception
-                            py.Add(0.0#)
-                        End Try
-                        i = i + 1
-                    Loop Until (i - 1) * dx >= 1
+                    If Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
+
+                        i = 0
+                        Do
+                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
+                            px.Add(i * dx)
+                            Try
+                                py.Add(Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)(6)(0) * i * dx)
+                            Catch ex As Exception
+                                py.Add(0.0#)
+                            End Try
+                            i = i + 1
+                        Loop Until (i - 1) * dx >= 1
+
+                    End If
 
                     Return New Object() {px, py}
 
@@ -3033,17 +3070,21 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                     Dim px, py As New ArrayList
 
-                    i = 0
-                    Do
-                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
-                        px.Add(i * dx)
-                        Try
-                            py.Add(Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)(6)(0) * i * dx)
-                        Catch ex As Exception
-                            py.Add(0.0#)
-                        End Try
-                        i = i + 1
-                    Loop Until (i - 1) * dx >= 1
+                    If Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
+
+                        i = 0
+                        Do
+                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
+                            px.Add(i * dx)
+                            Try
+                                py.Add(Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)(6)(0) * i * dx)
+                            Catch ex As Exception
+                                py.Add(0.0#)
+                            End Try
+                            i = i + 1
+                        Loop Until (i - 1) * dx >= 1
+
+                    End If
 
                     Return New Object() {px, py}
 

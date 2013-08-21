@@ -44,7 +44,222 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Property CompoundProperties As List(Of ConstantProperties)
 
+        Public Property SolidSolution As Boolean = False
+
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+
+            If SolidSolution Then
+                Return Flash_PT_SS(Vz, P, T, PP, ReuseKI, PrevKi)
+            Else
+                Return Flash_PT_E(Vz, P, T, PP, ReuseKI, PrevKi)
+            End If
+
+        End Function
+
+        Public Function Flash_PT_SS(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+
+            Dim i, n, ecount As Integer
+            Dim soma_x, soma_y, soma_s As Double
+            Dim d1, d2 As Date, dt As TimeSpan
+            Dim L, S, Lant, V As Double
+
+            Dim ids As New List(Of String)
+
+            d1 = Date.Now
+
+            etol = CDbl(PP.Parameters("PP_PTFELT"))
+            maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
+            itol = CDbl(PP.Parameters("PP_PTFILT"))
+            maxit_i = CInt(PP.Parameters("PP_PTFMII"))
+
+            n = UBound(Vz)
+
+            Dim Vn(n) As String, Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), Ki_ant(n), fi(n), Vs(n), Vs_ant(n), activcoeff(n) As Double
+
+            Vn = PP.RET_VNAMES()
+            fi = Vz.Clone
+
+            'Calculate Ki`s
+
+            i = 0
+            Do
+                ids.Add(CompoundProperties(i).Name)
+                Vp(i) = PP.AUX_PVAPi(i, T)
+                If CompoundProperties(i).TemperatureOfFusion <> 0.0# Then
+                    Ki(i) = Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
+                Else
+                    Ki(i) = 1.0E+20
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            V = 0.0#
+            L = 1.0#
+            S = 0.0#
+
+            i = 0
+            Do
+                If Vz(i) <> 0.0# Then
+                    Vx(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * L + 1)
+                    If Ki(i) <> 0 Then Vs(i) = Vx(i) / Ki(i) Else Vs(i) = Vz(i)
+                    If Vs(i) < 0 Then Vs(i) = 0
+                    If Vx(i) < 0 Then Vx(i) = 0
+                Else
+                    Vs(i) = 0
+                    Vx(i) = 0
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            i = 0
+            soma_x = 0
+            soma_s = 0
+            soma_y = 0.0#
+            Do
+                soma_x = soma_x + Vx(i)
+                soma_s = soma_s + Vs(i)
+                i = i + 1
+            Loop Until i = n + 1
+            i = 0
+            Do
+                Vx(i) = Vx(i) / soma_x
+                Vs(i) = Vs(i) / soma_s
+                i = i + 1
+            Loop Until i = n + 1
+
+            ecount = 0
+            Dim convergiu = 0
+            Dim F = 0
+
+            Do
+
+                Ki_ant = Ki.Clone
+
+                activcoeff = PP.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
+
+                For i = 0 To n
+                    activcoeff(i) = activcoeff(i) * P / Vp(i)
+                    If CompoundProperties(i).TemperatureOfFusion <> 0.0# Then
+                        Ki(i) = (1 / activcoeff(i)) * Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
+                    Else
+                        Ki(i) = 1.0E+20
+                    End If
+                Next
+
+                i = 0
+                Do
+                    If Vz(i) <> 0 Then
+                        Vs_ant(i) = Vs(i)
+                        Vx_ant(i) = Vx(i)
+                        Vx(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * L + 1)
+                        Vs(i) = Vx(i) / Ki(i)
+                    Else
+                        Vy(i) = 0
+                        Vx(i) = 0
+                    End If
+                    i += 1
+                Loop Until i = n + 1
+
+                i = 0
+                soma_x = 0
+                soma_s = 0
+                Do
+                    soma_x = soma_x + Vx(i)
+                    soma_s = soma_s + Vs(i)
+                    i = i + 1
+                Loop Until i = n + 1
+                i = 0
+                Do
+                    Vx(i) = Vx(i) / soma_x
+                    Vs(i) = Vs(i) / soma_s
+                    i = i + 1
+                Loop Until i = n + 1
+
+                Dim e1 As Double = 0
+                Dim e2 As Double = 0
+                Dim e3 As Double = 0
+                i = 0
+                Do
+                    e1 = e1 + (Vx(i) - Vx_ant(i))
+                    e2 = e2 + (Vs(i) - Vs_ant(i))
+                    i = i + 1
+                Loop Until i = n + 1
+
+                e3 = (L - Lant)
+
+                If Double.IsNaN(Math.Abs(e1) + Math.Abs(e2)) Then
+
+                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+
+                ElseIf Math.Abs(e3) < 0.0000000001 Then
+
+                    convergiu = 1
+
+                    Exit Do
+
+                Else
+
+                    Lant = L
+
+                    F = 0.0#
+                    Dim dF = 0
+                    i = 0
+                    Do
+                        If Vz(i) > 0 Then
+                            F = F + Vz(i) * (Ki(i) - 1) / (1 + L * (Ki(i) - 1))
+                            dF = dF - Vz(i) * (Ki(i) - 1) ^ 2 / (1 + L * (Ki(i) - 1)) ^ 2
+                        End If
+                        i = i + 1
+                    Loop Until i = n + 1
+
+                    If Abs(F) < 0.000001 Then Exit Do
+
+                    L = -0.4 * F / dF + L
+
+                End If
+
+                S = 1 - L
+
+                If L > 1 Then
+                    L = 1
+                    S = 0
+                    i = 0
+                    Do
+                        Vx(i) = Vz(i)
+                        i = i + 1
+                    Loop Until i = n + 1
+                ElseIf L < 0 Then
+                    L = 0
+                    S = 1
+                    i = 0
+                    Do
+                        Vs(i) = Vz(i)
+                        i = i + 1
+                    Loop Until i = n + 1
+                End If
+
+                ecount += 1
+
+                If Double.IsNaN(L) Then Throw New Exception(DWSIM.App.GetLocalString("pp_FlashTPVapFracError"))
+                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("pp_FlashMaxIt2"))
+
+                Console.WriteLine("PT Flash [NL-SLE]: Iteration #" & ecount & ", LF = " & L)
+
+                CheckCalculatorStatus()
+
+            Loop Until convergiu = 1
+
+            d2 = Date.Now
+
+            dt = d2 - d1
+
+            Console.WriteLine("PT Flash [NL-SLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & F)
+
+out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, S, Vs}
+
+        End Function
+
+        Public Function Flash_PT_E(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
 
@@ -154,7 +369,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
 
                 errfunc = Abs(L - L_ant) ^ 2
-                
+
                 If errfunc <= 0.0000000001 Then Exit Do
 
                 If Double.IsNaN(S) Then Throw New Exception(DWSIM.App.GetLocalString("PP_FlashTPSolidFracError"))
@@ -365,61 +580,9 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
         End Function
 
-        Public Overrides Function Flash_PV(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
-
-            Dim d1, d2 As Date, dt As TimeSpan
-            Dim n, i As Integer
-            Dim result As Object
-
-            d1 = Date.Now
-
-            etol = CDbl(PP.Parameters("PP_PTFELT"))
-            maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
-            itol = CDbl(PP.Parameters("PP_PTFILT"))
-            maxit_i = CInt(PP.Parameters("PP_PTFMII"))
-
-            n = UBound(Vz)
-
-            Dim T, VTf(n) As Double
-
-            If PP.AUX_IS_SINGLECOMP(Vz) Then
-                T = 0
-                For i = 0 To n
-                    T += Vz(i) * Me.CompoundProperties(i).TemperatureOfFusion
-                Next
-                result = Me.Flash_PT(Vz, P, T, PP)
-                Return New Object() {result(0), result(1), result(2), result(3), T, 0, PP.RET_NullVector, 0.0#, PP.RET_NullVector, result(7), result(8)}
-            End If
-
-            T = 0
-            For i = 0 To n
-                T += Vz(i) * Me.CompoundProperties(i).TemperatureOfFusion - 30
-                VTf(i) = Me.CompoundProperties(i).TemperatureOfFusion
-            Next
-
-            Dim ecount As Integer = 0
-
-            Dim bm As New MathEx.BrentOpt.Brent
-
-            bm.DefineFuncDelegate(AddressOf SolidFractionError)
-
-            T = bm.BrentOpt(50, Common.Max(VTf) + 50, 50, etol * 0.000001, 1000, New Object() {V, Vz, P, PP})
-
-            result = Me.Flash_PT(Vz, P, T, PP)
-
-            d2 = Date.Now
-
-            dt = d2 - d1
-
-            Console.WriteLine("PV Flash [NL-SLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
-
-            Return New Object() {result(0), result(1), result(2), result(3), T, ecount, PP.RET_NullVector, 0.0#, PP.RET_NullVector, result(7), result(8)}
-
-        End Function
-
         Function SolidFractionError(x As Double, otherargs As Object)
 
-            Dim val As Double = otherargs(0) - Me.Flash_PT(otherargs(1), otherargs(2), x, otherargs(3))(7)
+            Dim val As Double = (1 - otherargs(0)) - Me.Flash_PT(otherargs(1), otherargs(2), x, otherargs(3))(7)
 
             Return val
 
@@ -499,6 +662,392 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
         Function Serror(ByVal Tt As Double, ByVal otherargs As Object) As Double
             Return OBJ_FUNC_PS_FLASH(Tt, Sf, otherargs(0), otherargs(1), otherargs(2))
+        End Function
+
+        Public Overrides Function Flash_PV(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+
+            If SolidSolution Then
+                Return Flash_PV_SS(Vz, P, V, Tref, PP)
+            Else
+                Return Flash_PV_E(Vz, P, V, Tref, PP)
+            End If
+
+        End Function
+
+        Public Function Flash_PV_SS(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+
+            Dim i, n, ecount As Integer
+            Dim d1, d2 As Date, dt As TimeSpan
+            Dim soma_x, soma_s As Double
+            Dim L, S, Lf, Sf, T, Tf As Double
+            Dim ids As New List(Of String)
+
+            d1 = Date.Now
+
+            etol = CDbl(PP.Parameters("PP_PTFELT"))
+            maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
+            itol = CDbl(PP.Parameters("PP_PTFILT"))
+            maxit_i = CInt(PP.Parameters("PP_PTFMII"))
+
+            n = UBound(Vz)
+
+            PP = PP
+            L = V
+            Lf = L
+            S = 1 - L
+            Lf = 1 - Sf
+            Tf = T
+
+            Dim Vn(n) As String, Vx(n), Vs(n), Vx_ant(1), Vs_ant(1), Vp(n), Vp2(n), Ki(n), Ki_ant(n), fi(n), activcoeff(n), activcoeff2(n) As Double
+            Dim Vt(n), VTF(n), Tmin, Tmax, dFdT As Double
+
+            Vn = PP.RET_VNAMES()
+            VTF = PP.RET_VTF()
+            fi = Vz.Clone
+
+            If Tref = 0.0# Then
+
+                i = 0
+                Tref = 0
+                Do
+                    If L = 0 Then
+                        Tref = MathEx.Common.Min(VTF)
+                    Else
+                        Tref += Vz(i) * VTF(i)
+                    End If
+                    Tmin += 0.1 * Vz(i) * VTF(i)
+                    Tmax += 2.0 * Vz(i) * VTF(i)
+                    i += 1
+                Loop Until i = n + 1
+
+            Else
+
+                Tmin = Tref - 50
+                Tmax = Tref + 50
+
+            End If
+
+            T = Tref
+
+            'Calculate Ki`s
+
+            i = 0
+            Do
+                ids.Add(CompoundProperties(i).Name)
+                Vp(i) = PP.AUX_PVAPi(i, T)
+                If CompoundProperties(i).TemperatureOfFusion <> 0.0# Then
+                    Ki(i) = Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
+                Else
+                    Ki(i) = 1.0E+20
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            i = 0
+            Do
+                If Vz(i) <> 0.0# Then
+                    Vx(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * L + 1)
+                    If Ki(i) <> 0 Then Vs(i) = Vx(i) / Ki(i) Else Vs(i) = Vz(i)
+                    If Vs(i) < 0 Then Vs(i) = 0
+                    If Vx(i) < 0 Then Vx(i) = 0
+                Else
+                    Vs(i) = 0
+                    Vx(i) = 0
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            i = 0
+            soma_x = 0.0#
+            soma_s = 0.0#
+            Do
+                soma_x = soma_x + Vx(i)
+                soma_s = soma_s + Vs(i)
+                i = i + 1
+            Loop Until i = n + 1
+            i = 0
+            Do
+                Vx(i) = Vx(i) / soma_x
+                Vs(i) = Vs(i) / soma_s
+                i = i + 1
+            Loop Until i = n + 1
+
+            Dim marcador3, marcador2, marcador As Integer
+            Dim stmp4_ant, stmp4, Tant, fval As Double
+            Dim chk As Boolean = False
+
+            ecount = 0
+            Do
+
+                marcador3 = 0
+
+                Dim cont_int = 0
+                Do
+
+                    Ki_ant = Ki.Clone
+
+                    activcoeff = PP.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
+
+                    For i = 0 To n
+                        Vp(i) = PP.AUX_PVAPi(i, T)
+                        activcoeff(i) = activcoeff(i) * P / Vp(i)
+                        If CompoundProperties(i).TemperatureOfFusion <> 0.0# Then
+                            Ki(i) = (1 / activcoeff(i)) * Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
+                        Else
+                            Ki(i) = 1.0E+20
+                        End If
+                    Next
+
+                    marcador = 0
+                    If stmp4_ant <> 0 Then
+                        marcador = 1
+                    End If
+                    stmp4_ant = stmp4
+
+                    If L = 0 Then
+                        i = 0
+                        stmp4 = 0
+                        Do
+                            stmp4 = stmp4 + Ki(i) * Vs(i)
+                            i = i + 1
+                        Loop Until i = n + 1
+                    Else
+                        i = 0
+                        stmp4 = 0
+                        Do
+                            stmp4 = stmp4 + Vx(i) / Ki(i)
+                            i = i + 1
+                        Loop Until i = n + 1
+                    End If
+
+                    If L = 0 Then
+                        i = 0
+                        Do
+                            Vx_ant(i) = Vx(i)
+                            Vx(i) = Ki(i) * Vs(i) / stmp4
+                            i = i + 1
+                        Loop Until i = n + 1
+                    Else
+                        i = 0
+                        Do
+                            Vs_ant(i) = Vs(i)
+                            Vs(i) = (Vx(i) / Ki(i)) / stmp4
+                            i = i + 1
+                        Loop Until i = n + 1
+                    End If
+
+                    marcador2 = 0
+                    If marcador = 1 Then
+                        If L = 0 Then
+                            If Math.Abs(Vx(0) - Vx_ant(0)) < itol Then
+                                marcador2 = 1
+                            End If
+                        Else
+                            If Math.Abs(Vs(0) - Vs_ant(0)) < itol Then
+                                marcador2 = 1
+                            End If
+                        End If
+                    End If
+
+                    cont_int = cont_int + 1
+
+                Loop Until marcador2 = 1 Or Double.IsNaN(stmp4) Or cont_int > maxit_i
+
+                Dim K1(n), K2(n), dKdT(n) As Double
+
+                activcoeff = PP.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
+                activcoeff2 = PP.DW_CalcFugCoeff(Vx, T + 0.01, P, State.Liquid)
+
+                For i = 0 To n
+                    If CompoundProperties(i).TemperatureOfFusion <> 0.0# Then
+                        Vp(i) = PP.AUX_PVAPi(i, T)
+                        activcoeff(i) = activcoeff(i) * P / Vp(i)
+                        K1(i) = (1 / activcoeff(i)) * Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
+                        Vp2(i) = PP.AUX_PVAPi(i, T + 0.01)
+                        activcoeff2(i) = activcoeff2(i) * P / Vp2(i)
+                        K2(i) = (1 / activcoeff2(i)) * Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * (T + 0.01)) * (1 - (T + 0.01) / CompoundProperties(i).TemperatureOfFusion))
+                    Else
+                        K1(i) = 1.0E+20
+                        K2(i) = 1.0E+20
+                    End If
+                Next
+
+                For i = 0 To n
+                    dKdT(i) = (K2(i) - K1(i)) / 0.01
+                Next
+
+                fval = stmp4 - 1
+
+                ecount += 1
+
+                i = 0
+                dFdT = 0
+                Do
+                    If L = 0.0# Then
+                        dFdT = dFdT + Vs(i) * dKdT(i)
+                    Else
+                        dFdT = dFdT - Vx(i) / (Ki(i) ^ 2) * dKdT(i)
+                    End If
+                    i = i + 1
+                Loop Until i = n + 1
+
+                Tant = T
+                T = T - fval / dFdT
+                'If T < Tmin Then T = Tmin
+                'If T > Tmax Then T = Tmax
+
+                Console.WriteLine("PV Flash [NL-SLE]: Iteration #" & ecount & ", T = " & T & ", LF = " & L)
+
+                CheckCalculatorStatus()
+
+            Loop Until Math.Abs(T - Tant) < 0.01 Or Double.IsNaN(T) = True Or ecount > maxit_e Or Double.IsNaN(T) Or Double.IsInfinity(T)
+
+            d2 = Date.Now
+
+            dt = d2 - d1
+
+            Console.WriteLine("PV Flash [NL-SLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+
+            Return New Object() {L, V, Vx, PP.RET_NullVector, T, ecount, Ki, 0.0#, PP.RET_NullVector, S, Vs}
+
+
+        End Function
+
+        Public Function Flash_PV_E(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+
+            Dim i, n, ecount As Integer
+            Dim d1, d2 As Date, dt As TimeSpan
+            Dim soma_x, soma_s As Double
+            Dim L, S, Lf, Sf, T, Tf As Double
+            Dim ids As New List(Of String)
+
+            d1 = Date.Now
+
+            etol = CDbl(PP.Parameters("PP_PTFELT"))
+            maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
+            itol = CDbl(PP.Parameters("PP_PTFILT"))
+            maxit_i = CInt(PP.Parameters("PP_PTFMII"))
+
+            n = UBound(Vz)
+
+            PP = PP
+            L = V
+            Lf = L
+            S = 1 - L
+            Lf = 1 - Sf
+            Tf = T
+
+            Dim Vn(n) As String, Vx(n), Vs(n), Vx_ant(1), Vs_ant(1), Vp(n), Vp2(n), Ki(n), Ki_ant(n), fi(n), activcoeff(n), activcoeff2(n) As Double
+            Dim Vt(n), VTF(n), Tmin, Tmax As Double
+
+            Vn = PP.RET_VNAMES()
+            VTF = PP.RET_VTF()
+            fi = Vz.Clone
+
+            If Tref = 0.0# Then
+
+                i = 0
+                Tref = 0
+                Do
+                    If L = 0 Then 'L=0
+                        Tref = MathEx.Common.Min(VTF)
+                    Else
+                        Tref += Vz(i) * VTF(i)
+                    End If
+                    Tmin += 0.1 * Vz(i) * VTF(i)
+                    Tmax += 2.0 * Vz(i) * VTF(i)
+                    i += 1
+                Loop Until i = n + 1
+
+            Else
+
+                Tmin = Tref - 50
+                Tmax = Tref + 50
+
+            End If
+
+            T = Tref
+
+            'Calculate Ki`s
+
+            i = 0
+            Do
+                ids.Add(CompoundProperties(i).Name)
+                Vp(i) = PP.AUX_PVAPi(i, T)
+                If CompoundProperties(i).TemperatureOfFusion <> 0.0# Then
+                    Ki(i) = Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
+                Else
+                    Ki(i) = 1.0E+20
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            i = 0
+            Do
+                If Vz(i) <> 0.0# Then
+                    Vx(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * L + 1)
+                    If Ki(i) <> 0 Then Vs(i) = Vx(i) / Ki(i) Else Vs(i) = Vz(i)
+                    If Vs(i) < 0 Then Vs(i) = 0
+                    If Vx(i) < 0 Then Vx(i) = 0
+                Else
+                    Vs(i) = 0
+                    Vx(i) = 0
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            i = 0
+            soma_x = 0.0#
+            soma_s = 0.0#
+            Do
+                soma_x = soma_x + Vx(i)
+                soma_s = soma_s + Vs(i)
+                i = i + 1
+            Loop Until i = n + 1
+            i = 0
+            Do
+                Vx(i) = Vx(i) / soma_x
+                Vs(i) = Vs(i) / soma_s
+                i = i + 1
+            Loop Until i = n + 1
+
+            Dim chk As Boolean = False
+
+            Dim result As Object
+
+            If PP.AUX_IS_SINGLECOMP(Vz) Then
+                T = 0
+                For i = 0 To n
+                    T += Vz(i) * Me.CompoundProperties(i).TemperatureOfFusion
+                Next
+                result = Me.Flash_PT(Vz, P, T, PP)
+                Return New Object() {result(0), result(1), result(2), result(3), T, 0, PP.RET_NullVector, 0.0#, PP.RET_NullVector, result(7), result(8)}
+            End If
+
+            T = 0
+            For i = 0 To n
+                T += Vz(i) * Me.CompoundProperties(i).TemperatureOfFusion - 30
+                VTF(i) = Me.CompoundProperties(i).TemperatureOfFusion
+            Next
+
+            ecount = 0
+
+            Dim bm As New MathEx.BrentOpt.Brent
+
+            bm.DefineFuncDelegate(AddressOf SolidFractionError)
+
+            T = bm.BrentOpt(Common.Min(VTF) - 30, Common.Max(VTF) + 50, 50, etol, 100, New Object() {L, Vz, P, PP})
+
+            result = Me.Flash_PT_E(Vz, P, T, PP)
+
+            d2 = Date.Now
+
+            dt = d2 - d1
+
+            Console.WriteLine("PV Flash [NL-SLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+
+            Return New Object() {result(0), result(1), result(2), result(3), T, ecount, PP.RET_NullVector, 0.0#, PP.RET_NullVector, result(7), result(8)}
+
         End Function
 
     End Class

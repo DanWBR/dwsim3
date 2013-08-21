@@ -118,20 +118,17 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="FlowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>248, 25</value>
+  </data>
   <data name="chkCritical.Location" type="System.Drawing.Point, System.Drawing">
-    <value>305, 106</value>
+    <value>499, 105</value>
   </data>
   <data name="chkCritical.Size" type="System.Drawing.Size, System.Drawing">
     <value>109, 17</value>
   </data>
   <data name="chkCritical.Text" xml:space="preserve">
     <value>Kritischen Punkte</value>
-  </data>
-  <data name="chkSLE.Location" type="System.Drawing.Point, System.Drawing">
-    <value>253, 106</value>
-  </data>
-  <data name="chkSLE.Text" xml:space="preserve">
-    <value>SLE</value>
   </data>
   <data name="chkLLE.Location" type="System.Drawing.Point, System.Drawing">
     <value>202, 106</value>
@@ -265,14 +262,32 @@
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Diagramm-Einstellungen</value>
   </data>
+  <data name="chkSLE.Text" xml:space="preserve">
+    <value>SLE</value>
+  </data>
+  <data name="rbEutectic.Size" type="System.Drawing.Size, System.Drawing">
+    <value>81, 17</value>
+  </data>
+  <data name="rbEutectic.Text" xml:space="preserve">
+    <value>Eutektische</value>
+  </data>
+  <data name="rbSolidSolution.Location" type="System.Drawing.Point, System.Drawing">
+    <value>142, 3</value>
+  </data>
+  <data name="rbSolidSolution.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 17</value>
+  </data>
+  <data name="rbSolidSolution.Text" xml:space="preserve">
+    <value>Feststoff Lösung</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Ergebnisse</value>
+  </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Graph</value>
   </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Tabelle</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Ergebnisse</value>
   </data>
   <data name="TSB_Print.Text" xml:space="preserve">
     <value>Drucken</value>

@@ -118,14 +118,17 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="FlowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>217, 25</value>
+  </data>
+  <data name="chkCritical.Location" type="System.Drawing.Point, System.Drawing">
+    <value>469, 106</value>
+  </data>
   <data name="chkCritical.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 17</value>
   </data>
   <data name="chkCritical.Text" xml:space="preserve">
     <value>Critical Line</value>
-  </data>
-  <data name="chkSLE.Text" xml:space="preserve">
-    <value>SLE</value>
   </data>
   <data name="chkLLE.Text" xml:space="preserve">
     <value>LLE</value>
@@ -207,6 +210,18 @@
   </data>
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Diagram Settings</value>
+  </data>
+  <data name="chkSLE.Text" xml:space="preserve">
+    <value>SLE</value>
+  </data>
+  <data name="rbEutectic.Text" xml:space="preserve">
+    <value>Eutectic</value>
+  </data>
+  <data name="rbSolidSolution.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 17</value>
+  </data>
+  <data name="rbSolidSolution.Text" xml:space="preserve">
+    <value>Solid Solution</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Results</value>

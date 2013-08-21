@@ -196,8 +196,10 @@ Public Class FormStSim
                 ComboBoxFlashAlg.SelectedIndex = 5
             Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
                 ComboBoxFlashAlg.SelectedIndex = 6
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE_SS
                 ComboBoxFlashAlg.SelectedIndex = 7
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
+                ComboBoxFlashAlg.SelectedIndex = 8
             Case Else
                 ComboBoxFlashAlg.SelectedIndex = 0
         End Select
@@ -1133,6 +1135,7 @@ Public Class FormStSim
     End Sub
 
     Private Sub ComboBoxFlashAlg_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBoxFlashAlg.SelectedIndexChanged
+        Me.chkValidateEqCalc.Enabled = True
         Select Case ComboBoxFlashAlg.SelectedIndex
             Case 0
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
@@ -1162,7 +1165,13 @@ Public Class FormStSim
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
                 Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = False
+                Me.chkValidateEqCalc.Enabled = False
             Case 7
+                Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE_SS
+                Me.chkIOmode.Enabled = False
+                Me.GroupBox11.Enabled = False
+                Me.chkValidateEqCalc.Enabled = False
+            Case 8
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
                 Me.chkIOmode.Enabled = True
                 Me.GroupBox11.Enabled = True

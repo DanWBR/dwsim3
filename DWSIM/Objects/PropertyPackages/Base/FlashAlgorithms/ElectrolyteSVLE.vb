@@ -190,10 +190,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Next
 
                     'check for vapors
-                    V = 0.0#
                     For i = 0 To n
                         If P < Vp(i) Then
-                            V += Vf(i)
                             Vxl(i) = 0
                             Vnl(i) = 0
                             Vnv(i) = Vf(i)
@@ -204,8 +202,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     L_ant = L
                     L = Sum(Vnl)
-
                     S = Sum(Vns)
+                    V = Sum(Vnv)
 
                     For i = 0 To n
                         If Sum(Vnl) <> 0.0# Then Vxl(i) = Vnl(i) / Sum(Vnl) Else Vxl(i) = 0.0#
