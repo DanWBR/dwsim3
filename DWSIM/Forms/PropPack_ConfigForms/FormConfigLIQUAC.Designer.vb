@@ -107,28 +107,28 @@ Partial Class FormConfigLIQUAC
         'Button5
         '
         resources.ApplyResources(Me.Button5, "Button5")
-        Me.Button5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button5.ImageKey = ""
         Me.Button5.Name = "Button5"
         Me.Button5.UseVisualStyleBackColor = True
         '
         'Button4
         '
         resources.ApplyResources(Me.Button4, "Button4")
-        Me.Button4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button4.ImageKey = ""
         Me.Button4.Name = "Button4"
         Me.Button4.UseVisualStyleBackColor = True
         '
         'Button2
         '
         resources.ApplyResources(Me.Button2, "Button2")
-        Me.Button2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button2.ImageKey = ""
         Me.Button2.Name = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button1.ImageKey = ""
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
@@ -159,7 +159,7 @@ Partial Class FormConfigLIQUAC
         resources.ApplyResources(Me.Column3, "Column3")
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
-        Me.Column3.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column3.ToolTipText = ""
         '
         'Column4
         '
@@ -169,7 +169,7 @@ Partial Class FormConfigLIQUAC
         resources.ApplyResources(Me.Column4, "Column4")
         Me.Column4.Name = "Column4"
         Me.Column4.ReadOnly = True
-        Me.Column4.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column4.ToolTipText = ""
         '
         'Column5
         '
@@ -177,7 +177,7 @@ Partial Class FormConfigLIQUAC
         Me.Column5.DefaultCellStyle = DataGridViewCellStyle3
         resources.ApplyResources(Me.Column5, "Column5")
         Me.Column5.Name = "Column5"
-        Me.Column5.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column5.ToolTipText = ""
         '
         'Column6
         '
@@ -185,7 +185,7 @@ Partial Class FormConfigLIQUAC
         Me.Column6.DefaultCellStyle = DataGridViewCellStyle4
         resources.ApplyResources(Me.Column6, "Column6")
         Me.Column6.Name = "Column6"
-        Me.Column6.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column6.ToolTipText = ""
         '
         'Column7
         '
@@ -193,7 +193,7 @@ Partial Class FormConfigLIQUAC
         Me.Column7.DefaultCellStyle = DataGridViewCellStyle5
         resources.ApplyResources(Me.Column7, "Column7")
         Me.Column7.Name = "Column7"
-        Me.Column7.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column7.ToolTipText = ""
         '
         'Column8
         '
@@ -201,12 +201,12 @@ Partial Class FormConfigLIQUAC
         Me.Column8.DefaultCellStyle = DataGridViewCellStyle6
         resources.ApplyResources(Me.Column8, "Column8")
         Me.Column8.Name = "Column8"
-        Me.Column8.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column8.ToolTipText = ""
         '
         'LabelWithDivider3
         '
         resources.ApplyResources(Me.LabelWithDivider3, "LabelWithDivider3")
-        Me.LabelWithDivider3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.LabelWithDivider3.ImageKey = ""
         Me.LabelWithDivider3.Name = "LabelWithDivider3"
         '
         'FaTabStripItem1
@@ -242,7 +242,7 @@ Partial Class FormConfigLIQUAC
         '
         resources.ApplyResources(Me.ID, "ID")
         Me.ID.Name = "ID"
-        Me.ID.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.ID.ToolTipText = ""
         '
         'Column2
         '
@@ -252,7 +252,7 @@ Partial Class FormConfigLIQUAC
         resources.ApplyResources(Me.Column2, "Column2")
         Me.Column2.Name = "Column2"
         Me.Column2.ReadOnly = True
-        Me.Column2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column2.ToolTipText = ""
         '
         'Column1
         '
@@ -261,7 +261,7 @@ Partial Class FormConfigLIQUAC
         Me.Column1.FillWeight = 50.76142!
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
-        Me.Column1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column1.ToolTipText = ""
         '
         'FaTabStripItem2
         '
@@ -287,7 +287,7 @@ Partial Class FormConfigLIQUAC
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label3.ImageKey = ""
         Me.Label3.Name = "Label3"
         '
         'tbTol
@@ -298,7 +298,7 @@ Partial Class FormConfigLIQUAC
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label2.ImageKey = ""
         Me.Label2.Name = "Label2"
         '
         'tbMaxIts
@@ -316,14 +316,14 @@ Partial Class FormConfigLIQUAC
         'chkCalcChemEq
         '
         resources.ApplyResources(Me.chkCalcChemEq, "chkCalcChemEq")
-        Me.chkCalcChemEq.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkCalcChemEq.ImageKey = ""
         Me.chkCalcChemEq.Name = "chkCalcChemEq"
         Me.chkCalcChemEq.UseVisualStyleBackColor = True
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label1.ImageKey = ""
         Me.Label1.Name = "Label1"
         '
         'FormConfigLIQUAC

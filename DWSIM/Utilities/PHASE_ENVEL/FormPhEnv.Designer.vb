@@ -80,25 +80,25 @@ Partial Class FormPhEnv
         resources.ApplyResources(Me.CheckBox2, "CheckBox2")
         Me.CheckBox2.Checked = True
         Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.CheckBox2.ImageKey = ""
         Me.CheckBox2.Name = "CheckBox2"
         '
         'CheckBox3
         '
         resources.ApplyResources(Me.CheckBox3, "CheckBox3")
-        Me.CheckBox3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.CheckBox3.ImageKey = ""
         Me.CheckBox3.Name = "CheckBox3"
         '
         'CheckBox1
         '
         resources.ApplyResources(Me.CheckBox1, "CheckBox1")
-        Me.CheckBox1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.CheckBox1.ImageKey = ""
         Me.CheckBox1.Name = "CheckBox1"
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button1.ImageKey = ""
         Me.Button1.Name = "Button1"
         '
         'ComboBox3
@@ -111,7 +111,7 @@ Partial Class FormPhEnv
         'Label23
         '
         resources.ApplyResources(Me.Label23, "Label23")
-        Me.Label23.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label23.ImageKey = ""
         Me.Label23.Name = "Label23"
         '
         'GroupBox1
@@ -133,7 +133,7 @@ Partial Class FormPhEnv
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label1.ImageKey = ""
         Me.Label1.Name = "Label1"
         '
         'GroupBox2

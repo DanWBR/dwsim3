@@ -109,6 +109,7 @@ Public Class FormDataRegression
             .results = tbRegResults.Text
             For Each r As DataGridViewRow In Me.GridExpData.Rows
                 If r.Index < Me.GridExpData.Rows.Count - 1 Then
+                    .checkp.Add(r.Cells("check").Value)
                     If Double.TryParse(r.Cells("colx1").Value, New Double) Then .x1p.Add(Double.Parse(r.Cells("colx1").Value)) Else .x1p.Add(0.0#)
                     If Double.TryParse(r.Cells("colx2").Value, New Double) Then .x2p.Add(Double.Parse(r.Cells("colx2").Value)) Else .x2p.Add(0.0#)
                     If Double.TryParse(r.Cells("coly1").Value, New Double) Then .yp.Add(Double.Parse(r.Cells("coly1").Value)) Else .yp.Add(0.0#)
@@ -179,14 +180,16 @@ Public Class FormDataRegression
             Me.cbPunit.SelectedItem = .punit
             Me.tbTitle.Text = .title
             Me.tbDescription.Text = .description
-            Dim val1, val2, val3, val4, val5 As String, i As Integer
+            Dim val0 As Boolean, val1, val2, val3, val4, val5 As String, i As Integer
+            If .checkp Is Nothing Then .checkp = New ArrayList
             For i = 0 To .x1p.Count - 1
+                If .checkp.Count - 1 >= i Then val0 = .checkp(i) Else val0 = True
                 If Double.TryParse(.x1p(i), New Double) Then val1 = Double.Parse(.x1p(i)).ToString() Else val1 = ""
                 If Double.TryParse(.x2p(i), New Double) Then val2 = Double.Parse(.x2p(i)).ToString() Else val2 = ""
                 If Double.TryParse(.yp(i), New Double) Then val3 = Double.Parse(.yp(i)).ToString() Else val3 = ""
                 If Double.TryParse(.tp(i), New Double) Then val4 = Double.Parse(.tp(i)).ToString() Else val4 = ""
                 If Double.TryParse(.pp(i), New Double) Then val5 = Double.Parse(.pp(i)).ToString() Else val5 = ""
-                Me.GridExpData.Rows.Add(val1, val2, val3, val4, val5)
+                Me.GridExpData.Rows.Add(val0, val1, val2, val3, val4, val5)
             Next
             Me.tbRegResults.Text = .results
             currcase = mycase
@@ -256,57 +259,93 @@ Public Class FormDataRegression
         Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
         Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
 
-        Dim Vx1(currcase.pp.Count - 1), Vx2(currcase.pp.Count - 1), Vy(currcase.pp.Count - 1), IP(x.Length - 1, x.Length) As Double
-        Dim Vx1c(currcase.pp.Count - 1), Vx2c(currcase.pp.Count - 1), Vyc(currcase.pp.Count - 1) As Double
-        Dim VP(currcase.pp.Count - 1), VT(currcase.tp.Count - 1) As Double
-        Dim VPc(currcase.pp.Count - 1), VTc(currcase.tp.Count - 1) As Double
-        Dim np As Integer = currcase.x1p.Count
+        Dim Vx1, Vx2, Vy As New ArrayList, IP(x.Length - 1, x.Length) As Double
+        Dim Vx1c, Vx2c, Vyc As New ArrayList
+        Dim VP, VT, VPc, VTc As New ArrayList
+        Dim np As Integer = 0
         Dim i As Integer = 0
+
+        For Each b As Boolean In currcase.checkp
+            If b Then np += 1
+        Next
+
+        For i = 0 To np - 1
+            Vx1c.Add(0.0#)
+            Vx2c.Add(0.0#)
+            Vyc.Add(0.0#)
+            VPc.Add(0.0#)
+            VTc.Add(0.0#)
+        Next
+
         Dim PVF As Boolean = False
 
         Select Case currcase.datatype
             Case DataType.Pxy
-                For i = 0 To np - 1
-                    Vx1(i) = currcase.x1p(i)
-                    Vy(i) = currcase.yp(i)
-                    VP(i) = cv.ConverterParaSI(currcase.punit, currcase.pp(i))
-                    VT(i) = cv.ConverterParaSI(currcase.tunit, currcase.tp(0))
+                i = 0
+                For Each b As Boolean In currcase.checkp
+                    If b Then
+                        Vx1.Add(currcase.x1p(i))
+                        Vy.Add(currcase.yp(i))
+                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(i)))
+                        VT.Add(cv.ConverterParaSI(currcase.tunit, currcase.tp(0)))
+                    End If
+                    i += 1
                 Next
             Case DataType.Txy
-                For i = 0 To np - 1
-                    Vx1(i) = currcase.x1p(i)
-                    Vy(i) = currcase.yp(i)
-                    VP(i) = cv.ConverterParaSI(currcase.punit, currcase.pp(0))
-                    VT(i) = cv.ConverterParaSI(currcase.tunit, currcase.tp(i))
+                i = 0
+                For Each b As Boolean In currcase.checkp
+                    If b Then
+                        Vx1.Add(currcase.x1p(i))
+                        Vy.Add(currcase.yp(i))
+                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(0)))
+                        VT.Add(cv.ConverterParaSI(currcase.tunit, currcase.tp(i)))
+                    End If
+                    i += 1
                 Next
                 PVF = True
             Case DataType.TPxy
-                For i = 0 To np - 1
-                    Vx1(i) = currcase.x1p(i)
-                    Vy(i) = currcase.yp(i)
-                    VP(i) = cv.ConverterParaSI(currcase.punit, currcase.pp(i))
-                    VT(i) = cv.ConverterParaSI(currcase.tunit, currcase.tp(i))
+                i = 0
+                For Each b As Boolean In currcase.checkp
+                    If b Then
+                        Vx1.Add(currcase.x1p(i))
+                        Vy.Add(currcase.yp(i))
+                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(i)))
+                        VT.Add(cv.ConverterParaSI(currcase.tunit, currcase.tp(i)))
+                    End If
+                    i += 1
                 Next
             Case DataType.Pxx
-                For i = 0 To np - 1
-                    Vx1(i) = currcase.x1p(i)
-                    Vx2(i) = currcase.x2p(i)
-                    VP(i) = cv.ConverterParaSI(currcase.punit, currcase.pp(i))
-                    VT(i) = cv.ConverterParaSI(currcase.tunit, currcase.tp(0))
+                i = 0
+                For Each b As Boolean In currcase.checkp
+                    If b Then
+                        Vx1.Add(currcase.x1p(i))
+                        Vx2.Add(currcase.x2p(i))
+                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(i)))
+                        VT.Add(cv.ConverterParaSI(currcase.tunit, currcase.tp(0)))
+                    End If
+                    i += 1
                 Next
             Case DataType.Txx
-                For i = 0 To np - 1
-                    Vx1(i) = currcase.x1p(i)
-                    Vx2(i) = currcase.x2p(i)
-                    VP(i) = cv.ConverterParaSI(currcase.punit, currcase.pp(0))
-                    VT(i) = cv.ConverterParaSI(currcase.tunit, currcase.tp(i))
+                i = 0
+                For Each b As Boolean In currcase.checkp
+                    If b Then
+                        Vx1.Add(currcase.x1p(i))
+                        Vx2.Add(currcase.x2p(i))
+                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(0)))
+                        VT.Add(cv.ConverterParaSI(currcase.tunit, currcase.tp(i)))
+                    End If
+                    i += 1
                 Next
             Case DataType.TPxx
-                For i = 0 To np - 1
-                    Vx1(i) = currcase.x1p(i)
-                    Vx2(i) = currcase.x2p(i)
-                    VP(i) = cv.ConverterParaSI(currcase.punit, currcase.pp(i))
-                    VT(i) = cv.ConverterParaSI(currcase.tunit, currcase.tp(i))
+                i = 0
+                For Each b As Boolean In currcase.checkp
+                    If b Then
+                        Vx1.Add(currcase.x1p(i))
+                        Vx2.Add(currcase.x2p(i))
+                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(i)))
+                        VT.Add(cv.ConverterParaSI(currcase.tunit, currcase.tp(i)))
+                    End If
+                    i += 1
                 Next
         End Select
 
@@ -700,7 +739,7 @@ Public Class FormDataRegression
                             vartext += "}"
                     End Select
                     If Abs(Vx1(0) - Vx1c(0)) > Abs(Vx1(0) - Vx2c(0)) Then
-                        Dim tmpvec As Double() = Vx1c.Clone
+                        Dim tmpvec As ArrayList = Vx1c.Clone
                         Vx1c = Vx2c.Clone
                         Vx2c = tmpvec
                     End If
@@ -843,7 +882,7 @@ Public Class FormDataRegression
                             vartext += "}"
                     End Select
                     If Abs(Vx1(0) - Vx1c(0)) > Abs(Vx1(0) - Vx2c(0)) Then
-                        Dim tmpvec As Double() = Vx1c.Clone
+                        Dim tmpvec As ArrayList = Vx1c.Clone
                         Vx1c = Vx2c.Clone
                         Vx2c = tmpvec
                     End If
@@ -1153,6 +1192,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
     Sub UpdateData()
 
         Dim i As Integer = 0
+        Dim j As Integer = 0
         With Me.currcase
             px = New ArrayList
             px2 = New ArrayList
@@ -1168,17 +1208,23 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             title = tbTitle.Text & " / " & .datatype.ToString
             Select Case .datatype
                 Case DataType.Txy
-                    For i = 0 To .x1p.Count - 1
-                        Try
-                            px.Add(Double.Parse(.x1p(i)))
-                            py1.Add(Double.Parse(.tp(i)))
-                            py2.Add(cv.ConverterDoSI(.tunit, .calct(i)))
-                            py4.Add(cv.ConverterDoSI(.tunit, .calct(i)))
-                            px2.Add(Double.Parse(.yp(i)))
-                            py3.Add(Double.Parse(.tp(i)))
-                            py5.Add(Double.Parse(.calcy(i)))
-                        Catch ex As Exception
-                        End Try
+                    i = 0
+                    j = 0
+                    For Each b As Boolean In .checkp
+                        If b Then
+                            Try
+                                px.Add(Double.Parse(.x1p(i)))
+                                py1.Add(Double.Parse(.tp(i)))
+                                py2.Add(cv.ConverterDoSI(.tunit, .calct(j)))
+                                py4.Add(cv.ConverterDoSI(.tunit, .calct(j)))
+                                px2.Add(Double.Parse(.yp(i)))
+                                py3.Add(Double.Parse(.tp(i)))
+                                py5.Add(Double.Parse(.calcy(j)))
+                            Catch ex As Exception
+                            End Try
+                            j += 1
+                        End If
+                        i += 1
                     Next
                     xtitle = "Liquid Phase Mole Fraction " & .comp1
                     ytitle = "T / " & .tunit
@@ -1191,17 +1237,23 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                     y6ctitle = "y calc."
                     ycurvetypes.AddRange(New Integer() {1, 3, 1, 3, 1, 3})
                 Case DataType.Pxy
-                    For i = 0 To .x1p.Count - 1
-                        Try
-                            px.Add(Double.Parse(.x1p(i)))
-                            py1.Add(Double.Parse(.pp(i)))
-                            py2.Add(cv.ConverterDoSI(.punit, .calcp(i)))
-                            py4.Add(cv.ConverterDoSI(.punit, .calcp(i)))
-                            px2.Add(Double.Parse(.yp(i)))
-                            py3.Add(Double.Parse(.pp(i)))
-                            py5.Add(Double.Parse(.calcy(i)))
-                        Catch ex As Exception
-                        End Try
+                    i = 0
+                    j = 0
+                    For Each b As Boolean In .checkp
+                        If b Then
+                            Try
+                                px.Add(Double.Parse(.x1p(i)))
+                                py1.Add(Double.Parse(.pp(i)))
+                                py2.Add(cv.ConverterDoSI(.punit, .calcp(j)))
+                                py4.Add(cv.ConverterDoSI(.punit, .calcp(j)))
+                                px2.Add(Double.Parse(.yp(i)))
+                                py3.Add(Double.Parse(.pp(i)))
+                                py5.Add(Double.Parse(.calcy(j)))
+                            Catch ex As Exception
+                            End Try
+                            j += 1
+                        End If
+                        i += 1
                     Next
                     xtitle = "Liquid Phase Mole Fraction " & .comp1
                     ytitle = "P / " & .punit
@@ -1214,16 +1266,22 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                     y6ctitle = "y calc."
                     ycurvetypes.AddRange(New Integer() {1, 3, 1, 3, 1, 3})
                 Case DataType.TPxy
-                    For i = 0 To .x1p.Count - 1
-                        Try
-                            px.Add(Double.Parse(.x1p(i)))
-                            py1.Add(Double.Parse(.tp(i)))
-                            py2.Add(cv.ConverterDoSI(.tunit, .calct(i)))
-                            py4.Add(cv.ConverterDoSI(.punit, .calcp(i)))
-                            py3.Add(Double.Parse(.pp(i)))
-                            py5.Add(Double.Parse(.calcy(i)))
-                        Catch ex As Exception
-                        End Try
+                    i = 0
+                    j = 0
+                    For Each b As Boolean In .checkp
+                        If b Then
+                            Try
+                                px.Add(Double.Parse(.x1p(i)))
+                                py1.Add(Double.Parse(.tp(i)))
+                                py2.Add(cv.ConverterDoSI(.tunit, .calct(j)))
+                                py4.Add(cv.ConverterDoSI(.punit, .calcp(j)))
+                                py3.Add(Double.Parse(.pp(i)))
+                                py5.Add(Double.Parse(.calcy(j)))
+                            Catch ex As Exception
+                            End Try
+                            j += 1
+                        End If
+                        i += 1
                     Next
                     xtitle = "Liquid Phase Mole Fraction " & .comp1
                     ytitle = "T / " & .tunit & " - P / " & .punit
@@ -1232,20 +1290,25 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                     y6ctitle = "y calc."
                     ycurvetypes.AddRange(New Integer() {1, 3, 1, 3, 1, 3})
                 Case DataType.Txx
-                    Try
-                        For i = 0 To .x1p.Count - 1
-                            px.Add(Double.Parse(.x1p(i)))
-                            py1.Add(Double.Parse(.tp(i)))
-                            px2.Add(Double.Parse(.x2p(i)))
-                            py2.Add(Double.Parse(.tp(i)))
-                            px3.Add(Double.Parse(.calcx1l1(i)))
-                            py3.Add(Double.Parse(.tp(i)))
-                            px4.Add(Double.Parse(.calcx1l2(i)))
-                            py4.Add(Double.Parse(.tp(i)))
-                        Next
-                    Catch ex As Exception
-
-                    End Try
+                    i = 0
+                    j = 0
+                    For Each b As Boolean In .checkp
+                        If b Then
+                            Try
+                                px.Add(Double.Parse(.x1p(i)))
+                                py1.Add(Double.Parse(.tp(i)))
+                                px2.Add(Double.Parse(.x2p(i)))
+                                py2.Add(Double.Parse(.tp(i)))
+                                px3.Add(Double.Parse(.calcx1l1(j)))
+                                py3.Add(Double.Parse(.tp(i)))
+                                px4.Add(Double.Parse(.calcx1l2(j)))
+                                py4.Add(Double.Parse(.tp(i)))
+                            Catch ex As Exception
+                            End Try
+                            j += 1
+                        End If
+                        i += 1
+                    Next
                     xtitle = "Mole Fraction " & .comp1
                     ytitle = "T / " & .tunit
                     y1ctitle = "Tx1' exp."
@@ -1254,20 +1317,25 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                     y4ctitle = "Tx1'' calc."
                     ycurvetypes.AddRange(New Integer() {1, 1, 3, 3})
                 Case DataType.Pxx
-                    Try
-                        For i = 0 To .x1p.Count - 1
-                            px.Add(Double.Parse(.x1p(i)))
-                            py1.Add(Double.Parse(.pp(i)))
-                            px2.Add(Double.Parse(.x2p(i)))
-                            py2.Add(Double.Parse(.pp(i)))
-                            px3.Add(Double.Parse(.calcx1l1(i)))
-                            py3.Add(Double.Parse(.pp(i)))
-                            px4.Add(Double.Parse(.calcx1l2(i)))
-                            py4.Add(Double.Parse(.pp(i)))
-                        Next
-                    Catch ex As Exception
-
-                    End Try
+                    i = 0
+                    j = 0
+                    For Each b As Boolean In .checkp
+                        If b Then
+                            Try
+                                px.Add(Double.Parse(.x1p(i)))
+                                py1.Add(Double.Parse(.pp(i)))
+                                px2.Add(Double.Parse(.x2p(i)))
+                                py2.Add(Double.Parse(.pp(i)))
+                                px3.Add(Double.Parse(.calcx1l1(j)))
+                                py3.Add(Double.Parse(.pp(i)))
+                                px4.Add(Double.Parse(.calcx1l2(j)))
+                                py4.Add(Double.Parse(.pp(i)))
+                            Catch ex As Exception
+                            End Try
+                            j += 1
+                        End If
+                        i += 1
+                    Next
                     xtitle = "Mole Fraction " & .comp1
                     ytitle = "P / " & .tunit
                     y1ctitle = "Px1' exp."
@@ -1276,20 +1344,26 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                     y4ctitle = "Px1'' calc."
                     ycurvetypes.AddRange(New Integer() {1, 1, 3, 3})
                 Case DataType.TPxx
-                    Try
-                        For i = 0 To .x1p.Count - 1
-                            px.Add(Double.Parse(.x1p(i)))
-                            py1.Add(Double.Parse(.tp(i)))
-                            px2.Add(Double.Parse(.x2p(i)))
-                            py2.Add(Double.Parse(.tp(i)))
-                            px3.Add(Double.Parse(.calcx1l1(i)))
-                            py3.Add(Double.Parse(.tp(i)))
-                            px4.Add(Double.Parse(.calcx1l2(i)))
-                            py4.Add(Double.Parse(.tp(i)))
-                        Next
-                    Catch ex As Exception
+                    i = 0
+                    j = 0
+                    For Each b As Boolean In .checkp
+                        If b Then
+                            Try
+                                px.Add(Double.Parse(.x1p(i)))
+                                py1.Add(Double.Parse(.tp(i)))
+                                px2.Add(Double.Parse(.x2p(i)))
+                                py2.Add(Double.Parse(.tp(i)))
+                                px3.Add(Double.Parse(.calcx1l1(j)))
+                                py3.Add(Double.Parse(.tp(i)))
+                                px4.Add(Double.Parse(.calcx1l2(j)))
+                                py4.Add(Double.Parse(.tp(i)))
+                            Catch ex As Exception
 
-                    End Try
+                            End Try
+                            j += 1
+                        End If
+                        i += 1
+                    Next
                     xtitle = "Mole Fraction " & .comp1
                     ytitle = "T / " & .tunit & " - P / " & .punit
                     y1ctitle = "Tx1' exp."
@@ -1308,20 +1382,26 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
     Sub UpdateTable()
 
         Me.gridstats.Rows.Clear()
-        For i As Integer = 0 To currcase.x1p.Count - 1
-            With currcase
-                Try
-                    Me.gridstats.Rows.Add(New Object() {.x1p(i), .calcx1l1(i), .x2p(i), .calcx1l2(i), .yp(i), .calcy(i), .tp(i), cv.ConverterDoSI(.tunit, .calct(i)), .pp(i), cv.ConverterDoSI(.punit, .calcp(i)), _
-                                                        .calcy(i) - .yp(i), (.calcy(i) - .yp(i)) / .yp(i), (.calcy(i) - .yp(i)) / .yp(i) * 100, _
-                                                       cv.ConverterDoSI(.punit, .calcp(i)) - .pp(i), (cv.ConverterDoSI(.punit, .calcp(i)) - .pp(i)) / .pp(i), (cv.ConverterDoSI(.punit, .calcp(i)) - .pp(i)) / .pp(i) * 100, _
-                                                        cv.ConverterDoSI(.tunit, .calct(i)) - .tp(i), (cv.ConverterDoSI(.tunit, .calct(i)) - .tp(i)) / .tp(i), (cv.ConverterDoSI(.tunit, .calct(i)) - .tp(i)) / .tp(i) * 100, _
-                                                        .calcx1l1(i) - .x1p(i), (.calcx1l1(i) - .x1p(i)) / .x1p(i), (.calcx1l1(i) - .x1p(i)) / .x1p(i) * 100, _
-                                                        .calcx1l2(i) - .x2p(i), (.calcx1l2(i) - .x2p(i)) / .x2p(i), (.calcx1l2(i) - .x2p(i)) / .x2p(i) * 100})
-                Catch ex As Exception
+        Dim i As Integer = 0
+        Dim j As Integer = 0
+        With currcase
+            For Each b As Boolean In .checkp
+                If b Then
+                    Try
+                        Me.gridstats.Rows.Add(New Object() {.x1p(i), .calcx1l1(j), .x2p(i), .calcx1l2(j), .yp(i), .calcy(j), .tp(i), cv.ConverterDoSI(.tunit, .calct(j)), .pp(i), cv.ConverterDoSI(.punit, .calcp(j)), _
+                                                            .calcy(j) - .yp(i), (.calcy(j) - .yp(i)) / .yp(i), (.calcy(j) - .yp(i)) / .yp(i) * 100, _
+                                                           cv.ConverterDoSI(.punit, .calcp(j)) - .pp(i), (cv.ConverterDoSI(.punit, .calcp(j)) - .pp(i)) / .pp(i), (cv.ConverterDoSI(.punit, .calcp(j)) - .pp(i)) / .pp(i) * 100, _
+                                                            cv.ConverterDoSI(.tunit, .calct(j)) - .tp(i), (cv.ConverterDoSI(.tunit, .calct(j)) - .tp(i)) / .tp(i), (cv.ConverterDoSI(.tunit, .calct(j)) - .tp(i)) / .tp(i) * 100, _
+                                                            .calcx1l1(j) - .x1p(i), (.calcx1l1(j) - .x1p(i)) / .x1p(i), (.calcx1l1(j) - .x1p(i)) / .x1p(i) * 100, _
+                                                            .calcx1l2(j) - .x2p(i), (.calcx1l2(j) - .x2p(i)) / .x2p(i), (.calcx1l2(j) - .x2p(i)) / .x2p(i) * 100})
+                    Catch ex As Exception
 
-                End Try
-            End With
-        Next
+                    End Try
+                    j += 1
+                End If
+                i += 1
+            Next
+        End With
 
         Select Case currcase.datatype
             Case DataType.Txx, DataType.Pxx, DataType.TPxx
@@ -1756,8 +1836,13 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             End With
 
             Me.graph.IsAntiAlias = True
-            Me.graph.AxisChange()
-            Me.graph.Invalidate()
+
+            Try
+                Me.graph.AxisChange()
+                Me.graph.Invalidate()
+            Catch ex As Exception
+
+            End Try
 
         End With
 
@@ -1946,8 +2031,13 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
 
                 Me.graph2.IsAntiAlias = True
-                Me.graph2.AxisChange()
-                Me.graph2.Invalidate()
+
+                Try
+                    Me.graph.AxisChange()
+                    Me.graph.Invalidate()
+                Catch ex As Exception
+
+                End Try
 
         End Select
 
@@ -2020,6 +2110,10 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
     End Function
 
+    Private Sub GridExpData_DataError(sender As Object, e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles GridExpData.DataError
+
+    End Sub
+
     Private Sub GridExpData_KeyDown1(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles GridExpData.KeyDown
 
         If e.KeyCode = Keys.Delete And e.Modifiers = Keys.Shift Then
@@ -2028,13 +2122,17 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 If Not toremove.Contains(c.RowIndex) Then toremove.Add(c.RowIndex)
             Next
             For Each i As Integer In toremove
-                Me.GridExpData.Rows.RemoveAt(i)
+                Try
+                    Me.GridExpData.Rows.RemoveAt(i)
+                Catch ex As Exception
+
+                End Try
             Next
         ElseIf e.KeyCode = Keys.V And e.Modifiers = Keys.Control Then
             PasteData(GridExpData)
         ElseIf e.KeyCode = Keys.Delete Then
             For Each c As DataGridViewCell In Me.GridExpData.SelectedCells
-                c.Value = ""
+                If c.ColumnIndex <> 0 Then c.Value = "" Else c.Value = False
             Next
         End If
 
@@ -2680,7 +2778,7 @@ Namespace DWSIM.Optimization.DatRegression
         Public filename As String = ""
         Public model As String = "Peng-Robinson"
         Public datatype As DataType = datatype.Pxy
-        Public tp, x1p, x2p, yp, pp, calct, calcp, calcy, calcx1l1, calcx1l2 As New ArrayList
+        Public tp, x1p, x2p, yp, pp, calct, calcp, calcy, calcx1l1, calcx1l2, checkp As New ArrayList
         Public method As String = "IPOPT"
         Public objfunction As String = "Least Squares (min T/P)"
         Public includesd As Boolean = False

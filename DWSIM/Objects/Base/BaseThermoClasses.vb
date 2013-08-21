@@ -2150,29 +2150,29 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public Ion_CpAq_c As Double = 0.0#
 
         'the following properties are no longer used but kept for compatibility reasons
-        Public UNIFAC_Ri As Double
-        Public UNIFAC_Qi As Double
-        Public UNIFAC_01_CH4 As Integer
-        Public UNIFAC_02_CH3 As Integer
-        Public UNIFAC_03_CH2 As Integer
-        Public UNIFAC_04_CH As Integer
-        Public UNIFAC_05_H2O As Integer
-        Public UNIFAC_06_H2S As Integer
-        Public UNIFAC_07_CO2 As Integer
-        Public UNIFAC_08_N2 As Integer
-        Public UNIFAC_09_O2 As Integer
-        Public UNIFAC_10_OH As Integer
-        Public UNIFAC_11_ACH As Integer
-        Public UNIFAC_12_ACCH2 As Integer
-        Public UNIFAC_13_ACCH3 As Integer
-        Public UNIFAC_14_ACOH As Integer
-        Public UNIFAC_15_CH3CO As Integer
-        Public UNIFAC_16_CH2CO As Integer
-        Public Element_C As Integer = 0
-        Public Element_H As Integer = 0
-        Public Element_O As Integer = 0
-        Public Element_N As Integer = 0
-        Public Element_S As Integer = 0
+        <XmlIgnore()> Public UNIFAC_Ri As Double
+        <XmlIgnore()> Public UNIFAC_Qi As Double
+        <XmlIgnore()> Public UNIFAC_01_CH4 As Integer
+        <XmlIgnore()> Public UNIFAC_02_CH3 As Integer
+        <XmlIgnore()> Public UNIFAC_03_CH2 As Integer
+        <XmlIgnore()> Public UNIFAC_04_CH As Integer
+        <XmlIgnore()> Public UNIFAC_05_H2O As Integer
+        <XmlIgnore()> Public UNIFAC_06_H2S As Integer
+        <XmlIgnore()> Public UNIFAC_07_CO2 As Integer
+        <XmlIgnore()> Public UNIFAC_08_N2 As Integer
+        <XmlIgnore()> Public UNIFAC_09_O2 As Integer
+        <XmlIgnore()> Public UNIFAC_10_OH As Integer
+        <XmlIgnore()> Public UNIFAC_11_ACH As Integer
+        <XmlIgnore()> Public UNIFAC_12_ACCH2 As Integer
+        <XmlIgnore()> Public UNIFAC_13_ACCH3 As Integer
+        <XmlIgnore()> Public UNIFAC_14_ACOH As Integer
+        <XmlIgnore()> Public UNIFAC_15_CH3CO As Integer
+        <XmlIgnore()> Public UNIFAC_16_CH2CO As Integer
+        <XmlIgnore()> Public Element_C As Integer = 0
+        <XmlIgnore()> Public Element_H As Integer = 0
+        <XmlIgnore()> Public Element_O As Integer = 0
+        <XmlIgnore()> Public Element_N As Integer = 0
+        <XmlIgnore()> Public Element_S As Integer = 0
 
         Public Sub New()
             UNIFACGroups = New UNIFACGroupCollection

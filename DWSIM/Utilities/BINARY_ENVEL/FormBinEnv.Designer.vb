@@ -122,7 +122,7 @@ Partial Class FormBinEnv
         resources.ApplyResources(Me.chkSLE, "chkSLE")
         Me.chkSLE.Checked = True
         Me.chkSLE.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkSLE.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkSLE.ImageKey = ""
         Me.chkSLE.Name = "chkSLE"
         Me.chkSLE.UseVisualStyleBackColor = True
         '
@@ -130,14 +130,14 @@ Partial Class FormBinEnv
         '
         resources.ApplyResources(Me.rbEutectic, "rbEutectic")
         Me.rbEutectic.Checked = True
-        Me.rbEutectic.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.rbEutectic.ImageKey = ""
         Me.rbEutectic.Name = "rbEutectic"
         Me.rbEutectic.TabStop = True
         '
         'rbSolidSolution
         '
         resources.ApplyResources(Me.rbSolidSolution, "rbSolidSolution")
-        Me.rbSolidSolution.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.rbSolidSolution.ImageKey = ""
         Me.rbSolidSolution.Name = "rbSolidSolution"
         '
         'chkCritical
@@ -145,7 +145,7 @@ Partial Class FormBinEnv
         resources.ApplyResources(Me.chkCritical, "chkCritical")
         Me.chkCritical.Checked = True
         Me.chkCritical.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkCritical.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkCritical.ImageKey = ""
         Me.chkCritical.Name = "chkCritical"
         Me.chkCritical.UseVisualStyleBackColor = True
         '
@@ -154,7 +154,7 @@ Partial Class FormBinEnv
         resources.ApplyResources(Me.chkLLE, "chkLLE")
         Me.chkLLE.Checked = True
         Me.chkLLE.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkLLE.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkLLE.ImageKey = ""
         Me.chkLLE.Name = "chkLLE"
         Me.chkLLE.UseVisualStyleBackColor = True
         '
@@ -163,14 +163,14 @@ Partial Class FormBinEnv
         resources.ApplyResources(Me.chkVLE, "chkVLE")
         Me.chkVLE.Checked = True
         Me.chkVLE.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkVLE.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkVLE.ImageKey = ""
         Me.chkVLE.Name = "chkVLE"
         Me.chkVLE.UseVisualStyleBackColor = True
         '
         'Label7
         '
         resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label7.ImageKey = ""
         Me.Label7.Name = "Label7"
         '
         'cbPropPack
@@ -184,19 +184,19 @@ Partial Class FormBinEnv
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label6.ImageKey = ""
         Me.Label6.Name = "Label6"
         '
         'lblT
         '
         resources.ApplyResources(Me.lblT, "lblT")
-        Me.lblT.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.lblT.ImageKey = ""
         Me.lblT.Name = "lblT"
         '
         'lblP
         '
         resources.ApplyResources(Me.lblP, "lblP")
-        Me.lblP.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.lblP.ImageKey = ""
         Me.lblP.Name = "lblP"
         '
         'tbT
@@ -212,13 +212,13 @@ Partial Class FormBinEnv
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label5.ImageKey = ""
         Me.Label5.Name = "Label5"
         '
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label4.ImageKey = ""
         Me.Label4.Name = "Label4"
         '
         'cbXAxisBasis
@@ -232,7 +232,7 @@ Partial Class FormBinEnv
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label3.ImageKey = ""
         Me.Label3.Name = "Label3"
         '
         'cbComp2
@@ -245,45 +245,45 @@ Partial Class FormBinEnv
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label2.ImageKey = ""
         Me.Label2.Name = "Label2"
         '
         'RadioButton4
         '
         resources.ApplyResources(Me.RadioButton4, "RadioButton4")
-        Me.RadioButton4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.RadioButton4.ImageKey = ""
         Me.RadioButton4.Name = "RadioButton4"
         '
         'RadioButton3
         '
         resources.ApplyResources(Me.RadioButton3, "RadioButton3")
-        Me.RadioButton3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.RadioButton3.ImageKey = ""
         Me.RadioButton3.Name = "RadioButton3"
         '
         'RadioButton2
         '
         resources.ApplyResources(Me.RadioButton2, "RadioButton2")
-        Me.RadioButton2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.RadioButton2.ImageKey = ""
         Me.RadioButton2.Name = "RadioButton2"
         '
         'RadioButton1
         '
         resources.ApplyResources(Me.RadioButton1, "RadioButton1")
         Me.RadioButton1.Checked = True
-        Me.RadioButton1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.RadioButton1.ImageKey = ""
         Me.RadioButton1.Name = "RadioButton1"
         Me.RadioButton1.TabStop = True
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label1.ImageKey = ""
         Me.Label1.Name = "Label1"
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button1.ImageKey = ""
         Me.Button1.Name = "Button1"
         '
         'cbComp1
@@ -296,7 +296,7 @@ Partial Class FormBinEnv
         'Label23
         '
         resources.ApplyResources(Me.Label23, "Label23")
-        Me.Label23.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label23.ImageKey = ""
         Me.Label23.Name = "Label23"
         '
         'GroupBox2

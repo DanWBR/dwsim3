@@ -2489,8 +2489,16 @@ Public Class FormMain
         xel = xdoc.Element("DWSIM_Simulation_Data").Element("PropertyPackages")
 
         For Each pp As KeyValuePair(Of String, PropertyPackage) In form.Options.PropertyPackages
+            Dim createdms As Boolean = False
+            If pp.Value.CurrentMaterialStream Is Nothing Then
+                Dim ms As New Streams.MaterialStream("", "", form, pp.Value)
+                form.AddComponentsRows(ms)
+                pp.Value.CurrentMaterialStream = ms
+                createdms = True
+            End If
             xel.Add(New XElement("PropertyPackage", {New XElement("ID", pp.Key),
                                                      pp.Value.SaveData().ToArray()}))
+            If createdms Then pp.Value.CurrentMaterialStream = Nothing
         Next
 
         xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Compounds"))

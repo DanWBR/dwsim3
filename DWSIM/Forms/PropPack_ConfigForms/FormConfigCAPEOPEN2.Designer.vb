@@ -147,7 +147,7 @@ Partial Class FormConfigCAPEOPEN2
         'Button6
         '
         resources.ApplyResources(Me.Button6, "Button6")
-        Me.Button6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button6.ImageKey = ""
         Me.Button6.Name = "Button6"
         Me.Button6.UseVisualStyleBackColor = True
         '
@@ -174,21 +174,21 @@ Partial Class FormConfigCAPEOPEN2
         'Button11
         '
         resources.ApplyResources(Me.Button11, "Button11")
-        Me.Button11.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button11.ImageKey = ""
         Me.Button11.Name = "Button11"
         Me.Button11.UseVisualStyleBackColor = True
         '
         'Button10
         '
         resources.ApplyResources(Me.Button10, "Button10")
-        Me.Button10.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button10.ImageKey = ""
         Me.Button10.Name = "Button10"
         Me.Button10.UseVisualStyleBackColor = True
         '
         'Button7
         '
         resources.ApplyResources(Me.Button7, "Button7")
-        Me.Button7.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button7.ImageKey = ""
         Me.Button7.Name = "Button7"
         Me.Button7.UseVisualStyleBackColor = True
         '
@@ -202,7 +202,7 @@ Partial Class FormConfigCAPEOPEN2
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label3.ImageKey = ""
         Me.Label3.Name = "Label3"
         '
         'ogc1
@@ -230,7 +230,7 @@ Partial Class FormConfigCAPEOPEN2
         Me.Column11.FillWeight = 5.0!
         resources.ApplyResources(Me.Column11, "Column11")
         Me.Column11.Name = "Column11"
-        Me.Column11.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column11.ToolTipText = ""
         '
         'Column6
         '
@@ -238,7 +238,7 @@ Partial Class FormConfigCAPEOPEN2
         resources.ApplyResources(Me.Column6, "Column6")
         Me.Column6.Name = "Column6"
         Me.Column6.ReadOnly = True
-        Me.Column6.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column6.ToolTipText = ""
         '
         'Column7
         '
@@ -246,7 +246,7 @@ Partial Class FormConfigCAPEOPEN2
         resources.ApplyResources(Me.Column7, "Column7")
         Me.Column7.Name = "Column7"
         Me.Column7.ReadOnly = True
-        Me.Column7.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column7.ToolTipText = ""
         '
         'Column8
         '
@@ -254,7 +254,7 @@ Partial Class FormConfigCAPEOPEN2
         resources.ApplyResources(Me.Column8, "Column8")
         Me.Column8.Name = "Column8"
         Me.Column8.ReadOnly = True
-        Me.Column8.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column8.ToolTipText = ""
         '
         'Column9
         '
@@ -262,7 +262,7 @@ Partial Class FormConfigCAPEOPEN2
         resources.ApplyResources(Me.Column9, "Column9")
         Me.Column9.Name = "Column9"
         Me.Column9.ReadOnly = True
-        Me.Column9.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column9.ToolTipText = ""
         '
         'FaTabStripItem2
         '
@@ -297,7 +297,7 @@ Partial Class FormConfigCAPEOPEN2
         'RadioButton3
         '
         resources.ApplyResources(Me.RadioButton3, "RadioButton3")
-        Me.RadioButton3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.RadioButton3.ImageKey = ""
         Me.RadioButton3.Name = "RadioButton3"
         Me.RadioButton3.TabStop = True
         Me.RadioButton3.UseVisualStyleBackColor = True
@@ -305,7 +305,7 @@ Partial Class FormConfigCAPEOPEN2
         'RadioButton2
         '
         resources.ApplyResources(Me.RadioButton2, "RadioButton2")
-        Me.RadioButton2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.RadioButton2.ImageKey = ""
         Me.RadioButton2.Name = "RadioButton2"
         Me.RadioButton2.TabStop = True
         Me.RadioButton2.UseVisualStyleBackColor = True
@@ -313,7 +313,7 @@ Partial Class FormConfigCAPEOPEN2
         'RadioButton1
         '
         resources.ApplyResources(Me.RadioButton1, "RadioButton1")
-        Me.RadioButton1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.RadioButton1.ImageKey = ""
         Me.RadioButton1.Name = "RadioButton1"
         Me.RadioButton1.TabStop = True
         Me.RadioButton1.UseVisualStyleBackColor = True
@@ -321,13 +321,13 @@ Partial Class FormConfigCAPEOPEN2
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label4.ImageKey = ""
         Me.Label4.Name = "Label4"
         '
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label6.ImageKey = ""
         Me.Label6.Name = "Label6"
         '
         'ListView2
@@ -341,7 +341,7 @@ Partial Class FormConfigCAPEOPEN2
         'chkIOmode
         '
         resources.ApplyResources(Me.chkIOmode, "chkIOmode")
-        Me.chkIOmode.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkIOmode.ImageKey = ""
         Me.chkIOmode.Name = "chkIOmode"
         '
         'ComboBoxFlashAlg
@@ -355,7 +355,7 @@ Partial Class FormConfigCAPEOPEN2
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label1.ImageKey = ""
         Me.Label1.Name = "Label1"
         '
         'FaTabStripItem3
@@ -369,7 +369,7 @@ Partial Class FormConfigCAPEOPEN2
         'Button3
         '
         resources.ApplyResources(Me.Button3, "Button3")
-        Me.Button3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button3.ImageKey = ""
         Me.Button3.Name = "Button3"
         Me.Button3.UseVisualStyleBackColor = True
         '
@@ -417,13 +417,13 @@ Partial Class FormConfigCAPEOPEN2
         'Label9
         '
         resources.ApplyResources(Me.Label9, "Label9")
-        Me.Label9.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label9.ImageKey = ""
         Me.Label9.Name = "Label9"
         '
         'chkEnableGPUProcessing
         '
         resources.ApplyResources(Me.chkEnableGPUProcessing, "chkEnableGPUProcessing")
-        Me.chkEnableGPUProcessing.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkEnableGPUProcessing.ImageKey = ""
         Me.chkEnableGPUProcessing.Name = "chkEnableGPUProcessing"
         '
         'cbParallelism
@@ -436,13 +436,13 @@ Partial Class FormConfigCAPEOPEN2
         'Label11
         '
         resources.ApplyResources(Me.Label11, "Label11")
-        Me.Label11.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label11.ImageKey = ""
         Me.Label11.Name = "Label11"
         '
         'chkEnableParallelCalcs
         '
         resources.ApplyResources(Me.chkEnableParallelCalcs, "chkEnableParallelCalcs")
-        Me.chkEnableParallelCalcs.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkEnableParallelCalcs.ImageKey = ""
         Me.chkEnableParallelCalcs.Name = "chkEnableParallelCalcs"
         '
         'FaTabStripItem4
@@ -466,7 +466,7 @@ Partial Class FormConfigCAPEOPEN2
         'Button4
         '
         resources.ApplyResources(Me.Button4, "Button4")
-        Me.Button4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button4.ImageKey = ""
         Me.Button4.Name = "Button4"
         Me.Button4.UseVisualStyleBackColor = True
         '
@@ -483,13 +483,13 @@ Partial Class FormConfigCAPEOPEN2
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label5.ImageKey = ""
         Me.Label5.Name = "Label5"
         '
         'Label7
         '
         resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label7.ImageKey = ""
         Me.Label7.Name = "Label7"
         '
         'FaTabStripItem6
@@ -506,25 +506,25 @@ Partial Class FormConfigCAPEOPEN2
         'lblDescription
         '
         resources.ApplyResources(Me.lblDescription, "lblDescription")
-        Me.lblDescription.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.lblDescription.ImageKey = ""
         Me.lblDescription.Name = "lblDescription"
         '
         'Label10
         '
         resources.ApplyResources(Me.Label10, "Label10")
-        Me.Label10.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label10.ImageKey = ""
         Me.Label10.Name = "Label10"
         '
         'lblName
         '
         resources.ApplyResources(Me.lblName, "lblName")
-        Me.lblName.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.lblName.ImageKey = ""
         Me.lblName.Name = "lblName"
         '
         'Label8
         '
         resources.ApplyResources(Me.Label8, "Label8")
-        Me.Label8.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label8.ImageKey = ""
         Me.Label8.Name = "Label8"
         '
         'FaTabStripItem5
@@ -547,21 +547,21 @@ Partial Class FormConfigCAPEOPEN2
         'cbudb
         '
         resources.ApplyResources(Me.cbudb, "cbudb")
-        Me.cbudb.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.cbudb.ImageKey = ""
         Me.cbudb.Name = "cbudb"
         Me.cbudb.UseVisualStyleBackColor = True
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button1.ImageKey = ""
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Button2
         '
         resources.ApplyResources(Me.Button2, "Button2")
-        Me.Button2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button2.ImageKey = ""
         Me.Button2.Name = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
         '
@@ -576,7 +576,7 @@ Partial Class FormConfigCAPEOPEN2
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label2.ImageKey = ""
         Me.Label2.Name = "Label2"
         '
         'dgvdb
@@ -610,7 +610,7 @@ Partial Class FormConfigCAPEOPEN2
         Me.Column12.Name = "Column12"
         Me.Column12.ReadOnly = True
         Me.Column12.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Column12.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column12.ToolTipText = ""
         '
         'Column13
         '
@@ -620,7 +620,7 @@ Partial Class FormConfigCAPEOPEN2
         Me.Column13.Name = "Column13"
         Me.Column13.ReadOnly = True
         Me.Column13.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Column13.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column13.ToolTipText = ""
         '
         'Column14
         '
@@ -630,7 +630,7 @@ Partial Class FormConfigCAPEOPEN2
         Me.Column14.Name = "Column14"
         Me.Column14.ReadOnly = True
         Me.Column14.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Column14.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column14.ToolTipText = ""
         '
         'Column15
         '
@@ -639,7 +639,7 @@ Partial Class FormConfigCAPEOPEN2
         Me.Column15.Name = "Column15"
         Me.Column15.ReadOnly = True
         Me.Column15.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Column15.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column15.ToolTipText = ""
         '
         'Column1
         '
@@ -647,7 +647,7 @@ Partial Class FormConfigCAPEOPEN2
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
-        Me.Column1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column1.ToolTipText = ""
         '
         'ofdcs
         '
