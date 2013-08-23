@@ -1,4 +1,4 @@
-﻿'    Basic Thermodynamic Classes for DWSIM
+'    Basic Thermodynamic Classes for DWSIM
 '    Copyright 2008 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -2223,21 +2223,10 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
 
-            Dim elements As New List(Of System.Xml.Linq.XElement)
+            Dim elements As List(Of System.Xml.Linq.XElement) = XMLSerializer.XMLSerializer.Serialize(Me, True)
             Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
             With elements
-
-                Dim fields As FieldInfo() = Me.GetType.GetFields()
-                For Each fi As FieldInfo In fields
-                    If fi.Name <> "UNIFACGroups" And fi.Name <> "MODFACGroups" And fi.Name <> "Elements" Then
-                        If TypeOf Me.GetType.GetField(fi.Name).GetValue(Me) Is Double Then
-                            .Add(New XElement(fi.Name, Double.Parse(Me.GetType.GetField(fi.Name).GetValue(Me)).ToString(ci)))
-                        Else
-                            .Add(New XElement(fi.Name, Me.GetType.GetField(fi.Name).GetValue(Me)))
-                        End If
-                    End If
-                Next
 
                 .Add(New XElement("UNIFACGroups"))
 
@@ -2268,8 +2257,6 @@ Namespace DWSIM.ClassesBasicasTermodinamica
                     Next
 
                 End If
-
-
 
             End With
 
