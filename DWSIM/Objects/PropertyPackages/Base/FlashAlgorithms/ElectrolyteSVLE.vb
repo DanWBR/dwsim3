@@ -1,4 +1,4 @@
-﻿'    Flash Algorithm for Electrolyte solutions
+'    Flash Algorithm for Electrolyte solutions
 '    Copyright 2013 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -93,7 +93,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 End If
             Next
 
-           If Vnf(wid) = 0.0# Then
+            If Vnf(wid) = 0.0# Then
 
                 'only solids in the stream (no liquid water).
 
@@ -130,13 +130,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Dim int_count As Integer = 0
                 Dim L_ant As Double = 0.0#
 
+                Dim rext As Double() = Nothing
+                Dim result As Object
+
                 Do
 
                     'calculate chemical equilibria between ions, salts and water. 
                     ''SolveChemicalEquilibria' returns the equilibrium molar amounts in the liquid phase, including precipitates.
 
                     If CalculateChemicalEquilibria And Not Vnf(wid) <= 0.5 Then
-                        Vf = SolveChemicalEquilibria(Vf, T, P, ids).Clone
+                        result = SolveChemicalEquilibria(Vf, T, P, ids, rext)
+                        Vf = result(0).clone
+                        rext = result(1)
                     End If
 
                     For i = 0 To n
@@ -257,7 +262,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
-        Private Function SolveChemicalEquilibria(ByVal Vx As Array, ByVal T As Double, ByVal P As Double, ByVal ids As List(Of String)) As Array
+        Private Function SolveChemicalEquilibria(ByVal Vx As Array, ByVal T As Double, ByVal P As Double, ByVal ids As List(Of String), Optional ByVal prevx As Double() = Nothing) As Array
 
             'solves the chemical equilibria for the liquid phase.
 
@@ -406,9 +411,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Dim REx(r) As Double
 
-                For i = 0 To r
-                    REx(i) = ubound(i) * 0.9
-                Next
+                If Not prevx Is Nothing Then
+                    REx = prevx
+                Else
+                    For i = 0 To r
+                        REx(i) = ubound(i) * 0.1
+                    Next
+                End If
 
                 Dim REx0(REx.Length - 1) As Double
 
@@ -429,7 +438,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     fx = Me.FunctionValue2N(x)
 
-                    If AbsSum(fx) < Tolerance Then Exit Do
+                    If SumSqr(fx) < Tolerance Then Exit Do
 
                     dfdx_ant = dfdx.Clone
                     dfdx = Me.FunctionGradient2N(x)
@@ -499,11 +508,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
 
 
-                Return Vx
+                Return New Object() {Vx, x}
 
             Else
 
-                Return Vx
+                Return New Object() {Vx, Nothing}
 
             End If
 
@@ -840,4 +849,3 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 5, tolEXT, maxitEXT, {P, Vz})
     End Class
 
 End Namespace
-
