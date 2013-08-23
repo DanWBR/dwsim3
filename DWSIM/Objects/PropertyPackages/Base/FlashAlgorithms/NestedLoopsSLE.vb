@@ -1,4 +1,4 @@
-﻿'    DWSIM Nested Loops Flash Algorithms for Solid-Liquid Equilibria (SLE)
+'    DWSIM Nested Loops Flash Algorithms for Solid-Liquid Equilibria (SLE)
 '    Copyright 2013 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -1036,7 +1036,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             bm.DefineFuncDelegate(AddressOf SolidFractionError)
 
-            T = bm.BrentOpt(Common.Min(VTF) - 30, Common.Max(VTF) + 50, 50, etol, 100, New Object() {L, Vz, P, PP})
+            T = bm.BrentOpt(Common.Min(VTF) * 0.3, Common.Max(VTF) + 70, 250, etol, 100, New Object() {L, Vz, P, PP})
 
             result = Me.Flash_PT_E(Vz, P, T, PP)
 
@@ -1053,4 +1053,3 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
     End Class
 
 End Namespace
-
