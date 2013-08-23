@@ -445,7 +445,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     tmpx = x
                     tmpdx = dx
                     df = 1
-                    fval = brentsolver.brentoptimize(0.1, 2.0#, 0.0001, df)
+                    fval = brentsolver.brentoptimize(0.1, 10.0#, 0.0001, df)
 
                     For i = 0 To r
                         x(i) -= dx(i) * df
@@ -462,7 +462,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     End If
 
                     CheckCalculatorStatus()
-
 
                 Loop
 
@@ -611,9 +610,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             For i = 0 To Me.Reactions.Count - 1
                 With proppack.CurrentMaterialStream.Flowsheet.Options.Reactions(Me.Reactions(i))
-                    f(i) = (prod(i) - .ConstantKeqValue + pen_val) * (1 + pen_val)
-                    If Double.IsNaN(f(i)) Or Double.IsInfinity(f(i)) Then
-                        f(i) = pen_val
+                    f(i) = (prod(i) - .ConstantKeqValue)
+                    If Double.IsNaN(f(i)) Or Double.IsInfinity(f(i)) Or pen_val <> 0.0# Then
+                        f(i) = pen_val ^ 2
                     End If
                 End With
             Next

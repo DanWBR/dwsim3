@@ -1796,6 +1796,7 @@ Public Class FormMain
     Sub LoadXML(ByVal path As String, Optional ByVal simulationfilename As String = "")
 
         Dim fls As New FormLS
+        Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
         fls.Show(Me)
         fls.Label1.Text = "Restoring Simulation from XML file"
@@ -2432,9 +2433,9 @@ Public Class FormMain
             If xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView") IsNot Nothing Then
                 Dim flsconfig As String = xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView").Value
                 If flsconfig <> "" Then
-                    form.FormSurface.FlowsheetDesignSurface.Zoom = flsconfig.Split(";")(0)
-                    form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value = flsconfig.Split(";")(1)
-                    form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value = flsconfig.Split(";")(2)
+                    form.FormSurface.FlowsheetDesignSurface.Zoom = Single.Parse(flsconfig.Split(";")(0), ci)
+                    form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value = Integer.Parse(flsconfig.Split(";")(1))
+                    form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value = Integer.Parse(flsconfig.Split(";")(2))
                 End If
             End If
 
@@ -2463,6 +2464,8 @@ Public Class FormMain
 
         Dim xdoc As New XDocument()
         Dim xel As XElement
+
+        Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
         xdoc.Add(New XElement("DWSIM_Simulation_Data"))
 
@@ -2554,7 +2557,7 @@ Public Class FormMain
         Dim flsconfig As New StringBuilder()
 
         With flsconfig
-            .Append(form.FormSurface.FlowsheetDesignSurface.Zoom & ";")
+            .Append(form.FormSurface.FlowsheetDesignSurface.Zoom.ToString(ci) & ";")
             .Append(form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value & ";")
             .Append(form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value)
         End With
