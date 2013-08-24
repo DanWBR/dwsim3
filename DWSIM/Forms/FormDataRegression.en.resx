@@ -127,6 +127,18 @@
     <value>Regression Information</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkTS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 17</value>
+  </data>
+  <data name="chkTS.Text" xml:space="preserve">
+    <value>TS</value>
+  </data>
+  <data name="chkTL.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 17</value>
+  </data>
+  <data name="chkTL.Text" xml:space="preserve">
+    <value>TL</value>
+  </data>
   <data name="chkIdealVaporPhase.Size" type="System.Drawing.Size, System.Drawing">
     <value>167, 17</value>
   </data>
@@ -272,6 +284,12 @@
   </data>
   <data name="cbDataType.Items5" xml:space="preserve">
     <value>TPxx (LLE)</value>
+  </data>
+  <data name="cbDataType.Items6" xml:space="preserve">
+    <value>TTx (SLE-E)</value>
+  </data>
+  <data name="cbDataType.Items7" xml:space="preserve">
+    <value>TTx (SLE-SS)</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 13</value>

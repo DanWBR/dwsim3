@@ -2144,7 +2144,6 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             End With
 
             With .XAxis
-                .Type = AxisType.Log
                 .Title.Text = xtitle
                 .Title.FontSpec.Size = 11
                 .Scale.MinAuto = False
@@ -2161,6 +2160,11 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                         .Type = ZedGraph.AxisType.DateAsOrdinal
                         .Scale.Format = "dd/MM/yy"
                 End Select
+            End With
+
+            With .YAxis
+                .Scale.MinAuto = True
+                .Scale.MaxAuto = True
             End With
 
             With .Legend
@@ -2376,8 +2380,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Me.graph2.IsAntiAlias = True
 
                 Try
-                    Me.graph.AxisChange()
-                    Me.graph.Invalidate()
+                    Me.graph2.AxisChange()
+                    Me.graph2.Invalidate()
                 Catch ex As Exception
 
                 End Try
@@ -2412,7 +2416,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 For ii = 0 To arT.Length - 1
                     If r > dgv.Rows.Count - 1 Then
                         dgv.Rows.Add()
-                        dgv.Rows(0).Cells(0).Selected = True
+                        dgv.Rows(0).Cells(0).Value = True
+                        dgv.Rows(0).Cells(1).Selected = True
                     End If
                 Next
                 r = r + 1

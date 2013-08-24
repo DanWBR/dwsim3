@@ -3352,54 +3352,6 @@
   <data name="&gt;&gt;cf.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewCheckBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;check.Name" xml:space="preserve">
-    <value>check</value>
-  </data>
-  <data name="&gt;&gt;check.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewCheckBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colx1.Name" xml:space="preserve">
-    <value>colx1</value>
-  </data>
-  <data name="&gt;&gt;colx1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colx2.Name" xml:space="preserve">
-    <value>colx2</value>
-  </data>
-  <data name="&gt;&gt;colx2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;coly1.Name" xml:space="preserve">
-    <value>coly1</value>
-  </data>
-  <data name="&gt;&gt;coly1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colT.Name" xml:space="preserve">
-    <value>colT</value>
-  </data>
-  <data name="&gt;&gt;colT.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;coltl.Name" xml:space="preserve">
-    <value>coltl</value>
-  </data>
-  <data name="&gt;&gt;coltl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colts.Name" xml:space="preserve">
-    <value>colts</value>
-  </data>
-  <data name="&gt;&gt;colts.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colP.Name" xml:space="preserve">
-    <value>colP</value>
-  </data>
-  <data name="&gt;&gt;colP.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;ToolStripMenuItem1.Name" xml:space="preserve">
     <value>ToolStripMenuItem1</value>
   </data>
@@ -3602,6 +3554,54 @@
     <value>colts_error</value>
   </data>
   <data name="&gt;&gt;colts_error.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;check.Name" xml:space="preserve">
+    <value>check</value>
+  </data>
+  <data name="&gt;&gt;check.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewCheckBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colx1.Name" xml:space="preserve">
+    <value>colx1</value>
+  </data>
+  <data name="&gt;&gt;colx1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colx2.Name" xml:space="preserve">
+    <value>colx2</value>
+  </data>
+  <data name="&gt;&gt;colx2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;coly1.Name" xml:space="preserve">
+    <value>coly1</value>
+  </data>
+  <data name="&gt;&gt;coly1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colT.Name" xml:space="preserve">
+    <value>colT</value>
+  </data>
+  <data name="&gt;&gt;colT.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;coltl.Name" xml:space="preserve">
+    <value>coltl</value>
+  </data>
+  <data name="&gt;&gt;coltl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colts.Name" xml:space="preserve">
+    <value>colts</value>
+  </data>
+  <data name="&gt;&gt;colts.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colP.Name" xml:space="preserve">
+    <value>colP</value>
+  </data>
+  <data name="&gt;&gt;colP.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
