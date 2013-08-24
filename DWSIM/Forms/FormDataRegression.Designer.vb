@@ -744,15 +744,12 @@ Partial Class FormDataRegression
         '
         'check
         '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         Me.check.DefaultCellStyle = DataGridViewCellStyle4
-        Me.check.FalseValue = ""
         Me.check.FillWeight = 60.9137!
-        Me.check.HeaderText = ""
+        resources.ApplyResources(Me.check, "check")
         Me.check.Name = "check"
         Me.check.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.check.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.check.TrueValue = ""
         '
         'colx1
         '

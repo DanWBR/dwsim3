@@ -113,7 +113,7 @@ Public Class FormDataRegression
             .results = tbRegResults.Text
             For Each r As DataGridViewRow In Me.GridExpData.Rows
                 If r.Index < Me.GridExpData.Rows.Count - 1 Then
-                    .checkp.Add(r.Cells("check").Value)
+                    If r.Cells("check").Value Then .checkp.Add(True) Else .checkp.Add(False)
                     If Double.TryParse(r.Cells("colx1").Value, New Double) Then .x1p.Add(Double.Parse(r.Cells("colx1").Value, ci)) Else .x1p.Add(0.0#)
                     If Double.TryParse(r.Cells("colx2").Value, New Double) Then .x2p.Add(Double.Parse(r.Cells("colx2").Value, ci)) Else .x2p.Add(0.0#)
                     If Double.TryParse(r.Cells("coly1").Value, New Double) Then .yp.Add(Double.Parse(r.Cells("coly1").Value, ci)) Else .yp.Add(0.0#)
