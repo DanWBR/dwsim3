@@ -27,8 +27,8 @@ Partial Class FormDataRegression
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.tbRegResults = New System.Windows.Forms.TextBox()
         Me.btnDoReg = New System.Windows.Forms.Button()
@@ -60,6 +60,14 @@ Partial Class FormDataRegression
         Me.LabelWithDivider3 = New System.Windows.Forms.LabelWithDivider()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.GridExpData = New System.Windows.Forms.DataGridView()
+        Me.check = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.colx1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.coly1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colT = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.coltl = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colts = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colP = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
@@ -111,12 +119,10 @@ Partial Class FormDataRegression
         Me.dx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dxx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dxx2p = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.check = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.colx1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.coly1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colT = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colP = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.coltl_error = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colts_error = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.chkTL = New System.Windows.Forms.CheckBox()
+        Me.chkTS = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -161,6 +167,8 @@ Partial Class FormDataRegression
         'Panel1
         '
         resources.ApplyResources(Me.Panel1, "Panel1")
+        Me.Panel1.Controls.Add(Me.chkTS)
+        Me.Panel1.Controls.Add(Me.chkTL)
         Me.Panel1.Controls.Add(Me.chkIdealVaporPhase)
         Me.Panel1.Controls.Add(Me.Button2)
         Me.Panel1.Controls.Add(Me.Button1)
@@ -365,10 +373,60 @@ Partial Class FormDataRegression
         resources.ApplyResources(Me.GridExpData, "GridExpData")
         Me.GridExpData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.GridExpData.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.check, Me.colx1, Me.colx2, Me.coly1, Me.colT, Me.colP})
+        Me.GridExpData.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.check, Me.colx1, Me.colx2, Me.coly1, Me.colT, Me.coltl, Me.colts, Me.colP})
         Me.GridExpData.ContextMenuStrip = Me.ContextMenuStrip1
         Me.GridExpData.Name = "GridExpData"
         Me.GridExpData.RowHeadersVisible = False
+        '
+        'check
+        '
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.check.DefaultCellStyle = DataGridViewCellStyle4
+        Me.check.FillWeight = 60.9137!
+        Me.check.HeaderText = ""
+        Me.check.Name = "check"
+        Me.check.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.check.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        '
+        'colx1
+        '
+        Me.colx1.FillWeight = 107.8173!
+        resources.ApplyResources(Me.colx1, "colx1")
+        Me.colx1.Name = "colx1"
+        '
+        'colx2
+        '
+        Me.colx2.FillWeight = 107.8173!
+        resources.ApplyResources(Me.colx2, "colx2")
+        Me.colx2.Name = "colx2"
+        '
+        'coly1
+        '
+        Me.coly1.FillWeight = 107.8173!
+        resources.ApplyResources(Me.coly1, "coly1")
+        Me.coly1.Name = "coly1"
+        '
+        'colT
+        '
+        Me.colT.FillWeight = 107.8173!
+        resources.ApplyResources(Me.colT, "colT")
+        Me.colT.Name = "colT"
+        '
+        'coltl
+        '
+        resources.ApplyResources(Me.coltl, "coltl")
+        Me.coltl.Name = "coltl"
+        '
+        'colts
+        '
+        resources.ApplyResources(Me.colts, "colts")
+        Me.colts.Name = "colts"
+        '
+        'colP
+        '
+        Me.colP.FillWeight = 107.8173!
+        resources.ApplyResources(Me.colP, "colP")
+        Me.colP.Name = "colP"
         '
         'ContextMenuStrip1
         '
@@ -429,7 +487,7 @@ Partial Class FormDataRegression
         '
         Me.cbDataType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbDataType.FormattingEnabled = True
-        Me.cbDataType.Items.AddRange(New Object() {resources.GetString("cbDataType.Items"), resources.GetString("cbDataType.Items1"), resources.GetString("cbDataType.Items2"), resources.GetString("cbDataType.Items3"), resources.GetString("cbDataType.Items4"), resources.GetString("cbDataType.Items5")})
+        Me.cbDataType.Items.AddRange(New Object() {resources.GetString("cbDataType.Items"), resources.GetString("cbDataType.Items1"), resources.GetString("cbDataType.Items2"), resources.GetString("cbDataType.Items3"), resources.GetString("cbDataType.Items4"), resources.GetString("cbDataType.Items5"), resources.GetString("cbDataType.Items6"), resources.GetString("cbDataType.Items7")})
         resources.ApplyResources(Me.cbDataType, "cbDataType")
         Me.cbDataType.Name = "cbDataType"
         '
@@ -553,7 +611,7 @@ Partial Class FormDataRegression
         Me.gridstats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridstats.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.gridstats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.gridstats.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.x1l1, Me.x1l1calc, Me.x1l2, Me.x1l2calc, Me.y1, Me.y1c, Me.t, Me.tcalc, Me.p, Me.pcalc, Me.dy, Me.dyy, Me.dyp, Me.dp, Me.dpp, Me.dppp, Me.dt, Me.dtt, Me.dttp, Me.dx1l1, Me.dxx1, Me.dxxp, Me.dx2, Me.dxx2, Me.dxx2p})
+        Me.gridstats.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.x1l1, Me.x1l1calc, Me.x1l2, Me.x1l2calc, Me.y1, Me.y1c, Me.t, Me.tcalc, Me.p, Me.pcalc, Me.dy, Me.dyy, Me.dyp, Me.dp, Me.dpp, Me.dppp, Me.dt, Me.dtt, Me.dttp, Me.dx1l1, Me.dxx1, Me.dxxp, Me.dx2, Me.dxx2, Me.dxx2p, Me.coltl_error, Me.colts_error})
         Me.gridstats.ContextMenuStrip = Me.ContextMenuStrip1
         resources.ApplyResources(Me.gridstats, "gridstats")
         Me.gridstats.Name = "gridstats"
@@ -710,45 +768,29 @@ Partial Class FormDataRegression
         Me.dxx2p.Name = "dxx2p"
         Me.dxx2p.ReadOnly = True
         '
-        'check
+        'coltl_error
         '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.check.DefaultCellStyle = DataGridViewCellStyle4
-        Me.check.FillWeight = 60.9137!
-        Me.check.HeaderText = ""
-        Me.check.Name = "check"
-        Me.check.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.check.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        resources.ApplyResources(Me.coltl_error, "coltl_error")
+        Me.coltl_error.Name = "coltl_error"
+        Me.coltl_error.ReadOnly = True
         '
-        'colx1
+        'colts_error
         '
-        Me.colx1.FillWeight = 107.8173!
-        resources.ApplyResources(Me.colx1, "colx1")
-        Me.colx1.Name = "colx1"
+        resources.ApplyResources(Me.colts_error, "colts_error")
+        Me.colts_error.Name = "colts_error"
+        Me.colts_error.ReadOnly = True
         '
-        'colx2
+        'chkTL
         '
-        Me.colx2.FillWeight = 107.8173!
-        resources.ApplyResources(Me.colx2, "colx2")
-        Me.colx2.Name = "colx2"
+        resources.ApplyResources(Me.chkTL, "chkTL")
+        Me.chkTL.Name = "chkTL"
+        Me.chkTL.UseVisualStyleBackColor = True
         '
-        'coly1
+        'chkTS
         '
-        Me.coly1.FillWeight = 107.8173!
-        resources.ApplyResources(Me.coly1, "coly1")
-        Me.coly1.Name = "coly1"
-        '
-        'colT
-        '
-        Me.colT.FillWeight = 107.8173!
-        resources.ApplyResources(Me.colT, "colT")
-        Me.colT.Name = "colT"
-        '
-        'colP
-        '
-        Me.colP.FillWeight = 107.8173!
-        resources.ApplyResources(Me.colP, "colP")
-        Me.colP.Name = "colP"
+        resources.ApplyResources(Me.chkTS, "chkTS")
+        Me.chkTS.Name = "chkTS"
+        Me.chkTS.UseVisualStyleBackColor = True
         '
         'FormDataRegression
         '
@@ -831,6 +873,18 @@ Partial Class FormDataRegression
     Friend WithEvents graph2 As ZedGraph.ZedGraphControl
     Friend WithEvents FaTabStripItem3 As FarsiLibrary.Win.FATabStripItem
     Public WithEvents gridstats As System.Windows.Forms.DataGridView
+    Friend WithEvents chkIdealVaporPhase As System.Windows.Forms.CheckBox
+    Friend WithEvents colpar As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colval As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents cf As System.Windows.Forms.DataGridViewCheckBoxColumn
+    Friend WithEvents check As System.Windows.Forms.DataGridViewCheckBoxColumn
+    Friend WithEvents colx1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colx2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents coly1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colT As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents coltl As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colts As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colP As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents x1l1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents x1l1calc As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents x1l2 As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -856,14 +910,8 @@ Partial Class FormDataRegression
     Friend WithEvents dx2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dxx2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dxx2p As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents chkIdealVaporPhase As System.Windows.Forms.CheckBox
-    Friend WithEvents colpar As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colval As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents cf As System.Windows.Forms.DataGridViewCheckBoxColumn
-    Friend WithEvents check As System.Windows.Forms.DataGridViewCheckBoxColumn
-    Friend WithEvents colx1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colx2 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents coly1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colT As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colP As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents coltl_error As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colts_error As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents chkTS As System.Windows.Forms.CheckBox
+    Friend WithEvents chkTL As System.Windows.Forms.CheckBox
 End Class

@@ -232,6 +232,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     int_count += 1
 
+                    CheckCalculatorStatus()
+
                 Loop Until int_count > MaximumIterations
 
                 If int_count > MaximumIterations Then

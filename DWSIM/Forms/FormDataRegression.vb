@@ -93,12 +93,16 @@ Public Class FormDataRegression
 
         Dim mycase As New RegressionCase
 
+        Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.CurrentUICulture
+
         With mycase
             .comp1 = Me.cbCompound1.SelectedItem.ToString
             .comp2 = Me.cbCompound2.SelectedItem.ToString
             .model = Me.cbModel.SelectedItem.ToString
             .includesd = Me.chkIncludeSD.Checked
             .idealvapormodel = Me.chkIdealVaporPhase.Checked
+            .useTLdata = Me.chkTL.Checked
+            .useTSdata = Me.chkTS.Checked
             .datatype = Me.cbDataType.SelectedIndex
             .method = Me.cbRegMethod.SelectedItem.ToString
             .objfunction = Me.cbObjFunc.SelectedItem.ToString
@@ -110,11 +114,13 @@ Public Class FormDataRegression
             For Each r As DataGridViewRow In Me.GridExpData.Rows
                 If r.Index < Me.GridExpData.Rows.Count - 1 Then
                     .checkp.Add(r.Cells("check").Value)
-                    If Double.TryParse(r.Cells("colx1").Value, New Double) Then .x1p.Add(Double.Parse(r.Cells("colx1").Value)) Else .x1p.Add(0.0#)
-                    If Double.TryParse(r.Cells("colx2").Value, New Double) Then .x2p.Add(Double.Parse(r.Cells("colx2").Value)) Else .x2p.Add(0.0#)
-                    If Double.TryParse(r.Cells("coly1").Value, New Double) Then .yp.Add(Double.Parse(r.Cells("coly1").Value)) Else .yp.Add(0.0#)
-                    If Double.TryParse(r.Cells("colt").Value, New Double) Then .tp.Add(Double.Parse(r.Cells("colt").Value)) Else .tp.Add(0.0#)
-                    If Double.TryParse(r.Cells("colp").Value, New Double) Then .pp.Add(Double.Parse(r.Cells("colp").Value)) Else .pp.Add(0.0#)
+                    If Double.TryParse(r.Cells("colx1").Value, New Double) Then .x1p.Add(Double.Parse(r.Cells("colx1").Value, ci)) Else .x1p.Add(0.0#)
+                    If Double.TryParse(r.Cells("colx2").Value, New Double) Then .x2p.Add(Double.Parse(r.Cells("colx2").Value, ci)) Else .x2p.Add(0.0#)
+                    If Double.TryParse(r.Cells("coly1").Value, New Double) Then .yp.Add(Double.Parse(r.Cells("coly1").Value, ci)) Else .yp.Add(0.0#)
+                    If Double.TryParse(r.Cells("colt").Value, New Double) Then .tp.Add(Double.Parse(r.Cells("colt").Value, ci)) Else .tp.Add(0.0#)
+                    If Double.TryParse(r.Cells("colp").Value, New Double) Then .pp.Add(Double.Parse(r.Cells("colp").Value, ci)) Else .pp.Add(0.0#)
+                    If Double.TryParse(r.Cells("colts").Value, New Double) Then .ts.Add(Double.Parse(r.Cells("colts").Value, ci)) Else .ts.Add(0.0#)
+                    If Double.TryParse(r.Cells("coltl").Value, New Double) Then .tl.Add(Double.Parse(r.Cells("coltl").Value, ci)) Else .tl.Add(0.0#)
                 End If
             Next
             Select Case cbModel.SelectedItem.ToString()
@@ -171,6 +177,8 @@ Public Class FormDataRegression
                     gridInEst.Rows.Add(New Object() {"A21 (cal/mol)", .iepar2, .fixed2})
                     gridInEst.Rows.Add(New Object() {"alpha12", .iepar3, .fixed3})
             End Select
+            Me.chkTL.Checked = .useTLdata
+            Me.chkTS.Checked = .useTSdata
             Me.chkIncludeSD.Checked = .includesd
             Me.chkIdealVaporPhase.Checked = .idealvapormodel
             Me.cbDataType.SelectedIndex = .datatype
@@ -180,7 +188,7 @@ Public Class FormDataRegression
             Me.cbPunit.SelectedItem = .punit
             Me.tbTitle.Text = .title
             Me.tbDescription.Text = .description
-            Dim val0 As Boolean, val1, val2, val3, val4, val5 As String, i As Integer
+            Dim val0 As Boolean, val1, val2, val3, val4, val5, val6, val7 As String, i As Integer
             If .checkp Is Nothing Then .checkp = New ArrayList
             For i = 0 To .x1p.Count - 1
                 If .checkp.Count - 1 >= i Then val0 = .checkp(i) Else val0 = True
@@ -189,7 +197,9 @@ Public Class FormDataRegression
                 If Double.TryParse(.yp(i), New Double) Then val3 = Double.Parse(.yp(i)).ToString() Else val3 = ""
                 If Double.TryParse(.tp(i), New Double) Then val4 = Double.Parse(.tp(i)).ToString() Else val4 = ""
                 If Double.TryParse(.pp(i), New Double) Then val5 = Double.Parse(.pp(i)).ToString() Else val5 = ""
-                Me.GridExpData.Rows.Add(val0, val1, val2, val3, val4, val5)
+                If Double.TryParse(.ts(i), New Double) Then val6 = Double.Parse(.ts(i)).ToString() Else val6 = ""
+                If Double.TryParse(.tl(i), New Double) Then val7 = Double.Parse(.tl(i)).ToString() Else val7 = ""
+                Me.GridExpData.Rows.Add(val0, val1, val2, val3, val4, val7, val6, val5)
             Next
             Me.tbRegResults.Text = .results
             currcase = mycase
@@ -199,6 +209,8 @@ Public Class FormDataRegression
     End Sub
 
     Private Sub cbDataType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbDataType.SelectedIndexChanged
+        Me.chkTL.Enabled = False
+        Me.chkTS.Enabled = False
         Select Case cbDataType.SelectedIndex
             Case 0
                 Me.GridExpData.Columns("colx1").Visible = True
@@ -206,6 +218,8 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = True
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
+                Me.GridExpData.Columns("colTL").Visible = False
+                Me.GridExpData.Columns("colTS").Visible = False
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = True
             Case 1
@@ -214,6 +228,8 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = True
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
+                Me.GridExpData.Columns("colTL").Visible = False
+                Me.GridExpData.Columns("colTS").Visible = False
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = True
             Case 2
@@ -222,6 +238,8 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = True
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
+                Me.GridExpData.Columns("colTL").Visible = False
+                Me.GridExpData.Columns("colTS").Visible = False
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = True
             Case 3
@@ -230,6 +248,8 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = False
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
+                Me.GridExpData.Columns("colTL").Visible = False
+                Me.GridExpData.Columns("colTS").Visible = False
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = False
             Case 4
@@ -238,6 +258,8 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = False
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
+                Me.GridExpData.Columns("colTL").Visible = False
+                Me.GridExpData.Columns("colTS").Visible = False
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = False
             Case 5
@@ -246,8 +268,22 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = False
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
+                Me.GridExpData.Columns("colTL").Visible = False
+                Me.GridExpData.Columns("colTS").Visible = False
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = False
+            Case 6, 7
+                Me.GridExpData.Columns("colx1").Visible = True
+                Me.GridExpData.Columns("colx2").Visible = False
+                Me.GridExpData.Columns("coly1").Visible = False
+                Me.GridExpData.Columns("colT").Visible = False
+                Me.GridExpData.Columns("colP").Visible = True
+                Me.GridExpData.Columns("colTL").Visible = True
+                Me.GridExpData.Columns("colTS").Visible = True
+                cbObjFunc.Enabled = True
+                Me.FaTabStripItem2.Visible = False
+                Me.chkTL.Enabled = True
+                Me.chkTS.Enabled = True
         End Select
     End Sub
 
@@ -261,7 +297,7 @@ Public Class FormDataRegression
 
         Dim Vx1, Vx2, Vy As New ArrayList, IP(x.Length - 1, x.Length) As Double
         Dim Vx1c, Vx2c, Vyc As New ArrayList
-        Dim VP, VT, VPc, VTc As New ArrayList
+        Dim VP, VT, VPc, VTc, VTL, VTS, VTLc, VTSc As New ArrayList
         Dim np As Integer = 0
         Dim i As Integer = 0
 
@@ -275,6 +311,8 @@ Public Class FormDataRegression
             Vyc.Add(0.0#)
             VPc.Add(0.0#)
             VTc.Add(0.0#)
+            VTLc.Add(0.0#)
+            VTSc.Add(0.0#)
         Next
 
         Dim PVF As Boolean = False
@@ -347,6 +385,17 @@ Public Class FormDataRegression
                     End If
                     i += 1
                 Next
+            Case DataType.TTxSE, DataType.TTxSS
+                i = 0
+                For Each b As Boolean In currcase.checkp
+                    If b Then
+                        Vx1.Add(currcase.x1p(i))
+                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(0)))
+                        VTL.Add(cv.ConverterParaSI(currcase.tunit, currcase.tl(i)))
+                        VTS.Add(cv.ConverterParaSI(currcase.tunit, currcase.ts(i)))
+                    End If
+                    i += 1
+                Next
         End Select
 
         Dim f As Double = 0.0#
@@ -360,6 +409,8 @@ Public Class FormDataRegression
             Me.currcase.calcy.Clear()
             Me.currcase.calcx1l1.Clear()
             Me.currcase.calcx1l2.Clear()
+            Me.currcase.calctl.Clear()
+            Me.currcase.calcts.Clear()
 
             Select Case currcase.datatype
                 Case DataType.Pxy, DataType.Txy
@@ -624,7 +675,7 @@ Public Class FormDataRegression
                                 If PVF Then
                                     f += (VTc(i) - VT(i)) ^ 2 + ((Vyc(i) - Vy(i))) ^ 2
                                 Else
-                                    f += (VTc(i) - VP(i)) ^ 2 + ((Vyc(i) - Vy(i))) ^ 2
+                                    f += (VPc(i) - VP(i)) ^ 2 + ((Vyc(i) - Vy(i))) ^ 2
                                 End If
                             Case "Least Squares (min T/P)"
                                 If PVF Then
@@ -907,6 +958,228 @@ Public Class FormDataRegression
                                 f += ((Vx1c(i) - Vx1(i)) / Vx1(i)) ^ 2 + ((Vx2c(i) - Vx2(i)) / Vx2(i)) ^ 2
                             Case "Chi Square"
                         End Select
+                    Next
+                Case DataType.TTxSE, DataType.TTxSS
+                    If currcase.datatype = DataType.TTxSE Then
+                        proppack.Parameters("PP_FLASHALGORITHM") = 7
+                        proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
+                    Else
+                        proppack.Parameters("PP_FLASHALGORITHM") = 10
+                        proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE_SS
+                    End If
+                    Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
+                    Select Case currcase.model
+                        Case "PC-SAFT", "Peng-Robinson", "Soave-Redlich-Kwong", "Lee-Kesler-Plöcker"
+                            Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
+                            If doparallel Then
+                                My.MyApplication.IsRunningParallelTasks = True
+                                Try
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                                Sub(ipar)
+                                                                                    Dim result2 As Object
+                                                                                    If Me.currcase.useTLdata Then
+                                                                                        result2 = proppack.FlashBase.Flash_PV(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), 0.999, VTL(ipar), proppack)
+                                                                                        VTLc(ipar) = result2(4)
+                                                                                    Else
+                                                                                        VTLc(ipar) = 0.0#
+                                                                                    End If
+                                                                                    If Me.currcase.useTSdata Then
+                                                                                        result2 = proppack.FlashBase.Flash_PV(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), 0.001, VTS(ipar), proppack)
+                                                                                        VTSc(ipar) = result2(4)
+                                                                                    Else
+                                                                                        VTSc(ipar) = 0.0#
+                                                                                    End If
+                                                                                End Sub))
+                                    task1.Wait()
+                                Catch ae As AggregateException
+                                    For Each ex As Exception In ae.InnerExceptions
+                                        Throw ex
+                                    Next
+                                End Try
+                                My.MyApplication.IsRunningParallelTasks = False
+                            Else
+                                For i = 0 To np - 1
+                                    If Me.currcase.useTLdata Then
+                                        result = proppack.FlashBase.Flash_PV(New Double() {Vx1(i), 1 - Vx1(i)}, VP(0), 0.999, VTL(i), proppack)
+                                        VTLc(i) = result(4)
+                                    Else
+                                        VTLc(i) = 0.0#
+                                    End If
+                                    If Me.currcase.useTSdata Then
+                                        result = proppack.FlashBase.Flash_PV(New Double() {Vx1(i), 1 - Vx1(i)}, VP(0), 0.001, VTS(i), proppack)
+                                        VTSc(i) = result(4)
+                                    Else
+                                        VTSc(i) = 0.0#
+                                    End If
+                                    Application.DoEvents()
+                                Next
+                            End If
+                            vartext = ", Interaction parameters = {"
+                            vartext += "kij = " & x(0).ToString("N4")
+                            vartext += "}"
+                        Case "UNIQUAC"
+                            Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing)
+                            If doparallel Then
+                                My.MyApplication.IsRunningParallelTasks = True
+                                Try
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                         Sub(ipar)
+                                                                             Dim result2 As Object
+                                                                             If Me.currcase.useTLdata Then
+                                                                                 result2 = proppack.FlashBase.Flash_PV(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), 0.999, VTL(ipar), proppack)
+                                                                                 VTLc(ipar) = result2(4)
+                                                                             Else
+                                                                                 VTLc(ipar) = 0.0#
+                                                                             End If
+                                                                             If Me.currcase.useTSdata Then
+                                                                                 result2 = proppack.FlashBase.Flash_PV(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), 0.001, VTS(ipar), proppack)
+                                                                                 VTSc(ipar) = result2(4)
+                                                                             Else
+                                                                                 VTSc(ipar) = 0.0#
+                                                                             End If
+                                                                         End Sub))
+                                    task1.Wait()
+                                Catch ae As AggregateException
+                                    For Each ex As Exception In ae.InnerExceptions
+                                        Throw ex
+                                    Next
+                                End Try
+                                My.MyApplication.IsRunningParallelTasks = False
+                            Else
+                                For i = 0 To np - 1
+                                    If Me.currcase.useTLdata Then
+                                        result = proppack.FlashBase.Flash_PV(New Double() {Vx1(i), 1 - Vx1(i)}, VP(0), 0.999, VTL(i), proppack)
+                                        VTLc(i) = result(4)
+                                    Else
+                                        VTLc(i) = 0.0#
+                                    End If
+                                    If Me.currcase.useTSdata Then
+                                        result = proppack.FlashBase.Flash_PV(New Double() {Vx1(i), 1 - Vx1(i)}, VP(0), 0.001, VTS(i), proppack)
+                                        VTSc(i) = result(4)
+                                    Else
+                                        VTSc(i) = 0.0#
+                                    End If
+                                    Application.DoEvents()
+                                Next
+                            End If
+                            vartext = ", Interaction parameters = {"
+                            vartext += "A12 = " & x(0).ToString("N4") & ", "
+                            vartext += "A21 = " & x(1).ToString("N4")
+                            vartext += "}"
+                        Case "PRSV2-M", "PRSV2-VL"
+                            Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
+                            If doparallel Then
+                                My.MyApplication.IsRunningParallelTasks = True
+                                Try
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 If Me.currcase.useTLdata Then
+                                                                                     result2 = proppack.FlashBase.Flash_PV(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), 0.999, VTL(ipar), proppack)
+                                                                                     VTLc(ipar) = result2(4)
+                                                                                 Else
+                                                                                     VTLc(ipar) = 0.0#
+                                                                                 End If
+                                                                                 If Me.currcase.useTSdata Then
+                                                                                     result2 = proppack.FlashBase.Flash_PV(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), 0.001, VTS(ipar), proppack)
+                                                                                     VTSc(ipar) = result2(4)
+                                                                                 Else
+                                                                                     VTSc(ipar) = 0.0#
+                                                                                 End If
+                                                                             End Sub))
+                                    task1.Wait()
+                                Catch ae As AggregateException
+                                    For Each ex As Exception In ae.InnerExceptions
+                                        Throw ex
+                                    Next
+                                End Try
+                                My.MyApplication.IsRunningParallelTasks = False
+                            Else
+                                For i = 0 To np - 1
+                                    If Me.currcase.useTLdata Then
+                                        result = proppack.FlashBase.Flash_PV(New Double() {Vx1(i), 1 - Vx1(i)}, VP(0), 0.999, VTL(i), proppack)
+                                        VTLc(i) = result(4)
+                                    Else
+                                        VTLc(i) = 0.0#
+                                    End If
+                                    If Me.currcase.useTSdata Then
+                                        result = proppack.FlashBase.Flash_PV(New Double() {Vx1(i), 1 - Vx1(i)}, VP(0), 0.001, VTS(i), proppack)
+                                        VTSc(i) = result(4)
+                                    Else
+                                        VTSc(i) = 0.0#
+                                    End If
+                                    Application.DoEvents()
+                                Next
+                            End If
+                            vartext = ", Interaction parameters = {"
+                            vartext += "kij = " & x(0).ToString("N4") & ", "
+                            vartext += "kji = " & x(1).ToString("N4")
+                            vartext += "}"
+                        Case "NRTL"
+                            Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
+                            If doparallel Then
+                                My.MyApplication.IsRunningParallelTasks = True
+                                Try
+                                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
+                                                                             Sub(ipar)
+                                                                                 Dim result2 As Object
+                                                                                 If Me.currcase.useTLdata Then
+                                                                                     result2 = proppack.FlashBase.Flash_PV(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), 0.999, VTL(ipar), proppack)
+                                                                                     VTLc(ipar) = result2(4)
+                                                                                 Else
+                                                                                     VTLc(ipar) = 0.0#
+                                                                                 End If
+                                                                                 If Me.currcase.useTSdata Then
+                                                                                     result2 = proppack.FlashBase.Flash_PV(New Double() {Vx1(ipar), 1 - Vx1(ipar)}, VP(0), 0.001, VTS(ipar), proppack)
+                                                                                     VTSc(ipar) = result2(4)
+                                                                                 Else
+                                                                                     VTSc(ipar) = 0.0#
+                                                                                 End If
+                                                                             End Sub))
+                                    task1.Wait()
+                                Catch ae As AggregateException
+                                    For Each ex As Exception In ae.InnerExceptions
+                                        Throw ex
+                                    Next
+                                End Try
+                                My.MyApplication.IsRunningParallelTasks = False
+                            Else
+                                For i = 0 To np - 1
+                                    If Me.currcase.useTLdata Then
+                                        result = proppack.FlashBase.Flash_PV(New Double() {Vx1(i), 1 - Vx1(i)}, VP(0), 0.999, VTL(i), proppack)
+                                        VTLc(i) = result(4)
+                                    Else
+                                        VTLc(i) = 0.0#
+                                    End If
+                                    If Me.currcase.useTSdata Then
+                                        result = proppack.FlashBase.Flash_PV(New Double() {Vx1(i), 1 - Vx1(i)}, VP(0), 0.001, VTS(i), proppack)
+                                        VTSc(i) = result(4)
+                                    Else
+                                        VTSc(i) = 0.0#
+                                    End If
+                                    Application.DoEvents()
+                                Next
+                            End If
+                            vartext = ", Interaction parameters = {"
+                            vartext += "A12 = " & x(0).ToString("N4") & ", "
+                            vartext += "A21 = " & x(1).ToString("N4") & ", "
+                            vartext += "alpha12 = " & x(2).ToString("N4")
+                            vartext += "}"
+                    End Select
+                    For i = 0 To np - 1
+                        Me.currcase.calct.Add(VTc(i))
+                        Me.currcase.calctl.Add(VTLc(i))
+                        Me.currcase.calcts.Add(VTSc(i))
+                        Me.currcase.calcp.Add(VPc(i))
+                        Me.currcase.calcy.Add(Vyc(i))
+                        Me.currcase.calcx1l1.Add(Vx1c(i))
+                        Me.currcase.calcx1l2.Add(Vx2c(i))
+                        If Me.currcase.useTLdata Then
+                            f += (VTLc(i) - VTL(i)) ^ 2
+                        End If
+                        If Me.currcase.useTSdata Then
+                            f += (VTSc(i) - VTS(i)) ^ 2
+                        End If
                     Next
             End Select
 
@@ -1371,6 +1644,34 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                     y2ctitle = "Tx1'' exp."
                     y4ctitle = "Tx1'' calc."
                     ycurvetypes.AddRange(New Integer() {1, 1, 3, 3})
+                Case DataType.TTxSE, DataType.TTxSS
+                    i = 0
+                    j = 0
+                    For Each b As Boolean In .checkp
+                        If b Then
+                            Try
+                                px.Add(Double.Parse(.x1p(i)))
+                                py1.Add(Double.Parse(.tl(i)))
+                                px2.Add(Double.Parse(.x1p(i)))
+                                py2.Add(Double.Parse(.ts(i)))
+                                px3.Add(Double.Parse(.x1p(i)))
+                                py3.Add(Double.Parse(.calctl(j)))
+                                px4.Add(Double.Parse(.x1p(i)))
+                                py4.Add(Double.Parse(.calcts(j)))
+                            Catch ex As Exception
+
+                            End Try
+                            j += 1
+                        End If
+                        i += 1
+                    Next
+                    xtitle = "Mole Fraction " & .comp1
+                    ytitle = "T / " & .tunit
+                    y1ctitle = "TL exp."
+                    y3ctitle = "TL calc."
+                    y2ctitle = "TS exp."
+                    y4ctitle = "TS calc."
+                    ycurvetypes.AddRange(New Integer() {1, 1, 3, 3})
             End Select
         End With
 
@@ -1393,7 +1694,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                                                            cv.ConverterDoSI(.punit, .calcp(j)) - .pp(i), (cv.ConverterDoSI(.punit, .calcp(j)) - .pp(i)) / .pp(i), (cv.ConverterDoSI(.punit, .calcp(j)) - .pp(i)) / .pp(i) * 100, _
                                                             cv.ConverterDoSI(.tunit, .calct(j)) - .tp(i), (cv.ConverterDoSI(.tunit, .calct(j)) - .tp(i)) / .tp(i), (cv.ConverterDoSI(.tunit, .calct(j)) - .tp(i)) / .tp(i) * 100, _
                                                             .calcx1l1(j) - .x1p(i), (.calcx1l1(j) - .x1p(i)) / .x1p(i), (.calcx1l1(j) - .x1p(i)) / .x1p(i) * 100, _
-                                                            .calcx1l2(j) - .x2p(i), (.calcx1l2(j) - .x2p(i)) / .x2p(i), (.calcx1l2(j) - .x2p(i)) / .x2p(i) * 100})
+                                                            .calcx1l2(j) - .x2p(i), (.calcx1l2(j) - .x2p(i)) / .x2p(i), (.calcx1l2(j) - .x2p(i)) / .x2p(i) * 100, (.calctl(j) - .tl(i)) / .tl(i) * 100, (.calcts(j) - .ts(i)) / .ts(i) * 100})
                     Catch ex As Exception
 
                     End Try
@@ -1430,6 +1731,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Me.gridstats.Columns(22).Visible = True
                 Me.gridstats.Columns(23).Visible = True
                 Me.gridstats.Columns(24).Visible = True
+                Me.gridstats.Columns(25).Visible = False
+                Me.gridstats.Columns(26).Visible = False
             Case DataType.Pxy
                 Me.gridstats.Columns(0).Visible = True
                 Me.gridstats.Columns(1).Visible = False
@@ -1456,6 +1759,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Me.gridstats.Columns(22).Visible = False
                 Me.gridstats.Columns(23).Visible = False
                 Me.gridstats.Columns(24).Visible = False
+                Me.gridstats.Columns(25).Visible = False
+                Me.gridstats.Columns(26).Visible = False
             Case DataType.Txy
                 Me.gridstats.Columns(0).Visible = True
                 Me.gridstats.Columns(1).Visible = False
@@ -1482,6 +1787,36 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Me.gridstats.Columns(22).Visible = False
                 Me.gridstats.Columns(23).Visible = False
                 Me.gridstats.Columns(24).Visible = False
+                Me.gridstats.Columns(25).Visible = False
+                Me.gridstats.Columns(26).Visible = False
+            Case DataType.TTxSE, DataType.TTxSS
+                Me.gridstats.Columns(0).Visible = True
+                Me.gridstats.Columns(1).Visible = False
+                Me.gridstats.Columns(2).Visible = False
+                Me.gridstats.Columns(3).Visible = False
+                Me.gridstats.Columns(4).Visible = False
+                Me.gridstats.Columns(5).Visible = False
+                Me.gridstats.Columns(6).Visible = False
+                Me.gridstats.Columns(7).Visible = False
+                Me.gridstats.Columns(8).Visible = True
+                Me.gridstats.Columns(9).Visible = False
+                Me.gridstats.Columns(10).Visible = False
+                Me.gridstats.Columns(11).Visible = False
+                Me.gridstats.Columns(12).Visible = False
+                Me.gridstats.Columns(13).Visible = False
+                Me.gridstats.Columns(14).Visible = False
+                Me.gridstats.Columns(15).Visible = False
+                Me.gridstats.Columns(16).Visible = False
+                Me.gridstats.Columns(17).Visible = False
+                Me.gridstats.Columns(18).Visible = False
+                Me.gridstats.Columns(19).Visible = False
+                Me.gridstats.Columns(20).Visible = False
+                Me.gridstats.Columns(21).Visible = False
+                Me.gridstats.Columns(22).Visible = False
+                Me.gridstats.Columns(23).Visible = False
+                Me.gridstats.Columns(24).Visible = False
+                Me.gridstats.Columns(25).Visible = True
+                Me.gridstats.Columns(26).Visible = True
         End Select
 
 
@@ -1525,6 +1860,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                     Case DataType.Txy, DataType.Pxy
                         mycurve = .AddCurve(y1ctitle, px.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.Black)
                     Case DataType.TPxx, DataType.Txx, DataType.Pxx
+                        mycurve = .AddCurve(y1ctitle, px.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.Black)
+                    Case DataType.TTxSE, DataType.TTxSS
                         mycurve = .AddCurve(y1ctitle, px.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.Black)
                 End Select
                 With mycurve
@@ -1595,6 +1932,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                             mycurve = .AddCurve(y2ctitle, px2.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.Black)
                         Case DataType.TPxx, DataType.Txx, DataType.Pxx
                             mycurve = .AddCurve(y2ctitle, px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.Black)
+                        Case DataType.TTxSE, DataType.TTxSS
+                            mycurve = .AddCurve(y2ctitle, px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.Black)
                     End Select
                     With mycurve
                         Dim ppl As ZedGraph.PointPairList = .Points
@@ -1664,6 +2003,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                             mycurve = .AddCurve(y3ctitle, px3.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.Black)
                         Case DataType.TPxx, DataType.Txx, DataType.Pxx
                             mycurve = .AddCurve(y3ctitle, px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.Black)
+                        Case DataType.TTxSE, DataType.TTxSS
+                            mycurve = .AddCurve(y3ctitle, px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.Black)
                     End Select
                     With mycurve
                         Dim ppl As ZedGraph.PointPairList = .Points
@@ -1732,6 +2073,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                         Case DataType.Txy, DataType.Pxy
                             mycurve = .AddCurve(y4ctitle, px4.ToArray(GetType(Double)), py1.ToArray(GetType(Double)), Color.Black)
                         Case DataType.TPxx, DataType.Txx, DataType.Pxx
+                            mycurve = .AddCurve(y4ctitle, px4.ToArray(GetType(Double)), py4.ToArray(GetType(Double)), Color.Black)
+                        Case DataType.TTxSE, DataType.TTxSS
                             mycurve = .AddCurve(y4ctitle, px4.ToArray(GetType(Double)), py4.ToArray(GetType(Double)), Color.Black)
                     End Select
                     With mycurve
@@ -2778,7 +3121,7 @@ Namespace DWSIM.Optimization.DatRegression
         Public filename As String = ""
         Public model As String = "Peng-Robinson"
         Public datatype As DataType = datatype.Pxy
-        Public tp, x1p, x2p, yp, pp, calct, calcp, calcy, calcx1l1, calcx1l2, checkp As New ArrayList
+        Public tp, x1p, x2p, yp, pp, calct, calcp, calcy, calcx1l1, calcx1l2, checkp, ts, tl, calcts, calctl As New ArrayList
         Public method As String = "IPOPT"
         Public objfunction As String = "Least Squares (min T/P)"
         Public includesd As Boolean = False
@@ -2798,6 +3141,8 @@ Namespace DWSIM.Optimization.DatRegression
         Public title As String = ""
         Public description As String = ""
         Public idealvapormodel As Boolean = False
+        Public useTLdata As Boolean = True
+        Public useTSdata As Boolean = True
 
     End Class
 
@@ -2808,6 +3153,8 @@ Namespace DWSIM.Optimization.DatRegression
         Txx = 3
         Pxx = 4
         TPxx = 5
+        TTxSE = 6
+        TTxSS = 7
     End Enum
 
 End Namespace

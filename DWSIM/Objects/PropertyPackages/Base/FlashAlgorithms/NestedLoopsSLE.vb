@@ -370,12 +370,14 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
                 errfunc = Abs(L - L_ant) ^ 2
 
-                If errfunc <= 0.0000000001 Then Exit Do
+                If errfunc <= 0.00001 Then Exit Do
 
                 If Double.IsNaN(S) Then Throw New Exception(DWSIM.App.GetLocalString("PP_FlashTPSolidFracError"))
                 If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PP_FlashMaxIt2"))
 
                 ecount += 1
+
+                CheckCalculatorStatus()
 
             Loop
 
@@ -1036,7 +1038,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             bm.DefineFuncDelegate(AddressOf SolidFractionError)
 
-            T = bm.BrentOpt(Common.Min(VTF) * 0.3, Common.Max(VTF) + 70, 250, etol, 100, New Object() {L, Vz, P, PP})
+            T = bm.BrentOpt(Common.Min(VTF) * 0.6, Common.Max(VTF) + 70, 50, etol, 100, New Object() {L, Vz, P, PP})
 
             result = Me.Flash_PT_E(Vz, P, T, PP)
 
