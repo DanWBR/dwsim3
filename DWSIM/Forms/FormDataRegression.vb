@@ -218,8 +218,8 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = True
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
-                Me.GridExpData.Columns("colTL").Visible = False
-                Me.GridExpData.Columns("colTS").Visible = False
+                Me.GridExpData.Columns("coltl").Visible = False
+                Me.GridExpData.Columns("colts").Visible = False
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = True
             Case 1
@@ -228,8 +228,8 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = True
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
-                Me.GridExpData.Columns("colTL").Visible = False
-                Me.GridExpData.Columns("colTS").Visible = False
+                Me.GridExpData.Columns("coltl").Visible = False
+                Me.GridExpData.Columns("colts").Visible = False
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = True
             Case 2
@@ -238,8 +238,8 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = True
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
-                Me.GridExpData.Columns("colTL").Visible = False
-                Me.GridExpData.Columns("colTS").Visible = False
+                Me.GridExpData.Columns("coltl").Visible = False
+                Me.GridExpData.Columns("colts").Visible = False
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = True
             Case 3
@@ -248,8 +248,8 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = False
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
-                Me.GridExpData.Columns("colTL").Visible = False
-                Me.GridExpData.Columns("colTS").Visible = False
+                Me.GridExpData.Columns("coltl").Visible = False
+                Me.GridExpData.Columns("colts").Visible = False
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = False
             Case 4
@@ -258,8 +258,8 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = False
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
-                Me.GridExpData.Columns("colTL").Visible = False
-                Me.GridExpData.Columns("colTS").Visible = False
+                Me.GridExpData.Columns("coltl").Visible = False
+                Me.GridExpData.Columns("colts").Visible = False
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = False
             Case 5
@@ -268,8 +268,8 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = False
                 Me.GridExpData.Columns("colT").Visible = True
                 Me.GridExpData.Columns("colP").Visible = True
-                Me.GridExpData.Columns("colTL").Visible = False
-                Me.GridExpData.Columns("colTS").Visible = False
+                Me.GridExpData.Columns("coltl").Visible = False
+                Me.GridExpData.Columns("colts").Visible = False
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = False
             Case 6, 7
@@ -278,8 +278,8 @@ Public Class FormDataRegression
                 Me.GridExpData.Columns("coly1").Visible = False
                 Me.GridExpData.Columns("colT").Visible = False
                 Me.GridExpData.Columns("colP").Visible = True
-                Me.GridExpData.Columns("colTL").Visible = True
-                Me.GridExpData.Columns("colTS").Visible = True
+                Me.GridExpData.Columns("coltl").Visible = True
+                Me.GridExpData.Columns("colts").Visible = True
                 cbObjFunc.Enabled = True
                 Me.FaTabStripItem2.Visible = False
                 Me.chkTL.Enabled = True
