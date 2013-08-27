@@ -1,4 +1,4 @@
-﻿Imports Cudafy
+Imports Cudafy
 
 Namespace My
 
@@ -27,9 +27,6 @@ Namespace My
         Public Shared prevlang As Integer = 0 '0 = CUDA, 1 = OpenCL
 
         Private Sub MyApplication_Startup(ByVal sender As Object, ByVal e As Microsoft.VisualBasic.ApplicationServices.StartupEventArgs) Handles Me.Startup
-
-            If Not DWSIM.App.IsRunningOnMono Then AddHandler Microsoft.Win32.SystemEvents.UserPreferenceChanged, Sub()
-                                                                                                                 End Sub
 
             'upgrade settings from previous build, if applicable.
             If My.Settings.UpgradeRequired Then
@@ -97,4 +94,3 @@ Namespace My
     End Class
 
 End Namespace
-
