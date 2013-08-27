@@ -138,7 +138,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACS
-        aAAAAk1TRnQBSQFMAgEBBAEAAQgBAAEIAQABMAEAATABAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAHA
+        aAAAAk1TRnQBSQFMAgEBBAEAARABAAEQAQABMAEAATABAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAHA
         AwABYAMAAQEBAAEQBgABkP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A6QABuQEmAbkBKgG5ASoBuQEq
@@ -600,10 +600,10 @@
     <value>95, 237</value>
   </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>272, 17</value>
+    <value>277, 17</value>
   </data>
   <data name="Label12.Text" xml:space="preserve">
-    <value>Create a New Data Regression Case</value>
+    <value>Create a New Data Regression Study</value>
   </data>
   <data name="Button5.Location" type="System.Drawing.Point, System.Drawing">
     <value>43, 237</value>

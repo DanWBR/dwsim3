@@ -967,6 +967,8 @@ Public Class FormDataRegression
                         proppack.Parameters("PP_FLASHALGORITHM") = 10
                         proppack.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE_SS
                     End If
+                    proppack.Parameters("PP_PTFELT") = 0.001
+                    proppack.Parameters("PP_PTFMEI") = 1000
                     Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                     Select Case currcase.model
                         Case "PC-SAFT", "Peng-Robinson", "Soave-Redlich-Kwong", "Lee-Kesler-Plöcker"

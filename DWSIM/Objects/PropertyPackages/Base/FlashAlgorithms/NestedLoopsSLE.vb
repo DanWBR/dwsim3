@@ -214,7 +214,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     If Abs(F) < 0.000001 Then Exit Do
 
-                    L = -0.4 * F / dF + L
+                    L = -0.7 * F / dF + L
 
                 End If
 
@@ -370,7 +370,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
                 errfunc = Abs(L - L_ant) ^ 2
 
-                If errfunc <= 0.00001 Then Exit Do
+                If errfunc <= etol Then Exit Do
 
                 If Double.IsNaN(S) Then Throw New Exception(DWSIM.App.GetLocalString("PP_FlashTPSolidFracError"))
                 If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PP_FlashMaxIt2"))
