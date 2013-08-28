@@ -239,29 +239,13 @@ Namespace DWSIM.Editors.PipeEditor
 
         Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
 
+            XMLSerializer.XMLSerializer.Deserialize(Me, data)
+
         End Function
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
 
-            Dim elements As New List(Of System.Xml.Linq.XElement)
-            Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
-
-            With elements
-
-                Dim fields As Reflection.PropertyInfo() = Me.GetType.GetProperties()
-                For Each fi As Reflection.PropertyInfo In fields
-                    If TypeOf Me.GetType.GetProperty(fi.Name).PropertyType Is IList Then
-                        .Add(New XElement(fi.Name, XMLSerializer.XMLSerializer.ArrayToString(Me.GetType.GetProperty(fi.Name).GetValue(Me, Nothing), ci)))
-                    ElseIf TypeOf Me.GetType.GetProperty(fi.Name).GetValue(Me, Nothing) Is Double Then
-                        .Add(New XElement(fi.Name, Double.Parse(Me.GetType.GetProperty(fi.Name).GetValue(Me, Nothing)).ToString(ci)))
-                    ElseIf TypeOf Me.GetType.GetProperty(fi.Name).GetValue(Me, Nothing) Is Nullable(Of Double) Then
-                        .Add(New XElement(fi.Name, Double.Parse(Me.GetType.GetProperty(fi.Name).GetValue(Me, Nothing)).ToString(ci)))
-                    Else
-                        .Add(New XElement(fi.Name, Me.GetType.GetProperty(fi.Name).GetValue(Me, Nothing)))
-                    End If
-                Next
-
-            End With
+            Dim elements As System.Collections.Generic.List(Of System.Xml.Linq.XElement) = XMLSerializer.XMLSerializer.Serialize(Me)
 
             Return elements
 

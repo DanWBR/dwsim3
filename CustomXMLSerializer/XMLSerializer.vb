@@ -327,9 +327,9 @@ Public Class XMLSerializer
                 ElseIf sSingle(0) = "Units" Then
                     FontUnit = CInt(sSingle(1))
                 ElseIf sSingle(0) = "GdiCharSet" Then
-                    FontName = CByte(sSingle(1))
+                    gdiCharSet = CByte(sSingle(1))
                 ElseIf sSingle(0) = "GdiVerticalFont" Then
-                    FontName = CBool(sSingle(1))
+                    gdiVerticalFont = CBool(sSingle(1))
                 End If
             End If
         Next
