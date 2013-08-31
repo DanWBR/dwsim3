@@ -138,7 +138,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 ecount += 1
                 
-                If ecount > 1000 Then Throw New Exception(DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"))
+                If ecount > 10000 Then Throw New Exception(DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"))
 
             Loop
 

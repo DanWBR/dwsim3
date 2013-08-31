@@ -205,10 +205,13 @@
   <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 6</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="GroupBox1.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>665, 84</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
@@ -227,12 +230,18 @@
   <data name="&gt;&gt;GroupBox1.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <metadata name="HelpProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>332, 2</value>
+  </metadata>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnSaveToDB.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnSaveToDB.Location" type="System.Drawing.Point, System.Drawing">
     <value>194, 47</value>
+  </data>
+  <data name="btnSaveToDB.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="btnSaveToDB.Size" type="System.Drawing.Size, System.Drawing">
     <value>228, 26</value>
@@ -267,6 +276,9 @@
   <data name="chkReplaceComps.Location" type="System.Drawing.Point, System.Drawing">
     <value>428, 53</value>
   </data>
+  <data name="chkReplaceComps.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="chkReplaceComps.Size" type="System.Drawing.Size, System.Drawing">
     <value>218, 17</value>
   </data>
@@ -294,6 +306,9 @@
   <data name="tbDBPath.Location" type="System.Drawing.Point, System.Drawing">
     <value>62, 21</value>
   </data>
+  <data name="tbDBPath.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="tbDBPath.Size" type="System.Drawing.Size, System.Drawing">
     <value>584, 20</value>
   </data>
@@ -314,6 +329,9 @@
   </data>
   <data name="btnSearch.Location" type="System.Drawing.Point, System.Drawing">
     <value>11, 47</value>
+  </data>
+  <data name="btnSearch.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="btnSearch.Size" type="System.Drawing.Size, System.Drawing">
     <value>81, 26</value>
@@ -345,6 +363,9 @@
   <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 24</value>
   </data>
+  <data name="Label1.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 13</value>
   </data>
@@ -368,6 +389,9 @@
   </data>
   <data name="btnCreateNewDB.Location" type="System.Drawing.Point, System.Drawing">
     <value>98, 47</value>
+  </data>
+  <data name="btnCreateNewDB.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="btnCreateNewDB.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 26</value>
@@ -395,42 +419,6 @@
   </data>
   <data name="GroupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip2.Name" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip2.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip2.Parent" xml:space="preserve">
-    <value>GroupBox2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 96</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1005, 414</value>
-  </data>
-  <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Propriedades do Componente</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.Name" xml:space="preserve">
-    <value>GroupBox2</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GroupBox2.ZOrder" xml:space="preserve">
-    <value>2</value>
   </data>
   <data name="FaTabStrip2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -654,6 +642,9 @@
   <data name="&gt;&gt;CheckBoxMW.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
+  <data name="FaTabStripItem1.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>997, 374</value>
   </data>
@@ -711,6 +702,9 @@
   <data name="&gt;&gt;GridUNIFAC.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="FaTabStripItem2.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
     <value>997, 374</value>
   </data>
@@ -731,6 +725,54 @@
   </data>
   <data name="&gt;&gt;FaTabStripItem2.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="&gt;&gt;GridMODFAC.Name" xml:space="preserve">
+    <value>GridMODFAC</value>
+  </data>
+  <data name="&gt;&gt;GridMODFAC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GridMODFAC.Parent" xml:space="preserve">
+    <value>FaTabStripItem5</value>
+  </data>
+  <data name="&gt;&gt;GridMODFAC.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Label85.Name" xml:space="preserve">
+    <value>Label85</value>
+  </data>
+  <data name="&gt;&gt;Label85.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label85.Parent" xml:space="preserve">
+    <value>FaTabStripItem5</value>
+  </data>
+  <data name="&gt;&gt;Label85.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="FaTabStripItem5.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="FaTabStripItem5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>997, 374</value>
+  </data>
+  <data name="FaTabStripItem5.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="FaTabStripItem5.Title" xml:space="preserve">
+    <value>MODFAC</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem5.Name" xml:space="preserve">
+    <value>FaTabStripItem5</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem5.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem5.Parent" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem5.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;Label58.Name" xml:space="preserve">
     <value>Label58</value>
@@ -828,6 +870,9 @@
   <data name="&gt;&gt;GridJoback.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="FaTabStripItem3.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
     <value>997, 374</value>
   </data>
@@ -847,7 +892,7 @@
     <value>FaTabStrip2</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem3.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;GroupBox6.Name" xml:space="preserve">
     <value>GroupBox6</value>
@@ -1521,6 +1566,9 @@
   <data name="&gt;&gt;Label63.ZOrder" xml:space="preserve">
     <value>55</value>
   </data>
+  <data name="FaTabStripItem4.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
     <value>997, 374</value>
   </data>
@@ -1540,7 +1588,7 @@
     <value>FaTabStrip2</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem4.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;Label43.Name" xml:space="preserve">
     <value>Label43</value>
@@ -1794,6 +1842,9 @@
   <data name="&gt;&gt;Label29.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
+  <data name="FaTabStripItem7.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="FaTabStripItem7.Size" type="System.Drawing.Size, System.Drawing">
     <value>997, 374</value>
   </data>
@@ -1813,7 +1864,7 @@
     <value>FaTabStrip2</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem7.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;Label3.Name" xml:space="preserve">
     <value>Label3</value>
@@ -2067,6 +2118,9 @@
   <data name="&gt;&gt;tbCPIG_C.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
+  <data name="FaTabStripItem8.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="FaTabStripItem8.Size" type="System.Drawing.Size, System.Drawing">
     <value>997, 374</value>
   </data>
@@ -2086,7 +2140,7 @@
     <value>FaTabStrip2</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem8.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;Label45.Name" xml:space="preserve">
     <value>Label45</value>
@@ -2340,6 +2394,9 @@
   <data name="&gt;&gt;Label35.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
+  <data name="FaTabStripItem9.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="FaTabStripItem9.Size" type="System.Drawing.Size, System.Drawing">
     <value>997, 374</value>
   </data>
@@ -2359,7 +2416,7 @@
     <value>FaTabStrip2</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem9.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;Label46.Name" xml:space="preserve">
     <value>Label46</value>
@@ -2613,6 +2670,9 @@
   <data name="&gt;&gt;Label41.ZOrder" xml:space="preserve">
     <value>20</value>
   </data>
+  <data name="FaTabStripItem10.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="FaTabStripItem10.Size" type="System.Drawing.Size, System.Drawing">
     <value>997, 374</value>
   </data>
@@ -2632,7 +2692,7 @@
     <value>FaTabStrip2</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem10.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;LabelWithDivider7.Name" xml:space="preserve">
     <value>LabelWithDivider7</value>
@@ -2802,6 +2862,9 @@
   <data name="&gt;&gt;CheckBoxMeltingTemp.ZOrder" xml:space="preserve">
     <value>13</value>
   </data>
+  <data name="FaTabStripItem11.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="FaTabStripItem11.Size" type="System.Drawing.Size, System.Drawing">
     <value>997, 374</value>
   </data>
@@ -2821,10 +2884,19 @@
     <value>FaTabStrip2</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem11.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="FaTabStrip2.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 16</value>
+  </data>
+  <metadata name="HelpProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>332, 2</value>
+  </metadata>
+  <data name="HelpProvider1.HelpNamespace" xml:space="preserve">
+    <value>help\dwsim.chm</value>
+  </data>
+  <data name="FaTabStrip2.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="FaTabStrip2.Size" type="System.Drawing.Size, System.Drawing">
     <value>999, 395</value>
@@ -2844,6 +2916,33 @@
   <data name="&gt;&gt;FaTabStrip2.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 96</value>
+  </data>
+  <data name="GroupBox2.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1005, 414</value>
+  </data>
+  <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Propriedades do Componente</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.Name" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;GroupBox2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>128, 3</value>
   </metadata>
@@ -2858,6 +2957,9 @@
   </data>
   <data name="LinkLabel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 90</value>
+  </data>
+  <data name="LinkLabel1.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="LinkLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>67, 18</value>
@@ -2892,6 +2994,9 @@
   <data name="Label16.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 16</value>
   </data>
+  <data name="Label16.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label16.Size" type="System.Drawing.Size, System.Drawing">
     <value>18, 13</value>
   </data>
@@ -2918,6 +3023,9 @@
   </data>
   <data name="btnRenderSMILES.Location" type="System.Drawing.Point, System.Drawing">
     <value>676, 39</value>
+  </data>
+  <data name="btnRenderSMILES.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="btnRenderSMILES.Size" type="System.Drawing.Size, System.Drawing">
     <value>109, 23</value>
@@ -2949,6 +3057,9 @@
   <data name="Label17.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 42</value>
   </data>
+  <data name="Label17.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label17.Size" type="System.Drawing.Size, System.Drawing">
     <value>34, 13</value>
   </data>
@@ -2979,6 +3090,9 @@
   <data name="LinkPubChem.Location" type="System.Drawing.Point, System.Drawing">
     <value>338, 39</value>
   </data>
+  <data name="LinkPubChem.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="LinkPubChem.Size" type="System.Drawing.Size, System.Drawing">
     <value>255, 18</value>
   </data>
@@ -3006,6 +3120,9 @@
   <data name="TextBoxName.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="TextBoxName.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="TextBoxName.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 42</value>
   </data>
@@ -3027,6 +3144,9 @@
   <data name="TextBoxSMILES.Location" type="System.Drawing.Point, System.Drawing">
     <value>308, 13</value>
   </data>
+  <data name="TextBoxSMILES.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="TextBoxSMILES.Size" type="System.Drawing.Size, System.Drawing">
     <value>477, 21</value>
   </data>
@@ -3047,6 +3167,9 @@
   </data>
   <data name="TextBoxCAS.Location" type="System.Drawing.Point, System.Drawing">
     <value>88, 87</value>
+  </data>
+  <data name="TextBoxCAS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxCAS.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 21</value>
@@ -3071,6 +3194,9 @@
   </data>
   <data name="Label51.Location" type="System.Drawing.Point, System.Drawing">
     <value>249, 16</value>
+  </data>
+  <data name="Label51.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label51.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 13</value>
@@ -3102,6 +3228,9 @@
   <data name="Label21.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 144</value>
   </data>
+  <data name="Label21.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label21.Size" type="System.Drawing.Size, System.Drawing">
     <value>45, 13</value>
   </data>
@@ -3129,6 +3258,9 @@
   <data name="Label47.Location" type="System.Drawing.Point, System.Drawing">
     <value>249, 39</value>
   </data>
+  <data name="Label47.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label47.Size" type="System.Drawing.Size, System.Drawing">
     <value>83, 13</value>
   </data>
@@ -3153,6 +3285,9 @@
   <data name="TextBoxFormula.Location" type="System.Drawing.Point, System.Drawing">
     <value>88, 141</value>
   </data>
+  <data name="TextBoxFormula.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="TextBoxFormula.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 21</value>
   </data>
@@ -3173,6 +3308,9 @@
   </data>
   <data name="pbRender.Location" type="System.Drawing.Point, System.Drawing">
     <value>252, 68</value>
+  </data>
+  <data name="pbRender.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="pbRender.Size" type="System.Drawing.Size, System.Drawing">
     <value>534, 263</value>
@@ -3201,6 +3339,9 @@
   <data name="Label22.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 117</value>
   </data>
+  <data name="Label22.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label22.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 13</value>
   </data>
@@ -3225,6 +3366,9 @@
   <data name="TextBoxID.Location" type="System.Drawing.Point, System.Drawing">
     <value>88, 13</value>
   </data>
+  <data name="TextBoxID.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="TextBoxID.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 21</value>
   </data>
@@ -3245,6 +3389,9 @@
   </data>
   <data name="TextBoxMW.Location" type="System.Drawing.Point, System.Drawing">
     <value>88, 114</value>
+  </data>
+  <data name="TextBoxMW.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxMW.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 21</value>
@@ -3282,6 +3429,9 @@
   <data name="lblMW.Location" type="System.Drawing.Point, System.Drawing">
     <value>157, 117</value>
   </data>
+  <data name="lblMW.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="lblMW.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 13</value>
   </data>
@@ -3311,6 +3461,9 @@
   </data>
   <data name="CheckBoxMW.Location" type="System.Drawing.Point, System.Drawing">
     <value>210, 117</value>
+  </data>
+  <data name="CheckBoxMW.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="CheckBoxMW.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -3344,6 +3497,9 @@
   </data>
   <data name="LinkLabel2.Location" type="System.Drawing.Point, System.Drawing">
     <value>486, 16</value>
+  </data>
+  <data name="LinkLabel2.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="LinkLabel2.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 18</value>
@@ -3381,6 +3537,9 @@
   <data name="Label60.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 16</value>
   </data>
+  <data name="Label60.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label60.Size" type="System.Drawing.Size, System.Drawing">
     <value>457, 13</value>
   </data>
@@ -3402,6 +3561,12 @@
   <data name="&gt;&gt;Label60.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <metadata name="Column3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="Column5.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="Column4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -3417,8 +3582,11 @@
   <data name="GridUNIFAC.RowHeadersWidth" type="System.Int32, mscorlib">
     <value>120</value>
   </data>
+  <data name="GridUNIFAC.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="GridUNIFAC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>571, 323</value>
+    <value>690, 323</value>
   </data>
   <data name="GridUNIFAC.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
@@ -3435,6 +3603,18 @@
   <data name="&gt;&gt;GridUNIFAC.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <metadata name="Column3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Column3.HeaderText" xml:space="preserve">
+    <value>Main Group</value>
+  </data>
+  <metadata name="Column5.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="Column5.HeaderText" xml:space="preserve">
+    <value>Subgroup</value>
+  </data>
   <metadata name="Column4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -3447,6 +3627,108 @@
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Exemplo</value>
   </data>
+  <metadata name="MainGroup.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="SubGroup.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="DataGridViewTextBoxColumn13.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="DataGridViewImageColumn1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="GridMODFAC.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
+  <data name="GridMODFAC.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 36</value>
+  </data>
+  <data name="GridMODFAC.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="GridMODFAC.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="GridMODFAC.Size" type="System.Drawing.Size, System.Drawing">
+    <value>690, 323</value>
+  </data>
+  <data name="GridMODFAC.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="&gt;&gt;GridMODFAC.Name" xml:space="preserve">
+    <value>GridMODFAC</value>
+  </data>
+  <data name="&gt;&gt;GridMODFAC.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GridMODFAC.Parent" xml:space="preserve">
+    <value>FaTabStripItem5</value>
+  </data>
+  <data name="&gt;&gt;GridMODFAC.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="MainGroup.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="MainGroup.HeaderText" xml:space="preserve">
+    <value>MainGroup</value>
+  </data>
+  <metadata name="SubGroup.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="SubGroup.HeaderText" xml:space="preserve">
+    <value>SubGroup</value>
+  </data>
+  <metadata name="DataGridViewTextBoxColumn13.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="DataGridViewTextBoxColumn13.HeaderText" xml:space="preserve">
+    <value>Quantidade</value>
+  </data>
+  <metadata name="DataGridViewImageColumn1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="DataGridViewImageColumn1.HeaderText" xml:space="preserve">
+    <value>Exemplo</value>
+  </data>
+  <data name="Label85.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="Label85.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label85.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label85.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 16</value>
+  </data>
+  <data name="Label85.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label85.Size" type="System.Drawing.Size, System.Drawing">
+    <value>462, 13</value>
+  </data>
+  <data name="Label85.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="Label85.Text" xml:space="preserve">
+    <value>Informe a quantidade de cada grupo funcional MODFAC presente na substância, se disponível.</value>
+  </data>
+  <data name="&gt;&gt;Label85.Name" xml:space="preserve">
+    <value>Label85</value>
+  </data>
+  <data name="&gt;&gt;Label85.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label85.Parent" xml:space="preserve">
+    <value>FaTabStripItem5</value>
+  </data>
+  <data name="&gt;&gt;Label85.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="Label58.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -3455,6 +3737,9 @@
   </data>
   <data name="Label58.Location" type="System.Drawing.Point, System.Drawing">
     <value>651, 62</value>
+  </data>
+  <data name="Label58.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label58.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 13</value>
@@ -3492,6 +3777,9 @@
   <data name="AddAtomDataGrid.RowHeadersWidth" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
+  <data name="AddAtomDataGrid.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="AddAtomDataGrid.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 278</value>
   </data>
@@ -3528,6 +3816,9 @@
   <data name="TextBox1.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="TextBox1.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="TextBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>468, 35</value>
   </data>
@@ -3557,6 +3848,9 @@
   </data>
   <data name="Label59.Location" type="System.Drawing.Point, System.Drawing">
     <value>514, 62</value>
+  </data>
+  <data name="Label59.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label59.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 13</value>
@@ -3590,6 +3884,9 @@
   </data>
   <data name="AtomDataGrid.Location" type="System.Drawing.Point, System.Drawing">
     <value>517, 78</value>
+  </data>
+  <data name="AtomDataGrid.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="AtomDataGrid.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 278</value>
@@ -3633,6 +3930,9 @@
   <data name="LinkLabel3.Location" type="System.Drawing.Point, System.Drawing">
     <value>522, 9</value>
   </data>
+  <data name="LinkLabel3.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="LinkLabel3.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 18</value>
   </data>
@@ -3668,6 +3968,9 @@
   </data>
   <data name="Label57.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 62</value>
+  </data>
+  <data name="Label57.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label57.Size" type="System.Drawing.Size, System.Drawing">
     <value>496, 13</value>
@@ -3710,6 +4013,9 @@
   </data>
   <data name="GridJoback.RowHeadersWidth" type="System.Int32, mscorlib">
     <value>80</value>
+  </data>
+  <data name="GridJoback.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="GridJoback.Size" type="System.Drawing.Size, System.Drawing">
     <value>493, 278</value>
@@ -3876,6 +4182,9 @@
   <data name="GroupBox6.Location" type="System.Drawing.Point, System.Drawing">
     <value>762, 13</value>
   </data>
+  <data name="GroupBox6.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
     <value>223, 204</value>
   </data>
@@ -3909,6 +4218,9 @@
   <data name="LabelWithDivider8.Location" type="System.Drawing.Point, System.Drawing">
     <value>14, 112</value>
   </data>
+  <data name="LabelWithDivider8.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="LabelWithDivider8.Size" type="System.Drawing.Size, System.Drawing">
     <value>195, 18</value>
   </data>
@@ -3932,6 +4244,9 @@
   </data>
   <data name="TextBoxPCSAFTEpsilon.Location" type="System.Drawing.Point, System.Drawing">
     <value>51, 133</value>
+  </data>
+  <data name="TextBoxPCSAFTEpsilon.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxPCSAFTEpsilon.Size" type="System.Drawing.Size, System.Drawing">
     <value>122, 21</value>
@@ -3966,6 +4281,9 @@
   <data name="Label20.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 136</value>
   </data>
+  <data name="Label20.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label20.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 13</value>
   </data>
@@ -3999,6 +4317,9 @@
   <data name="LabelWithDivider9.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 68</value>
   </data>
+  <data name="LabelWithDivider9.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="LabelWithDivider9.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 18</value>
   </data>
@@ -4022,6 +4343,9 @@
   </data>
   <data name="TextBoxPCSAFTm.Location" type="System.Drawing.Point, System.Drawing">
     <value>51, 89</value>
+  </data>
+  <data name="TextBoxPCSAFTm.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxPCSAFTm.Size" type="System.Drawing.Size, System.Drawing">
     <value>122, 21</value>
@@ -4056,6 +4380,9 @@
   <data name="Label25.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 92</value>
   </data>
+  <data name="Label25.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label25.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 13</value>
   </data>
@@ -4089,6 +4416,9 @@
   <data name="LabelWithDivider10.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 24</value>
   </data>
+  <data name="LabelWithDivider10.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="LabelWithDivider10.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 18</value>
   </data>
@@ -4112,6 +4442,9 @@
   </data>
   <data name="TextBoxPCSAFTSigma.Location" type="System.Drawing.Point, System.Drawing">
     <value>51, 45</value>
+  </data>
+  <data name="TextBoxPCSAFTSigma.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxPCSAFTSigma.Size" type="System.Drawing.Size, System.Drawing">
     <value>122, 21</value>
@@ -4146,6 +4479,9 @@
   <data name="Label27.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 48</value>
   </data>
+  <data name="Label27.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label27.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
   </data>
@@ -4176,6 +4512,9 @@
   <data name="CheckBoxAF.Location" type="System.Drawing.Point, System.Drawing">
     <value>710, 212</value>
   </data>
+  <data name="CheckBoxAF.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="CheckBoxAF.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
   </data>
@@ -4205,6 +4544,9 @@
   </data>
   <data name="CheckBoxCSLV.Location" type="System.Drawing.Point, System.Drawing">
     <value>439, 212</value>
+  </data>
+  <data name="CheckBoxCSLV.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="CheckBoxCSLV.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -4278,6 +4620,9 @@
   <data name="GroupBox11.Location" type="System.Drawing.Point, System.Drawing">
     <value>762, 223</value>
   </data>
+  <data name="GroupBox11.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="GroupBox11.Size" type="System.Drawing.Size, System.Drawing">
     <value>224, 90</value>
   </data>
@@ -4301,6 +4646,9 @@
   </data>
   <data name="TextBoxUNIQUAC_R.Location" type="System.Drawing.Point, System.Drawing">
     <value>42, 52</value>
+  </data>
+  <data name="TextBoxUNIQUAC_R.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxUNIQUAC_R.Size" type="System.Drawing.Size, System.Drawing">
     <value>122, 21</value>
@@ -4335,6 +4683,9 @@
   <data name="Label48.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 55</value>
   </data>
+  <data name="Label48.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label48.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -4358,6 +4709,9 @@
   </data>
   <data name="TextBoxUNIQUAC_Q.Location" type="System.Drawing.Point, System.Drawing">
     <value>42, 21</value>
+  </data>
+  <data name="TextBoxUNIQUAC_Q.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxUNIQUAC_Q.Size" type="System.Drawing.Size, System.Drawing">
     <value>122, 21</value>
@@ -4392,6 +4746,9 @@
   <data name="Label49.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 24</value>
   </data>
+  <data name="Label49.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label49.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 13</value>
   </data>
@@ -4421,6 +4778,9 @@
   </data>
   <data name="LabelWithDivider12.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 13</value>
+  </data>
+  <data name="LabelWithDivider12.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="LabelWithDivider12.Size" type="System.Drawing.Size, System.Drawing">
     <value>450, 18</value>
@@ -4452,6 +4812,9 @@
   <data name="LabelWithDivider2.Location" type="System.Drawing.Point, System.Drawing">
     <value>518, 13</value>
   </data>
+  <data name="LabelWithDivider2.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="LabelWithDivider2.Size" type="System.Drawing.Size, System.Drawing">
     <value>224, 18</value>
   </data>
@@ -4481,6 +4844,9 @@
   </data>
   <data name="CheckBoxZRa.Location" type="System.Drawing.Point, System.Drawing">
     <value>710, 168</value>
+  </data>
+  <data name="CheckBoxZRa.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="CheckBoxZRa.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -4512,6 +4878,9 @@
   <data name="CheckBoxCSSP.Location" type="System.Drawing.Point, System.Drawing">
     <value>439, 185</value>
   </data>
+  <data name="CheckBoxCSSP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="CheckBoxCSSP.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
   </data>
@@ -4541,6 +4910,9 @@
   </data>
   <data name="Label50.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 34</value>
+  </data>
+  <data name="Label50.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label50.Size" type="System.Drawing.Size, System.Drawing">
     <value>200, 13</value>
@@ -4572,6 +4944,9 @@
   <data name="Label4.Location" type="System.Drawing.Point, System.Drawing">
     <value>518, 36</value>
   </data>
+  <data name="Label4.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>18, 13</value>
   </data>
@@ -4602,6 +4977,9 @@
   <data name="CheckBoxCSAF.Location" type="System.Drawing.Point, System.Drawing">
     <value>439, 158</value>
   </data>
+  <data name="CheckBoxCSAF.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="CheckBoxCSAF.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
   </data>
@@ -4625,6 +5003,9 @@
   </data>
   <data name="TextBoxDHF.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 31</value>
+  </data>
+  <data name="TextBoxDHF.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxDHF.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -4659,6 +5040,9 @@
   <data name="CheckBoxZc.Location" type="System.Drawing.Point, System.Drawing">
     <value>710, 124</value>
   </data>
+  <data name="CheckBoxZc.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="CheckBoxZc.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
   </data>
@@ -4688,6 +5072,9 @@
   </data>
   <data name="CheckBoxNBP.Location" type="System.Drawing.Point, System.Drawing">
     <value>439, 110</value>
+  </data>
+  <data name="CheckBoxNBP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="CheckBoxNBP.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -4719,6 +5106,9 @@
   <data name="lblDHF.Location" type="System.Drawing.Point, System.Drawing">
     <value>358, 34</value>
   </data>
+  <data name="lblDHF.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="lblDHF.Size" type="System.Drawing.Size, System.Drawing">
     <value>32, 13</value>
   </data>
@@ -4742,6 +5132,9 @@
   </data>
   <data name="TextBoxTc.Location" type="System.Drawing.Point, System.Drawing">
     <value>544, 33</value>
+  </data>
+  <data name="TextBoxTc.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxTc.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -4776,6 +5169,9 @@
   <data name="CheckBoxDGF.Location" type="System.Drawing.Point, System.Drawing">
     <value>439, 60</value>
   </data>
+  <data name="CheckBoxDGF.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="CheckBoxDGF.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
   </data>
@@ -4805,6 +5201,9 @@
   </data>
   <data name="LabelWithDivider4.Location" type="System.Drawing.Point, System.Drawing">
     <value>517, 100</value>
+  </data>
+  <data name="LabelWithDivider4.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="LabelWithDivider4.Size" type="System.Drawing.Size, System.Drawing">
     <value>225, 18</value>
@@ -4836,6 +5235,9 @@
   <data name="Label53.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 60</value>
   </data>
+  <data name="Label53.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label53.Size" type="System.Drawing.Size, System.Drawing">
     <value>242, 13</value>
   </data>
@@ -4865,6 +5267,9 @@
   </data>
   <data name="CheckBoxPc.Location" type="System.Drawing.Point, System.Drawing">
     <value>710, 80</value>
+  </data>
+  <data name="CheckBoxPc.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="CheckBoxPc.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -4896,6 +5301,9 @@
   <data name="CheckBoxDHF.Location" type="System.Drawing.Point, System.Drawing">
     <value>439, 34</value>
   </data>
+  <data name="CheckBoxDHF.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="CheckBoxDHF.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
   </data>
@@ -4926,6 +5334,9 @@
   <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
     <value>518, 168</value>
   </data>
+  <data name="Label12.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>26, 13</value>
   </data>
@@ -4949,6 +5360,9 @@
   </data>
   <data name="TextBoxDGF.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 57</value>
+  </data>
+  <data name="TextBoxDGF.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxDGF.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -4983,6 +5397,9 @@
   <data name="lblTc.Location" type="System.Drawing.Point, System.Drawing">
     <value>619, 36</value>
   </data>
+  <data name="lblTc.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="lblTc.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
   </data>
@@ -5013,6 +5430,9 @@
   <data name="Label68.Location" type="System.Drawing.Point, System.Drawing">
     <value>358, 266</value>
   </data>
+  <data name="Label68.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label68.Size" type="System.Drawing.Size, System.Drawing">
     <value>67, 13</value>
   </data>
@@ -5036,6 +5456,9 @@
   </data>
   <data name="TextBoxZc.Location" type="System.Drawing.Point, System.Drawing">
     <value>544, 121</value>
+  </data>
+  <data name="TextBoxZc.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxZc.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -5070,6 +5493,9 @@
   <data name="lblDGF.Location" type="System.Drawing.Point, System.Drawing">
     <value>358, 60</value>
   </data>
+  <data name="lblDGF.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="lblDGF.Size" type="System.Drawing.Size, System.Drawing">
     <value>32, 13</value>
   </data>
@@ -5100,6 +5526,9 @@
   <data name="CheckBoxTc.Location" type="System.Drawing.Point, System.Drawing">
     <value>710, 35</value>
   </data>
+  <data name="CheckBoxTc.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="CheckBoxTc.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
   </data>
@@ -5123,6 +5552,9 @@
   </data>
   <data name="TextBoxVTCSRK.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 263</value>
+  </data>
+  <data name="TextBoxVTCSRK.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxVTCSRK.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -5150,6 +5582,9 @@
   </data>
   <data name="TextBoxZRa.Location" type="System.Drawing.Point, System.Drawing">
     <value>544, 165</value>
+  </data>
+  <data name="TextBoxZRa.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxZRa.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -5184,6 +5619,9 @@
   <data name="Label56.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 110</value>
   </data>
+  <data name="Label56.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label56.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 13</value>
   </data>
@@ -5213,6 +5651,9 @@
   </data>
   <data name="Label8.Location" type="System.Drawing.Point, System.Drawing">
     <value>518, 80</value>
+  </data>
+  <data name="Label8.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>18, 13</value>
@@ -5244,6 +5685,9 @@
   <data name="Text1.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 266</value>
   </data>
+  <data name="Text1.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Text1.Size" type="System.Drawing.Size, System.Drawing">
     <value>213, 13</value>
   </data>
@@ -5274,6 +5718,9 @@
   <data name="Label11.Location" type="System.Drawing.Point, System.Drawing">
     <value>518, 124</value>
   </data>
+  <data name="Label11.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>18, 13</value>
   </data>
@@ -5297,6 +5744,9 @@
   </data>
   <data name="TextBoxNBP.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 107</value>
+  </data>
+  <data name="TextBoxNBP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxNBP.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -5331,6 +5781,9 @@
   <data name="LabelWithDivider6.Location" type="System.Drawing.Point, System.Drawing">
     <value>518, 188</value>
   </data>
+  <data name="LabelWithDivider6.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="LabelWithDivider6.Size" type="System.Drawing.Size, System.Drawing">
     <value>224, 18</value>
   </data>
@@ -5360,6 +5813,9 @@
   </data>
   <data name="Label67.Location" type="System.Drawing.Point, System.Drawing">
     <value>358, 239</value>
+  </data>
+  <data name="Label67.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label67.Size" type="System.Drawing.Size, System.Drawing">
     <value>67, 13</value>
@@ -5391,6 +5847,9 @@
   <data name="LabelWithDivider5.Location" type="System.Drawing.Point, System.Drawing">
     <value>518, 144</value>
   </data>
+  <data name="LabelWithDivider5.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="LabelWithDivider5.Size" type="System.Drawing.Size, System.Drawing">
     <value>224, 18</value>
   </data>
@@ -5421,6 +5880,9 @@
   <data name="lblNBP.Location" type="System.Drawing.Point, System.Drawing">
     <value>358, 110</value>
   </data>
+  <data name="lblNBP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="lblNBP.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
   </data>
@@ -5444,6 +5906,9 @@
   </data>
   <data name="TextBoxPc.Location" type="System.Drawing.Point, System.Drawing">
     <value>544, 77</value>
+  </data>
+  <data name="TextBoxPc.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxPc.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -5478,6 +5943,9 @@
   <data name="Label66.Location" type="System.Drawing.Point, System.Drawing">
     <value>358, 212</value>
   </data>
+  <data name="Label66.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label66.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 13</value>
   </data>
@@ -5507,6 +5975,9 @@
   </data>
   <data name="LabelWithDivider3.Location" type="System.Drawing.Point, System.Drawing">
     <value>518, 56</value>
+  </data>
+  <data name="LabelWithDivider3.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="LabelWithDivider3.Size" type="System.Drawing.Size, System.Drawing">
     <value>224, 18</value>
@@ -5538,6 +6009,9 @@
   <data name="LabelWithDivider13.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 85</value>
   </data>
+  <data name="LabelWithDivider13.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="LabelWithDivider13.Size" type="System.Drawing.Size, System.Drawing">
     <value>450, 18</value>
   </data>
@@ -5561,6 +6035,9 @@
   </data>
   <data name="TextBoxAF.Location" type="System.Drawing.Point, System.Drawing">
     <value>544, 209</value>
+  </data>
+  <data name="TextBoxAF.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxAF.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -5588,6 +6065,9 @@
   </data>
   <data name="TextBoxVTCPR.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 236</value>
+  </data>
+  <data name="TextBoxVTCPR.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxVTCPR.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -5625,6 +6105,9 @@
   <data name="Label14.Location" type="System.Drawing.Point, System.Drawing">
     <value>518, 212</value>
   </data>
+  <data name="Label14.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label14.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 13</value>
   </data>
@@ -5654,6 +6137,9 @@
   </data>
   <data name="LabelWithDivider16.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 133</value>
+  </data>
+  <data name="LabelWithDivider16.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="LabelWithDivider16.Size" type="System.Drawing.Size, System.Drawing">
     <value>450, 18</value>
@@ -5685,6 +6171,9 @@
   <data name="lblPc.Location" type="System.Drawing.Point, System.Drawing">
     <value>619, 80</value>
   </data>
+  <data name="lblPc.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="lblPc.Size" type="System.Drawing.Size, System.Drawing">
     <value>19, 13</value>
   </data>
@@ -5708,6 +6197,9 @@
   </data>
   <data name="TextBoxCSLV.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 209</value>
+  </data>
+  <data name="TextBoxCSLV.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxCSLV.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -5742,6 +6234,9 @@
   <data name="Label62.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 158</value>
   </data>
+  <data name="Label62.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label62.Size" type="System.Drawing.Size, System.Drawing">
     <value>147, 13</value>
   </data>
@@ -5765,6 +6260,9 @@
   </data>
   <data name="TextBoxCSSP.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 182</value>
+  </data>
+  <data name="TextBoxCSSP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxCSSP.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -5792,6 +6290,9 @@
   </data>
   <data name="TextBoxCSAF.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 155</value>
+  </data>
+  <data name="TextBoxCSAF.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxCSAF.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -5826,6 +6327,9 @@
   <data name="Label65.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 239</value>
   </data>
+  <data name="Label65.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label65.Size" type="System.Drawing.Size, System.Drawing">
     <value>266, 13</value>
   </data>
@@ -5855,6 +6359,9 @@
   </data>
   <data name="Label61.Location" type="System.Drawing.Point, System.Drawing">
     <value>358, 185</value>
+  </data>
+  <data name="Label61.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label61.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 13</value>
@@ -5886,6 +6393,9 @@
   <data name="Label64.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 212</value>
   </data>
+  <data name="Label64.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label64.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 13</value>
   </data>
@@ -5915,6 +6425,9 @@
   </data>
   <data name="Label63.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 185</value>
+  </data>
+  <data name="Label63.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label63.Size" type="System.Drawing.Size, System.Drawing">
     <value>197, 13</value>
@@ -5946,6 +6459,9 @@
   <data name="Label43.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 205</value>
   </data>
+  <data name="Label43.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label43.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
   </data>
@@ -5976,6 +6492,9 @@
   <data name="rbEstimatePVAP.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 16</value>
   </data>
+  <data name="rbEstimatePVAP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbEstimatePVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 17</value>
   </data>
@@ -5999,6 +6518,9 @@
   </data>
   <data name="tbPVAP_E.Location" type="System.Drawing.Point, System.Drawing">
     <value>280, 177</value>
+  </data>
+  <data name="tbPVAP_E.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbPVAP_E.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -6033,6 +6555,9 @@
   <data name="rbRegressPVAP.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 39</value>
   </data>
+  <data name="rbRegressPVAP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbRegressPVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 17</value>
   </data>
@@ -6062,6 +6587,9 @@
   </data>
   <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 180</value>
+  </data>
+  <data name="Label13.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
@@ -6099,6 +6627,9 @@
   <data name="GridExpDataPVAP.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 62</value>
   </data>
+  <data name="GridExpDataPVAP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="GridExpDataPVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 164</value>
   </data>
@@ -6119,6 +6650,9 @@
   </data>
   <data name="tbPVAP_D.Location" type="System.Drawing.Point, System.Drawing">
     <value>280, 151</value>
+  </data>
+  <data name="tbPVAP_D.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbPVAP_D.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -6150,6 +6684,9 @@
   <data name="btnRegressPVAP.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 238</value>
   </data>
+  <data name="btnRegressPVAP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="btnRegressPVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>98, 23</value>
   </data>
@@ -6180,6 +6717,9 @@
   <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 154</value>
   </data>
+  <data name="Label10.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -6207,6 +6747,9 @@
   <data name="btnViewPVAP.Location" type="System.Drawing.Point, System.Drawing">
     <value>120, 238</value>
   </data>
+  <data name="btnViewPVAP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="btnViewPVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 23</value>
   </data>
@@ -6230,6 +6773,9 @@
   </data>
   <data name="tbPVAP_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>280, 125</value>
+  </data>
+  <data name="tbPVAP_C.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbPVAP_C.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -6264,6 +6810,9 @@
   <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>17, 270</value>
   </data>
+  <data name="Label2.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 13</value>
   </data>
@@ -6294,6 +6843,9 @@
   <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 128</value>
   </data>
+  <data name="Label6.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -6318,6 +6870,9 @@
   <data name="tbStatusPVAP.Location" type="System.Drawing.Point, System.Drawing">
     <value>63, 267</value>
   </data>
+  <data name="tbStatusPVAP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="tbStatusPVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>161, 21</value>
   </data>
@@ -6341,6 +6896,9 @@
   </data>
   <data name="tbPVAP_B.Location" type="System.Drawing.Point, System.Drawing">
     <value>280, 99</value>
+  </data>
+  <data name="tbPVAP_B.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbPVAP_B.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -6375,6 +6933,9 @@
   <data name="rbCoeffPVAP.Location" type="System.Drawing.Point, System.Drawing">
     <value>263, 16</value>
   </data>
+  <data name="rbCoeffPVAP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbCoeffPVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 17</value>
   </data>
@@ -6404,6 +6965,9 @@
   </data>
   <data name="Label5.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 102</value>
+  </data>
+  <data name="Label5.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
@@ -6531,6 +7095,9 @@
   <data name="cbEqPVAP.Location" type="System.Drawing.Point, System.Drawing">
     <value>314, 41</value>
   </data>
+  <data name="cbEqPVAP.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="cbEqPVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 21</value>
   </data>
@@ -6551,6 +7118,9 @@
   </data>
   <data name="tbPVAP_A.Location" type="System.Drawing.Point, System.Drawing">
     <value>280, 73</value>
+  </data>
+  <data name="tbPVAP_A.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbPVAP_A.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -6585,6 +7155,9 @@
   <data name="Label30.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 44</value>
   </data>
+  <data name="Label30.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label30.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 13</value>
   </data>
@@ -6614,6 +7187,9 @@
   </data>
   <data name="Label29.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 76</value>
+  </data>
+  <data name="Label29.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label29.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
@@ -6645,6 +7221,9 @@
   <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 267</value>
   </data>
+  <data name="Label3.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 13</value>
   </data>
@@ -6671,6 +7250,9 @@
   </data>
   <data name="Label44.Location" type="System.Drawing.Point, System.Drawing">
     <value>263, 205</value>
+  </data>
+  <data name="Label44.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label44.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 13</value>
@@ -6702,6 +7284,9 @@
   <data name="rbEstimateCPIG.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 16</value>
   </data>
+  <data name="rbEstimateCPIG.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbEstimateCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 17</value>
   </data>
@@ -6725,6 +7310,9 @@
   </data>
   <data name="tbStatusCPIG.Location" type="System.Drawing.Point, System.Drawing">
     <value>63, 267</value>
+  </data>
+  <data name="tbStatusCPIG.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbStatusCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>161, 21</value>
@@ -6756,6 +7344,9 @@
   <data name="Label26.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 76</value>
   </data>
+  <data name="Label26.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label26.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -6779,6 +7370,9 @@
   </data>
   <data name="tbCPIG_E.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 177</value>
+  </data>
+  <data name="tbCPIG_E.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbCPIG_E.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -6813,6 +7407,9 @@
   <data name="Label28.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 44</value>
   </data>
+  <data name="Label28.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label28.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 13</value>
   </data>
@@ -6836,6 +7433,9 @@
   </data>
   <data name="tbCPIG_A.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 73</value>
+  </data>
+  <data name="tbCPIG_A.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbCPIG_A.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -6869,6 +7469,9 @@
   </data>
   <data name="Label18.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 180</value>
+  </data>
+  <data name="Label18.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label18.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
@@ -6996,6 +7599,9 @@
   <data name="cbEqCPIG.Location" type="System.Drawing.Point, System.Drawing">
     <value>317, 41</value>
   </data>
+  <data name="cbEqCPIG.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="cbEqCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 21</value>
   </data>
@@ -7019,6 +7625,9 @@
   </data>
   <data name="btnViewCPIG.Location" type="System.Drawing.Point, System.Drawing">
     <value>120, 238</value>
+  </data>
+  <data name="btnViewCPIG.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="btnViewCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 23</value>
@@ -7050,6 +7659,9 @@
   <data name="Label24.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 102</value>
   </data>
+  <data name="Label24.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label24.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
   </data>
@@ -7073,6 +7685,9 @@
   </data>
   <data name="tbCPIG_D.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 151</value>
+  </data>
+  <data name="tbCPIG_D.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbCPIG_D.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -7107,6 +7722,9 @@
   <data name="rbCoeffCPIG.Location" type="System.Drawing.Point, System.Drawing">
     <value>263, 16</value>
   </data>
+  <data name="rbCoeffCPIG.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbCoeffCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 17</value>
   </data>
@@ -7134,6 +7752,9 @@
   <data name="btnRegressCPIG.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 238</value>
   </data>
+  <data name="btnRegressCPIG.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="btnRegressCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>98, 23</value>
   </data>
@@ -7157,6 +7778,9 @@
   </data>
   <data name="tbCPIG_B.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 99</value>
+  </data>
+  <data name="tbCPIG_B.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbCPIG_B.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -7191,6 +7815,9 @@
   <data name="Label19.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 154</value>
   </data>
+  <data name="Label19.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label19.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -7220,6 +7847,9 @@
   </data>
   <data name="Label23.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 128</value>
+  </data>
+  <data name="Label23.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label23.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
@@ -7257,6 +7887,9 @@
   <data name="GridExpDataCPIG.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 62</value>
   </data>
+  <data name="GridExpDataCPIG.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="GridExpDataCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 170</value>
   </data>
@@ -7284,6 +7917,9 @@
   <data name="rbRegressCPIG.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 39</value>
   </data>
+  <data name="rbRegressCPIG.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbRegressCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 17</value>
   </data>
@@ -7307,6 +7943,9 @@
   </data>
   <data name="tbCPIG_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 125</value>
+  </data>
+  <data name="tbCPIG_C.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbCPIG_C.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -7341,6 +7980,9 @@
   <data name="Label45.Location" type="System.Drawing.Point, System.Drawing">
     <value>265, 205</value>
   </data>
+  <data name="Label45.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label45.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 13</value>
   </data>
@@ -7371,6 +8013,9 @@
   <data name="rbEstimateLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 16</value>
   </data>
+  <data name="rbEstimateLIQDENS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbEstimateLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 17</value>
   </data>
@@ -7394,6 +8039,9 @@
   </data>
   <data name="tbLIQDENS_E.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 177</value>
+  </data>
+  <data name="tbLIQDENS_E.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbLIQDENS_E.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -7428,6 +8076,9 @@
   <data name="rbRegressLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 39</value>
   </data>
+  <data name="rbRegressLIQDENS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbRegressLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 17</value>
   </data>
@@ -7457,6 +8108,9 @@
   </data>
   <data name="Label31.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 180</value>
+  </data>
+  <data name="Label31.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label31.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
@@ -7494,6 +8148,9 @@
   <data name="GridExpDataLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 62</value>
   </data>
+  <data name="GridExpDataLIQDENS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="GridExpDataLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>207, 170</value>
   </data>
@@ -7514,6 +8171,9 @@
   </data>
   <data name="tbLIQDENS_D.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 151</value>
+  </data>
+  <data name="tbLIQDENS_D.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbLIQDENS_D.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -7545,6 +8205,9 @@
   <data name="btnRegressLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 238</value>
   </data>
+  <data name="btnRegressLIQDENS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="btnRegressLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>98, 23</value>
   </data>
@@ -7575,6 +8238,9 @@
   <data name="Label32.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 154</value>
   </data>
+  <data name="Label32.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label32.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -7602,6 +8268,9 @@
   <data name="btnViewLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
     <value>120, 238</value>
   </data>
+  <data name="btnViewLIQDENS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="btnViewLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 23</value>
   </data>
@@ -7625,6 +8294,9 @@
   </data>
   <data name="tbLIQDENS_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 125</value>
+  </data>
+  <data name="tbLIQDENS_C.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbLIQDENS_C.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -7659,6 +8331,9 @@
   <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 270</value>
   </data>
+  <data name="Label7.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 13</value>
   </data>
@@ -7689,6 +8364,9 @@
   <data name="Label33.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 128</value>
   </data>
+  <data name="Label33.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label33.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -7713,6 +8391,9 @@
   <data name="tbStatusLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
     <value>63, 267</value>
   </data>
+  <data name="tbStatusLIQDENS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="tbStatusLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>161, 21</value>
   </data>
@@ -7736,6 +8417,9 @@
   </data>
   <data name="tbLIQDENS_B.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 99</value>
+  </data>
+  <data name="tbLIQDENS_B.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbLIQDENS_B.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -7770,6 +8454,9 @@
   <data name="rbCoeffLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
     <value>263, 16</value>
   </data>
+  <data name="rbCoeffLIQDENS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbCoeffLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 17</value>
   </data>
@@ -7799,6 +8486,9 @@
   </data>
   <data name="Label34.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 102</value>
+  </data>
+  <data name="Label34.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label34.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
@@ -7926,6 +8616,9 @@
   <data name="cbEqLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
     <value>317, 41</value>
   </data>
+  <data name="cbEqLIQDENS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="cbEqLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 21</value>
   </data>
@@ -7946,6 +8639,9 @@
   </data>
   <data name="tbLIQDENS_A.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 73</value>
+  </data>
+  <data name="tbLIQDENS_A.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbLIQDENS_A.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -7980,6 +8676,9 @@
   <data name="Label36.Location" type="System.Drawing.Point, System.Drawing">
     <value>263, 44</value>
   </data>
+  <data name="Label36.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label36.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 13</value>
   </data>
@@ -8009,6 +8708,9 @@
   </data>
   <data name="Label35.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 76</value>
+  </data>
+  <data name="Label35.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label35.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
@@ -8040,6 +8742,9 @@
   <data name="Label46.Location" type="System.Drawing.Point, System.Drawing">
     <value>263, 205</value>
   </data>
+  <data name="Label46.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label46.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 13</value>
   </data>
@@ -8070,6 +8775,9 @@
   <data name="rbEstimateLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 16</value>
   </data>
+  <data name="rbEstimateLIQVISC.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbEstimateLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 17</value>
   </data>
@@ -8093,6 +8801,9 @@
   </data>
   <data name="tbLIQVISC_E.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 177</value>
+  </data>
+  <data name="tbLIQVISC_E.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbLIQVISC_E.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -8127,6 +8838,9 @@
   <data name="rbRegressLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 39</value>
   </data>
+  <data name="rbRegressLIQVISC.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbRegressLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 17</value>
   </data>
@@ -8156,6 +8870,9 @@
   </data>
   <data name="Label37.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 180</value>
+  </data>
+  <data name="Label37.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label37.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
@@ -8193,6 +8910,9 @@
   <data name="GridExpDataLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 62</value>
   </data>
+  <data name="GridExpDataLIQVISC.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="GridExpDataLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 170</value>
   </data>
@@ -8213,6 +8933,9 @@
   </data>
   <data name="tbLIQVISC_D.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 151</value>
+  </data>
+  <data name="tbLIQVISC_D.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbLIQVISC_D.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -8244,6 +8967,9 @@
   <data name="btnRegressLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 238</value>
   </data>
+  <data name="btnRegressLIQVISC.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="btnRegressLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>98, 23</value>
   </data>
@@ -8274,6 +9000,9 @@
   <data name="Label38.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 154</value>
   </data>
+  <data name="Label38.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label38.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -8301,6 +9030,9 @@
   <data name="btnViewLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
     <value>120, 238</value>
   </data>
+  <data name="btnViewLIQVISC.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="btnViewLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 23</value>
   </data>
@@ -8324,6 +9056,9 @@
   </data>
   <data name="tbLIQVISC_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 125</value>
+  </data>
+  <data name="tbLIQVISC_C.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbLIQVISC_C.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -8358,6 +9093,9 @@
   <data name="Label9.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 270</value>
   </data>
+  <data name="Label9.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 13</value>
   </data>
@@ -8388,6 +9126,9 @@
   <data name="Label39.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 128</value>
   </data>
+  <data name="Label39.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label39.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -8412,6 +9153,9 @@
   <data name="tbStatusLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
     <value>63, 267</value>
   </data>
+  <data name="tbStatusLIQVISC.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="tbStatusLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>161, 21</value>
   </data>
@@ -8435,6 +9179,9 @@
   </data>
   <data name="tbLIQVISC_B.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 99</value>
+  </data>
+  <data name="tbLIQVISC_B.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbLIQVISC_B.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -8469,6 +9216,9 @@
   <data name="rbCoeffLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
     <value>263, 16</value>
   </data>
+  <data name="rbCoeffLIQVISC.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbCoeffLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 17</value>
   </data>
@@ -8498,6 +9248,9 @@
   </data>
   <data name="Label40.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 102</value>
+  </data>
+  <data name="Label40.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label40.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
@@ -8625,6 +9378,9 @@
   <data name="cbEqLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
     <value>317, 41</value>
   </data>
+  <data name="cbEqLIQVISC.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="cbEqLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 21</value>
   </data>
@@ -8645,6 +9401,9 @@
   </data>
   <data name="tbLIQVISC_A.Location" type="System.Drawing.Point, System.Drawing">
     <value>283, 73</value>
+  </data>
+  <data name="tbLIQVISC_A.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbLIQVISC_A.Size" type="System.Drawing.Size, System.Drawing">
     <value>187, 21</value>
@@ -8679,6 +9438,9 @@
   <data name="Label42.Location" type="System.Drawing.Point, System.Drawing">
     <value>263, 44</value>
   </data>
+  <data name="Label42.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label42.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 13</value>
   </data>
@@ -8709,6 +9471,9 @@
   <data name="Label41.Location" type="System.Drawing.Point, System.Drawing">
     <value>260, 76</value>
   </data>
+  <data name="Label41.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label41.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -8738,6 +9503,9 @@
   </data>
   <data name="LabelWithDivider7.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 18</value>
+  </data>
+  <data name="LabelWithDivider7.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="LabelWithDivider7.Size" type="System.Drawing.Size, System.Drawing">
     <value>651, 20</value>
@@ -9003,6 +9771,9 @@
   <data name="gbCPs.Location" type="System.Drawing.Point, System.Drawing">
     <value>340, 41</value>
   </data>
+  <data name="gbCPs.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="gbCPs.Size" type="System.Drawing.Size, System.Drawing">
     <value>321, 320</value>
   </data>
@@ -9033,6 +9804,9 @@
   <data name="Label84.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 248</value>
   </data>
+  <data name="Label84.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label84.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 13</value>
   </data>
@@ -9056,6 +9830,9 @@
   </data>
   <data name="tbStatusSolidCp.Location" type="System.Drawing.Point, System.Drawing">
     <value>68, 245</value>
+  </data>
+  <data name="tbStatusSolidCp.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbStatusSolidCp.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 21</value>
@@ -9081,6 +9858,9 @@
   <data name="btnRegressSolidCp.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 217</value>
   </data>
+  <data name="btnRegressSolidCp.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="btnRegressSolidCp.Size" type="System.Drawing.Size, System.Drawing">
     <value>98, 23</value>
   </data>
@@ -9104,6 +9884,9 @@
   </data>
   <data name="btnViewSolidCp.Location" type="System.Drawing.Point, System.Drawing">
     <value>119, 217</value>
+  </data>
+  <data name="btnViewSolidCp.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="btnViewSolidCp.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 23</value>
@@ -9135,6 +9918,9 @@
   <data name="rbCoeffSolidCp.Location" type="System.Drawing.Point, System.Drawing">
     <value>19, 274</value>
   </data>
+  <data name="rbCoeffSolidCp.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbCoeffSolidCp.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 17</value>
   </data>
@@ -9164,6 +9950,9 @@
   </data>
   <data name="rbRegressSolidCp.Location" type="System.Drawing.Point, System.Drawing">
     <value>19, 297</value>
+  </data>
+  <data name="rbRegressSolidCp.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="rbRegressSolidCp.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 17</value>
@@ -9201,6 +9990,9 @@
   <data name="GridExpDataCpS.Location" type="System.Drawing.Point, System.Drawing">
     <value>171, 53</value>
   </data>
+  <data name="GridExpDataCpS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="GridExpDataCpS.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 132</value>
   </data>
@@ -9225,6 +10017,9 @@
   <data name="Label75.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 191</value>
   </data>
+  <data name="Label75.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label75.Size" type="System.Drawing.Size, System.Drawing">
     <value>206, 13</value>
   </data>
@@ -9248,6 +10043,9 @@
   </data>
   <data name="tbCpS_E.Location" type="System.Drawing.Point, System.Drawing">
     <value>35, 164</value>
+  </data>
+  <data name="tbCpS_E.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbCpS_E.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 21</value>
@@ -9276,6 +10074,9 @@
   <data name="Label73.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 167</value>
   </data>
+  <data name="Label73.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label73.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -9299,6 +10100,9 @@
   </data>
   <data name="tbCpS_D.Location" type="System.Drawing.Point, System.Drawing">
     <value>35, 137</value>
+  </data>
+  <data name="tbCpS_D.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbCpS_D.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 21</value>
@@ -9327,6 +10131,9 @@
   <data name="Label72.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 140</value>
   </data>
+  <data name="Label72.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label72.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -9350,6 +10157,9 @@
   </data>
   <data name="tbCpS_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>35, 110</value>
+  </data>
+  <data name="tbCpS_C.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbCpS_C.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 21</value>
@@ -9378,6 +10188,9 @@
   <data name="Label71.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 113</value>
   </data>
+  <data name="Label71.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label71.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -9401,6 +10214,9 @@
   </data>
   <data name="tbCpS_B.Location" type="System.Drawing.Point, System.Drawing">
     <value>35, 80</value>
+  </data>
+  <data name="tbCpS_B.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbCpS_B.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 21</value>
@@ -9429,6 +10245,9 @@
   <data name="Label70.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 83</value>
   </data>
+  <data name="Label70.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label70.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -9456,6 +10275,9 @@
   <data name="Label69.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 56</value>
   </data>
+  <data name="Label69.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label69.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -9479,6 +10301,9 @@
   </data>
   <data name="tbCpS_A.Location" type="System.Drawing.Point, System.Drawing">
     <value>35, 53</value>
+  </data>
+  <data name="tbCpS_A.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbCpS_A.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 21</value>
@@ -9606,6 +10431,9 @@
   <data name="cbEqCpS.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 22</value>
   </data>
+  <data name="cbEqCpS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="cbEqCpS.Size" type="System.Drawing.Size, System.Drawing">
     <value>218, 21</value>
   </data>
@@ -9629,6 +10457,9 @@
   </data>
   <data name="Label74.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 25</value>
+  </data>
+  <data name="Label74.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label74.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 18</value>
@@ -9906,6 +10737,9 @@
   <data name="gbSolidDens.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 41</value>
   </data>
+  <data name="gbSolidDens.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="gbSolidDens.Size" type="System.Drawing.Size, System.Drawing">
     <value>321, 320</value>
   </data>
@@ -9935,6 +10769,9 @@
   </data>
   <data name="rbEstimateSolidDens.Location" type="System.Drawing.Point, System.Drawing">
     <value>192, 274</value>
+  </data>
+  <data name="rbEstimateSolidDens.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="rbEstimateSolidDens.Size" type="System.Drawing.Size, System.Drawing">
     <value>106, 17</value>
@@ -9966,6 +10803,9 @@
   <data name="Label83.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 248</value>
   </data>
+  <data name="Label83.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label83.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 13</value>
   </data>
@@ -9989,6 +10829,9 @@
   </data>
   <data name="tbStatusSolidDens.Location" type="System.Drawing.Point, System.Drawing">
     <value>68, 245</value>
+  </data>
+  <data name="tbStatusSolidDens.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbStatusSolidDens.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 21</value>
@@ -10014,6 +10857,9 @@
   <data name="btnRegressSolidDens.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 217</value>
   </data>
+  <data name="btnRegressSolidDens.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="btnRegressSolidDens.Size" type="System.Drawing.Size, System.Drawing">
     <value>98, 23</value>
   </data>
@@ -10037,6 +10883,9 @@
   </data>
   <data name="btnViewSolidDens.Location" type="System.Drawing.Point, System.Drawing">
     <value>119, 217</value>
+  </data>
+  <data name="btnViewSolidDens.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="btnViewSolidDens.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 23</value>
@@ -10068,6 +10917,9 @@
   <data name="rbCoeffSolidDens.Location" type="System.Drawing.Point, System.Drawing">
     <value>19, 274</value>
   </data>
+  <data name="rbCoeffSolidDens.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbCoeffSolidDens.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 17</value>
   </data>
@@ -10098,6 +10950,9 @@
   <data name="rbRegressSolidDens.Location" type="System.Drawing.Point, System.Drawing">
     <value>19, 297</value>
   </data>
+  <data name="rbRegressSolidDens.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="rbRegressSolidDens.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 17</value>
   </data>
@@ -10125,6 +10980,9 @@
   <data name="Label77.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 191</value>
   </data>
+  <data name="Label77.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label77.Size" type="System.Drawing.Size, System.Drawing">
     <value>206, 13</value>
   </data>
@@ -10151,6 +11009,9 @@
   </data>
   <data name="Label78.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 167</value>
+  </data>
+  <data name="Label78.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label78.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
@@ -10188,6 +11049,9 @@
   <data name="GridExpDataRoS.Location" type="System.Drawing.Point, System.Drawing">
     <value>170, 53</value>
   </data>
+  <data name="GridExpDataRoS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="GridExpDataRoS.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 132</value>
   </data>
@@ -10208,6 +11072,9 @@
   </data>
   <data name="tbRoS_E.Location" type="System.Drawing.Point, System.Drawing">
     <value>36, 164</value>
+  </data>
+  <data name="tbRoS_E.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbRoS_E.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 21</value>
@@ -10233,6 +11100,9 @@
   <data name="Label79.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 140</value>
   </data>
+  <data name="Label79.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label79.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -10256,6 +11126,9 @@
   </data>
   <data name="tbRoS_D.Location" type="System.Drawing.Point, System.Drawing">
     <value>36, 137</value>
+  </data>
+  <data name="tbRoS_D.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbRoS_D.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 21</value>
@@ -10281,6 +11154,9 @@
   <data name="Label80.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 113</value>
   </data>
+  <data name="Label80.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label80.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -10304,6 +11180,9 @@
   </data>
   <data name="tbRoS_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>36, 110</value>
+  </data>
+  <data name="tbRoS_C.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbRoS_C.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 21</value>
@@ -10329,6 +11208,9 @@
   <data name="Label81.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 83</value>
   </data>
+  <data name="Label81.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label81.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -10352,6 +11234,9 @@
   </data>
   <data name="tbRoS_B.Location" type="System.Drawing.Point, System.Drawing">
     <value>36, 80</value>
+  </data>
+  <data name="tbRoS_B.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbRoS_B.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 21</value>
@@ -10377,6 +11262,9 @@
   <data name="Label82.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 56</value>
   </data>
+  <data name="Label82.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label82.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
   </data>
@@ -10400,6 +11288,9 @@
   </data>
   <data name="tbRoS_A.Location" type="System.Drawing.Point, System.Drawing">
     <value>36, 53</value>
+  </data>
+  <data name="tbRoS_A.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tbRoS_A.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 21</value>
@@ -10524,6 +11415,9 @@
   <data name="cbEqSolidDENS.Location" type="System.Drawing.Point, System.Drawing">
     <value>78, 23</value>
   </data>
+  <data name="cbEqSolidDENS.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="cbEqSolidDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>218, 21</value>
   </data>
@@ -10547,6 +11441,9 @@
   </data>
   <data name="Label76.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 26</value>
+  </data>
+  <data name="Label76.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="Label76.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 18</value>
@@ -10578,6 +11475,9 @@
   <data name="Label54.Location" type="System.Drawing.Point, System.Drawing">
     <value>908, 121</value>
   </data>
+  <data name="Label54.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label54.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 13</value>
   </data>
@@ -10604,6 +11504,9 @@
   </data>
   <data name="TextBoxEnthOfFusion2.Location" type="System.Drawing.Point, System.Drawing">
     <value>833, 118</value>
+  </data>
+  <data name="TextBoxEnthOfFusion2.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxEnthOfFusion2.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -10638,6 +11541,9 @@
   <data name="CheckBoxEnthOfFusion.Location" type="System.Drawing.Point, System.Drawing">
     <value>959, 94</value>
   </data>
+  <data name="CheckBoxEnthOfFusion.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="CheckBoxEnthOfFusion.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
   </data>
@@ -10667,6 +11573,9 @@
   </data>
   <data name="LabelWithDivider1.Location" type="System.Drawing.Point, System.Drawing">
     <value>694, 18</value>
+  </data>
+  <data name="LabelWithDivider1.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="LabelWithDivider1.Size" type="System.Drawing.Size, System.Drawing">
     <value>300, 18</value>
@@ -10698,6 +11607,9 @@
   <data name="lblEnthOfFusion.Location" type="System.Drawing.Point, System.Drawing">
     <value>908, 94</value>
   </data>
+  <data name="lblEnthOfFusion.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="lblEnthOfFusion.Size" type="System.Drawing.Size, System.Drawing">
     <value>32, 13</value>
   </data>
@@ -10728,6 +11640,9 @@
   <data name="Label52.Location" type="System.Drawing.Point, System.Drawing">
     <value>694, 49</value>
   </data>
+  <data name="Label52.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label52.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 13</value>
   </data>
@@ -10751,6 +11666,9 @@
   </data>
   <data name="TextBoxEnthOfFusion.Location" type="System.Drawing.Point, System.Drawing">
     <value>833, 91</value>
+  </data>
+  <data name="TextBoxEnthOfFusion.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxEnthOfFusion.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -10778,6 +11696,9 @@
   </data>
   <data name="TextBoxMeltingTemp.Location" type="System.Drawing.Point, System.Drawing">
     <value>833, 46</value>
+  </data>
+  <data name="TextBoxMeltingTemp.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="TextBoxMeltingTemp.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
@@ -10812,6 +11733,9 @@
   <data name="Label55.Location" type="System.Drawing.Point, System.Drawing">
     <value>694, 94</value>
   </data>
+  <data name="Label55.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label55.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 13</value>
   </data>
@@ -10842,6 +11766,9 @@
   <data name="lblMeltingTemp.Location" type="System.Drawing.Point, System.Drawing">
     <value>908, 49</value>
   </data>
+  <data name="lblMeltingTemp.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="lblMeltingTemp.Size" type="System.Drawing.Size, System.Drawing">
     <value>13, 13</value>
   </data>
@@ -10871,6 +11798,9 @@
   </data>
   <data name="CheckBoxMeltingTemp.Location" type="System.Drawing.Point, System.Drawing">
     <value>959, 49</value>
+  </data>
+  <data name="CheckBoxMeltingTemp.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="CheckBoxMeltingTemp.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -10923,6 +11853,9 @@
   <data name="GroupBox3.Location" type="System.Drawing.Point, System.Drawing">
     <value>679, 6</value>
   </data>
+  <data name="GroupBox3.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
     <value>334, 84</value>
   </data>
@@ -10953,6 +11886,9 @@
   <data name="Label15.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 24</value>
   </data>
+  <data name="Label15.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
     <value>110, 13</value>
   </data>
@@ -10979,6 +11915,9 @@
   </data>
   <data name="cbUnits.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 47</value>
+  </data>
+  <data name="cbUnits.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="cbUnits.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 21</value>
@@ -11015,6 +11954,9 @@
   </metadata>
   <data name="StatusStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 513</value>
+  </data>
+  <data name="StatusStrip1.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>1025, 22</value>
@@ -11169,6 +12111,9 @@
   <data name="ComboBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>66, 175</value>
   </data>
+  <data name="ComboBox1.ShowHelp" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="ComboBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>153, 21</value>
   </data>
@@ -11180,12 +12125,6 @@
   </data>
   <data name="&gt;&gt;ComboBox1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <metadata name="HelpProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>332, 2</value>
-  </metadata>
-  <data name="HelpProvider1.HelpNamespace" xml:space="preserve">
-    <value>help\dwsim.chm</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -11204,9 +12143,6 @@
   </data>
   <data name="$this.HelpNavigator" type="System.Windows.Forms.HelpNavigator, System.Windows.Forms">
     <value>KeywordIndex</value>
-  </data>
-  <data name="$this.HelpString" xml:space="preserve">
-    <value />
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -12667,6 +13603,18 @@
   <data name="&gt;&gt;ToolStripLabel2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;Column3.Name" xml:space="preserve">
+    <value>Column3</value>
+  </data>
+  <data name="&gt;&gt;Column3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Column5.Name" xml:space="preserve">
+    <value>Column5</value>
+  </data>
+  <data name="&gt;&gt;Column5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;Column4.Name" xml:space="preserve">
     <value>Column4</value>
   </data>
@@ -12677,6 +13625,30 @@
     <value>Column1</value>
   </data>
   <data name="&gt;&gt;Column1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewImageColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MainGroup.Name" xml:space="preserve">
+    <value>MainGroup</value>
+  </data>
+  <data name="&gt;&gt;MainGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SubGroup.Name" xml:space="preserve">
+    <value>SubGroup</value>
+  </data>
+  <data name="&gt;&gt;SubGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DataGridViewTextBoxColumn13.Name" xml:space="preserve">
+    <value>DataGridViewTextBoxColumn13</value>
+  </data>
+  <data name="&gt;&gt;DataGridViewTextBoxColumn13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DataGridViewImageColumn1.Name" xml:space="preserve">
+    <value>DataGridViewImageColumn1</value>
+  </data>
+  <data name="&gt;&gt;DataGridViewImageColumn1.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewImageColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Atom.Name" xml:space="preserve">

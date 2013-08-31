@@ -806,7 +806,13 @@ Namespace DWSIM.Databases
                             .ChildNodes(.ChildNodes.Count - 1).Attributes("name").Value = kvp.Key
                         Next
                     End With
-
+                    With .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "MODFAC", ""))
+                        For Each kvp As DictionaryEntry In comp.MODFACGroups.Collection
+                            .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "", "MODFACGroup", "")).InnerText = kvp.Value
+                            .ChildNodes(.ChildNodes.Count - 1).Attributes.Append(xmldoc.CreateAttribute("name"))
+                            .ChildNodes(.ChildNodes.Count - 1).Attributes("name").Value = kvp.Key
+                        Next
+                    End With
                     With .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "elements", ""))
                         For Each el As DictionaryEntry In comp.Elements.Collection
                             .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "", "element", "")).InnerText = el.Value
@@ -1016,11 +1022,11 @@ Namespace DWSIM.Databases
                                 For Each node3 As XmlNode In node2.ChildNodes
                                     .UNIFACGroups.Collection.Add(node3.Attributes("name").InnerText, Integer.Parse(node3.InnerText))
                                 Next
-                                'Case "MODFAC" 'MODFAC not yet implemented for UserDB
-                                '.MODFACGroups.Collection = New SortedList
-                                'For Each node3 As XmlNode In node2.ChildNodes
-                                '    .MODFACGroups.Collection.Add(node3.Attributes("name").InnerText, Integer.Parse(node3.InnerText))
-                                'Next
+                            Case "MODFAC"
+                                .MODFACGroups.Collection = New SortedList
+                                For Each node3 As XmlNode In node2.ChildNodes
+                                    .MODFACGroups.Collection.Add(node3.Attributes("name").InnerText, Integer.Parse(node3.InnerText))
+                                Next
                             Case "PC_SAFT_sigma"
                                 .PC_SAFT_sigma = Double.Parse(node2.InnerText, nf)
                             Case "PC_SAFT_m"

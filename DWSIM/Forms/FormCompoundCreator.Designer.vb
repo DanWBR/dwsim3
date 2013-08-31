@@ -25,30 +25,33 @@ Partial Class FormCompoundCreator
         Me.components = New System.ComponentModel.Container()
         Dim ToolStripLabel2 As System.Windows.Forms.ToolStripStatusLabel
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormCompoundCreator))
-        Dim DataGridViewCellStyle193 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle194 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle195 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle196 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle197 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle198 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle199 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle200 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle201 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle202 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle203 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle204 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle205 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle206 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle207 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle208 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle209 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle210 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle211 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle212 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle213 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle214 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle215 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle216 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle31 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle32 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle33 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle34 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle35 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle36 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle37 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle38 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle39 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle40 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle41 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle42 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle43 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle44 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle45 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle46 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle47 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle48 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle49 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle50 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle51 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle52 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle53 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle54 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.btnSaveToDB = New System.Windows.Forms.Button()
         Me.chkReplaceComps = New System.Windows.Forms.CheckBox()
@@ -81,8 +84,17 @@ Partial Class FormCompoundCreator
         Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.Label60 = New System.Windows.Forms.Label()
         Me.GridUNIFAC = New System.Windows.Forms.DataGridView()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.FaTabStripItem5 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GridMODFAC = New System.Windows.Forms.DataGridView()
+        Me.MainGroup = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SubGroup = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewImageColumn1 = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Label85 = New System.Windows.Forms.Label()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
         Me.Label58 = New System.Windows.Forms.Label()
         Me.AddAtomDataGrid = New System.Windows.Forms.DataGridView()
@@ -347,6 +359,8 @@ Partial Class FormCompoundCreator
         CType(Me.pbRender, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStripItem2.SuspendLayout()
         CType(Me.GridUNIFAC, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.FaTabStripItem5.SuspendLayout()
+        CType(Me.GridMODFAC, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStripItem3.SuspendLayout()
         CType(Me.AddAtomDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.AtomDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -386,6 +400,7 @@ Partial Class FormCompoundCreator
         Me.GroupBox1.Controls.Add(Me.btnCreateNewDB)
         resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Name = "GroupBox1"
+        Me.HelpProvider1.SetShowHelp(Me.GroupBox1, CType(resources.GetObject("GroupBox1.ShowHelp"), Boolean))
         Me.GroupBox1.TabStop = False
         '
         'btnSaveToDB
@@ -393,6 +408,7 @@ Partial Class FormCompoundCreator
         Me.btnSaveToDB.Image = Global.DWSIM.My.Resources.Resources.disk
         resources.ApplyResources(Me.btnSaveToDB, "btnSaveToDB")
         Me.btnSaveToDB.Name = "btnSaveToDB"
+        Me.HelpProvider1.SetShowHelp(Me.btnSaveToDB, CType(resources.GetObject("btnSaveToDB.ShowHelp"), Boolean))
         Me.btnSaveToDB.UseVisualStyleBackColor = True
         '
         'chkReplaceComps
@@ -401,6 +417,7 @@ Partial Class FormCompoundCreator
         Me.chkReplaceComps.Checked = True
         Me.chkReplaceComps.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkReplaceComps.Name = "chkReplaceComps"
+        Me.HelpProvider1.SetShowHelp(Me.chkReplaceComps, CType(resources.GetObject("chkReplaceComps.ShowHelp"), Boolean))
         Me.chkReplaceComps.UseVisualStyleBackColor = True
         '
         'tbDBPath
@@ -408,24 +425,28 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.tbDBPath, "tbDBPath")
         Me.tbDBPath.Name = "tbDBPath"
         Me.tbDBPath.ReadOnly = True
+        Me.HelpProvider1.SetShowHelp(Me.tbDBPath, CType(resources.GetObject("tbDBPath.ShowHelp"), Boolean))
         '
         'btnSearch
         '
         Me.btnSearch.Image = Global.DWSIM.My.Resources.Resources.folder_go
         resources.ApplyResources(Me.btnSearch, "btnSearch")
         Me.btnSearch.Name = "btnSearch"
+        Me.HelpProvider1.SetShowHelp(Me.btnSearch, CType(resources.GetObject("btnSearch.ShowHelp"), Boolean))
         Me.btnSearch.UseVisualStyleBackColor = True
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.Name = "Label1"
+        Me.HelpProvider1.SetShowHelp(Me.Label1, CType(resources.GetObject("Label1.ShowHelp"), Boolean))
         '
         'btnCreateNewDB
         '
         Me.btnCreateNewDB.Image = Global.DWSIM.My.Resources.Resources.page_white
         resources.ApplyResources(Me.btnCreateNewDB, "btnCreateNewDB")
         Me.btnCreateNewDB.Name = "btnCreateNewDB"
+        Me.HelpProvider1.SetShowHelp(Me.btnCreateNewDB, CType(resources.GetObject("btnCreateNewDB.ShowHelp"), Boolean))
         Me.btnCreateNewDB.UseVisualStyleBackColor = True
         '
         'GroupBox2
@@ -433,15 +454,17 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Controls.Add(Me.FaTabStrip2)
         Me.GroupBox2.Name = "GroupBox2"
+        Me.HelpProvider1.SetShowHelp(Me.GroupBox2, CType(resources.GetObject("GroupBox2.ShowHelp"), Boolean))
         Me.GroupBox2.TabStop = False
         '
         'FaTabStrip2
         '
         Me.FaTabStrip2.AlwaysShowClose = False
         resources.ApplyResources(Me.FaTabStrip2, "FaTabStrip2")
-        Me.FaTabStrip2.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2, Me.FaTabStripItem3, Me.FaTabStripItem4, Me.FaTabStripItem7, Me.FaTabStripItem8, Me.FaTabStripItem9, Me.FaTabStripItem10, Me.FaTabStripItem11})
+        Me.FaTabStrip2.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2, Me.FaTabStripItem5, Me.FaTabStripItem3, Me.FaTabStripItem4, Me.FaTabStripItem7, Me.FaTabStripItem8, Me.FaTabStripItem9, Me.FaTabStripItem10, Me.FaTabStripItem11})
         Me.FaTabStrip2.Name = "FaTabStrip2"
         Me.FaTabStrip2.SelectedItem = Me.FaTabStripItem1
+        Me.HelpProvider1.SetShowHelp(Me.FaTabStrip2, CType(resources.GetObject("FaTabStrip2.ShowHelp"), Boolean))
         '
         'FaTabStripItem1
         '
@@ -466,13 +489,14 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem1.Controls.Add(Me.CheckBoxMW)
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
-        Me.FaTabStripItem1.Selected = True
+        Me.HelpProvider1.SetShowHelp(Me.FaTabStripItem1, CType(resources.GetObject("FaTabStripItem1.ShowHelp"), Boolean))
         resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         '
         'LinkLabel1
         '
         resources.ApplyResources(Me.LinkLabel1, "LinkLabel1")
         Me.LinkLabel1.Name = "LinkLabel1"
+        Me.HelpProvider1.SetShowHelp(Me.LinkLabel1, CType(resources.GetObject("LinkLabel1.ShowHelp"), Boolean))
         Me.LinkLabel1.TabStop = True
         Me.ToolTip1.SetToolTip(Me.LinkLabel1, resources.GetString("LinkLabel1.ToolTip"))
         Me.LinkLabel1.UseCompatibleTextRendering = True
@@ -481,22 +505,26 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me.Label16, "Label16")
         Me.Label16.Name = "Label16"
+        Me.HelpProvider1.SetShowHelp(Me.Label16, CType(resources.GetObject("Label16.ShowHelp"), Boolean))
         '
         'btnRenderSMILES
         '
         resources.ApplyResources(Me.btnRenderSMILES, "btnRenderSMILES")
         Me.btnRenderSMILES.Name = "btnRenderSMILES"
+        Me.HelpProvider1.SetShowHelp(Me.btnRenderSMILES, CType(resources.GetObject("btnRenderSMILES.ShowHelp"), Boolean))
         Me.btnRenderSMILES.UseVisualStyleBackColor = True
         '
         'Label17
         '
         resources.ApplyResources(Me.Label17, "Label17")
         Me.Label17.Name = "Label17"
+        Me.HelpProvider1.SetShowHelp(Me.Label17, CType(resources.GetObject("Label17.ShowHelp"), Boolean))
         '
         'LinkPubChem
         '
         resources.ApplyResources(Me.LinkPubChem, "LinkPubChem")
         Me.LinkPubChem.Name = "LinkPubChem"
+        Me.HelpProvider1.SetShowHelp(Me.LinkPubChem, CType(resources.GetObject("LinkPubChem.ShowHelp"), Boolean))
         Me.LinkPubChem.TabStop = True
         Me.LinkPubChem.UseCompatibleTextRendering = True
         '
@@ -505,67 +533,79 @@ Partial Class FormCompoundCreator
         Me.TextBoxName.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.TextBoxName, "TextBoxName")
         Me.TextBoxName.Name = "TextBoxName"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxName, CType(resources.GetObject("TextBoxName.ShowHelp"), Boolean))
         '
         'TextBoxSMILES
         '
         resources.ApplyResources(Me.TextBoxSMILES, "TextBoxSMILES")
         Me.TextBoxSMILES.Name = "TextBoxSMILES"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxSMILES, CType(resources.GetObject("TextBoxSMILES.ShowHelp"), Boolean))
         '
         'TextBoxCAS
         '
         Me.TextBoxCAS.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxCAS, "TextBoxCAS")
         Me.TextBoxCAS.Name = "TextBoxCAS"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxCAS, CType(resources.GetObject("TextBoxCAS.ShowHelp"), Boolean))
         '
         'Label51
         '
         resources.ApplyResources(Me.Label51, "Label51")
         Me.Label51.Name = "Label51"
+        Me.HelpProvider1.SetShowHelp(Me.Label51, CType(resources.GetObject("Label51.ShowHelp"), Boolean))
         '
         'Label21
         '
         resources.ApplyResources(Me.Label21, "Label21")
         Me.Label21.Name = "Label21"
+        Me.HelpProvider1.SetShowHelp(Me.Label21, CType(resources.GetObject("Label21.ShowHelp"), Boolean))
         '
         'Label47
         '
         resources.ApplyResources(Me.Label47, "Label47")
         Me.Label47.Name = "Label47"
+        Me.HelpProvider1.SetShowHelp(Me.Label47, CType(resources.GetObject("Label47.ShowHelp"), Boolean))
         '
         'TextBoxFormula
         '
         Me.TextBoxFormula.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxFormula, "TextBoxFormula")
         Me.TextBoxFormula.Name = "TextBoxFormula"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxFormula, CType(resources.GetObject("TextBoxFormula.ShowHelp"), Boolean))
         '
         'pbRender
         '
         Me.pbRender.BackColor = System.Drawing.SystemColors.ControlLight
         resources.ApplyResources(Me.pbRender, "pbRender")
         Me.pbRender.Name = "pbRender"
+        Me.HelpProvider1.SetShowHelp(Me.pbRender, CType(resources.GetObject("pbRender.ShowHelp"), Boolean))
         Me.pbRender.TabStop = False
         '
         'Label22
         '
         resources.ApplyResources(Me.Label22, "Label22")
         Me.Label22.Name = "Label22"
+        Me.HelpProvider1.SetShowHelp(Me.Label22, CType(resources.GetObject("Label22.ShowHelp"), Boolean))
         '
         'TextBoxID
         '
         resources.ApplyResources(Me.TextBoxID, "TextBoxID")
         Me.TextBoxID.Name = "TextBoxID"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxID, CType(resources.GetObject("TextBoxID.ShowHelp"), Boolean))
         '
         'TextBoxMW
         '
         Me.TextBoxMW.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.TextBoxMW, "TextBoxMW")
         Me.TextBoxMW.Name = "TextBoxMW"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxMW, CType(resources.GetObject("TextBoxMW.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.TextBoxMW, resources.GetString("TextBoxMW.ToolTip"))
         '
         'lblMW
         '
         resources.ApplyResources(Me.lblMW, "lblMW")
         Me.lblMW.Name = "lblMW"
+        Me.HelpProvider1.SetShowHelp(Me.lblMW, CType(resources.GetObject("lblMW.ShowHelp"), Boolean))
         '
         'CheckBoxMW
         '
@@ -573,6 +613,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxMW.Checked = True
         Me.CheckBoxMW.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxMW.Name = "CheckBoxMW"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxMW, CType(resources.GetObject("CheckBoxMW.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxMW, resources.GetString("CheckBoxMW.ToolTip"))
         Me.CheckBoxMW.UseVisualStyleBackColor = True
         '
@@ -584,12 +625,14 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem2.Controls.Add(Me.GridUNIFAC)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        Me.HelpProvider1.SetShowHelp(Me.FaTabStripItem2, CType(resources.GetObject("FaTabStripItem2.ShowHelp"), Boolean))
         resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         '
         'LinkLabel2
         '
         resources.ApplyResources(Me.LinkLabel2, "LinkLabel2")
         Me.LinkLabel2.Name = "LinkLabel2"
+        Me.HelpProvider1.SetShowHelp(Me.LinkLabel2, CType(resources.GetObject("LinkLabel2.ShowHelp"), Boolean))
         Me.LinkLabel2.TabStop = True
         Me.ToolTip1.SetToolTip(Me.LinkLabel2, resources.GetString("LinkLabel2.ToolTip"))
         Me.LinkLabel2.UseCompatibleTextRendering = True
@@ -598,6 +641,7 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me.Label60, "Label60")
         Me.Label60.Name = "Label60"
+        Me.HelpProvider1.SetShowHelp(Me.Label60, CType(resources.GetObject("Label60.ShowHelp"), Boolean))
         '
         'GridUNIFAC
         '
@@ -609,17 +653,30 @@ Partial Class FormCompoundCreator
         Me.GridUNIFAC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridUNIFAC.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.GridUNIFAC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.GridUNIFAC.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column4, Me.Column1})
+        Me.GridUNIFAC.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column3, Me.Column5, Me.Column4, Me.Column1})
         Me.GridUNIFAC.Name = "GridUNIFAC"
         Me.GridUNIFAC.RowTemplate.Height = 80
         Me.GridUNIFAC.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.HelpProvider1.SetShowHelp(Me.GridUNIFAC, CType(resources.GetObject("GridUNIFAC.ShowHelp"), Boolean))
+        '
+        'Column3
+        '
+        resources.ApplyResources(Me.Column3, "Column3")
+        Me.Column3.Name = "Column3"
+        Me.Column3.ReadOnly = True
+        '
+        'Column5
+        '
+        resources.ApplyResources(Me.Column5, "Column5")
+        Me.Column5.Name = "Column5"
+        Me.Column5.ReadOnly = True
         '
         'Column4
         '
-        DataGridViewCellStyle193.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle193.Format = "N0"
-        DataGridViewCellStyle193.NullValue = "0"
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle193
+        DataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle28.Format = "N0"
+        DataGridViewCellStyle28.NullValue = "0"
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle28
         resources.ApplyResources(Me.Column4, "Column4")
         Me.Column4.MaxInputLength = 2
         Me.Column4.Name = "Column4"
@@ -631,6 +688,71 @@ Partial Class FormCompoundCreator
         Me.Column1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
+        '
+        'FaTabStripItem5
+        '
+        Me.FaTabStripItem5.Controls.Add(Me.GridMODFAC)
+        Me.FaTabStripItem5.Controls.Add(Me.Label85)
+        Me.FaTabStripItem5.IsDrawn = True
+        Me.FaTabStripItem5.Name = "FaTabStripItem5"
+        Me.HelpProvider1.SetShowHelp(Me.FaTabStripItem5, CType(resources.GetObject("FaTabStripItem5.ShowHelp"), Boolean))
+        resources.ApplyResources(Me.FaTabStripItem5, "FaTabStripItem5")
+        '
+        'GridMODFAC
+        '
+        Me.GridMODFAC.AllowUserToAddRows = False
+        Me.GridMODFAC.AllowUserToDeleteRows = False
+        Me.GridMODFAC.AllowUserToResizeColumns = False
+        Me.GridMODFAC.AllowUserToResizeRows = False
+        resources.ApplyResources(Me.GridMODFAC, "GridMODFAC")
+        Me.GridMODFAC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.GridMODFAC.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
+        Me.GridMODFAC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.GridMODFAC.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.MainGroup, Me.SubGroup, Me.DataGridViewTextBoxColumn13, Me.DataGridViewImageColumn1})
+        Me.GridMODFAC.Name = "GridMODFAC"
+        Me.GridMODFAC.RowTemplate.Height = 80
+        Me.GridMODFAC.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.HelpProvider1.SetShowHelp(Me.GridMODFAC, CType(resources.GetObject("GridMODFAC.ShowHelp"), Boolean))
+        '
+        'MainGroup
+        '
+        DataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.MainGroup.DefaultCellStyle = DataGridViewCellStyle29
+        resources.ApplyResources(Me.MainGroup, "MainGroup")
+        Me.MainGroup.Name = "MainGroup"
+        Me.MainGroup.ReadOnly = True
+        '
+        'SubGroup
+        '
+        DataGridViewCellStyle30.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.SubGroup.DefaultCellStyle = DataGridViewCellStyle30
+        resources.ApplyResources(Me.SubGroup, "SubGroup")
+        Me.SubGroup.Name = "SubGroup"
+        Me.SubGroup.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn13
+        '
+        DataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle31.Format = "N0"
+        DataGridViewCellStyle31.NullValue = "0"
+        Me.DataGridViewTextBoxColumn13.DefaultCellStyle = DataGridViewCellStyle31
+        resources.ApplyResources(Me.DataGridViewTextBoxColumn13, "DataGridViewTextBoxColumn13")
+        Me.DataGridViewTextBoxColumn13.MaxInputLength = 2
+        Me.DataGridViewTextBoxColumn13.Name = "DataGridViewTextBoxColumn13"
+        '
+        'DataGridViewImageColumn1
+        '
+        Me.DataGridViewImageColumn1.FillWeight = 200.0!
+        resources.ApplyResources(Me.DataGridViewImageColumn1, "DataGridViewImageColumn1")
+        Me.DataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom
+        Me.DataGridViewImageColumn1.Name = "DataGridViewImageColumn1"
+        Me.DataGridViewImageColumn1.ReadOnly = True
+        '
+        'Label85
+        '
+        resources.ApplyResources(Me.Label85, "Label85")
+        Me.Label85.Name = "Label85"
+        Me.HelpProvider1.SetShowHelp(Me.Label85, CType(resources.GetObject("Label85.ShowHelp"), Boolean))
         '
         'FaTabStripItem3
         '
@@ -644,12 +766,15 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem3.Controls.Add(Me.GridJoback)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
+        Me.FaTabStripItem3.Selected = True
+        Me.HelpProvider1.SetShowHelp(Me.FaTabStripItem3, CType(resources.GetObject("FaTabStripItem3.ShowHelp"), Boolean))
         resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         '
         'Label58
         '
         resources.ApplyResources(Me.Label58, "Label58")
         Me.Label58.Name = "Label58"
+        Me.HelpProvider1.SetShowHelp(Me.Label58, CType(resources.GetObject("Label58.ShowHelp"), Boolean))
         '
         'AddAtomDataGrid
         '
@@ -664,12 +789,13 @@ Partial Class FormCompoundCreator
         Me.AddAtomDataGrid.MultiSelect = False
         Me.AddAtomDataGrid.Name = "AddAtomDataGrid"
         Me.AddAtomDataGrid.RowHeadersVisible = False
+        Me.HelpProvider1.SetShowHelp(Me.AddAtomDataGrid, CType(resources.GetObject("AddAtomDataGrid.ShowHelp"), Boolean))
         '
         'Atom
         '
         Me.Atom.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        DataGridViewCellStyle194.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Atom.DefaultCellStyle = DataGridViewCellStyle194
+        DataGridViewCellStyle32.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.Atom.DefaultCellStyle = DataGridViewCellStyle32
         resources.ApplyResources(Me.Atom, "Atom")
         Me.Atom.Name = "Atom"
         Me.Atom.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
@@ -686,11 +812,13 @@ Partial Class FormCompoundCreator
         Me.TextBox1.ForeColor = System.Drawing.Color.Red
         resources.ApplyResources(Me.TextBox1, "TextBox1")
         Me.TextBox1.Name = "TextBox1"
+        Me.HelpProvider1.SetShowHelp(Me.TextBox1, CType(resources.GetObject("TextBox1.ShowHelp"), Boolean))
         '
         'Label59
         '
         resources.ApplyResources(Me.Label59, "Label59")
         Me.Label59.Name = "Label59"
+        Me.HelpProvider1.SetShowHelp(Me.Label59, CType(resources.GetObject("Label59.ShowHelp"), Boolean))
         '
         'AtomDataGrid
         '
@@ -701,12 +829,13 @@ Partial Class FormCompoundCreator
         Me.AtomDataGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColAtom, Me.ColCount})
         Me.AtomDataGrid.Name = "AtomDataGrid"
         Me.AtomDataGrid.RowHeadersVisible = False
+        Me.HelpProvider1.SetShowHelp(Me.AtomDataGrid, CType(resources.GetObject("AtomDataGrid.ShowHelp"), Boolean))
         '
         'ColAtom
         '
         Me.ColAtom.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        DataGridViewCellStyle195.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.ColAtom.DefaultCellStyle = DataGridViewCellStyle195
+        DataGridViewCellStyle33.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.ColAtom.DefaultCellStyle = DataGridViewCellStyle33
         resources.ApplyResources(Me.ColAtom, "ColAtom")
         Me.ColAtom.Name = "ColAtom"
         Me.ColAtom.ReadOnly = True
@@ -715,8 +844,8 @@ Partial Class FormCompoundCreator
         'ColCount
         '
         Me.ColCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        DataGridViewCellStyle196.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.ColCount.DefaultCellStyle = DataGridViewCellStyle196
+        DataGridViewCellStyle34.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.ColCount.DefaultCellStyle = DataGridViewCellStyle34
         resources.ApplyResources(Me.ColCount, "ColCount")
         Me.ColCount.Name = "ColCount"
         Me.ColCount.ReadOnly = True
@@ -726,6 +855,7 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me.LinkLabel3, "LinkLabel3")
         Me.LinkLabel3.Name = "LinkLabel3"
+        Me.HelpProvider1.SetShowHelp(Me.LinkLabel3, CType(resources.GetObject("LinkLabel3.ShowHelp"), Boolean))
         Me.LinkLabel3.TabStop = True
         Me.ToolTip1.SetToolTip(Me.LinkLabel3, resources.GetString("LinkLabel3.ToolTip"))
         Me.LinkLabel3.UseCompatibleTextRendering = True
@@ -734,6 +864,7 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me.Label57, "Label57")
         Me.Label57.Name = "Label57"
+        Me.HelpProvider1.SetShowHelp(Me.Label57, CType(resources.GetObject("Label57.ShowHelp"), Boolean))
         '
         'GridJoback
         '
@@ -746,6 +877,7 @@ Partial Class FormCompoundCreator
         Me.GridJoback.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridJoback.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column2, Me.ColumnGroupName, Me.ColumnCountUNIFAC, Me.ColumnCountJoback})
         Me.GridJoback.Name = "GridJoback"
+        Me.HelpProvider1.SetShowHelp(Me.GridJoback, CType(resources.GetObject("GridJoback.ShowHelp"), Boolean))
         '
         'Column2
         '
@@ -759,8 +891,8 @@ Partial Class FormCompoundCreator
         'ColumnGroupName
         '
         Me.ColumnGroupName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        DataGridViewCellStyle197.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.ColumnGroupName.DefaultCellStyle = DataGridViewCellStyle197
+        DataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.ColumnGroupName.DefaultCellStyle = DataGridViewCellStyle35
         resources.ApplyResources(Me.ColumnGroupName, "ColumnGroupName")
         Me.ColumnGroupName.Name = "ColumnGroupName"
         Me.ColumnGroupName.ReadOnly = True
@@ -769,8 +901,8 @@ Partial Class FormCompoundCreator
         '
         'ColumnCountUNIFAC
         '
-        DataGridViewCellStyle198.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.ColumnCountUNIFAC.DefaultCellStyle = DataGridViewCellStyle198
+        DataGridViewCellStyle36.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.ColumnCountUNIFAC.DefaultCellStyle = DataGridViewCellStyle36
         resources.ApplyResources(Me.ColumnCountUNIFAC, "ColumnCountUNIFAC")
         Me.ColumnCountUNIFAC.Name = "ColumnCountUNIFAC"
         Me.ColumnCountUNIFAC.ReadOnly = True
@@ -845,6 +977,7 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem4.Controls.Add(Me.Label63)
         Me.FaTabStripItem4.IsDrawn = True
         Me.FaTabStripItem4.Name = "FaTabStripItem4"
+        Me.HelpProvider1.SetShowHelp(Me.FaTabStripItem4, CType(resources.GetObject("FaTabStripItem4.ShowHelp"), Boolean))
         resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
         '
         'GroupBox6
@@ -860,6 +993,7 @@ Partial Class FormCompoundCreator
         Me.GroupBox6.Controls.Add(Me.Label27)
         resources.ApplyResources(Me.GroupBox6, "GroupBox6")
         Me.GroupBox6.Name = "GroupBox6"
+        Me.HelpProvider1.SetShowHelp(Me.GroupBox6, CType(resources.GetObject("GroupBox6.ShowHelp"), Boolean))
         Me.GroupBox6.TabStop = False
         '
         'LabelWithDivider8
@@ -867,51 +1001,60 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.LabelWithDivider8, "LabelWithDivider8")
         Me.LabelWithDivider8.Gap = 5
         Me.LabelWithDivider8.Name = "LabelWithDivider8"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider8, CType(resources.GetObject("LabelWithDivider8.ShowHelp"), Boolean))
         '
         'TextBoxPCSAFTEpsilon
         '
         Me.TextBoxPCSAFTEpsilon.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxPCSAFTEpsilon, "TextBoxPCSAFTEpsilon")
         Me.TextBoxPCSAFTEpsilon.Name = "TextBoxPCSAFTEpsilon"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxPCSAFTEpsilon, CType(resources.GetObject("TextBoxPCSAFTEpsilon.ShowHelp"), Boolean))
         '
         'Label20
         '
         resources.ApplyResources(Me.Label20, "Label20")
         Me.Label20.Name = "Label20"
+        Me.HelpProvider1.SetShowHelp(Me.Label20, CType(resources.GetObject("Label20.ShowHelp"), Boolean))
         '
         'LabelWithDivider9
         '
         resources.ApplyResources(Me.LabelWithDivider9, "LabelWithDivider9")
         Me.LabelWithDivider9.Gap = 5
         Me.LabelWithDivider9.Name = "LabelWithDivider9"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider9, CType(resources.GetObject("LabelWithDivider9.ShowHelp"), Boolean))
         '
         'TextBoxPCSAFTm
         '
         Me.TextBoxPCSAFTm.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxPCSAFTm, "TextBoxPCSAFTm")
         Me.TextBoxPCSAFTm.Name = "TextBoxPCSAFTm"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxPCSAFTm, CType(resources.GetObject("TextBoxPCSAFTm.ShowHelp"), Boolean))
         '
         'Label25
         '
         resources.ApplyResources(Me.Label25, "Label25")
         Me.Label25.Name = "Label25"
+        Me.HelpProvider1.SetShowHelp(Me.Label25, CType(resources.GetObject("Label25.ShowHelp"), Boolean))
         '
         'LabelWithDivider10
         '
         resources.ApplyResources(Me.LabelWithDivider10, "LabelWithDivider10")
         Me.LabelWithDivider10.Gap = 5
         Me.LabelWithDivider10.Name = "LabelWithDivider10"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider10, CType(resources.GetObject("LabelWithDivider10.ShowHelp"), Boolean))
         '
         'TextBoxPCSAFTSigma
         '
         Me.TextBoxPCSAFTSigma.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxPCSAFTSigma, "TextBoxPCSAFTSigma")
         Me.TextBoxPCSAFTSigma.Name = "TextBoxPCSAFTSigma"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxPCSAFTSigma, CType(resources.GetObject("TextBoxPCSAFTSigma.ShowHelp"), Boolean))
         '
         'Label27
         '
         resources.ApplyResources(Me.Label27, "Label27")
         Me.Label27.Name = "Label27"
+        Me.HelpProvider1.SetShowHelp(Me.Label27, CType(resources.GetObject("Label27.ShowHelp"), Boolean))
         '
         'CheckBoxAF
         '
@@ -919,6 +1062,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxAF.Checked = True
         Me.CheckBoxAF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxAF.Name = "CheckBoxAF"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxAF, CType(resources.GetObject("CheckBoxAF.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxAF, resources.GetString("CheckBoxAF.ToolTip"))
         Me.CheckBoxAF.UseVisualStyleBackColor = True
         '
@@ -928,6 +1072,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxCSLV.Checked = True
         Me.CheckBoxCSLV.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxCSLV.Name = "CheckBoxCSLV"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxCSLV, CType(resources.GetObject("CheckBoxCSLV.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxCSLV, resources.GetString("CheckBoxCSLV.ToolTip"))
         Me.CheckBoxCSLV.UseVisualStyleBackColor = True
         '
@@ -939,6 +1084,7 @@ Partial Class FormCompoundCreator
         Me.GroupBox11.Controls.Add(Me.Label49)
         resources.ApplyResources(Me.GroupBox11, "GroupBox11")
         Me.GroupBox11.Name = "GroupBox11"
+        Me.HelpProvider1.SetShowHelp(Me.GroupBox11, CType(resources.GetObject("GroupBox11.ShowHelp"), Boolean))
         Me.GroupBox11.TabStop = False
         '
         'TextBoxUNIQUAC_R
@@ -946,34 +1092,40 @@ Partial Class FormCompoundCreator
         Me.TextBoxUNIQUAC_R.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxUNIQUAC_R, "TextBoxUNIQUAC_R")
         Me.TextBoxUNIQUAC_R.Name = "TextBoxUNIQUAC_R"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxUNIQUAC_R, CType(resources.GetObject("TextBoxUNIQUAC_R.ShowHelp"), Boolean))
         '
         'Label48
         '
         resources.ApplyResources(Me.Label48, "Label48")
         Me.Label48.Name = "Label48"
+        Me.HelpProvider1.SetShowHelp(Me.Label48, CType(resources.GetObject("Label48.ShowHelp"), Boolean))
         '
         'TextBoxUNIQUAC_Q
         '
         Me.TextBoxUNIQUAC_Q.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxUNIQUAC_Q, "TextBoxUNIQUAC_Q")
         Me.TextBoxUNIQUAC_Q.Name = "TextBoxUNIQUAC_Q"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxUNIQUAC_Q, CType(resources.GetObject("TextBoxUNIQUAC_Q.ShowHelp"), Boolean))
         '
         'Label49
         '
         resources.ApplyResources(Me.Label49, "Label49")
         Me.Label49.Name = "Label49"
+        Me.HelpProvider1.SetShowHelp(Me.Label49, CType(resources.GetObject("Label49.ShowHelp"), Boolean))
         '
         'LabelWithDivider12
         '
         resources.ApplyResources(Me.LabelWithDivider12, "LabelWithDivider12")
         Me.LabelWithDivider12.Gap = 5
         Me.LabelWithDivider12.Name = "LabelWithDivider12"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider12, CType(resources.GetObject("LabelWithDivider12.ShowHelp"), Boolean))
         '
         'LabelWithDivider2
         '
         resources.ApplyResources(Me.LabelWithDivider2, "LabelWithDivider2")
         Me.LabelWithDivider2.Gap = 5
         Me.LabelWithDivider2.Name = "LabelWithDivider2"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider2, CType(resources.GetObject("LabelWithDivider2.ShowHelp"), Boolean))
         '
         'CheckBoxZRa
         '
@@ -981,6 +1133,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxZRa.Checked = True
         Me.CheckBoxZRa.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxZRa.Name = "CheckBoxZRa"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxZRa, CType(resources.GetObject("CheckBoxZRa.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxZRa, resources.GetString("CheckBoxZRa.ToolTip"))
         Me.CheckBoxZRa.UseVisualStyleBackColor = True
         '
@@ -990,6 +1143,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxCSSP.Checked = True
         Me.CheckBoxCSSP.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxCSSP.Name = "CheckBoxCSSP"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxCSSP, CType(resources.GetObject("CheckBoxCSSP.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxCSSP, resources.GetString("CheckBoxCSSP.ToolTip"))
         Me.CheckBoxCSSP.UseVisualStyleBackColor = True
         '
@@ -997,11 +1151,13 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me.Label50, "Label50")
         Me.Label50.Name = "Label50"
+        Me.HelpProvider1.SetShowHelp(Me.Label50, CType(resources.GetObject("Label50.ShowHelp"), Boolean))
         '
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
         Me.Label4.Name = "Label4"
+        Me.HelpProvider1.SetShowHelp(Me.Label4, CType(resources.GetObject("Label4.ShowHelp"), Boolean))
         '
         'CheckBoxCSAF
         '
@@ -1009,6 +1165,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxCSAF.Checked = True
         Me.CheckBoxCSAF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxCSAF.Name = "CheckBoxCSAF"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxCSAF, CType(resources.GetObject("CheckBoxCSAF.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxCSAF, resources.GetString("CheckBoxCSAF.ToolTip"))
         Me.CheckBoxCSAF.UseVisualStyleBackColor = True
         '
@@ -1017,6 +1174,7 @@ Partial Class FormCompoundCreator
         Me.TextBoxDHF.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.TextBoxDHF, "TextBoxDHF")
         Me.TextBoxDHF.Name = "TextBoxDHF"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxDHF, CType(resources.GetObject("TextBoxDHF.ShowHelp"), Boolean))
         '
         'CheckBoxZc
         '
@@ -1024,6 +1182,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxZc.Checked = True
         Me.CheckBoxZc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxZc.Name = "CheckBoxZc"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxZc, CType(resources.GetObject("CheckBoxZc.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxZc, resources.GetString("CheckBoxZc.ToolTip"))
         Me.CheckBoxZc.UseVisualStyleBackColor = True
         '
@@ -1033,6 +1192,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxNBP.Checked = True
         Me.CheckBoxNBP.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxNBP.Name = "CheckBoxNBP"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxNBP, CType(resources.GetObject("CheckBoxNBP.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxNBP, resources.GetString("CheckBoxNBP.ToolTip"))
         Me.CheckBoxNBP.UseVisualStyleBackColor = True
         '
@@ -1040,12 +1200,14 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me.lblDHF, "lblDHF")
         Me.lblDHF.Name = "lblDHF"
+        Me.HelpProvider1.SetShowHelp(Me.lblDHF, CType(resources.GetObject("lblDHF.ShowHelp"), Boolean))
         '
         'TextBoxTc
         '
         Me.TextBoxTc.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.TextBoxTc, "TextBoxTc")
         Me.TextBoxTc.Name = "TextBoxTc"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxTc, CType(resources.GetObject("TextBoxTc.ShowHelp"), Boolean))
         '
         'CheckBoxDGF
         '
@@ -1053,6 +1215,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxDGF.Checked = True
         Me.CheckBoxDGF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxDGF.Name = "CheckBoxDGF"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxDGF, CType(resources.GetObject("CheckBoxDGF.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxDGF, resources.GetString("CheckBoxDGF.ToolTip"))
         Me.CheckBoxDGF.UseVisualStyleBackColor = True
         '
@@ -1061,11 +1224,13 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.LabelWithDivider4, "LabelWithDivider4")
         Me.LabelWithDivider4.Gap = 5
         Me.LabelWithDivider4.Name = "LabelWithDivider4"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider4, CType(resources.GetObject("LabelWithDivider4.ShowHelp"), Boolean))
         '
         'Label53
         '
         resources.ApplyResources(Me.Label53, "Label53")
         Me.Label53.Name = "Label53"
+        Me.HelpProvider1.SetShowHelp(Me.Label53, CType(resources.GetObject("Label53.ShowHelp"), Boolean))
         '
         'CheckBoxPc
         '
@@ -1073,6 +1238,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxPc.Checked = True
         Me.CheckBoxPc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxPc.Name = "CheckBoxPc"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxPc, CType(resources.GetObject("CheckBoxPc.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxPc, resources.GetString("CheckBoxPc.ToolTip"))
         Me.CheckBoxPc.UseVisualStyleBackColor = True
         '
@@ -1082,6 +1248,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxDHF.Checked = True
         Me.CheckBoxDHF.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxDHF.Name = "CheckBoxDHF"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxDHF, CType(resources.GetObject("CheckBoxDHF.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxDHF, resources.GetString("CheckBoxDHF.ToolTip"))
         Me.CheckBoxDHF.UseVisualStyleBackColor = True
         '
@@ -1089,33 +1256,39 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me.Label12, "Label12")
         Me.Label12.Name = "Label12"
+        Me.HelpProvider1.SetShowHelp(Me.Label12, CType(resources.GetObject("Label12.ShowHelp"), Boolean))
         '
         'TextBoxDGF
         '
         Me.TextBoxDGF.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.TextBoxDGF, "TextBoxDGF")
         Me.TextBoxDGF.Name = "TextBoxDGF"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxDGF, CType(resources.GetObject("TextBoxDGF.ShowHelp"), Boolean))
         '
         'lblTc
         '
         resources.ApplyResources(Me.lblTc, "lblTc")
         Me.lblTc.Name = "lblTc"
+        Me.HelpProvider1.SetShowHelp(Me.lblTc, CType(resources.GetObject("lblTc.ShowHelp"), Boolean))
         '
         'Label68
         '
         resources.ApplyResources(Me.Label68, "Label68")
         Me.Label68.Name = "Label68"
+        Me.HelpProvider1.SetShowHelp(Me.Label68, CType(resources.GetObject("Label68.ShowHelp"), Boolean))
         '
         'TextBoxZc
         '
         Me.TextBoxZc.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.TextBoxZc, "TextBoxZc")
         Me.TextBoxZc.Name = "TextBoxZc"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxZc, CType(resources.GetObject("TextBoxZc.ShowHelp"), Boolean))
         '
         'lblDGF
         '
         resources.ApplyResources(Me.lblDGF, "lblDGF")
         Me.lblDGF.Name = "lblDGF"
+        Me.HelpProvider1.SetShowHelp(Me.lblDGF, CType(resources.GetObject("lblDGF.ShowHelp"), Boolean))
         '
         'CheckBoxTc
         '
@@ -1123,6 +1296,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxTc.Checked = True
         Me.CheckBoxTc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxTc.Name = "CheckBoxTc"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxTc, CType(resources.GetObject("CheckBoxTc.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxTc, resources.GetString("CheckBoxTc.ToolTip"))
         Me.CheckBoxTc.UseVisualStyleBackColor = True
         '
@@ -1131,153 +1305,181 @@ Partial Class FormCompoundCreator
         Me.TextBoxVTCSRK.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxVTCSRK, "TextBoxVTCSRK")
         Me.TextBoxVTCSRK.Name = "TextBoxVTCSRK"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxVTCSRK, CType(resources.GetObject("TextBoxVTCSRK.ShowHelp"), Boolean))
         '
         'TextBoxZRa
         '
         Me.TextBoxZRa.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxZRa, "TextBoxZRa")
         Me.TextBoxZRa.Name = "TextBoxZRa"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxZRa, CType(resources.GetObject("TextBoxZRa.ShowHelp"), Boolean))
         '
         'Label56
         '
         resources.ApplyResources(Me.Label56, "Label56")
         Me.Label56.Name = "Label56"
+        Me.HelpProvider1.SetShowHelp(Me.Label56, CType(resources.GetObject("Label56.ShowHelp"), Boolean))
         '
         'Label8
         '
         resources.ApplyResources(Me.Label8, "Label8")
         Me.Label8.Name = "Label8"
+        Me.HelpProvider1.SetShowHelp(Me.Label8, CType(resources.GetObject("Label8.ShowHelp"), Boolean))
         '
         'Text1
         '
         resources.ApplyResources(Me.Text1, "Text1")
         Me.Text1.Name = "Text1"
+        Me.HelpProvider1.SetShowHelp(Me.Text1, CType(resources.GetObject("Text1.ShowHelp"), Boolean))
         '
         'Label11
         '
         resources.ApplyResources(Me.Label11, "Label11")
         Me.Label11.Name = "Label11"
+        Me.HelpProvider1.SetShowHelp(Me.Label11, CType(resources.GetObject("Label11.ShowHelp"), Boolean))
         '
         'TextBoxNBP
         '
         resources.ApplyResources(Me.TextBoxNBP, "TextBoxNBP")
         Me.TextBoxNBP.Name = "TextBoxNBP"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxNBP, CType(resources.GetObject("TextBoxNBP.ShowHelp"), Boolean))
         '
         'LabelWithDivider6
         '
         resources.ApplyResources(Me.LabelWithDivider6, "LabelWithDivider6")
         Me.LabelWithDivider6.Gap = 5
         Me.LabelWithDivider6.Name = "LabelWithDivider6"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider6, CType(resources.GetObject("LabelWithDivider6.ShowHelp"), Boolean))
         '
         'Label67
         '
         resources.ApplyResources(Me.Label67, "Label67")
         Me.Label67.Name = "Label67"
+        Me.HelpProvider1.SetShowHelp(Me.Label67, CType(resources.GetObject("Label67.ShowHelp"), Boolean))
         '
         'LabelWithDivider5
         '
         resources.ApplyResources(Me.LabelWithDivider5, "LabelWithDivider5")
         Me.LabelWithDivider5.Gap = 5
         Me.LabelWithDivider5.Name = "LabelWithDivider5"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider5, CType(resources.GetObject("LabelWithDivider5.ShowHelp"), Boolean))
         '
         'lblNBP
         '
         resources.ApplyResources(Me.lblNBP, "lblNBP")
         Me.lblNBP.Name = "lblNBP"
+        Me.HelpProvider1.SetShowHelp(Me.lblNBP, CType(resources.GetObject("lblNBP.ShowHelp"), Boolean))
         '
         'TextBoxPc
         '
         Me.TextBoxPc.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.TextBoxPc, "TextBoxPc")
         Me.TextBoxPc.Name = "TextBoxPc"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxPc, CType(resources.GetObject("TextBoxPc.ShowHelp"), Boolean))
         '
         'Label66
         '
         resources.ApplyResources(Me.Label66, "Label66")
         Me.Label66.Name = "Label66"
+        Me.HelpProvider1.SetShowHelp(Me.Label66, CType(resources.GetObject("Label66.ShowHelp"), Boolean))
         '
         'LabelWithDivider3
         '
         resources.ApplyResources(Me.LabelWithDivider3, "LabelWithDivider3")
         Me.LabelWithDivider3.Gap = 5
         Me.LabelWithDivider3.Name = "LabelWithDivider3"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider3, CType(resources.GetObject("LabelWithDivider3.ShowHelp"), Boolean))
         '
         'LabelWithDivider13
         '
         resources.ApplyResources(Me.LabelWithDivider13, "LabelWithDivider13")
         Me.LabelWithDivider13.Gap = 5
         Me.LabelWithDivider13.Name = "LabelWithDivider13"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider13, CType(resources.GetObject("LabelWithDivider13.ShowHelp"), Boolean))
         '
         'TextBoxAF
         '
         Me.TextBoxAF.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.TextBoxAF, "TextBoxAF")
         Me.TextBoxAF.Name = "TextBoxAF"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxAF, CType(resources.GetObject("TextBoxAF.ShowHelp"), Boolean))
         '
         'TextBoxVTCPR
         '
         Me.TextBoxVTCPR.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxVTCPR, "TextBoxVTCPR")
         Me.TextBoxVTCPR.Name = "TextBoxVTCPR"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxVTCPR, CType(resources.GetObject("TextBoxVTCPR.ShowHelp"), Boolean))
         '
         'Label14
         '
         resources.ApplyResources(Me.Label14, "Label14")
         Me.Label14.Name = "Label14"
+        Me.HelpProvider1.SetShowHelp(Me.Label14, CType(resources.GetObject("Label14.ShowHelp"), Boolean))
         '
         'LabelWithDivider16
         '
         resources.ApplyResources(Me.LabelWithDivider16, "LabelWithDivider16")
         Me.LabelWithDivider16.Gap = 5
         Me.LabelWithDivider16.Name = "LabelWithDivider16"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider16, CType(resources.GetObject("LabelWithDivider16.ShowHelp"), Boolean))
         '
         'lblPc
         '
         resources.ApplyResources(Me.lblPc, "lblPc")
         Me.lblPc.Name = "lblPc"
+        Me.HelpProvider1.SetShowHelp(Me.lblPc, CType(resources.GetObject("lblPc.ShowHelp"), Boolean))
         '
         'TextBoxCSLV
         '
         Me.TextBoxCSLV.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxCSLV, "TextBoxCSLV")
         Me.TextBoxCSLV.Name = "TextBoxCSLV"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxCSLV, CType(resources.GetObject("TextBoxCSLV.ShowHelp"), Boolean))
         '
         'Label62
         '
         resources.ApplyResources(Me.Label62, "Label62")
         Me.Label62.Name = "Label62"
+        Me.HelpProvider1.SetShowHelp(Me.Label62, CType(resources.GetObject("Label62.ShowHelp"), Boolean))
         '
         'TextBoxCSSP
         '
         Me.TextBoxCSSP.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxCSSP, "TextBoxCSSP")
         Me.TextBoxCSSP.Name = "TextBoxCSSP"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxCSSP, CType(resources.GetObject("TextBoxCSSP.ShowHelp"), Boolean))
         '
         'TextBoxCSAF
         '
         Me.TextBoxCSAF.BackColor = System.Drawing.Color.LightSteelBlue
         resources.ApplyResources(Me.TextBoxCSAF, "TextBoxCSAF")
         Me.TextBoxCSAF.Name = "TextBoxCSAF"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxCSAF, CType(resources.GetObject("TextBoxCSAF.ShowHelp"), Boolean))
         '
         'Label65
         '
         resources.ApplyResources(Me.Label65, "Label65")
         Me.Label65.Name = "Label65"
+        Me.HelpProvider1.SetShowHelp(Me.Label65, CType(resources.GetObject("Label65.ShowHelp"), Boolean))
         '
         'Label61
         '
         resources.ApplyResources(Me.Label61, "Label61")
         Me.Label61.Name = "Label61"
+        Me.HelpProvider1.SetShowHelp(Me.Label61, CType(resources.GetObject("Label61.ShowHelp"), Boolean))
         '
         'Label64
         '
         resources.ApplyResources(Me.Label64, "Label64")
         Me.Label64.Name = "Label64"
+        Me.HelpProvider1.SetShowHelp(Me.Label64, CType(resources.GetObject("Label64.ShowHelp"), Boolean))
         '
         'Label63
         '
         resources.ApplyResources(Me.Label63, "Label63")
         Me.Label63.Name = "Label63"
+        Me.HelpProvider1.SetShowHelp(Me.Label63, CType(resources.GetObject("Label63.ShowHelp"), Boolean))
         '
         'FaTabStripItem7
         '
@@ -1305,18 +1507,21 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem7.Controls.Add(Me.Label29)
         Me.FaTabStripItem7.IsDrawn = True
         Me.FaTabStripItem7.Name = "FaTabStripItem7"
+        Me.HelpProvider1.SetShowHelp(Me.FaTabStripItem7, CType(resources.GetObject("FaTabStripItem7.ShowHelp"), Boolean))
         resources.ApplyResources(Me.FaTabStripItem7, "FaTabStripItem7")
         '
         'Label43
         '
         resources.ApplyResources(Me.Label43, "Label43")
         Me.Label43.Name = "Label43"
+        Me.HelpProvider1.SetShowHelp(Me.Label43, CType(resources.GetObject("Label43.ShowHelp"), Boolean))
         '
         'rbEstimatePVAP
         '
         resources.ApplyResources(Me.rbEstimatePVAP, "rbEstimatePVAP")
         Me.rbEstimatePVAP.Checked = True
         Me.rbEstimatePVAP.Name = "rbEstimatePVAP"
+        Me.HelpProvider1.SetShowHelp(Me.rbEstimatePVAP, CType(resources.GetObject("rbEstimatePVAP.ShowHelp"), Boolean))
         Me.rbEstimatePVAP.TabStop = True
         Me.rbEstimatePVAP.UseVisualStyleBackColor = True
         '
@@ -1325,41 +1530,45 @@ Partial Class FormCompoundCreator
         Me.tbPVAP_E.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbPVAP_E, "tbPVAP_E")
         Me.tbPVAP_E.Name = "tbPVAP_E"
+        Me.HelpProvider1.SetShowHelp(Me.tbPVAP_E, CType(resources.GetObject("tbPVAP_E.ShowHelp"), Boolean))
         '
         'rbRegressPVAP
         '
         resources.ApplyResources(Me.rbRegressPVAP, "rbRegressPVAP")
         Me.rbRegressPVAP.Name = "rbRegressPVAP"
+        Me.HelpProvider1.SetShowHelp(Me.rbRegressPVAP, CType(resources.GetObject("rbRegressPVAP.ShowHelp"), Boolean))
         Me.rbRegressPVAP.UseVisualStyleBackColor = True
         '
         'Label13
         '
         resources.ApplyResources(Me.Label13, "Label13")
         Me.Label13.Name = "Label13"
+        Me.HelpProvider1.SetShowHelp(Me.Label13, CType(resources.GetObject("Label13.ShowHelp"), Boolean))
         '
         'GridExpDataPVAP
         '
-        DataGridViewCellStyle199.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpDataPVAP.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle199
+        DataGridViewCellStyle37.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpDataPVAP.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle37
         Me.GridExpDataPVAP.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataPVAP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataPVAP.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2})
         resources.ApplyResources(Me.GridExpDataPVAP, "GridExpDataPVAP")
         Me.GridExpDataPVAP.Name = "GridExpDataPVAP"
         Me.GridExpDataPVAP.RowHeadersVisible = False
+        Me.HelpProvider1.SetShowHelp(Me.GridExpDataPVAP, CType(resources.GetObject("GridExpDataPVAP.ShowHelp"), Boolean))
         '
         'DataGridViewTextBoxColumn1
         '
-        DataGridViewCellStyle200.NullValue = "0"
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle200
+        DataGridViewCellStyle38.NullValue = "0"
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle38
         resources.ApplyResources(Me.DataGridViewTextBoxColumn1, "DataGridViewTextBoxColumn1")
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle201.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle201.NullValue = "0"
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle201
+        DataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle39.NullValue = "0"
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle39
         resources.ApplyResources(Me.DataGridViewTextBoxColumn2, "DataGridViewTextBoxColumn2")
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         '
@@ -1368,22 +1577,26 @@ Partial Class FormCompoundCreator
         Me.tbPVAP_D.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbPVAP_D, "tbPVAP_D")
         Me.tbPVAP_D.Name = "tbPVAP_D"
+        Me.HelpProvider1.SetShowHelp(Me.tbPVAP_D, CType(resources.GetObject("tbPVAP_D.ShowHelp"), Boolean))
         '
         'btnRegressPVAP
         '
         resources.ApplyResources(Me.btnRegressPVAP, "btnRegressPVAP")
         Me.btnRegressPVAP.Name = "btnRegressPVAP"
+        Me.HelpProvider1.SetShowHelp(Me.btnRegressPVAP, CType(resources.GetObject("btnRegressPVAP.ShowHelp"), Boolean))
         Me.btnRegressPVAP.UseVisualStyleBackColor = True
         '
         'Label10
         '
         resources.ApplyResources(Me.Label10, "Label10")
         Me.Label10.Name = "Label10"
+        Me.HelpProvider1.SetShowHelp(Me.Label10, CType(resources.GetObject("Label10.ShowHelp"), Boolean))
         '
         'btnViewPVAP
         '
         resources.ApplyResources(Me.btnViewPVAP, "btnViewPVAP")
         Me.btnViewPVAP.Name = "btnViewPVAP"
+        Me.HelpProvider1.SetShowHelp(Me.btnViewPVAP, CType(resources.GetObject("btnViewPVAP.ShowHelp"), Boolean))
         Me.btnViewPVAP.UseVisualStyleBackColor = True
         '
         'tbPVAP_C
@@ -1391,39 +1604,46 @@ Partial Class FormCompoundCreator
         Me.tbPVAP_C.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbPVAP_C, "tbPVAP_C")
         Me.tbPVAP_C.Name = "tbPVAP_C"
+        Me.HelpProvider1.SetShowHelp(Me.tbPVAP_C, CType(resources.GetObject("tbPVAP_C.ShowHelp"), Boolean))
         '
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
         Me.Label2.Name = "Label2"
+        Me.HelpProvider1.SetShowHelp(Me.Label2, CType(resources.GetObject("Label2.ShowHelp"), Boolean))
         '
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
         Me.Label6.Name = "Label6"
+        Me.HelpProvider1.SetShowHelp(Me.Label6, CType(resources.GetObject("Label6.ShowHelp"), Boolean))
         '
         'tbStatusPVAP
         '
         resources.ApplyResources(Me.tbStatusPVAP, "tbStatusPVAP")
         Me.tbStatusPVAP.Name = "tbStatusPVAP"
         Me.tbStatusPVAP.ReadOnly = True
+        Me.HelpProvider1.SetShowHelp(Me.tbStatusPVAP, CType(resources.GetObject("tbStatusPVAP.ShowHelp"), Boolean))
         '
         'tbPVAP_B
         '
         Me.tbPVAP_B.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbPVAP_B, "tbPVAP_B")
         Me.tbPVAP_B.Name = "tbPVAP_B"
+        Me.HelpProvider1.SetShowHelp(Me.tbPVAP_B, CType(resources.GetObject("tbPVAP_B.ShowHelp"), Boolean))
         '
         'rbCoeffPVAP
         '
         resources.ApplyResources(Me.rbCoeffPVAP, "rbCoeffPVAP")
         Me.rbCoeffPVAP.Name = "rbCoeffPVAP"
+        Me.HelpProvider1.SetShowHelp(Me.rbCoeffPVAP, CType(resources.GetObject("rbCoeffPVAP.ShowHelp"), Boolean))
         Me.rbCoeffPVAP.UseVisualStyleBackColor = True
         '
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
         Me.Label5.Name = "Label5"
+        Me.HelpProvider1.SetShowHelp(Me.Label5, CType(resources.GetObject("Label5.ShowHelp"), Boolean))
         '
         'cbEqPVAP
         '
@@ -1435,22 +1655,26 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.cbEqPVAP, "cbEqPVAP")
         Me.cbEqPVAP.Items.AddRange(New Object() {resources.GetString("cbEqPVAP.Items"), resources.GetString("cbEqPVAP.Items1"), resources.GetString("cbEqPVAP.Items2"), resources.GetString("cbEqPVAP.Items3"), resources.GetString("cbEqPVAP.Items4"), resources.GetString("cbEqPVAP.Items5"), resources.GetString("cbEqPVAP.Items6"), resources.GetString("cbEqPVAP.Items7"), resources.GetString("cbEqPVAP.Items8"), resources.GetString("cbEqPVAP.Items9"), resources.GetString("cbEqPVAP.Items10"), resources.GetString("cbEqPVAP.Items11"), resources.GetString("cbEqPVAP.Items12"), resources.GetString("cbEqPVAP.Items13"), resources.GetString("cbEqPVAP.Items14"), resources.GetString("cbEqPVAP.Items15"), resources.GetString("cbEqPVAP.Items16"), resources.GetString("cbEqPVAP.Items17"), resources.GetString("cbEqPVAP.Items18"), resources.GetString("cbEqPVAP.Items19"), resources.GetString("cbEqPVAP.Items20"), resources.GetString("cbEqPVAP.Items21"), resources.GetString("cbEqPVAP.Items22"), resources.GetString("cbEqPVAP.Items23"), resources.GetString("cbEqPVAP.Items24"), resources.GetString("cbEqPVAP.Items25"), resources.GetString("cbEqPVAP.Items26"), resources.GetString("cbEqPVAP.Items27"), resources.GetString("cbEqPVAP.Items28"), resources.GetString("cbEqPVAP.Items29"), resources.GetString("cbEqPVAP.Items30"), resources.GetString("cbEqPVAP.Items31"), resources.GetString("cbEqPVAP.Items32")})
         Me.cbEqPVAP.Name = "cbEqPVAP"
+        Me.HelpProvider1.SetShowHelp(Me.cbEqPVAP, CType(resources.GetObject("cbEqPVAP.ShowHelp"), Boolean))
         '
         'tbPVAP_A
         '
         Me.tbPVAP_A.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbPVAP_A, "tbPVAP_A")
         Me.tbPVAP_A.Name = "tbPVAP_A"
+        Me.HelpProvider1.SetShowHelp(Me.tbPVAP_A, CType(resources.GetObject("tbPVAP_A.ShowHelp"), Boolean))
         '
         'Label30
         '
         resources.ApplyResources(Me.Label30, "Label30")
         Me.Label30.Name = "Label30"
+        Me.HelpProvider1.SetShowHelp(Me.Label30, CType(resources.GetObject("Label30.ShowHelp"), Boolean))
         '
         'Label29
         '
         resources.ApplyResources(Me.Label29, "Label29")
         Me.Label29.Name = "Label29"
+        Me.HelpProvider1.SetShowHelp(Me.Label29, CType(resources.GetObject("Label29.ShowHelp"), Boolean))
         '
         'FaTabStripItem8
         '
@@ -1478,23 +1702,27 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem8.Controls.Add(Me.tbCPIG_C)
         Me.FaTabStripItem8.IsDrawn = True
         Me.FaTabStripItem8.Name = "FaTabStripItem8"
+        Me.HelpProvider1.SetShowHelp(Me.FaTabStripItem8, CType(resources.GetObject("FaTabStripItem8.ShowHelp"), Boolean))
         resources.ApplyResources(Me.FaTabStripItem8, "FaTabStripItem8")
         '
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
         Me.Label3.Name = "Label3"
+        Me.HelpProvider1.SetShowHelp(Me.Label3, CType(resources.GetObject("Label3.ShowHelp"), Boolean))
         '
         'Label44
         '
         resources.ApplyResources(Me.Label44, "Label44")
         Me.Label44.Name = "Label44"
+        Me.HelpProvider1.SetShowHelp(Me.Label44, CType(resources.GetObject("Label44.ShowHelp"), Boolean))
         '
         'rbEstimateCPIG
         '
         resources.ApplyResources(Me.rbEstimateCPIG, "rbEstimateCPIG")
         Me.rbEstimateCPIG.Checked = True
         Me.rbEstimateCPIG.Name = "rbEstimateCPIG"
+        Me.HelpProvider1.SetShowHelp(Me.rbEstimateCPIG, CType(resources.GetObject("rbEstimateCPIG.ShowHelp"), Boolean))
         Me.rbEstimateCPIG.TabStop = True
         Me.rbEstimateCPIG.UseVisualStyleBackColor = True
         '
@@ -1503,33 +1731,39 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.tbStatusCPIG, "tbStatusCPIG")
         Me.tbStatusCPIG.Name = "tbStatusCPIG"
         Me.tbStatusCPIG.ReadOnly = True
+        Me.HelpProvider1.SetShowHelp(Me.tbStatusCPIG, CType(resources.GetObject("tbStatusCPIG.ShowHelp"), Boolean))
         '
         'Label26
         '
         resources.ApplyResources(Me.Label26, "Label26")
         Me.Label26.Name = "Label26"
+        Me.HelpProvider1.SetShowHelp(Me.Label26, CType(resources.GetObject("Label26.ShowHelp"), Boolean))
         '
         'tbCPIG_E
         '
         Me.tbCPIG_E.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbCPIG_E, "tbCPIG_E")
         Me.tbCPIG_E.Name = "tbCPIG_E"
+        Me.HelpProvider1.SetShowHelp(Me.tbCPIG_E, CType(resources.GetObject("tbCPIG_E.ShowHelp"), Boolean))
         '
         'Label28
         '
         resources.ApplyResources(Me.Label28, "Label28")
         Me.Label28.Name = "Label28"
+        Me.HelpProvider1.SetShowHelp(Me.Label28, CType(resources.GetObject("Label28.ShowHelp"), Boolean))
         '
         'tbCPIG_A
         '
         Me.tbCPIG_A.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbCPIG_A, "tbCPIG_A")
         Me.tbCPIG_A.Name = "tbCPIG_A"
+        Me.HelpProvider1.SetShowHelp(Me.tbCPIG_A, CType(resources.GetObject("tbCPIG_A.ShowHelp"), Boolean))
         '
         'Label18
         '
         resources.ApplyResources(Me.Label18, "Label18")
         Me.Label18.Name = "Label18"
+        Me.HelpProvider1.SetShowHelp(Me.Label18, CType(resources.GetObject("Label18.ShowHelp"), Boolean))
         '
         'cbEqCPIG
         '
@@ -1541,34 +1775,40 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.cbEqCPIG, "cbEqCPIG")
         Me.cbEqCPIG.Items.AddRange(New Object() {resources.GetString("cbEqCPIG.Items"), resources.GetString("cbEqCPIG.Items1"), resources.GetString("cbEqCPIG.Items2"), resources.GetString("cbEqCPIG.Items3"), resources.GetString("cbEqCPIG.Items4"), resources.GetString("cbEqCPIG.Items5"), resources.GetString("cbEqCPIG.Items6"), resources.GetString("cbEqCPIG.Items7"), resources.GetString("cbEqCPIG.Items8"), resources.GetString("cbEqCPIG.Items9"), resources.GetString("cbEqCPIG.Items10"), resources.GetString("cbEqCPIG.Items11"), resources.GetString("cbEqCPIG.Items12"), resources.GetString("cbEqCPIG.Items13"), resources.GetString("cbEqCPIG.Items14"), resources.GetString("cbEqCPIG.Items15"), resources.GetString("cbEqCPIG.Items16"), resources.GetString("cbEqCPIG.Items17"), resources.GetString("cbEqCPIG.Items18"), resources.GetString("cbEqCPIG.Items19"), resources.GetString("cbEqCPIG.Items20"), resources.GetString("cbEqCPIG.Items21"), resources.GetString("cbEqCPIG.Items22"), resources.GetString("cbEqCPIG.Items23"), resources.GetString("cbEqCPIG.Items24"), resources.GetString("cbEqCPIG.Items25"), resources.GetString("cbEqCPIG.Items26"), resources.GetString("cbEqCPIG.Items27"), resources.GetString("cbEqCPIG.Items28"), resources.GetString("cbEqCPIG.Items29"), resources.GetString("cbEqCPIG.Items30"), resources.GetString("cbEqCPIG.Items31"), resources.GetString("cbEqCPIG.Items32")})
         Me.cbEqCPIG.Name = "cbEqCPIG"
+        Me.HelpProvider1.SetShowHelp(Me.cbEqCPIG, CType(resources.GetObject("cbEqCPIG.ShowHelp"), Boolean))
         '
         'btnViewCPIG
         '
         resources.ApplyResources(Me.btnViewCPIG, "btnViewCPIG")
         Me.btnViewCPIG.Name = "btnViewCPIG"
+        Me.HelpProvider1.SetShowHelp(Me.btnViewCPIG, CType(resources.GetObject("btnViewCPIG.ShowHelp"), Boolean))
         Me.btnViewCPIG.UseVisualStyleBackColor = True
         '
         'Label24
         '
         resources.ApplyResources(Me.Label24, "Label24")
         Me.Label24.Name = "Label24"
+        Me.HelpProvider1.SetShowHelp(Me.Label24, CType(resources.GetObject("Label24.ShowHelp"), Boolean))
         '
         'tbCPIG_D
         '
         Me.tbCPIG_D.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbCPIG_D, "tbCPIG_D")
         Me.tbCPIG_D.Name = "tbCPIG_D"
+        Me.HelpProvider1.SetShowHelp(Me.tbCPIG_D, CType(resources.GetObject("tbCPIG_D.ShowHelp"), Boolean))
         '
         'rbCoeffCPIG
         '
         resources.ApplyResources(Me.rbCoeffCPIG, "rbCoeffCPIG")
         Me.rbCoeffCPIG.Name = "rbCoeffCPIG"
+        Me.HelpProvider1.SetShowHelp(Me.rbCoeffCPIG, CType(resources.GetObject("rbCoeffCPIG.ShowHelp"), Boolean))
         Me.rbCoeffCPIG.UseVisualStyleBackColor = True
         '
         'btnRegressCPIG
         '
         resources.ApplyResources(Me.btnRegressCPIG, "btnRegressCPIG")
         Me.btnRegressCPIG.Name = "btnRegressCPIG"
+        Me.HelpProvider1.SetShowHelp(Me.btnRegressCPIG, CType(resources.GetObject("btnRegressCPIG.ShowHelp"), Boolean))
         Me.btnRegressCPIG.UseVisualStyleBackColor = True
         '
         'tbCPIG_B
@@ -1576,40 +1816,44 @@ Partial Class FormCompoundCreator
         Me.tbCPIG_B.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbCPIG_B, "tbCPIG_B")
         Me.tbCPIG_B.Name = "tbCPIG_B"
+        Me.HelpProvider1.SetShowHelp(Me.tbCPIG_B, CType(resources.GetObject("tbCPIG_B.ShowHelp"), Boolean))
         '
         'Label19
         '
         resources.ApplyResources(Me.Label19, "Label19")
         Me.Label19.Name = "Label19"
+        Me.HelpProvider1.SetShowHelp(Me.Label19, CType(resources.GetObject("Label19.ShowHelp"), Boolean))
         '
         'Label23
         '
         resources.ApplyResources(Me.Label23, "Label23")
         Me.Label23.Name = "Label23"
+        Me.HelpProvider1.SetShowHelp(Me.Label23, CType(resources.GetObject("Label23.ShowHelp"), Boolean))
         '
         'GridExpDataCPIG
         '
-        DataGridViewCellStyle202.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpDataCPIG.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle202
+        DataGridViewCellStyle40.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpDataCPIG.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle40
         Me.GridExpDataCPIG.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataCPIG.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataCPIG.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4})
         resources.ApplyResources(Me.GridExpDataCPIG, "GridExpDataCPIG")
         Me.GridExpDataCPIG.Name = "GridExpDataCPIG"
         Me.GridExpDataCPIG.RowHeadersVisible = False
+        Me.HelpProvider1.SetShowHelp(Me.GridExpDataCPIG, CType(resources.GetObject("GridExpDataCPIG.ShowHelp"), Boolean))
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle203.NullValue = "0"
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle203
+        DataGridViewCellStyle41.NullValue = "0"
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle41
         resources.ApplyResources(Me.DataGridViewTextBoxColumn3, "DataGridViewTextBoxColumn3")
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
         '
         'DataGridViewTextBoxColumn4
         '
-        DataGridViewCellStyle204.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle204.NullValue = "0"
-        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle204
+        DataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle42.NullValue = "0"
+        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle42
         resources.ApplyResources(Me.DataGridViewTextBoxColumn4, "DataGridViewTextBoxColumn4")
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
         '
@@ -1617,6 +1861,7 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me.rbRegressCPIG, "rbRegressCPIG")
         Me.rbRegressCPIG.Name = "rbRegressCPIG"
+        Me.HelpProvider1.SetShowHelp(Me.rbRegressCPIG, CType(resources.GetObject("rbRegressCPIG.ShowHelp"), Boolean))
         Me.rbRegressCPIG.UseVisualStyleBackColor = True
         '
         'tbCPIG_C
@@ -1624,6 +1869,7 @@ Partial Class FormCompoundCreator
         Me.tbCPIG_C.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbCPIG_C, "tbCPIG_C")
         Me.tbCPIG_C.Name = "tbCPIG_C"
+        Me.HelpProvider1.SetShowHelp(Me.tbCPIG_C, CType(resources.GetObject("tbCPIG_C.ShowHelp"), Boolean))
         '
         'FaTabStripItem9
         '
@@ -1651,18 +1897,21 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem9.Controls.Add(Me.Label35)
         Me.FaTabStripItem9.IsDrawn = True
         Me.FaTabStripItem9.Name = "FaTabStripItem9"
+        Me.HelpProvider1.SetShowHelp(Me.FaTabStripItem9, CType(resources.GetObject("FaTabStripItem9.ShowHelp"), Boolean))
         resources.ApplyResources(Me.FaTabStripItem9, "FaTabStripItem9")
         '
         'Label45
         '
         resources.ApplyResources(Me.Label45, "Label45")
         Me.Label45.Name = "Label45"
+        Me.HelpProvider1.SetShowHelp(Me.Label45, CType(resources.GetObject("Label45.ShowHelp"), Boolean))
         '
         'rbEstimateLIQDENS
         '
         resources.ApplyResources(Me.rbEstimateLIQDENS, "rbEstimateLIQDENS")
         Me.rbEstimateLIQDENS.Checked = True
         Me.rbEstimateLIQDENS.Name = "rbEstimateLIQDENS"
+        Me.HelpProvider1.SetShowHelp(Me.rbEstimateLIQDENS, CType(resources.GetObject("rbEstimateLIQDENS.ShowHelp"), Boolean))
         Me.rbEstimateLIQDENS.TabStop = True
         Me.rbEstimateLIQDENS.UseVisualStyleBackColor = True
         '
@@ -1671,41 +1920,45 @@ Partial Class FormCompoundCreator
         Me.tbLIQDENS_E.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbLIQDENS_E, "tbLIQDENS_E")
         Me.tbLIQDENS_E.Name = "tbLIQDENS_E"
+        Me.HelpProvider1.SetShowHelp(Me.tbLIQDENS_E, CType(resources.GetObject("tbLIQDENS_E.ShowHelp"), Boolean))
         '
         'rbRegressLIQDENS
         '
         resources.ApplyResources(Me.rbRegressLIQDENS, "rbRegressLIQDENS")
         Me.rbRegressLIQDENS.Name = "rbRegressLIQDENS"
+        Me.HelpProvider1.SetShowHelp(Me.rbRegressLIQDENS, CType(resources.GetObject("rbRegressLIQDENS.ShowHelp"), Boolean))
         Me.rbRegressLIQDENS.UseVisualStyleBackColor = True
         '
         'Label31
         '
         resources.ApplyResources(Me.Label31, "Label31")
         Me.Label31.Name = "Label31"
+        Me.HelpProvider1.SetShowHelp(Me.Label31, CType(resources.GetObject("Label31.ShowHelp"), Boolean))
         '
         'GridExpDataLIQDENS
         '
-        DataGridViewCellStyle205.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpDataLIQDENS.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle205
+        DataGridViewCellStyle43.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpDataLIQDENS.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle43
         Me.GridExpDataLIQDENS.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataLIQDENS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataLIQDENS.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6})
         resources.ApplyResources(Me.GridExpDataLIQDENS, "GridExpDataLIQDENS")
         Me.GridExpDataLIQDENS.Name = "GridExpDataLIQDENS"
         Me.GridExpDataLIQDENS.RowHeadersVisible = False
+        Me.HelpProvider1.SetShowHelp(Me.GridExpDataLIQDENS, CType(resources.GetObject("GridExpDataLIQDENS.ShowHelp"), Boolean))
         '
         'DataGridViewTextBoxColumn5
         '
-        DataGridViewCellStyle206.NullValue = "0"
-        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle206
+        DataGridViewCellStyle44.NullValue = "0"
+        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle44
         resources.ApplyResources(Me.DataGridViewTextBoxColumn5, "DataGridViewTextBoxColumn5")
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
         '
         'DataGridViewTextBoxColumn6
         '
-        DataGridViewCellStyle207.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle207.NullValue = "0"
-        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle207
+        DataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle45.NullValue = "0"
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle45
         resources.ApplyResources(Me.DataGridViewTextBoxColumn6, "DataGridViewTextBoxColumn6")
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
         '
@@ -1714,22 +1967,26 @@ Partial Class FormCompoundCreator
         Me.tbLIQDENS_D.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbLIQDENS_D, "tbLIQDENS_D")
         Me.tbLIQDENS_D.Name = "tbLIQDENS_D"
+        Me.HelpProvider1.SetShowHelp(Me.tbLIQDENS_D, CType(resources.GetObject("tbLIQDENS_D.ShowHelp"), Boolean))
         '
         'btnRegressLIQDENS
         '
         resources.ApplyResources(Me.btnRegressLIQDENS, "btnRegressLIQDENS")
         Me.btnRegressLIQDENS.Name = "btnRegressLIQDENS"
+        Me.HelpProvider1.SetShowHelp(Me.btnRegressLIQDENS, CType(resources.GetObject("btnRegressLIQDENS.ShowHelp"), Boolean))
         Me.btnRegressLIQDENS.UseVisualStyleBackColor = True
         '
         'Label32
         '
         resources.ApplyResources(Me.Label32, "Label32")
         Me.Label32.Name = "Label32"
+        Me.HelpProvider1.SetShowHelp(Me.Label32, CType(resources.GetObject("Label32.ShowHelp"), Boolean))
         '
         'btnViewLIQDENS
         '
         resources.ApplyResources(Me.btnViewLIQDENS, "btnViewLIQDENS")
         Me.btnViewLIQDENS.Name = "btnViewLIQDENS"
+        Me.HelpProvider1.SetShowHelp(Me.btnViewLIQDENS, CType(resources.GetObject("btnViewLIQDENS.ShowHelp"), Boolean))
         Me.btnViewLIQDENS.UseVisualStyleBackColor = True
         '
         'tbLIQDENS_C
@@ -1737,39 +1994,46 @@ Partial Class FormCompoundCreator
         Me.tbLIQDENS_C.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbLIQDENS_C, "tbLIQDENS_C")
         Me.tbLIQDENS_C.Name = "tbLIQDENS_C"
+        Me.HelpProvider1.SetShowHelp(Me.tbLIQDENS_C, CType(resources.GetObject("tbLIQDENS_C.ShowHelp"), Boolean))
         '
         'Label7
         '
         resources.ApplyResources(Me.Label7, "Label7")
         Me.Label7.Name = "Label7"
+        Me.HelpProvider1.SetShowHelp(Me.Label7, CType(resources.GetObject("Label7.ShowHelp"), Boolean))
         '
         'Label33
         '
         resources.ApplyResources(Me.Label33, "Label33")
         Me.Label33.Name = "Label33"
+        Me.HelpProvider1.SetShowHelp(Me.Label33, CType(resources.GetObject("Label33.ShowHelp"), Boolean))
         '
         'tbStatusLIQDENS
         '
         resources.ApplyResources(Me.tbStatusLIQDENS, "tbStatusLIQDENS")
         Me.tbStatusLIQDENS.Name = "tbStatusLIQDENS"
         Me.tbStatusLIQDENS.ReadOnly = True
+        Me.HelpProvider1.SetShowHelp(Me.tbStatusLIQDENS, CType(resources.GetObject("tbStatusLIQDENS.ShowHelp"), Boolean))
         '
         'tbLIQDENS_B
         '
         Me.tbLIQDENS_B.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbLIQDENS_B, "tbLIQDENS_B")
         Me.tbLIQDENS_B.Name = "tbLIQDENS_B"
+        Me.HelpProvider1.SetShowHelp(Me.tbLIQDENS_B, CType(resources.GetObject("tbLIQDENS_B.ShowHelp"), Boolean))
         '
         'rbCoeffLIQDENS
         '
         resources.ApplyResources(Me.rbCoeffLIQDENS, "rbCoeffLIQDENS")
         Me.rbCoeffLIQDENS.Name = "rbCoeffLIQDENS"
+        Me.HelpProvider1.SetShowHelp(Me.rbCoeffLIQDENS, CType(resources.GetObject("rbCoeffLIQDENS.ShowHelp"), Boolean))
         Me.rbCoeffLIQDENS.UseVisualStyleBackColor = True
         '
         'Label34
         '
         resources.ApplyResources(Me.Label34, "Label34")
         Me.Label34.Name = "Label34"
+        Me.HelpProvider1.SetShowHelp(Me.Label34, CType(resources.GetObject("Label34.ShowHelp"), Boolean))
         '
         'cbEqLIQDENS
         '
@@ -1781,22 +2045,26 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.cbEqLIQDENS, "cbEqLIQDENS")
         Me.cbEqLIQDENS.Items.AddRange(New Object() {resources.GetString("cbEqLIQDENS.Items"), resources.GetString("cbEqLIQDENS.Items1"), resources.GetString("cbEqLIQDENS.Items2"), resources.GetString("cbEqLIQDENS.Items3"), resources.GetString("cbEqLIQDENS.Items4"), resources.GetString("cbEqLIQDENS.Items5"), resources.GetString("cbEqLIQDENS.Items6"), resources.GetString("cbEqLIQDENS.Items7"), resources.GetString("cbEqLIQDENS.Items8"), resources.GetString("cbEqLIQDENS.Items9"), resources.GetString("cbEqLIQDENS.Items10"), resources.GetString("cbEqLIQDENS.Items11"), resources.GetString("cbEqLIQDENS.Items12"), resources.GetString("cbEqLIQDENS.Items13"), resources.GetString("cbEqLIQDENS.Items14"), resources.GetString("cbEqLIQDENS.Items15"), resources.GetString("cbEqLIQDENS.Items16"), resources.GetString("cbEqLIQDENS.Items17"), resources.GetString("cbEqLIQDENS.Items18"), resources.GetString("cbEqLIQDENS.Items19"), resources.GetString("cbEqLIQDENS.Items20"), resources.GetString("cbEqLIQDENS.Items21"), resources.GetString("cbEqLIQDENS.Items22"), resources.GetString("cbEqLIQDENS.Items23"), resources.GetString("cbEqLIQDENS.Items24"), resources.GetString("cbEqLIQDENS.Items25"), resources.GetString("cbEqLIQDENS.Items26"), resources.GetString("cbEqLIQDENS.Items27"), resources.GetString("cbEqLIQDENS.Items28"), resources.GetString("cbEqLIQDENS.Items29"), resources.GetString("cbEqLIQDENS.Items30"), resources.GetString("cbEqLIQDENS.Items31"), resources.GetString("cbEqLIQDENS.Items32")})
         Me.cbEqLIQDENS.Name = "cbEqLIQDENS"
+        Me.HelpProvider1.SetShowHelp(Me.cbEqLIQDENS, CType(resources.GetObject("cbEqLIQDENS.ShowHelp"), Boolean))
         '
         'tbLIQDENS_A
         '
         Me.tbLIQDENS_A.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbLIQDENS_A, "tbLIQDENS_A")
         Me.tbLIQDENS_A.Name = "tbLIQDENS_A"
+        Me.HelpProvider1.SetShowHelp(Me.tbLIQDENS_A, CType(resources.GetObject("tbLIQDENS_A.ShowHelp"), Boolean))
         '
         'Label36
         '
         resources.ApplyResources(Me.Label36, "Label36")
         Me.Label36.Name = "Label36"
+        Me.HelpProvider1.SetShowHelp(Me.Label36, CType(resources.GetObject("Label36.ShowHelp"), Boolean))
         '
         'Label35
         '
         resources.ApplyResources(Me.Label35, "Label35")
         Me.Label35.Name = "Label35"
+        Me.HelpProvider1.SetShowHelp(Me.Label35, CType(resources.GetObject("Label35.ShowHelp"), Boolean))
         '
         'FaTabStripItem10
         '
@@ -1824,18 +2092,21 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem10.Controls.Add(Me.Label41)
         Me.FaTabStripItem10.IsDrawn = True
         Me.FaTabStripItem10.Name = "FaTabStripItem10"
+        Me.HelpProvider1.SetShowHelp(Me.FaTabStripItem10, CType(resources.GetObject("FaTabStripItem10.ShowHelp"), Boolean))
         resources.ApplyResources(Me.FaTabStripItem10, "FaTabStripItem10")
         '
         'Label46
         '
         resources.ApplyResources(Me.Label46, "Label46")
         Me.Label46.Name = "Label46"
+        Me.HelpProvider1.SetShowHelp(Me.Label46, CType(resources.GetObject("Label46.ShowHelp"), Boolean))
         '
         'rbEstimateLIQVISC
         '
         resources.ApplyResources(Me.rbEstimateLIQVISC, "rbEstimateLIQVISC")
         Me.rbEstimateLIQVISC.Checked = True
         Me.rbEstimateLIQVISC.Name = "rbEstimateLIQVISC"
+        Me.HelpProvider1.SetShowHelp(Me.rbEstimateLIQVISC, CType(resources.GetObject("rbEstimateLIQVISC.ShowHelp"), Boolean))
         Me.rbEstimateLIQVISC.TabStop = True
         Me.rbEstimateLIQVISC.UseVisualStyleBackColor = True
         '
@@ -1844,41 +2115,45 @@ Partial Class FormCompoundCreator
         Me.tbLIQVISC_E.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbLIQVISC_E, "tbLIQVISC_E")
         Me.tbLIQVISC_E.Name = "tbLIQVISC_E"
+        Me.HelpProvider1.SetShowHelp(Me.tbLIQVISC_E, CType(resources.GetObject("tbLIQVISC_E.ShowHelp"), Boolean))
         '
         'rbRegressLIQVISC
         '
         resources.ApplyResources(Me.rbRegressLIQVISC, "rbRegressLIQVISC")
         Me.rbRegressLIQVISC.Name = "rbRegressLIQVISC"
+        Me.HelpProvider1.SetShowHelp(Me.rbRegressLIQVISC, CType(resources.GetObject("rbRegressLIQVISC.ShowHelp"), Boolean))
         Me.rbRegressLIQVISC.UseVisualStyleBackColor = True
         '
         'Label37
         '
         resources.ApplyResources(Me.Label37, "Label37")
         Me.Label37.Name = "Label37"
+        Me.HelpProvider1.SetShowHelp(Me.Label37, CType(resources.GetObject("Label37.ShowHelp"), Boolean))
         '
         'GridExpDataLIQVISC
         '
-        DataGridViewCellStyle208.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpDataLIQVISC.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle208
+        DataGridViewCellStyle46.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpDataLIQVISC.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle46
         Me.GridExpDataLIQVISC.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataLIQVISC.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataLIQVISC.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn7, Me.DataGridViewTextBoxColumn8})
         resources.ApplyResources(Me.GridExpDataLIQVISC, "GridExpDataLIQVISC")
         Me.GridExpDataLIQVISC.Name = "GridExpDataLIQVISC"
         Me.GridExpDataLIQVISC.RowHeadersVisible = False
+        Me.HelpProvider1.SetShowHelp(Me.GridExpDataLIQVISC, CType(resources.GetObject("GridExpDataLIQVISC.ShowHelp"), Boolean))
         '
         'DataGridViewTextBoxColumn7
         '
-        DataGridViewCellStyle209.NullValue = "0"
-        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle209
+        DataGridViewCellStyle47.NullValue = "0"
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle47
         resources.ApplyResources(Me.DataGridViewTextBoxColumn7, "DataGridViewTextBoxColumn7")
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
         '
         'DataGridViewTextBoxColumn8
         '
-        DataGridViewCellStyle210.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle210.NullValue = "0"
-        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle210
+        DataGridViewCellStyle48.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle48.NullValue = "0"
+        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle48
         resources.ApplyResources(Me.DataGridViewTextBoxColumn8, "DataGridViewTextBoxColumn8")
         Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
         '
@@ -1887,22 +2162,26 @@ Partial Class FormCompoundCreator
         Me.tbLIQVISC_D.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbLIQVISC_D, "tbLIQVISC_D")
         Me.tbLIQVISC_D.Name = "tbLIQVISC_D"
+        Me.HelpProvider1.SetShowHelp(Me.tbLIQVISC_D, CType(resources.GetObject("tbLIQVISC_D.ShowHelp"), Boolean))
         '
         'btnRegressLIQVISC
         '
         resources.ApplyResources(Me.btnRegressLIQVISC, "btnRegressLIQVISC")
         Me.btnRegressLIQVISC.Name = "btnRegressLIQVISC"
+        Me.HelpProvider1.SetShowHelp(Me.btnRegressLIQVISC, CType(resources.GetObject("btnRegressLIQVISC.ShowHelp"), Boolean))
         Me.btnRegressLIQVISC.UseVisualStyleBackColor = True
         '
         'Label38
         '
         resources.ApplyResources(Me.Label38, "Label38")
         Me.Label38.Name = "Label38"
+        Me.HelpProvider1.SetShowHelp(Me.Label38, CType(resources.GetObject("Label38.ShowHelp"), Boolean))
         '
         'btnViewLIQVISC
         '
         resources.ApplyResources(Me.btnViewLIQVISC, "btnViewLIQVISC")
         Me.btnViewLIQVISC.Name = "btnViewLIQVISC"
+        Me.HelpProvider1.SetShowHelp(Me.btnViewLIQVISC, CType(resources.GetObject("btnViewLIQVISC.ShowHelp"), Boolean))
         Me.btnViewLIQVISC.UseVisualStyleBackColor = True
         '
         'tbLIQVISC_C
@@ -1910,39 +2189,46 @@ Partial Class FormCompoundCreator
         Me.tbLIQVISC_C.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbLIQVISC_C, "tbLIQVISC_C")
         Me.tbLIQVISC_C.Name = "tbLIQVISC_C"
+        Me.HelpProvider1.SetShowHelp(Me.tbLIQVISC_C, CType(resources.GetObject("tbLIQVISC_C.ShowHelp"), Boolean))
         '
         'Label9
         '
         resources.ApplyResources(Me.Label9, "Label9")
         Me.Label9.Name = "Label9"
+        Me.HelpProvider1.SetShowHelp(Me.Label9, CType(resources.GetObject("Label9.ShowHelp"), Boolean))
         '
         'Label39
         '
         resources.ApplyResources(Me.Label39, "Label39")
         Me.Label39.Name = "Label39"
+        Me.HelpProvider1.SetShowHelp(Me.Label39, CType(resources.GetObject("Label39.ShowHelp"), Boolean))
         '
         'tbStatusLIQVISC
         '
         resources.ApplyResources(Me.tbStatusLIQVISC, "tbStatusLIQVISC")
         Me.tbStatusLIQVISC.Name = "tbStatusLIQVISC"
         Me.tbStatusLIQVISC.ReadOnly = True
+        Me.HelpProvider1.SetShowHelp(Me.tbStatusLIQVISC, CType(resources.GetObject("tbStatusLIQVISC.ShowHelp"), Boolean))
         '
         'tbLIQVISC_B
         '
         Me.tbLIQVISC_B.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbLIQVISC_B, "tbLIQVISC_B")
         Me.tbLIQVISC_B.Name = "tbLIQVISC_B"
+        Me.HelpProvider1.SetShowHelp(Me.tbLIQVISC_B, CType(resources.GetObject("tbLIQVISC_B.ShowHelp"), Boolean))
         '
         'rbCoeffLIQVISC
         '
         resources.ApplyResources(Me.rbCoeffLIQVISC, "rbCoeffLIQVISC")
         Me.rbCoeffLIQVISC.Name = "rbCoeffLIQVISC"
+        Me.HelpProvider1.SetShowHelp(Me.rbCoeffLIQVISC, CType(resources.GetObject("rbCoeffLIQVISC.ShowHelp"), Boolean))
         Me.rbCoeffLIQVISC.UseVisualStyleBackColor = True
         '
         'Label40
         '
         resources.ApplyResources(Me.Label40, "Label40")
         Me.Label40.Name = "Label40"
+        Me.HelpProvider1.SetShowHelp(Me.Label40, CType(resources.GetObject("Label40.ShowHelp"), Boolean))
         '
         'cbEqLIQVISC
         '
@@ -1954,22 +2240,26 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.cbEqLIQVISC, "cbEqLIQVISC")
         Me.cbEqLIQVISC.Items.AddRange(New Object() {resources.GetString("cbEqLIQVISC.Items"), resources.GetString("cbEqLIQVISC.Items1"), resources.GetString("cbEqLIQVISC.Items2"), resources.GetString("cbEqLIQVISC.Items3"), resources.GetString("cbEqLIQVISC.Items4"), resources.GetString("cbEqLIQVISC.Items5"), resources.GetString("cbEqLIQVISC.Items6"), resources.GetString("cbEqLIQVISC.Items7"), resources.GetString("cbEqLIQVISC.Items8"), resources.GetString("cbEqLIQVISC.Items9"), resources.GetString("cbEqLIQVISC.Items10"), resources.GetString("cbEqLIQVISC.Items11"), resources.GetString("cbEqLIQVISC.Items12"), resources.GetString("cbEqLIQVISC.Items13"), resources.GetString("cbEqLIQVISC.Items14"), resources.GetString("cbEqLIQVISC.Items15"), resources.GetString("cbEqLIQVISC.Items16"), resources.GetString("cbEqLIQVISC.Items17"), resources.GetString("cbEqLIQVISC.Items18"), resources.GetString("cbEqLIQVISC.Items19"), resources.GetString("cbEqLIQVISC.Items20"), resources.GetString("cbEqLIQVISC.Items21"), resources.GetString("cbEqLIQVISC.Items22"), resources.GetString("cbEqLIQVISC.Items23"), resources.GetString("cbEqLIQVISC.Items24"), resources.GetString("cbEqLIQVISC.Items25"), resources.GetString("cbEqLIQVISC.Items26"), resources.GetString("cbEqLIQVISC.Items27"), resources.GetString("cbEqLIQVISC.Items28"), resources.GetString("cbEqLIQVISC.Items29"), resources.GetString("cbEqLIQVISC.Items30"), resources.GetString("cbEqLIQVISC.Items31"), resources.GetString("cbEqLIQVISC.Items32")})
         Me.cbEqLIQVISC.Name = "cbEqLIQVISC"
+        Me.HelpProvider1.SetShowHelp(Me.cbEqLIQVISC, CType(resources.GetObject("cbEqLIQVISC.ShowHelp"), Boolean))
         '
         'tbLIQVISC_A
         '
         Me.tbLIQVISC_A.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbLIQVISC_A, "tbLIQVISC_A")
         Me.tbLIQVISC_A.Name = "tbLIQVISC_A"
+        Me.HelpProvider1.SetShowHelp(Me.tbLIQVISC_A, CType(resources.GetObject("tbLIQVISC_A.ShowHelp"), Boolean))
         '
         'Label42
         '
         resources.ApplyResources(Me.Label42, "Label42")
         Me.Label42.Name = "Label42"
+        Me.HelpProvider1.SetShowHelp(Me.Label42, CType(resources.GetObject("Label42.ShowHelp"), Boolean))
         '
         'Label41
         '
         resources.ApplyResources(Me.Label41, "Label41")
         Me.Label41.Name = "Label41"
+        Me.HelpProvider1.SetShowHelp(Me.Label41, CType(resources.GetObject("Label41.ShowHelp"), Boolean))
         '
         'FaTabStripItem11
         '
@@ -1990,6 +2280,7 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem11.Controls.Add(Me.CheckBoxMeltingTemp)
         Me.FaTabStripItem11.IsDrawn = True
         Me.FaTabStripItem11.Name = "FaTabStripItem11"
+        Me.HelpProvider1.SetShowHelp(Me.FaTabStripItem11, CType(resources.GetObject("FaTabStripItem11.ShowHelp"), Boolean))
         resources.ApplyResources(Me.FaTabStripItem11, "FaTabStripItem11")
         '
         'LabelWithDivider7
@@ -1997,6 +2288,7 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.LabelWithDivider7, "LabelWithDivider7")
         Me.LabelWithDivider7.Gap = 5
         Me.LabelWithDivider7.Name = "LabelWithDivider7"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider7, CType(resources.GetObject("LabelWithDivider7.ShowHelp"), Boolean))
         '
         'gbCPs
         '
@@ -2022,29 +2314,34 @@ Partial Class FormCompoundCreator
         Me.gbCPs.Controls.Add(Me.Label74)
         resources.ApplyResources(Me.gbCPs, "gbCPs")
         Me.gbCPs.Name = "gbCPs"
+        Me.HelpProvider1.SetShowHelp(Me.gbCPs, CType(resources.GetObject("gbCPs.ShowHelp"), Boolean))
         Me.gbCPs.TabStop = False
         '
         'Label84
         '
         resources.ApplyResources(Me.Label84, "Label84")
         Me.Label84.Name = "Label84"
+        Me.HelpProvider1.SetShowHelp(Me.Label84, CType(resources.GetObject("Label84.ShowHelp"), Boolean))
         '
         'tbStatusSolidCp
         '
         resources.ApplyResources(Me.tbStatusSolidCp, "tbStatusSolidCp")
         Me.tbStatusSolidCp.Name = "tbStatusSolidCp"
         Me.tbStatusSolidCp.ReadOnly = True
+        Me.HelpProvider1.SetShowHelp(Me.tbStatusSolidCp, CType(resources.GetObject("tbStatusSolidCp.ShowHelp"), Boolean))
         '
         'btnRegressSolidCp
         '
         resources.ApplyResources(Me.btnRegressSolidCp, "btnRegressSolidCp")
         Me.btnRegressSolidCp.Name = "btnRegressSolidCp"
+        Me.HelpProvider1.SetShowHelp(Me.btnRegressSolidCp, CType(resources.GetObject("btnRegressSolidCp.ShowHelp"), Boolean))
         Me.btnRegressSolidCp.UseVisualStyleBackColor = True
         '
         'btnViewSolidCp
         '
         resources.ApplyResources(Me.btnViewSolidCp, "btnViewSolidCp")
         Me.btnViewSolidCp.Name = "btnViewSolidCp"
+        Me.HelpProvider1.SetShowHelp(Me.btnViewSolidCp, CType(resources.GetObject("btnViewSolidCp.ShowHelp"), Boolean))
         Me.btnViewSolidCp.UseVisualStyleBackColor = True
         '
         'rbCoeffSolidCp
@@ -2052,6 +2349,7 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.rbCoeffSolidCp, "rbCoeffSolidCp")
         Me.rbCoeffSolidCp.Checked = True
         Me.rbCoeffSolidCp.Name = "rbCoeffSolidCp"
+        Me.HelpProvider1.SetShowHelp(Me.rbCoeffSolidCp, CType(resources.GetObject("rbCoeffSolidCp.ShowHelp"), Boolean))
         Me.rbCoeffSolidCp.TabStop = True
         Me.rbCoeffSolidCp.UseVisualStyleBackColor = True
         '
@@ -2059,31 +2357,33 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me.rbRegressSolidCp, "rbRegressSolidCp")
         Me.rbRegressSolidCp.Name = "rbRegressSolidCp"
+        Me.HelpProvider1.SetShowHelp(Me.rbRegressSolidCp, CType(resources.GetObject("rbRegressSolidCp.ShowHelp"), Boolean))
         Me.rbRegressSolidCp.UseVisualStyleBackColor = True
         '
         'GridExpDataCpS
         '
-        DataGridViewCellStyle211.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpDataCpS.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle211
+        DataGridViewCellStyle49.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpDataCpS.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle49
         Me.GridExpDataCpS.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataCpS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataCpS.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn9, Me.DataGridViewTextBoxColumn10})
         resources.ApplyResources(Me.GridExpDataCpS, "GridExpDataCpS")
         Me.GridExpDataCpS.Name = "GridExpDataCpS"
         Me.GridExpDataCpS.RowHeadersVisible = False
+        Me.HelpProvider1.SetShowHelp(Me.GridExpDataCpS, CType(resources.GetObject("GridExpDataCpS.ShowHelp"), Boolean))
         '
         'DataGridViewTextBoxColumn9
         '
-        DataGridViewCellStyle212.NullValue = "0"
-        Me.DataGridViewTextBoxColumn9.DefaultCellStyle = DataGridViewCellStyle212
+        DataGridViewCellStyle50.NullValue = "0"
+        Me.DataGridViewTextBoxColumn9.DefaultCellStyle = DataGridViewCellStyle50
         resources.ApplyResources(Me.DataGridViewTextBoxColumn9, "DataGridViewTextBoxColumn9")
         Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
         '
         'DataGridViewTextBoxColumn10
         '
-        DataGridViewCellStyle213.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle213.NullValue = "0"
-        Me.DataGridViewTextBoxColumn10.DefaultCellStyle = DataGridViewCellStyle213
+        DataGridViewCellStyle51.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle51.NullValue = "0"
+        Me.DataGridViewTextBoxColumn10.DefaultCellStyle = DataGridViewCellStyle51
         resources.ApplyResources(Me.DataGridViewTextBoxColumn10, "DataGridViewTextBoxColumn10")
         Me.DataGridViewTextBoxColumn10.Name = "DataGridViewTextBoxColumn10"
         '
@@ -2091,61 +2391,72 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me.Label75, "Label75")
         Me.Label75.Name = "Label75"
+        Me.HelpProvider1.SetShowHelp(Me.Label75, CType(resources.GetObject("Label75.ShowHelp"), Boolean))
         '
         'tbCpS_E
         '
         Me.tbCpS_E.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbCpS_E, "tbCpS_E")
         Me.tbCpS_E.Name = "tbCpS_E"
+        Me.HelpProvider1.SetShowHelp(Me.tbCpS_E, CType(resources.GetObject("tbCpS_E.ShowHelp"), Boolean))
         '
         'Label73
         '
         resources.ApplyResources(Me.Label73, "Label73")
         Me.Label73.Name = "Label73"
+        Me.HelpProvider1.SetShowHelp(Me.Label73, CType(resources.GetObject("Label73.ShowHelp"), Boolean))
         '
         'tbCpS_D
         '
         Me.tbCpS_D.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbCpS_D, "tbCpS_D")
         Me.tbCpS_D.Name = "tbCpS_D"
+        Me.HelpProvider1.SetShowHelp(Me.tbCpS_D, CType(resources.GetObject("tbCpS_D.ShowHelp"), Boolean))
         '
         'Label72
         '
         resources.ApplyResources(Me.Label72, "Label72")
         Me.Label72.Name = "Label72"
+        Me.HelpProvider1.SetShowHelp(Me.Label72, CType(resources.GetObject("Label72.ShowHelp"), Boolean))
         '
         'tbCpS_C
         '
         Me.tbCpS_C.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbCpS_C, "tbCpS_C")
         Me.tbCpS_C.Name = "tbCpS_C"
+        Me.HelpProvider1.SetShowHelp(Me.tbCpS_C, CType(resources.GetObject("tbCpS_C.ShowHelp"), Boolean))
         '
         'Label71
         '
         resources.ApplyResources(Me.Label71, "Label71")
         Me.Label71.Name = "Label71"
+        Me.HelpProvider1.SetShowHelp(Me.Label71, CType(resources.GetObject("Label71.ShowHelp"), Boolean))
         '
         'tbCpS_B
         '
         Me.tbCpS_B.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbCpS_B, "tbCpS_B")
         Me.tbCpS_B.Name = "tbCpS_B"
+        Me.HelpProvider1.SetShowHelp(Me.tbCpS_B, CType(resources.GetObject("tbCpS_B.ShowHelp"), Boolean))
         '
         'Label70
         '
         resources.ApplyResources(Me.Label70, "Label70")
         Me.Label70.Name = "Label70"
+        Me.HelpProvider1.SetShowHelp(Me.Label70, CType(resources.GetObject("Label70.ShowHelp"), Boolean))
         '
         'Label69
         '
         resources.ApplyResources(Me.Label69, "Label69")
         Me.Label69.Name = "Label69"
+        Me.HelpProvider1.SetShowHelp(Me.Label69, CType(resources.GetObject("Label69.ShowHelp"), Boolean))
         '
         'tbCpS_A
         '
         Me.tbCpS_A.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbCpS_A, "tbCpS_A")
         Me.tbCpS_A.Name = "tbCpS_A"
+        Me.HelpProvider1.SetShowHelp(Me.tbCpS_A, CType(resources.GetObject("tbCpS_A.ShowHelp"), Boolean))
         '
         'cbEqCpS
         '
@@ -2157,11 +2468,13 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.cbEqCpS, "cbEqCpS")
         Me.cbEqCpS.Items.AddRange(New Object() {resources.GetString("cbEqCpS.Items"), resources.GetString("cbEqCpS.Items1"), resources.GetString("cbEqCpS.Items2"), resources.GetString("cbEqCpS.Items3"), resources.GetString("cbEqCpS.Items4"), resources.GetString("cbEqCpS.Items5"), resources.GetString("cbEqCpS.Items6"), resources.GetString("cbEqCpS.Items7"), resources.GetString("cbEqCpS.Items8"), resources.GetString("cbEqCpS.Items9"), resources.GetString("cbEqCpS.Items10"), resources.GetString("cbEqCpS.Items11"), resources.GetString("cbEqCpS.Items12"), resources.GetString("cbEqCpS.Items13"), resources.GetString("cbEqCpS.Items14"), resources.GetString("cbEqCpS.Items15"), resources.GetString("cbEqCpS.Items16"), resources.GetString("cbEqCpS.Items17"), resources.GetString("cbEqCpS.Items18"), resources.GetString("cbEqCpS.Items19"), resources.GetString("cbEqCpS.Items20"), resources.GetString("cbEqCpS.Items21"), resources.GetString("cbEqCpS.Items22"), resources.GetString("cbEqCpS.Items23"), resources.GetString("cbEqCpS.Items24"), resources.GetString("cbEqCpS.Items25"), resources.GetString("cbEqCpS.Items26"), resources.GetString("cbEqCpS.Items27"), resources.GetString("cbEqCpS.Items28"), resources.GetString("cbEqCpS.Items29"), resources.GetString("cbEqCpS.Items30"), resources.GetString("cbEqCpS.Items31"), resources.GetString("cbEqCpS.Items32")})
         Me.cbEqCpS.Name = "cbEqCpS"
+        Me.HelpProvider1.SetShowHelp(Me.cbEqCpS, CType(resources.GetObject("cbEqCpS.ShowHelp"), Boolean))
         '
         'Label74
         '
         resources.ApplyResources(Me.Label74, "Label74")
         Me.Label74.Name = "Label74"
+        Me.HelpProvider1.SetShowHelp(Me.Label74, CType(resources.GetObject("Label74.ShowHelp"), Boolean))
         '
         'gbSolidDens
         '
@@ -2188,6 +2501,7 @@ Partial Class FormCompoundCreator
         Me.gbSolidDens.Controls.Add(Me.Label76)
         resources.ApplyResources(Me.gbSolidDens, "gbSolidDens")
         Me.gbSolidDens.Name = "gbSolidDens"
+        Me.HelpProvider1.SetShowHelp(Me.gbSolidDens, CType(resources.GetObject("gbSolidDens.ShowHelp"), Boolean))
         Me.gbSolidDens.TabStop = False
         '
         'rbEstimateSolidDens
@@ -2195,6 +2509,7 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.rbEstimateSolidDens, "rbEstimateSolidDens")
         Me.rbEstimateSolidDens.Checked = True
         Me.rbEstimateSolidDens.Name = "rbEstimateSolidDens"
+        Me.HelpProvider1.SetShowHelp(Me.rbEstimateSolidDens, CType(resources.GetObject("rbEstimateSolidDens.ShowHelp"), Boolean))
         Me.rbEstimateSolidDens.TabStop = True
         Me.rbEstimateSolidDens.UseVisualStyleBackColor = True
         '
@@ -2202,70 +2517,79 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me.Label83, "Label83")
         Me.Label83.Name = "Label83"
+        Me.HelpProvider1.SetShowHelp(Me.Label83, CType(resources.GetObject("Label83.ShowHelp"), Boolean))
         '
         'tbStatusSolidDens
         '
         resources.ApplyResources(Me.tbStatusSolidDens, "tbStatusSolidDens")
         Me.tbStatusSolidDens.Name = "tbStatusSolidDens"
         Me.tbStatusSolidDens.ReadOnly = True
+        Me.HelpProvider1.SetShowHelp(Me.tbStatusSolidDens, CType(resources.GetObject("tbStatusSolidDens.ShowHelp"), Boolean))
         '
         'btnRegressSolidDens
         '
         resources.ApplyResources(Me.btnRegressSolidDens, "btnRegressSolidDens")
         Me.btnRegressSolidDens.Name = "btnRegressSolidDens"
+        Me.HelpProvider1.SetShowHelp(Me.btnRegressSolidDens, CType(resources.GetObject("btnRegressSolidDens.ShowHelp"), Boolean))
         Me.btnRegressSolidDens.UseVisualStyleBackColor = True
         '
         'btnViewSolidDens
         '
         resources.ApplyResources(Me.btnViewSolidDens, "btnViewSolidDens")
         Me.btnViewSolidDens.Name = "btnViewSolidDens"
+        Me.HelpProvider1.SetShowHelp(Me.btnViewSolidDens, CType(resources.GetObject("btnViewSolidDens.ShowHelp"), Boolean))
         Me.btnViewSolidDens.UseVisualStyleBackColor = True
         '
         'rbCoeffSolidDens
         '
         resources.ApplyResources(Me.rbCoeffSolidDens, "rbCoeffSolidDens")
         Me.rbCoeffSolidDens.Name = "rbCoeffSolidDens"
+        Me.HelpProvider1.SetShowHelp(Me.rbCoeffSolidDens, CType(resources.GetObject("rbCoeffSolidDens.ShowHelp"), Boolean))
         Me.rbCoeffSolidDens.UseVisualStyleBackColor = True
         '
         'rbRegressSolidDens
         '
         resources.ApplyResources(Me.rbRegressSolidDens, "rbRegressSolidDens")
         Me.rbRegressSolidDens.Name = "rbRegressSolidDens"
+        Me.HelpProvider1.SetShowHelp(Me.rbRegressSolidDens, CType(resources.GetObject("rbRegressSolidDens.ShowHelp"), Boolean))
         Me.rbRegressSolidDens.UseVisualStyleBackColor = True
         '
         'Label77
         '
         resources.ApplyResources(Me.Label77, "Label77")
         Me.Label77.Name = "Label77"
+        Me.HelpProvider1.SetShowHelp(Me.Label77, CType(resources.GetObject("Label77.ShowHelp"), Boolean))
         '
         'Label78
         '
         resources.ApplyResources(Me.Label78, "Label78")
         Me.Label78.Name = "Label78"
+        Me.HelpProvider1.SetShowHelp(Me.Label78, CType(resources.GetObject("Label78.ShowHelp"), Boolean))
         '
         'GridExpDataRoS
         '
-        DataGridViewCellStyle214.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpDataRoS.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle214
+        DataGridViewCellStyle52.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpDataRoS.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle52
         Me.GridExpDataRoS.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpDataRoS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpDataRoS.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn11, Me.DataGridViewTextBoxColumn12})
         resources.ApplyResources(Me.GridExpDataRoS, "GridExpDataRoS")
         Me.GridExpDataRoS.Name = "GridExpDataRoS"
         Me.GridExpDataRoS.RowHeadersVisible = False
+        Me.HelpProvider1.SetShowHelp(Me.GridExpDataRoS, CType(resources.GetObject("GridExpDataRoS.ShowHelp"), Boolean))
         '
         'DataGridViewTextBoxColumn11
         '
-        DataGridViewCellStyle215.NullValue = "0"
-        Me.DataGridViewTextBoxColumn11.DefaultCellStyle = DataGridViewCellStyle215
+        DataGridViewCellStyle53.NullValue = "0"
+        Me.DataGridViewTextBoxColumn11.DefaultCellStyle = DataGridViewCellStyle53
         resources.ApplyResources(Me.DataGridViewTextBoxColumn11, "DataGridViewTextBoxColumn11")
         Me.DataGridViewTextBoxColumn11.Name = "DataGridViewTextBoxColumn11"
         '
         'DataGridViewTextBoxColumn12
         '
-        DataGridViewCellStyle216.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle216.NullValue = "0"
-        Me.DataGridViewTextBoxColumn12.DefaultCellStyle = DataGridViewCellStyle216
+        DataGridViewCellStyle54.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle54.NullValue = "0"
+        Me.DataGridViewTextBoxColumn12.DefaultCellStyle = DataGridViewCellStyle54
         resources.ApplyResources(Me.DataGridViewTextBoxColumn12, "DataGridViewTextBoxColumn12")
         Me.DataGridViewTextBoxColumn12.Name = "DataGridViewTextBoxColumn12"
         '
@@ -2274,50 +2598,59 @@ Partial Class FormCompoundCreator
         Me.tbRoS_E.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbRoS_E, "tbRoS_E")
         Me.tbRoS_E.Name = "tbRoS_E"
+        Me.HelpProvider1.SetShowHelp(Me.tbRoS_E, CType(resources.GetObject("tbRoS_E.ShowHelp"), Boolean))
         '
         'Label79
         '
         resources.ApplyResources(Me.Label79, "Label79")
         Me.Label79.Name = "Label79"
+        Me.HelpProvider1.SetShowHelp(Me.Label79, CType(resources.GetObject("Label79.ShowHelp"), Boolean))
         '
         'tbRoS_D
         '
         Me.tbRoS_D.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbRoS_D, "tbRoS_D")
         Me.tbRoS_D.Name = "tbRoS_D"
+        Me.HelpProvider1.SetShowHelp(Me.tbRoS_D, CType(resources.GetObject("tbRoS_D.ShowHelp"), Boolean))
         '
         'Label80
         '
         resources.ApplyResources(Me.Label80, "Label80")
         Me.Label80.Name = "Label80"
+        Me.HelpProvider1.SetShowHelp(Me.Label80, CType(resources.GetObject("Label80.ShowHelp"), Boolean))
         '
         'tbRoS_C
         '
         Me.tbRoS_C.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbRoS_C, "tbRoS_C")
         Me.tbRoS_C.Name = "tbRoS_C"
+        Me.HelpProvider1.SetShowHelp(Me.tbRoS_C, CType(resources.GetObject("tbRoS_C.ShowHelp"), Boolean))
         '
         'Label81
         '
         resources.ApplyResources(Me.Label81, "Label81")
         Me.Label81.Name = "Label81"
+        Me.HelpProvider1.SetShowHelp(Me.Label81, CType(resources.GetObject("Label81.ShowHelp"), Boolean))
         '
         'tbRoS_B
         '
         Me.tbRoS_B.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbRoS_B, "tbRoS_B")
         Me.tbRoS_B.Name = "tbRoS_B"
+        Me.HelpProvider1.SetShowHelp(Me.tbRoS_B, CType(resources.GetObject("tbRoS_B.ShowHelp"), Boolean))
         '
         'Label82
         '
         resources.ApplyResources(Me.Label82, "Label82")
         Me.Label82.Name = "Label82"
+        Me.HelpProvider1.SetShowHelp(Me.Label82, CType(resources.GetObject("Label82.ShowHelp"), Boolean))
         '
         'tbRoS_A
         '
         Me.tbRoS_A.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.tbRoS_A, "tbRoS_A")
         Me.tbRoS_A.Name = "tbRoS_A"
+        Me.HelpProvider1.SetShowHelp(Me.tbRoS_A, CType(resources.GetObject("tbRoS_A.ShowHelp"), Boolean))
         '
         'cbEqSolidDENS
         '
@@ -2329,22 +2662,26 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.cbEqSolidDENS, "cbEqSolidDENS")
         Me.cbEqSolidDENS.Items.AddRange(New Object() {resources.GetString("cbEqSolidDENS.Items"), resources.GetString("cbEqSolidDENS.Items1"), resources.GetString("cbEqSolidDENS.Items2"), resources.GetString("cbEqSolidDENS.Items3"), resources.GetString("cbEqSolidDENS.Items4"), resources.GetString("cbEqSolidDENS.Items5"), resources.GetString("cbEqSolidDENS.Items6"), resources.GetString("cbEqSolidDENS.Items7"), resources.GetString("cbEqSolidDENS.Items8"), resources.GetString("cbEqSolidDENS.Items9"), resources.GetString("cbEqSolidDENS.Items10"), resources.GetString("cbEqSolidDENS.Items11"), resources.GetString("cbEqSolidDENS.Items12"), resources.GetString("cbEqSolidDENS.Items13"), resources.GetString("cbEqSolidDENS.Items14"), resources.GetString("cbEqSolidDENS.Items15"), resources.GetString("cbEqSolidDENS.Items16"), resources.GetString("cbEqSolidDENS.Items17"), resources.GetString("cbEqSolidDENS.Items18"), resources.GetString("cbEqSolidDENS.Items19"), resources.GetString("cbEqSolidDENS.Items20"), resources.GetString("cbEqSolidDENS.Items21"), resources.GetString("cbEqSolidDENS.Items22"), resources.GetString("cbEqSolidDENS.Items23"), resources.GetString("cbEqSolidDENS.Items24"), resources.GetString("cbEqSolidDENS.Items25"), resources.GetString("cbEqSolidDENS.Items26"), resources.GetString("cbEqSolidDENS.Items27"), resources.GetString("cbEqSolidDENS.Items28"), resources.GetString("cbEqSolidDENS.Items29"), resources.GetString("cbEqSolidDENS.Items30"), resources.GetString("cbEqSolidDENS.Items31"), resources.GetString("cbEqSolidDENS.Items32")})
         Me.cbEqSolidDENS.Name = "cbEqSolidDENS"
+        Me.HelpProvider1.SetShowHelp(Me.cbEqSolidDENS, CType(resources.GetObject("cbEqSolidDENS.ShowHelp"), Boolean))
         '
         'Label76
         '
         resources.ApplyResources(Me.Label76, "Label76")
         Me.Label76.Name = "Label76"
+        Me.HelpProvider1.SetShowHelp(Me.Label76, CType(resources.GetObject("Label76.ShowHelp"), Boolean))
         '
         'Label54
         '
         resources.ApplyResources(Me.Label54, "Label54")
         Me.Label54.Name = "Label54"
+        Me.HelpProvider1.SetShowHelp(Me.Label54, CType(resources.GetObject("Label54.ShowHelp"), Boolean))
         '
         'TextBoxEnthOfFusion2
         '
         Me.TextBoxEnthOfFusion2.BackColor = System.Drawing.Color.LightGray
         resources.ApplyResources(Me.TextBoxEnthOfFusion2, "TextBoxEnthOfFusion2")
         Me.TextBoxEnthOfFusion2.Name = "TextBoxEnthOfFusion2"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxEnthOfFusion2, CType(resources.GetObject("TextBoxEnthOfFusion2.ShowHelp"), Boolean))
         '
         'CheckBoxEnthOfFusion
         '
@@ -2352,6 +2689,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxEnthOfFusion.Checked = True
         Me.CheckBoxEnthOfFusion.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxEnthOfFusion.Name = "CheckBoxEnthOfFusion"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxEnthOfFusion, CType(resources.GetObject("CheckBoxEnthOfFusion.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxEnthOfFusion, resources.GetString("CheckBoxEnthOfFusion.ToolTip"))
         Me.CheckBoxEnthOfFusion.UseVisualStyleBackColor = True
         '
@@ -2360,38 +2698,45 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.LabelWithDivider1, "LabelWithDivider1")
         Me.LabelWithDivider1.Gap = 5
         Me.LabelWithDivider1.Name = "LabelWithDivider1"
+        Me.HelpProvider1.SetShowHelp(Me.LabelWithDivider1, CType(resources.GetObject("LabelWithDivider1.ShowHelp"), Boolean))
         '
         'lblEnthOfFusion
         '
         resources.ApplyResources(Me.lblEnthOfFusion, "lblEnthOfFusion")
         Me.lblEnthOfFusion.Name = "lblEnthOfFusion"
+        Me.HelpProvider1.SetShowHelp(Me.lblEnthOfFusion, CType(resources.GetObject("lblEnthOfFusion.ShowHelp"), Boolean))
         '
         'Label52
         '
         resources.ApplyResources(Me.Label52, "Label52")
         Me.Label52.Name = "Label52"
+        Me.HelpProvider1.SetShowHelp(Me.Label52, CType(resources.GetObject("Label52.ShowHelp"), Boolean))
         '
         'TextBoxEnthOfFusion
         '
         Me.TextBoxEnthOfFusion.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.TextBoxEnthOfFusion, "TextBoxEnthOfFusion")
         Me.TextBoxEnthOfFusion.Name = "TextBoxEnthOfFusion"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxEnthOfFusion, CType(resources.GetObject("TextBoxEnthOfFusion.ShowHelp"), Boolean))
         '
         'TextBoxMeltingTemp
         '
         Me.TextBoxMeltingTemp.BackColor = System.Drawing.Color.White
         resources.ApplyResources(Me.TextBoxMeltingTemp, "TextBoxMeltingTemp")
         Me.TextBoxMeltingTemp.Name = "TextBoxMeltingTemp"
+        Me.HelpProvider1.SetShowHelp(Me.TextBoxMeltingTemp, CType(resources.GetObject("TextBoxMeltingTemp.ShowHelp"), Boolean))
         '
         'Label55
         '
         resources.ApplyResources(Me.Label55, "Label55")
         Me.Label55.Name = "Label55"
+        Me.HelpProvider1.SetShowHelp(Me.Label55, CType(resources.GetObject("Label55.ShowHelp"), Boolean))
         '
         'lblMeltingTemp
         '
         resources.ApplyResources(Me.lblMeltingTemp, "lblMeltingTemp")
         Me.lblMeltingTemp.Name = "lblMeltingTemp"
+        Me.HelpProvider1.SetShowHelp(Me.lblMeltingTemp, CType(resources.GetObject("lblMeltingTemp.ShowHelp"), Boolean))
         '
         'CheckBoxMeltingTemp
         '
@@ -2399,6 +2744,7 @@ Partial Class FormCompoundCreator
         Me.CheckBoxMeltingTemp.Checked = True
         Me.CheckBoxMeltingTemp.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxMeltingTemp.Name = "CheckBoxMeltingTemp"
+        Me.HelpProvider1.SetShowHelp(Me.CheckBoxMeltingTemp, CType(resources.GetObject("CheckBoxMeltingTemp.ShowHelp"), Boolean))
         Me.ToolTip1.SetToolTip(Me.CheckBoxMeltingTemp, resources.GetString("CheckBoxMeltingTemp.ToolTip"))
         Me.CheckBoxMeltingTemp.UseVisualStyleBackColor = True
         '
@@ -2408,12 +2754,14 @@ Partial Class FormCompoundCreator
         Me.GroupBox3.Controls.Add(Me.Label15)
         Me.GroupBox3.Controls.Add(Me.cbUnits)
         Me.GroupBox3.Name = "GroupBox3"
+        Me.HelpProvider1.SetShowHelp(Me.GroupBox3, CType(resources.GetObject("GroupBox3.ShowHelp"), Boolean))
         Me.GroupBox3.TabStop = False
         '
         'Label15
         '
         resources.ApplyResources(Me.Label15, "Label15")
         Me.Label15.Name = "Label15"
+        Me.HelpProvider1.SetShowHelp(Me.Label15, CType(resources.GetObject("Label15.ShowHelp"), Boolean))
         '
         'cbUnits
         '
@@ -2424,6 +2772,7 @@ Partial Class FormCompoundCreator
         Me.cbUnits.FormattingEnabled = True
         resources.ApplyResources(Me.cbUnits, "cbUnits")
         Me.cbUnits.Name = "cbUnits"
+        Me.HelpProvider1.SetShowHelp(Me.cbUnits, CType(resources.GetObject("cbUnits.ShowHelp"), Boolean))
         '
         'DBOpenDlg
         '
@@ -2435,6 +2784,7 @@ Partial Class FormCompoundCreator
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripStatusDWSIM, Me.ToolStripSpace1, ToolStripLabel2, Me.ToolStripStatusUserDB})
         resources.ApplyResources(Me.StatusStrip1, "StatusStrip1")
         Me.StatusStrip1.Name = "StatusStrip1"
+        Me.HelpProvider1.SetShowHelp(Me.StatusStrip1, CType(resources.GetObject("StatusStrip1.ShowHelp"), Boolean))
         '
         'ToolStripLabel1
         '
@@ -2470,6 +2820,7 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.ComboBox1, "ComboBox1")
         Me.ComboBox1.Items.AddRange(New Object() {resources.GetString("ComboBox1.Items"), resources.GetString("ComboBox1.Items1"), resources.GetString("ComboBox1.Items2"), resources.GetString("ComboBox1.Items3"), resources.GetString("ComboBox1.Items4"), resources.GetString("ComboBox1.Items5"), resources.GetString("ComboBox1.Items6"), resources.GetString("ComboBox1.Items7"), resources.GetString("ComboBox1.Items8"), resources.GetString("ComboBox1.Items9"), resources.GetString("ComboBox1.Items10"), resources.GetString("ComboBox1.Items11"), resources.GetString("ComboBox1.Items12"), resources.GetString("ComboBox1.Items13"), resources.GetString("ComboBox1.Items14"), resources.GetString("ComboBox1.Items15"), resources.GetString("ComboBox1.Items16"), resources.GetString("ComboBox1.Items17"), resources.GetString("ComboBox1.Items18"), resources.GetString("ComboBox1.Items19"), resources.GetString("ComboBox1.Items20"), resources.GetString("ComboBox1.Items21"), resources.GetString("ComboBox1.Items22"), resources.GetString("ComboBox1.Items23"), resources.GetString("ComboBox1.Items24"), resources.GetString("ComboBox1.Items25"), resources.GetString("ComboBox1.Items26"), resources.GetString("ComboBox1.Items27"), resources.GetString("ComboBox1.Items28"), resources.GetString("ComboBox1.Items29"), resources.GetString("ComboBox1.Items30"), resources.GetString("ComboBox1.Items31"), resources.GetString("ComboBox1.Items32")})
         Me.ComboBox1.Name = "ComboBox1"
+        Me.HelpProvider1.SetShowHelp(Me.ComboBox1, CType(resources.GetObject("ComboBox1.ShowHelp"), Boolean))
         '
         'HelpProvider1
         '
@@ -2485,7 +2836,7 @@ Partial Class FormCompoundCreator
         Me.Controls.Add(Me.GroupBox1)
         Me.HelpProvider1.SetHelpKeyword(Me, resources.GetString("$this.HelpKeyword"))
         Me.HelpProvider1.SetHelpNavigator(Me, CType(resources.GetObject("$this.HelpNavigator"), System.Windows.Forms.HelpNavigator))
-        Me.HelpProvider1.SetHelpString(Me, resources.GetString("$this.HelpString"))
+        Me.HelpProvider1.SetHelpString(Me, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         Me.Name = "FormCompoundCreator"
         Me.HelpProvider1.SetShowHelp(Me, CType(resources.GetObject("$this.ShowHelp"), Boolean))
         Me.GroupBox1.ResumeLayout(False)
@@ -2499,6 +2850,9 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem2.ResumeLayout(False)
         Me.FaTabStripItem2.PerformLayout()
         CType(Me.GridUNIFAC, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.FaTabStripItem5.ResumeLayout(False)
+        Me.FaTabStripItem5.PerformLayout()
+        CType(Me.GridMODFAC, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStripItem3.ResumeLayout(False)
         Me.FaTabStripItem3.PerformLayout()
         CType(Me.AddAtomDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2562,8 +2916,6 @@ Partial Class FormCompoundCreator
     Public WithEvents Label44 As System.Windows.Forms.Label
     Friend WithEvents btnSaveToDB As System.Windows.Forms.Button
     Public WithEvents GridUNIFAC As System.Windows.Forms.DataGridView
-    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewImageColumn
     Public WithEvents TextBoxID As System.Windows.Forms.TextBox
     Public WithEvents Label16 As System.Windows.Forms.Label
     Friend WithEvents CheckBoxMW As System.Windows.Forms.CheckBox
@@ -2827,4 +3179,15 @@ Partial Class FormCompoundCreator
     Friend WithEvents ColCount As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents rbEstimateSolidDens As System.Windows.Forms.RadioButton
     Friend WithEvents HelpProvider1 As System.Windows.Forms.HelpProvider
+    Friend WithEvents FaTabStripItem5 As FarsiLibrary.Win.FATabStripItem
+    Public WithEvents GridMODFAC As System.Windows.Forms.DataGridView
+    Public WithEvents Label85 As System.Windows.Forms.Label
+    Friend WithEvents MainGroup As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents SubGroup As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn13 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewImageColumn1 As System.Windows.Forms.DataGridViewImageColumn
+    Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewImageColumn
 End Class

@@ -44,7 +44,7 @@ Public Class FormCompoundCreator
     Friend isUserDBSaved As Boolean = True
     Private forceclose As Boolean = False
     Private populating As Boolean = False
-    Private UNIFAClines(), JOBACKlines(), ElementLines() As String
+    Private UNIFAClines(), MODFACLines(), JOBACKlines(), ElementLines() As String
 
 
     Private Sub FormCompoundCreator_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -56,22 +56,81 @@ Public Class FormCompoundCreator
         Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac.txt"
 
         Dim i As Integer
+        Dim ID, GroupType, GroupName As String
+        Dim L As Boolean = True
 
+
+        L = True
         UNIFAClines = IO.File.ReadAllLines(filename)
+        GroupName = UNIFAClines(2).Split(",")(2)
         With Me.GridUNIFAC.Rows
             .Clear()
             For i = 2 To UNIFAClines.Length - 1
+                .Add(New Object() {" ", " ", CInt(0), Image.FromFile(picpath & UNIFAClines(i).Split(",")(7) & ".png")})
+                .Item(.Count - 1).HeaderCell.Value = "ID" & i - 1
+                .Item(.Count - 1).Cells(0).Value = UNIFAClines(i).Split(",")(2) 'MainGroup
+                .Item(.Count - 1).Cells(1).Value = UNIFAClines(i).Split(",")(3) 'SubGroup
 
-                .Add(New Object() {CInt(0), Image.FromFile(picpath & UNIFAClines(i).Split(",")(7) & ".png")})
-                .Item(.Count - 1).HeaderCell.Value = UNIFAClines(i).Split(",")(3)
-                .Item(.Count - 1).HeaderCell.Tag = UNIFAClines(i).Split(",")(2)
-                .Item(.Count - 1).Cells(1).ToolTipText = "Main Group: " & UNIFAClines(i).Split(",")(2) & vbCrLf & _
-                                                         "Subgroup: " & UNIFAClines(i).Split(",")(3) & vbCrLf & _
-                                                         "Rk / Qk: " & UNIFAClines(i).Split(",")(4) & " / " & UNIFAClines(i).Split(",")(5) & vbCrLf & _
+                .Item(.Count - 1).Cells(3).ToolTipText = "Rk / Qk: " & UNIFAClines(i).Split(",")(4) & " / " & UNIFAClines(i).Split(",")(5) & vbCrLf & _
                                                          "Example Compound: " & UNIFAClines(i).Split(",")(6) & vbCrLf & _
                                                          "Joback subgroups: " & UNIFAClines(i).Split(",")(8)
 
+                If GroupName <> UNIFAClines(i).Split(",")(2) Then
+                    L = Not L
+                    GroupName = UNIFAClines(i).Split(",")(2)
+                End If
+                If L Then
+                    .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(230, 230, 200)
+                    .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(230, 230, 200)
+                Else
+                    .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(200, 230, 230)
+                    .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(200, 230, 230)
+                End If
+            Next
+        End With
+
+
+        'Grid MODFAC
+        L = True
+        filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "modfac.txt"
+        MODFACLines = IO.File.ReadAllLines(filename)
+        GroupName = MODFACLines(1).Split(";")(1)
+        Dim s As String
+        With Me.GridMODFAC.Rows
+            .Clear()
+            For i = 1 To MODFACLines.Length - 1
                 
+
+                s = picpath & MODFACLines(i).Split(";")(6) & ".png"
+                If Not My.Computer.FileSystem.FileExists(s) Then s = picpath & "empty.png"
+
+                .Add(New Object() {CInt(0), CInt(0), CInt(0), Image.FromFile(s)})
+                .Item(.Count - 1).HeaderCell.Value = "ID" & i
+                .Item(.Count - 1).Cells(0).Value = MODFACLines(i).Split(";")(1)
+                .Item(.Count - 1).Cells(1).Value = MODFACLines(i).Split(";")(2)
+                .Item(.Count - 1).Cells(2).Value = 0
+
+                s = MODFACLines(i).Split(";")(7) & ": " & MODFACLines(i).Split(";")(8)
+                If MODFACLines(i).Split(";")(9) <> "" Then s = s & vbCrLf & MODFACLines(i).Split(";")(9) & ": " & MODFACLines(i).Split(";")(10)
+                If MODFACLines(i).Split(";")(11) <> "" Then s = s & vbCrLf & MODFACLines(i).Split(";")(11) & ": " & MODFACLines(i).Split(";")(12)
+                If MODFACLines(i).Split(";")(13) <> "" Then s = s & vbCrLf & MODFACLines(i).Split(";")(13) & ": " & MODFACLines(i).Split(";")(14)
+
+                .Item(.Count - 1).Cells(3).ToolTipText = "Rk / Qk: " & MODFACLines(i).Split(";")(4) & " / " & MODFACLines(i).Split(";")(5) & vbCrLf & _
+                                                         "Example Compound: " & MODFACLines(i).Split(";")(6) & vbCrLf & s
+
+                If GroupName <> MODFACLines(i).Split(";")(1) Then
+                    L = Not L
+                    GroupName = MODFACLines(i).Split(";")(1)
+                End If
+                If L Then
+                    .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(230, 230, 200)
+                    .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(230, 230, 200)
+                Else
+                    .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(200, 230, 230)
+                    .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(200, 230, 230)
+                End If
+
+
             Next
         End With
 
@@ -79,8 +138,7 @@ Public Class FormCompoundCreator
         filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "JobackGroups.txt"
         JOBACKlines = IO.File.ReadAllLines(filename)
 
-        Dim ID, GroupType, GroupName As String
-        Dim L As Boolean = True
+        
 
         GroupType = ""
 
@@ -98,9 +156,9 @@ Public Class FormCompoundCreator
                     .Item(.Count - 1).Cells(1).Value = GroupName
 
                     If L Then
-                        .Item(.Count - 1).Cells(0).Style.BackColor = Color.CadetBlue
+                        .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(200, 230, 230)
                     Else
-                        .Item(.Count - 1).Cells(0).Style.BackColor = Color.CornflowerBlue
+                        .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(230, 230, 200)
                     End If
                 Else
                     GroupType = JOBACKlines(i).Split(";")(1)
@@ -384,8 +442,12 @@ Public Class FormCompoundCreator
 
             populating = True
             For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
-                r.Cells(0).Value = .cp.UNIFACGroups.Collection(r.HeaderCell.Value)
+                r.Cells(2).Value = .cp.UNIFACGroups.Collection(r.Cells(1).Value)
             Next
+            For Each r As DataGridViewRow In Me.GridMODFAC.Rows
+                r.Cells(2).Value = .cp.MODFACGroups.Collection(r.Cells(1).Value)
+            Next
+
 
             FillUnifacSubGroups()
 
@@ -448,11 +510,11 @@ Public Class FormCompoundCreator
             r.Cells(2).Value = Nothing
         Next
         For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
-            ugc = mycase.cp.UNIFACGroups.Collection(r.HeaderCell.Value)
+            ugc = mycase.cp.UNIFACGroups.Collection(r.Cells(1).Value)
 
             'Joback groups from UNIFAC subgroups
             JG = UNIFAClines(r.Index + 2).Split(",")(8) 'Joback Subgroup List
-            If r.Cells(0).Value > 0 Then
+            If r.Cells(2).Value > 0 Then
                 For k = 0 To 3
                     JSG = JG.Split("/")(k)
                     If Not JSG = "" Then
@@ -576,19 +638,14 @@ Public Class FormCompoundCreator
             .cp.Liquid_Viscosity_Const_D = CheckEmptyCell(tbLIQVISC_D.Text)
             .cp.Liquid_Viscosity_Const_E = CheckEmptyCell(tbLIQVISC_E.Text)
 
+            .cp.UNIFACGroups.Collection.Clear()
             For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
-                If CInt(r.Cells(0).Value) <> 0 Then
-                    .cp.UNIFACGroups.Collection(r.HeaderCell.Value) = r.Cells(0).Value
-                    '.cp.MODFACGroups.Collection(r.HeaderCell.Value) = r.Cells(0).Value
-                Else
-                    If .cp.UNIFACGroups.Collection.ContainsKey(r.HeaderCell.Value) Then
-                        .cp.UNIFACGroups.Collection.Remove(r.HeaderCell.Value)
-                    End If
-                    'MODFAC groups need to be defined separately! Not yet implemented!
-                    'If .cp.MODFACGroups.Collection.ContainsKey(r.HeaderCell.Value) Then
-                    '    .cp.MODFACGroups.Collection.Remove(r.HeaderCell.Value)
-                    'End If
-                End If
+                If CInt(r.Cells(2).Value) <> 0 Then .cp.UNIFACGroups.Collection(r.Cells(1).Value) = r.Cells(2).Value
+            Next
+
+            .cp.MODFACGroups.Collection.Clear()
+            For Each r As DataGridViewRow In Me.GridMODFAC.Rows
+                If CInt(r.Cells(2).Value) <> 0 Then .cp.MODFACGroups.Collection(r.Cells(1).Value) = r.Cells(2).Value
             Next
 
             Dim JC As Integer
@@ -670,8 +727,8 @@ Public Class FormCompoundCreator
             'get UNIFAC group amounts
             Dim vn As New ArrayList
             For Each row As DataGridViewRow In GridUNIFAC.Rows
-                If Not row.Cells(0).Value Is Nothing Then
-                    vn.Add(Integer.Parse(row.Cells(0).Value))
+                If Not row.Cells(2).Value Is Nothing Then
+                    vn.Add(Integer.Parse(row.Cells(2).Value))
                 Else
                     vn.Add(0)
                 End If
@@ -914,16 +971,12 @@ Public Class FormCompoundCreator
             'get group amounts
             If Not populating Then
                 mycase.cp.UNIFACGroups.Collection.Clear()
-                mycase.cp.MODFACGroups.Collection.Clear()
             End If
-
-
             For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
-                If Not r.Cells(0).Value Is Nothing Then
-                    If CInt(r.Cells(0).Value) <> 0 Then
+                If Not r.Cells(2).Value Is Nothing Then
+                    If CInt(r.Cells(2).Value) <> 0 Then
                         If Not populating Then
-                            mycase.cp.UNIFACGroups.Collection.Add(r.HeaderCell.Value, r.Cells(0).Value)
-                            mycase.cp.MODFACGroups.Collection.Add(r.HeaderCell.Value, r.Cells(0).Value)
+                            mycase.cp.UNIFACGroups.Collection.Add(r.Cells(1).Value, r.Cells(2).Value)
                         End If
                     End If
                 End If
@@ -933,6 +986,9 @@ Public Class FormCompoundCreator
             loaded = True
             CalcJobackParams()
         End If
+        BothSaveStatusModified(sender, e)
+    End Sub
+    Private Sub GridMODFAC_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridMODFAC.CellValueChanged
         BothSaveStatusModified(sender, e)
     End Sub
 

@@ -653,7 +653,13 @@ Imports System.Runtime.Serialization
             ByVal e As MouseEventArgs) Handles MyBase.MouseMove
 
         If draggingfs Then
-            Me.Cursor = Cursors.Hand
+            If Not My.Computer.Keyboard.ShiftKeyDown Then
+                draggingfs = False
+                Cursor.Current = Cursors.Default
+            Else
+                Cursor.Current = Cursors.Hand
+            End If
+
             Dim dx As Integer = -(e.X - dragStart.X)
             Dim dy As Integer = -(e.Y - dragStart.Y)
             If Me.HorizontalScroll.Value + dx > Me.HorizontalScroll.Minimum Then
@@ -820,42 +826,23 @@ Imports System.Runtime.Serialization
             'for more information
 
             If My.Computer.Keyboard.CtrlKeyDown Then
+                Dim dx, dy As Integer
 
-                Dim detents As Integer = Math.Abs(e.Delta \ 120)
-                Dim i As Integer
-                Dim delta As Integer
-                Dim zoomIn As Boolean = (e.Delta < 0)
-                Dim zoomPercentage As Integer = Me.Zoom * 100
-                For i = 1 To detents
-                    If zoomPercentage <= 100 Then
-                        If zoomIn Then
-                            delta = -5
-                            zoomPercentage = zoomPercentage - 5
-                        Else
-                            delta = +5
-                            zoomPercentage = zoomPercentage + 5
-                        End If
-                    Else
-                        If zoomIn Then
-                            delta = -5
-                            zoomPercentage = zoomPercentage - 5
-                        Else
-                            delta = +5
-                            zoomPercentage = zoomPercentage + 5
-                        End If
-                    End If
-                Next
+                Dim Cursorpos, Pos1, Pos2 As Point
+                Cursorpos = Cursor.Position
+                Pos1 = gscTogoc(Cursorpos)
 
-                'Dim cursorpos As Point = gscTogoc(Cursor.Position)
+                'do zoom
+                If e.Delta > 0 Then Me.Zoom += 0.05 Else Me.Zoom -= 0.05
+                Pos2 = gscTogoc(Cursorpos)
 
-                'Dim dx, dy As Integer
-                'dx = cursorpos.X + Me.AutoScrollPosition.X / Me.Zoom
-                'dy = cursorpos.Y + Me.AutoScrollPosition.Y / Me.Zoom
+                dx = Pos1.X - Pos2.X
+                dy = Pos1.Y - Pos2.Y
 
-                'Me.HorizontalScroll.Value -= dx / (zoomPercentage / 100)
-                'Me.VerticalScroll.Value -= dx / (zoomPercentage / 100)
+                'adjust viewpoint to keep same position
+                Me.HorizontalScroll.Value += dx
+                Me.VerticalScroll.Value += dy
 
-                Me.Zoom = zoomPercentage / 100
                 RaiseEvent StatusUpdate(Me, New StatusUpdateEventArgs(StatusUpdateType.SurfaceZoomChanged, _
                         Me.SelectedObject, String.Format("Zoom set to {0}", Me.Zoom * 100), _
                         Nothing, Me.Zoom))

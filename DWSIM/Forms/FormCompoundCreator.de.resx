@@ -164,9 +164,6 @@
   <data name="FaTabStripItem4.Title" xml:space="preserve">
     <value>Eigenschaften</value>
   </data>
-  <data name="FaTabStripItem11.Title" xml:space="preserve">
-    <value>Feststoff</value>
-  </data>
   <data name="FaTabStripItem7.Title" xml:space="preserve">
     <value>Dampfdruck</value>
   </data>
@@ -179,8 +176,8 @@
   <data name="FaTabStripItem10.Title" xml:space="preserve">
     <value>Viskositat Flüssigkeit</value>
   </data>
-  <data name="FaTabStripItem5.Title" xml:space="preserve">
-    <value>Kritische Daten</value>
+  <data name="FaTabStripItem11.Title" xml:space="preserve">
+    <value>Feststoff</value>
   </data>
   <data name="LinkLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 18</value>
@@ -217,6 +214,18 @@
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Beispiel</value>
+  </data>
+  <data name="DataGridViewTextBoxColumn13.HeaderText" xml:space="preserve">
+    <value>Anzahl</value>
+  </data>
+  <data name="DataGridViewImageColumn1.HeaderText" xml:space="preserve">
+    <value>Beispiel</value>
+  </data>
+  <data name="Label85.Size" type="System.Drawing.Size, System.Drawing">
+    <value>451, 13</value>
+  </data>
+  <data name="Label85.Text" xml:space="preserve">
+    <value>Tragen Sie die Anzahl aller MODFAC Gruppen der Komponentenstruktur ein, falls vorhanden.</value>
   </data>
   <data name="Label58.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 13</value>
@@ -365,90 +374,6 @@
   </data>
   <data name="Label63.Text" xml:space="preserve">
     <value>Chao-Seader Löslichkeitsparameter</value>
-  </data>
-  <data name="LabelWithDivider7.Text" xml:space="preserve">
-    <value>Dichte / Wärmekapazität</value>
-  </data>
-  <data name="gbCPs.Text" xml:space="preserve">
-    <value>Wärmekapazität (Feststoff)</value>
-  </data>
-  <data name="btnRegressSolidCp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnRegressSolidCp.Text" xml:space="preserve">
-    <value>Datenregression</value>
-  </data>
-  <data name="btnViewSolidCp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnViewSolidCp.Text" xml:space="preserve">
-    <value>Diagramm</value>
-  </data>
-  <data name="rbCoeffSolidCp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 17</value>
-  </data>
-  <data name="rbCoeffSolidCp.Text" xml:space="preserve">
-    <value>Eingabe der Koeffizienten *</value>
-  </data>
-  <data name="rbRegressSolidCp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 17</value>
-  </data>
-  <data name="rbRegressSolidCp.Text" xml:space="preserve">
-    <value>Regression Versuchsdaten</value>
-  </data>
-  <data name="Label74.Text" xml:space="preserve">
-    <value>Gleichung</value>
-  </data>
-  <data name="gbSolidDens.Text" xml:space="preserve">
-    <value>Dichte (Feststoff)</value>
-  </data>
-  <data name="rbEstimateSolidDens.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 17</value>
-  </data>
-  <data name="rbEstimateSolidDens.Text" xml:space="preserve">
-    <value>Schätze (DWSIM)</value>
-  </data>
-  <data name="btnRegressSolidDens.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnRegressSolidDens.Text" xml:space="preserve">
-    <value>Datenregression</value>
-  </data>
-  <data name="btnViewSolidDens.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnViewSolidDens.Text" xml:space="preserve">
-    <value>Diagramm</value>
-  </data>
-  <data name="rbCoeffSolidDens.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 17</value>
-  </data>
-  <data name="rbCoeffSolidDens.Text" xml:space="preserve">
-    <value>Eingabe der Koeffizienten *</value>
-  </data>
-  <data name="rbRegressSolidDens.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 17</value>
-  </data>
-  <data name="rbRegressSolidDens.Text" xml:space="preserve">
-    <value>Regression Versuchsdaten</value>
-  </data>
-  <data name="Label76.Text" xml:space="preserve">
-    <value>Gleichung</value>
-  </data>
-  <data name="LabelWithDivider1.Text" xml:space="preserve">
-    <value>Schmelzpunkt Daten</value>
-  </data>
-  <data name="Label52.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 13</value>
-  </data>
-  <data name="Label52.Text" xml:space="preserve">
-    <value>Schmelzpunkt</value>
-  </data>
-  <data name="Label55.Size" type="System.Drawing.Size, System.Drawing">
-    <value>89, 13</value>
-  </data>
-  <data name="Label55.Text" xml:space="preserve">
-    <value>Schmelzenthalpie</value>
   </data>
   <data name="Label43.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 197</value>
@@ -776,6 +701,90 @@
   </data>
   <data name="Label41.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 76</value>
+  </data>
+  <data name="LabelWithDivider7.Text" xml:space="preserve">
+    <value>Dichte / Wärmekapazität</value>
+  </data>
+  <data name="gbCPs.Text" xml:space="preserve">
+    <value>Wärmekapazität (Feststoff)</value>
+  </data>
+  <data name="btnRegressSolidCp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnRegressSolidCp.Text" xml:space="preserve">
+    <value>Datenregression</value>
+  </data>
+  <data name="btnViewSolidCp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnViewSolidCp.Text" xml:space="preserve">
+    <value>Diagramm</value>
+  </data>
+  <data name="rbCoeffSolidCp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 17</value>
+  </data>
+  <data name="rbCoeffSolidCp.Text" xml:space="preserve">
+    <value>Eingabe der Koeffizienten *</value>
+  </data>
+  <data name="rbRegressSolidCp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 17</value>
+  </data>
+  <data name="rbRegressSolidCp.Text" xml:space="preserve">
+    <value>Regression Versuchsdaten</value>
+  </data>
+  <data name="Label74.Text" xml:space="preserve">
+    <value>Gleichung</value>
+  </data>
+  <data name="gbSolidDens.Text" xml:space="preserve">
+    <value>Dichte (Feststoff)</value>
+  </data>
+  <data name="rbEstimateSolidDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 17</value>
+  </data>
+  <data name="rbEstimateSolidDens.Text" xml:space="preserve">
+    <value>Schätze (DWSIM)</value>
+  </data>
+  <data name="btnRegressSolidDens.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnRegressSolidDens.Text" xml:space="preserve">
+    <value>Datenregression</value>
+  </data>
+  <data name="btnViewSolidDens.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnViewSolidDens.Text" xml:space="preserve">
+    <value>Diagramm</value>
+  </data>
+  <data name="rbCoeffSolidDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 17</value>
+  </data>
+  <data name="rbCoeffSolidDens.Text" xml:space="preserve">
+    <value>Eingabe der Koeffizienten *</value>
+  </data>
+  <data name="rbRegressSolidDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 17</value>
+  </data>
+  <data name="rbRegressSolidDens.Text" xml:space="preserve">
+    <value>Regression Versuchsdaten</value>
+  </data>
+  <data name="Label76.Text" xml:space="preserve">
+    <value>Gleichung</value>
+  </data>
+  <data name="LabelWithDivider1.Text" xml:space="preserve">
+    <value>Schmelzpunkt Daten</value>
+  </data>
+  <data name="Label52.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 13</value>
+  </data>
+  <data name="Label52.Text" xml:space="preserve">
+    <value>Schmelzpunkt</value>
+  </data>
+  <data name="Label55.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 13</value>
+  </data>
+  <data name="Label55.Text" xml:space="preserve">
+    <value>Schmelzenthalpie</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Einheitensystem</value>
