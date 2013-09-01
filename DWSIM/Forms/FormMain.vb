@@ -260,11 +260,15 @@ Public Class FormMain
 
             Dim dinfo As New DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "plugins"))
 
-            Dim files() As FileInfo = dinfo.GetFiles("*.dll")
+            Dim files() As FileInfo = dinfo.GetFiles("*.*", SearchOption.TopDirectoryOnly)
 
             If Not files Is Nothing Then
                 For Each fi As FileInfo In files
-                    pluginassemblylist.Add(Assembly.LoadFile(fi.FullName))
+                    Try
+                        pluginassemblylist.Add(Assembly.LoadFile(fi.FullName))
+                    Catch ex As Exception
+
+                    End Try
                 Next
             End If
 
