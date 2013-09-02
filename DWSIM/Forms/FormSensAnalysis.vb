@@ -21,7 +21,8 @@ Imports DWSIM.DWSIM.Optimization
 Imports DWSIM.DWSIM.SimulationObjects
 Imports Microsoft.MSDN.Samples
 Imports Ciloci.Flee
-Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
+Imports System.Linq
 
 Public Class FormSensAnalysis
 
@@ -539,7 +540,15 @@ Public Class FormSensAnalysis
             Me.tbStats.SelectionStart = Me.tbStats.Text.Length - 1
             Me.tbStats.SelectionLength = 1
             Me.tbStats.ScrollToCaret()
+
+            If FormMain.UtilityPlugins.ContainsKey("DF7368D6-5A06-4856-9B7A-D7F09D81F71F") Then
+
+                btnRegressData.Enabled = True
+
+            End If
+
         End Try
+
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAbort.Click
@@ -723,4 +732,22 @@ Public Class FormSensAnalysis
     Private Sub dgvResults_DataError(sender As Object, e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles dgvResults.DataError
 
     End Sub
+
+    Private Sub btnRegressData_Click(sender As System.Object, e As System.EventArgs) Handles btnRegressData.Click
+
+        'data fitting plugin is available
+        Dim myUPlugin As Interfaces.IUtilityPlugin = FormMain.UtilityPlugins.Item("DF7368D6-5A06-4856-9B7A-D7F09D81F71F")
+
+        myUPlugin.SetFlowsheet(form)
+
+        Dim pform As Form = myUPlugin.UtilityForm
+
+        dgvResults.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText
+        dgvResults.SelectAll()
+        pform.Tag = TryCast(dgvResults.GetClipboardContent(), DataObject).GetText()
+        dgvResults.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithAutoHeaderText
+        pform.ShowDialog(Me)
+
+    End Sub
+
 End Class
