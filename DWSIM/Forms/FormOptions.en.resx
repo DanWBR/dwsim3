@@ -202,11 +202,17 @@
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Other</value>
   </data>
+  <data name="chkUpdates.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 43</value>
+  </data>
   <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
     <value>167, 17</value>
   </data>
   <data name="chkUpdates.Text" xml:space="preserve">
     <value>Check for updates on startup</value>
+  </data>
+  <data name="chkconsole.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 20</value>
   </data>
   <data name="chkconsole.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 17</value>
@@ -370,7 +376,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABw
-        KgAAAk1TRnQBSQFMAgEBCgEAAeQBAAHkAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAewBAAHsAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAeQCogHiAqAB4QKfAd4CnAHcAZwBmgHaApgB2gKYAdkClwHXApUB1gKU
         AdMCkQHTApEB0QKPAc8CjQHPAo0BzwKNAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKf
         Ad4CnAHeApwB3AKaAdoCmAHaApgB2gKYAdoCmGAAA+wD8APuA+0B6gHrAeoD6APnAuUB5gLjAeQD4gPh

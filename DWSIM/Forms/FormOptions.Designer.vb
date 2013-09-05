@@ -114,10 +114,10 @@ Partial Class FormOptions
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem3, Me.FaTabStripItem4, Me.FaTabStripItem2, Me.FaTabStripItem5})
         Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem3
+        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStrip1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStrip1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.FaTabStrip1, "")
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStrip1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'FaTabStripItem1
         '
@@ -128,9 +128,10 @@ Partial Class FormOptions
         Me.FaTabStripItem1.Controls.Add(Me.GroupBox2)
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
+        Me.FaTabStripItem1.Selected = True
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem1, "")
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'GroupBox7
         '
@@ -146,7 +147,7 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox7, System.Drawing.Color.Empty)
         Me.GroupBox7.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBox7, "")
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox7, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'GroupBox8
         '
@@ -156,7 +157,7 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox8, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox8, System.Drawing.Color.Empty)
         Me.GroupBox8.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBox8, "")
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox8, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'tbGPUCaps
         '
@@ -165,7 +166,7 @@ Partial Class FormOptions
         Me.tbGPUCaps.ReadOnly = True
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbGPUCaps, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbGPUCaps, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.tbGPUCaps, "")
+        Me.SuperToolTip1.SetToolTip(Me.tbGPUCaps, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'cbGPU
         '
@@ -175,25 +176,25 @@ Partial Class FormOptions
         Me.cbGPU.Name = "cbGPU"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.cbGPU, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.cbGPU, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.cbGPU, "")
+        Me.SuperToolTip1.SetToolTip(Me.cbGPU, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'Label7
         '
         resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.ImageKey = ""
+        Me.Label7.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label7.Name = "Label7"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label7, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label7, "")
+        Me.SuperToolTip1.SetToolTip(Me.Label7, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'chkEnableGPUProcessing
         '
         resources.ApplyResources(Me.chkEnableGPUProcessing, "chkEnableGPUProcessing")
-        Me.chkEnableGPUProcessing.ImageKey = ""
+        Me.chkEnableGPUProcessing.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.chkEnableGPUProcessing.Name = "chkEnableGPUProcessing"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkEnableGPUProcessing, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkEnableGPUProcessing, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.chkEnableGPUProcessing, "")
+        Me.SuperToolTip1.SetToolTip(Me.chkEnableGPUProcessing, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'cbParallelism
         '
@@ -203,25 +204,25 @@ Partial Class FormOptions
         Me.cbParallelism.Name = "cbParallelism"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.cbParallelism, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.cbParallelism, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.cbParallelism, "")
+        Me.SuperToolTip1.SetToolTip(Me.cbParallelism, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.ImageKey = ""
+        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label6.Name = "Label6"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label6, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label6, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label6, "")
+        Me.SuperToolTip1.SetToolTip(Me.Label6, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'chkEnableParallelCalcs
         '
         resources.ApplyResources(Me.chkEnableParallelCalcs, "chkEnableParallelCalcs")
-        Me.chkEnableParallelCalcs.ImageKey = ""
+        Me.chkEnableParallelCalcs.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.chkEnableParallelCalcs.Name = "chkEnableParallelCalcs"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkEnableParallelCalcs, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkEnableParallelCalcs, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.chkEnableParallelCalcs, "")
+        Me.SuperToolTip1.SetToolTip(Me.chkEnableParallelCalcs, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'GroupBox6
         '
@@ -232,25 +233,25 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox6, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox6, System.Drawing.Color.Empty)
         Me.GroupBox6.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBox6, "")
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox6, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'chkUpdates
         '
         resources.ApplyResources(Me.chkUpdates, "chkUpdates")
-        Me.chkUpdates.ImageKey = ""
+        Me.chkUpdates.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.chkUpdates.Name = "chkUpdates"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkUpdates, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkUpdates, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.chkUpdates, "")
+        Me.SuperToolTip1.SetToolTip(Me.chkUpdates, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'chkconsole
         '
         resources.ApplyResources(Me.chkconsole, "chkconsole")
-        Me.chkconsole.ImageKey = ""
+        Me.chkconsole.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.chkconsole.Name = "chkconsole"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkconsole, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkconsole, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.chkconsole, "")
+        Me.SuperToolTip1.SetToolTip(Me.chkconsole, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'GroupBox2
         '
@@ -260,16 +261,16 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox2, System.Drawing.Color.Empty)
         Me.GroupBox2.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBox2, "")
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox2, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'KryptonCheckBox1
         '
         resources.ApplyResources(Me.KryptonCheckBox1, "KryptonCheckBox1")
-        Me.KryptonCheckBox1.ImageKey = ""
+        Me.KryptonCheckBox1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KryptonCheckBox1.Name = "KryptonCheckBox1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonCheckBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonCheckBox1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.KryptonCheckBox1, "")
+        Me.SuperToolTip1.SetToolTip(Me.KryptonCheckBox1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'FaTabStripItem3
         '
@@ -280,10 +281,9 @@ Partial Class FormOptions
         Me.FaTabStripItem3.Controls.Add(Me.GroupBox4)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        Me.FaTabStripItem3.Selected = True
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem3, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem3, "")
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem3, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'GroupBox9
         '
@@ -294,25 +294,25 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox9, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox9, System.Drawing.Color.Empty)
         Me.GroupBox9.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBox9, "")
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox9, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'Label8
         '
         resources.ApplyResources(Me.Label8, "Label8")
-        Me.Label8.ImageKey = ""
+        Me.Label8.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label8.Name = "Label8"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label8, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label8, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label8, "")
+        Me.SuperToolTip1.SetToolTip(Me.Label8, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'CheckBoxConstantProperties
         '
         resources.ApplyResources(Me.CheckBoxConstantProperties, "CheckBoxConstantProperties")
-        Me.CheckBoxConstantProperties.ImageKey = ""
+        Me.CheckBoxConstantProperties.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.CheckBoxConstantProperties.Name = "CheckBoxConstantProperties"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.CheckBoxConstantProperties, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.CheckBoxConstantProperties, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.CheckBoxConstantProperties, "")
+        Me.SuperToolTip1.SetToolTip(Me.CheckBoxConstantProperties, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'GroupBox11
         '
@@ -324,36 +324,36 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox11, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox11, System.Drawing.Color.Empty)
         Me.GroupBox11.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBox11, "")
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox11, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'cbudb
         '
         resources.ApplyResources(Me.cbudb, "cbudb")
-        Me.cbudb.ImageKey = ""
+        Me.cbudb.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.cbudb.Name = "cbudb"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.cbudb, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.cbudb, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.cbudb, "")
+        Me.SuperToolTip1.SetToolTip(Me.cbudb, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         Me.cbudb.UseVisualStyleBackColor = True
         '
         'Button11
         '
         resources.ApplyResources(Me.Button11, "Button11")
-        Me.Button11.ImageKey = ""
+        Me.Button11.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button11.Name = "Button11"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button11, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button11, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Button11, "")
+        Me.SuperToolTip1.SetToolTip(Me.Button11, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         Me.Button11.UseVisualStyleBackColor = True
         '
         'Button7
         '
         resources.ApplyResources(Me.Button7, "Button7")
-        Me.Button7.ImageKey = ""
+        Me.Button7.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button7.Name = "Button7"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button7, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Button7, "")
+        Me.SuperToolTip1.SetToolTip(Me.Button7, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         Me.Button7.UseVisualStyleBackColor = True
         '
         'GroupBox4
@@ -364,7 +364,7 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox4, System.Drawing.Color.Empty)
         Me.GroupBox4.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBox4, "")
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox4, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'dgvdb
         '
@@ -390,7 +390,7 @@ Partial Class FormOptions
         Me.dgvdb.ShowCellErrors = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.dgvdb, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.dgvdb, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.dgvdb, "")
+        Me.SuperToolTip1.SetToolTip(Me.dgvdb, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'Column12
         '
@@ -400,7 +400,7 @@ Partial Class FormOptions
         Me.Column12.Name = "Column12"
         Me.Column12.ReadOnly = True
         Me.Column12.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Column12.ToolTipText = ""
+        Me.Column12.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'Column13
         '
@@ -410,7 +410,7 @@ Partial Class FormOptions
         Me.Column13.Name = "Column13"
         Me.Column13.ReadOnly = True
         Me.Column13.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Column13.ToolTipText = ""
+        Me.Column13.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'Column14
         '
@@ -420,7 +420,7 @@ Partial Class FormOptions
         Me.Column14.Name = "Column14"
         Me.Column14.ReadOnly = True
         Me.Column14.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Column14.ToolTipText = ""
+        Me.Column14.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'Column15
         '
@@ -429,7 +429,7 @@ Partial Class FormOptions
         Me.Column15.Name = "Column15"
         Me.Column15.ReadOnly = True
         Me.Column15.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Column15.ToolTipText = ""
+        Me.Column15.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'Column1
         '
@@ -437,7 +437,7 @@ Partial Class FormOptions
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
-        Me.Column1.ToolTipText = ""
+        Me.Column1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'FaTabStripItem4
         '
@@ -448,7 +448,7 @@ Partial Class FormOptions
         Me.FaTabStripItem4.Name = "FaTabStripItem4"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem4, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem4, "")
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem4, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'GroupBox1
         '
@@ -461,16 +461,16 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox1, System.Drawing.Color.Empty)
         Me.GroupBox1.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBox1, "")
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = ""
+        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button1.Name = "Button1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Button1, "")
+        Me.SuperToolTip1.SetToolTip(Me.Button1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         Me.Button1.UseVisualStyleBackColor = True
         '
         'ListView1
@@ -484,7 +484,7 @@ Partial Class FormOptions
         Me.ListView1.SmallImageList = Me.ImageList1
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ListView1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ListView1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.ListView1, "")
+        Me.SuperToolTip1.SetToolTip(Me.ListView1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         Me.ListView1.UseCompatibleStateImageBehavior = False
         Me.ListView1.View = System.Windows.Forms.View.List
         '
@@ -506,20 +506,20 @@ Partial Class FormOptions
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ImageKey = ""
+        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label3.Name = "Label3"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label3, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label3, "")
+        Me.SuperToolTip1.SetToolTip(Me.Label3, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = ""
+        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label1.Name = "Label1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label1, "")
+        Me.SuperToolTip1.SetToolTip(Me.Label1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'FaTabStripItem2
         '
@@ -530,7 +530,7 @@ Partial Class FormOptions
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem2, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem2, "")
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem2, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'GroupBox3
         '
@@ -548,16 +548,16 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox3, System.Drawing.Color.Empty)
         Me.GroupBox3.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBox3, "")
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox3, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'Button2
         '
         resources.ApplyResources(Me.Button2, "Button2")
-        Me.Button2.ImageKey = ""
+        Me.Button2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button2.Name = "Button2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button2, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Button2, "")
+        Me.SuperToolTip1.SetToolTip(Me.Button2, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'PictureBox1
         '
@@ -568,16 +568,16 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PictureBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.PictureBox1, System.Drawing.Color.Empty)
         Me.PictureBox1.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.PictureBox1, "")
+        Me.SuperToolTip1.SetToolTip(Me.PictureBox1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'KryptonLabel3
         '
         resources.ApplyResources(Me.KryptonLabel3, "KryptonLabel3")
-        Me.KryptonLabel3.ImageKey = ""
+        Me.KryptonLabel3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KryptonLabel3.Name = "KryptonLabel3"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonLabel3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonLabel3, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.KryptonLabel3, "")
+        Me.SuperToolTip1.SetToolTip(Me.KryptonLabel3, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'TrackBar1
         '
@@ -587,26 +587,26 @@ Partial Class FormOptions
         Me.TrackBar1.Name = "TrackBar1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.TrackBar1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.TrackBar1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.TrackBar1, "")
+        Me.SuperToolTip1.SetToolTip(Me.TrackBar1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         Me.TrackBar1.Value = 5
         '
         'KryptonLabel2
         '
         resources.ApplyResources(Me.KryptonLabel2, "KryptonLabel2")
-        Me.KryptonLabel2.ImageKey = ""
+        Me.KryptonLabel2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KryptonLabel2.Name = "KryptonLabel2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonLabel2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonLabel2, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.KryptonLabel2, "")
+        Me.SuperToolTip1.SetToolTip(Me.KryptonLabel2, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'KryptonButton1
         '
         resources.ApplyResources(Me.KryptonButton1, "KryptonButton1")
-        Me.KryptonButton1.ImageKey = ""
+        Me.KryptonButton1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KryptonButton1.Name = "KryptonButton1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.KryptonButton1, "")
+        Me.SuperToolTip1.SetToolTip(Me.KryptonButton1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'KryptonTextBox1
         '
@@ -615,25 +615,25 @@ Partial Class FormOptions
         Me.KryptonTextBox1.ReadOnly = True
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonTextBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonTextBox1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.KryptonTextBox1, "")
+        Me.SuperToolTip1.SetToolTip(Me.KryptonTextBox1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'KryptonLabel1
         '
         resources.ApplyResources(Me.KryptonLabel1, "KryptonLabel1")
-        Me.KryptonLabel1.ImageKey = ""
+        Me.KryptonLabel1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KryptonLabel1.Name = "KryptonLabel1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonLabel1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonLabel1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.KryptonLabel1, "")
+        Me.SuperToolTip1.SetToolTip(Me.KryptonLabel1, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'KryptonCheckBox6
         '
         resources.ApplyResources(Me.KryptonCheckBox6, "KryptonCheckBox6")
-        Me.KryptonCheckBox6.ImageKey = ""
+        Me.KryptonCheckBox6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KryptonCheckBox6.Name = "KryptonCheckBox6"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonCheckBox6, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonCheckBox6, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.KryptonCheckBox6, "")
+        Me.SuperToolTip1.SetToolTip(Me.KryptonCheckBox6, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'FaTabStripItem5
         '
@@ -644,7 +644,7 @@ Partial Class FormOptions
         Me.FaTabStripItem5.Name = "FaTabStripItem5"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem5, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem5, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem5, "")
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem5, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'GroupBox5
         '
@@ -659,7 +659,7 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox5, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox5, System.Drawing.Color.Empty)
         Me.GroupBox5.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBox5, "")
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox5, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'lbpaths
         '
@@ -668,35 +668,35 @@ Partial Class FormOptions
         Me.lbpaths.Name = "lbpaths"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.lbpaths, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.lbpaths, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.lbpaths, "")
+        Me.SuperToolTip1.SetToolTip(Me.lbpaths, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.ImageKey = ""
+        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label5.Name = "Label5"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label5, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label5, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label5, "")
+        Me.SuperToolTip1.SetToolTip(Me.Label5, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'btnrmpath
         '
         resources.ApplyResources(Me.btnrmpath, "btnrmpath")
-        Me.btnrmpath.ImageKey = ""
+        Me.btnrmpath.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.btnrmpath.Name = "btnrmpath"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.btnrmpath, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.btnrmpath, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.btnrmpath, "")
+        Me.SuperToolTip1.SetToolTip(Me.btnrmpath, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         Me.btnrmpath.UseVisualStyleBackColor = True
         '
         'btnaddpath
         '
         resources.ApplyResources(Me.btnaddpath, "btnaddpath")
-        Me.btnaddpath.ImageKey = ""
+        Me.btnaddpath.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.btnaddpath.Name = "btnaddpath"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.btnaddpath, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.btnaddpath, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.btnaddpath, "")
+        Me.SuperToolTip1.SetToolTip(Me.btnaddpath, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         Me.btnaddpath.UseVisualStyleBackColor = True
         '
         'tbaddpath
@@ -705,17 +705,21 @@ Partial Class FormOptions
         Me.tbaddpath.Name = "tbaddpath"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbaddpath, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbaddpath, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.tbaddpath, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label4.Name = "Label4"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label4, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label4, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         '
         'FolderBrowserDialog1
         '
         resources.ApplyResources(Me.FolderBrowserDialog1, "FolderBrowserDialog1")
+        Me.FolderBrowserDialog1.SelectedPath = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'ofdcs
         '
@@ -747,6 +751,7 @@ Partial Class FormOptions
         Me.ShowInTaskbar = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStrip1.ResumeLayout(False)
         Me.FaTabStripItem1.ResumeLayout(False)

@@ -430,14 +430,18 @@ Public Class FormOptions
             Else
                 My.Settings.CudafyTarget = eGPUType.OpenCL
             End If
-            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
-                If Me.cbGPU.SelectedItem.ToString.Split("|")(1).Contains(prop.Name) Then
-                    My.Settings.SelectedGPU = Me.cbGPU.SelectedItem.ToString
-                    My.Settings.CudafyDeviceID = prop.DeviceId
-                    GetCUDACaps(prop)
-                    Exit For
-                End If
-            Next
+            Try
+                For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+                    If Me.cbGPU.SelectedItem.ToString.Split("|")(1).Contains(prop.Name) Then
+                        My.Settings.SelectedGPU = Me.cbGPU.SelectedItem.ToString
+                        My.Settings.CudafyDeviceID = prop.DeviceId
+                        GetCUDACaps(prop)
+                        Exit For
+                    End If
+                Next
+            Catch ex As Exception
+
+            End Try
             MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
         End If
     End Sub

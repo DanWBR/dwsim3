@@ -244,6 +244,7 @@ Public Class FormReacEq
                             Case Else
                                 MessageBox.Show(ex.ToString)
                         End Select
+                        Exit Sub
                     End Try
                     '// Evaluate the expressions
                     'double result = (double)eDynamic.Evaluate();
