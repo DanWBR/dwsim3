@@ -2156,6 +2156,12 @@ restart:            fx = Me.FunctionValue(xvar)
                     Array.Resize(xt(i), ns + 1)
                 Next
 
+                For i = 0 To ns
+                    For j = 1 To nc
+                        If Double.IsNaN(K(i)(j - 1)) Or Double.IsInfinity(K(i)(j - 1)) Then K(i)(j - 1) = pp.AUX_PVAPi(j - 1, Tj(i)) / P(i)
+                    Next
+                Next
+
                 Dim sum1(ns), sum2(ns) As Double
 
                 For i = 0 To ns

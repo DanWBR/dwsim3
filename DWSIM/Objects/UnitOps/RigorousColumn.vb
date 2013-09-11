@@ -1678,7 +1678,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Private _rr As Double = 5.0#
         Private _condp, _rebp, _conddp, _drate, _vrate, _condd, _rebd As Double
         Private _st As New System.Collections.Generic.List(Of Auxiliary.SepOps.Stage)
-        Public CondenserType As condtype = condtype.Total_Condenser
+        Public Property CondenserType As condtype = condtype.Total_Condenser
         Private m_specs As New Collections.Generic.Dictionary(Of String, Auxiliary.SepOps.ColumnSpec)
         Private m_jac As Object
         Private _vrateunit As String = "mol/s"
