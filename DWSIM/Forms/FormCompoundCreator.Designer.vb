@@ -2836,7 +2836,7 @@ Partial Class FormCompoundCreator
         Me.Controls.Add(Me.GroupBox1)
         Me.HelpProvider1.SetHelpKeyword(Me, resources.GetString("$this.HelpKeyword"))
         Me.HelpProvider1.SetHelpNavigator(Me, CType(resources.GetObject("$this.HelpNavigator"), System.Windows.Forms.HelpNavigator))
-        Me.HelpProvider1.SetHelpString(Me, Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable)
+        Me.HelpProvider1.SetHelpString(Me, "")
         Me.Name = "FormCompoundCreator"
         Me.HelpProvider1.SetShowHelp(Me, CType(resources.GetObject("$this.ShowHelp"), Boolean))
         Me.GroupBox1.ResumeLayout(False)
