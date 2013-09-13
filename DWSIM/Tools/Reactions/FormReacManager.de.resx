@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="KryptonButton8.Text" xml:space="preserve">
     <value>Neu</value>
@@ -129,16 +129,19 @@
   <data name="KryptonButton2.Text" xml:space="preserve">
     <value>Kopieren</value>
   </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Reaktionssets</value>
+  </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>Beschreibung</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Reaktionssets</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Chemische Reaktionen</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 13</value>
   </data>
@@ -178,17 +181,14 @@
   <data name="DataGridViewTextBoxColumn3.HeaderText" xml:space="preserve">
     <value>Gleichung</value>
   </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Chemische Reaktionen</value>
-  </data>
   <data name="OpenFileDialog1.Filter" xml:space="preserve">
-    <value>DWSIM Chemische Reaktionsdatei|*.dwrxs</value>
+    <value>DWSIM Chemische Reaktionsdatei|*.dwrxs;*.dwrxm</value>
   </data>
   <data name="OpenFileDialog1.Title" xml:space="preserve">
     <value>Reaktionsdatei öffnen</value>
   </data>
   <data name="SaveFileDialog1.Filter" xml:space="preserve">
-    <value>DWSIM Chemische Reaktionsdatei|*.dwrxs</value>
+    <value>DWSIM Chemische Reaktionsdatei|*.dwrxs|DWSIM Chemische Reaktionsdatei (XML)|*.dwrxm</value>
   </data>
   <data name="SaveFileDialog1.Title" xml:space="preserve">
     <value>Reaktionen in Datei speichern</value>

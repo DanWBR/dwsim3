@@ -28,6 +28,8 @@ Imports CapeOpen
 Imports System.Runtime.Serialization.Formatters
 Imports System.Runtime.InteropServices.Marshal
 Imports System.Runtime.InteropServices
+Imports DWSIM.DWSIM.SimulationObjects
+Imports System.Text
 
 <System.Serializable()> <ComVisible(True)> Public MustInherit Class SimulationObjects_BaseClass
 
@@ -112,7 +114,7 @@ Imports System.Runtime.InteropServices
     Public Overridable Sub PropertyValueChanged(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs)
 
         Dim ChildParent As FormFlowsheet = FlowSheet
-        Dim sobj As Microsoft.MSDN.Samples.GraphicObjects.GraphicObject = ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject
+        Dim sobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject
 
         If Not sobj Is Nothing Then
 
@@ -1205,8 +1207,8 @@ Imports System.Runtime.InteropServices
                         End If
                     End If
                 End If
-                End If
             End If
+        End If
 
     End Sub
 
@@ -1461,6 +1463,137 @@ Imports System.Runtime.InteropServices
         Return elements
 
     End Function
+
+    Public Sub CopyDataToClipboard(su As DWSIM.SistemasDeUnidades.Unidades, nf As String)
+
+        Dim DT As New DataTable
+        DT.Columns.Clear()
+        DT.Columns.Add(("Propriedade"), GetType(System.String))
+        DT.Columns.Add(("Valor"), GetType(System.String))
+        DT.Columns.Add(("Unidade"), GetType(System.String))
+        DT.Rows.Clear()
+
+        Dim baseobj As SimulationObjects_BaseClass
+        Dim properties() As String
+        Dim description As String
+        Dim objtype As Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto
+        Dim propidx, r1, r2, r3, r4, r5, r6 As Integer
+        r1 = 5
+        r2 = 12
+        r3 = 30
+        r4 = 48
+        r5 = 66
+        r6 = 84
+
+        baseobj = Me
+        properties = baseobj.GetProperties(SimulationObjects_BaseClass.PropertyType.ALL)
+        objtype = baseobj.GraphicObject.TipoObjeto
+        description = DWSIM.App.GetLocalString(baseobj.GraphicObject.Description)
+        If objtype = Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream Then
+            Dim value As String
+            For propidx = 0 To r1 - 1
+                value = baseobj.GetPropertyValue(properties(propidx), su)
+                If Double.TryParse(value, New Double) Then
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), Format(Double.Parse(value), nf), baseobj.GetPropertyUnit(properties(propidx), su)})
+                Else
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), value, baseobj.GetPropertyUnit(properties(propidx), su)})
+                End If
+            Next
+            For propidx = r1 To r2 - 1
+                value = baseobj.GetPropertyValue(properties(propidx), su)
+                If Double.TryParse(value, New Double) Then
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), Format(Double.Parse(value), nf), baseobj.GetPropertyUnit(properties(propidx), su)})
+                Else
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), value, baseobj.GetPropertyUnit(properties(propidx), su)})
+                End If
+            Next
+            DT.Rows.Add(New String() {DWSIM.App.GetLocalString("FraomolarnaMistura"), "", ""})
+            For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In CType(Me, Streams.MaterialStream).Fases(0).Componentes.Values
+                DT.Rows.Add(New String() {DWSIM.App.GetComponentName(subst.Nome), Format(subst.FracaoMolar.GetValueOrDefault, nf), ""})
+            Next
+            For propidx = r2 To r3 - 1
+                value = baseobj.GetPropertyValue(properties(propidx), su)
+                If Double.TryParse(value, New Double) Then
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), Format(Double.Parse(value), nf), baseobj.GetPropertyUnit(properties(propidx), su)})
+                Else
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), value, baseobj.GetPropertyUnit(properties(propidx), su)})
+                End If
+            Next
+            DT.Rows.Add(New String() {DWSIM.App.GetLocalString("FraomolarnaFaseVapor"), "", ""})
+            For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In CType(Me, Streams.MaterialStream).Fases(2).Componentes.Values
+                DT.Rows.Add(New String() {DWSIM.App.GetComponentName(subst.Nome), Format(subst.FracaoMolar.GetValueOrDefault, nf), ""})
+            Next
+            For propidx = r3 To r4 - 1
+                value = baseobj.GetPropertyValue(properties(propidx), su)
+                If Double.TryParse(value, New Double) Then
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), Format(Double.Parse(value), nf), baseobj.GetPropertyUnit(properties(propidx), su)})
+                Else
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), value, baseobj.GetPropertyUnit(properties(propidx), su)})
+                End If
+            Next
+            DT.Rows.Add(New String() {DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), "", ""})
+            For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In CType(Me, Streams.MaterialStream).Fases(1).Componentes.Values
+                DT.Rows.Add(New String() {DWSIM.App.GetComponentName(subst.Nome), Format(subst.FracaoMolar.GetValueOrDefault, nf), ""})
+            Next
+            For propidx = r4 To r5 - 1
+                value = baseobj.GetPropertyValue(properties(propidx), su)
+                If Double.TryParse(value, New Double) Then
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), Format(Double.Parse(value), nf), baseobj.GetPropertyUnit(properties(propidx), su)})
+                Else
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), value, baseobj.GetPropertyUnit(properties(propidx), su)})
+                End If
+            Next
+            DT.Rows.Add(New String() {DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), "", ""})
+            For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In CType(Me, Streams.MaterialStream).Fases(3).Componentes.Values
+                DT.Rows.Add(New String() {DWSIM.App.GetComponentName(subst.Nome), Format(subst.FracaoMolar.GetValueOrDefault, nf), ""})
+            Next
+            For propidx = r5 To r6 - 1
+                value = baseobj.GetPropertyValue(properties(propidx), su)
+                If Double.TryParse(value, New Double) Then
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), Format(Double.Parse(value), nf), baseobj.GetPropertyUnit(properties(propidx), su)})
+                Else
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), value, baseobj.GetPropertyUnit(properties(propidx), su)})
+                End If
+            Next
+            DT.Rows.Add(New String() {DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), "", ""})
+            For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In CType(Me, Streams.MaterialStream).Fases(4).Componentes.Values
+                DT.Rows.Add(New String() {DWSIM.App.GetComponentName(subst.Nome), Format(subst.FracaoMolar.GetValueOrDefault, nf), ""})
+            Next
+            For propidx = r6 To 101
+                value = baseobj.GetPropertyValue(properties(propidx), su)
+                If Double.TryParse(value, New Double) Then
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), Format(Double.Parse(value), nf), baseobj.GetPropertyUnit(properties(propidx), su)})
+                Else
+                    DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(properties(propidx)), value, baseobj.GetPropertyUnit(properties(propidx), su)})
+                End If
+            Next
+            DT.Rows.Add(New String() {DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), "", ""})
+            For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In CType(Me, Streams.MaterialStream).Fases(6).Componentes.Values
+                DT.Rows.Add(New String() {DWSIM.App.GetComponentName(subst.Nome), Format(subst.FracaoMolar.GetValueOrDefault, nf), ""})
+            Next
+        Else
+            For Each prop As String In properties
+                DT.Rows.Add(New String() {DWSIM.App.GetPropertyName(prop), Format(baseobj.GetPropertyValue(prop, su), nf), baseobj.GetPropertyUnit(prop, su)})
+            Next
+        End If
+
+        Dim st As New StringBuilder(DWSIM.App.GetLocalString(Me.Descricao) & ": " & Me.GraphicObject.Tag & vbCrLf)
+        For Each r As DataRow In DT.Rows
+            Dim l As String = ""
+            For Each o As Object In r.ItemArray
+                l += o.ToString() & vbTab
+            Next
+            st.AppendLine(l)
+        Next
+
+        Clipboard.SetText(st.ToString())
+
+        DT.Clear()
+        DT.Dispose()
+        DT = Nothing
+
+    End Sub
+
 
 End Class
 
