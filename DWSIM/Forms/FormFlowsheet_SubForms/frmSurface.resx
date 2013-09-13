@@ -589,16 +589,16 @@
     <value>False</value>
   </data>
   <data name="TSMI_Label.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="TSMI_Label.Text" xml:space="preserve">
     <value>ToolStripMenuItem1</value>
   </data>
   <data name="ToolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
+    <value>203, 6</value>
   </data>
   <data name="RecalcularToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="RecalcularToolStripMenuItem.Text" xml:space="preserve">
     <value>Recalcular</value>
@@ -607,31 +607,31 @@
     <value>False</value>
   </data>
   <data name="EditCompTSMI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="EditCompTSMI.Text" xml:space="preserve">
     <value>Editar Composição</value>
   </data>
   <data name="ToolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
+    <value>203, 6</value>
   </data>
   <data name="ToolStripSeparator6.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="ConectarAToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="ConectarAToolStripMenuItem.Text" xml:space="preserve">
     <value>Conectar a...</value>
   </data>
   <data name="DesconectarDeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="DesconectarDeToolStripMenuItem.Text" xml:space="preserve">
     <value>Desconectar de...</value>
   </data>
   <data name="ToolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
+    <value>203, 6</value>
   </data>
   <data name="ToolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
     <value>97, 22</value>
@@ -652,25 +652,25 @@
     <value>270°</value>
   </data>
   <data name="TSMI_Girar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="TSMI_Girar.Text" xml:space="preserve">
     <value>Girar</value>
   </data>
   <data name="HorizontalmenteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="HorizontalmenteToolStripMenuItem.Text" xml:space="preserve">
     <value>Inverter Horizontalmente</value>
   </data>
   <data name="ToolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
+    <value>203, 6</value>
   </data>
   <data name="ClonarToolStripMenuItem.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>White</value>
   </data>
   <data name="ClonarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="ClonarToolStripMenuItem.Text" xml:space="preserve">
     <value>Clonar</value>
@@ -679,13 +679,13 @@
     <value>Cria uma cópia exata do objeto selecionado.</value>
   </data>
   <data name="ExcluirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="ExcluirToolStripMenuItem.Text" xml:space="preserve">
     <value>Excluir</value>
   </data>
   <data name="ToolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 6</value>
+    <value>203, 6</value>
   </data>
   <data name="MostrarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 22</value>
@@ -700,13 +700,19 @@
     <value>Configurar...</value>
   </data>
   <data name="TabelaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="TabelaToolStripMenuItem.Text" xml:space="preserve">
     <value>Tabela</value>
   </data>
+  <data name="ToolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>203, 6</value>
+  </data>
+  <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
   <data name="CMS_Sel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>215, 276</value>
+    <value>207, 304</value>
   </data>
   <data name="&gt;&gt;CMS_Sel.Name" xml:space="preserve">
     <value>CMS_Sel</value>
@@ -801,6 +807,9 @@
   </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>70</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
@@ -1005,6 +1014,18 @@
     <value>ConfigurarToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;ConfigurarToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripSeparator7.Name" xml:space="preserve">
+    <value>ToolStripSeparator7</value>
+  </data>
+  <data name="&gt;&gt;ToolStripSeparator7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Name" xml:space="preserve">
+    <value>CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;designSurfacePrintDocument.Name" xml:space="preserve">

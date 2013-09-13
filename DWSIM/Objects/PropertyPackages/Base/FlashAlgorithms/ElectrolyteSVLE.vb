@@ -40,7 +40,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim Hf, Hl, Hv, Hs, T, P, P0, Ninerts, Winerts, E(,) As Double
         Dim r, c, els, comps, i, j As Integer
 
-        Public Property ReactionSet As String = ""
+        Public Property ReactionSet As String = "DefaultSet"
         Public Property Reactions As List(Of String)
         Public Property ReactionExtents As Dictionary(Of String, Double)
         Public Property ComponentIDs As List(Of String)
@@ -48,9 +48,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Property ComponentConversions As Dictionary(Of String, Double)
 
         Public Property MaximumIterations As Integer = 1000
-        Public Property Tolerance As Double = 0.0000000001
+        Public Property Tolerance As Double = 1.0E-20
 
-        Public Property CalculateChemicalEquilibria As Boolean = False
+        Public Property CalculateChemicalEquilibria As Boolean = True
 
         Private Vx0 As Double()
 
