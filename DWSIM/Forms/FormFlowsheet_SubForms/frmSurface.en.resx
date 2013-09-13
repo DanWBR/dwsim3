@@ -112,59 +112,23 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FlowsheetDesignSurface.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PictureBox3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PictureBox4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="LabelCalculator.Size" type="System.Drawing.Size, System.Drawing">
     <value>132, 13</value>
   </data>
   <data name="LabelCalculator.Text" xml:space="preserve">
     <value>Calculator Status: Idle</value>
   </data>
-  <data name="LabelCalculator.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LabelTime.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Panel2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="SpinningProgress1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LabelSimultAdjInfo.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PicSimultAdjust.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="LabelSimultAdjustStatus.Text" xml:space="preserve">
     <value>The Simultaneous Adjust Solver is working, please wait...</value>
   </data>
-  <data name="LabelSimultAdjustStatus.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PanelSimultAdjust.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TableLayoutPanel2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TableLayoutPanel1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="CMS_NoSel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>290, 98</value>
   </data>
   <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
     <value>289, 22</value>
@@ -193,47 +157,92 @@
   <data name="CopiarParaAÁreaDeTransferênciaToolStripMenuItem.Text" xml:space="preserve">
     <value>Capture Snapshot and Send to Clipboard</value>
   </data>
-  <data name="CMS_NoSel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>290, 98</value>
-  </data>
-  <data name="CMS_NoSel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="TSMI_Label.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="ToolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 6</value>
+    <value>203, 6</value>
   </data>
   <data name="RecalcularToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="RecalcularToolStripMenuItem.Text" xml:space="preserve">
     <value>Recalculate</value>
   </data>
   <data name="EditCompTSMI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="EditCompTSMI.Text" xml:space="preserve">
     <value>Edit Stream Composition</value>
   </data>
   <data name="ToolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 6</value>
+    <value>203, 6</value>
   </data>
   <data name="ConectarAToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="ConectarAToolStripMenuItem.Text" xml:space="preserve">
     <value>Connect to...</value>
   </data>
   <data name="DesconectarDeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 22</value>
+    <value>206, 22</value>
   </data>
   <data name="DesconectarDeToolStripMenuItem.Text" xml:space="preserve">
     <value>Disconnect from...</value>
   </data>
   <data name="ToolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 6</value>
+    <value>203, 6</value>
+  </data>
+  <data name="TSMI_Girar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="TSMI_Girar.Text" xml:space="preserve">
+    <value>Rotate</value>
+  </data>
+  <data name="HorizontalmenteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="HorizontalmenteToolStripMenuItem.Text" xml:space="preserve">
+    <value>Invert Horizontally</value>
+  </data>
+  <data name="ToolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>203, 6</value>
+  </data>
+  <data name="ClonarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="ClonarToolStripMenuItem.Text" xml:space="preserve">
+    <value>Clone</value>
+  </data>
+  <data name="ClonarToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Creates an exact copy of the selected object.</value>
+  </data>
+  <data name="ExcluirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="ExcluirToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ToolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>203, 6</value>
+  </data>
+  <data name="TabelaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="TabelaToolStripMenuItem.Text" xml:space="preserve">
+    <value>Table</value>
+  </data>
+  <data name="ToolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>203, 6</value>
+  </data>
+  <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 22</value>
+  </data>
+  <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy Data to Clipboard</value>
+  </data>
+  <data name="CMS_Sel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>207, 282</value>
   </data>
   <data name="ToolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 22</value>
@@ -253,39 +262,6 @@
   <data name="ToolStripMenuItem7.Text" xml:space="preserve">
     <value>270 °</value>
   </data>
-  <data name="TSMI_Girar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 22</value>
-  </data>
-  <data name="TSMI_Girar.Text" xml:space="preserve">
-    <value>Rotate</value>
-  </data>
-  <data name="HorizontalmenteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 22</value>
-  </data>
-  <data name="HorizontalmenteToolStripMenuItem.Text" xml:space="preserve">
-    <value>Invert Horizontally</value>
-  </data>
-  <data name="ToolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 6</value>
-  </data>
-  <data name="ClonarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 22</value>
-  </data>
-  <data name="ClonarToolStripMenuItem.Text" xml:space="preserve">
-    <value>Clone</value>
-  </data>
-  <data name="ClonarToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Creates an exact copy of the selected object.</value>
-  </data>
-  <data name="ExcluirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 22</value>
-  </data>
-  <data name="ExcluirToolStripMenuItem.Text" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ToolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 6</value>
-  </data>
   <data name="MostrarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 22</value>
   </data>
@@ -297,18 +273,6 @@
   </data>
   <data name="ConfigurarToolStripMenuItem.Text" xml:space="preserve">
     <value>Configure...</value>
-  </data>
-  <data name="TabelaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 22</value>
-  </data>
-  <data name="TabelaToolStripMenuItem.Text" xml:space="preserve">
-    <value>Table</value>
-  </data>
-  <data name="CMS_Sel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>247, 254</value>
-  </data>
-  <data name="CMS_Sel.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="PreviewDialog.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -332,18 +296,9 @@
         AABsAgAAbAIAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAHwAAAB8AAAAAAAAAA==
 </value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="PreviewDialog.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PreviewDialog.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="CMS_ItemsToConnect.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="CMS_ItemsToDisconnect.ToolTip" xml:space="preserve">
-    <value />
+    <value>Inherit</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -364,10 +319,10 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 </value>
   </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Flowsheet</value>
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

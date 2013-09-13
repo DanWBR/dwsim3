@@ -18,7 +18,8 @@
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Runtime.Serialization.Formatters
-
+Imports System.Globalization
+Imports System.Linq
 
 Public Class FormReacManager
 
@@ -94,6 +95,7 @@ Public Class FormReacManager
     End Sub
 
     Private Sub KryptonButton4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton4.Click
+
         Dim myStream As System.IO.FileStream
         col = New ReactionsCollection
         col.Collection = New DWSIM.ClassesBasicasTermodinamica.Reaction(frmchild.Options.Reactions.Count - 1) {}
@@ -103,14 +105,32 @@ Public Class FormReacManager
             myStream = Me.SaveFileDialog1.OpenFile()
             If Not (myStream Is Nothing) Then
                 Dim filename As String = myStream.Name
-                Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
-                Try
-                    mySerializer.Serialize(myStream, col)
-                Catch ex As System.Runtime.Serialization.SerializationException
-                    MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Finally
-                    myStream.Close()
-                End Try
+                Select Case Me.SaveFileDialog1.FilterIndex
+                    Case 1
+                        Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
+                        Try
+                            mySerializer.Serialize(myStream, col)
+                        Catch ex As System.Runtime.Serialization.SerializationException
+                            MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Finally
+                            myStream.Close()
+                        End Try
+                    Case 2
+                        Try
+                            Dim xdoc As New XDocument()
+                            Dim xel As XElement
+                            xdoc.Add(New XElement("DWSIM_Reaction_Data"))
+                            xel = xdoc.Element("DWSIM_Reaction_Data")
+                            For Each pp As KeyValuePair(Of String, Reaction) In frmchild.Options.Reactions
+                                If GridRxns.SelectedRows(0).Cells(3).Value = pp.Value.ID Then xel.Add(New XElement("Reaction", {pp.Value.SaveData().ToArray()}))
+                            Next
+                            xdoc.Save(myStream)
+                        Catch ex As Exception
+                            MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Finally
+                            myStream.Close()
+                        End Try
+                End Select
             End If
         End If
     End Sub
@@ -122,71 +142,90 @@ Public Class FormReacManager
         If Me.OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
             myStream = Me.OpenFileDialog1.OpenFile()
             If Not (myStream Is Nothing) Then
-                Dim nome = myStream.Name
-                myStream.Close()
-                Dim myFileStream As IO.FileStream = New IO.FileStream(nome, IO.FileMode.Open)
-                Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
-                Try
-                    Dim rxns As ReactionsCollection
-                    rxns = DirectCast(mySerializer.Deserialize(myFileStream), ReactionsCollection)
-                    'verify Components
-                    Dim carray As New ArrayList
-                    For Each rxn As Reaction In rxns.Collection
-                        For Each ssbase As ReactionStoichBase In rxn.Components.Values
-                            If Not Me.frmchild.Options.SelectedComponents.ContainsKey(ssbase.CompName) Then
-                                If Not carray.Contains(ssbase.CompName) Then carray.Add(ssbase.CompName)
-                            End If
-                        Next
+                Dim rxns As New ReactionsCollection
+                Select Case IO.Path.GetExtension(myStream.Name).ToLower()
+                    Case ".dwrxs"
+                        Dim nome = myStream.Name
+                        Dim myFileStream As IO.FileStream = New IO.FileStream(nome, IO.FileMode.Open)
+                        Try
+                            myStream.Close()
+                            Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
+                            rxns = DirectCast(mySerializer.Deserialize(myFileStream), ReactionsCollection)
+                        Catch ex As Exception
+                            MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Finally
+                            myFileStream.Close()
+                        End Try
+                    Case ".dwrxm"
+                        Try
+                            Dim ci As CultureInfo = CultureInfo.InvariantCulture
+                            Dim xdoc As XDocument = XDocument.Load(myStream)
+                            Dim data As List(Of XElement) = xdoc.Element("DWSIM_Reaction_Data").Elements.ToList
+                            Dim rxarr As New ArrayList
+                            For Each xel As XElement In data
+                                Dim obj As New Reaction()
+                                obj.LoadData(xel.Elements.ToList)
+                                rxarr.Add(obj)
+                            Next
+                            rxns.Collection = New Reaction(rxarr.Count - 1) {}
+                            rxarr.CopyTo(rxns.Collection, 0)
+                        Catch ex As Exception
+                            MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Finally
+                            myStream.Close()
+                        End Try
+                End Select
+                'verify Components
+                Dim carray As New ArrayList
+                For Each rxn As Reaction In rxns.Collection
+                    For Each ssbase As ReactionStoichBase In rxn.Components.Values
+                        If Not Me.frmchild.Options.SelectedComponents.ContainsKey(ssbase.CompName) Then
+                            If Not carray.Contains(ssbase.CompName) Then carray.Add(ssbase.CompName)
+                        End If
                     Next
-                    'warn user about missing Components
-                    If carray.Count > 0 Then
-                        Dim str As String = DWSIM.App.GetLocalString("Vocedeveadicionar") & vbCrLf & vbCrLf
-                        Dim str2 As String = ""
-                        Dim str3 As String = vbCrLf & DWSIM.App.GetLocalString("Vocedeveadicionar1")
-                        Dim i As Integer = 0, idx As Integer
+                Next
+                'warn user about missing Components
+                If carray.Count > 0 Then
+                    Dim str As String = DWSIM.App.GetLocalString("Vocedeveadicionar") & vbCrLf & vbCrLf
+                    Dim str2 As String = ""
+                    Dim str3 As String = vbCrLf & DWSIM.App.GetLocalString("Vocedeveadicionar1")
+                    Dim i As Integer = 0, idx As Integer
+                    Do
+                        str2 += "- " & DWSIM.App.GetComponentName(CStr(carray(i))) & vbCrLf
+                        i += 1
+                    Loop Until i = carray.Count
+                    Dim res As MsgBoxResult = MessageBox.Show(str + str2 + str3, DWSIM.App.GetLocalString("Aviso"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+                    If res = MsgBoxResult.Yes Then
+                        'add Components
+                        Dim tmpcomp As New DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+                        i = 0
                         Do
-                            str2 += "- " & DWSIM.App.GetComponentName(CStr(carray(i))) & vbCrLf
+                            If Not Me.frmchild.Options.SelectedComponents.ContainsKey(carray(i)) Then
+                                If Not Me.frmchild.Options.NotSelectedComponents.ContainsKey(carray(i)) Then
+                                    MessageBox.Show("Component " & carray(i) & " is absent from the list of available components.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                Else
+                                    tmpcomp = Me.frmchild.Options.NotSelectedComponents(carray(i))
+                                    For Each r As DataGridViewRow In Me.frmchild.FrmStSim1.ogc1.Rows
+                                        If r.Cells(0).Value = tmpcomp.Name Then
+                                            idx = r.Index
+                                            Exit For
+                                        End If
+                                    Next
+                                    Me.frmchild.FrmStSim1.AddCompToSimulation(idx)
+                                End If
+                            End If
                             i += 1
                         Loop Until i = carray.Count
-                        Dim res As MsgBoxResult = MessageBox.Show(str + str2 + str3, DWSIM.App.GetLocalString("Aviso"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-                        If res = MsgBoxResult.Yes Then
-                            'add Components
-                            Dim tmpcomp As New DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                            i = 0
-                            Do
-                                If Not Me.frmchild.Options.SelectedComponents.ContainsKey(carray(i)) Then
-                                    If Not Me.frmchild.Options.NotSelectedComponents.ContainsKey(carray(i)) Then
-                                        MessageBox.Show("Component " & carray(i) & " is absent from the list of available components.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                                    Else
-                                        tmpcomp = Me.frmchild.Options.NotSelectedComponents(carray(i))
-                                        For Each r As DataGridViewRow In Me.frmchild.FrmStSim1.ogc1.Rows
-                                            If r.Cells(0).Value = tmpcomp.Name Then
-                                                idx = r.Index
-                                                Exit For
-                                            End If
-                                        Next
-                                        Me.frmchild.FrmStSim1.AddCompToSimulation(idx)
-                                    End If
-                                End If
-                                i += 1
-                            Loop Until i = carray.Count
-                        End If
                     End If
-                    'add reactions
-                    For Each rxn As Reaction In rxns.Collection
-                        If Not frmchild.Options.Reactions.ContainsKey(rxn.ID) Then
-                            Me.frmchild.Options.Reactions.Add(rxn.ID, rxn)
-                            Me.GridRxns.Rows.Add(New Object() {rxn.Name, rxn.ReactionType, rxn.Equation, rxn.ID})
-                            Me.frmchild.Options.ReactionSets("DefaultSet").Reactions.Add(rxn.ID, New ReactionSetBase(rxn.ID, 0, True))
-                        End If
-                    Next
-                Catch ex As System.Runtime.Serialization.SerializationException
-                    Throw ex
-                Catch ex As System.Exception
-                Finally
-                    myFileStream.Close()
-                End Try
-
+                End If
+                'add reactions
+                For Each rxn As Reaction In rxns.Collection
+                    If Not frmchild.Options.Reactions.ContainsKey(rxn.ID) Then
+                        Me.frmchild.Options.Reactions.Add(rxn.ID, rxn)
+                        Me.GridRxns.Rows.Add(New Object() {rxn.Name, rxn.ReactionType, rxn.Equation, rxn.ID})
+                        Me.frmchild.Options.ReactionSets("DefaultSet").Reactions.Add(rxn.ID, New ReactionSetBase(rxn.ID, 0, True))
+                    End If
+                Next
             End If
         End If
 
