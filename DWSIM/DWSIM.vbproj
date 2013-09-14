@@ -1920,7 +1920,6 @@
     <None Include="Resources\colan.jpg" />
     <None Include="Resources\colan2.jpg" />
     <None Include="Resources\Davos-1.jpg" />
-    <None Include="Resources\clipboard_sign.png" />
     <Content Include="Resources\control_equalizer_blue.png" />
     <Content Include="Resources\de.png" />
     <None Include="Resources\emblem-symbolic-link.png" />

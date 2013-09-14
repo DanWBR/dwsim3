@@ -3261,11 +3261,4 @@ Public Class frmSurface
 
     End Sub
 
-    Private Sub CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Click
-
-        'copy all simulation properties from the selected object to clipboard
-        ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).CopyDataToClipboard(ChildParent.Options.SelectedUnitSystem, ChildParent.Options.NumberFormat)
-
-    End Sub
-
 End Class
