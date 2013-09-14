@@ -75,6 +75,7 @@ Public Class FormReacEq
         Me.tbApproach.Text = rc.Approach
         Me.tbTmin.Text = rc.Tmin
         Me.tbTmax.Text = rc.Tmax
+        Me.tbKeqConstant.Text = rc.ConstantKeqValue
 
         Select Case rc.ReactionPhase
             Case PhaseName.Vapor
@@ -302,7 +303,7 @@ Public Class FormReacEq
             rc.Approach = Me.tbApproach.Text
             rc.Tmin = Me.tbTmin.Text
             rc.Tmax = Me.tbTmax.Text
-            If Me.rbKeqConstant.Checked Then rc.ConstantKeqValue = Me.tbKeqConstant.Text
+            rc.ConstantKeqValue = Me.tbKeqConstant.Text
 
             For Each row As DataGridViewRow In Me.KryptonDataGridView1.Rows
                 If row.Cells(3).Value = True Then
