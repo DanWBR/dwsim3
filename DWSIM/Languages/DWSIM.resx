@@ -4786,4 +4786,16 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="XLFileSaved" xml:space="preserve">
     <value>Planilha do Excel salva com sucesso.</value>
   </data>
+  <data name="Electrolyte_Cp0" xml:space="preserve">
+    <value>[Eletrólito] Capacidade Calorífica no Estado Padrão a 298 K</value>
+  </data>
+  <data name="Electrolyte_DelGF" xml:space="preserve">
+    <value>[Eletrólito] Energia de Gibbs de Formação no Estado Padrão a 298 K</value>
+  </data>
+  <data name="Electrolyte_DelHF" xml:space="preserve">
+    <value>[Eletrólito] Entalpia de Formação no Estado Padrão a 298 K</value>
+  </data>
+  <data name="Electrolyte_StdStateMolVol" xml:space="preserve">
+    <value>[Eletrólito] Volume Molar no Estado Padrão a 298 K</value>
+  </data>
 </root>

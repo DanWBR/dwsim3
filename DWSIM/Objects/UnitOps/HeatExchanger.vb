@@ -427,11 +427,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         If STProperties.Tube_Fluid = 0 Then
                             'cold
                             Tc2 = (Th1 - Tc1) * 0.3 + Tc1
-                            Th2 = Th1 - 3 * (Tc2 - Tc1)
+                            Th2 = (Tc1 + Th1) / 2
                         Else
                             'hot
                             Th2 = (Tc1 - Th1) * 0.3 + Th1
-                            Tc2 = Tc1 - 3 * (Th2 - Th1)
+                            Tc2 = (Tc1 + Th1) / 2
                         End If
                     Else
                         Tc2 = TempColdOut

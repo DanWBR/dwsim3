@@ -4766,4 +4766,16 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="XLFileSaved" xml:space="preserve">
     <value>Excel Spreadsheet saved successfully.</value>
   </data>
+  <data name="Electrolyte_Cp0" xml:space="preserve">
+    <value>[Electrolyte] Standard State Heat Capacity at 298 K</value>
+  </data>
+  <data name="Electrolyte_DelGF" xml:space="preserve">
+    <value>[Electrolyte] Standard State Gibbs Energy of Formation at 298 K</value>
+  </data>
+  <data name="Electrolyte_DelHF" xml:space="preserve">
+    <value>[Electrolyte] Standard State Enthalpy of Formation at 298 K</value>
+  </data>
+  <data name="Electrolyte_StdStateMolVol" xml:space="preserve">
+    <value>[Electrolyte] Standard State Molar Volume at 298 K</value>
+  </data>
 </root>

@@ -122,7 +122,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkEnableEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>442, 19</value>
+    <value>573, 19</value>
   </data>
   <data name="chkEnableEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 17</value>
@@ -135,18 +135,6 @@
   </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>Component</value>
-  </data>
-  <data name="FaTabStripItem10.Title" xml:space="preserve">
-    <value>Cp Solid</value>
-  </data>
-  <data name="DataTable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1000, 513</value>
-  </data>
-  <data name="FaTabStripItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1000, 513</value>
-  </data>
-  <data name="FaTabStripItem7.Title" xml:space="preserve">
-    <value>Data Table</value>
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Property</value>
@@ -164,16 +152,16 @@
     <value>Constants</value>
   </data>
   <data name="pbRender.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1021, 306</value>
+    <value>869, 306</value>
   </data>
   <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1027, 326</value>
+    <value>875, 326</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>2D Render</value>
   </data>
   <data name="tbInChI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>888, 21</value>
+    <value>736, 21</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 13</value>
@@ -182,7 +170,7 @@
     <value>InChI String</value>
   </data>
   <data name="tbSMILES.Size" type="System.Drawing.Size, System.Drawing">
-    <value>888, 21</value>
+    <value>736, 21</value>
   </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 13</value>
@@ -191,25 +179,25 @@
     <value>SMILES String</value>
   </data>
   <data name="tbMODFAC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>888, 21</value>
+    <value>736, 21</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
     <value>MODFAC Groups</value>
   </data>
   <data name="tbUNIFAC.Size" type="System.Drawing.Size, System.Drawing">
-    <value>888, 21</value>
+    <value>736, 21</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>UNIFAC Groups</value>
   </data>
   <data name="tbFormula.Size" type="System.Drawing.Size, System.Drawing">
-    <value>888, 21</value>
+    <value>736, 21</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Formula</value>
   </data>
   <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1027, 164</value>
+    <value>875, 164</value>
   </data>
   <data name="GroupBox5.Text" xml:space="preserve">
     <value>Molecular Structure</value>
@@ -217,23 +205,65 @@
   <data name="FaTabStripItem6.Title" xml:space="preserve">
     <value>Molecular</value>
   </data>
+  <data name="GraphCp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
+  </data>
+  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
+  </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Ideal Gas Cp</value>
   </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Vapor Pressure</value>
+  <data name="GraphDHVAP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
   </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Liquid Viscosity</value>
+  <data name="FaTabStripItem5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
   </data>
   <data name="FaTabStripItem5.Title" xml:space="preserve">
     <value>Enthalpy of Vaporization</value>
   </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Vapor Pressure</value>
+  </data>
+  <data name="GraphVisc.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
+  </data>
+  <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Liquid Viscosity</value>
+  </data>
+  <data name="GraphLiqDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
+  </data>
+  <data name="FaTabStripItem9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
+  </data>
   <data name="FaTabStripItem9.Title" xml:space="preserve">
     <value>Liquid Density</value>
   </data>
+  <data name="GraphSolidDens.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
+  </data>
+  <data name="FaTabStripItem8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
+  </data>
   <data name="FaTabStripItem8.Title" xml:space="preserve">
     <value>Solid Density</value>
+  </data>
+  <data name="GraphCpSolid.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
+  </data>
+  <data name="FaTabStripItem10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
+  </data>
+  <data name="FaTabStripItem10.Title" xml:space="preserve">
+    <value>Cp Solid</value>
+  </data>
+  <data name="FaTabStripItem7.Title" xml:space="preserve">
+    <value>Data Table</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>View</value>

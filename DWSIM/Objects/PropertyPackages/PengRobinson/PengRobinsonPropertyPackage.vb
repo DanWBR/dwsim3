@@ -1050,10 +1050,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                                              End Sub)
 
-
-            If CBool(parameters(2)) = True Then
-
-                tasks(3) = Task.Factory.StartNew(Sub()
+            tasks(3) = Task.Factory.StartNew(Sub()
+                                                 If CBool(parameters(2)) = True Then
                                                      beta = 10
                                                      Dim Pmin, Tmin, dP, dT, T, P As Double
                                                      Pmin = 101325
@@ -1111,12 +1109,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                      Loop Until ii >= 200 Or PQ(ii - 1) = 0 Or PQ(ii - 1) < 0 Or TQ(ii - 1) < 0 Or _
                                                                  Double.IsNaN(PQ(ii - 1)) = True Or Double.IsNaN(TQ(ii - 1)) = True Or _
                                                                  Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02
-                                                 End Sub)
 
-            Else
-                TQ.Add(0)
-                PQ.Add(0)
-            End If
+                                                 Else
+                                                     TQ.Add(0)
+                                                     PQ.Add(0)
+                                                 End If
+                                             End Sub)
+
 
             tasks(4) = Task.Factory.StartNew(Sub()
                                                  If n > 0 And CBool(parameters(3)) = True Then

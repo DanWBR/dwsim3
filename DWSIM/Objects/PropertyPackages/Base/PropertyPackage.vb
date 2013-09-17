@@ -5876,7 +5876,7 @@ Final3:
             Dim val As Double
             Dim zerodens As Double = 0
 
-            If cprop.OriginalDB = "ChemSep" Or (cprop.OriginalDB = "User" And cprop.SolidDensityEquation > 0) Then
+            If cprop.OriginalDB = "ChemSep" Or (cprop.OriginalDB = "User" And cprop.SolidDensityEquation <> "") Then
                 Dim A, B, C, D, E, result As Double
                 Dim eqno As String = cprop.SolidDensityEquation
                 Dim mw As Double = cprop.Molar_Weight

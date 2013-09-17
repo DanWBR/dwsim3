@@ -458,11 +458,14 @@ Public Class FormPureComp
             .Add(New Object() {DWSIM.App.GetLocalString("SRKVolumeTranslationCoefficient"), Format(constprop.SRK_Volume_Translation_Coefficient, nf), ""})
             .Add(New Object() {"UNIQUAC R", Format(constprop.UNIQUAC_R, nf), ""})
             .Add(New Object() {"UNIQUAC Q", Format(constprop.UNIQUAC_Q, nf), ""})
-            .Add(New Object() {DWSIM.App.GetLocalString("Charge"), Format(constprop.Charge, "+#;-#"), ""})
+            .Add(New Object() {DWSIM.App.GetLocalString("Charge"), Format(constprop.Charge, "#;-#"), ""})
             .Add(New Object() {DWSIM.App.GetLocalString("HydrationNumber"), constprop.HydrationNumber, ""})
             .Add(New Object() {DWSIM.App.GetLocalString("PositiveIon"), constprop.PositiveIon, ""})
             .Add(New Object() {DWSIM.App.GetLocalString("NegativeIon"), constprop.NegativeIon, ""})
-
+            .Add(New Object() {DWSIM.App.GetLocalString("Electrolyte_DelGF"), Format(cv.ConverterDoSI(su.spmp_enthalpy, constprop.Electrolyte_DelGF), nf), su.spmp_enthalpy})
+            .Add(New Object() {DWSIM.App.GetLocalString("Electrolyte_DelHF"), Format(cv.ConverterDoSI(su.spmp_enthalpy, constprop.Electrolyte_DelHF), nf), su.spmp_enthalpy})
+            .Add(New Object() {DWSIM.App.GetLocalString("Electrolyte_Cp0"), Format(constprop.Electrolyte_Cp0, nf), "kJ/[mol.K]"})
+            .Add(New Object() {DWSIM.App.GetLocalString("Electrolyte_StdStateMolVol"), Format(constprop.StandardStateMolarVolume, nf), "cm3/mol"})
         End With
 
         chkEnableEdit_CheckedChanged(Me, New EventArgs)
@@ -538,6 +541,14 @@ Public Class FormPureComp
                 constprop.SolidTs = cv.ConverterParaSI(su.spmp_temperature, GridProps.Rows(e.RowIndex).Cells(1).Value)
             Case 16 '.Add(New Object() {DWSIM.App.GetLocalString("SolidDensityAtTs"), Format(cv.ConverterDoSI(su.spmp_density, constprop.SolidDensityAtTs), nf), su.spmp_density})
                 constprop.SolidDensityAtTs = cv.ConverterParaSI(su.spmp_density, GridProps.Rows(e.RowIndex).Cells(1).Value)
+            Case 29 '    .Add(New Object() {DWSIM.App.GetLocalString("Electrolyte_DelGF"), Format(cv.ConverterDoSI(su.spmp_enthalpy, constprop.Electrolyte_DelGF), nf), su.spmp_enthalpy})
+                constprop.Electrolyte_DelGF = cv.ConverterParaSI(su.spmp_enthalpy, GridProps.Rows(e.RowIndex).Cells(1).Value)
+            Case 30 '    .Add(New Object() {DWSIM.App.GetLocalString("Electrolyte_DelHF"), Format(cv.ConverterDoSI(su.spmp_enthalpy, constprop.Electrolyte_DelGF), nf), su.spmp_enthalpy})
+                constprop.Electrolyte_DelHF = cv.ConverterParaSI(su.spmp_enthalpy, GridProps.Rows(e.RowIndex).Cells(1).Value)
+            Case 31 '    .Add(New Object() {DWSIM.App.GetLocalString("Electrolyte_Cp0"), Format(cv.ConverterDoSI(su.spmp_heatCapacityCp, constprop.Electrolyte_Cp0), nf), su.spmp_heatCapacityCp})
+                constprop.Electrolyte_Cp0 = GridProps.Rows(e.RowIndex).Cells(1).Value
+            Case 32 '    .Add(New Object() {DWSIM.App.GetLocalString("Electrolyte_StdStateMolVol"), Format(constprop.StandardStateMolarVolume, nf), "cm3/mol"})
+                constprop.StandardStateMolarVolume = GridProps.Rows(e.RowIndex).Cells(1).Value
         End Select
 
         For Each mat As DWSIM.SimulationObjects.Streams.MaterialStream In Me.ChildParent.Collections.CLCS_MaterialStreamCollection.Values

@@ -145,25 +145,6 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Komponente</value>
   </data>
-  <data name="FaTabStripItem10.Title" xml:space="preserve">
-    <value>Cp Feststoff</value>
-  </data>
-  <data name="DataGridViewTextBoxColumn2.HeaderText" xml:space="preserve">
-    <value>CpGas</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="DataGridViewTextBoxColumn2.Width" type="System.Int32, mscorlib">
-    <value>47</value>
-  </data>
-  <data name="DataTable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1000, 513</value>
-  </data>
-  <data name="FaTabStripItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1000, 513</value>
-  </data>
-  <data name="FaTabStripItem7.Title" xml:space="preserve">
-    <value>Datentabelle</value>
-  </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Eigenschaft</value>
   </data>
@@ -173,17 +154,8 @@
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>Einheit</value>
   </data>
-  <data name="GridProps.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1018, 469</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1024, 489</value>
-  </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Eigenschaften</value>
-  </data>
-  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1039, 503</value>
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Konstanten</value>
@@ -224,17 +196,30 @@
   <data name="GroupBox5.Text" xml:space="preserve">
     <value>Molekülstruktur</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="FaTabStripItem6.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="FaTabStripItem6.Title" xml:space="preserve">
     <value>Molekül</value>
   </data>
+  <data name="GraphCp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
+  </data>
+  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>890, 510</value>
+  </data>
   <data name="FaTabStripItem2.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Cp ideales Gas</value>
+  </data>
+  <data name="FaTabStripItem5.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="FaTabStripItem5.Title" xml:space="preserve">
+    <value>Verdampfungsenthalpie</value>
   </data>
   <data name="FaTabStripItem3.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -248,17 +233,23 @@
   <data name="FaTabStripItem4.Title" xml:space="preserve">
     <value>Flüssigviskosität</value>
   </data>
-  <data name="FaTabStripItem5.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="FaTabStripItem5.Title" xml:space="preserve">
-    <value>Verdampfungsenthalpie</value>
-  </data>
   <data name="FaTabStripItem9.Title" xml:space="preserve">
     <value>Flüssigkeitsdichte</value>
   </data>
   <data name="FaTabStripItem8.Title" xml:space="preserve">
     <value>Feststoffdichte</value>
+  </data>
+  <data name="FaTabStripItem10.Title" xml:space="preserve">
+    <value>Cp Feststoff</value>
+  </data>
+  <data name="DataGridViewTextBoxColumn2.HeaderText" xml:space="preserve">
+    <value>CpGas</value>
+  </data>
+  <data name="DataGridViewTextBoxColumn2.Width" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="FaTabStripItem7.Title" xml:space="preserve">
+    <value>Datentabelle</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Anzeige</value>

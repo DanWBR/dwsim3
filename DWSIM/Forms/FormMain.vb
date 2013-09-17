@@ -368,17 +368,26 @@ Public Class FormMain
 
         Me.dropdownlist.Clear()
 
+        Dim toremove As New ArrayList
+
         If Not My.Settings.MostRecentFiles Is Nothing Then
             For Each str As String In My.Settings.MostRecentFiles
-                Dim tsmi As New ToolStripMenuItem
-                With tsmi
-                    .Text = str
-                    .Tag = str
-                    .DisplayStyle = ToolStripItemDisplayStyle.Text
-                End With
-                Me.FileToolStripMenuItem.DropDownItems.Insert(Me.FileToolStripMenuItem.DropDownItems.Count - 1, tsmi)
-                Me.dropdownlist.Add(Me.FileToolStripMenuItem.DropDownItems.Count - 2)
-                AddHandler tsmi.Click, AddressOf Me.OpenRecent_click
+                If File.Exists(str) Then
+                    Dim tsmi As New ToolStripMenuItem
+                    With tsmi
+                        .Text = str
+                        .Tag = str
+                        .DisplayStyle = ToolStripItemDisplayStyle.Text
+                    End With
+                    Me.FileToolStripMenuItem.DropDownItems.Insert(Me.FileToolStripMenuItem.DropDownItems.Count - 1, tsmi)
+                    Me.dropdownlist.Add(Me.FileToolStripMenuItem.DropDownItems.Count - 2)
+                    AddHandler tsmi.Click, AddressOf Me.OpenRecent_click
+                Else
+                    toremove.Add(str)
+                End If
+            Next
+            For Each s As String In toremove
+                My.Settings.MostRecentFiles.Remove(s)
             Next
             If My.Settings.MostRecentFiles.Count > 0 Then
                 Me.FileToolStripMenuItem.DropDownItems.Insert(Me.FileToolStripMenuItem.DropDownItems.Count - 1, New ToolStripSeparator())
@@ -387,6 +396,7 @@ Public Class FormMain
         Else
             My.Settings.MostRecentFiles = New System.Collections.Specialized.StringCollection
         End If
+
     End Sub
 
     Sub AddPropPacks()
