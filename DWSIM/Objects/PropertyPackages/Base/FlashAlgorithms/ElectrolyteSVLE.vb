@@ -414,10 +414,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Dim REx(r) As Double
 
                 If Not prevx Is Nothing Then
-                    REx = prevx
+                    For i = 0 To r
+                        REx(i) = prevx(i) * 0.9
+                    Next
                 Else
                     For i = 0 To r
-                        REx(i) = ubound(i) * 0.1
+                        REx(i) = ubound(i) * 0.0001
                     Next
                 End If
 
@@ -634,7 +636,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Private Function FunctionGradient2N(ByVal x() As Double) As Double(,)
 
-            Dim epsilon As Double = 0.001
+            Dim epsilon As Double = 0.00000001
 
             Dim f1(), f2() As Double
             Dim g(x.Length - 1, x.Length - 1), x2(x.Length - 1) As Double
