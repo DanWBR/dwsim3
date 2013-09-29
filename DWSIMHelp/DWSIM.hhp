@@ -2,12 +2,14 @@
 Compatibility=1.1 or later
 Compiled file=DWSIM.chm
 Contents file=toc.hhc
+Default Font=Arial,10,0
 Default topic=0 Welcome.htm
 Display compile progress=No
 Error log file=log
+Full-text search=Yes
 Index file=Index.hhk
-Language=0x407 Deutsch (Deutschland)
-Title=DWSIM
+Language=0x409 Inglês (Estados Unidos)
+Title=Online Help for DWSIM
 
 
 [FILES]

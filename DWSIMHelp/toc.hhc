@@ -8,9 +8,10 @@
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Welcome">
 		<param name="Local" value="0 Welcome.htm">
+		<param name="ImageNumber" value="11">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="1 Introduction">
+		<param name="Name" value="Legal">
 		<param name="Local" value="1 Introduction.htm">
 		</OBJECT>
 	<UL>
@@ -26,7 +27,7 @@
 			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Utilities">
+		<param name="Name" value="General Help">
 		<param name="Local" value="Utilities.htm">
 		</OBJECT>
 	<UL>
@@ -56,6 +57,61 @@
 				<param name="ImageNumber" value="11">
 				</OBJECT>
 		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Online Content">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Data Regression">
+			<param name="Local" value="http://dwsim.inforside.com.br/wiki/index.php?title=Using_the_Data_Regression_Utility">
+			<param name="ImageNumber" value="13">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="IronPython Scripting">
+			<param name="Local" value="http://dwsim.inforside.com.br/wiki/index.php?title=Using_the_Script_Tool">
+			<param name="ImageNumber" value="13">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="CAPE-OPEN General Information">
+			<param name="Local" value="http://dwsim.inforside.com.br/wiki/index.php?title=CAPE-OPEN">
+			<param name="ImageNumber" value="13">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Video Tutorials">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="General Simulation - Part 1">
+			<param name="Local" value="http://dwsim.sourceforge.net/tutorials/simulation/tut_part1.htm">
+			<param name="ImageNumber" value="33">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="General Simulation - Part 2">
+			<param name="Local" value="http://dwsim.sourceforge.net/tutorials/simulation/tut_part2.htm">
+			<param name="ImageNumber" value="33">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Gibbs Reactor">
+			<param name="Local" value="http://dwsim.sourceforge.net/tutorials/gibbs/gibbs.htm">
+			<param name="ImageNumber" value="33">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Watch Panel Usage">
+			<param name="Local" value="http://dwsim.sourceforge.net/tutorials/watchpanel/tut5.htm">
+			<param name="ImageNumber" value="33">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="CAPE-OPEN Unit Operations">
+			<param name="Local" value="http://dwsim.sourceforge.net/tutorials/capeopen_unitop/tut2.htm">
+			<param name="ImageNumber" value="33">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="CAPE-OPEN Property Packages">
+			<param name="Local" value="http://dwsim.sourceforge.net/tutorials/multiflash/tut1.htm">
+			<param name="ImageNumber" value="33">
+			</OBJECT>
 	</UL>
 </UL>
 </BODY></HTML>
