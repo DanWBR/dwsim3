@@ -1,4 +1,4 @@
-﻿'DWSIM Custom XML Serializer
+'DWSIM Custom XML Serializer
 'Copyright 2012 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -107,6 +107,12 @@ Public Class XMLSerializer
                                 Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
                                 Dim val As ArrayList = StringToArray(xel.Value, ci)
                                 If Not val Is Nothing Then obj.GetType.GetProperty(prop.Name).SetValue(obj, val, Nothing)
+                            ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Byte Then
+                                Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
+                                If Not xel Is Nothing Then
+                                    Dim val As Byte = xel.Value
+                                    obj.GetType.GetProperty(prop.Name).SetValue(obj, val, Nothing)
+                                End If
                             End If
                         End If
                     End If
@@ -187,6 +193,12 @@ Public Class XMLSerializer
                             Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
                             Dim val As ArrayList = StringToArray(xel.Value, ci)
                             If Not val Is Nothing Then obj.GetType.GetField(prop.Name).SetValue(obj, val)
+                        ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Byte Then
+                            Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
+                            If Not xel Is Nothing Then
+                                Dim val As Byte = xel.Value
+                                obj.GetType.GetField(prop.Name).SetValue(obj, val)
+                            End If
                         End If
                     End If
                 End If
@@ -250,6 +262,8 @@ Public Class XMLSerializer
                                 .Add(New XElement(prop.Name, obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing)))
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Color Then
                                 .Add(New XElement(prop.Name, ColorTranslator.ToHtml(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing))))
+                            ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Byte Then
+                                .Add(New XElement(prop.Name, obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing)))
                             End If
                         End If
                     End If
@@ -292,6 +306,8 @@ Public Class XMLSerializer
                             .Add(New XElement(prop.Name, obj.GetType.GetField(prop.Name).GetValue(obj)))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Color Then
                             .Add(New XElement(prop.Name, ColorTranslator.ToHtml(obj.GetType.GetField(prop.Name).GetValue(obj))))
+                        ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Byte Then
+                            .Add(New XElement(prop.Name, obj.GetType.GetField(prop.Name).GetValue(obj)))
                         End If
                     End If
                 Next
