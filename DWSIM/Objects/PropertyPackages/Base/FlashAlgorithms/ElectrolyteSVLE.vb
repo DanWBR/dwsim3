@@ -565,7 +565,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             i = 0
             Do
-                wtotal += Vx(i) * CompoundProperties(i).Molar_Weight / 1000
+                If CompoundProperties(i).Name = "Water" Then
+                    wtotal += Vx(i) * CompoundProperties(i).Molar_Weight / 1000
+                End If
                 mtotal += Vx(i)
                 i += 1
             Loop Until i = nc + 1
@@ -636,7 +638,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Private Function FunctionGradient2N(ByVal x() As Double) As Double(,)
 
-            Dim epsilon As Double = 0.00000001
+            Dim epsilon As Double = 0.0001
 
             Dim f1(), f2() As Double
             Dim g(x.Length - 1, x.Length - 1), x2(x.Length - 1) As Double
