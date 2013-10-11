@@ -443,7 +443,7 @@ Partial Class FormFlowsheet
         Me.TSTable.IsDrawn = True
         Me.TSTable.Name = "TSTable"
         resources.ApplyResources(Me.TSTable, "TSTable")
-        Me.TSTable.Title = ""
+        Me.TSTable.Title = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'ToolStrip2
         '
@@ -540,8 +540,8 @@ Partial Class FormFlowsheet
         'MenuStrip1
         '
         Me.MenuStrip1.AllowItemReorder = True
-        resources.ApplyResources(Me.MenuStrip1, "MenuStrip1")
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfiguraçõesToolStripMenuItem, Me.ExibirToolStripMenuItem, Me.InserirToolStripMenuItem, Me.SuplementosToolStripMenuItem, Me.OtimizaToolStripMenuItem, Me.ResultadosToolStripMenuItem, Me.ArquivoToolStripMenuItem, Me.FerramentasToolStripMenuItem, Me.PluginsToolStripMenuItem, Me.ScriptsToolStripMenuItem})
+        resources.ApplyResources(Me.MenuStrip1, "MenuStrip1")
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.ShowItemToolTips = True
         '
@@ -1115,7 +1115,6 @@ Partial Class FormFlowsheet
         'FlowLayoutPanel1
         '
         resources.ApplyResources(Me.FlowLayoutPanel1, "FlowLayoutPanel1")
-        Me.FlowLayoutPanel1.Controls.Add(Me.MenuStrip1)
         Me.FlowLayoutPanel1.Controls.Add(Me.ToolStrip6)
         Me.FlowLayoutPanel1.Controls.Add(Me.ToolStrip7)
         Me.FlowLayoutPanel1.Controls.Add(Me.ToolStrip2)
@@ -1133,6 +1132,7 @@ Partial Class FormFlowsheet
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.FlowLayoutPanel1)
+        Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.dckPanel)
         Me.DoubleBuffered = True
         Me.Name = "FormFlowsheet"

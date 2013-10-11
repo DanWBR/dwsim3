@@ -196,7 +196,7 @@ Imports DWSIM.DWSIM.GraphicObjects
         If DWSIM.App.IsRunningOnMono Then
             Me.FlowLayoutPanel1.AutoSize = False
             Me.FlowLayoutPanel1.Height = 50
-            Me.MenuStrip1.Visible = True
+            Me.MenuStrip1.Visible = False
         Else
             Me.MenuStrip1.Visible = False
         End If
