@@ -458,7 +458,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     tmpx = x
                     tmpdx = dx
                     df = 1
-                    fval = brentsolver.brentoptimize(0.1, 10.0#, 0.0001, df)
+                    fval = brentsolver.brentoptimize(0.00001, 2.0#, 0.00000001, df)
 
                     For i = 0 To r
                         x(i) -= dx(i) * df

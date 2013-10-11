@@ -63,6 +63,11 @@
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Aqueous Electrolyte Simulations">
+			<param name="Local" value="http://dwsim.inforside.com.br/wiki/index.php?title=Setting_up_an_Electrolyte_Simulation">
+			<param name="ImageNumber" value="13">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Data Regression">
 			<param name="Local" value="http://dwsim.inforside.com.br/wiki/index.php?title=Using_the_Data_Regression_Utility">
 			<param name="ImageNumber" value="13">

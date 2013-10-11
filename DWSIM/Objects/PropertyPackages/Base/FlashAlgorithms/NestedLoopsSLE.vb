@@ -240,8 +240,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 ecount += 1
 
-                If Double.IsNaN(L) Then Throw New Exception(DWSIM.App.GetLocalString("pp_FlashTPVapFracError"))
-                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("pp_FlashMaxIt2"))
+                If Double.IsNaN(L) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
+                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
                 Console.WriteLine("PT Flash [NL-SLE]: Iteration #" & ecount & ", LF = " & L)
 

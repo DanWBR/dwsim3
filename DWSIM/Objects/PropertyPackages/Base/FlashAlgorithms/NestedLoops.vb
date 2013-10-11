@@ -225,7 +225,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                ElseIf Math.Abs(e3) < 0.0000000001 Then
+                ElseIf Math.Abs(e3) < itol Then
 
                     convergiu = 1
 
@@ -246,7 +246,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         i = i + 1
                     Loop Until i = n + 1
 
-                    If Abs(F) < 0.000001 Then Exit Do
+                    If Abs(F) < etol * 0.0001 Then Exit Do
 
                     V = -F / dF + V
 
@@ -274,8 +274,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 ecount += 1
 
-                If Double.IsNaN(V) Then Throw New Exception(DWSIM.App.GetLocalString("pp_FlashTPVapFracError"))
-                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("pp_FlashMaxIt2"))
+                If Double.IsNaN(V) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
+                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
                 Console.WriteLine("PT Flash [NL]: Iteration #" & ecount & ", VF = " & V)
 
