@@ -169,6 +169,6 @@ Public Class FormWelcome
     Private Sub Button6_Click(sender As System.Object, e As System.EventArgs) Handles Button6.Click
         Me.Close()
         Application.DoEvents()
-        Process.Start(My.Application.Info.DirectoryPath & "\samples\")
+        Process.Start(My.Application.Info.DirectoryPath & "\docs\")
     End Sub
 End Class
