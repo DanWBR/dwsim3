@@ -119,8 +119,13 @@ Public Class FormDataRegression
                     If Double.TryParse(r.Cells("coly1").Value, New Double) Then .yp.Add(Double.Parse(r.Cells("coly1").Value, ci)) Else .yp.Add(0.0#)
                     If Double.TryParse(r.Cells("colt").Value, New Double) Then .tp.Add(Double.Parse(r.Cells("colt").Value, ci)) Else .tp.Add(0.0#)
                     If Double.TryParse(r.Cells("colp").Value, New Double) Then .pp.Add(Double.Parse(r.Cells("colp").Value, ci)) Else .pp.Add(0.0#)
-                    If Double.TryParse(r.Cells("colts").Value, New Double) Then .ts.Add(Double.Parse(r.Cells("colts").Value, ci)) Else .ts.Add(0.0#)
-                    If Double.TryParse(r.Cells("coltl").Value, New Double) Then .tl.Add(Double.Parse(r.Cells("coltl").Value, ci)) Else .tl.Add(0.0#)
+                    Try
+                        If Double.TryParse(r.Cells("colts").Value, New Double) Then .ts.Add(Double.Parse(r.Cells("colts").Value, ci)) Else .ts.Add(0.0#)
+                        If Double.TryParse(r.Cells("coltl").Value, New Double) Then .tl.Add(Double.Parse(r.Cells("coltl").Value, ci)) Else .tl.Add(0.0#)
+                    Catch ex As Exception
+                        .ts.Add(0.0#)
+                        .tl.Add(0.0#)
+                    End Try
                 End If
             Next
             Select Case cbModel.SelectedItem.ToString()
@@ -197,8 +202,13 @@ Public Class FormDataRegression
                 If Double.TryParse(.yp(i), New Double) Then val3 = Double.Parse(.yp(i)).ToString() Else val3 = ""
                 If Double.TryParse(.tp(i), New Double) Then val4 = Double.Parse(.tp(i)).ToString() Else val4 = ""
                 If Double.TryParse(.pp(i), New Double) Then val5 = Double.Parse(.pp(i)).ToString() Else val5 = ""
-                If Double.TryParse(.ts(i), New Double) Then val6 = Double.Parse(.ts(i)).ToString() Else val6 = ""
-                If Double.TryParse(.tl(i), New Double) Then val7 = Double.Parse(.tl(i)).ToString() Else val7 = ""
+                Try
+                    If Double.TryParse(.ts(i), New Double) Then val6 = Double.Parse(.ts(i)).ToString() Else val6 = ""
+                    If Double.TryParse(.tl(i), New Double) Then val7 = Double.Parse(.tl(i)).ToString() Else val7 = ""
+                Catch ex As Exception
+                    val6 = ""
+                    val7 = ""
+                End Try
                 Me.GridExpData.Rows.Add(val0, val1, val2, val3, val4, val7, val6, val5)
             Next
             Me.tbRegResults.Text = .results
