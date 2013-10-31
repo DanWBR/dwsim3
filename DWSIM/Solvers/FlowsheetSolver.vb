@@ -246,8 +246,8 @@ Namespace DWSIM.Flowsheet
 
             Dim T As Double = ms.Fases(0).SPMProperties.temperature.GetValueOrDefault
             Dim P As Double = ms.Fases(0).SPMProperties.pressure.GetValueOrDefault
-            Dim W As Double = ms.Fases(0).SPMProperties.massflow.GetValueOrDefault
-            Dim Q As Double = ms.Fases(0).SPMProperties.molarflow.GetValueOrDefault
+            Dim W As Nullable(Of Double) = ms.Fases(0).SPMProperties.massflow
+            Dim Q As Nullable(Of Double) = ms.Fases(0).SPMProperties.molarflow
             Dim QV As Double = ms.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
             Dim H As Double = ms.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
 
@@ -257,7 +257,7 @@ Namespace DWSIM.Flowsheet
                 comp += subs.FracaoMolar.GetValueOrDefault
             Next
 
-            If W >= 0 And T > 0 And P > 0 And comp >= 0 Then
+            If W.HasValue And T > 0 And P > 0 And comp >= 0 Then
                 With ms.PropertyPackage
                     .CurrentMaterialStream = ms
                     .DW_CalcVazaoMolar()
@@ -447,7 +447,7 @@ Namespace DWSIM.Flowsheet
                     End With
                     CalculateFlowsheet(form, objargs, Nothing)
                 End If
-            ElseIf Q >= 0 And T > 0 And P > 0 And comp >= 0 Then
+            ElseIf Q.HasValue And T > 0 And P > 0 And comp >= 0 Then
                 With ms.PropertyPackage
                     .CurrentMaterialStream = ms
                     .DW_CalcVazaoMassica()

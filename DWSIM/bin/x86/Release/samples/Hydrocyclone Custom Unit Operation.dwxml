@@ -11,12 +11,13 @@
     <SimNome>simulation_title</SimNome>
     <SimAutor>PETROBRAS\ptc0</SimAutor>
     <SimComentario>simulation_details</SimComentario>
-    <FilePath>C:\Users\Daniel\Documents\Visual Studio 2010\Projects\DWSIM\DWSIM3\DWSIM\bin\x86\Release\samples\Hydrocyclone Custom Unit Operation.dwsim</FilePath>
-    <BackupFileName>35033277.dwbcs</BackupFileName>
+    <FilePath>C:\Users\Daniel\Documents\Visual Studio 2010\Projects\DWSIM\DWSIM3\DWSIM\bin\x86\Release\samples\Hydrocyclone Custom Unit Operation.dwxml</FilePath>
+    <BackupFileName>41227774.dwbcs</BackupFileName>
     <CalculatorActivated>true</CalculatorActivated>
     <PropertyPackageFlashAlgorithm>DWSIMDefault</PropertyPackageFlashAlgorithm>
     <PropertyPackageIOFlashQuickMode>true</PropertyPackageIOFlashQuickMode>
     <ThreePhaseFlashStabTestSeverity>0</ThreePhaseFlashStabTestSeverity>
+    <Password></Password>
     <UsePassword>false</UsePassword>
     <ThreePhaseFlashStabTestCompIds>Agua</ThreePhaseFlashStabTestCompIds>
   </Settings>
@@ -25,6 +26,7 @@
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
       <SpecType>Temperature_and_Pressure</SpecType>
       <IsElectrolyteStream>false</IsElectrolyteStream>
+      <ReferenceSolvent></ReferenceSolvent>
       <AtEquilibrium>true</AtEquilibrium>
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-e8b39133-6eed-4827-a886-bc782b4b7f77</ComponentDescription>
@@ -48,91 +50,91 @@
           <Compounds>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>29.6102605341684</lnKvalue>
-              <Kvalue>7237236381329.47</Kvalue>
+              <lnKvalue>29.6102289202548</lnKvalue>
+              <Kvalue>7237007587580.61</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.00961538461538462</FracaoMolar>
               <FracaoMassica>0.0438246071031517</FracaoMassica>
-              <MolarFlow>3.66197124829784</MolarFlow>
-              <MassFlow>0.366944166964437</MassFlow>
+              <MolarFlow>5.24824642966169</MolarFlow>
+              <MassFlow>0.52589528523782</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000550521192894309</VolumetricFlow>
-              <VolumetricFraction>0.0849446650030856</VolumetricFraction>
+              <VolumetricFlow>0.000788969032929919</VolumetricFlow>
+              <VolumetricFraction>0.0871341202958145</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>34.7306709441039</lnKvalue>
-              <Kvalue>1.21154275206786E+15</Kvalue>
+              <lnKvalue>34.7306406407222</lnKvalue>
+              <Kvalue>1.21150603878177E+15</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.00961538461538462</FracaoMolar>
               <FracaoMassica>0.049959369825557</FracaoMassica>
-              <MolarFlow>3.66197124829784</MolarFlow>
-              <MassFlow>0.418310637664311</MassFlow>
+              <MolarFlow>5.24824642966169</MolarFlow>
+              <MassFlow>0.599512437906684</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000624553026020862</VolumetricFlow>
-              <VolumetricFraction>0.0963676753170714</VolumetricFraction>
+              <VolumetricFlow>0.000895069063608831</VolumetricFlow>
+              <VolumetricFraction>0.0988518588263546</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nOctano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>39.9269830373939</lnKvalue>
-              <Kvalue>2.18810627797566E+17</Kvalue>
+              <lnKvalue>39.9269547217241</lnKvalue>
+              <Kvalue>2.18804432115797E+17</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.00961538461538462</FracaoMolar>
               <FracaoMassica>0.0560941325479624</FracaoMassica>
-              <MolarFlow>3.66197124829784</MolarFlow>
-              <MassFlow>0.469677108364185</MassFlow>
+              <MolarFlow>5.24824642966169</MolarFlow>
+              <MassFlow>0.673129590575549</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000699014826234934</VolumetricFlow>
-              <VolumetricFraction>0.107857028962945</VolumetricFraction>
+              <VolumetricFlow>0.00100178171278622</VolumetricFlow>
+              <VolumetricFraction>0.110637255239161</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nNonano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>45.5226490009985</lnKvalue>
-              <Kvalue>5.89162725742331E+19</Kvalue>
+              <lnKvalue>45.5226236528028</lnKvalue>
+              <Kvalue>5.8914779171952E+19</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.00961538461538462</FracaoMolar>
               <FracaoMassica>0.0622288952703678</FracaoMassica>
-              <MolarFlow>3.66197124829784</MolarFlow>
-              <MassFlow>0.521043579064059</MassFlow>
+              <MolarFlow>5.24824642966169</MolarFlow>
+              <MassFlow>0.746746743244414</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000778352919852757</VolumetricFlow>
-              <VolumetricFraction>0.120098787992998</VolumetricFraction>
+              <VolumetricFlow>0.00111548394494968</VolumetricFlow>
+              <VolumetricFraction>0.123194584566069</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nDecano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-3.80603550576172</lnKvalue>
-              <Kvalue>0.0222361595689813</Kvalue>
+              <lnKvalue>-3.80612882602154</lnKvalue>
+              <Kvalue>0.0222340845816136</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.961538461538462</FracaoMolar>
               <FracaoMassica>0.787892995252961</FracaoMassica>
-              <MolarFlow>366.197124829784</MolarFlow>
-              <MassFlow>6.59704120380857</MassFlow>
+              <MolarFlow>524.824642966169</MolarFlow>
+              <MassFlow>9.45471594303553</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0064022316292091</VolumetricFlow>
-              <VolumetricFraction>0.98785555948567</VolumetricFraction>
+              <VolumetricFlow>0.00917552902374589</VolumetricFlow>
+              <VolumetricFraction>1.0133498481731</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -141,20 +143,20 @@
           <Nome>Mixture</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <density>924.717668029267</density>
-            <enthalpy>-2033.95898384498</enthalpy>
-            <entropy>-5.41235391693046</entropy>
-            <molarflow>380.845009822976</molarflow>
-            <massflow>8.37301669586556</massflow>
-            <heatCapacityCp>3.5277563535351</heatCapacityCp>
-            <heatCapacityCv>2.7791119066956</heatCapacityCv>
+            <density>924.71999985482</density>
+            <enthalpy>-2033.95932970679</enthalpy>
+            <entropy>-5.41235665052444</entropy>
+            <molarflow>545.817628684815</molarflow>
+            <massflow>12</massflow>
+            <heatCapacityCp>3.52774737612053</heatCapacityCp>
+            <heatCapacityCv>2.77910306752523</heatCapacityCv>
             <molecularWeight>21.9853653846154</molecularWeight>
             <pressure>980880.929332043</pressure>
             <temperature>308.15</temperature>
-            <thermalConductivity>0.29066058221466</thermalConductivity>
-            <volumetric_flow>0.00905467364294001</volumetric_flow>
-            <molar_enthalpy>-44717.3314371529</molar_enthalpy>
-            <molar_entropy>-118.992578454571</molar_entropy>
+            <thermalConductivity>0.290660937826303</thermalConductivity>
+            <volumetric_flow>0.0129769011180509</volumetric_flow>
+            <molar_enthalpy>-44717.3390410512</molar_enthalpy>
+            <molar_entropy>-118.992638553633</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -169,10 +171,10 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>3.37754561586164E-14</FracaoMolar>
-              <FracaoMassica>1.8786765522717E-13</FracaoMassica>
-              <MolarFlow>1.23572236696173E-11</MolarFlow>
-              <MassFlow>1.23824324059033E-12</MassFlow>
+              <FracaoMolar>3.37765956295893E-14</FracaoMolar>
+              <FracaoMassica>1.87873993253779E-13</FracaoMassica>
+              <MolarFlow>1.77106868281396E-11</MolarFlow>
+              <MassFlow>1.7746816629269E-12</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000147655932748015</PartialVolume>
@@ -187,10 +189,10 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>2.01760077959069E-16</FracaoMolar>
-              <FracaoMassica>1.27933696726832E-15</FracaoMassica>
-              <MolarFlow>7.38167502233305E-14</MolarFlow>
-              <MassFlow>8.43216119476127E-15</MassFlow>
+              <FracaoMolar>2.01766620247802E-16</FracaoMolar>
+              <FracaoMassica>1.2793784511531E-15</FracaoMassica>
+              <MolarFlow>1.05795902664938E-13</MolarFlow>
+              <MassFlow>1.20851717573185E-14</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000164288080509925</PartialVolume>
@@ -205,10 +207,10 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>1.11713476885642E-18</FracaoMolar>
-              <FracaoMassica>7.95345385423063E-18</FracaoMassica>
-              <MolarFlow>4.08719400947108E-16</MolarFlow>
-              <MassFlow>5.24215329266742E-17</MassFlow>
+              <FracaoMolar>1.11716877254771E-18</FracaoMolar>
+              <FracaoMassica>7.95369594390243E-18</FracaoMassica>
+              <MolarFlow>5.85785094559285E-16</MolarFlow>
+              <MassFlow>7.51316246579848E-17</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000180016567984741</PartialVolume>
@@ -223,10 +225,10 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>4.14895493940103E-21</FracaoMolar>
-              <FracaoMassica>3.27690287844898E-20</FracaoMassica>
-              <MolarFlow>1.51795327176544E-18</MolarFlow>
-              <MassFlow>2.15981981273146E-19</MassFlow>
+              <FracaoMolar>4.14906891429337E-21</FracaoMolar>
+              <FracaoMassica>3.27699289741959E-20</FracaoMassica>
+              <MolarFlow>2.17555555258642E-18</MolarFlow>
+              <MassFlow>3.09548921799759E-19</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000196158014556918</PartialVolume>
@@ -243,8 +245,8 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.999999999999966</FracaoMolar>
               <FracaoMassica>0.999999999999811</FracaoMassica>
-              <MolarFlow>365.864005258281</MolarFlow>
-              <MassFlow>6.59104005472792</MassFlow>
+              <MolarFlow>524.347895281191</MolarFlow>
+              <MassFlow>9.44612733349067</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>1.74657175221666E-05</PartialVolume>
@@ -262,18 +264,18 @@
             <compressibilityFactor>0</compressibilityFactor>
             <density>1031.27263394635</density>
             <enthalpy>-2493.37288510794</enthalpy>
-            <entropy>-6.69007664734926</entropy>
-            <molarflow>365.864005258293</molarflow>
-            <massflow>6.59104005472917</massflow>
-            <molarfraction>0.960663776133902</molarfraction>
-            <massfraction>0.787176270409649</massfraction>
+            <entropy>-6.69007664734925</entropy>
+            <molarflow>524.347895281209</molarflow>
+            <massflow>9.44612733349245</massflow>
+            <molarfraction>0.960665005534286</molarfraction>
+            <massfraction>0.787177277791038</massfraction>
             <heatCapacityCp>3.92844479802458</heatCapacityCp>
             <heatCapacityCv>3.01954892568867</heatCapacityCv>
             <molecularWeight>18.0150000000028</molecularWeight>
             <thermalConductivity>0.302043656844155</thermalConductivity>
             <viscosity>0.000739888921827264</viscosity>
-            <kinematic_viscosity>5.6476142469975E-07</kinematic_viscosity>
-            <volumetric_flow>0</volumetric_flow>
+            <kinematic_viscosity>5.64762147447843E-07</kinematic_viscosity>
+            <volumetric_flow>0.00915968001336871</volumetric_flow>
             <molar_enthalpy>-44918.1125252265</molar_enthalpy>
             <molar_entropy>-120.521730802016</molar_entropy>
           </SPMProperties>
@@ -289,16 +291,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.244440960107137</FracaoMolar>
-              <FracaoMassica>0.20591973925826</FracaoMassica>
-              <MolarFlow>3.66197113916045</MolarFlow>
-              <MassFlow>0.366944156028434</MassFlow>
-              <FugacityCoeff>0.0107956302824623</FugacityCoeff>
-              <ActivityCoeff>1.08093480195049</ActivityCoeff>
-              <PartialVolume>0.000150335290025758</PartialVolume>
+              <FracaoMolar>0.244441478853979</FracaoMolar>
+              <FracaoMassica>0.205919805442089</FracaoMassica>
+              <MolarFlow>5.24809338377818</MolarFlow>
+              <MassFlow>0.525879949428108</MassFlow>
+              <FugacityCoeff>0.0107956305871552</FugacityCoeff>
+              <ActivityCoeff>1.0809348324585</ActivityCoeff>
+              <PartialVolume>0.000150334834930401</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000550521192892484</VolumetricFlow>
-              <VolumetricFraction>0.206690714298062</VolumetricFraction>
+              <VolumetricFlow>0.000788969032927304</VolumetricFlow>
+              <VolumetricFraction>0.206690452693807</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
             </Compound>
@@ -307,16 +309,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.244440960107957</FracaoMolar>
-              <FracaoMassica>0.234745296947119</FracaoMassica>
-              <MolarFlow>3.66197113917273</MolarFlow>
-              <MassFlow>0.41831062519884</MassFlow>
-              <FugacityCoeff>0.00362090475403961</FugacityCoeff>
-              <ActivityCoeff>1.10577594105956</ActivityCoeff>
+              <FracaoMolar>0.244441478854799</FracaoMolar>
+              <FracaoMassica>0.234745372395654</FracaoMassica>
+              <MolarFlow>5.24809338379578</MolarFlow>
+              <MassFlow>0.599494955324376</MassFlow>
+              <FugacityCoeff>0.00362090475211321</FugacityCoeff>
+              <ActivityCoeff>1.10577594047127</ActivityCoeff>
               <PartialVolume>0.000170551763520086</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.00062455302602085</VolumetricFlow>
-              <VolumetricFraction>0.234485634216949</VolumetricFraction>
+              <VolumetricFlow>0.000895069063608814</VolumetricFlow>
+              <VolumetricFraction>0.234486047269962</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nOctano</Nome>
             </Compound>
@@ -325,16 +327,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.244440960107962</FracaoMolar>
-              <FracaoMassica>0.263570854635294</FracaoMassica>
-              <MolarFlow>3.66197113917281</MolarFlow>
-              <MassFlow>0.469677094368026</MassFlow>
-              <FugacityCoeff>0.00125713271174067</FugacityCoeff>
-              <ActivityCoeff>1.16009597836087</ActivityCoeff>
-              <PartialVolume>0.000190885651616508</PartialVolume>
+              <FracaoMolar>0.244441478854804</FracaoMolar>
+              <FracaoMassica>0.263570939348534</FracaoMassica>
+              <MolarFlow>5.24809338379589</MolarFlow>
+              <MassFlow>0.673109961218893</MassFlow>
+              <FugacityCoeff>0.00125713265624867</FugacityCoeff>
+              <ActivityCoeff>1.16009592715224</ActivityCoeff>
+              <PartialVolume>0.00019088542406883</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000699014826234933</VolumetricFlow>
-              <VolumetricFraction>0.262441983350949</VolumetricFraction>
+              <VolumetricFlow>0.00100178171278622</VolumetricFlow>
+              <VolumetricFraction>0.262442132801985</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nNonano</Nome>
             </Compound>
@@ -343,16 +345,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.244440960107962</FracaoMolar>
-              <FracaoMassica>0.292396412323464</FracaoMassica>
-              <MolarFlow>3.66197113917281</MolarFlow>
-              <MassFlow>0.521043563537203</MassFlow>
-              <FugacityCoeff>0.000428875742475436</FugacityCoeff>
-              <ActivityCoeff>1.19193860645314</ActivityCoeff>
-              <PartialVolume>0.00021255114872738</PartialVolume>
+              <FracaoMolar>0.244441478854804</FracaoMolar>
+              <FracaoMassica>0.29239650630141</FracaoMassica>
+              <MolarFlow>5.24809338379589</MolarFlow>
+              <MassFlow>0.746724967113398</MassFlow>
+              <FugacityCoeff>0.000428875695623731</FugacityCoeff>
+              <ActivityCoeff>1.19193847624211</ActivityCoeff>
+              <PartialVolume>0.000212550921179702</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000778352919852757</VolumetricFlow>
-              <VolumetricFraction>0.292229114986619</VolumetricFraction>
+              <VolumetricFlow>0.00111548394494968</VolumetricFlow>
+              <VolumetricFraction>0.292229316908521</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nDecano</Nome>
             </Compound>
@@ -361,16 +363,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.0222361595689806</FracaoMolar>
-              <FracaoMassica>0.00336769683586359</FracaoMassica>
-              <MolarFlow>0.333120008003911</MolarFlow>
-              <MassFlow>0.00600115694419045</MassFlow>
-              <FugacityCoeff>0.223542141778051</FugacityCoeff>
-              <ActivityCoeff>38.9267593812437</ActivityCoeff>
-              <PartialVolume>3.32023919573565E-05</PartialVolume>
+              <FracaoMolar>0.0222340845816128</FracaoMolar>
+              <FracaoMassica>0.00336737651231324</FracaoMassica>
+              <MolarFlow>0.477359868440458</MolarFlow>
+              <MassFlow>0.00859963802995485</MassFlow>
+              <FugacityCoeff>0.223542450669605</FugacityCoeff>
+              <ActivityCoeff>38.9268131704178</ActivityCoeff>
+              <PartialVolume>3.32014817666426E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.10603348584449E-05</VolumetricFlow>
-              <VolumetricFraction>0.00415255314742115</VolumetricFraction>
+              <VolumetricFlow>1.58490103798157E-05</VolumetricFlow>
+              <VolumetricFraction>0.00415205032572526</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -381,28 +383,28 @@
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <activity>0</activity>
             <activityCoefficient>0</activityCoefficient>
-            <compressibilityFactor>0.0680700764609219</compressibilityFactor>
-            <density>669.035125733029</density>
-            <enthalpy>-334.713696370018</enthalpy>
-            <entropy>-0.686410001791221</entropy>
-            <molarflow>14.9810045646827</molarflow>
-            <massflow>1.78197659607669</massflow>
-            <molarfraction>0.0393362238660976</molarfraction>
-            <massfraction>0.212823724208815</massfraction>
+            <compressibilityFactor>0.0680701939411848</compressibilityFactor>
+            <density>669.03517584203</density>
+            <enthalpy>-334.713377619881</enthalpy>
+            <entropy>-0.686411396165275</entropy>
+            <molarflow>21.4697334036062</molarflow>
+            <massflow>2.55380947111473</massflow>
+            <molarfraction>0.0393349944657137</molarfraction>
+            <massfraction>0.212817455926228</massfraction>
             <fugacity>0</fugacity>
             <fugacityCoefficient>0</fugacityCoefficient>
-            <heatCapacityCp>2.04572037508728</heatCapacityCp>
-            <heatCapacityCv>1.88980174342742</heatCapacityCv>
+            <heatCapacityCp>2.04571985020863</heatCapacityCp>
+            <heatCapacityCv>1.88980157804436</heatCapacityCv>
             <logFugacityCoefficient>0</logFugacityCoefficient>
-            <molecularWeight>118.949072365791</molecularWeight>
+            <molecularWeight>118.9492865657</molecularWeight>
             <pressure>0</pressure>
             <temperature>0</temperature>
-            <thermalConductivity>0.0126647203136834</thermalConductivity>
-            <viscosity>0.000339548142309087</viscosity>
-            <kinematic_viscosity>5.07519155944257E-07</kinematic_viscosity>
-            <volumetric_flow>0.00266350229985947</volumetric_flow>
-            <molar_enthalpy>-39813.8836913387</molar_enthalpy>
-            <molar_entropy>-81.6478329756669</molar_entropy>
+            <thermalConductivity>0.0126647164765903</thermalConductivity>
+            <viscosity>0.000339545657270569</viscosity>
+            <kinematic_viscosity>5.07515403570859E-07</kinematic_viscosity>
+            <volumetric_flow>0.00381715276465183</volumetric_flow>
+            <molar_enthalpy>-39813.9174718805</molar_enthalpy>
+            <molar_entropy>-81.6481458644254</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -416,16 +418,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>3.37754561586164E-14</FracaoMolar>
-              <FracaoMassica>1.8786765522717E-13</FracaoMassica>
-              <MolarFlow>1.23572236696173E-11</MolarFlow>
-              <MassFlow>1.23824324059033E-12</MassFlow>
-              <FugacityCoeff>78130530727.8791</FugacityCoeff>
-              <ActivityCoeff>7822980923663.51</ActivityCoeff>
+              <FracaoMolar>3.37765956295893E-14</FracaoMolar>
+              <FracaoMassica>1.87873993253779E-13</FracaoMassica>
+              <MolarFlow>1.77106868281396E-11</MolarFlow>
+              <MassFlow>1.7746816629269E-12</MassFlow>
+              <FugacityCoeff>78130530727.8783</FugacityCoeff>
+              <ActivityCoeff>7822980923663.42</ActivityCoeff>
               <PartialVolume>0.000147655932748015</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.8249297461153E-15</VolumetricFlow>
-              <VolumetricFraction>2.85539169905817E-13</VolumetricFraction>
+              <VolumetricFlow>2.61553566407246E-15</VolumetricFlow>
+              <VolumetricFraction>2.85548803042797E-13</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
             </Compound>
@@ -434,16 +436,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>2.01760077959069E-16</FracaoMolar>
-              <FracaoMassica>1.27933696726832E-15</FracaoMassica>
-              <MolarFlow>7.38167502233305E-14</MolarFlow>
-              <MassFlow>8.43216119476127E-15</MassFlow>
-              <FugacityCoeff>4386881046696.01</FugacityCoeff>
-              <ActivityCoeff>1.33969486833775E+15</ActivityCoeff>
+              <FracaoMolar>2.01766620247802E-16</FracaoMolar>
+              <FracaoMassica>1.2793784511531E-15</FracaoMassica>
+              <MolarFlow>1.05795902664938E-13</MolarFlow>
+              <MassFlow>1.20851717573185E-14</MassFlow>
+              <FugacityCoeff>4386881046695.93</FugacityCoeff>
+              <ActivityCoeff>1.33969486833773E+15</ActivityCoeff>
               <PartialVolume>0.000164288080509925</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.21292882794171E-17</VolumetricFlow>
-              <VolumetricFraction>1.89781930741476E-15</VolumetricFraction>
+              <VolumetricFlow>1.73839812552275E-17</VolumetricFlow>
+              <VolumetricFraction>1.89788084625831E-15</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nOctano</Nome>
             </Compound>
@@ -452,16 +454,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>1.11713476885642E-18</FracaoMolar>
-              <FracaoMassica>7.95345385423063E-18</FracaoMassica>
-              <MolarFlow>4.08719400947108E-16</MolarFlow>
-              <MassFlow>5.24215329266742E-17</MassFlow>
-              <FugacityCoeff>275074006057422</FugacityCoeff>
-              <ActivityCoeff>2.5384133687602E+17</ActivityCoeff>
+              <FracaoMolar>1.11716877254771E-18</FracaoMolar>
+              <FracaoMassica>7.95369594390243E-18</FracaoMassica>
+              <MolarFlow>5.85785094559285E-16</MolarFlow>
+              <MassFlow>7.51316246579848E-17</MassFlow>
+              <FugacityCoeff>275074006057416</FugacityCoeff>
+              <ActivityCoeff>2.53841336876015E+17</ActivityCoeff>
               <PartialVolume>0.000180016567984741</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>7.35888594588388E-20</VolumetricFlow>
-              <VolumetricFraction>1.15141428807995E-17</VolumetricFraction>
+              <VolumetricFlow>1.05469074618712E-19</VolumetricFlow>
+              <VolumetricFraction>1.15144933518178E-17</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nNonano</Nome>
             </Compound>
@@ -470,16 +472,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>4.14895493940103E-21</FracaoMolar>
-              <FracaoMassica>3.27690287844898E-20</FracaoMassica>
-              <MolarFlow>1.51795327176544E-18</MolarFlow>
-              <MassFlow>2.15981981273146E-19</MassFlow>
-              <FugacityCoeff>2.52677608469995E+16</FugacityCoeff>
-              <ActivityCoeff>7.02245817828899E+19</ActivityCoeff>
+              <FracaoMolar>4.14906891429337E-21</FracaoMolar>
+              <FracaoMassica>3.27699289741959E-20</FracaoMassica>
+              <MolarFlow>2.17555555258642E-18</MolarFlow>
+              <MassFlow>3.09548921799759E-19</MassFlow>
+              <FugacityCoeff>2.52677608469989E+16</FugacityCoeff>
+              <ActivityCoeff>7.02245817828884E+19</ActivityCoeff>
               <PartialVolume>0.000196158014556918</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>2.97809673740571E-22</VolumetricFlow>
-              <VolumetricFraction>4.65970414536891E-20</VolumetricFraction>
+              <VolumetricFlow>4.26825714184675E-22</VolumetricFlow>
+              <VolumetricFraction>4.65983215092357E-20</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nDecano</Nome>
             </Compound>
@@ -490,13 +492,13 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.999999999999966</FracaoMolar>
               <FracaoMassica>0.999999999999811</FracaoMassica>
-              <MolarFlow>365.864005258281</MolarFlow>
-              <MassFlow>6.59104005472792</MassFlow>
+              <MolarFlow>524.347895281191</MolarFlow>
+              <MassFlow>9.44612733349067</MassFlow>
               <FugacityCoeff>0.00497071909060762</FugacityCoeff>
-              <ActivityCoeff>0.865581695034272</ActivityCoeff>
+              <ActivityCoeff>0.865581695034273</ActivityCoeff>
               <PartialVolume>1.74657175221666E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.00639117129435065</VolumetricFlow>
+              <VolumetricFlow>0.00915968001336608</VolumetricFlow>
               <VolumetricFraction>0.999999999999713</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
@@ -506,21 +508,21 @@
           <Nome>Liquid 1</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <compressibilityFactor>0.00818439866907573</compressibilityFactor>
+            <compressibilityFactor>0.00818439866907574</compressibilityFactor>
             <density>1031.27263394635</density>
             <enthalpy>-2493.37288510794</enthalpy>
-            <entropy>-6.69007664734926</entropy>
-            <molarflow>365.864005258293</molarflow>
-            <massflow>6.59104005472917</massflow>
-            <molarfraction>0.960663776133902</molarfraction>
-            <massfraction>0.787176270409649</massfraction>
+            <entropy>-6.69007664734925</entropy>
+            <molarflow>524.347895281209</molarflow>
+            <massflow>9.44612733349245</massflow>
+            <molarfraction>0.960665005534286</molarfraction>
+            <massfraction>0.787177277791038</massfraction>
             <heatCapacityCp>3.92844479802458</heatCapacityCp>
             <heatCapacityCv>3.01954892568867</heatCapacityCv>
             <molecularWeight>18.0150000000028</molecularWeight>
             <thermalConductivity>0.302043656844155</thermalConductivity>
             <viscosity>0.000739888921827264</viscosity>
             <kinematic_viscosity>7.17452298715567E-07</kinematic_viscosity>
-            <volumetric_flow>0.00639117129435249</volumetric_flow>
+            <volumetric_flow>0.00915968001336871</volumetric_flow>
             <molar_enthalpy>-44918.1125252265</molar_enthalpy>
             <molar_entropy>-120.521730802016</molar_entropy>
           </SPMProperties>
@@ -1027,6 +1029,7 @@ xmu = feed.PropertyPackage.AUX_CONVERT_MASS_TO_MOL(xwuarr)
 
 overflow = oms1
 
+overflow.Clear()
 overflow.SetProp("temperature", "Overall", None, "", "", T)			# K
 overflow.SetProp("pressure", "Overall", None, "", "", P)			# Pa
 overflow.SetProp("fraction", "Overall", None, "", "mole", xmo)		# mol/mol
@@ -1037,6 +1040,7 @@ overflow.SetProp("totalFlow", "Overall", None, "", "mass", [to])	# kg/s
 
 underflow = oms2
 
+underflow.Clear()
 underflow.SetProp("temperature", "Overall", None, "", "", T)		# K
 underflow.SetProp("pressure", "Overall", None, "", "", P)			# Pa
 underflow.SetProp("fraction", "Overall", None, "", "mole", xmu)		# mol/mol
@@ -1058,6 +1062,7 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
       <ComponentDescription>CustomUnitOp</ComponentDescription>
       <ComponentName>UO-0ef32ef3-6d73-4f82-8880-14b941089b1a</ComponentName>
       <code>0</code>
+      <selectedReport></selectedReport>
       <IsAdjustAttached>false</IsAdjustAttached>
       <AttachedAdjustId></AttachedAdjustId>
       <AdjustVarType>Nenhum</AdjustVarType>
@@ -1075,6 +1080,7 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
       <SpecType>Temperature_and_Pressure</SpecType>
       <IsElectrolyteStream>false</IsElectrolyteStream>
+      <ReferenceSolvent></ReferenceSolvent>
       <AtEquilibrium>true</AtEquilibrium>
       <CompositionBasis>Mass_Fractions</CompositionBasis>
       <ComponentDescription>MAT-911f4a18-c8a1-451c-9b44-166f89bba524</ComponentDescription>
@@ -1098,91 +1104,91 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
           <Compounds>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-0.0399901834092786</lnKvalue>
-              <Kvalue>0.96079887087531</Kvalue>
+              <lnKvalue>-0.0399901834092747</lnKvalue>
+              <Kvalue>0.960798870875314</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.16554054054054</FracaoMolar>
+              <FracaoMolar>0.165540540540541</FracaoMolar>
               <FracaoMassica>0.192056129564378</FracaoMassica>
-              <MolarFlow>3.58873182333189</MolarFlow>
-              <MassFlow>0.359605283625148</MassFlow>
+              <MolarFlow>5.14328150106846</MolarFlow>
+              <MassFlow>0.515377379533064</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000190901768856826</VolumetricFlow>
-              <VolumetricFraction>0.204011464561173</VolumetricFraction>
+              <VolumetricFlow>0.000273595683550122</VolumetricFlow>
+              <VolumetricFraction>Infinity</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-0.0498841313275785</lnKvalue>
-              <Kvalue>0.951339648576935</Kvalue>
+              <lnKvalue>-0.0498841313275787</lnKvalue>
+              <Kvalue>0.951339648576934</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.16554054054054</FracaoMolar>
               <FracaoMassica>0.218940997727321</FracaoMassica>
-              <MolarFlow>3.58873182333189</MolarFlow>
-              <MassFlow>0.409944424911025</MassFlow>
+              <MolarFlow>5.14328150106845</MolarFlow>
+              <MassFlow>0.58752218914855</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000212405181341141</VolumetricFlow>
-              <VolumetricFraction>0.226991569461501</VolumetricFraction>
+              <VolumetricFlow>0.000304413841352099</VolumetricFlow>
+              <VolumetricFraction>Infinity</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nOctano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-0.0608774329951619</lnKvalue>
-              <Kvalue>0.940938560729719</Kvalue>
+              <lnKvalue>-0.0608774329951639</lnKvalue>
+              <Kvalue>0.940938560729717</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.16554054054054</FracaoMolar>
               <FracaoMassica>0.245825865890264</FracaoMassica>
-              <MolarFlow>3.58873182333189</MolarFlow>
-              <MassFlow>0.460283566196901</MassFlow>
+              <MolarFlow>5.14328150106845</MolarFlow>
+              <MassFlow>0.659666998764038</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000232740267270325</VolumetricFlow>
-              <VolumetricFraction>0.248723115938168</VolumetricFraction>
+              <VolumetricFlow>0.000333557582492697</VolumetricFlow>
+              <VolumetricFraction>Infinity</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nNonano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-0.0739134361646138</lnKvalue>
-              <Kvalue>0.928752086704428</Kvalue>
+              <lnKvalue>-0.0739134361646123</lnKvalue>
+              <Kvalue>0.928752086704429</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.16554054054054</FracaoMolar>
               <FracaoMassica>0.272710734053207</FracaoMassica>
-              <MolarFlow>3.58873182333189</MolarFlow>
-              <MassFlow>0.510622707482778</MassFlow>
+              <MolarFlow>5.14328150106846</MolarFlow>
+              <MassFlow>0.731811808379525</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000253609260782393</VolumetricFlow>
-              <VolumetricFraction>0.271025234749375</VolumetricFraction>
+              <VolumetricFlow>0.000363466506747974</VolumetricFlow>
+              <VolumetricFraction>Infinity</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nDecano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>0.101566665503809</lnKvalue>
+              <lnKvalue>0.101566665503808</lnKvalue>
               <Kvalue>1.10690370822567</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.337837837837839</FracaoMolar>
-              <FracaoMassica>0.0704662727648309</FracaoMassica>
-              <MolarFlow>7.32394249659572</MolarFlow>
-              <MassFlow>0.131940824076172</MassFlow>
+              <FracaoMolar>0.337837837837838</FracaoMolar>
+              <FracaoMassica>0.0704662727648307</FracaoMassica>
+              <MolarFlow>10.4964928593234</MolarFlow>
+              <MassFlow>0.189094318860711</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>4.60839188267771E-05</VolumetricFlow>
-              <VolumetricFraction>0.0492486152897835</VolumetricFraction>
+              <VolumetricFlow>6.60463302544696E-05</VolumetricFlow>
+              <VolumetricFraction>Infinity</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -1194,15 +1200,15 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
             <density>2000.97891695171</density>
             <enthalpy>-405.714387007531</enthalpy>
             <entropy>-0.8367031202921</entropy>
-            <molarflow>21.6788697899233</molarflow>
-            <massflow>1.87239680629202</massflow>
+            <molarflow>31.0696188635972</molarflow>
+            <massflow>2.68347269468589</massflow>
             <heatCapacityCp>2.15817491990047</heatCapacityCp>
             <heatCapacityCv>1.92592400250403</heatCapacityCv>
-            <molecularWeight>86.3696689189188</molecularWeight>
+            <molecularWeight>86.3696689189189</molecularWeight>
             <pressure>980880.929332043</pressure>
             <temperature>308.15</temperature>
             <thermalConductivity>0.131374903341891</thermalConductivity>
-            <volumetric_flow>0.000935740397077462</volumetric_flow>
+            <volumetric_flow>0.00134107994439736</volumetric_flow>
             <molar_enthalpy>-35041.4172814826</molar_enthalpy>
             <molar_entropy>-72.265771483055</molar_entropy>
           </SPMProperties>
@@ -1219,10 +1225,10 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.16554054054054</FracaoMolar>
+              <FracaoMolar>0.165540540540541</FracaoMolar>
               <FracaoMassica>0.192056129564378</FracaoMassica>
-              <MolarFlow>3.58873182333189</MolarFlow>
-              <MassFlow>0.359605283625148</MassFlow>
+              <MolarFlow>5.14328150106846</MolarFlow>
+              <MassFlow>0.515377379533064</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000147655932748015</PartialVolume>
@@ -1239,8 +1245,8 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.16554054054054</FracaoMolar>
               <FracaoMassica>0.218940997727321</FracaoMassica>
-              <MolarFlow>3.58873182333189</MolarFlow>
-              <MassFlow>0.409944424911025</MassFlow>
+              <MolarFlow>5.14328150106845</MolarFlow>
+              <MassFlow>0.58752218914855</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000164288080509925</PartialVolume>
@@ -1257,8 +1263,8 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.16554054054054</FracaoMolar>
               <FracaoMassica>0.245825865890264</FracaoMassica>
-              <MolarFlow>3.58873182333189</MolarFlow>
-              <MassFlow>0.460283566196901</MassFlow>
+              <MolarFlow>5.14328150106845</MolarFlow>
+              <MassFlow>0.659666998764038</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000180016567984741</PartialVolume>
@@ -1275,8 +1281,8 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.16554054054054</FracaoMolar>
               <FracaoMassica>0.272710734053207</FracaoMassica>
-              <MolarFlow>3.58873182333189</MolarFlow>
-              <MassFlow>0.510622707482777</MassFlow>
+              <MolarFlow>5.14328150106846</MolarFlow>
+              <MassFlow>0.731811808379525</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000196158014556918</PartialVolume>
@@ -1291,10 +1297,10 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.337837837837839</FracaoMolar>
-              <FracaoMassica>0.0704662727648309</FracaoMassica>
-              <MolarFlow>7.32394249659572</MolarFlow>
-              <MassFlow>0.131940824076172</MassFlow>
+              <FracaoMolar>0.337837837837838</FracaoMolar>
+              <FracaoMassica>0.0704662727648307</FracaoMassica>
+              <MolarFlow>10.4964928593234</MolarFlow>
+              <MassFlow>0.189094318860711</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>1.74657175221666E-05</PartialVolume>
@@ -1312,14 +1318,14 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
             <compressibilityFactor>0</compressibilityFactor>
             <density>2000.97891695171</density>
             <enthalpy>-405.714387007531</enthalpy>
-            <entropy>-0.836703120292101</entropy>
-            <molarflow>21.6788697899233</molarflow>
-            <massflow>1.87239680629202</massflow>
+            <entropy>-0.8367031202921</entropy>
+            <molarflow>31.0696188635972</molarflow>
+            <massflow>2.68347269468589</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
             <heatCapacityCp>2.15817491990047</heatCapacityCp>
             <heatCapacityCv>1.92592400250403</heatCapacityCv>
-            <molecularWeight>86.3696689189188</molecularWeight>
+            <molecularWeight>86.3696689189189</molecularWeight>
             <thermalConductivity>0.131374903341891</thermalConductivity>
             <viscosity>0.000603365546328389</viscosity>
             <kinematic_viscosity>3.01535184212513E-07</kinematic_viscosity>
@@ -1339,11 +1345,11 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.15905116443544</FracaoMolar>
+              <FracaoMolar>0.159051164435441</FracaoMolar>
               <FracaoMassica>0.193141087676349</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.0116001751051732</FugacityCoeff>
+              <FugacityCoeff>0.0116001751051733</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1361,7 +1367,7 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoMassica>0.218010146244043</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.00397412635968685</FugacityCoeff>
+              <FugacityCoeff>0.00397412635968684</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1375,8 +1381,8 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.155763477958636</FracaoMolar>
-              <FracaoMassica>0.242104499420955</FracaoMassica>
+              <FracaoMolar>0.155763477958635</FracaoMolar>
+              <FracaoMassica>0.242104499420954</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0.00141477560641942</FugacityCoeff>
@@ -1397,7 +1403,7 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoMassica>0.26510386000048</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.000498068422718153</FugacityCoeff>
+              <FugacityCoeff>0.000498068422718156</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1411,8 +1417,8 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.373953955481646</FracaoMolar>
-              <FracaoMassica>0.0816404066581735</FracaoMassica>
+              <FracaoMolar>0.373953955481645</FracaoMolar>
+              <FracaoMassica>0.0816404066581732</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0.157126446152009</FugacityCoeff>
@@ -1434,8 +1440,6 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
             <fugacity>0</fugacity>
             <fugacityCoefficient>0</fugacityCoefficient>
             <logFugacityCoefficient>0</logFugacityCoefficient>
-            <pressure>0</pressure>
-            <temperature>0</temperature>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -1449,15 +1453,15 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.16554054054054</FracaoMolar>
+              <FracaoMolar>0.165540540540541</FracaoMolar>
               <FracaoMassica>0.192056129564378</FracaoMassica>
-              <MolarFlow>3.58873182333189</MolarFlow>
-              <MassFlow>0.359605283625148</MassFlow>
-              <FugacityCoeff>0.0113602932287837</FugacityCoeff>
+              <MolarFlow>5.14328150106846</MolarFlow>
+              <MassFlow>0.515377379533064</MassFlow>
+              <FugacityCoeff>0.0113602932287838</FugacityCoeff>
               <ActivityCoeff>1.13747284688913</ActivityCoeff>
               <PartialVolume>0.000147655932748015</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000190901768856826</VolumetricFlow>
+              <VolumetricFlow>0.000273595683550122</VolumetricFlow>
               <VolumetricFraction>0.204011464561173</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
@@ -1469,14 +1473,14 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.16554054054054</FracaoMolar>
               <FracaoMassica>0.218940997727321</FracaoMassica>
-              <MolarFlow>3.58873182333189</MolarFlow>
-              <MassFlow>0.409944424911025</MassFlow>
-              <FugacityCoeff>0.00387274625048966</FugacityCoeff>
+              <MolarFlow>5.14328150106845</MolarFlow>
+              <MassFlow>0.58752218914855</MassFlow>
+              <FugacityCoeff>0.00387274625048965</FugacityCoeff>
               <ActivityCoeff>1.18268496978345</ActivityCoeff>
               <PartialVolume>0.000164288080509925</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000212405181341141</VolumetricFlow>
-              <VolumetricFraction>0.226991569461501</VolumetricFraction>
+              <VolumetricFlow>0.000304413841352099</VolumetricFlow>
+              <VolumetricFraction>0.2269915694615</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nOctano</Nome>
             </Compound>
@@ -1487,13 +1491,13 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.16554054054054</FracaoMolar>
               <FracaoMassica>0.245825865890264</FracaoMassica>
-              <MolarFlow>3.58873182333189</MolarFlow>
-              <MassFlow>0.460283566196901</MassFlow>
+              <MolarFlow>5.14328150106845</MolarFlow>
+              <MassFlow>0.659666998764038</MassFlow>
               <FugacityCoeff>0.0013710881931049</FugacityCoeff>
               <ActivityCoeff>1.26525535764372</ActivityCoeff>
               <PartialVolume>0.000180016567984741</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000232740267270325</VolumetricFlow>
+              <VolumetricFlow>0.000333557582492697</VolumetricFlow>
               <VolumetricFraction>0.248723115938168</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nNonano</Nome>
@@ -1505,13 +1509,13 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.16554054054054</FracaoMolar>
               <FracaoMassica>0.272710734053207</FracaoMassica>
-              <MolarFlow>3.58873182333189</MolarFlow>
-              <MassFlow>0.510622707482777</MassFlow>
-              <FugacityCoeff>0.000479519386719831</FugacityCoeff>
+              <MolarFlow>5.14328150106846</MolarFlow>
+              <MassFlow>0.731811808379525</MassFlow>
+              <FugacityCoeff>0.000479519386719832</FugacityCoeff>
               <ActivityCoeff>1.33268826601178</ActivityCoeff>
               <PartialVolume>0.000196158014556918</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000253609260782393</VolumetricFlow>
+              <VolumetricFlow>0.000363466506747974</VolumetricFlow>
               <VolumetricFraction>0.271025234749375</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nDecano</Nome>
@@ -1521,16 +1525,16 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.337837837837839</FracaoMolar>
-              <FracaoMassica>0.0704662727648309</FracaoMassica>
-              <MolarFlow>7.32394249659572</MolarFlow>
-              <MassFlow>0.131940824076172</MassFlow>
+              <FracaoMolar>0.337837837837838</FracaoMolar>
+              <FracaoMassica>0.0704662727648307</FracaoMassica>
+              <MolarFlow>10.4964928593234</MolarFlow>
+              <MassFlow>0.189094318860711</MassFlow>
               <FugacityCoeff>0.165567430727082</FugacityCoeff>
               <ActivityCoeff>28.8312686190639</ActivityCoeff>
               <PartialVolume>1.74657175221666E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>4.60839188267771E-05</VolumetricFlow>
-              <VolumetricFraction>0.0492486152897835</VolumetricFraction>
+              <VolumetricFlow>6.60463302544696E-05</VolumetricFlow>
+              <VolumetricFraction>0.0492486152897833</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -1542,18 +1546,18 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
             <compressibilityFactor>0.0498968978766993</compressibilityFactor>
             <density>2000.97891695171</density>
             <enthalpy>-405.714387007531</enthalpy>
-            <entropy>-0.836703120292101</entropy>
-            <molarflow>21.6788697899233</molarflow>
-            <massflow>1.87239680629202</massflow>
+            <entropy>-0.8367031202921</entropy>
+            <molarflow>31.0696188635972</molarflow>
+            <massflow>2.68347269468589</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
             <heatCapacityCp>2.15817491990047</heatCapacityCp>
             <heatCapacityCv>1.92592400250403</heatCapacityCv>
-            <molecularWeight>86.3696689189188</molecularWeight>
+            <molecularWeight>86.3696689189189</molecularWeight>
             <thermalConductivity>0.131374903341891</thermalConductivity>
             <viscosity>0.000603365546328389</viscosity>
             <kinematic_viscosity>3.01535184212513E-07</kinematic_viscosity>
-            <volumetric_flow>0.000935740397077462</volumetric_flow>
+            <volumetric_flow>0.00134107994439736</volumetric_flow>
             <molar_enthalpy>-35041.4172814826</molar_enthalpy>
             <molar_entropy>-72.265771483055</molar_entropy>
           </SPMProperties>
@@ -1959,6 +1963,7 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
       <SpecType>Temperature_and_Pressure</SpecType>
       <IsElectrolyteStream>false</IsElectrolyteStream>
+      <ReferenceSolvent></ReferenceSolvent>
       <AtEquilibrium>true</AtEquilibrium>
       <CompositionBasis>Mass_Fractions</CompositionBasis>
       <ComponentDescription>MAT-308f73d3-6f78-4cd6-a2af-2acdf05199cc</ComponentDescription>
@@ -1982,91 +1987,91 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
           <Compounds>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-6.50067829749625</lnKvalue>
-              <Kvalue>0.00150241975971582</Kvalue>
+              <lnKvalue>-6.50067829749626</lnKvalue>
+              <Kvalue>0.0015024197597158</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.000203915171288744</FracaoMolar>
               <FracaoMassica>0.00112895130986811</FracaoMassica>
-              <MolarFlow>0.0732394249659569</MolarFlow>
-              <MassFlow>0.00733888333928874</MassFlow>
+              <MolarFlow>0.104964928593234</MolarFlow>
+              <MassFlow>0.0105179057047564</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.07378131043433E-05</VolumetricFlow>
-              <VolumetricFraction>0.00171392471476312</VolumetricFraction>
+              <VolumetricFlow>1.53891676002206E-05</VolumetricFlow>
+              <VolumetricFraction>Infinity</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
               <lnKvalue>-1.45200990187288</lnKvalue>
-              <Kvalue>0.234099298312613</Kvalue>
+              <Kvalue>0.234099298312612</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.000203915171288744</FracaoMolar>
               <FracaoMassica>0.00128698691746382</FracaoMassica>
-              <MolarFlow>0.0732394249659569</MolarFlow>
-              <MassFlow>0.00836621275328622</MassFlow>
+              <MolarFlow>0.104964928593234</MolarFlow>
+              <MassFlow>0.0119902487581337</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.19470455226478E-05</VolumetricFlow>
-              <VolumetricFraction>0.00190693732426612</VolumetricFraction>
+              <VolumetricFlow>1.7122209530833E-05</VolumetricFlow>
+              <VolumetricFraction>Infinity</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nOctano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>3.67238494142856</lnKvalue>
-              <Kvalue>39.3456310768912</Kvalue>
+              <lnKvalue>3.67238494142855</lnKvalue>
+              <Kvalue>39.3456310768909</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.000203915171288744</FracaoMolar>
               <FracaoMassica>0.00144502252505952</FracaoMassica>
-              <MolarFlow>0.0732394249659569</MolarFlow>
-              <MassFlow>0.0093935421672837</MassFlow>
+              <MolarFlow>0.104964928593234</MolarFlow>
+              <MassFlow>0.013462591811511</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.30379387468976E-05</VolumetricFlow>
-              <VolumetricFraction>0.00208106112769246</VolumetricFraction>
+              <VolumetricFlow>1.86856506616099E-05</VolumetricFlow>
+              <VolumetricFraction>Infinity</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nNonano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
               <lnKvalue>9.1917233457674</lnKvalue>
-              <Kvalue>9815.55200186475</Kvalue>
+              <Kvalue>9815.55200186474</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.000203915171288744</FracaoMolar>
               <FracaoMassica>0.00160305813265523</FracaoMassica>
-              <MolarFlow>0.0732394249659569</MolarFlow>
-              <MassFlow>0.0104208715812812</MassFlow>
+              <MolarFlow>0.104964928593234</MolarFlow>
+              <MassFlow>0.0149349348648883</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>7.06897040975309E-06</VolumetricFlow>
-              <VolumetricFraction>0.00112831942365474</VolumetricFraction>
+              <VolumetricFlow>1.01310731840441E-05</VolumetricFlow>
+              <VolumetricFraction>Infinity</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nDecano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
               <lnKvalue>-39.5205570602866</lnKvalue>
-              <Kvalue>6.86183304387542E-18</Kvalue>
+              <Kvalue>6.86183304387537E-18</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.999184339314845</FracaoMolar>
               <FracaoMassica>0.994535981114953</FracaoMassica>
-              <MolarFlow>358.873182333189</MolarFlow>
-              <MassFlow>6.46510037973239</MassFlow>
+              <MolarFlow>514.328150106845</MolarFlow>
+              <MassFlow>9.26562162417482</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.00622368378614524</VolumetricFlow>
-              <VolumetricFraction>0.993398316239104</VolumetricFraction>
+              <VolumetricFlow>0.00891962934585101</VolumetricFlow>
+              <VolumetricFraction>Infinity</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -2077,16 +2082,16 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <density>1036.62708769123</density>
             <enthalpy>-2474.94064722367</enthalpy>
-            <entropy>-6.64760529983338</entropy>
-            <molarflow>359.166140033052</molarflow>
-            <massflow>6.50061988957353</massflow>
+            <entropy>-6.64760529983337</entropy>
+            <molarflow>514.748009821218</molarflow>
+            <massflow>9.31652730531411</massflow>
             <heatCapacityCp>3.91475820838504</heatCapacityCp>
             <heatCapacityCv>3.00859556559894</heatCapacityCv>
             <molecularWeight>18.0992002446982</molecularWeight>
             <pressure>980880.929332043</pressure>
             <temperature>308.15</temperature>
             <thermalConductivity>0.300451522511518</thermalConductivity>
-            <volumetric_flow>0.00627093384570114</volumetric_flow>
+            <volumetric_flow>0.00898734696009519</volumetric_flow>
             <molar_enthalpy>-44794.4463678442</molar_enthalpy>
             <molar_entropy>-120.316339469401</molar_entropy>
           </SPMProperties>
@@ -2105,8 +2110,8 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.000203936287554768</FracaoMolar>
               <FracaoMassica>0.00112987149446016</FracaoMassica>
-              <MolarFlow>0.0732470092137166</MolarFlow>
-              <MassFlow>0.00733964331125125</MassFlow>
+              <MolarFlow>0.104975798149144</MolarFlow>
+              <MassFlow>0.0105189948777369</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000147655932748015</PartialVolume>
@@ -2123,8 +2128,8 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.000203931368196137</FracaoMolar>
               <FracaoMassica>0.0012880048435234</FracaoMassica>
-              <MolarFlow>0.0732452423466659</MolarFlow>
-              <MassFlow>0.00836687727850199</MassFlow>
+              <MolarFlow>0.10497326591908</MolarFlow>
+              <MassFlow>0.0119912011392024</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000164288080509925</PartialVolume>
@@ -2141,8 +2146,8 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.000203107531852411</FracaoMolar>
               <FracaoMassica>0.00144032326790842</FracaoMassica>
-              <MolarFlow>0.0729493482270707</MolarFlow>
-              <MassFlow>0.00935633750490764</MassFlow>
+              <MolarFlow>0.104549197800728</MolarFlow>
+              <MassFlow>0.0134092710115258</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000180016567984741</PartialVolume>
@@ -2159,8 +2164,8 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.000101060089051155</FracaoMolar>
               <FracaoMassica>0.000795038718373229</FracaoMassica>
-              <MolarFlow>0.0362973620958997</MolarFlow>
-              <MassFlow>0.00516457016581509</MassFlow>
+              <MolarFlow>0.0520204797114369</MolarFlow>
+              <MassFlow>0.0074017339557418</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000196158014556918</PartialVolume>
@@ -2177,8 +2182,8 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.999287964723346</FracaoMolar>
               <FracaoMassica>0.995346761675735</FracaoMassica>
-              <MolarFlow>358.910401071169</MolarFlow>
-              <MassFlow>6.46577087529711</MassFlow>
+              <MolarFlow>514.381491079638</MolarFlow>
+              <MassFlow>9.26658256179967</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>1.74657175221666E-05</PartialVolume>
@@ -2197,8 +2202,8 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
             <density>1036.62708769123</density>
             <enthalpy>-2476.70144680381</enthalpy>
             <entropy>-6.65233474683406</entropy>
-            <molarflow>359.166140033052</molarflow>
-            <massflow>6.49599830355759</massflow>
+            <molarflow>514.748009821218</molarflow>
+            <massflow>9.30990376278388</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>0.999289054567956</massfraction>
             <heatCapacityCp>3.91754336794731</heatCapacityCp>
@@ -2223,16 +2228,16 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>3.0639790814537E-07</FracaoMolar>
-              <FracaoMassica>2.15952456337086E-07</FracaoMassica>
-              <MolarFlow>3.67152661530783E-24</MolarFlow>
-              <MassFlow>3.67901652960306E-25</MassFlow>
+              <FracaoMolar>3.06397908145366E-07</FracaoMolar>
+              <FracaoMassica>2.15952456337083E-07</FracaoMassica>
+              <MolarFlow>5.26194094482677E-24</MolarFlow>
+              <MassFlow>5.27267530435421E-25</MassFlow>
               <FugacityCoeff>0.0108295411207347</FugacityCoeff>
               <ActivityCoeff>1.08433019474302</ActivityCoeff>
-              <PartialVolume>0.000150463854464098</PartialVolume>
+              <PartialVolume>0.000150463626916419</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>5.52429968197881E-28</VolumetricFlow>
-              <VolumetricFraction>2.17169571585288E-07</VolumetricFraction>
+              <VolumetricFlow>7.91729414417677E-28</VolumetricFlow>
+              <VolumetricFraction>2.17169702203384E-07</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
             </Compound>
@@ -2241,16 +2246,16 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>4.77401901986468E-05</FracaoMolar>
-              <FracaoMassica>3.83579525576435E-05</FracaoMassica>
-              <MolarFlow>5.72064541808258E-22</MolarFlow>
-              <MassFlow>6.53475046752991E-23</MassFlow>
+              <FracaoMolar>4.77401901986466E-05</FracaoMolar>
+              <FracaoMassica>3.83579525576434E-05</FracaoMassica>
+              <MolarFlow>8.19868722474747E-22</MolarFlow>
+              <MassFlow>9.36544240370128E-23</MassFlow>
               <FugacityCoeff>0.00362764669233029</FugacityCoeff>
               <ActivityCoeff>1.10783483894955</ActivityCoeff>
-              <PartialVolume>0.000170629015956929</PartialVolume>
+              <PartialVolume>0.000170628788409251</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>9.76104426455533E-26</VolumetricFlow>
-              <VolumetricFraction>3.8372317274417E-05</VolumetricFraction>
+              <VolumetricFlow>1.3989297622849E-25</VolumetricFlow>
+              <VolumetricFraction>3.83723472118709E-05</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nOctano</Nome>
             </Compound>
@@ -2259,16 +2264,16 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.00799139401720289</FracaoMolar>
-              <FracaoMassica>0.00720931997784373</FracaoMassica>
-              <MolarFlow>9.57598438095458E-20</MolarFlow>
-              <MassFlow>1.22819660473247E-20</MassFlow>
-              <FugacityCoeff>0.00125737243046353</FugacityCoeff>
-              <ActivityCoeff>1.16031719345115</ActivityCoeff>
-              <PartialVolume>0.000190892022951505</PartialVolume>
+              <FracaoMolar>0.00799139401720283</FracaoMolar>
+              <FracaoMassica>0.00720931997784367</FracaoMassica>
+              <MolarFlow>1.37240634702418E-19</MolarFlow>
+              <MassFlow>1.76022093256627E-20</MassFlow>
+              <FugacityCoeff>0.00125737243046352</FugacityCoeff>
+              <ActivityCoeff>1.16031719345114</ActivityCoeff>
+              <PartialVolume>0.000190892364273023</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.82797215384024E-23</VolumetricFlow>
-              <VolumetricFraction>0.00718606796105461</VolumetricFraction>
+              <VolumetricFlow>2.61981460584315E-23</VolumetricFlow>
+              <VolumetricFraction>0.00718609599969829</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nNonano</Nome>
             </Compound>
@@ -2279,14 +2284,14 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.99196055939469</FracaoMolar>
               <FracaoMassica>0.992752106117142</FracaoMassica>
-              <MolarFlow>1.18865354440517E-17</MolarFlow>
-              <MassFlow>1.6912756956569E-18</MassFlow>
-              <FugacityCoeff>0.000427985381825721</FugacityCoeff>
-              <ActivityCoeff>1.18946410130642</ActivityCoeff>
-              <PartialVolume>0.000212459219465275</PartialVolume>
+              <MolarFlow>1.70354879859552E-17</MolarFlow>
+              <MassFlow>2.42389440808164E-18</MassFlow>
+              <FugacityCoeff>0.000427985381825719</FugacityCoeff>
+              <ActivityCoeff>1.18946410130641</ActivityCoeff>
+              <PartialVolume>0.000212458764369918</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>2.52539454266184E-21</VolumetricFlow>
-              <VolumetricFraction>0.992775342552099</VolumetricFraction>
+              <VolumetricFlow>3.61933276331586E-21</VolumetricFlow>
+              <VolumetricFraction>0.992775314483388</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nDecano</Nome>
             </Compound>
@@ -2295,16 +2300,16 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>6.85694717668566E-18</FracaoMolar>
-              <FracaoMassica>8.68865122445842E-19</FracaoMassica>
-              <MolarFlow>8.21659136361233E-35</MolarFlow>
-              <MassFlow>1.48021893415476E-36</MassFlow>
+              <FracaoMolar>6.85694717668562E-18</FracaoMolar>
+              <FracaoMassica>8.68865122445836E-19</FracaoMassica>
+              <MolarFlow>1.17758150908779E-34</MolarFlow>
+              <MassFlow>2.12141308862166E-36</MassFlow>
               <FugacityCoeff>0.233069406294811</FugacityCoeff>
               <ActivityCoeff>40.5858001797952</ActivityCoeff>
               <PartialVolume>3.51479246083386E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>2.88795047408166E-39</VolumetricFlow>
-              <VolumetricFraction>1.13530221624615E-18</VolumetricFraction>
+              <VolumetricFlow>4.13894778922078E-39</VolumetricFlow>
+              <VolumetricFraction>1.13530461601145E-18</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -2319,22 +2324,20 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
             <density>669.723187097728</density>
             <enthalpy>-327.76703125971</enthalpy>
             <entropy>-0.739350322178999</entropy>
-            <molarflow>1.19828710239297E-17</molarflow>
-            <massflow>1.70362337711055E-18</massflow>
-            <molarfraction>3.33630308882318E-20</molarfraction>
-            <massfraction>2.62070911090037E-19</massfraction>
+            <molarflow>1.7173553751321E-17</molarflow>
+            <massflow>2.44159079909887E-18</massflow>
+            <molarfraction>3.33630308882316E-20</molarfraction>
+            <massfraction>2.62070911090036E-19</massfraction>
             <fugacity>0</fugacity>
             <fugacityCoefficient>0</fugacityCoefficient>
             <heatCapacityCp>2.0029008140244</heatCapacityCp>
             <heatCapacityCv>1.88272968491117</heatCapacityCv>
             <logFugacityCoefficient>0</logFugacityCoefficient>
             <molecularWeight>142.171552519294</molecularWeight>
-            <pressure>0</pressure>
-            <temperature>0</temperature>
             <thermalConductivity>0.0112412079827434</thermalConductivity>
-            <viscosity>0.000290825868180805</viscosity>
-            <kinematic_viscosity>4.34247871036256E-07</kinematic_viscosity>
-            <volumetric_flow>2.54377242707285E-21</volumetric_flow>
+            <viscosity>0.000290825868180803</viscosity>
+            <kinematic_viscosity>4.34247871036253E-07</kinematic_viscosity>
+            <volumetric_flow>3.64567159407993E-21</volumetric_flow>
             <molar_enthalpy>-46599.1476988331</molar_enthalpy>
             <molar_entropy>-105.114583159829</molar_entropy>
           </SPMProperties>
@@ -2352,13 +2355,13 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.000203936287554768</FracaoMolar>
               <FracaoMassica>0.00112987149446016</FracaoMassica>
-              <MolarFlow>0.0732470092137166</MolarFlow>
-              <MassFlow>0.00733964331125125</MassFlow>
-              <FugacityCoeff>54037583296.0707</FugacityCoeff>
-              <ActivityCoeff>5410624749989</ActivityCoeff>
+              <MolarFlow>0.104975798149144</MolarFlow>
+              <MassFlow>0.0105189948777369</MassFlow>
+              <FugacityCoeff>54037583296.0705</FugacityCoeff>
+              <ActivityCoeff>5410624749988.99</ActivityCoeff>
               <PartialVolume>0.000147655932748015</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.07378131043433E-05</VolumetricFlow>
+              <VolumetricFlow>1.53891676002206E-05</VolumetricFlow>
               <VolumetricFraction>0.00171353307164999</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
@@ -2370,13 +2373,13 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.000203931368196137</FracaoMolar>
               <FracaoMassica>0.0012880048435234</FracaoMassica>
-              <MolarFlow>0.0732452423466659</MolarFlow>
-              <MassFlow>0.00836687727850199</MassFlow>
-              <FugacityCoeff>2851966880811.5</FugacityCoeff>
-              <ActivityCoeff>870952586637837</ActivityCoeff>
+              <MolarFlow>0.10497326591908</MolarFlow>
+              <MassFlow>0.0119912011392024</MassFlow>
+              <FugacityCoeff>2851966880811.46</FugacityCoeff>
+              <ActivityCoeff>870952586637828</ActivityCoeff>
               <PartialVolume>0.000164288080509925</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.19470455226478E-05</VolumetricFlow>
+              <VolumetricFlow>1.7122209530833E-05</VolumetricFlow>
               <VolumetricFraction>0.00190650157649739</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nOctano</Nome>
@@ -2388,13 +2391,13 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.000203107531852411</FracaoMolar>
               <FracaoMassica>0.00144032326790842</FracaoMassica>
-              <MolarFlow>0.0729493482270707</MolarFlow>
-              <MassFlow>0.00935633750490764</MassFlow>
-              <FugacityCoeff>168012679481035</FugacityCoeff>
-              <ActivityCoeff>1.55043959925044E+17</ActivityCoeff>
+              <MolarFlow>0.104549197800728</MolarFlow>
+              <MassFlow>0.0134092710115258</MassFlow>
+              <FugacityCoeff>168012679481034</FugacityCoeff>
+              <ActivityCoeff>1.55043959925043E+17</ActivityCoeff>
               <PartialVolume>0.000180016567984741</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.30379387468976E-05</VolumetricFlow>
+              <VolumetricFlow>1.86856506616099E-05</VolumetricFlow>
               <VolumetricFraction>0.00208058559148503</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nNonano</Nome>
@@ -2406,13 +2409,13 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.000101060089051155</FracaoMolar>
               <FracaoMassica>0.000795038718373229</FracaoMassica>
-              <MolarFlow>0.0362973620958997</MolarFlow>
-              <MassFlow>0.00516457016581509</MassFlow>
+              <MolarFlow>0.0520204797114369</MolarFlow>
+              <MassFlow>0.0074017339557418</MassFlow>
               <FugacityCoeff>1.4438374526447E+16</FugacityCoeff>
-              <ActivityCoeff>4.01273709563732E+19</ActivityCoeff>
+              <ActivityCoeff>4.01273709563733E+19</ActivityCoeff>
               <PartialVolume>0.000196158014556918</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>7.06897040975308E-06</VolumetricFlow>
+              <VolumetricFlow>1.01310731840441E-05</VolumetricFlow>
               <VolumetricFraction>0.00112806159521696</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nDecano</Nome>
@@ -2424,13 +2427,13 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.999287964723346</FracaoMolar>
               <FracaoMassica>0.995346761675735</FracaoMassica>
-              <MolarFlow>358.910401071169</MolarFlow>
-              <MassFlow>6.46577087529711</MassFlow>
-              <FugacityCoeff>0.00497151189376338</FugacityCoeff>
+              <MolarFlow>514.381491079638</MolarFlow>
+              <MassFlow>9.26658256179967</MassFlow>
+              <FugacityCoeff>0.00497151189376337</FugacityCoeff>
               <ActivityCoeff>0.865719750693198</ActivityCoeff>
               <PartialVolume>1.74657175221666E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.00622368378614524</VolumetricFlow>
+              <VolumetricFlow>0.00891962934585101</VolumetricFlow>
               <VolumetricFraction>0.993171318165151</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
@@ -2440,12 +2443,12 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
           <Nome>Liquid 1</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <compressibilityFactor>0.00822887820916953</compressibilityFactor>
+            <compressibilityFactor>0.00822887820916954</compressibilityFactor>
             <density>1036.62708769123</density>
             <enthalpy>-2476.70144680381</enthalpy>
             <entropy>-6.65233474683406</entropy>
-            <molarflow>359.166140033052</molarflow>
-            <massflow>6.49599830355759</massflow>
+            <molarflow>514.748009821218</molarflow>
+            <massflow>9.30990376278388</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>0.999289054567956</massfraction>
             <heatCapacityCp>3.91754336794731</heatCapacityCp>
@@ -2454,7 +2457,7 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
             <thermalConductivity>0.300451522511518</thermalConductivity>
             <viscosity>0.000739720274299987</viscosity>
             <kinematic_viscosity>7.13583778663828E-07</kinematic_viscosity>
-            <volumetric_flow>0.00626647555392889</volumetric_flow>
+            <volumetric_flow>0.00898095744682772</volumetric_flow>
             <molar_enthalpy>-44794.4463678442</molar_enthalpy>
             <molar_entropy>-120.316339469401</molar_entropy>
           </SPMProperties>
@@ -2908,8 +2911,8 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
       <FillColor>WhiteSmoke</FillColor>
       <GradientColor1>LightGrey</GradientColor1>
       <GradientColor2>White</GradientColor2>
-      <MixPoint>false</MixPoint>
-      <SplitPoint>false</SplitPoint>
+      <MixPoint>true</MixPoint>
+      <SplitPoint>true</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
       <Status>Calculated</Status>
       <Description>Custom Unit Operation</Description>
@@ -3045,7 +3048,7 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
-      <Status>NotCalculated</Status>
+      <Status>ErrorCalculating</Status>
       <Description></Description>
       <Shape>0</Shape>
       <FlippedH>false</FlippedH>
@@ -3073,7 +3076,7 @@ underflow.SetProp("totalFlow", "Overall", None, "", "mass", [tu])	# kg/s
   </GraphicObjects>
   <PropertyPackages>
     <PropertyPackage>
-      <ID>PP-8cee36c7-bfec-421c-a4be-720f050e14a1</ID>
+      <ID>18569cdd-5b69-48ae-a562-dcfc1af13ca0</ID>
       <Type>DWSIM.DWSIM.SimulationObjects.PropertyPackages.PengRobinsonPropertyPackage</Type>
       <ComponentName>Peng-Robinson (PR)</ComponentName>
       <ComponentDescription>Property Package that uses the Peng-Robinson EOS. Recommended for use with hydrocarbons and non-condensables.
@@ -3116,6 +3119,9 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <Name>nHeptano</Name>
       <CAS_Number>142-82-5</CAS_Number>
       <Formula>C7H16</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>100.204</Molar_Weight>
       <Critical_Temperature>540.2</Critical_Temperature>
       <Critical_Pressure>2740000</Critical_Pressure>
@@ -3203,6 +3209,8 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <LiquidDensityEquation></LiquidDensityEquation>
       <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
       <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
@@ -3214,6 +3222,8 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -3251,6 +3261,9 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <Name>nOctano</Name>
       <CAS_Number>111-65-9</CAS_Number>
       <Formula>C8H18</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>114.231</Molar_Weight>
       <Critical_Temperature>568.7</Critical_Temperature>
       <Critical_Pressure>2490000</Critical_Pressure>
@@ -3338,6 +3351,8 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <LiquidDensityEquation></LiquidDensityEquation>
       <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
       <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
@@ -3349,6 +3364,8 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -3386,6 +3403,9 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <Name>nNonano</Name>
       <CAS_Number>111-84-2</CAS_Number>
       <Formula>C9H20</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>128.258</Molar_Weight>
       <Critical_Temperature>594.6</Critical_Temperature>
       <Critical_Pressure>2290000</Critical_Pressure>
@@ -3473,6 +3493,8 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <LiquidDensityEquation></LiquidDensityEquation>
       <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
       <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
@@ -3484,6 +3506,8 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -3521,6 +3545,9 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <Name>nDecano</Name>
       <CAS_Number>124-18-5</CAS_Number>
       <Formula>C10H22</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>142.285</Molar_Weight>
       <Critical_Temperature>617.7</Critical_Temperature>
       <Critical_Pressure>2110000</Critical_Pressure>
@@ -3608,6 +3635,8 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <LiquidDensityEquation></LiquidDensityEquation>
       <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
       <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
@@ -3619,6 +3648,8 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -3656,6 +3687,9 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <Name>Agua</Name>
       <CAS_Number>7732-18-5</CAS_Number>
       <Formula>H2O</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>18.015</Molar_Weight>
       <Critical_Temperature>647.13</Critical_Temperature>
       <Critical_Pressure>22055000</Critical_Pressure>
@@ -3743,6 +3777,8 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <LiquidDensityEquation></LiquidDensityEquation>
       <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
       <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
@@ -3754,6 +3790,8 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -3805,8 +3843,8 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
   <PanelLayout>&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;!--DockPanel configuration file. Author: Weifen Luo, all rights reserved.--&gt;
 &lt;!--!!! AUTOMATICALLY GENERATED FILE. DO NOT MODIFY !!!--&gt;
-&lt;DockPanel FormatVersion="1.0" DockLeftPortion="0.25" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="3" ActivePane="3"&gt;
-  &lt;Contents Count="10"&gt;
+&lt;DockPanel FormatVersion="1.0" DockLeftPortion="0.25" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="3" ActivePane="2"&gt;
+  &lt;Contents Count="8"&gt;
     &lt;Content ID="0" PersistString="DWSIM.frmLog" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="1" PersistString="DWSIM.frmObjListView" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="2" PersistString="DWSIM.frmObjList" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
@@ -3815,10 +3853,8 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
     &lt;Content ID="5" PersistString="DWSIM.SpreadsheetForm" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="6" PersistString="DWSIM.frmSurface" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="7" PersistString="DWSIM.frmWatch" AutoHidePortion="0.25" IsHidden="True" IsFloat="False" /&gt;
-    &lt;Content ID="8" PersistString="DWSIM.frmOutput" AutoHidePortion="0.25" IsHidden="True" IsFloat="False" /&gt;
-    &lt;Content ID="9" PersistString="DWSIM.frmQueue" AutoHidePortion="0.25" IsHidden="True" IsFloat="False" /&gt;
   &lt;/Contents&gt;
-  &lt;Panes Count="7"&gt;
+  &lt;Panes Count="5"&gt;
     &lt;Pane ID="0" DockState="DockBottom" ActiveContent="0"&gt;
       &lt;Contents Count="1"&gt;
         &lt;Content ID="0" RefID="0" /&gt;
@@ -3847,16 +3883,6 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
         &lt;Content ID="0" RefID="7" /&gt;
       &lt;/Contents&gt;
     &lt;/Pane&gt;
-    &lt;Pane ID="5" DockState="DockBottom" ActiveContent="-1"&gt;
-      &lt;Contents Count="1"&gt;
-        &lt;Content ID="0" RefID="8" /&gt;
-      &lt;/Contents&gt;
-    &lt;/Pane&gt;
-    &lt;Pane ID="6" DockState="DockBottom" ActiveContent="-1"&gt;
-      &lt;Contents Count="1"&gt;
-        &lt;Content ID="0" RefID="9" /&gt;
-      &lt;/Contents&gt;
-    &lt;/Pane&gt;
   &lt;/Panes&gt;
   &lt;DockWindows&gt;
     &lt;DockWindow ID="0" DockState="Document" ZOrderIndex="1"&gt;
@@ -3878,11 +3904,9 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       &lt;NestedPanes Count="0" /&gt;
     &lt;/DockWindow&gt;
     &lt;DockWindow ID="4" DockState="DockBottom" ZOrderIndex="2"&gt;
-      &lt;NestedPanes Count="4"&gt;
+      &lt;NestedPanes Count="2"&gt;
         &lt;Pane ID="0" RefID="0" PrevPane="-1" Alignment="Right" Proportion="0.5" /&gt;
-        &lt;Pane ID="1" RefID="5" PrevPane="0" Alignment="Right" Proportion="0.5" /&gt;
-        &lt;Pane ID="2" RefID="6" PrevPane="5" Alignment="Right" Proportion="0.5" /&gt;
-        &lt;Pane ID="3" RefID="4" PrevPane="6" Alignment="Right" Proportion="0.5" /&gt;
+        &lt;Pane ID="1" RefID="4" PrevPane="0" Alignment="Right" Proportion="0.5" /&gt;
       &lt;/NestedPanes&gt;
     &lt;/DockWindow&gt;
   &lt;/DockWindows&gt;
