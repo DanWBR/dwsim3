@@ -1,34 +1,36 @@
-==========================================
+==================================================
 DWSIM - Open Source Process Simulator
-Copyright (c) Daniel Wagner O. de Medeiros
-==========================================
+Version 3.0, Build 5031
+Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo LeÃ³n
+==================================================
 
 DWSIM is a software for modeling, simulation and optimization of steady-state chemical processes.
 
-==========================================
+==================================================
 DISCLAIMER
-==========================================
+==================================================
 
 The data and information within DWSIM has been obtained from a wide variety of literature sources.  While reasonable care has been exercised in the collection of data and testing of this software, the author of DWSIM disclaims any warranty, expressed or implied, as to the accuracy or reliability of the data or calculations contained therein. The results of calculations obtained from DWSIM yield approximate results, which will not always be suitable for every application.
 
 The software is designed for use by trained professional personnel and is not a substitute for sound professional judgment.  It is the sole responsibility of the user to validate the data presented by DWSIM and to determine whether the results of this program are accurate and suitable for any specific purpose.  No guarantee of accuracy or fitness for any purpose is expressed or implied.  The author strongly recommends that the data be checked against other sources and/or methods before use and application.  The author shall not be held liable for any direct, indirect, consequential or incidental damages incurred through use of the data or calculations. 
 
-==========================================
+==================================================
 LICENSE
-==========================================
+==================================================
 
 DWSIM is licensed under the GNU General Public License (GPL) Version 3.
  
-==========================================
+==================================================
 SOFTWARE/SYSTEM REQUIREMENTS
-==========================================
+==================================================
 
-OS: 	Windows XP/2000/Vista/7/8
-Software: 	.NET Framework 4.0 / Mono 2.10 or newer
-CPU: 	1.6 GHz single-core processor (minimum)
-Memory: 	512 MB RAM
-HD space: 	200 MB for program files.
-Display: 	A 1024x768 display resolution is recommended as a minimum.
+OS: Windows XP/2000/Vista/7/8
+Software: .NET Framework 4.0 / Mono 2.10 or newer
+CPU: 1.6 GHz single-core processor (minimum)
+GPU (optional): CUDA 1.3+ or OpenCL 1.1-enabled device
+Memory: 1 GB RAM
+HD space: 200 MB for program files.
+Display: A 1024x768 display resolution is recommended as a minimum.
 
 ==========================================
 COMPILATION TIPS
@@ -37,9 +39,9 @@ COMPILATION TIPS
 DWSIM is a VB.NET project that compiles for the .NET 4.0 profile. 
 Compile DWSIM on Windows using Visual Studio 2010, Visual Basic 2010 Express Edition or SharpDevelop. MonoDevelop is not supported.
 
-==========================================
+==================================================
 USAGE INFO (LINUX / OS X)
-==========================================
+==================================================
 
 ** Linux
 
@@ -87,24 +89,109 @@ sudo unzip dynamiclibraries\libipopt_mono_dwsim_osx_10.7.3_32.zip -d /usr/lib
 mv DWSIM.exe.config.osx DWSIM.exe.config
 mv Cureos.Numerics.dll.config.osx Cureos.Numerics.dll.config
 
-===============================================
+==================================================
 KNOWN ISSUES
-===============================================
+==================================================
 
 Known limitations of DWSIM when running on Mono:
 
 - Report Tool doesn't work. When the user clicks on the button to generate a report preview, a blank page appears;
 - DataGrids don't display tooltips, this is a Mono limitation, not DWSIM's.
 
-==========================================
+==================================================
 VERSION HISTORY / CHANGELOG
-==========================================
+==================================================
 
-Version 3.0 Build 4700
+Version 3.0 Build 5031
 
+- [NEW] Added Aqueous Electrolyte systems simulation support with two new Property Packages: LIQUAC* and Extended UNIQUAC
+- [NEW] New Unit Operations for Solid-handling simulations: Solids Separator and Continuous Cake Filter
 - [NEW] Unified code base and single executable for .NET/Mono, compiled for CLR v4.0
 - [NEW] New XML simulation file format for full compatibility between platforms (Windows/Linux/OS X)
-- [NEW] New Parallel calculations option
+- [NEW] New Parallel Calculations engine with support for multicore CPUs and CUDA/OpenCL-capable GPUs
+- [NEW] 'Copy Data to Clipboard' function added to flowsheet objects
+- [CHG] Stability enhancements to Rigorous Column model and Boston-Britt Inside-Out solver
+- [CHG] Report tool now fully supports Excel Spreadsheet file format
+- [CHG] Added more material stream composition input options: Mass/Mole Flows, Standard Liquid Volumetric Fractions, Molarity and Molality (for electrolyte simulations)
+- [CHG] Mixer and Separator Vessel models now supports up to six inlet streams
+- [CHG] NRTL/UNIQUAC Interaction Parameters are now temperature-dependent
+- [CHG] All Activity coefficient models now include an option to model the Vapor Phase as ideal. The Data Regression utility also supports this option in order to regress data to find the interaction parameters accordingly
+- [CHG] The Compound Creator was enhanced to include more Joback/UNIFAC groups, Element information and Solid Phase properties estimation, including temperature-dependent ones (Cp, Density). The regression graphs now show calculated properties for every temperature dependent property
+- [CHG] Phase Envelope utilities now have cancellation support
+- [CHG] The Binary Envelope Utility was enhanced to show every kind of equilibrium line supported by DWSIM (VLE, LLE, SLE and Critical)
+- [CHG] The Data Regression utility now supports fixing some interaction parameters, enhanced LLE /SLE regression
+- [CHG] The Pure Compound Property viewer now includes molecular properties, solid properties and property tables
+- [FIX] Lots of bug fixes and minor enhancements
+
+Version 2.1 Build 4819
+
+- [FIX] Fixed empty property grid after adding an object to the flowsheet
+- [FIX] Fixed Binary Envelope utility "index out of bounds" error
+- [FIX] Fixed unit system not being updated after loading from file
+- [FIX] Fixed NRTL parameter estimation in the Data Regression utility
+- [FIX] Fixed vapor pressure parameters not being saved in the Compound Creator
+- [FIX] Fixed NRTL/UNIQUAC parameter estimation between compounds from mixed databases
+- [FIX] Fixed boiling point calculation instability in the Binary Envelope utility when two liquid phases are present
+- [FIX] Fixed key compound list for instability test not being updated after adding/removing a compound from the simulation
+- [FIX] Fixed object property sorting in the Sensitivity Analysis utility
+- [FIX] Fixed German translation for the "Advanced" section in Thermodynamics config screen 
+- [FIX] Fixed Critical Temperature calculation in the Compound Creator when Normal Boiling Point isn't selected to be calculated by UNIFAC/Joback
+- [FIX] Fixed Adjust error function units
+- [CHG] Phase Envelope utility is now set to show all calculated points even when an error occurs
+- [CHG] Saved file name is now displayed in the window title for Regression and Compound Creator cases
+
+Version 2.1 Build 4768
+
+- [CHG] Various enhancements added to the Binary Envelope utility
+
+Version 2.1 Build 4767
+
+- [CHG] New Material Streams are now added to the flowsheet at standard conditions (25 C, 1 atm, 1 kg/s)
+- [CHG] Enhanced stability of the Three-Phase Flash algorithms when there is no vapor phase
+- [CHG] More stable NRTL parameter estimation through UNIFAC (fixed alpha12 at 0.3)
+- [FIX] Fixed flowsheet page setup for printing
+- [FIX] Fixed system of units saving and loading on German and Spanish GUI languages
+
+Version 2.1 Build 4764
+
+- [NEW] Added user-defined units and other minor enhancements/bug fixes to the Compound Creator
+- [CHG] Added a message box to warn the user when NRTL/UNIQUAC parameter estimation with UNIFAC method fails
+- [CHG] Added an error message to the Information Window when Bubble/Dew point calculation fails
+- [FIX] DWSIM now throws an exception when an UNIFAC interaction parameter is not found for a binary during an activity coefficient calculation
+- [FIX] Fixed Master Table property list when changing locale setting
+- [FIX] Fixed Material Stream's compound mass and mole flow units when displayed on tables and reports
+
+Version 2.1 Build 4762
+
+- [CHG] Added UNIQUAC parameter input to the Compound Creator
+- [CHG] Added data point information to the Compound Creator regression viewer
+- [FIX] Fixed Compound Creator filename and checkbox persistence
+
+Version 2.1 Build 4761
+
+- [CHG] Enhanced Compound Creator with UNIFAC group pictures and the ability to enter equation coefficients for temperature-dependent properties.
+- [CHG] Updated UNIFAC groups and interaction parameters with data from http://www.aim.env.uea.ac.uk/aim/info/UNIFACgroups.html
+- [FIX] Fixed CSTR/PFR models
+
+Version 2.1 Build 4753
+
+- [NEW] Added support for multiple dependent variables to the Sensitivity Analysis utility
+- [FIX] Fixed Rigorous Column outlet streams' compound mass fractions
+- [FIX] Fixed single-compound inlet stream calculation error
+- [FIX] Fixed Sensitivity Analysis flowsheet restoring
+
+Version 2.1 Build 4715
+
+- [NEW] Added German translation for the Compound Creator utility (by Gregor Reichert) 
+- [FIX] Fixed Material Stream specification not being honored when changing mixture composition
+- [FIX] Fixed Pipe Hydraulic Editor form resizing and length/diameter units
+- [FIX] Fixed ChemSep database loading in CAPE-OPEN mode
+- [FIX] Fixed Data Regression utility
+- [FIX] Fixed Heater/Cooler outlet temperature specification bug
+
+Version 2.1 Build 4698
+
+- [CHG] Enhanced Element Matrix and Initial Estimates editor for the Gibbs Reactor
 
 Version 2.1 Build 4680
 
@@ -355,7 +442,7 @@ Version 1.8 Build 3908
 
 Version 1.7 Build 3875
 
-- [NEW] Added German translation by Rainer Göllnitz
+- [NEW] Added German translation by Rainer GÃ¶llnitz
 
 Version 1.7 Build 3868
 
@@ -365,7 +452,7 @@ Version 1.7 Build 3868
 
 Version 1.7 Build 3850
 
-- [NEW] Lee-Kesler-Plöcker Property Package
+- [NEW] Lee-Kesler-PlÃ¶cker Property Package
 - [FIX] Fixed K-value calculation call in the Sum Rates method for solving Absorption Columns
 - [FIX] Fixed IO Flash calculation in single phase region
 - [FIX] Fixed Critical Point calculation with PR and SRK Equations of State
@@ -425,7 +512,7 @@ Version 1.6 Build 3618
 
 Version 1.6 Build 3605
 
-- [NEW] Added Spanish GUI translation (many thanks to Abad Lira and Gustavo León!)
+- [NEW] Added Spanish GUI translation (many thanks to Abad Lira and Gustavo LeÃ³n!)
 - [NEW] Added a Multivariate, Constrained Optimization utility
 - [NEW] Added a Sensitivity Analysis utility supporting up to 2 independent variables
 - [NEW] Added "command-line run mode" (read the documentation for more details)
