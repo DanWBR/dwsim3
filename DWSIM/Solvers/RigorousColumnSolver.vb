@@ -442,11 +442,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 Case Column.ColType.DistillationColumn
                     If Not _specs("C").SType = ColumnSpec.SpecType.Heat_Duty Then
                         _Q(0) = Hl(0) * _Rlj(0) * _Lj(0) + Hv(0) * _Rvj(0) * _Vj(0) - Hv(1) * _Vj(1) - _HF(0) * _F(0)
-                        '_Q(0) = -_Q(0)
+                        _Q(0) = -_Q(0)
                     End If
                     If Not _specs("R").SType = ColumnSpec.SpecType.Heat_Duty Then
                         _Q(_ns) = Hl(_ns) * _Rlj(_ns) * _Lj(_ns) + Hv(_ns) * _Rvj(_ns) * _Vj(_ns) - Hl(_ns - 1) * _Lj(_ns - 1) - _HF(_ns) * _F(_ns)
-                        '_Q(_ns) = -_Q(_ns)
+                        _Q(_ns) = -_Q(_ns)
                     End If
                 Case Column.ColType.AbsorptionColumn
                     'use provided values
@@ -908,11 +908,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 Case Column.ColType.DistillationColumn
                     If Not _specs("C").SType = ColumnSpec.SpecType.Heat_Duty Then
                         _Q(0) = Hl(0) * _Rlj(0) * _Lj(0) + Hv(0) * _Rvj(0) * _Vj(0) - Hv(1) * _Vj(1) - _HF(0) * _F(0)
-                        '_Q(0) = -_Q(0)
+                        _Q(0) = -_Q(0)
                     End If
                     If Not _specs("R").SType = ColumnSpec.SpecType.Heat_Duty Then
                         _Q(_ns) = Hl(_ns) * _Rlj(_ns) * _Lj(_ns) + Hv(_ns) * _Rvj(_ns) * _Vj(_ns) - Hl(_ns - 1) * _Lj(_ns - 1) - _HF(_ns) * _F(_ns)
-                        '_Q(_ns) = -_Q(_ns)
+                        _Q(_ns) = -_Q(_ns)
                     End If
                 Case Column.ColType.AbsorptionColumn
                     'use provided values
