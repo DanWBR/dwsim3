@@ -1239,12 +1239,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Dim fge As Double = 0
                             Dim dge As Double = 0
 
-                            If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
+                            If Not My.Application.CAPEOPENMode Then
+                                If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
                                 And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
                                 And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
 
-                                ige = Me.DW_CalcGibbsEnergy(RET_VMOL(Fase.Mixture), T, P)
+                                    ige = Me.DW_CalcGibbsEnergy(RET_VMOL(Fase.Mixture), T, P)
 
+                                End If
                             End If
 
                             result = Me.FlashBase.Flash_PT(RET_VMOL(Fase.Mixture), P, T, Me)
@@ -1259,20 +1261,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Dim Vx2 = result(6)
                             Dim Vs = result(8)
 
-                            If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
-                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
-                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
+                            If Not My.Application.CAPEOPENMode Then
+                                If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
+                                                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
+                                                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
 
-                                fge = xl * Me.DW_CalcGibbsEnergy(Vx, T, P)
-                                fge += xl2 * Me.DW_CalcGibbsEnergy(Vx2, T, P)
-                                fge += xv * Me.DW_CalcGibbsEnergy(Vy, T, P)
+                                    fge = xl * Me.DW_CalcGibbsEnergy(Vx, T, P)
+                                    fge += xl2 * Me.DW_CalcGibbsEnergy(Vx2, T, P)
+                                    fge += xv * Me.DW_CalcGibbsEnergy(Vy, T, P)
 
-                                dge = fge - ige
+                                    dge = fge - ige
 
-                                If dge > 0.0000000001 Then
-                                    Throw New Exception(DWSIM.App.GetLocalString("InvalidFlashResult"))
+                                    If dge > 0.0000000001 Then
+                                        Throw New Exception(DWSIM.App.GetLocalString("InvalidFlashResult"))
+                                    End If
+
                                 End If
-
                             End If
 
                             'do a density calculation check to order liquid phases from lighter to heavier

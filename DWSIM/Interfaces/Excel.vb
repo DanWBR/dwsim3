@@ -637,7 +637,7 @@ Namespace Interfaces
         <ExcelFunction("Calculates a PT Flash using the selected Property Package.")> _
         Public Shared Function PTFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
-        <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
         <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
         <ExcelArgument("Temperature in K.")> ByVal T As Double, _
         <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
@@ -685,14 +685,16 @@ Namespace Interfaces
                 ms._pp = pp
                 pp.SetMaterial(ms)
 
-                Select Case flashalg
-                    Case 1
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                    Case 2
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                    Case 3
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                End Select
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
 
                 pp._ioquick = False
                 pp._tpseverity = 2
@@ -751,7 +753,7 @@ Namespace Interfaces
         <ExcelFunction("Calculates a PH Flash using the selected Property Package.")> _
         Public Shared Function PHFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
-        <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
         <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
         <ExcelArgument("Mixture Mass Enthalpy in kJ/kg.")> ByVal H As Double, _
         <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
@@ -799,14 +801,16 @@ Namespace Interfaces
                 ms._pp = pp
                 pp.SetMaterial(ms)
 
-                Select Case flashalg
-                    Case 1
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                    Case 2
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                    Case 3
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                End Select
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
 
                 pp._ioquick = False
                 pp._tpseverity = 2
@@ -867,7 +871,7 @@ Namespace Interfaces
         <ExcelFunction("Calculates a PS Flash using the selected Property Package.")> _
         Public Shared Function PSFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
-        <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
         <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
         <ExcelArgument("Mixture Mass Entropy in kJ/[kg.K].")> ByVal S As Double, _
         <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
@@ -915,14 +919,16 @@ Namespace Interfaces
                 ms._pp = pp
                 pp.SetMaterial(ms)
 
-                Select Case flashalg
-                    Case 1
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                    Case 2
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                    Case 3
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                End Select
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
 
                 pp._ioquick = False
                 pp._tpseverity = 2
@@ -983,7 +989,7 @@ Namespace Interfaces
         <ExcelFunction("Calculates a PVF Flash using the selected Property Package.")> _
         Public Shared Function PVFFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
-        <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
         <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
         <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
         <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
@@ -1031,14 +1037,16 @@ Namespace Interfaces
                 ms._pp = pp
                 pp.SetMaterial(ms)
 
-                Select Case flashalg
-                    Case 1
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                    Case 2
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                    Case 3
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                End Select
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
 
                 pp._ioquick = False
                 pp._tpseverity = 2
@@ -1099,7 +1107,7 @@ Namespace Interfaces
         <ExcelFunction("Calculates a TVF Flash using the selected Property Package.")> _
         Public Shared Function TVFFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
-        <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
         <ExcelArgument("Temperature in K.")> ByVal T As Double, _
         <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
         <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
@@ -1147,14 +1155,16 @@ Namespace Interfaces
                 ms._pp = pp
                 pp.SetMaterial(ms)
 
-                Select Case flashalg
-                    Case 1
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                    Case 2
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                    Case 3
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                End Select
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
 
                 pp._ioquick = False
                 pp._tpseverity = 2
@@ -1236,7 +1246,7 @@ Namespace Interfaces
         <ExcelFunction("Calculates a PT Flash using the selected Property Package.")> _
         Public Shared Function PTFlash( _
        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
-       <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
+       <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
        <ExcelArgument("Temperature in K.")> ByVal T As Double, _
        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
@@ -1284,14 +1294,16 @@ Namespace Interfaces
                 ms._pp = pp
                 pp.SetMaterial(ms)
 
-                Select Case flashalg
-                    Case 1
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                    Case 2
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                    Case 3
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                End Select
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
 
                 pp._ioquick = False
                 pp._tpseverity = 2
@@ -1345,7 +1357,7 @@ Namespace Interfaces
         <ExcelFunction("Calculates a PH Flash using the selected Property Package.")> _
         Public Shared Function PHFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
-        <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
         <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
         <ExcelArgument("Mixture Mass Enthalpy in kJ/kg.")> ByVal H As Double, _
         <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
@@ -1393,14 +1405,16 @@ Namespace Interfaces
                 ms._pp = pp
                 pp.SetMaterial(ms)
 
-                Select Case flashalg
-                    Case 1
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                    Case 2
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                    Case 3
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                End Select
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
 
                 pp._ioquick = False
                 pp._tpseverity = 2
@@ -1456,7 +1470,7 @@ Namespace Interfaces
         <ExcelFunction("Calculates a PS Flash using the selected Property Package.")> _
         Public Shared Function PSFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
-        <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
         <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
         <ExcelArgument("Mixture Mass Entropy in kJ/[kg.K].")> ByVal S As Double, _
         <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
@@ -1504,14 +1518,16 @@ Namespace Interfaces
                 ms._pp = pp
                 pp.SetMaterial(ms)
 
-                Select Case flashalg
-                    Case 1
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                    Case 2
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                    Case 3
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                End Select
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
 
                 pp._ioquick = False
                 pp._tpseverity = 2
@@ -1567,7 +1583,7 @@ Namespace Interfaces
         <ExcelFunction("Calculates a PVF Flash using the selected Property Package.")> _
         Public Shared Function PVFFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
-        <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
         <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
         <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
         <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
@@ -1615,14 +1631,16 @@ Namespace Interfaces
                 ms._pp = pp
                 pp.SetMaterial(ms)
 
-                Select Case flashalg
-                    Case 1
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                    Case 2
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                    Case 3
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                End Select
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
 
                 pp._ioquick = False
                 pp._tpseverity = 2
@@ -1678,7 +1696,7 @@ Namespace Interfaces
         <ExcelFunction("Calculates a TVF Flash using the selected Property Package.")> _
         Public Shared Function TVFFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
-        <ExcelArgument("The Flash Algorithm to use: 1 - Nested Loops, 2 - Inside Out, 3 - Three-Phase Inside Out")> ByVal flashalg As Integer, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
         <ExcelArgument("Temperature in K.")> ByVal T As Double, _
         <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
         <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
@@ -1726,14 +1744,16 @@ Namespace Interfaces
                 ms._pp = pp
                 pp.SetMaterial(ms)
 
-                Select Case flashalg
-                    Case 1
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                    Case 2
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                    Case 3
-                        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                End Select
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
 
                 pp._ioquick = False
                 pp._tpseverity = 2
