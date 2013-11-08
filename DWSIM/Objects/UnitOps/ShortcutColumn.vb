@@ -1,5 +1,5 @@
 '    Shortcut Column Calculation Routines 
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2013 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -62,6 +62,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
             ObjectType = TipoObjeto.ShortcutColumn
 
         End Sub
+
+        Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
+            MyBase.LoadData(data)
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
+            Return True
+        End Function
+
+        Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
+            Dim elements As System.Collections.Generic.List(Of System.Xml.Linq.XElement) = MyBase.SaveData()
+            elements.AddRange(XMLSerializer.XMLSerializer.Serialize(Me, True))
+            Return elements
+        End Function
 
         Public Overrides Sub Validate()
 
@@ -457,6 +469,8 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
 
         Function rminfunc(ByVal x As Double, ByVal otherargs As Object) As Double
 
+            If Double.IsNaN(x) Then Exit Function
+
             Dim alpha As Object = otherargs(0)
             Dim z As Object = otherargs(1)
             Dim q As Double = otherargs(2)
@@ -469,6 +483,8 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                 j = j + 1
             Loop Until j = n + 1
 
+            CheckCalculatorStatus()
+
             Return value - 1 + q
 
         End Function
@@ -477,14 +493,14 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
 
             If Me.GraphicObject.OutputConnectors(0).IsAttached Then
 
-                'Zerar valores da corrente de matéria conectada a jusante
+                'Zerar valores da corrente de matÃ©ria conectada a jusante
                 FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name).Clear()
 
             End If
 
             If Me.GraphicObject.OutputConnectors(1).IsAttached Then
 
-                'Zerar valores da corrente de matéria conectada a jusante
+                'Zerar valores da corrente de matÃ©ria conectada a jusante
                 FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(1).AttachedConnector.AttachedTo.Name).Clear()
 
             End If
