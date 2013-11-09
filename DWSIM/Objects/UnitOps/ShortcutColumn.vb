@@ -153,21 +153,29 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Dim lnk, dnk, hnk As New ArrayList
             Dim hki, lki As Integer
-            Dim K(n), alpha(n), z(n), xb(n), xd(n), F, D, Dant, B, R, q As Double
+            Dim K(n), alpha(n), z(n), xb(n), xd(n), F, D, Dant, B, R, q, T, P As Double
             Dim id(n) As String
 
             F = feed.Fases(0).SPMProperties.molarflow.GetValueOrDefault
             q = feed.Fases(1).SPMProperties.molarfraction.GetValueOrDefault
+            T = feed.Fases(0).SPMProperties.temperature.GetValueOrDefault
+            P = feed.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
             i = 0
             For Each comp As DWSIM.ClassesBasicasTermodinamica.Substancia In feed.Fases(0).Componentes.Values
                 z(i) = comp.FracaoMolar.GetValueOrDefault
-                K(i) = feed.Fases(2).Componentes(comp.Nome).FracaoMolar.GetValueOrDefault / feed.Fases(1).Componentes(comp.Nome).FracaoMolar.GetValueOrDefault
+                'K(i) = feed.Fases(2).Componentes(comp.Nome).FracaoMolar.GetValueOrDefault / feed.Fases(1).Componentes(comp.Nome).FracaoMolar.GetValueOrDefault
                 id(i) = comp.Nome
-                If Double.IsInfinity(K(i)) Then K(i) = 1.0E+20
+                'If Double.IsInfinity(K(i)) Then K(i) = 1.0E+20
                 If Me.m_lightkey = comp.Nome Then lki = i
                 If Me.m_heavykey = comp.Nome Then hki = i
                 i = i + 1
+            Next
+
+            K = feed.PropertyPackage.DW_CalcKvalue(z, T, P)
+
+            For i = 0 To n
+                If Double.IsInfinity(K(i)) Then K(i) = 1.0E+20
             Next
 
             i = 0
