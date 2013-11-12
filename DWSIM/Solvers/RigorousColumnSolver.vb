@@ -319,8 +319,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 _Vj(i) = 0
                 For j = 0 To _nc - 1
                     If i < _ns Then
-                        '_vc(i)(j) = _eff(i) * (_S(i, j) * _lc(i)(j) - _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)) + _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)
-                        _vc(i)(j) = _S(i, j) * _lc(i)(j)
+                        If _eff(i) <> 1.0 Then
+                            _vc(i)(j) = _eff(i) * (_S(i, j) * _lc(i)(j) - _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)) + _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)
+                        Else
+                            _vc(i)(j) = _S(i, j) * _lc(i)(j)
+                        End If
                     Else
                         _vc(i)(j) = _S(i, j) * _lc(i)(j)
                     End If
@@ -794,8 +797,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 _Vj(i) = 0
                 For j = 0 To _nc - 1
                     If i < _ns Then
-                        '_vc(i)(j) = _eff(i) * (_S(i, j) * _lc(i)(j) - _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)) + _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)
-                        _vc(i)(j) = _S(i, j) * _lc(i)(j)
+                        If _eff(i) <> 1.0 Then
+                            _vc(i)(j) = _eff(i) * (_S(i, j) * _lc(i)(j) - _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)) + _vc(i + 1)(j) * _Vj(i) / _Vj(i + 1)
+                        Else
+                            _vc(i)(j) = _S(i, j) * _lc(i)(j)
+                        End If
                     Else
                         _vc(i)(j) = _S(i, j) * _lc(i)(j)
                     End If
