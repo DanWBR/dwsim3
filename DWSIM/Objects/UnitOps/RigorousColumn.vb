@@ -1141,28 +1141,53 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     For i = 5 To 7
                         proplist.Add("PROP_DC_" + CStr(i))
                     Next
-                Case PropertyType.RW
+                    For i = 1 To Me.Stages.Count
+                        proplist.Add("Stage_Temperature_" + CStr(i))
+                    Next
+                Case PropertyType.RW, PropertyType.ALL
                     For i = 0 To 7
                         proplist.Add("PROP_DC_" + CStr(i))
                     Next
+                    For i = 1 To Me.Stages.Count
+                        proplist.Add("Stage_Pressure_" + CStr(i))
+                    Next
+                    For i = 1 To Me.Stages.Count
+                        proplist.Add("Stage_Efficiency_" + CStr(i))
+                    Next
+                    For i = 1 To Me.Stages.Count
+                        proplist.Add("Stage_Temperature_" + CStr(i))
+                    Next
+                    proplist.Add("Condenser_Specification_Value")
+                    proplist.Add("Reboiler_Specification_Value")
+                    proplist.Add("Global_Stage_Efficiency")
                 Case PropertyType.WR
                     For i = 0 To 4
                         proplist.Add("PROP_DC_" + CStr(i))
                     Next
-                Case PropertyType.ALL
-                    For i = 0 To 7
-                        proplist.Add("PROP_DC_" + CStr(i))
+                    For i = 1 To Me.Stages.Count
+                        proplist.Add("Stage_Pressure_" + CStr(i))
                     Next
+                    For i = 1 To Me.Stages.Count
+                        proplist.Add("Stage_Efficiency_" + CStr(i))
+                    Next
+                    proplist.Add("Condenser_Specification_Value")
+                    proplist.Add("Reboiler_Specification_Value")
+                    proplist.Add("Global_Stage_Efficiency")
             End Select
             Return proplist.ToArray(GetType(System.String))
             proplist = Nothing
         End Function
 
         Public Overrides Function GetPropertyValue(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
+
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
             Dim value As Double = 0
-            Dim propidx As Integer = CInt(prop.Split("_")(2))
+            Dim propidx As Integer = -1
+            Try
+                propidx = CInt(prop.Split("_")(2))
+            Catch ex As Exception
+            End Try
 
             Select Case propidx
 
@@ -1186,14 +1211,43 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     value = Me.NumberOfStages
             End Select
 
+            Select Case prop
+                Case "Condenser_Specification_Value"
+                    value = Me.Specs("C").SpecValue
+                Case "Reboiler_Specification_Value"
+                    value = Me.Specs("R").SpecValue
+            End Select
+
+            If prop.Contains("Stage_Pressure_") Then
+                Dim stageindex As Integer = prop.Split("_")(2)
+                If Me.Stages.Count >= stageindex Then value = cv.ConverterDoSI(su.spmp_pressure, Me.Stages(stageindex - 1).P)
+            End If
+
+            If prop.Contains("Stage_Temperature_") Then
+                Dim stageindex As Integer = prop.Split("_")(2)
+                If Me.Stages.Count >= stageindex Then value = cv.ConverterDoSI(su.spmp_temperature, Me.Stages(stageindex - 1).T)
+            End If
+
+            If prop.Contains("Stage_Efficiency_") Then
+                Dim stageindex As Integer = prop.Split("_")(2)
+                If Me.Stages.Count >= stageindex Then value = Me.Stages(stageindex - 1).Efficiency
+            End If
+
+            If prop.Contains("Global_Stage_Efficiency") Then value = -1
+
             Return value
+
         End Function
 
         Public Overrides Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
             Dim value As String = ""
-            Dim propidx As Integer = CInt(prop.Split("_")(2))
+            Dim propidx As Integer = -1
+            Try
+                propidx = CInt(prop.Split("_")(2))
+            Catch ex As Exception
+            End Try
 
             Select Case propidx
 
@@ -1217,13 +1271,29 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     value = ""
             End Select
 
+            Select Case prop
+                Case "Condenser_Specification_Value"
+                    value = Me.Specs("C").SpecUnit
+                Case "Reboiler_Specification_Value"
+                    value = Me.Specs("R").SpecUnit
+            End Select
+
+            If prop.Contains("Stage_Pressure_") Then value = su.spmp_pressure
+            If prop.Contains("Stage_Temperature_") Then value = su.spmp_temperature
+            If prop.Contains("Stage_Efficiency_") Then value = ""
+
             Return value
+
         End Function
 
         Public Overrides Function SetPropertyValue(ByVal prop As String, ByVal propval As Object, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-            Dim propidx As Integer = CInt(prop.Split("_")(2))
+            Dim propidx As Integer = -1
+            Try
+                propidx = CInt(prop.Split("_")(2))
+            Catch ex As Exception
+            End Try
 
             Select Case propidx
 
@@ -1238,7 +1308,37 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Me.CondenserDeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
 
             End Select
+
+            Select Case prop
+                Case "Condenser_Specification_Value"
+                    Me.Specs("C").SpecValue = propval
+                Case "Reboiler_Specification_Value"
+                    Me.Specs("R").SpecValue = propval
+            End Select
+
+            If prop.Contains("Stage_Pressure_") Then
+                Dim stageindex As Integer = prop.Split("_")(2)
+                If Me.Stages.Count >= stageindex Then Me.Stages(stageindex - 1).P = cv.ConverterParaSI(su.spmp_pressure, propval)
+            End If
+
+            If prop.Contains("Stage_Temperature_") Then
+                Dim stageindex As Integer = prop.Split("_")(2)
+                If Me.Stages.Count >= stageindex Then Me.Stages(stageindex - 1).T = cv.ConverterParaSI(su.spmp_temperature, propval)
+            End If
+
+            If prop.Contains("Stage_Efficiency_") Then
+                Dim stageindex As Integer = prop.Split("_")(2)
+                If Me.Stages.Count >= stageindex Then Me.Stages(stageindex - 1).Efficiency = propval
+            End If
+
+            If prop = "Global_Stage_Efficiency" Then
+                For Each st As Stage In Me.Stages
+                    st.Efficiency = propval
+                Next
+            End If
+
             Return 1
+
         End Function
 
     End Class
@@ -3462,6 +3562,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Next
                 Next
             End If
+
+            'update stage temperatures
+            For i = 0 To Me.Stages.Count - 1
+                Me.Stages(i).T = Tf(i)
+            Next
 
             'copy results to output streams
 
