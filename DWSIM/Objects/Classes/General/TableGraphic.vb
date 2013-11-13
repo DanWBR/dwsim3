@@ -1,4 +1,4 @@
-﻿'    Table Graphic Object
+'    Table Graphic Object
 '    Copyright 2008 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -105,6 +105,7 @@ Namespace DWSIM.GraphicObjects
             m_objectlist = New Dictionary(Of String, Boolean)
             m_propertylist = New Dictionary(Of String, Boolean)
             m_sortableitems = New ArrayList
+            m_sortedlist = New List(Of String)
         End Sub
 
         Public Sub New(ByVal graphicPosition As Point)
