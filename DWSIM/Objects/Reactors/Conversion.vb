@@ -211,7 +211,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     If X < 0 Or X > 1 Then
 
-                        'exception
+                        Throw New ArgumentOutOfRangeException("Conversion Expression", "The conversion expression for reaction " & rxn.Name & " results in a value that is out of the valid range (0 to 100%).")
 
                     Else
 
