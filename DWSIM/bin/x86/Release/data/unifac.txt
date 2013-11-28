@@ -76,7 +76,7 @@
 40,74,CF2,CF3,1.406,1.38,1-1-1-Trifluoroethane: 1*CF3 1*CH3,1-1-1-Trifluoroethane,1:4/3:16//,
 40,75,CF2,CF2,1.0105,0.92,Perfluorohexane: 2*CF3 4*CF2,Perfluorohexane,1:4/2:16//,
 40,76,CF2,CF,0.615,0.46,Perfluoromethylcyclohexane: 1*CF3 5*CF2 1*CF,Perfluoromethylcyclohexane,1:4/1:16//,
-41,77,COO,COO,1.38,1.2,Methylacrylate: 1*CH3 1*CH2=CH 1*COO,Methylacrylate,1:26///,
+41,77,COO,COO,1.38,1.2,Methylacrylate: 1*CH3 1*CH2=CH 1*COO,Methylacrylate,1:28///,
 42,78,SiH2,SiH3,1.6035,1.263,Methylsilane: 1*CH3 1*SiH3,SiH3 Methylsilane,///,Si:1/H:3
 42,79,SiH2,SiH2,1.4443,1.006,Diethylsilane: 2*CH3 2*CH2 1*SiH2,SiH2 Diethylsilane,///,Si:1/H:2
 42,80,SiH2,SiH,1.2853,0.749,Heptamethyltrisiloxane:  7*CH3 2*SiO 1*SiH,SIH Heptamethyltrisiloxane,///,Si:1/H:1
