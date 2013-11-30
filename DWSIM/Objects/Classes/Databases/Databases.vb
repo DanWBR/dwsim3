@@ -1105,7 +1105,7 @@ Namespace DWSIM.Databases
                             Case "HydratedSalt"
                                 .IsHydratedSalt = node2.InnerText
                             Case "HydrationNumber"
-                                .HydrationNumber = node2.InnerText
+                                .HydrationNumber = Double.Parse(node2.InnerText, nf)
                             Case "Charge"
                                 .Charge = node2.InnerText
                             Case "PositiveIon"

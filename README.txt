@@ -1,7 +1,7 @@
 ==================================================
 DWSIM - Open Source Process Simulator
-Version 3.0, Build 5031
-Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo LeÃ³n
+Version 3.0, Build 5065
+Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo León
 ==================================================
 
 DWSIM is a software for modeling, simulation and optimization of steady-state chemical processes.
@@ -24,20 +24,13 @@ DWSIM is licensed under the GNU General Public License (GPL) Version 3.
 SOFTWARE/SYSTEM REQUIREMENTS
 ==================================================
 
-OS: Windows XP/2000/Vista/7/8
-Software: .NET Framework 4.0 / Mono 2.10 or newer
-CPU: 1.6 GHz single-core processor (minimum)
-GPU (optional): CUDA 1.3+ or OpenCL 1.1-enabled device
-Memory: 1 GB RAM
-HD space: 200 MB for program files.
-Display: A 1024x768 display resolution is recommended as a minimum.
-
-==========================================
-COMPILATION TIPS
-==========================================
-
-DWSIM is a VB.NET project that compiles for the .NET 4.0 profile. 
-Compile DWSIM on Windows using Visual Studio 2010, Visual Basic 2010 Express Edition or SharpDevelop. MonoDevelop is not supported.
+OS: 	Windows XP/2000/Vista/7/8
+Software: 	.NET Framework 4.0 / Mono 2.10 or newer
+CPU: 	1.6 GHz single-core processor (minimum)
+GPU (optional): 	CUDA 1.3+ or OpenCL 1.1-enabled device
+Memory: 	1 GB RAM
+HD space: 	200 MB for program files.
+Display: 	A 1024x768 display resolution is recommended as a minimum.
 
 ==================================================
 USAGE INFO (LINUX / OS X)
@@ -101,6 +94,16 @@ Known limitations of DWSIM when running on Mono:
 ==================================================
 VERSION HISTORY / CHANGELOG
 ==================================================
+
+Version 3.0 Build 5065
+
+- [CHG] Exposed more properties of the Distillation Column to Adjust, Set, Report and Optimization tools
+- [FIX] Fixed Excel Thermo Interface
+- [FIX] Fixed Material Stream cleaning through CAPE-OPEN commands
+- [FIX] Fixed inverted sign on Russell's IO duties results
+- [FIX] Fixed stage efficiency on Russell's IO solver
+- [FIX] Fixed some Spanish translations
+- [FIX] Fixed XML loading of Pipe, Shortcut Column and Master Property Table
 
 Version 3.0 Build 5031
 
@@ -442,7 +445,7 @@ Version 1.8 Build 3908
 
 Version 1.7 Build 3875
 
-- [NEW] Added German translation by Rainer GÃ¶llnitz
+- [NEW] Added German translation by Rainer Göllnitz
 
 Version 1.7 Build 3868
 
@@ -452,7 +455,7 @@ Version 1.7 Build 3868
 
 Version 1.7 Build 3850
 
-- [NEW] Lee-Kesler-PlÃ¶cker Property Package
+- [NEW] Lee-Kesler-Plöcker Property Package
 - [FIX] Fixed K-value calculation call in the Sum Rates method for solving Absorption Columns
 - [FIX] Fixed IO Flash calculation in single phase region
 - [FIX] Fixed Critical Point calculation with PR and SRK Equations of State
@@ -512,7 +515,7 @@ Version 1.6 Build 3618
 
 Version 1.6 Build 3605
 
-- [NEW] Added Spanish GUI translation (many thanks to Abad Lira and Gustavo LeÃ³n!)
+- [NEW] Added Spanish GUI translation (many thanks to Abad Lira and Gustavo León!)
 - [NEW] Added a Multivariate, Constrained Optimization utility
 - [NEW] Added a Sensitivity Analysis utility supporting up to 2 independent variables
 - [NEW] Added "command-line run mode" (read the documentation for more details)
