@@ -1,5 +1,5 @@
-﻿'    Data Regression Utility
-'    Copyright 2012 Daniel Wagner O. de Medeiros
+'    Data Regression Utility
+'    Copyright 2012-2013 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -449,7 +449,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 2, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                         VTc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -477,7 +477,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 2, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                         VPc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -510,7 +510,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 2, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                         VTc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -572,7 +572,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 2, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                         VTc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -600,7 +600,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 2, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                         VPc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -634,7 +634,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 2, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
                                         VTc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -662,7 +662,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 2, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
                                         VPc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
