@@ -1,4 +1,4 @@
-﻿'    Property Package Base Class
+'    Property Package Base Class
 '    Copyright 2008-2011 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -189,7 +189,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 Dim cspath As String = ""
                 Try
-                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96").GetValue("")
+                    If My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96") IsNot Nothing Then
+                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96").GetValue("")
+                    ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95") IsNot Nothing Then
+                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95").GetValue("")
+                    ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94") IsNot Nothing Then
+                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94").GetValue("")
+                    ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93") IsNot Nothing Then
+                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93").GetValue("")
+                    End If
                     cspath += Path.DirectorySeparatorChar + "pcd" + Path.DirectorySeparatorChar + "chemsep1.xml"
                     If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
                 Catch ex As Exception
@@ -1273,7 +1281,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     dge = fge - ige
 
                                     If dge > 0.0000000001 Then
-                                        Throw New Exception(DWSIM.App.GetLocalString("InvalidFlashResult"))
+                                        Throw New Exception(DWSIM.App.GetLocalString("InvalidFlashResult") & "(DGE = " & dge & " kJ/kg, " & Format(dge / ige * 100, "0.00") & "%)")
                                     End If
 
                                 End If
