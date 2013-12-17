@@ -1,5 +1,5 @@
-﻿'    DWSIM Excel Interface Shared Methods
-'    Copyright 2011 Daniel Wagner O. de Medeiros
+'    DWSIM Excel Interface Shared Methods
+'    Copyright 2011-2013 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -28,9 +28,996 @@ Namespace Interfaces
 
     Public Class ExcelIntegration
 
+#Region "Information Procedures"
+
+        <ExcelFunction("Returns a single property value for a compound.")> _
+        Public Shared Function GetCompoundProp( _
+            <ExcelArgument("Compound name.")> ByVal compound As String, _
+            <ExcelArgument("Property identifier.")> ByVal prop As String, _
+            <ExcelArgument("Temperature in K, if needed.")> ByVal temperature As Double, _
+            <ExcelArgument("Pressure in Pa, if needed.")> ByVal pressure As Double) As Double
+
+            Try
+
+                Dim pp As New RaoultPropertyPackage(True)
+
+                Dim ms As New Streams.MaterialStream("", "")
+
+                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                    phase.Componentes.Add(compound, New DWSIM.ClassesBasicasTermodinamica.Substancia(compound, ""))
+                    phase.Componentes(compound).ConstantProperties = pp._availablecomps(compound)
+                Next
+
+                Dim tmpcomp As ConstantProperties = pp._availablecomps(compound)
+                pp._selectedcomps.Add(compound, tmpcomp)
+                pp._availablecomps.Remove(compound)
+
+                ms._pp = pp
+                pp.SetMaterial(ms)
+
+                Dim results As Object = Nothing
+
+                If pressure <> 0.0# And temperature = 0.0# Then
+                    ms.GetPDependentProperty(New Object() {prop}, pressure, New Object() {compound}, results)
+                ElseIf pressure = 0.0# And temperature <> 0.0# Then
+                    ms.GetTDependentProperty(New Object() {prop}, temperature, New Object() {compound}, results)
+                Else
+                    results = ms.GetCompoundConstant(New Object() {prop}, New Object() {compound})
+                End If
+
+                Return results(0)
+
+                pp.Dispose()
+                pp = Nothing
+
+                ms.Dispose()
+                ms = Nothing
+
+            Catch ex As Exception
+
+                Return Double.NegativeInfinity
+
+            End Try
+        End Function
+
+        <ExcelFunction("Returns a list of the available single compound properties.")> _
+        Public Shared Function GetCompoundPropList() As Object(,)
+
+            Dim pp As New RaoultPropertyPackage(True)
+
+            Dim props As New ArrayList
+
+            props.AddRange(pp.GetConstPropList())
+            props.AddRange(pp.GetPDependentPropList())
+            props.AddRange(pp.GetTDependentPropList())
+
+            pp.Dispose()
+            pp = Nothing
+
+            Dim values As Object() = props.ToArray
+
+            Dim results2(values.Length - 1, 0) As Object
+            Dim i As Integer
+
+            For i = 0 To values.Length - 1
+                results2(i, 0) = values(i)
+            Next
+
+            Return results2
+
+        End Function
+
+        <ExcelFunction("Returns a list of the available Property Packages.")> _
+        Public Shared Function GetPropPackList() As Object(,)
+
+            Dim ppm As New CAPEOPENPropertyPackageManager()
+
+            Dim values As Object() = ppm.GetPropertyPackageList()
+
+            Dim results2(values.Length - 1, 0) As Object
+            Dim i As Integer
+
+            For i = 0 To values.Length - 1
+                results2(i, 0) = values(i)
+            Next
+
+            Return results2
+
+            ppm.Dispose()
+            ppm = Nothing
+
+        End Function
+
+        <ExcelFunction("Returns a list of the available properties.")> _
+        Public Shared Function GetPropList( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String) As Object(,)
+
+            Dim ppm As New CAPEOPENPropertyPackageManager()
+
+            Dim pp As PropertyPackages.PropertyPackage = ppm.GetPropertyPackage(proppack)
+
+            ppm.Dispose()
+            ppm = Nothing
+
+            Dim values As Object() = pp.GetSinglePhasePropList()
+
+            Dim results2(values.Length - 1, 0) As Object
+            Dim i As Integer
+
+            For i = 0 To values.Length - 1
+                results2(i, 0) = values(i)
+            Next
+
+            Return results2
+
+            pp.Dispose()
+            pp = Nothing
+
+        End Function
+
+        <ExcelFunction("Returns a list of the available phases.")> _
+        Public Shared Function GetPhaseList( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String) As Object(,)
+
+            Dim ppm As New CAPEOPENPropertyPackageManager()
+
+            Dim pp As PropertyPackages.PropertyPackage = ppm.GetPropertyPackage(proppack)
+
+            ppm.Dispose()
+            ppm = Nothing
+
+            Dim values As Object() = pp.GetPhaseList()
+
+            Dim results2(values.Length - 1, 0) As Object
+            Dim i As Integer
+
+            For i = 0 To values.Length - 1
+                results2(i, 0) = values(i)
+            Next
+
+            Return results2
+
+            pp.Dispose()
+            pp = Nothing
+
+        End Function
+
+        <ExcelFunction("Returns a list of the available compounds.")> _
+        Public Shared Function GetCompoundList( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String) As Object(,)
+
+            Dim ppm As New CAPEOPENPropertyPackageManager()
+
+            Dim pp As PropertyPackages.PropertyPackage = ppm.GetPropertyPackage(proppack)
+
+            ppm.Dispose()
+            ppm = Nothing
+
+            Dim comps As New ArrayList
+
+            For Each c As ConstantProperties In pp._availablecomps.Values
+                comps.Add(c.Name)
+            Next
+
+            pp.Dispose()
+            pp = Nothing
+
+            Dim values As Object() = comps.ToArray
+
+            Dim results2(values.Length - 1, 0) As Object
+            Dim i As Integer
+
+            For i = 0 To values.Length - 1
+                results2(i, 0) = values(i)
+            Next
+
+            Return results2
+
+        End Function
+
+#End Region
+
+#Region "Property Calculation Function"
+
+        <ExcelFunction("Calculates properties using the selected Property Package.")> _
+        Public Shared Function CalcProp( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
+        <ExcelArgument("The property to calculate.")> ByVal prop As String, _
+        <ExcelArgument("The returning basis of the properties: Mole, Mass or UNDEFINED.")> ByVal basis As String, _
+        <ExcelArgument("The name of the phase to calculate properties from.")> ByVal phaselabel As String, _
+        <ExcelArgument("The list of compounds to include.")> ByVal compounds As Object(), _
+        <ExcelArgument("Temperature in K.")> ByVal temperature As Double, _
+        <ExcelArgument("Pressure in Pa.")> ByVal pressure As Double, _
+        <ExcelArgument("*Normalized* mole fractions of the compounds in the mixture.")> ByVal molefractions As Double(), _
+        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
+        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
+        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
+
+            Try
+
+                Dim ppm As New CAPEOPENPropertyPackageManager()
+
+                Dim pp As PropertyPackages.PropertyPackage = ppm.GetPropertyPackage(proppack)
+
+                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
+
+                ppm.Dispose()
+                ppm = Nothing
+
+                Dim ms As New Streams.MaterialStream("", "")
+
+                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                    For Each c As String In compounds
+                        phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
+                        phase.Componentes(c).ConstantProperties = pp._availablecomps(c)
+                    Next
+                Next
+
+                For Each c As String In compounds
+                    Dim tmpcomp As ConstantProperties = pp._availablecomps(c)
+                    pp._selectedcomps.Add(c, tmpcomp)
+                    pp._availablecomps.Remove(c)
+                Next
+
+                Dim dwp As PropertyPackages.Fase = PropertyPackages.Fase.Mixture
+                For Each pi As PropertyPackages.PhaseInfo In pp.PhaseMappings.Values
+                    If pi.PhaseLabel = phaselabel Then dwp = pi.DWPhaseID
+                Next
+
+                ms.SetPhaseComposition(molefractions, dwp)
+                ms.Fases(0).SPMProperties.temperature = temperature
+                ms.Fases(0).SPMProperties.pressure = pressure
+
+                ms._pp = pp
+                pp.SetMaterial(ms)
+
+                If prop.ToLower <> "molecularweight" Then
+                    pp.CalcSinglePhaseProp(New Object() {prop}, phaselabel)
+                End If
+
+                Dim results As Double() = Nothing
+                Dim allres As New ArrayList
+                Dim i As Integer
+
+                results = Nothing
+                If prop.ToLower <> "molecularweight" Then
+                    ms.GetSinglePhaseProp(prop, phaselabel, basis, results)
+                Else
+                    results = New Double() {pp.AUX_MMM(dwp)}
+                End If
+                For i = 0 To results.Length - 1
+                    allres.Add(results(i))
+                Next
+
+                pp.Dispose()
+                pp = Nothing
+
+                ms.Dispose()
+                ms = Nothing
+
+                Dim values As Object() = allres.ToArray()
+
+                Dim results2(values.Length - 1, 0) As Object
+
+                For i = 0 To values.Length - 1
+                    results2(i, 0) = values(i)
+                Next
+
+                Return results2
+
+            Catch ex As Exception
+
+                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
+
+            End Try
+
+
+        End Function
+
+#End Region
+
+#Region "Flash Calculation Routines, v1"
+
+        <ExcelFunction("Calculates a Pressure / Temperature Flash using the selected Property Package.")> _
+        Public Shared Function PTFlash( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
+        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
+        <ExcelArgument("Temperature in K.")> ByVal T As Double, _
+        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
+        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
+        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
+        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
+        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
+
+            Try
+
+                Dim ppm As New CAPEOPENPropertyPackageManager()
+
+                Dim pp As PropertyPackages.PropertyPackage
+
+                pp = ppm.GetPropertyPackage(proppack)
+                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
+
+                ppm.Dispose()
+                ppm = Nothing
+
+                Dim ms As New Streams.MaterialStream("", "")
+
+                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                    For Each c As String In compounds
+                        phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
+                        phase.Componentes(c).ConstantProperties = pp._availablecomps(c)
+                    Next
+                Next
+
+                For Each c As String In compounds
+                    Dim tmpcomp As ConstantProperties = pp._availablecomps(c)
+                    If Not pp._selectedcomps.ContainsKey(c) Then pp._selectedcomps.Add(c, tmpcomp)
+                    'pp._availablecomps.Remove(c)
+                Next
+
+                ms.SetOverallComposition(molefractions)
+                ms.Fases(0).SPMProperties.temperature = T
+                ms.Fases(0).SPMProperties.pressure = P
+
+                ms._pp = pp
+                pp.SetMaterial(ms)
+
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
+
+                pp._ioquick = False
+                pp._tpseverity = 2
+                Dim comps(compounds.Length - 1) As String
+                Dim k As Integer
+                For Each c As String In compounds
+                    comps(k) = c
+                    k += 1
+                Next
+                pp._tpcompids = comps
+
+                pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
+
+                Dim labels As String() = Nothing
+                Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
+
+                ms.GetPresentPhases(labels, statuses)
+
+                Dim fractions(compounds.Length + 1, labels.Length - 1) As Object
+
+                Dim res As Object = Nothing
+
+                Dim i, j As Integer
+                i = 0
+                For Each l As String In labels
+                    If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                        fractions(0, i) = labels(i)
+                        ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
+                        fractions(1, i) = res(0)
+                        ms.GetSinglePhaseProp("fraction", labels(i), "Mole", res)
+                        For j = 0 To compounds.Length - 1
+                            fractions(2 + j, i) = res(j)
+                        Next
+                    End If
+                    i += 1
+                Next
+
+                If TypeOf proppack Is String Then
+                    pp.Dispose()
+                    pp = Nothing
+                End If
+
+                ms.Dispose()
+                ms = Nothing
+
+                Return fractions
+
+            Catch ex As Exception
+
+                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
+
+            End Try
+
+        End Function
+
+        <ExcelFunction("Calculates a Pressure / Enthalpy Flash using the selected Property Package.")> _
+        Public Shared Function PHFlash( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
+        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
+        <ExcelArgument("Mixture Mass Enthalpy in kJ/kg.")> ByVal H As Double, _
+        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
+        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
+        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
+        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
+        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
+
+            Return PHFlash2(proppack, flashalg, P, H, compounds, molefractions, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8, 0.0#)
+
+        End Function
+
+        <ExcelFunction("Calculates a Pressure / Entropy Flash using the selected Property Package.")> _
+        Public Shared Function PSFlash( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
+        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
+        <ExcelArgument("Mixture Mass Entropy in kJ/[kg.K].")> ByVal S As Double, _
+        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
+        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
+        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
+        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
+        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
+
+            Return PSFlash2(proppack, flashalg, P, S, compounds, molefractions, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8, 0.0#)
+
+        End Function
+
+        <ExcelFunction("Calculates a Pressure / Vapor Fraction Flash using the selected Property Package.")> _
+        Public Shared Function PVFFlash( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
+        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
+        <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
+        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
+        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
+        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
+        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
+        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
+
+            Return PVFFlash2(proppack, flashalg, P, VF, compounds, molefractions, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8, 0.0#)
+
+        End Function
+
+        <ExcelFunction("Calculates a Temperature / Vapor Fraction Flash using the selected Property Package.")> _
+        Public Shared Function TVFFlash( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
+        <ExcelArgument("Temperature in K.")> ByVal T As Double, _
+        <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
+        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
+        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
+        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
+        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
+        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
+
+            Return TVFFlash2(proppack, flashalg, T, VF, compounds, molefractions, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8, 0.0#)
+
+        End Function
+
+#End Region
+
+#Region "Flash Calculation Routines, v2 (accept an initial estimate)"
+
+        <ExcelFunction("Calculates a Pressure / Enthalpy Flash using the selected Property Package.")> _
+        Public Shared Function PHFlash2( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
+        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
+        <ExcelArgument("Mixture Mass Enthalpy in kJ/kg.")> ByVal H As Double, _
+        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
+        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
+        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
+        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
+        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object, _
+        <ExcelArgument("Initial estimate for temperature search, in K.")> ByVal InitialEstimate As Double) As Object(,)
+
+            Try
+
+                Dim ppm As New CAPEOPENPropertyPackageManager()
+
+                Dim pp As PropertyPackages.PropertyPackage
+
+                pp = ppm.GetPropertyPackage(proppack)
+                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
+
+                ppm.Dispose()
+                ppm = Nothing
+
+                Dim ms As New Streams.MaterialStream("", "")
+
+                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                    For Each c As String In compounds
+                        phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
+                        phase.Componentes(c).ConstantProperties = pp._availablecomps(c)
+                    Next
+                Next
+
+                For Each c As String In compounds
+                    Dim tmpcomp As ConstantProperties = pp._availablecomps(c)
+                    If Not pp._selectedcomps.ContainsKey(c) Then pp._selectedcomps.Add(c, tmpcomp)
+                    'pp._availablecomps.Remove(c)
+                Next
+
+                ms.SetOverallComposition(molefractions)
+                ms.Fases(0).SPMProperties.enthalpy = H
+                ms.Fases(0).SPMProperties.pressure = P
+
+                ms._pp = pp
+                pp.SetMaterial(ms)
+
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
+
+                pp._ioquick = False
+                pp._tpseverity = 2
+                Dim comps(compounds.Length - 1) As String
+                Dim k As Integer
+                For Each c As String In compounds
+                    comps(k) = c
+                    k += 1
+                Next
+                pp._tpcompids = comps
+
+                ms.Fases(0).SPMProperties.temperature = InitialEstimate
+
+                pp.CalcEquilibrium(ms, "PH", "UNDEFINED")
+
+                Dim labels As String() = Nothing
+                Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
+
+                ms.GetPresentPhases(labels, statuses)
+
+                Dim fractions(compounds.Length + 2, labels.Length - 1) As Object
+
+                Dim res As Object = Nothing
+
+                Dim i, j As Integer
+                i = 0
+                For Each l As String In labels
+                    If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                        fractions(0, i) = labels(i)
+                        ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
+                        fractions(1, i) = res(0)
+                        ms.GetSinglePhaseProp("fraction", labels(i), "Mole", res)
+                        For j = 0 To compounds.Length - 1
+                            fractions(2 + j, i) = res(j)
+                        Next
+                    End If
+                    i += 1
+                Next
+
+                fractions(compounds.Length + 2, 0) = ms.Fases(0).SPMProperties.temperature.GetValueOrDefault
+
+                If TypeOf proppack Is String Then
+                    pp.Dispose()
+                    pp = Nothing
+                End If
+
+                ms.Dispose()
+                ms = Nothing
+
+                Return fractions
+
+            Catch ex As Exception
+
+                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
+
+            End Try
+
+        End Function
+
+        <ExcelFunction("Calculates a Pressure / Entropy Flash using the selected Property Package.")> _
+        Public Shared Function PSFlash2( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
+        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
+        <ExcelArgument("Mixture Mass Entropy in kJ/[kg.K].")> ByVal S As Double, _
+        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
+        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
+        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
+        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
+        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object, _
+        <ExcelArgument("Initial estimate for temperature search, in K.")> ByVal InitialEstimate As Double) As Object(,)
+
+            Try
+
+                Dim ppm As New CAPEOPENPropertyPackageManager()
+
+                Dim pp As PropertyPackages.PropertyPackage
+
+                pp = ppm.GetPropertyPackage(proppack)
+                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
+
+                ppm.Dispose()
+                ppm = Nothing
+
+                Dim ms As New Streams.MaterialStream("", "")
+
+                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                    For Each c As String In compounds
+                        phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
+                        phase.Componentes(c).ConstantProperties = pp._availablecomps(c)
+                    Next
+                Next
+
+                For Each c As String In compounds
+                    Dim tmpcomp As ConstantProperties = pp._availablecomps(c)
+                    If Not pp._selectedcomps.ContainsKey(c) Then pp._selectedcomps.Add(c, tmpcomp)
+                    'pp._availablecomps.Remove(c)
+                Next
+
+                ms.SetOverallComposition(molefractions)
+                ms.Fases(0).SPMProperties.entropy = S
+                ms.Fases(0).SPMProperties.pressure = P
+
+                ms._pp = pp
+                pp.SetMaterial(ms)
+
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
+
+                pp._ioquick = False
+                pp._tpseverity = 2
+                Dim comps(compounds.Length - 1) As String
+                Dim k As Integer
+                For Each c As String In compounds
+                    comps(k) = c
+                    k += 1
+                Next
+                pp._tpcompids = comps
+
+                ms.Fases(0).SPMProperties.temperature = InitialEstimate
+
+                pp.CalcEquilibrium(ms, "PS", "UNDEFINED")
+
+                Dim labels As String() = Nothing
+                Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
+
+                ms.GetPresentPhases(labels, statuses)
+
+                Dim fractions(compounds.Length + 2, labels.Length - 1) As Object
+
+                Dim res As Object = Nothing
+
+                Dim i, j As Integer
+                i = 0
+                For Each l As String In labels
+                    If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                        fractions(0, i) = labels(i)
+                        ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
+                        fractions(1, i) = res(0)
+                        ms.GetSinglePhaseProp("fraction", labels(i), "Mole", res)
+                        For j = 0 To compounds.Length - 1
+                            fractions(2 + j, i) = res(j)
+                        Next
+                    End If
+                    i += 1
+                Next
+
+                fractions(compounds.Length + 2, 0) = ms.Fases(0).SPMProperties.temperature.GetValueOrDefault
+
+                If TypeOf proppack Is String Then
+                    pp.Dispose()
+                    pp = Nothing
+                End If
+
+                ms.Dispose()
+                ms = Nothing
+
+                Return fractions
+
+            Catch ex As Exception
+
+                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
+
+            End Try
+
+        End Function
+
+        <ExcelFunction("Calculates a Pressure / Vapor Fraction Flash using the selected Property Package.")> _
+        Public Shared Function PVFFlash2( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
+        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
+        <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
+        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
+        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
+        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
+        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
+        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object, _
+        <ExcelArgument("Initial estimate for temperature search, in K.")> ByVal InitialEstimate As Double) As Object(,)
+
+            Try
+
+                Dim ppm As New CAPEOPENPropertyPackageManager()
+
+                Dim pp As PropertyPackages.PropertyPackage
+
+                pp = ppm.GetPropertyPackage(proppack)
+                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
+
+                ppm.Dispose()
+                ppm = Nothing
+
+                Dim ms As New Streams.MaterialStream("", "")
+
+                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                    For Each c As String In compounds
+                        phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
+                        phase.Componentes(c).ConstantProperties = pp._availablecomps(c)
+                    Next
+                Next
+
+                For Each c As String In compounds
+                    Dim tmpcomp As ConstantProperties = pp._availablecomps(c)
+                    If Not pp._selectedcomps.ContainsKey(c) Then pp._selectedcomps.Add(c, tmpcomp)
+                    'pp._availablecomps.Remove(c)
+                Next
+
+                ms.SetOverallComposition(molefractions)
+                ms.Fases(2).SPMProperties.molarfraction = VF
+                ms.Fases(0).SPMProperties.pressure = P
+
+                ms._pp = pp
+                pp.SetMaterial(ms)
+
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
+
+                pp._ioquick = False
+                pp._tpseverity = 2
+                Dim comps(compounds.Length - 1) As String
+                Dim k As Integer
+                For Each c As String In compounds
+                    comps(k) = c
+                    k += 1
+                Next
+                pp._tpcompids = comps
+
+                ms.Fases(0).SPMProperties.temperature = InitialEstimate
+
+                pp.CalcEquilibrium(ms, "PVF", "UNDEFINED")
+
+                Dim labels As String() = Nothing
+                Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
+
+                ms.GetPresentPhases(labels, statuses)
+
+                Dim fractions(compounds.Length + 2, labels.Length - 1) As Object
+
+                Dim res As Object = Nothing
+
+                Dim i, j As Integer
+                i = 0
+                For Each l As String In labels
+                    If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                        fractions(0, i) = labels(i)
+                        ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
+                        fractions(1, i) = res(0)
+                        ms.GetSinglePhaseProp("fraction", labels(i), "Mole", res)
+                        For j = 0 To compounds.Length - 1
+                            fractions(2 + j, i) = res(j)
+                        Next
+                    End If
+                    i += 1
+                Next
+
+                fractions(compounds.Length + 2, 0) = ms.Fases(0).SPMProperties.temperature.GetValueOrDefault
+
+                If TypeOf proppack Is String Then
+                    pp.Dispose()
+                    pp = Nothing
+                End If
+
+                ms.Dispose()
+                ms = Nothing
+
+                Return fractions
+
+            Catch ex As Exception
+
+                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
+
+            End Try
+
+        End Function
+
+        <ExcelFunction("Calculates a Temperature / Vapor Fraction Flash using the selected Property Package.")> _
+        Public Shared Function TVFFlash2( _
+        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
+        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
+        <ExcelArgument("Temperature in K.")> ByVal T As Double, _
+        <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
+        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
+        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
+        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
+        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
+        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
+        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
+        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
+        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
+        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
+        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object, _
+        <ExcelArgument("Initial estimate for pressure search, in Pa.")> ByVal InitialEstimate As Double) As Object(,)
+
+            Try
+
+                Dim ppm As New CAPEOPENPropertyPackageManager()
+
+                Dim pp As PropertyPackages.PropertyPackage
+
+                pp = ppm.GetPropertyPackage(proppack)
+                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
+
+                ppm.Dispose()
+                ppm = Nothing
+
+                Dim ms As New Streams.MaterialStream("", "")
+
+                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                    For Each c As String In compounds
+                        phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
+                        phase.Componentes(c).ConstantProperties = pp._availablecomps(c)
+                    Next
+                Next
+
+                For Each c As String In compounds
+                    Dim tmpcomp As ConstantProperties = pp._availablecomps(c)
+                    If Not pp._selectedcomps.ContainsKey(c) Then pp._selectedcomps.Add(c, tmpcomp)
+                    'pp._availablecomps.Remove(c)
+                Next
+
+                ms.SetOverallComposition(molefractions)
+                ms.Fases(2).SPMProperties.molarfraction = VF
+                ms.Fases(0).SPMProperties.temperature = T
+
+                ms._pp = pp
+                pp.SetMaterial(ms)
+
+                pp.FlashAlgorithm = flashalg
+
+                'Select Case flashalg
+                '    Case 1
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
+                '    Case 2
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
+                '    Case 3
+                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
+                'End Select
+
+                pp._ioquick = False
+                pp._tpseverity = 2
+                Dim comps(compounds.Length - 1) As String
+                Dim k As Integer
+                For Each c As String In compounds
+                    comps(k) = c
+                    k += 1
+                Next
+                pp._tpcompids = comps
+
+                ms.Fases(0).SPMProperties.pressure = InitialEstimate
+
+                pp.CalcEquilibrium(ms, "TVF", "UNDEFINED")
+
+                Dim labels As String() = Nothing
+                Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
+
+                ms.GetPresentPhases(labels, statuses)
+
+                Dim fractions(compounds.Length + 2, labels.Length - 1) As Object
+
+                Dim res As Object = Nothing
+
+                Dim i, j As Integer
+                i = 0
+                For Each l As String In labels
+                    If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                        fractions(0, i) = labels(i)
+                        ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
+                        fractions(1, i) = res(0)
+                        ms.GetSinglePhaseProp("fraction", labels(i), "Mole", res)
+                        For j = 0 To compounds.Length - 1
+                            fractions(2 + j, i) = res(j)
+                        Next
+                    End If
+                    i += 1
+                Next
+
+                fractions(compounds.Length + 2, 0) = ms.Fases(0).SPMProperties.pressure.GetValueOrDefault
+
+                If TypeOf proppack Is String Then
+                    pp.Dispose()
+                    pp = Nothing
+                End If
+
+                ms.Dispose()
+                ms = Nothing
+
+                Return fractions
+
+            Catch ex As Exception
+
+                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
+
+            End Try
+
+        End Function
+
+#End Region
+
+#Region "Helper Procedures"
+
         Public Shared Sub SetIP(ByVal proppack As String, ByVal pp As PropertyPackage, ByVal compounds As Object, ByVal ip1 As Object, ByVal ip2 As Object,
-                                ByVal ip3 As Object, ByVal ip4 As Object, ByVal ip5 As Object, ByVal ip6 As Object,
-                                ByVal ip7 As Object, ByVal ip8 As Object)
+                               ByVal ip3 As Object, ByVal ip4 As Object, ByVal ip5 As Object, ByVal ip6 As Object,
+                               ByVal ip7 As Object, ByVal ip8 As Object)
 
             Dim i, j As Integer
 
@@ -349,879 +1336,6 @@ Namespace Interfaces
 
         End Sub
 
-        <ExcelFunction("Returns a single property value for a compound.")> _
-        Public Shared Function GetCompoundProp( _
-            <ExcelArgument("Compound name.")> ByVal compound As String, _
-            <ExcelArgument("Property identifier.")> ByVal prop As String, _
-            <ExcelArgument("Temperature in K, if needed.")> ByVal temperature As Double, _
-            <ExcelArgument("Pressure in Pa, if needed.")> ByVal pressure As Double) As Double
-
-            Try
-
-                Dim pp As New RaoultPropertyPackage(True)
-
-                Dim ms As New Streams.MaterialStream("", "")
-
-                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
-                    phase.Componentes.Add(compound, New DWSIM.ClassesBasicasTermodinamica.Substancia(compound, ""))
-                    phase.Componentes(compound).ConstantProperties = pp._availablecomps(compound)
-                Next
-
-                Dim tmpcomp As ConstantProperties = pp._availablecomps(compound)
-                pp._selectedcomps.Add(compound, tmpcomp)
-                pp._availablecomps.Remove(compound)
-
-                ms._pp = pp
-                pp.SetMaterial(ms)
-
-                Dim results As Object = Nothing
-
-                If pressure <> 0.0# And temperature = 0.0# Then
-                    ms.GetPDependentProperty(New Object() {prop}, pressure, New Object() {compound}, results)
-                ElseIf pressure = 0.0# And temperature <> 0.0# Then
-                    ms.GetTDependentProperty(New Object() {prop}, temperature, New Object() {compound}, results)
-                Else
-                    results = ms.GetCompoundConstant(New Object() {prop}, New Object() {compound})
-                End If
-
-                Return results(0)
-
-                pp.Dispose()
-                pp = Nothing
-
-                ms.Dispose()
-                ms = Nothing
-
-            Catch ex As Exception
-
-                Return Double.NegativeInfinity
-
-            End Try
-        End Function
-
-        <ExcelFunction("Returns a list of the available single compound properties.")> _
-        Public Shared Function GetCompoundPropList() As Object(,)
-
-            Dim pp As New RaoultPropertyPackage(True)
-
-            Dim props As New ArrayList
-
-            props.AddRange(pp.GetConstPropList())
-            props.AddRange(pp.GetPDependentPropList())
-            props.AddRange(pp.GetTDependentPropList())
-
-            pp.Dispose()
-            pp = Nothing
-
-            Dim values As Object() = props.ToArray
-
-            Dim results2(values.Length - 1, 0) As Object
-            Dim i As Integer
-
-            For i = 0 To values.Length - 1
-                results2(i, 0) = values(i)
-            Next
-
-            Return results2
-
-        End Function
-
-        <ExcelFunction("Calculates properties using the selected Property Package.")> _
-        Public Shared Function CalcProp( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
-        <ExcelArgument("The property to calculate.")> ByVal prop As String, _
-        <ExcelArgument("The returning basis of the properties: Mole, Mass or UNDEFINED.")> ByVal basis As String, _
-        <ExcelArgument("The name of the phase to calculate properties from.")> ByVal phaselabel As String, _
-        <ExcelArgument("The list of compounds to include.")> ByVal compounds As Object(), _
-        <ExcelArgument("Temperature in K.")> ByVal temperature As Double, _
-        <ExcelArgument("Pressure in Pa.")> ByVal pressure As Double, _
-        <ExcelArgument("*Normalized* mole fractions of the compounds in the mixture.")> ByVal molefractions As Double(), _
-        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
-        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
-        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
-        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
-        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
-        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
-        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
-
-            Try
-
-                Dim ppm As New CAPEOPENPropertyPackageManager()
-
-                Dim pp As PropertyPackages.PropertyPackage = ppm.GetPropertyPackage(proppack)
-
-                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
-
-                ppm.Dispose()
-                ppm = Nothing
-
-                Dim ms As New Streams.MaterialStream("", "")
-
-                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
-                    For Each c As String In compounds
-                        phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
-                        phase.Componentes(c).ConstantProperties = pp._availablecomps(c)
-                    Next
-                Next
-
-                For Each c As String In compounds
-                    Dim tmpcomp As ConstantProperties = pp._availablecomps(c)
-                    pp._selectedcomps.Add(c, tmpcomp)
-                    pp._availablecomps.Remove(c)
-                Next
-
-                Dim dwp As PropertyPackages.Fase = PropertyPackages.Fase.Mixture
-                For Each pi As PropertyPackages.PhaseInfo In pp.PhaseMappings.Values
-                    If pi.PhaseLabel = phaselabel Then dwp = pi.DWPhaseID
-                Next
-
-                ms.SetPhaseComposition(molefractions, dwp)
-                ms.Fases(0).SPMProperties.temperature = temperature
-                ms.Fases(0).SPMProperties.pressure = pressure
-
-                ms._pp = pp
-                pp.SetMaterial(ms)
-
-                If prop.ToLower <> "molecularweight" Then
-                    pp.CalcSinglePhaseProp(New Object() {prop}, phaselabel)
-                End If
-
-                Dim results As Double() = Nothing
-                Dim allres As New ArrayList
-                Dim i As Integer
-
-                results = Nothing
-                If prop.ToLower <> "molecularweight" Then
-                    ms.GetSinglePhaseProp(prop, phaselabel, basis, results)
-                Else
-                    results = New Double() {pp.AUX_MMM(dwp)}
-                End If
-                For i = 0 To results.Length - 1
-                    allres.Add(results(i))
-                Next
-
-                pp.Dispose()
-                pp = Nothing
-
-                ms.Dispose()
-                ms = Nothing
-
-                Dim values As Object() = allres.ToArray()
-
-                Dim results2(values.Length - 1, 0) As Object
-
-                For i = 0 To values.Length - 1
-                    results2(i, 0) = values(i)
-                Next
-
-                Return results2
-
-            Catch ex As Exception
-
-                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
-
-            End Try
-
-
-        End Function
-
-        <ExcelFunction("Returns a list of the available Property Packages.")> _
-        Public Shared Function GetPropPackList() As Object(,)
-
-            Dim ppm As New CAPEOPENPropertyPackageManager()
-
-            Dim values As Object() = ppm.GetPropertyPackageList()
-
-            Dim results2(values.Length - 1, 0) As Object
-            Dim i As Integer
-
-            For i = 0 To values.Length - 1
-                results2(i, 0) = values(i)
-            Next
-
-            Return results2
-
-            ppm.Dispose()
-            ppm = Nothing
-
-        End Function
-
-        <ExcelFunction("Returns a list of the available properties.")> _
-        Public Shared Function GetPropList( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String) As Object(,)
-
-            Dim ppm As New CAPEOPENPropertyPackageManager()
-
-            Dim pp As PropertyPackages.PropertyPackage = ppm.GetPropertyPackage(proppack)
-
-            ppm.Dispose()
-            ppm = Nothing
-
-            Dim values As Object() = pp.GetSinglePhasePropList()
-
-            Dim results2(values.Length - 1, 0) As Object
-            Dim i As Integer
-
-            For i = 0 To values.Length - 1
-                results2(i, 0) = values(i)
-            Next
-
-            Return results2
-
-            pp.Dispose()
-            pp = Nothing
-
-        End Function
-
-        <ExcelFunction("Returns a list of the available phases.")> _
-        Public Shared Function GetPhaseList( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String) As Object(,)
-
-            Dim ppm As New CAPEOPENPropertyPackageManager()
-
-            Dim pp As PropertyPackages.PropertyPackage = ppm.GetPropertyPackage(proppack)
-
-            ppm.Dispose()
-            ppm = Nothing
-
-            Dim values As Object() = pp.GetPhaseList()
-
-            Dim results2(values.Length - 1, 0) As Object
-            Dim i As Integer
-
-            For i = 0 To values.Length - 1
-                results2(i, 0) = values(i)
-            Next
-
-            Return results2
-
-            pp.Dispose()
-            pp = Nothing
-
-        End Function
-
-        <ExcelFunction("Returns a list of the available compounds.")> _
-        Public Shared Function GetCompoundList( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String) As Object(,)
-
-            Dim ppm As New CAPEOPENPropertyPackageManager()
-
-            Dim pp As PropertyPackages.PropertyPackage = ppm.GetPropertyPackage(proppack)
-
-            ppm.Dispose()
-            ppm = Nothing
-
-            Dim comps As New ArrayList
-
-            For Each c As ConstantProperties In pp._availablecomps.Values
-                comps.Add(c.Name)
-            Next
-
-            pp.Dispose()
-            pp = Nothing
-
-            Dim values As Object() = comps.ToArray
-
-            Dim results2(values.Length - 1, 0) As Object
-            Dim i As Integer
-
-            For i = 0 To values.Length - 1
-                results2(i, 0) = values(i)
-            Next
-
-            Return results2
-
-        End Function
-
-        <ExcelFunction("Calculates a PT Flash using the selected Property Package.")> _
-        Public Shared Function PTFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
-        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
-        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
-        <ExcelArgument("Temperature in K.")> ByVal T As Double, _
-        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
-        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
-        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
-        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
-        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
-        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
-        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
-        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
-        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
-
-            Try
-
-                Dim ppm As New CAPEOPENPropertyPackageManager()
-
-                Dim pp As PropertyPackages.PropertyPackage
-
-                pp = ppm.GetPropertyPackage(proppack)
-                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
-
-                ppm.Dispose()
-                ppm = Nothing
-
-                Dim ms As New Streams.MaterialStream("", "")
-
-                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
-                    For Each c As String In compounds
-                        phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
-                        phase.Componentes(c).ConstantProperties = pp._availablecomps(c)
-                    Next
-                Next
-
-                For Each c As String In compounds
-                    Dim tmpcomp As ConstantProperties = pp._availablecomps(c)
-                    If Not pp._selectedcomps.ContainsKey(c) Then pp._selectedcomps.Add(c, tmpcomp)
-                    'pp._availablecomps.Remove(c)
-                Next
-
-                ms.SetOverallComposition(molefractions)
-                ms.Fases(0).SPMProperties.temperature = T
-                ms.Fases(0).SPMProperties.pressure = P
-
-                ms._pp = pp
-                pp.SetMaterial(ms)
-
-                pp.FlashAlgorithm = flashalg
-
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
-                pp._ioquick = False
-                pp._tpseverity = 2
-                Dim comps(compounds.Length - 1) As String
-                Dim k As Integer
-                For Each c As String In compounds
-                    comps(k) = c
-                    k += 1
-                Next
-                pp._tpcompids = comps
-
-                pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
-
-                Dim labels As String() = Nothing
-                Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
-
-                ms.GetPresentPhases(labels, statuses)
-
-                Dim fractions(compounds.Length + 1, labels.Length - 1) As Object
-
-                Dim res As Object = Nothing
-
-                Dim i, j As Integer
-                i = 0
-                For Each l As String In labels
-                    If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
-                        fractions(0, i) = labels(i)
-                        ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
-                        fractions(1, i) = res(0)
-                        ms.GetSinglePhaseProp("fraction", labels(i), "Mole", res)
-                        For j = 0 To compounds.Length - 1
-                            fractions(2 + j, i) = res(j)
-                        Next
-                    End If
-                    i += 1
-                Next
-
-                If TypeOf proppack Is String Then
-                    pp.Dispose()
-                    pp = Nothing
-                End If
-
-                ms.Dispose()
-                ms = Nothing
-
-                Return fractions
-
-            Catch ex As Exception
-
-                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
-
-            End Try
-
-        End Function
-
-        <ExcelFunction("Calculates a PH Flash using the selected Property Package.")> _
-        Public Shared Function PHFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
-        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
-        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
-        <ExcelArgument("Mixture Mass Enthalpy in kJ/kg.")> ByVal H As Double, _
-        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
-        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
-        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
-        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
-        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
-        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
-        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
-        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
-        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
-
-            Try
-
-                Dim ppm As New CAPEOPENPropertyPackageManager()
-
-                Dim pp As PropertyPackages.PropertyPackage
-
-                pp = ppm.GetPropertyPackage(proppack)
-                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
-
-                ppm.Dispose()
-                ppm = Nothing
-
-                Dim ms As New Streams.MaterialStream("", "")
-
-                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
-                    For Each c As String In compounds
-                        phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
-                        phase.Componentes(c).ConstantProperties = pp._availablecomps(c)
-                    Next
-                Next
-
-                For Each c As String In compounds
-                    Dim tmpcomp As ConstantProperties = pp._availablecomps(c)
-                    If Not pp._selectedcomps.ContainsKey(c) Then pp._selectedcomps.Add(c, tmpcomp)
-                    'pp._availablecomps.Remove(c)
-                Next
-
-                ms.SetOverallComposition(molefractions)
-                ms.Fases(0).SPMProperties.enthalpy = H
-                ms.Fases(0).SPMProperties.pressure = P
-
-                ms._pp = pp
-                pp.SetMaterial(ms)
-
-                pp.FlashAlgorithm = flashalg
-
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
-                pp._ioquick = False
-                pp._tpseverity = 2
-                Dim comps(compounds.Length - 1) As String
-                Dim k As Integer
-                For Each c As String In compounds
-                    comps(k) = c
-                    k += 1
-                Next
-                pp._tpcompids = comps
-
-                pp.CalcEquilibrium(ms, "PH", "UNDEFINED")
-
-                Dim labels As String() = Nothing
-                Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
-
-                ms.GetPresentPhases(labels, statuses)
-
-                Dim fractions(compounds.Length + 2, labels.Length - 1) As Object
-
-                Dim res As Object = Nothing
-
-                Dim i, j As Integer
-                i = 0
-                For Each l As String In labels
-                    If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
-                        fractions(0, i) = labels(i)
-                        ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
-                        fractions(1, i) = res(0)
-                        ms.GetSinglePhaseProp("fraction", labels(i), "Mole", res)
-                        For j = 0 To compounds.Length - 1
-                            fractions(2 + j, i) = res(j)
-                        Next
-                    End If
-                    i += 1
-                Next
-
-                fractions(compounds.Length + 2, 0) = ms.Fases(0).SPMProperties.temperature.GetValueOrDefault
-
-                If TypeOf proppack Is String Then
-                    pp.Dispose()
-                    pp = Nothing
-                End If
-
-                ms.Dispose()
-                ms = Nothing
-
-                Return fractions
-
-            Catch ex As Exception
-
-                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
-
-            End Try
-
-        End Function
-
-        <ExcelFunction("Calculates a PS Flash using the selected Property Package.")> _
-        Public Shared Function PSFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
-        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
-        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
-        <ExcelArgument("Mixture Mass Entropy in kJ/[kg.K].")> ByVal S As Double, _
-        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
-        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
-        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
-        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
-        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
-        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
-        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
-        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
-        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
-
-            Try
-
-                Dim ppm As New CAPEOPENPropertyPackageManager()
-
-                Dim pp As PropertyPackages.PropertyPackage
-
-                pp = ppm.GetPropertyPackage(proppack)
-                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
-
-                ppm.Dispose()
-                ppm = Nothing
-
-                Dim ms As New Streams.MaterialStream("", "")
-
-                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
-                    For Each c As String In compounds
-                        phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
-                        phase.Componentes(c).ConstantProperties = pp._availablecomps(c)
-                    Next
-                Next
-
-                For Each c As String In compounds
-                    Dim tmpcomp As ConstantProperties = pp._availablecomps(c)
-                    If Not pp._selectedcomps.ContainsKey(c) Then pp._selectedcomps.Add(c, tmpcomp)
-                    'pp._availablecomps.Remove(c)
-                Next
-
-                ms.SetOverallComposition(molefractions)
-                ms.Fases(0).SPMProperties.entropy = S
-                ms.Fases(0).SPMProperties.pressure = P
-
-                ms._pp = pp
-                pp.SetMaterial(ms)
-
-                pp.FlashAlgorithm = flashalg
-
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
-                pp._ioquick = False
-                pp._tpseverity = 2
-                Dim comps(compounds.Length - 1) As String
-                Dim k As Integer
-                For Each c As String In compounds
-                    comps(k) = c
-                    k += 1
-                Next
-                pp._tpcompids = comps
-
-                pp.CalcEquilibrium(ms, "PS", "UNDEFINED")
-
-                Dim labels As String() = Nothing
-                Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
-
-                ms.GetPresentPhases(labels, statuses)
-
-                Dim fractions(compounds.Length + 2, labels.Length - 1) As Object
-
-                Dim res As Object = Nothing
-
-                Dim i, j As Integer
-                i = 0
-                For Each l As String In labels
-                    If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
-                        fractions(0, i) = labels(i)
-                        ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
-                        fractions(1, i) = res(0)
-                        ms.GetSinglePhaseProp("fraction", labels(i), "Mole", res)
-                        For j = 0 To compounds.Length - 1
-                            fractions(2 + j, i) = res(j)
-                        Next
-                    End If
-                    i += 1
-                Next
-
-                fractions(compounds.Length + 2, 0) = ms.Fases(0).SPMProperties.temperature.GetValueOrDefault
-
-                If TypeOf proppack Is String Then
-                    pp.Dispose()
-                    pp = Nothing
-                End If
-
-                ms.Dispose()
-                ms = Nothing
-
-                Return fractions
-
-            Catch ex As Exception
-
-                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
-
-            End Try
-
-        End Function
-
-        <ExcelFunction("Calculates a PVF Flash using the selected Property Package.")> _
-        Public Shared Function PVFFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
-        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
-        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
-        <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
-        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
-        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
-        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
-        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
-        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
-        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
-        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
-        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
-        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
-
-            Try
-
-                Dim ppm As New CAPEOPENPropertyPackageManager()
-
-                Dim pp As PropertyPackages.PropertyPackage
-
-                pp = ppm.GetPropertyPackage(proppack)
-                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
-
-                ppm.Dispose()
-                ppm = Nothing
-
-                Dim ms As New Streams.MaterialStream("", "")
-
-                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
-                    For Each c As String In compounds
-                        phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
-                        phase.Componentes(c).ConstantProperties = pp._availablecomps(c)
-                    Next
-                Next
-
-                For Each c As String In compounds
-                    Dim tmpcomp As ConstantProperties = pp._availablecomps(c)
-                    If Not pp._selectedcomps.ContainsKey(c) Then pp._selectedcomps.Add(c, tmpcomp)
-                    'pp._availablecomps.Remove(c)
-                Next
-
-                ms.SetOverallComposition(molefractions)
-                ms.Fases(2).SPMProperties.molarfraction = VF
-                ms.Fases(0).SPMProperties.pressure = P
-
-                ms._pp = pp
-                pp.SetMaterial(ms)
-
-                pp.FlashAlgorithm = flashalg
-
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
-                pp._ioquick = False
-                pp._tpseverity = 2
-                Dim comps(compounds.Length - 1) As String
-                Dim k As Integer
-                For Each c As String In compounds
-                    comps(k) = c
-                    k += 1
-                Next
-                pp._tpcompids = comps
-
-                pp.CalcEquilibrium(ms, "PVF", "UNDEFINED")
-
-                Dim labels As String() = Nothing
-                Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
-
-                ms.GetPresentPhases(labels, statuses)
-
-                Dim fractions(compounds.Length + 2, labels.Length - 1) As Object
-
-                Dim res As Object = Nothing
-
-                Dim i, j As Integer
-                i = 0
-                For Each l As String In labels
-                    If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
-                        fractions(0, i) = labels(i)
-                        ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
-                        fractions(1, i) = res(0)
-                        ms.GetSinglePhaseProp("fraction", labels(i), "Mole", res)
-                        For j = 0 To compounds.Length - 1
-                            fractions(2 + j, i) = res(j)
-                        Next
-                    End If
-                    i += 1
-                Next
-
-                fractions(compounds.Length + 2, 0) = ms.Fases(0).SPMProperties.temperature.GetValueOrDefault
-
-                If TypeOf proppack Is String Then
-                    pp.Dispose()
-                    pp = Nothing
-                End If
-
-                ms.Dispose()
-                ms = Nothing
-
-                Return fractions
-
-            Catch ex As Exception
-
-                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
-
-            End Try
-
-        End Function
-
-        <ExcelFunction("Calculates a TVF Flash using the selected Property Package.")> _
-        Public Shared Function TVFFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
-        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
-        <ExcelArgument("Temperature in K.")> ByVal T As Double, _
-        <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
-        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
-        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
-        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
-        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
-        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
-        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
-        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
-        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
-        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
-
-            Try
-
-                Dim ppm As New CAPEOPENPropertyPackageManager()
-
-                Dim pp As PropertyPackages.PropertyPackage
-
-                pp = ppm.GetPropertyPackage(proppack)
-                SetIP(proppack, pp, compounds, ip1, ip2, ip3, ip4, ip5, ip6, ip7, ip8)
-
-                ppm.Dispose()
-                ppm = Nothing
-
-                Dim ms As New Streams.MaterialStream("", "")
-
-                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
-                    For Each c As String In compounds
-                        phase.Componentes.Add(c, New DWSIM.ClassesBasicasTermodinamica.Substancia(c, ""))
-                        phase.Componentes(c).ConstantProperties = pp._availablecomps(c)
-                    Next
-                Next
-
-                For Each c As String In compounds
-                    Dim tmpcomp As ConstantProperties = pp._availablecomps(c)
-                    If Not pp._selectedcomps.ContainsKey(c) Then pp._selectedcomps.Add(c, tmpcomp)
-                    'pp._availablecomps.Remove(c)
-                Next
-
-                ms.SetOverallComposition(molefractions)
-                ms.Fases(2).SPMProperties.molarfraction = VF
-                ms.Fases(0).SPMProperties.temperature = T
-
-                ms._pp = pp
-                pp.SetMaterial(ms)
-
-                pp.FlashAlgorithm = flashalg
-
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
-                pp._ioquick = False
-                pp._tpseverity = 2
-                Dim comps(compounds.Length - 1) As String
-                Dim k As Integer
-                For Each c As String In compounds
-                    comps(k) = c
-                    k += 1
-                Next
-                pp._tpcompids = comps
-
-                pp.CalcEquilibrium(ms, "TVF", "UNDEFINED")
-
-                Dim labels As String() = Nothing
-                Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
-
-                ms.GetPresentPhases(labels, statuses)
-
-                Dim fractions(compounds.Length + 2, labels.Length - 1) As Object
-
-                Dim res As Object = Nothing
-
-                Dim i, j As Integer
-                i = 0
-                For Each l As String In labels
-                    If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
-                        fractions(0, i) = labels(i)
-                        ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
-                        fractions(1, i) = res(0)
-                        ms.GetSinglePhaseProp("fraction", labels(i), "Mole", res)
-                        For j = 0 To compounds.Length - 1
-                            fractions(2 + j, i) = res(j)
-                        Next
-                    End If
-                    i += 1
-                Next
-
-                fractions(compounds.Length + 2, 0) = ms.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                If TypeOf proppack Is String Then
-                    pp.Dispose()
-                    pp = Nothing
-                End If
-
-                ms.Dispose()
-                ms = Nothing
-
-                Return fractions
-
-            Catch ex As Exception
-
-                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
-
-            End Try
-
-        End Function
-
         Public Shared Sub AddCompounds(ByVal proppack As PropertyPackage, ByVal compounds As Object())
 
             Dim ms As New Streams.MaterialStream("", "")
@@ -1243,22 +1357,26 @@ Namespace Interfaces
 
         End Sub
 
+#End Region
+
+#Region "Fast Functions"
+
         <ExcelFunction("Calculates a PT Flash using the selected Property Package.")> _
         Public Shared Function PTFlash( _
-       <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
-       <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
-       <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
-       <ExcelArgument("Temperature in K.")> ByVal T As Double, _
-       <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
-       <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
-       <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
-       <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
-       <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-       <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
-        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
-        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
-        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
-        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
+               ByVal proppack As PropertyPackage, _
+               ByVal flashalg As Integer, _
+               ByVal P As Double, _
+               ByVal T As Double, _
+               ByVal compounds As Object(), _
+               ByVal molefractions As Double(), _
+               ByVal ip1 As Object, _
+               ByVal ip2 As Object, _
+               ByVal ip3 As Object, _
+               ByVal ip4 As Object, _
+                ByVal ip5 As Object, _
+                ByVal ip6 As Object, _
+                ByVal ip7 As Object, _
+                ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -1354,22 +1472,21 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a PH Flash using the selected Property Package.")> _
         Public Shared Function PHFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
-        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
-        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
-        <ExcelArgument("Mixture Mass Enthalpy in kJ/kg.")> ByVal H As Double, _
-        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
-        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
-        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
-        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
-        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
-        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
-        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
-        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
-        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
+            ByVal proppack As PropertyPackage, _
+            ByVal flashalg As Integer, _
+            ByVal P As Double, _
+            ByVal H As Double, _
+            ByVal compounds As Object(), _
+            ByVal molefractions As Double(), _
+            ByVal ip1 As Object, _
+            ByVal ip2 As Object, _
+            ByVal ip3 As Object, _
+            ByVal ip4 As Object, _
+            ByVal ip5 As Object, _
+            ByVal ip6 As Object, _
+            ByVal ip7 As Object, _
+            ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -1467,22 +1584,21 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a PS Flash using the selected Property Package.")> _
         Public Shared Function PSFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
-        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
-        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
-        <ExcelArgument("Mixture Mass Entropy in kJ/[kg.K].")> ByVal S As Double, _
-        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
-        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
-        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
-        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
-        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
-        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
-        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
-        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
-        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
+            ByVal proppack As PropertyPackage, _
+            ByVal flashalg As Integer, _
+            ByVal P As Double, _
+            ByVal S As Double, _
+            ByVal compounds As Object(), _
+            ByVal molefractions As Double(), _
+            ByVal ip1 As Object, _
+            ByVal ip2 As Object, _
+            ByVal ip3 As Object, _
+            ByVal ip4 As Object, _
+            ByVal ip5 As Object, _
+            ByVal ip6 As Object, _
+            ByVal ip7 As Object, _
+            ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -1580,22 +1696,21 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a PVF Flash using the selected Property Package.")> _
         Public Shared Function PVFFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
-        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
-        <ExcelArgument("Pressure in Pa.")> ByVal P As Double, _
-        <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
-        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
-        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
-        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
-        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
-        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
-        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
-        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
-        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
-        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
+            ByVal proppack As PropertyPackage, _
+            ByVal flashalg As Integer, _
+            ByVal P As Double, _
+            ByVal VF As Double, _
+            ByVal compounds As Object(), _
+            ByVal molefractions As Double(), _
+            ByVal ip1 As Object, _
+            ByVal ip2 As Object, _
+            ByVal ip3 As Object, _
+            ByVal ip4 As Object, _
+            ByVal ip5 As Object, _
+            ByVal ip6 As Object, _
+            ByVal ip7 As Object, _
+            ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -1693,22 +1808,21 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a TVF Flash using the selected Property Package.")> _
         Public Shared Function TVFFlash( _
-        <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As PropertyPackage, _
-        <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
-        <ExcelArgument("Temperature in K.")> ByVal T As Double, _
-        <ExcelArgument("Mixture Mole Vapor Fraction.")> ByVal VF As Double, _
-        <ExcelArgument("Compound names.")> ByVal compounds As Object(), _
-        <ExcelArgument("Compound mole fractions.")> ByVal molefractions As Double(), _
-        <ExcelArgument("Interaction Parameters Set #1.")> ByVal ip1 As Object, _
-        <ExcelArgument("Interaction Parameters Set #2.")> ByVal ip2 As Object, _
-        <ExcelArgument("Interaction Parameters Set #3.")> ByVal ip3 As Object, _
-        <ExcelArgument("Interaction Parameters Set #4.")> ByVal ip4 As Object, _
-        <ExcelArgument("Interaction Parameters Set #5.")> ByVal ip5 As Object, _
-        <ExcelArgument("Interaction Parameters Set #6.")> ByVal ip6 As Object, _
-        <ExcelArgument("Interaction Parameters Set #7.")> ByVal ip7 As Object, _
-        <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
+                ByVal proppack As PropertyPackage, _
+                ByVal flashalg As Integer, _
+                ByVal T As Double, _
+                ByVal VF As Double, _
+                ByVal compounds As Object(), _
+                ByVal molefractions As Double(), _
+                ByVal ip1 As Object, _
+                ByVal ip2 As Object, _
+                ByVal ip3 As Object, _
+                ByVal ip4 As Object, _
+                ByVal ip5 As Object, _
+                ByVal ip6 As Object, _
+                ByVal ip7 As Object, _
+                ByVal ip8 As Object) As Object(,)
 
             Try
 
@@ -1805,6 +1919,8 @@ Namespace Interfaces
             End Try
 
         End Function
+
+#End Region
 
     End Class
 
