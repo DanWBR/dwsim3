@@ -6347,36 +6347,54 @@ Final3:
                 Case DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture
 
                     For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                        End If
                         val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                     Next
 
                 Case DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid
 
                     For Each subst In Me.CurrentMaterialStream.Fases(1).Componentes.Values
+                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                        End If
                         val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                     Next
 
                 Case DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1
 
                     For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
+                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                        End If
                         val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                     Next
 
                 Case DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2
 
                     For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
+                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                        End If
                         val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                     Next
 
                 Case DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3
 
                     For Each subst In Me.CurrentMaterialStream.Fases(5).Componentes.Values
+                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                        End If
                         val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                     Next
 
                 Case DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor
 
                     For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                        End If
                         val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                     Next
 
@@ -6392,6 +6410,9 @@ Final3:
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
 
             For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
+                If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                End If
                 val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDT_Ti(T1, T2, subst.Nome)
             Next
 
