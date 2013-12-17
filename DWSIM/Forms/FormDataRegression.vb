@@ -1,5 +1,5 @@
 '    Data Regression Utility
-'    Copyright 2012-2013 Daniel Wagner O. de Medeiros
+'    Copyright 2012 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -680,6 +680,8 @@ Public Class FormDataRegression
                         Me.currcase.calcy.Add(Vyc(i))
                         Me.currcase.calcx1l1.Add(0.0#)
                         Me.currcase.calcx1l2.Add(0.0#)
+                        Me.currcase.calctl.Add(0.0#)
+                        Me.currcase.calcts.Add(0.0#)
                         Select Case currcase.objfunction
                             Case "Least Squares (min T/P+y/x)"
                                 If PVF Then
@@ -810,6 +812,8 @@ Public Class FormDataRegression
                         Me.currcase.calct.Add(0.0#)
                         Me.currcase.calcp.Add(0.0#)
                         Me.currcase.calcy.Add(0.0#)
+                        Me.currcase.calctl.Add(0.0#)
+                        Me.currcase.calcts.Add(0.0#)
                         Select Case currcase.objfunction
                             Case "Least Squares (min T/P+y/x)"
                                 If Abs(Vx1c(i) - Vx2c(i)) < 0.001 Then
@@ -953,6 +957,8 @@ Public Class FormDataRegression
                         Me.currcase.calct.Add(0.0#)
                         Me.currcase.calcp.Add(0.0#)
                         Me.currcase.calcy.Add(0.0#)
+                        Me.currcase.calctl.Add(0.0#)
+                        Me.currcase.calcts.Add(0.0#)
                         Select Case currcase.objfunction
                             Case "Least Squares (min T/P+y/x)"
                                 f += ((Vx1c(i) - Vx1(i))) ^ 2 + ((Vx2c(i) - Vx2(i))) ^ 2
@@ -2174,10 +2180,12 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End Select
             End With
 
-            With .YAxis
-                .Scale.MinAuto = True
-                .Scale.MaxAuto = True
-            End With
+            If Not .YAxis Is Nothing Then
+                With .YAxis
+                    .Scale.MinAuto = True
+                    .Scale.MaxAuto = True
+                End With
+            End If
 
             With .Legend
                 .Border.IsVisible = False
@@ -3160,6 +3168,8 @@ Namespace DWSIM.Optimization.DatRegression
         Public idealvapormodel As Boolean = False
         Public useTLdata As Boolean = True
         Public useTSdata As Boolean = True
+
+
 
     End Class
 
