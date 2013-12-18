@@ -404,7 +404,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                             FunctionValue(initval2)
 
-                            result = New Object() {L1 / F, V / F, Vx1, Vy, ecount, L2 / F, Vx2, 0.0#, PP.RET_NullVector}
+                            'order liquid phases by mixture NBP
+                            Dim VNBP = PP.RET_VTB()
+                            Dim nbp1 As Double = 0
+                            Dim nbp2 As Double = 0
+
+                            For i = 0 To n
+                                nbp1 += Vx1(i) * VNBP(i)
+                                nbp2 += Vx2(i) * VNBP(i)
+                            Next
+
+                            If nbp1 >= nbp2 Then
+                                result = New Object() {L1 / F, V / F, Vx1, Vy, ecount, L2 / F, Vx2, 0.0#, PP.RET_NullVector}
+                            Else
+                                result = New Object() {L2 / F, V / F, Vx2, Vy, ecount, L1 / F, Vx1, 0.0#, PP.RET_NullVector}
+                            End If
+
 
                         End If
 
@@ -1430,8 +1445,8 @@ out:        Return result
                         L = 1 - soma_y
 
                         For i = 0 To x.Length - 1
-                            If V <> 0.0# Then Vy(i) = x(i) / V Else Vy(i) = 0.0#
-                            If L <> 0.0# Then Vx1(i) = (fi(i) - x(i)) / L Else Vx1(i) = 0.0#
+                            If V <> 0.0# Then Vy(i) = Abs(x(i) / V) Else Vy(i) = 0.0#
+                            If L <> 0.0# Then Vx1(i) = Abs((fi(i) - x(i)) / L) Else Vx1(i) = 0.0#
                         Next
 
                         If My.Settings.EnableParallelProcessing Then
@@ -1682,8 +1697,8 @@ out:        Return result
                         L = 1 - soma_y
 
                         For i = 0 To x.Length - 1
-                            Vy(i) = x(i) / V
-                            Vx1(i) = (fi(i) - x(i)) / L
+                            Vy(i) = Abs(x(i) / V)
+                            Vx1(i) = Abs((fi(i) - x(i)) / L)
                         Next
 
                         If My.Settings.EnableParallelProcessing Then
@@ -2059,4 +2074,3 @@ out:        Return result
     End Class
 
 End Namespace
-
