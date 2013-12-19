@@ -1271,8 +1271,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             If Not My.Application.CAPEOPENMode Then
                                 If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
-                                                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
-                                                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
+                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
+                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
 
                                     fge = xl * Me.DW_CalcGibbsEnergy(Vx, T, P)
                                     fge += xl2 * Me.DW_CalcGibbsEnergy(Vx2, T, P)
@@ -1280,7 +1280,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                                     dge = fge - ige
 
-                                    If dge > 0.0000000001 Then
+                                    Dim dgtol As Double = Me.CurrentMaterialStream.Flowsheet.Options.FlashValidationDGETolerancePct
+
+                                    If Math.Abs(dge / ige * 100) > Math.Abs(dgtol) Then
                                         Throw New Exception(DWSIM.App.GetLocalString("InvalidFlashResult") & "(DGE = " & dge & " kJ/kg, " & Format(dge / ige * 100, "0.00") & "%)")
                                     End If
 
