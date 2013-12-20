@@ -105,6 +105,7 @@ Partial Class FormStSim
         Me.tbPassword = New System.Windows.Forms.TextBox()
         Me.chkUsePassword = New System.Windows.Forms.CheckBox()
         Me.PanelPP = New System.Windows.Forms.Panel()
+        Me.LinkLabelPropertyMethods = New System.Windows.Forms.LinkLabel()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.Button8 = New System.Windows.Forms.Button()
         Me.ListViewPP = New System.Windows.Forms.ListView()
@@ -476,8 +477,8 @@ Partial Class FormStSim
         Me.NavigationPanePage1.ImageFooter = Nothing
         Me.NavigationPanePage1.ImageIndex = 1
         Me.NavigationPanePage1.ImageIndexFooter = -1
-        Me.NavigationPanePage1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
-        Me.NavigationPanePage1.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.NavigationPanePage1.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.NavigationPanePage1.ImageList = Nothing
         Me.NavigationPanePage1.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage1.Key = "NavigationPanePage1"
@@ -538,8 +539,8 @@ Partial Class FormStSim
         Me.NavigationPanePage5.ImageFooter = Nothing
         Me.NavigationPanePage5.ImageIndex = 2
         Me.NavigationPanePage5.ImageIndexFooter = -1
-        Me.NavigationPanePage5.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
-        Me.NavigationPanePage5.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.NavigationPanePage5.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.NavigationPanePage5.ImageList = Nothing
         Me.NavigationPanePage5.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage5.Key = "NavigationPanePage5"
@@ -585,8 +586,8 @@ Partial Class FormStSim
         Me.NavigationPanePage3.ImageFooter = Nothing
         Me.NavigationPanePage3.ImageIndex = 6
         Me.NavigationPanePage3.ImageIndexFooter = -1
-        Me.NavigationPanePage3.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
-        Me.NavigationPanePage3.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.NavigationPanePage3.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.NavigationPanePage3.ImageList = Nothing
         Me.NavigationPanePage3.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage3.Key = "NavigationPanePage3"
@@ -632,8 +633,8 @@ Partial Class FormStSim
         Me.NavigationPanePage4.ImageFooter = Nothing
         Me.NavigationPanePage4.ImageIndex = 0
         Me.NavigationPanePage4.ImageIndexFooter = -1
-        Me.NavigationPanePage4.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
-        Me.NavigationPanePage4.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.NavigationPanePage4.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.NavigationPanePage4.ImageList = Nothing
         Me.NavigationPanePage4.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage4.Key = "NavigationPanePage4"
@@ -998,12 +999,22 @@ Partial Class FormStSim
         'PanelPP
         '
         Me.PanelPP.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.PanelPP.Controls.Add(Me.LinkLabelPropertyMethods)
         Me.PanelPP.Controls.Add(Me.GroupBox6)
         Me.PanelPP.Controls.Add(Me.GroupBox12)
         resources.ApplyResources(Me.PanelPP, "PanelPP")
         Me.PanelPP.Name = "PanelPP"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelPP, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.PanelPP, System.Drawing.Color.Empty)
+        '
+        'LinkLabelPropertyMethods
+        '
+        resources.ApplyResources(Me.LinkLabelPropertyMethods, "LinkLabelPropertyMethods")
+        Me.LinkLabelPropertyMethods.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
+        Me.LinkLabelPropertyMethods.Name = "LinkLabelPropertyMethods"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.LinkLabelPropertyMethods, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.LinkLabelPropertyMethods, System.Drawing.Color.Empty)
+        Me.LinkLabelPropertyMethods.TabStop = True
         '
         'GroupBox6
         '
@@ -1374,6 +1385,7 @@ Partial Class FormStSim
         Me.PanelDescricao.ResumeLayout(False)
         Me.PanelDescricao.PerformLayout()
         Me.PanelPP.ResumeLayout(False)
+        Me.PanelPP.PerformLayout()
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
         Me.GroupBox12.ResumeLayout(False)
@@ -1505,4 +1517,5 @@ Partial Class FormStSim
     Friend WithEvents Label13 As System.Windows.Forms.Label
     Friend WithEvents tbFlashValidationTolerance As System.Windows.Forms.TextBox
     Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents LinkLabelPropertyMethods As System.Windows.Forms.LinkLabel
 End Class

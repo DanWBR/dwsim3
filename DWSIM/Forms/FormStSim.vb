@@ -1290,4 +1290,9 @@ Public Class FormStSim
             Me.tbFlashValidationTolerance.ForeColor = Color.Red
         End Try
     End Sub
+
+    Private Sub LinkLabelPropertyMethods_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabelPropertyMethods.LinkClicked
+        Process.Start("http://dwsim.inforside.com.br/wiki/index.php?title=Property_Methods_and_Correlation_Profiles")
+    End Sub
+
 End Class
