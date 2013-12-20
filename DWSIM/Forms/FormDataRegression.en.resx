@@ -127,11 +127,23 @@
     <value>Regression Information</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkDoTDepRegression.Size" type="System.Drawing.Size, System.Drawing">
+    <value>248, 17</value>
+  </data>
+  <data name="chkDoTDepRegression.Text" xml:space="preserve">
+    <value>Calculate parameters' temperature dependency</value>
+  </data>
+  <data name="chkTS.Location" type="System.Drawing.Point, System.Drawing">
+    <value>247, 275</value>
+  </data>
   <data name="chkTS.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 17</value>
   </data>
   <data name="chkTS.Text" xml:space="preserve">
     <value>TS</value>
+  </data>
+  <data name="chkTL.Location" type="System.Drawing.Point, System.Drawing">
+    <value>199, 275</value>
   </data>
   <data name="chkTL.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 17</value>
@@ -179,12 +191,6 @@
   </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>T Unit</value>
-  </data>
-  <data name="chkIncludeSD.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 17</value>
-  </data>
-  <data name="chkIncludeSD.Text" xml:space="preserve">
-    <value>Include standard deviations</value>
   </data>
   <data name="btnCalcOnce.Text" xml:space="preserve">
     <value>Calc Once</value>
@@ -290,6 +296,9 @@
   </data>
   <data name="cbDataType.Items7" xml:space="preserve">
     <value>TTx (SLE-SS)</value>
+  </data>
+  <data name="cbDataType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>109, 273</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 13</value>
