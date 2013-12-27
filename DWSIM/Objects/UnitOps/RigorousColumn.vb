@@ -1131,6 +1131,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
             MyBase.new(nome, descricao)
             Me.ColumnType = ColType.DistillationColumn
             MyBase.AddStages()
+            For k = 0 To Me.Stages.Count - 1
+                Me.Stages(k).P = 101325
+            Next
         End Sub
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
@@ -1382,6 +1385,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
             MyBase.new(nome, descricao)
             Me.ColumnType = ColType.AbsorptionColumn
             MyBase.AddStages()
+            For k = 0 To Me.Stages.Count - 1
+                Me.Stages(k).P = 101325
+            Next
         End Sub
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
@@ -1497,6 +1503,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
             MyBase.new(nome, descricao)
             Me.ColumnType = ColType.ReboiledAbsorber
             MyBase.AddStages()
+            For k = 0 To Me.Stages.Count - 1
+                Me.Stages(k).P = 101325
+            Next
         End Sub
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
@@ -1621,6 +1630,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
             MyBase.new(nome, descricao)
             Me.ColumnType = ColType.RefluxedAbsorber
             MyBase.AddStages()
+            For k = 0 To Me.Stages.Count - 1
+                Me.Stages(k).P = 101325
+            Next
         End Sub
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
@@ -1776,7 +1788,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Private _nst As Integer = 12
         Private _rr As Double = 5.0#
-        Private _condp, _rebp, _conddp, _drate, _vrate, _condd, _rebd As Double
+        Private _condp As Double = 101325
+        Private _rebp As Double = 101325
+        Private _conddp, _drate, _vrate, _condd, _rebd As Double
         Private _st As New System.Collections.Generic.List(Of Auxiliary.SepOps.Stage)
         Public Property CondenserType As condtype = condtype.Total_Condenser
         Private m_specs As New Collections.Generic.Dictionary(Of String, Auxiliary.SepOps.ColumnSpec)
