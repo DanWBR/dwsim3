@@ -117,21 +117,63 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 22</value>
+  </data>
+  <data name="ToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Erzeuge Punkte (UNIFAC)</value>
+  </data>
+  <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 22</value>
+  </data>
+  <data name="ToolStripMenuItem2.Text" xml:space="preserve">
+    <value>Erzeuge Punkte (NRTL)</value>
+  </data>
+  <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 22</value>
+  </data>
+  <data name="ToolStripMenuItem3.Text" xml:space="preserve">
+    <value>Erzeuge Punkte (UNIQUAC)</value>
+  </data>
+  <data name="ToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 22</value>
+  </data>
+  <data name="ToolStripMenuItem4.Text" xml:space="preserve">
+    <value>Erzeuge Punkte (PR)</value>
+  </data>
+  <data name="ToolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 22</value>
+  </data>
+  <data name="ToolStripMenuItem5.Text" xml:space="preserve">
+    <value>Erzeuge Punkte (SRK)</value>
+  </data>
+  <data name="ToolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 22</value>
+  </data>
+  <data name="ToolStripMenuItem6.Text" xml:space="preserve">
+    <value>Erzeuge Punkte (PRSV2-M)</value>
+  </data>
+  <data name="ToolStripMenuItem7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>219, 22</value>
+  </data>
+  <data name="ToolStripMenuItem7.Text" xml:space="preserve">
+    <value>Erzeuge Punkte (PRSV2-VL)</value>
+  </data>
+  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 158</value>
+  </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Regression Ergebnisse</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnDoReg.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 597</value>
+    <value>123, 509</value>
   </data>
   <data name="btnDoReg.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 23</value>
   </data>
   <data name="btnDoReg.Text" xml:space="preserve">
     <value>Regression starten</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Regression Informationen</value>
   </data>
   <data name="chkDoTDepRegression.Size" type="System.Drawing.Size, System.Drawing">
     <value>248, 17</value>
@@ -187,7 +229,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>233, 597</value>
+    <value>233, 509</value>
   </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>62, 23</value>
@@ -243,51 +285,6 @@
   <data name="Label4.Text" xml:space="preserve">
     <value>Modell</value>
   </data>
-  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 158</value>
-  </data>
-  <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 22</value>
-  </data>
-  <data name="ToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Erzeuge Punkte (UNIFAC)</value>
-  </data>
-  <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 22</value>
-  </data>
-  <data name="ToolStripMenuItem2.Text" xml:space="preserve">
-    <value>Erzeuge Punkte (NRTL)</value>
-  </data>
-  <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 22</value>
-  </data>
-  <data name="ToolStripMenuItem3.Text" xml:space="preserve">
-    <value>Erzeuge Punkte (UNIQUAC)</value>
-  </data>
-  <data name="ToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 22</value>
-  </data>
-  <data name="ToolStripMenuItem4.Text" xml:space="preserve">
-    <value>Erzeuge Punkte (PR)</value>
-  </data>
-  <data name="ToolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 22</value>
-  </data>
-  <data name="ToolStripMenuItem5.Text" xml:space="preserve">
-    <value>Erzeuge Punkte (SRK)</value>
-  </data>
-  <data name="ToolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 22</value>
-  </data>
-  <data name="ToolStripMenuItem6.Text" xml:space="preserve">
-    <value>Erzeuge Punkte (PRSV2-M)</value>
-  </data>
-  <data name="ToolStripMenuItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 22</value>
-  </data>
-  <data name="ToolStripMenuItem7.Text" xml:space="preserve">
-    <value>Erzeuge Punkte (PRSV2-VL)</value>
-  </data>
   <data name="cbDataType.Items" xml:space="preserve">
     <value>Txy (VLE)</value>
   </data>
@@ -327,8 +324,8 @@
   <data name="LabelWithDivider2.Text" xml:space="preserve">
     <value>Experimentelle Daten</value>
   </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Information</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Regression Informationen</value>
   </data>
   <data name="tbDescription.Location" type="System.Drawing.Point, System.Drawing">
     <value>356, 19</value>
@@ -353,6 +350,9 @@
   </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>Titel</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

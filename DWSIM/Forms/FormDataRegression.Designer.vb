@@ -29,6 +29,49 @@ Partial Class FormDataRegression
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
+        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
+        Me.graph = New ZedGraph.ZedGraphControl()
+        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
+        Me.graph2 = New ZedGraph.ZedGraphControl()
+        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
+        Me.gridstats = New System.Windows.Forms.DataGridView()
+        Me.x1l1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.x1l1calc = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.x1l2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.x1l2calc = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.y1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.y1c = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.t = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.tcalc = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.p = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.pcalc = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dy = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dyy = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dyp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dpp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dppp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dt = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dtt = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dttp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dx1l1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dxx1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dxxp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dxx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dxx2p = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.coltl_error = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colts_error = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem7 = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.tbRegResults = New System.Windows.Forms.TextBox()
         Me.btnDoReg = New System.Windows.Forms.Button()
@@ -70,83 +113,361 @@ Partial Class FormDataRegression
         Me.coltl = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colts = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colP = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem7 = New System.Windows.Forms.ToolStripMenuItem()
         Me.cbCompound2 = New System.Windows.Forms.ComboBox()
         Me.cbDataType = New System.Windows.Forms.ComboBox()
         Me.cbModel = New System.Windows.Forms.ComboBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.LabelWithDivider1 = New System.Windows.Forms.LabelWithDivider()
         Me.LabelWithDivider2 = New System.Windows.Forms.LabelWithDivider()
-        Me.graph = New ZedGraph.ZedGraphControl()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.tbDescription = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.tbTitle = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
-        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
-        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
-        Me.graph2 = New ZedGraph.ZedGraphControl()
-        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
-        Me.gridstats = New System.Windows.Forms.DataGridView()
-        Me.x1l1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.x1l1calc = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.x1l2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.x1l2calc = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.y1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.y1c = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.t = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.tcalc = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.p = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.pcalc = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dy = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dyy = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dyp = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dp = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dpp = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dppp = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dt = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dtt = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dttp = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dx1l1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dxx1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dxxp = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dxx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dxx2p = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.coltl_error = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colts_error = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.GroupBox1.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
-        Me.Panel1.SuspendLayout()
-        CType(Me.gridInEst, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GridExpData, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextMenuStrip1.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
+        Me.SplitContainer1.Panel2.SuspendLayout()
+        Me.SplitContainer1.SuspendLayout()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
         Me.FaTabStripItem2.SuspendLayout()
         Me.FaTabStripItem3.SuspendLayout()
         CType(Me.gridstats, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer1.Panel1.SuspendLayout()
-        Me.SplitContainer1.Panel2.SuspendLayout()
-        Me.SplitContainer1.SuspendLayout()
+        Me.ContextMenuStrip1.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        CType(Me.gridInEst, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridExpData, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox4.SuspendLayout()
         Me.SuspendLayout()
+        '
+        'SplitContainer1
+        '
+        resources.ApplyResources(Me.SplitContainer1, "SplitContainer1")
+        Me.SplitContainer1.Name = "SplitContainer1"
+        '
+        'SplitContainer1.Panel1
+        '
+        resources.ApplyResources(Me.SplitContainer1.Panel1, "SplitContainer1.Panel1")
+        Me.SplitContainer1.Panel1.Controls.Add(Me.FaTabStrip1)
+        '
+        'SplitContainer1.Panel2
+        '
+        resources.ApplyResources(Me.SplitContainer1.Panel2, "SplitContainer1.Panel2")
+        Me.SplitContainer1.Panel2.Controls.Add(Me.GroupBox1)
+        '
+        'FaTabStrip1
+        '
+        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
+        Me.FaTabStrip1.AlwaysShowClose = False
+        Me.FaTabStrip1.AlwaysShowMenuGlyph = False
+        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2, Me.FaTabStripItem3})
+        Me.FaTabStrip1.Name = "FaTabStrip1"
+        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
+        '
+        'FaTabStripItem1
+        '
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
+        Me.FaTabStripItem1.CanClose = False
+        Me.FaTabStripItem1.Controls.Add(Me.graph)
+        Me.FaTabStripItem1.IsDrawn = True
+        Me.FaTabStripItem1.Name = "FaTabStripItem1"
+        Me.FaTabStripItem1.Selected = True
+        '
+        'graph
+        '
+        resources.ApplyResources(Me.graph, "graph")
+        Me.graph.Name = "graph"
+        Me.graph.ScrollGrace = 0.0R
+        Me.graph.ScrollMaxX = 0.0R
+        Me.graph.ScrollMaxY = 0.0R
+        Me.graph.ScrollMaxY2 = 0.0R
+        Me.graph.ScrollMinX = 0.0R
+        Me.graph.ScrollMinY = 0.0R
+        Me.graph.ScrollMinY2 = 0.0R
+        '
+        'FaTabStripItem2
+        '
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
+        Me.FaTabStripItem2.CanClose = False
+        Me.FaTabStripItem2.Controls.Add(Me.graph2)
+        Me.FaTabStripItem2.IsDrawn = True
+        Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        '
+        'graph2
+        '
+        resources.ApplyResources(Me.graph2, "graph2")
+        Me.graph2.Name = "graph2"
+        Me.graph2.ScrollGrace = 0.0R
+        Me.graph2.ScrollMaxX = 0.0R
+        Me.graph2.ScrollMaxY = 0.0R
+        Me.graph2.ScrollMaxY2 = 0.0R
+        Me.graph2.ScrollMinX = 0.0R
+        Me.graph2.ScrollMinY = 0.0R
+        Me.graph2.ScrollMinY2 = 0.0R
+        '
+        'FaTabStripItem3
+        '
+        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
+        Me.FaTabStripItem3.CanClose = False
+        Me.FaTabStripItem3.Controls.Add(Me.gridstats)
+        Me.FaTabStripItem3.IsDrawn = True
+        Me.FaTabStripItem3.Name = "FaTabStripItem3"
+        '
+        'gridstats
+        '
+        resources.ApplyResources(Me.gridstats, "gridstats")
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.gridstats.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        Me.gridstats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.gridstats.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
+        Me.gridstats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.gridstats.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.x1l1, Me.x1l1calc, Me.x1l2, Me.x1l2calc, Me.y1, Me.y1c, Me.t, Me.tcalc, Me.p, Me.pcalc, Me.dy, Me.dyy, Me.dyp, Me.dp, Me.dpp, Me.dppp, Me.dt, Me.dtt, Me.dttp, Me.dx1l1, Me.dxx1, Me.dxxp, Me.dx2, Me.dxx2, Me.dxx2p, Me.coltl_error, Me.colts_error})
+        Me.gridstats.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.gridstats.Name = "gridstats"
+        Me.gridstats.ReadOnly = True
+        Me.gridstats.RowHeadersVisible = False
+        '
+        'x1l1
+        '
+        resources.ApplyResources(Me.x1l1, "x1l1")
+        Me.x1l1.Name = "x1l1"
+        Me.x1l1.ReadOnly = True
+        '
+        'x1l1calc
+        '
+        resources.ApplyResources(Me.x1l1calc, "x1l1calc")
+        Me.x1l1calc.Name = "x1l1calc"
+        Me.x1l1calc.ReadOnly = True
+        Me.x1l1calc.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'x1l2
+        '
+        resources.ApplyResources(Me.x1l2, "x1l2")
+        Me.x1l2.Name = "x1l2"
+        Me.x1l2.ReadOnly = True
+        '
+        'x1l2calc
+        '
+        resources.ApplyResources(Me.x1l2calc, "x1l2calc")
+        Me.x1l2calc.Name = "x1l2calc"
+        Me.x1l2calc.ReadOnly = True
+        Me.x1l2calc.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'y1
+        '
+        resources.ApplyResources(Me.y1, "y1")
+        Me.y1.Name = "y1"
+        Me.y1.ReadOnly = True
+        '
+        'y1c
+        '
+        resources.ApplyResources(Me.y1c, "y1c")
+        Me.y1c.Name = "y1c"
+        Me.y1c.ReadOnly = True
+        Me.y1c.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        't
+        '
+        resources.ApplyResources(Me.t, "t")
+        Me.t.Name = "t"
+        Me.t.ReadOnly = True
+        Me.t.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'tcalc
+        '
+        resources.ApplyResources(Me.tcalc, "tcalc")
+        Me.tcalc.Name = "tcalc"
+        Me.tcalc.ReadOnly = True
+        Me.tcalc.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'p
+        '
+        resources.ApplyResources(Me.p, "p")
+        Me.p.Name = "p"
+        Me.p.ReadOnly = True
+        Me.p.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'pcalc
+        '
+        resources.ApplyResources(Me.pcalc, "pcalc")
+        Me.pcalc.Name = "pcalc"
+        Me.pcalc.ReadOnly = True
+        Me.pcalc.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dy
+        '
+        resources.ApplyResources(Me.dy, "dy")
+        Me.dy.Name = "dy"
+        Me.dy.ReadOnly = True
+        Me.dy.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dyy
+        '
+        resources.ApplyResources(Me.dyy, "dyy")
+        Me.dyy.Name = "dyy"
+        Me.dyy.ReadOnly = True
+        Me.dyy.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dyp
+        '
+        resources.ApplyResources(Me.dyp, "dyp")
+        Me.dyp.Name = "dyp"
+        Me.dyp.ReadOnly = True
+        Me.dyp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dp
+        '
+        resources.ApplyResources(Me.dp, "dp")
+        Me.dp.Name = "dp"
+        Me.dp.ReadOnly = True
+        Me.dp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dpp
+        '
+        resources.ApplyResources(Me.dpp, "dpp")
+        Me.dpp.Name = "dpp"
+        Me.dpp.ReadOnly = True
+        Me.dpp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dppp
+        '
+        resources.ApplyResources(Me.dppp, "dppp")
+        Me.dppp.Name = "dppp"
+        Me.dppp.ReadOnly = True
+        Me.dppp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dt
+        '
+        resources.ApplyResources(Me.dt, "dt")
+        Me.dt.Name = "dt"
+        Me.dt.ReadOnly = True
+        Me.dt.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dtt
+        '
+        resources.ApplyResources(Me.dtt, "dtt")
+        Me.dtt.Name = "dtt"
+        Me.dtt.ReadOnly = True
+        Me.dtt.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dttp
+        '
+        resources.ApplyResources(Me.dttp, "dttp")
+        Me.dttp.Name = "dttp"
+        Me.dttp.ReadOnly = True
+        Me.dttp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dx1l1
+        '
+        resources.ApplyResources(Me.dx1l1, "dx1l1")
+        Me.dx1l1.Name = "dx1l1"
+        Me.dx1l1.ReadOnly = True
+        Me.dx1l1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dxx1
+        '
+        resources.ApplyResources(Me.dxx1, "dxx1")
+        Me.dxx1.Name = "dxx1"
+        Me.dxx1.ReadOnly = True
+        Me.dxx1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dxxp
+        '
+        resources.ApplyResources(Me.dxxp, "dxxp")
+        Me.dxxp.Name = "dxxp"
+        Me.dxxp.ReadOnly = True
+        Me.dxxp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dx2
+        '
+        resources.ApplyResources(Me.dx2, "dx2")
+        Me.dx2.Name = "dx2"
+        Me.dx2.ReadOnly = True
+        Me.dx2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dxx2
+        '
+        resources.ApplyResources(Me.dxx2, "dxx2")
+        Me.dxx2.Name = "dxx2"
+        Me.dxx2.ReadOnly = True
+        Me.dxx2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'dxx2p
+        '
+        resources.ApplyResources(Me.dxx2p, "dxx2p")
+        Me.dxx2p.Name = "dxx2p"
+        Me.dxx2p.ReadOnly = True
+        Me.dxx2p.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'coltl_error
+        '
+        resources.ApplyResources(Me.coltl_error, "coltl_error")
+        Me.coltl_error.Name = "coltl_error"
+        Me.coltl_error.ReadOnly = True
+        Me.coltl_error.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'colts_error
+        '
+        resources.ApplyResources(Me.colts_error, "colts_error")
+        Me.colts_error.Name = "colts_error"
+        Me.colts_error.ReadOnly = True
+        Me.colts_error.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        '
+        'ContextMenuStrip1
+        '
+        resources.ApplyResources(Me.ContextMenuStrip1, "ContextMenuStrip1")
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripMenuItem2, Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6, Me.ToolStripMenuItem7})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        '
+        'ToolStripMenuItem1
+        '
+        resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
+        Me.ToolStripMenuItem1.Image = Global.DWSIM.My.Resources.Resources.lightning
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        '
+        'ToolStripMenuItem2
+        '
+        resources.ApplyResources(Me.ToolStripMenuItem2, "ToolStripMenuItem2")
+        Me.ToolStripMenuItem2.Image = Global.DWSIM.My.Resources.Resources.lightning
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        '
+        'ToolStripMenuItem3
+        '
+        resources.ApplyResources(Me.ToolStripMenuItem3, "ToolStripMenuItem3")
+        Me.ToolStripMenuItem3.Image = Global.DWSIM.My.Resources.Resources.lightning
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        '
+        'ToolStripMenuItem4
+        '
+        resources.ApplyResources(Me.ToolStripMenuItem4, "ToolStripMenuItem4")
+        Me.ToolStripMenuItem4.Image = Global.DWSIM.My.Resources.Resources.lightning
+        Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
+        '
+        'ToolStripMenuItem5
+        '
+        resources.ApplyResources(Me.ToolStripMenuItem5, "ToolStripMenuItem5")
+        Me.ToolStripMenuItem5.Image = Global.DWSIM.My.Resources.Resources.lightning
+        Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
+        '
+        'ToolStripMenuItem6
+        '
+        resources.ApplyResources(Me.ToolStripMenuItem6, "ToolStripMenuItem6")
+        Me.ToolStripMenuItem6.Image = Global.DWSIM.My.Resources.Resources.lightning
+        Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
+        '
+        'ToolStripMenuItem7
+        '
+        resources.ApplyResources(Me.ToolStripMenuItem7, "ToolStripMenuItem7")
+        Me.ToolStripMenuItem7.Image = Global.DWSIM.My.Resources.Resources.lightning
+        Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.tbRegResults)
         resources.ApplyResources(Me.GroupBox1, "GroupBox1")
+        Me.GroupBox1.Controls.Add(Me.tbRegResults)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
@@ -159,6 +480,7 @@ Partial Class FormDataRegression
         'btnDoReg
         '
         resources.ApplyResources(Me.btnDoReg, "btnDoReg")
+        Me.btnDoReg.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.btnDoReg.Name = "btnDoReg"
         Me.btnDoReg.UseVisualStyleBackColor = True
         '
@@ -209,55 +531,62 @@ Partial Class FormDataRegression
         'chkDoTDepRegression
         '
         resources.ApplyResources(Me.chkDoTDepRegression, "chkDoTDepRegression")
+        Me.chkDoTDepRegression.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.chkDoTDepRegression.Name = "chkDoTDepRegression"
         Me.chkDoTDepRegression.UseVisualStyleBackColor = True
         '
         'chkTS
         '
         resources.ApplyResources(Me.chkTS, "chkTS")
+        Me.chkTS.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.chkTS.Name = "chkTS"
         Me.chkTS.UseVisualStyleBackColor = True
         '
         'chkTL
         '
         resources.ApplyResources(Me.chkTL, "chkTL")
+        Me.chkTL.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.chkTL.Name = "chkTL"
         Me.chkTL.UseVisualStyleBackColor = True
         '
         'chkIdealVaporPhase
         '
         resources.ApplyResources(Me.chkIdealVaporPhase, "chkIdealVaporPhase")
+        Me.chkIdealVaporPhase.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.chkIdealVaporPhase.Name = "chkIdealVaporPhase"
         Me.chkIdealVaporPhase.UseVisualStyleBackColor = True
         '
         'Button2
         '
         resources.ApplyResources(Me.Button2, "Button2")
+        Me.Button2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button2.Name = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Label9
         '
         resources.ApplyResources(Me.Label9, "Label9")
+        Me.Label9.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label9.Name = "Label9"
         '
         'gridInEst
         '
+        resources.ApplyResources(Me.gridInEst, "gridInEst")
         Me.gridInEst.AllowUserToAddRows = False
         Me.gridInEst.AllowUserToDeleteRows = False
         Me.gridInEst.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.gridInEst.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.gridInEst.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.gridInEst.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridInEst.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridInEst.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colpar, Me.colval, Me.cf})
-        resources.ApplyResources(Me.gridInEst, "gridInEst")
         Me.gridInEst.Name = "gridInEst"
         Me.gridInEst.RowHeadersVisible = False
         '
@@ -268,15 +597,17 @@ Partial Class FormDataRegression
         Me.colpar.Name = "colpar"
         Me.colpar.ReadOnly = True
         Me.colpar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.colpar.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'colval
         '
         Me.colval.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        DataGridViewCellStyle2.Format = "N4"
-        Me.colval.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle3.Format = "N4"
+        Me.colval.DefaultCellStyle = DataGridViewCellStyle3
         resources.ApplyResources(Me.colval, "colval")
         Me.colval.Name = "colval"
         Me.colval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.colval.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'cf
         '
@@ -284,42 +615,47 @@ Partial Class FormDataRegression
         Me.cf.FillWeight = 20.0!
         resources.ApplyResources(Me.cf, "cf")
         Me.cf.Name = "cf"
+        Me.cf.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'btnCancel
         '
         resources.ApplyResources(Me.btnCancel, "btnCancel")
+        Me.btnCancel.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.UseVisualStyleBackColor = True
         '
         'cbPunit
         '
+        resources.ApplyResources(Me.cbPunit, "cbPunit")
         Me.cbPunit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbPunit.FormattingEnabled = True
         Me.cbPunit.Items.AddRange(New Object() {resources.GetString("cbPunit.Items"), resources.GetString("cbPunit.Items1"), resources.GetString("cbPunit.Items2"), resources.GetString("cbPunit.Items3"), resources.GetString("cbPunit.Items4"), resources.GetString("cbPunit.Items5"), resources.GetString("cbPunit.Items6"), resources.GetString("cbPunit.Items7"), resources.GetString("cbPunit.Items8"), resources.GetString("cbPunit.Items9"), resources.GetString("cbPunit.Items10"), resources.GetString("cbPunit.Items11"), resources.GetString("cbPunit.Items12"), resources.GetString("cbPunit.Items13"), resources.GetString("cbPunit.Items14"), resources.GetString("cbPunit.Items15"), resources.GetString("cbPunit.Items16"), resources.GetString("cbPunit.Items17"), resources.GetString("cbPunit.Items18")})
-        resources.ApplyResources(Me.cbPunit, "cbPunit")
         Me.cbPunit.Name = "cbPunit"
         '
         'Label8
         '
         resources.ApplyResources(Me.Label8, "Label8")
+        Me.Label8.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label8.Name = "Label8"
         '
         'cbTunit
         '
+        resources.ApplyResources(Me.cbTunit, "cbTunit")
         Me.cbTunit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbTunit.FormattingEnabled = True
         Me.cbTunit.Items.AddRange(New Object() {resources.GetString("cbTunit.Items"), resources.GetString("cbTunit.Items1"), resources.GetString("cbTunit.Items2"), resources.GetString("cbTunit.Items3")})
-        resources.ApplyResources(Me.cbTunit, "cbTunit")
         Me.cbTunit.Name = "cbTunit"
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label1.Name = "Label1"
         '
         'btnCalcOnce
         '
         resources.ApplyResources(Me.btnCalcOnce, "btnCalcOnce")
+        Me.btnCalcOnce.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.btnCalcOnce.Name = "btnCalcOnce"
         Me.btnCalcOnce.UseVisualStyleBackColor = True
         '
@@ -335,16 +671,19 @@ Partial Class FormDataRegression
         '
         resources.ApplyResources(Me.LabelWithDivider12, "LabelWithDivider12")
         Me.LabelWithDivider12.Gap = 5
+        Me.LabelWithDivider12.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.LabelWithDivider12.Name = "LabelWithDivider12"
         '
         'Label7
         '
         resources.ApplyResources(Me.Label7, "Label7")
+        Me.Label7.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label7.Name = "Label7"
         '
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label2.Name = "Label2"
         '
         'cbRegMethod
@@ -358,36 +697,40 @@ Partial Class FormDataRegression
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label3.Name = "Label3"
         '
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
+        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label6.Name = "Label6"
         '
         'cbCompound1
         '
+        resources.ApplyResources(Me.cbCompound1, "cbCompound1")
         Me.cbCompound1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbCompound1.FormattingEnabled = True
-        resources.ApplyResources(Me.cbCompound1, "cbCompound1")
         Me.cbCompound1.Name = "cbCompound1"
         '
         'LabelWithDivider3
         '
         resources.ApplyResources(Me.LabelWithDivider3, "LabelWithDivider3")
         Me.LabelWithDivider3.Gap = 5
+        Me.LabelWithDivider3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.LabelWithDivider3.Name = "LabelWithDivider3"
         '
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label4.Name = "Label4"
         '
         'GridExpData
         '
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpData.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
         resources.ApplyResources(Me.GridExpData, "GridExpData")
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpData.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
         Me.GridExpData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpData.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.check, Me.colx1, Me.colx2, Me.coly1, Me.colT, Me.coltl, Me.colts, Me.colP})
@@ -397,7 +740,7 @@ Partial Class FormDataRegression
         '
         'check
         '
-        Me.check.DefaultCellStyle = DataGridViewCellStyle4
+        Me.check.DefaultCellStyle = DataGridViewCellStyle5
         Me.check.FillWeight = 60.9137!
         resources.ApplyResources(Me.check, "check")
         Me.check.Name = "check"
@@ -427,6 +770,7 @@ Partial Class FormDataRegression
         Me.colT.FillWeight = 107.8173!
         resources.ApplyResources(Me.colT, "colT")
         Me.colT.Name = "colT"
+        Me.colT.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'coltl
         '
@@ -443,106 +787,50 @@ Partial Class FormDataRegression
         Me.colP.FillWeight = 107.8173!
         resources.ApplyResources(Me.colP, "colP")
         Me.colP.Name = "colP"
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripMenuItem2, Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6, Me.ToolStripMenuItem7})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        resources.ApplyResources(Me.ContextMenuStrip1, "ContextMenuStrip1")
-        '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.Image = Global.DWSIM.My.Resources.Resources.lightning
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
-        '
-        'ToolStripMenuItem2
-        '
-        Me.ToolStripMenuItem2.Image = Global.DWSIM.My.Resources.Resources.lightning
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        resources.ApplyResources(Me.ToolStripMenuItem2, "ToolStripMenuItem2")
-        '
-        'ToolStripMenuItem3
-        '
-        Me.ToolStripMenuItem3.Image = Global.DWSIM.My.Resources.Resources.lightning
-        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        resources.ApplyResources(Me.ToolStripMenuItem3, "ToolStripMenuItem3")
-        '
-        'ToolStripMenuItem4
-        '
-        Me.ToolStripMenuItem4.Image = Global.DWSIM.My.Resources.Resources.lightning
-        Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
-        resources.ApplyResources(Me.ToolStripMenuItem4, "ToolStripMenuItem4")
-        '
-        'ToolStripMenuItem5
-        '
-        Me.ToolStripMenuItem5.Image = Global.DWSIM.My.Resources.Resources.lightning
-        Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        resources.ApplyResources(Me.ToolStripMenuItem5, "ToolStripMenuItem5")
-        '
-        'ToolStripMenuItem6
-        '
-        Me.ToolStripMenuItem6.Image = Global.DWSIM.My.Resources.Resources.lightning
-        Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-        resources.ApplyResources(Me.ToolStripMenuItem6, "ToolStripMenuItem6")
-        '
-        'ToolStripMenuItem7
-        '
-        Me.ToolStripMenuItem7.Image = Global.DWSIM.My.Resources.Resources.lightning
-        Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
-        resources.ApplyResources(Me.ToolStripMenuItem7, "ToolStripMenuItem7")
+        Me.colP.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'cbCompound2
         '
+        resources.ApplyResources(Me.cbCompound2, "cbCompound2")
         Me.cbCompound2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbCompound2.FormattingEnabled = True
-        resources.ApplyResources(Me.cbCompound2, "cbCompound2")
         Me.cbCompound2.Name = "cbCompound2"
         '
         'cbDataType
         '
+        resources.ApplyResources(Me.cbDataType, "cbDataType")
         Me.cbDataType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbDataType.FormattingEnabled = True
         Me.cbDataType.Items.AddRange(New Object() {resources.GetString("cbDataType.Items"), resources.GetString("cbDataType.Items1"), resources.GetString("cbDataType.Items2"), resources.GetString("cbDataType.Items3"), resources.GetString("cbDataType.Items4"), resources.GetString("cbDataType.Items5"), resources.GetString("cbDataType.Items6"), resources.GetString("cbDataType.Items7")})
-        resources.ApplyResources(Me.cbDataType, "cbDataType")
         Me.cbDataType.Name = "cbDataType"
         '
         'cbModel
         '
+        resources.ApplyResources(Me.cbModel, "cbModel")
         Me.cbModel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbModel.FormattingEnabled = True
         Me.cbModel.Items.AddRange(New Object() {resources.GetString("cbModel.Items"), resources.GetString("cbModel.Items1"), resources.GetString("cbModel.Items2"), resources.GetString("cbModel.Items3"), resources.GetString("cbModel.Items4"), resources.GetString("cbModel.Items5"), resources.GetString("cbModel.Items6"), resources.GetString("cbModel.Items7")})
-        resources.ApplyResources(Me.cbModel, "cbModel")
         Me.cbModel.Name = "cbModel"
         '
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label5.Name = "Label5"
         '
         'LabelWithDivider1
         '
         resources.ApplyResources(Me.LabelWithDivider1, "LabelWithDivider1")
         Me.LabelWithDivider1.Gap = 5
+        Me.LabelWithDivider1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.LabelWithDivider1.Name = "LabelWithDivider1"
         '
         'LabelWithDivider2
         '
         resources.ApplyResources(Me.LabelWithDivider2, "LabelWithDivider2")
         Me.LabelWithDivider2.Gap = 5
+        Me.LabelWithDivider2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.LabelWithDivider2.Name = "LabelWithDivider2"
-        '
-        'graph
-        '
-        resources.ApplyResources(Me.graph, "graph")
-        Me.graph.Name = "graph"
-        Me.graph.ScrollGrace = 0.0R
-        Me.graph.ScrollMaxX = 0.0R
-        Me.graph.ScrollMaxY = 0.0R
-        Me.graph.ScrollMaxY2 = 0.0R
-        Me.graph.ScrollMinX = 0.0R
-        Me.graph.ScrollMinY = 0.0R
-        Me.graph.ScrollMinY2 = 0.0R
         '
         'GroupBox4
         '
@@ -562,6 +850,7 @@ Partial Class FormDataRegression
         'Label11
         '
         resources.ApplyResources(Me.Label11, "Label11")
+        Me.Label11.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label11.Name = "Label11"
         '
         'tbTitle
@@ -572,242 +861,8 @@ Partial Class FormDataRegression
         'Label10
         '
         resources.ApplyResources(Me.Label10, "Label10")
+        Me.Label10.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label10.Name = "Label10"
-        '
-        'FaTabStrip1
-        '
-        Me.FaTabStrip1.AlwaysShowClose = False
-        Me.FaTabStrip1.AlwaysShowMenuGlyph = False
-        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
-        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2, Me.FaTabStripItem3})
-        Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
-        '
-        'FaTabStripItem1
-        '
-        Me.FaTabStripItem1.CanClose = False
-        Me.FaTabStripItem1.Controls.Add(Me.graph)
-        Me.FaTabStripItem1.IsDrawn = True
-        Me.FaTabStripItem1.Name = "FaTabStripItem1"
-        Me.FaTabStripItem1.Selected = True
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
-        '
-        'FaTabStripItem2
-        '
-        Me.FaTabStripItem2.CanClose = False
-        Me.FaTabStripItem2.Controls.Add(Me.graph2)
-        Me.FaTabStripItem2.IsDrawn = True
-        Me.FaTabStripItem2.Name = "FaTabStripItem2"
-        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
-        '
-        'graph2
-        '
-        resources.ApplyResources(Me.graph2, "graph2")
-        Me.graph2.Name = "graph2"
-        Me.graph2.ScrollGrace = 0.0R
-        Me.graph2.ScrollMaxX = 0.0R
-        Me.graph2.ScrollMaxY = 0.0R
-        Me.graph2.ScrollMaxY2 = 0.0R
-        Me.graph2.ScrollMinX = 0.0R
-        Me.graph2.ScrollMinY = 0.0R
-        Me.graph2.ScrollMinY2 = 0.0R
-        '
-        'FaTabStripItem3
-        '
-        Me.FaTabStripItem3.CanClose = False
-        Me.FaTabStripItem3.Controls.Add(Me.gridstats)
-        Me.FaTabStripItem3.IsDrawn = True
-        Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
-        '
-        'gridstats
-        '
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.gridstats.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
-        Me.gridstats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.gridstats.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
-        Me.gridstats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.gridstats.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.x1l1, Me.x1l1calc, Me.x1l2, Me.x1l2calc, Me.y1, Me.y1c, Me.t, Me.tcalc, Me.p, Me.pcalc, Me.dy, Me.dyy, Me.dyp, Me.dp, Me.dpp, Me.dppp, Me.dt, Me.dtt, Me.dttp, Me.dx1l1, Me.dxx1, Me.dxxp, Me.dx2, Me.dxx2, Me.dxx2p, Me.coltl_error, Me.colts_error})
-        Me.gridstats.ContextMenuStrip = Me.ContextMenuStrip1
-        resources.ApplyResources(Me.gridstats, "gridstats")
-        Me.gridstats.Name = "gridstats"
-        Me.gridstats.ReadOnly = True
-        Me.gridstats.RowHeadersVisible = False
-        '
-        'x1l1
-        '
-        resources.ApplyResources(Me.x1l1, "x1l1")
-        Me.x1l1.Name = "x1l1"
-        Me.x1l1.ReadOnly = True
-        '
-        'x1l1calc
-        '
-        resources.ApplyResources(Me.x1l1calc, "x1l1calc")
-        Me.x1l1calc.Name = "x1l1calc"
-        Me.x1l1calc.ReadOnly = True
-        '
-        'x1l2
-        '
-        resources.ApplyResources(Me.x1l2, "x1l2")
-        Me.x1l2.Name = "x1l2"
-        Me.x1l2.ReadOnly = True
-        '
-        'x1l2calc
-        '
-        resources.ApplyResources(Me.x1l2calc, "x1l2calc")
-        Me.x1l2calc.Name = "x1l2calc"
-        Me.x1l2calc.ReadOnly = True
-        '
-        'y1
-        '
-        resources.ApplyResources(Me.y1, "y1")
-        Me.y1.Name = "y1"
-        Me.y1.ReadOnly = True
-        '
-        'y1c
-        '
-        resources.ApplyResources(Me.y1c, "y1c")
-        Me.y1c.Name = "y1c"
-        Me.y1c.ReadOnly = True
-        '
-        't
-        '
-        resources.ApplyResources(Me.t, "t")
-        Me.t.Name = "t"
-        Me.t.ReadOnly = True
-        '
-        'tcalc
-        '
-        resources.ApplyResources(Me.tcalc, "tcalc")
-        Me.tcalc.Name = "tcalc"
-        Me.tcalc.ReadOnly = True
-        '
-        'p
-        '
-        resources.ApplyResources(Me.p, "p")
-        Me.p.Name = "p"
-        Me.p.ReadOnly = True
-        '
-        'pcalc
-        '
-        resources.ApplyResources(Me.pcalc, "pcalc")
-        Me.pcalc.Name = "pcalc"
-        Me.pcalc.ReadOnly = True
-        '
-        'dy
-        '
-        resources.ApplyResources(Me.dy, "dy")
-        Me.dy.Name = "dy"
-        Me.dy.ReadOnly = True
-        '
-        'dyy
-        '
-        resources.ApplyResources(Me.dyy, "dyy")
-        Me.dyy.Name = "dyy"
-        Me.dyy.ReadOnly = True
-        '
-        'dyp
-        '
-        resources.ApplyResources(Me.dyp, "dyp")
-        Me.dyp.Name = "dyp"
-        Me.dyp.ReadOnly = True
-        '
-        'dp
-        '
-        resources.ApplyResources(Me.dp, "dp")
-        Me.dp.Name = "dp"
-        Me.dp.ReadOnly = True
-        '
-        'dpp
-        '
-        resources.ApplyResources(Me.dpp, "dpp")
-        Me.dpp.Name = "dpp"
-        Me.dpp.ReadOnly = True
-        '
-        'dppp
-        '
-        resources.ApplyResources(Me.dppp, "dppp")
-        Me.dppp.Name = "dppp"
-        Me.dppp.ReadOnly = True
-        '
-        'dt
-        '
-        resources.ApplyResources(Me.dt, "dt")
-        Me.dt.Name = "dt"
-        Me.dt.ReadOnly = True
-        '
-        'dtt
-        '
-        resources.ApplyResources(Me.dtt, "dtt")
-        Me.dtt.Name = "dtt"
-        Me.dtt.ReadOnly = True
-        '
-        'dttp
-        '
-        resources.ApplyResources(Me.dttp, "dttp")
-        Me.dttp.Name = "dttp"
-        Me.dttp.ReadOnly = True
-        '
-        'dx1l1
-        '
-        resources.ApplyResources(Me.dx1l1, "dx1l1")
-        Me.dx1l1.Name = "dx1l1"
-        Me.dx1l1.ReadOnly = True
-        '
-        'dxx1
-        '
-        resources.ApplyResources(Me.dxx1, "dxx1")
-        Me.dxx1.Name = "dxx1"
-        Me.dxx1.ReadOnly = True
-        '
-        'dxxp
-        '
-        resources.ApplyResources(Me.dxxp, "dxxp")
-        Me.dxxp.Name = "dxxp"
-        Me.dxxp.ReadOnly = True
-        '
-        'dx2
-        '
-        resources.ApplyResources(Me.dx2, "dx2")
-        Me.dx2.Name = "dx2"
-        Me.dx2.ReadOnly = True
-        '
-        'dxx2
-        '
-        resources.ApplyResources(Me.dxx2, "dxx2")
-        Me.dxx2.Name = "dxx2"
-        Me.dxx2.ReadOnly = True
-        '
-        'dxx2p
-        '
-        resources.ApplyResources(Me.dxx2p, "dxx2p")
-        Me.dxx2p.Name = "dxx2p"
-        Me.dxx2p.ReadOnly = True
-        '
-        'coltl_error
-        '
-        resources.ApplyResources(Me.coltl_error, "coltl_error")
-        Me.coltl_error.Name = "coltl_error"
-        Me.coltl_error.ReadOnly = True
-        '
-        'colts_error
-        '
-        resources.ApplyResources(Me.colts_error, "colts_error")
-        Me.colts_error.Name = "colts_error"
-        Me.colts_error.ReadOnly = True
-        '
-        'SplitContainer1
-        '
-        resources.ApplyResources(Me.SplitContainer1, "SplitContainer1")
-        Me.SplitContainer1.Name = "SplitContainer1"
-        '
-        'SplitContainer1.Panel1
-        '
-        Me.SplitContainer1.Panel1.Controls.Add(Me.FaTabStrip1)
-        '
-        'SplitContainer1.Panel2
-        '
-        Me.SplitContainer1.Panel2.Controls.Add(Me.GroupBox1)
         '
         'FormDataRegression
         '
@@ -817,6 +872,17 @@ Partial Class FormDataRegression
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Name = "FormDataRegression"
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel2.ResumeLayout(False)
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.ResumeLayout(False)
+        CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.FaTabStrip1.ResumeLayout(False)
+        Me.FaTabStripItem1.ResumeLayout(False)
+        Me.FaTabStripItem2.ResumeLayout(False)
+        Me.FaTabStripItem3.ResumeLayout(False)
+        CType(Me.gridstats, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
@@ -824,19 +890,8 @@ Partial Class FormDataRegression
         Me.Panel1.PerformLayout()
         CType(Me.gridInEst, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridExpData, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
-        CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.FaTabStrip1.ResumeLayout(False)
-        Me.FaTabStripItem1.ResumeLayout(False)
-        Me.FaTabStripItem2.ResumeLayout(False)
-        Me.FaTabStripItem3.ResumeLayout(False)
-        CType(Me.gridstats, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer1.Panel1.ResumeLayout(False)
-        Me.SplitContainer1.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
