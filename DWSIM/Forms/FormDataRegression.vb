@@ -1447,7 +1447,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
                 For i As Integer = 0 To currcase.tp.Count - 1
                     If currcase.checkp(i) Then
-                        px(i) = currcase.tp(i)
+                        px(i) = cv.ConverterParaSI(Me.cbTunit.SelectedItem.ToString(), currcase.tp(i))
                     End If
                 Next
 

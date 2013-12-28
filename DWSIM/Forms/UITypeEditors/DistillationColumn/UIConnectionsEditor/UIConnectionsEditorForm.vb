@@ -18,7 +18,7 @@
 Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
 Imports DWSIM.DWSIM.SimulationObjects.UnitOps
 Imports DWSIM.DWSIM.SimulationObjects
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 
 Public Class UIConnectionsEditorForm
 
@@ -59,10 +59,11 @@ Public Class UIConnectionsEditorForm
         form = My.Application.ActiveSimulation
         dc = form.Collections.ObjectCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
 
-        tpl = New DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors.Templates(form)
+        tpl = New DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors.Templates(form, dc)
 
         Dim sgt1 As New DataGridViewComboBoxCell
         Dim sgt2 As New DataGridViewComboBoxCell
+
         With sgt1.Items
             i = 0
             For Each st As Stage In dc.Stages
