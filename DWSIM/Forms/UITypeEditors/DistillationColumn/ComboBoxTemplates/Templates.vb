@@ -66,7 +66,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
                     End If
                 Next
                 For Each str As StreamInformation In dc.MaterialStreams.Values
-                    If str.StreamBehavior <> StreamInformation.Behavior.Feed Then
+                    If (str.Name <> "0") And (str.StreamBehavior <> StreamInformation.Behavior.Feed) Then
                         .Add(str.Tag.ToString)
                     End If
                 Next
@@ -89,7 +89,9 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
                     End If
                 Next
                 For Each str As StreamInformation In dc.EnergyStreams.Values
-                    .Add(str.Tag.ToString)
+                    If str.Name <> "0" Then
+                        .Add(str.Tag.ToString)
+                    End If
                 Next
             End With
 
@@ -105,9 +107,14 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
             With dgcbc.Items
                 .Clear()
                 For Each estr As EnergyStream In fc.Collections.CLCS_EnergyStreamCollection.Values
-                    'If Not estr.GraphicObject.OutputConnectors(0).IsAttached Then
-                    .Add(estr.GraphicObject.Tag.ToString)
-                    'End If
+                    If Not estr.GraphicObject.OutputConnectors(0).IsAttached Then
+                        .Add(estr.GraphicObject.Tag.ToString)
+                    End If
+                Next
+                For Each str As StreamInformation In dc.EnergyStreams.Values
+                    If str.Name <> "0" Then
+                        .Add(str.Tag.ToString)
+                    End If
                 Next
             End With
 
