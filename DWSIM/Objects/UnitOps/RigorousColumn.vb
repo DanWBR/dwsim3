@@ -3033,63 +3033,71 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Sub
 
         Public Sub CheckConnPos()
-
+            Dim idx As Integer
             For Each strinfo As StreamInformation In Me.MaterialStreams.Values
-                Select Case strinfo.StreamBehavior
-                    Case StreamInformation.Behavior.Feed
-                        If Me.GraphicObject.FlippedH Then
-                            Me.GraphicObject.InputConnectors(FlowSheet.Collections.MaterialStreamCollection(strinfo.Name).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
-                        Else
-                            Me.GraphicObject.InputConnectors(FlowSheet.Collections.MaterialStreamCollection(strinfo.Name).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
-                        End If
-                    Case StreamInformation.Behavior.Distillate
-                        If Not Me.GraphicObject.FlippedH Then
-                            Me.GraphicObject.OutputConnectors(FlowSheet.Collections.MaterialStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.3 * Me.GraphicObject.Height)
-                        Else
-                            Me.GraphicObject.OutputConnectors(FlowSheet.Collections.MaterialStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.3 * Me.GraphicObject.Height)
-                        End If
-                    Case StreamInformation.Behavior.BottomsLiquid
-                        If Not Me.GraphicObject.FlippedH Then
-                            Me.GraphicObject.OutputConnectors(FlowSheet.Collections.MaterialStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.98 * Me.GraphicObject.Height)
-                        Else
-                            Me.GraphicObject.OutputConnectors(FlowSheet.Collections.MaterialStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.98 * Me.GraphicObject.Height)
-                        End If
-                    Case StreamInformation.Behavior.OverheadVapor
-                        If Not Me.GraphicObject.FlippedH Then
-                            Me.GraphicObject.OutputConnectors(FlowSheet.Collections.MaterialStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.02 * Me.GraphicObject.Height)
-                        Else
-                            Me.GraphicObject.OutputConnectors(FlowSheet.Collections.MaterialStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.02 * Me.GraphicObject.Height)
-                        End If
-                    Case StreamInformation.Behavior.Sidedraw
-                        If Me.GraphicObject.FlippedH Then
-                            Me.GraphicObject.OutputConnectors(FlowSheet.Collections.MaterialStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
-                        Else
-                            Me.GraphicObject.OutputConnectors(FlowSheet.Collections.MaterialStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
-                        End If
-                End Select
+                Try
+                    idx = FlowSheet.Collections.MaterialStreamCollection(strinfo.Name).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex
+                    Select Case strinfo.StreamBehavior
+                        Case StreamInformation.Behavior.Feed
+                            If Me.GraphicObject.FlippedH Then
+                                Me.GraphicObject.InputConnectors(idx).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+                            Else
+                                Me.GraphicObject.InputConnectors(idx).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+                            End If
+                        Case StreamInformation.Behavior.Distillate
+                            If Not Me.GraphicObject.FlippedH Then
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.3 * Me.GraphicObject.Height)
+                            Else
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.3 * Me.GraphicObject.Height)
+                            End If
+                        Case StreamInformation.Behavior.BottomsLiquid
+                            If Not Me.GraphicObject.FlippedH Then
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.98 * Me.GraphicObject.Height)
+                            Else
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.98 * Me.GraphicObject.Height)
+                            End If
+                        Case StreamInformation.Behavior.OverheadVapor
+                            If Not Me.GraphicObject.FlippedH Then
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.02 * Me.GraphicObject.Height)
+                            Else
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.02 * Me.GraphicObject.Height)
+                            End If
+                        Case StreamInformation.Behavior.Sidedraw
+                            If Me.GraphicObject.FlippedH Then
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+                            Else
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+                            End If
+                    End Select
+                Catch ex As Exception
+                End Try
             Next
 
             For Each strinfo As StreamInformation In Me.EnergyStreams.Values
-                Select Case strinfo.StreamBehavior
-                    Case StreamInformation.Behavior.Distillate
-                        If Me.GraphicObject.FlippedH Then
-                            Me.GraphicObject.OutputConnectors(FlowSheet.Collections.EnergyStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.08 * Me.GraphicObject.Height)
-                        Else
-                            Me.GraphicObject.OutputConnectors(FlowSheet.Collections.EnergyStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.08 * Me.GraphicObject.Height)
-                        End If
-                    Case StreamInformation.Behavior.BottomsLiquid
-                        If Me.GraphicObject.FlippedH Then
-                            Me.GraphicObject.OutputConnectors(FlowSheet.Collections.EnergyStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.825 * Me.GraphicObject.Height)
-                        Else
-                            Me.GraphicObject.OutputConnectors(FlowSheet.Collections.EnergyStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.825 * Me.GraphicObject.Height)
-                        End If
-                    Case StreamInformation.Behavior.InterExchanger
-                        If Me.GraphicObject.FlippedH Then
-                            Me.GraphicObject.InputConnectors(FlowSheet.Collections.EnergyStreamCollection(strinfo.Name).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
-                        Else
-                            Me.GraphicObject.InputConnectors(FlowSheet.Collections.EnergyStreamCollection(strinfo.Name).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
-                        End If
-                End Select
+                Try
+                    idx = FlowSheet.Collections.EnergyStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
+                    Select Case strinfo.StreamBehavior
+                        Case StreamInformation.Behavior.Distillate
+                            If Me.GraphicObject.FlippedH Then
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.08 * Me.GraphicObject.Height)
+                            Else
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.08 * Me.GraphicObject.Height)
+                            End If
+                        Case StreamInformation.Behavior.BottomsLiquid
+                            If Me.GraphicObject.FlippedH Then
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.825 * Me.GraphicObject.Height)
+                            Else
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.825 * Me.GraphicObject.Height)
+                            End If
+                        Case StreamInformation.Behavior.InterExchanger
+                            If Me.GraphicObject.FlippedH Then
+                                Me.GraphicObject.InputConnectors(idx).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+                            Else
+                                Me.GraphicObject.InputConnectors(idx).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+                            End If
+                    End Select
+                Catch ex As Exception
+                End Try
             Next
 
             Dim i As Integer = 0
