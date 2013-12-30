@@ -34,9 +34,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
         Function GetMaterialStreamInSelector() As DataGridViewComboBoxCell
 
             Dim dgcbc As New DataGridViewComboBoxCell
+            dgcbc.Sorted = True
 
             With dgcbc.Items
                 .Clear()
+
                 For Each mstr As MaterialStream In fc.Collections.CLCS_MaterialStreamCollection.Values
                     If Not mstr.GraphicObject.OutputConnectors(0).IsAttached Then
                         .Add(mstr.GraphicObject.Tag.ToString)
@@ -49,7 +51,6 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
                 Next
             End With
 
-
             Return dgcbc
 
         End Function
@@ -57,6 +58,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
         Function GetMaterialStreamOutSelector() As DataGridViewComboBoxCell
 
             Dim dgcbc As New DataGridViewComboBoxCell
+            dgcbc.Sorted = True
 
             With dgcbc.Items
                 .Clear()
@@ -72,7 +74,6 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
                 Next
             End With
 
-
             Return dgcbc
 
         End Function
@@ -80,6 +81,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
         Function GetEnergyStreamInSelector() As DataGridViewComboBoxCell
 
             Dim dgcbc As New DataGridViewComboBoxCell
+            dgcbc.Sorted = True
 
             With dgcbc.Items
                 .Clear()
@@ -95,7 +97,6 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
                 Next
             End With
 
-
             Return dgcbc
 
         End Function
@@ -103,6 +104,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
         Function GetEnergyStreamOutSelector() As DataGridViewComboBoxCell
 
             Dim dgcbc As New DataGridViewComboBoxCell
+            dgcbc.Sorted = True
 
             With dgcbc.Items
                 .Clear()
@@ -125,6 +127,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
         Function GetSideDrawTypeSelector() As DataGridViewComboBoxCell
 
             Dim dgcbc As New DataGridViewComboBoxCell
+            dgcbc.Sorted = True
 
             With dgcbc.Items
                 .Clear()
