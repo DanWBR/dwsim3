@@ -1,4 +1,4 @@
-﻿'    Data Regression Utility
+'    Data Regression Utility
 '    Copyright 2012 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -25,6 +25,7 @@ Imports DotNumerics
 Imports Cureos.Numerics
 Imports DWSIM.DWSIM.Optimization.DatRegression
 Imports System.Threading.Tasks
+Imports System.Linq
 
 Public Class FormDataRegression
 
@@ -43,6 +44,11 @@ Public Class FormDataRegression
 
     Public proppack As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
     Public ppname As String = ""
+
+    Public regressedparameters As New Dictionary(Of String, Double)
+    Public A12, B12, C12, A21, B21, C21 As Double
+    Public drawtdep As Boolean = False
+    Public output As Boolean = True
 
     Private Sub FormDataRegression_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -99,7 +105,6 @@ Public Class FormDataRegression
             .comp1 = Me.cbCompound1.SelectedItem.ToString
             .comp2 = Me.cbCompound2.SelectedItem.ToString
             .model = Me.cbModel.SelectedItem.ToString
-            .includesd = Me.chkIncludeSD.Checked
             .idealvapormodel = Me.chkIdealVaporPhase.Checked
             .useTLdata = Me.chkTL.Checked
             .useTSdata = Me.chkTS.Checked
@@ -184,7 +189,6 @@ Public Class FormDataRegression
             End Select
             Me.chkTL.Checked = .useTLdata
             Me.chkTS.Checked = .useTSdata
-            Me.chkIncludeSD.Checked = .includesd
             Me.chkIdealVaporPhase.Checked = .idealvapormodel
             Me.cbDataType.SelectedIndex = .datatype
             Me.cbRegMethod.SelectedItem = .method
@@ -412,6 +416,8 @@ Public Class FormDataRegression
         Dim result As Object = Nothing
         Dim vartext As String = ""
 
+        regressedparameters.Clear()
+
         Try
 
             Me.currcase.calcp.Clear()
@@ -449,7 +455,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 2, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                         VTc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -477,7 +483,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 2, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                         VPc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -486,6 +492,7 @@ Public Class FormDataRegression
                             vartext = ", Interaction parameters = {"
                             vartext += "kij = " & x(0).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("kij", x(0))
                         Case "UNIQUAC"
                             If PVF Then
                                 If doparallel Then
@@ -510,7 +517,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 2, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                         VTc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -548,6 +555,8 @@ Public Class FormDataRegression
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
                             vartext += "A21 = " & x(1).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("A12", x(0))
+                            regressedparameters.Add("A21", x(1))
                         Case "PRSV2-M", "PRSV2-VL"
                             If PVF Then
                                 If doparallel Then
@@ -572,7 +581,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 2, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                         VTc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -600,7 +609,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 2, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                         VPc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -610,6 +619,8 @@ Public Class FormDataRegression
                             vartext += "kij = " & x(0).ToString("N4") & ", "
                             vartext += "kji = " & x(1).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("kij", x(0))
+                            regressedparameters.Add("kji", x(1))
                         Case "NRTL"
                             If PVF Then
                                 If doparallel Then
@@ -634,7 +645,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 1, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.PVFFlash(proppack, 2, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
                                         VTc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -662,7 +673,7 @@ Public Class FormDataRegression
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
-                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
+                                        result = Interfaces.ExcelIntegration.TVFFlash(proppack, 2, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
                                         VPc(i) = result(4, 0)
                                         Vyc(i) = result(2, 0)
                                     Next
@@ -673,6 +684,9 @@ Public Class FormDataRegression
                             vartext += "A21 = " & x(1).ToString("N4") & ", "
                             vartext += "alpha12 = " & x(2).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("A12", x(0))
+                            regressedparameters.Add("A21", x(1))
+                            regressedparameters.Add("alpha12", x(2))
                     End Select
                     For i = 0 To np - 1
                         Me.currcase.calct.Add(VTc(i))
@@ -680,6 +694,8 @@ Public Class FormDataRegression
                         Me.currcase.calcy.Add(Vyc(i))
                         Me.currcase.calcx1l1.Add(0.0#)
                         Me.currcase.calcx1l2.Add(0.0#)
+                        Me.currcase.calctl.Add(0.0#)
+                        Me.currcase.calcts.Add(0.0#)
                         Select Case currcase.objfunction
                             Case "Least Squares (min T/P+y/x)"
                                 If PVF Then
@@ -748,9 +764,15 @@ Public Class FormDataRegression
                             vartext += "kij = " & x(0).ToString("N4") & ", "
                             vartext += "kji = " & x(1).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("kij", x(0))
+                            regressedparameters.Add("kji", x(1))
                         Case "UNIQUAC"
                             Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
-                            Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing)
+                            If drawtdep Then
+                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, A12}, {A21, 0.0#}}, New Double(,) {{0.0#, A21}, {A12, 0.0#}}, New Double(,) {{0.0#, B12}, {B21, 0.0#}}, New Double(,) {{0.0#, B21}, {B12, 0.0#}}, New Double(,) {{0.0#, C12}, {C21, 0.0#}}, New Double(,) {{0.0#, C21}, {C12, 0.0#}}, Nothing)
+                            Else
+                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing)
+                            End If
                             For i = 0 To np - 1
                                 With flashinstance
                                     .InitialEstimatesForPhase1 = New Double() {Vx1(i), 1 - Vx1(i)}
@@ -764,9 +786,15 @@ Public Class FormDataRegression
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
                             vartext += "A21 = " & x(1).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("A12", x(0))
+                            regressedparameters.Add("A21", x(1))
                         Case "NRTL"
                             Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
-                            Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
+                            If drawtdep Then
+                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, A12}, {A21, 0.0#}}, New Double(,) {{0.0#, A21}, {A12, 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, New Double(,) {{0.0#, B12}, {B21, 0.0#}}, New Double(,) {{0.0#, B21}, {B12, 0.0#}}, New Double(,) {{0.0#, C12}, {C21, 0.0#}}, New Double(,) {{0.0#, C21}, {C12, 0.0#}})
+                            Else
+                                Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
+                            End If
                             For i = 0 To np - 1
                                 With flashinstance
                                     .InitialEstimatesForPhase1 = New Double() {Vx1(i), 1 - Vx1(i)}
@@ -781,6 +809,9 @@ Public Class FormDataRegression
                             vartext += "A21 = " & x(1).ToString("N4") & ", "
                             vartext += "alpha12 = " & x(2).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("A12", x(0))
+                            regressedparameters.Add("A21", x(1))
+                            regressedparameters.Add("alpha12", x(2))
                         Case "Lee-Kesler-Plöcker", "Peng-Robinson", "Soave-Redlich-Kwong", "PC-SAFT"
                             Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                             Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -798,6 +829,7 @@ Public Class FormDataRegression
                                 vartext += x(i).ToString("N4")
                             Next
                             vartext += "}"
+                            regressedparameters.Add("kij", x(0))
                     End Select
                     If Abs(Vx1(0) - Vx1c(0)) > Abs(Vx1(0) - Vx2c(0)) Then
                         Dim tmpvec As ArrayList = Vx1c.Clone
@@ -810,6 +842,8 @@ Public Class FormDataRegression
                         Me.currcase.calct.Add(0.0#)
                         Me.currcase.calcp.Add(0.0#)
                         Me.currcase.calcy.Add(0.0#)
+                        Me.currcase.calctl.Add(0.0#)
+                        Me.currcase.calcts.Add(0.0#)
                         Select Case currcase.objfunction
                             Case "Least Squares (min T/P+y/x)"
                                 If Abs(Vx1c(i) - Vx2c(i)) < 0.001 Then
@@ -866,6 +900,8 @@ Public Class FormDataRegression
                             vartext += "kij = " & x(0).ToString("N4") & ", "
                             vartext += "kji = " & x(1).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("kij", x(0))
+                            regressedparameters.Add("kji", x(1))
                         Case "PRSV2-VL"
                             For i = 0 To np - 1
                                 result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -876,6 +912,8 @@ Public Class FormDataRegression
                             vartext += "kij = " & x(0).ToString("N4") & ", "
                             vartext += "kji = " & x(1).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("kij", x(0))
+                            regressedparameters.Add("kji", x(1))
                         Case "UNIQUAC"
                             For i = 0 To np - 1
                                 result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -886,6 +924,8 @@ Public Class FormDataRegression
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
                             vartext += "A21 = " & x(1).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("A12", x(0))
+                            regressedparameters.Add("A21", x(1))
                         Case "NRTL"
                             For i = 0 To np - 1
                                 result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
@@ -897,6 +937,9 @@ Public Class FormDataRegression
                             vartext += "A21 = " & x(1).ToString("N4") & ", "
                             vartext += "alpha12 = " & x(2).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("A12", x(0))
+                            regressedparameters.Add("A21", x(1))
+                            regressedparameters.Add("alpha12", x(2))
                         Case "Lee-Kesler-Plöcker"
                             For i = 0 To np - 1
                                 result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -908,6 +951,7 @@ Public Class FormDataRegression
                                 vartext += x(i).ToString("N4")
                             Next
                             vartext += "}"
+                            regressedparameters.Add("kij", x(0))
                         Case "Peng-Robinson"
                             For i = 0 To np - 1
                                 result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -919,6 +963,7 @@ Public Class FormDataRegression
                                 vartext += x(i).ToString("N4")
                             Next
                             vartext += "}"
+                            regressedparameters.Add("kij", x(0))
                         Case "Soave-Redlich-Kwong"
                             For i = 0 To np - 1
                                 result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -930,6 +975,7 @@ Public Class FormDataRegression
                                 vartext += x(i).ToString("N4")
                             Next
                             vartext += "}"
+                            regressedparameters.Add("kij", x(0))
                         Case "PC-SAFT"
                             For i = 0 To np - 1
                                 result = Interfaces.ExcelIntegration.PTFlash(proppack, 3, VP(i), VT(i), New Object() {currcase.comp1, currcase.comp2}, New Double() {(Vx1(i) + Vx2(i)) / 2, 1 - (Vx1(i) + Vx2(i)) / 2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -941,6 +987,7 @@ Public Class FormDataRegression
                                 vartext += x(i).ToString("N4")
                             Next
                             vartext += "}"
+                            regressedparameters.Add("kij", x(0))
                     End Select
                     If Abs(Vx1(0) - Vx1c(0)) > Abs(Vx1(0) - Vx2c(0)) Then
                         Dim tmpvec As ArrayList = Vx1c.Clone
@@ -953,6 +1000,8 @@ Public Class FormDataRegression
                         Me.currcase.calct.Add(0.0#)
                         Me.currcase.calcp.Add(0.0#)
                         Me.currcase.calcy.Add(0.0#)
+                        Me.currcase.calctl.Add(0.0#)
+                        Me.currcase.calcts.Add(0.0#)
                         Select Case currcase.objfunction
                             Case "Least Squares (min T/P+y/x)"
                                 f += ((Vx1c(i) - Vx1(i))) ^ 2 + ((Vx2c(i) - Vx2(i))) ^ 2
@@ -1029,6 +1078,7 @@ Public Class FormDataRegression
                             vartext = ", Interaction parameters = {"
                             vartext += "kij = " & x(0).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("kij", x(0))
                         Case "UNIQUAC"
                             Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing)
                             If doparallel Then
@@ -1078,6 +1128,8 @@ Public Class FormDataRegression
                             vartext += "A12 = " & x(0).ToString("N4") & ", "
                             vartext += "A21 = " & x(1).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("A12", x(0))
+                            regressedparameters.Add("A21", x(1))
                         Case "PRSV2-M", "PRSV2-VL"
                             Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                             If doparallel Then
@@ -1127,6 +1179,8 @@ Public Class FormDataRegression
                             vartext += "kij = " & x(0).ToString("N4") & ", "
                             vartext += "kji = " & x(1).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("kij", x(0))
+                            regressedparameters.Add("kji", x(1))
                         Case "NRTL"
                             Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
                             If doparallel Then
@@ -1177,6 +1231,9 @@ Public Class FormDataRegression
                             vartext += "A21 = " & x(1).ToString("N4") & ", "
                             vartext += "alpha12 = " & x(2).ToString("N4")
                             vartext += "}"
+                            regressedparameters.Add("A12", x(0))
+                            regressedparameters.Add("A21", x(1))
+                            regressedparameters.Add("alpha12", x(2))
                     End Select
                     For i = 0 To np - 1
                         Me.currcase.calct.Add(VTc(i))
@@ -1196,7 +1253,7 @@ Public Class FormDataRegression
             End Select
 
             itn += 1
-            Me.tbRegResults.AppendText("Iteration #" & itn & ", Function Value = " & Format(f, "E") & vartext & vbCrLf)
+            If output Then Me.tbRegResults.AppendText("Iteration #" & itn & ", Function Value = " & Format(f, "E") & vartext & vbCrLf)
 
             UpdateData()
             Application.DoEvents()
@@ -1320,143 +1377,141 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
             currcase = Me.StoreCase()
 
-            Dim nvar As Integer = 0
-            Dim i As Integer
-
-            Dim initval2() As Double = Nothing
-            Dim lconstr2() As Double = Nothing
-            Dim uconstr2() As Double = Nothing
-            Dim finalval2() As Double = Nothing
-            Dim fixed() As Boolean = Nothing
+            Dim initval As Double() = Nothing
 
             Select Case currcase.model
                 Case "PC-SAFT"
-                    initval2 = New Double() {currcase.iepar1}
-                    lconstr2 = New Double() {-0.5#}
-                    uconstr2 = New Double() {0.5#}
-                    fixed = New Boolean() {currcase.fixed1}
-                    nvar = 1
+                    initval = New Double() {currcase.iepar1}
                 Case "Peng-Robinson"
-                    initval2 = New Double() {currcase.iepar1}
-                    lconstr2 = New Double() {-0.5#}
-                    uconstr2 = New Double() {0.5#}
-                    fixed = New Boolean() {currcase.fixed1}
-                    nvar = 1
+                    initval = New Double() {currcase.iepar1}
                 Case "PRSV2-M", "PRSV2-VL"
-                    nvar = 2
-                    initval2 = New Double() {currcase.iepar1, currcase.iepar2}
-                    lconstr2 = New Double() {-0.5#, -0.5#}
-                    uconstr2 = New Double() {0.5#, 0.5#}
-                    fixed = New Boolean() {currcase.fixed1, currcase.fixed2}
+                    initval = New Double() {currcase.iepar1, currcase.iepar2}
                 Case "Soave-Redlich-Kwong"
-                    initval2 = New Double() {currcase.iepar1}
-                    lconstr2 = New Double() {-0.5#}
-                    uconstr2 = New Double() {0.5#}
-                    nvar = 1
-                    fixed = New Boolean() {currcase.fixed1}
+                    initval = New Double() {currcase.iepar1}
                 Case "UNIQUAC"
-                    nvar = 2
-                    initval2 = New Double() {currcase.iepar1, currcase.iepar2}
-                    lconstr2 = New Double() {-3000000.0#, -3000000.0#}
-                    uconstr2 = New Double() {3000000.0#, 3000000.0#}
-                    fixed = New Boolean() {currcase.fixed1, currcase.fixed2}
+                    initval = New Double() {currcase.iepar1, currcase.iepar2}
                 Case "NRTL"
-                    nvar = 3
-                    initval2 = New Double() {currcase.iepar1, currcase.iepar2, currcase.iepar3}
-                    lconstr2 = New Double() {-3000000.0#, -3000000.0#, 0.0#}
-                    uconstr2 = New Double() {3000000.0#, 3000000.0#, 0.8#}
-                    fixed = New Boolean() {currcase.fixed1, currcase.fixed2, currcase.fixed3}
+                    initval = New Double() {currcase.iepar1, currcase.iepar2, currcase.iepar3}
                 Case "Lee-Kesler-Plöcker"
-                    initval2 = New Double() {1.0#}
-                    lconstr2 = New Double() {0.9#}
-                    uconstr2 = New Double() {1.1#}
-                    nvar = 1
-                    fixed = New Boolean() {currcase.fixed1}
+                    initval = New Double() {currcase.iepar1}
             End Select
 
-            itn = 0
+            drawtdep = False
+            output = True
 
-            Me.tbRegResults.AppendText("Starting experimental data regression for " & currcase.model & " model parameter estimation..." & vbCrLf)
+            If Not chkDoTDepRegression.Checked Then
 
-            Dim ppm As New CAPEOPENPropertyPackageManager()
+                DoRegression(initval)
 
-            Select Case currcase.model
-                Case "PC-SAFT"
-                    ppname = "PC-SAFT"
-                Case "Peng-Robinson"
-                    ppname = "Peng-Robinson (PR)"
-                Case "Soave-Redlich-Kwong"
-                    ppname = "Soave-Redlich-Kwong (SRK)"
-                Case "UNIQUAC"
-                    ppname = "UNIQUAC"
-                Case "PRSV2-M"
-                    ppname = "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)"
-                Case "PRSV2-VL"
-                    ppname = "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)"
-                Case "NRTL"
-                    ppname = "NRTL"
-                Case "Lee-Kesler-Plöcker"
-                    ppname = "Lee-Kesler-Plöcker"
-            End Select
+            Else
 
-            proppack = ppm.GetPropertyPackage(ppname)
-            proppack.ComponentName = ppname
-            proppack._availablecomps = FormMain.AvailableComponents
+                'get initial list of included parameters.
 
-            If proppack.Parameters.ContainsKey("PP_IDEAL_VAPOR_PHASE_FUG") Then
-                proppack.Parameters("PP_IDEAL_VAPOR_PHASE_FUG") = Me.chkIdealVaporPhase.CheckState
+                Dim toinclude As New ArrayList
+
+                For Each b As Boolean In currcase.checkp
+                    toinclude.Add(b)
+                Next
+
+                'do regression for each checked point one at a time
+
+                Dim regpars As New ArrayList
+                Dim j As Integer = 0
+
+                tbRegResults.AppendText("Starting temperature-dependent regression for selected data points...")
+                tbRegResults.AppendText(vbCrLf)
+
+                For Each b As Boolean In toinclude
+                    For i As Integer = 0 To currcase.checkp.Count - 1
+                        currcase.checkp(i) = False
+                    Next
+                    currcase.checkp(j) = b
+                    tbRegResults.AppendText("Regressing parameters for data set #" & j + 1 & "...")
+                    tbRegResults.AppendText(vbCrLf)
+                    tbRegResults.AppendText(vbCrLf)
+                    DoRegression(initval)
+                    tbRegResults.AppendText(vbCrLf)
+                    tbRegResults.AppendText(vbCrLf)
+                    initval = regressedparameters.Values.ToArray()
+                    regpars.Add(initval.Clone)
+                    j += 1
+                Next
+
+                For i As Integer = 0 To currcase.checkp.Count - 1
+                    currcase.checkp(i) = toinclude(i)
+                Next
+
+                'regress calculated parameters to obtain temperature dependency
+
+                Dim px(regpars.Count - 1), py_a12(regpars.Count - 1), py_a21(regpars.Count - 1) As Double
+
+                For i As Integer = 0 To currcase.tp.Count - 1
+                    If currcase.checkp(i) Then
+                        px(i) = cv.ConverterParaSI(Me.cbTunit.SelectedItem.ToString(), currcase.tp(i))
+                    End If
+                Next
+
+                For i As Integer = 0 To regpars.Count - 1
+                    py_a12(i) = regpars(i)(0)
+                    py_a21(i) = regpars(i)(1)
+                Next
+
+                Dim obj As Object = Nothing
+                Dim lmfit As New DWSIM.Utilities.PetroleumCharacterization.LMFit
+
+                Dim c_a12(2), c_a21(2) As Double
+                Dim r_a12, r_a21, n_a12, n_a21 As Double
+
+                c_a12(0) = py_a12(0)
+                c_a12(1) = 0.1
+                c_a12(2) = 0.01
+
+                obj = lmfit.GetCoeffs(px, py_a12, c_a12.Clone, DWSIM.Utilities.PetroleumCharacterization.LMFit.FitType.SecondDegreePoly, 0.0000000001, 0.0000000001, 0.0000000001, 10000)
+                c_a12 = obj(0)
+                r_a12 = obj(2)
+                n_a12 = obj(3)
+
+                c_a21(0) = py_a21(0)
+                c_a21(1) = 0.1
+                c_a21(2) = 0.01
+
+                obj = lmfit.GetCoeffs(px, py_a21, c_a21.Clone, DWSIM.Utilities.PetroleumCharacterization.LMFit.FitType.SecondDegreePoly, 0.0000000001, 0.0000000001, 0.0000000001, 10000)
+                c_a21 = obj(0)
+                r_a21 = obj(2)
+                n_a21 = obj(3)
+
+                tbRegResults.AppendText("Finished temperature-dependent regression." & vbCrLf)
+                tbRegResults.AppendText(vbCrLf)
+                tbRegResults.AppendText("Interaction Parameter 1-2, f(T) = " & c_a12(0) & " + " & c_a12(1) & "*T + " & c_a12(2) & "*T^2, R^2 = " & r_a12)
+                tbRegResults.AppendText(vbCrLf)
+                tbRegResults.AppendText("A12 = " & c_a12(0) & vbCrLf)
+                tbRegResults.AppendText("B12 = " & c_a12(1) & vbCrLf)
+                tbRegResults.AppendText("C12 = " & c_a12(2) & vbCrLf)
+                tbRegResults.AppendText(vbCrLf)
+                tbRegResults.AppendText("Interaction Parameter 2-1, f(T) = " & c_a21(0) & " + " & c_a21(1) & "*T + " & c_a21(2) & "*T^2, R^2 = " & r_a21)
+                tbRegResults.AppendText(vbCrLf)
+                tbRegResults.AppendText("A21 = " & c_a21(0) & vbCrLf)
+                tbRegResults.AppendText("B21 = " & c_a21(1) & vbCrLf)
+                tbRegResults.AppendText("C21 = " & c_a21(2) & vbCrLf)
+                tbRegResults.AppendText(vbCrLf)
+                tbRegResults.AppendText("Plotting results... ")
+
+                drawtdep = True
+                output = False
+
+                A12 = c_a12(0)
+                B12 = c_a12(1)
+                C12 = c_a12(2)
+
+                A21 = c_a21(0)
+                B21 = c_a21(1)
+                C21 = c_a21(2)
+
+                FunctionValue(initval)
+
+                tbRegResults.AppendText("done")
+
             End If
-
-            Select Case currcase.method
-                Case "Limited Memory BFGS"
-                    Dim variables(nvar - 1) As Optimization.OptBoundVariable
-                    For i = 0 To nvar - 1
-                        variables(i) = New Optimization.OptBoundVariable("x" & CStr(i + 1), initval2(i), fixed(i), lconstr2(i), uconstr2(i))
-                    Next
-                    Dim solver As New Optimization.L_BFGS_B
-                    solver.Tolerance = currcase.tolerance
-                    solver.MaxFunEvaluations = currcase.maxits
-                    solver.ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
-                Case "Truncated Newton"
-                    Dim variables(nvar - 1) As Optimization.OptBoundVariable
-                    For i = 0 To nvar - 1
-                        variables(i) = New Optimization.OptBoundVariable("x" & CStr(i + 1), initval2(i), fixed(i), lconstr2(i), uconstr2(i))
-                    Next
-                    Dim solver As New Optimization.TruncatedNewton
-                    solver.Tolerance = currcase.tolerance
-                    solver.MaxFunEvaluations = currcase.maxits
-                    solver.ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
-                Case "Nelder-Mead Simplex Downhill"
-                    Dim variables(nvar - 1) As Optimization.OptBoundVariable
-                    For i = 0 To nvar - 1
-                        variables(i) = New Optimization.OptBoundVariable("x" & CStr(i + 1), initval2(i), fixed(i), lconstr2(i), uconstr2(i))
-                    Next
-                    Dim solver As New Optimization.Simplex
-                    solver.Tolerance = currcase.tolerance
-                    solver.MaxFunEvaluations = currcase.maxits
-                    solver.ComputeMin(AddressOf FunctionValue, variables)
-                Case "IPOPT"
-                    For i = 0 To nvar - 1
-                        If fixed(i) Then
-                            lconstr2(i) = initval2(i)
-                            uconstr2(i) = initval2(i)
-                        End If
-                    Next
-                    Dim obj As Double
-                    Dim status As IpoptReturnCode
-                    Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, 0, Nothing, Nothing, _
-                     0, 0, AddressOf eval_f, AddressOf eval_g, _
-                     AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
-                        problem.AddOption("tol", currcase.tolerance)
-                        problem.AddOption("max_iter", currcase.maxits)
-                        problem.AddOption("mu_strategy", "adaptive")
-                        problem.AddOption("hessian_approximation", "limited-memory")
-                        'solve the problem 
-                        status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
-                    End Using
-            End Select
-
-            Me.tbRegResults.AppendText("Finished!")
 
         Catch ex As Exception
 
@@ -2174,10 +2229,12 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End Select
             End With
 
-            With .YAxis
-                .Scale.MinAuto = True
-                .Scale.MaxAuto = True
-            End With
+            If Not .YAxis Is Nothing Then
+                With .YAxis
+                    .Scale.MinAuto = True
+                    .Scale.MaxAuto = True
+                End With
+            End If
 
             With .Legend
                 .Border.IsVisible = False
@@ -2508,6 +2565,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Button1.Enabled = False
                 Button2.Enabled = False
                 chkIdealVaporPhase.Enabled = False
+                chkDoTDepRegression.Enabled = False
+                chkDoTDepRegression.Checked = False
             Case "Lee-Kesler-Plöcker"
                 With gridInEst.Rows
                     .Clear()
@@ -2516,6 +2575,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Button1.Enabled = False
                 Button2.Enabled = False
                 chkIdealVaporPhase.Enabled = False
+                chkDoTDepRegression.Enabled = False
+                chkDoTDepRegression.Checked = False
             Case "PRSV2-M"
                 With gridInEst.Rows
                     .Clear()
@@ -2525,6 +2586,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Button1.Enabled = False
                 Button2.Enabled = False
                 chkIdealVaporPhase.Enabled = False
+                chkDoTDepRegression.Enabled = False
+                chkDoTDepRegression.Checked = False
             Case "PRSV2-VL"
                 With gridInEst.Rows
                     .Clear()
@@ -2534,6 +2597,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Button1.Enabled = False
                 Button2.Enabled = False
                 chkIdealVaporPhase.Enabled = False
+                chkDoTDepRegression.Enabled = False
+                chkDoTDepRegression.Checked = False
             Case "UNIQUAC"
                 With gridInEst.Rows
                     .Clear()
@@ -2543,6 +2608,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Button1.Enabled = True
                 Button2.Enabled = True
                 chkIdealVaporPhase.Enabled = True
+                chkDoTDepRegression.Enabled = True
             Case "NRTL"
                 With gridInEst.Rows
                     .Clear()
@@ -2553,6 +2619,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Button1.Enabled = True
                 Button2.Enabled = True
                 chkIdealVaporPhase.Enabled = True
+                chkDoTDepRegression.Enabled = True
         End Select
     End Sub
 
@@ -3128,6 +3195,158 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
     End Sub
 
+    Sub DoRegression(initval As Double())
+
+        Dim nvar As Integer = 0
+        Dim i As Integer
+
+        Dim initval2() As Double = Nothing
+        Dim lconstr2() As Double = Nothing
+        Dim uconstr2() As Double = Nothing
+        Dim finalval2() As Double = Nothing
+        Dim fixed() As Boolean = Nothing
+
+        Select Case currcase.model
+            Case "PC-SAFT"
+                initval2 = initval
+                lconstr2 = New Double() {-0.5#}
+                uconstr2 = New Double() {0.5#}
+                fixed = New Boolean() {currcase.fixed1}
+                nvar = 1
+            Case "Peng-Robinson"
+                initval2 = initval
+                lconstr2 = New Double() {-0.5#}
+                uconstr2 = New Double() {0.5#}
+                fixed = New Boolean() {currcase.fixed1}
+                nvar = 1
+            Case "PRSV2-M", "PRSV2-VL"
+                nvar = 2
+                initval2 = initval
+                lconstr2 = New Double() {-0.5#, -0.5#}
+                uconstr2 = New Double() {0.5#, 0.5#}
+                fixed = New Boolean() {currcase.fixed1, currcase.fixed2}
+            Case "Soave-Redlich-Kwong"
+                initval2 = initval
+                lconstr2 = New Double() {-0.5#}
+                uconstr2 = New Double() {0.5#}
+                nvar = 1
+                fixed = New Boolean() {currcase.fixed1}
+            Case "UNIQUAC"
+                nvar = 2
+                initval2 = initval
+                lconstr2 = New Double() {-3000000.0#, -3000000.0#}
+                uconstr2 = New Double() {3000000.0#, 3000000.0#}
+                fixed = New Boolean() {currcase.fixed1, currcase.fixed2}
+            Case "NRTL"
+                nvar = 3
+                initval2 = initval
+                lconstr2 = New Double() {-3000000.0#, -3000000.0#, 0.0#}
+                uconstr2 = New Double() {3000000.0#, 3000000.0#, 0.8#}
+                fixed = New Boolean() {currcase.fixed1, currcase.fixed2, currcase.fixed3}
+            Case "Lee-Kesler-Plöcker"
+                initval2 = initval
+                lconstr2 = New Double() {0.9#}
+                uconstr2 = New Double() {1.1#}
+                nvar = 1
+                fixed = New Boolean() {currcase.fixed1}
+        End Select
+
+        itn = 0
+
+        Me.tbRegResults.AppendText("Starting experimental data regression for " & currcase.model & " model parameter estimation..." & vbCrLf)
+
+        Dim ppm As New CAPEOPENPropertyPackageManager()
+
+        Select Case currcase.model
+            Case "PC-SAFT"
+                ppname = "PC-SAFT"
+            Case "Peng-Robinson"
+                ppname = "Peng-Robinson (PR)"
+            Case "Soave-Redlich-Kwong"
+                ppname = "Soave-Redlich-Kwong (SRK)"
+            Case "UNIQUAC"
+                ppname = "UNIQUAC"
+            Case "PRSV2-M"
+                ppname = "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)"
+            Case "PRSV2-VL"
+                ppname = "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)"
+            Case "NRTL"
+                ppname = "NRTL"
+            Case "Lee-Kesler-Plöcker"
+                ppname = "Lee-Kesler-Plöcker"
+        End Select
+
+        proppack = ppm.GetPropertyPackage(ppname)
+        proppack.ComponentName = ppname
+        proppack._availablecomps = FormMain.AvailableComponents
+
+        If proppack.Parameters.ContainsKey("PP_IDEAL_VAPOR_PHASE_FUG") Then
+            proppack.Parameters("PP_IDEAL_VAPOR_PHASE_FUG") = Me.chkIdealVaporPhase.CheckState
+        End If
+
+        Select Case currcase.method
+            Case "Limited Memory BFGS"
+                Dim variables(nvar - 1) As Optimization.OptBoundVariable
+                For i = 0 To nvar - 1
+                    variables(i) = New Optimization.OptBoundVariable("x" & CStr(i + 1), initval2(i), fixed(i), lconstr2(i), uconstr2(i))
+                Next
+                Dim solver As New Optimization.L_BFGS_B
+                solver.Tolerance = currcase.tolerance
+                solver.MaxFunEvaluations = currcase.maxits
+                solver.ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
+            Case "Truncated Newton"
+                Dim variables(nvar - 1) As Optimization.OptBoundVariable
+                For i = 0 To nvar - 1
+                    variables(i) = New Optimization.OptBoundVariable("x" & CStr(i + 1), initval2(i), fixed(i), lconstr2(i), uconstr2(i))
+                Next
+                Dim solver As New Optimization.TruncatedNewton
+                solver.Tolerance = currcase.tolerance
+                solver.MaxFunEvaluations = currcase.maxits
+                solver.ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
+            Case "Nelder-Mead Simplex Downhill"
+                Dim variables(nvar - 1) As Optimization.OptBoundVariable
+                For i = 0 To nvar - 1
+                    variables(i) = New Optimization.OptBoundVariable("x" & CStr(i + 1), initval2(i), fixed(i), lconstr2(i), uconstr2(i))
+                Next
+                Dim solver As New Optimization.Simplex
+                solver.Tolerance = currcase.tolerance
+                solver.MaxFunEvaluations = currcase.maxits
+                solver.ComputeMin(AddressOf FunctionValue, variables)
+            Case "IPOPT"
+                For i = 0 To nvar - 1
+                    If fixed(i) Then
+                        lconstr2(i) = initval2(i)
+                        uconstr2(i) = initval2(i)
+                    End If
+                Next
+                Dim obj As Double
+                Dim status As IpoptReturnCode
+                Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, 0, Nothing, Nothing, _
+                 0, 0, AddressOf eval_f, AddressOf eval_g, _
+                 AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
+                    problem.AddOption("tol", currcase.tolerance)
+                    problem.AddOption("max_iter", currcase.maxits)
+                    problem.AddOption("mu_strategy", "adaptive")
+                    problem.AddOption("hessian_approximation", "limited-memory")
+                    'solve the problem 
+                    status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
+                End Using
+        End Select
+
+        Me.tbRegResults.AppendText("Finished!")
+
+    End Sub
+
+    Private Sub chkDoTDepRegression_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkDoTDepRegression.CheckedChanged
+
+        If chkDoTDepRegression.Checked Then
+            If cbModel.SelectedItem.ToString = "NRTL" Then
+                gridInEst.Rows(2).Cells(2).Value = True
+            End If
+        End If
+
+    End Sub
+
 End Class
 
 Namespace DWSIM.Optimization.DatRegression
@@ -3160,6 +3379,8 @@ Namespace DWSIM.Optimization.DatRegression
         Public idealvapormodel As Boolean = False
         Public useTLdata As Boolean = True
         Public useTSdata As Boolean = True
+
+
 
     End Class
 

@@ -323,14 +323,13 @@ Public Class FormOptions
             Else
 
                 'remove user database
-                My.Settings.UserDatabases.Remove(Me.dgvdb.Rows(e.RowIndex).Cells(2).Value)
+                My.Settings.UserDatabases.Remove(Me.dgvdb.Rows(e.RowIndex).Cells(3).Value)
                 Me.dgvdb.Rows.RemoveAt(e.RowIndex)
                 MessageBox.Show(DWSIM.App.GetLocalString("UDBRemoved"))
 
             End If
 
         End If
-
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click

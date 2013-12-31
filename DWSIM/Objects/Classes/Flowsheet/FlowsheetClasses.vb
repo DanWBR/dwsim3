@@ -307,6 +307,8 @@ Namespace DWSIM.FormClasses
         Public ThreePhaseFlashStabTestSeverity As Integer = 0
         Public ThreePhaseFlashStabTestCompIds As String() = New String() {}
 
+        Public FlashValidationDGETolerancePct As Double = 0.01
+
         Public Password As String = ""
         Public UsePassword As Boolean = False
 

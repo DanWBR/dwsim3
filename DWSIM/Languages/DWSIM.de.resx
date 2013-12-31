@@ -4764,7 +4764,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Nutzer 5</value>
   </data>
   <data name="XLFileSaved" xml:space="preserve">
-    <value>Excel Spreadsheet saved successfully.</value>
+    <value>Excel Tabelle erfolgreich gespeichert.</value>
   </data>
   <data name="Electrolyte_Cp0" xml:space="preserve">
     <value>[Electrolyte] Standard State Heat Capacity at 298 K</value>

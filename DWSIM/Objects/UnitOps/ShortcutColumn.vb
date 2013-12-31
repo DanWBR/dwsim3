@@ -172,6 +172,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 i = i + 1
             Next
 
+            feed.PropertyPackage.CurrentMaterialStream = feed
+
             K = feed.PropertyPackage.DW_CalcKvalue(z, T, P)
 
             For i = 0 To n

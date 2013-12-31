@@ -1,4 +1,4 @@
-﻿'    Property Package Base Class
+'    Property Package Base Class
 '    Copyright 2008-2011 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -189,7 +189,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 Dim cspath As String = ""
                 Try
-                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96").GetValue("")
+                    If My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96") IsNot Nothing Then
+                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96").GetValue("")
+                    ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95") IsNot Nothing Then
+                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95").GetValue("")
+                    ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94") IsNot Nothing Then
+                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94").GetValue("")
+                    ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93") IsNot Nothing Then
+                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93").GetValue("")
+                    End If
                     cspath += Path.DirectorySeparatorChar + "pcd" + Path.DirectorySeparatorChar + "chemsep1.xml"
                     If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
                 Catch ex As Exception
@@ -1263,8 +1271,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             If Not My.Application.CAPEOPENMode Then
                                 If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
-                                                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
-                                                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
+                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
+                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
 
                                     fge = xl * Me.DW_CalcGibbsEnergy(Vx, T, P)
                                     fge += xl2 * Me.DW_CalcGibbsEnergy(Vx2, T, P)
@@ -1272,8 +1280,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                                     dge = fge - ige
 
-                                    If dge > 0.0000000001 Then
-                                        Throw New Exception(DWSIM.App.GetLocalString("InvalidFlashResult"))
+                                    Dim dgtol As Double = Me.CurrentMaterialStream.Flowsheet.Options.FlashValidationDGETolerancePct
+
+                                    If Math.Abs(dge / ige * 100) > Math.Abs(dgtol) Then
+                                        Throw New Exception(DWSIM.App.GetLocalString("InvalidFlashResult") & "(DGE = " & dge & " kJ/kg, " & Format(dge / ige * 100, "0.00") & "%)")
                                     End If
 
                                 End If
@@ -1408,7 +1418,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
-                            result = Me.FlashBase.Flash_TV(RET_VMOL(Fase.Mixture), T, xv, 0, Me)
+                            result = Me.FlashBase.Flash_TV(RET_VMOL(Fase.Mixture), T, xv, P, Me)
 
                             P = result(4)
 
@@ -1600,7 +1610,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             Else
 
-redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mixture), P, H, 0.0#, Me)
+redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mixture), P, H, T, Me)
 
                                 T = result(4)
 
@@ -1772,7 +1782,7 @@ redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mix
 
                             Else
 
-redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mixture), P, S, 0.0#, Me)
+redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mixture), P, S, T, Me)
 
                                 T = result(4)
 
@@ -1864,7 +1874,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
-                            result = Me.FlashBase.Flash_PV(RET_VMOL(Fase.Mixture), P, xv, 0, Me)
+                            result = Me.FlashBase.Flash_PV(RET_VMOL(Fase.Mixture), P, xv, T, Me)
 
                             T = result(4)
 
@@ -6339,36 +6349,54 @@ Final3:
                 Case DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture
 
                     For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                        End If
                         val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                     Next
 
                 Case DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid
 
                     For Each subst In Me.CurrentMaterialStream.Fases(1).Componentes.Values
+                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                        End If
                         val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                     Next
 
                 Case DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1
 
                     For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
+                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                        End If
                         val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                     Next
 
                 Case DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2
 
                     For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
+                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                        End If
                         val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                     Next
 
                 Case DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3
 
                     For Each subst In Me.CurrentMaterialStream.Fases(5).Componentes.Values
+                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                        End If
                         val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                     Next
 
                 Case DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor
 
                     For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                        End If
                         val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                     Next
 
@@ -6384,6 +6412,9 @@ Final3:
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
 
             For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
+                If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
+                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
+                End If
                 val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDT_Ti(T1, T2, subst.Nome)
             Next
 

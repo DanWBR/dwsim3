@@ -1,4 +1,4 @@
-﻿'    Simplified LLE Flash Algorithm
+'    Simplified LLE Flash Algorithm
 '    Copyright 2013 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -148,8 +148,26 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Console.WriteLine("PT Flash [SimpleLLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & err)
 
-out:        Return New Object() {L1, V, Vx1, PP.RET_NullVector, ecount, L2, Vx2, 0.0#, PP.RET_NullVector, gamma1, gamma2}
+out:
 
+            'order liquid phases by mixture NBP
+
+            Dim VNBP = PP.RET_VTB()
+            Dim nbp1 As Double = 0
+            Dim nbp2 As Double = 0
+
+            For i = 0 To n
+                nbp1 += Vx1(i) * VNBP(i)
+                nbp2 += Vx2(i) * VNBP(i)
+            Next
+
+            If nbp1 >= nbp2 Then
+                Return New Object() {L1, V, Vx1, PP.RET_NullVector, ecount, L2, Vx2, 0.0#, PP.RET_NullVector, gamma1, gamma2}
+            Else
+                Return New Object() {L2, V, Vx2, PP.RET_NullVector, ecount, L1, Vx1, 0.0#, PP.RET_NullVector, gamma1, gamma2}
+            End If
+
+            
         End Function
 
         Public Overrides Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object

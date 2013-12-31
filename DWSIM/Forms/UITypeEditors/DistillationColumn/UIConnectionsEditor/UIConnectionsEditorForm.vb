@@ -18,7 +18,7 @@
 Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
 Imports DWSIM.DWSIM.SimulationObjects.UnitOps
 Imports DWSIM.DWSIM.SimulationObjects
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 
 Public Class UIConnectionsEditorForm
 
@@ -59,10 +59,11 @@ Public Class UIConnectionsEditorForm
         form = My.Application.ActiveSimulation
         dc = form.Collections.ObjectCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
 
-        tpl = New DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors.Templates(form)
+        tpl = New DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors.Templates(form, dc)
 
         Dim sgt1 As New DataGridViewComboBoxCell
         Dim sgt2 As New DataGridViewComboBoxCell
+
         With sgt1.Items
             i = 0
             For Each st As Stage In dc.Stages
@@ -444,6 +445,8 @@ Public Class UIConnectionsEditorForm
                 Case 2
                     dc.MaterialStreams(id).AssociatedStage = dgv1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
             End Select
+            dc.CheckConnPos()
+            form.FormSurface.FlowsheetDesignSurface.Invalidate()
         End If
     End Sub
 
@@ -487,6 +490,8 @@ Public Class UIConnectionsEditorForm
                 Case 4
                     dc.MaterialStreams(id).FlowRate.Value = cvt.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_molarflow, value)
             End Select
+            dc.CheckConnPos()
+            form.FormSurface.FlowsheetDesignSurface.Invalidate()
         End If
     End Sub
 
@@ -533,9 +538,19 @@ Public Class UIConnectionsEditorForm
                                 End If
                         End Select
                         .OutputConnectors(.OutputConnectors.Count - 1).Position = pos
+
+                        Dim k As Integer
+                        For k = 0 To .OutputConnectors.Count - 2
+                            .OutputConnectors.Item(k).AttachedConnector.AttachedFromConnectorIndex = k
+                        Next
+
                         form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByTag(dc.MaterialStreams(id).Tag, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
+                       
                     End With
             End Select
+
+            dc.CheckConnPos()
+            form.FormSurface.FlowsheetDesignSurface.Invalidate()
         End If
     End Sub
 
@@ -563,9 +578,9 @@ Public Class UIConnectionsEditorForm
                                 fidx = .OutputConnectors.Count - 1
                                 tidx = 0
                                 If dc.GraphicObject.FlippedH Then
-                                    .OutputConnectors(.OutputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X, dc.GraphicObject.Y + 0.175 * dc.GraphicObject.Height)
+                                    .OutputConnectors(.OutputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X, dc.GraphicObject.Y + 0.08 * dc.GraphicObject.Height)
                                 Else
-                                    .OutputConnectors(.OutputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + 0.175 * dc.GraphicObject.Height)
+                                    .OutputConnectors(.OutputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + 0.08 * dc.GraphicObject.Height)
                                 End If
                                 form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByTag(dc.EnergyStreams(id).Tag, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
                             Case StreamInformation.Behavior.BottomsLiquid
@@ -591,8 +606,16 @@ Public Class UIConnectionsEditorForm
                                 End If
                                 form.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(dc.EnergyStreams(id).Tag, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject, fidx, tidx)
                         End Select
+
+                        Dim k As Integer
+                        For k = 0 To .OutputConnectors.Count - 2
+                            .OutputConnectors.Item(k).AttachedConnector.AttachedFromConnectorIndex = k
+                        Next
                     End With
             End Select
+
+            dc.CheckConnPos()
+            form.FormSurface.FlowsheetDesignSurface.Invalidate()
         End If
     End Sub
 

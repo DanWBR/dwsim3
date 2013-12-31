@@ -544,7 +544,7 @@ Public Class FormMain
             If Not Me.ActiveMdiChild Is Nothing Then
                 If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
                     My.Application.ActiveSimulation = Me.ActiveMdiChild
-               End If
+                End If
             End If
 
         End If
@@ -623,7 +623,16 @@ Public Class FormMain
             My.Settings.ChemSepDatabasePath = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "chemsepdb" & Path.DirectorySeparatorChar & "chemsep1.xml"
         Else
             Try
-                Dim cspath As String = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96").GetValue("")
+                Dim cspath As String = ""
+                If My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96") IsNot Nothing Then
+                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96").GetValue("")
+                ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95") IsNot Nothing Then
+                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95").GetValue("")
+                ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94") IsNot Nothing Then
+                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94").GetValue("")
+                ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93") IsNot Nothing Then
+                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93").GetValue("")
+                End If
                 cspath += Path.DirectorySeparatorChar + "pcd" + Path.DirectorySeparatorChar + "chemsep1.xml"
                 If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
             Catch ex As Exception
@@ -2141,9 +2150,9 @@ Public Class FormMain
                     obj.LoadData(xel.Elements.ToList)
                     If TypeOf obj Is Streams.MaterialStream Then
                         For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
-                                For Each c As ConstantProperties In form.Options.SelectedComponents.Values
-                                    phase.Componentes(c.Name).ConstantProperties = c
-                                Next
+                            For Each c As ConstantProperties In form.Options.SelectedComponents.Values
+                                phase.Componentes(c.Name).ConstantProperties = c
+                            Next
                         Next
                     End If
                     With form.Collections

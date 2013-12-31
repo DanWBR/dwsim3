@@ -117,129 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Regression Ergebnisse</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnDoReg.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 597</value>
-  </data>
-  <data name="btnDoReg.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 23</value>
-  </data>
-  <data name="btnDoReg.Text" xml:space="preserve">
-    <value>Regression starten</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Regression Informationen</value>
-  </data>
-  <data name="chkTS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 17</value>
-  </data>
-  <data name="chkTS.Text" xml:space="preserve">
-    <value>TS</value>
-  </data>
-  <data name="chkTL.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 17</value>
-  </data>
-  <data name="chkTL.Text" xml:space="preserve">
-    <value>TL</value>
-  </data>
-  <data name="chkIdealVaporPhase.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 133</value>
-  </data>
-  <data name="chkIdealVaporPhase.Size" type="System.Drawing.Size, System.Drawing">
-    <value>207, 17</value>
-  </data>
-  <data name="chkIdealVaporPhase.Text" xml:space="preserve">
-    <value>Dampfphase als ideales Gas berechnen</value>
-  </data>
-  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 13</value>
-  </data>
-  <data name="Label9.Text" xml:space="preserve">
-    <value>Startwerte:</value>
-  </data>
-  <data name="colpar.HeaderText" xml:space="preserve">
-    <value>Parameter</value>
-  </data>
-  <data name="colval.HeaderText" xml:space="preserve">
-    <value>Wert</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnCancel.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>233, 597</value>
-  </data>
-  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>62, 23</value>
-  </data>
-  <data name="btnCancel.Text" xml:space="preserve">
-    <value>Abbruch</value>
-  </data>
-  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 13</value>
-  </data>
-  <data name="Label8.Text" xml:space="preserve">
-    <value>P Einheit</value>
-  </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 13</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>T Einheit</value>
-  </data>
-  <data name="chkIncludeSD.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 17</value>
-  </data>
-  <data name="chkIncludeSD.Text" xml:space="preserve">
-    <value>Standardabweichungen berücksichtigen</value>
-  </data>
-  <data name="btnCalcOnce.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 23</value>
-  </data>
-  <data name="btnCalcOnce.Text" xml:space="preserve">
-    <value>Berechnung einmal</value>
-  </data>
-  <data name="LabelWithDivider12.Text" xml:space="preserve">
-    <value>Komponenten</value>
-  </data>
-  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>62, 13</value>
-  </data>
-  <data name="Label7.Text" xml:space="preserve">
-    <value>Zielfunktion</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>Komponente 1</value>
-  </data>
-  <data name="Label3.Text" xml:space="preserve">
-    <value>Komponente 2</value>
-  </data>
-  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 13</value>
-  </data>
-  <data name="Label6.Text" xml:space="preserve">
-    <value>Methode</value>
-  </data>
-  <data name="LabelWithDivider3.Text" xml:space="preserve">
-    <value>Regression Parameter</value>
-  </data>
-  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 13</value>
-  </data>
-  <data name="Label4.Text" xml:space="preserve">
-    <value>Modell</value>
-  </data>
-  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 158</value>
-  </data>
   <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>219, 22</value>
   </data>
@@ -282,6 +160,131 @@
   <data name="ToolStripMenuItem7.Text" xml:space="preserve">
     <value>Erzeuge Punkte (PRSV2-VL)</value>
   </data>
+  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 158</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Regression Ergebnisse</value>
+  </data>
+  <data name="btnDoReg.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 509</value>
+  </data>
+  <data name="btnDoReg.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 23</value>
+  </data>
+  <data name="btnDoReg.Text" xml:space="preserve">
+    <value>Regression starten</value>
+  </data>
+  <data name="chkDoTDepRegression.Size" type="System.Drawing.Size, System.Drawing">
+    <value>248, 17</value>
+  </data>
+  <data name="chkDoTDepRegression.Text" xml:space="preserve">
+    <value>Calculate parameters' temperature dependency</value>
+  </data>
+  <data name="chkTS.Location" type="System.Drawing.Point, System.Drawing">
+    <value>247, 275</value>
+  </data>
+  <data name="chkTS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 17</value>
+  </data>
+  <data name="chkTS.Text" xml:space="preserve">
+    <value>TS</value>
+  </data>
+  <data name="chkTL.Location" type="System.Drawing.Point, System.Drawing">
+    <value>199, 275</value>
+  </data>
+  <data name="chkTL.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 17</value>
+  </data>
+  <data name="chkTL.Text" xml:space="preserve">
+    <value>TL</value>
+  </data>
+  <data name="chkIdealVaporPhase.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 133</value>
+  </data>
+  <data name="chkIdealVaporPhase.Size" type="System.Drawing.Size, System.Drawing">
+    <value>214, 17</value>
+  </data>
+  <data name="chkIdealVaporPhase.Text" xml:space="preserve">
+    <value>Dampfphase als ideales Gas berechnen</value>
+  </data>
+  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 13</value>
+  </data>
+  <data name="Label9.Text" xml:space="preserve">
+    <value>Startwerte:</value>
+  </data>
+  <data name="colpar.HeaderText" xml:space="preserve">
+    <value>Parameter</value>
+  </data>
+  <data name="colval.HeaderText" xml:space="preserve">
+    <value>Wert</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnCancel.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>233, 509</value>
+  </data>
+  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 23</value>
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>Abbruch</value>
+  </data>
+  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 13</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>P Einheit</value>
+  </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 13</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>T Einheit</value>
+  </data>
+  <data name="btnCalcOnce.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 23</value>
+  </data>
+  <data name="btnCalcOnce.Text" xml:space="preserve">
+    <value>Berechnung einmal</value>
+  </data>
+  <data name="LabelWithDivider12.Text" xml:space="preserve">
+    <value>Komponenten</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Zielfunktion</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Komponente 1</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Komponente 2</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Methode</value>
+  </data>
+  <data name="LabelWithDivider3.Text" xml:space="preserve">
+    <value>Regression Parameter</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Modell</value>
+  </data>
   <data name="cbDataType.Items" xml:space="preserve">
     <value>Txy (VLE)</value>
   </data>
@@ -306,6 +309,9 @@
   <data name="cbDataType.Items7" xml:space="preserve">
     <value>TTx (SLE-SS)</value>
   </data>
+  <data name="cbDataType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>109, 273</value>
+  </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 13</value>
   </data>
@@ -318,8 +324,8 @@
   <data name="LabelWithDivider2.Text" xml:space="preserve">
     <value>Experimentelle Daten</value>
   </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Information</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Regression Informationen</value>
   </data>
   <data name="tbDescription.Location" type="System.Drawing.Point, System.Drawing">
     <value>356, 19</value>
@@ -344,6 +350,9 @@
   </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>Titel</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -438,7 +438,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             My.Application.ChangeUICulture("en-US")
 
-            m_sl = New OptionParameter("Script Language", "Select the scripting language for this Unit Operation.", Me.Language.ToString, "IronPython", New String() {"IronPython", "IronRuby", "VBScript", "JScript", "Lua"}, True, CapeParamMode.CAPE_INPUT)
+            m_sl = New OptionParameter("Script Language", "Select the scripting language for this Unit Operation.", Me.Language.ToString, "IronPython", New String() {"IronPython", "Lua"}, True, CapeParamMode.CAPE_INPUT)
 
             'set CAPE-OPEN Mode 
             _capeopenmode = True
@@ -711,7 +711,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             key.SetValue("ComponentVersion", My.Application.Info.Version.ToString)
             key.SetValue("VendorURL", "http://dwsim.inforside.com.br")
             key.SetValue("HelpURL", "http://dwsim.inforside.com.br")
-            key.SetValue("About", "DWSIM is open-source software, released under the GPL v3 license. (c) 2011-2012 Daniel Medeiros.")
+            key.SetValue("About", "DWSIM is open-source software, released under the GPL v3 license. (c) 2011-2014 Daniel Medeiros.")
             key.Close()
 
         End Sub

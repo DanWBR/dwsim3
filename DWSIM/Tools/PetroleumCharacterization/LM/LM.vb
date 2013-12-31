@@ -28,6 +28,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
             LiqVisc = 2
             HVap = 3
             LiqDens = 4
+            SecondDegreePoly = 5
         End Enum
 
         Private _x, _y As Double()
@@ -49,6 +50,8 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
                     lmsolve.DefineFuncGradDelegate(AddressOf fvhvap)
                 Case LMFit.FitType.LiqDens
                     lmsolve.DefineFuncGradDelegate(AddressOf fvliqdens)
+                Case LMFit.FitType.SecondDegreePoly
+                    lmsolve.DefineFuncGradDelegate(AddressOf fvsdp)
             End Select
 
             Dim newc(UBound(inest) + 1) As Double
@@ -83,7 +86,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
             If Double.IsNaN(x(1)) Or Double.IsNegativeInfinity(x(1)) Or Double.IsPositiveInfinity(x(1)) Then iflag = -1
             If Double.IsNaN(fvec(1)) Or Double.IsNegativeInfinity(fvec(1)) Or Double.IsPositiveInfinity(fvec(1)) Then iflag = -1
 
-            sum = 0
+            sum = 0.0#
             Dim i As Integer
             If iflag = 1 Then
                 i = 1
@@ -117,7 +120,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
             If Double.IsNaN(fvec(1)) Or Double.IsNegativeInfinity(fvec(1)) Or Double.IsPositiveInfinity(fvec(1)) Then iflag = -1
 
             'A + B * T + C * T ^ 2 + D * T ^ 3 + E * T ^ 4
-            sum = 0
+            sum = 0.0#
             Dim i As Integer
             If iflag = 1 Then
                 i = 1
@@ -130,7 +133,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
                 i = 1
                 Do
                     'A + B * T + C * T ^ 2 + D * T ^ 3 + E * T ^ 4
-                    fjac(i, 1) = 0
+                    fjac(i, 1) = 1
                     fjac(i, 2) = _x(i - 1)
                     fjac(i, 3) = _x(i - 1) ^ 2
                     fjac(i, 4) = _x(i - 1) ^ 3
@@ -182,7 +185,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
             If Double.IsNaN(fvec(1)) Or Double.IsNegativeInfinity(fvec(1)) Or Double.IsPositiveInfinity(fvec(1)) Then iflag = -1
 
             'A * (1 - Tr) ^ (B + C * Tr + D * Tr ^ 2)
-            sum = 0
+            sum = 0.0#
             Dim i As Integer
             If iflag = 1 Then
                 i = 1
@@ -215,7 +218,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
             If Double.IsNaN(fvec(1)) Or Double.IsNegativeInfinity(fvec(1)) Or Double.IsPositiveInfinity(fvec(1)) Then iflag = -1
 
             'a / b^[1 + (1 - t/c)^d]
-            sum = 0
+            sum = 0.0#
             Dim i As Integer
             If iflag = 1 Then
                 i = 1
@@ -241,6 +244,35 @@ Namespace DWSIM.Utilities.PetroleumCharacterization
 
         End Sub
 
+        Public Sub fvsdp(ByRef x As Double(), ByRef fvec As Double(), ByRef fjac As Double(,), ByRef iflag As Integer)
+
+            If Double.IsNaN(x(1)) Or Double.IsNegativeInfinity(x(1)) Or Double.IsPositiveInfinity(x(1)) Then iflag = -1
+            If Double.IsNaN(fvec(1)) Or Double.IsNegativeInfinity(fvec(1)) Or Double.IsPositiveInfinity(fvec(1)) Then iflag = -1
+
+            'A + B * T + C * T ^ 2
+            sum = 0.0#
+            Dim i As Integer
+            If iflag = 1 Then
+                i = 1
+                Do
+                    fvec(i) = -_y(i - 1) + (x(1) + x(2) * _x(i - 1) + x(3) * _x(i - 1) ^ 2)
+                    sum += (fvec(i)) ^ 2
+                    i = i + 1
+                Loop Until i = UBound(_y) + 2
+            ElseIf iflag = 2 Then
+                i = 1
+                Do
+                    'A + B * T + C * T ^ 2
+                    fjac(i, 1) = 1
+                    fjac(i, 2) = _x(i - 1)
+                    fjac(i, 3) = _x(i - 1) ^ 2
+                    i = i + 1
+                Loop Until i = UBound(_y) + 2
+            End If
+
+            its += 1
+
+        End Sub
 
     End Class
 

@@ -181,6 +181,10 @@ Public Class FormStSim
 
         chkValidateEqCalc.Checked = Me.FrmChild.Options.ValidateEquilibriumCalc
 
+        tbFlashValidationTolerance.Enabled = chkValidateEqCalc.Checked
+
+        tbFlashValidationTolerance.Text = Me.FrmChild.Options.FlashValidationDGETolerancePct
+
         Select Case Me.FrmChild.Options.PropertyPackageFlashAlgorithm
             Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                 ComboBoxFlashAlg.SelectedIndex = 0
@@ -1275,6 +1279,20 @@ Public Class FormStSim
 
     Private Sub chkValidateEqCalc_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkValidateEqCalc.CheckedChanged
         Me.FrmChild.Options.ValidateEquilibriumCalc = Me.chkValidateEqCalc.Checked
+        Me.tbFlashValidationTolerance.Enabled = Me.chkValidateEqCalc.Checked
+    End Sub
+
+    Private Sub tbFlashValidationTolerance_TextChanged(sender As System.Object, e As System.EventArgs) Handles tbFlashValidationTolerance.TextChanged
+        Try
+            Me.FrmChild.Options.FlashValidationDGETolerancePct = Me.tbFlashValidationTolerance.Text
+            Me.tbFlashValidationTolerance.ForeColor = Color.Blue
+        Catch ex As Exception
+            Me.tbFlashValidationTolerance.ForeColor = Color.Red
+        End Try
+    End Sub
+
+    Private Sub LinkLabelPropertyMethods_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabelPropertyMethods.LinkClicked
+        Process.Start("http://dwsim.inforside.com.br/wiki/index.php?title=Property_Methods_and_Correlation_Profiles")
     End Sub
 
 End Class

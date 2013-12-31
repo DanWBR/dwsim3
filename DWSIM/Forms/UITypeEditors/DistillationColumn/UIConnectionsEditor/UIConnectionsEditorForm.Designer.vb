@@ -22,44 +22,44 @@ Partial Class UIConnectionsEditorForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UIConnectionsEditorForm))
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.dgv1 = New System.Windows.Forms.DataGridView
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column5 = New System.Windows.Forms.DataGridViewComboBoxColumn
-        Me.Column3 = New System.Windows.Forms.DataGridViewComboBoxColumn
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.ToolStrip2 = New System.Windows.Forms.ToolStrip
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.dgv3 = New System.Windows.Forms.DataGridView
-        Me.DataGridViewComboBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewComboBoxColumn4 = New System.Windows.Forms.DataGridViewComboBoxColumn
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox
-        Me.dgv2 = New System.Windows.Forms.DataGridView
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewComboBoxColumn1 = New System.Windows.Forms.DataGridViewComboBoxColumn
-        Me.DataGridViewComboBoxColumn2 = New System.Windows.Forms.DataGridViewComboBoxColumn
-        Me.Column2 = New System.Windows.Forms.DataGridViewComboBoxColumn
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
-        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox
-        Me.dgv4 = New System.Windows.Forms.DataGridView
-        Me.DataGridViewComboBoxColumn5 = New System.Windows.Forms.DataGridViewComboBoxColumn
-        Me.DataGridViewComboBoxColumn6 = New System.Windows.Forms.DataGridViewComboBoxColumn
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.ToolStrip3 = New System.Windows.Forms.ToolStrip
-        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.dgv1 = New System.Windows.Forms.DataGridView()
+        Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.dgv3 = New System.Windows.Forms.DataGridView()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.dgv2 = New System.Windows.Forms.DataGridView()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.dgv4 = New System.Windows.Forms.DataGridView()
+        Me.ToolStrip3 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewComboBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewComboBoxColumn4 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewComboBoxColumn5 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.DataGridViewComboBoxColumn6 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewComboBoxColumn1 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.DataGridViewComboBoxColumn2 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1.SuspendLayout()
         CType(Me.dgv1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip2.SuspendLayout()
@@ -75,43 +75,190 @@ Partial Class UIConnectionsEditorForm
         '
         'GroupBox1
         '
-        Me.GroupBox1.AccessibleDescription = Nothing
-        Me.GroupBox1.AccessibleName = Nothing
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
-        Me.GroupBox1.BackgroundImage = Nothing
         Me.GroupBox1.Controls.Add(Me.dgv1)
         Me.GroupBox1.Controls.Add(Me.ToolStrip2)
-        Me.GroupBox1.Font = Nothing
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
         'dgv1
         '
-        Me.dgv1.AccessibleDescription = Nothing
-        Me.dgv1.AccessibleName = Nothing
         Me.dgv1.AllowUserToAddRows = False
         Me.dgv1.AllowUserToDeleteRows = False
         Me.dgv1.AllowUserToOrderColumns = True
         Me.dgv1.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.dgv1, "dgv1")
         Me.dgv1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dgv1.BackgroundImage = Nothing
         Me.dgv1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column5, Me.Column3, Me.Column4})
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle5.NullValue = "<empty>"
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv1.DefaultCellStyle = DataGridViewCellStyle5
-        Me.dgv1.Font = Nothing
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.NullValue = "<empty>"
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv1.DefaultCellStyle = DataGridViewCellStyle1
+        resources.ApplyResources(Me.dgv1, "dgv1")
         Me.dgv1.MultiSelect = False
         Me.dgv1.Name = "dgv1"
         Me.dgv1.RowHeadersVisible = False
         Me.dgv1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        '
+        'ToolStrip2
+        '
+        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2})
+        resources.ApplyResources(Me.ToolStrip2, "ToolStrip2")
+        Me.ToolStrip2.Name = "ToolStrip2"
+        '
+        'ToolStripButton1
+        '
+        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.add
+        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        '
+        'ToolStripButton2
+        '
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.delete1
+        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
+        Me.ToolStripButton2.Name = "ToolStripButton2"
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.dgv3)
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.TabStop = False
+        '
+        'dgv3
+        '
+        Me.dgv3.AllowUserToAddRows = False
+        Me.dgv3.AllowUserToDeleteRows = False
+        Me.dgv3.AllowUserToOrderColumns = True
+        Me.dgv3.AllowUserToResizeRows = False
+        Me.dgv3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgv3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv3.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewComboBoxColumn3, Me.DataGridViewComboBoxColumn4, Me.DataGridViewTextBoxColumn2})
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.NullValue = "<empty>"
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv3.DefaultCellStyle = DataGridViewCellStyle2
+        resources.ApplyResources(Me.dgv3, "dgv3")
+        Me.dgv3.MultiSelect = False
+        Me.dgv3.Name = "dgv3"
+        Me.dgv3.RowHeadersVisible = False
+        Me.dgv3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.dgv2)
+        Me.GroupBox3.Controls.Add(Me.ToolStrip1)
+        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.TabStop = False
+        '
+        'dgv2
+        '
+        Me.dgv2.AllowUserToAddRows = False
+        Me.dgv2.AllowUserToDeleteRows = False
+        Me.dgv2.AllowUserToOrderColumns = True
+        Me.dgv2.AllowUserToResizeRows = False
+        Me.dgv2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgv2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewComboBoxColumn1, Me.DataGridViewComboBoxColumn2, Me.Column2, Me.Column7, Me.Column6})
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.NullValue = "<empty>"
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv2.DefaultCellStyle = DataGridViewCellStyle3
+        resources.ApplyResources(Me.dgv2, "dgv2")
+        Me.dgv2.MultiSelect = False
+        Me.dgv2.Name = "dgv2"
+        Me.dgv2.RowHeadersVisible = False
+        Me.dgv2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        '
+        'ToolStrip1
+        '
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton3, Me.ToolStripButton4})
+        resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
+        Me.ToolStrip1.Name = "ToolStrip1"
+        '
+        'ToolStripButton3
+        '
+        Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.add
+        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
+        Me.ToolStripButton3.Name = "ToolStripButton3"
+        '
+        'ToolStripButton4
+        '
+        Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton4.Image = Global.DWSIM.My.Resources.Resources.delete1
+        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
+        Me.ToolStripButton4.Name = "ToolStripButton4"
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.dgv4)
+        Me.GroupBox4.Controls.Add(Me.ToolStrip3)
+        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.TabStop = False
+        '
+        'dgv4
+        '
+        Me.dgv4.AllowUserToAddRows = False
+        Me.dgv4.AllowUserToDeleteRows = False
+        Me.dgv4.AllowUserToOrderColumns = True
+        Me.dgv4.AllowUserToResizeRows = False
+        Me.dgv4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgv4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgv4.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewComboBoxColumn5, Me.DataGridViewComboBoxColumn6, Me.DataGridViewTextBoxColumn3})
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.NullValue = "<empty>"
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv4.DefaultCellStyle = DataGridViewCellStyle4
+        resources.ApplyResources(Me.dgv4, "dgv4")
+        Me.dgv4.MultiSelect = False
+        Me.dgv4.Name = "dgv4"
+        Me.dgv4.RowHeadersVisible = False
+        Me.dgv4.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        '
+        'ToolStrip3
+        '
+        Me.ToolStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton5, Me.ToolStripButton6})
+        resources.ApplyResources(Me.ToolStrip3, "ToolStrip3")
+        Me.ToolStrip3.Name = "ToolStrip3"
+        '
+        'ToolStripButton5
+        '
+        Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton5.Image = Global.DWSIM.My.Resources.Resources.add
+        Me.ToolStripButton5.Name = "ToolStripButton5"
+        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
+        '
+        'ToolStripButton6
+        '
+        Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.delete1
+        Me.ToolStripButton6.Name = "ToolStripButton6"
+        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
         '
         'Column1
         '
@@ -125,6 +272,7 @@ Partial Class UIConnectionsEditorForm
         Me.Column5.FillWeight = 20.0!
         resources.ApplyResources(Me.Column5, "Column5")
         Me.Column5.Name = "Column5"
+        Me.Column5.Sorted = True
         '
         'Column3
         '
@@ -139,75 +287,6 @@ Partial Class UIConnectionsEditorForm
         resources.ApplyResources(Me.Column4, "Column4")
         Me.Column4.Name = "Column4"
         Me.Column4.ReadOnly = True
-        '
-        'ToolStrip2
-        '
-        Me.ToolStrip2.AccessibleDescription = Nothing
-        Me.ToolStrip2.AccessibleName = Nothing
-        resources.ApplyResources(Me.ToolStrip2, "ToolStrip2")
-        Me.ToolStrip2.BackgroundImage = Nothing
-        Me.ToolStrip2.Font = Nothing
-        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2})
-        Me.ToolStrip2.Name = "ToolStrip2"
-        '
-        'ToolStripButton1
-        '
-        Me.ToolStripButton1.AccessibleDescription = Nothing
-        Me.ToolStripButton1.AccessibleName = Nothing
-        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
-        Me.ToolStripButton1.BackgroundImage = Nothing
-        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.add
-        Me.ToolStripButton1.Name = "ToolStripButton1"
-        '
-        'ToolStripButton2
-        '
-        Me.ToolStripButton2.AccessibleDescription = Nothing
-        Me.ToolStripButton2.AccessibleName = Nothing
-        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
-        Me.ToolStripButton2.BackgroundImage = Nothing
-        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.delete1
-        Me.ToolStripButton2.Name = "ToolStripButton2"
-        '
-        'GroupBox2
-        '
-        Me.GroupBox2.AccessibleDescription = Nothing
-        Me.GroupBox2.AccessibleName = Nothing
-        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.BackgroundImage = Nothing
-        Me.GroupBox2.Controls.Add(Me.dgv3)
-        Me.GroupBox2.Font = Nothing
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.TabStop = False
-        '
-        'dgv3
-        '
-        Me.dgv3.AccessibleDescription = Nothing
-        Me.dgv3.AccessibleName = Nothing
-        Me.dgv3.AllowUserToAddRows = False
-        Me.dgv3.AllowUserToDeleteRows = False
-        Me.dgv3.AllowUserToOrderColumns = True
-        Me.dgv3.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.dgv3, "dgv3")
-        Me.dgv3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dgv3.BackgroundImage = Nothing
-        Me.dgv3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv3.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewComboBoxColumn3, Me.DataGridViewComboBoxColumn4, Me.DataGridViewTextBoxColumn2})
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle6.NullValue = "<empty>"
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv3.DefaultCellStyle = DataGridViewCellStyle6
-        Me.dgv3.Font = Nothing
-        Me.dgv3.MultiSelect = False
-        Me.dgv3.Name = "dgv3"
-        Me.dgv3.RowHeadersVisible = False
-        Me.dgv3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         '
         'DataGridViewComboBoxColumn3
         '
@@ -224,6 +303,7 @@ Partial Class UIConnectionsEditorForm
         resources.ApplyResources(Me.DataGridViewComboBoxColumn4, "DataGridViewComboBoxColumn4")
         Me.DataGridViewComboBoxColumn4.Name = "DataGridViewComboBoxColumn4"
         Me.DataGridViewComboBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewComboBoxColumn4.Sorted = True
         Me.DataGridViewComboBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         '
         'DataGridViewTextBoxColumn2
@@ -231,45 +311,26 @@ Partial Class UIConnectionsEditorForm
         resources.ApplyResources(Me.DataGridViewTextBoxColumn2, "DataGridViewTextBoxColumn2")
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         '
-        'GroupBox3
+        'DataGridViewComboBoxColumn5
         '
-        Me.GroupBox3.AccessibleDescription = Nothing
-        Me.GroupBox3.AccessibleName = Nothing
-        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
-        Me.GroupBox3.BackgroundImage = Nothing
-        Me.GroupBox3.Controls.Add(Me.dgv2)
-        Me.GroupBox3.Controls.Add(Me.ToolStrip1)
-        Me.GroupBox3.Font = Nothing
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.TabStop = False
+        Me.DataGridViewComboBoxColumn5.FillWeight = 20.0!
+        resources.ApplyResources(Me.DataGridViewComboBoxColumn5, "DataGridViewComboBoxColumn5")
+        Me.DataGridViewComboBoxColumn5.Name = "DataGridViewComboBoxColumn5"
+        Me.DataGridViewComboBoxColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         '
-        'dgv2
+        'DataGridViewComboBoxColumn6
         '
-        Me.dgv2.AccessibleDescription = Nothing
-        Me.dgv2.AccessibleName = Nothing
-        Me.dgv2.AllowUserToAddRows = False
-        Me.dgv2.AllowUserToDeleteRows = False
-        Me.dgv2.AllowUserToOrderColumns = True
-        Me.dgv2.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.dgv2, "dgv2")
-        Me.dgv2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dgv2.BackgroundImage = Nothing
-        Me.dgv2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewComboBoxColumn1, Me.DataGridViewComboBoxColumn2, Me.Column2, Me.Column7, Me.Column6})
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle7.NullValue = "<empty>"
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv2.DefaultCellStyle = DataGridViewCellStyle7
-        Me.dgv2.Font = Nothing
-        Me.dgv2.MultiSelect = False
-        Me.dgv2.Name = "dgv2"
-        Me.dgv2.RowHeadersVisible = False
-        Me.dgv2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.DataGridViewComboBoxColumn6.FillWeight = 25.0!
+        resources.ApplyResources(Me.DataGridViewComboBoxColumn6, "DataGridViewComboBoxColumn6")
+        Me.DataGridViewComboBoxColumn6.Name = "DataGridViewComboBoxColumn6"
+        Me.DataGridViewComboBoxColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridViewComboBoxColumn6.Sorted = True
+        Me.DataGridViewComboBoxColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        resources.ApplyResources(Me.DataGridViewTextBoxColumn3, "DataGridViewTextBoxColumn3")
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
         '
         'DataGridViewTextBoxColumn1
         '
@@ -283,6 +344,7 @@ Partial Class UIConnectionsEditorForm
         Me.DataGridViewComboBoxColumn1.FillWeight = 20.0!
         resources.ApplyResources(Me.DataGridViewComboBoxColumn1, "DataGridViewComboBoxColumn1")
         Me.DataGridViewComboBoxColumn1.Name = "DataGridViewComboBoxColumn1"
+        Me.DataGridViewComboBoxColumn1.Sorted = True
         '
         'DataGridViewComboBoxColumn2
         '
@@ -312,140 +374,15 @@ Partial Class UIConnectionsEditorForm
         resources.ApplyResources(Me.Column6, "Column6")
         Me.Column6.Name = "Column6"
         '
-        'ToolStrip1
-        '
-        Me.ToolStrip1.AccessibleDescription = Nothing
-        Me.ToolStrip1.AccessibleName = Nothing
-        resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
-        Me.ToolStrip1.BackgroundImage = Nothing
-        Me.ToolStrip1.Font = Nothing
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton3, Me.ToolStripButton4})
-        Me.ToolStrip1.Name = "ToolStrip1"
-        '
-        'ToolStripButton3
-        '
-        Me.ToolStripButton3.AccessibleDescription = Nothing
-        Me.ToolStripButton3.AccessibleName = Nothing
-        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
-        Me.ToolStripButton3.BackgroundImage = Nothing
-        Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.add
-        Me.ToolStripButton3.Name = "ToolStripButton3"
-        '
-        'ToolStripButton4
-        '
-        Me.ToolStripButton4.AccessibleDescription = Nothing
-        Me.ToolStripButton4.AccessibleName = Nothing
-        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
-        Me.ToolStripButton4.BackgroundImage = Nothing
-        Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton4.Image = Global.DWSIM.My.Resources.Resources.delete1
-        Me.ToolStripButton4.Name = "ToolStripButton4"
-        '
-        'GroupBox4
-        '
-        Me.GroupBox4.AccessibleDescription = Nothing
-        Me.GroupBox4.AccessibleName = Nothing
-        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
-        Me.GroupBox4.BackgroundImage = Nothing
-        Me.GroupBox4.Controls.Add(Me.dgv4)
-        Me.GroupBox4.Controls.Add(Me.ToolStrip3)
-        Me.GroupBox4.Font = Nothing
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.TabStop = False
-        '
-        'dgv4
-        '
-        Me.dgv4.AccessibleDescription = Nothing
-        Me.dgv4.AccessibleName = Nothing
-        Me.dgv4.AllowUserToAddRows = False
-        Me.dgv4.AllowUserToDeleteRows = False
-        Me.dgv4.AllowUserToOrderColumns = True
-        Me.dgv4.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.dgv4, "dgv4")
-        Me.dgv4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dgv4.BackgroundImage = Nothing
-        Me.dgv4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv4.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewComboBoxColumn5, Me.DataGridViewComboBoxColumn6, Me.DataGridViewTextBoxColumn3})
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.NullValue = "<empty>"
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv4.DefaultCellStyle = DataGridViewCellStyle8
-        Me.dgv4.Font = Nothing
-        Me.dgv4.MultiSelect = False
-        Me.dgv4.Name = "dgv4"
-        Me.dgv4.RowHeadersVisible = False
-        Me.dgv4.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        '
-        'DataGridViewComboBoxColumn5
-        '
-        Me.DataGridViewComboBoxColumn5.FillWeight = 20.0!
-        resources.ApplyResources(Me.DataGridViewComboBoxColumn5, "DataGridViewComboBoxColumn5")
-        Me.DataGridViewComboBoxColumn5.Name = "DataGridViewComboBoxColumn5"
-        Me.DataGridViewComboBoxColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        '
-        'DataGridViewComboBoxColumn6
-        '
-        Me.DataGridViewComboBoxColumn6.FillWeight = 25.0!
-        resources.ApplyResources(Me.DataGridViewComboBoxColumn6, "DataGridViewComboBoxColumn6")
-        Me.DataGridViewComboBoxColumn6.Name = "DataGridViewComboBoxColumn6"
-        Me.DataGridViewComboBoxColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridViewComboBoxColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        resources.ApplyResources(Me.DataGridViewTextBoxColumn3, "DataGridViewTextBoxColumn3")
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        '
-        'ToolStrip3
-        '
-        Me.ToolStrip3.AccessibleDescription = Nothing
-        Me.ToolStrip3.AccessibleName = Nothing
-        resources.ApplyResources(Me.ToolStrip3, "ToolStrip3")
-        Me.ToolStrip3.BackgroundImage = Nothing
-        Me.ToolStrip3.Font = Nothing
-        Me.ToolStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton5, Me.ToolStripButton6})
-        Me.ToolStrip3.Name = "ToolStrip3"
-        '
-        'ToolStripButton5
-        '
-        Me.ToolStripButton5.AccessibleDescription = Nothing
-        Me.ToolStripButton5.AccessibleName = Nothing
-        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
-        Me.ToolStripButton5.BackgroundImage = Nothing
-        Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton5.Image = Global.DWSIM.My.Resources.Resources.add
-        Me.ToolStripButton5.Name = "ToolStripButton5"
-        '
-        'ToolStripButton6
-        '
-        Me.ToolStripButton6.AccessibleDescription = Nothing
-        Me.ToolStripButton6.AccessibleName = Nothing
-        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
-        Me.ToolStripButton6.BackgroundImage = Nothing
-        Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.delete1
-        Me.ToolStripButton6.Name = "ToolStripButton6"
-        '
         'UIConnectionsEditorForm
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Font = Nothing
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Icon = Nothing
         Me.Name = "UIConnectionsEditorForm"
         Me.ShowInTaskbar = False
         Me.GroupBox1.ResumeLayout(False)
@@ -481,24 +418,24 @@ Partial Class UIConnectionsEditorForm
     Public WithEvents dgv1 As System.Windows.Forms.DataGridView
     Public WithEvents dgv3 As System.Windows.Forms.DataGridView
     Public WithEvents dgv2 As System.Windows.Forms.DataGridView
-    Public WithEvents DataGridViewComboBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents DataGridViewComboBoxColumn4 As System.Windows.Forms.DataGridViewComboBoxColumn
-    Public WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents Column5 As System.Windows.Forms.DataGridViewComboBoxColumn
-    Public WithEvents Column3 As System.Windows.Forms.DataGridViewComboBoxColumn
-    Public WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
     Public WithEvents ToolStrip3 As System.Windows.Forms.ToolStrip
     Public WithEvents ToolStripButton5 As System.Windows.Forms.ToolStripButton
     Public WithEvents ToolStripButton6 As System.Windows.Forms.ToolStripButton
-    Public WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents DataGridViewComboBoxColumn1 As System.Windows.Forms.DataGridViewComboBoxColumn
-    Public WithEvents DataGridViewComboBoxColumn2 As System.Windows.Forms.DataGridViewComboBoxColumn
-    Public WithEvents Column2 As System.Windows.Forms.DataGridViewComboBoxColumn
-    Public WithEvents Column7 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
     Public WithEvents dgv4 As System.Windows.Forms.DataGridView
-    Public WithEvents DataGridViewComboBoxColumn5 As System.Windows.Forms.DataGridViewComboBoxColumn
-    Public WithEvents DataGridViewComboBoxColumn6 As System.Windows.Forms.DataGridViewComboBoxColumn
-    Public WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents Column3 As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewComboBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewComboBoxColumn4 As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewComboBoxColumn1 As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents DataGridViewComboBoxColumn2 As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents Column7 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewComboBoxColumn5 As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents DataGridViewComboBoxColumn6 As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

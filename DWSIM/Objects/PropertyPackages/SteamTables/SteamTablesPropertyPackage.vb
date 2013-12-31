@@ -52,6 +52,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Sub DW_CalcEquilibrium(ByVal spec1 As DWSIM.SimulationObjects.PropertyPackages.FlashSpec, ByVal spec2 As DWSIM.SimulationObjects.PropertyPackages.FlashSpec)
 
+            If Not Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey("Agua") Then
+                Throw New Exception("The Steam Tables Property Package only works with the 'Water (H2O)' compound from the DWSIM database. Please setup your simulation accordingly.")
+            End If
+
             Me.CurrentMaterialStream.AtEquilibrium = False
 
             Dim P, T, H, S, vf, lf, Psat, Hv, Hl, Sv, Sl As Double
@@ -374,6 +378,10 @@ FINAL:
         'End Sub
 
         Public Overrides Sub DW_CalcProp(ByVal [property] As String, ByVal phase As Fase)
+
+            If Not Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey("Agua") Then
+                Throw New Exception("The Steam Tables Property Package only works with the 'Water (H2O)' compound from the DWSIM database. Please setup your simulation accordingly.")
+            End If
 
             Dim result As Double = 0.0#
             Dim resultObj As Object = Nothing

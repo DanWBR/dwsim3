@@ -137,7 +137,9 @@ Public Class FormWelcome
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
         Me.Close()
         Application.DoEvents()
-        Process.Start(My.Application.Info.DirectoryPath & "\samples\")
+        Application.DoEvents()
+        FormMain.OpenFileDialog1.InitialDirectory = My.Application.Info.DirectoryPath & "\samples\"
+        Call FormMain.LoadFileDialog()
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click

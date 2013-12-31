@@ -173,6 +173,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
+            If Ri Is Nothing Then Ri = New Dictionary(Of String, Double)
             If Rxi Is Nothing Then Rxi = New Dictionary(Of String, Double)
             If DHRi Is Nothing Then DHRi = New Dictionary(Of String, Double)
             If DN Is Nothing Then DN = New Dictionary(Of String, Double)
