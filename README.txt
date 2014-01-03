@@ -1,6 +1,6 @@
 ==================================================
 DWSIM - Open Source Process Simulator
-Version 3.0, Build 5065
+Version 3.0, Build 5114
 Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo León
 ==================================================
 
@@ -94,6 +94,17 @@ Known limitations of DWSIM when running on Mono:
 ==================================================
 VERSION HISTORY / CHANGELOG
 ==================================================
+
+Version 3.0 Build 5114
+
+- [NEW] Temperature-dependent VLE/LLE regression for NRTL/UNIQUAC interaction parameters
+- [NEW] Excel Interface: created new functions that accept an initial estimate for temperature and pressure calculations
+- [CHG] Users can now specify the gibbs energy delta tolerance for validation of flash calculation results
+- [CHG] Welcome Screen: Button "Samples" opens a dialog with samples directory selected instead of displaying samples directory.
+- [CHG] Enhanced stability of the three-phase Gibbs Minimization flash algorithm
+- [FIX] Fixed enthalpy and entropy calculation through Excel interface
+- [FIX] Fixed CSTR and Shortcut Column models
+- [FIX] Minor bug fixes and enhancements
 
 Version 3.0 Build 5065
 

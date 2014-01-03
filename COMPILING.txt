@@ -1,0 +1,1 @@
+When compiling DWSIM using Visual Studio 2010/2012 or Visual Basic 2010/2012 Express Edition, change the build configuration to "Release/x86", otherwise you'll get missing file errors during initialization.
