@@ -1515,7 +1515,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 IP.Parameters.Collection("B21") = c_a21(1)
                 IP.Parameters.Collection("C21") = c_a21(2)
 
-                If IP.Model = "NRTL" Then
+                If currcase.model = "NRTL" Then
                     IP.Parameters.Collection("alpha12") = regpars(0)(2)
                 End If
 

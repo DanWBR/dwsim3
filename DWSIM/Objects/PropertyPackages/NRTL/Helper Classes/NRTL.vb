@@ -99,6 +99,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim csdb As New DWSIM.Databases.ChemSep
 
+
+           
+
             For Each nrtlip In nrtlipc
                 If Me.InteractionParameters.ContainsKey(csdb.GetDWSIMName(nrtlip.ID1)) Then
                     If Not Me.InteractionParameters(csdb.GetDWSIMName(nrtlip.ID1)).ContainsKey(csdb.GetDWSIMName(nrtlip.ID2)) Then
@@ -132,6 +135,38 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                     End If
                 End If
             Next
+
+         
+            'load interactions user database
+            Dim IPDBPath As String = "J:\Data\DWSIM Simulations\UserComponents\AlzChem_IPDB.xml"
+            Dim Interactions As DWSIM.ClassesBasicasTermodinamica.InteractionParameters()
+            Dim IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameters
+            Dim IPD As New NRTL_IPData
+            Try
+                Interactions = DWSIM.Databases.UserDB.ReadInteractions(IPDBPath, "NRTL")
+                For Each IP In Interactions
+                    IPD.A12 = IP.Parameters.Collection.Item("A12").ToString
+                    IPD.A21 = IP.Parameters.Collection.Item("A21").ToString
+                    IPD.alpha12 = IP.Parameters.Collection.Item("alpha12").ToString
+                    IPD.comment = IP.Parameters.Collection.Item("Description")
+                    If IP.Parameters.Collection.ContainsKey("B12") Then IPD.B12 = IP.Parameters.Collection.Item("B12").ToString
+                    If IP.Parameters.Collection.ContainsKey("B21") Then IPD.B21 = IP.Parameters.Collection.Item("B21").ToString
+                    If IP.Parameters.Collection.ContainsKey("C12") Then IPD.C12 = IP.Parameters.Collection.Item("C12").ToString
+                    If IP.Parameters.Collection.ContainsKey("C21") Then IPD.C21 = IP.Parameters.Collection.Item("C21").ToString
+
+                    If Me.InteractionParameters.ContainsKey(IP.Comp1) Then
+                        If Me.InteractionParameters(IP.Comp1).ContainsKey(IP.Comp2) Then
+                        Else
+                            Me.InteractionParameters(IP.Comp1).Add(IP.Comp2, IPD.Clone)
+                        End If
+                    Else
+                        Me.InteractionParameters.Add(IP.Comp1, New Dictionary(Of String, NRTL_IPData))
+                        Me.InteractionParameters(IP.Comp1).Add(IP.Comp2, IPD.Clone)
+                    End If
+                Next
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erroaocarregararquiv"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
 
 
             With fh1

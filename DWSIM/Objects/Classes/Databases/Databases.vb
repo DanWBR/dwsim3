@@ -730,6 +730,7 @@ Namespace DWSIM.Databases
                                 Exit For
                             End If
                         Next
+                        If index <> -1 Then Exit For
                         i += 1
                     Next
                 End If
@@ -745,7 +746,6 @@ Namespace DWSIM.Databases
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "DataType", "")).InnerText = IP.DataType
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Description", "")).InnerText = IP.Description
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "RegressionFile", "")).InnerText = IP.RegressionFile
-                    '.ToString(cult)
                     With .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Parameters", ""))
                         For Each par As DictionaryEntry In IP.Parameters.Collection
                             p = par.Value
@@ -940,8 +940,61 @@ Namespace DWSIM.Databases
             xmldoc = Nothing
 
         End Sub
+        Public Shared Function ReadInteractions(ByVal xmlpath As String, ByVal Model As String) As ClassesBasicasTermodinamica.InteractionParameters()
 
-        Public Shared Function Read(ByVal xmlpath As String) As ClassesBasicasTermodinamica.ConstantProperties()
+            Dim xmldoc As XmlDocument
+            Dim reader As XmlReader = XmlReader.Create(xmlpath)
+            reader.Read()
+
+            xmldoc = New XmlDocument
+            xmldoc.Load(reader)
+
+            Dim IP As ClassesBasicasTermodinamica.InteractionParameters
+            Dim IPA As New ArrayList()
+            Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
+            'Dim nf As Globalization.NumberFormatInfo = cult.NumberFormat
+
+            For Each node As XmlNode In xmldoc.ChildNodes(1)
+                IP = New ClassesBasicasTermodinamica.InteractionParameters
+                With IP
+                    For Each node2 As XmlNode In node.ChildNodes
+                        Select Case node2.Name
+                            Case "Comp1"
+                                .Comp1 = node2.InnerText
+                            Case "Comp2"
+                                .Comp2 = node2.InnerText
+                            Case "Model"
+                                .Model = node2.InnerText
+                            Case "DataType"
+                                .DataType = node2.InnerText
+                            Case "Description"
+                                .Description = node2.InnerText
+                            Case "RegressionFile"
+                                .RegressionFile = node2.InnerText
+                            Case "Parameters"
+                                For Each node3 As XmlNode In node2.ChildNodes
+                                    .Parameters.Collection.Add(node3.Attributes("name").InnerText, Double.Parse(node3.InnerText, cult))
+                                Next
+                        End Select
+                    Next
+                End With
+
+                If IP.Model = Model Then
+                    IPA.Add(IP)
+                End If
+
+            Next
+
+            xmldoc = Nothing
+
+            reader.Close()
+            reader = Nothing
+
+            Return IPA.ToArray(Type.GetType("DWSIM.DWSIM.ClassesBasicasTermodinamica.InteractionParameters"))
+
+        End Function
+
+        Public Shared Function ReadComps(ByVal xmlpath As String) As ClassesBasicasTermodinamica.ConstantProperties()
 
             Dim xmldoc As XmlDocument
             Dim reader As XmlReader = XmlReader.Create(xmlpath)

@@ -663,7 +663,7 @@ Public Class FormMain
         For Each fpath As String In My.Settings.UserDatabases
             Try
                 Dim componentes As ConstantProperties()
-                componentes = DWSIM.Databases.UserDB.Read(fpath)
+                componentes = DWSIM.Databases.UserDB.ReadComps(fpath)
                 If componentes.Length > 0 Then
                     If My.Settings.ReplaceComps Then
                         For Each c As ConstantProperties In componentes
