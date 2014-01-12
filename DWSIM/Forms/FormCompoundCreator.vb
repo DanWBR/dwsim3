@@ -2588,4 +2588,8 @@ End Class
     Public DataLDENS As New ArrayList
     Public DataCpS As New ArrayList
     Public DataRoS As New ArrayList
+
+    Protected Overrides Sub Finalize()
+        MyBase.Finalize()
+    End Sub
 End Class

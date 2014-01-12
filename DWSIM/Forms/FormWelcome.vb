@@ -120,6 +120,7 @@ Public Class FormWelcome
                     Dim objStreamReader As New FileStream(Me.lvlatest.SelectedItems(0).Tag, FileMode.Open)
                     Dim x As New BinaryFormatter()
                     NewMDIChild.currcase = x.Deserialize(objStreamReader)
+                    NewMDIChild.currcase.filename = Me.lvlatest.SelectedItems(0).Tag
                     objStreamReader.Close()
                     NewMDIChild.LoadCase(NewMDIChild.currcase, False)
             End Select

@@ -3057,6 +3057,7 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                     Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
                     Dim x As New BinaryFormatter()
                     NewMDIChild.currcase = x.Deserialize(objStreamReader)
+                    NewMDIChild.currcase.filename = Me.OpenFileDialog1.FileName
                     objStreamReader.Close()
                     NewMDIChild.LoadCase(NewMDIChild.currcase, False)
                     If Not My.Settings.MostRecentFiles.Contains(Me.OpenFileDialog1.FileName) Then

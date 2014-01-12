@@ -117,7 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="BtnSelectIPDB.Text" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="BtnSaveIPDB.Text" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 13</value>
+  </data>
+  <data name="Label12.Text" xml:space="preserve">
+    <value>Base de datos</value>
+  </data>
+  <data name="BtnNewIPDB.Text" xml:space="preserve">
+    <value>Nueva</value>
+  </data>
+  <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 13</value>
+  </data>
+  <data name="Label11.Text" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Información</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAICAAAAEACACoCAAAZgAAABAQAAABAAgAaAUAAA4JAACAgAAAAQAgACgIAQB2DgAAMDAAAAEA
@@ -1561,5 +1588,8 @@
         AAAAAAAAAAAAAAAAAAD8PzV78A8AAMADAACAAcADgAGAAQAAgAEAAAAAAAAAAAAAAAAAAAAAAAAAAIAB
         AACAAYABwAOAAeAHwAP4HwAE
 </value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Regresión de los datos</value>
   </data>
 </root>

@@ -117,18 +117,63 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
+  </data>
+  <data name="ToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Generate Points (UNIFAC)</value>
+  </data>
+  <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
+  </data>
+  <data name="ToolStripMenuItem2.Text" xml:space="preserve">
+    <value>Generate Points (NRTL)</value>
+  </data>
+  <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
+  </data>
+  <data name="ToolStripMenuItem3.Text" xml:space="preserve">
+    <value>Generate Points (UNIQUAC)</value>
+  </data>
+  <data name="ToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
+  </data>
+  <data name="ToolStripMenuItem4.Text" xml:space="preserve">
+    <value>Generate Points (PR)</value>
+  </data>
+  <data name="ToolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
+  </data>
+  <data name="ToolStripMenuItem5.Text" xml:space="preserve">
+    <value>Generate Points (SRK)</value>
+  </data>
+  <data name="ToolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
+  </data>
+  <data name="ToolStripMenuItem6.Text" xml:space="preserve">
+    <value>Generate Points (PRSV2-M)</value>
+  </data>
+  <data name="ToolStripMenuItem7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 22</value>
+  </data>
+  <data name="ToolStripMenuItem7.Text" xml:space="preserve">
+    <value>Generate Points (PRSV2-VL)</value>
+  </data>
+  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>222, 158</value>
+  </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Regression Results</value>
   </data>
   <data name="btnDoReg.Text" xml:space="preserve">
     <value>Run Regression</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkDoTDepRegression.Size" type="System.Drawing.Size, System.Drawing">
     <value>248, 17</value>
   </data>
   <data name="chkDoTDepRegression.Text" xml:space="preserve">
-    <value>Calculate parameters' temperature dependency</value>
+    <value>Calculate parameter's temperature dependency</value>
   </data>
   <data name="chkTS.Location" type="System.Drawing.Point, System.Drawing">
     <value>247, 275</value>
@@ -225,51 +270,6 @@
   <data name="Label4.Text" xml:space="preserve">
     <value>Model</value>
   </data>
-  <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
-  </data>
-  <data name="ToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Generate Points (UNIFAC)</value>
-  </data>
-  <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
-  </data>
-  <data name="ToolStripMenuItem2.Text" xml:space="preserve">
-    <value>Generate Points (NRTL)</value>
-  </data>
-  <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
-  </data>
-  <data name="ToolStripMenuItem3.Text" xml:space="preserve">
-    <value>Generate Points (UNIQUAC)</value>
-  </data>
-  <data name="ToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
-  </data>
-  <data name="ToolStripMenuItem4.Text" xml:space="preserve">
-    <value>Generate Points (PR)</value>
-  </data>
-  <data name="ToolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
-  </data>
-  <data name="ToolStripMenuItem5.Text" xml:space="preserve">
-    <value>Generate Points (SRK)</value>
-  </data>
-  <data name="ToolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
-  </data>
-  <data name="ToolStripMenuItem6.Text" xml:space="preserve">
-    <value>Generate Points (PRSV2-M)</value>
-  </data>
-  <data name="ToolStripMenuItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 22</value>
-  </data>
-  <data name="ToolStripMenuItem7.Text" xml:space="preserve">
-    <value>Generate Points (PRSV2-VL)</value>
-  </data>
-  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>222, 158</value>
-  </data>
   <data name="cbDataType.Items" xml:space="preserve">
     <value>Txy (VLE)</value>
   </data>
@@ -312,11 +312,35 @@
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Regression Information</value>
   </data>
+  <data name="BtnSelectIPDB.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="BtnSaveIPDB.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 58</value>
+  </data>
+  <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 13</value>
+  </data>
+  <data name="Label12.Text" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="tbIPDBName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>344, 55</value>
+  </data>
+  <data name="tbIPDBName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>506, 20</value>
+  </data>
+  <data name="BtnNewIPDB.Text" xml:space="preserve">
+    <value>New</value>
+  </data>
   <data name="tbDescription.Location" type="System.Drawing.Point, System.Drawing">
     <value>344, 19</value>
   </data>
   <data name="tbDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>860, 20</value>
+    <value>506, 20</value>
   </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 13</value>

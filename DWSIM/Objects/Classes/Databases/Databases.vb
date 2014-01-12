@@ -676,20 +676,94 @@ Namespace DWSIM.Databases
 
     <System.Serializable()> Public Class UserDB
 
-        Public Shared Sub CreateNew(ByVal path As String)
+        Public Shared Sub CreateNew(ByVal path As String, ByVal TopNode As String)
 
             Dim writer As New XmlTextWriter(path, Nothing)
 
             With writer
                 .Formatting = Formatting.Indented
                 .WriteStartDocument()
-                .WriteStartElement("compounds")
+                .WriteStartElement(TopNode)
                 .WriteEndElement()
                 .WriteEndDocument()
                 .Flush()
                 .Close()
             End With
 
+        End Sub
+        Public Shared Sub AddInteractionParameters(ByVal IPDS() As ClassesBasicasTermodinamica.InteractionParameters, ByVal xmlpath As String, ByVal replace As Boolean)
+            Dim xmldoc As XmlDocument
+            Dim reader As XmlReader = XmlReader.Create(xmlpath)
+            Try
+                reader.Read()
+            Catch ex As Exception
+                reader.Close()
+                CreateNew(xmlpath, "Interactions")
+                reader = XmlReader.Create(xmlpath)
+                reader.Read()
+            End Try
+
+            Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
+            Dim p As Double
+
+            xmldoc = New XmlDocument
+            xmldoc.Load(reader)
+
+            For Each IP As ClassesBasicasTermodinamica.InteractionParameters In IPDS
+                Dim index As Integer = -1
+                Dim i As Integer = 0
+                Dim C1, C2, M, S1, S2 As String
+
+                If xmldoc.ChildNodes.Count > 0 Then
+                    For Each node As XmlNode In xmldoc.ChildNodes(1)
+                        C1 = ""
+                        C2 = ""
+                        M = ""
+                        For Each node2 As XmlNode In node.ChildNodes
+                            If node2.Name = "Comp1" Then C1 = node2.InnerText
+                            If node2.Name = "Comp2" Then C2 = node2.InnerText
+                            If node2.Name = "Model" Then M = node2.InnerText
+                            S1 = C1 & C2 & M
+                            S2 = C2 & C1 & M
+                            If (S1 = IP.Comp1 & IP.Comp2 & IP.Model) Or (S2 = IP.Comp1 & IP.Comp2 & IP.Model) Then
+                                index = i
+                                Exit For
+                            End If
+                        Next
+                        i += 1
+                    Next
+                End If
+                If replace Then
+                    If index <> -1 Then xmldoc.ChildNodes(1).RemoveChild(xmldoc.ChildNodes(1).ChildNodes(index))
+                End If
+
+                Dim newnode As XmlNode = xmldoc.CreateNode("element", "Interaction", "")
+                With newnode
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Comp1", "")).InnerText = IP.Comp1
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Comp2", "")).InnerText = IP.Comp2
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Model", "")).InnerText = IP.Model
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "DataType", "")).InnerText = IP.DataType
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Description", "")).InnerText = IP.Description
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "RegressionFile", "")).InnerText = IP.RegressionFile
+                    '.ToString(cult)
+                    With .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Parameters", ""))
+                        For Each par As DictionaryEntry In IP.Parameters.Collection
+                            p = par.Value
+                            .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "", "Parameter", "")).InnerText = p.ToString(cult)
+                            .ChildNodes(.ChildNodes.Count - 1).Attributes.Append(xmldoc.CreateAttribute("name"))
+                            .ChildNodes(.ChildNodes.Count - 1).Attributes("name").Value = par.Key
+                        Next
+                    End With
+
+                End With
+                xmldoc.ChildNodes(1).AppendChild(newnode)
+            Next
+
+            reader.Close()
+            reader = Nothing
+
+            xmldoc.Save(xmlpath)
+            xmldoc = Nothing
         End Sub
 
         Public Shared Sub AddCompounds(ByVal comps() As ClassesBasicasTermodinamica.ConstantProperties, ByVal xmlpath As String, ByVal replace As Boolean)
@@ -700,7 +774,7 @@ Namespace DWSIM.Databases
                 reader.Read()
             Catch ex As Exception
                 reader.Close()
-                CreateNew(xmlpath)
+                CreateNew(xmlpath, "compounds")
                 reader = XmlReader.Create(xmlpath)
                 reader.Read()
             End Try

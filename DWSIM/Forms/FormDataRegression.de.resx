@@ -167,7 +167,7 @@
     <value>Regression Ergebnisse</value>
   </data>
   <data name="btnDoReg.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 509</value>
+    <value>123, 527</value>
   </data>
   <data name="btnDoReg.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 23</value>
@@ -176,10 +176,10 @@
     <value>Regression starten</value>
   </data>
   <data name="chkDoTDepRegression.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 17</value>
+    <value>264, 17</value>
   </data>
   <data name="chkDoTDepRegression.Text" xml:space="preserve">
-    <value>Calculate parameters' temperature dependency</value>
+    <value>Temperaturabhängigkeit der Parameter berechnen</value>
   </data>
   <data name="chkTS.Location" type="System.Drawing.Point, System.Drawing">
     <value>247, 275</value>
@@ -229,7 +229,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>233, 509</value>
+    <value>233, 527</value>
   </data>
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>62, 23</value>
@@ -327,11 +327,41 @@
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Regression Informationen</value>
   </data>
+  <data name="BtnSelectIPDB.Location" type="System.Drawing.Point, System.Drawing">
+    <value>181, 52</value>
+  </data>
+  <data name="BtnSelectIPDB.Text" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="BtnSaveIPDB.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 23</value>
+  </data>
+  <data name="BtnSaveIPDB.Text" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>290, 57</value>
+  </data>
+  <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 13</value>
+  </data>
+  <data name="Label12.Text" xml:space="preserve">
+    <value>Datenbank</value>
+  </data>
+  <data name="tbIPDBName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>356, 55</value>
+  </data>
+  <data name="tbIPDBName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>494, 20</value>
+  </data>
+  <data name="BtnNewIPDB.Text" xml:space="preserve">
+    <value>Neu</value>
+  </data>
   <data name="tbDescription.Location" type="System.Drawing.Point, System.Drawing">
     <value>356, 19</value>
   </data>
   <data name="tbDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>850, 20</value>
+    <value>494, 20</value>
   </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 13</value>

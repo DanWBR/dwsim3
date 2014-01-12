@@ -26,6 +26,7 @@ Imports Cureos.Numerics
 Imports DWSIM.DWSIM.Optimization.DatRegression
 Imports System.Threading.Tasks
 Imports System.Linq
+Imports System.IO
 
 Public Class FormDataRegression
 
@@ -41,6 +42,7 @@ Public Class FormDataRegression
     Private forceclose As Boolean = False
 
     Public currcase As RegressionCase
+    Public IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameters
 
     Public proppack As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
     Public ppname As String = ""
@@ -53,6 +55,7 @@ Public Class FormDataRegression
     Private Sub FormDataRegression_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         cv = New DWSIM.SistemasDeUnidades.Conversor
+        IP = New DWSIM.ClassesBasicasTermodinamica.InteractionParameters
 
         'get list of compounds
         Dim compounds As New ArrayList
@@ -116,6 +119,8 @@ Public Class FormDataRegression
             .title = tbTitle.Text
             .description = tbDescription.Text
             .results = tbRegResults.Text
+            .databasepath = tbIPDBName.Text
+            .filename = currcase.filename
             For Each r As DataGridViewRow In Me.GridExpData.Rows
                 If r.Index < Me.GridExpData.Rows.Count - 1 Then
                     If r.Cells("check").Value Then .checkp.Add(True) Else .checkp.Add(False)
@@ -153,6 +158,7 @@ Public Class FormDataRegression
                     .fixed2 = gridInEst.Rows(1).Cells(2).Value
                     .fixed3 = gridInEst.Rows(2).Cells(2).Value
             End Select
+
         End With
 
         Return mycase
@@ -197,6 +203,7 @@ Public Class FormDataRegression
             Me.cbPunit.SelectedItem = .punit
             Me.tbTitle.Text = .title
             Me.tbDescription.Text = .description
+            Me.tbIPDBName.Text = .databasepath
             Dim val0 As Boolean, val1, val2, val3, val4, val5, val6, val7 As String, i As Integer
             If .checkp Is Nothing Then .checkp = New ArrayList
             For i = 0 To .x1p.Count - 1
@@ -1400,9 +1407,13 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             output = True
 
             If Not chkDoTDepRegression.Checked Then
-
                 DoRegression(initval)
 
+                Dim k As Integer
+                IP.Parameters.Collection.Clear()
+                For k = 0 To regressedparameters.Count - 1
+                    IP.Parameters.Collection(regressedparameters.Keys(k)) = regressedparameters.Values(k)
+                Next
             Else
 
                 'get initial list of included parameters.
@@ -1495,6 +1506,19 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 tbRegResults.AppendText("C21 = " & c_a21(2) & vbCrLf)
                 tbRegResults.AppendText(vbCrLf)
                 tbRegResults.AppendText("Plotting results... ")
+
+                IP.Parameters.Collection.Clear()
+                IP.Parameters.Collection("A12") = c_a12(0)
+                IP.Parameters.Collection("B12") = c_a12(1)
+                IP.Parameters.Collection("C12") = c_a12(2)
+                IP.Parameters.Collection("A21") = c_a21(0)
+                IP.Parameters.Collection("B21") = c_a21(1)
+                IP.Parameters.Collection("C21") = c_a21(2)
+
+                If IP.Model = "NRTL" Then
+                    IP.Parameters.Collection("alpha12") = regpars(0)(2)
+                End If
+
 
                 drawtdep = True
                 output = False
@@ -3347,16 +3371,55 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
     End Sub
 
+    Private Sub BtnNewIPDB_Click(sender As System.Object, e As System.EventArgs) Handles BtnNewIPDB.Click
+        'Create new Interaction Parameter User Database
+        If Me.DBOpenDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+            If Not File.Exists(Me.DBOpenDlg.FileName) Then File.Create(Me.DBOpenDlg.FileName)
+            Me.tbIPDBName.Text = Me.DBOpenDlg.FileName
+        End If
+    End Sub
+
+    Private Sub BtnSaveIPDB_Click(sender As System.Object, e As System.EventArgs) Handles BtnSaveIPDB.Click
+        'Save Regression results to database
+        If IP.Parameters.Collection.Count > 0 Then
+            With currcase
+                IP.Comp1 = .comp1
+                IP.Comp2 = .comp2
+                IP.Model = .model
+                IP.DataType = [Enum].GetName(GetType(DataType), .datatype)
+                IP.Description = .description
+                IP.RegressionFile = .filename
+            End With
+            If Me.tbIPDBName.Text <> "" Then
+                Try
+                    DWSIM.Databases.UserDB.AddInteractionParameters(New DWSIM.ClassesBasicasTermodinamica.InteractionParameters() {IP}, tbIPDBName.Text, True)
+                Catch ex As Exception
+                    MessageBox.Show(DWSIM.App.GetLocalString("Erroaosalvararquivo") & ex.Message.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End If
+        Else
+            MessageBox.Show("No regressed parameters available! No data saved." & vbCrLf & "Please run regression first.", DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+    End Sub
+
+    Private Sub BtnSelectIPDB_Click(sender As System.Object, e As System.EventArgs) Handles BtnSelectIPDB.Click
+        'Select Interaction user database
+        If Me.DBOpenDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+            Me.tbIPDBName.Text = Me.DBOpenDlg.FileName
+        End If
+    End Sub
 End Class
 
 Namespace DWSIM.Optimization.DatRegression
 
-    <System.Serializable()> Public Class RegressionCase
 
+    <System.Serializable()> Public Class RegressionCase
         Public comp1, comp2, comp3 As String
         Public filename As String = ""
+        Public databasepath As String = ""
         Public model As String = "Peng-Robinson"
-        Public datatype As DataType = datatype.Pxy
+        Public datatype As DataType = DataType.Pxy
         Public tp, x1p, x2p, yp, pp, calct, calcp, calcy, calcx1l1, calcx1l2, checkp, ts, tl, calcts, calctl As New ArrayList
         Public method As String = "IPOPT"
         Public objfunction As String = "Least Squares (min T/P)"
@@ -3379,9 +3442,6 @@ Namespace DWSIM.Optimization.DatRegression
         Public idealvapormodel As Boolean = False
         Public useTLdata As Boolean = True
         Public useTSdata As Boolean = True
-
-
-
     End Class
 
     Public Enum DataType
@@ -3396,4 +3456,3 @@ Namespace DWSIM.Optimization.DatRegression
     End Enum
 
 End Namespace
-

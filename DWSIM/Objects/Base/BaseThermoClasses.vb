@@ -1992,7 +1992,50 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         End Property
 
     End Class
+    <System.Serializable()> Public Class InteractionParameters
+        Implements ICloneable, XMLSerializer.Interfaces.ICustomXMLSerialization
+        Public Comp1 As String = ""
+        Public Comp2 As String = ""
+        Public Model As String = ""
+        Public DataType As String = ""
+        Public Description As String = ""
+        Public RegressionFile As String = ""
+        Public Parameters As InteractionParameterCollection
+        Public Sub New()
+            Parameters = New InteractionParameterCollection
+        End Sub
+        Public Function Clone() As Object Implements System.ICloneable.Clone
+            Return ObjectCopy(Me)
+        End Function
+        Function ObjectCopy(ByVal obj As InteractionParameters) As InteractionParameters
 
+            Dim objMemStream As New MemoryStream(50000)
+            Dim objBinaryFormatter As New BinaryFormatter(Nothing, New StreamingContext(StreamingContextStates.Clone))
+
+            objBinaryFormatter.Serialize(objMemStream, obj)
+
+            objMemStream.Seek(0, SeekOrigin.Begin)
+
+            ObjectCopy = objBinaryFormatter.Deserialize(objMemStream)
+
+            objMemStream.Close()
+
+        End Function
+
+        Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
+
+            Return True
+        End Function
+
+        Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
+
+            Dim elements As List(Of System.Xml.Linq.XElement) = XMLSerializer.XMLSerializer.Serialize(Me, True)
+            Dim ci As CultureInfo = CultureInfo.InvariantCulture
+
+            Return elements
+        End Function
+    End Class
     <System.Serializable()> Public Class ConstantProperties
 
         Implements ICloneable, XMLSerializer.Interfaces.ICustomXMLSerialization
@@ -2278,6 +2321,12 @@ Namespace DWSIM.ClassesBasicasTermodinamica
     End Class
 
     <System.Serializable()> Public Class ElementCollection
+        Public Collection As New System.Collections.SortedList
+        Sub New()
+            Collection = New System.Collections.SortedList
+        End Sub
+    End Class
+    <System.Serializable()> Public Class InteractionParameterCollection
         Public Collection As New System.Collections.SortedList
         Sub New()
             Collection = New System.Collections.SortedList
