@@ -51,6 +51,8 @@ CHEMSEP 2 component IDs;CHEMSEP 2 Names;DWSIM Names
 214;2-methyl-2-butene;
 216;1-hexene;
 234;1-heptene;
+250;1-octene;
+270;Cyclohexene;
 301;Propadiene;
 302;1,2-butadiene;
 303;1,3-butadiene;
@@ -69,7 +71,10 @@ CHEMSEP 2 component IDs;CHEMSEP 2 Names;DWSIM Names
 507;P-xylene;Pxileno
 509;N-propylbenzene;
 510;Cumene;
+514;1,2,3-trimethylbenzene;
+515;1,2,4-trimethylbenzene;
 518;N-butylbenzene;
+524;P-cymene;
 558;Biphenyl;
 601;Styrene;
 701;Naphthalene;
@@ -103,10 +108,12 @@ CHEMSEP 2 component IDs;CHEMSEP 2 Names;DWSIM Names
 922;Bromine;
 1001;Formaldehyde;
 1002;Acetaldehyde;
+1003;Propanal;
 1006;2-methylpropanal;
 1051;Acetone;
 1052;Methyl ethyl ketone;MetilEtilCetona
 1053;3-pentanone;
+1054;Methyl isobutyl ketone;
 1061;Methyl isopropyl ketone;
 1080;Cyclohexanone;
 1101;Methanol;Metanol
@@ -118,6 +125,7 @@ CHEMSEP 2 component IDs;CHEMSEP 2 Names;DWSIM Names
 1107;2-butanol;
 1108;2-methyl-2-propanol;
 1111;2-methyl-2-butanol;
+1114;1-hexanol;
 1151;Cyclohexanol;
 1181;Phenol;Fenol
 1182;O-cresol;
@@ -127,22 +135,32 @@ CHEMSEP 2 component IDs;CHEMSEP 2 Names;DWSIM Names
 1202;Diethylene glycol;
 1203;Triethylene glycol;
 1204;Tetraethylene glycol;
+1241;1,4-butanediol;
 1252;Acetic acid;
 1253;Propionic acid;
 1256;N-butyric acid;
+1277;Acrylic acid;
+1278;Methacrylic acid;
 1301;Methyl formate;
 1302;Ethyl formate;
 1303;N-propyl formate;
 1312;Methyl acetate;
 1313;Ethyl acetate;
 1314;N-propyl acetate;
+1315;N-butyl acetate;
+1321;Vinyl acetate;
 1322;Methyl propionate;
+1351;Methyl methacrylate;
 1401;Dimethyl ether;
 1402;Diethyl ether;
+1403;Diisopropyl ether;
 1405;Methyl tert-butyl ether;
 1421;1,4-dioxane;
 1427;Methyl tert-pentyl ether;
+1431;Methylal;
 1441;Ethylene oxide;
+1442;1,2-propylene oxide;
+1461;Anisole;
 1479;Tetrahydrofuran;
 1501;Carbon tetrachloride;
 1502;Methyl chloride;
@@ -166,8 +184,14 @@ CHEMSEP 2 component IDs;CHEMSEP 2 Names;DWSIM Names
 1704;Ethylamine;
 1706;Triethylamine;
 1710;Diethylamine;
+1741;Ethylenediamine;
+1760;Nitromethane;
+1761;Nitroethane;
+1762;1-nitropropane;
+1763;2-nitropropane;
 1771;Hydrogen cyanide;
 1772;Acetonitrile;
+1773;Propionitrile;
 1774;Acrylonitrile;
 1775;Methacrylonitrile;
 1791;Pyridine;
@@ -175,6 +199,7 @@ CHEMSEP 2 component IDs;CHEMSEP 2 Names;DWSIM Names
 1802;Ethyl mercaptan;
 1820;Dimethyl sulfide;
 1821;Thiophene;
+1844;Dimethyl sulfoxide;
 1845;Sulfolane;
 1851;Acetyl chloride;
 1854;Dichloroacetyl chloride;
