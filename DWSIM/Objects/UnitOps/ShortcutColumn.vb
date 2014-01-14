@@ -243,21 +243,7 @@ restart:    B = F - D
                 i = i + 1
             Loop Until i = n + 1
 
-            If D = 0 Then
-
-                'call the flowsheet calculation routine
-
-                With objargs
-                    .Calculado = False
-                    .Nome = Me.Nome
-                    .Tipo = Me.GraphicObject.TipoObjeto
-                End With
-
-                GoTo final
-
-            End If
-
-            If Double.IsNaN(D) Then Throw New ArgumentOutOfRangeException("D")
+            If Double.IsNaN(D) Or D = 0.0# Then Throw New ArgumentOutOfRangeException("D", "Invalid value for Distillate Rate: " & D)
 
             CheckCalculatorStatus()
 
@@ -402,6 +388,10 @@ restart:    B = F - D
 
             pp.CurrentMaterialStream = distillate
 
+            For Each comp As DWSIM.ClassesBasicasTermodinamica.Substancia In distillate.Fases(0).Componentes.Values
+                comp.FracaoMassica = pp.AUX_CONVERT_MOL_TO_MASS(comp.Nome, 0)
+            Next
+
             If Me.condtype = CondenserType.PartialCond Then
                 result = pp.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.VAP, m_condenserpressure, 1, 0)
                 TD = result(2)
@@ -417,6 +407,10 @@ restart:    B = F - D
             HD = distillate.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * distillate.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
 
             pp.CurrentMaterialStream = bottoms
+
+            For Each comp As DWSIM.ClassesBasicasTermodinamica.Substancia In bottoms.Fases(0).Componentes.Values
+                comp.FracaoMassica = pp.AUX_CONVERT_MOL_TO_MASS(comp.Nome, 0)
+            Next
 
             result = pp.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.VAP, m_boilerpressure, 0.001, 0)
             TB = result(2)
