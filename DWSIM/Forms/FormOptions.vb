@@ -224,8 +224,19 @@ Public Class FormOptions
             End Try
         End If
     End Sub
+    Private Sub Button4_Click(sender As System.Object, e As System.EventArgs) Handles Button4.Click
+        'Add interaction parameter user database
+        If Me.OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            Dim path = Me.OpenFileDialog1.FileName
 
-    Private Sub Button10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+            If Not My.Settings.UserInteractionsDatabases.Contains(path) Then
+                My.Settings.UserInteractionsDatabases.Add(path)
+                My.Settings.Save()
+                With Me.dgvIPDB.Rows
+                    .Add(New Object() {dgvIPDB.Rows.Count + 1, My.Resources.information, "User", path, DWSIM.App.GetLocalString("Remove")})
+                End With
+            End If
+        End If
 
     End Sub
 
@@ -242,9 +253,6 @@ Public Class FormOptions
                     path2 = My.Settings.ChemSepDatabasePath
                     Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString("Remove")})
                     Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(4).ReadOnly = True
-                    For Each r As DataGridViewRow In Me.dgvdb.Rows
-                        r.Height = "40"
-                    Next
                 End If
             End If
         End With
@@ -257,9 +265,6 @@ Public Class FormOptions
             With Me.dgvdb.Rows
                 .Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path, DWSIM.App.GetLocalString("Remove")})
             End With
-            For Each r As DataGridViewRow In Me.dgvdb.Rows
-                r.Height = "40"
-            Next
         End If
     End Sub
 
@@ -268,7 +273,13 @@ Public Class FormOptions
         Dim pathsep As Char = Path.DirectorySeparatorChar
 
         Me.dgvdb.Rows.Clear()
+        Me.dgvIPDB.Rows.Clear()
+
         Dim name, path2 As String
+
+        '===========================
+        '=== Component databases ===
+        '===========================
 
         'dwsim databases
         name = "DWSIM"
@@ -303,10 +314,33 @@ Public Class FormOptions
             Next
         End If
 
-        For Each r As DataGridViewRow In Me.dgvdb.Rows
-            r.Height = "40"
-        Next
+        '=======================================
+        '=== Interaction parameter databases ===
+        '=======================================
+        'chemsep databases 
+        name = "ChemSep NRTL"
+        path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "nrtl.dat"
+        Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, My.Resources.information, name, path2, " "})
+        Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(4).ReadOnly = True
 
+        name = "ChemSep UNIQUAC-1"
+        path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "uniquac.dat"
+        Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString(" ")})
+        Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(4).ReadOnly = True
+
+        name = "ChemSep UNIQUAC-2"
+        path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "uniquacip.dat"
+        Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString(" ")})
+        Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(4).ReadOnly = True
+
+        'user databases
+        If Not My.Settings.UserInteractionsDatabases Is Nothing Then
+            For Each str As String In My.Settings.UserInteractionsDatabases
+                path2 = str
+                If File.Exists(path2) Then Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, My.Resources.information, "User", path2, DWSIM.App.GetLocalString("Remove")})
+                i = i + 1
+            Next
+        End If
     End Sub
 
     Private Sub dgvdb_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvdb.CellContentClick
@@ -325,13 +359,27 @@ Public Class FormOptions
                 'remove user database
                 My.Settings.UserDatabases.Remove(Me.dgvdb.Rows(e.RowIndex).Cells(3).Value)
                 Me.dgvdb.Rows.RemoveAt(e.RowIndex)
-                MessageBox.Show(DWSIM.App.GetLocalString("UDBRemoved"))
+                MessageBox.Show(DWSIM.App.GetLocalString("UDBRemoved"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             End If
 
         End If
+      
     End Sub
+    Private Sub dgvIPDB_CellContentClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvIPDB.CellContentClick
 
+        If e.ColumnIndex = 4 And e.RowIndex > 2 Then
+            If Me.dgvIPDB.Rows(e.RowIndex).Cells(2).Value = "User" Then
+
+                'remove user database
+                My.Settings.UserInteractionsDatabases.Remove(Me.dgvIPDB.Rows(e.RowIndex).Cells(3).Value)
+                My.Settings.Save()
+                Me.dgvIPDB.Rows.RemoveAt(e.RowIndex)
+                MessageBox.Show(DWSIM.App.GetLocalString("UDBRemoved"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
+        End If
+    End Sub
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         If Me.ListView1.SelectedIndices.Count > 0 Then
             Select Case Me.ListView1.SelectedIndices.Item(0)
@@ -377,9 +425,6 @@ Public Class FormOptions
                     path2 = My.Settings.ChemSepDatabasePath
                     Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString("Remove")})
                     Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(4).ReadOnly = True
-                    For Each r As DataGridViewRow In Me.dgvdb.Rows
-                        r.Height = "40"
-                    Next
                 End If
                 MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
             End If
@@ -454,5 +499,4 @@ Public Class FormOptions
     Private Sub CheckBoxConstantProperties_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxConstantProperties.CheckedChanged
         My.Settings.ReplaceCompoundConstantProperties = CheckBoxConstantProperties.Checked
     End Sub
-
 End Class

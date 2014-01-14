@@ -865,6 +865,7 @@
     <Compile Include="Objects\PropertyPackages\SRK\SRKPropertyPackage.vb" />
     <Compile Include="Objects\Classes\Shared\Shared Functions.vb" />
     <Compile Include="Objects\Classes\Optimization\SensitivityAnalysis.vb" />
+    <Compile Include="Settings.vb" />
     <Compile Include="Solvers\CommandLineProcessor.vb" />
     <Compile Include="Solvers\FlowsheetSolver.vb" />
     <Compile Include="Solvers\RigorousColumnSolver.vb" />

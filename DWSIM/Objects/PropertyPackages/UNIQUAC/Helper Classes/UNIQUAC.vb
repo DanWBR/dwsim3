@@ -80,16 +80,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             End Get
         End Property
 
-        ' Public ReadOnly Property InteractionParameters2() As Dictionary(Of String, Dictionary(Of String, NRTL_IPData))
-        '    Get
-        '        Return _ip2
-        '    End Get
-        'End Property
-
         Sub New()
 
             _ip = New Dictionary(Of String, Dictionary(Of String, UNIQUAC_IPData))
-            '_ip2 = New Dictionary(Of String, Dictionary(Of String, UNIQUAC_IPData))
 
             Dim pathsep As Char = System.IO.Path.DirectorySeparatorChar
 
@@ -102,6 +95,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim csdb As New DWSIM.Databases.ChemSep
 
+            'load UNIQUAC.DAT database interactions
             For Each uniquacip In uniquacipc
                 If Me.InteractionParameters.ContainsKey(csdb.GetDWSIMName(uniquacip.ID1)) Then
                     If Not Me.InteractionParameters(csdb.GetDWSIMName(uniquacip.ID1)).ContainsKey(csdb.GetDWSIMName(uniquacip.ID2)) Then
@@ -135,6 +129,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 End If
             Next
 
+            'load UNIQUACIP.DAT database interactions
             For Each uniquacip In uniquacipc2
                 uniquacip.A12 *= 1.98721
                 uniquacip.A21 *= 1.98721
@@ -173,11 +168,46 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 End If
             Next
 
+            'load user database interactions
+            If Not My.Settings.UserInteractionsDatabases Is Nothing Then
+                For Each IPDBPath As String In My.Settings.UserInteractionsDatabases
+
+                    Dim Interactions As DWSIM.ClassesBasicasTermodinamica.InteractionParameters()
+                    Dim IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameters
+                    Dim IPD As New UNIQUAC_IPData
+                    Try
+                        Interactions = DWSIM.Databases.UserDB.ReadInteractions(IPDBPath, "UNIQUAC")
+                        For Each IP In Interactions
+                            IPD.A12 = IP.Parameters.Collection.Item("A12").ToString
+                            IPD.A21 = IP.Parameters.Collection.Item("A21").ToString
+                            IPD.comment = IP.Parameters.Collection.Item("Description")
+                            If IP.Parameters.Collection.ContainsKey("B12") Then IPD.B12 = IP.Parameters.Collection.Item("B12").ToString
+                            If IP.Parameters.Collection.ContainsKey("B21") Then IPD.B21 = IP.Parameters.Collection.Item("B21").ToString
+                            If IP.Parameters.Collection.ContainsKey("C12") Then IPD.C12 = IP.Parameters.Collection.Item("C12").ToString
+                            If IP.Parameters.Collection.ContainsKey("C21") Then IPD.C21 = IP.Parameters.Collection.Item("C21").ToString
+
+                            If Me.InteractionParameters.ContainsKey(IP.Comp1) Then
+                                If Me.InteractionParameters(IP.Comp1).ContainsKey(IP.Comp2) Then
+                                Else
+                                    Me.InteractionParameters(IP.Comp1).Add(IP.Comp2, IPD.Clone)
+                                End If
+                            Else
+                                Me.InteractionParameters.Add(IP.Comp1, New Dictionary(Of String, UNIQUAC_IPData))
+                                Me.InteractionParameters(IP.Comp1).Add(IP.Comp2, IPD.Clone)
+                            End If
+                        Next
+                    Catch ex As Exception
+                        MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erroaocarregararquiv"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                Next
+            End If
+           
+
+
             uniquacip = Nothing
             uniquacipc = Nothing
-            'uniquacipc2 = Nothing
+            uniquacipc2 = Nothing
             fh1 = Nothing
-            'fh2 = Nothing
 
         End Sub
 

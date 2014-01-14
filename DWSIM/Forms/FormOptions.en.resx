@@ -117,36 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Features</value>
-  </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Compound Databases</value>
-  </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>UI Language</value>
-  </data>
-  <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Backups</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="GroupBox7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 6</value>
-  </data>
-  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>745, 266</value>
-  </data>
-  <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Calculation Engine</value>
+  <data name="tbGPUCaps.Size" type="System.Drawing.Size, System.Drawing">
+    <value>727, 166</value>
   </data>
   <data name="GroupBox8.Size" type="System.Drawing.Size, System.Drawing">
     <value>733, 186</value>
   </data>
   <data name="GroupBox8.Text" xml:space="preserve">
     <value>OpenCL/CUDA device info</value>
-  </data>
-  <data name="tbGPUCaps.Size" type="System.Drawing.Size, System.Drawing">
-    <value>727, 166</value>
   </data>
   <data name="cbGPU.Location" type="System.Drawing.Point, System.Drawing">
     <value>383, 47</value>
@@ -196,11 +175,14 @@
   <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
     <value>Enable CPU Parallel Processing</value>
   </data>
-  <data name="GroupBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 320</value>
+  <data name="GroupBox7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 6</value>
   </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Other</value>
+  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>745, 266</value>
+  </data>
+  <data name="GroupBox7.Text" xml:space="preserve">
+    <value>Calculation Engine</value>
   </data>
   <data name="chkUpdates.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 43</value>
@@ -220,14 +202,11 @@
   <data name="chkconsole.Text" xml:space="preserve">
     <value>Redirect console output</value>
   </data>
-  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 273</value>
+  <data name="GroupBox6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 320</value>
   </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>745, 44</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Reminders</value>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Other</value>
   </data>
   <data name="KryptonCheckBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 20</value>
@@ -238,8 +217,17 @@
   <data name="KryptonCheckBox1.Text" xml:space="preserve">
     <value>Show the welcome screen on startup</value>
   </data>
-  <data name="GroupBox9.Text" xml:space="preserve">
-    <value>Compound Constant Properties</value>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 273</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>745, 44</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Reminders</value>
+  </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Features</value>
   </data>
   <data name="Label8.Text" xml:space="preserve">
     <value>If checked, when you load a simulation file, if the simulation compounds are also present in one of the loaded databases, DWSIM will use the constant properties loaded from the simulation file instead of the ones existing in the loaded databases.</value>
@@ -250,14 +238,8 @@
   <data name="CheckBoxConstantProperties.Text" xml:space="preserve">
     <value>Replace database constant properties with the ones from the simulation file</value>
   </data>
-  <data name="GroupBox11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 316</value>
-  </data>
-  <data name="GroupBox11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>745, 72</value>
-  </data>
-  <data name="GroupBox11.Text" xml:space="preserve">
-    <value>Tasks</value>
+  <data name="GroupBox9.Text" xml:space="preserve">
+    <value>Compound Constant Properties</value>
   </data>
   <data name="cbudb.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 47</value>
@@ -286,17 +268,38 @@
   <data name="Button7.Text" xml:space="preserve">
     <value>Add User Database</value>
   </data>
+  <data name="GroupBox11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 316</value>
+  </data>
+  <data name="GroupBox11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>745, 72</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="dgvdb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>740, 209</value>
+  </data>
   <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
     <value>746, 232</value>
   </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Compound Databases</value>
   </data>
-  <data name="dgvdb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>740, 209</value>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Compound Databases</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>UI Language</value>
+  <data name="Button4.Text" xml:space="preserve">
+    <value>Add user database</value>
+  </data>
+  <data name="GroupBox12.Text" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="GroupBox10.Text" xml:space="preserve">
+    <value>Interaction parameter databases</value>
+  </data>
+  <data name="FaTabStripItem6.Title" xml:space="preserve">
+    <value>Interaction parameters</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
     <value>279, 47</value>
@@ -376,7 +379,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABw
-        KgAAAk1TRnQBSQFMAgEBCgEAAewBAAHsAQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAfQBAAH0AQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAeQCogHiAqAB4QKfAd4CnAHcAZwBmgHaApgB2gKYAdkClwHXApUB1gKU
         AdMCkQHTApEB0QKPAc8CjQHPAo0BzwKNAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKf
         Ad4CnAHeApwB3AKaAdoCmAHaApgB2gKYAdoCmGAAA+wD8APuA+0B6gHrAeoD6APnAuUB5gLjAeQD4gPh
@@ -575,8 +578,11 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Select an User Interface Language from the list below and click 'OK' to confirm:</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Backup Copy</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>UI Language</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>UI Language</value>
   </data>
   <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>225, 25</value>
@@ -608,8 +614,11 @@
   <data name="KryptonCheckBox6.Text" xml:space="preserve">
     <value>Enable backup copies</value>
   </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>IronPython and IronRuby</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Backup Copy</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Backups</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>33, 13</value>
@@ -628,6 +637,9 @@
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Manage the paths were the compiler should search files for importing into scripts:</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>IronPython and IronRuby</value>
   </data>
   <data name="FolderBrowserDialog1.Description" xml:space="preserve">
     <value>Select a folder...</value>

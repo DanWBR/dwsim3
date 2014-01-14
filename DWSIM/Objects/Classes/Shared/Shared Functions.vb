@@ -174,6 +174,15 @@ Namespace DWSIM
                 Next
             End With
 
+            My.Settings.UserInteractionsDatabases = New Collections.Specialized.StringCollection()
+
+            With source
+                col = .Configs("UserInteractionsDatabases").GetValues()
+                For Each Str As String In col
+                    My.Settings.UserInteractionsDatabases.Add(Str)
+                Next
+            End With
+
             My.Settings.BackupFiles = New Collections.Specialized.StringCollection()
 
             With source
