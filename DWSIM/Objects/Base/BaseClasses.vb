@@ -21,7 +21,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Runtime.Serialization
 Imports System.IO
 Imports System.Linq
-Imports DWSIM.Interfaces
+Imports DWSIM.Interfaces2
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports Microsoft.Scripting.Hosting
 Imports CapeOpen

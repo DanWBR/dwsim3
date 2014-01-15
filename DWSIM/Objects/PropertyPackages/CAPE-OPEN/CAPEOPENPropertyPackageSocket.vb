@@ -1487,6 +1487,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Me.ComponentDescription = (From el As XElement In data Select el Where el.Name = "ComponentDescription").SingleOrDefault.Value
             Me.Tag = (From el As XElement In data Select el Where el.Name = "Tag").SingleOrDefault.Value
             Me._coversion = (From el As XElement In data Select el Where el.Name = "CAPEOPEN_Version").SingleOrDefault.Value
+            Me._ppname = (From el As XElement In data Select el Where el.Name = "CAPEOPEN_PropertyPackageName").SingleOrDefault.Value
 
             _mappings.Clear()
             For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "CompoundMappings").Elements
@@ -1528,6 +1529,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 .Add(New XElement("ComponentDescription", ComponentDescription))
                 .Add(New XElement("Tag", Tag))
                 .Add(New XElement("CAPEOPEN_Version", _coversion))
+                .Add(New XElement("CAPEOPEN_PropertyPackageName", _ppname))
                 .Add(New XElement("CAPEOPEN_Object_Info", _selts.SaveData().ToArray))
                 .Add(New XElement("CompoundMappings"))
                 For Each kvp As KeyValuePair(Of String, String) In _mappings

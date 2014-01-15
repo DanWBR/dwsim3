@@ -27,7 +27,7 @@ Imports System.Math
 Imports CapeOpen
 Imports System.Runtime.InteropServices.ComTypes
 Imports iop = System.Runtime.InteropServices
-Imports DWSIM.Interfaces
+Imports DWSIM.Interfaces2
 Imports System.Xml.Serialization
 Imports System.Runtime.Serialization.Formatters
 Imports System.Threading.Tasks
@@ -167,12 +167,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 #Region "   Constructor"
 
         Sub New()
-            Me.New(False)
+            'Me.New(False)
+            MyBase.New()
         End Sub
 
         Sub New(ByVal capeopenmode As Boolean)
 
-            If capeopenmode Then My.Application.CAPEOPENMode = capeopenmode
+            My.Application.CAPEOPENMode = capeopenmode
 
             If capeopenmode Then
 

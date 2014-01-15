@@ -2957,7 +2957,7 @@ Namespace DWSIM.SimulationObjects.Streams
             If Not Me.PropertyPackage Is Nothing Then
                 Me.PropertyPackage.CurrentMaterialStream = Me
                 Try
-                    Me.PropertyPackage.GetComponentList(compIds, formulae, names, boilTemps, molwts, casnos)
+                    Me.PropertyPackage.GetCompoundList(compIds, formulae, names, boilTemps, molwts, casnos)
                 Catch ex As Exception
                     Dim hcode As Integer = 0
                     Dim comEx As COMException = New COMException(ex.Message.ToString, ex)
@@ -3684,13 +3684,13 @@ Namespace DWSIM.SimulationObjects.Streams
             Select Case phaseLabel.ToLower
                 Case "overall"
                     For Each c As String In comps
-                        arr.Add(Me.Fases(0).Componentes(c).FracaoMolar)
+                        arr.Add(Me.Fases(0).Componentes(c).FracaoMolar.GetValueOrDefault)
                     Next
                 Case Else
                     For Each pi As PhaseInfo In Me.PropertyPackage.PhaseMappings.Values
                         If phaseLabel = pi.PhaseLabel Then
                             For Each c As String In comps
-                                arr.Add(Me.Fases(pi.DWPhaseIndex).Componentes(c).FracaoMolar)
+                                arr.Add(Me.Fases(pi.DWPhaseIndex).Componentes(c).FracaoMolar.GetValueOrDefault)
                             Next
                             Exit For
                         End If
