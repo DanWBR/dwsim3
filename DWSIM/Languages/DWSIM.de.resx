@@ -2054,7 +2054,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Iteration</value>
   </data>
   <data name="IterationsTaken" xml:space="preserve">
-    <value>IterationsTaken</value>
+    <value>Benötigtes Iterationen</value>
   </data>
   <data name="JaExisteObjetoNome" xml:space="preserve">
     <value>Ein Objekt mit dem angegebenen Namen existiert bereits auf dem Fließbild.</value>
@@ -4746,16 +4746,16 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Activity Coefficients</value>
   </data>
   <data name="FreezingPoint" xml:space="preserve">
-    <value>Freezing Point</value>
+    <value>Gefrierpunk</value>
   </data>
   <data name="FreezingPointDepression" xml:space="preserve">
-    <value>Freezing Point Depression</value>
+    <value>Gefrierpunkterniedrigung</value>
   </data>
   <data name="OsmoticCoefficient" xml:space="preserve">
-    <value>Osmotic Coefficient</value>
+    <value>Osmotischer Koeffizient</value>
   </data>
   <data name="InvalidFlashResult" xml:space="preserve">
-    <value>The result of the flash calculation at the specified conditions is invalid. Please try a different flash algorithm and, if the error condition persists, check if the thermodynamic model is adequate and is correctly configured for your system.</value>
+    <value>Das Ergebnis der Flash-Berechnung bei den spezifizierten Bediungen ist ungültig. Bitte versuchen Sie es mit einem anderen Flash-Algorithmus. Falls der Fehler weiterhin auftritt, testen Sie ob das thermodynamische Modell geeignet  und für Ihr System korrekt konfiguriert ist.</value>
   </data>
   <data name="UnsuitableFlashAlgorithmSelected" xml:space="preserve">
     <value>The selected Flash Algorithm is unsuitable for LLE calculations. Please select another Flash Algorithm in the Property Package configuration window or in the Advanced Thermo Settings Panel.</value>
@@ -4777,5 +4777,8 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   </data>
   <data name="Electrolyte_StdStateMolVol" xml:space="preserve">
     <value>[Electrolyte] Standard State Molar Volume at 298 K</value>
+  </data>
+  <data name="Selado" xml:space="preserve">
+    <value>Gesperrt</value>
   </data>
 </root>

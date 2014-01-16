@@ -194,6 +194,7 @@ Public Class FormOptions
     End Sub
 
     Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
+        'add user component database
         If Me.OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
             Dim path = Me.OpenFileDialog1.FileName
             Try
@@ -215,7 +216,7 @@ Public Class FormOptions
                             End If
                         Next
                     End If
-                    Me.AddDatabase("User" & CStr(My.Settings.UserDatabases.Count + 1), path)
+                    Me.AddDatabase("User" & CStr(My.Settings.UserDatabases.Count + 1) & "   ", path)
                     MessageBox.Show(DWSIM.App.GetLocalString("UDBAdded"))
                 End If
             Catch ex As System.Runtime.Serialization.SerializationException
@@ -232,15 +233,15 @@ Public Class FormOptions
             If Not My.Settings.UserInteractionsDatabases.Contains(path) Then
                 My.Settings.UserInteractionsDatabases.Add(path)
                 My.Settings.Save()
-                With Me.dgvIPDB.Rows
-                    .Add(New Object() {dgvIPDB.Rows.Count + 1, My.Resources.information, "User", path, DWSIM.App.GetLocalString("Remove")})
-                End With
+                Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, "User   ", path, My.Resources.disconnect})
+                Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Remove")
             End If
         End If
 
     End Sub
 
     Private Sub Button11_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button11.Click
+        'Add ChemSep component database
         With Me.ofdcs
             If .ShowDialog = Windows.Forms.DialogResult.OK Then
                 Dim filename As String = .FileName
@@ -249,22 +250,23 @@ Public Class FormOptions
                 If FormMain.loadedCSDB Then
                     My.Settings.ChemSepDatabasePath = filename
                     Dim name, path2 As String
-                    name = "ChemSep"
+                    name = "ChemSep   "
                     path2 = My.Settings.ChemSepDatabasePath
-                    Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString("Remove")})
-                    Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(4).ReadOnly = True
+                    Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.disconnect})
+                    Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ReadOnly = True
+                    Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Remove")
                 End If
             End If
         End With
     End Sub
 
     Sub AddDatabase(ByVal name As String, ByVal path As String)
-        If Not My.Settings.UserDatabases.Contains(path) Then
+        If Not My.Settings.UserDatabases.Contains(path) And File.Exists(path) Then
             My.Settings.UserDatabases.Add(path)
             My.Settings.Save()
-            With Me.dgvdb.Rows
-                .Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path, DWSIM.App.GetLocalString("Remove")})
-            End With
+            Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path, My.Resources.disconnect})
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ReadOnly = True
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Remove")
         End If
     End Sub
 
@@ -282,25 +284,39 @@ Public Class FormOptions
         '===========================
 
         'dwsim databases
-        name = "DWSIM"
+        name = "DWSIM   "
         path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "dwsim.xml"
-        If File.Exists(path2) Then Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString("Remove")})
-        Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
-        name = "Biodiesel"
+        If File.Exists(path2) Then
+            Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.lock})
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
+        End If
+
+        name = "Biodiesel   "
         path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "biod_db.xml"
-        If File.Exists(path2) Then Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString("Remove")})
-        Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
-        name = "Electrolyte"
+        If File.Exists(path2) Then
+            Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.lock})
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
+        End If
+
+        name = "Electrolyte   "
         path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "electrolyte.xml"
-        If File.Exists(path2) Then Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString("Remove")})
-        Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
+        If File.Exists(path2) Then
+            Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.lock})
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
+        End If
 
         'chemsep database
         If FormMain.loadedCSDB Then
-            name = "ChemSep"
+            name = "ChemSep   "
             path2 = My.Settings.ChemSepDatabasePath
-            Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString("Remove")})
-            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(4).ReadOnly = True
+            If File.Exists(path2) Then
+                Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.disconnect})
+                Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ReadOnly = True
+                Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Remove")
+            End If
         End If
 
         Dim i As Integer = 1
@@ -309,8 +325,12 @@ Public Class FormOptions
         If Not My.Settings.UserDatabases Is Nothing Then
             For Each str As String In My.Settings.UserDatabases
                 path2 = str
-                If File.Exists(path2) Then Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, My.Resources.information, "User" & CStr(i), path2, DWSIM.App.GetLocalString("Remove")})
-                i = i + 1
+                If File.Exists(path2) Then
+                    Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, "User   " & CStr(i) & "   ", path2, My.Resources.disconnect})
+                    Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
+                    Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Remove")
+                    i = i + 1
+                End If
             Next
         End If
 
@@ -318,36 +338,47 @@ Public Class FormOptions
         '=== Interaction parameter databases ===
         '=======================================
         'chemsep databases 
-        name = "ChemSep NRTL"
+        name = "ChemSep NRTL   "
         path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "nrtl.dat"
-        Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, My.Resources.information, name, path2, " "})
-        Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(4).ReadOnly = True
+        If File.Exists(path2) Then
+            Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, name, path2, My.Resources.lock})
+            Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(3).ReadOnly = True
+            Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
+        End If
 
-        name = "ChemSep UNIQUAC-1"
+        name = "ChemSep UNIQUAC-1   "
         path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "uniquac.dat"
-        Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString(" ")})
-        Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(4).ReadOnly = True
+        If File.Exists(path2) Then
+            Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, name, path2, My.Resources.lock})
+            Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(3).ReadOnly = True
+            Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
+        End If
 
-        name = "ChemSep UNIQUAC-2"
+        name = "ChemSep UNIQUAC-2   "
         path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "uniquacip.dat"
-        Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, My.Resources.information, name, path2, DWSIM.App.GetLocalString(" ")})
-        Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(4).ReadOnly = True
-
+        If File.Exists(path2) Then
+            Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, name, path2, My.Resources.lock})
+            Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(3).ReadOnly = True
+            Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
+        End If
+        
         'user databases
         If Not My.Settings.UserInteractionsDatabases Is Nothing Then
             For Each str As String In My.Settings.UserInteractionsDatabases
-                path2 = str
-                If File.Exists(path2) Then Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, My.Resources.information, "User", path2, DWSIM.App.GetLocalString("Remove")})
-                i = i + 1
+                If File.Exists(path2) Then
+                    Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, "User   ", str, My.Resources.disconnect})
+                    Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(3).ReadOnly = True
+                    Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Remove")
+                End If
             Next
         End If
     End Sub
 
     Private Sub dgvdb_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvdb.CellContentClick
+        'remove component database
+        If e.ColumnIndex = 3 And e.RowIndex > 2 Then
 
-        If e.ColumnIndex = 4 And e.RowIndex > 2 Then
-
-            If Me.dgvdb.Rows(e.RowIndex).Cells(2).Value = "ChemSep" Then
+            If Me.dgvdb.Rows(e.RowIndex).Cells(1).Value = "ChemSep   " Then
 
                 'remove chemsep database
                 My.Settings.ChemSepDatabasePath = ""
@@ -357,7 +388,7 @@ Public Class FormOptions
             Else
 
                 'remove user database
-                My.Settings.UserDatabases.Remove(Me.dgvdb.Rows(e.RowIndex).Cells(3).Value)
+                My.Settings.UserDatabases.Remove(Me.dgvdb.Rows(e.RowIndex).Cells(2).Value)
                 Me.dgvdb.Rows.RemoveAt(e.RowIndex)
                 MessageBox.Show(DWSIM.App.GetLocalString("UDBRemoved"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -367,12 +398,11 @@ Public Class FormOptions
       
     End Sub
     Private Sub dgvIPDB_CellContentClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvIPDB.CellContentClick
+        'remove user interactions database
 
-        If e.ColumnIndex = 4 And e.RowIndex > 2 Then
-            If Me.dgvIPDB.Rows(e.RowIndex).Cells(2).Value = "User" Then
-
-                'remove user database
-                My.Settings.UserInteractionsDatabases.Remove(Me.dgvIPDB.Rows(e.RowIndex).Cells(3).Value)
+        If e.ColumnIndex = 3 And e.RowIndex > 2 Then
+            If Me.dgvIPDB.Rows(e.RowIndex).Cells(1).Value = "User   " Then
+                My.Settings.UserInteractionsDatabases.Remove(Me.dgvIPDB.Rows(e.RowIndex).Cells(2).Value)
                 My.Settings.Save()
                 Me.dgvIPDB.Rows.RemoveAt(e.RowIndex)
                 MessageBox.Show(DWSIM.App.GetLocalString("UDBRemoved"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)

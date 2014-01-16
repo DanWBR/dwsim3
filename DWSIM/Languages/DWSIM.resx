@@ -4798,4 +4798,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Electrolyte_StdStateMolVol" xml:space="preserve">
     <value>[Eletrólito] Volume Molar no Estado Padrão a 298 K</value>
   </data>
+  <data name="Selado" xml:space="preserve">
+    <value>Selado</value>
+  </data>
 </root>
