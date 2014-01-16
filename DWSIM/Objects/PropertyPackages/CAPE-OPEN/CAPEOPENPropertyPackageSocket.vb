@@ -1,4 +1,4 @@
-﻿'    CAPE-OPEN Property Package Wrapper
+'    CAPE-OPEN Property Package Wrapper
 '    Copyright 2011 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -1160,7 +1160,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Sub
 
         Public Overrides Sub Initialize()
-            CType(_copp, ICapeUtilities).Initialize()
+            If Not _copp Is Nothing Then CType(_copp, ICapeUtilities).Initialize()
         End Sub
 
         Public Overrides ReadOnly Property parameters1() As Object
