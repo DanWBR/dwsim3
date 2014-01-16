@@ -563,7 +563,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .spmp_heatflow = "kW"
                 .spmp_head = "m"
                 .spmp_deltaP = "bar"
-                .spmp_deltaT = "°C"
+                .spmp_deltaT = "C."
 
             End With
 
