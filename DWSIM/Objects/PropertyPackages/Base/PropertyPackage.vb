@@ -1,5 +1,5 @@
 '    Property Package Base Class
-'    Copyright 2008-2011 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -167,8 +167,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 #Region "   Constructor"
 
         Sub New()
+
             'Me.New(False)
+
             MyBase.New()
+
+            Initialize()
+
         End Sub
 
         Sub New(ByVal capeopenmode As Boolean)
@@ -225,9 +230,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             End If
 
-            Me.m_ip = New DataTable
-            Me.m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-            ConfigParameters()
+            Initialize()
 
         End Sub
 
@@ -9680,7 +9683,9 @@ Final3:
         ''' <remarks></remarks>
         Public Overridable Sub Initialize() Implements CapeOpen.ICapeUtilities.Initialize
 
-            'do nothing
+            Me.m_ip = New DataTable
+            Me.m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
+            ConfigParameters()
 
         End Sub
 
