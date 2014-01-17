@@ -1,5 +1,5 @@
 '    Property Package Base Class
-'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2011 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -1286,7 +1286,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                                     Dim dgtol As Double = Me.CurrentMaterialStream.Flowsheet.Options.FlashValidationDGETolerancePct
 
-                                    If Math.Abs(dge / ige * 100) > Math.Abs(dgtol) Then
+                                    If dge > 0.0# And Math.Abs(dge / ige * 100) > Math.Abs(dgtol) Then
                                         Throw New Exception(DWSIM.App.GetLocalString("InvalidFlashResult") & "(DGE = " & dge & " kJ/kg, " & Format(dge / ige * 100, "0.00") & "%)")
                                     End If
 
@@ -2075,18 +2075,24 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             Vy = result(3)
                             Vx2 = result(6)
 
-                            If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc Then
+                            If Not My.Application.CAPEOPENMode Then
+                                If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
+                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
+                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
 
-                                fge = xl * Me.DW_CalcGibbsEnergy(Vx, T, P)
-                                fge += xl2 * Me.DW_CalcGibbsEnergy(Vx2, T, P)
-                                fge += xv * Me.DW_CalcGibbsEnergy(Vy, T, P)
+                                    fge = xl * Me.DW_CalcGibbsEnergy(Vx, T, P)
+                                    fge += xl2 * Me.DW_CalcGibbsEnergy(Vx2, T, P)
+                                    fge += xv * Me.DW_CalcGibbsEnergy(Vy, T, P)
 
-                                dge = fge - ige
+                                    dge = fge - ige
 
-                                If dge > 0.0000000001 Then
-                                    Throw New Exception(DWSIM.App.GetLocalString("InvalidFlashResult"))
+                                    Dim dgtol As Double = Me.CurrentMaterialStream.Flowsheet.Options.FlashValidationDGETolerancePct
+
+                                    If dge > 0.0# And Math.Abs(dge / ige * 100) > Math.Abs(dgtol) Then
+                                        Throw New Exception(DWSIM.App.GetLocalString("InvalidFlashResult") & "(DGE = " & dge & " kJ/kg, " & Format(dge / ige * 100, "0.00") & "%)")
+                                    End If
+
                                 End If
-
                             End If
 
                             Dim HM, HV, HL1, HL2 As Double
