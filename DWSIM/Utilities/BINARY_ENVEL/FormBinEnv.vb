@@ -206,15 +206,21 @@ Public Class FormBinEnv
 
         Dim i As Integer
 
-        'convert x axis
+        'convert x+y axis
         Select Case cbXAxisBasis.SelectedIndex
             Case 0
             Case 1
                 For i = 0 To r(0).count - 1
                     r(0)(i) = r(0)(i) * mw1 / (r(0)(i) * mw1 + (1 - r(0)(i)) * mw2)
+                    If Me.RadioButton3.Checked Or Me.RadioButton4.Checked Then
+                        r(1)(i) = r(1)(i) * mw1 / (r(1)(i) * mw1 + (1 - r(1)(i)) * mw2)
+                    End If
                 Next
                 For i = 0 To r2(0).count - 1
                     r2(0)(i) = r2(0)(i) * mw1 / (r2(0)(i) * mw1 + (1 - r2(0)(i)) * mw2)
+                    If Me.RadioButton3.Checked Or Me.RadioButton4.Checked Then
+                        r2(1)(i) = r2(1)(i) * mw1 / (r2(1)(i) * mw1 + (1 - r2(1)(i)) * mw2)
+                    End If
                 Next
                 If r.Length > 2 Then
                     For i = 0 To r(3).count - 1
@@ -227,9 +233,15 @@ Public Class FormBinEnv
             Case 2
                 For i = 0 To r(0).count - 1
                     r(0)(i) = r(0)(i) * 100
+                    If Me.RadioButton3.Checked Or Me.RadioButton4.Checked Then
+                        r(1)(i) = r(1)(i) * 100
+                    End If
                 Next
                 For i = 0 To r2(0).count - 1
                     r2(0)(i) = r2(0)(i) * 100
+                    If Me.RadioButton3.Checked Or Me.RadioButton4.Checked Then
+                        r2(1)(i) = r2(1)(i) * 100
+                    End If
                 Next
                 If r.Length > 2 Then
                     For i = 0 To r(3).count - 1
@@ -242,9 +254,15 @@ Public Class FormBinEnv
             Case 3
                 For i = 0 To r(0).count - 1
                     r(0)(i) = r(0)(i) * mw1 / (r(0)(i) * mw1 + (1 - r(0)(i)) * mw2) * 100
+                    If Me.RadioButton3.Checked Or Me.RadioButton4.Checked Then
+                        r(1)(i) = r(1)(i) * mw1 / (r(1)(i) * mw1 + (1 - r(1)(i)) * mw2) * 100
+                    End If
                 Next
                 For i = 0 To r2(0).count - 1
                     r2(0)(i) = r2(0)(i) * mw1 / (r2(0)(i) * mw1 + (1 - r2(0)(i)) * mw2) * 100
+                    If Me.RadioButton3.Checked Or Me.RadioButton4.Checked Then
+                        r2(1)(i) = r2(1)(i) * mw1 / (r2(1)(i) * mw1 + (1 - r2(1)(i)) * mw2) * 100
+                    End If
                 Next
                 If r.Length > 2 Then
                     For i = 0 To r(3).count - 1
@@ -708,8 +726,18 @@ Public Class FormBinEnv
                     .Line.Style = Drawing2D.DashStyle.Dash
                     .Symbol.IsVisible = False
                 End With
-                .XAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " / " & c(0)
-                .YAxis.Title.Text = DWSIM.App.GetLocalString("FraoMolary") & c(0)
+
+                vx.Clear()
+                vx.Add(0.0)
+                vx.Add(1.0)
+                With .AddCurve("", vx.ToArray(GetType(Double)), vx.ToArray(GetType(Double)), Color.Black, ZedGraph.SymbolType.None)
+                    .Color = Color.Black
+                    .Line.Style = Drawing2D.DashStyle.Solid
+                    .Symbol.IsVisible = False
+                End With
+
+                .XAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " (X) - " & c(0)
+                .YAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " (Y) - " & c(0)
                 Me.GraphControl.IsAutoScrollRange = True
                 Select Case cbXAxisBasis.SelectedIndex
                     Case 0, 1
@@ -723,162 +751,174 @@ Public Class FormBinEnv
 
         ElseIf Me.RadioButton4.Checked Then
 
-            Dim px, py, pxi, pyi As New ArrayList
-            px = r(0)
-            py = r(1)
-            pxi = r2(0)
-            pyi = r2(1)
+                Dim px, py, pxi, pyi As New ArrayList
+                px = r(0)
+                py = r(1)
+                pxi = r2(0)
+                pyi = r2(1)
 
-            Dim vx, vy, vxi, vyi As New ArrayList
+                Dim vx, vy, vxi, vyi As New ArrayList
 
-            i = 0
-            Do
-                vx.Add(px(i))
-                vy.Add(py(i))
-                i += 1
-            Loop Until i = px.Count
-
-            i = 0
-            Do
-                vxi.Add(pxi(i))
-                vyi.Add(pyi(i))
-                i += 1
-            Loop Until i = pxi.Count
-
-            With Me.Grid1.Columns
-                .Clear()
-                .Add("c1", "x (" & c(0) & ")")
-                .Add("c2", "y (" & c(0) & ")")
-            End With
-            For Each co As DataGridViewColumn In Me.Grid1.Columns
-                co.SortMode = DataGridViewColumnSortMode.NotSortable
-                co.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                co.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
-            Next
-            Dim j, k As Integer
-            Dim data(11, vx.Count - 1) As String
-            j = 0
-            For Each d As Double In px
-                data(0, j) = vx(j)
-                data(1, j) = vy(j)
-                j = j + 1
-            Next
-            With Me.Grid1.Rows
-                .Clear()
-                k = 0
+                i = 0
                 Do
-                    .Add()
-                    j = 0
-                    Do
-                        If Double.TryParse(data(j, k), New Double) Then
-                            .Item(k).Cells(j).Value = Format(CDbl(data(j, k)), nf)
-                        Else
-                            .Item(k).Cells(j).Value = data(j, k)
-                        End If
-                        j = j + 1
-                    Loop Until j = 2
-                    k = k + 1
-                Loop Until k = vx.Count
-            End With
+                    vx.Add(px(i))
+                    vy.Add(py(i))
+                    i += 1
+                Loop Until i = px.Count
 
-            With Me.GraphControl.GraphPane
-                .Title.Text = c(0) & " / " & c(1) & vbCrLf & "T = " & cv.ConverterDoSI(su.spmp_temperature, T) & " " & su.spmp_temperature
-                .CurveList.Clear()
-                With .AddCurve("", vx.ToArray(GetType(Double)), vy.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
-                    .Color = Color.SteelBlue
-                    .Line.IsSmooth = True
-                    .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                i = 0
+                Do
+                    vxi.Add(pxi(i))
+                    vyi.Add(pyi(i))
+                    i += 1
+                Loop Until i = pxi.Count
+
+                With Me.Grid1.Columns
+                    .Clear()
+                    .Add("c1", "x (" & c(0) & ")")
+                    .Add("c2", "y (" & c(0) & ")")
                 End With
-                With .AddCurve("", vxi.ToArray(GetType(Double)), vyi.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
-                    .Color = Color.SteelBlue
-                    .Line.IsSmooth = True
-                    .Line.Style = Drawing2D.DashStyle.Dash
+                For Each co As DataGridViewColumn In Me.Grid1.Columns
+                    co.SortMode = DataGridViewColumnSortMode.NotSortable
+                    co.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                    co.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                Next
+                Dim j, k As Integer
+                Dim data(11, vx.Count - 1) As String
+                j = 0
+                For Each d As Double In px
+                    data(0, j) = vx(j)
+                    data(1, j) = vy(j)
+                    j = j + 1
+                Next
+                With Me.Grid1.Rows
+                    .Clear()
+                    k = 0
+                    Do
+                        .Add()
+                        j = 0
+                        Do
+                            If Double.TryParse(data(j, k), New Double) Then
+                                .Item(k).Cells(j).Value = Format(CDbl(data(j, k)), nf)
+                            Else
+                                .Item(k).Cells(j).Value = data(j, k)
+                            End If
+                            j = j + 1
+                        Loop Until j = 2
+                        k = k + 1
+                    Loop Until k = vx.Count
+                End With
+
+                With Me.GraphControl.GraphPane
+                    .Title.Text = c(0) & " / " & c(1) & vbCrLf & "T = " & cv.ConverterDoSI(su.spmp_temperature, T) & " " & su.spmp_temperature
+                    .CurveList.Clear()
+                    With .AddCurve("", vx.ToArray(GetType(Double)), vy.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
+                        .Color = Color.SteelBlue
+                        .Line.IsSmooth = True
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                End With
+
+                    With .AddCurve("", vxi.ToArray(GetType(Double)), vyi.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
+                        .Color = Color.SteelBlue
+                        .Line.IsSmooth = True
+                        .Line.Style = Drawing2D.DashStyle.Dash
+                    .Symbol.IsVisible = False
+
+                End With
+
+                vx.Clear()
+                vx.Add(0.0)
+                vx.Add(1.0)
+                With .AddCurve("", vx.ToArray(GetType(Double)), vx.ToArray(GetType(Double)), Color.Black, ZedGraph.SymbolType.None)
+                    .Color = Color.Black
+                    .Line.Style = Drawing2D.DashStyle.Solid
                     .Symbol.IsVisible = False
                 End With
-                .XAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " / " & c(0)
-                .YAxis.Title.Text = DWSIM.App.GetLocalString("FraoMolary") & c(0)
-                Me.GraphControl.IsAutoScrollRange = True
-                Select Case cbXAxisBasis.SelectedIndex
-                    Case 0, 1
-                        Me.GraphControl.GraphPane.XAxis.Scale.Max = 1
-                    Case 2, 3
-                        Me.GraphControl.GraphPane.XAxis.Scale.Max = 100
-                End Select
-                .AxisChange(Me.CreateGraphics)
-                Me.GraphControl.Invalidate()
-            End With
+                .XAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " (X) - " & c(0)
+                .YAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " (Y) - " & c(0)
+
+                    Me.GraphControl.IsAutoScrollRange = True
+                    Select Case cbXAxisBasis.SelectedIndex
+                        Case 0, 1
+                            Me.GraphControl.GraphPane.XAxis.Scale.Max = 1
+                        Case 2, 3
+                            Me.GraphControl.GraphPane.XAxis.Scale.Max = 100
+                    End Select
+                    .AxisChange(Me.CreateGraphics)
+                    Me.GraphControl.Invalidate()
+                End With
 
         Else
 
-            Dim px, py As ArrayList
-            px = r(0)
-            py = r(1)
+                Dim px, py As ArrayList
+                px = r(0)
+                py = r(1)
 
-            Dim vx, vy As New ArrayList
+                Dim vx, vy As New ArrayList
 
-            i = 0
-            Do
-                vx.Add(px(i))
-                vy.Add(py(i))
-                i += 1
-            Loop Until i = px.Count
-
-            With Me.Grid1.Columns
-                .Clear()
-                .Add("c1", "x (" & c(0) & ")")
-                .Add("c2", DWSIM.App.GetLocalString("DeltaGRT"))
-            End With
-            For Each co As DataGridViewColumn In Me.Grid1.Columns
-                co.SortMode = DataGridViewColumnSortMode.NotSortable
-                co.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                co.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
-            Next
-            Dim j, k As Integer
-            Dim data(11, vx.Count - 1) As String
-            j = 0
-            For Each d As Double In px
-                data(0, j) = vx(j)
-                data(1, j) = vy(j)
-                j = j + 1
-            Next
-            With Me.Grid1.Rows
-                .Clear()
-                k = 0
+                i = 0
                 Do
-                    .Add()
-                    j = 0
-                    Do
-                        If Double.TryParse(data(j, k), New Double) Then
-                            .Item(k).Cells(j).Value = Format(CDbl(data(j, k)), nf)
-                        Else
-                            .Item(k).Cells(j).Value = data(j, k)
-                        End If
-                        j = j + 1
-                    Loop Until j = 2
-                    k = k + 1
-                Loop Until k = vx.Count
-            End With
+                    vx.Add(px(i))
+                    vy.Add(py(i))
+                    i += 1
+                Loop Until i = px.Count
 
-            With Me.GraphControl.GraphPane
-                .Title.Text = c(0) & " / " & c(1) & vbCrLf & "T = " & cv.ConverterDoSI(su.spmp_temperature, T) & " " & su.spmp_temperature & ", P = " & cv.ConverterDoSI(su.spmp_pressure, P) & " " & su.spmp_pressure
-                .CurveList.Clear()
-                With .AddCurve("", vx.ToArray(GetType(Double)), vy.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
-                    .Color = Color.SteelBlue
-                    .Line.IsSmooth = True
-                    .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                With Me.Grid1.Columns
+                    .Clear()
+                    .Add("c1", "x (" & c(0) & ")")
+                    .Add("c2", DWSIM.App.GetLocalString("DeltaGRT"))
                 End With
-                .XAxis.Title.Text = DWSIM.App.GetLocalString("FraoMolarx") & c(0)
-                .YAxis.Title.Text = DWSIM.App.GetLocalString("DeltaGRT")
-                .AxisChange(Me.CreateGraphics)
-                Me.GraphControl.IsAutoScrollRange = True
-                Select Case cbXAxisBasis.SelectedIndex
-                    Case 0, 1
-                        Me.GraphControl.GraphPane.XAxis.Scale.Max = 1
-                    Case 2, 3
-                        Me.GraphControl.GraphPane.XAxis.Scale.Max = 100
-                End Select
-                Me.GraphControl.Invalidate()
-            End With
+                For Each co As DataGridViewColumn In Me.Grid1.Columns
+                    co.SortMode = DataGridViewColumnSortMode.NotSortable
+                    co.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                    co.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+                Next
+                Dim j, k As Integer
+                Dim data(11, vx.Count - 1) As String
+                j = 0
+                For Each d As Double In px
+                    data(0, j) = vx(j)
+                    data(1, j) = vy(j)
+                    j = j + 1
+                Next
+                With Me.Grid1.Rows
+                    .Clear()
+                    k = 0
+                    Do
+                        .Add()
+                        j = 0
+                        Do
+                            If Double.TryParse(data(j, k), New Double) Then
+                                .Item(k).Cells(j).Value = Format(CDbl(data(j, k)), nf)
+                            Else
+                                .Item(k).Cells(j).Value = data(j, k)
+                            End If
+                            j = j + 1
+                        Loop Until j = 2
+                        k = k + 1
+                    Loop Until k = vx.Count
+                End With
+
+                With Me.GraphControl.GraphPane
+                    .Title.Text = c(0) & " / " & c(1) & vbCrLf & "T = " & cv.ConverterDoSI(su.spmp_temperature, T) & " " & su.spmp_temperature & ", P = " & cv.ConverterDoSI(su.spmp_pressure, P) & " " & su.spmp_pressure
+                    .CurveList.Clear()
+                    With .AddCurve("", vx.ToArray(GetType(Double)), vy.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
+                        .Color = Color.SteelBlue
+                        .Line.IsSmooth = True
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                    End With
+                    .XAxis.Title.Text = DWSIM.App.GetLocalString("FraoMolarx") & c(0)
+                    .YAxis.Title.Text = DWSIM.App.GetLocalString("DeltaGRT")
+                    .AxisChange(Me.CreateGraphics)
+                    Me.GraphControl.IsAutoScrollRange = True
+                    Select Case cbXAxisBasis.SelectedIndex
+                        Case 0, 1
+                            Me.GraphControl.GraphPane.XAxis.Scale.Max = 1
+                        Case 2, 3
+                            Me.GraphControl.GraphPane.XAxis.Scale.Max = 100
+                    End Select
+                    Me.GraphControl.Invalidate()
+                End With
 
         End If
 
