@@ -328,8 +328,8 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
         actu(0) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
         actu(1) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
 
-        x(0) = dgvu1.Rows(row).Cells(2).Value
-        x(1) = dgvu1.Rows(row).Cells(3).Value
+        x(0) = dgvu1.Rows(row).Cells(3).Value
+        x(1) = dgvu1.Rows(row).Cells(4).Value
 
         If x(0) = 0 Then x(0) = -100
         If x(1) = 0 Then x(1) = 100
@@ -400,10 +400,10 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
             MessageBox.Show("Parameter estimation through UNIFAC failed: Reached the maximum number of iterations.", "UNIFAC Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
+        dgvu1.Rows(row).Cells(5).Value = 0.0#
         dgvu1.Rows(row).Cells(6).Value = 0.0#
         dgvu1.Rows(row).Cells(7).Value = 0.0#
         dgvu1.Rows(row).Cells(8).Value = 0.0#
-        dgvu1.Rows(row).Cells(9).Value = 0.0#
 
     End Sub
 

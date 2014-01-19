@@ -316,8 +316,8 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
             MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
-        x(0) = dgvu1.Rows(row).Cells(2).Value
-        x(1) = dgvu1.Rows(row).Cells(3).Value
+        x(0) = dgvu1.Rows(row).Cells(3).Value
+        x(1) = dgvu1.Rows(row).Cells(4).Value
 
         If x(0) = 0 Then x(0) = 0
         If x(1) = 0 Then x(1) = 0

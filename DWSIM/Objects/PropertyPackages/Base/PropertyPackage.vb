@@ -1,5 +1,5 @@
 '    Property Package Base Class
-'    Copyright 2008-2011 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
