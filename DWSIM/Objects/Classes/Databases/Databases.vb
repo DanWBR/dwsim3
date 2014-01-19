@@ -691,80 +691,6 @@ Namespace DWSIM.Databases
             End With
 
         End Sub
-        Public Shared Sub AddInteractionParameters(ByVal IPDS() As ClassesBasicasTermodinamica.InteractionParameters, ByVal xmlpath As String, ByVal replace As Boolean)
-            Dim xmldoc As XmlDocument
-            Dim reader As XmlReader = XmlReader.Create(xmlpath)
-            Try
-                reader.Read()
-            Catch ex As Exception
-                reader.Close()
-                CreateNew(xmlpath, "Interactions")
-                reader = XmlReader.Create(xmlpath)
-                reader.Read()
-            End Try
-
-            Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
-            Dim p As Double
-
-            xmldoc = New XmlDocument
-            xmldoc.Load(reader)
-
-            For Each IP As ClassesBasicasTermodinamica.InteractionParameters In IPDS
-                Dim index As Integer = -1
-                Dim i As Integer = 0
-                Dim C1, C2, M, S1, S2 As String
-
-                If xmldoc.ChildNodes.Count > 0 Then
-                    For Each node As XmlNode In xmldoc.ChildNodes(1)
-                        C1 = ""
-                        C2 = ""
-                        M = ""
-                        For Each node2 As XmlNode In node.ChildNodes
-                            If node2.Name = "Comp1" Then C1 = node2.InnerText
-                            If node2.Name = "Comp2" Then C2 = node2.InnerText
-                            If node2.Name = "Model" Then M = node2.InnerText
-                            S1 = C1 & C2 & M
-                            S2 = C2 & C1 & M
-                            If (S1 = IP.Comp1 & IP.Comp2 & IP.Model) Or (S2 = IP.Comp1 & IP.Comp2 & IP.Model) Then
-                                index = i
-                                Exit For
-                            End If
-                        Next
-                        If index <> -1 Then Exit For
-                        i += 1
-                    Next
-                End If
-                If replace Then
-                    If index <> -1 Then xmldoc.ChildNodes(1).RemoveChild(xmldoc.ChildNodes(1).ChildNodes(index))
-                End If
-
-                Dim newnode As XmlNode = xmldoc.CreateNode("element", "Interaction", "")
-                With newnode
-                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Comp1", "")).InnerText = IP.Comp1
-                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Comp2", "")).InnerText = IP.Comp2
-                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Model", "")).InnerText = IP.Model
-                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "DataType", "")).InnerText = IP.DataType
-                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Description", "")).InnerText = IP.Description
-                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "RegressionFile", "")).InnerText = IP.RegressionFile
-                    With .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Parameters", ""))
-                        For Each par As DictionaryEntry In IP.Parameters.Collection
-                            p = par.Value
-                            .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "", "Parameter", "")).InnerText = p.ToString(cult)
-                            .ChildNodes(.ChildNodes.Count - 1).Attributes.Append(xmldoc.CreateAttribute("name"))
-                            .ChildNodes(.ChildNodes.Count - 1).Attributes("name").Value = par.Key
-                        Next
-                    End With
-
-                End With
-                xmldoc.ChildNodes(1).AppendChild(newnode)
-            Next
-
-            reader.Close()
-            reader = Nothing
-
-            xmldoc.Save(xmlpath)
-            xmldoc = Nothing
-        End Sub
 
         Public Shared Sub AddCompounds(ByVal comps() As ClassesBasicasTermodinamica.ConstantProperties, ByVal xmlpath As String, ByVal replace As Boolean)
 
@@ -940,59 +866,6 @@ Namespace DWSIM.Databases
             xmldoc = Nothing
 
         End Sub
-        Public Shared Function ReadInteractions(ByVal xmlpath As String, ByVal Model As String) As ClassesBasicasTermodinamica.InteractionParameters()
-
-            Dim xmldoc As XmlDocument
-            Dim reader As XmlReader = XmlReader.Create(xmlpath)
-            reader.Read()
-
-            xmldoc = New XmlDocument
-            xmldoc.Load(reader)
-
-            Dim IP As ClassesBasicasTermodinamica.InteractionParameters
-            Dim IPA As New ArrayList()
-            Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
-            'Dim nf As Globalization.NumberFormatInfo = cult.NumberFormat
-
-            For Each node As XmlNode In xmldoc.ChildNodes(1)
-                IP = New ClassesBasicasTermodinamica.InteractionParameters
-                With IP
-                    For Each node2 As XmlNode In node.ChildNodes
-                        Select Case node2.Name
-                            Case "Comp1"
-                                .Comp1 = node2.InnerText
-                            Case "Comp2"
-                                .Comp2 = node2.InnerText
-                            Case "Model"
-                                .Model = node2.InnerText
-                            Case "DataType"
-                                .DataType = node2.InnerText
-                            Case "Description"
-                                .Description = node2.InnerText
-                            Case "RegressionFile"
-                                .RegressionFile = node2.InnerText
-                            Case "Parameters"
-                                For Each node3 As XmlNode In node2.ChildNodes
-                                    .Parameters.Collection.Add(node3.Attributes("name").InnerText, Double.Parse(node3.InnerText, cult))
-                                Next
-                        End Select
-                    Next
-                End With
-
-                If IP.Model = Model Then
-                    IPA.Add(IP)
-                End If
-
-            Next
-
-            xmldoc = Nothing
-
-            reader.Close()
-            reader = Nothing
-
-            Return IPA.ToArray(Type.GetType("DWSIM.DWSIM.ClassesBasicasTermodinamica.InteractionParameters"))
-
-        End Function
 
         Public Shared Function ReadComps(ByVal xmlpath As String) As ClassesBasicasTermodinamica.ConstantProperties()
 
@@ -1178,6 +1051,176 @@ Namespace DWSIM.Databases
 
             Return cpa.ToArray(Type.GetType("DWSIM.DWSIM.ClassesBasicasTermodinamica.ConstantProperties"))
 
+        End Function
+
+    End Class
+
+    <System.Serializable()> Public Class UserIPDB
+
+        Public Shared Sub CreateNew(ByVal path As String, ByVal TopNode As String)
+
+            Dim writer As New XmlTextWriter(path, Nothing)
+
+            With writer
+                .Formatting = Formatting.Indented
+                .WriteStartDocument()
+                .WriteStartElement(TopNode)
+                .WriteEndElement()
+                .WriteEndDocument()
+                .Flush()
+                .Close()
+            End With
+
+        End Sub
+
+        Public Shared Sub AddInteractionParameters(ByVal IPDS() As ClassesBasicasTermodinamica.InteractionParameter, ByVal xmlpath As String, ByVal replace As Boolean)
+            Dim xmldoc As XmlDocument
+            Dim reader As XmlReader = XmlReader.Create(xmlpath)
+            Try
+                reader.Read()
+            Catch ex As Exception
+                reader.Close()
+                CreateNew(xmlpath, "Interactions")
+                reader = XmlReader.Create(xmlpath)
+                reader.Read()
+            End Try
+
+            Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
+            Dim p As Double
+
+            xmldoc = New XmlDocument
+            xmldoc.Load(reader)
+
+            For Each IP As ClassesBasicasTermodinamica.InteractionParameter In IPDS
+                Dim index As Integer = -1
+                Dim i As Integer = 0
+                Dim C1, C2, M, S1, S2 As String
+
+                If xmldoc.ChildNodes.Count > 0 Then
+                    For Each node As XmlNode In xmldoc.ChildNodes(1)
+                        C1 = ""
+                        C2 = ""
+                        M = ""
+                        For Each node2 As XmlNode In node.ChildNodes
+                            If node2.Name = "Comp1" Then C1 = node2.InnerText
+                            If node2.Name = "Comp2" Then C2 = node2.InnerText
+                            If node2.Name = "Model" Then M = node2.InnerText
+                            S1 = C1 & C2 & M
+                            S2 = C2 & C1 & M
+                            If (S1 = IP.Comp1 & IP.Comp2 & IP.Model) Or (S2 = IP.Comp1 & IP.Comp2 & IP.Model) Then
+                                index = i
+                                Exit For
+                            End If
+                        Next
+                        If index <> -1 Then Exit For
+                        i += 1
+                    Next
+                End If
+                'If replace Then
+                '    If index <> -1 Then xmldoc.ChildNodes(1).RemoveChild(xmldoc.ChildNodes(1).ChildNodes(index))
+                'End If
+
+                Dim newnode As XmlNode = xmldoc.CreateNode("element", "Interaction", "")
+                With newnode
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Comp1", "")).InnerText = IP.Comp1
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Comp2", "")).InnerText = IP.Comp2
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Model", "")).InnerText = IP.Model
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "DataType", "")).InnerText = IP.DataType
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Description", "")).InnerText = IP.Description
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "RegressionFile", "")).InnerText = IP.RegressionFile
+                    With .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Parameters", ""))
+                        For Each par As KeyValuePair(Of String, Object) In IP.Parameters
+                            p = par.Value
+                            .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "", "Parameter", "")).InnerText = p.ToString(cult)
+                            .ChildNodes(.ChildNodes.Count - 1).Attributes.Append(xmldoc.CreateAttribute("name"))
+                            .ChildNodes(.ChildNodes.Count - 1).Attributes("name").Value = par.Key
+                        Next
+                    End With
+
+                End With
+                xmldoc.ChildNodes(1).AppendChild(newnode)
+            Next
+
+            reader.Close()
+            reader = Nothing
+
+            xmldoc.Save(xmlpath)
+            xmldoc = Nothing
+        End Sub
+
+        Public Shared Function ReadInteractions(ByVal xmlpath As String, ByVal Model As String) As ClassesBasicasTermodinamica.InteractionParameter()
+
+            Dim xmldoc As XmlDocument
+            Dim reader As XmlReader = XmlReader.Create(xmlpath)
+            reader.Read()
+
+            xmldoc = New XmlDocument
+            xmldoc.Load(reader)
+
+            Dim IP As ClassesBasicasTermodinamica.InteractionParameter
+            Dim IPA As New ArrayList()
+            Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
+            'Dim nf As Globalization.NumberFormatInfo = cult.NumberFormat
+
+            For Each node As XmlNode In xmldoc.ChildNodes(1)
+                IP = New ClassesBasicasTermodinamica.InteractionParameter
+                With IP
+                    For Each node2 As XmlNode In node.ChildNodes
+                        Select Case node2.Name
+                            Case "Comp1"
+                                .Comp1 = node2.InnerText
+                            Case "Comp2"
+                                .Comp2 = node2.InnerText
+                            Case "Model"
+                                .Model = node2.InnerText
+                            Case "DataType"
+                                .DataType = node2.InnerText
+                            Case "Description"
+                                .Description = node2.InnerText
+                            Case "RegressionFile"
+                                .RegressionFile = node2.InnerText
+                            Case "Parameters"
+                                For Each node3 As XmlNode In node2.ChildNodes
+                                    .Parameters.Add(node3.Attributes("name").InnerText, Double.Parse(node3.InnerText, cult))
+                                Next
+                        End Select
+                    Next
+                End With
+
+                If IP.Model = Model Then
+                    IPA.Add(IP)
+                End If
+
+            Next
+
+            xmldoc = Nothing
+
+            reader.Close()
+            reader = Nothing
+
+            Return IPA.ToArray(Type.GetType("DWSIM.DWSIM.ClassesBasicasTermodinamica.InteractionParameter"))
+
+        End Function
+
+        Public Shared Function GetStoredIPsets(ByVal comp1 As String, ByVal comp2 As String, ByVal model As String) As List(Of ClassesBasicasTermodinamica.InteractionParameter)
+
+            Dim results As New List(Of ClassesBasicasTermodinamica.InteractionParameter)
+
+            If Not My.Settings.UserInteractionsDatabases Is Nothing Then
+                For Each IPDBPath As String In My.Settings.UserInteractionsDatabases
+                    Dim Interactions As ClassesBasicasTermodinamica.InteractionParameter()
+                    Try
+                        Interactions = UserIPDB.ReadInteractions(IPDBPath, model)
+                        For Each ipset As ClassesBasicasTermodinamica.InteractionParameter In Interactions
+                            If ipset.Comp1 = comp1 And ipset.Comp2 = comp2 Then
+                                results.Add(ipset)
+                            End If
+                        Next
+                    Catch ex As Exception
+                    End Try
+                Next
+            End If
+            Return results
         End Function
 
     End Class

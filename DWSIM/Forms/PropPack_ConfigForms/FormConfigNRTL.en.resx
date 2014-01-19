@@ -122,7 +122,7 @@
     <value>991, 430</value>
   </data>
   <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>991, 430</value>
+    <value>1040, 430</value>
   </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>991, 430</value>
@@ -131,7 +131,7 @@
     <value>General Options</value>
   </data>
   <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>993, 451</value>
+    <value>1042, 451</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
     <value>979, 420</value>
@@ -164,7 +164,7 @@
     <value>Action in deployment.</value>
   </data>
   <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>979, 422</value>
+    <value>1028, 422</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Interaction Parameters</value>
@@ -182,10 +182,10 @@
     <value>Estimate (UNIFAC)</value>
   </data>
   <data name="dgvu1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>964, 361</value>
+    <value>1013, 361</value>
   </data>
   <data name="LabelWithDivider3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>966, 10</value>
+    <value>1015, 10</value>
   </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>980, 420</value>
@@ -203,6 +203,6 @@
     <value>Value</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>993, 451</value>
+    <value>1042, 451</value>
   </data>
 </root>

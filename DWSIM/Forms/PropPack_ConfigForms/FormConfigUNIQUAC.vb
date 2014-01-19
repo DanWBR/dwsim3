@@ -18,6 +18,7 @@
 
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports System.IO
+Imports System.Text
 
 Public Class FormConfigUNIQUAC
 
@@ -29,7 +30,6 @@ Public Class FormConfigUNIQUAC
     Private Sub ConfigFormUNIQUAC_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         Loaded = False
-
 
         Me.Text = DWSIM.App.GetLocalString("ConfigurarPacotedePropriedades") & _pp.Tag & ")"
 
@@ -106,7 +106,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                                     Dim b21 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).B21
                                     Dim c12 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).C12
                                     Dim c21 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).C21
-                                    dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(cp.Name), DWSIM.App.GetComponentName(cp2.Name), Format(a12, nf), Format(a21, nf), Format(b12, nf), Format(b21, nf), Format(c12, nf), Format(c21, nf)})
+                                    dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(cp.Name), DWSIM.App.GetComponentName(cp2.Name), "", Format(a12, nf), Format(a21, nf), Format(b12, nf), Format(b21, nf), Format(c12, nf), Format(c21, nf)})
                                     With dgvu1.Rows(dgvu1.Rows.Count - 1)
                                         .Cells(0).Tag = cp.Name
                                         .Cells(1).Tag = cp2.Name
@@ -120,7 +120,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                             Dim b21 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).B21
                             Dim c12 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).C12
                             Dim c21 As Double = ppu.m_uni.InteractionParameters(cp.Name)(cp2.Name).C21
-                            dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(cp.Name), DWSIM.App.GetComponentName(cp2.Name), Format(a12, nf), Format(a21, nf), Format(b12, nf), Format(b21, nf), Format(c12, nf), Format(c21, nf)})
+                            dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(cp.Name), DWSIM.App.GetComponentName(cp2.Name), "", Format(a12, nf), Format(a21, nf), Format(b12, nf), Format(b21, nf), Format(c12, nf), Format(c21, nf)})
                             With dgvu1.Rows(dgvu1.Rows.Count - 1)
                                 .Cells(0).Tag = cp.Name
                                 .Cells(1).Tag = cp2.Name
@@ -132,6 +132,23 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                 ppu.m_uni.InteractionParameters.Add(cp.Name, New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData))
                 GoTo gt1
             End If
+        Next
+
+        For Each r As DataGridViewRow In dgvu1.Rows
+            Dim cb As DataGridViewComboBoxCell = r.Cells(2)
+            cb.Items.Clear()
+            Dim ipsets As List(Of DWSIM.ClassesBasicasTermodinamica.InteractionParameter) = DWSIM.Databases.UserIPDB.GetStoredIPsets(r.Cells(0).Value, r.Cells(1).Value, "UNIQUAC")
+            cb.Items.Add(ipsets.Count)
+            For Each ip As InteractionParameter In ipsets
+                Dim strb As New StringBuilder
+                For Each kvp As KeyValuePair(Of String, Object) In ip.Parameters
+                    strb.Append(kvp.Key & ": " & Double.Parse(kvp.Value).ToString("N2") & ", ")
+                Next
+                strb.Append("{" & ip.DataType & " / " & ip.Description & "}")
+                cb.Items.Add(strb.ToString)
+                cb.Tag = ipsets
+            Next
+            r.Cells(2).Value = cb.Items(0)
         Next
 
         Loaded = True
@@ -192,16 +209,35 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
             Dim id2 As String = dgvu1.Rows(e.RowIndex).Cells(1).Tag.ToString
             Select Case e.ColumnIndex
                 Case 2
-                    ppu.m_uni.InteractionParameters(id1)(id2).A12 = value
+                    Dim cb As DataGridViewComboBoxCell = dgvu1.Rows(e.RowIndex).Cells(2)
+                    If value <> "" Then
+                        Dim i As Integer = -1
+                        For Each s As String In cb.Items
+                            If value = s And i <> -1 Then
+                                Dim ipset As InteractionParameter = cb.Tag(i)
+                                With dgvu1.Rows(e.RowIndex)
+                                    If ipset.Parameters.ContainsKey("A12") Then .Cells(3).Value = Double.Parse(ipset.Parameters("A12"), Globalization.CultureInfo.InvariantCulture).ToString("N4")
+                                    If ipset.Parameters.ContainsKey("A21") Then .Cells(4).Value = Double.Parse(ipset.Parameters("A21"), Globalization.CultureInfo.InvariantCulture).ToString("N4")
+                                    If ipset.Parameters.ContainsKey("B12") Then .Cells(5).Value = Double.Parse(ipset.Parameters("B12"), Globalization.CultureInfo.InvariantCulture).ToString("N4")
+                                    If ipset.Parameters.ContainsKey("B21") Then .Cells(6).Value = Double.Parse(ipset.Parameters("B21"), Globalization.CultureInfo.InvariantCulture).ToString("N4")
+                                    If ipset.Parameters.ContainsKey("C12") Then .Cells(7).Value = Double.Parse(ipset.Parameters("C12"), Globalization.CultureInfo.InvariantCulture).ToString("N4")
+                                    If ipset.Parameters.ContainsKey("C21") Then .Cells(8).Value = Double.Parse(ipset.Parameters("C21"), Globalization.CultureInfo.InvariantCulture).ToString("N4")
+                                End With
+                            End If
+                            i += 1
+                        Next
+                    End If
                 Case 3
-                    ppu.m_uni.InteractionParameters(id1)(id2).A21 = value
+                    ppu.m_uni.InteractionParameters(id1)(id2).A12 = value
                 Case 4
-                    ppu.m_uni.InteractionParameters(id1)(id2).B12 = value
+                    ppu.m_uni.InteractionParameters(id1)(id2).A21 = value
                 Case 5
-                    ppu.m_uni.InteractionParameters(id1)(id2).B21 = value
+                    ppu.m_uni.InteractionParameters(id1)(id2).B12 = value
                 Case 6
-                    ppu.m_uni.InteractionParameters(id1)(id2).C12 = value
+                    ppu.m_uni.InteractionParameters(id1)(id2).B21 = value
                 Case 7
+                    ppu.m_uni.InteractionParameters(id1)(id2).C12 = value
+                Case 8
                     ppu.m_uni.InteractionParameters(id1)(id2).C21 = value
             End Select
         End If
@@ -356,18 +392,18 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
         Loop Until Math.Abs(fx(0) + fx(1)) < 0.01 Or count > 500
 
         If count < 500 Then
-            dgvu1.Rows(row).Cells(2).Value = x0(0)
-            dgvu1.Rows(row).Cells(3).Value = x0(1)
+            dgvu1.Rows(row).Cells(3).Value = x0(0)
+            dgvu1.Rows(row).Cells(4).Value = x0(1)
         Else
-            If Not Double.IsNaN(x0(0)) Then dgvu1.Rows(row).Cells(2).Value = x0(0) Else dgvu1.Rows(row).Cells(2).Value = 0.0#
-            If Not Double.IsNaN(x0(1)) Then dgvu1.Rows(row).Cells(3).Value = x0(1) Else dgvu1.Rows(row).Cells(3).Value = 0.0#
+            If Not Double.IsNaN(x0(0)) Then dgvu1.Rows(row).Cells(3).Value = x0(0) Else dgvu1.Rows(row).Cells(3).Value = 0.0#
+            If Not Double.IsNaN(x0(1)) Then dgvu1.Rows(row).Cells(4).Value = x0(1) Else dgvu1.Rows(row).Cells(4).Value = 0.0#
             MessageBox.Show("Parameter estimation through UNIFAC failed: Reached the maximum number of iterations.", "UNIFAC Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
-        dgvu1.Rows(row).Cells(4).Value = 0.0#
-        dgvu1.Rows(row).Cells(5).Value = 0.0#
         dgvu1.Rows(row).Cells(6).Value = 0.0#
         dgvu1.Rows(row).Cells(7).Value = 0.0#
+        dgvu1.Rows(row).Cells(8).Value = 0.0#
+        dgvu1.Rows(row).Cells(9).Value = 0.0#
 
     End Sub
 

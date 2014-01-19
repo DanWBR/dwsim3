@@ -117,10 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>933, 377</value>
+  </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>General Options</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>935, 398</value>
+  </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
     <value>900, 371</value>
   </data>
@@ -151,8 +157,14 @@
   <data name="Label2.Text" xml:space="preserve">
     <value>Action in deployment.</value>
   </data>
+  <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>921, 369</value>
+  </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Interaction Parameters</value>
+  </data>
+  <data name="Button5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>488, 17</value>
   </data>
   <data name="Button5.Text" xml:space="preserve">
     <value>Estimate (UNIFAC-LL)</value>
@@ -160,11 +172,23 @@
   <data name="Button4.Text" xml:space="preserve">
     <value>Open IPD File</value>
   </data>
+  <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>756, 17</value>
+  </data>
   <data name="Button2.Text" xml:space="preserve">
     <value>Estimate (Modified UNIFAC)</value>
   </data>
+  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>622, 17</value>
+  </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Estimate (UNIFAC)</value>
+  </data>
+  <data name="dgvu1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>906, 308</value>
+  </data>
+  <data name="LabelWithDivider3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>908, 10</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>General Options</value>
@@ -174,5 +198,8 @@
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Value</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>935, 398</value>
   </data>
 </root>

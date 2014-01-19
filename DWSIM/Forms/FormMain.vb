@@ -173,7 +173,7 @@ Public Class FormMain
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        If My.Settings.BackupFolder = "" Then My.Settings.BackupFolder = My.Computer.FileSystem.SpecialDirectories.Temp & "\DWSIM"
+        If My.Settings.BackupFolder = "" Then My.Settings.BackupFolder = My.Computer.FileSystem.SpecialDirectories.Temp & Path.DirectorySeparatorChar & "DWSIM"
         If My.Settings.BackupActivated Then
             Me.TimerBackup.Interval = My.Settings.BackupInterval * 60000
             Me.TimerBackup.Enabled = True

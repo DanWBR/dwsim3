@@ -4767,4 +4767,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Selado" xml:space="preserve">
     <value>Selado</value>
   </data>
+  <data name="NoRegParmsAvail" xml:space="preserve">
+    <value>Não foram obtidos parâmetros por regressão. Os dados não foram salvos.</value>
+  </data>
+  <data name="ParametrosAdicionadosComSucesso" xml:space="preserve">
+    <value>Parâmetros de Interação adicionados ao banco de dados com sucesso.</value>
+  </data>
 </root>

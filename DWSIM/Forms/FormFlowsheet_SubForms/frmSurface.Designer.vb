@@ -148,14 +148,12 @@ Partial Class frmSurface
         '
         resources.ApplyResources(Me.LabelCalculator, "LabelCalculator")
         Me.LabelCalculator.ForeColor = System.Drawing.Color.DimGray
-        Me.LabelCalculator.MinimumSize = New System.Drawing.Size(100, 0)
         Me.LabelCalculator.Name = "LabelCalculator"
         '
         'LabelTime
         '
         resources.ApplyResources(Me.LabelTime, "LabelTime")
         Me.LabelTime.ForeColor = System.Drawing.Color.DimGray
-        Me.LabelTime.MinimumSize = New System.Drawing.Size(100, 0)
         Me.LabelTime.Name = "LabelTime"
         '
         'PanelSimultAdjust
@@ -170,7 +168,6 @@ Partial Class frmSurface
         '
         resources.ApplyResources(Me.LabelSimultAdjInfo, "LabelSimultAdjInfo")
         Me.LabelSimultAdjInfo.ForeColor = System.Drawing.Color.OrangeRed
-        Me.LabelSimultAdjInfo.MinimumSize = New System.Drawing.Size(100, 0)
         Me.LabelSimultAdjInfo.Name = "LabelSimultAdjInfo"
         '
         'PicSimultAdjust
@@ -184,7 +181,6 @@ Partial Class frmSurface
         '
         resources.ApplyResources(Me.LabelSimultAdjustStatus, "LabelSimultAdjustStatus")
         Me.LabelSimultAdjustStatus.ForeColor = System.Drawing.Color.OrangeRed
-        Me.LabelSimultAdjustStatus.MinimumSize = New System.Drawing.Size(100, 0)
         Me.LabelSimultAdjustStatus.Name = "LabelSimultAdjustStatus"
         '
         'CMS_NoSel

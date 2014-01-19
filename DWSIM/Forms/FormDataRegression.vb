@@ -42,7 +42,7 @@ Public Class FormDataRegression
     Private forceclose As Boolean = False
 
     Public currcase As RegressionCase
-    Public IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameters
+    Public IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameter
 
     Public proppack As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
     Public ppname As String = ""
@@ -55,7 +55,7 @@ Public Class FormDataRegression
     Private Sub FormDataRegression_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         cv = New DWSIM.SistemasDeUnidades.Conversor
-        IP = New DWSIM.ClassesBasicasTermodinamica.InteractionParameters
+        IP = New DWSIM.ClassesBasicasTermodinamica.InteractionParameter
 
         'get list of compounds
         Dim compounds As New ArrayList
@@ -1410,9 +1410,9 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 DoRegression(initval)
 
                 Dim k As Integer
-                IP.Parameters.Collection.Clear()
+                IP.Parameters.Clear()
                 For k = 0 To regressedparameters.Count - 1
-                    IP.Parameters.Collection(regressedparameters.Keys(k)) = regressedparameters.Values(k)
+                    IP.Parameters(regressedparameters.Keys(k)) = regressedparameters.Values(k)
                 Next
             Else
 
@@ -1507,16 +1507,16 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 tbRegResults.AppendText(vbCrLf)
                 tbRegResults.AppendText("Plotting results... ")
 
-                IP.Parameters.Collection.Clear()
-                IP.Parameters.Collection("A12") = c_a12(0)
-                IP.Parameters.Collection("B12") = c_a12(1)
-                IP.Parameters.Collection("C12") = c_a12(2)
-                IP.Parameters.Collection("A21") = c_a21(0)
-                IP.Parameters.Collection("B21") = c_a21(1)
-                IP.Parameters.Collection("C21") = c_a21(2)
+                IP.Parameters.Clear()
+                IP.Parameters("A12") = c_a12(0)
+                IP.Parameters("B12") = c_a12(1)
+                IP.Parameters("C12") = c_a12(2)
+                IP.Parameters("A21") = c_a21(0)
+                IP.Parameters("B21") = c_a21(1)
+                IP.Parameters("C21") = c_a21(2)
 
                 If currcase.model = "NRTL" Then
-                    IP.Parameters.Collection("alpha12") = regpars(0)(2)
+                    IP.Parameters("alpha12") = regpars(0)(2)
                 End If
 
 
@@ -3381,7 +3381,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
     Private Sub BtnSaveIPDB_Click(sender As System.Object, e As System.EventArgs) Handles BtnSaveIPDB.Click
         'Save Regression results to database
-        If IP.Parameters.Collection.Count > 0 Then
+        If IP.Parameters.Count > 0 Then
             With currcase
                 IP.Comp1 = .comp1
                 IP.Comp2 = .comp2
@@ -3392,13 +3392,14 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             End With
             If Me.tbIPDBName.Text <> "" Then
                 Try
-                    DWSIM.Databases.UserDB.AddInteractionParameters(New DWSIM.ClassesBasicasTermodinamica.InteractionParameters() {IP}, tbIPDBName.Text, True)
+                    DWSIM.Databases.UserIPDB.AddInteractionParameters(New DWSIM.ClassesBasicasTermodinamica.InteractionParameter() {IP}, tbIPDBName.Text, True)
+                    MessageBox.Show(DWSIM.App.GetLocalString("ParametrosAdicionadosComSucesso"))
                 Catch ex As Exception
                     MessageBox.Show(DWSIM.App.GetLocalString("Erroaosalvararquivo") & ex.Message.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
         Else
-            MessageBox.Show("No regressed parameters available! No data saved." & vbCrLf & "Please run regression first.", DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(DWSIM.App.GetLocalString("NoRegParmsAvail"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
     End Sub

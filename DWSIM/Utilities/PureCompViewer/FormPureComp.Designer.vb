@@ -129,14 +129,14 @@ Partial Class FormPureComp
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Button1.ImageKey = ""
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'chkEnableEdit
         '
         resources.ApplyResources(Me.chkEnableEdit, "chkEnableEdit")
-        Me.chkEnableEdit.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkEnableEdit.ImageKey = ""
         Me.chkEnableEdit.Name = "chkEnableEdit"
         Me.chkEnableEdit.UseVisualStyleBackColor = True
         '
@@ -150,7 +150,7 @@ Partial Class FormPureComp
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label1.ImageKey = ""
         Me.Label1.Name = "Label1"
         '
         'FaTabStrip1
@@ -201,7 +201,7 @@ Partial Class FormPureComp
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
-        Me.Column1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column1.ToolTipText = ""
         '
         'Column2
         '
@@ -212,7 +212,7 @@ Partial Class FormPureComp
         resources.ApplyResources(Me.Column2, "Column2")
         Me.Column2.Name = "Column2"
         Me.Column2.ReadOnly = True
-        Me.Column2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column2.ToolTipText = ""
         '
         'Column3
         '
@@ -224,7 +224,7 @@ Partial Class FormPureComp
         resources.ApplyResources(Me.Column3, "Column3")
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
-        Me.Column3.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column3.ToolTipText = ""
         '
         'FaTabStripItem6
         '
@@ -273,7 +273,7 @@ Partial Class FormPureComp
         'Label7
         '
         resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label7.ImageKey = ""
         Me.Label7.Name = "Label7"
         '
         'tbSMILES
@@ -285,7 +285,7 @@ Partial Class FormPureComp
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label6.ImageKey = ""
         Me.Label6.Name = "Label6"
         '
         'tbMODFAC
@@ -297,7 +297,7 @@ Partial Class FormPureComp
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label5.ImageKey = ""
         Me.Label5.Name = "Label5"
         '
         'tbUNIFAC
@@ -309,7 +309,7 @@ Partial Class FormPureComp
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label4.ImageKey = ""
         Me.Label4.Name = "Label4"
         '
         'tbFormula
@@ -321,7 +321,7 @@ Partial Class FormPureComp
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label2.ImageKey = ""
         Me.Label2.Name = "Label2"
         '
         'FaTabStripItem2
@@ -524,7 +524,7 @@ Partial Class FormPureComp
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
         Me.DataGridViewTextBoxColumn1.ReadOnly = True
         Me.DataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.DataGridViewTextBoxColumn1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewTextBoxColumn1.ToolTipText = ""
         '
         'DataGridViewTextBoxColumn2
         '
@@ -537,7 +537,7 @@ Partial Class FormPureComp
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.ReadOnly = True
         Me.DataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.DataGridViewTextBoxColumn2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewTextBoxColumn2.ToolTipText = ""
         '
         'DataGridViewTextBoxColumn3
         '
@@ -549,7 +549,7 @@ Partial Class FormPureComp
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
         Me.DataGridViewTextBoxColumn3.ReadOnly = True
         Me.DataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.DataGridViewTextBoxColumn3.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewTextBoxColumn3.ToolTipText = ""
         '
         'DataGridViewTextBoxColumn4
         '
@@ -562,7 +562,7 @@ Partial Class FormPureComp
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
         Me.DataGridViewTextBoxColumn4.ReadOnly = True
         Me.DataGridViewTextBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.DataGridViewTextBoxColumn4.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewTextBoxColumn4.ToolTipText = ""
         '
         'DataGridViewTextBoxColumn5
         '
@@ -574,7 +574,7 @@ Partial Class FormPureComp
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
         Me.DataGridViewTextBoxColumn5.ReadOnly = True
         Me.DataGridViewTextBoxColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.DataGridViewTextBoxColumn5.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewTextBoxColumn5.ToolTipText = ""
         '
         'DataGridViewTextBoxColumn6
         '
@@ -587,7 +587,7 @@ Partial Class FormPureComp
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
         Me.DataGridViewTextBoxColumn6.ReadOnly = True
         Me.DataGridViewTextBoxColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.DataGridViewTextBoxColumn6.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewTextBoxColumn6.ToolTipText = ""
         '
         'DataGridViewTextBoxColumn7
         '
@@ -599,7 +599,7 @@ Partial Class FormPureComp
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
         Me.DataGridViewTextBoxColumn7.ReadOnly = True
         Me.DataGridViewTextBoxColumn7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.DataGridViewTextBoxColumn7.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewTextBoxColumn7.ToolTipText = ""
         '
         'DataGridViewTextBoxColumn8
         '
@@ -613,7 +613,7 @@ Partial Class FormPureComp
         Me.DataGridViewTextBoxColumn8.ReadOnly = True
         Me.DataGridViewTextBoxColumn8.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DataGridViewTextBoxColumn8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.DataGridViewTextBoxColumn8.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewTextBoxColumn8.ToolTipText = ""
         '
         'Column4
         '
@@ -625,7 +625,7 @@ Partial Class FormPureComp
         Me.Column4.Name = "Column4"
         Me.Column4.ReadOnly = True
         Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column4.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column4.ToolTipText = ""
         '
         'Column5
         '
@@ -637,7 +637,7 @@ Partial Class FormPureComp
         Me.Column5.Name = "Column5"
         Me.Column5.ReadOnly = True
         Me.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column5.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column5.ToolTipText = ""
         '
         'Column6
         '
@@ -649,7 +649,7 @@ Partial Class FormPureComp
         Me.Column6.Name = "Column6"
         Me.Column6.ReadOnly = True
         Me.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column6.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column6.ToolTipText = ""
         '
         'Column7
         '
@@ -661,21 +661,21 @@ Partial Class FormPureComp
         Me.Column7.Name = "Column7"
         Me.Column7.ReadOnly = True
         Me.Column7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column7.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column7.ToolTipText = ""
         '
         'T6
         '
         Me.T6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
         resources.ApplyResources(Me.T6, "T6")
         Me.T6.Name = "T6"
-        Me.T6.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.T6.ToolTipText = ""
         '
         'SolidCp
         '
         Me.SolidCp.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
         resources.ApplyResources(Me.SolidCp, "SolidCp")
         Me.SolidCp.Name = "SolidCp"
-        Me.SolidCp.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.SolidCp.ToolTipText = ""
         '
         'FormPureComp
         '

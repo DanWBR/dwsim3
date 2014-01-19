@@ -137,20 +137,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             'load user database interactions
             If Not My.Settings.UserInteractionsDatabases Is Nothing Then
                 For Each IPDBPath As String In My.Settings.UserInteractionsDatabases
-                    Dim Interactions As DWSIM.ClassesBasicasTermodinamica.InteractionParameters()
-                    Dim IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameters
+                    Dim Interactions As DWSIM.ClassesBasicasTermodinamica.InteractionParameter()
+                    Dim IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameter
                     Dim IPD As New NRTL_IPData
                     Try
-                        Interactions = DWSIM.Databases.UserDB.ReadInteractions(IPDBPath, "NRTL")
+                        Interactions = DWSIM.Databases.UserIPDB.ReadInteractions(IPDBPath, "NRTL")
                         For Each IP In Interactions
-                            IPD.A12 = IP.Parameters.Collection.Item("A12").ToString
-                            IPD.A21 = IP.Parameters.Collection.Item("A21").ToString
-                            IPD.alpha12 = IP.Parameters.Collection.Item("alpha12").ToString
-                            IPD.comment = IP.Parameters.Collection.Item("Description")
-                            If IP.Parameters.Collection.ContainsKey("B12") Then IPD.B12 = IP.Parameters.Collection.Item("B12").ToString
-                            If IP.Parameters.Collection.ContainsKey("B21") Then IPD.B21 = IP.Parameters.Collection.Item("B21").ToString
-                            If IP.Parameters.Collection.ContainsKey("C12") Then IPD.C12 = IP.Parameters.Collection.Item("C12").ToString
-                            If IP.Parameters.Collection.ContainsKey("C21") Then IPD.C21 = IP.Parameters.Collection.Item("C21").ToString
+                            IPD.A12 = IP.Parameters.Item("A12").ToString
+                            IPD.A21 = IP.Parameters.Item("A21").ToString
+                            IPD.alpha12 = IP.Parameters.Item("alpha12").ToString
+                            IPD.comment = IP.Description
+                            If IP.Parameters.ContainsKey("B12") Then IPD.B12 = IP.Parameters.Item("B12").ToString
+                            If IP.Parameters.ContainsKey("B21") Then IPD.B21 = IP.Parameters.Item("B21").ToString
+                            If IP.Parameters.ContainsKey("C12") Then IPD.C12 = IP.Parameters.Item("C12").ToString
+                            If IP.Parameters.ContainsKey("C21") Then IPD.C21 = IP.Parameters.Item("C21").ToString
 
                             If Me.InteractionParameters.ContainsKey(IP.Comp1) Then
                                 If Me.InteractionParameters(IP.Comp1).ContainsKey(IP.Comp2) Then
