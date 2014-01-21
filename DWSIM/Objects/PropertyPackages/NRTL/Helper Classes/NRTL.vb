@@ -139,10 +139,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 For Each IPDBPath As String In My.Settings.UserInteractionsDatabases
                     Dim Interactions As DWSIM.ClassesBasicasTermodinamica.InteractionParameter()
                     Dim IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameter
-                    Dim IPD As New NRTL_IPData
                     Try
                         Interactions = DWSIM.Databases.UserIPDB.ReadInteractions(IPDBPath, "NRTL")
                         For Each IP In Interactions
+                            Dim IPD As New NRTL_IPData
                             IPD.A12 = IP.Parameters.Item("A12").ToString
                             IPD.A21 = IP.Parameters.Item("A21").ToString
                             IPD.alpha12 = IP.Parameters.Item("alpha12").ToString

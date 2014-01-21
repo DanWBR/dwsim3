@@ -174,10 +174,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
                     Dim Interactions As DWSIM.ClassesBasicasTermodinamica.InteractionParameter()
                     Dim IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameter
-                    Dim IPD As New UNIQUAC_IPData
                     Try
                         Interactions = DWSIM.Databases.UserIPDB.ReadInteractions(IPDBPath, "UNIQUAC")
                         For Each IP In Interactions
+                            Dim IPD As New UNIQUAC_IPData
                             IPD.A12 = IP.Parameters.Item("A12").ToString
                             IPD.A21 = IP.Parameters.Item("A21").ToString
                             IPD.comment = IP.Description

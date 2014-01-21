@@ -40,7 +40,7 @@ Namespace DWSIM.Optimization
         Public description As String = ""
         Public results As ArrayList
         Public stats As String = ""
-        Public numvar As Integer = 2
+        Public numvar As Integer = 1
 
         Public depvartype As SADependentVariableType = SADependentVariableType.Variable
 
