@@ -1,4 +1,4 @@
-﻿'    Peng-Robinson Lee-Kesler Property Package 
+'    Peng-Robinson Lee-Kesler Property Package 
 '    Copyright 2008 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -122,7 +122,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             If DHres = 0 Then Throw New Exception("Erro no cálculo da entalpia [LK].")
 
-            H_LK_MIX = Hid + DHres / MMm '/ 1000
+            If MathEx.Common.Sum(Vz) = 0.0# Then
+                H_LK_MIX = 0.0#
+            Else
+                H_LK_MIX = Hid + DHres / MMm '/ 1000
+            End If
 
         End Function
 
@@ -163,7 +167,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim DSres = R * Me.S_LK(TIPO, T / Tcm, P, Pcm, wm)
 
-            S_LK_MIX = Sid + DSres / MMm '/ 1000
+
+            If MathEx.Common.Sum(Vz) = 0.0# Then
+                S_LK_MIX = 0.0#
+            Else
+                S_LK_MIX = Sid + DSres / MMm '/ 1000
+            End If
 
         End Function
 
