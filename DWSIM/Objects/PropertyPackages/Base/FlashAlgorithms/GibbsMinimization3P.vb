@@ -636,9 +636,9 @@ out:        Return result
             Hl1 = 0
             Hl2 = 0
 
-            If V > 0 Then Hv = proppack.DW_CalcEnthalpy(Vy, T, Pf, State.Vapor)
-            If L1 > 0 Then Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, Pf, State.Liquid)
-            If L2 > 0 Then Hl2 = proppack.DW_CalcEnthalpy(Vx2, T, Pf, State.Liquid)
+            If V > 0.00000001 Then Hv = proppack.DW_CalcEnthalpy(Vy, T, Pf, State.Vapor)
+            If L1 > 0.00000001 Then Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, Pf, State.Liquid)
+            If L2 > 0.00000001 Then Hl2 = proppack.DW_CalcEnthalpy(Vx2, T, Pf, State.Liquid)
 
             Dim mmg, mml, mml2
             mmg = proppack.AUX_MMM(Vy)
@@ -669,9 +669,9 @@ out:        Return result
             Sl1 = 0
             Sl2 = 0
 
-            If V > 0 Then Sv = proppack.DW_CalcEntropy(Vy, T, Pf, State.Vapor)
-            If L1 > 0 Then Sl1 = proppack.DW_CalcEntropy(Vx1, T, Pf, State.Liquid)
-            If L2 > 0 Then Sl2 = proppack.DW_CalcEntropy(Vx2, T, Pf, State.Liquid)
+            If V > 0.00000001 Then Sv = proppack.DW_CalcEntropy(Vy, T, Pf, State.Vapor)
+            If L1 > 0.00000001 Then Sl1 = proppack.DW_CalcEntropy(Vx1, T, Pf, State.Liquid)
+            If L2 > 0.00000001 Then Sl2 = proppack.DW_CalcEntropy(Vx2, T, Pf, State.Liquid)
 
             Dim mmg, mml, mml2
             mmg = proppack.AUX_MMM(Vy)
