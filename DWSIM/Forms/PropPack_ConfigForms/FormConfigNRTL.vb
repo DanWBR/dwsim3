@@ -412,4 +412,23 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
         Process.Start(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "data" & Path.DirectorySeparatorChar & "nrtl.dat")
     End Sub
 
+    Private Sub dgv1_EditingControlShowing(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles dgvu1.EditingControlShowing
+
+        Dim cb As ComboBox = TryCast(e.Control, ComboBox)
+
+        If cb IsNot Nothing Then
+            AddHandler cb.SelectionChangeCommitted, AddressOf SelectionChanged
+        End If
+
+    End Sub
+
+    Private Sub SelectionChanged(ByVal sender As Object, ByVal e As EventArgs)
+
+        Dim cb As ComboBox = sender
+        Dim cell As DataGridViewCell = Me.dgvu1.SelectedCells(0)
+
+        cell.Value = cb.SelectedItem.ToString
+
+    End Sub
+
 End Class
