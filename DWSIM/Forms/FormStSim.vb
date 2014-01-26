@@ -62,10 +62,13 @@ Public Class FormStSim
         If Me.FrmChild.Options.SelectedComponents.Count = 0 And Me.FrmChild.Options.PropertyPackages.Count = 0 Then
             MessageBox.Show(DWSIM.App.GetLocalString("Adicionesubstnciassi"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             MessageBox.Show(DWSIM.App.GetLocalString("NoexistemPacotesdePr"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            e.Cancel = True
         ElseIf Me.FrmChild.Options.SelectedComponents.Count = 0 Then
             MessageBox.Show(DWSIM.App.GetLocalString("Adicionesubstnciassi"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            e.Cancel = True
         ElseIf Me.FrmChild.Options.PropertyPackages.Count = 0 Then
             MessageBox.Show(DWSIM.App.GetLocalString("NoexistemPacotesdePr"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            e.Cancel = True
         Else
             FrmChild.FormProps.PGEx1.Refresh()
             FrmChild.FormProps.PGEx2.Refresh()
