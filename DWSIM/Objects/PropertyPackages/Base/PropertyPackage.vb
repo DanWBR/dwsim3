@@ -5994,7 +5994,7 @@ Final3:
                                 Else
                                     vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                 End If
-                                vk(i) = subst.FracaoMolar / vk(i)
+                                vk(i) = subst.FracaoMassica / vk(i)
                                 i = i + 1
                             Next
                             val = 1 / MathEx.Common.Sum(vk)
@@ -6054,7 +6054,7 @@ Final3:
                                 Else
                                     vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                 End If
-                                vk(i) = subst.FracaoMolar / vk(i)
+                                vk(i) = subst.FracaoMassica / vk(i)
                                 i = i + 1
                             Next
                             val = 1 / MathEx.Common.Sum(vk)
@@ -6095,7 +6095,7 @@ Final3:
                                 Else
                                     vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                 End If
-                                vk(i) = subst.FracaoMolar / vk(i)
+                                vk(i) = subst.FracaoMassica / vk(i)
                                 i = i + 1
                             Next
                             val = 1 / MathEx.Common.Sum(vk)
@@ -6136,7 +6136,7 @@ Final3:
                                 Else
                                     vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                 End If
-                                vk(i) = subst.FracaoMolar / vk(i)
+                                vk(i) = subst.FracaoMassica / vk(i)
                                 i = i + 1
                             Next
                             val = 1 / MathEx.Common.Sum(vk)
@@ -6177,7 +6177,7 @@ Final3:
                                 Else
                                     vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                 End If
-                                vk(i) = subst.FracaoMolar / vk(i)
+                                vk(i) = subst.FracaoMassica / vk(i)
                                 i = i + 1
                             Next
                             val = 1 / MathEx.Common.Sum(vk)
