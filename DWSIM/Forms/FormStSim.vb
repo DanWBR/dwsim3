@@ -1025,7 +1025,7 @@ Public Class FormStSim
     End Sub
 
     Sub AddCompToSimulation(ByVal index As Integer)
-
+        ' TODO Add code to check that index is within range. If it is out of range, don't do anything.
         If Me.loaded Then
             If Not Me.FrmChild.Options.SelectedComponents.ContainsKey(ogc1.Rows(index).Cells(0).Value) Then
                 Dim tmpcomp As New DWSIM.ClassesBasicasTermodinamica.ConstantProperties
@@ -1297,5 +1297,18 @@ Public Class FormStSim
     Private Sub LinkLabelPropertyMethods_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabelPropertyMethods.LinkClicked
         Process.Start("http://dwsim.inforside.com.br/wiki/index.php?title=Property_Methods_and_Correlation_Profiles")
     End Sub
+    
+    Private Sub ogc1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles ogc1.CellDoubleClick
+        If e.RowIndex > -1 Then
+            AddCompToSimulation(e.RowIndex)
+        End If
+    End Sub
+
+    Private Sub ListViewPP_DoubleClick(sender As Object, e As EventArgs) Handles ListViewPP.DoubleClick
+        If ListViewPP.SelectedItems.Count = 1 Then
+            Button8.PerformClick()
+        End If
+    End Sub
+
 
 End Class
