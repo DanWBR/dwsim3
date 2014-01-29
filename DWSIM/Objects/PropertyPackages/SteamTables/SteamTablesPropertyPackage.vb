@@ -1,5 +1,5 @@
-﻿'    Steam Tables Property Package 
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Steam Tables Property Package 
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -173,6 +173,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Case FlashSpec.VAP
 
                             T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+                            vf = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
 
                             With Me.m_iapws97
                                 Hl = .enthalpySatLiqTW(T)
@@ -252,6 +253,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Case FlashSpec.VAP
 
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+                            vf = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
 
                             With Me.m_iapws97
                                 Hl = .enthalpySatLiqPW(P / 100000)
@@ -363,6 +365,213 @@ FINAL:
             Me.CurrentMaterialStream.AtEquilibrium = True
 
         End Sub
+
+        Public Overrides Function DW_CalcEquilibrio_ISOL(spec1 As FlashSpec, spec2 As FlashSpec, val1 As Double, val2 As Double, estimate As Double) As Object
+
+            If Not Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey("Agua") Then
+                Throw New Exception("The Steam Tables Property Package only works with the 'Water (H2O)' compound from the DWSIM database. Please setup your simulation accordingly.")
+            End If
+
+            Dim P, T, H, S, vf, lf, Psat, Hv, Hl, Sv, Sl As Double
+
+            Dim brentsolverP As New BrentOpt.Brent
+            brentsolverP.DefineFuncDelegate(AddressOf EnthalpyPx)
+
+            Dim brentsolverT As New BrentOpt.Brent
+            brentsolverT.DefineFuncDelegate(AddressOf EnthalpyTx)
+
+            Select Case spec1
+
+                Case FlashSpec.T
+
+                    Select Case spec2
+
+                        Case FlashSpec.P
+
+                            T = val1
+                            P = val2
+
+                            With Me.m_iapws97
+                                Psat = .pSatW(T)
+                                If T > 273.15 And Psat = -1 Then Psat = 1.0E+20
+                                If P / 100000 > Psat Then
+                                    vf = 0
+                                Else
+                                    vf = 1
+                                End If
+                                H = .enthalpyW(T, P / 100000)
+                                S = .entropyW(T, P / 100000)
+                            End With
+                            lf = 1 - vf
+
+                        Case FlashSpec.H
+
+                            T = val1
+                            H = val2
+
+                            With Me.m_iapws97
+                                Hl = .enthalpySatLiqTW(T)
+                                Hv = .enthalpySatVapTW(T)
+                                Sl = .entropySatLiqTW(T)
+                                Sv = .entropySatVapTW(T)
+                                If H < Hl Then
+                                    vf = 0
+                                ElseIf H > Hv Then
+                                    vf = 1
+                                Else
+                                    vf = (H - Hl) / (Hv - Hl)
+                                End If
+                                S = vf * Sv + (1 - vf) * Sl
+                                P = .pSatW(T) * 100000
+
+                                If vf <> 0 And vf <> 1 Then
+                                    P = .pSatW(T)
+                                Else
+                                    LoopVarF = H
+                                    LoopVarX = T
+                                    P = brentsolverP.BrentOpt(0.001, 600, 20, 0.0001, 1000, Nothing)
+                                End If
+                                P = P * 100000
+
+                            End With
+                            lf = 1 - vf
+
+                        Case FlashSpec.S
+
+                            T = val1
+                            S = val2
+
+                            With Me.m_iapws97
+                                Hl = .enthalpySatLiqTW(T)
+                                Hv = .enthalpySatVapTW(T)
+                                Sl = .entropySatLiqTW(T)
+                                Sv = .entropySatVapTW(T)
+                                If S < Sl Then
+                                    vf = 0
+                                ElseIf S > Sv Then
+                                    vf = 1
+                                Else
+                                    vf = (S - Sl) / (Sv - Sl)
+                                End If
+                                H = vf * Hv + (1 - vf) * Hl
+
+                                If vf <> 0 And vf <> 1 Then
+                                    P = .pSatW(T)
+                                Else
+                                    LoopVarF = H
+                                    LoopVarX = T
+                                    P = brentsolverP.BrentOpt(0.001, 1000, 20, 0.0001, 1000, Nothing)
+                                End If
+                                P = P * 100000
+
+                            End With
+                            lf = 1 - vf
+
+                        Case FlashSpec.VAP
+
+                            T = val1
+                            vf = val2
+
+                            With Me.m_iapws97
+                                Hl = .enthalpySatLiqTW(T)
+                                Hv = .enthalpySatVapTW(T)
+                                Sl = .entropySatLiqTW(T)
+                                Sv = .entropySatVapTW(T)
+                                H = vf * Hv + (1 - vf) * Hl
+                                S = vf * Sv + (1 - vf) * Sl
+                                P = .pSatW(T) * 100000
+                            End With
+                            lf = 1 - vf
+
+                    End Select
+
+                Case FlashSpec.P
+
+                    Select Case spec2
+
+                        Case FlashSpec.H
+
+                            P = val1
+                            H = val2
+
+                            With Me.m_iapws97
+                                Hl = .enthalpySatLiqPW(P / 100000)
+                                Hv = .enthalpySatVapPW(P / 100000)
+                                Sl = .entropySatLiqPW(P / 100000)
+                                Sv = .entropySatVapPW(P / 100000)
+                                If H < Hl Then
+                                    vf = 0
+                                ElseIf H > Hv Then
+                                    vf = 1
+                                Else
+                                    vf = (H - Hl) / (Hv - Hl)
+                                End If
+                                S = vf * Sv + (1 - vf) * Sl
+
+                                If vf <> 0 And vf <> 1 Then
+                                    T = .tSatW(P / 100000)
+                                Else
+                                    LoopVarF = H
+                                    LoopVarX = P / 100000
+                                    T = brentsolverT.BrentOpt(273.15, 623.15, 20, 0.0001, 1000, Nothing)
+                                End If
+
+                            End With
+                            lf = 1 - vf
+
+                        Case FlashSpec.S
+
+                            P = val1
+                            S = val2
+
+                            With Me.m_iapws97
+                                Hl = .enthalpySatLiqPW(P / 100000)
+                                Hv = .enthalpySatVapPW(P / 100000)
+                                Sl = .entropySatLiqPW(P / 100000)
+                                Sv = .entropySatVapPW(P / 100000)
+                                If S < Sl Then
+                                    vf = 0
+                                ElseIf S > Sv Then
+                                    vf = 1
+                                Else
+                                    vf = (S - Sl) / (Sv - Sl)
+                                End If
+                                H = vf * Hv + (1 - vf) * Hl
+
+                                If vf <> 0 And vf <> 1 Then
+                                    T = .tSatW(P / 100000)
+                                Else
+                                    LoopVarF = H
+                                    LoopVarX = P / 100000
+                                    T = brentsolverT.BrentOpt(273.15, 623.15, 20, 0.0001, 1000, Nothing)
+                                End If
+
+                            End With
+                            lf = 1 - vf
+
+                        Case FlashSpec.VAP
+
+                            P = val1
+                            vf = val2
+
+                            With Me.m_iapws97
+                                Hl = .enthalpySatLiqPW(P / 100000)
+                                Hv = .enthalpySatVapPW(P / 100000)
+                                Sl = .entropySatLiqPW(P / 100000)
+                                Sv = .entropySatVapPW(P / 100000)
+                                H = vf * Hv + (1 - vf) * Hl
+                                S = vf * Sv + (1 - vf) * Sl
+                                T = .tSatW(P / 100000)
+                            End With
+                            lf = 1 - vf
+
+                    End Select
+
+            End Select
+
+            Return New Object() {lf, vf, T, P, H, S, 1, 1, New Double() {1.0#}, New Double() {1.0#}, New Object() {lf, vf, New Double() {1.0#}, New Double() {1.0#}, 0, 0.0#, Me.RET_NullVector, 0.0#, Me.RET_NullVector}}
+
+        End Function
 
         'Public Overrides Sub DW_CalcOverallProps()
 
