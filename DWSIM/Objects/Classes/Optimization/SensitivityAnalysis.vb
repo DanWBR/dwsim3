@@ -1,15 +1,5 @@
-﻿Imports System.Xml
-Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
-Imports DWSIM.DWSIM.SimulationObjects.Streams
-Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
-Imports System.IO
-Imports System.Runtime.Serialization.Formatters.Binary
-Imports System.Runtime.Serialization
-Imports Ciloci.Flee
-Imports System.Linq
-
 '    Sensitivity Analysis Classes
-'    Copyright 2009 Daniel Wagner O. de Medeiros
+'    Copyright 2009-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -25,6 +15,16 @@ Imports System.Linq
 '
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
+
+Imports System.Xml
+Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
+Imports DWSIM.DWSIM.SimulationObjects.Streams
+Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
+Imports System.IO
+Imports System.Runtime.Serialization.Formatters.Binary
+Imports System.Runtime.Serialization
+Imports Ciloci.Flee
+Imports System.Linq
 
 Namespace DWSIM.Optimization
 
@@ -83,7 +83,7 @@ Namespace DWSIM.Optimization
 
         Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
 
-            XMLSerializer.XMLSerializer.Deserialize(Me, data)
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
 
             Dim xel As XElement = (From xel2 As XElement In data Select xel2 Where xel2.Name = "IV1").SingleOrDefault
             iv1.LoadData(xel.Elements.ToList)
@@ -108,7 +108,7 @@ Namespace DWSIM.Optimization
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
 
-            Dim elements As List(Of XElement) = XMLSerializer.XMLSerializer.Serialize(Me)
+            Dim elements As List(Of XElement) = XMLSerializer.XMLSerializer.Serialize(Me, True)
 
             With elements
                 .Add(New XElement("IV1", iv1.SaveData.ToArray))
@@ -134,11 +134,11 @@ Namespace DWSIM.Optimization
 
         Implements XMLSerializer.Interfaces.ICustomXMLSerialization
 
-        Public objectID As String
-        Public objectTAG As String
-        Public propID As String
-        Public unit As String
-        Public points As Integer
+        Public objectID As String = ""
+        Public objectTAG As String = ""
+        Public propID As String = ""
+        Public unit As String = ""
+        Public points As Integer = 0
         Public name As String = ""
         Public id As String = ""
         Public currentvalue As Double = 0.0#
@@ -150,11 +150,11 @@ Namespace DWSIM.Optimization
         End Sub
 
         Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
-            XMLSerializer.XMLSerializer.Deserialize(Me, data)
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
         End Function
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
-            Return XMLSerializer.XMLSerializer.Serialize(Me)
+            Return XMLSerializer.XMLSerializer.Serialize(Me, True)
         End Function
 
     End Class
