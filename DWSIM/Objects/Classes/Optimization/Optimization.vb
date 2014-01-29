@@ -1,5 +1,5 @@
-﻿'    Optimization Classes
-'    Copyright 2009 Daniel Wagner O. de Medeiros
+'    Optimization Classes
+'    Copyright 2009-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -99,7 +99,7 @@ Namespace DWSIM.Optimization
 
         Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
 
-            XMLSerializer.XMLSerializer.Deserialize(Me, data)
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
 
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "Variables").SingleOrDefault.Elements.ToList
                 Dim optvar As New OPTVariable
@@ -111,7 +111,7 @@ Namespace DWSIM.Optimization
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
 
-            Dim elements As List(Of XElement) = XMLSerializer.XMLSerializer.Serialize(Me)
+            Dim elements As List(Of XElement) = XMLSerializer.XMLSerializer.Serialize(Me, True)
 
             With elements
                 .Add(New XElement("Variables"))
@@ -148,11 +148,11 @@ Namespace DWSIM.Optimization
         End Sub
 
         Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
-            XMLSerializer.XMLSerializer.Deserialize(Me, data)
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
         End Function
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
-            Return XMLSerializer.XMLSerializer.Serialize(Me)
+            Return XMLSerializer.XMLSerializer.Serialize(Me, True)
         End Function
 
     End Class
