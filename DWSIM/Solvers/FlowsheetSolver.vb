@@ -240,7 +240,12 @@ Namespace DWSIM.Flowsheet
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
             Dim preLab As String = form.FormSurface.LabelCalculator.Text
-            form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
+
+            Try
+                form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
+            Catch ex As Exception
+                form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & "...")
+            End Try
 
             Dim sobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = form.Collections.MaterialStreamCollection(ms.Nome)
 
