@@ -38,7 +38,7 @@ Namespace DWSIM.Optimization
 
         Public name As String = ""
         Public description As String = ""
-        Public results As ArrayList
+        <Xml.Serialization.XmlIgnore()> Public results As ArrayList
         Public stats As String = ""
         Public numvar As Integer = 1
 
