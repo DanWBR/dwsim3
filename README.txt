@@ -1,7 +1,7 @@
 ==================================================
 DWSIM - Open Source Process Simulator
-Version 3.0, Build 5114
-Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo León
+Version 3.0, Build 5142 - January 2014
+Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo LeÃ³n
 ==================================================
 
 DWSIM is a software for modeling, simulation and optimization of steady-state chemical processes.
@@ -62,6 +62,8 @@ On Linux machines, Mono can locate these libraries on the DWSIM folder, so you d
 
 Important: Mono requires the X11 package installed on OS X in order to run Windows Forms applications, including DWSIM. Be sure to have it installed before doing the steps below.
 
+Due to a bug in the libgdiplus library in OS X, DWSIM will work only with a specific Mono 2.10 build, which can be found here => https://bugzilla.xamarin.com/show_bug.cgi?id=2474
+
 To run DWSIM on OS X, open a terminal (console) window (Go > Utilities > Terminal), point it to the folder which contains the DWSIM executable and execute the following commands:
 
 export MONO_MWF_MAC_FORCE_X11=1
@@ -82,6 +84,8 @@ sudo unzip dynamiclibraries\libipopt_mono_dwsim_osx_10.7.3_32.zip -d /usr/lib
 mv DWSIM.exe.config.osx DWSIM.exe.config
 mv Cureos.Numerics.dll.config.osx Cureos.Numerics.dll.config
 
+Finally, if you didn't do this already, copy the file "default.ini" and rename the copied file to "dwsim.ini" to have your settings saved between sessions. 
+
 ==================================================
 KNOWN ISSUES
 ==================================================
@@ -94,6 +98,21 @@ Known limitations of DWSIM when running on Mono:
 ==================================================
 VERSION HISTORY / CHANGELOG
 ==================================================
+
+The full changelog, including code changes and their authors can be viewed at https://github.com/DanWBR/dwsim3/commits/master
+
+Version 3.0 Build 5142
+
+- [NEW] User Interaction Parameter database system for NRTL and UNIQUAC models (work in progress)
+- [CHG] Compounds and Property Packages can now be added with a double mouse click
+- [FIX] Fixed bug #13: Steam Tables - gas-liquid equilibrium in adibatic expander (https://sourceforge.net/apps/mantisbt/dwsim/view.php?id=13)
+- [FIX] Fixed bug #14: Sensitivity Analysis Definition cannot be saved (https://sourceforge.net/apps/mantisbt/dwsim/view.php?id=14)
+- [FIX] Fixes to the CAPE-OPEN subsystem
+- [FIX] Fixed validation of PT-flash calculations
+- [FIX] Fixed a bug in the PH-Flash calculation with Gibbs 3P algorithm
+- [FIX] Fixed mixing rule for liquid density
+- [FIX] Fixed some bugs in the Shortcut Column model
+- [FIX] Binary Envelope - y axis scale adjusted to x axis in Txy and Pxy diagrams
 
 Version 3.0 Build 5114
 
@@ -456,7 +475,7 @@ Version 1.8 Build 3908
 
 Version 1.7 Build 3875
 
-- [NEW] Added German translation by Rainer Göllnitz
+- [NEW] Added German translation by Rainer GÃ¶llnitz
 
 Version 1.7 Build 3868
 
@@ -466,7 +485,7 @@ Version 1.7 Build 3868
 
 Version 1.7 Build 3850
 
-- [NEW] Lee-Kesler-Plöcker Property Package
+- [NEW] Lee-Kesler-PlÃ¶cker Property Package
 - [FIX] Fixed K-value calculation call in the Sum Rates method for solving Absorption Columns
 - [FIX] Fixed IO Flash calculation in single phase region
 - [FIX] Fixed Critical Point calculation with PR and SRK Equations of State
@@ -526,7 +545,7 @@ Version 1.6 Build 3618
 
 Version 1.6 Build 3605
 
-- [NEW] Added Spanish GUI translation (many thanks to Abad Lira and Gustavo León!)
+- [NEW] Added Spanish GUI translation (many thanks to Abad Lira and Gustavo LeÃ³n!)
 - [NEW] Added a Multivariate, Constrained Optimization utility
 - [NEW] Added a Sensitivity Analysis utility supporting up to 2 independent variables
 - [NEW] Added "command-line run mode" (read the documentation for more details)
