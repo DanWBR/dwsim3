@@ -762,6 +762,14 @@ Namespace DWSIM.Databases
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Ideal_Gas_Heat_Capacity_Const_C", "")).InnerText = comp.Ideal_Gas_Heat_Capacity_Const_C.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Ideal_Gas_Heat_Capacity_Const_D", "")).InnerText = comp.Ideal_Gas_Heat_Capacity_Const_D.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Ideal_Gas_Heat_Capacity_Const_E", "")).InnerText = comp.Ideal_Gas_Heat_Capacity_Const_E.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Heat_Capacity_EqNo", "")).InnerText = comp.LiquidHeatCapacityEquation
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Heat_Capacity_Const_A", "")).InnerText = comp.Liquid_Heat_Capacity_Const_A.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Heat_Capacity_Const_B", "")).InnerText = comp.Liquid_Heat_Capacity_Const_B.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Heat_Capacity_Const_C", "")).InnerText = comp.Liquid_Heat_Capacity_Const_C.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Heat_Capacity_Const_D", "")).InnerText = comp.Liquid_Heat_Capacity_Const_D.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Heat_Capacity_Const_E", "")).InnerText = comp.Liquid_Heat_Capacity_Const_E.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Heat_Capacity_TMin", "")).InnerText = comp.Liquid_Heat_Capacity_Tmin.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Heat_Capacity_TMax", "")).InnerText = comp.Liquid_Heat_Capacity_Tmax.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Viscosity_EqNo", "")).InnerText = comp.LiquidViscosityEquation
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Viscosity_Const_A", "")).InnerText = comp.Liquid_Viscosity_Const_A.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Liquid_Viscosity_Const_B", "")).InnerText = comp.Liquid_Viscosity_Const_B.ToString(cult)
@@ -970,7 +978,22 @@ Namespace DWSIM.Databases
                                 .Liquid_Density_Const_D = Double.Parse(node2.InnerText, nf)
                             Case "Liquid_Density_Const_E"
                                 .Liquid_Density_Const_E = Double.Parse(node2.InnerText, nf)
-
+                            Case "Liquid_Heat_Capacity_EqNo"
+                                .LiquidHeatCapacityEquation = Integer.Parse(node2.InnerText, nf)
+                            Case "Liquid_Heat_Capacity_Constant_A"
+                                .Liquid_Heat_Capacity_Const_A = Double.Parse(node2.InnerText, nf)
+                            Case "Liquid_Heat_Capacity_Constant_B"
+                                .Liquid_Heat_Capacity_Const_B = Double.Parse(node2.InnerText, nf)
+                            Case "Liquid_Heat_Capacity_Constant_C"
+                                .Liquid_Heat_Capacity_Const_C = Double.Parse(node2.InnerText, nf)
+                            Case "Liquid_Heat_Capacity_Constant_D"
+                                .Liquid_Heat_Capacity_Const_D = Double.Parse(node2.InnerText, nf)
+                            Case "Liquid_Heat_Capacity_Constant_E"
+                                .Liquid_Heat_Capacity_Const_E = Double.Parse(node2.InnerText, nf)
+                            Case "Liquid_Heat_Capacity_TMin"
+                                .Liquid_Heat_Capacity_Tmin = Double.Parse(node2.InnerText, nf)
+                            Case "Liquid_Heat_Capacity_TMax"
+                                .Liquid_Heat_Capacity_Tmax = Double.Parse(node2.InnerText, nf)
                             Case "Solid_Heat_Capacity_EqNo"
                                 .SolidHeatCapacityEquation = Integer.Parse(node2.InnerText, nf)
                             Case "Solid_Heat_Capacity_Constant_A"

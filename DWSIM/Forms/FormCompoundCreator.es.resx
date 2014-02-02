@@ -178,6 +178,12 @@
   <data name="tbCPIG_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>273, 123</value>
   </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Cp (Gas Ideal)</value>
+  </data>
+  <data name="FaTabStripItem8.Title" xml:space="preserve">
+    <value>Capacidad Calorífica</value>
+  </data>
   <data name="Label45.Location" type="System.Drawing.Point, System.Drawing">
     <value>255, 203</value>
   </data>
