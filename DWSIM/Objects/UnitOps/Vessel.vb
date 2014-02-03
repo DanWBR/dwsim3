@@ -1,5 +1,5 @@
-﻿'    Separator Vessel Calculation Routines 
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Separator Vessel Calculation Routines 
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -250,21 +250,21 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End If
                 Next
                 Me.PropertyPackage.CurrentMaterialStream = mix
-                If W <> 0.0# Then
-                    If nc > 1 Then
-                        'do a PH-Flash only if there is more than one inlet stream, otherwise the temperature won't change
-                        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P, Hs, T)
-                        T = tmp(2)
-                    End If
-                End If
-                .Fases(0).SPMProperties.temperature = T
+                'If W <> 0.0# Then
+                '    If nc > 1 Then
+                '        'do a PH-Flash only if there is more than one inlet stream, otherwise the temperature won't change
+                '        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P, Hs, T)
+                '        T = tmp(2)
+                '    End If
+                'End If
+                '.Fases(0).SPMProperties.temperature = T
                 .Fases(0).SPMProperties.molarflow = W / Me.PropertyPackage.AUX_MMM(PropertyPackages.Fase.Mixture) * 1000
             End With
 
             With Me.PropertyPackage
 
                 'calculate mixture stream
-                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                 If mix.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
                 Else
