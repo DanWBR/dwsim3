@@ -1,5 +1,5 @@
 '    DWSIM Excel Interface Shared Methods
-'    Copyright 2011-2013 Daniel Wagner O. de Medeiros
+'    Copyright 2011-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -125,6 +125,246 @@ Namespace Interfaces
 
             ppm.Dispose()
             ppm = Nothing
+
+        End Function
+
+        <ExcelFunction("Returns a list of the thermodynamic models.")> _
+        Public Shared Function GetModelList() As Object(,)
+
+            Dim modellist As New ArrayList
+
+            modellist.Add("Peng-Robinson")
+            modellist.Add("Peng-Robinson-Stryjek-Vera 2 (Van Laar)")
+            modellist.Add("Peng-Robinson-Stryjek-Vera 2 (Margules)")
+            modellist.Add("Soave-Redlich-Kwong")
+            modellist.Add("Lee-Kesler-Plöcker")
+            modellist.Add("PC-SAFT")
+            modellist.Add("NRTL")
+            modellist.Add("UNIQUAC")
+
+            Dim list(modellist.Count - 1, 0) As Object
+
+            For i As Integer = 0 To modellist.Count - 1
+                list(i, 0) = modellist(i)
+            Next
+
+            Return list
+
+        End Function
+
+        <ExcelFunction("Returns the interaction parameters stored in DWSIM's database for a given binary/model combination.")> _
+        Public Shared Function GetInteractionParameterSet(
+            <ExcelArgument("Thermodynamic Model (use 'GetModelList' to get a list of available models).")> ByVal Model As String,
+            <ExcelArgument("The name of the first compound.")> ByVal Compound1 As String,
+            <ExcelArgument("The name of the second compound.")> ByVal Compound2 As String) As Object(,)
+
+            Dim ipdata(0, 8) As Object
+
+            ipdata(0, 0) = Compound1
+            ipdata(0, 1) = Compound2
+            ipdata(0, 2) = 0.0#
+            ipdata(0, 3) = 0.0#
+            ipdata(0, 4) = 0.0#
+            ipdata(0, 5) = 0.0#
+            ipdata(0, 6) = 0.0#
+            ipdata(0, 7) = 0.0#
+            ipdata(0, 8) = 0.0#
+
+            Select Case Model
+                Case "Peng-Robinson"
+                    Dim pp As New PengRobinsonPropertyPackage(True)
+                    If pp.m_pr.InteractionParameters.ContainsKey(Compound1) Then
+                        If pp.m_pr.InteractionParameters(Compound1).ContainsKey(Compound2) Then
+                            ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound1)(Compound2).kij
+                        Else
+                            If pp.m_pr.InteractionParameters.ContainsKey(Compound2) Then
+                                If pp.m_pr.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                                    ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kij
+                                End If
+                            End If
+                        End If
+                    ElseIf pp.m_pr.InteractionParameters.ContainsKey(Compound2) Then
+                        If pp.m_pr.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                            ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kij
+                        End If
+                    End If
+                    pp.Dispose()
+                    pp = Nothing
+                Case "Peng-Robinson-Stryjek-Vera 2 (Van Laar)"
+                    Dim pp As New PRSV2VLPropertyPackage(True)
+                    If pp.m_pr.InteractionParameters.ContainsKey(Compound1) Then
+                        If pp.m_pr.InteractionParameters(Compound1).ContainsKey(Compound2) Then
+                            ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound1)(Compound2).kij
+                            ipdata(0, 3) = pp.m_pr.InteractionParameters(Compound1)(Compound2).kji
+                        Else
+                            If pp.m_pr.InteractionParameters.ContainsKey(Compound2) Then
+                                If pp.m_pr.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                                    ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kji
+                                    ipdata(0, 3) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kij
+                                End If
+                            End If
+                        End If
+                    ElseIf pp.m_pr.InteractionParameters.ContainsKey(Compound2) Then
+                        If pp.m_pr.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                            ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kji
+                            ipdata(0, 3) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kij
+                        End If
+                    End If
+                    pp.Dispose()
+                    pp = Nothing
+                Case "Peng-Robinson-Stryjek-Vera 2 (Margules)"
+                    Dim pp As New PRSV2PropertyPackage(True)
+                    If pp.m_pr.InteractionParameters.ContainsKey(Compound1) Then
+                        If pp.m_pr.InteractionParameters(Compound1).ContainsKey(Compound2) Then
+                            ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound1)(Compound2).kij
+                            ipdata(0, 3) = pp.m_pr.InteractionParameters(Compound1)(Compound2).kji
+                        Else
+                            If pp.m_pr.InteractionParameters.ContainsKey(Compound2) Then
+                                If pp.m_pr.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                                    ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kji
+                                    ipdata(0, 3) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kij
+                                End If
+                            End If
+                        End If
+                    ElseIf pp.m_pr.InteractionParameters.ContainsKey(Compound2) Then
+                        If pp.m_pr.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                            ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kji
+                            ipdata(0, 3) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kij
+                        End If
+                    End If
+                    pp.Dispose()
+                    pp = Nothing
+                Case "Soave-Redlich-Kwong"
+                    Dim pp As New SRKPropertyPackage(True)
+                    If pp.m_pr.InteractionParameters.ContainsKey(Compound1) Then
+                        If pp.m_pr.InteractionParameters(Compound1).ContainsKey(Compound2) Then
+                            ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound1)(Compound2).kij
+                        Else
+                            If pp.m_pr.InteractionParameters.ContainsKey(Compound2) Then
+                                If pp.m_pr.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                                    ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kij
+                                End If
+                            End If
+                        End If
+                    ElseIf pp.m_pr.InteractionParameters.ContainsKey(Compound2) Then
+                        If pp.m_pr.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                            ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kij
+                        End If
+                    End If
+                    pp.Dispose()
+                    pp = Nothing
+                Case "Lee-Kesler-Plöcker"
+                    Dim pp As New LKPPropertyPackage(True)
+                    If pp.m_pr.InteractionParameters.ContainsKey(Compound1) Then
+                        If pp.m_pr.InteractionParameters(Compound1).ContainsKey(Compound2) Then
+                            ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound1)(Compound2).kij
+                        Else
+                            If pp.m_pr.InteractionParameters.ContainsKey(Compound2) Then
+                                If pp.m_pr.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                                    ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kij
+                                End If
+                            End If
+                        End If
+                    ElseIf pp.m_pr.InteractionParameters.ContainsKey(Compound2) Then
+                        If pp.m_pr.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                            ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kij
+                        End If
+                    End If
+                    pp.Dispose()
+                    pp = Nothing
+                Case "PC-SAFT"
+                    Dim pp As New PCSAFTPropertyPackage(True)
+                    If pp.m_pr.InteractionParameters.ContainsKey(Compound1) Then
+                        If pp.m_pr.InteractionParameters(Compound1).ContainsKey(Compound2) Then
+                            ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound1)(Compound2).kij
+                        Else
+                            If pp.m_pr.InteractionParameters.ContainsKey(Compound2) Then
+                                If pp.m_pr.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                                    ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kij
+                                End If
+                            End If
+                        End If
+                    ElseIf pp.m_pr.InteractionParameters.ContainsKey(Compound2) Then
+                        If pp.m_pr.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                            ipdata(0, 2) = pp.m_pr.InteractionParameters(Compound2)(Compound1).kij
+                        End If
+                    End If
+                    pp.Dispose()
+                    pp = Nothing
+                Case "NRTL"
+                    Dim pp As New NRTLPropertyPackage(True)
+                    If pp.m_uni.InteractionParameters.ContainsKey(Compound1) Then
+                        If pp.m_uni.InteractionParameters(Compound1).ContainsKey(Compound2) Then
+                            ipdata(0, 2) = pp.m_uni.InteractionParameters(Compound1)(Compound2).A12
+                            ipdata(0, 3) = pp.m_uni.InteractionParameters(Compound1)(Compound2).A21
+                            ipdata(0, 4) = pp.m_uni.InteractionParameters(Compound1)(Compound2).B12
+                            ipdata(0, 5) = pp.m_uni.InteractionParameters(Compound1)(Compound2).B21
+                            ipdata(0, 6) = pp.m_uni.InteractionParameters(Compound1)(Compound2).C12
+                            ipdata(0, 7) = pp.m_uni.InteractionParameters(Compound1)(Compound2).C21
+                            ipdata(0, 8) = pp.m_uni.InteractionParameters(Compound1)(Compound2).alpha12
+                        Else
+                            If pp.m_uni.InteractionParameters.ContainsKey(Compound2) Then
+                                If pp.m_uni.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                                    ipdata(0, 2) = pp.m_uni.InteractionParameters(Compound2)(Compound1).A21
+                                    ipdata(0, 3) = pp.m_uni.InteractionParameters(Compound2)(Compound1).A12
+                                    ipdata(0, 4) = pp.m_uni.InteractionParameters(Compound2)(Compound1).B21
+                                    ipdata(0, 5) = pp.m_uni.InteractionParameters(Compound2)(Compound1).B12
+                                    ipdata(0, 6) = pp.m_uni.InteractionParameters(Compound2)(Compound1).C21
+                                    ipdata(0, 7) = pp.m_uni.InteractionParameters(Compound2)(Compound1).C12
+                                    ipdata(0, 8) = pp.m_uni.InteractionParameters(Compound2)(Compound1).alpha12
+                                End If
+                            End If
+                        End If
+                    ElseIf pp.m_uni.InteractionParameters.ContainsKey(Compound2) Then
+                        If pp.m_uni.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                            ipdata(0, 2) = pp.m_uni.InteractionParameters(Compound2)(Compound1).A21
+                            ipdata(0, 3) = pp.m_uni.InteractionParameters(Compound2)(Compound1).A12
+                            ipdata(0, 4) = pp.m_uni.InteractionParameters(Compound2)(Compound1).B21
+                            ipdata(0, 5) = pp.m_uni.InteractionParameters(Compound2)(Compound1).B12
+                            ipdata(0, 6) = pp.m_uni.InteractionParameters(Compound2)(Compound1).C21
+                            ipdata(0, 7) = pp.m_uni.InteractionParameters(Compound2)(Compound1).C12
+                            ipdata(0, 8) = pp.m_uni.InteractionParameters(Compound2)(Compound1).alpha12
+                        End If
+                    End If
+                    pp.Dispose()
+                    pp = Nothing
+                Case "UNIQUAC"
+                    Dim pp As New UNIQUACPropertyPackage(True)
+                    If pp.m_uni.InteractionParameters.ContainsKey(Compound1) Then
+                        If pp.m_uni.InteractionParameters(Compound1).ContainsKey(Compound2) Then
+                            ipdata(0, 2) = pp.m_uni.InteractionParameters(Compound1)(Compound2).A12
+                            ipdata(0, 3) = pp.m_uni.InteractionParameters(Compound1)(Compound2).A21
+                            ipdata(0, 4) = pp.m_uni.InteractionParameters(Compound1)(Compound2).B12
+                            ipdata(0, 5) = pp.m_uni.InteractionParameters(Compound1)(Compound2).B21
+                            ipdata(0, 6) = pp.m_uni.InteractionParameters(Compound1)(Compound2).C12
+                            ipdata(0, 7) = pp.m_uni.InteractionParameters(Compound1)(Compound2).C21
+                        Else
+                            If pp.m_uni.InteractionParameters.ContainsKey(Compound2) Then
+                                If pp.m_uni.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                                    ipdata(0, 2) = pp.m_uni.InteractionParameters(Compound2)(Compound1).A21
+                                    ipdata(0, 3) = pp.m_uni.InteractionParameters(Compound2)(Compound1).A12
+                                    ipdata(0, 4) = pp.m_uni.InteractionParameters(Compound2)(Compound1).B21
+                                    ipdata(0, 5) = pp.m_uni.InteractionParameters(Compound2)(Compound1).B12
+                                    ipdata(0, 6) = pp.m_uni.InteractionParameters(Compound2)(Compound1).C21
+                                    ipdata(0, 7) = pp.m_uni.InteractionParameters(Compound2)(Compound1).C12
+                                End If
+                            End If
+                        End If
+                    ElseIf pp.m_uni.InteractionParameters.ContainsKey(Compound2) Then
+                        If pp.m_uni.InteractionParameters(Compound2).ContainsKey(Compound1) Then
+                            ipdata(0, 2) = pp.m_uni.InteractionParameters(Compound2)(Compound1).A21
+                            ipdata(0, 3) = pp.m_uni.InteractionParameters(Compound2)(Compound1).A12
+                            ipdata(0, 4) = pp.m_uni.InteractionParameters(Compound2)(Compound1).B21
+                            ipdata(0, 5) = pp.m_uni.InteractionParameters(Compound2)(Compound1).B12
+                            ipdata(0, 6) = pp.m_uni.InteractionParameters(Compound2)(Compound1).C21
+                            ipdata(0, 7) = pp.m_uni.InteractionParameters(Compound2)(Compound1).C12
+                        End If
+                    End If
+                    pp.Dispose()
+                    pp = Nothing
+            End Select
+
+            Return ipdata
 
         End Function
 
