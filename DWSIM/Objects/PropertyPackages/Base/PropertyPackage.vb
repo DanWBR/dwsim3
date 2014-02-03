@@ -204,12 +204,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93") IsNot Nothing Then
                         cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93").GetValue("")
                     End If
-                    cspath += Path.DirectorySeparatorChar + "pcd" + Path.DirectorySeparatorChar + "chemsep1.xml"
-                    If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
+                    cspath += Path.DirectorySeparatorChar + "pcd" + pathsep + "chemsep1.xml"
                 Catch ex As Exception
                     Console.WriteLine(ex.ToString)
                 Finally
-                    If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
+                    If Not File.Exists(cspath) Then
+                        cspath = My.Application.Info.DirectoryPath & pathsep & "chemsepdb" & pathsep & "chemsep1.xml"
+                        If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
+                    Else
+                        My.Settings.ChemSepDatabasePath = cspath
+                    End If
                 End Try
 
                 'load chempsep database if existent
