@@ -153,7 +153,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                         For i = 0 To n
                             If i <> imaxl Then
-                                vx1e(i) = Vz(i) / (1 - L2)
+                                vx1e(i) = Vz(i) - V * result(3)(i) - L2 * vx2est(i)
                             Else
                                 vx1e(i) = Vz(i) * L2
                             End If
@@ -674,16 +674,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
-        Private Function CalcKbjw(ByVal K1() As Double, ByVal K2() As Double, ByVal L1 As Double, ByVal L2 As Double) As Double
+        Private Function CalcKbjw(ByVal K1() As Double, ByVal K2() As Double, ByVal L1 As Double, ByVal L2 As Double, Vx1() As Double, Vx2() As Double) As Double
 
             Dim i As Integer
             Dim n As Integer = UBound(K1) - 1
 
             Dim Kbj1 As Object
 
-            Kbj1 = L1 * K1(0) + L2 * K2(0)
+            Kbj1 = Vx1(0) * L1 * K1(0) + Vx2(0) * L2 * K2(0)
             For i = 1 To n
-                If Abs(K1(i) - 1) < Abs(Kbj1 - 1) Then Kbj1 = L1 * K1(i) + L2 * K2(i)
+                If Abs(K1(i) - 1) < Abs(Kbj1 - 1) Then Kbj1 = Vx1(i) * L1 * K1(i) + Vx2(i) * L2 * K2(i)
             Next
 
             Return Kbj1
@@ -1463,7 +1463,7 @@ restart:    Do
                 i = i + 1
             Loop Until i = n + 1
 
-            Kb = CalcKbjw(Ki1, Ki2, L1est, L2est)
+            Kb = CalcKbjw(Ki1, Ki2, L1, L2, Vx1, Vx2)
             Kb0 = Kb
 
             For i = 0 To n
@@ -1509,7 +1509,7 @@ restart:    Do
                         dfr = (fr - Me.TPErrorFunc(R1)) / (-0.0001)
                     End If
                     R0 = R
-                    R += -fr / dfr
+                    R += -0.1 * fr / dfr
                     If R < 0 Then R = 0
                     If R > 1 Then R = 1
                     icount += 1
@@ -1525,7 +1525,7 @@ restart:    Do
 
                 Ki1 = PP.DW_CalcKvalue(Vx1, Vy, T, P)
                 Ki2 = PP.DW_CalcKvalue(Vx2, Vy, T, P)
-                Kb = CalcKbjw(Ki1, Ki2, L1, L2)
+                Kb = CalcKbjw(Ki1, Ki2, L1, L2, Vx1, Vx2)
 
                 For i = 0 To n
                     uic1(i) = Log(Ki1(i))

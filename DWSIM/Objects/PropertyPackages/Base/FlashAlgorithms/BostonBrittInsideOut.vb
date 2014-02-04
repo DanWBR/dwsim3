@@ -697,7 +697,7 @@ restart:    Do
                 refx(n + 6) = Fc
 
                 err = 0
-                If Not PP._ioquick Then err = bo3.brentoptimize(0, 2, 0.0001, alpha)
+                If Not PP._ioquick Then err = bo3.brentoptimize(0.2, 2, 0.0001, alpha)
 
                 For i = 0 To n
                     ui(i) = ui(i) + alpha * dx(i)
@@ -721,7 +721,7 @@ restart:    Do
 
                 CheckCalculatorStatus()
 
-            Loop Until AbsSum(fx) < etol
+            Loop Until SumSqr(fx) < etol
 
             If Abs(fr) > itol Then
                 If V <= 0.01 Then
