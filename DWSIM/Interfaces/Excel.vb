@@ -23,6 +23,7 @@ Imports ExcelDna.Integration
 Imports DWSIM.DWSIM.SimulationObjects
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
+Imports System.Reflection
 
 Namespace Interfaces
 
@@ -30,12 +31,54 @@ Namespace Interfaces
 
 #Region "Information Procedures"
 
-        <ExcelFunction("Returns a single property value for a compound.")> _
+        <ExcelFunction("Returns a list of compound constants and their values from the corresponding loaded database.")> _
+        Public Shared Function GetCompoundConstants(<ExcelArgument("Compound name.")> ByVal compound As String) As Object(,)
+
+            Try
+
+                Dim pp As New RaoultPropertyPackage(True)
+
+                Dim ms As New Streams.MaterialStream("", "")
+
+                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                    phase.Componentes.Add(compound, New DWSIM.ClassesBasicasTermodinamica.Substancia(compound, ""))
+                    phase.Componentes(compound).ConstantProperties = pp._availablecomps(compound)
+                Next
+
+                Dim tmpcomp As ConstantProperties = pp._availablecomps(compound)
+
+                Dim props As FieldInfo() = tmpcomp.GetType.GetFields()
+
+                Dim results(props.Length - 1, 1) As Object
+
+                Dim i = 0
+                For Each prop As FieldInfo In props
+                    results(i, 0) = prop.Name
+                    results(i, 1) = tmpcomp.GetType.GetField(prop.Name).GetValue(tmpcomp)
+                    i += 1
+                Next
+
+                pp.Dispose()
+                pp = Nothing
+
+                ms.Dispose()
+                ms = Nothing
+
+                Return results
+
+            Catch ex As Exception
+
+                Return New Object(,) {{ex.GetType.ToString}, {ex.ToString}}
+
+            End Try
+        End Function
+
+        <ExcelFunction("Returns a single property value for a compound. For a constant property, set T = 0 and P = 0. For a T-dep property, set P = 0. For a P-dep property, set T = 0.")> _
         Public Shared Function GetCompoundProp( _
             <ExcelArgument("Compound name.")> ByVal compound As String, _
             <ExcelArgument("Property identifier.")> ByVal prop As String, _
-            <ExcelArgument("Temperature in K, if needed.")> ByVal temperature As Double, _
-            <ExcelArgument("Pressure in Pa, if needed.")> ByVal pressure As Double) As Double
+            <ExcelArgument("Temperature in K, if needed. Set as zero for a constant or P-dep property.")> ByVal temperature As Double, _
+            <ExcelArgument("Pressure in Pa, if needed. Set as zero for a constant or T-dep property.")> ByVal pressure As Double) As Object
 
             Try
 
@@ -75,7 +118,7 @@ Namespace Interfaces
 
             Catch ex As Exception
 
-                Return Double.NegativeInfinity
+                Return ex.ToString
 
             End Try
         End Function
