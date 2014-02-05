@@ -1,5 +1,5 @@
 '    NRTL Property Package 
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -135,38 +135,38 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Next
 
             'load user database interactions
-            If Not My.Settings.UserInteractionsDatabases Is Nothing Then
-                For Each IPDBPath As String In My.Settings.UserInteractionsDatabases
-                    Dim Interactions As DWSIM.ClassesBasicasTermodinamica.InteractionParameter()
-                    Dim IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameter
-                    Try
-                        Interactions = DWSIM.Databases.UserIPDB.ReadInteractions(IPDBPath, "NRTL")
-                        For Each IP In Interactions
-                            Dim IPD As New NRTL_IPData
-                            IPD.A12 = IP.Parameters.Item("A12").ToString
-                            IPD.A21 = IP.Parameters.Item("A21").ToString
-                            IPD.alpha12 = IP.Parameters.Item("alpha12").ToString
-                            IPD.comment = IP.Description
-                            If IP.Parameters.ContainsKey("B12") Then IPD.B12 = IP.Parameters.Item("B12").ToString
-                            If IP.Parameters.ContainsKey("B21") Then IPD.B21 = IP.Parameters.Item("B21").ToString
-                            If IP.Parameters.ContainsKey("C12") Then IPD.C12 = IP.Parameters.Item("C12").ToString
-                            If IP.Parameters.ContainsKey("C21") Then IPD.C21 = IP.Parameters.Item("C21").ToString
+            'If Not My.Settings.UserInteractionsDatabases Is Nothing Then
+            '    For Each IPDBPath As String In My.Settings.UserInteractionsDatabases
+            '        Dim Interactions As DWSIM.ClassesBasicasTermodinamica.InteractionParameter()
+            '        Dim IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameter
+            '        Try
+            '            Interactions = DWSIM.Databases.UserIPDB.ReadInteractions(IPDBPath, "NRTL")
+            '            For Each IP In Interactions
+            '                Dim IPD As New NRTL_IPData
+            '                IPD.A12 = IP.Parameters.Item("A12").ToString
+            '                IPD.A21 = IP.Parameters.Item("A21").ToString
+            '                IPD.alpha12 = IP.Parameters.Item("alpha12").ToString
+            '                IPD.comment = IP.Description
+            '                If IP.Parameters.ContainsKey("B12") Then IPD.B12 = IP.Parameters.Item("B12").ToString
+            '                If IP.Parameters.ContainsKey("B21") Then IPD.B21 = IP.Parameters.Item("B21").ToString
+            '                If IP.Parameters.ContainsKey("C12") Then IPD.C12 = IP.Parameters.Item("C12").ToString
+            '                If IP.Parameters.ContainsKey("C21") Then IPD.C21 = IP.Parameters.Item("C21").ToString
 
-                            If Me.InteractionParameters.ContainsKey(IP.Comp1) Then
-                                If Me.InteractionParameters(IP.Comp1).ContainsKey(IP.Comp2) Then
-                                Else
-                                    Me.InteractionParameters(IP.Comp1).Add(IP.Comp2, IPD.Clone)
-                                End If
-                            Else
-                                Me.InteractionParameters.Add(IP.Comp1, New Dictionary(Of String, NRTL_IPData))
-                                Me.InteractionParameters(IP.Comp1).Add(IP.Comp2, IPD.Clone)
-                            End If
-                        Next
-                    Catch ex As Exception
-                        MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erroaocarregararquiv"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End Try
-                Next
-            End If
+            '                If Me.InteractionParameters.ContainsKey(IP.Comp1) Then
+            '                    If Me.InteractionParameters(IP.Comp1).ContainsKey(IP.Comp2) Then
+            '                    Else
+            '                        Me.InteractionParameters(IP.Comp1).Add(IP.Comp2, IPD.Clone)
+            '                    End If
+            '                Else
+            '                    Me.InteractionParameters.Add(IP.Comp1, New Dictionary(Of String, NRTL_IPData))
+            '                    Me.InteractionParameters(IP.Comp1).Add(IP.Comp2, IPD.Clone)
+            '                End If
+            '            Next
+            '        Catch ex As Exception
+            '            MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erroaocarregararquiv"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            '        End Try
+            '    Next
+            'End If
 
             'load biodiesel database interactions
             With fh1
@@ -606,6 +606,55 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
+        Function DLNGAMMA_DT(ByVal T As Double, ByVal Vx As Array, ByVal Vids As Array) As Array
+
+            Dim gamma1, gamma2 As Double()
+
+            Dim epsilon As Double = 0.001
+
+            gamma1 = GAMMA_MR(T, Vx, Vids)
+            gamma2 = GAMMA_MR(T + epsilon, Vx, Vids)
+
+            Dim dgamma(gamma1.Length - 1) As Double
+
+            For i As Integer = 0 To Vx.Length - 1
+                dgamma(i) = (gamma2(i) - gamma1(i)) / (epsilon)
+            Next
+
+            Return dgamma
+
+        End Function
+
+        Function HEX_MIX(ByVal T As Double, ByVal Vx As Array, ByVal Vids As Array) As Double
+
+            Dim dgamma As Double() = DLNGAMMA_DT(T, Vx, Vids)
+
+            Dim hex As Double = 0.0#
+
+            For i As Integer = 0 To Vx.Length - 1
+                hex += -8.314 * T ^ 2 * Vx(i) * dgamma(i)
+            Next
+
+            Return hex 'kJ/kmol
+
+        End Function
+
+        Function CPEX_MIX(ByVal T As Double, ByVal Vx As Array, ByVal Vids As Array) As Double
+
+            Dim hex1, hex2, cpex As Double
+
+            Dim epsilon As Double = 0.001
+
+            hex1 = HEX_MIX(T, Vx, Vids)
+            hex2 = HEX_MIX(T + epsilon, Vx, Vids)
+
+            cpex = (hex2 - hex1) / epsilon
+
+            Return cpex 'kJ/kmol.K
+
+        End Function
+
     End Class
+
 
 End Namespace
