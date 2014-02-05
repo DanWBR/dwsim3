@@ -5941,6 +5941,30 @@ Final3:
 
         End Function
 
+        Public Function AUX_LIQTHERMCONDi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
+
+            Dim val As Double
+
+            If cprop.LiquidHeatCapacityEquation <> "" And cprop.LiquidHeatCapacityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
+                val = Me.CalcCSTDepProp(cprop.LiquidThermalConductivityEquation, cprop.Liquid_Thermal_Conductivity_Const_A, cprop.Liquid_Thermal_Conductivity_Const_B, cprop.Liquid_Thermal_Conductivity_Const_C, cprop.Liquid_Thermal_Conductivity_Const_D, cprop.Liquid_Thermal_Conductivity_Const_E, T, cprop.Critical_Temperature)
+            ElseIf cprop.IsIon Or cprop.IsSalt Then
+                val = 0.0#
+            Else
+                val = Me.m_props.condl_latini(T, cprop.Normal_Boiling_Point, cprop.Critical_Temperature, cprop.Molar_Weight, "")
+            End If
+
+            Return val
+
+        End Function
+
+        Public Function AUX_VAPTHERMCONDi(ByVal cprop As ConstantProperties, ByVal T As Double, ByVal P As Double) As Double
+
+            Dim val As Double = Me.m_props.condtg_elyhanley(T, cprop.Critical_Temperature, cprop.Critical_Volume / 1000, cprop.Critical_Compressibility, cprop.Acentric_Factor, cprop.Molar_Weight, Me.AUX_CPi(cprop.Name, T) * cprop.Molar_Weight - 8.314)
+
+            Return val
+
+        End Function
+
         Public Function AUX_VAPVISCm(ByVal T As Double, ByVal RHO As Double, ByVal MM As Double) As Double
 
             If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
@@ -5949,6 +5973,16 @@ Final3:
 
             val = Me.m_props.viscg_lucas(T, Me.AUX_TCM(Fase.Vapor), Me.AUX_PCM(Fase.Vapor), Me.AUX_WM(Fase.Vapor), Me.AUX_MMM(Fase.Vapor))
             val = Me.m_props.viscg_jossi_stiel_thodos(val, T, MM / RHO / 1000, AUX_TCM(Fase.Vapor), AUX_PCM(Fase.Vapor), AUX_VCM(Fase.Vapor), AUX_MMM(Fase.Vapor))
+
+            Return val
+
+        End Function
+
+        Public Function AUX_VAPVISCi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
+
+            Dim val As Double
+
+            val = Me.m_props.viscg_lucas(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight)
 
             Return val
 
@@ -6325,7 +6359,7 @@ Final3:
 
             m_pr2 = Nothing
 
-            Return val
+            Return val 'kg/m3
 
         End Function
 
@@ -6342,13 +6376,11 @@ Final3:
                 val = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, 101325, Me.AUX_PVAPi(subst.Nome, T))
             End If
 
-            Return val
+            Return val 'kg/m3
 
         End Function
 
         Public Overridable Function AUX_LIQDENSi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
-
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
             Dim val As Double
 
@@ -6359,7 +6391,7 @@ Final3:
                 val = Me.m_props.liq_dens_rackett(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight, cprop.Z_Rackett, 101325, Me.AUX_PVAPi(cprop.Name, T))
             End If
 
-            Return val
+            Return val 'kg/m3
 
         End Function
 
@@ -6369,10 +6401,10 @@ Final3:
 
             If cprop.LiquidHeatCapacityEquation <> "" And cprop.LiquidHeatCapacityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
                 val = Me.CalcCSTDepProp(cprop.LiquidHeatCapacityEquation, cprop.Liquid_Heat_Capacity_Const_A, cprop.Liquid_Heat_Capacity_Const_B, cprop.Liquid_Heat_Capacity_Const_C, cprop.Liquid_Heat_Capacity_Const_D, cprop.Liquid_Heat_Capacity_Const_E, T, cprop.Critical_Temperature)
-                val = cprop.Molar_Weight * val / 1000 'kJ/kg.K
+                val = val / 1000 / cprop.Molar_Weight 'kJ/kg.K
             Else
                 'estimate using Rownlinson/Bondi correlation
-                val = Me.m_props.Cpl_rb(AUX_CPi(cprop.Name, T), T, cprop.Critical_Temperature, cprop.Acentric_Factor, cprop.Molar_Weight)
+                val = Me.m_props.Cpl_rb(AUX_CPi(cprop.Name, T), T, cprop.Critical_Temperature, cprop.Acentric_Factor, cprop.Molar_Weight) 'kJ/kg.K
             End If
 
             Return val
@@ -8233,6 +8265,16 @@ Final3:
                             vals.Add(Me.AUX_PVAPi(c, temperature))
                         Case "viscosityofliquid"
                             vals.Add(Me.AUX_LIQVISCi(c, temperature))
+                        Case "heatcapacityofliquid"
+                            vals.Add(Me.AUX_LIQ_Cpi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature) * Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties.Molar_Weight)
+                        Case "heatcapacityofsolid"
+                            vals.Add(Me.AUX_SolidHeatCapacity(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature) * Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties.Molar_Weight)
+                        Case "thermalconductivityofliquid"
+                            vals.Add(Me.AUX_LIQTHERMCONDi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature))
+                        Case "thermalconductivityofvapor"
+                            vals.Add(Me.AUX_VAPTHERMCONDi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature, Me.AUX_PVAPi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties.Name, temperature)))
+                        Case "viscosityofvapor"
+                            vals.Add(Me.AUX_VAPVISCi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature))
                     End Select
                 Next
             Next
@@ -8257,12 +8299,20 @@ Final3:
         Public Overridable Function GetTDependentPropList() As Object Implements ICapeThermoCompounds.GetTDependentPropList
             Dim vals As New ArrayList
             With vals
+
                 .Add("heatOfVaporization")
                 .Add("idealGasEnthalpy")
                 .Add("idealGasEntropy")
                 .Add("idealGasHeatCapacity")
                 .Add("vaporPressure")
                 .Add("viscosityOfLiquid")
+
+                .Add("heatCapacityOfLiquid")
+                .Add("heatCapacityOfSolid")
+                .Add("thermalConductivityOfLiquid")
+                .Add("thermalConductivityOfVapor")
+                .Add("viscosityOfVapor")
+
             End With
             Dim arr2(vals.Count - 1) As String
             Array.Copy(vals.ToArray, arr2, vals.Count)
