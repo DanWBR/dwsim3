@@ -1,5 +1,5 @@
-﻿'    Property Package Auxiliary Calculations Base Classes 
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Property Package Auxiliary Calculations Base Classes 
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -23,6 +23,28 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
         Sub New()
 
         End Sub
+
+        Function Cpl_lk(cpig As Double, T As Double, Tc As Double, w As Double, MW As Double) As Double
+
+            'liquid heat capacity by Rownlinson/Bondi correlation
+
+            'cpig = ideal gas heat capacity, kJ/kg.K
+            'T = temperature in K
+            'Tc = critical temperature in K
+            'w = acentric factor
+            'MW = mole weight, kg/kmol
+
+            Dim cpl, Tr, R As Double
+
+            R = 8.314
+            Tr = T / Tc
+
+            cpl = cpig * MW + 1.45 * R + 0.45 * R * (1 - Tr) ^ -1 + 0.25 * w * R * (17.11 + 25.2 * (1 - Tr) ^ (1 / 3) * Tr ^ -1 + 1.742 * (1 - Tr) ^ -1)
+
+            Return cpl / MW 'kJ/kg.K
+
+
+        End Function
 
         Function Cpig_lk(ByVal WK As Double, ByVal w As Double, ByVal T As Double) As Double
 
@@ -905,4 +927,3 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
     End Class
 
 End Namespace
-
