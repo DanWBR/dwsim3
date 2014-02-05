@@ -8275,6 +8275,10 @@ Final3:
                             vals.Add(Me.AUX_VAPTHERMCONDi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature, Me.AUX_PVAPi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties.Name, temperature)))
                         Case "viscosityofvapor"
                             vals.Add(Me.AUX_VAPVISCi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature))
+                        Case "densityofliquid"
+                            vals.Add(Me.AUX_LIQDENSi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature))
+                        Case "densityofsolid"
+                            vals.Add(Me.AUX_SOLIDDENSi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature))
                     End Select
                 Next
             Next
@@ -8312,6 +8316,9 @@ Final3:
                 .Add("thermalConductivityOfLiquid")
                 .Add("thermalConductivityOfVapor")
                 .Add("viscosityOfVapor")
+
+                .Add("densityOfLiquid")
+                .Add("densityOfSolid")
 
             End With
             Dim arr2(vals.Count - 1) As String
