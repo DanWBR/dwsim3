@@ -24,7 +24,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Sub
 
-        Function Cpl_lk(cpig As Double, T As Double, Tc As Double, w As Double, MW As Double) As Double
+        Function Cpl_rb(cpig As Double, T As Double, Tc As Double, w As Double, MW As Double) As Double
 
             'liquid heat capacity by Rownlinson/Bondi correlation
 
