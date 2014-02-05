@@ -6372,7 +6372,7 @@ Final3:
                 val = cprop.Molar_Weight * val / 1000 'kJ/kg.K
             Else
                 'estimate using Rownlinson/Bondi correlation
-                val = Me.m_props.Cpl_lk(AUX_CPi(cprop.Name, T), T, cprop.Critical_Temperature, cprop.Acentric_Factor, cprop.Molar_Weight)
+                val = Me.m_props.Cpl_rb(AUX_CPi(cprop.Name, T), T, cprop.Critical_Temperature, cprop.Acentric_Factor, cprop.Molar_Weight)
             End If
 
             Return val
