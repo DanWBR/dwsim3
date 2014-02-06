@@ -146,6 +146,15 @@ Public Class FormMain
         End If
         My.Application.SaveMySettingsOnExit = True
         My.Settings.Save()
+        'save an ini file for Excel/CAPE-OPEN compatibility purposes
+        Try
+            If Not Directory.Exists(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data") Then
+                Directory.CreateDirectory(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data")
+            End If
+            DWSIM.App.SaveSettings(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini")
+        Catch ex As Exception
+            Console.WriteLine(ex.ToString)
+        End Try
 
     End Sub
 
