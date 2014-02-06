@@ -235,9 +235,40 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Console.WriteLine(ex.ToString)
                 End Try
 
+                'load user databases
+
+                If Not My.Settings.UserDatabases Is Nothing Then
+                    For Each fpath As String In My.Settings.UserDatabases
+                        Try
+                            Dim componentes As ConstantProperties()
+                            componentes = DWSIM.Databases.UserDB.ReadComps(fpath)
+                            If componentes.Length > 0 Then
+                                If My.Settings.ReplaceComps Then
+                                    For Each c As ConstantProperties In componentes
+                                        If Not _availablecomps.ContainsKey(c.Name) Then
+                                            _availablecomps.Add(c.Name, c)
+                                        Else
+                                            _availablecomps(c.Name) = c
+                                        End If
+                                    Next
+                                Else
+                                    For Each c As ConstantProperties In componentes
+                                        If Not _availablecomps.ContainsKey(c.Name) Then
+                                            _availablecomps.Add(c.Name, c)
+                                        End If
+                                    Next
+                                End If
+                            End If
+                        Catch ex As Exception
+                            MsgBox(ex.ToString)
+                        End Try
+                    Next
+                End If
+
+
             End If
 
-            Initialize()
+                Initialize()
 
         End Sub
 
