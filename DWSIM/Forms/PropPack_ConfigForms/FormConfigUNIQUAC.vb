@@ -1,4 +1,4 @@
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -216,12 +216,12 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                             If value = s And i <> -1 Then
                                 Dim ipset As InteractionParameter = cb.Tag(i)
                                 With dgvu1.Rows(e.RowIndex)
-                                    If ipset.Parameters.ContainsKey("A12") Then .Cells(3).Value = Double.Parse(ipset.Parameters("A12"), Globalization.CultureInfo.InvariantCulture).ToString("N4")
-                                    If ipset.Parameters.ContainsKey("A21") Then .Cells(4).Value = Double.Parse(ipset.Parameters("A21"), Globalization.CultureInfo.InvariantCulture).ToString("N4")
-                                    If ipset.Parameters.ContainsKey("B12") Then .Cells(5).Value = Double.Parse(ipset.Parameters("B12"), Globalization.CultureInfo.InvariantCulture).ToString("N4")
-                                    If ipset.Parameters.ContainsKey("B21") Then .Cells(6).Value = Double.Parse(ipset.Parameters("B21"), Globalization.CultureInfo.InvariantCulture).ToString("N4")
-                                    If ipset.Parameters.ContainsKey("C12") Then .Cells(7).Value = Double.Parse(ipset.Parameters("C12"), Globalization.CultureInfo.InvariantCulture).ToString("N4")
-                                    If ipset.Parameters.ContainsKey("C21") Then .Cells(8).Value = Double.Parse(ipset.Parameters("C21"), Globalization.CultureInfo.InvariantCulture).ToString("N4")
+                                    If ipset.Parameters.ContainsKey("A12") Then .Cells(3).Value = ipset.Parameters("A12")
+                                    If ipset.Parameters.ContainsKey("A21") Then .Cells(4).Value = ipset.Parameters("A21")
+                                    If ipset.Parameters.ContainsKey("B12") Then .Cells(5).Value = ipset.Parameters("B12")
+                                    If ipset.Parameters.ContainsKey("B21") Then .Cells(6).Value = ipset.Parameters("B21")
+                                    If ipset.Parameters.ContainsKey("C12") Then .Cells(7).Value = ipset.Parameters("C12")
+                                    If ipset.Parameters.ContainsKey("C21") Then .Cells(8).Value = ipset.Parameters("C21")
                                 End With
                             End If
                             i += 1
