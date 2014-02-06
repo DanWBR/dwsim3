@@ -457,7 +457,7 @@ Namespace Interfaces
                         Case "kij"
                             ipdata(i, 2) = p.Value
                         Case "kji"
-                            ipdata(i, 2) = p.Value
+                            ipdata(i, 3) = p.Value
                         Case "A12"
                             ipdata(i, 2) = p.Value
                         Case "A21"
