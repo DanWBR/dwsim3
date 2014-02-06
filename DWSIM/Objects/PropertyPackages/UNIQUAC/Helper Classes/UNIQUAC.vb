@@ -201,7 +201,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             '        End Try
             '    Next
             'End If
-           
+
 
 
             uniquacip = Nothing
@@ -443,7 +443,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim n As Integer = UBound(Vx)
 
-             Dim tau_ij(n, n), tau_ji(n, n), a12(n, n), a21(n, n), b12(n, n), b21(n, n), c12(n, n), c21(n, n) As Double
+            Dim tau_ij(n, n), tau_ji(n, n), a12(n, n), a21(n, n), b12(n, n), b21(n, n), c12(n, n), c21(n, n) As Double
 
             Dim i, j As Integer
 
@@ -534,7 +534,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             i = 0
             Do
-                lngc(i) = 1 - VR(i) / r + Math.Log(VR(i) / r) - z / 2 * VQ(i) * (1 - fi(i) / teta(i) + Math.Log(fi(i) / teta(i)))
+                If Vx(i) <> 0.0# Then
+                    lngc(i) = 1 - VR(i) / r + Math.Log(VR(i) / r) - z / 2 * VQ(i) * (1 - fi(i) / teta(i) + Math.Log(fi(i) / teta(i)))
+                Else
+                    lngc(i) = 1 - VR(i) / r
+                End If
                 lngr(i) = VQ(i) * (1 - Math.Log(S(i)) - sum1(i))
                 lng(i) = lngc(i) + lngr(i)
                 g(i) = Math.Exp(lng(i))
