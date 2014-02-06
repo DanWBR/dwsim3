@@ -5198,7 +5198,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Dim val As Double = 0
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
 
-            For Each subst In Me.CurrentMaterialStream.Fases(1).Componentes.Values
+            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, T)
             Next
 
