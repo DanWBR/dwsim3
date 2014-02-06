@@ -135,38 +135,38 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Next
 
             'load user database interactions
-            'If Not My.Settings.UserInteractionsDatabases Is Nothing Then
-            '    For Each IPDBPath As String In My.Settings.UserInteractionsDatabases
-            '        Dim Interactions As DWSIM.ClassesBasicasTermodinamica.InteractionParameter()
-            '        Dim IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameter
-            '        Try
-            '            Interactions = DWSIM.Databases.UserIPDB.ReadInteractions(IPDBPath, "NRTL")
-            '            For Each IP In Interactions
-            '                Dim IPD As New NRTL_IPData
-            '                IPD.A12 = IP.Parameters.Item("A12").ToString
-            '                IPD.A21 = IP.Parameters.Item("A21").ToString
-            '                IPD.alpha12 = IP.Parameters.Item("alpha12").ToString
-            '                IPD.comment = IP.Description
-            '                If IP.Parameters.ContainsKey("B12") Then IPD.B12 = IP.Parameters.Item("B12").ToString
-            '                If IP.Parameters.ContainsKey("B21") Then IPD.B21 = IP.Parameters.Item("B21").ToString
-            '                If IP.Parameters.ContainsKey("C12") Then IPD.C12 = IP.Parameters.Item("C12").ToString
-            '                If IP.Parameters.ContainsKey("C21") Then IPD.C21 = IP.Parameters.Item("C21").ToString
+            If Not My.Settings.UserInteractionsDatabases Is Nothing Then
+                For Each IPDBPath As String In My.Settings.UserInteractionsDatabases
+                    Dim Interactions As DWSIM.ClassesBasicasTermodinamica.InteractionParameter()
+                    Dim IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameter
+                    Try
+                        Interactions = DWSIM.Databases.UserIPDB.ReadInteractions(IPDBPath, "NRTL")
+                        For Each IP In Interactions
+                            Dim IPD As New NRTL_IPData
+                            IPD.A12 = IP.Parameters.Item("A12")
+                            IPD.A21 = IP.Parameters.Item("A21")
+                            IPD.alpha12 = IP.Parameters.Item("alpha12")
+                            IPD.comment = IP.Description
+                            If IP.Parameters.ContainsKey("B12") Then IPD.B12 = IP.Parameters.Item("B12")
+                            If IP.Parameters.ContainsKey("B21") Then IPD.B21 = IP.Parameters.Item("B21")
+                            If IP.Parameters.ContainsKey("C12") Then IPD.C12 = IP.Parameters.Item("C12")
+                            If IP.Parameters.ContainsKey("C21") Then IPD.C21 = IP.Parameters.Item("C21")
 
-            '                If Me.InteractionParameters.ContainsKey(IP.Comp1) Then
-            '                    If Me.InteractionParameters(IP.Comp1).ContainsKey(IP.Comp2) Then
-            '                    Else
-            '                        Me.InteractionParameters(IP.Comp1).Add(IP.Comp2, IPD.Clone)
-            '                    End If
-            '                Else
-            '                    Me.InteractionParameters.Add(IP.Comp1, New Dictionary(Of String, NRTL_IPData))
-            '                    Me.InteractionParameters(IP.Comp1).Add(IP.Comp2, IPD.Clone)
-            '                End If
-            '            Next
-            '        Catch ex As Exception
-            '            MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erroaocarregararquiv"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-            '        End Try
-            '    Next
-            'End If
+                            If Me.InteractionParameters.ContainsKey(IP.Comp1) Then
+                                If Me.InteractionParameters(IP.Comp1).ContainsKey(IP.Comp2) Then
+                                Else
+                                    Me.InteractionParameters(IP.Comp1).Add(IP.Comp2, IPD.Clone)
+                                End If
+                            Else
+                                Me.InteractionParameters.Add(IP.Comp1, New Dictionary(Of String, NRTL_IPData))
+                                Me.InteractionParameters(IP.Comp1).Add(IP.Comp2, IPD.Clone)
+                            End If
+                        Next
+                    Catch ex As Exception
+                        Console.WriteLine(ex.ToString)
+                    End Try
+                Next
+            End If
 
             'load biodiesel database interactions
             With fh1
