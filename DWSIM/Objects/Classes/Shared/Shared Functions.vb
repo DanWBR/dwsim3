@@ -1,4 +1,4 @@
-﻿Imports System.IO
+Imports System.IO
 Imports Nini.Config
 Imports System.Globalization
 Imports System.Reflection
@@ -139,9 +139,9 @@ Namespace DWSIM
             Return Not Type.GetType("Mono.Runtime") Is Nothing
         End Function
 
-        Shared Sub LoadSettings()
+        Shared Sub LoadSettings(Optional ByVal configfile As String = "")
 
-            Dim configfile As String = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "dwsim.ini"
+            If configfile = "" Then configfile = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "dwsim.ini"
             If Not File.Exists(configfile) Then File.Copy(My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "default.ini", configfile)
 
             Dim source As New IniConfigSource(configfile)
@@ -208,11 +208,15 @@ Namespace DWSIM
 
         End Sub
 
-        Shared Sub SaveSettings()
+        Shared Sub SaveSettings(Optional ByVal configfile As String = "")
 
-            Dim configfile As String = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "dwsim.ini"
+            If configfile = "" Then
+                configfile = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "dwsim.ini"
+                File.Copy(My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "default.ini", configfile, True)
+            Else
+                File.Copy(My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "excelcompat.ini", configfile, True)
+            End If
 
-            File.Copy(My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "default.ini", configfile, True)
 
             Dim source As New IniConfigSource(configfile)
 
@@ -226,6 +230,10 @@ Namespace DWSIM
 
             For Each Str As String In My.Settings.UserDatabases
                 source.Configs("UserDatabases").Set(My.Settings.UserDatabases.IndexOf(Str), Str)
+            Next
+
+            For Each Str As String In My.Settings.UserInteractionsDatabases
+                source.Configs("UserInteractionsDatabases").Set(My.Settings.UserInteractionsDatabases.IndexOf(Str), Str)
             Next
 
             For Each Str As String In My.Settings.BackupFiles
