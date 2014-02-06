@@ -24,6 +24,7 @@ Imports DWSIM.DWSIM.SimulationObjects
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports System.Reflection
+Imports System.IO
 
 Namespace Interfaces
 
@@ -35,6 +36,9 @@ Namespace Interfaces
         Public Shared Function GetCompoundConstants(<ExcelArgument("Compound name.")> ByVal compound As String) As Object(,)
 
             Try
+
+                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
 
                 Dim pp As New RaoultPropertyPackage(True)
 
@@ -79,6 +83,9 @@ Namespace Interfaces
             <ExcelArgument("Property identifier.")> ByVal prop As String, _
             <ExcelArgument("Temperature in K, if needed. Set as zero for a constant or P-dep property.")> ByVal temperature As Double, _
             <ExcelArgument("Pressure in Pa, if needed. Set as zero for a constant or T-dep property.")> ByVal pressure As Double) As Object
+
+            Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+            If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
 
             Try
 
@@ -125,6 +132,9 @@ Namespace Interfaces
 
         <ExcelFunction("Returns a list of the available single compound properties.")> _
         Public Shared Function GetCompoundPropList() As Object(,)
+
+            Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+            If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
 
             Dim pp As New RaoultPropertyPackage(True)
 
@@ -200,6 +210,9 @@ Namespace Interfaces
             <ExcelArgument("Thermodynamic Model (use 'GetModelList' to get a list of available models).")> ByVal Model As String,
             <ExcelArgument("The name of the first compound.")> ByVal Compound1 As String,
             <ExcelArgument("The name of the second compound.")> ByVal Compound2 As String) As Object(,)
+
+            Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+            If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
 
             Dim ipdata(0, 8) As Object
 
@@ -411,6 +424,64 @@ Namespace Interfaces
 
         End Function
 
+        <ExcelFunction("Returns the interaction parameters stored in user databases for a given binary/model combination.")> _
+        Public Shared Function GetUserInteractionParameterSet(
+            <ExcelArgument("Thermodynamic Model (use 'GetModelList' to get a list of available models).")> ByVal Model As String,
+            <ExcelArgument("The name of the first compound.")> ByVal Compound1 As String,
+            <ExcelArgument("The name of the second compound.")> ByVal Compound2 As String) As Object(,)
+
+            Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+            If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
+
+            Dim iplist As List(Of DWSIM.ClassesBasicasTermodinamica.InteractionParameter) = DWSIM.Databases.UserIPDB.GetStoredIPsets(Compound1, Compound2, Model)
+
+            Dim ipdata(iplist.Count, 9) As Object
+
+            ipdata(0, 0) = "ID1"
+            ipdata(0, 1) = "ID2"
+            ipdata(0, 2) = "kij/A12"
+            ipdata(0, 3) = "kji/A21"
+            ipdata(0, 4) = "B12"
+            ipdata(0, 5) = "B21"
+            ipdata(0, 6) = "C12"
+            ipdata(0, 7) = "C21"
+            ipdata(0, 8) = "alpha12"
+            ipdata(0, 9) = "RegressionFile"
+
+            Dim i As Integer = 1
+            For Each ip As InteractionParameter In iplist
+                ipdata(i, 0) = Compound1
+                ipdata(i, 1) = Compound2
+                For Each p As KeyValuePair(Of String, Object) In ip.Parameters
+                    Select Case p.Key
+                        Case "kij"
+                            ipdata(i, 2) = p.Value
+                        Case "kji"
+                            ipdata(i, 2) = p.Value
+                        Case "A12"
+                            ipdata(i, 2) = p.Value
+                        Case "A21"
+                            ipdata(i, 3) = p.Value
+                        Case "B12"
+                            ipdata(i, 4) = p.Value
+                        Case "B21"
+                            ipdata(i, 5) = p.Value
+                        Case "C12"
+                            ipdata(i, 6) = p.Value
+                        Case "C21"
+                            ipdata(i, 7) = p.Value
+                        Case "alpha12"
+                            ipdata(i, 8) = p.Value
+                    End Select
+                Next
+                ipdata(i, 9) = ip.RegressionFile
+                i += 1
+            Next
+
+            Return ipdata
+
+        End Function
+
         <ExcelFunction("Returns a list of the available properties.")> _
         Public Shared Function GetPropList( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String) As Object(,)
@@ -469,6 +540,9 @@ Namespace Interfaces
         Public Shared Function GetCompoundList( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String) As Object(,)
 
+            Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+            If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
+
             Dim ppm As New CAPEOPENPropertyPackageManager()
 
             Dim pp As PropertyPackages.PropertyPackage = ppm.GetPropertyPackage(proppack)
@@ -522,6 +596,9 @@ Namespace Interfaces
         <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
+
+                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
 
                 Dim ppm As New CAPEOPENPropertyPackageManager()
 
@@ -624,6 +701,9 @@ Namespace Interfaces
         <ExcelArgument("Interaction Parameters Set #8.")> ByVal ip8 As Object) As Object(,)
 
             Try
+
+                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
 
                 Dim ppm As New CAPEOPENPropertyPackageManager()
 
@@ -830,6 +910,9 @@ Namespace Interfaces
 
             Try
 
+                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
+
                 Dim ppm As New CAPEOPENPropertyPackageManager()
 
                 Dim pp As PropertyPackages.PropertyPackage
@@ -950,6 +1033,9 @@ Namespace Interfaces
         <ExcelArgument("Initial estimate for temperature search, in K.")> ByVal InitialEstimate As Double) As Object(,)
 
             Try
+
+                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
 
                 Dim ppm As New CAPEOPENPropertyPackageManager()
 
@@ -1072,6 +1158,9 @@ Namespace Interfaces
 
             Try
 
+                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
+
                 Dim ppm As New CAPEOPENPropertyPackageManager()
 
                 Dim pp As PropertyPackages.PropertyPackage
@@ -1192,6 +1281,9 @@ Namespace Interfaces
         <ExcelArgument("Initial estimate for pressure search, in Pa.")> ByVal InitialEstimate As Double) As Object(,)
 
             Try
+
+                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
 
                 Dim ppm As New CAPEOPENPropertyPackageManager()
 
@@ -1663,6 +1755,9 @@ Namespace Interfaces
 
             Try
 
+                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
+
                 Dim ppm As New CAPEOPENPropertyPackageManager()
 
                 Dim pp As PropertyPackages.PropertyPackage
@@ -1772,6 +1867,9 @@ Namespace Interfaces
             ByVal ip8 As Object) As Object(,)
 
             Try
+
+                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
 
                 Dim ppm As New CAPEOPENPropertyPackageManager()
 
@@ -1885,6 +1983,9 @@ Namespace Interfaces
 
             Try
 
+                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
+
                 Dim ppm As New CAPEOPENPropertyPackageManager()
 
                 Dim pp As PropertyPackages.PropertyPackage
@@ -1997,6 +2098,9 @@ Namespace Interfaces
 
             Try
 
+                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
+
                 Dim ppm As New CAPEOPENPropertyPackageManager()
 
                 Dim pp As PropertyPackages.PropertyPackage
@@ -2108,6 +2212,9 @@ Namespace Interfaces
                 ByVal ip8 As Object) As Object(,)
 
             Try
+
+                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                If File.Exists(inifile) Then DWSIM.App.LoadSettings(inifile)
 
                 Dim ppm As New CAPEOPENPropertyPackageManager()
 
