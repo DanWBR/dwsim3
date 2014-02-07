@@ -226,6 +226,9 @@ Namespace Interfaces
             ipdata(0, 7) = "C21"
             ipdata(0, 8) = "alpha12"
 
+            ipdata(1, 0) = Compound1
+            ipdata(1, 1) = Compound2
+
             Select Case Model
                 Case "Peng-Robinson"
                     Dim pp As New PengRobinsonPropertyPackage(True)
