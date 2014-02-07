@@ -8,7 +8,7 @@ Imports Cudafy
 Imports Cudafy.Host
 
 '    Shared Functions
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -206,6 +206,13 @@ Namespace DWSIM
             My.Settings.ShowTips = source.Configs("Misc").GetBoolean("ShowTips", True)
             My.Settings.RedirectOutput = source.Configs("Misc").GetBoolean("RedirectConsoleOutput", False)
 
+            My.Settings.EnableParallelProcessing = source.Configs("Misc").GetBoolean("EnableParallelProcessing", False)
+            My.Settings.MaxDegreeOfParallelism = source.Configs("Misc").GetInt("MaxDegreeOfParallelism", -1)
+            My.Settings.EnableGPUProcessing = source.Configs("Misc").GetBoolean("EnableGPUProcessing", False)
+            My.Settings.SelectedGPU = source.Configs("Misc").Get("SelectedGPU", "")
+            My.Settings.CudafyTarget = source.Configs("Misc").GetInt("CudafyTarget", 1)
+            My.Settings.CudafyDeviceID = source.Configs("Misc").GetInt("CudafyDeviceID", 0)
+
         End Sub
 
         Shared Sub SaveSettings(Optional ByVal configfile As String = "")
@@ -253,6 +260,13 @@ Namespace DWSIM
             source.Configs("Misc").Set("UserUnits", My.Settings.UserUnits)
             source.Configs("Misc").Set("ShowTips", My.Settings.ShowTips)
             source.Configs("Misc").Set("RedirectConsoleOutput", My.Settings.RedirectOutput)
+
+            source.Configs("Misc").Set("EnableParallelProcessing", My.Settings.EnableParallelProcessing)
+            source.Configs("Misc").Set("MaxDegreeOfParallelism", My.Settings.MaxDegreeOfParallelism)
+            source.Configs("Misc").Set("EnableGPUProcessing", My.Settings.EnableGPUProcessing)
+            source.Configs("Misc").Set("SelectedGPU", My.Settings.SelectedGPU)
+            source.Configs("Misc").Set("CudafyTarget", My.Settings.CudafyTarget)
+            source.Configs("Misc").Set("CudafyDeviceID", My.Settings.CudafyDeviceID)
 
             source.Save(configfile)
 
