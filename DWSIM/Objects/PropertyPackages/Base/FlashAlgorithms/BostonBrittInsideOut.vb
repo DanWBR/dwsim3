@@ -133,12 +133,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 End If
             ElseIf P <= Pd Then
                 'vapor only
-                L = 0
-                V = 1
+                L = 0.02
+                V = 0.98
             ElseIf P >= Pb Then
                 'liquid only
-                L = 1
-                V = 0
+                L = 0.02
+                V = 0.98
             Else
                 'VLE
                 V = 1 - (P - Pd) / (Pb - Pd)

@@ -424,7 +424,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.SimpleLLE Else Return _simplelle
                     Case Else
                         If _dwdf Is Nothing Then _dwdf = New Auxiliary.FlashAlgorithms.DWSIMDefault
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.DWSIMDefault Else Return _nli
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.DWSIMDefault Else Return _dwdf
                         Return _dwdf
                 End Select
             End Get
@@ -7724,7 +7724,7 @@ Final3:
             For Each f As String In ph
                 For Each pi As PhaseInfo In Me.PhaseMappings.Values
                     If f = pi.PhaseLabel Then
-                        If pi.DWPhaseID = Fase.Solid Then
+                        If Not pi.DWPhaseID = Fase.Solid Then
                             For Each p As String In props
                                 Me.DW_CalcProp(p, pi.DWPhaseID)
                             Next
