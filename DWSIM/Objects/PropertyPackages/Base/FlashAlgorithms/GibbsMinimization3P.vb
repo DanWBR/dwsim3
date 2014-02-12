@@ -1,5 +1,5 @@
 '    Michelsen's Three-Phase Gibbs Minimization w/ Nested Loops Flash Algorithms
-'    Copyright 2012 Daniel Wagner O. de Medeiros
+'    Copyright 2012-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -148,10 +148,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     result = New Object() {L, V, Vx1, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
                     GoTo out
                 End If
-            ElseIf P <= Pd Then
+            ElseIf P <= Pd * 0.95 Then
                 'vapor only
                 L = 0.0#
                 V = 1.0#
+                Vy = Vz
+                result = New Object() {L, V, Vx1, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+                GoTo out
             ElseIf P >= Pb Then
                 'liquid only
                 L = 1.0#
@@ -1682,7 +1685,7 @@ out:        Return result
         Private Function FunctionGradient(ByVal x() As Double) As Double()
 
             Dim g(x.Length - 1) As Double
-            Dim epsilon As Double = 0.001
+            Dim epsilon As Double = 0.000001
             Dim fcv(x.Length - 1), fcl(x.Length - 1), fcl2(x.Length - 1) As Double
             Dim i As Integer
 
