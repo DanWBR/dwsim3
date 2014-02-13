@@ -148,13 +148,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     result = New Object() {L, V, Vx1, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
                     GoTo out
                 End If
-            ElseIf P <= Pd * 0.95 Then
+            ElseIf P <= Pd Then
                 'vapor only
                 L = 0.0#
                 V = 1.0#
-                Vy = Vz
-                result = New Object() {L, V, Vx1, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
-                GoTo out
             ElseIf P >= Pb Then
                 'liquid only
                 L = 1.0#
