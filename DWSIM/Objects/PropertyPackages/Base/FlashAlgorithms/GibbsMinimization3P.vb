@@ -239,7 +239,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Using problem As New Ipopt(initval.Length, lconstr, uconstr, 0, Nothing, Nothing, _
              0, 0, AddressOf eval_f, AddressOf eval_g, _
              AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
-                problem.AddOption("tol", etol * 10)
+                problem.AddOption("tol", etol)
                 problem.AddOption("max_iter", maxit_e)
                 problem.AddOption("mu_strategy", "adaptive")
                 problem.AddOption("hessian_approximation", "limited-memory")
@@ -255,7 +255,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             FunctionValue(initval)
 
-            result = New Object() {L, V, Vx1, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+            For i = 0 To n
+                Ki(i) = Vy(i) / Vx1(i)
+            Next
+
+            'check if the algorithm converged to the trivial solution.
+            If PP.AUX_CheckTrivial(Ki) Then
+                'rollback to the inside-out PT flash.
+                Console.WriteLine("PT Flash [GM]: Converged to the trivial solution at specified conditions. Rolling back to the Inside-Out PT-Flash...")
+                result = _io.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
+            Else
+                result = New Object() {L, V, Vx1, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+            End If
 
             'if two-phase only, no need to do stability check on the liquid phase.
 
