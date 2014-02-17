@@ -1,4 +1,4 @@
-﻿Imports Microsoft.Msdn.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports PropertyGridEx
@@ -3120,53 +3120,56 @@ Public Class frmSurface
 
     Private Sub EditCompTSMI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EditCompTSMI.Click
 
-        If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.MaterialStream Then
+        If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
+            If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.MaterialStream Then
 
-            Dim mystr As DWSIM.SimulationObjects.Streams.MaterialStream = ChildParent.Collections.CLCS_MaterialStreamCollection(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                Dim mystr As DWSIM.SimulationObjects.Streams.MaterialStream = ChildParent.Collections.CLCS_MaterialStreamCollection(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
 
-            If Not mystr.GraphicObject.InputConnectors(0).IsAttached Then
+                If Not mystr.GraphicObject.InputConnectors(0).IsAttached Then
 
-                Dim selectionControl As New CompositionEditorForm
-                selectionControl.Text = mystr.GraphicObject.Tag & DWSIM.App.GetLocalString("EditComp")
-                selectionControl.Componentes = mystr.Fases(0).Componentes
-                selectionControl.NF = My.Application.ActiveSimulation.Options.NumberFormat
-                selectionControl.SU = My.Application.ActiveSimulation.Options.SelectedUnitSystem
-                selectionControl.Q = mystr.Fases(0).SPMProperties.molarflow.GetValueOrDefault
-                selectionControl.W = mystr.Fases(0).SPMProperties.massflow.GetValueOrDefault
-                selectionControl.Solvent = mystr.ReferenceSolvent
-                selectionControl.InitialComposition = mystr.InputComposition
+                    Dim selectionControl As New CompositionEditorForm
+                    selectionControl.Text = mystr.GraphicObject.Tag & DWSIM.App.GetLocalString("EditComp")
+                    selectionControl.Componentes = mystr.Fases(0).Componentes
+                    selectionControl.NF = My.Application.ActiveSimulation.Options.NumberFormat
+                    selectionControl.SU = My.Application.ActiveSimulation.Options.SelectedUnitSystem
+                    selectionControl.Q = mystr.Fases(0).SPMProperties.molarflow.GetValueOrDefault
+                    selectionControl.W = mystr.Fases(0).SPMProperties.massflow.GetValueOrDefault
+                    selectionControl.Solvent = mystr.ReferenceSolvent
+                    selectionControl.InitialComposition = mystr.InputComposition
 
-                selectionControl.ShowDialog()
+                    selectionControl.ShowDialog()
 
-                mystr.Fases(0).Componentes = selectionControl.Componentes
-                mystr.Fases(0).SPMProperties.molarflow = selectionControl.Q
-                mystr.Fases(0).SPMProperties.massflow = selectionControl.W
-                mystr.ReferenceSolvent = selectionControl.Solvent
-                mystr.InputComposition = selectionControl.InitialComposition
+                    mystr.Fases(0).Componentes = selectionControl.Componentes
+                    mystr.Fases(0).SPMProperties.molarflow = selectionControl.Q
+                    mystr.Fases(0).SPMProperties.massflow = selectionControl.W
+                    mystr.ReferenceSolvent = selectionControl.Solvent
+                    mystr.InputComposition = selectionControl.InitialComposition
 
-                selectionControl.Dispose()
-                selectionControl = Nothing
+                    selectionControl.Dispose()
+                    selectionControl = Nothing
 
-                Me.FlowsheetDesignSurface.SelectedObject = Nothing
-                Me.FlowsheetDesignSurface.SelectedObjects.Clear()
+                    Me.FlowsheetDesignSurface.SelectedObject = Nothing
+                    Me.FlowsheetDesignSurface.SelectedObjects.Clear()
 
-                Application.DoEvents()
-                CalculateMaterialStream(ChildParent, mystr)
-                Application.DoEvents()
-                Call ChildParent.FormSurface.UpdateSelectedObject()
-                Application.DoEvents()
-                Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
-                Application.DoEvents()
-                ProcessCalculationQueue(ChildParent)
-                Application.DoEvents()
+                    Application.DoEvents()
+                    CalculateMaterialStream(ChildParent, mystr)
+                    Application.DoEvents()
+                    Call ChildParent.FormSurface.UpdateSelectedObject()
+                    Application.DoEvents()
+                    Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
+                    Application.DoEvents()
+                    ProcessCalculationQueue(ChildParent)
+                    Application.DoEvents()
 
-            Else
+                Else
 
-                MessageBox.Show("This Material Stream's composition is read-only.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show("This Material Stream's composition is read-only.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                End If
 
             End If
-
         End If
+
 
     End Sub
 
