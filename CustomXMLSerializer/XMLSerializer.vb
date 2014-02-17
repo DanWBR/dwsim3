@@ -1,5 +1,5 @@
 'DWSIM Custom XML Serializer
-'Copyright 2012 Daniel Wagner O. de Medeiros
+'Copyright 2012-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -285,13 +285,13 @@ Public Class XMLSerializer
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is ArrayList Then
                             .Add(New XElement(prop.Name, ArrayToString(obj.GetType.GetField(prop.Name).GetValue(obj), ci)))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Single Then
-                            .Add(New XElement(prop.Name, Single.Parse(obj.GetType.GetField(prop.Name).GetValue(obj)).ToString(ci)))
+                            .Add(New XElement(prop.Name, DirectCast(obj.GetType.GetField(prop.Name).GetValue(obj), System.Single).ToString(ci)))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Double Then
-                            .Add(New XElement(prop.Name, Double.Parse(obj.GetType.GetField(prop.Name).GetValue(obj)).ToString(ci)))
+                            .Add(New XElement(prop.Name, DirectCast(obj.GetType.GetField(prop.Name).GetValue(obj), System.Double).ToString(ci)))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Nullable(Of Double) Then
-                            .Add(New XElement(prop.Name, Double.Parse(obj.GetType.GetField(prop.Name).GetValue(obj)).ToString(ci)))
+                            .Add(New XElement(prop.Name, DirectCast(obj.GetType.GetField(prop.Name).GetValue(obj), Nullable(Of Double)).GetValueOrDefault.ToString(ci)))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Nullable(Of Single) Then
-                            .Add(New XElement(prop.Name, Single.Parse(obj.GetType.GetField(prop.Name).GetValue(obj)).ToString(ci)))
+                            .Add(New XElement(prop.Name, DirectCast(obj.GetType.GetField(prop.Name).GetValue(obj), Nullable(Of Single)).GetValueOrDefault.ToString(ci)))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Nullable(Of Integer) Then
                             .Add(New XElement(prop.Name, obj.GetType.GetField(prop.Name).GetValue(obj)))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Integer Then
