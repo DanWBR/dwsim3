@@ -306,6 +306,15 @@ Public Class frmProps
                         i += 1
                     Next
 
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetPropertyName("PROP_SP_1")) Then
+
+                    Select Case sp.OperationMode
+                        Case SimulationObjects.UnitOps.Splitter.OpMode.StreamMassFlowSpec
+                            sp.StreamFlowSpec = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_massflow, e.ChangedItem.Value)
+                        Case SimulationObjects.UnitOps.Splitter.OpMode.StreamMoleFlowSpec
+                            sp.StreamFlowSpec = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
+                    End Select
+
                 End If
 
                 If ChildParent.Options.CalculatorActivated Then

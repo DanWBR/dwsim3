@@ -4807,4 +4807,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ParametrosAdicionadosComSucesso" xml:space="preserve">
     <value>Interaction Parameters successfully added to the database.</value>
   </data>
+  <data name="SplitterOperationMode" xml:space="preserve">
+    <value>Operation Mode (Split Ratios / Stream 1 Flow Spec)</value>
+  </data>
 </root>

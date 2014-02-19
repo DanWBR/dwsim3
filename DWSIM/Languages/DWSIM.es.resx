@@ -4773,4 +4773,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ParametrosAdicionadosComSucesso" xml:space="preserve">
     <value>Parâmetros de Interação adicionados ao banco de dados com sucesso.</value>
   </data>
+  <data name="SplitterOperationMode" xml:space="preserve">
+    <value>Modo de Operação (Fatores de Divisão / Especificação da Corrente 1)</value>
+  </data>
 </root>

@@ -1114,6 +1114,9 @@
     <value>Vazão Molar do Líquido de Retificação</value>
     <comment>0</comment>
   </data>
+  <data name="PROP_SP_1" xml:space="preserve">
+    <value>Especificação de Vazão</value>
+  </data>
   <data name="PROP_SS_0" xml:space="preserve">
     <value>Balanço de Energia</value>
     <comment>0</comment>
