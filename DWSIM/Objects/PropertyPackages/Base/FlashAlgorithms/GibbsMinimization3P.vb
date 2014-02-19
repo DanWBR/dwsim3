@@ -253,18 +253,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If Double.IsNaN(initval(i)) Then initval(i) = 0.0#
             Next
 
-            FunctionValue(initval)
-
             For i = 0 To n
                 Ki(i) = Vy(i) / Vx1(i)
             Next
 
             'check if the algorithm converged to the trivial solution.
             If PP.AUX_CheckTrivial(Ki) Then
-                'rollback to the inside-out PT flash.
-                Console.WriteLine("PT Flash [GM]: Converged to the trivial solution at specified conditions. Rolling back to the Inside-Out PT-Flash...")
+                'rollback to inside-out PT flash.
+                Console.WriteLine("PT Flash [GM]: Converged to the trivial solution at specified conditions. Rolling back to Inside-Out PT-Flash...")
+                result = _io.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
+            ElseIf status = IpoptReturnCode.Maximum_Iterations_Exceeded Then
+                'retry with inside-out PT flash.
+                Console.WriteLine("PT Flash [GM]: Maximum iterations exceeded. Recalculating with Inside-Out PT-Flash...")
                 result = _io.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
             Else
+                FunctionValue(initval)
                 result = New Object() {L, V, Vx1, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
             End If
 
@@ -444,7 +447,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("PT Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
+            Console.WriteLine("PT Flash [GM]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
 
 out:        Return result
 

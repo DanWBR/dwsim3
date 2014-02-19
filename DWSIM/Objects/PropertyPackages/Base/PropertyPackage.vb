@@ -5062,6 +5062,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = Nothing
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = Nothing
 
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarflow = Nothing
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massflow = Nothing
+
                 End If
 
             End If

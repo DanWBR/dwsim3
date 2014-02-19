@@ -313,7 +313,7 @@ Namespace DWSIM
                                     .CompilerPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\bin\nvcc.exe"
                                     .IncludeDirectoryPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include"
                                 End With
-                                My.MyApplication.gpumod = CudafyTranslator.Cudafy(cp, GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
+                                My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
                                             GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR), _
                                             GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac), _
                                             GetType(DWSIM.MathEx.Broyden))
