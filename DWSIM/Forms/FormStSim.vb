@@ -191,22 +191,24 @@ Public Class FormStSim
         Select Case Me.FrmChild.Options.PropertyPackageFlashAlgorithm
             Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                 ComboBoxFlashAlg.SelectedIndex = 0
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3PV2
                 ComboBoxFlashAlg.SelectedIndex = 1
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut
                 ComboBoxFlashAlg.SelectedIndex = 2
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin2P
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
                 ComboBoxFlashAlg.SelectedIndex = 3
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin2P
                 ComboBoxFlashAlg.SelectedIndex = 4
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3P
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
                 ComboBoxFlashAlg.SelectedIndex = 5
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3P
                 ComboBoxFlashAlg.SelectedIndex = 6
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE_SS
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
                 ComboBoxFlashAlg.SelectedIndex = 7
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE_SS
                 ComboBoxFlashAlg.SelectedIndex = 8
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
+                ComboBoxFlashAlg.SelectedIndex = 9
             Case Else
                 ComboBoxFlashAlg.SelectedIndex = 0
         End Select
@@ -1149,36 +1151,40 @@ Public Class FormStSim
                 Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = False
             Case 1
+                Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3PV2
+                Me.chkIOmode.Enabled = False
+                Me.GroupBox11.Enabled = True
+            Case 2
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut
                 Me.chkIOmode.Enabled = True
                 Me.GroupBox11.Enabled = False
-            Case 2
+            Case 3
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
                 Me.chkIOmode.Enabled = True
                 Me.GroupBox11.Enabled = True
-            Case 3
+            Case 4
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin2P
                 Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = False
-            Case 4
+            Case 5
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
                 Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = True
-            Case 5
+            Case 6
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3P
                 Me.chkIOmode.Enabled = True
                 Me.GroupBox11.Enabled = True
-            Case 6
+            Case 7
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
                 Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = False
                 Me.chkValidateEqCalc.Enabled = False
-            Case 7
+            Case 8
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE_SS
                 Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = False
                 Me.chkValidateEqCalc.Enabled = False
-            Case 8
+            Case 9
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
                 Me.chkIOmode.Enabled = True
                 Me.GroupBox11.Enabled = True

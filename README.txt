@@ -1,7 +1,7 @@
 ==================================================
 DWSIM - Open Source Process Simulator
-Version 3.0, Build 5142 - January 2014
-Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo LeÃ³n
+Version 3.0, Build 5162 - February 2014
+Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo León
 ==================================================
 
 DWSIM is a software for modeling, simulation and optimization of steady-state chemical processes.
@@ -100,6 +100,37 @@ VERSION HISTORY / CHANGELOG
 ==================================================
 
 The full changelog, including code changes and their authors can be viewed at https://github.com/DanWBR/dwsim3/commits/master
+
+Version 3.0 Build 5162
+
+- [NEW] Added a new "Stream Flow Spec" operation mode for the Splitter Unit Operation.
+- [CHG] Workaround for CAPE-OPEN terminate call error during flowsheet close event.
+- [CHG] Updated Cudafy.NET.dll to v1.26, compiling CUDA code with CUDA SDK 5.5 and Visual C++ 2012 Express.
+- [CHG] Added a trivial solution check to the Gibbs PT flash algorithm.
+- [FIX] Fix for zeroing mass and mole flow through CAPE-OPEN calls.
+- [FIX] Workaround for Gibbs PT-Flash algorithm reaching maximum number of iterations (happens on single phase regions).
+- [FIX] Fixed XML serialization of Double and Single data types.
+- [FIX] Minor bug fixes.
+
+Version 3.0 Build 5154
+
+- [NEW] Excel Interface: added functions to return interaction parameters stored in DWSIM for a given binary / model.
+- [NEW] Excel Interface: saving and reading settings to/from INI file (stored in "My Documents\DWSIM Application Data") for improved compatibility.
+- [FIX] Inside-Out Flash: fixed resulting vapor composition in three-phase PT-Flash.
+- [FIX] Separator Vessel: fixed equilibrium calculation for a single compound mixture.
+- [FIX] Flowsheet Solver: fixed flash calculation for single compound not following the defined specification.
+- [FIX] Fixed equilibrium calculation routines to handle single-compound streams.
+- [FIX] Exposing more temperature-dependent pure compound properties through Excel and CAPE-OPEN interfaces.
+- [FIX] Excel Interface: Added a function to return compound constants as loaded from the database files.
+- [FIX] Fixed a small bug in mixture vapor pressure calculation.
+- [FIX] UNIQUAC model: fixed infinite dilution activity coefficient calculation.
+- [FIX] Data Regression utility: fixed images not showing in database management buttons.
+
+Version 3.0 Build 5145
+
+- [CHG] Changed the XML simulation loading code, now keeps loading information even if it finds errors in the XML structure
+- [CHG] Changed ChemSep database initial directory setting for Excel compatibility if it doesn't find it through registry (defaults to [dwsim]\chemsepdb\chemsep1.xml)
+- [FIX] Fixed XML loading of Sensitivity Analysis and Optimization Cases
 
 Version 3.0 Build 5142
 
@@ -475,7 +506,7 @@ Version 1.8 Build 3908
 
 Version 1.7 Build 3875
 
-- [NEW] Added German translation by Rainer GÃ¶llnitz
+- [NEW] Added German translation by Rainer Göllnitz
 
 Version 1.7 Build 3868
 
@@ -485,7 +516,7 @@ Version 1.7 Build 3868
 
 Version 1.7 Build 3850
 
-- [NEW] Lee-Kesler-PlÃ¶cker Property Package
+- [NEW] Lee-Kesler-Plöcker Property Package
 - [FIX] Fixed K-value calculation call in the Sum Rates method for solving Absorption Columns
 - [FIX] Fixed IO Flash calculation in single phase region
 - [FIX] Fixed Critical Point calculation with PR and SRK Equations of State
@@ -545,7 +576,7 @@ Version 1.6 Build 3618
 
 Version 1.6 Build 3605
 
-- [NEW] Added Spanish GUI translation (many thanks to Abad Lira and Gustavo LeÃ³n!)
+- [NEW] Added Spanish GUI translation (many thanks to Abad Lira and Gustavo León!)
 - [NEW] Added a Multivariate, Constrained Optimization utility
 - [NEW] Added a Sensitivity Analysis utility supporting up to 2 independent variables
 - [NEW] Added "command-line run mode" (read the documentation for more details)

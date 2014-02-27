@@ -24,6 +24,7 @@ Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports Cureos.Numerics
 Imports DotNumerics.Optimization
 Imports System.Threading.Tasks
+Imports DotNumerics
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -52,6 +53,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim Pb, Pd, Pmin, Pmax, Px, soma_x1, soma_x2, soma_y, soma_x, Tmin, Tmax As Double
         Dim proppack As PropertyPackages.PropertyPackage
         Dim objval, objval0 As Double
+
+        Public Enum numsolver
+            Limited_Memory_BGFS = 0
+            Truncated_Newton = 1
+            Simplex = 2
+            IPOPT = 3
+        End Enum
+
+        Public Property Solver As numsolver = numsolver.IPOPT
 
         Public Enum ObjFuncType As Integer
             MinGibbs = 0
@@ -320,7 +330,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         ' liquid phase NOT stable. proceed to three-phase flash.
 
                         Dim vx2est(UBound(Vz)) As Double
-                        Dim m As Double = UBound(stresult(1), 1)
+                        Dim m As Double = LBound(stresult(1), 1)
                         Dim gl, hl, sl, gv, hv, sv, gli As Double
 
                         If StabSearchSeverity = 2 Then
@@ -365,12 +375,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             Dim maxl As Double = MathEx.Common.Max(vx2est)
                             Dim imaxl As Integer = Array.IndexOf(vx2est, maxl)
 
-                            F = 1000
-                            V = V * 1000
-                            If V <= 0.0# Then V = 0.0000000001
-                            L1 = (F * Vz(imaxl) - Vy(imaxl) - F * vx2est(imaxl) + V * vx2est(imaxl)) / (Vx1(imaxl) - vx2est(imaxl))
-                            L1 = L1 * (1 - Vx1(imaxl))
-                            L2 = F - L1 - V
+                            F = 1000.0#
+                            V = result(1) * F
+                            L2 = F * fi(imaxl)
+                            L1 = F - L2 - V
+
+                            If L1 < 0.0# Then
+                                L1 = Abs(L1)
+                                L2 = F - L1 - V
+                            End If
+
+                            If L2 < 0.0# Then
+                                V += L2
+                                L2 = Abs(L2)
+                            End If
 
                             For i = 0 To n
                                 If Vz(i) <> 0 Then
@@ -401,16 +419,52 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             objval = 0.0#
                             objval0 = 0.0#
 
-                            Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, 0, Nothing, Nothing, 0, 0, _
-                                AddressOf eval_f, AddressOf eval_g, _
-                                AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
-                                problem.AddOption("tol", etol * 10)
-                                problem.AddOption("max_iter", maxit_e)
-                                problem.AddOption("hessian_approximation", "limited-memory")
-                                problem.SetIntermediateCallback(AddressOf intermediate)
-                                'solve the problem 
-                                status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
-                            End Using
+                            Solver = numsolver.IPOPT
+
+                            Select Case Me.Solver
+                                Case numsolver.Limited_Memory_BGFS
+                                    Dim variables(2 * n + 1) As OptBoundVariable
+                                    For i = 0 To 2 * n + 1
+                                        variables(i) = New OptBoundVariable("x" & CStr(i + 1), initval2(i), False, lconstr2(i), uconstr2(i))
+                                    Next
+                                    Dim solver As New L_BFGS_B
+                                    solver.Tolerance = etol
+                                    solver.MaxFunEvaluations = maxit_e
+                                    initval2 = solver.ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
+                                    solver = Nothing
+                                Case numsolver.Truncated_Newton
+                                    Dim variables(2 * n + 1) As OptBoundVariable
+                                    For i = 0 To 2 * n + 1
+                                        variables(i) = New OptBoundVariable("x" & CStr(i + 1), initval2(i), False, lconstr2(i), uconstr2(i))
+                                    Next
+                                    Dim solver As New TruncatedNewton
+                                    solver.Tolerance = etol
+                                    solver.MaxFunEvaluations = maxit_e
+                                    initval2 = solver.ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
+                                    solver = Nothing
+                                Case numsolver.Simplex
+                                    Dim variables(2 * n + 1) As OptBoundVariable
+                                    For i = 0 To 2 * n + 1
+                                        variables(i) = New OptBoundVariable("x" & CStr(i + 1), initval2(i), False, lconstr2(i), uconstr2(i))
+                                    Next
+                                    Dim solver As New Simplex
+                                    solver.Tolerance = etol
+                                    solver.MaxFunEvaluations = maxit_e
+                                    initval2 = solver.ComputeMin(AddressOf FunctionValue, variables)
+                                    solver = Nothing
+                                Case numsolver.IPOPT
+                                    Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, 0, Nothing, Nothing, 0, 0, _
+                                            AddressOf eval_f, AddressOf eval_g, _
+                                            AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
+                                        problem.AddOption("tol", etol * 10)
+                                        problem.AddOption("max_iter", maxit_e * 10)
+                                        problem.AddOption("mu_strategy", "adaptive")
+                                        problem.AddOption("hessian_approximation", "limited-memory")
+                                        problem.SetIntermediateCallback(AddressOf intermediate)
+                                        'solve the problem 
+                                        status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
+                                    End Using
+                            End Select
 
                             For i = 0 To initval2.Length - 1
                                 If Double.IsNaN(initval2(i)) Then initval2(i) = 0.0#
@@ -803,7 +857,7 @@ out:        Return result
 
             n = UBound(Vz)
 
-            pp = PP
+            PP = PP
             Vf = V
             L = 1 - V
             Lf = 1 - Vf
@@ -1133,7 +1187,7 @@ out:        Return result
 
             n = UBound(Vz)
 
-            pp = PP
+            PP = PP
             Vf = V
             L = 1 - V
             Lf = 1 - Vf
@@ -1766,9 +1820,9 @@ out:        Return result
                         L1 = F - V - L2
 
                         For i = 0 To n
-                            Vy(i) = (x(i) / V)
-                            Vx2(i) = (x(i + n + 1) / L2)
-                            Vx1(i) = ((fi(i) * F - Vy(i) * V - Vx2(i) * L2) / L1)
+                            If V <> 0.0# Then Vy(i) = (x(i) / V) Else Vy(i) = 0.0#
+                            If L2 <> 0.0# Then Vx2(i) = (x(i + n + 1) / L2) Else Vx2(i) = 0.0#
+                            If L1 <> 0.0# Then Vx1(i) = ((fi(i) * F - Vy(i) * V - Vx2(i) * L2) / L1) Else Vx1(i) = 0.0#
                             If Vx1(i) <= 0 Then Vx1(i) = 1.0E-20
                         Next
 

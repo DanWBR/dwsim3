@@ -1,5 +1,5 @@
-'    DWSIM Three-Phase Hybrid Nested Loops / Inside-Out Flash Algorithms
-'    Copyright 2012 Daniel Wagner O. de Medeiros
+﻿'    DWSIM Three-Phase Nested Loops Flash Algorithms
+'    Copyright 2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -28,7 +28,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
     ''' The Flash algorithms in this class are based on the Nested Loops approach to solve equilibrium calculations.
     ''' </summary>
     ''' <remarks></remarks>
-    <System.Serializable()> Public Class NestedLoops3P
+    <System.Serializable()> Public Class NestedLoops3PV2
 
         Inherits FlashAlgorithm
 
@@ -45,7 +45,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim DHv, DHl, DHl1, DHl2, Hv0, Hvid, Hlid1, Hlid2, Hm, Hv, Hl1, Hl2 As Double
         Dim DSv, DSl, DSl1, DSl2, Sv0, Svid, Slid1, Slid2, Sm, Sv, Sl1, Sl2 As Double
         Dim Pb, Pd, Pmin, Pmax, Px, soma_x, soma_x1, soma_y, soma_x2 As Double
-        Dim Kb, Kb0, Kb_ As Double
         Dim proppack As PropertyPackages.PropertyPackage
 
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
@@ -456,18 +455,10 @@ out:
             proppack = PP
 
             ReDim Vn(n), Vx1(n), Vx2(n), Vy(n), Vp(n), ui1(n), ui2(n), uic1(n), uic2(n), pi(n), Ki1(n), Ki2(n), fi(n)
+            Dim b1(n), b2(n), CFL1(n), CFL2(n), CFV(n), L1ant, L2ant As Double
 
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
-
-            '--------------------------------------
-            ' STEP 1 - Assume u, A, B, C, D, E, F 
-            '--------------------------------------
-
-
-            '----------------------------------------
-            ' STEP 1.1 - Estimate K, Vx, Vy, V and L 
-            '----------------------------------------
 
             'Calculate Ki`s
 
@@ -520,128 +511,182 @@ out:
                 i = i + 1
             Loop Until i = n + 1
 
-            Kb = 1.0# 'CalcKbjw(Ki1, Ki2, L1, L2, Vx1, Vx2)
-            Kb0 = Kb
+            i = 0
+            Do
+                b1(i) = 1 - Ki1(i) ^ -1
+                b2(i) = 1 - Ki2(i) ^ -1
+                i = i + 1
+            Loop Until i = n + 1
 
-            For i = 0 To n
-                ui1(i) = Log(Ki1(i))
-                ui2(i) = Log(Ki2(i))
-            Next
+            i = 0
+            Do
+                If Vz(i) <> 0 Then
+                    Vy(i) = Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
+                    Vx1(i) = Vy(i) / Ki1(i)
+                    Vx2(i) = Vy(i) / Ki2(i)
+                Else
+                    Vy(i) = 0
+                    Vx1(i) = 0
+                    Vx2(i) = 0
+                End If
+                i += 1
+            Loop Until i = n + 1
 
-            Dim fx(2 * n + 1), x(2 * n + 1), dfdx(2 * n + 1, 2 * n + 1), dx(2 * n + 1), xbr(2 * n + 1), fbr(2 * n + 1) As Double
-            Dim bo As New BrentOpt.Brent
-            Dim bo2 As New BrentOpt.BrentMinimize
+            i = 0
+            soma_x1 = 0
+            soma_x2 = 0
+            soma_y = 0
+            Do
+                soma_x1 = soma_x1 + Vx1(i)
+                soma_x2 = soma_x2 + Vx2(i)
+                soma_y = soma_y + Vy(i)
+                i = i + 1
+            Loop Until i = n + 1
+
+            i = 0
+            Do
+                Vx1(i) = Vx1(i) / soma_x1
+                Vx2(i) = Vx2(i) / soma_x2
+                Vy(i) = Vy(i) / soma_y
+                i = i + 1
+            Loop Until i = n + 1
+
+            Vant = 0.0#
+            L1ant = 0.0#
+            L2ant = 0.0#
 
             ecount = 0
 
-            V = Vest
-            L1 = L1est
-            L2 = L2est
-            L = L1 + L2
-            beta = L1 / L2
-
-            R = Kb * V / (Kb * V + Kb0 * L)
+            Console.WriteLine("PT Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V)
 
             Do
 
-                '--------------------------------------------------------------
-                ' STEPS 2, 3, 4, 5, 6, 7 and 8 - Calculate R and Energy Balance
-                '--------------------------------------------------------------
+                CFL1 = proppack.DW_CalcFugCoeff(Vx1, T, P, State.Liquid)
+                CFL2 = proppack.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
+                CFV = proppack.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
 
-                Rant = R
-                R = Kb * V / (Kb * V + Kb0 * L)
-
-                Dim fr, dfr, R0, R1 As Double
-                Dim icount As Integer = 0
-
+                i = 0
                 Do
-                    R0 = R
-                    If R > 0.999 Then
-                        R1 = R - 0.01
-                        fr = Me.TPErrorFunc(R0)
-                        dfr = (fr - Me.TPErrorFunc(R1)) / 0.01
-                    Else
-                        R1 = R + 0.01
-                        fr = Me.TPErrorFunc(R0)
-                        dfr = (fr - Me.TPErrorFunc(R1)) / (-0.01)
-                    End If
-                    R0 = R
-                    R += -0.5 * fr / dfr
-                    If R < 0 Then R = 0.0#
-                    If R > 1 Then R = 1.0#
-                    icount += 1
-                Loop Until Abs(fr) < itol Or icount > maxit_i Or R = 0 Or R = 1
+                    If Vz(i) <> 0 Then Ki1(i) = CFL1(i) / CFV(i)
+                    If Vz(i) <> 0 Then Ki2(i) = CFL2(i) / CFV(i)
+                    i = i + 1
+                Loop Until i = n + 1
 
-                Me.TPErrorFunc(R)
+                i = 0
+                Dim Vx1ant(n), Vx2ant(n), Vyant(n)
+                Do
+                    Vx1ant(i) = Vx1(i)
+                    Vx2ant(i) = Vx2(i)
+                    Vyant(i) = Vy(i)
+                    b1(i) = 1 - Ki1(i) ^ -1
+                    b2(i) = 1 - Ki2(i) ^ -1
+                    Vy(i) = Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
+                    Vx1(i) = Vy(i) / Ki1(i)
+                    Vx2(i) = Vy(i) / Ki2(i)
+                    i = i + 1
+                Loop Until i = n + 1
 
-                'At this point, we have converged R for the simplified model. Proceed to step 9.
+                i = 0
+                soma_x1 = 0
+                soma_x2 = 0
+                soma_y = 0
+                Do
+                    soma_x1 = soma_x1 + Vx1(i)
+                    soma_x2 = soma_x2 + Vx2(i)
+                    soma_y = soma_y + Vy(i)
+                    i = i + 1
+                Loop Until i = n + 1
 
-                '----------------------------------------------------------
-                ' STEP 9 - Rigorous model Enthalpy and K-values calculation
-                '----------------------------------------------------------
+                i = 0
+                Do
+                    Vx1(i) = Vx1(i) / soma_x1
+                    Vx2(i) = Vx2(i) / soma_x2
+                    Vy(i) = Vy(i) / soma_y
+                    i = i + 1
+                Loop Until i = n + 1
 
-                Ki1 = PP.DW_CalcKvalue(Vx1, Vy, T, P)
-                Ki2 = PP.DW_CalcKvalue(Vx2, Vy, T, P)
-                Kb = CalcKbjw(Ki1, Ki2, L1, L2, Vx1, Vx2)
+                Dim e1 = 0
+                Dim e2 = 0
+                Dim e3 = 0
+                Dim e4 = 0
+                i = 0
+                Do
+                    e1 = e1 + (Vx1(i) - Vx1ant(i))
+                    e4 = e4 + (Vx2(i) - Vx2ant(i))
+                    e2 = e2 + (Vy(i) - Vyant(i))
+                    i = i + 1
+                Loop Until i = n + 1
+                e3 = (V - Vant) + (L1 - L1ant) + (L2 - L2ant)
 
-                For i = 0 To n
-                    uic1(i) = Log(Ki1(i))
-                    uic2(i) = Log(Ki2(i))
-                Next
+                If (Math.Abs(e1) + Math.Abs(e4) + Math.Abs(e3) + Math.Abs(e2) + Math.Abs(L1ant - L1) + Math.Abs(L2ant - L2)) < etol Then
 
-                '-------------------------------------------
-                ' STEP 10 - Update variables using Broyden
-                '-------------------------------------------
+                    Exit Do
 
-                For i = 0 To n
-                    fx(i) = (ui1(i) - uic1(i))
-                    x(i) = ui1(i)
-                Next
+                ElseIf Double.IsNaN(Math.Abs(e1) + Math.Abs(e4) + Math.Abs(e2)) Then
 
-                For i = n + 1 To 2 * n + 1
-                    fx(i) = (ui2(i - n - 1) - uic2(i - n - 1))
-                    x(i) = ui2(i - n - 1)
-                Next
-
-                If PP._ioquick Then
-
-                    If ecount = 0 Then
-                        For i = 0 To 2 * n + 1
-                            For j = 0 To 2 * n + 1
-                                If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
-                            Next
-                        Next
-                        Broyden.broydn(2 * n + 1, x, fx, dx, xbr, fbr, dfdx, 0)
-                    Else
-                        Broyden.broydn(2 * n + 1, x, fx, dx, xbr, fbr, dfdx, 1)
-                    End If
-
-                    For i = 0 To n
-                        ui1(i) = ui1(i) + dx(i)
-                    Next
-                    For i = n + 1 To 2 * n + 1
-                        ui2(i - n - 1) = ui2(i - n - 1) + dx(i)
-                    Next
+                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
 
                 Else
 
-                    For i = 0 To n
-                        ui1(i) = uic1(i)
-                        ui2(i) = uic2(i)
-                    Next
+                    Vant = V
+                    Dim F1 = 0, F2 = 0
+                    Dim dF1dL1 = 0, dF1dL2 = 0, dF2dL1 = 0, dF2dL2 = 0
+                    Dim dL1, dL2 As Double
+                    i = 0
+                    Do
+                        F1 = F1 + b1(i) * Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
+                        F2 = F2 + b2(i) * Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
+                        dF1dL1 = dF1dL1 + b1(i) * Vz(i) * (-b1(i)) / (1 - b1(i) * L1 - b2(i) * L2)
+                        dF1dL2 = dF1dL2 + b1(i) * Vz(i) * (-b2(i)) / (1 - b1(i) * L1 - b2(i) * L2)
+                        dF2dL1 = dF2dL1 + b2(i) * Vz(i) * (-b1(i)) / (1 - b1(i) * L1 - b2(i) * L2)
+                        dF2dL2 = dF2dL2 + b2(i) * Vz(i) * (-b2(i)) / (1 - b1(i) * L1 - b2(i) * L2)
+                        i = i + 1
+                    Loop Until i = n + 1
+
+                    Dim MA As Mapack.Matrix = New Mapack.Matrix(2, 2)
+                    Dim MB As Mapack.Matrix = New Mapack.Matrix(2, 1)
+                    Dim MX As Mapack.Matrix = New Mapack.Matrix(1, 2)
+
+                    MA(0, 0) = dF1dL1
+                    MA(0, 1) = dF1dL2
+                    MA(1, 0) = dF2dL1
+                    MA(1, 1) = dF2dL2
+                    MB(0, 0) = -F1
+                    MB(1, 0) = -F2
+
+                    MX = MA.Solve(MB)
+
+                    dL1 = MX(0, 0)
+                    dL2 = MX(1, 0)
+
+                    'dL1 = dL1 / (Math.Abs(dL1) + Math.Abs(dL2))
+                    'dL2 = dL2 / (Math.Abs(dL1) + Math.Abs(dL2))
+
+                    L2ant = L2
+                    L1ant = L1
+                    Vant = V
+
+                    L1 += -dL1
+                    L2 += -dL2
+                    V = 1 - L1 - L2
+
+
+                    'L1 = L1 + (dL1 * L1 / (Math.Abs(dL1) + Math.Abs(dL2)))
+                    'L2 = L2 + (dL2 * L2 / (Math.Abs(dL1) + Math.Abs(dL2)))
+                    'Vant = V
+                    'V = 1 - L1 - L2
+
+                    'L1 = Math.Abs(L1) / (Math.Abs(L1) + Math.Abs(L2) + Math.Abs(V))
+                    'L2 = Math.Abs(L2) / (Math.Abs(L1) + Math.Abs(L2) + Math.Abs(V))
+                    'V = 1 - L1 - L2
 
                 End If
 
                 ecount += 1
 
-                If Double.IsNaN(V) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
-                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+                Console.WriteLine("PT Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V)
 
-                Console.WriteLine("PT Flash [IO]: Iteration #" & ecount & ", VF = " & V)
-
-                CheckCalculatorStatus()
-
-            Loop Until AbsSum(fx) < etol
+            Loop
 
 out:
             'order liquid phases by mixture NBP
@@ -660,73 +705,6 @@ out:
             Else
                 Return New Object() {L2, V, Vx2, Vy, ecount, L1, Vx1, 0.0#, PP.RET_NullVector}
             End If
-
-        End Function
-
-        Private Function TPErrorFunc(ByVal Rt As Double) As Double
-
-            Dim fr, dfr, S0, S1 As Double
-            Dim icount As Integer = 0
-
-            S = 1 - Rt
-            Do
-                S0 = S
-                S1 = S + 0.01
-                fr = Me.SErrorFunc(S0, Rt)
-                dfr = (fr - Me.SErrorFunc(S1, Rt)) / -0.01
-                S += -fr / dfr
-                If S < -(1 - Rt) Then S = -(1 - Rt) + 0.01
-                If S > (1 - Rt) Then S = (1 - Rt) - 0.01
-                icount += 1
-            Loop Until Abs(fr) < itol Or icount > maxit_i
-
-            If S <= -(1 - Rt) Then S = -(1 - Rt)
-            If S >= (1 - Rt) Then S = (1 - Rt)
-
-            For i = 0 To n
-                pi(i) = fi(i) / (Rt + (1 - Rt + S) / (2 * Kb0 * Exp(ui1(i))) + (1 - Rt - S) / (2 * Kb0 * Exp(ui2(i))))
-            Next
-
-            Dim sumpi As Double = 0
-            Dim sumeuipi1 As Double = 0
-            Dim sumeuipi2 As Double = 0
-            For i = 0 To n
-                sumpi += pi(i)
-                sumeuipi1 += pi(i) / Exp(ui1(i))
-                sumeuipi2 += pi(i) / Exp(ui2(i))
-            Next
-            For i = 0 To n
-                Vx1(i) = (pi(i) / Exp(ui1(i))) / sumeuipi1
-                Vx2(i) = (pi(i) / Exp(ui2(i))) / sumeuipi2
-                Vy(i) = pi(i) / sumpi
-            Next
-
-            If Rt <> 1 Then
-                Kb = ((1 - Rt + S) * sumeuipi1 + (1 - Rt - S) * sumeuipi2) / (2 * (1 - Rt) * sumpi)
-            Else
-                Kb = 1.0#
-            End If
-
-            V = Rt * sumpi
-            L1 = 0.5 * (S * V * (Kb / Kb0 - 1) + (1 + S) - V)
-            L2 = 1 - L1 - V
-            beta = L1 / (L1 + L2)
-
-            Dim err1 As Double = Kb - 1
-
-            CheckCalculatorStatus()
-
-            Return err1
-
-        End Function
-
-        Private Function SErrorFunc(ByVal S0 As Double, ByVal Rt As Double)
-
-            Dim errfunc As Double = 0
-            For i = 0 To n
-                errfunc += fi(i) * (1 / Exp(ui1(i)) - 1 / Exp(ui2(i))) / (Rt + (1 - Rt + S0) / (2 * Kb0 * Exp(ui1(i))) + (1 - Rt - S0) / (2 * Kb0 * Exp(ui2(i))))
-            Next
-            Return errfunc
 
         End Function
 
@@ -1636,4 +1614,5 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
     End Class
 
 End Namespace
+
 
