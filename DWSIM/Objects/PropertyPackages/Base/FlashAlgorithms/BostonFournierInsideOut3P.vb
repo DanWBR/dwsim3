@@ -47,6 +47,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim d1, d2 As Date, dt As TimeSpan
 
+            Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
+            Dim nc As Integer = UBound(Vz)
+
             d1 = Date.Now
 
             ' try a two-phase flash first.
@@ -59,8 +62,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             If result(0) > 0 Then ' we have a liquid phase
 
-                Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
-                Dim nc As Integer = UBound(Vz)
+                If result(1) > 0 And nc = 1 Then
+                    'the liquid phase cannot be unstable when there's also vapor and only two compounds in the system.
+                    Return result
+                End If
 
                 If nt = -1 Then nt = nc
 
@@ -174,7 +179,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Next
 
                         Try
-                            result = Flash_PT_3P(Vz, V, L1, L2, result(3), vx1e, vx2est, P, T, PP)
+                            result = Flash_PT_3P(Vz, V, L1, L2, result(3), result(2), vx2est, P, T, PP)
                         Catch ex As Exception
                             'if there was an error, keep the two-phase result.
                             result = _io.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
@@ -1530,7 +1535,7 @@ restart:    Do
 
                 Ki1 = PP.DW_CalcKvalue(Vx1, Vy, T, P)
                 Ki2 = PP.DW_CalcKvalue(Vx2, Vy, T, P)
-                Kb = CalcKbjw(Ki1, Ki2, L1, L2, Vx1, Vx2)
+                'Kb = CalcKbjw(Ki1, Ki2, L1, L2, Vx1, Vx2)
 
                 For i = 0 To n
                     uic1(i) = Log(Ki1(i))

@@ -252,7 +252,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     If Abs(F) < 0.000001 Then Exit Do
 
-                    V = -F / dF + V
+                    V = -0.5 * F / dF + V
 
                 End If
 
@@ -293,7 +293,12 @@ out:
 
             ' check if there is a liquid phase
 
-            If result(0) > 0 Then ' we have a liquid phase
+            If L > 0 Then ' we have a liquid phase
+
+                If V > 0 And n = 1 Then
+                    'the liquid phase cannot be unstable when there's also vapor and only two compounds in the system.
+                    Return result
+                End If
 
                 Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
                 Dim nc As Integer = UBound(Vz)
@@ -409,7 +414,7 @@ out:
                             vx1e(i) = Abs(vx1e(i)) / sumvx2
                         Next
 
-                        result = Flash_PT_3P(Vz, V, L1, L2, Vy, vx1e, vx2est, P, T, PP)
+                        result = Flash_PT_3P(Vz, V, L1, L2, Vy, Vx, vx2est, P, T, PP)
 
                     End If
 
@@ -455,7 +460,7 @@ out:
             proppack = PP
 
             ReDim Vn(n), Vx1(n), Vx2(n), Vy(n), Vp(n), ui1(n), ui2(n), uic1(n), uic2(n), pi(n), Ki1(n), Ki2(n), fi(n)
-            Dim b1(n), b2(n), CFL1(n), CFL2(n), CFV(n), L1ant, L2ant As Double
+            Dim b1(n), b2(n), CFL1(n), CFL2(n), CFV(n), Kil(n), L1ant, L2ant As Double
 
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
@@ -557,7 +562,11 @@ out:
 
             ecount = 0
 
-            Console.WriteLine("PT Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V)
+            V = Vest
+            L1 = L1est
+            L2 = L2est
+
+            Console.WriteLine("PT Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", L2 = " & L2)
 
             Do
 
@@ -636,12 +645,14 @@ out:
                     Do
                         F1 = F1 + b1(i) * Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
                         F2 = F2 + b2(i) * Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
-                        dF1dL1 = dF1dL1 + b1(i) * Vz(i) * (-b1(i)) / (1 - b1(i) * L1 - b2(i) * L2)
-                        dF1dL2 = dF1dL2 + b1(i) * Vz(i) * (-b2(i)) / (1 - b1(i) * L1 - b2(i) * L2)
-                        dF2dL1 = dF2dL1 + b2(i) * Vz(i) * (-b1(i)) / (1 - b1(i) * L1 - b2(i) * L2)
-                        dF2dL2 = dF2dL2 + b2(i) * Vz(i) * (-b2(i)) / (1 - b1(i) * L1 - b2(i) * L2)
+                        dF1dL1 = dF1dL1 + b1(i) * Vz(i) * (-b1(i)) / (1 - b1(i) * L1 - b2(i) * L2) ^ 2
+                        dF1dL2 = dF1dL2 + b1(i) * Vz(i) * (-b2(i)) / (1 - b1(i) * L1 - b2(i) * L2) ^ 2
+                        dF2dL1 = dF2dL1 + b2(i) * Vz(i) * (-b1(i)) / (1 - b1(i) * L1 - b2(i) * L2) ^ 2
+                        dF2dL2 = dF2dL2 + b2(i) * Vz(i) * (-b2(i)) / (1 - b1(i) * L1 - b2(i) * L2) ^ 2
                         i = i + 1
                     Loop Until i = n + 1
+
+                    If Abs(F1) + Abs(F2) = etol Then Exit Do
 
                     Dim MA As Mapack.Matrix = New Mapack.Matrix(2, 2)
                     Dim MB As Mapack.Matrix = New Mapack.Matrix(2, 1)
@@ -655,7 +666,6 @@ out:
                     MB(1, 0) = -F2
 
                     MX = MA.Solve(MB)
-
                     dL1 = MX(0, 0)
                     dL2 = MX(1, 0)
 
@@ -668,23 +678,31 @@ out:
 
                     L1 += -dL1
                     L2 += -dL2
+
                     V = 1 - L1 - L2
 
-
-                    'L1 = L1 + (dL1 * L1 / (Math.Abs(dL1) + Math.Abs(dL2)))
-                    'L2 = L2 + (dL2 * L2 / (Math.Abs(dL1) + Math.Abs(dL2)))
-                    'Vant = V
-                    'V = 1 - L1 - L2
-
-                    'L1 = Math.Abs(L1) / (Math.Abs(L1) + Math.Abs(L2) + Math.Abs(V))
-                    'L2 = Math.Abs(L2) / (Math.Abs(L1) + Math.Abs(L2) + Math.Abs(V))
-                    'V = 1 - L1 - L2
+                    If V <= 0.0# Then
+                        'switch to simple LLE flash procedure.
+                        Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = Vx1, .InitialEstimatesForPhase2 = Vx2, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
+                        Dim result As Object = slle.Flash_PT(Vz, P, T, PP)
+                        L1 = result(0)
+                        V = result(1)
+                        L2 = result(5)
+                        Vx1 = result(2)
+                        Vy = result(3)
+                        Vx2 = result(6)
+                        Exit Do
+                    ElseIf V > 1.0# Then
+                        V = 1.0#
+                    End If
 
                 End If
 
+                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
+
                 ecount += 1
 
-                Console.WriteLine("PT Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V)
+                Console.WriteLine("PT Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", L2 = " & L2)
 
             Loop
 

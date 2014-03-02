@@ -296,6 +296,11 @@ out:
 
             If result(0) > 0 Then ' we have a liquid phase
 
+                If V > 0 And n = 1 Then
+                    'the liquid phase cannot be unstable when there's also vapor and only two compounds in the system.
+                    Return result
+                End If
+
                 Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
                 Dim nc As Integer = UBound(Vz)
 
@@ -410,7 +415,7 @@ out:
                             vx1e(i) = Abs(vx1e(i)) / sumvx2
                         Next
 
-                        result = Flash_PT_3P(Vz, V, L1, L2, Vy, vx1e, vx2est, P, T, PP)
+                        result = Flash_PT_3P(Vz, V, L1, L2, Vy, Vx, vx2est, P, T, PP)
 
                     End If
 
