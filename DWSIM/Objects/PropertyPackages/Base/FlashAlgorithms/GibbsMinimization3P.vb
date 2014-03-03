@@ -289,7 +289,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 If result(0) > 0 Then ' we have a liquid phase
 
-                    If result(1) > 0 And n = 1 Then
+                    If result(1) > 0.0001 And n = 1 Then
                         'the liquid phase cannot be unstable when there's also vapor and only two compounds in the system.
                         Return result
                     End If
@@ -375,7 +375,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             Dim lconstr2(2 * n + 1) As Double
                             Dim uconstr2(2 * n + 1) As Double
                             Dim finalval2(2 * n + 1) As Double
-                            Dim glow(n), gup(n) As Double
+                            Dim glow(n), gup(n), g(n) As Double
 
                             Dim maxl As Double = MathEx.Common.Max(vx2est)
                             Dim imaxl As Integer = Array.IndexOf(vx2est, maxl)
@@ -397,14 +397,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                             For i = 0 To n
                                 If Vz(i) <> 0 Then
-                                    initval2(i) = Vy(i) * V
+                                    initval2(i) = Vy(i) * V - vx2est(i) * L2
+                                    If initval2(i) < 0.0# Then initval2(i) = 0.0#
                                 Else
                                     initval2(i) = 0.0#
                                 End If
                                 lconstr2(i) = 0.0#
                                 uconstr2(i) = fi(i) * F
                                 glow(i) = 0.0#
-                                gup(i) = 10000.0#
+                                gup(i) = 1000.0#
                             Next
                             For i = n + 1 To 2 * n + 1
                                 If Vz(i - n - 1) <> 0 Then
@@ -458,16 +459,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                     initval2 = solver.ComputeMin(AddressOf FunctionValue, variables)
                                     solver = Nothing
                                 Case numsolver.IPOPT
-                                    Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, 0, Nothing, Nothing, 0, 0, _
+                                    Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, n + 1, glow, gup, (n + 1) * 2, 0, _
                                             AddressOf eval_f, AddressOf eval_g, _
                                             AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
-                                        problem.AddOption("tol", etol * 10)
-                                        problem.AddOption("max_iter", maxit_e * 10)
+                                        problem.AddOption("tol", etol)
+                                        problem.AddOption("max_iter", maxit_e)
                                         problem.AddOption("mu_strategy", "adaptive")
                                         problem.AddOption("hessian_approximation", "limited-memory")
                                         problem.SetIntermediateCallback(AddressOf intermediate)
                                         'solve the problem 
-                                        status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
+                                        status = problem.SolveProblem(initval2, obj, g, Nothing, Nothing, Nothing)
                                     End Using
                             End Select
 
@@ -721,7 +722,7 @@ out:        Return result
             Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L1 + mml2 * L2)) * Hv - (mml * L1 / (mmg * V + mml * L1 + mml2 * L2)) * Hl1 - (mml2 * L2 / (mmg * V + mml * L1 + mml2 * L2)) * Hl2
             OBJ_FUNC_PH_FLASH = herr
 
-            Console.WriteLine("PH Flash [NL]: Current T = " & T & ", Current H Error = " & herr)
+            Console.WriteLine("PH Flash [GM]: Current T = " & T & ", Current H Error = " & herr)
 
         End Function
 
@@ -754,7 +755,7 @@ out:        Return result
             Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L1 + mml2 * L2)) * Sv - (mml * L1 / (mmg * V + mml * L1 + mml2 * L2)) * Sl1 - (mml2 * L2 / (mmg * V + mml * L1 + mml2 * L2)) * Sl2
             OBJ_FUNC_PS_FLASH = serr
 
-            Console.WriteLine("PS Flash [NL]: Current T = " & T & ", Current S Error = " & serr)
+            Console.WriteLine("PS Flash [GM]: Current T = " & T & ", Current S Error = " & serr)
 
         End Function
 
@@ -1053,7 +1054,7 @@ out:        Return result
                         P = P - fval / dFdP
                     End If
 
-                    Console.WriteLine("TV Flash [NL]: Iteration #" & ecount & ", P = " & P & ", VF = " & V)
+                    Console.WriteLine("TV Flash [GM]: Iteration #" & ecount & ", P = " & P & ", VF = " & V)
 
                     CheckCalculatorStatus()
 
@@ -1157,7 +1158,7 @@ out:        Return result
                         P = P - fval / dFdP
                     End If
 
-                    Console.WriteLine("TV Flash [NL]: Iteration #" & ecount & ", P = " & P & ", VF = " & V)
+                    Console.WriteLine("TV Flash [GM]: Iteration #" & ecount & ", P = " & P & ", VF = " & V)
 
                     CheckCalculatorStatus()
 
@@ -1169,7 +1170,7 @@ out:        Return result
 
             dt = d2 - d1
 
-            Console.WriteLine("TV Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            Console.WriteLine("TV Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L, V, Vx, Vy, P, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
@@ -1378,7 +1379,7 @@ out:        Return result
                     If T < Tmin Then T = Tmin
                     If T > Tmax Then T = Tmax
 
-                    Console.WriteLine("PV Flash [NL]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
+                    Console.WriteLine("PV Flash [GM]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
 
                     CheckCalculatorStatus()
 
@@ -1480,7 +1481,7 @@ out:        Return result
                     If T < Tmin Then T = Tmin
                     If T > Tmax Then T = Tmax
 
-                    Console.WriteLine("PV Flash [NL]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
+                    Console.WriteLine("PV Flash [GM]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
 
                     CheckCalculatorStatus()
 
@@ -1492,7 +1493,7 @@ out:        Return result
 
             dt = d2 - d1
 
-            Console.WriteLine("PV Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            Console.WriteLine("PV Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
@@ -1562,6 +1563,8 @@ out:        Return result
 
                         Gm = Gv + Gl1
 
+                        Console.WriteLine("[GM] V = " & Format(V, "N4") & ", L = " & Format(L, "N4") & " / GE = " & Format(Gm * 8.314 * Tf, "N2") & " kJ/kmol")
+
                     Else
 
                         soma_y = 0
@@ -1582,10 +1585,9 @@ out:        Return result
                             If V <> 0.0# Then Vy(i) = (x(i) / V) Else Vy(i) = 0.0#
                             If L2 <> 0.0# Then Vx2(i) = (x(i + n + 1) / L2) Else Vx2(i) = 0.0#
                             If L1 <> 0.0# Then Vx1(i) = ((fi(i) * F - Vy(i) * V - Vx2(i) * L2) / L1) Else Vx1(i) = 0.0#
-                            If Vx1(i) < 0 Then
-                                pval += Abs(Vx1(i) * L1)
-                                Vx1(i) = 1.0E-20
-                            End If
+                            If Vy(i) < 0.0# Then Vy(i) = 1.0E-20
+                            If Vx1(i) < 0.0# Then Vx1(i) = 1.0E-20
+                            If Vx2(i) < 0.0# Then Vx2(i) = 1.0E-20
                         Next
 
                         soma_x1 = 0
@@ -1642,6 +1644,8 @@ out:        Return result
                         Next
 
                         Gm = Gv + Gl1 + Gl2 + pval
+
+                        Console.WriteLine("[GM] V = " & Format(V / 1000, "N4") & ", L1 = " & Format(L1 / 1000, "N4") & ", L2 = " & Format(L2 / 1000, "N4") & " / GE = " & Format(Gm * 8.314 * Tf / 1000, "N2") & " kJ/kmol")
 
                     End If
 
@@ -1828,7 +1832,9 @@ out:        Return result
                             If V <> 0.0# Then Vy(i) = (x(i) / V) Else Vy(i) = 0.0#
                             If L2 <> 0.0# Then Vx2(i) = (x(i + n + 1) / L2) Else Vx2(i) = 0.0#
                             If L1 <> 0.0# Then Vx1(i) = ((fi(i) * F - Vy(i) * V - Vx2(i) * L2) / L1) Else Vx1(i) = 0.0#
-                            If Vx1(i) <= 0 Then Vx1(i) = 1.0E-20
+                            If Vy(i) < 0.0# Then Vy(i) = 1.0E-20
+                            If Vx1(i) < 0.0# Then Vx1(i) = 1.0E-20
+                            If Vx2(i) < 0.0# Then Vx2(i) = 1.0E-20
                         Next
 
                         soma_x1 = 0
@@ -2068,7 +2074,7 @@ out:        Return result
 
         Public Function eval_g(ByVal n As Integer, ByVal x As Double(), ByVal new_x As Boolean, ByVal m As Integer, ByRef g As Double()) As Boolean
             For i = 0 To m - 1
-                g(i) = fi(i) - x(i) - x(i + m)
+                g(i) = fi(i) * F - x(i) - x(i + m)
             Next
             Return True
         End Function
@@ -2082,11 +2088,10 @@ out:        Return result
 
                 k = 0
                 For i = 0 To m - 1
-                    For j = 0 To n - 1
-                        row(k) = i
-                        col(k) = j
-                        k += 1
-                    Next
+                    row(i) = i
+                    row(i + m) = i
+                    col(i) = i
+                    col(i + m) = i + m
                 Next
 
                 iRow = row

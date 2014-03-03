@@ -295,7 +295,7 @@ out:
 
             If L > 0 Then ' we have a liquid phase
 
-                If V > 0 And n = 1 Then
+                If V > 0.0001 And n = 1 Then
                     'the liquid phase cannot be unstable when there's also vapor and only two compounds in the system.
                     Return result
                 End If

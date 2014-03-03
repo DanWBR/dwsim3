@@ -62,7 +62,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             If result(0) > 0 Then ' we have a liquid phase
 
-                If result(1) > 0 And nc = 1 Then
+                If result(1) > 0.0001 And nc = 1 Then
                     'the liquid phase cannot be unstable when there's also vapor and only two compounds in the system.
                     Return result
                 End If
