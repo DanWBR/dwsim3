@@ -71,9 +71,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim Vp(n), fi1(n), fi2(n), act1(n), act2(n), Vx1(n), Vx2(n) As Double
 
-            Dim result As Object = New GibbsMinimization3P() With {.ForceTwoPhaseOnly = False,
-                                                                   .StabSearchCompIDs = _pp.RET_VNAMES,
-                                                                   .StabSearchSeverity = 0}.Flash_PT(_Vz, _P, x, _pp)
+            Dim result As Object = New SimpleLLE().Flash_PT(_Vz, _P, x, _pp)
 
             Vx1 = result(2)
             Vx2 = result(6)
