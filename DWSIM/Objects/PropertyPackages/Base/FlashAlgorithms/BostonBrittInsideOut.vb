@@ -252,6 +252,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Vx(i) = pi(i) / sumpi
                         Vy(i) = Exp(ui(i)) * pi(i) / sumeuipi
                     Next
+                    Exit Do
                 End If
 
                 If R >= 1 Then
@@ -271,6 +272,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Vx(i) = pi(i) / sumpi
                         Vy(i) = Exp(ui(i)) * pi(i) / sumeuipi
                     Next
+                    Exit Do
                 End If
 
 

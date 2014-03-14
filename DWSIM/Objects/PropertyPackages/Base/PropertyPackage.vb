@@ -2979,12 +2979,12 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                     If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
                                         unstable = True
                                         ui.Add(px.Count - 1)
-                                        If ut.Count = 0 Then ut.Add(Me.FlashBase.BubbleTemperature_LLE(New Double() {i * dx, 1 - i * dx}, result(2), result(6), P, y1 - 40, y2, Me))
-                                        py1(py1.Count - 1) = ut(0)
+                                        ut.Add(Me.FlashBase.BubbleTemperature_LLE(New Double() {i * dx, 1 - i * dx}, result(2), result(6), P, y1 - 50, y2 + 20, Me))
+                                        py1(py1.Count - 1) = ut(ut.Count - 1)
                                     End If
                                 End If
                             Catch ex As Exception
-                            End Try
+                    End Try
                             i = i + 1
                         Loop Until (i - 1) * dx >= 1
                     End If

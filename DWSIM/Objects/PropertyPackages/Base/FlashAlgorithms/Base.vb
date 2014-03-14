@@ -61,6 +61,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             err = bm.brentoptimize(Tmin, Tmax, 0.0001, T)
 
+            err = BubbleTemperature_LLEPerror(T)
+
             Return T
 
         End Function
@@ -71,7 +73,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim Vp(n), fi1(n), fi2(n), act1(n), act2(n), Vx1(n), Vx2(n) As Double
 
-            Dim result As Object = New SimpleLLE().Flash_PT(_Vz, _P, x, _pp)
+            Dim result As Object = New SimpleLLE() With {.UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True,
+                                                          .InitialEstimatesForPhase1 = _Vx1est, .InitialEstimatesForPhase2 = _Vx2est}.Flash_PT(_Vz, _P, x, _pp)
+
+            'Dim result As Object = New GibbsMinimization3P() With {.ForceTwoPhaseOnly = False, .StabSearchSeverity = 0, .StabSearchCompIDs = _pp.RET_VNAMES}.Flash_PT(_Vz, _P, x, _pp)
 
             Vx1 = result(2)
             Vx2 = result(6)
