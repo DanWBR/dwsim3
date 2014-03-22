@@ -262,7 +262,11 @@ Public Class frmProps
 
                 Dim es As DWSIM.SimulationObjects.Streams.EnergyStream = ChildParent.Collections.CLCS_EnergyStreamCollection.Item(sobj.Name)
 
-                es.Energia = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+                If e.ChangedItem.Parent.Label.Contains(DWSIM.App.GetLocalString("Energia")) Then
+
+                    es.Energia = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+
+                End If
 
                 If ChildParent.Options.CalculatorActivated Then
 
