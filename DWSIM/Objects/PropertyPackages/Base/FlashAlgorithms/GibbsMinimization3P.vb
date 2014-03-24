@@ -369,7 +369,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         sv = PP.DW_CalcEntropy(vx2est, T, P, State.Vapor)
                         gv = hv - T * sv
 
-                        If Abs((gl - gv) / gl) > 0.05 Then 'test phase is liquid-like.
+                        If gl < gv Then 'test phase is liquid-like.
 
                             Dim initval2(2 * n + 1) As Double
                             Dim lconstr2(2 * n + 1) As Double
