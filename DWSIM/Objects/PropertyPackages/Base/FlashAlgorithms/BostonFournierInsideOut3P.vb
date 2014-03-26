@@ -1519,11 +1519,19 @@ restart:    Do
                         dfr = (fr - Me.TPErrorFunc(R1)) / (-0.01)
                     End If
                     R0 = R
-                    R += -0.5 * fr / dfr
-                    If R < 0 Then R = 0.0#
-                    If R > 1 Then R = 1.0#
+                    If (R - fr / dfr) < 0.0# Or (R - fr / dfr) > 1.0# Then
+                        If (R + 0.1) < 1.0# Then R += 0.1 Else R -= 0.1
+                    Else
+                        R = R - fr / dfr
+                    End If
+                    If R < 0.0# Then R = 0.0#
+                    If R > 1.0# Then R = 1.0#
                     icount += 1
                 Loop Until Abs(fr) < itol Or icount > maxit_i Or R = 0 Or R = 1
+
+                If icount > maxit_i Then R = Rant
+                If Rant = 0.0# And R = 1.0# Then R = 0.0#
+                If Rant = 1.0# And R = 0.0# Then R = 1.0#
 
                 Me.TPErrorFunc(R)
 

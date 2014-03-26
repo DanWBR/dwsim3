@@ -225,7 +225,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                ElseIf Math.Abs(e3) < itol Then
+                ElseIf Math.Abs(e3) < itol And ecount > 0 Then
 
                     convergiu = 1
 

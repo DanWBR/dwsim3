@@ -227,11 +227,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         dfr = (fr - Me.TPErrorFunc(R1)) / -0.001
                     End If
                     R0 = R
-                    R += -fr / dfr
-                    If R < 0 Then R = 0
-                    If R > 1 Then R = 1
+                    R = R - 0.3 * fr / dfr
+                    If R < 0.0# Then R = 0.0#
+                    If R > 1.0# Then R = 1.0#
                     icount += 1
                 Loop Until Abs(fr) < itol Or icount > maxit_i
+
+                If icount > maxit_i Then R = Rant
+                If Rant = 0.0# And R = 1.0# Then R = 0.0#
+                If Rant = 1.0# And R = 0.0# Then R = 1.0#
 
                 Me.TPErrorFunc(R)
 

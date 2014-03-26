@@ -702,22 +702,23 @@ Public Class frmSurface
     End Sub
 
     Private Sub MostrarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MostrarToolStripMenuItem.Click
-        If Me.MostrarToolStripMenuItem.Checked = True Then
-            Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
-            Dim tabela As New DWSIM.GraphicObjects.TableGraphic(obj, Me.FlowsheetDesignSurface.SelectedObject.X + Me.FlowsheetDesignSurface.SelectedObject.Width, Me.FlowsheetDesignSurface.SelectedObject.Y + Me.FlowsheetDesignSurface.SelectedObject.Height)
-            obj.Tabela = tabela
-            tabela.Tag = obj.Nome
-            tabela.Name = "TAB-" & Guid.NewGuid.ToString
-            tabela.HeaderText = Me.FlowsheetDesignSurface.SelectedObject.Tag
-            Me.FlowsheetDesignSurface.drawingObjects.Add(tabela)
-            Me.FlowsheetDesignSurface.Invalidate()
-        Else
-            Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
-            Me.FlowsheetDesignSurface.drawingObjects.Remove(obj.Tabela)
-            obj.Tabela = Nothing
-            Me.FlowsheetDesignSurface.Invalidate()
+        If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
+            If Me.MostrarToolStripMenuItem.Checked = True Then
+                Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
+                Dim tabela As New DWSIM.GraphicObjects.TableGraphic(obj, Me.FlowsheetDesignSurface.SelectedObject.X + Me.FlowsheetDesignSurface.SelectedObject.Width, Me.FlowsheetDesignSurface.SelectedObject.Y + Me.FlowsheetDesignSurface.SelectedObject.Height)
+                obj.Tabela = tabela
+                tabela.Tag = obj.Nome
+                tabela.Name = "TAB-" & Guid.NewGuid.ToString
+                tabela.HeaderText = Me.FlowsheetDesignSurface.SelectedObject.Tag
+                Me.FlowsheetDesignSurface.drawingObjects.Add(tabela)
+                Me.FlowsheetDesignSurface.Invalidate()
+            Else
+                Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
+                Me.FlowsheetDesignSurface.drawingObjects.Remove(obj.Tabela)
+                obj.Tabela = Nothing
+                Me.FlowsheetDesignSurface.Invalidate()
+            End If
         End If
-
     End Sub
 
     Private Sub CMS_Sel_Enter(ByVal sender As Object, ByVal e As System.EventArgs) Handles CMS_Sel.Opened
