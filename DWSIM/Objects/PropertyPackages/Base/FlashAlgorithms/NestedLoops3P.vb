@@ -659,19 +659,33 @@ out:
 out:
             'order liquid phases by mixture NBP
 
-            Dim VNBP = PP.RET_VTB()
-            Dim nbp1 As Double = 0
-            Dim nbp2 As Double = 0
-
+            'check if liquid phase compositions are the same.
+            Dim Kl(n) As Double
             For i = 0 To n
-                nbp1 += Vx1(i) * VNBP(i)
-                nbp2 += Vx2(i) * VNBP(i)
+                If Vx1(i) <> 0.0# Then Kl(i) = Vx2(i) / Vx1(i) Else Kl(i) = 0.0#
             Next
 
-            If nbp1 >= nbp2 Then
+            If PP.AUX_CheckTrivial(Kl) Then
+                'the liquid phases are the same. condense them into only one phase.
+                L1 = L1 + L2
+                L2 = 0.0#
+                Vx2 = PP.RET_NullVector
                 Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2, 0.0#, PP.RET_NullVector}
             Else
-                Return New Object() {L2, V, Vx2, Vy, ecount, L1, Vx1, 0.0#, PP.RET_NullVector}
+                'order liquid phases by mixture NBP
+
+                Dim VNBP = PP.RET_VTB()
+                Dim nbp1 As Double = 0
+                Dim nbp2 As Double = 0
+                For i = 0 To n
+                    nbp1 += Vx1(i) * VNBP(i)
+                    nbp2 += Vx2(i) * VNBP(i)
+                Next
+                If nbp1 >= nbp2 Then
+                    Return New Object() {L1, V, Vx1, Vy, ecount, L2, Vx2, 0.0#, PP.RET_NullVector}
+                Else
+                    Return New Object() {L2, V, Vx2, Vy, ecount, L1, Vx1, 0.0#, PP.RET_NullVector}
+                End If
             End If
 
         End Function
@@ -1649,4 +1663,3 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
     End Class
 
 End Namespace
-
