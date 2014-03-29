@@ -2507,11 +2507,11 @@ Public Class FormMain
             Me.UpdateMRUList()
         End If
 
+        My.Application.ActiveSimulation = form
+
         form.MdiParent = Me
         form.Show()
         form.MdiParent = Me
-
-        My.Application.ActiveSimulation = form
 
         'form.FrmStSim1.Init()
 

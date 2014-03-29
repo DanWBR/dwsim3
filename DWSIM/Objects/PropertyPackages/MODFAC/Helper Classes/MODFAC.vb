@@ -162,7 +162,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                     beta(i, k) = 0
                     m = 0
                     Do
-                        beta(i, k) = beta(i, k) + VEKI(i, m) * TAU(m, k, T)
+                        If VEKI(i, m) <> 0.0# And Not Double.IsNaN(VEKI(i, m)) Then
+                            beta(i, k) = beta(i, k) + VEKI(i, m) * TAU(m, k, T)
+                        Else
+
+                        End If
                         m = m + 1
                     Loop Until m = n2 + 1
                     k = k + 1
@@ -193,7 +197,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Do
                 m = 0
                 Do
-                    s(k) = s(k) + teta(m) * TAU(m, k, T)
+                    If teta(m) <> 0.0# And Not Double.IsNaN(teta(m)) Then s(k) = s(k) + teta(m) * TAU(m, k, T)
                     m = m + 1
                 Loop Until m = n2 + 1
                 k = k + 1
@@ -255,20 +259,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         If Me.ModfGroups.InteracParam_aij.ContainsKey(g1) Then
                             If Not Me.ModfGroups.InteracParam_aij(g1).ContainsKey(g2) Then
                                 If Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
-                                    If Not Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) Then
-                                        Throw New Exception("UNIFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
+                                    If Not Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) And g2 <> g1 Then
+                                        Throw New Exception("MODFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
                                                             Me.ModfGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
                                     End If
                                 End If
                             End If
                         Else
                             If Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
-                                If Not Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) Then
-                                    Throw New Exception("UNIFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
+                                If Not Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) And g2 <> g1 Then
+                                    Throw New Exception("MODFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
                                                         Me.ModfGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
                                 End If
                             Else
-                                Throw New Exception("UNIFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
+                                Throw New Exception("MODFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
                                                     Me.ModfGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
                             End If
                         End If
@@ -285,28 +289,32 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             g1 = Me.ModfGroups.Groups(group_1 + 1).PrimaryGroup
             g2 = Me.ModfGroups.Groups(group_2 + 1).PrimaryGroup
 
-            If Me.ModfGroups.InteracParam_aij.ContainsKey(g1) Then
-                If Me.ModfGroups.InteracParam_aij(g1).ContainsKey(g2) Then
-                    res = Me.ModfGroups.InteracParam_aij(g1)(g2) + Me.ModfGroups.InteracParam_bij(g1)(g2) * T + Me.ModfGroups.InteracParam_cij(g1)(g2) * T ^ 2
-                Else
-                    If Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
-                        If Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) Then
-                            res = Me.ModfGroups.InteracParam_aji(g2)(g1) + Me.ModfGroups.InteracParam_bji(g2)(g1) * T + Me.ModfGroups.InteracParam_cji(g2)(g1) * T ^ 2
-                        Else
-                            res = 0
-                        End If
+            If g1 <> g2 Then
+                If Me.ModfGroups.InteracParam_aij.ContainsKey(g1) Then
+                    If Me.ModfGroups.InteracParam_aij(g1).ContainsKey(g2) Then
+                        res = Me.ModfGroups.InteracParam_aij(g1)(g2) + Me.ModfGroups.InteracParam_bij(g1)(g2) * T + Me.ModfGroups.InteracParam_cij(g1)(g2) * T ^ 2
                     Else
-                        res = 0
+                        If Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
+                            If Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) Then
+                                res = Me.ModfGroups.InteracParam_aji(g2)(g1) + Me.ModfGroups.InteracParam_bji(g2)(g1) * T + Me.ModfGroups.InteracParam_cji(g2)(g1) * T ^ 2
+                            Else
+                                res = 0.0#
+                            End If
+                        Else
+                            res = 0.0#
+                        End If
                     End If
-                End If
-            ElseIf Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
-                If Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) Then
-                    res = Me.ModfGroups.InteracParam_aji(g2)(g1) + Me.ModfGroups.InteracParam_bji(g2)(g1) * T + Me.ModfGroups.InteracParam_cji(g2)(g1) * T ^ 2
+                ElseIf Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
+                    If Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) Then
+                        res = Me.ModfGroups.InteracParam_aji(g2)(g1) + Me.ModfGroups.InteracParam_bji(g2)(g1) * T + Me.ModfGroups.InteracParam_cji(g2)(g1) * T ^ 2
+                    Else
+                        res = 0.0#
+                    End If
                 Else
-                    res = 0
+                    res = 0.0#
                 End If
             Else
-                res = 0
+                res = 0.0#
             End If
 
             Return Math.Exp(-res / T)

@@ -112,62 +112,62 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="O.HeaderText" xml:space="preserve">
     <value>LA</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="CelulaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>262, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="CelulaToolStripMenuItem.Text" xml:space="preserve">
     <value>Celda</value>
   </data>
   <data name="ToolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>259, 6</value>
+    <value>205, 6</value>
   </data>
   <data name="AvaliarFórmulaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>262, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="AvaliarFórmulaToolStripMenuItem.Text" xml:space="preserve">
     <value>Evaluar órfmula</value>
   </data>
   <data name="ImportarDadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>262, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="ImportarDadosToolStripMenuItem.Text" xml:space="preserve">
     <value>Importar datos</value>
   </data>
   <data name="ExportarDadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>262, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="ExportarDadosToolStripMenuItem.Text" xml:space="preserve">
     <value>Exportar como propiedad</value>
   </data>
   <data name="ToolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>259, 6</value>
+    <value>205, 6</value>
   </data>
   <data name="LimparToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>262, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="LimparToolStripMenuItem.Text" xml:space="preserve">
     <value>Limpiar</value>
   </data>
   <data name="CopiarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>262, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="ColarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>262, 22</value>
+    <value>208, 22</value>
   </data>
   <data name="ColarToolStripMenuItem.Text" xml:space="preserve">
     <value>Pegar</value>
   </data>
   <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>263, 170</value>
+    <value>209, 170</value>
   </data>
   <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>302, 8</value>

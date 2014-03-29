@@ -241,9 +241,9 @@ Public Class SpreadsheetForm
 
     Sub DefineVariables()
 
-        If TypeOf FormMain.ActiveMdiChild Is FormFlowsheet Then
+        If TypeOf My.Application.ActiveSimulation Is FormFlowsheet Then
 
-            If Me.formc Is Nothing Then Me.formc = FormMain.ActiveMdiChild
+            If Me.formc Is Nothing Then Me.formc = My.Application.ActiveSimulation
 
             For Each r As DataGridViewRow In Me.DataGridView1.Rows
                 For Each ce As DataGridViewCell In r.Cells
