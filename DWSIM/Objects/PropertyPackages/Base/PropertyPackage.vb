@@ -2078,7 +2078,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     sumwf += Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.massfraction.GetValueOrDefault
                 End If
             Next
-            If Abs(summf - 1) > 0.000001 Then
+            If Abs(summf - 1) > 0.0001 Then
                 For Each pi As PhaseInfo In Me.PhaseMappings.Values
                     If Not pi.PhaseLabel = "Disabled" Then
                         If Not Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction.HasValue Then

@@ -476,6 +476,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim result As Object = _io.Flash_TV(Vz, T, V, Pref, PP, ReuseKI, PrevKi)
 
+            P = result(4)
+
             If result(0) > 0 Then
 
                 Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
@@ -576,6 +578,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim _io As New BostonBrittInsideOut
 
             Dim result As Object = _io.Flash_PV(Vz, P, V, Tref, PP, ReuseKI, PrevKi)
+
+            T = result(4)
 
             If result(0) > 0 Then
 
@@ -1813,11 +1817,21 @@ out:
                         fr = Me.LiquidFractionBalance(R)
                         dfr = (fr - Me.LiquidFractionBalance(R1)) / -0.001
                         R0 = R
-                        R += -fr / dfr
-                        If R < 0 Then R = 0
-                        If R > 1 Then R = 1
+                        If (R - fr / dfr) < 0.0# Or (R - fr / dfr) > 1.0# Then
+                            If (R + 0.1) < 1.0# Then R += 0.1 Else R -= 0.1
+                        Else
+                            R = R - fr / dfr
+                        End If
+                        If R < 0.0# Then R = 0.0#
+                        If R > 1.0# Then R = 1.0#
                         icount += 1
-                    Loop Until Abs(fr) < itol Or icount > maxit_i Or Abs(R - R0) < 0.000001
+                    Loop Until Abs(fr) < itol Or icount > maxit_i Or R = 0 Or R = 1
+
+                    If icount > maxit_i Then R = Rant
+                    If Rant = 0.0# And R = 1.0# Then R = 0.0#
+                    If Rant = 1.0# And R = 0.0# Then R = 1.0#
+
+                    Me.LiquidFractionBalance(R)
 
                 Else
 
@@ -1862,8 +1876,8 @@ out:
                 x(2 * n + 3) = B
 
                 If ecount = 0 Then
-                    For i = 0 To 2 * n + 1
-                        For j = 0 To 2 * n + 1
+                    For i = 0 To 2 * n + 3
+                        For j = 0 To 2 * n + 3
                             If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
                         Next
                     Next
@@ -1957,12 +1971,14 @@ out:
 
             'Estimate V
 
-            Kb_ = CalcKbj1(PP.DW_CalcKvalue(Vx1EST, VyEST, T_, P))
-            Kb = CalcKbj1(PP.DW_CalcKvalue(Vx1EST, VyEST, T, P))
-            Kb0 = Kb_
+            T_ = 298.15
 
-            B = Log(Kb_ / Kb) / (1 / T_ - 1 / T)
-            A = Log(Kb) - B * (1 / T - 1 / T_)
+            Kb0 = CalcKbj1(PP.DW_CalcKvalue(Vx1, Vy, T, P0))
+            Kb_ = CalcKbj1(PP.DW_CalcKvalue(Vx1, Vy, T, P_))
+            Kb = CalcKbj1(PP.DW_CalcKvalue(Vx1, Vy, T, P))
+
+            B = Log(Kb_ * P_ / (Kb0 * P0)) / Log(P_ / P0)
+            A = Log(Kb * P) - B * Log(P / P0)
 
             For i = 0 To n
                 ui1(i) = Log(Ki1(i) / Kb)
@@ -2000,15 +2016,25 @@ out:
                     Dim icount As Integer = 0
 
                     Do
-                        R1 = R + 0.001
+                        R1 = R + 0.01
                         fr = Me.LiquidFractionBalanceP(R)
-                        dfr = (fr - Me.LiquidFractionBalanceP(R1)) / -0.001
+                        dfr = (fr - Me.LiquidFractionBalanceP(R1)) / -0.01
                         R0 = R
-                        R += -fr / dfr
-                        If R < 0 Then R = 0
-                        If R > 1 Then R = 1
+                        If (R - fr / dfr) < 0.0# Or (R - fr / dfr) > 1.0# Then
+                            If (R + 0.1) < 1.0# Then R += 0.1 Else R -= 0.1
+                        Else
+                            R = R - fr / dfr
+                        End If
+                        If R < 0.0# Then R = 0.0#
+                        If R > 1.0# Then R = 1.0#
                         icount += 1
-                    Loop Until Abs(fr) < itol Or icount > maxit_i
+                    Loop Until Abs(fr) < itol Or icount > maxit_i Or R = 0 Or R = 1
+
+                    If icount > maxit_i Then R = Rant
+                    If Rant = 0.0# And R = 1.0# Then R = 0.0#
+                    If Rant = 1.0# And R = 0.0# Then R = 1.0#
+
+                    Me.LiquidFractionBalanceP(R)
 
                 Else
 
@@ -2053,8 +2079,8 @@ out:
                 x(2 * n + 3) = B
 
                 If ecount = 0 Then
-                    For i = 0 To 2 * n + 1
-                        For j = 0 To 2 * n + 1
+                    For i = 0 To 2 * n + 3
+                        For j = 0 To 2 * n + 3
                             If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
                         Next
                     Next
@@ -2178,7 +2204,7 @@ out:
                 Vy(i) = pi(i) / sumpi
             Next
 
-            If R <> 1 Then
+            If R <> 1.0# Then
                 Kb = ((1 - R + S) * sumeuipi1 + (1 - R - S) * sumeuipi2) / (2 * (1 - R) * sumpi)
             Else
                 Kb = 1.0#
