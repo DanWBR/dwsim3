@@ -2974,7 +2974,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 py1.Add(y1)
                                 py2.Add(y2)
                                 'check if liquid phase is stable.
-                                result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, P, calcT, Me)
+                                result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, P, calcT - 10, Me)
                                 If result(5) > 0.0# Then
                                     If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
                                         unstable = True
@@ -2984,7 +2984,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                     End If
                                 End If
                             Catch ex As Exception
-                    End Try
+                            End Try
                             i = i + 1
                         Loop Until (i - 1) * dx >= 1
                     End If

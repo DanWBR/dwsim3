@@ -1756,8 +1756,8 @@ out:
             End If
 
             T = Tref
-            T_ = T - 0.1
-            T0 = T - 0.2
+            T_ = T - 10
+            T0 = T - 20
 
             '----------------------------------------
             ' STEP 1.1 - Estimate K, Vx, Vy, V and L 
@@ -1775,7 +1775,7 @@ out:
             Kb0 = Kb_
 
             B = Log(Kb_ / Kb) / (1 / T_ - 1 / T)
-            A = Log(Kb) - B * (1 / T - 1 / T_)
+            A = Log(Kb) - B * (1 / T - 1 / T0)
 
             For i = 0 To n
                 ui1(i) = Log(Ki1(i) / Kb)
@@ -1852,7 +1852,7 @@ out:
                     uic1(i) = Log(Ki1(i) / Kb)
                     uic2(i) = Log(Ki2(i) / Kb)
                 Next
-
+                
                 Bc = Log(Kb_ / Kb) / (1 / T_ - 1 / T)
                 Ac = Log(Kb) - Bc * (1 / T - 1 / T0)
 
@@ -1875,25 +1875,41 @@ out:
                 x(2 * n + 2) = A
                 x(2 * n + 3) = B
 
-                If ecount = 0 Then
-                    For i = 0 To 2 * n + 3
-                        For j = 0 To 2 * n + 3
-                            If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
-                        Next
-                    Next
-                    Broyden.broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 0)
-                Else
-                    Broyden.broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 1)
-                End If
+                If PP._ioquick Then
 
-                For i = 0 To n
-                    ui1(i) = ui1(i) + dx(i)
-                Next
-                For i = n + 1 To 2 * n + 1
-                    ui2(i - n - 1) = ui2(i - n - 1) + dx(i)
-                Next
-                A += dx(2 * n + 2)
-                B += dx(2 * n + 3)
+                    If ecount = 0 Then
+                        For i = 0 To 2 * n + 3
+                            For j = 0 To 2 * n + 3
+                                If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
+                            Next
+                        Next
+                        Broyden.broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 0)
+                    Else
+                        Broyden.broydn(2 * n + 3, x, fx, dx, xbr, fbr, dfdx, 1)
+                    End If
+
+                    For i = 0 To n
+                        ui1(i) = ui1(i) + dx(i)
+                    Next
+                    For i = n + 1 To 2 * n + 1
+                        ui2(i - n - 1) = ui2(i - n - 1) + dx(i)
+                    Next
+                    A += dx(2 * n + 2)
+                    B += dx(2 * n + 3)
+
+                Else
+
+                    For i = 0 To n
+                        ui1(i) = uic1(i)
+                    Next
+                    For i = n + 1 To 2 * n + 1
+                        ui2(i - n - 1) = uic2(i - n - 1)
+                    Next
+
+                    A = Ac
+                    B = Bc
+
+                End If
 
                 ecount += 1
 
@@ -2149,7 +2165,7 @@ out:
                 Vy(i) = pi(i) / sumpi
             Next
 
-            If R <> 1 Then
+            If R <> 1.0# Then
                 Kb = ((1 - R + S) * sumeuipi1 + (1 - R - S) * sumeuipi2) / (2 * (1 - R) * sumpi)
             Else
                 Kb = 1.0#
@@ -2160,7 +2176,7 @@ out:
             L2 = 1 - L1 - V
             beta = L1 / (L1 + L2)
 
-            T = 1 / T_ + (Log(Kb) - A) / B
+            T = 1 / T0 + (Log(Kb) - A) / B
             T = 1 / T
 
             Dim eberror As Double = (L1 + L2) - Lf

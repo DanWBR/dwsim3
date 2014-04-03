@@ -683,7 +683,7 @@ out:
 
                     If V <= 0.0# Or Abs(L1) > 1.0# Or Abs(L2) > 1.0# Then
                         'switch to simple LLE flash procedure.
-                        Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = Vx1, .InitialEstimatesForPhase2 = Vx2, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
+                        Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = Vx1EST, .InitialEstimatesForPhase2 = Vx2EST, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
                         Dim result As Object = slle.Flash_PT(Vz, P, T, PP)
                         L1 = result(0)
                         V = result(1)
