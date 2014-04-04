@@ -178,12 +178,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             vx1e(i) = Abs(vx1e(i)) / sumvx2
                         Next
 
-                        Try
-                            result = Flash_PT_3P(Vz, V, L1, L2, result(3), result(2), vx2est, P, T, PP)
-                        Catch ex As Exception
-                            'if there was an error, keep the two-phase result.
-                            result = _io.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
-                        End Try
+                        result = Flash_PT_3P(Vz, V, L1, L2, result(3), result(2), vx2est, P, T, PP)
 
                     End If
 
@@ -2123,7 +2118,7 @@ out:
 
                 CheckCalculatorStatus()
 
-            Loop Until AbsSum(fx) < etol * (n + 2)
+            Loop Until AbsSum(fx) < etol
 
             Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, PP.RET_NullVector}
 

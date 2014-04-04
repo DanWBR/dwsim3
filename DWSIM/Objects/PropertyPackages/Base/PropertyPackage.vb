@@ -2071,22 +2071,24 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
             End Select
 
-            Dim summf As Double = 0, sumwf As Double = 0
-            For Each pi As PhaseInfo In Me.PhaseMappings.Values
-                If Not pi.PhaseLabel = "Disabled" Then
-                    summf += Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction.GetValueOrDefault
-                    sumwf += Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.massfraction.GetValueOrDefault
-                End If
-            Next
-            If Abs(summf - 1) > 0.0001 Then
+            If My.Application.CAPEOPENMode Then
+                Dim summf As Double = 0, sumwf As Double = 0
                 For Each pi As PhaseInfo In Me.PhaseMappings.Values
                     If Not pi.PhaseLabel = "Disabled" Then
-                        If Not Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction.HasValue Then
-                            Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction = 1 - summf
-                            Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.massfraction = 1 - sumwf
-                        End If
+                        summf += Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction.GetValueOrDefault
+                        sumwf += Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.massfraction.GetValueOrDefault
                     End If
                 Next
+                If Abs(summf - 1) > 0.0001 Then
+                    For Each pi As PhaseInfo In Me.PhaseMappings.Values
+                        If Not pi.PhaseLabel = "Disabled" Then
+                            If Not Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction.HasValue Then
+                                Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction = 1 - summf
+                                Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.massfraction = 1 - sumwf
+                            End If
+                        End If
+                    Next
+                End If
             End If
 
             With Me.CurrentMaterialStream

@@ -134,6 +134,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Function StabTest(ByVal T As Double, ByVal P As Double, ByVal Vz As Array, ByVal pp As PropertyPackage, Optional ByVal VzArray(,) As Double = Nothing, Optional ByVal searchseverity As Integer = 0)
 
+            Console.WriteLine("Starting Liquid Phase Stability Test @ T = " & T & " K & P = " & P & " Pa for the following trial phases:")
+           
             Dim i, j, c, n, o, l, nt, maxits As Integer
             n = UBound(Vz)
             nt = UBound(VzArray, 1)
@@ -156,9 +158,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             End Select
 
             For i = 0 To nt
+                Dim text As String = "{"
                 For j = 0 To n
                     Y(i, j) = VzArray(i, j)
+                    text += VzArray(i, j).ToString & vbTab
                 Next
+                text.TrimEnd(New Char() {vbTab})
+                text += "}"
+                Console.WriteLine(text)
             Next
 
             ReDim K(0, n)
@@ -420,7 +427,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 c = c + 1
 
-                If c > maxits Then Throw New Exception("Stability Test: Maximum Iterations Reached.")
+                If c > maxits Then Throw New Exception("Liquid Phase Stability Test: Maximum Iterations Reached.")
 
             Loop Until finish = True
 
@@ -504,11 +511,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 'normalize initial estimates
 
+                Console.WriteLine("Liquid Phase Stability Test finished. Phase is NOT stable. Initial estimates for incipient liquid phase composition:")
+
+                For i = 0 To nt
+                    For j = 0 To n
+                        Y(i, j) = VzArray(i, j)
+                    Next
+                Next
+
                 Dim inest(m - l, n) As Double
                 i = 0
                 l = 0
                 Do
                     If Not excidx.Contains(i) Then
+                        Dim text As String = "{"
                         j = 0
                         sum2 = 0
                         Do
@@ -518,8 +534,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         j = 0
                         Do
                             inest(l, j) = Y(i, j) / sum2
+                            text += inest(l, j).ToString & vbTab
                             j = j + 1
                         Loop Until j = n + 1
+                        text.TrimEnd(New Char() {vbTab})
+                        text += "}"
+                        Console.WriteLine(text)
                         l = l + 1
                     End If
                     i = i + 1
@@ -528,6 +548,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Else
 
                 'the phase is stable
+
+                Console.WriteLine("Liquid Phase Stability Test finished. Phase is stable.")
 
                 isStable = True
                 Return New Object() {isStable, Nothing}
