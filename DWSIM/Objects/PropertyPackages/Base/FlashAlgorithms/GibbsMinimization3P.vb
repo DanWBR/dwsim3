@@ -569,10 +569,11 @@ out:        Return result
                     If Abs(fx) < etol Then Exit Do
                     dfdx = (Herror(x1 + 1, Nothing) - fx)
                     x1 = x1 - fx / dfdx
+                    If x1 < 0 Then GoTo alt
                     cnt += 1
-                Loop Until cnt > maxit_e Or Double.IsNaN(x1)
-                If Double.IsNaN(x1) Then
-                    Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
+                Loop Until cnt > 20 Or Double.IsNaN(x1)
+                If Double.IsNaN(x1) Or cnt > 20 Then
+alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 Else
                     Tf = x1
                 End If

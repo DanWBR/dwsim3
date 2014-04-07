@@ -151,9 +151,9 @@ Public Class frmProps
 
                 Dim sp As DWSIM.SimulationObjects.UnitOps.Splitter = ChildParent.Collections.CLCS_SplitterCollection.Item(sobj.Name)
 
-                If e.ChangedItem.Parent.Label.Contains(DWSIM.App.GetLocalString("Fraesdascorrentes2")) Then
+                If e.ChangedItem.Label.Contains("[Split Ratio] ") Then
 
-                    If e.ChangedItem.Value < 0 Or e.ChangedItem.Value > 1 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If e.ChangedItem.Value < 0.0# Or e.ChangedItem.Value > 1.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
                     Dim i As Integer = 0
                     Dim j As Integer = 0
@@ -161,7 +161,7 @@ Public Class frmProps
                     Dim cp As ConnectionPoint
                     For Each cp In sp.GraphicObject.OutputConnectors
                         If cp.IsAttached Then
-                            If cp.AttachedConnector.AttachedTo.Tag = e.ChangedItem.Label Then
+                            If e.ChangedItem.Label.Contains(cp.AttachedConnector.AttachedTo.Tag) Then
                                 sp.Ratios(i) = e.ChangedItem.Value
                             End If
                         End If

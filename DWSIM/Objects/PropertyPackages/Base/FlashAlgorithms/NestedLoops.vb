@@ -370,7 +370,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                 If x1 < 0 Then GoTo alt
                 cnt += 1
             Loop Until cnt > 20 Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Then
+            If Double.IsNaN(x1) Or cnt > 20 Then
 alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Else
                 T = x1

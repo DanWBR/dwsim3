@@ -407,7 +407,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim cg2 As ConnectionPoint
                         For Each cg2 In Me.GraphicObject.OutputConnectors
                             If cg2.IsAttached = True Then
-                                .Item.Add(cg2.AttachedConnector.AttachedTo.Tag, Me.Ratios.Item(i), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Digiteumvalorentre0e"), True)
+                                .Item.Add("[Split Ratio] " & cg2.AttachedConnector.AttachedTo.Tag, Me.Ratios.Item(i), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Digiteumvalorentre0e"), True)
                                 With .Item(.Item.Count - 1)
                                     .DefaultValue = GetType(System.Double)
                                 End With
