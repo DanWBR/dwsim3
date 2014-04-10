@@ -95,12 +95,18 @@ Public Class frmProps
                     ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Vazomssica")) Then
                         W = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_massflow, e.ChangedItem.Value)
                         ms.Fases(0).SPMProperties.massflow = W
+                        ms.Fases(0).SPMProperties.molarflow = Nothing
+                        ms.Fases(0).SPMProperties.volumetric_flow = Nothing
                     ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Vazomolar")) Then
                         Q = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
                         ms.Fases(0).SPMProperties.molarflow = Q
+                        ms.Fases(0).SPMProperties.massflow = Nothing
+                        ms.Fases(0).SPMProperties.volumetric_flow = Nothing
                     ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Vazovolumtrica")) Then
                         QV = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_volumetricFlow, e.ChangedItem.Value)
                         ms.Fases(0).SPMProperties.volumetric_flow = QV
+                        ms.Fases(0).SPMProperties.massflow = Nothing
+                        ms.Fases(0).SPMProperties.molarflow = Nothing
                     ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("EntalpiaEspecfica")) Then
                         HM = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_enthalpy, e.ChangedItem.Value)
                         ms.Fases(0).SPMProperties.enthalpy = HM
