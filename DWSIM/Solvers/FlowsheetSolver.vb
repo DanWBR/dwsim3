@@ -339,7 +339,7 @@ Namespace DWSIM.Flowsheet
                                                          End Sub)
                             Dim task5 As Task = New Task(Sub()
                                                              If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                                                 .DW_CalcSolidPhaseProps()
                                                              Else
                                                                  .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
                                                              End If
@@ -426,7 +426,7 @@ Namespace DWSIM.Flowsheet
                             .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
                         End If
                         If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                            .DW_CalcSolidPhaseProps()
                         Else
                             .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
                         End If
@@ -526,7 +526,7 @@ Namespace DWSIM.Flowsheet
                                                          End Sub)
                             Dim task5 As Task = New Task(Sub()
                                                              If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                                                 .DW_CalcSolidPhaseProps()
                                                              Else
                                                                  .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
                                                              End If
@@ -608,7 +608,7 @@ Namespace DWSIM.Flowsheet
                             .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
                         End If
                         If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                            .DW_CalcSolidPhaseProps()
                         Else
                             .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
                         End If
@@ -711,7 +711,7 @@ Namespace DWSIM.Flowsheet
                                                          End Sub)
                             Dim task5 As Task = New Task(Sub()
                                                              If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                                                 .DW_CalcSolidPhaseProps()
                                                              Else
                                                                  .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
                                                              End If
@@ -793,7 +793,7 @@ Namespace DWSIM.Flowsheet
                             .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
                         End If
                         If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                            .DW_CalcSolidPhaseProps()
                         Else
                             .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
                         End If

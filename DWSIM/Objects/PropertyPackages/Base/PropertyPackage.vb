@@ -943,13 +943,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             DV = Me.CurrentMaterialStream.Fases(2).SPMProperties.density.GetValueOrDefault
             DS = Me.CurrentMaterialStream.Fases(7).SPMProperties.density.GetValueOrDefault
 
+            If Double.IsNaN(DL) Then DL = 0.0#
+
             Dim tl As Double = 0.0#
             Dim tv As Double = 0.0#
             Dim ts As Double = 0.0#
 
-            If DL <> 0.0# Then tl = Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction.GetValueOrDefault / DL.GetValueOrDefault
-            If DV <> 0.0# Then tv = Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault / DV.GetValueOrDefault
-            If DS <> 0.0# Then ts = Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault / DS.GetValueOrDefault
+            If DL <> 0.0# And Not Double.IsNaN(DL) Then tl = Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction.GetValueOrDefault / DL.GetValueOrDefault
+            If DV <> 0.0# And Not Double.IsNaN(DV) Then tv = Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault / DV.GetValueOrDefault
+            If DS <> 0.0# And Not Double.IsNaN(DS) Then ts = Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault / DS.GetValueOrDefault
 
             vl = tl / (tl + tv + ts)
             vv = tv / (tl + tv + ts)
@@ -964,15 +966,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             End If
 
             result = vl * DL.GetValueOrDefault + vv * DV.GetValueOrDefault + vs * DS.GetValueOrDefault
-            If Double.IsNaN(result) Then
-                If Double.IsNaN(DL) = False And Double.IsNaN(DV) = True Then
-                    result = DL
-                ElseIf Double.IsNaN(DL) = True And Double.IsNaN(DV) = False Then
-                    result = DV
-                Else
-                    result = 0
-                End If
-            End If
             Me.CurrentMaterialStream.Fases(0).SPMProperties.density = result
 
             HL = Me.CurrentMaterialStream.Fases(1).SPMProperties.enthalpy.GetValueOrDefault

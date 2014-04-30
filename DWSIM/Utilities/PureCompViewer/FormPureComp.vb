@@ -263,7 +263,7 @@ Public Class FormPureComp
         If Not constprop.IsIon And Not constprop.IsSalt Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
-                VD = cv.ConverterDoSI(su.spmp_density, pp.AUX_SolidHeatCapacity(constprop, T))
+                VD = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_SolidHeatCapacity(constprop, T))
                 vxSCP.Add(TD)
                 vySCP.Add(VD)
                 Me.DataTable.Item(12, Row).Value = Format(TD, nf)
