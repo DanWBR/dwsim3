@@ -3336,20 +3336,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     If i = 0 Then
                         Select Case Me.ColumnType
                             Case ColType.DistillationColumn
-                                If Me.CondenserType = condtype.Partial_Condenser Then
-                                    V(0) = vaprate
-                                ElseIf Me.CondenserType = condtype.Full_Reflux Then
-                                    V(0) = vaprate
-                                Else
+                                If Me.CondenserType = condtype.Total_Condenser Then
                                     V(0) = 0.0005
+                                Else
+                                    V(0) = vaprate
                                 End If
                             Case ColType.RefluxedAbsorber
-                                If Me.CondenserType = condtype.Partial_Condenser Then
-                                    V(0) = vaprate
-                                ElseIf Me.CondenserType = condtype.Full_Reflux Then
-                                    V(0) = vaprate
-                                Else
+                                If Me.CondenserType = condtype.Total_Condenser Then
                                     V(0) = 0.0005
+                                Else
+                                    V(0) = vaprate
                                 End If
                             Case Else
                                 V(0) = F(lastF)
