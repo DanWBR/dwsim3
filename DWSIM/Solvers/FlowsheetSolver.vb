@@ -30,6 +30,17 @@ Namespace DWSIM.Flowsheet
 
     <System.Serializable()> Public Class FlowsheetSolver
 
+        'custom event handler declaration
+        Public Delegate Sub CustomEventHandler(ByVal sender As Object, ByVal e As System.EventArgs, ByVal extrainfo As Object)
+
+        'events for plugins
+        Public Shared Event UnitOpCalculationStarted As CustomEventHandler
+        Public Shared Event UnitOpCalculationFinished As CustomEventHandler
+        Public Shared Event FlowsheetCalculationStarted As CustomEventHandler
+        Public Shared Event FlowsheetCalculationFinished As CustomEventHandler
+        Public Shared Event MaterialStreamCalculationStarted As CustomEventHandler
+        Public Shared Event MaterialStreamCalculationFinished As CustomEventHandler
+
         ''' <summary>
         ''' Flowsheet calculation routine 1. Calculates the object sent by the queue and updates the flowsheet.
         ''' </summary>
@@ -42,6 +53,8 @@ Namespace DWSIM.Flowsheet
             Dim preLab As String = form.FormSurface.LabelCalculator.Text
 
             If form.Options.CalculatorActivated Then
+
+                RaiseEvent UnitOpCalculationStarted(form, New System.EventArgs(), objArgs)
 
                 Select Case objArgs.Tipo
                     Case TipoObjeto.MaterialStream
@@ -157,14 +170,14 @@ Namespace DWSIM.Flowsheet
                                         Dim ms As Streams.MaterialStream = CType(obj, Streams.MaterialStream)
                                         Try
                                             ms.GraphicObject.Calculated = False
-                                            form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & MS.GraphicObject.Tag & "... (PP: " & MS.PropertyPackage.Tag & " [" & MS.PropertyPackage.ComponentName & "])")
-                                            CalculateMaterialStream(form, MS)
-                                            MS.GraphicObject.Calculated = True
+                                            form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
+                                            CalculateMaterialStream(form, ms)
+                                            ms.GraphicObject.Calculated = True
                                         Catch ex As Exception
-                                            MS.GraphicObject.Calculated = False
-                                            MS.Clear()
-                                            MS.ClearAllProps()
-                                            MS.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                            ms.GraphicObject.Calculated = False
+                                            ms.Clear()
+                                            ms.ClearAllProps()
+                                            ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                                             form.WriteToLog(gobj.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
                                         End Try
                                     End If
@@ -174,9 +187,12 @@ Namespace DWSIM.Flowsheet
                         End If
                 End Select
 
+                RaiseEvent UnitOpCalculationFinished(form, New System.EventArgs(), objArgs)
+
             End If
 
             Application.DoEvents()
+
             form.FormSurface.LabelCalculator.Text = preLab
 
         End Sub
@@ -189,6 +205,8 @@ Namespace DWSIM.Flowsheet
         ''' <param name="DoNotCalcFlash">Tells the calculator whether to do flash calculations or not.</param>
         ''' <remarks></remarks>
         Public Shared Sub CalculateMaterialStream(ByVal form As FormFlowsheet, ByVal ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False, Optional ByVal OnlyMe As Boolean = False)
+
+            RaiseEvent MaterialStreamCalculationStarted(form, New System.EventArgs(), ms)
 
             If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
@@ -261,6 +279,8 @@ Namespace DWSIM.Flowsheet
             For Each subs In ms.Fases(0).Componentes.Values
                 comp += subs.FracaoMolar.GetValueOrDefault
             Next
+
+            Dim calculated As Boolean
 
             If W.HasValue And T > 0 And P > 0 And comp >= 0 Then
                 With ms.PropertyPackage
@@ -454,15 +474,7 @@ Namespace DWSIM.Flowsheet
                 End With
                 sobj.Calculated = True
                 form.UpdateStatusLabel(preLab)
-                If Not OnlyMe Then
-                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                    With objargs
-                        .Calculado = True
-                        .Nome = ms.Nome
-                        .Tipo = TipoObjeto.MaterialStream
-                    End With
-                    CalculateFlowsheet(form, objargs, Nothing)
-                End If
+                calculated = True
             ElseIf Q.HasValue And T > 0 And P > 0 And comp >= 0 Then
                 With ms.PropertyPackage
                     .CurrentMaterialStream = ms
@@ -636,15 +648,7 @@ Namespace DWSIM.Flowsheet
                 End With
                 sobj.Calculated = True
                 form.UpdateStatusLabel(preLab)
-                If Not OnlyMe Then
-                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                    With objargs
-                        .Calculado = True
-                        .Nome = ms.Nome
-                        .Tipo = TipoObjeto.MaterialStream
-                    End With
-                    CalculateFlowsheet(form, objargs, Nothing)
-                End If
+                calculated = True
             ElseIf QV.HasValue And T > 0 And P > 0 And comp >= 0 Then
                 With ms.PropertyPackage
                     .CurrentMaterialStream = ms
@@ -827,15 +831,7 @@ Namespace DWSIM.Flowsheet
                 End With
                 sobj.Calculated = True
                 form.UpdateStatusLabel(preLab)
-                If Not OnlyMe Then
-                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                    With objargs
-                        .Calculado = True
-                        .Nome = ms.Nome
-                        .Tipo = TipoObjeto.MaterialStream
-                    End With
-                    CalculateFlowsheet(form, objargs, Nothing)
-                End If
+                calculated = True
             Else
                 With ms.PropertyPackage
                     .CurrentMaterialStream = ms
@@ -861,16 +857,20 @@ Namespace DWSIM.Flowsheet
                 ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                 sobj.Calculated = False
                 form.UpdateStatusLabel(preLab)
-                If Not OnlyMe Then
-                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                    With objargs
-                        .Calculado = False
-                        .Nome = ms.Nome
-                        .Tipo = TipoObjeto.MaterialStream
-                    End With
-                    CalculateFlowsheet(form, objargs, Nothing)
-                End If
-                End If
+                calculated = False
+            End If
+
+            RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), ms)
+
+            If Not OnlyMe Then
+                Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                With objargs
+                    .Calculado = calculated
+                    .Nome = ms.Nome
+                    .Tipo = TipoObjeto.MaterialStream
+                End With
+                CalculateFlowsheet(form, objargs, Nothing)
+            End If
 
         End Sub
 
@@ -1169,7 +1169,6 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
-
         ''' <summary>
         ''' Checks the calculator status to see if the user did any stop/abort request, and throws an exception to force aborting, if necessary.
         ''' </summary>
@@ -1195,6 +1194,8 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Public Shared Sub CalculateAll(ByVal form As FormFlowsheet)
 
+            RaiseEvent FlowsheetCalculationStarted(form, New System.EventArgs(), Nothing)
+
             For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                 If baseobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream And baseobj.GraphicObject.Calculated Then
                     Dim ms As Streams.MaterialStream = baseobj
@@ -1215,6 +1216,8 @@ Namespace DWSIM.Flowsheet
                 End If
             Next
             ProcessCalculationQueue(form)
+
+            RaiseEvent FlowsheetCalculationFinished(form, New System.EventArgs(), Nothing)
 
         End Sub
 
