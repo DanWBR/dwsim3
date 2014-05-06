@@ -690,9 +690,7 @@ Public Class FormMain
                         Next
                     End If
                 End If
-            Catch ex As System.Runtime.Serialization.SerializationException
-                invaliddbs.Add(fpath)
-            Catch ex As FileNotFoundException
+            Catch ex As Exception
                 invaliddbs.Add(fpath)
             End Try
         Next

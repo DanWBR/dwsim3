@@ -1607,16 +1607,25 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 Else
                                     xv = (H - hl) / (hv - hl)
                                 End If
-                                S = xv * sv + (1 - xv) * sl
+                                If Tsat > Me.AUX_TCM(Fase.Mixture) Then
+                                    xv = 1.0#
+                                    LoopVarState = State.Vapor
+                                End If
+                                xl = 1 - xv
 
                                 If xv <> 0.0# And xv <> 1.0# Then
                                     T = Tsat
+                                    S = xv * sv + (1 - xv) * sl
                                 Else
                                     LoopVarF = H
                                     LoopVarX = P
-                                    T = brentsolverT.BrentOpt(273.15, 623.15, 20, 0.0001, 1000, Nothing)
+                                    T = brentsolverT.BrentOpt(10, 2000, 20, 0.0001, 1000, Nothing)
+                                    If xv = 0.0# Then
+                                        S = Me.DW_CalcEntropy(vz, T, P, State.Liquid)
+                                    Else
+                                        S = Me.DW_CalcEntropy(vz, T, P, State.Vapor)
+                                    End If
                                 End If
-                                xl = 1 - xv
 
                                 If T <= Me.AUX_TFM(Fase.Mixture) Then
 
@@ -1796,7 +1805,7 @@ redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mix
                             If Me.AUX_IS_SINGLECOMP(Fase.Mixture) And Me.ComponentName <> "FPROPS" Then
 
                                 Dim brentsolverT As New BrentOpt.Brent
-                                brentsolverT.DefineFuncDelegate(AddressOf EnthalpyTx)
+                                brentsolverT.DefineFuncDelegate(AddressOf EntropyTx)
 
                                 Dim hl, hv, sl, sv, Tsat As Double
                                 Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
@@ -1821,16 +1830,25 @@ redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mix
                                 Else
                                     xv = (S - sl) / (sv - sl)
                                 End If
-                                H = xv * hv + (1 - xv) * hl
+                                If Tsat > Me.AUX_TCM(Fase.Mixture) Then
+                                    xv = 1.0#
+                                    LoopVarState = State.Vapor
+                                End If
+                                xl = 1 - xv
 
                                 If xv <> 0.0# And xv <> 1.0# Then
                                     T = Tsat
+                                    H = xv * hv + (1 - xv) * hl
                                 Else
-                                    LoopVarF = H
+                                    LoopVarF = S
                                     LoopVarX = P
-                                    T = brentsolverT.BrentOpt(273.15, 623.15, 20, 0.0001, 1000, Nothing)
+                                    T = brentsolverT.BrentOpt(10, 2000, 20, 0.0001, 1000, Nothing)
+                                    If xv = 0.0# Then
+                                        H = Me.DW_CalcEnthalpy(vz, T, P, State.Liquid)
+                                    Else
+                                        H = Me.DW_CalcEnthalpy(vz, T, P, State.Vapor)
+                                    End If
                                 End If
-                                xl = 1 - xv
 
                                 Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
                                 Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
@@ -2110,6 +2128,20 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         End Function
 
+        Private Function EntropyTx(ByVal x As Double, ByVal otherargs As Object) As Double
+
+            Dim er As Double = LoopVarF - Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), x, LoopVarX, LoopVarState)
+            Return er
+
+        End Function
+
+        Private Function EntropyPx(ByVal x As Double, ByVal otherargs As Object) As Double
+
+            Dim er As Double = LoopVarF - Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), LoopVarX, x, LoopVarState)
+            Return er
+
+        End Function
+
         Public MustOverride Sub DW_CalcVazaoMolar()
 
         Public MustOverride Sub DW_CalcVazaoMassica()
@@ -2328,16 +2360,25 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 Else
                                     xv = (H - hl) / (hv - hl)
                                 End If
-                                S = xv * sv + (1 - xv) * sl
+                                If Tsat > Me.AUX_TCM(Fase.Mixture) Then
+                                    xv = 1.0#
+                                    LoopVarState = State.Vapor
+                                End If
+                                xl = 1 - xv
 
                                 If xv <> 0.0# And xv <> 1.0# Then
                                     T = Tsat
+                                    S = xv * sv + (1 - xv) * sl
                                 Else
                                     LoopVarF = H
                                     LoopVarX = P
-                                    T = brentsolverT.BrentOpt(273.15, 623.15, 20, 0.0001, 1000, Nothing)
+                                    T = brentsolverT.BrentOpt(10, 2000, 20, 0.000000000001, 1000, Nothing)
+                                    If xv = 0.0# Then
+                                        S = Me.DW_CalcEntropy(vz, T, P, State.Liquid)
+                                    Else
+                                        S = Me.DW_CalcEntropy(vz, T, P, State.Vapor)
+                                    End If
                                 End If
-                                xl = 1 - xv
 
                                 Vx = vz
                                 Vy = vz
@@ -2389,7 +2430,7 @@ redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mix
                             If Me.AUX_IS_SINGLECOMP(Fase.Mixture) And Me.ComponentName <> "FPROPS" Then
 
                                 Dim brentsolverT As New BrentOpt.Brent
-                                brentsolverT.DefineFuncDelegate(AddressOf EnthalpyTx)
+                                brentsolverT.DefineFuncDelegate(AddressOf EntropyTx)
 
                                 Dim hl, hv, sl, sv, Tsat As Double
                                 Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
@@ -2412,16 +2453,25 @@ redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mix
                                 Else
                                     xv = (S - sl) / (sv - sl)
                                 End If
-                                H = xv * hv + (1 - xv) * hl
+                                If Tsat > Me.AUX_TCM(Fase.Mixture) Then
+                                    xv = 1.0#
+                                    LoopVarState = State.Vapor
+                                End If
+                                xl = 1 - xv
 
                                 If xv <> 0.0# And xv <> 1.0# Then
                                     T = Tsat
+                                    H = xv * hv + (1 - xv) * hl
                                 Else
-                                    LoopVarF = H
+                                    LoopVarF = S
                                     LoopVarX = P
-                                    T = brentsolverT.BrentOpt(273.15, 623.15, 20, 0.0001, 1000, Nothing)
+                                    T = brentsolverT.BrentOpt(10, 2000, 20, 0.000000000001, 1000, Nothing)
+                                    If xv = 0.0# Then
+                                        H = Me.DW_CalcEnthalpy(vz, T, P, State.Liquid)
+                                    Else
+                                        H = Me.DW_CalcEnthalpy(vz, T, P, State.Vapor)
+                                    End If
                                 End If
-                                xl = 1 - xv
 
                                 Vx = vz
                                 Vy = vz
@@ -5678,7 +5728,7 @@ Final3:
 
             Dim fT, fT_inf, nsub, delta_T As Double
 
-            Tinf = 100
+            Tinf = 10
             Tsup = 2000
 
             nsub = 10
