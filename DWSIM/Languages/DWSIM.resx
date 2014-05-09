@@ -2755,9 +2755,6 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
   <data name="SelecioLiquidrueparausa" xml:space="preserve">
     <value>Selecione 'True' para usar o Delta-P fornecido, independentemente do valor da potência associada à corrente de energia conectada à bomba. O valor da potência na corrente de energia será atualizado de acordo com o Delta-P da bomba. Esta opção só tem efeito caso a corrente de energia seja editável.</value>
   </data>
-  <data name="SelecioLiquidrueparausa2" xml:space="preserve">
-    <value>Selecione 'True' para usar o Delta-P fornecido, independentemente do valor da potência associada à corrente de energia conectada ao compressor. O valor da potência na corrente de energia será atualizado de acordo com o Delta-P do compressor. Esta opção só tem efeito caso a corrente de energia seja editável.</value>
-  </data>
   <data name="SelecioLiquidrueparausa3" xml:space="preserve">
     <value>Selecione 'True' para usar o valor informado para o calor fornecido, independentemente do valor da potência associada à corrente de energia conectada ao aquecedor. O valor da potência na corrente de energia será atualizado de acordo com o Delta-Q do aquecedor. Esta opção só tem efeito caso a corrente de energia seja editável.</value>
   </data>

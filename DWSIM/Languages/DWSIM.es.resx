@@ -3998,9 +3998,6 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
   <data name="EntropiaEspecficaFas" xml:space="preserve">
     <value>Entropía Específica (Fase Vapor) </value>
   </data>
-  <data name="SelecioLiquidrueparausa2" xml:space="preserve">
-    <value>Seleccione 'True' para utilizar el Delta-P siempre independientemente del valor de la energía asociada con el flujo de energía conectado al compresor. El valor de la producción en el flujo de energía se actualizará de acuerdo con el Delta-P del compresor. Esta opción sólo tiene efecto si el flujo de energía es editable.</value>
-  </data>
   <data name="Nohcorrentedematriac14" xml:space="preserve">
     <value>Ninguna corriente de materia está conectada a la salida del objeto.</value>
   </data>

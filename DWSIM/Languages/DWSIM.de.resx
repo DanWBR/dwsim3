@@ -1211,10 +1211,10 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Temperaturdifferenz zwischen den Strömen</value>
   </data>
   <data name="Diferenaentreosvalor" xml:space="preserve">
-    <value>Differenz zwischen den Temperaturwerten zwischen den Strömen.</value>
+    <value>Temperaturdifferenzen zwischen den Strömen.</value>
   </data>
   <data name="Diferenaentreosvalor2" xml:space="preserve">
-    <value>Differenz zwischen den Druckwerten zwischen den Strömen.</value>
+    <value>Druckdifferenzen zwischen den Strömen.</value>
   </data>
   <data name="Diferenaentreosvalor3" xml:space="preserve">
     <value>Differenz zwischen den Werten des Massenstromes</value>
@@ -1322,16 +1322,16 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Expanderwirkungsgrad bezogen auf den idealen isentropen Prozeß</value>
   </data>
   <data name="Eficinciadoaquecedor" xml:space="preserve">
-    <value>Idealer Wirkungsgrad des Heizers auf den Prozeß, bei dem alle Wärmeverluste beim eintretenden Energiestrom mit berücksichtigt werden</value>
+    <value>Idealer Wirkungsgrad des Heizers bezogen auf den Prozeß, bei dem alle Wärmeverluste beim eintretenden Energiestrom mit berücksichtigt werden</value>
   </data>
   <data name="Eficinciadoaquecedor2" xml:space="preserve">
-    <value>Idealer Wirkungsgrad des Heizers auf den Prozeß, bei dem die gesamte übertragene Wärme des Energiestromes für den Ausgangsstrom verfügbar ist</value>
+    <value>Idealer Wirkungsgrad des Heizers bezogen auf den Prozeß, bei dem die gesamte übertragene Wärme des Energiestromes für den Ausgangsstrom verfügbar ist</value>
   </data>
   <data name="Eficinciadocompresso" xml:space="preserve">
-    <value>Wirkungsgrad des Verdichters auf den idealen isentropen/adiabaten Prozeß.</value>
+    <value>Wirkungsgrad des Verdichters bezogen auf den idealen isentropen/adiabaten Prozeß.</value>
   </data>
   <data name="Eficinciaglobaldabom" xml:space="preserve">
-    <value>Gesamtwirkungsgrad der Pumpe auf den idealen isentropen Prozeß.</value>
+    <value>Gesamtwirkungsgrad der Pumpe bezogen auf den idealen isentropen Prozeß.</value>
   </data>
   <data name="Elevaom" xml:space="preserve">
     <value>Höhe (m)</value>
@@ -3306,9 +3306,6 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
   </data>
   <data name="SelecioLiquidrueparausa" xml:space="preserve">
     <value>Wählen Sie 'Wahr', um die vorgegebene Druckdifferenz zu verwenden, unabhängig von der Leistung des mit der Pumpe verbundenen Energiestromes. Der Ausgabewert im Energiestrom wird entsprechend der Druckdifferenz der Pumpe angeglichen. Diese Option ist nur wirksam, wenn der Energiestrom bearbeitbar ist.</value>
-  </data>
-  <data name="SelecioLiquidrueparausa2" xml:space="preserve">
-    <value>Wählen Sie 'Wahr', um die vorgegebene Druckdifferenz zu verwenden, unabhängig von der Leistung des mit dem Verdichter verbundenen Energiestromes. Der Ausgabewert im Energiestrom wird entsprechend der Druckdifferenz des Verdichters angeglichen. Diese Option ist nur wirksam, wenn der Energiestrom bearbeitbar ist.</value>
   </data>
   <data name="SelecioLiquidrueparausa3" xml:space="preserve">
     <value>Wählen Sie 'Wahr', um die vorgegebene Wärme zu verwenden, unabhängig von der Leistung des mit dem Heizer verbundenen Energiestromes. Der Ausgabewert im Energiestrom wird entsprechend der Wärmezufuhr im Heizer angeglichen. Diese Option wird nur wirksam, wenn der Energiestrom bearbeitbar ist.</value>

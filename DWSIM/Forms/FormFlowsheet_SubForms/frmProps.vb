@@ -126,7 +126,7 @@ Public Class frmProps
 
                 Dim es As DWSIM.SimulationObjects.Streams.EnergyStream = ChildParent.Collections.CLCS_EnergyStreamCollection.Item(sobj.Name)
 
-                If e.ChangedItem.Parent.Label.Contains(DWSIM.App.GetLocalString("Energia")) Then
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Energia")) Then
 
                     es.Energia = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
 
@@ -344,8 +344,11 @@ Public Class frmProps
                     If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
+                ElseIf e.ChangedItem.Label.Contains("Pressure") Then
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.POut = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
                     If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
                 End If
