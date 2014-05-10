@@ -2680,6 +2680,11 @@ Public Class FormCompoundCreator
         BothSaveStatusModified(sender, e)
     End Sub
 
+    Private Sub FormCompoundCreator_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
+        Dim pathsep = System.IO.Path.DirectorySeparatorChar
+        Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "help" & pathsep & "Component Creator.htm"
+        System.Diagnostics.Process.Start(filename)
+    End Sub
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase

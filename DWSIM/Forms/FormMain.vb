@@ -3837,4 +3837,10 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
 
 #End Region
 
+    Private Sub FormMain_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
+
+        Dim pathsep = System.IO.Path.DirectorySeparatorChar
+        Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "help" & pathsep & "frame.htm"
+        System.Diagnostics.Process.Start(filename)
+    End Sub
 End Class
