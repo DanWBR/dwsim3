@@ -165,6 +165,10 @@
     <value>Power Required</value>
     <comment>0</comment>
   </data>
+  <data name="PROP_CO_4" xml:space="preserve">
+    <value>Pressure</value>
+    <comment>1</comment>
+  </data>
   <data name="PROP_CP_0" xml:space="preserve">
     <value>Energy Balance</value>
     <comment>0</comment>

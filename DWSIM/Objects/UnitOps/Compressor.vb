@@ -237,6 +237,7 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
 
                     Case CalculationMode.OutletPressure
                         P2 = Me.POut.GetValueOrDefault
+                        DeltaP = P2 - Pi
                 End Select
                 POut = P2
 
@@ -537,6 +538,9 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
                 Case 3
                     'PROP_CO_3	Power Required
                     value = cv.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
+                Case 4
+                    'PROP_CO_4	Pressure Out
+                    value = cv.ConverterDoSI(su.spmp_pressure, Me.POut.GetValueOrDefault)
 
             End Select
 
@@ -554,15 +558,16 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
                         proplist.Add("PROP_CO_" + CStr(i))
                     Next
                 Case PropertyType.RW
-                    For i = 0 To 3
+                    For i = 0 To 4
                         proplist.Add("PROP_CO_" + CStr(i))
                     Next
                 Case PropertyType.WR
                     For i = 0 To 1
                         proplist.Add("PROP_CO_" + CStr(i))
                     Next
+                    proplist.Add("PROP_CO_4")
                 Case PropertyType.ALL
-                    For i = 0 To 3
+                    For i = 0 To 4
                         proplist.Add("PROP_CO_" + CStr(i))
                     Next
             End Select
@@ -582,6 +587,9 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
                 Case 1
                     'PROP_CO_1(Efficiency)
                     Me.EficienciaAdiabatica = propval
+                Case 4
+                    'PROP_CO_4(Pressure Out)
+                    Me.POut = cv.ConverterParaSI(su.spmp_pressure, propval)
             End Select
             Return 1
         End Function
@@ -606,7 +614,9 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
                 Case 3
                     'PROP_CO_3	Power Required
                     value = su.spmp_heatflow
-
+                Case 4
+                    'PROP_CO_4	Pressure Out
+                    value = su.spmp_pressure
             End Select
 
             Return value

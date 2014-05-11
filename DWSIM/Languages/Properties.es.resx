@@ -157,6 +157,10 @@
     <value>Potencia Requerida</value>
     <comment>0</comment>
   </data>
+  <data name="PROP_CO_4" xml:space="preserve">
+    <value>Presión</value>
+    <comment>1</comment>
+  </data>
   <data name="PROP_CP_0" xml:space="preserve">
     <value>Balance de Energia</value>
     <comment>0</comment>
