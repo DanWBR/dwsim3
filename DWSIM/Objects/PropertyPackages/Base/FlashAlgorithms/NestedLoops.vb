@@ -1,4 +1,4 @@
-﻿'    DWSIM Nested Loops Flash Algorithms
+'    DWSIM Nested Loops Flash Algorithms
 '    Copyright 2010 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -858,7 +858,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Tf = T
 
             ReDim Vn(n), Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n)
-            Dim Vt(n), VTc(n), Tmin, Tmax, dFdT As Double
+            Dim Vt(n), VTc(n), Tmin, Tmax, dFdT, Tsat(n), Tsatmin, Tsatmax As Double
 
             Vn = PP.RET_VNAMES()
             VTc = PP.RET_VTC()
@@ -869,11 +869,17 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 i = 0
                 Tref = 0
                 Do
-                    Tref += 0.7 * Vz(i) * VTc(i)
+                    Tsat(i) = PP.AUX_TSATi(P, i)
+                    Tref += Vz(i) * Tsat(i)
                     Tmin += 0.1 * Vz(i) * VTc(i)
                     Tmax += 2.0 * Vz(i) * VTc(i)
                     i += 1
                 Loop Until i = n + 1
+
+                Tsatmin = Common.Min(Tsat)
+                Tsatmax = Common.Max(Tsat)
+
+                Tref = Tsatmin + V * (Tsatmax - Tsatmin)
 
             Else
 
@@ -1012,10 +1018,10 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                     Dim K1(n), K2(n), dKdT(n) As Double
 
                     K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
-                    K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.1, P)
+                    K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.5, P)
 
                     For i = 0 To n
-                        dKdT(i) = (K2(i) - K1(i)) / (0.1)
+                        dKdT(i) = (K2(i) - K1(i)) / 0.5
                     Next
 
                     fval = stmp4 - 1
