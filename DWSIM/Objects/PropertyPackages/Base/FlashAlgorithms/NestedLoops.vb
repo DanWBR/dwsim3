@@ -913,6 +913,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Do
                 If Vz(i) <> 0 Then
                     Vy(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * V + 1)
+                    If Double.IsInfinity(Vy(i)) Then Vy(i) = 0.0#
                     Vx(i) = Vy(i) / Ki(i)
                 Else
                     Vy(i) = 0

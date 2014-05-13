@@ -1249,6 +1249,22 @@ Namespace DWSIM.Flowsheet
                         End If
                         form.CalculationQueue.Enqueue(objargs)
                         ProcessQueueInternal(form)
+                    Else
+                        If ms.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.OT_Reciclo Then
+                            'add this stream to the calculator queue list
+                            Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                            With objargs
+                                .Calculado = True
+                                .Nome = ms.Nome
+                                .Tipo = TipoObjeto.MaterialStream
+                                .Tag = ms.GraphicObject.Tag
+                            End With
+                            If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then
+                                form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
+                            End If
+                            form.CalculationQueue.Enqueue(objargs)
+                            ProcessQueueInternal(form)
+                        End If
                     End If
                 Else
                     Dim unit As SimulationObjects_UnitOpBaseClass = baseobj
