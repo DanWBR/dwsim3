@@ -1,4 +1,4 @@
-﻿'    Copyright 2008-2011 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2011 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -1560,13 +1560,13 @@ Imports DWSIM.DWSIM.GraphicObjects
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.RefluxedAbsorber
                                     Me.Collections.RefluxedAbsorberCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRFAB").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_RefluxedAbsorberCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.ReboiledAbsorber
                                     Me.Collections.ReboiledAbsorberCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRBAB").Nodes.RemoveByKey(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_ReboiledAbsorberCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
