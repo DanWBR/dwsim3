@@ -1,5 +1,5 @@
-﻿'    CAPE-OPEN Unit Operation Wrapper Class
-'    Copyright 2011 Daniel Wagner O. de Medeiros
+'    CAPE-OPEN Unit Operation Wrapper Class
+'    Copyright 2011-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -30,6 +30,7 @@ Imports System.Xml.Linq
 Imports DWSIM.DWSIM.SimulationObjects
 Imports System.Reflection
 Imports System.Runtime.Serialization.Formatters.Binary
+Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 
 Namespace DWSIM.SimulationObjects.UnitOps
 
@@ -979,6 +980,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         RestorePorts()
                         myuo.Calculate()
                         UpdateParams()
+                        For Each c As ConnectionPoint In Me.GraphicObject.OutputConnectors
+                            If c.IsAttached And c.Type = ConType.ConOut Then
+                                Dim mat As Streams.MaterialStream = Me.FlowSheet.Collections.ObjectCollection(c.AttachedConnector.AttachedTo.Name)
+                                mat.PropertyPackage.CurrentMaterialStream = mat
+                                For Each subst As Substancia In mat.Fases(0).Componentes.Values
+                                    subst.FracaoMassica = mat.PropertyPackage.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 0)
+                                Next
+                            End If
+                        Next
                         'Call function to calculate flowsheet
                         With objargs
                             .Calculado = True
