@@ -1,3 +1,5 @@
+//This file is part of DWSIM
+
 function LoadMenue() 
   {
   
@@ -6,6 +8,7 @@ function LoadMenue()
      //On loading a content page this script checks if menu, header and footer are already existing.
      //If not, they will be reloaded. Actual topic is passed to frame.htm to reload this page again.
  
+
      if (top.frames.length == 0)
 	{
 	  filename = location.href;
