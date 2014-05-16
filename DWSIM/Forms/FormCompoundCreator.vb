@@ -2681,9 +2681,18 @@ Public Class FormCompoundCreator
     End Sub
 
     Private Sub FormCompoundCreator_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
-        Dim pathsep = System.IO.Path.DirectorySeparatorChar
-        Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "help" & pathsep & "Component Creator.htm"
-        System.Diagnostics.Process.Start(filename)
+        Select Case FaTabStrip2.SelectedItem.Name
+            Case "FaTabStripItem1"
+                DWSIM.App.HelpRequested("Component Creator 1.htm") 'Component definition
+            Case "FaTabStripItem2"
+                DWSIM.App.HelpRequested("Component Creator 2.htm") 'UNIFAC definition
+            Case "FaTabStripItem3"
+                DWSIM.App.HelpRequested("Component Creator 3.htm") 'Joback definition
+
+            Case Else
+                DWSIM.App.HelpRequested("Component Creator.htm")
+        End Select
+
     End Sub
 End Class
 

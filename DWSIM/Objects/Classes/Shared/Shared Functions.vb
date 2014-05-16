@@ -28,7 +28,11 @@ Imports Cudafy.Host
 Namespace DWSIM
 
     <System.Serializable()> Public Class App
-
+        Public Shared Sub HelpRequested(topic As String)
+            Dim pathsep = System.IO.Path.DirectorySeparatorChar
+            Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "help" & pathsep & topic
+            System.Diagnostics.Process.Start(filename)
+        End Sub
         Public Shared Function GetLocalString(ByVal id As String) As String
 
             If My.MyApplication._ResourceManager Is Nothing Then

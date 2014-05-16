@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<script src="ContentScripts.js"></script>
+<head>
+<link rel="stylesheet" type="text/css" href="DWSIMstyle.css">
+</head>
+
+<!-- ================================================================================== -->
+<!-- ====================   Begin of content    ==============================================-->
+<!-- ================================================================================== -->
+<body onload="LoadMenue()">
+
+<H2>Pipe Segment</H2>
+
+<p>The Pipe Segment unit operation can be used to simulate fluid flow process in
+a pipe. Two of the most used correlations for the calculation of pressure drop are available in
+DWSIM. Temperature can be rigorously calculated considering the influence of the environment.
+<br>
+With the help of the Recycle Logical Operation, the user can build large water distribution
+systems, as an example.
+The pipe segment is divided in sections, which can be straight tubes, valves, curves, etc. Each
+section is subdivided in small sections for calculation purposes, as defined by the user.
+
+</p>
+
+<table>
+<tr>
+
+<td>
+<h3>Input Parameters</h3>
+<b>Pressure drop correlation: </b>select the model to be used for the pressure drop calculation in
+the pipe segment.
+</td>
+
+<td><img src="pictures/SO_Pipe1.png"></td>
+</tr>
+
+<tr>
+<td><b>Hydraulic profile: </b>clicking on the ellipsis button opens the pipe hydraulic profile editor. 
+Here the user adds sections, defines their type and into
+how many increments it will be divided during the calculations. Also the pipe material, length,
+elevation, internal and external diameters are defined. Each change can be saved by clicking 
+the "Apply" button.<br></td>
+<td><img src="pictures/SO_Pipe2.png"></td>
+</tr>
+
+<tr>
+<td><b>Thermal profile: </b>clicking on the ellipsis button opens the pipe thermal profile editor. 
+In the thermal profile editor it is possible to define how the temperature profile in the
+pipe should be calculated. The configurations in this window are valid for the entire pipe
+segment. Changes are saved automatically.<br></td>
+<td><img src="pictures/SO_Pipe3.png"></td>
+</tr>
+</table>
+
+
+<h3>Calculation method</h3>
+The pipe segment is calculated based on incremental mass and energy
+balances. The complete algorithm consists in three nested loops. The external loop iterates
+on the sections (increments), the middle loop iterates on the temperature and the internal loop
+calculates the pressure.<br><br>
+
+The pressure and temperature are calculated as follows:
+<ol>
+<li>The inlet temperature and pressure are used to estimate the increment outlet pressure and temperature.<br><br></li>
+
+<li>Fluid properties are calculated based in a arithmetic mean of inlet and outlet conditions.<br><br></li>
+
+<li>The calculated properties and the inlet pressure are used to calculate the pressure drop. 
+With it, the outlet pressure is calculated.<br><br></li>
+
+<li>The calculated and estimated pressure are compared, and if their difference exceeds the
+tolerance, a new outlet pressure is estimated, and the steps 2 and 3 are repeated. <br><br></li>
+
+<li>Once the internal loop has converged, the outlet temperature is calculated. If the global
+heat transfer coefficient (U) was given, the outlet temperature is calculated from the following
+equation:<br>
+<center><b>Q =  U*A*&#916T<sub>ml</sub></b></center><br>
+where: Q = heat transferred, A = heat transfer area (external surface) and &#916T<sub>ml</sub> =
+logarithmic mean temperature difference.<br><br>
+</li>
+
+<li>
+The calculated temperature is compared to the estimated one, and if their difference
+exceeds the specified tolerance, a new temperature is estimated and new properties are
+calculated (return to step 2).<br><br>
+</li>
+
+<li>
+When both pressure and temperature converges, the results are passed to the next increment,
+where calculation restarts.<br><br>
+</li>
+
+</ol>
+
+
+<br>
+
+<h3>Output Parameters</h3>
+<b>Delta-T: </b>temperature variation in the pipe segment.<br><br>
+<b>Delta-P: </b>pressure variation in the pipe segment.<br><br>
+<b>Heat exchanged: </b>amount of heat exchanged with the environment, or lost by friction in the pipe walls.<br><br>
+<b>Results (table): </b>results are show section by section in a table.<br><br>
+<b>Results (graph): </b>a graph shows the temperature, pressure, liquid holdup, velocity and heat
+exchanged profiles.<br><br>
+
+
+</BODY>
+</HTML>

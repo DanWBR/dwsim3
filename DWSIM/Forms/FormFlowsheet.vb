@@ -710,7 +710,35 @@ Imports DWSIM.DWSIM.GraphicObjects
 #End Region
 
 #Region "    Click Event Handlers "
+    Private Sub FormFlowsheet_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
 
+        Dim obj As GraphicObject = Me.FormSurface.FlowsheetDesignSurface.SelectedObject
+
+        If obj Is Nothing Then
+            DWSIM.App.HelpRequested("frame.htm")
+        Else
+            Select Case obj.TipoObjeto
+                Case TipoObjeto.MaterialStream
+                    DWSIM.App.HelpRequested("SO_Material_Stream.htm")
+                Case TipoObjeto.EnergyStream
+                    DWSIM.App.HelpRequested("SO_Energy_Stream.htm")
+                Case TipoObjeto.NodeIn
+                    DWSIM.App.HelpRequested("SO_Mixer.htm")
+                Case TipoObjeto.NodeOut
+                    DWSIM.App.HelpRequested("SO_Splitter.htm")
+                Case TipoObjeto.Vessel
+                    DWSIM.App.HelpRequested("SO_Separator.htm")
+                Case TipoObjeto.Tank
+                    DWSIM.App.HelpRequested("SO_Tank.htm")
+                Case TipoObjeto.Pipe
+                    DWSIM.App.HelpRequested("SO_Pipe_Segment.htm")
+                Case Else
+                    DWSIM.App.HelpRequested("frame.htm")
+            End Select
+        End If
+
+
+    End Sub
     Private Sub InserObjectTSMIClick(ByVal sender As System.Object, ByVal e As EventArgs) Handles _
     TSMIAdjust.Click, TSMIColAbs.Click, TSMIColAbsCond.Click, TSMIColAbsReb.Click, TSMIColDist.Click, _
      TSMIColShortcut.Click, TSMIComponentSeparator.Click, TSMICompressor.Click, TSMICooler.Click, _

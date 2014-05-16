@@ -906,11 +906,11 @@ Namespace DWSIM.SistemasDeUnidades
                 Case "ft2"
                     Return valor / 10.7639
                 Case "h"                                'tempo
-                    Return valor / 3600
+                    Return valor * 3600
                 Case "s"
                     Return valor
                 Case "min."
-                    Return valor / 60
+                    Return valor * 60
                 Case "ft3"                              'volume
                     Return valor / 35.3147
                 Case "m3"
@@ -1291,11 +1291,11 @@ Namespace DWSIM.SistemasDeUnidades
                 Case "ft2"
                     Return valor * 10.7639
                 Case "h"                                'tempo
-                    Return valor * 3600
+                    Return valor / 3600
                 Case "s"
                     Return valor
                 Case "min."
-                    Return valor * 60
+                    Return valor / 60
                 Case "ft3"                              'volume
                     Return valor * 35.3147
                 Case "m3"
