@@ -1198,6 +1198,11 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        ''' <summary>
+        ''' Calculate all objects in the Flowsheet using a ordering method.
+        ''' </summary>
+        ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
+        ''' <remarks></remarks>
         Public Shared Sub CalculateAll2(ByVal form As FormFlowsheet)
 
             Dim lists As New Dictionary(Of Integer, List(Of String))
@@ -1207,6 +1212,8 @@ Namespace DWSIM.Flowsheet
             Dim obj As SimulationObjects_BaseClass
 
             RaiseEvent FlowsheetCalculationStarted(form, New System.EventArgs(), Nothing)
+
+            My.MyApplication.IsFlowsheetSolving = True
 
             'find recycles.
 
@@ -1320,6 +1327,8 @@ Namespace DWSIM.Flowsheet
             lists.Clear()
             recycles.Clear()
 
+            My.MyApplication.IsFlowsheetSolving = False
+
             RaiseEvent FlowsheetCalculationFinished(form, New System.EventArgs(), Nothing)
 
         End Sub
@@ -1332,6 +1341,8 @@ Namespace DWSIM.Flowsheet
         Public Shared Sub CalculateAll(ByVal form As FormFlowsheet)
 
             RaiseEvent FlowsheetCalculationStarted(form, New System.EventArgs(), Nothing)
+
+            My.MyApplication.IsFlowsheetSolving = True
 
             For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                 If baseobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream And baseobj.GraphicObject.Calculated Then
@@ -1353,6 +1364,8 @@ Namespace DWSIM.Flowsheet
                 End If
             Next
             ProcessCalculationQueue(form)
+
+            My.MyApplication.IsFlowsheetSolving = False
 
             RaiseEvent FlowsheetCalculationFinished(form, New System.EventArgs(), Nothing)
 

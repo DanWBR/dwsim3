@@ -41,6 +41,8 @@ Namespace DWSIM.SimulationObjects.SpecialOps
         Protected m_InternalCounterW As Integer = 0
         Protected m_IterationsTaken As Integer = 0
 
+        Public Property Converged As Boolean = False
+
         Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
 
             MyBase.LoadData(data)
@@ -473,6 +475,8 @@ SS:             Tnew = Me.ConvergenceHistory.Temperatura
                 Math.Abs(Me.ConvergenceHistory.PressaoE) > Me.ConvergenceParameters.Pressao Or _
                 Math.Abs(Me.ConvergenceHistory.VazaoMassicaE) > Me.ConvergenceParameters.VazaoMassica Then
 
+                Me.Converged = False
+
                 'Call function to calculate flowsheet
                 With objargs
                     .Calculado = True
@@ -485,6 +489,9 @@ SS:             Tnew = Me.ConvergenceHistory.Temperatura
             Else
 final:          Me.IterationsTaken = Me.IterationCount.ToString
                 Me.IterationCount = 0
+
+                Me.Converged = True
+
             End If
 
             Me.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)

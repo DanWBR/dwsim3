@@ -412,7 +412,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                 _Tj(i) = _Bj(i) / (_Aj(i) - Log(_Kbj(i)))
                 If Abs(_Tj(i) - _Tj_ant(i)) > 100 Or Double.IsNaN(_Tj(i)) Or Double.IsInfinity(_Tj(i)) Then
                     'switch to a bubble point temperature calculation...
-                    Dim tmp = _pp.DW_CalcBubT(_xc(i), _P(i), Nothing, Nothing, False)
+                    Dim tmp = _pp.DW_CalcBubT(_xc(i), _P(i), _Tj(i), Nothing, False)
                     _Tj(i) = tmp(4)
                     CheckCalculatorStatus()
                 End If
@@ -1760,6 +1760,9 @@ restart:            fx = Me.FunctionValue(xvar)
                 Dim tmp(ns) As Object
 
                 If doparallel Then
+                    If My.Settings.EnableGPUProcessing Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    End If
                     My.MyApplication.IsRunningParallelTasks = True
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
@@ -1780,6 +1783,10 @@ restart:            fx = Me.FunctionValue(xvar)
                         Kbj_ant(i) = Kbj(i)
                     Next
                     My.MyApplication.IsRunningParallelTasks = False
+                    If My.Settings.EnableGPUProcessing Then
+                        My.MyApplication.gpu.DisableMultithreading()
+                        My.MyApplication.gpu.FreeAll()
+                    End If
                 Else
                     For i = 0 To ns
                         If llextr Then
@@ -1830,6 +1837,9 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
+                    If My.Settings.EnableGPUProcessing Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    End If
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  'new Ks
@@ -1845,6 +1855,10 @@ restart:            fx = Me.FunctionValue(xvar)
                         Next
                     Next
                     My.MyApplication.IsRunningParallelTasks = False
+                    If My.Settings.EnableGPUProcessing Then
+                        My.MyApplication.gpu.DisableMultithreading()
+                        My.MyApplication.gpu.FreeAll()
+                    End If
                 Else
                     For i = 0 To ns
 
@@ -1861,23 +1875,30 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
+                    If My.Settings.EnableGPUProcessing Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    End If
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
-                                                             Sub(ipar)
-                                                                 'enthalpies
-                                                                 If llextr Then
-                                                                     Hv1(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
-                                                                     Hv2(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
-                                                                 Else
-                                                                     Hv1(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Vapor)
-                                                                     Hv2(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Vapor)
-                                                                 End If
-                                                                 Hl1(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
-                                                                 Hl2(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
-                                                             End Sub))
+                                                              Sub(ipar)
+                                                                  'enthalpies
+                                                                  If llextr Then
+                                                                      Hv1(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
+                                                                      Hv2(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
+                                                                  Else
+                                                                      Hv1(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Vapor)
+                                                                      Hv2(ipar) = pp.DW_CalcEnthalpyDeparture(yc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Vapor)
+                                                                  End If
+                                                                  Hl1(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
+                                                                  Hl2(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
+                                                              End Sub))
                     While Not task1.IsCompleted
                         Application.DoEvents()
                     End While
                     My.MyApplication.IsRunningParallelTasks = False
+                    If My.Settings.EnableGPUProcessing Then
+                        My.MyApplication.gpu.DisableMultithreading()
+                        My.MyApplication.gpu.FreeAll()
+                    End If
                 Else
                     For i = 0 To ns
 
@@ -2291,6 +2312,11 @@ restart:            fx = Me.FunctionValue(xvar)
                         If Tj(i) < 0 Then Tj(i) = Tj_ant(i)
                     Next
                 End If
+
+                For i = 0 To ns
+                    If Double.IsNaN(Tj(i)) Or Double.IsInfinity(Tj(i)) Then Tj(i) = Tj_ant(i)
+                Next
+
 
                 t_error_ant = t_error
                 t_error = 0
@@ -3558,6 +3584,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 For k = 0 To x.Length - 1
                     g(k, i) = (f2(k) - f3(k)) / (x2(i) - x3(i))
                 Next
+                CheckCalculatorStatus()
             Next
 
             Return g

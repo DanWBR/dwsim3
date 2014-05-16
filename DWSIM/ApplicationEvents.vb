@@ -19,6 +19,7 @@ Namespace My
         Public Shared CommandLineMode As Boolean = False
         
         Public Shared IsRunningParallelTasks As Boolean = False
+        Public Shared IsFlowsheetSolving As Boolean = False
         
         Public ActiveSimulation As FormFlowsheet
         Public CAPEOPENMode As Boolean = False

@@ -188,6 +188,14 @@ Public Class frmSurface
             Call Me.RecalcularToolStripMenuItem_Click(sender, e)
         ElseIf e.KeyCode = Keys.E And e.Control Then
             Call Me.EditCompTSMI_Click(sender, e)
+        ElseIf e.KeyCode = Keys.F5 Then
+            If Not My.MyApplication.IsFlowsheetSolving Then
+                If My.Computer.Keyboard.ShiftKeyDown Then
+                    CalculateAll(Me.ChildParent)
+                Else
+                    CalculateAll2(Me.ChildParent)
+                End If
+            End If
         End If
 
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then

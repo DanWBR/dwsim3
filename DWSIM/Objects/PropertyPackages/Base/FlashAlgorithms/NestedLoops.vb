@@ -879,7 +879,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 Tsatmin = Common.Min(Tsat)
                 Tsatmax = Common.Max(Tsat)
 
-                Tref = Tsatmin + V * (Tsatmax - Tsatmin)
+                Tref = Tsatmin + V * (Tref - Tsatmin)
 
             Else
 
