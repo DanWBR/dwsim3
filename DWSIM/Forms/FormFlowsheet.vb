@@ -732,6 +732,10 @@ Imports DWSIM.DWSIM.GraphicObjects
                     DWSIM.App.HelpRequested("SO_Tank.htm")
                 Case TipoObjeto.Pipe
                     DWSIM.App.HelpRequested("SO_Pipe_Segment.htm")
+                Case TipoObjeto.Valve
+                    DWSIM.App.HelpRequested("SO_Valve.htm")
+                Case TipoObjeto.Pump
+                    DWSIM.App.HelpRequested("SO_Pump.htm")
                 Case Else
                     DWSIM.App.HelpRequested("frame.htm")
             End Select

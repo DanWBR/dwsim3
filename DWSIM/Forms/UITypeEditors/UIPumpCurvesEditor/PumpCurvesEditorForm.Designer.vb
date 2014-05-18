@@ -22,81 +22,80 @@ Partial Class PumpCurvesEditorForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PumpCurvesEditorForm))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip
-        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox
-        Me.tb5 = New System.Windows.Forms.TextBox
-        Me.Label15 = New System.Windows.Forms.Label
-        Me.cb10 = New System.Windows.Forms.ComboBox
-        Me.cb5 = New System.Windows.Forms.ComboBox
-        Me.dgv5 = New System.Windows.Forms.DataGridView
-        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Label10 = New System.Windows.Forms.Label
-        Me.ch5 = New System.Windows.Forms.CheckBox
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox
-        Me.tb4 = New System.Windows.Forms.TextBox
-        Me.Label14 = New System.Windows.Forms.Label
-        Me.cb9 = New System.Windows.Forms.ComboBox
-        Me.ch4 = New System.Windows.Forms.CheckBox
-        Me.cb4 = New System.Windows.Forms.ComboBox
-        Me.dgv4 = New System.Windows.Forms.DataGridView
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox
-        Me.tb3 = New System.Windows.Forms.TextBox
-        Me.Label13 = New System.Windows.Forms.Label
-        Me.cb8 = New System.Windows.Forms.ComboBox
-        Me.cb3 = New System.Windows.Forms.ComboBox
-        Me.ch3 = New System.Windows.Forms.CheckBox
-        Me.dgv3 = New System.Windows.Forms.DataGridView
-        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Label9 = New System.Windows.Forms.Label
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.tb2 = New System.Windows.Forms.TextBox
-        Me.Label12 = New System.Windows.Forms.Label
-        Me.cb7 = New System.Windows.Forms.ComboBox
-        Me.ch2 = New System.Windows.Forms.CheckBox
-        Me.cb2 = New System.Windows.Forms.ComboBox
-        Me.dgv2 = New System.Windows.Forms.DataGridView
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.tb1 = New System.Windows.Forms.TextBox
-        Me.Label11 = New System.Windows.Forms.Label
-        Me.cb6 = New System.Windows.Forms.ComboBox
-        Me.dgv1 = New System.Windows.Forms.DataGridView
-        Me.vap = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.temp = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.ch1 = New System.Windows.Forms.CheckBox
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.cb1 = New System.Windows.Forms.ComboBox
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem
-        Me.GroupBox7 = New System.Windows.Forms.GroupBox
-        Me.Label17 = New System.Windows.Forms.Label
-        Me.Label18 = New System.Windows.Forms.Label
-        Me.cbeffunit = New System.Windows.Forms.ComboBox
-        Me.Label19 = New System.Windows.Forms.Label
-        Me.cbpowerunit = New System.Windows.Forms.ComboBox
-        Me.cbheadunit = New System.Windows.Forms.ComboBox
-        Me.Label16 = New System.Windows.Forms.Label
-        Me.cbflowunit = New System.Windows.Forms.ComboBox
-        Me.chart1 = New ZedGraph.ZedGraphControl
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
+        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.tb5 = New System.Windows.Forms.TextBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.cb10 = New System.Windows.Forms.ComboBox()
+        Me.cb5 = New System.Windows.Forms.ComboBox()
+        Me.dgv5 = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.ch5 = New System.Windows.Forms.CheckBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.tb4 = New System.Windows.Forms.TextBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.cb9 = New System.Windows.Forms.ComboBox()
+        Me.ch4 = New System.Windows.Forms.CheckBox()
+        Me.cb4 = New System.Windows.Forms.ComboBox()
+        Me.dgv4 = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.tb3 = New System.Windows.Forms.TextBox()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.cb8 = New System.Windows.Forms.ComboBox()
+        Me.cb3 = New System.Windows.Forms.ComboBox()
+        Me.ch3 = New System.Windows.Forms.CheckBox()
+        Me.dgv3 = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.tb2 = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.cb7 = New System.Windows.Forms.ComboBox()
+        Me.ch2 = New System.Windows.Forms.CheckBox()
+        Me.cb2 = New System.Windows.Forms.ComboBox()
+        Me.dgv2 = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.tb1 = New System.Windows.Forms.TextBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.cb6 = New System.Windows.Forms.ComboBox()
+        Me.dgv1 = New System.Windows.Forms.DataGridView()
+        Me.vap = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.temp = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ch1 = New System.Windows.Forms.CheckBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.cb1 = New System.Windows.Forms.ComboBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.cbeffunit = New System.Windows.Forms.ComboBox()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.cbpowerunit = New System.Windows.Forms.ComboBox()
+        Me.cbheadunit = New System.Windows.Forms.ComboBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.cbflowunit = New System.Windows.Forms.ComboBox()
+        Me.chart1 = New ZedGraph.ZedGraphControl()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
@@ -116,8 +115,6 @@ Partial Class PumpCurvesEditorForm
         '
         'FaTabStrip1
         '
-        Me.FaTabStrip1.AccessibleDescription = Nothing
-        Me.FaTabStrip1.AccessibleName = Nothing
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
         resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
@@ -127,9 +124,6 @@ Partial Class PumpCurvesEditorForm
         '
         'FaTabStripItem1
         '
-        Me.FaTabStripItem1.AccessibleDescription = Nothing
-        Me.FaTabStripItem1.AccessibleName = Nothing
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         Me.FaTabStripItem1.CanClose = False
         Me.FaTabStripItem1.Controls.Add(Me.GroupBox5)
         Me.FaTabStripItem1.Controls.Add(Me.GroupBox4)
@@ -139,13 +133,11 @@ Partial Class PumpCurvesEditorForm
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
         Me.FaTabStripItem1.Selected = True
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         '
         'GroupBox5
         '
-        Me.GroupBox5.AccessibleDescription = Nothing
-        Me.GroupBox5.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox5, "GroupBox5")
-        Me.GroupBox5.BackgroundImage = Nothing
         Me.GroupBox5.Controls.Add(Me.tb5)
         Me.GroupBox5.Controls.Add(Me.Label15)
         Me.GroupBox5.Controls.Add(Me.cb10)
@@ -154,55 +146,37 @@ Partial Class PumpCurvesEditorForm
         Me.GroupBox5.Controls.Add(Me.Label10)
         Me.GroupBox5.Controls.Add(Me.ch5)
         Me.GroupBox5.Controls.Add(Me.Label5)
-        Me.GroupBox5.Font = Nothing
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.TabStop = False
         '
         'tb5
         '
-        Me.tb5.AccessibleDescription = Nothing
-        Me.tb5.AccessibleName = Nothing
         resources.ApplyResources(Me.tb5, "tb5")
-        Me.tb5.BackgroundImage = Nothing
-        Me.tb5.Font = Nothing
         Me.tb5.Name = "tb5"
         '
         'Label15
         '
-        Me.Label15.AccessibleDescription = Nothing
-        Me.Label15.AccessibleName = Nothing
         resources.ApplyResources(Me.Label15, "Label15")
-        Me.Label15.Font = Nothing
         Me.Label15.Name = "Label15"
         '
         'cb10
         '
-        Me.cb10.AccessibleDescription = Nothing
-        Me.cb10.AccessibleName = Nothing
         resources.ApplyResources(Me.cb10, "cb10")
-        Me.cb10.BackgroundImage = Nothing
         Me.cb10.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb10.Font = Nothing
         Me.cb10.FormattingEnabled = True
         Me.cb10.Items.AddRange(New Object() {resources.GetString("cb10.Items"), resources.GetString("cb10.Items1"), resources.GetString("cb10.Items2"), resources.GetString("cb10.Items3"), resources.GetString("cb10.Items4")})
         Me.cb10.Name = "cb10"
         '
         'cb5
         '
-        Me.cb5.AccessibleDescription = Nothing
-        Me.cb5.AccessibleName = Nothing
         resources.ApplyResources(Me.cb5, "cb5")
-        Me.cb5.BackgroundImage = Nothing
         Me.cb5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb5.Font = Nothing
         Me.cb5.FormattingEnabled = True
         Me.cb5.Items.AddRange(New Object() {resources.GetString("cb5.Items"), resources.GetString("cb5.Items1"), resources.GetString("cb5.Items2"), resources.GetString("cb5.Items3"), resources.GetString("cb5.Items4"), resources.GetString("cb5.Items5"), resources.GetString("cb5.Items6"), resources.GetString("cb5.Items7"), resources.GetString("cb5.Items8"), resources.GetString("cb5.Items9"), resources.GetString("cb5.Items10"), resources.GetString("cb5.Items11"), resources.GetString("cb5.Items12"), resources.GetString("cb5.Items13"), resources.GetString("cb5.Items14")})
         Me.cb5.Name = "cb5"
         '
         'dgv5
         '
-        Me.dgv5.AccessibleDescription = Nothing
-        Me.dgv5.AccessibleName = Nothing
         Me.dgv5.AllowDrop = True
         Me.dgv5.AllowUserToResizeRows = False
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
@@ -210,10 +184,8 @@ Partial Class PumpCurvesEditorForm
         resources.ApplyResources(Me.dgv5, "dgv5")
         Me.dgv5.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv5.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dgv5.BackgroundImage = Nothing
         Me.dgv5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv5.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn7, Me.DataGridViewTextBoxColumn8})
-        Me.dgv5.Font = Nothing
         Me.dgv5.Name = "dgv5"
         Me.dgv5.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.dgv5.RowHeadersVisible = False
@@ -232,36 +204,23 @@ Partial Class PumpCurvesEditorForm
         '
         'Label10
         '
-        Me.Label10.AccessibleDescription = Nothing
-        Me.Label10.AccessibleName = Nothing
         resources.ApplyResources(Me.Label10, "Label10")
-        Me.Label10.Font = Nothing
         Me.Label10.Name = "Label10"
         '
         'ch5
         '
-        Me.ch5.AccessibleDescription = Nothing
-        Me.ch5.AccessibleName = Nothing
         resources.ApplyResources(Me.ch5, "ch5")
-        Me.ch5.BackgroundImage = Nothing
-        Me.ch5.Font = Nothing
         Me.ch5.Name = "ch5"
         Me.ch5.UseVisualStyleBackColor = True
         '
         'Label5
         '
-        Me.Label5.AccessibleDescription = Nothing
-        Me.Label5.AccessibleName = Nothing
         resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.Font = Nothing
         Me.Label5.Name = "Label5"
         '
         'GroupBox4
         '
-        Me.GroupBox4.AccessibleDescription = Nothing
-        Me.GroupBox4.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox4, "GroupBox4")
-        Me.GroupBox4.BackgroundImage = Nothing
         Me.GroupBox4.Controls.Add(Me.tb4)
         Me.GroupBox4.Controls.Add(Me.Label14)
         Me.GroupBox4.Controls.Add(Me.cb9)
@@ -270,65 +229,43 @@ Partial Class PumpCurvesEditorForm
         Me.GroupBox4.Controls.Add(Me.dgv4)
         Me.GroupBox4.Controls.Add(Me.Label8)
         Me.GroupBox4.Controls.Add(Me.Label1)
-        Me.GroupBox4.Font = Nothing
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.TabStop = False
         '
         'tb4
         '
-        Me.tb4.AccessibleDescription = Nothing
-        Me.tb4.AccessibleName = Nothing
         resources.ApplyResources(Me.tb4, "tb4")
-        Me.tb4.BackgroundImage = Nothing
-        Me.tb4.Font = Nothing
         Me.tb4.Name = "tb4"
         '
         'Label14
         '
-        Me.Label14.AccessibleDescription = Nothing
-        Me.Label14.AccessibleName = Nothing
         resources.ApplyResources(Me.Label14, "Label14")
-        Me.Label14.Font = Nothing
         Me.Label14.Name = "Label14"
         '
         'cb9
         '
-        Me.cb9.AccessibleDescription = Nothing
-        Me.cb9.AccessibleName = Nothing
-        resources.ApplyResources(Me.cb9, "cb9")
-        Me.cb9.BackgroundImage = Nothing
         Me.cb9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb9.Font = Nothing
         Me.cb9.FormattingEnabled = True
         Me.cb9.Items.AddRange(New Object() {resources.GetString("cb9.Items"), resources.GetString("cb9.Items1"), resources.GetString("cb9.Items2"), resources.GetString("cb9.Items3"), resources.GetString("cb9.Items4")})
+        resources.ApplyResources(Me.cb9, "cb9")
         Me.cb9.Name = "cb9"
         '
         'ch4
         '
-        Me.ch4.AccessibleDescription = Nothing
-        Me.ch4.AccessibleName = Nothing
         resources.ApplyResources(Me.ch4, "ch4")
-        Me.ch4.BackgroundImage = Nothing
-        Me.ch4.Font = Nothing
         Me.ch4.Name = "ch4"
         Me.ch4.UseVisualStyleBackColor = True
         '
         'cb4
         '
-        Me.cb4.AccessibleDescription = Nothing
-        Me.cb4.AccessibleName = Nothing
-        resources.ApplyResources(Me.cb4, "cb4")
-        Me.cb4.BackgroundImage = Nothing
         Me.cb4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb4.Font = Nothing
         Me.cb4.FormattingEnabled = True
         Me.cb4.Items.AddRange(New Object() {resources.GetString("cb4.Items"), resources.GetString("cb4.Items1"), resources.GetString("cb4.Items2"), resources.GetString("cb4.Items3"), resources.GetString("cb4.Items4"), resources.GetString("cb4.Items5"), resources.GetString("cb4.Items6"), resources.GetString("cb4.Items7"), resources.GetString("cb4.Items8"), resources.GetString("cb4.Items9"), resources.GetString("cb4.Items10"), resources.GetString("cb4.Items11"), resources.GetString("cb4.Items12"), resources.GetString("cb4.Items13"), resources.GetString("cb4.Items14")})
+        resources.ApplyResources(Me.cb4, "cb4")
         Me.cb4.Name = "cb4"
         '
         'dgv4
         '
-        Me.dgv4.AccessibleDescription = Nothing
-        Me.dgv4.AccessibleName = Nothing
         Me.dgv4.AllowDrop = True
         Me.dgv4.AllowUserToResizeRows = False
         DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
@@ -336,10 +273,8 @@ Partial Class PumpCurvesEditorForm
         resources.ApplyResources(Me.dgv4, "dgv4")
         Me.dgv4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv4.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dgv4.BackgroundImage = Nothing
         Me.dgv4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv4.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4})
-        Me.dgv4.Font = Nothing
         Me.dgv4.Name = "dgv4"
         Me.dgv4.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.dgv4.RowHeadersVisible = False
@@ -358,26 +293,17 @@ Partial Class PumpCurvesEditorForm
         '
         'Label8
         '
-        Me.Label8.AccessibleDescription = Nothing
-        Me.Label8.AccessibleName = Nothing
         resources.ApplyResources(Me.Label8, "Label8")
-        Me.Label8.Font = Nothing
         Me.Label8.Name = "Label8"
         '
         'Label1
         '
-        Me.Label1.AccessibleDescription = Nothing
-        Me.Label1.AccessibleName = Nothing
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.Font = Nothing
         Me.Label1.Name = "Label1"
         '
         'GroupBox3
         '
-        Me.GroupBox3.AccessibleDescription = Nothing
-        Me.GroupBox3.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox3, "GroupBox3")
-        Me.GroupBox3.BackgroundImage = Nothing
         Me.GroupBox3.Controls.Add(Me.tb3)
         Me.GroupBox3.Controls.Add(Me.Label13)
         Me.GroupBox3.Controls.Add(Me.cb8)
@@ -386,65 +312,43 @@ Partial Class PumpCurvesEditorForm
         Me.GroupBox3.Controls.Add(Me.dgv3)
         Me.GroupBox3.Controls.Add(Me.Label9)
         Me.GroupBox3.Controls.Add(Me.Label4)
-        Me.GroupBox3.Font = Nothing
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.TabStop = False
         '
         'tb3
         '
-        Me.tb3.AccessibleDescription = Nothing
-        Me.tb3.AccessibleName = Nothing
         resources.ApplyResources(Me.tb3, "tb3")
-        Me.tb3.BackgroundImage = Nothing
-        Me.tb3.Font = Nothing
         Me.tb3.Name = "tb3"
         '
         'Label13
         '
-        Me.Label13.AccessibleDescription = Nothing
-        Me.Label13.AccessibleName = Nothing
         resources.ApplyResources(Me.Label13, "Label13")
-        Me.Label13.Font = Nothing
         Me.Label13.Name = "Label13"
         '
         'cb8
         '
-        Me.cb8.AccessibleDescription = Nothing
-        Me.cb8.AccessibleName = Nothing
-        resources.ApplyResources(Me.cb8, "cb8")
-        Me.cb8.BackgroundImage = Nothing
         Me.cb8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb8.Font = Nothing
         Me.cb8.FormattingEnabled = True
         Me.cb8.Items.AddRange(New Object() {resources.GetString("cb8.Items"), resources.GetString("cb8.Items1")})
+        resources.ApplyResources(Me.cb8, "cb8")
         Me.cb8.Name = "cb8"
         '
         'cb3
         '
-        Me.cb3.AccessibleDescription = Nothing
-        Me.cb3.AccessibleName = Nothing
-        resources.ApplyResources(Me.cb3, "cb3")
-        Me.cb3.BackgroundImage = Nothing
         Me.cb3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb3.Font = Nothing
         Me.cb3.FormattingEnabled = True
         Me.cb3.Items.AddRange(New Object() {resources.GetString("cb3.Items"), resources.GetString("cb3.Items1"), resources.GetString("cb3.Items2"), resources.GetString("cb3.Items3"), resources.GetString("cb3.Items4"), resources.GetString("cb3.Items5"), resources.GetString("cb3.Items6"), resources.GetString("cb3.Items7"), resources.GetString("cb3.Items8"), resources.GetString("cb3.Items9"), resources.GetString("cb3.Items10"), resources.GetString("cb3.Items11"), resources.GetString("cb3.Items12"), resources.GetString("cb3.Items13"), resources.GetString("cb3.Items14")})
+        resources.ApplyResources(Me.cb3, "cb3")
         Me.cb3.Name = "cb3"
         '
         'ch3
         '
-        Me.ch3.AccessibleDescription = Nothing
-        Me.ch3.AccessibleName = Nothing
         resources.ApplyResources(Me.ch3, "ch3")
-        Me.ch3.BackgroundImage = Nothing
-        Me.ch3.Font = Nothing
         Me.ch3.Name = "ch3"
         Me.ch3.UseVisualStyleBackColor = True
         '
         'dgv3
         '
-        Me.dgv3.AccessibleDescription = Nothing
-        Me.dgv3.AccessibleName = Nothing
         Me.dgv3.AllowDrop = True
         Me.dgv3.AllowUserToResizeRows = False
         DataGridViewCellStyle3.BackColor = System.Drawing.Color.WhiteSmoke
@@ -452,10 +356,8 @@ Partial Class PumpCurvesEditorForm
         resources.ApplyResources(Me.dgv3, "dgv3")
         Me.dgv3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv3.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dgv3.BackgroundImage = Nothing
         Me.dgv3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv3.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6})
-        Me.dgv3.Font = Nothing
         Me.dgv3.Name = "dgv3"
         Me.dgv3.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.dgv3.RowHeadersVisible = False
@@ -474,26 +376,17 @@ Partial Class PumpCurvesEditorForm
         '
         'Label9
         '
-        Me.Label9.AccessibleDescription = Nothing
-        Me.Label9.AccessibleName = Nothing
         resources.ApplyResources(Me.Label9, "Label9")
-        Me.Label9.Font = Nothing
         Me.Label9.Name = "Label9"
         '
         'Label4
         '
-        Me.Label4.AccessibleDescription = Nothing
-        Me.Label4.AccessibleName = Nothing
         resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.Font = Nothing
         Me.Label4.Name = "Label4"
         '
         'GroupBox2
         '
-        Me.GroupBox2.AccessibleDescription = Nothing
-        Me.GroupBox2.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.BackgroundImage = Nothing
         Me.GroupBox2.Controls.Add(Me.tb2)
         Me.GroupBox2.Controls.Add(Me.Label12)
         Me.GroupBox2.Controls.Add(Me.cb7)
@@ -502,65 +395,43 @@ Partial Class PumpCurvesEditorForm
         Me.GroupBox2.Controls.Add(Me.dgv2)
         Me.GroupBox2.Controls.Add(Me.Label2)
         Me.GroupBox2.Controls.Add(Me.Label7)
-        Me.GroupBox2.Font = Nothing
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
         'tb2
         '
-        Me.tb2.AccessibleDescription = Nothing
-        Me.tb2.AccessibleName = Nothing
         resources.ApplyResources(Me.tb2, "tb2")
-        Me.tb2.BackgroundImage = Nothing
-        Me.tb2.Font = Nothing
         Me.tb2.Name = "tb2"
         '
         'Label12
         '
-        Me.Label12.AccessibleDescription = Nothing
-        Me.Label12.AccessibleName = Nothing
         resources.ApplyResources(Me.Label12, "Label12")
-        Me.Label12.Font = Nothing
         Me.Label12.Name = "Label12"
         '
         'cb7
         '
-        Me.cb7.AccessibleDescription = Nothing
-        Me.cb7.AccessibleName = Nothing
-        resources.ApplyResources(Me.cb7, "cb7")
-        Me.cb7.BackgroundImage = Nothing
         Me.cb7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb7.Font = Nothing
         Me.cb7.FormattingEnabled = True
         Me.cb7.Items.AddRange(New Object() {resources.GetString("cb7.Items"), resources.GetString("cb7.Items1"), resources.GetString("cb7.Items2"), resources.GetString("cb7.Items3"), resources.GetString("cb7.Items4"), resources.GetString("cb7.Items5"), resources.GetString("cb7.Items6"), resources.GetString("cb7.Items7"), resources.GetString("cb7.Items8"), resources.GetString("cb7.Items9")})
+        resources.ApplyResources(Me.cb7, "cb7")
         Me.cb7.Name = "cb7"
         '
         'ch2
         '
-        Me.ch2.AccessibleDescription = Nothing
-        Me.ch2.AccessibleName = Nothing
         resources.ApplyResources(Me.ch2, "ch2")
-        Me.ch2.BackgroundImage = Nothing
-        Me.ch2.Font = Nothing
         Me.ch2.Name = "ch2"
         Me.ch2.UseVisualStyleBackColor = True
         '
         'cb2
         '
-        Me.cb2.AccessibleDescription = Nothing
-        Me.cb2.AccessibleName = Nothing
-        resources.ApplyResources(Me.cb2, "cb2")
-        Me.cb2.BackgroundImage = Nothing
         Me.cb2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb2.Font = Nothing
         Me.cb2.FormattingEnabled = True
         Me.cb2.Items.AddRange(New Object() {resources.GetString("cb2.Items"), resources.GetString("cb2.Items1"), resources.GetString("cb2.Items2"), resources.GetString("cb2.Items3"), resources.GetString("cb2.Items4"), resources.GetString("cb2.Items5"), resources.GetString("cb2.Items6"), resources.GetString("cb2.Items7"), resources.GetString("cb2.Items8"), resources.GetString("cb2.Items9"), resources.GetString("cb2.Items10"), resources.GetString("cb2.Items11"), resources.GetString("cb2.Items12"), resources.GetString("cb2.Items13"), resources.GetString("cb2.Items14")})
+        resources.ApplyResources(Me.cb2, "cb2")
         Me.cb2.Name = "cb2"
         '
         'dgv2
         '
-        Me.dgv2.AccessibleDescription = Nothing
-        Me.dgv2.AccessibleName = Nothing
         Me.dgv2.AllowDrop = True
         Me.dgv2.AllowUserToResizeRows = False
         DataGridViewCellStyle4.BackColor = System.Drawing.Color.WhiteSmoke
@@ -568,10 +439,8 @@ Partial Class PumpCurvesEditorForm
         resources.ApplyResources(Me.dgv2, "dgv2")
         Me.dgv2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv2.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dgv2.BackgroundImage = Nothing
         Me.dgv2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2})
-        Me.dgv2.Font = Nothing
         Me.dgv2.Name = "dgv2"
         Me.dgv2.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.dgv2.RowHeadersVisible = False
@@ -590,26 +459,17 @@ Partial Class PumpCurvesEditorForm
         '
         'Label2
         '
-        Me.Label2.AccessibleDescription = Nothing
-        Me.Label2.AccessibleName = Nothing
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.Font = Nothing
         Me.Label2.Name = "Label2"
         '
         'Label7
         '
-        Me.Label7.AccessibleDescription = Nothing
-        Me.Label7.AccessibleName = Nothing
         resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.Font = Nothing
         Me.Label7.Name = "Label7"
         '
         'GroupBox1
         '
-        Me.GroupBox1.AccessibleDescription = Nothing
-        Me.GroupBox1.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox1, "GroupBox1")
-        Me.GroupBox1.BackgroundImage = Nothing
         Me.GroupBox1.Controls.Add(Me.tb1)
         Me.GroupBox1.Controls.Add(Me.Label11)
         Me.GroupBox1.Controls.Add(Me.cb6)
@@ -618,43 +478,29 @@ Partial Class PumpCurvesEditorForm
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.cb1)
         Me.GroupBox1.Controls.Add(Me.Label6)
-        Me.GroupBox1.Font = Nothing
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
         'tb1
         '
-        Me.tb1.AccessibleDescription = Nothing
-        Me.tb1.AccessibleName = Nothing
         resources.ApplyResources(Me.tb1, "tb1")
-        Me.tb1.BackgroundImage = Nothing
-        Me.tb1.Font = Nothing
         Me.tb1.Name = "tb1"
         '
         'Label11
         '
-        Me.Label11.AccessibleDescription = Nothing
-        Me.Label11.AccessibleName = Nothing
         resources.ApplyResources(Me.Label11, "Label11")
-        Me.Label11.Font = Nothing
         Me.Label11.Name = "Label11"
         '
         'cb6
         '
-        Me.cb6.AccessibleDescription = Nothing
-        Me.cb6.AccessibleName = Nothing
-        resources.ApplyResources(Me.cb6, "cb6")
-        Me.cb6.BackgroundImage = Nothing
         Me.cb6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb6.Font = Nothing
         Me.cb6.FormattingEnabled = True
         Me.cb6.Items.AddRange(New Object() {resources.GetString("cb6.Items"), resources.GetString("cb6.Items1"), resources.GetString("cb6.Items2"), resources.GetString("cb6.Items3"), resources.GetString("cb6.Items4")})
+        resources.ApplyResources(Me.cb6, "cb6")
         Me.cb6.Name = "cb6"
         '
         'dgv1
         '
-        Me.dgv1.AccessibleDescription = Nothing
-        Me.dgv1.AccessibleName = Nothing
         Me.dgv1.AllowDrop = True
         Me.dgv1.AllowUserToResizeRows = False
         DataGridViewCellStyle5.BackColor = System.Drawing.Color.WhiteSmoke
@@ -662,10 +508,8 @@ Partial Class PumpCurvesEditorForm
         resources.ApplyResources(Me.dgv1, "dgv1")
         Me.dgv1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dgv1.BackgroundImage = Nothing
         Me.dgv1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgv1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.vap, Me.temp})
-        Me.dgv1.Font = Nothing
         Me.dgv1.Name = "dgv1"
         Me.dgv1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.dgv1.RowHeadersVisible = False
@@ -684,58 +528,39 @@ Partial Class PumpCurvesEditorForm
         '
         'ch1
         '
-        Me.ch1.AccessibleDescription = Nothing
-        Me.ch1.AccessibleName = Nothing
         resources.ApplyResources(Me.ch1, "ch1")
-        Me.ch1.BackgroundImage = Nothing
-        Me.ch1.Font = Nothing
         Me.ch1.Name = "ch1"
         Me.ch1.UseVisualStyleBackColor = True
         '
         'Label3
         '
-        Me.Label3.AccessibleDescription = Nothing
-        Me.Label3.AccessibleName = Nothing
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.Font = Nothing
         Me.Label3.Name = "Label3"
         '
         'cb1
         '
-        Me.cb1.AccessibleDescription = Nothing
-        Me.cb1.AccessibleName = Nothing
-        resources.ApplyResources(Me.cb1, "cb1")
-        Me.cb1.BackgroundImage = Nothing
         Me.cb1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cb1.Font = Nothing
         Me.cb1.FormattingEnabled = True
         Me.cb1.Items.AddRange(New Object() {resources.GetString("cb1.Items"), resources.GetString("cb1.Items1"), resources.GetString("cb1.Items2"), resources.GetString("cb1.Items3"), resources.GetString("cb1.Items4"), resources.GetString("cb1.Items5"), resources.GetString("cb1.Items6"), resources.GetString("cb1.Items7"), resources.GetString("cb1.Items8"), resources.GetString("cb1.Items9"), resources.GetString("cb1.Items10"), resources.GetString("cb1.Items11"), resources.GetString("cb1.Items12"), resources.GetString("cb1.Items13"), resources.GetString("cb1.Items14")})
+        resources.ApplyResources(Me.cb1, "cb1")
         Me.cb1.Name = "cb1"
         '
         'Label6
         '
-        Me.Label6.AccessibleDescription = Nothing
-        Me.Label6.AccessibleName = Nothing
         resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.Font = Nothing
         Me.Label6.Name = "Label6"
         '
         'FaTabStripItem2
         '
-        Me.FaTabStripItem2.AccessibleDescription = Nothing
-        Me.FaTabStripItem2.AccessibleName = Nothing
-        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         Me.FaTabStripItem2.CanClose = False
         Me.FaTabStripItem2.Controls.Add(Me.GroupBox7)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         '
         'GroupBox7
         '
-        Me.GroupBox7.AccessibleDescription = Nothing
-        Me.GroupBox7.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox7, "GroupBox7")
-        Me.GroupBox7.BackgroundImage = Nothing
         Me.GroupBox7.Controls.Add(Me.Label17)
         Me.GroupBox7.Controls.Add(Me.Label18)
         Me.GroupBox7.Controls.Add(Me.cbeffunit)
@@ -745,118 +570,81 @@ Partial Class PumpCurvesEditorForm
         Me.GroupBox7.Controls.Add(Me.Label16)
         Me.GroupBox7.Controls.Add(Me.cbflowunit)
         Me.GroupBox7.Controls.Add(Me.chart1)
-        Me.GroupBox7.Font = Nothing
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.TabStop = False
         '
         'Label17
         '
-        Me.Label17.AccessibleDescription = Nothing
-        Me.Label17.AccessibleName = Nothing
         resources.ApplyResources(Me.Label17, "Label17")
-        Me.Label17.Font = Nothing
         Me.Label17.Name = "Label17"
         '
         'Label18
         '
-        Me.Label18.AccessibleDescription = Nothing
-        Me.Label18.AccessibleName = Nothing
         resources.ApplyResources(Me.Label18, "Label18")
-        Me.Label18.Font = Nothing
         Me.Label18.Name = "Label18"
         '
         'cbeffunit
         '
-        Me.cbeffunit.AccessibleDescription = Nothing
-        Me.cbeffunit.AccessibleName = Nothing
-        resources.ApplyResources(Me.cbeffunit, "cbeffunit")
-        Me.cbeffunit.BackgroundImage = Nothing
         Me.cbeffunit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbeffunit.Font = Nothing
         Me.cbeffunit.FormattingEnabled = True
         Me.cbeffunit.Items.AddRange(New Object() {resources.GetString("cbeffunit.Items"), resources.GetString("cbeffunit.Items1")})
+        resources.ApplyResources(Me.cbeffunit, "cbeffunit")
         Me.cbeffunit.Name = "cbeffunit"
         '
         'Label19
         '
-        Me.Label19.AccessibleDescription = Nothing
-        Me.Label19.AccessibleName = Nothing
         resources.ApplyResources(Me.Label19, "Label19")
-        Me.Label19.Font = Nothing
         Me.Label19.Name = "Label19"
         '
         'cbpowerunit
         '
-        Me.cbpowerunit.AccessibleDescription = Nothing
-        Me.cbpowerunit.AccessibleName = Nothing
-        resources.ApplyResources(Me.cbpowerunit, "cbpowerunit")
-        Me.cbpowerunit.BackgroundImage = Nothing
         Me.cbpowerunit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbpowerunit.Font = Nothing
         Me.cbpowerunit.FormattingEnabled = True
         Me.cbpowerunit.Items.AddRange(New Object() {resources.GetString("cbpowerunit.Items"), resources.GetString("cbpowerunit.Items1"), resources.GetString("cbpowerunit.Items2"), resources.GetString("cbpowerunit.Items3"), resources.GetString("cbpowerunit.Items4"), resources.GetString("cbpowerunit.Items5"), resources.GetString("cbpowerunit.Items6"), resources.GetString("cbpowerunit.Items7"), resources.GetString("cbpowerunit.Items8"), resources.GetString("cbpowerunit.Items9")})
+        resources.ApplyResources(Me.cbpowerunit, "cbpowerunit")
         Me.cbpowerunit.Name = "cbpowerunit"
         '
         'cbheadunit
         '
-        Me.cbheadunit.AccessibleDescription = Nothing
-        Me.cbheadunit.AccessibleName = Nothing
-        resources.ApplyResources(Me.cbheadunit, "cbheadunit")
-        Me.cbheadunit.BackgroundImage = Nothing
         Me.cbheadunit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbheadunit.Font = Nothing
         Me.cbheadunit.FormattingEnabled = True
         Me.cbheadunit.Items.AddRange(New Object() {resources.GetString("cbheadunit.Items"), resources.GetString("cbheadunit.Items1"), resources.GetString("cbheadunit.Items2"), resources.GetString("cbheadunit.Items3"), resources.GetString("cbheadunit.Items4")})
+        resources.ApplyResources(Me.cbheadunit, "cbheadunit")
         Me.cbheadunit.Name = "cbheadunit"
         '
         'Label16
         '
-        Me.Label16.AccessibleDescription = Nothing
-        Me.Label16.AccessibleName = Nothing
         resources.ApplyResources(Me.Label16, "Label16")
-        Me.Label16.Font = Nothing
         Me.Label16.Name = "Label16"
         '
         'cbflowunit
         '
-        Me.cbflowunit.AccessibleDescription = Nothing
-        Me.cbflowunit.AccessibleName = Nothing
-        resources.ApplyResources(Me.cbflowunit, "cbflowunit")
-        Me.cbflowunit.BackgroundImage = Nothing
         Me.cbflowunit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbflowunit.Font = Nothing
         Me.cbflowunit.FormattingEnabled = True
         Me.cbflowunit.Items.AddRange(New Object() {resources.GetString("cbflowunit.Items"), resources.GetString("cbflowunit.Items1"), resources.GetString("cbflowunit.Items2"), resources.GetString("cbflowunit.Items3"), resources.GetString("cbflowunit.Items4"), resources.GetString("cbflowunit.Items5"), resources.GetString("cbflowunit.Items6"), resources.GetString("cbflowunit.Items7"), resources.GetString("cbflowunit.Items8"), resources.GetString("cbflowunit.Items9"), resources.GetString("cbflowunit.Items10"), resources.GetString("cbflowunit.Items11"), resources.GetString("cbflowunit.Items12"), resources.GetString("cbflowunit.Items13"), resources.GetString("cbflowunit.Items14")})
+        resources.ApplyResources(Me.cbflowunit, "cbflowunit")
         Me.cbflowunit.Name = "cbflowunit"
         '
         'chart1
         '
-        Me.chart1.AccessibleDescription = Nothing
-        Me.chart1.AccessibleName = Nothing
         resources.ApplyResources(Me.chart1, "chart1")
-        Me.chart1.BackgroundImage = Nothing
         Me.chart1.IsAntiAlias = True
         Me.chart1.IsAutoScrollRange = True
         Me.chart1.Name = "chart1"
-        Me.chart1.ScrollGrace = 0
-        Me.chart1.ScrollMaxX = 0
-        Me.chart1.ScrollMaxY = 0
-        Me.chart1.ScrollMaxY2 = 0
-        Me.chart1.ScrollMinX = 0
-        Me.chart1.ScrollMinY = 0
-        Me.chart1.ScrollMinY2 = 0
+        Me.chart1.ScrollGrace = 0.0R
+        Me.chart1.ScrollMaxX = 0.0R
+        Me.chart1.ScrollMaxY = 0.0R
+        Me.chart1.ScrollMaxY2 = 0.0R
+        Me.chart1.ScrollMinX = 0.0R
+        Me.chart1.ScrollMinY = 0.0R
+        Me.chart1.ScrollMinY2 = 0.0R
         '
         'PumpCurvesEditorForm
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.FaTabStrip1)
-        Me.Font = Nothing
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.Icon = Nothing
         Me.Name = "PumpCurvesEditorForm"
         Me.ShowInTaskbar = False
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()

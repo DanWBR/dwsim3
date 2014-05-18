@@ -3761,6 +3761,11 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
         Me.FrmOptions.ShowDialog(Me)
     End Sub
 
+    Private Sub FormMain_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
+
+        'Load help - no special topic
+        DWSIM.App.HelpRequested("frame.htm")
+    End Sub
 #End Region
 
 #Region "    Backup/Update"
@@ -3837,9 +3842,4 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
 
 #End Region
 
-    Private Sub FormMain_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
-
-        'Load help - no special topic
-        DWSIM.App.HelpRequested("frame.htm")
-    End Sub
 End Class

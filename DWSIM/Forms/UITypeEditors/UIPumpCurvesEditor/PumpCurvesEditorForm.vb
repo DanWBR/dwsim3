@@ -561,4 +561,7 @@
 
     End Sub
 
+    Private Sub PumpCurvesEditorForm_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
+        DWSIM.App.HelpRequested("SO_PumpCurveEditor.htm")
+    End Sub
 End Class
