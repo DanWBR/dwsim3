@@ -312,7 +312,7 @@ Imports DWSIM.DWSIM.GraphicObjects
 
     End Sub
 
-    Private Sub FormChild_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
+    Public Sub FormChild_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
 
         If Not Me.m_IsLoadedFromFile Then
             With Me.FrmStSim1
