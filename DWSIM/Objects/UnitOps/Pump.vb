@@ -1,5 +1,5 @@
-﻿'    Centrifugal Pump Calculation Routines 
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Centrifugal Pump Calculation Routines 
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -623,7 +623,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     Me.DeltaT = T2 - Ti
 
-                    Me.NPSH = (Pi - Me.PropertyPackage.DW_CalcPVAP_ISOL(Ti)) / (rho_li * 9.81)
+                    Dim Pbub As Double '= Me.PropertyPackage.DW_CalcPVAP_ISOL(Ti)
+
+                    Try
+                        Pbub = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.VAP, Ti, 0.0#, Pi)(3)
+                        Me.NPSH = (Pi - Pbub) / (rho_li * 9.81)
+                    Catch ex As Exception
+                        Me.NPSH = Double.PositiveInfinity
+                    End Try
 
                     'Corrente de energia - atualizar valor da potência (kJ/s)
                     With form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name)
@@ -648,7 +655,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     Me.DeltaT = T2 - Ti
 
-                    Me.NPSH = (Pi - Me.PropertyPackage.DW_CalcPVAP_ISOL(Ti)) / (rho_li * 9.81)
+                    Dim Pbub As Double '= Me.PropertyPackage.DW_CalcPVAP_ISOL(Ti)
+
+                    Try
+                        Pbub = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.VAP, Ti, 0.0#, Pi)(3)
+                        Me.NPSH = (Pi - Pbub) / (rho_li * 9.81)
+                    Catch ex As Exception
+                        Me.NPSH = Double.PositiveInfinity
+                    End Try
 
                     'Corrente de energia - atualizar valor da potência (kJ/s)
                     With form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name)
