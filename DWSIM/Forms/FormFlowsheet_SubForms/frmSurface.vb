@@ -633,6 +633,17 @@ Public Class frmSurface
                             Else
 
                                 Me.m_qt = obj.TabelaRapida
+
+                                If Not Me.m_qt Is Nothing Then
+                                    If FlowsheetDesignSurface.AutoScrollPosition.X + px2.X * FlowsheetDesignSurface.Zoom + m_qt.Width * FlowsheetDesignSurface.Zoom > FlowsheetDesignSurface.ClientRectangle.Width Then
+                                        px2.X -= 50 + m_qt.Width / FlowsheetDesignSurface.Zoom
+                                    End If
+                                    If FlowsheetDesignSurface.AutoScrollPosition.Y + px2.Y * FlowsheetDesignSurface.Zoom + m_qt.Height * FlowsheetDesignSurface.Zoom > FlowsheetDesignSurface.ClientRectangle.Height Then
+                                        px2.Y -= 50 + m_qt.Height / FlowsheetDesignSurface.Zoom
+                                    End If
+                                    Me.m_qt.SetPosition(px2)
+                                End If
+
                                 If Not Me.FlowsheetDesignSurface.drawingObjects.Contains(obj.TabelaRapida) Then
                                     obj.TabelaRapida.BaseOwner = obj
                                     Me.FlowsheetDesignSurface.drawingObjects.Add(obj.TabelaRapida)
@@ -673,7 +684,7 @@ Public Class frmSurface
 
         End If
 
-        If Not Me.m_qt Is Nothing Then Me.m_qt.SetPosition(px2)
+        'If Not Me.m_qt Is Nothing Then Me.m_qt.SetPosition(px2)
         Me.FlowsheetDesignSurface.Invalidate()
 
     End Sub
