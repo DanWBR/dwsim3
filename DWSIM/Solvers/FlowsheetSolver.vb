@@ -150,7 +150,7 @@ Namespace DWSIM.Flowsheet
                             End If
                         End If
                     Case Else
-                        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Then
+                        If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Or objArgs.Emissor = "FlowsheetSolver" Then
                             Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
                             myObj.GraphicObject.Calculated = False
                             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])")
