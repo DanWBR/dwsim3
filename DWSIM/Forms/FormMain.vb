@@ -2511,6 +2511,7 @@ Public Class FormMain
         form.Show()
         form.MdiParent = Me
 
+        form.FormChild_Shown(Me, New EventArgs)
         'form.FrmStSim1.Init()
 
         form.Invalidate()
