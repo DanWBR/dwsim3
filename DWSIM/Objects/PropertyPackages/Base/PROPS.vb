@@ -25,7 +25,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
         End Sub
 
         Function Cpl_rb(cpig As Double, T As Double, Tc As Double, w As Double, MW As Double) As Double
-
             'liquid heat capacity by Rownlinson/Bondi correlation
 
             'cpig = ideal gas heat capacity, kJ/kg.K
@@ -197,16 +196,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 tmpcor = tmp * (1 - c * Math.Log((beta + P) / (beta + Pvp)))
 
                 liq_dens_rackett = 0.001 * MM / (tmpcor * 0.000001) 'kg/m3 ''''m3/mol
-
             Else
-
                 liq_dens_rackett = 0.001 * MM / (tmp * 0.000001) 'kg/m3 ''''m3/mol
-
             End If
-
-
-
-
         End Function
 
         Function JT_Goldzberg(ByVal T As Double, ByVal Tpc As Double, ByVal Ppc As Double, ByVal Cp As Double, ByVal fluido As Double, ByVal SG As Double)
@@ -678,35 +670,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
-            Dim tv
-            Dim tv2
 
             If Not IsNumeric(temp1) Then
-
-                If temp1(0, 0) > temp1(1, 0) Then
-                    tv = temp1(1, 0)
-                    tv2 = temp1(1, 1)
-                    temp1(1, 0) = temp1(0, 0)
-                    temp1(0, 0) = tv
-                    temp1(1, 1) = temp1(0, 1)
-                    temp1(0, 1) = tv2
-                End If
-                If temp1(0, 0) > temp1(2, 0) Then
-                    tv = temp1(2, 0)
-                    temp1(2, 0) = temp1(0, 0)
-                    temp1(0, 0) = tv
-                    tv2 = temp1(2, 1)
-                    temp1(2, 1) = temp1(0, 1)
-                    temp1(0, 1) = tv2
-                End If
-                If temp1(1, 0) > temp1(2, 0) Then
-                    tv = temp1(2, 0)
-                    temp1(2, 0) = temp1(1, 0)
-                    temp1(1, 0) = tv
-                    tv2 = temp1(2, 1)
-                    temp1(2, 1) = temp1(1, 1)
-                    temp1(1, 1) = tv2
-                End If
+                temp1 = SortRoots(temp1)
 
                 If TIPO = "L" Then
                     Z = temp1(0, 0)
