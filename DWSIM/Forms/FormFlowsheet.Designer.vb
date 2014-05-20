@@ -50,6 +50,7 @@ Partial Class FormFlowsheet
         Me.TSTBZoom = New System.Windows.Forms.ToolStripTextBox()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton20 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton18 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
@@ -189,7 +190,7 @@ Partial Class FormFlowsheet
         'ToolStrip4
         '
         resources.ApplyResources(Me.ToolStrip4, "ToolStrip4")
-        Me.ToolStrip4.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel4, Me.TSBtabela, Me.TSBTexto, Me.ToolStripButton19, Me.ToolStripButton12, Me.ToolStripSeparator5, Me.ToolStripButton1, Me.TSTBZoom, Me.ToolStripButton2, Me.ToolStripButton20, Me.ToolStripSeparator6, Me.ToolStripButton18, Me.ToolStripButton6, Me.ToolStripButton11, Me.ToolStripButton10, Me.ToolStripSeparator4, Me.ToolStripButton16, Me.ToolStripButton17})
+        Me.ToolStrip4.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel4, Me.TSBtabela, Me.TSBTexto, Me.ToolStripButton19, Me.ToolStripButton12, Me.ToolStripSeparator5, Me.ToolStripButton1, Me.TSTBZoom, Me.ToolStripButton2, Me.ToolStripButton20, Me.ToolStripButton3, Me.ToolStripSeparator6, Me.ToolStripButton18, Me.ToolStripButton6, Me.ToolStripButton11, Me.ToolStripButton10, Me.ToolStripSeparator4, Me.ToolStripButton16, Me.ToolStripButton17})
         Me.ToolStrip4.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.ToolStrip4.Name = "ToolStrip4"
         '
@@ -256,9 +257,16 @@ Partial Class FormFlowsheet
         'ToolStripButton20
         '
         Me.ToolStripButton20.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton20.Image = Global.DWSIM.My.Resources.Resources.zoom
+        Me.ToolStripButton20.Image = Global.DWSIM.My.Resources.Resources.zoom_extend
         resources.ApplyResources(Me.ToolStripButton20, "ToolStripButton20")
         Me.ToolStripButton20.Name = "ToolStripButton20"
+        '
+        'ToolStripButton3
+        '
+        Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.zoom_refresh
+        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
+        Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'ToolStripSeparator6
         '
@@ -443,7 +451,7 @@ Partial Class FormFlowsheet
         Me.TSTable.IsDrawn = True
         Me.TSTable.Name = "TSTable"
         resources.ApplyResources(Me.TSTable, "TSTable")
-        Me.TSTable.Title = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.TSTable.Title = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         '
         'ToolStrip2
         '
@@ -1292,4 +1300,5 @@ Partial Class FormFlowsheet
     Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents TSMISolidsSeparator As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents TSMIFilter As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripButton3 As System.Windows.Forms.ToolStripButton
 End Class

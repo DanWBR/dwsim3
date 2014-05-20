@@ -22,6 +22,7 @@ Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.PipingOps
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports System.Globalization
 Imports System.Reflection
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.PipingOps
 
@@ -194,7 +195,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected _curveflow As Double
 
         Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
-            Return MyBase.LoadData(data)
+
+            MyBase.LoadData(data)
+
+            m_curves = New Dictionary(Of String, UnitOps.Auxiliary.PipingOps.Curve)
+
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "Curves").Elements.ToList
+                Dim cv As New Curve()
+                cv.LoadData(xel.Elements.ToList)
+                m_curves.Add(cv.ID, cv)
+            Next
+
+            Return True
+
         End Function
 
         Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)

@@ -1173,6 +1173,12 @@ Imports DWSIM.DWSIM.GraphicObjects
         Me.TSTBZoom.Text = Format(Me.FormSurface.FlowsheetDesignSurface.Zoom, "#%")
     End Sub
 
+    Private Sub ToolStripButton3_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripButton3.Click
+        Me.FormSurface.FlowsheetDesignSurface.Zoom = 1
+        Me.TSTBZoom.Text = Format(Me.FormSurface.FlowsheetDesignSurface.Zoom, "#%")
+        Me.FormSurface.FlowsheetDesignSurface.Invalidate()
+    End Sub
+
     Private Sub TSTBZoom_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TSTBZoom.KeyDown
         If e.KeyCode = Keys.Enter Then
             Me.FormSurface.FlowsheetDesignSurface.Zoom = CInt(Me.TSTBZoom.Text.Replace("%", "")) / 100

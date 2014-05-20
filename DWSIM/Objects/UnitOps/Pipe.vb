@@ -753,7 +753,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             With form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
                 .Fases(0).SPMProperties.temperature = Tout
                 .Fases(0).SPMProperties.pressure = Pout
-                .Fases(0).SPMProperties.enthalpy = 0
+                .Fases(0).SPMProperties.enthalpy = Hout
                 Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                 For Each comp In .Fases(0).Componentes.Values
                     comp.FracaoMolar = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMolar

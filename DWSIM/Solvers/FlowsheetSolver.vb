@@ -507,6 +507,9 @@ Namespace DWSIM.Flowsheet
                     End If
                     If doparallel Then
                         My.MyApplication.IsRunningParallelTasks = True
+                        If My.Settings.EnableGPUProcessing Then
+                            My.MyApplication.gpu.EnableMultithreading()
+                        End If
                         Try
                             Dim task1 As Task = New Task(Sub()
                                                              If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
@@ -596,6 +599,11 @@ Namespace DWSIM.Flowsheet
                             For Each ex As Exception In ae.InnerExceptions
                                 Throw
                             Next
+                        Finally
+                            If My.Settings.EnableGPUProcessing Then
+                                My.MyApplication.gpu.DisableMultithreading()
+                                My.MyApplication.gpu.FreeAll()
+                            End If
                         End Try
                         My.MyApplication.IsRunningParallelTasks = False
                     Else
@@ -684,6 +692,9 @@ Namespace DWSIM.Flowsheet
                     End If
                     If doparallel Then
                         My.MyApplication.IsRunningParallelTasks = True
+                        If My.Settings.EnableGPUProcessing Then
+                            My.MyApplication.gpu.EnableMultithreading()
+                        End If
                         Try
                             Dim task1 As Task = New Task(Sub()
                                                              If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
@@ -773,6 +784,11 @@ Namespace DWSIM.Flowsheet
                             For Each ex As Exception In ae.InnerExceptions
                                 Throw
                             Next
+                        Finally
+                            If My.Settings.EnableGPUProcessing Then
+                                My.MyApplication.gpu.DisableMultithreading()
+                                My.MyApplication.gpu.FreeAll()
+                            End If
                         End Try
                         My.MyApplication.IsRunningParallelTasks = False
                     Else

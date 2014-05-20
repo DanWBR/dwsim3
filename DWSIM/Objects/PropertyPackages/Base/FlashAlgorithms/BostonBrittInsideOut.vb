@@ -199,6 +199,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             ecount = 0
 
+            R = Kb * V / (Kb * V + Kb0 * L)
+           
             Do
 
                 '--------------------------------------------------------------
@@ -234,8 +236,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Loop Until Abs(fr) < itol Or icount > maxit_i
 
                 If icount > maxit_i Then R = Rant
-                If Rant = 0.0# And R = 1.0# Then R = 0.0#
-                If Rant = 1.0# And R = 0.0# Then R = 1.0#
+                If ecount > 0 Then
+                    If Rant = 0.0# And R = 1.0# Then R = 0.0#
+                    If Rant = 1.0# And R = 0.0# Then R = 1.0#
+                End If
 
                 Me.TPErrorFunc(R)
 
