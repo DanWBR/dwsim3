@@ -1,4 +1,4 @@
-﻿'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Copyright 2008 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -294,7 +294,7 @@ Public Class SpreadsheetForm
         For i As Integer = 0 To dt1.GetUpperBound(0)
             For j As Integer = 0 To dt1.GetUpperBound(1)
                 If Double.TryParse(dt1(i, j), New Double) Then
-                    text += Double.Parse(dt1(i, j), ci) + ";"
+                    text += Double.Parse(dt1(i, j), ci).ToString + ";"
                 Else
                     text += dt1(i, j) + ";"
                 End If
@@ -477,7 +477,7 @@ Public Class SpreadsheetForm
                         ccparams.ToolTipText = DWSIM.App.GetLocalString("CellIsReading") & vbCrLf & _
                         DWSIM.App.GetLocalString("Objeto") & ": " & formc.Collections.ObjectCollection(ccparams.ObjectID).GraphicObject.Tag & vbCrLf & _
                         DWSIM.App.GetLocalString("Propriedade") & ": " & DWSIM.App.GetPropertyName(prop) & vbCrLf & _
-                        DWSIM.App.GetLocalString("CurrentValue") & ": " & Format(cell.Value, formc.Options.NumberFormat) & _
+                        DWSIM.App.GetLocalString("CurrentValue") & ": " & cell.Value & _
                         " " & formc.Collections.ObjectCollection(obj).GetPropertyUnit(prop, formc.Options.SelectedUnitSystem)
                         cell.ToolTipText = ccparams.ToolTipText
                     Else
