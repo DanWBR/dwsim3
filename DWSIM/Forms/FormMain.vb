@@ -2425,7 +2425,7 @@ Public Class FormMain
             Dim data2 As String = xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("Data2").Value
             If data1 <> "" Then form.FormSpreadsheet.CopyDT1FromString(data1)
             If data2 <> "" Then form.FormSpreadsheet.CopyDT2FromString(data2)
-        Catch ex As Exception
+         Catch ex As Exception
             excs.Add(New Exception("Error Loading Spreadsheet Information", ex))
         End Try
 
@@ -2511,12 +2511,15 @@ Public Class FormMain
         form.Show()
         form.MdiParent = Me
 
+        Try
+            form.FormSpreadsheet.EvaluateAll()
+        Catch ex As Exception
+            excs.Add(New Exception("Error Updating Spreadsheet Variables", ex))
+        End Try
+
         form.FormChild_Shown(Me, New EventArgs)
-        'form.FrmStSim1.Init()
-
+        
         form.Invalidate()
-
-        'form = Nothing
 
         If xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView") IsNot Nothing Then
             Try
