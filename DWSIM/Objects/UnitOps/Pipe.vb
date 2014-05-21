@@ -291,7 +291,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 segmento.Resultados.Clear()
 
-                If segmento.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                If segmento.Tipo = "Tubulaosimples" Then
                     j = 0
                     nseg = segmento.Incrementos
 

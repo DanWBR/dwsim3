@@ -1618,7 +1618,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 Else
                                     LoopVarF = H
                                     LoopVarX = P
-                                    T = brentsolverT.BrentOpt(10, 2000, 20, 0.0001, 1000, Nothing)
+                                    T = brentsolverT.BrentOpt(Me.AUX_TFM(Fase.Mixture), 2000, 20, 0.0001, 1000, Nothing)
                                     If xv = 0.0# Then
                                         S = Me.DW_CalcEntropy(vz, T, P, State.Liquid)
                                     Else
@@ -1841,7 +1841,7 @@ redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mix
                                 Else
                                     LoopVarF = S
                                     LoopVarX = P
-                                    T = brentsolverT.BrentOpt(10, 2000, 20, 0.0001, 1000, Nothing)
+                                    T = brentsolverT.BrentOpt(Me.AUX_TFM(Fase.Mixture), 2000, 20, 0.0001, 1000, Nothing)
                                     If xv = 0.0# Then
                                         H = Me.DW_CalcEnthalpy(vz, T, P, State.Liquid)
                                     Else
@@ -2371,7 +2371,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 Else
                                     LoopVarF = H
                                     LoopVarX = P
-                                    T = brentsolverT.BrentOpt(10, 2000, 20, 0.000000000001, 1000, Nothing)
+                                    T = brentsolverT.BrentOpt(Me.AUX_TFM(Fase.Mixture), 2000, 20, 0.000000000001, 1000, Nothing)
                                     If xv = 0.0# Then
                                         S = Me.DW_CalcEntropy(vz, T, P, State.Liquid)
                                     Else
@@ -2464,7 +2464,7 @@ redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mix
                                 Else
                                     LoopVarF = S
                                     LoopVarX = P
-                                    T = brentsolverT.BrentOpt(10, 2000, 20, 0.000000000001, 1000, Nothing)
+                                    T = brentsolverT.BrentOpt(Me.AUX_TFM(Fase.Mixture), 2000, 20, 0.000000000001, 1000, Nothing)
                                     If xv = 0.0# Then
                                         H = Me.DW_CalcEnthalpy(vz, T, P, State.Liquid)
                                     Else

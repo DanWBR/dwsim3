@@ -20,6 +20,8 @@ Namespace DWSIM.SistemasDeUnidades
 
     <System.Serializable()> Public Class Unidades
 
+        Implements XMLSerializer.Interfaces.ICustomXMLSerialization
+
         Public nome As String
 
         Public area, distance, time, volume, molar_volume, diameter, thickness, molar_conc, mass_conc, _
@@ -74,10 +76,18 @@ Namespace DWSIM.SistemasDeUnidades
         Public tpmp_logKvalue As String
         Public tpmp_surfaceTension As String
 
-
         Public Sub New()
 
         End Sub
+
+        Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
+        End Function
+
+        Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
+            Return XMLSerializer.XMLSerializer.Serialize(Me, True)
+        End Function
+
     End Class
 
     <System.Serializable()> Public Class UnidadesSI
