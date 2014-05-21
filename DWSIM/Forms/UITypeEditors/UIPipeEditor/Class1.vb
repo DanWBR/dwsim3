@@ -22,7 +22,7 @@ Imports System.Windows.Forms
 
     Inherits System.Windows.Forms.UserControl
 
-#Region "    Declarações de variáveis"
+#Region "    Declaraï¿½ï¿½es de variï¿½veis"
 
     Public Event StatusChanged(ByVal e As EventArgs, ByVal statuscode As PipeEditorStatus)
 
@@ -868,87 +868,87 @@ Imports System.Windows.Forms
 
         Dim tmp(1) As Double
 
-        'Curva Normal 90°;30,00;1;
+        'Curva Normal 90ï¿½;30,00;1;
         If name = 0 Then
             tmp(0) = 30
             tmp(1) = 1
         End If
-        'Curva Normal 45°;16,00;1;
+        'Curva Normal 45ï¿½;16,00;1;
         If name = 1 Then
             tmp(0) = 16
             tmp(1) = 1
         End If
-        'Curva Normal 180°;50,00;1;
+        'Curva Normal 180ï¿½;50,00;1;
         If name = 2 Then
             tmp(0) = 50
             tmp(1) = 1
         End If
-        'Válvula Angular;55,00;1;
+        'Vï¿½lvula Angular;55,00;1;
         If name = 3 Then
             tmp(0) = 55
             tmp(1) = 1
         End If
-        'Válvula Borboleta (2" a 14");40,00;1;
+        'Vï¿½lvula Borboleta (2" a 14");40,00;1;
         If name = 4 Then
             tmp(0) = 40
             tmp(1) = 1
         End If
-        'Válvula Esfera;3,00;1;
+        'Vï¿½lvula Esfera;3,00;1;
         If name = 5 Then
             tmp(0) = 3
             tmp(1) = 1
         End If
-        'Válvula Gaveta (Aberta);8,00;1;
+        'Vï¿½lvula Gaveta (Aberta);8,00;1;
         If name = 6 Then
             tmp(0) = 8
             tmp(1) = 1
         End If
-        'Válvula Globo;340,00;1;
+        'Vï¿½lvula Globo;340,00;1;
         If name = 7 Then
             tmp(0) = 340
             tmp(1) = 1
         End If
-        'Válvula Lift-Check;600,00;1;
+        'Vï¿½lvula Lift-Check;600,00;1;
         If name = 8 Then
             tmp(0) = 600
             tmp(1) = 1
         End If
-        'Válvula Pé (Poppet Disc);420,00;1;
+        'Vï¿½lvula Pï¿½ (Poppet Disc);420,00;1;
         If name = 9 Then
             tmp(0) = 420
             tmp(1) = 1
         End If
-        'Válvula Retenção de Portinhola;100,00;1;
+        'Vï¿½lvula Retenï¿½ï¿½o de Portinhola;100,00;1;
         If name = 10 Then
             tmp(0) = 100
             tmp(1) = 1
         End If
-        'Válvula Stop-Check (Globo);400,00;1;
+        'Vï¿½lvula Stop-Check (Globo);400,00;1;
         If name = 11 Then
             tmp(0) = 400
             tmp(1) = 1
         End If
-        'Tê (saída bilateral);20,00;1;
+        'Tï¿½ (saï¿½da bilateral);20,00;1;
         If name = 12 Then
             tmp(0) = 20
             tmp(1) = 1
         End If
-        'Tê (saída de lado);60,00;1;
+        'Tï¿½ (saï¿½da de lado);60,00;1;
         If name = 13 Then
             tmp(0) = 60
             tmp(1) = 1
         End If
-        'Contração Rápida d/D = 1/2;9,60;0;
+        'Contraï¿½ï¿½o Rï¿½pida d/D = 1/2;9,60;0;
         If name = 14 Then
             tmp(0) = 9.6
             tmp(1) = 0
         End If
-        'Contração Rápida d/D = 1/4;96,00;0;
+        'Contraï¿½ï¿½o Rï¿½pida d/D = 1/4;96,00;0;
         If name = 15 Then
             tmp(0) = 96
             tmp(1) = 0
         End If
-        'Contração Rápida d/D = 3/4;1,11;0;
+        'Contraï¿½ï¿½o Rï¿½pida d/D = 3/4;1,11;0;
         If name = 16 Then
             tmp(0) = 11
             tmp(1) = 0
@@ -963,42 +963,42 @@ Imports System.Windows.Forms
             tmp(0) = 0.78
             tmp(1) = 0
         End If
-        'Expansão Rápida d/D = 1/2;9,00;0;
+        'Expansï¿½o Rï¿½pida d/D = 1/2;9,00;0;
         If name = 19 Then
             tmp(0) = 9
             tmp(1) = 0
         End If
-        'Expansão Rápida d/D = 1/4;225,00;0;
+        'Expansï¿½o Rï¿½pida d/D = 1/4;225,00;0;
         If name = 20 Then
             tmp(0) = 225
             tmp(1) = 0
         End If
-        'Expansão Rápida d/D = 3/4;0,60;0;
+        'Expansï¿½o Rï¿½pida d/D = 3/4;0,60;0;
         If name = 21 Then
             tmp(0) = 0.6
             tmp(1) = 0
         End If
-        'Joelho em 90°;60,00;1;
+        'Joelho em 90ï¿½;60,00;1;
         If name = 22 Then
             tmp(0) = 60
             tmp(1) = 1
         End If
-        'Redução Normal 2:1;5,67;0;
+        'Reduï¿½ï¿½o Normal 2:1;5,67;0;
         If name = 23 Then
             tmp(0) = 5.67
             tmp(1) = 0
         End If
-        'Redução Normal 4:3;0,65;0;
+        'Reduï¿½ï¿½o Normal 4:3;0,65;0;
         If name = 24 Then
             tmp(0) = 0.65
             tmp(1) = 0
         End If
-        'Saída Borda;1,00;0;
+        'Saï¿½da Borda;1,00;0;
         If name = 25 Then
             tmp(0) = 1
             tmp(1) = 0
         End If
-        'Saída Normal;1,00;0;
+        'Saï¿½da Normal;1,00;0;
         If name = 26 Then
             tmp(0) = 1
             tmp(1) = 0
@@ -1197,6 +1197,9 @@ Imports System.Windows.Forms
                 v7 = Me.GridMalha.Rows(6).Cells(column.Name).Value
                 v8 = Me.GridMalha.Rows(7).Cells(column.Name).Value
                 v9 = Me.GridMalha.Rows(8).Cells(column.Name).Value
+                
+                If v2 = DWSIM.App.GetLocalString("Tubulaosimples") Then v2 = "Tubulaosimples"
+                
                 Me.Profile.Sections.Add(column.Index + 1, New PipeSection(v1, v2, v3, v4, v5, cv.Convert(Me.SystemOfUnits.distance, "m", v6), cv.Convert(Me.SystemOfUnits.distance, "m", v7), cv.Convert(Me.SystemOfUnits.diameter, "in", v8), cv.Convert(Me.SystemOfUnits.diameter, "in", v9)))
             Else
                 Label1.Text = DWSIM.App.GetLocalString("Erronasecao") & " " & column.Index + 1 & "."
