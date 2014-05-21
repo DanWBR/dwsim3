@@ -136,6 +136,30 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Component</value>
   </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Constants</value>
+  </data>
+  <data name="FaTabStripItem6.Title" xml:space="preserve">
+    <value>Molecular</value>
+  </data>
+  <data name="FaTabStripItem16.Title" xml:space="preserve">
+    <value>Liquid Phase</value>
+  </data>
+  <data name="FaTabStripItem17.Title" xml:space="preserve">
+    <value>Vapor Phase</value>
+  </data>
+  <data name="FaTabStripItem18.Title" xml:space="preserve">
+    <value>Solid Phase</value>
+  </data>
+  <data name="FaTabStripItem7.Title" xml:space="preserve">
+    <value>Data Table</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Properties</value>
+  </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Property</value>
   </data>
@@ -145,20 +169,20 @@
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>Unit</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Properties</value>
-  </data>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Constants</value>
-  </data>
-  <data name="pbRender.Size" type="System.Drawing.Size, System.Drawing">
-    <value>869, 306</value>
-  </data>
   <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
     <value>875, 326</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>2D Render</value>
+  </data>
+  <data name="pbRender.Size" type="System.Drawing.Size, System.Drawing">
+    <value>869, 306</value>
+  </data>
+  <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>875, 164</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>Molecular Structure</value>
   </data>
   <data name="tbInChI.Size" type="System.Drawing.Size, System.Drawing">
     <value>736, 21</value>
@@ -196,77 +220,41 @@
   <data name="Label2.Text" xml:space="preserve">
     <value>Formula</value>
   </data>
-  <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>875, 164</value>
-  </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>Molecular Structure</value>
-  </data>
-  <data name="FaTabStripItem6.Title" xml:space="preserve">
-    <value>Molecular</value>
-  </data>
-  <data name="GraphCp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
-  </data>
-  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
-  </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Ideal Gas Cp</value>
+    <value>Heat Capacity</value>
   </data>
-  <data name="GraphDHVAP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
+  <data name="FaTabStripItemHVAP.Title" xml:space="preserve">
+    <value>Vaporization Enthalpy</value>
   </data>
-  <data name="FaTabStripItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
-  </data>
-  <data name="FaTabStripItem5.Title" xml:space="preserve">
-    <value>Enthalpy of Vaporization</value>
-  </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
+  <data name="FaTabStripItemPVAP.Title" xml:space="preserve">
     <value>Vapor Pressure</value>
   </data>
-  <data name="GraphVisc.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
+  <data name="FaTabStripItemSURFT.Title" xml:space="preserve">
+    <value>Surface Tension</value>
   </data>
-  <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
+  <data name="FaTabStripItemLIQVISC.Title" xml:space="preserve">
+    <value>Viscosity</value>
   </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Liquid Viscosity</value>
+  <data name="FaTabStripItemLIQDENS.Title" xml:space="preserve">
+    <value>Density</value>
   </data>
-  <data name="GraphLiqDens.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
+  <data name="FaTabStripItemLIQTCOND.Title" xml:space="preserve">
+    <value>Thermal Conductivity</value>
   </data>
-  <data name="FaTabStripItem9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
+  <data name="FaTabStripItemCPIG.Title" xml:space="preserve">
+    <value>Ideal Gas Heat Capacity</value>
   </data>
-  <data name="FaTabStripItem9.Title" xml:space="preserve">
-    <value>Liquid Density</value>
+  <data name="FaTabStripItemVAPVISC.Title" xml:space="preserve">
+    <value>Viscosity</value>
   </data>
-  <data name="GraphSolidDens.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
+  <data name="FaTabStripItemVAPTCOND.Title" xml:space="preserve">
+    <value>Thermal Conductivity</value>
   </data>
-  <data name="FaTabStripItem8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
+  <data name="FaTabStripItemCPSOLID.Title" xml:space="preserve">
+    <value>Heat Capacity</value>
   </data>
-  <data name="FaTabStripItem8.Title" xml:space="preserve">
-    <value>Solid Density</value>
-  </data>
-  <data name="GraphCpSolid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
-  </data>
-  <data name="FaTabStripItem10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
-  </data>
-  <data name="FaTabStripItem10.Title" xml:space="preserve">
-    <value>Cp Solid</value>
-  </data>
-  <data name="FaTabStripItem7.Title" xml:space="preserve">
-    <value>Data Table</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>View</value>
+  <data name="FaTabStripItemSOLIDDENS.Title" xml:space="preserve">
+    <value>Density</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Utilities: Pure Component Properties</value>

@@ -370,6 +370,69 @@ Namespace DWSIM.Databases
                                         cp.Solid_Heat_Capacity_Tmax = Double.Parse(node3.Attributes("value").Value, nf)
                                 End Select
                             Next
+                        Case "VaporViscosity" 'Pa.s
+                            For Each node3 As XmlNode In node2.ChildNodes
+                                Select Case node3.Name
+                                    Case "eqno"
+                                        cp.VaporViscosityEquation = node3.Attributes("value").Value
+                                    Case "A"
+                                        cp.Vapor_Viscosity_Const_A = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "B"
+                                        cp.Vapor_Viscosity_Const_B = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "C"
+                                        cp.Vapor_Viscosity_Const_C = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "D"
+                                        cp.Vapor_Viscosity_Const_D = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "E"
+                                        cp.Vapor_Viscosity_Const_E = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "Tmin"
+                                        cp.Vapor_Viscosity_Tmin = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "Tmax"
+                                        cp.Vapor_Viscosity_Tmax = Double.Parse(node3.Attributes("value").Value, nf)
+                                End Select
+                            Next
+                        Case "VaporThermalConductivity" 'W/m/K
+                            For Each node3 As XmlNode In node2.ChildNodes
+                                Select Case node3.Name
+                                    Case "eqno"
+                                        cp.VaporThermalConductivityEquation = node3.Attributes("value").Value
+                                    Case "A"
+                                        cp.Vapor_Thermal_Conductivity_Const_A = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "B"
+                                        cp.Vapor_Thermal_Conductivity_Const_B = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "C"
+                                        cp.Vapor_Thermal_Conductivity_Const_C = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "D"
+                                        cp.Vapor_Thermal_Conductivity_Const_D = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "E"
+                                        cp.Vapor_Thermal_Conductivity_Const_E = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "Tmin"
+                                        cp.Vapor_Thermal_Conductivity_Tmin = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "Tmax"
+                                        cp.Vapor_Thermal_Conductivity_Tmax = Double.Parse(node3.Attributes("value").Value, nf)
+                                End Select
+                            Next
+                        Case "SurfaceTension" 'N/m
+                            For Each node3 As XmlNode In node2.ChildNodes
+                                Select Case node3.Name
+                                    Case "eqno"
+                                        cp.SurfaceTensionEquation = node3.Attributes("value").Value
+                                    Case "A"
+                                        cp.Surface_Tension_Const_A = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "B"
+                                        cp.Surface_Tension_Const_B = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "C"
+                                        cp.Surface_Tension_Const_C = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "D"
+                                        cp.Surface_Tension_Const_D = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "E"
+                                        cp.Surface_Tension_Const_E = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "Tmin"
+                                        cp.Surface_Tension_Tmin = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "Tmax"
+                                        cp.Surface_Tension_Tmax = Double.Parse(node3.Attributes("value").Value, nf)
+                                End Select
+                            Next
                         Case "UnifacVLE"
                             If cp.UNIFACGroups.Collection Is Nothing Then cp.UNIFACGroups.Collection = New SortedList
                             For Each node3 As XmlNode In node2.ChildNodes

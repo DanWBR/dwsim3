@@ -294,7 +294,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 .Add("PP_IDEAL_MIXRULE_LIQDENS", 0)
                 .Add("PP_FLASHALGORITHM", 2)
                 .Add("PP_USEEXPLIQDENS", 0)
-                .Add("PP_USEEXPLIQTHERMALCOND", 1)
             End With
         End Sub
 
@@ -5973,9 +5972,17 @@ Final3:
 
             For Each subst In Me.CurrentMaterialStream.Fases(1).Componentes.Values
                 If T / subst.ConstantProperties.Critical_Temperature < 1 Then
-                    nbp = subst.ConstantProperties.Normal_Boiling_Point
-                    If nbp = 0 Then nbp = 0.7 * subst.ConstantProperties.Critical_Temperature
-                    subst.TDProperties.surfaceTension = Me.m_props.sigma_bb(T, nbp, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure)
+                    With subst.ConstantProperties
+                        If .SurfaceTensionEquation <> "" And .SurfaceTensionEquation <> "0" And Not .IsIon And Not .IsSalt Then
+                            subst.TDProperties.surfaceTension = Me.CalcCSTDepProp(.SurfaceTensionEquation, .Surface_Tension_Const_A, .Surface_Tension_Const_B, .Surface_Tension_Const_C, .Surface_Tension_Const_D, .Surface_Tension_Const_E, T, .Critical_Temperature)
+                        ElseIf .IsIon Or .IsSalt Then
+                            subst.TDProperties.surfaceTension = 0.0#
+                        Else
+                            nbp = subst.ConstantProperties.Normal_Boiling_Point
+                            If nbp = 0 Then nbp = 0.7 * subst.ConstantProperties.Critical_Temperature
+                            subst.TDProperties.surfaceTension = Me.m_props.sigma_bb(T, nbp, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure)
+                        End If
+                    End With
                 Else
                     subst.TDProperties.surfaceTension = 0
                     ftotal -= subst.FracaoMolar.GetValueOrDefault
@@ -5983,6 +5990,33 @@ Final3:
                 val += subst.FracaoMolar.GetValueOrDefault * subst.TDProperties.surfaceTension.GetValueOrDefault / ftotal
             Next
 
+            Return val
+
+        End Function
+
+        Public Function AUX_SURFTi(ByVal constprop As ConstantProperties, ByVal T As Double) As Double
+
+            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
+
+            Dim val As Double = 0
+            Dim nbp As Double
+            Dim ftotal As Double = 1
+
+            If T / constprop.Critical_Temperature < 1 Then
+                With constprop
+                    If .SurfaceTensionEquation <> "" And .SurfaceTensionEquation <> "0" And Not .IsIon And Not .IsSalt Then
+                        val = Me.CalcCSTDepProp(.SurfaceTensionEquation, .Surface_Tension_Const_A, .Surface_Tension_Const_B, .Surface_Tension_Const_C, .Surface_Tension_Const_D, .Surface_Tension_Const_E, T, .Critical_Temperature)
+                    ElseIf .IsIon Or .IsSalt Then
+                        val = 0.0#
+                    Else
+                        nbp = constprop.Normal_Boiling_Point
+                        If nbp = 0 Then nbp = 0.7 * constprop.Critical_Temperature
+                        val = Me.m_props.sigma_bb(T, nbp, constprop.Critical_Temperature, constprop.Critical_Pressure)
+                    End If
+                End With
+            Else
+            End If
+            
             Return val
 
         End Function
@@ -5996,22 +6030,14 @@ Final3:
             Dim vcl(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1)
             Dim i As Integer = 0
             For Each subst In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
-                If Me.Parameters.ContainsKey("PP_USEEXPLIQTHERMALCOND") Then
-                    If CInt(Me.Parameters("PP_USEEXPLIQTHERMALCOND")) = 1 Then
-                        If subst.ConstantProperties.LiquidThermalConductivityEquation <> "" Then
-                            vcl(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidThermalConductivityEquation, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_A, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_B, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_C, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_D, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_E, T, subst.ConstantProperties.Critical_Temperature)
-                        Else
-                            vcl(i) = Me.m_props.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Molar_Weight, "")
-                        End If
-                    Else
-                        vcl(i) = Me.m_props.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Molar_Weight, "")
-                    End If
+                If subst.ConstantProperties.LiquidThermalConductivityEquation <> "" Then
+                    vcl(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidThermalConductivityEquation, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_A, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_B, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_C, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_D, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_E, T, subst.ConstantProperties.Critical_Temperature)
+                ElseIf subst.ConstantProperties.IsIon Or subst.ConstantProperties.IsSalt Then
+                    vcl(i) = 0.0#
                 Else
                     vcl(i) = Me.m_props.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Molar_Weight, "")
                 End If
-                If subst.ConstantProperties.IsIon Or subst.ConstantProperties.IsSalt Then
-                    vcl(i) = 0.0#
-                End If
+
                 i = i + 1
             Next
             val = Me.m_props.condlm_li(Me.RET_VVC, vcl, Me.RET_VMOL(Me.RET_PHASECODE(phaseid)))
@@ -6033,7 +6059,7 @@ Final3:
 
             Dim val As Double
 
-            If cprop.LiquidHeatCapacityEquation <> "" And cprop.LiquidHeatCapacityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
+            If cprop.LiquidThermalConductivityEquation <> "" And cprop.LiquidThermalConductivityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
                 val = Me.CalcCSTDepProp(cprop.LiquidThermalConductivityEquation, cprop.Liquid_Thermal_Conductivity_Const_A, cprop.Liquid_Thermal_Conductivity_Const_B, cprop.Liquid_Thermal_Conductivity_Const_C, cprop.Liquid_Thermal_Conductivity_Const_D, cprop.Liquid_Thermal_Conductivity_Const_E, T, cprop.Critical_Temperature)
             ElseIf cprop.IsIon Or cprop.IsSalt Then
                 val = 0.0#
@@ -6047,7 +6073,15 @@ Final3:
 
         Public Function AUX_VAPTHERMCONDi(ByVal cprop As ConstantProperties, ByVal T As Double, ByVal P As Double) As Double
 
-            Dim val As Double = Me.m_props.condtg_elyhanley(T, cprop.Critical_Temperature, cprop.Critical_Volume / 1000, cprop.Critical_Compressibility, cprop.Acentric_Factor, cprop.Molar_Weight, Me.AUX_CPi(cprop.Name, T) * cprop.Molar_Weight - 8.314)
+            Dim val As Double
+
+            If cprop.VaporThermalConductivityEquation <> "" And cprop.VaporThermalConductivityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
+                val = Me.CalcCSTDepProp(cprop.VaporThermalConductivityEquation, cprop.Vapor_Thermal_Conductivity_Const_A, cprop.Vapor_Thermal_Conductivity_Const_B, cprop.Vapor_Thermal_Conductivity_Const_C, cprop.Vapor_Thermal_Conductivity_Const_D, cprop.Vapor_Thermal_Conductivity_Const_E, T, cprop.Critical_Temperature)
+            ElseIf cprop.IsIon Or cprop.IsSalt Then
+                val = 0.0#
+            Else
+                val = Me.m_props.condtg_elyhanley(T, cprop.Critical_Temperature, cprop.Critical_Volume / 1000, cprop.Critical_Compressibility, cprop.Acentric_Factor, cprop.Molar_Weight, Me.AUX_CPi(cprop.Name, T) * cprop.Molar_Weight - 8.314)
+            End If
 
             Return val
 
@@ -6057,9 +6091,12 @@ Final3:
 
             If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
-            Dim val As Double
+            Dim val As Double = 0.0#
 
-            val = Me.m_props.viscg_lucas(T, Me.AUX_TCM(Fase.Vapor), Me.AUX_PCM(Fase.Vapor), Me.AUX_WM(Fase.Vapor), Me.AUX_MMM(Fase.Vapor))
+            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_VAPVISCi(subst.ConstantProperties, T)
+            Next
+
             val = Me.m_props.viscg_jossi_stiel_thodos(val, T, MM / RHO / 1000, AUX_TCM(Fase.Vapor), AUX_PCM(Fase.Vapor), AUX_VCM(Fase.Vapor), AUX_MMM(Fase.Vapor))
 
             Return val
@@ -6070,7 +6107,13 @@ Final3:
 
             Dim val As Double
 
-            val = Me.m_props.viscg_lucas(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight)
+            If cprop.VaporViscosityEquation <> "" And cprop.VaporViscosityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
+                val = Me.CalcCSTDepProp(cprop.VaporViscosityEquation, cprop.Vapor_Viscosity_Const_A, cprop.Vapor_Viscosity_Const_B, cprop.Vapor_Viscosity_Const_C, cprop.Vapor_Viscosity_Const_D, cprop.Vapor_Viscosity_Const_E, T, cprop.Critical_Temperature)
+            ElseIf cprop.IsIon Or cprop.IsSalt Then
+                val = 0.0#
+            Else
+                val = Me.m_props.viscg_lucas(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight)
+            End If
 
             Return val
 
