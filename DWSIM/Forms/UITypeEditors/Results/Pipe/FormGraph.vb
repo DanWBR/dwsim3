@@ -1,4 +1,4 @@
-﻿Public Class FormGraph
+Public Class FormGraph
     Inherits System.Windows.Forms.Form
 
     Protected m_results As PipeProfile
@@ -59,7 +59,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vx(i) = cv.ConverterDoSI(su.distance, comp_ant)
                                 comp_ant += ps.Comprimento / ps.Incrementos
@@ -82,7 +82,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vx(i) = cv.ConverterDoSI(su.spmp_pressure, res.PressaoInicial)
                                 comp_ant += ps.Comprimento / ps.Incrementos
@@ -104,7 +104,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vx(i) = cv.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial)
                                 comp_ant += ps.Comprimento / ps.Incrementos
@@ -126,7 +126,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vx(i) = cv.ConverterDoSI(su.velocity, res.LiqVel)
                                 comp_ant += ps.Comprimento / ps.Incrementos
@@ -148,7 +148,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vx(i) = cv.ConverterDoSI(su.velocity, res.VapVel)
                                 comp_ant += ps.Comprimento / ps.Incrementos
@@ -170,7 +170,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vx(i) = cv.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido)
                                 comp_ant += ps.Comprimento / ps.Incrementos
@@ -210,7 +210,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vy(i) = res.HoldupDeLiquido
                                 i += 1
@@ -231,7 +231,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vy(i) = cv.ConverterDoSI(su.distance, comp_ant)
                                 comp_ant += ps.Comprimento / ps.Incrementos
@@ -253,7 +253,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vy(i) = cv.ConverterDoSI(su.spmp_pressure, res.PressaoInicial)
                                 comp_ant += ps.Comprimento / ps.Incrementos
@@ -275,7 +275,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vy(i) = cv.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial)
                                 comp_ant += ps.Comprimento / ps.Incrementos
@@ -297,7 +297,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vy(i) = cv.ConverterDoSI(su.velocity, res.LiqVel)
                                 comp_ant += ps.Comprimento / ps.Incrementos
@@ -319,7 +319,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vy(i) = cv.ConverterDoSI(su.velocity, res.VapVel)
                                 comp_ant += ps.Comprimento / ps.Incrementos
@@ -341,7 +341,7 @@
                     Dim comp_ant As Double = 0
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
-                        If ps.Tipo = DWSIM.App.GetLocalString("Tubulaosimples") Then
+                        If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
                                 vy(i) = cv.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido)
                                 comp_ant += ps.Comprimento / ps.Incrementos
