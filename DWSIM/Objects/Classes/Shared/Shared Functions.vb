@@ -81,7 +81,7 @@ Namespace DWSIM
                 Dim sname As String = ""
                 If PropID.Split(",").Length = 2 Then
                     sname = PropID.Split(",")(1)
-                    retstr = My.MyApplication._PropertyNameManager.GetString(prop, My.MyApplication._CultureInfo) + " - " + DWSIM.App.GetComponentName(sname)
+                    retstr = My.MyApplication._PropertyNameManager.GetString(prop, My.MyApplication._CultureInfo) + " - " + DWSIM.App.GetComponentName(sname, fp)
                     If retstr Is Nothing Then Return PropID Else Return retstr
                 Else
                     retstr = My.MyApplication._PropertyNameManager.GetString(prop, My.MyApplication._CultureInfo)
@@ -97,7 +97,7 @@ Namespace DWSIM
 
         Public Shared Function GetComponentName(ByVal UniqueName As String, Optional ByRef fp As FormMain = Nothing) As String
             If Not UniqueName = "" Then
-                If fp Is Nothing Then fp = FormMain
+                If fp Is Nothing Then fp = My.Forms.FormMain
                 If fp.AvailableComponents.ContainsKey(UniqueName) Then
                     Dim str As String = GetLocalString("_" + UniqueName)
                     If UniqueName Is Nothing Then
