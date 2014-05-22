@@ -719,12 +719,6 @@
     <Compile Include="Forms\FormFlowsheet_SubForms\frmMatList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormHelpViewer.Designer.vb">
-      <DependentUpon>FormHelpViewer.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FormHelpViewer.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\FormLanguageSelection.Designer.vb">
       <DependentUpon>FormLanguageSelection.vb</DependentUpon>
     </Compile>
@@ -1133,6 +1127,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\AboutBoxMono.de.resx">
       <DependentUpon>AboutBoxMono.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBoxMono.resx">
       <DependentUpon>AboutBoxMono.vb</DependentUpon>
@@ -1142,6 +1137,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCompoundCreator.de.resx">
       <DependentUpon>FormCompoundCreator.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCompoundCreator.es.resx">
       <DependentUpon>FormCompoundCreator.vb</DependentUpon>
@@ -1366,14 +1362,6 @@
     <EmbeddedResource Include="Forms\FormConfigureTable.en.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormConfigureTable.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormHelpViewer.en.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormHelpViewer.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormHelpViewer.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormHelpViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormLanguageSelection.resx">
       <SubType>Designer</SubType>
@@ -1998,6 +1986,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormChart.resx">
       <DependentUpon>FormChart.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCompoundCreator.en.resx">
       <DependentUpon>FormCompoundCreator.vb</DependentUpon>
@@ -2046,27 +2035,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBoxNET.de.resx">
       <DependentUpon>AboutBoxNET.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBoxNET.resx">
       <DependentUpon>AboutBoxNET.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCLM.de.resx">
       <DependentUpon>FormCLM.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCLM.en.resx">
       <DependentUpon>FormCLM.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCLM.es.resx">
       <DependentUpon>FormCLM.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCLM.resx">
       <DependentUpon>FormCLM.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCapeOpenUnitSelector.en.resx">
       <DependentUpon>FormCapeOpenUnitSelector.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCapeOpenUnitSelector.resx">
       <DependentUpon>FormCapeOpenUnitSelector.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormFlowsheet_SubForms\frmLog.de.resx">
       <DependentUpon>frmLog.vb</DependentUpon>
@@ -2126,12 +2121,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormConfigureTable.es.resx">
       <DependentUpon>FormConfigureTable.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormHelpViewer.de.resx">
-      <DependentUpon>FormHelpViewer.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormHelpViewer.es.resx">
-      <DependentUpon>FormHelpViewer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormLoadSave.de.resx">
       <DependentUpon>FormLoadSave.vb</DependentUpon>
