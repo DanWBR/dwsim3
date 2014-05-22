@@ -4869,11 +4869,11 @@ Namespace DWSIM.SimulationObjects.Streams
         Implements ICapeIdentification, ICapeCollection
 
         Protected m_energy As Nullable(Of Double)
-        Protected m_params As ParameterCollection
+        'Protected m_params As List(Of CapeOpen.ICapeParameter)
         Protected WithEvents m_work As CapeOpen.RealParameter
-        Protected WithEvents m_tlo As CapeOpen.RealParameter
-        Protected WithEvents m_thi As CapeOpen.RealParameter
-        Protected WithEvents m_af As CapeOpen.RealParameter
+        'Protected WithEvents m_tlo As CapeOpen.RealParameter
+        'Protected WithEvents m_thi As CapeOpen.RealParameter
+        'Protected WithEvents m_af As CapeOpen.RealParameter
 
 #Region "   DWSIM Specific"
 
@@ -4897,17 +4897,17 @@ Namespace DWSIM.SimulationObjects.Streams
         End Sub
 
         Sub CreateParamCol()
-            If m_params Is Nothing Then
-                m_work = New CapeOpen.RealParameter("work", Me.Energia.GetValueOrDefault, 0.0#, "J/s")
-                'm_af = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter("axisFrequency", 0.0#, 0.0#, "s-1")
-                'm_tlo = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter("temperatureLow", 0.0#, 0.0#, "K")
-                'm_thi = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter("temperatureHigh", 0.0#, 0.0#, "K")
-                m_params = New ParameterCollection
-                m_params.Add(m_work)
-                'm_params.Add(m_af)
-                'm_params.Add(m_tlo)
-                'm_params.Add(m_thi)
-            End If
+            ' If m_params Is Nothing Then
+            m_work = New CapeOpen.RealParameter("work", Me.Energia.GetValueOrDefault, 0.0#, "J/s")
+            'm_af = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter("axisFrequency", 0.0#, 0.0#, "s-1")
+            'm_tlo = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter("temperatureLow", 0.0#, 0.0#, "K")
+            'm_thi = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.RealParameter("temperatureHigh", 0.0#, 0.0#, "K")
+            ' m_params = New List(Of CapeOpen.ICapeParameter)
+            ' m_params.Add(m_work)
+            'm_params.Add(m_af)
+            'm_params.Add(m_tlo)
+            'm_params.Add(m_thi)
+            '  End If
         End Sub
 
         Public Property Energia() As Nullable(Of Double)
@@ -4930,7 +4930,6 @@ Namespace DWSIM.SimulationObjects.Streams
             Me.Energia = ASource.Energia
 
         End Sub
-
 
         Public Overloads Overrides Sub UpdatePropertyNodes(ByVal su As SistemasDeUnidades.Unidades, ByVal nf As String)
 
@@ -5141,25 +5140,26 @@ Namespace DWSIM.SimulationObjects.Streams
         End Sub
 
         Public Function Count() As Integer Implements CapeOpen.ICapeCollection.Count
-            If m_params Is Nothing Then CreateParamCol()
-            Return Me.m_params.Count
+            'If m_params Is Nothing Then CreateParamCol()
+            Return 1 'Me.m_params.Count
         End Function
 
         Public Function Item(ByVal index As Object) As Object Implements CapeOpen.ICapeCollection.Item
-            If m_params Is Nothing Then CreateParamCol()
-            Dim mypar As Object = Nothing
-            If IsNumeric(index) Then
-                mypar = m_params(index - 1)
-                Return mypar
-            Else
-                For Each p As ICapeIdentification In m_params
-                    If p.ComponentName = index Then
-                        mypar = p
-                        Exit For
-                    End If
-                Next
-                Return mypar
-            End If
+            '    If m_params Is Nothing Then CreateParamCol()
+            '    Dim mypar As Object = Nothing
+            '    If IsNumeric(index) Then
+            '        mypar = m_params(index - 1)
+            '        Return mypar
+            '    Else
+            '        For Each p As ICapeIdentification In m_params
+            '            If p.ComponentName = index Then
+            '                mypar = p
+            '                Exit For
+            '            End If
+            '        Next
+            '        Return mypar
+            '    End If
+            Return m_work
         End Function
 
 #End Region

@@ -344,6 +344,9 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Do
                 If My.Settings.EnableParallelProcessing Then
                     My.MyApplication.IsRunningParallelTasks = True
+                    If My.Settings.EnableGPUProcessing Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    End If
                     Try
                         Dim task1 As Task = New Task(Sub()
                                                          fx = Herror(x1, {P, Vz, PP})
@@ -358,6 +361,11 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                         For Each ex As Exception In ae.InnerExceptions
                             Throw
                         Next
+                    Finally
+                        If My.Settings.EnableGPUProcessing Then
+                            My.MyApplication.gpu.DisableMultithreading()
+                            My.MyApplication.gpu.FreeAll()
+                        End If
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
@@ -450,6 +458,9 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Do
                 If My.Settings.EnableParallelProcessing Then
                     My.MyApplication.IsRunningParallelTasks = True
+                    If My.Settings.EnableGPUProcessing Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    End If
                     Try
                         Dim task1 As Task = New Task(Sub()
                                                          fx = Serror(x1, {P, Vz, PP})
@@ -464,12 +475,17 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                         For Each ex As Exception In ae.InnerExceptions
                             Throw
                         Next
+                    Finally
+                        If My.Settings.EnableGPUProcessing Then
+                            My.MyApplication.gpu.DisableMultithreading()
+                            My.MyApplication.gpu.FreeAll()
+                        End If
                     End Try
-                    My.MyApplication.IsRunningParallelTasks = False
-                Else
-                    fx = Serror(x1, {P, Vz, PP})
-                    fx2 = Serror(x1 + 1, {P, Vz, PP})
-                End If
+                        My.MyApplication.IsRunningParallelTasks = False
+                    Else
+                        fx = Serror(x1, {P, Vz, PP})
+                        fx2 = Serror(x1 + 1, {P, Vz, PP})
+                    End If
                 If Abs(fx) < etol Then Exit Do
                 dfdx = (fx2 - fx)
                 x1 = x1 - fx / dfdx

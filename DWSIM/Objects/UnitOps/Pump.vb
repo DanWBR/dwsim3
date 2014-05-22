@@ -41,11 +41,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.PipingOps
 
         Protected _x As ArrayList
         Protected _y As ArrayList
-        Protected _xunit As String
-        Protected _yunit As String
+        Protected _xunit As String = ""
+        Protected _yunit As String = ""
         Protected _type As CurveType
-        Protected _id As String
-        Protected _name As String
+        Protected _id As String = ""
+        Protected _name As String = ""
         Protected _enabled As Boolean = True
 
         Sub New(ByVal id As String, ByVal name As String, ByVal x As ArrayList, ByVal xunit As String, ByVal y As ArrayList, ByVal yunit As String, ByVal type As CurveType)
@@ -56,14 +56,14 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.PipingOps
             Me.y = y
             Me.xunit = xunit
             Me.yunit = yunit
-            Me.Type = type
+            Me.CvType = type
         End Sub
 
         Sub New(ByVal id As String, ByVal name As String, ByVal type As CurveType)
             Me.New()
             Me.ID = id
             Me.Name = name
-            Me.Type = type
+            Me.CvType = type
         End Sub
 
         Sub New()
@@ -98,7 +98,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.PipingOps
             End Set
         End Property
 
-        Public Property Type() As CurveType
+        Public Property CvType() As CurveType
             Get
                 Return _type
             End Get
@@ -203,7 +203,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "Curves").Elements.ToList
                 Dim cv As New Curve()
                 cv.LoadData(xel.Elements.ToList)
-                m_curves.Add(cv.ID, cv)
+                m_curves.Add(cv.Name, cv)
             Next
 
             Return True
