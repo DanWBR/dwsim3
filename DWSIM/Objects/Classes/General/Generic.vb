@@ -1,5 +1,5 @@
 ﻿'    Miscelaneous Classes
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -16,9 +16,61 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
+Imports System.Runtime.Serialization
+Imports System.Reflection
+Imports System.Linq
+Imports CapeOpen
 
 Namespace DWSIM.Outros
+
+    ''' <summary>
+    ''' Serialization Binder Class to enable loading of pre-3.0 simulations in DWSIM 3.0+.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public NotInheritable Class VersionDeserializationBinder
+
+        Inherits SerializationBinder
+
+        Public Overrides Function BindToType(assemblyName As String, typeName As String) As Type
+            If Not String.IsNullOrEmpty(assemblyName) AndAlso Not String.IsNullOrEmpty(typeName) Then
+                Dim typeToDeserialize As Type = Nothing
+                If typeName = "CapeOpen.ICapeParameter" Then
+                    typeName = "CapeOpen.CapeParameter"
+                    assemblyName = "CapeOpen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=90d5303f0e924b64"
+                ElseIf typeName.Contains("System.Collections.Generic.List`1[[CapeOpen.ICapeParameter") Then
+                    typeName = typeName.Replace("List`1[[CapeOpen.ICapeParameter", "List`1[[CapeOpen.CapeParameter")
+                    typeName = typeName.Replace("CapeOpen, Version=1.0.4118.14986, Culture=neutral, PublicKeyToken=100cc1b5ee8fe630", "CapeOpen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=90d5303f0e924b64")
+                ElseIf typeName.Contains("DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.CRealParameter") Then
+                    typeName = "CapeOpen.RealParameter"
+                    assemblyName = "CapeOpen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=90d5303f0e924b64"
+                ElseIf typeName.Contains("CapeOpen.CRealParameter") Then
+                    typeName = typeName.Replace("CapeOpen.CRealParameter", "CapeOpen.RealParameter")
+                    typeName = typeName.Replace("CapeOpen, Version=1.0.4118.14986, Culture=neutral, PublicKeyToken=100cc1b5ee8fe630", "CapeOpen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=90d5303f0e924b64")
+                    assemblyName = "CapeOpen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=90d5303f0e924b64"
+                ElseIf typeName.Contains("CapeOpen.ICape") Then
+                    typeName = typeName.Replace("CapeOpen, Version=1.0.4118.14986, Culture=neutral, PublicKeyToken=100cc1b5ee8fe630", "CapeOpen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=90d5303f0e924b64")
+                ElseIf typeName.Contains("CapeOpen") Then
+                    typeName = typeName.Replace("CapeOpen.C", "CapeOpen.")
+                    typeName = typeName.Replace("CapeOpen.ape", "CapeOpen.Cape")
+                    typeName = typeName.Replace("CapeOpen, Version=1.0.4118.14986, Culture=neutral, PublicKeyToken=100cc1b5ee8fe630", "CapeOpen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=90d5303f0e924b64")
+                End If
+                If assemblyName.Contains("DWSIM") Then
+                    assemblyName = Assembly.GetExecutingAssembly().FullName
+                    typeToDeserialize = Type.[GetType]([String].Format("{0}, {1}", typeName, assemblyName))
+                ElseIf assemblyName.Contains("CapeOpen") Then
+                    Dim assemblies As AssemblyName() = Assembly.GetExecutingAssembly().GetReferencedAssemblies()
+                    assemblyName = (From a As AssemblyName In assemblies Where a.FullName.Contains("CapeOpen")).FirstOrDefault.FullName
+                    typeToDeserialize = Type.[GetType]([String].Format("{0}, {1}", typeName, assemblyName))
+                Else
+                    typeToDeserialize = Type.[GetType]([String].Format("{0}, {1}", typeName, assemblyName))
+                End If
+                ' The following line of code returns the type. 
+                Return typeToDeserialize
+            End If
+            Return Nothing
+        End Function
+    End Class
 
     <System.Serializable()> <System.Runtime.InteropServices.ComVisible(False)> Public Class StatusChangeEventArgs
 
@@ -210,6 +262,101 @@ Namespace DWSIM.Outros
             ROnly = ro
         End Sub
 
+    End Class
+
+End Namespace
+
+Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
+
+    ''' <summary>
+    ''' This class if for legacy compatibility only. It should NOT be used. Use CapePen.RealParameter instead if necessary.
+    ''' </summary>
+    ''' <remarks></remarks>
+    <System.Serializable()> Public Class CRealParameter
+        Implements ICapeIdentification, ICapeParameter, ICapeParameterSpec, ICapeRealParameterSpec
+        Dim _par As Global.CapeOpen.RealParameter
+        Public Event OnParameterValueChanged(ByVal sender As Object, ByVal args As System.EventArgs)
+        Sub New(ByVal name As String, ByVal value As Double, ByVal defaultvalue As Double, ByVal unit As String)
+            _par = New Global.CapeOpen.RealParameter(name, value, defaultvalue, unit)
+        End Sub
+        Public Property ComponentDescription() As String Implements Global.CapeOpen.ICapeIdentification.ComponentDescription
+            Get
+                Return _par.ComponentDescription
+            End Get
+            Set(ByVal value As String)
+                _par.ComponentDescription = value
+            End Set
+        End Property
+        Public Property ComponentName() As String Implements Global.CapeOpen.ICapeIdentification.ComponentName
+            Get
+                Return _par.ComponentName
+            End Get
+            Set(ByVal value As String)
+                _par.ComponentName = value
+            End Set
+        End Property
+        Public Property Mode() As Global.CapeOpen.CapeParamMode Implements Global.CapeOpen.ICapeParameter.Mode
+            Get
+                Return _par.Mode
+            End Get
+            Set(ByVal value As Global.CapeOpen.CapeParamMode)
+                _par.Mode = value
+            End Set
+        End Property
+        Public Sub Reset() Implements Global.CapeOpen.ICapeParameter.Reset
+            _par.Reset()
+        End Sub
+        Public ReadOnly Property Specification() As Object Implements Global.CapeOpen.ICapeParameter.Specification
+            Get
+                Return Me
+            End Get
+        End Property
+        Public Function Validate(ByRef message As String) As Boolean Implements Global.CapeOpen.ICapeParameter.Validate
+            Return _par.Validate(message)
+        End Function
+        Public ReadOnly Property ValStatus() As Global.CapeOpen.CapeValidationStatus Implements Global.CapeOpen.ICapeParameter.ValStatus
+            Get
+                Return _par.ValStatus
+            End Get
+        End Property
+        Public Property value() As Object Implements Global.CapeOpen.ICapeParameter.value
+            Get
+                Return _par.SIValue
+            End Get
+            Set(ByVal value As Object)
+                _par.SIValue = value
+                RaiseEvent OnParameterValueChanged(Me, New System.EventArgs())
+            End Set
+        End Property
+        Public ReadOnly Property Dimensionality() As Object Implements Global.CapeOpen.ICapeParameterSpec.Dimensionality
+            Get
+                Dim myd As ICapeParameterSpec = _par
+                Return New Double() {myd.Dimensionality(0), myd.Dimensionality(1), myd.Dimensionality(2), myd.Dimensionality(3), myd.Dimensionality(4), myd.Dimensionality(5), myd.Dimensionality(6), myd.Dimensionality(7)}
+            End Get
+        End Property
+        Public ReadOnly Property Type() As Global.CapeOpen.CapeParamType Implements Global.CapeOpen.ICapeParameterSpec.Type
+            Get
+                Return _par.Type
+            End Get
+        End Property
+        Public ReadOnly Property DefaultValue() As Double Implements Global.CapeOpen.ICapeRealParameterSpec.DefaultValue
+            Get
+                Return _par.DefaultValue
+            End Get
+        End Property
+        Public ReadOnly Property LowerBound() As Double Implements Global.CapeOpen.ICapeRealParameterSpec.LowerBound
+            Get
+                Return _par.LowerBound
+            End Get
+        End Property
+        Public ReadOnly Property UpperBound() As Double Implements Global.CapeOpen.ICapeRealParameterSpec.UpperBound
+            Get
+                Return _par.UpperBound
+            End Get
+        End Property
+        Public Function Validate1(ByVal value As Double, ByRef message As String) As Boolean Implements Global.CapeOpen.ICapeRealParameterSpec.Validate
+            Return _par.Validate(value, message)
+        End Function
     End Class
 
 End Namespace

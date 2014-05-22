@@ -8,7 +8,7 @@ Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports DWSIM.DWSIM.SimulationObjects
 
 '    Command Line Mode Processing Functions
-'    Copyright 2009-2012 Daniel Wagner O. de Medeiros
+'    Copyright 2009-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
