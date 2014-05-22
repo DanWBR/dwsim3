@@ -906,9 +906,6 @@ Public Class FormStSim
 
     End Function
 
-    Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-
-    End Sub
 
     Private Sub TextBox1_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBox1.TextChanged
         For Each r As DataGridViewRow In ogc1.Rows
@@ -1315,6 +1312,5 @@ Public Class FormStSim
             Button8.PerformClick()
         End If
     End Sub
-
 
 End Class

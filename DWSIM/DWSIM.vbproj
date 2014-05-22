@@ -118,6 +118,9 @@
     </WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AeroWizard">
+      <HintPath>References\AeroWizard.dll</HintPath>
+    </Reference>
     <Reference Include="Ascend, Version=1.0.0.6, Culture=neutral, PublicKeyToken=25c7a393ba3f37cd, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\Ascend.dll</HintPath>
@@ -314,6 +317,12 @@
       <DependentUpon>AboutBoxMono.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\AboutBoxMono.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormConfigWizard.Designer.vb">
+      <DependentUpon>FormConfigWizard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormConfigWizard.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\FormDataRegression.Designer.vb">
@@ -1127,7 +1136,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\AboutBoxMono.de.resx">
       <DependentUpon>AboutBoxMono.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBoxMono.resx">
       <DependentUpon>AboutBoxMono.vb</DependentUpon>
@@ -1137,10 +1145,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCompoundCreator.de.resx">
       <DependentUpon>FormCompoundCreator.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCompoundCreator.es.resx">
       <DependentUpon>FormCompoundCreator.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormConfigWizard.en.resx">
+      <DependentUpon>FormConfigWizard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormConfigWizard.resx">
+      <DependentUpon>FormConfigWizard.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormDataRegression.de.resx">
       <DependentUpon>FormDataRegression.vb</DependentUpon>
@@ -1986,7 +1999,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormChart.resx">
       <DependentUpon>FormChart.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCompoundCreator.en.resx">
       <DependentUpon>FormCompoundCreator.vb</DependentUpon>
@@ -2035,33 +2047,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBoxNET.de.resx">
       <DependentUpon>AboutBoxNET.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBoxNET.resx">
       <DependentUpon>AboutBoxNET.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCLM.de.resx">
       <DependentUpon>FormCLM.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCLM.en.resx">
       <DependentUpon>FormCLM.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCLM.es.resx">
       <DependentUpon>FormCLM.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCLM.resx">
       <DependentUpon>FormCLM.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCapeOpenUnitSelector.en.resx">
       <DependentUpon>FormCapeOpenUnitSelector.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCapeOpenUnitSelector.resx">
       <DependentUpon>FormCapeOpenUnitSelector.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormFlowsheet_SubForms\frmLog.de.resx">
       <DependentUpon>frmLog.vb</DependentUpon>

@@ -315,14 +315,35 @@ Imports DWSIM.DWSIM.GraphicObjects
     Public Sub FormChild_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
 
         If Not Me.m_IsLoadedFromFile Then
-            With Me.FrmStSim1
-                '.Text = Me.Text & " - Assistente de Configuração"
-                '.MdiParent = My.Forms.FormParent
-                .WindowState = FormWindowState.Normal
+
+            Me.WindowState = FormWindowState.Maximized
+
+            Application.DoEvents()
+
+            Dim fw As New FormConfigWizard
+            With fw
                 .StartPosition = FormStartPosition.CenterScreen
+                .WindowState = FormWindowState.Normal
                 .ShowDialog(Me)
-                'MUST CALL THE DISPOSE METHOD!!!!!!!!!
+                If .switch Then
+                    With Me.FrmStSim1
+                        '.Text = Me.Text & " - Assistente de Configuração"
+                        '.MdiParent = My.Forms.FormParent
+                        .WindowState = FormWindowState.Normal
+                        .StartPosition = FormStartPosition.CenterScreen
+                        .ShowDialog(Me)
+                        'MUST CALL THE DISPOSE METHOD!!!!!!!!!
+                    End With
+                End If
             End With
+            'With Me.FrmStSim1
+            '    '.Text = Me.Text & " - Assistente de Configuração"
+            '    '.MdiParent = My.Forms.FormParent
+            '    .WindowState = FormWindowState.Normal
+            '    .StartPosition = FormStartPosition.CenterScreen
+            '    .ShowDialog(Me)
+            '    'MUST CALL THE DISPOSE METHOD!!!!!!!!!
+            'End With
         Else
             Dim array1(FormMain.AvailableUnitSystems.Count - 1) As String
             FormMain.AvailableUnitSystems.Keys.CopyTo(array1, 0)
@@ -736,8 +757,6 @@ Imports DWSIM.DWSIM.GraphicObjects
                     DWSIM.App.HelpRequested("SO_Valve.htm")
                 Case TipoObjeto.Pump
                     DWSIM.App.HelpRequested("SO_Pump.htm")
-                Case TipoObjeto.Compressor
-                    DWSIM.App.HelpRequested("SO_Compressor.htm")
                 Case Else
                     DWSIM.App.HelpRequested("frame.htm")
             End Select

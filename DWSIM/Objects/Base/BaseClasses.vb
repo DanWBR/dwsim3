@@ -1,4 +1,4 @@
-'    Calculation Engine Base Classes 
+﻿'    Calculation Engine Base Classes 
 '    Copyright 2008 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.

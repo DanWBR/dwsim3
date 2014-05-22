@@ -106,9 +106,6 @@ Partial Class FormStSim
         Me.chkUsePassword = New System.Windows.Forms.CheckBox()
         Me.PanelPP = New System.Windows.Forms.Panel()
         Me.LinkLabelPropertyMethods = New System.Windows.Forms.LinkLabel()
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
-        Me.Button8 = New System.Windows.Forms.Button()
-        Me.ListViewPP = New System.Windows.Forms.ListView()
         Me.GroupBox12 = New System.Windows.Forms.GroupBox()
         Me.btnDeletePP = New System.Windows.Forms.Button()
         Me.btnConfigPP = New System.Windows.Forms.Button()
@@ -117,6 +114,9 @@ Partial Class FormStSim
         Me.Column18 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column16 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column17 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.ListViewPP = New System.Windows.Forms.ListView()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.tbFlashValidationTolerance = New System.Windows.Forms.TextBox()
@@ -164,9 +164,9 @@ Partial Class FormStSim
         Me.GroupBox9.SuspendLayout()
         Me.PanelDescricao.SuspendLayout()
         Me.PanelPP.SuspendLayout()
-        Me.GroupBox6.SuspendLayout()
         Me.GroupBox12.SuspendLayout()
         CType(Me.dgvpp, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox6.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.PanelOptions.SuspendLayout()
         Me.PanelUnits.SuspendLayout()
@@ -1000,8 +1000,8 @@ Partial Class FormStSim
         '
         Me.PanelPP.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PanelPP.Controls.Add(Me.LinkLabelPropertyMethods)
-        Me.PanelPP.Controls.Add(Me.GroupBox6)
         Me.PanelPP.Controls.Add(Me.GroupBox12)
+        Me.PanelPP.Controls.Add(Me.GroupBox6)
         resources.ApplyResources(Me.PanelPP, "PanelPP")
         Me.PanelPP.Name = "PanelPP"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelPP, System.Drawing.Color.Empty)
@@ -1015,38 +1015,6 @@ Partial Class FormStSim
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.LinkLabelPropertyMethods, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.LinkLabelPropertyMethods, System.Drawing.Color.Empty)
         Me.LinkLabelPropertyMethods.TabStop = True
-        '
-        'GroupBox6
-        '
-        Me.GroupBox6.Controls.Add(Me.Button8)
-        Me.GroupBox6.Controls.Add(Me.ListViewPP)
-        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
-        Me.GroupBox6.Name = "GroupBox6"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox6, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox6, System.Drawing.Color.Empty)
-        Me.GroupBox6.TabStop = False
-        '
-        'Button8
-        '
-        resources.ApplyResources(Me.Button8, "Button8")
-        Me.Button8.Name = "Button8"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button8, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button8, System.Drawing.Color.Empty)
-        '
-        'ListViewPP
-        '
-        resources.ApplyResources(Me.ListViewPP, "ListViewPP")
-        Me.ListViewPP.FullRowSelect = True
-        Me.ListViewPP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
-        Me.ListViewPP.MultiSelect = False
-        Me.ListViewPP.Name = "ListViewPP"
-        Me.ListViewPP.ShowGroups = False
-        Me.ListViewPP.ShowItemToolTips = True
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.ListViewPP, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.ListViewPP, System.Drawing.Color.Empty)
-        Me.ListViewPP.TileSize = New System.Drawing.Size(350, 16)
-        Me.ListViewPP.UseCompatibleStateImageBehavior = False
-        Me.ListViewPP.View = System.Windows.Forms.View.Tile
         '
         'GroupBox12
         '
@@ -1117,6 +1085,38 @@ Partial Class FormStSim
         resources.ApplyResources(Me.Column17, "Column17")
         Me.Column17.Name = "Column17"
         Me.Column17.ReadOnly = True
+        '
+        'GroupBox6
+        '
+        Me.GroupBox6.Controls.Add(Me.Button8)
+        Me.GroupBox6.Controls.Add(Me.ListViewPP)
+        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox6, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox6, System.Drawing.Color.Empty)
+        Me.GroupBox6.TabStop = False
+        '
+        'Button8
+        '
+        resources.ApplyResources(Me.Button8, "Button8")
+        Me.Button8.Name = "Button8"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button8, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button8, System.Drawing.Color.Empty)
+        '
+        'ListViewPP
+        '
+        resources.ApplyResources(Me.ListViewPP, "ListViewPP")
+        Me.ListViewPP.FullRowSelect = True
+        Me.ListViewPP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
+        Me.ListViewPP.MultiSelect = False
+        Me.ListViewPP.Name = "ListViewPP"
+        Me.ListViewPP.ShowGroups = False
+        Me.ListViewPP.ShowItemToolTips = True
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.ListViewPP, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.ListViewPP, System.Drawing.Color.Empty)
+        Me.ListViewPP.TileSize = New System.Drawing.Size(350, 16)
+        Me.ListViewPP.UseCompatibleStateImageBehavior = False
+        Me.ListViewPP.View = System.Windows.Forms.View.Tile
         '
         'GroupBox3
         '
@@ -1348,15 +1348,15 @@ Partial Class FormStSim
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.PanelComps)
-        Me.Controls.Add(Me.PanelUnits)
         Me.Controls.Add(Me.PanelReactions)
         Me.Controls.Add(Me.PanelOptions)
         Me.Controls.Add(Me.PanelDescricao)
         Me.Controls.Add(Me.PanelCarPet)
         Me.Controls.Add(Me.NavigationPane1)
         Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.PanelPP)
+        Me.Controls.Add(Me.PanelUnits)
         Me.Controls.Add(Me.PanelPPAdv)
+        Me.Controls.Add(Me.PanelPP)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FormStSim"
         Me.ShowIcon = False
@@ -1387,11 +1387,11 @@ Partial Class FormStSim
         Me.PanelDescricao.PerformLayout()
         Me.PanelPP.ResumeLayout(False)
         Me.PanelPP.PerformLayout()
-        Me.GroupBox6.ResumeLayout(False)
-        Me.GroupBox6.PerformLayout()
         Me.GroupBox12.ResumeLayout(False)
         Me.GroupBox12.PerformLayout()
         CType(Me.dgvpp, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox6.ResumeLayout(False)
+        Me.GroupBox6.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         Me.PanelOptions.ResumeLayout(False)

@@ -4773,4 +4773,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SplitterOperationMode" xml:space="preserve">
     <value>Modo de Operação (Fatores de Divisão / Especificação da Corrente 1)</value>
   </data>
+  <data name="CancelText" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="FinishText" xml:space="preserve">
+    <value>Finalizar</value>
+  </data>
+  <data name="NextText" xml:space="preserve">
+    <value>Próximo</value>
+  </data>
 </root>
