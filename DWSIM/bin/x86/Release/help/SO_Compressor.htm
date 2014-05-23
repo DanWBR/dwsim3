@@ -25,9 +25,9 @@ compressor efficiency, which is defined by the user</p>
 
 <h3>Input Parameters</h3>
 
-<b>Calculation Mode: </b>Either select a fixed <b><i>outlet pressure</i></b>, a <b><i>pressure difference</i></b> 
-between inlet and outlet or <b><i>pressure difference</i></b>.<br>
-<b>Delta P: </b>pressure rise in the compressor (mode Delta-P)<br>
+<b>Calculation Mode: </b>Either select a fixed <b><i>OutletPressure</i></b>, a <b><i>Delta_P</i></b> 
+between inlet and outlet or <b><i>EnergyStream</i></b>.<br>
+<b>Delta P: </b>pressure rise in the compressor (mode Delta_P)<br>
 <b>Pressure: </b>pressure at outlet of compressor (mode OutletPressure)<br>
 <b>Adiabatic Efficiency: </b>compressor adiabatic efficiency<br>
 <b>Ignore liquid in the inlet stream: </b>defines if the calculator should ignore any liquid in the
@@ -106,7 +106,7 @@ where
 <h3>Output Parameters</h3>
 <b>Delta-T: </b><br>temperature increase observed in the compression process.<br><br>
 <b>Power required: </b><br>
-Shaft power required by the compressor. The calculated power is written into the energy stream (pressure calculation modes) <br>
+Shaft power required by the compressor. The calculated power is either written into the energy stream (pressure calculation modes) 
 or read from energy stream (energy caclulation mode).<br>
 </td>
 

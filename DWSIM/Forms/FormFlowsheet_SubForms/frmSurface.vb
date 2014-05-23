@@ -163,7 +163,7 @@ Public Class frmSurface
     End Sub
 
     Private Sub FlowsheetDesignSurface_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles FlowsheetDesignSurface.KeyDown
-
+      
         If e.KeyCode = Keys.Delete Then
             Dim n As Integer = Me.FlowsheetDesignSurface.SelectedObjects.Count
             If n > 1 Then

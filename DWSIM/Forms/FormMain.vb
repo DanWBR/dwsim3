@@ -3733,7 +3733,8 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
     End Sub
 
     Private Sub ContentsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ContentsToolStripMenuItem.Click
-        My.Computer.Keyboard.SendKeys("{F1}", True)
+        'call general help
+        DWSIM.App.HelpRequested("frame.htm")
     End Sub
 
     Private Sub RegistrarTiposCOMToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RegistrarTiposCOMToolStripMenuItem.Click

@@ -757,11 +757,20 @@ Imports DWSIM.DWSIM.GraphicObjects
                     DWSIM.App.HelpRequested("SO_Valve.htm")
                 Case TipoObjeto.Pump
                     DWSIM.App.HelpRequested("SO_Pump.htm")
+                Case TipoObjeto.Compressor
+                    DWSIM.App.HelpRequested("SO_Compressor.htm")
+                Case TipoObjeto.Expander
+                    DWSIM.App.HelpRequested("SO_Expander.htm")
+                Case TipoObjeto.Heater
+                    DWSIM.App.HelpRequested("SO_Heater.htm")
+                Case TipoObjeto.Cooler
+                    DWSIM.App.HelpRequested("SO_Cooler.htm")
+                Case TipoObjeto.ShortcutColumn
+                    DWSIM.App.HelpRequested("SO_Shortcut_Column.htm")
                 Case Else
                     DWSIM.App.HelpRequested("frame.htm")
             End Select
         End If
-
 
     End Sub
     Private Sub InserObjectTSMIClick(ByVal sender As System.Object, ByVal e As EventArgs) Handles _
