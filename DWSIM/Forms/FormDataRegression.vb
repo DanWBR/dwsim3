@@ -3440,7 +3440,7 @@ Namespace DWSIM.Optimization.DatRegression
         Public fixed3 As Boolean = False
         Public title As String = ""
         Public description As String = ""
-        Public idealvapormodel As Boolean = False
+        Public idealvapormodel As Boolean = True
         Public useTLdata As Boolean = True
         Public useTSdata As Boolean = True
     End Class

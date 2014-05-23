@@ -3112,7 +3112,7 @@ Public Class frmSurface
 
             AddObjectToSurface(tobj, mpx, mpy)
 
-            If tobj = TipoObjeto.MaterialStream Then
+            If tobj = TipoObjeto.MaterialStream And Not My.Computer.Keyboard.ShiftKeyDown Then
                 Call Me.EditCompTSMI_Click(Me.FlowsheetDesignSurface, New EventArgs())
             End If
 
