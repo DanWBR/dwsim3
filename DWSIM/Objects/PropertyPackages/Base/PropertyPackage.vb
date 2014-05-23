@@ -6049,7 +6049,17 @@ Final3:
 
             If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
-            Dim val As Double = Me.m_props.condtg_elyhanley(T, Me.AUX_TCM(Fase.Vapor), Me.AUX_VCM(Fase.Vapor), Me.AUX_ZCM(Fase.Vapor), Me.AUX_WM(Fase.Vapor), Me.AUX_MMM(Fase.Vapor), Me.DW_CalcCv_ISOL(Fase.Vapor, T, P) * Me.AUX_MMM(Fase.Vapor))
+            Dim val As Double
+            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+            Dim i As Integer = 0
+            For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                If subst.ConstantProperties.VaporThermalConductivityEquation <> "" Then
+                    val += subst.FracaoMolar.GetValueOrDefault * Me.CalcCSTDepProp(subst.ConstantProperties.VaporThermalConductivityEquation, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_A, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_B, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_C, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_D, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_E, T, subst.ConstantProperties.Critical_Temperature)
+                Else
+                    val += subst.FracaoMolar.GetValueOrDefault * Me.m_props.condtg_elyhanley(T, Me.AUX_TCM(Fase.Vapor), Me.AUX_VCM(Fase.Vapor), Me.AUX_ZCM(Fase.Vapor), Me.AUX_WM(Fase.Vapor), Me.AUX_MMM(Fase.Vapor), Me.DW_CalcCv_ISOL(Fase.Vapor, T, P) * Me.AUX_MMM(Fase.Vapor))
+                End If
+                i = i + 1
+            Next
 
             Return val
 
