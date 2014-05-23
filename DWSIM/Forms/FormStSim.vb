@@ -105,6 +105,8 @@ Public Class FormStSim
                 End If
             Next
 
+            Me.TextBox1.AutoCompleteCustomSource = ACSC1
+
             'property packages
             Me.ListViewPP.Items.Clear()
             For Each pp2 As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In FormMain.PropertyPackages.Values
@@ -857,11 +859,11 @@ Public Class FormStSim
 
     Public Function AddCompToGrid(ByRef comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties) As Integer
 
-        If Not initialized Then
-            Me.Visible = False
-            Me.Show()
-            Me.Visible = False
-        End If
+        'If Not initialized Then
+        '    Me.Visible = False
+        '    Me.Show()
+        '    Me.Visible = False
+        'End If
 
         Dim contains As Boolean = False
         Dim index As Integer = -1
@@ -888,7 +890,7 @@ Public Class FormStSim
                 ACSC1.Add(translatedname)
                 ACSC1.Add(comp.CAS_Number)
                 ACSC1.Add(comp.Formula)
-                Me.TextBox1.AutoCompleteCustomSource = ACSC1
+                'Me.TextBox1.AutoCompleteCustomSource = ACSC1
             End Try
         Else
             Return index
