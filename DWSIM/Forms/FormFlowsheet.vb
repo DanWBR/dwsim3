@@ -765,8 +765,28 @@ Imports DWSIM.DWSIM.GraphicObjects
                     DWSIM.App.HelpRequested("SO_Heater.htm")
                 Case TipoObjeto.Cooler
                     DWSIM.App.HelpRequested("SO_Cooler.htm")
+                Case TipoObjeto.HeatExchanger
+                    DWSIM.App.HelpRequested("SO_Heatexchanger.htm")
                 Case TipoObjeto.ShortcutColumn
                     DWSIM.App.HelpRequested("SO_Shortcut_Column.htm")
+                Case TipoObjeto.DistillationColumn
+                    DWSIM.App.HelpRequested("SO_Rigorous_Column.htm")
+                Case TipoObjeto.AbsorptionColumn
+                    DWSIM.App.HelpRequested("frame.htm") 'no topic yet
+                Case TipoObjeto.ReboiledAbsorber
+                    DWSIM.App.HelpRequested("frame.htm") 'no topic yet
+                Case TipoObjeto.RefluxedAbsorber
+                    DWSIM.App.HelpRequested("frame.htm") 'no topic yet
+                Case TipoObjeto.ComponentSeparator
+                    DWSIM.App.HelpRequested("SO_CompSep.htm")
+                Case TipoObjeto.OrificePlate
+                    DWSIM.App.HelpRequested("SO_OrificePlate.htm")
+                Case TipoObjeto.CustomUO
+                    DWSIM.App.HelpRequested("SO_CustomUO.htm")
+                Case TipoObjeto.SolidSeparator
+                    DWSIM.App.HelpRequested("SO_SolidSeparator.htm")
+                Case TipoObjeto.Filter
+                    DWSIM.App.HelpRequested("SO_CakeFilter.htm")
                 Case Else
                     DWSIM.App.HelpRequested("frame.htm")
             End Select
