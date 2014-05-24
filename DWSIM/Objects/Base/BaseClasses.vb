@@ -178,7 +178,8 @@ Imports System.Text
                         End If
                     End If
                 End If
-            ElseIf sobj.TipoObjeto = TipoObjeto.Compressor Or sobj.TipoObjeto = TipoObjeto.Heater Or sobj.TipoObjeto = TipoObjeto.Pump Then
+            ElseIf sobj.TipoObjeto = TipoObjeto.Compressor Or sobj.TipoObjeto = TipoObjeto.Heater Or sobj.TipoObjeto = TipoObjeto.Pump Or
+                sobj.TipoObjeto = TipoObjeto.RCT_PFR Or sobj.TipoObjeto = TipoObjeto.RCT_CSTR Then
                 If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then

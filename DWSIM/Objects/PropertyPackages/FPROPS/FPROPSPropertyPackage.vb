@@ -556,6 +556,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "    Auxiliary Functions"
 
+        Shared Function SupportsCompound(compname As String) As Boolean
+
+            Select Case compname
+                Case "Ammonia", "Nitrogen", "Hydrogen", "Water", "Carbon dioxide", "Methane", "Carbon monoxide", "Ethanol", "Acetone", "Carbonyl sulfide", "N-decane",
+                    "Hydrogen sulfide", "Isopentane", "Krypton", "Neopentane", "Nitrous oxide", "N-nonane", "Sulfur dioxide", "Toluene", "Xenon", "1-butene", "Cis-2-butene",
+                    "Isobutene","Trans-2-butene","Dimethyl ether","Ethane","Isobutane"
+                    Return True
+                Case Else
+                    Return False
+            End Select
+
+        End Function
+
         Public Function GetFpropsFluidID(ByVal names() As String) As String()
 
             Dim fpnames As New ArrayList

@@ -1493,6 +1493,7 @@ Namespace DWSIM.Databases
                     .ID = i
                     .IsHYPO = False
                     .IsPF = False
+                    .IsCOOLPROPSupported = True
                 End With
                 cpa.Add(cp)
                 i += 1

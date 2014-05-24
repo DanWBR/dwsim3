@@ -724,7 +724,10 @@ Public Class FormMain
             csdb.Load(filename)
             cpa = csdb.Transfer()
             For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
-                If Not Me.AvailableComponents.ContainsKey(cp.Name) Then Me.AvailableComponents.Add(cp.Name, cp)
+                cp.IsFPROPSSupported = FPROPSPropertyPackage.SupportsCompound(cp.Name)
+                If Not Me.AvailableComponents.ContainsKey(cp.Name) Then
+                    Me.AvailableComponents.Add(cp.Name, cp)
+                End If
             Next
             loadedCSDB = True
         End If
@@ -773,7 +776,11 @@ Public Class FormMain
             cpdb.Load(filename)
             cpa = cpdb.Transfer()
             For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
-                If Not Me.AvailableComponents.ContainsKey(cp.Name) Then Me.AvailableComponents.Add(cp.Name, cp)
+                If Not Me.AvailableComponents.ContainsKey(cp.Name) Then
+                    Me.AvailableComponents.Add(cp.Name, cp)
+                Else
+                    Me.AvailableComponents(cp.Name).IsCOOLPROPSupported = true
+                End If
             Next
         End If
     End Sub

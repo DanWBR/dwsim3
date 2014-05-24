@@ -155,6 +155,9 @@ Click "Next" to continue.</value>
   <data name="Column6.HeaderText" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="casno.HeaderText" xml:space="preserve">
+    <value>CAS #</value>
+  </data>
   <data name="Column8.HeaderText" xml:space="preserve">
     <value>Type</value>
   </data>

@@ -2155,6 +2155,9 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public UNIQUAC_R As Double
         Public UNIQUAC_Q As Double
 
+        Public IsFPROPSSupported As Boolean = False
+        Public IsCOOLPROPSupported As Boolean = False
+
         Public UNIFACGroups As UNIFACGroupCollection
         Public MODFACGroups As UNIFACGroupCollection
         Public Elements As New ElementCollection

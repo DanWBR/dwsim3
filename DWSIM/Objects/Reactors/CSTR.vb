@@ -203,16 +203,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                 End With
                 CalculateFlowsheet(FlowSheet, objargs, Nothing)
                 Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac15"))
-            ElseIf Not Me.GraphicObject.InputConnectors(1).IsAttached Then
-                'Call function to calculate flowsheet
-                With objargs
-                    .Calculado = False
-                    .Nome = Me.Nome
-                    .Tipo = TipoObjeto.RCT_CSTR
-                End With
-                CalculateFlowsheet(FlowSheet, objargs, Nothing)
-                Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedeenerg17"))
-            End If
+           End If
 
             ims = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Clone
             pp = Me.PropertyPackage

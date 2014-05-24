@@ -188,7 +188,7 @@ Public Class FormConfigWizard
             Try
                 Dim r As New OutlookGridRow
                 translatedname = DWSIM.App.GetComponentName(comp.Name)
-                r.CreateCells(ogc1, New Object() {comp.Name, translatedname, comp.CAS_Number, DWSIM.App.GetComponentType(comp), comp.Formula, comp.OriginalDB})
+                r.CreateCells(ogc1, New Object() {comp.Name, translatedname, comp.CAS_Number, DWSIM.App.GetComponentType(comp), comp.Formula, comp.OriginalDB, comp.IsCOOLPROPSupported, comp.IsFPROPSSupported})
                 ogc1.Rows.Add(r)
                 Return ogc1.Rows.Count - 1
             Catch ex As Exception
