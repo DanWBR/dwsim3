@@ -293,7 +293,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 .Add("PP_RIG_BUB_DEW_FLASH_INIT", 0)
                 .Add("PP_IDEAL_MIXRULE_LIQDENS", 0)
                 .Add("PP_FLASHALGORITHM", 2)
-                .Add("PP_USEEXPLIQDENS", 0)
             End With
         End Sub
 
@@ -5480,7 +5479,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         End Function
 
-        Public Function AUX_PVAPi(ByVal sub1 As String, ByVal T As Double)
+        Public Overridable Function AUX_PVAPi(ByVal sub1 As String, ByVal T As Double)
 
             If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.IsPF = 1 Then
 
@@ -5547,7 +5546,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         End Function
 
-        Public Function AUX_PVAPi(ByVal index As Integer, ByVal T As Double)
+        Public Overridable Function AUX_PVAPi(ByVal index As Integer, ByVal T As Double)
 
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim nome As String = ""
@@ -5865,7 +5864,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_LIQVISCi(ByVal sub1 As String, ByVal T As Double)
+        Public Overridable Function AUX_LIQVISCi(ByVal sub1 As String, ByVal T As Double)
 
             If T / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature < 1 Then
 
@@ -5961,7 +5960,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_SURFTM(ByVal T As Double) As Double
+        Public Overridable Function AUX_SURFTM(ByVal T As Double) As Double
 
             If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
@@ -5994,7 +5993,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_SURFTi(ByVal constprop As ConstantProperties, ByVal T As Double) As Double
+        Public Overridable Function AUX_SURFTi(ByVal constprop As ConstantProperties, ByVal T As Double) As Double
 
             If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
@@ -6016,12 +6015,12 @@ Final3:
                 End With
             Else
             End If
-            
+
             Return val
 
         End Function
 
-        Public Function AUX_CONDTL(ByVal T As Double, Optional ByVal phaseid As Integer = 3) As Double
+        Public Overridable Function AUX_CONDTL(ByVal T As Double, Optional ByVal phaseid As Integer = 3) As Double
 
             If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
@@ -6045,7 +6044,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_CONDTG(ByVal T As Double, ByVal P As Double) As Double
+        Public Overridable Function AUX_CONDTG(ByVal T As Double, ByVal P As Double) As Double
 
             If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
@@ -6065,7 +6064,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_LIQTHERMCONDi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
+        Public Overridable Function AUX_LIQTHERMCONDi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
 
             Dim val As Double
 
@@ -6081,7 +6080,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_VAPTHERMCONDi(ByVal cprop As ConstantProperties, ByVal T As Double, ByVal P As Double) As Double
+        Public Overridable Function AUX_VAPTHERMCONDi(ByVal cprop As ConstantProperties, ByVal T As Double, ByVal P As Double) As Double
 
             Dim val As Double
 
@@ -6097,7 +6096,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_VAPVISCm(ByVal T As Double, ByVal RHO As Double, ByVal MM As Double) As Double
+        Public Overridable Function AUX_VAPVISCm(ByVal T As Double, ByVal RHO As Double, ByVal MM As Double) As Double
 
             If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
@@ -6113,7 +6112,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_VAPVISCi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
+        Public Overridable Function AUX_VAPVISCi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
 
             Dim val As Double
 

@@ -1,5 +1,5 @@
-﻿'    FPROPS Property Package
-'    Copyright 2012 Daniel Wagner O. de Medeiros
+﻿'    CoolProp Property Package
+'    Copyright 2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -16,45 +16,22 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-
-' FPROPS
-' Copyright (C) 2011 - Carnegie Mellon University
-'
-' ASCEND is free software; you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation; either version 2 of the License, or
-' (at your option) any later version.
-'
-' ASCEND is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-'
-' You should have received a copy of the GNU General Public License
-' along with ASCEND; if not, write to the Free Software
-' Foundation, Inc., 51 Franklin St, Fifth Floor,
-' Boston, MA  02110-1301  USA
-'/
-
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 Imports System.Math
 Imports DWSIM.DWSIM.MathEx
-Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports System.Runtime.InteropServices
+Imports CoolPropInterface
 
 Namespace DWSIM.SimulationObjects.PropertyPackages
 
 
-    <System.Runtime.InteropServices.Guid(FPROPSPropertyPackage.ClassId)> _
-    <System.Serializable()> Public Class FPROPSPropertyPackage
+    <System.Runtime.InteropServices.Guid(CoolPropPropertyPackage.ClassId)> _
+    <System.Serializable()> Public Class CoolPropPropertyPackage
 
         Inherits DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
 
-        Public Shadows Const ClassId As String = "D1CFA6ED-8050-41bf-A2B9-B7D75947E880"
-
-        Protected fprops As New Auxiliary.FPROPS.FPROPS
-        Public m_uni As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
+        Public Shadows Const ClassId As String = "1F5B0263-E936-40d5-BA5B-FFAB11595E43"
 
         Public Sub New(ByVal comode As Boolean)
             MyBase.New(comode)
@@ -66,34 +43,173 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             With Me.Parameters
                 .Item("PP_IDEAL_MIXRULE_LIQDENS") = 1
-                .Item("PP_FLASHALGORITHM") = 0
-                .Item("PP_USEEXPLIQDENS") = 0
-                .Add("PP_USE_EOS_LIQDENS", 1)
+                .Item("PP_USEEXPLIQDENS") = 1
             End With
 
             Me.IsConfigurable = True
-            Me.ConfigForm = New FormConfigFPROPS
+            Me.ConfigForm = New FormConfigPP
             Me._packagetype = PropertyPackages.PackageType.Miscelaneous
 
         End Sub
 
         Public Overrides Sub ReconfigureConfigForm()
             MyBase.ReconfigureConfigForm()
-            Me.ConfigForm = New FormConfigFPROPS
+            Me.ConfigForm = New FormConfigPP
         End Sub
-
 
 #Region "    DWSIM Functions"
 
+        Public Overrides Function AUX_PVAPi(index As Integer, T As Double) As Object
+            Return CoolProp.Props("P", "T", T, "Q", 0, RET_VNAMES()(index)) * 1000
+        End Function
+
+        Public Overrides Function AUX_PVAPi(sub1 As String, T As Double) As Object
+            Return CoolProp.Props("P", "T", T, "Q", 0, sub1) * 1000
+        End Function
+
+        Public Overrides Function AUX_LIQDENSi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
+            Return CoolProp.Props("D", "T", T, "Q", 0, cprop.Name)
+        End Function
+
+        Public Overrides Function AUX_LIQ_Cpi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
+            Return CoolProp.Props("C", "T", T, "Q", 0, cprop.Name)
+        End Function
+
+        Public Overrides Function AUX_CONDTG(T As Double, P As Double) As Double
+            Dim val As Double
+            Dim i As Integer
+            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            i = 0
+            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                If CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) > P Then
+                    vk(i) = CoolProp.Props("L", "T", T, "P", P / 1000, subst.ConstantProperties.Name) * 1000
+                Else
+                    vk(i) = CoolProp.Props("L", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
+                End If
+                vk(i) = subst.FracaoMassica * vk(i)
+                i = i + 1
+            Next
+            val = MathEx.Common.Sum(vk)
+
+            Return val
+        End Function
+
+        Public Overrides Function AUX_CONDTL(T As Double, Optional phaseid As Integer = 3) As Double
+
+            Dim val As Double
+            Dim i As Integer
+            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            i = 0
+            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
+                vk(i) = CoolProp.Props("L", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
+                vk(i) = subst.FracaoMassica * vk(i)
+                i = i + 1
+            Next
+            val = MathEx.Common.Sum(vk)
+            Return val
+
+        End Function
+
+        Public Overrides Function AUX_LIQDENS(T As Double, Vx As System.Array, Optional P As Double = 0.0, Optional Pvp As Double = 0.0, Optional FORCE_EOS As Boolean = False) As Double
+            Dim val As Double
+            Dim i As Integer
+            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            Dim vn As String() = Me.RET_VNAMES
+            Dim n As Integer = Vx.Length - 1
+            For i = 0 To n
+                vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, vn(i))
+                vk(i) = vn(i) / vk(i)
+                i = i + 1
+            Next
+            val = 1 / MathEx.Common.Sum(vk)
+            Return val
+        End Function
+
+        Public Overrides Function AUX_LIQDENSi(subst As ClassesBasicasTermodinamica.Substancia, T As Double) As Double
+            Return CoolProp.Props("L", "T", T, "Q", 0, subst.ConstantProperties.Name)
+        End Function
+
+        Public Overrides Function AUX_LIQTHERMCONDi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
+            Return CoolProp.Props("L", "T", T, "Q", 0, cprop.Name) * 1000
+        End Function
+
+        Public Overrides Function AUX_LIQVISCi(sub1 As String, T As Double) As Object
+            Return CoolProp.Props("V", "T", T, "Q", 0, sub1)
+        End Function
+
+        Public Overrides Function AUX_SURFTi(constprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
+            Return CoolProp.Props("I", "T", T, "Q", 0, constprop.Name)
+        End Function
+
+        Public Overrides Function AUX_SURFTM(T As Double) As Double
+
+        End Function
+
+        Public Overrides Function AUX_VAPTHERMCONDi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double, P As Double) As Double
+            Dim val As Double
+            If CoolProp.Props("P", "T", T, "Q", 1, cprop.Name) * 1000 > P Then
+                val = CoolProp.Props("L", "T", T, "P", P / 1000, cprop.Name) * 1000
+            Else
+                val = CoolProp.Props("L", "T", T, "Q", 1, cprop.Name) * 1000
+            End If
+            Return val
+        End Function
+
+        Public Overrides Function AUX_VAPVISCi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
+            Return CoolProp.Props("V", "T", T, "Q", 1, cprop.Name)
+        End Function
+
+        Public Function AUX_VAPVISCMIX(T As Double, P As Double, MM As Double) As Double
+            Dim val As Double = 0.0#
+            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                If CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000 > P Then
+                    val = subst.FracaoMolar.GetValueOrDefault * CoolProp.Props("V", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                Else
+                    val = subst.FracaoMolar.GetValueOrDefault * CoolProp.Props("V", "T", T, "Q", 1, subst.ConstantProperties.Name)
+                End If
+            Next
+            Return val
+        End Function
+
         Public Overrides Function AUX_LIQDENS(ByVal T As Double, Optional ByVal P As Double = 0.0, Optional ByVal Pvp As Double = 0.0, Optional ByVal phaseid As Integer = 3, Optional ByVal FORCE_EOS As Boolean = False) As Double
 
-            Return CalcRho(RET_VMAS(RET_PHASECODE(phaseid)), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), State.Liquid)
+            Dim val As Double
+            Dim i As Integer
+            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            i = 0
+            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                If CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000 < P Then
+                    vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                Else
+                    vk(i) = CoolProp.Props("D", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                End If
+                vk(i) = subst.FracaoMassica / vk(i)
+                i = i + 1
+            Next
+            val = 1 / MathEx.Common.Sum(vk)
+
+            Return val
 
         End Function
 
         Public Overrides Function AUX_VAPDENS(ByVal T As Double, ByVal P As Double) As Double
 
-            Return CalcRho(RET_VMAS(Fase.Vapor), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), State.Vapor)
+            Dim val As Double
+            Dim i As Integer
+            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            i = 0
+            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                If CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000 > P Then
+                    vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                Else
+                    vk(i) = CoolProp.Props("D", "T", T, "Q", 1, subst.ConstantProperties.Name)
+                End If
+                vk(i) = subst.FracaoMassica / vk(i)
+                i = i + 1
+            Next
+            val = 1 / MathEx.Common.Sum(vk)
+
+            Return val
 
         End Function
 
@@ -107,91 +223,212 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_CalcCp_ISOL(ByVal fase1 As Fase, ByVal T As Double, ByVal P As Double) As Double
 
-            Dim fstate As State
-
+            Dim phaseID As Integer
             Select Case fase1
-                Case Fase.Aqueous, Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3
-                    fstate = State.Liquid
-                Case Fase.Vapor
-                    fstate = State.Vapor
+                Case PropertyPackages.Fase.Mixture
+                    phaseID = 0
+                Case PropertyPackages.Fase.Vapor
+                    phaseID = 2
+                Case PropertyPackages.Fase.Liquid1
+                    phaseID = 3
+                Case PropertyPackages.Fase.Liquid2
+                    phaseID = 4
+                Case PropertyPackages.Fase.Liquid3
+                    phaseID = 5
+                Case PropertyPackages.Fase.Liquid
+                    phaseID = 1
+                Case PropertyPackages.Fase.Aqueous
+                    phaseID = 6
+                Case PropertyPackages.Fase.Solid
+                    phaseID = 7
             End Select
 
-            Return FPROPS_CalcCp(RET_VMAS(fase1), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), fstate)
+            Dim val As Double
+            Dim i As Integer
+            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            Select Case fase1
+                Case Fase.Aqueous, Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3
+                    i = 0
+                    For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
+                        Dim psat As Double = CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
+                        If psat < P Then
+                            vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                        Else
+                            vk(i) = CoolProp.Props("C", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                        End If
+                        vk(i) = subst.FracaoMassica * vk(i)
+                        i = i + 1
+                    Next
+                Case Fase.Vapor
+                    i = 0
+                    For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
+                        Dim psat As Double = CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
+                        If psat > P Then
+                            vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                        Else
+                            vk(i) = CoolProp.Props("C", "T", T, "Q", 1, subst.ConstantProperties.Name)
+                        End If
+                        vk(i) = subst.FracaoMassica * vk(i)
+                        i = i + 1
+                    Next
+            End Select
+
+            val = MathEx.Common.Sum(vk)
+
+            Return val
 
         End Function
 
         Public Overrides Function DW_CalcCv_ISOL(ByVal fase1 As Fase, ByVal T As Double, ByVal P As Double) As Double
 
-            Dim fstate As State
-
+            Dim phaseID As Integer
             Select Case fase1
-                Case Fase.Aqueous, Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3
-                    fstate = State.Liquid
-                Case Fase.Vapor
-                    fstate = State.Vapor
+                Case PropertyPackages.Fase.Mixture
+                    phaseID = 0
+                Case PropertyPackages.Fase.Vapor
+                    phaseID = 2
+                Case PropertyPackages.Fase.Liquid1
+                    phaseID = 3
+                Case PropertyPackages.Fase.Liquid2
+                    phaseID = 4
+                Case PropertyPackages.Fase.Liquid3
+                    phaseID = 5
+                Case PropertyPackages.Fase.Liquid
+                    phaseID = 1
+                Case PropertyPackages.Fase.Aqueous
+                    phaseID = 6
+                Case PropertyPackages.Fase.Solid
+                    phaseID = 7
             End Select
 
-            Return FPROPS_CalcCv(RET_VMAS(fase1), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), fstate)
+            Dim val As Double
+            Dim i As Integer
+            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            Select Case fase1
+                Case Fase.Aqueous, Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3
+                    i = 0
+                    For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
+                        Dim psat As Double = CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
+                        If psat < P Then
+                            vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                        Else
+                            vk(i) = CoolProp.Props("O", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                        End If
+                        vk(i) = subst.FracaoMassica * vk(i)
+                        i = i + 1
+                    Next
+                Case Fase.Vapor
+                    i = 0
+                    For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
+                        Dim psat As Double = CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
+                        If psat > P Then
+                            vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                        Else
+                            vk(i) = CoolProp.Props("O", "T", T, "Q", 1, subst.ConstantProperties.Name)
+                        End If
+                        vk(i) = subst.FracaoMassica * vk(i)
+                        i = i + 1
+                    Next
+            End Select
 
-        End Function
+            val = MathEx.Common.Sum(vk)
 
-        Public Overrides Function DW_CalcEnergiaMistura_ISOL(ByVal T As Double, ByVal P As Double) As Double
-
-            Dim HM, HV, HL As Double
-
-            HL = FPROPS_CalcH(RET_VMAS(Fase.Liquid), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), State.Liquid)
-            HV = FPROPS_CalcH(RET_VMAS(Fase.Vapor), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), State.Vapor)
-            HM = Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction.GetValueOrDefault * HL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * HV
-
-            Dim ent_massica = HM
-            Dim flow = Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow
-            Return ent_massica * flow
+            Return val
 
         End Function
 
         Public Overrides Function DW_CalcEnthalpy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
-            Return FPROPS_CalcH(AUX_CONVERT_MOL_TO_MASS(Vx), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), st)
+            Dim val As Double
+            Dim i As Integer
+            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            Dim vn As String() = Me.RET_VNAMES
+            Dim n As Integer = Vx.Length - 1
+            Select Case st
+                Case State.Liquid
+                    For i = 0 To n
+                        If CoolProp.Props("P", "T", T, "Q", 0, vn(i)) < P Then
+                            vk(i) = CoolProp.Props("H", "T", T, "P", P / 1000, vn(i))
+                        Else
+                            vk(i) = CoolProp.Props("H", "T", T, "Q", 0, vn(i))
+                        End If
+                        vk(i) = Vx(i) * vk(i)
+                    Next
+                Case State.Vapor
+                    For i = 0 To n
+                        If CoolProp.Props("P", "T", T, "Q", 1, vn(i)) > P Then
+                            vk(i) = CoolProp.Props("H", "T", T, "P", P / 1000, vn(i))
+                        Else
+                            vk(i) = CoolProp.Props("H", "T", T, "Q", 1, vn(i))
+                        End If
+                        vk(i) = Vx(i) * vk(i)
+                    Next
+            End Select
+
+            val = MathEx.Common.Sum(vk)
+
+            Return val
 
         End Function
 
         Public Overrides Function DW_CalcEnthalpyDeparture(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
-            Return FPROPS_CalcH(AUX_CONVERT_MOL_TO_MASS(Vx), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), st) - RET_Hid(298.15, T, Fase.Mixture)
+            Return DW_CalcEnthalpy(Vx, T, P, st)
 
         End Function
 
         Public Overrides Function DW_CalcEntropy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
-            Return FPROPS_CalcS(AUX_CONVERT_MOL_TO_MASS(Vx), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), st)
+            Dim val As Double
+            Dim i As Integer
+            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            Dim vn As String() = Me.RET_VNAMES
+            Dim n As Integer = Vx.Length - 1
+            Select Case st
+                Case State.Liquid
+                    For i = 0 To n
+                        If CoolProp.Props("P", "T", T, "Q", 0, vn(i)) < P Then
+                            vk(i) = CoolProp.Props("S", "T", T, "P", P / 1000, vn(i))
+                        Else
+                            vk(i) = CoolProp.Props("S", "T", T, "Q", 0, vn(i))
+                        End If
+                        vk(i) = Vx(i) * vk(i)
+                    Next
+                Case State.Vapor
+                    For i = 0 To n
+                        If CoolProp.Props("P", "T", T, "Q", 1, vn(i)) > P Then
+                            vk(i) = CoolProp.Props("S", "T", T, "P", P / 1000, vn(i))
+                        Else
+                            vk(i) = CoolProp.Props("S", "T", T, "Q", 1, vn(i))
+                        End If
+                        vk(i) = Vx(i) * vk(i)
+                    Next
+            End Select
+
+            val = MathEx.Common.Sum(vk)
+
+            Return val
 
         End Function
 
         Public Overrides Function DW_CalcEntropyDeparture(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
-            Return FPROPS_CalcS(AUX_CONVERT_MOL_TO_MASS(Vx), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), st) - RET_Sid(298.15, T, P, Fase.Mixture)
+            Return DW_CalcEntropy(Vx, T, P, st)
 
         End Function
 
         Public Overrides Function DW_CalcFugCoeff(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Object
 
-            If m_uni Is Nothing Then m_uni = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
-
             Dim n As Integer = UBound(Vx)
-            Dim lnfug(n), ativ(n) As Double
+            Dim lnfug(n) As Double
             Dim fugcoeff(n) As Double
             Dim i As Integer
 
             Dim Tc As Object = Me.RET_VTC()
 
             If st = State.Liquid Then
-                ativ = Me.m_uni.GAMMA_MR(T, Vx, Me.RET_VNAMES, Me.RET_VQ, Me.RET_VR)
                 For i = 0 To n
-                    If T / Tc(i) >= 1 Then
-                        lnfug(i) = Math.Log(Me.AUX_PVAPi(i, T) / P)
-                    Else
-                        lnfug(i) = Math.Log(ativ(i) * Me.AUX_PVAPi(i, T) / (P))
-                    End If
+                    lnfug(i) = Math.Log(Me.AUX_PVAPi(i, T) / P)
                 Next
             Else
                 For i = 0 To n
@@ -209,26 +446,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_CalcK_ISOL(ByVal fase1 As Fase, ByVal T As Double, ByVal P As Double) As Double
 
-            If fase1 = Fase.Liquid Then
-                Return Me.AUX_CONDTL(T)
-            ElseIf fase1 = Fase.Vapor Then
-                Return Me.AUX_CONDTG(T, P)
-            End If
+            Return 0.0#
 
         End Function
 
         Public Overrides Function DW_CalcMassaEspecifica_ISOL(ByVal fase1 As Fase, ByVal T As Double, ByVal P As Double, Optional ByVal Pvp As Double = 0.0) As Double
 
-            Dim fstate As State
-
-            Select Case fase1
-                Case Fase.Aqueous, Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3
-                    fstate = State.Liquid
-                Case Fase.Vapor
-                    fstate = State.Vapor
-            End Select
-
-            Return CalcRho(RET_VMAS(fase1), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), fstate)
+            Return 0.0#
 
         End Function
 
@@ -303,13 +527,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 result = Me.DW_CalcEntropy(RET_VMOL(dwpl), T, P, State.Liquid)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
 
-                result = FPROPS_CalcZ(RET_VMAS(dwpl), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), State.Liquid)
+                result = P / (Me.AUX_LIQDENS(T, P, 0, phaseID) * 8.314 * T) / 1000 * AUX_MMM(fase.Mixture)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
 
-                result = FPROPS_CalcCp(RET_VMAS(dwpl), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), State.Liquid)
+                result = Me.DW_CalcCp_ISOL(fase, T, P)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
 
-                result = FPROPS_CalcCv(RET_VMAS(dwpl), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), State.Liquid)
+                result = Me.DW_CalcCv_ISOL(fase, T, P)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
 
                 result = Me.AUX_MMM(fase)
@@ -340,13 +564,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 result = Me.DW_CalcEntropy(RET_VMOL(dwpl), T, P, State.Vapor)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
 
-                result = FPROPS_CalcZ(RET_VMAS(dwpl), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), State.Vapor)
+                result = P / (Me.AUX_VAPDENS(T, P) * 8.314 * T) / 1000 * AUX_MMM(fase.Mixture)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
 
-                result = FPROPS_CalcCp(RET_VMAS(dwpl), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), State.Vapor)
+                result = Me.DW_CalcCp_ISOL(fase, T, P)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
 
-                result = FPROPS_CalcCv(RET_VMAS(dwpl), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), State.Vapor)
+                result = Me.DW_CalcCv_ISOL(fase, T, P)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
 
                 result = Me.AUX_MMM(fase)
@@ -361,7 +585,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 result = Me.AUX_CONDTG(T, P)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = result
 
-                result = Me.AUX_VAPVISCm(T, Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault, Me.AUX_MMM(fase))
+                result = Me.AUX_VAPVISCMIX(T, P, Me.AUX_MMM(fase))
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = result
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = result / Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault
 
@@ -429,13 +653,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Select Case [property].ToLower
                 Case "compressibilityfactor"
-                    result = FPROPS_CalcZ(RET_VMAS(phase), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), fstate)
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
                 Case "heatcapacity", "heatcapacitycp"
-                    result = FPROPS_CalcCp(RET_VMAS(phase), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), fstate)
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
                 Case "heatcapacitycv"
-                    result = FPROPS_CalcCv(RET_VMAS(phase), T, P, GetFluidStruct(GetFpropsFluidID(RET_VNAMES())), fstate)
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
                 Case "enthalpy", "enthalpynf"
                     result = Me.DW_CalcEnthalpy(RET_VMOL(phase), T, P, phase)
@@ -469,7 +690,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     If state = "L" Then
                         result = Me.AUX_LIQVISCm(T)
                     Else
-                        result = Me.AUX_VAPVISCm(T, Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault, Me.AUX_MMM(phase))
+                        result = Me.AUX_VAPVISCMIX(T, P, Me.AUX_MMM(phase))
                     End If
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = result
                 Case "thermalconductivity"
@@ -556,306 +777,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "    Auxiliary Functions"
 
-        Public Function GetFpropsFluidID(ByVal names() As String) As String()
 
-            Dim fpnames As New ArrayList
-
-            For Each name As String In names
-
-                Select Case name
-                    Case "Ammonia"
-                        fpnames.Add("ammonia")
-                    Case "Nitrogen"
-                        fpnames.Add("nitrogen")
-                    Case "Hydrogen"
-                        fpnames.Add("hydrogen")
-                    Case "Water"
-                        fpnames.Add("water")
-                    Case "Carbon dioxide"
-                        fpnames.Add("carbondioxide")
-                    Case "Methane"
-                        fpnames.Add("methane")
-                    Case "Carbon monoxide"
-                        fpnames.Add("carbonmonoxide")
-                    Case "Ethanol"
-                        fpnames.Add("ethanol")
-                    Case "Acetone"
-                        fpnames.Add("acetone")
-                    Case "Carbonyl sulfide"
-                        fpnames.Add("carbonylsulfide")
-                    Case "N-decane"
-                        fpnames.Add("decane")
-                    Case "Hydrogen sulfide"
-                        fpnames.Add("hydrogensulfide")
-                    Case "Isopentane"
-                        fpnames.Add("isopentane")
-                    Case "Krypton"
-                        fpnames.Add("krypton")
-                    Case "Neopentane"
-                        fpnames.Add("neopentane")
-                    Case "Nitrous oxide"
-                        fpnames.Add("nitrousoxide")
-                    Case "N-nonane"
-                        fpnames.Add("nonane")
-                    Case "Sulfur dioxide"
-                        fpnames.Add("sulfurdioxide")
-                    Case "Toluene"
-                        fpnames.Add("toluene")
-                    Case "Xenon"
-                        fpnames.Add("xenon")
-                    Case "1-butene"
-                        fpnames.Add("butane")
-                    Case "Cis-2-butene"
-                        fpnames.Add("cisbutene")
-                    Case "Isobutene"
-                        fpnames.Add("isobutene")
-                    Case "Trans-2-butene"
-                        fpnames.Add("transbutene")
-                    Case "Dimethyl ether"
-                        fpnames.Add("dimethylether")
-                    Case "Ethane"
-                        fpnames.Add("ethane")
-                    Case "Isobutane"
-                        fpnames.Add("isobutane")
-                    Case Else
-                        Throw New ArgumentOutOfRangeException(name, "Error: compound '" & name & "' is not supported by this version of FPROPS.")
-                        Return Nothing
-                End Select
-
-            Next
-
-            Return fpnames.ToArray(Type.GetType("System.String"))
-
-        End Function
-
-        'Public Function GetDominantCompound(ByVal Vz As Double()) As String
-
-        '    Dim i As Integer = 0
-        '    Dim maxZ As Double = Vz(0)
-        '    Dim name As String = ""
-
-        '    For Each s As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-        '        If s.FracaoMolar.GetValueOrDefault >= maxZ Then
-        '            name = s.Nome
-        '            maxZ = Vz(i)
-        '        End If
-        '        i += 1
-        '    Next
-
-        '    Return name
-
-        'End Function
-
-        'Public Function GetDominantCompound() As String()
-
-        '    Dim i As Integer = 0
-        '    Dim maxZ As Double = 0.0#
-        '    Dim name As String = ""
-
-        '    For Each s As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-        '        If s.FracaoMolar.GetValueOrDefault >= maxZ Then
-        '            name = s.Nome
-        '            maxZ = s.FracaoMolar.GetValueOrDefault
-        '        End If
-        '        i += 1
-        '    Next
-
-        '    Return name
-
-        'End Function
-
-        Public Function GetFluidStruct(ByVal fluidnames() As String) As PureFluid_struct()
-
-            Dim mystruct(fluidnames.Length - 1) As PureFluid_struct
-
-            For i As Integer = 0 To fluidnames.Length - 1
-                Dim data As System.IntPtr = fprops.fprops_fluid(fluidnames(i), Nothing)
-                mystruct(i) = Marshal.PtrToStructure(data, Type.GetType("DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS.PureFluid_struct"))
-            Next
-
-            Return mystruct
-
-        End Function
-
-        Private Function FPROPS_CalcCp(ByVal Vw As Array, ByVal T As Double, ByVal P As Double, ByVal fluidstruct() As PureFluid_struct, ByVal fluidstate As State) As Double
-
-            Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
-
-            Dim result As Double = 0
-
-            For i As Integer = 0 To Vw.Length - 1
-                result += Vw(i) * fprops.fprops_cp(T, CalcRho(T, P, fluidstruct(i), fluidstate), fluidstruct(i), myerr) / 1000 'kJ/kg
-                If myerr <> FpropsError_enum.FPROPS_NO_ERROR Then Throw New Exception("FPROPS returned an error: " & myerr & " [@ fprops_cp, T = " & T & " K, P = " & P & " Pa, fluid = " & fluidstruct(i).name & ", state = " & fluidstate.ToString & "]")
-            Next
-
-
-            Return result
-
-        End Function
-
-        Private Function FPROPS_CalcCv(ByVal Vw As Array, ByVal T As Double, ByVal P As Double, ByVal fluidstruct() As PureFluid_struct, ByVal fluidstate As State) As Double
-
-            Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
-
-            Dim result As Double = 0
-
-            For i As Integer = 0 To Vw.Length - 1
-                result += Vw(i) * fprops.fprops_cv(T, CalcRho(T, P, fluidstruct(i), fluidstate), fluidstruct(i), myerr) / 1000 'kJ/kg
-                If myerr <> FpropsError_enum.FPROPS_NO_ERROR Then Throw New Exception("FPROPS returned an error: " & myerr & " [@ fprops_cv, T = " & T & " K, P = " & P & " Pa, fluid = " & fluidstruct(i).name & ", state = " & fluidstate.ToString & "]")
-            Next
-
-            Return result
-
-        End Function
-
-        Private Function FPROPS_CalcH(ByVal Vw As Array, ByVal T As Double, ByVal P As Double, ByVal fluidstruct() As PureFluid_struct, ByVal fluidstate As State) As Double
-
-            Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
-
-            Dim result As Double = 0
-
-            For i As Integer = 0 To Vw.Length - 1
-                result += Vw(i) * fprops.fprops_h(T, CalcRho(T, P, fluidstruct(i), fluidstate), fluidstruct(i), myerr) / 1000 'kJ/kg
-                If myerr <> FpropsError_enum.FPROPS_NO_ERROR Then Throw New Exception("FPROPS returned an error: " & myerr & " [@ fprops_h, T = " & T & " K, P = " & P & " Pa, fluid = " & fluidstruct(i).name & ", state = " & fluidstate.ToString & "]")
-            Next
-
-            Return result
-
-        End Function
-
-        Private Function FPROPS_CalcS(ByVal Vw As Array, ByVal T As Double, ByVal P As Double, ByVal fluidstruct() As PureFluid_struct, ByVal fluidstate As State) As Double
-
-            Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
-
-            Dim result As Double = 0
-
-            For i As Integer = 0 To Vw.Length - 1
-                result += Vw(i) * fprops.fprops_s(T, CalcRho(T, P, fluidstruct(i), fluidstate), fluidstruct(i), myerr) / 1000 'kJ/kg.K
-                If myerr <> FpropsError_enum.FPROPS_NO_ERROR Then Throw New Exception("FPROPS returned an error: " & myerr & " [@ fprops_s, T = " & T & " K, P = " & P & " Pa, fluid = " & fluidstruct(i).name & ", state = " & fluidstate.ToString & "]")
-            Next
-
-            Return result
-
-        End Function
-
-        Private Function FPROPS_CalcZ(ByVal Vw As Array, ByVal T As Double, ByVal P As Double, ByVal fluidstruct() As PureFluid_struct, ByVal fluidstate As State) As Double
-
-            Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
-
-            Dim _rho As Double = 0
-
-            For i As Integer = 0 To Vw.Length - 1
-                _rho += Vw(i) / CalcRho(T, P, fluidstruct(i), fluidstate)
-            Next
-
-            Dim rho As Double = 1 / _rho
-
-            Dim result As Double = P / (rho * 8.314 * T) / 1000 * AUX_MMM(Fase.Mixture)
-
-            Return result
-
-        End Function
-
-        Private Function CalcRho(ByVal T As Double, ByVal P As Double, ByVal fluidstruct As PureFluid_struct, ByVal fluidstate As State) As Double
-
-            Dim f1, f2, x1, dfdx As Double, cnt As Integer
-            Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
-            Dim satt, rhof, rhog As Double
-
-            If fluidstate = State.Liquid Then
-                x1 = 1000
-            Else
-                x1 = 1
-            End If
-
-            cnt = 0
-
-            f1 = 1000
-
-            While Abs(f1) >= 0.00001
-
-                f1 = P - fprops.fprops_p(T, x1, fluidstruct, myerr)
-                If myerr <> FpropsError_enum.FPROPS_NO_ERROR Then Throw New Exception("FPROPS returned an error: " & myerr & " [@ fprops_p, T = " & T & " K, P = " & P & " Pa, fluid = " & fluidstruct.name & ", state = " & fluidstate.ToString & "]")
-                f2 = P - fprops.fprops_p(T, x1 * 1.01, fluidstruct, myerr)
-                If myerr <> FpropsError_enum.FPROPS_NO_ERROR Then Throw New Exception("FPROPS returned an error: " & myerr & " [@ fprops_p, T = " & T & " K, P = " & P & " Pa, fluid = " & fluidstruct.name & ", state = " & fluidstate.ToString & "]")
-                dfdx = (f2 - f1) / (0.01 * x1)
-
-                If Abs(dfdx) < 0.0000000001 Or Double.IsNaN(f1) Or Double.IsInfinity(f1) Then
-                    Console.WriteLine("FPROPS WARNING: compound: " & fluidstruct.name & ", state: " & fluidstate.ToString)
-                    Console.WriteLine("FPROPS WARNING: unable to calculate density at P = " & P & " Pa and T = " & T & " K")
-                    fprops.fprops_sat_p(P, satt, rhof, rhog, fluidstruct)
-                    If fluidstate = State.Liquid Then
-                        Console.WriteLine("FPROPS WARNING: returning calculated density @ saturation temperature (" & satt & " K => " & rhof & " kg/m3")
-                        Return rhof
-                    Else
-                        Console.WriteLine("FPROPS WARNING: returning calculated density @ saturation temperature (" & satt & " K => " & rhog & " kg/m3")
-                        Return rhog
-                    End If
-                End If
-
-                x1 = x1 - f1 / dfdx
-                cnt += 1
-
-                If cnt > 500 Then Exit While
-
-            End While
-
-            Return x1
-
-        End Function
-
-        Private Function CalcRho(ByVal Vw As Array, ByVal T As Double, ByVal P As Double, ByVal fluidstruct() As PureFluid_struct, ByVal fluidstate As State) As Double
-
-            Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
-
-            Dim _rho As Double = 0
-
-            For i As Integer = 0 To Vw.Length - 1
-                _rho += Vw(i) / CalcRho(T, P, fluidstruct(i), fluidstate)
-            Next
-
-            Dim rho As Double = 1 / _rho
-
-            Return rho
-
-        End Function
 
 #End Region
 
-#Region "    UNIQUAC Auxiliary Functions"
-
-        Function RET_VQ() As Object
-
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim VQ(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                VQ(i) = subst.ConstantProperties.UNIQUAC_Q
-                i += 1
-            Next
-
-            Return VQ
+        Public Overrides Function DW_CalcEnergiaMistura_ISOL(T As Double, P As Double) As Double
 
         End Function
-
-        Function RET_VR() As Object
-
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim VR(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                VR(i) = subst.ConstantProperties.UNIQUAC_R
-                i += 1
-            Next
-
-            Return VR
-
-        End Function
-
-#End Region
-
     End Class
 
 End Namespace
+

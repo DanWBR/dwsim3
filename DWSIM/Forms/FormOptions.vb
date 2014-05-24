@@ -308,6 +308,14 @@ Public Class FormOptions
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
         End If
 
+        name = "CoolProp   "
+        path2 = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "coolprop.txt"
+        If File.Exists(path2) Then
+            Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.lock})
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
+        End If
+
         'chemsep database
         If FormMain.loadedCSDB Then
             name = "ChemSep   "
@@ -376,7 +384,7 @@ Public Class FormOptions
 
     Private Sub dgvdb_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvdb.CellContentClick
         'remove component database
-        If e.ColumnIndex = 3 And e.RowIndex > 2 Then
+        If e.ColumnIndex = 3 And e.RowIndex > 3 Then
 
             If Me.dgvdb.Rows(e.RowIndex).Cells(1).Value = "ChemSep   " Then
 
@@ -400,7 +408,7 @@ Public Class FormOptions
     Private Sub dgvIPDB_CellContentClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvIPDB.CellContentClick
         'remove user interactions database
 
-        If e.ColumnIndex = 3 And e.RowIndex > 2 Then
+        If e.ColumnIndex = 3 And e.RowIndex > 3 Then
             If Me.dgvIPDB.Rows(e.RowIndex).Cells(1).Value = "User   " Then
                 My.Settings.UserInteractionsDatabases.Remove(Me.dgvIPDB.Rows(e.RowIndex).Cells(2).Value)
                 My.Settings.Save()

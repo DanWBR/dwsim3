@@ -1459,4 +1459,49 @@ Namespace DWSIM.Databases
 
     End Class
 
+    Public Class CoolProp
+
+        Dim text() As String
+
+        Sub New()
+
+        End Sub
+
+        Public Sub Load(ByVal filename As String)
+
+            text = File.ReadAllLines(filename)
+
+        End Sub
+
+        Public Function Transfer() As ClassesBasicasTermodinamica.ConstantProperties()
+
+            Dim cp As ClassesBasicasTermodinamica.ConstantProperties
+            Dim cpa As New ArrayList()
+            Dim i As Integer = 300000
+            For Each s As String In text
+                cp = New ClassesBasicasTermodinamica.ConstantProperties
+                With cp
+                    .OriginalDB = "CoolProp"
+                    .Name = s
+                    .Formula = ""
+                    .Molar_Weight = CoolPropInterface.CoolProp.Props1(s, "molemass")
+                    .Critical_Pressure = CoolPropInterface.CoolProp.Props1(s, "pcrit") * 1000
+                    .Critical_Temperature = CoolPropInterface.CoolProp.Props1(s, "Tcrit")
+                    .Critical_Volume = 1 / CoolPropInterface.CoolProp.Props1(s, "rhocrit") * .Molar_Weight
+                    .Acentric_Factor = CoolPropInterface.CoolProp.Props1(s, "accentric")
+                    .Critical_Compressibility = .Critical_Pressure * .Critical_Volume / (8314 * .Critical_Temperature)
+                    .ID = i
+                    .IsHYPO = False
+                    .IsPF = False
+                End With
+                cpa.Add(cp)
+                i += 1
+            Next
+
+            Return cpa.ToArray(Type.GetType("DWSIM.DWSIM.ClassesBasicasTermodinamica.ConstantProperties"))
+
+        End Function
+
+    End Class
+
 End Namespace

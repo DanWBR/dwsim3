@@ -22,6 +22,9 @@ Public Class CAPEOPENPropertyPackageManager
             Case "FPROPS"
                 pp = New FPROPSPropertyPackage(True)
                 pp.ComponentDescription = DWSIM.App.GetLocalString("DescFPP")
+            Case "CoolProp"
+                pp = New CoolPropPropertyPackage(True)
+                pp.ComponentDescription = DWSIM.App.GetLocalString("DescCPPP")
             Case "PC-SAFT"
                 pp = New PCSAFTPropertyPackage(True)
                 pp.ComponentDescription = DWSIM.App.GetLocalString("DescPCSAFTPP")
@@ -81,7 +84,7 @@ Public Class CAPEOPENPropertyPackageManager
     End Function
 
     Public Function GetPropertyPackageList() As Object Implements ICapeThermoPropertyPackageManager.GetPropertyPackageList
-        Return New String() {"FPROPS", "PC-SAFT", "Peng-Robinson (PR)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)", "Soave-Redlich-Kwong (SRK)", "Peng-Robinson / Lee-Kesler (PR/LK)", _
+        Return New String() {"FPROPS", "CoolProp", "PC-SAFT", "Peng-Robinson (PR)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)", "Soave-Redlich-Kwong (SRK)", "Peng-Robinson / Lee-Kesler (PR/LK)", _
                              "UNIFAC", "UNIFAC-LL", "Modified UNIFAC (Dortmund)", "NRTL", "UNIQUAC", _
                             "Chao-Seader", "Grayson-Streed", "Lee-Kesler-Plöcker", "Raoult's Law", "COSMO-SAC (JCOSMO)", "IAPWS-IF97 Steam Tables"}
     End Function

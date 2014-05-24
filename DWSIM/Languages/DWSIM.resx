@@ -4816,4 +4816,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="NextText" xml:space="preserve">
     <value>Próximo</value>
   </data>
+  <data name="DescCPPP" xml:space="preserve">
+    <value>CoolProp is an open-source database of fluid and humid air properties, formulated based on the most accurate formulations in open literature. It has been validated against the most accurate data available from the relevant references.</value>
+  </data>
 </root>

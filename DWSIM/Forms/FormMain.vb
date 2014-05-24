@@ -415,6 +415,16 @@ Public Class FormMain
         FPP.ComponentDescription = DWSIM.App.GetLocalString("DescFPP")
         PropertyPackages.Add(FPP.ComponentName.ToString, FPP)
 
+        If Not DWSIM.App.IsRunningOnMono Then
+
+            Dim CPPP As CoolPropPropertyPackage = New CoolPropPropertyPackage()
+            CPPP.ComponentName = "CoolProp"
+            CPPP.ComponentDescription = DWSIM.App.GetLocalString("DescCPPP")
+
+            PropertyPackages.Add(CPPP.ComponentName.ToString, CPPP)
+
+        End If
+
         Dim STPP As SteamTablesPropertyPackage = New SteamTablesPropertyPackage()
         STPP.ComponentName = DWSIM.App.GetLocalString("TabelasdeVaporSteamT")
         STPP.ComponentDescription = DWSIM.App.GetLocalString("DescSteamTablesPP")
@@ -666,6 +676,9 @@ Public Class FormMain
         'load Electrolyte XML database
         Me.LoadEDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "electrolyte.xml")
 
+        'load Electrolyte XML database
+        Me.LoadCPDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "coolprop.txt")
+
         Dim invaliddbs As New List(Of String)
 
         'load user databases
@@ -747,6 +760,18 @@ Public Class FormMain
             Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
             edb.Load(filename)
             cpa = edb.Transfer()
+            For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
+                If Not Me.AvailableComponents.ContainsKey(cp.Name) Then Me.AvailableComponents.Add(cp.Name, cp)
+            Next
+        End If
+    End Sub
+
+    Public Sub LoadCPDB(ByVal filename As String)
+        If File.Exists(filename) Then
+            Dim cpdb As New DWSIM.Databases.CoolProp
+            Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+            cpdb.Load(filename)
+            cpa = cpdb.Transfer()
             For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
                 If Not Me.AvailableComponents.ContainsKey(cp.Name) Then Me.AvailableComponents.Add(cp.Name, cp)
             Next
