@@ -707,7 +707,7 @@ restart:    Do
                 refx(n + 6) = Fc
 
                 err = 0
-                If Not PP._ioquick Then err = bo3.brentoptimize(0.2, 2, 0.0001, alpha)
+                If Not PP._ioquick Then err = bo3.brentoptimize(0, 2, 0.0001, alpha)
 
                 For i = 0 To n
                     ui(i) = ui(i) + alpha * dx(i)
@@ -722,7 +722,9 @@ restart:    Do
                 ecount += 1
 
                 If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
-                If Double.IsNaN(AbsSum(fx)) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                If Double.IsNaN(AbsSum(fx)) Then
+                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                End If
 
                 Console.WriteLine("PH Flash [IO]: Iteration #" & ecount & ", T = " & T)
                 Console.WriteLine("PH Flash [IO]: Iteration #" & ecount & ", VF = " & V)

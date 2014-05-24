@@ -1,4 +1,4 @@
-'    Peng-Robinson-Stryjek-Vera 2 w/ Margules Mixing Rules Property Package 
+﻿'    Peng-Robinson-Stryjek-Vera 2 w/ Margules Mixing Rules Property Package 
 '    Copyright 2012 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -200,8 +200,35 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
+            Dim tv
+            Dim tv2
+
             If Not IsNumeric(temp1) Then
-                temp1 = SortRoots(temp1)
+
+                If temp1(0, 0) > temp1(1, 0) Then
+                    tv = temp1(1, 0)
+                    tv2 = temp1(1, 1)
+                    temp1(1, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    temp1(1, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(0, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(1, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(1, 0)
+                    temp1(1, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(1, 1)
+                    temp1(1, 1) = tv2
+                End If
 
                 If TIPO = "L" Then
                     Z = temp1(0, 0)
@@ -397,10 +424,35 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
-            Dim ZV As Double
+            Dim tv = 0
+            Dim ZV, tv2
 
             If Not IsNumeric(temp1) Then
-                temp1 = SortRoots(temp1)
+
+                If temp1(0, 0) > temp1(1, 0) Then
+                    tv = temp1(1, 0)
+                    temp1(1, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(1, 1)
+                    temp1(1, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(0, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(1, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(1, 0)
+                    temp1(1, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(1, 1)
+                    temp1(1, 1) = tv2
+                End If
 
                 ZV = temp1(2, 0)
                 If temp1(2, 1) <> 0 Then
@@ -423,6 +475,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 Loop Until Math.Abs(findZV) < 0.0001 Or Double.IsNaN(ZV)
 
                 Return ZV
+
             End If
 
             Z_PR = 0
@@ -512,8 +565,35 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
+            Dim tv
+            Dim tv2
+
             If Not IsNumeric(temp1) Then
-                temp1 = SortRoots(temp1)
+
+                If temp1(0, 0) > temp1(1, 0) Then
+                    tv = temp1(1, 0)
+                    tv2 = temp1(1, 1)
+                    temp1(1, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    temp1(1, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(0, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(1, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(1, 0)
+                    temp1(1, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(1, 1)
+                    temp1(1, 1) = tv2
+                End If
 
                 If TIPO = "L" Then
                     Z = temp1(0, 0)
@@ -545,6 +625,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                     Z = Z - findZV / dfdz
                     If Z < 0 Then Z = 1
                 Loop Until Math.Abs(findZV) < 0.0001 Or Double.IsNaN(Z)
+
+
             End If
 
             Dim V = (Z * R * T / P) ' m3/mol
@@ -658,8 +740,34 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
+            Dim tv = 0
+            Dim tv2 = 0
             If Not IsNumeric(temp1) Then
-                temp1 = SortRoots(temp1)
+
+                If temp1(0, 0) > temp1(1, 0) Then
+                    tv = temp1(1, 0)
+                    tv2 = temp1(1, 1)
+                    temp1(1, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    temp1(1, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(0, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(1, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(1, 0)
+                    temp1(1, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(1, 1)
+                    temp1(1, 1) = tv2
+                End If
 
                 If TIPO = "L" Then
                     Z = temp1(0, 0)
@@ -853,9 +961,9 @@ Final3:
         End Function
 
         Function GeneratePseudoRoot(ByVal T, ByVal P, ByVal Vx, ByVal VKij, ByVal VKij2, ByVal Vk1, ByVal Vk2, ByVal Vk3, ByVal VTc, ByVal VPc, ByVal Vw, ByVal VTb, ByVal TIPO)
+
             Dim ai(), bi(), ci(), aml2(), amv2() As Double
-            Dim n As Integer
-            Dim R, coeff(3), tmp() As Double
+            Dim n, R, coeff(3), tmp() As Double
             Dim Tc(), Pc(), W(), alpha(), Vant(0, 4), m(), a(,), b(,), Tr() As Double
             Dim beta As Double
             Dim criterioOK As Boolean = False
@@ -968,8 +1076,35 @@ Final3:
                 coeff(3) = 1
 
                 Dim temp1 = Poly_Roots(coeff)
+                Dim tv = 0
+                Dim tv2
+
                 If Not IsNumeric(temp1) Then
-                    temp1 = SortRoots(temp1)
+
+                    If temp1(0, 0) > temp1(1, 0) Then
+                        tv = temp1(1, 0)
+                        temp1(1, 0) = temp1(0, 0)
+                        temp1(0, 0) = tv
+                        tv2 = temp1(1, 1)
+                        temp1(1, 1) = temp1(0, 1)
+                        temp1(0, 1) = tv2
+                    End If
+                    If temp1(0, 0) > temp1(2, 0) Then
+                        tv = temp1(2, 0)
+                        temp1(2, 0) = temp1(0, 0)
+                        temp1(0, 0) = tv
+                        tv2 = temp1(2, 1)
+                        temp1(2, 1) = temp1(0, 1)
+                        temp1(0, 1) = tv2
+                    End If
+                    If temp1(1, 0) > temp1(2, 0) Then
+                        tv = temp1(2, 0)
+                        temp1(2, 0) = temp1(1, 0)
+                        temp1(1, 0) = tv
+                        tv2 = temp1(2, 1)
+                        temp1(2, 1) = temp1(1, 1)
+                        temp1(1, 1) = tv2
+                    End If
 
                     ZV = temp1(2, 0)
                     If temp1(2, 1) <> 0 Then
@@ -997,7 +1132,9 @@ Final3:
                         ZV = ZV - findZV / dfdz
                         If ZV < 0 Then ZV = 1
                     Loop Until Math.Abs(findZV) < 0.0001 Or Double.IsNaN(ZV)
+
                 End If
+
 
                 beta = 1 / P * (1 - (BG * ZV ^ 2 + AG * ZV - 6 * BG ^ 2 * ZV - 2 * BG * ZV - 2 * AG * BG + 2 * BG ^ 2 + 2 * BG) / (ZV * (3 * ZV ^ 2 - 2 * ZV + 2 * BG * ZV + AG - 3 * BG ^ 2 - 2 * BG)))
 
@@ -1053,8 +1190,8 @@ Final3:
         End Function
 
         Function CalcLnFug(ByVal T, ByVal P, ByVal Vx, ByVal VKij, ByVal VKij2, ByVal Vk1, ByVal Vk2, ByVal Vk3, ByVal VTc, ByVal VPc, ByVal Vw, ByVal VTb, ByVal TIPO)
-            Dim n As Integer
-            Dim R, coeff(3) As Double
+
+            Dim n, R, coeff(3) As Double
             Dim Vant(0, 4) As Double
             Dim beta As Double
             Dim criterioOK As Boolean = False
@@ -1155,8 +1292,35 @@ Final3:
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
+            Dim tv = 0
+            Dim tv2
+
             If Not IsNumeric(temp1) Then
-                temp1 = SortRoots(temp1)
+
+                If temp1(0, 0) > temp1(1, 0) Then
+                    tv = temp1(1, 0)
+                    temp1(1, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(1, 1)
+                    temp1(1, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(0, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(1, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(1, 0)
+                    temp1(1, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(1, 1)
+                    temp1(1, 1) = tv2
+                End If
 
                 ZV = temp1(2, 0)
                 If temp1(2, 1) <> 0 Then

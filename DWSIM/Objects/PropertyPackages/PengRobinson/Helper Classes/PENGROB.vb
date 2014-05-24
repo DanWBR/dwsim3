@@ -1,4 +1,4 @@
-'    Peng-Robinson Property Package 
+﻿'    Peng-Robinson Property Package 
 '    Copyright 2008 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -270,10 +270,35 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
-            Dim ZV
+            Dim tv = 0
+            Dim ZV, tv2
 
             If Not IsNumeric(temp1) Then
-                temp1 = SortRoots(temp1)
+
+                If temp1(0, 0) > temp1(1, 0) Then
+                    tv = temp1(1, 0)
+                    temp1(1, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(1, 1)
+                    temp1(1, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(0, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(1, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(1, 0)
+                    temp1(1, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(1, 1)
+                    temp1(1, 1) = tv2
+                End If
 
                 ZV = temp1(2, 0)
                 If temp1(2, 1) <> 0 Then
@@ -447,8 +472,35 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
+            Dim tv
+            Dim tv2
+
             If Not IsNumeric(temp1) Then
-                temp1 = SortRoots(temp1)
+
+                If temp1(0, 0) > temp1(1, 0) Then
+                    tv = temp1(1, 0)
+                    tv2 = temp1(1, 1)
+                    temp1(1, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    temp1(1, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(0, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(1, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(1, 0)
+                    temp1(1, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(1, 1)
+                    temp1(1, 1) = tv2
+                End If
 
                 If TIPO = "L" Then
                     Z = temp1(0, 0)
@@ -597,8 +649,35 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
+            Dim tv
+            Dim tv2
+
             If Not IsNumeric(temp1) Then
-                temp1 = SortRoots(temp1)
+
+                If temp1(0, 0) > temp1(1, 0) Then
+                    tv = temp1(1, 0)
+                    tv2 = temp1(1, 1)
+                    temp1(1, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    temp1(1, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(0, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(1, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(1, 0)
+                    temp1(1, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(1, 1)
+                    temp1(1, 1) = tv2
+                End If
 
                 If TIPO = "L" Then
                     Z = temp1(0, 0)
@@ -753,7 +832,30 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Dim tv2 = 0
             If Not IsNumeric(temp1) Then
 
-                temp1 = SortRoots(temp1)
+                If temp1(0, 0) > temp1(1, 0) Then
+                    tv = temp1(1, 0)
+                    tv2 = temp1(1, 1)
+                    temp1(1, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    temp1(1, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(0, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(0, 0)
+                    temp1(0, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(0, 1)
+                    temp1(0, 1) = tv2
+                End If
+                If temp1(1, 0) > temp1(2, 0) Then
+                    tv = temp1(2, 0)
+                    temp1(2, 0) = temp1(1, 0)
+                    temp1(1, 0) = tv
+                    tv2 = temp1(2, 1)
+                    temp1(2, 1) = temp1(1, 1)
+                    temp1(1, 1) = tv2
+                End If
 
                 If TIPO = "L" Then
                     Z = temp1(0, 0)
