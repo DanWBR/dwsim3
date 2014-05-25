@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<script src="ContentScripts.js"></script>
+<head>
+<link rel="stylesheet" type="text/css" href="DWSIMstyle.css">
+</head>
+
+<!-- ================================================================================== -->
+<!-- ====================   Begin of content    ======================================= -->
+<!-- ================================================================================== -->
+<body onload="LoadMenue()">
+
+<H2>Reactors</H2>
+
+<p>The reactors in DWSIM are specialized modules that solve a particular set of reactions in
+sequence or in parallel.</p>
+
+There are four different types of reactors available:
+<table style="margin-left:20px;">
+<tr><td><b>Type   </b></td><td><b>Description</b></td></tr>
+<tr><td>CSTR:   </td><td><b>C</b>ontinuous <b>S</b>tirred <b>T</b>ank <b>R</b>eactor</td></tr>
+<tr><td>PFR:   </td><td><b>P</b>lug <b>F</b>low <b>R</b>eactor</td></tr>
+<tr><td>Gibbs:   </td><td>Gibbs Minimsation Reactor</td></tr>
+<tr><td>Equilibrium:   </td><td>Equilibrium Reactor</td></tr>
+<tr><td>Conversion:   </td><td>Conversion Reactor</td></tr>
+</table>
+<br>
+To run a simulation of a reactor it is necessary to define the chemical reactions which are to be used in this specific reactor.
+This is done in simulation thermodynamic setup with the "Reaction Manager" (see separate documentation).<br>
+The principle is to either define reactions of "Equilibrium", "Conversion" or "Kinetic" type. One or more reactions are combined to define
+a "Reation Set" which is used for calculation of the reactor.
+<br><br>
+
+<table>
+<tr>
+<td><img src="pictures/SO_Reactor1.png"></td>
+
+<td>
+
+
+<h3>Input Parameters</h3>
+
+All reactors share the same basic interface. There must be set the 
+<ul>
+<li><b>input and output streams</b></li>
+<li><b>energy streams</b> that represent the heat exchanged with the environment</li>
+<li><b>reaction set</b> to be used</li>
+<li><b>mode of operation</b> (isothermal or adiabatic)</li>
+<li><b>pressure drop</b> through the reactor.</li>
+</ul>
+<br>For the PFR and CSTR, it is also necessary to define<br>
+<ul>
+<li><b>volume</b> of the reaction medium</li>
+</ul>
+<br>For the Gibbs Reactor you select the calculation mode:<br>
+<ul>
+<li><b>Diect Minimization: </b>Define components taking part in reactions and the element matrix.</li>
+<li><b>Reaction Extend: </b>Select reaction set which defines extend of each reaction.</li>
+</ul>
+
+<br><br>
+<h3>Output Parameters</h3>
+As results the conversions of the components involved in the reactions, the variation in temperature 
+and the heat exchanged in the reactor are shown.<br><br>
+
+For the <b>PFR</b> the profiles of concentration of reactants and products (see figure) is shown along the
+longitudinal axis of the reactor (assuming the concentration does not vary radially).<br><br>
+<img style="margin-left:20px;" src="pictures/SO_Reactor2.png">
+</td>
+
+</tr>
+</table>
+
+<br><br>
+
+
+</BODY>
+</HTML>

@@ -787,6 +787,8 @@ Imports DWSIM.DWSIM.GraphicObjects
                     DWSIM.App.HelpRequested("SO_SolidSeparator.htm")
                 Case TipoObjeto.Filter
                     DWSIM.App.HelpRequested("SO_CakeFilter.htm")
+                Case TipoObjeto.RCT_Conversion, TipoObjeto.RCT_CSTR, TipoObjeto.RCT_Equilibrium, TipoObjeto.RCT_Gibbs, TipoObjeto.RCT_PFR
+                    DWSIM.App.HelpRequested("SO_Reactor.htm")
                 Case Else
                     DWSIM.App.HelpRequested("frame.htm")
             End Select

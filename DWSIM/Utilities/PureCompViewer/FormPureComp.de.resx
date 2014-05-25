@@ -203,44 +203,53 @@
   <data name="FaTabStripItem6.Title" xml:space="preserve">
     <value>Molekül</value>
   </data>
-  <data name="GraphCp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
-  </data>
-  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>890, 510</value>
-  </data>
   <data name="FaTabStripItem2.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Cp ideales Gas</value>
+    <value>Wärmekapazität</value>
   </data>
-  <data name="FaTabStripItem5.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="FaTabStripItem5.Title" xml:space="preserve">
+  <data name="FaTabStripItemHVAP.Title" xml:space="preserve">
     <value>Verdampfungsenthalpie</value>
   </data>
-  <data name="FaTabStripItem3.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
+  <data name="FaTabStripItemPVAP.Title" xml:space="preserve">
     <value>Dampfdruck</value>
   </data>
-  <data name="FaTabStripItem4.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="FaTabStripItemSURFT.Title" xml:space="preserve">
+    <value>Oberflächenspannung</value>
   </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Flüssigviskosität</value>
+  <data name="FaTabStripItemLIQVISC.Title" xml:space="preserve">
+    <value>Viskosität</value>
   </data>
-  <data name="FaTabStripItem9.Title" xml:space="preserve">
-    <value>Flüssigkeitsdichte</value>
+  <data name="FaTabStripItemLIQDENS.Title" xml:space="preserve">
+    <value>Dichte</value>
   </data>
-  <data name="FaTabStripItem8.Title" xml:space="preserve">
-    <value>Feststoffdichte</value>
+  <data name="FaTabStripItemLIQTCOND.Title" xml:space="preserve">
+    <value>Therm. Leitfähigkeit</value>
   </data>
-  <data name="FaTabStripItem10.Title" xml:space="preserve">
-    <value>Cp Feststoff</value>
+  <data name="FaTabStripItem16.Title" xml:space="preserve">
+    <value>Eigenschaften Flüssigkeit</value>
+  </data>
+  <data name="FaTabStripItemCPIG.Title" xml:space="preserve">
+    <value>Cp ideales Gas</value>
+  </data>
+  <data name="FaTabStripItemVAPVISC.Title" xml:space="preserve">
+    <value>Viskosität</value>
+  </data>
+  <data name="FaTabStripItemVAPTCOND.Title" xml:space="preserve">
+    <value>Therm. Leitfähigkeit</value>
+  </data>
+  <data name="FaTabStripItem17.Title" xml:space="preserve">
+    <value>Eigenschaften Dampf</value>
+  </data>
+  <data name="FaTabStripItemCPSOLID.Title" xml:space="preserve">
+    <value>Wärmekapazität</value>
+  </data>
+  <data name="FaTabStripItemSOLIDDENS.Title" xml:space="preserve">
+    <value>Dichte</value>
+  </data>
+  <data name="FaTabStripItem18.Title" xml:space="preserve">
+    <value>Eigenschaften Feststoff</value>
   </data>
   <data name="DataGridViewTextBoxColumn2.HeaderText" xml:space="preserve">
     <value>CpGas</value>

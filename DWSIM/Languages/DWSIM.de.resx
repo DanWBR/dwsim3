@@ -4566,7 +4566,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>FPROPS</value>
   </data>
   <data name="RestoreState" xml:space="preserve">
-    <value>Wiederherstellungsstatus</value>
+    <value>Status wieder herstellen</value>
   </data>
   <data name="RestoreStateError" xml:space="preserve">
     <value>Fehler beim Wiederherstellen des Simulationsstus:</value>
@@ -4575,7 +4575,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Simulationsstatus erfolgreich wiederhergestellt.</value>
   </data>
   <data name="SaveState" xml:space="preserve">
-    <value>Speicher Status</value>
+    <value>Status speichern</value>
   </data>
   <data name="SaveStateError" xml:space="preserve">
     <value>Fehler beim Speichern des Simulationsstatus:</value>

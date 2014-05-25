@@ -23,111 +23,81 @@ Partial Class FormState
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormState))
-        Me.LabelWithDivider1 = New System.Windows.Forms.LabelWithDivider
-        Me.TextBox1 = New System.Windows.Forms.TextBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.btnCancel = New System.Windows.Forms.Button
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.TextBox2 = New System.Windows.Forms.TextBox
-        Me.btnOK = New System.Windows.Forms.Button
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox
+        Me.LabelWithDivider1 = New System.Windows.Forms.LabelWithDivider()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.btnCancel = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.btnOK = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LabelWithDivider1
         '
-        Me.LabelWithDivider1.AccessibleDescription = Nothing
-        Me.LabelWithDivider1.AccessibleName = Nothing
         resources.ApplyResources(Me.LabelWithDivider1, "LabelWithDivider1")
-        Me.LabelWithDivider1.Font = Nothing
+        Me.LabelWithDivider1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.LabelWithDivider1.Name = "LabelWithDivider1"
         '
         'TextBox1
         '
-        Me.TextBox1.AccessibleDescription = Nothing
-        Me.TextBox1.AccessibleName = Nothing
         resources.ApplyResources(Me.TextBox1, "TextBox1")
-        Me.TextBox1.BackgroundImage = Nothing
-        Me.TextBox1.Font = Nothing
         Me.TextBox1.Name = "TextBox1"
         '
         'Label1
         '
-        Me.Label1.AccessibleDescription = Nothing
-        Me.Label1.AccessibleName = Nothing
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.Font = Nothing
+        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label1.Name = "Label1"
         '
         'btnCancel
         '
-        Me.btnCancel.AccessibleDescription = Nothing
-        Me.btnCancel.AccessibleName = Nothing
         resources.ApplyResources(Me.btnCancel, "btnCancel")
-        Me.btnCancel.BackgroundImage = Nothing
         Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btnCancel.Font = Nothing
+        Me.btnCancel.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.UseVisualStyleBackColor = True
         '
         'Label2
         '
-        Me.Label2.AccessibleDescription = Nothing
-        Me.Label2.AccessibleName = Nothing
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.Font = Nothing
+        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label2.Name = "Label2"
         '
         'TextBox2
         '
-        Me.TextBox2.AccessibleDescription = Nothing
-        Me.TextBox2.AccessibleName = Nothing
         resources.ApplyResources(Me.TextBox2, "TextBox2")
-        Me.TextBox2.BackgroundImage = Nothing
-        Me.TextBox2.Font = Nothing
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.ReadOnly = True
         '
         'btnOK
         '
-        Me.btnOK.AccessibleDescription = Nothing
-        Me.btnOK.AccessibleName = Nothing
         resources.ApplyResources(Me.btnOK, "btnOK")
-        Me.btnOK.BackgroundImage = Nothing
         Me.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.btnOK.Font = Nothing
+        Me.btnOK.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.btnOK.Name = "btnOK"
         Me.btnOK.UseVisualStyleBackColor = True
         '
         'Label3
         '
-        Me.Label3.AccessibleDescription = Nothing
-        Me.Label3.AccessibleName = Nothing
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.Font = Nothing
+        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.Label3.Name = "Label3"
         '
         'PictureBox1
         '
-        Me.PictureBox1.AccessibleDescription = Nothing
-        Me.PictureBox1.AccessibleName = Nothing
         resources.ApplyResources(Me.PictureBox1, "PictureBox1")
-        Me.PictureBox1.BackgroundImage = Nothing
-        Me.PictureBox1.Font = Nothing
-        Me.PictureBox1.ImageLocation = Nothing
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.TabStop = False
         '
         'FormState
         '
         Me.AcceptButton = Me.btnOK
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.BackgroundImage = Nothing
         Me.CancelButton = Me.btnCancel
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.LabelWithDivider1)
@@ -138,9 +108,7 @@ Partial Class FormState
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.PictureBox1)
-        Me.Font = Nothing
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Icon = Nothing
         Me.Name = "FormState"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
