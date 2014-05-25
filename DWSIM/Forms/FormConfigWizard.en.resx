@@ -183,9 +183,9 @@ Click "Next" to continue.</value>
     <value>Added Property Packages</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>Select the Property Packages that you want to use in your simulation. The first on the list will be used by default by all flowsheet objects.
+    <value>Select and Add the Property Packages that you want to use in your simulation. The first on the list will be used by default by all flowsheet objects.
 
-You can configure the Property Pckages in the configuration window after finishing this wizard.
+You can configure the Property Packages in the configuration window after finishing this wizard.
 
 Click "Next" to continue.</value>
   </data>
