@@ -59,6 +59,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "    DWSIM Functions"
 
+        Public Overrides Function AUX_CPi(sub1 As String, T As Double) As Object
+            Return CoolProp.Props("C0", "T", T, "Q", 1, sub1)
+        End Function
+
         Public Overrides Function AUX_PVAPi(index As Integer, T As Double) As Object
             Return CoolProp.Props("P", "T", T, "Q", 0, RET_VNAMES()(index)) * 1000
         End Function

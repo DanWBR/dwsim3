@@ -5372,7 +5372,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         End Function
 
-        Public Function AUX_CPi(ByVal sub1 As String, ByVal T As Double)
+        Public Overridable Function AUX_CPi(ByVal sub1 As String, ByVal T As Double)
 
             If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.IsPF = 1 Then
 

@@ -1484,6 +1484,7 @@ Namespace DWSIM.Databases
                     .OriginalDB = "CoolProp"
                     .Name = s
                     .Formula = ""
+                    .CAS_Number = CoolPropInterface.CoolProp.get_fluid_param_string(s, "CAS")
                     .Molar_Weight = CoolPropInterface.CoolProp.Props1(s, "molemass")
                     .Critical_Pressure = CoolPropInterface.CoolProp.Props1(s, "pcrit") * 1000
                     .Critical_Temperature = CoolPropInterface.CoolProp.Props1(s, "Tcrit")
