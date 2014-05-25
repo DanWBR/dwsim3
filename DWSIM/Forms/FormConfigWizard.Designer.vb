@@ -548,14 +548,7 @@ Partial Class FormConfigWizard
     Public WithEvents DataGridView1 As System.Windows.Forms.DataGridView
     Public WithEvents ComboBox2 As System.Windows.Forms.ComboBox
     Public WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents Column18 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column16 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column17 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column11 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents casno As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -564,4 +557,11 @@ Partial Class FormConfigWizard
     Friend WithEvents Column7 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column5 As System.Windows.Forms.DataGridViewCheckBoxColumn
     Friend WithEvents Column10 As System.Windows.Forms.DataGridViewCheckBoxColumn
+    Friend WithEvents Column18 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column16 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column17 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

@@ -1153,6 +1153,9 @@
     <EmbeddedResource Include="Forms\FormCompoundCreator.es.resx">
       <DependentUpon>FormCompoundCreator.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormConfigWizard.de.resx">
+      <DependentUpon>FormConfigWizard.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormConfigWizard.en.resx">
       <DependentUpon>FormConfigWizard.vb</DependentUpon>
     </EmbeddedResource>

@@ -159,7 +159,7 @@
     <value>0</value>
   </data>
   <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 0</value>
+    <value>15, 4</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>679, 107</value>
