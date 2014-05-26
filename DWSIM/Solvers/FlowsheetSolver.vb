@@ -1203,14 +1203,16 @@ Namespace DWSIM.Flowsheet
         Public Shared Sub CheckCalculatorStatus()
 
             If Not My.MyApplication.IsRunningParallelTasks Then
-                Application.DoEvents()
                 If Not My.Application.CAPEOPENMode Then
                     If My.MyApplication.CalculatorStopRequested = True Then
+                        My.MyApplication.MasterCalculatorStopRequested = True
                         My.MyApplication.CalculatorStopRequested = False
                         Throw New Exception(DWSIM.App.GetLocalString("CalculationAborted"))
                     End If
                 End If
             End If
+
+            Application.DoEvents()
 
         End Sub
 
@@ -1308,7 +1310,11 @@ Namespace DWSIM.Flowsheet
 
             If form.CalculationQueue Is Nothing Then form.CalculationQueue = New Queue(Of DWSIM.Outros.StatusChangeEventArgs)
 
-            While Not converged Or My.MyApplication.CalculatorStopRequested
+            My.MyApplication.MasterCalculatorStopRequested = False
+
+            While Not converged
+
+                If My.MyApplication.MasterCalculatorStopRequested Then Exit While
 
                 Dim objargs As DWSIM.Outros.StatusChangeEventArgs = Nothing
 
