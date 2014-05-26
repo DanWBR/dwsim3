@@ -90,9 +90,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim i As Integer
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             i = 0
+            Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
                 CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
-                If CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) > P Then
+                If xv = 1.0# Then
                     vk(i) = CoolProp.Props("L", "T", T, "P", P / 1000, subst.ConstantProperties.Name) * 1000
                 Else
                     vk(i) = CoolProp.Props("L", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
@@ -128,9 +129,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim vn As String() = Me.RET_VNAMES
             Dim n As Integer = Vx.Length - 1
+            Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             For i = 0 To n
                 CheckIfCompoundIsSupported(vn(i))
-                vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, vn(i))
+                If xv = 0.0# Then
+                    vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, vn(i))
+                Else
+                    vk(i) = CoolProp.Props("D", "T", T, "Q", 0, vn(i))
+                End If
                 If vn(i) <> 0.0# Then vk(i) = vn(i) / vk(i)
             Next
             val = 1 / MathEx.Common.Sum(vk)
@@ -188,7 +194,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim val As Double = 0.0#
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
                 CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
-                If CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000 > P Then
+                Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
+                If xv = 1.0# Then
                     val = subst.FracaoMolar.GetValueOrDefault * CoolProp.Props("V", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                 Else
                     val = subst.FracaoMolar.GetValueOrDefault * CoolProp.Props("V", "T", T, "Q", 1, subst.ConstantProperties.Name)
@@ -202,10 +209,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim val As Double
             Dim i As Integer
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             i = 0
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
                 CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
-                If CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000 < P Then
+                If xv = 0.0# Then
                     vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                 Else
                     vk(i) = CoolProp.Props("D", "T", T, "Q", 0, subst.ConstantProperties.Name)
@@ -224,10 +232,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim val As Double
             Dim i As Integer
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             i = 0
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
                 CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
-                If CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000 > P Then
+                If xv = 1.0# Then
                     vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                 Else
                     vk(i) = CoolProp.Props("D", "T", T, "Q", 1, subst.ConstantProperties.Name)
@@ -274,13 +283,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim val As Double
             Dim i As Integer
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             Select Case fase1
                 Case Fase.Aqueous, Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3
                     i = 0
                     For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
                         CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
-                        Dim psat As Double = CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
-                        If psat < P Then
+                        If xv = 0.0# Then
                             vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                         Else
                             vk(i) = CoolProp.Props("C", "T", T, "Q", 0, subst.ConstantProperties.Name)
@@ -292,8 +301,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     i = 0
                     For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
                         CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
-                        Dim psat As Double = CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
-                        If psat > P Then
+                        If xv = 1.0# Then
                             vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                         Else
                             vk(i) = CoolProp.Props("C", "T", T, "Q", 1, subst.ConstantProperties.Name)
@@ -334,13 +342,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim val As Double
             Dim i As Integer
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             Select Case fase1
                 Case Fase.Aqueous, Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3
                     i = 0
                     For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
                         CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
-                        Dim psat As Double = CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
-                        If psat < P Then
+                        If xv = 0.0# Then
                             vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                         Else
                             vk(i) = CoolProp.Props("O", "T", T, "Q", 0, subst.ConstantProperties.Name)
@@ -352,8 +360,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     i = 0
                     For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
                         CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
-                        Dim psat As Double = CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
-                        If psat > P Then
+                        If xv = 1.0# Then
                             vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                         Else
                             vk(i) = CoolProp.Props("O", "T", T, "Q", 1, subst.ConstantProperties.Name)
@@ -374,13 +381,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim val As Double
             Dim i As Integer
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             Dim vn As String() = Me.RET_VNAMES
             Dim n As Integer = Vx.Length - 1
             Select Case st
                 Case State.Liquid
                     For i = 0 To n
                         CheckIfCompoundIsSupported(vn(i))
-                        If CoolProp.Props("P", "T", T, "Q", 0, vn(i)) < P Then
+                        If xv = 0.0# Then
                             vk(i) = CoolProp.Props("H", "T", T, "P", P / 1000, vn(i))
                         Else
                             vk(i) = CoolProp.Props("H", "T", T, "Q", 0, vn(i))
@@ -390,7 +398,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Case State.Vapor
                     For i = 0 To n
                         CheckIfCompoundIsSupported(vn(i))
-                        If CoolProp.Props("P", "T", T, "Q", 1, vn(i)) > P Then
+                        If xv = 1.0# Then
                             vk(i) = CoolProp.Props("H", "T", T, "P", P / 1000, vn(i))
                         Else
                             vk(i) = CoolProp.Props("H", "T", T, "Q", 1, vn(i))
@@ -417,12 +425,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim i As Integer
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim vn As String() = Me.RET_VNAMES
+            Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             Dim n As Integer = Vx.Length - 1
             Select Case st
                 Case State.Liquid
                     For i = 0 To n
                         CheckIfCompoundIsSupported(vn(i))
-                        If CoolProp.Props("P", "T", T, "Q", 0, vn(i)) < P Then
+                        If xv = 0.0# Then
                             vk(i) = CoolProp.Props("S", "T", T, "P", P / 1000, vn(i))
                         Else
                             vk(i) = CoolProp.Props("S", "T", T, "Q", 0, vn(i))
@@ -432,7 +441,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Case State.Vapor
                     For i = 0 To n
                         CheckIfCompoundIsSupported(vn(i))
-                        If CoolProp.Props("P", "T", T, "Q", 1, vn(i)) > P Then
+                        If xv = 1.0# Then
                             vk(i) = CoolProp.Props("S", "T", T, "P", P / 1000, vn(i))
                         Else
                             vk(i) = CoolProp.Props("S", "T", T, "Q", 1, vn(i))
