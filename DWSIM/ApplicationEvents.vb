@@ -16,8 +16,9 @@ Namespace My
         Public Shared _PropertyNameManager As System.Resources.ResourceManager
         Public Shared _CultureInfo As System.Globalization.CultureInfo
         Public Shared CalculatorStopRequested As Boolean = False
+        Public Shared MasterCalculatorStopRequested As Boolean = False
         Public Shared CommandLineMode As Boolean = False
-        
+
         Public Shared IsRunningParallelTasks As Boolean = False
         Public Shared IsFlowsheetSolving As Boolean = False
         
