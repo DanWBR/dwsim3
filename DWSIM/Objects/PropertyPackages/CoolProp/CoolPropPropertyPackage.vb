@@ -1,4 +1,4 @@
-﻿'    CoolProp Property Package
+'    CoolProp Property Package
 '    Copyright 2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -22,6 +22,7 @@ Imports DWSIM.DWSIM.MathEx
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports System.Runtime.InteropServices
 Imports CoolPropInterface
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.PropertyPackages
 
@@ -60,22 +61,27 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 #Region "    DWSIM Functions"
 
         Public Overrides Function AUX_CPi(sub1 As String, T As Double) As Object
+            CheckIfCompoundIsSupported(sub1)
             Return CoolProp.Props("C0", "T", T, "Q", 1, sub1)
         End Function
 
         Public Overrides Function AUX_PVAPi(index As Integer, T As Double) As Object
+            CheckIfCompoundIsSupported(RET_VNAMES()(index))
             Return CoolProp.Props("P", "T", T, "Q", 0, RET_VNAMES()(index)) * 1000
         End Function
 
         Public Overrides Function AUX_PVAPi(sub1 As String, T As Double) As Object
+            CheckIfCompoundIsSupported(sub1)
             Return CoolProp.Props("P", "T", T, "Q", 0, sub1) * 1000
         End Function
 
         Public Overrides Function AUX_LIQDENSi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
+            CheckIfCompoundIsSupported(cprop.Name)
             Return CoolProp.Props("D", "T", T, "Q", 0, cprop.Name)
         End Function
 
         Public Overrides Function AUX_LIQ_Cpi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
+            CheckIfCompoundIsSupported(cprop.Name)
             Return CoolProp.Props("C", "T", T, "Q", 0, cprop.Name)
         End Function
 
@@ -85,6 +91,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             i = 0
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                 If CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) > P Then
                     vk(i) = CoolProp.Props("L", "T", T, "P", P / 1000, subst.ConstantProperties.Name) * 1000
                 Else
@@ -105,6 +112,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             i = 0
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
+                CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                 vk(i) = CoolProp.Props("L", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
                 vk(i) = subst.FracaoMassica * vk(i)
                 i = i + 1
@@ -121,6 +129,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim vn As String() = Me.RET_VNAMES
             Dim n As Integer = Vx.Length - 1
             For i = 0 To n
+                CheckIfCompoundIsSupported(vn(i))
                 vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, vn(i))
                 If vn(i) <> 0.0# Then vk(i) = vn(i) / vk(i)
             Next
@@ -129,26 +138,38 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Public Overrides Function AUX_LIQDENSi(subst As ClassesBasicasTermodinamica.Substancia, T As Double) As Double
+            CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
             Return CoolProp.Props("L", "T", T, "Q", 0, subst.ConstantProperties.Name)
         End Function
 
         Public Overrides Function AUX_LIQTHERMCONDi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
+            CheckIfCompoundIsSupported(cprop.Name)
             Return CoolProp.Props("L", "T", T, "Q", 0, cprop.Name) * 1000
         End Function
 
         Public Overrides Function AUX_LIQVISCi(sub1 As String, T As Double) As Object
+            CheckIfCompoundIsSupported(sub1)
             Return CoolProp.Props("V", "T", T, "Q", 0, sub1)
         End Function
 
         Public Overrides Function AUX_SURFTi(constprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
+            CheckIfCompoundIsSupported(constprop.Name)
             Return CoolProp.Props("I", "T", T, "Q", 0, constprop.Name)
         End Function
 
         Public Overrides Function AUX_SURFTM(T As Double) As Double
 
+            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+            Dim val As Double = 0
+            For Each subst In Me.CurrentMaterialStream.Fases(1).Componentes.Values
+                val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_SURFTi(subst.ConstantProperties, T)
+            Next
+            Return val
+
         End Function
 
         Public Overrides Function AUX_VAPTHERMCONDi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double, P As Double) As Double
+            CheckIfCompoundIsSupported(cprop.Name)
             Dim val As Double
             If CoolProp.Props("P", "T", T, "Q", 1, cprop.Name) * 1000 > P Then
                 val = CoolProp.Props("L", "T", T, "P", P / 1000, cprop.Name) * 1000
@@ -159,12 +180,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Public Overrides Function AUX_VAPVISCi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
+            CheckIfCompoundIsSupported(cprop.Name)
             Return CoolProp.Props("V", "T", T, "Q", 1, cprop.Name)
         End Function
 
         Public Function AUX_VAPVISCMIX(T As Double, P As Double, MM As Double) As Double
             Dim val As Double = 0.0#
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                 If CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000 > P Then
                     val = subst.FracaoMolar.GetValueOrDefault * CoolProp.Props("V", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                 Else
@@ -181,6 +204,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             i = 0
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
+                CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                 If CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000 < P Then
                     vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                 Else
@@ -202,6 +226,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             i = 0
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+                CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                 If CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000 > P Then
                     vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                 Else
@@ -253,6 +278,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Case Fase.Aqueous, Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3
                     i = 0
                     For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
+                        CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                         Dim psat As Double = CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
                         If psat < P Then
                             vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
@@ -265,6 +291,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Case Fase.Vapor
                     i = 0
                     For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
+                        CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                         Dim psat As Double = CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
                         If psat > P Then
                             vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
@@ -311,6 +338,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Case Fase.Aqueous, Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3
                     i = 0
                     For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
+                        CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                         Dim psat As Double = CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
                         If psat < P Then
                             vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
@@ -323,6 +351,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Case Fase.Vapor
                     i = 0
                     For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
+                        CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                         Dim psat As Double = CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
                         If psat > P Then
                             vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
@@ -350,6 +379,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Select Case st
                 Case State.Liquid
                     For i = 0 To n
+                        CheckIfCompoundIsSupported(vn(i))
                         If CoolProp.Props("P", "T", T, "Q", 0, vn(i)) < P Then
                             vk(i) = CoolProp.Props("H", "T", T, "P", P / 1000, vn(i))
                         Else
@@ -359,6 +389,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Next
                 Case State.Vapor
                     For i = 0 To n
+                        CheckIfCompoundIsSupported(vn(i))
                         If CoolProp.Props("P", "T", T, "Q", 1, vn(i)) > P Then
                             vk(i) = CoolProp.Props("H", "T", T, "P", P / 1000, vn(i))
                         Else
@@ -390,6 +421,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Select Case st
                 Case State.Liquid
                     For i = 0 To n
+                        CheckIfCompoundIsSupported(vn(i))
                         If CoolProp.Props("P", "T", T, "Q", 0, vn(i)) < P Then
                             vk(i) = CoolProp.Props("S", "T", T, "P", P / 1000, vn(i))
                         Else
@@ -399,6 +431,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Next
                 Case State.Vapor
                     For i = 0 To n
+                        CheckIfCompoundIsSupported(vn(i))
                         If CoolProp.Props("P", "T", T, "Q", 1, vn(i)) > P Then
                             vk(i) = CoolProp.Props("S", "T", T, "P", P / 1000, vn(i))
                         Else
@@ -772,7 +805,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function SupportsComponent(ByVal comp As ClassesBasicasTermodinamica.ConstantProperties) As Boolean
 
+            CheckIfCompoundIsSupported(comp.Name)
+
             Return True
+
+        End Function
+
+        Public Overrides Function DW_CalcEnergiaMistura_ISOL(T As Double, P As Double) As Double
 
         End Function
 
@@ -780,13 +819,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "    Auxiliary Functions"
 
+        Sub CheckIfCompoundIsSupported(compname As String)
 
+            Dim comps() As String = CoolPropInterface.CoolProp.get_global_param_string("FluidsList").Split(",")
+
+            If Not comps.Contains(compname) Then
+                Throw New ArgumentOutOfRangeException(compname, "Error: compound '" & compname & "' is not supported by this version of CoolProp.")
+            End If
+
+        End Sub
 
 #End Region
 
-        Public Overrides Function DW_CalcEnergiaMistura_ISOL(T As Double, P As Double) As Double
-
-        End Function
     End Class
 
 End Namespace
