@@ -1222,6 +1222,9 @@ Imports DWSIM.DWSIM.GraphicObjects
 
     Private Sub ToolStripButton20_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton20.Click
         Me.FormSurface.FlowsheetDesignSurface.ZoomAll()
+        Application.DoEvents()
+        Me.FormSurface.FlowsheetDesignSurface.ZoomAll()
+        Application.DoEvents()
         Me.TSTBZoom.Text = Format(Me.FormSurface.FlowsheetDesignSurface.Zoom, "#%")
     End Sub
 
