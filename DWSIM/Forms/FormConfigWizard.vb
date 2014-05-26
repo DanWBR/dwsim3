@@ -1,4 +1,4 @@
-﻿'    Copyright 2014 Daniel Wagner O. de Medeiros
+'    Copyright 2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -458,4 +458,17 @@ Public Class FormConfigWizard
 
     End Sub
 
+    Private Sub WizardPage2_Commit(sender As System.Object, e As AeroWizard.WizardPageConfirmEventArgs) Handles WizardPage2.Commit
+        If ListViewA.Items.Count = 0 Then
+            MessageBox.Show(DWSIM.App.GetLocalString("Adicionesubstnciassi"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            e.Cancel = True
+        End If
+    End Sub
+
+    Private Sub WizardPage3_Commit(sender As System.Object, e As AeroWizard.WizardPageConfirmEventArgs) Handles WizardPage3.Commit
+        If dgvpp.Rows.Count = 0 Then
+            MessageBox.Show(DWSIM.App.GetLocalString("NoexistemPacotesdePr"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            e.Cancel = True
+        End If
+    End Sub
 End Class
