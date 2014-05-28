@@ -895,7 +895,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 Tsatmin = Common.Min(Tsat)
                 Tsatmax = Common.Max(Tsat)
 
-                Tref = Tsatmin + V * (Tref - Tsatmin)
+                Tref = Tsatmin + V * (Tsatmax - Tsatmin)
 
             Else
 
@@ -1057,14 +1057,14 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
                     Tant = T
                     T = T - fval / dFdT
-                    If T < Tmin Then T = Tmin
-                    If T > Tmax Then T = Tmax
+                    'If T < Tmin Then T = Tmin
+                    'If T > Tmax Then T = Tmax
 
                     Console.WriteLine("PV Flash [NL]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
 
                     CheckCalculatorStatus()
 
-                Loop Until Math.Abs(T - Tant) < 0.1 Or Double.IsNaN(T) = True Or ecount > maxit_e Or Double.IsNaN(T) Or Double.IsInfinity(T)
+                Loop Until Math.Abs(T - Tant) < 0.01 Or Double.IsNaN(T) = True Or ecount > maxit_e Or Double.IsNaN(T) Or Double.IsInfinity(T)
 
             Else
 
