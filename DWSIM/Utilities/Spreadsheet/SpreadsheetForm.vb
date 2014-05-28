@@ -245,17 +245,17 @@ Public Class SpreadsheetForm
 
             If Me.formc Is Nothing Then Me.formc = My.Application.ActiveSimulation
 
-            For Each r As DataGridViewRow In Me.DataGridView1.Rows
-                For Each ce As DataGridViewCell In r.Cells
-                    Try
-                        Me.ExpContext.Variables.DefineVariable(Me.GetCellString(ce), GetType(Double))
-                    Catch ex As Exception
-                        ce.OwningColumn.Visible = False
-                    End Try
-                Next
-            Next
-
         End If
+
+        For Each r As DataGridViewRow In Me.DataGridView1.Rows
+            For Each ce As DataGridViewCell In r.Cells
+                Try
+                    Me.ExpContext.Variables.DefineVariable(Me.GetCellString(ce), GetType(Double))
+                Catch ex As Exception
+                    ce.OwningColumn.Visible = False
+                End Try
+            Next
+        Next
 
     End Sub
 
@@ -460,11 +460,13 @@ Public Class SpreadsheetForm
                     DWSIM.App.GetLocalString("Objeto") & ": " & formc.Collections.ObjectCollection(ccparams.ObjectID).GraphicObject.Tag & vbCrLf & _
                     DWSIM.App.GetLocalString("Propriedade") & ": " & DWSIM.App.GetPropertyName(ccparams.PropID)
                     cell.ToolTipText = ccparams.ToolTipText
+                    cell.Style.BackColor = Color.LightBlue
                 End If
                 If expression <> "" Then
                     If expression.Substring(0, 1) = "=" Then
                         Me.Expr = ExpressionFactory.CreateGeneric(Of Double)(expression.Substring(1), Me.ExpContext)
                         cell.Value = Expr.Evaluate
+                        If Not ccparams.CellType = VarType.Write Then cell.Style.BackColor = Color.LightYellow
                     ElseIf expression.Substring(0, 1) = ":" Then
                         Dim str As String()
                         Dim obj, prop As String
@@ -480,21 +482,25 @@ Public Class SpreadsheetForm
                         DWSIM.App.GetLocalString("CurrentValue") & ": " & cell.Value & _
                         " " & formc.Collections.ObjectCollection(obj).GetPropertyUnit(prop, formc.Options.SelectedUnitSystem)
                         cell.ToolTipText = ccparams.ToolTipText
+                        cell.Style.BackColor = Color.LightGreen
                     Else
                         cell.Value = expression
                         ccparams.ToolTipText = expression
                         cell.ToolTipText = ccparams.ToolTipText
+                        cell.Style.BackColor = cell.OwningColumn.DefaultCellStyle.BackColor
                     End If
                 Else
                     cell.Value = ""
                     ccparams.ToolTipText = ""
                     cell.ToolTipText = ccparams.ToolTipText
+                    cell.Style.BackColor = cell.OwningColumn.DefaultCellStyle.BackColor
                 End If
             Catch ex As Exception
                 cell.Value = Me.OldValue
                 ccparams.ToolTipText = ""
                 cell.Tag = ccparams.Clone
                 cell.ToolTipText = ccparams.ToolTipText
+                cell.Style.BackColor = cell.OwningColumn.DefaultCellStyle.BackColor
                 My.Application.ActiveSimulation.WriteToLog(Me.Text & ": " & DWSIM.App.GetLocalString("Invalidexpressiononcell") & " " & GetCellString(cell) & " - " & ex.Message, Color.Brown, DWSIM.FormClasses.TipoAviso.Informacao)
             End Try
 
@@ -588,11 +594,11 @@ Public Class SpreadsheetForm
                             ccparams = ce.Tag
                             If Not ccparams Is Nothing Then
                                 If ccparams.Expression <> "" Then
-                                    If ccparams.Expression.Substring(0, 1) = "=" Or ccparams.Expression.Substring(0, 1) = ":" Then
-                                        ccparams.PrevVal = ce.Value
-                                        UpdateValue(ce, ccparams.Expression)
-                                        ccparams.CurrVal = ce.Value
-                                    End If
+                                    'If ccparams.Expression.Substring(0, 1) = "=" Or ccparams.Expression.Substring(0, 1) = ":" Then
+                                    ccparams.PrevVal = ce.Value
+                                    UpdateValue(ce, ccparams.Expression)
+                                    ccparams.CurrVal = ce.Value
+                                    'End If
                                     If ccparams.CellType = VarType.Write Then
                                         i += 1
                                         delta += Math.Abs((CDbl(ccparams.CurrVal) - CDbl(ccparams.PrevVal)) / CDbl(ccparams.PrevVal))
