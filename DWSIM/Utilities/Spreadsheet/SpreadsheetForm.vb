@@ -1,4 +1,4 @@
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -334,12 +334,12 @@ Public Class SpreadsheetForm
         Dim rows() As String = text.Split("|")
         Dim n As Integer = rows.Length - 1
         Dim m As Integer = 0
-        If n > 0 Then
-            m = rows(0).Split(";").Length - 1
-        End If
         If n > 0 And m > 0 Then
             Dim elm(n, m) As Object
             For i As Integer = 0 To n
+                If n > 0 Then
+                    m = rows(i).Split(";").Length - 1
+                End If
                 For j As Integer = 0 To m
                     elm(i, j) = Double.Parse(rows(i).Split(";")(j))
                 Next
@@ -658,5 +658,14 @@ Public Class SpreadsheetForm
 
     Private Sub chkWriteMode_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkWriteMode.CheckedChanged
         Me.WriteMode = chkWriteMode.Checked
+    End Sub
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
     End Sub
 End Class
