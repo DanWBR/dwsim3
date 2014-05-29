@@ -2,7 +2,8 @@
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.SimulationObjects.Streams
 
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
+'              2013-2014 Gregor Reichert
 '
 '    This file is part of DWSIM.
 '
@@ -78,27 +79,49 @@ Public Class FormPureComp
         'setting up datatable
         Dim Row As Integer
         Dim TD, VD As Double
-        Me.DataTable.Rows.Clear()
-        Me.DataTable.Rows.Add(51)
-        Me.DataTable.Columns.Item(0).HeaderText = "Temp " & su.spmp_temperature
-        Me.DataTable.Columns.Item(2).HeaderText = "Temp " & su.spmp_temperature
-        Me.DataTable.Columns.Item(4).HeaderText = "Temp " & su.spmp_temperature
-        Me.DataTable.Columns.Item(6).HeaderText = "Temp " & su.spmp_temperature
-        Me.DataTable.Columns.Item(8).HeaderText = "Temp " & su.spmp_temperature
-        Me.DataTable.Columns.Item(10).HeaderText = "Temp " & su.spmp_temperature
-        Me.DataTable.Columns.Item(12).HeaderText = "Temp " & su.spmp_temperature
+      
+        'setting up liquid table
+        Me.DataTableLiquid.Rows.Clear()
+        Me.DataTableLiquid.Rows.Add(51)
+        Me.DataTableLiquid.Columns.Item(0).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTableLiquid.Columns.Item(2).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTableLiquid.Columns.Item(4).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTableLiquid.Columns.Item(6).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTableLiquid.Columns.Item(8).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTableLiquid.Columns.Item(10).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTableLiquid.Columns.Item(12).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTableLiquid.Columns.Item(1).HeaderText = DWSIM.App.GetLocalString("CapacidadeCalorfica") & " " & su.spmp_heatCapacityCp
+        Me.DataTableLiquid.Columns.Item(3).HeaderText = DWSIM.App.GetLocalString("EntalpiadeVaporizao") & " " & su.spmp_enthalpy
+        Me.DataTableLiquid.Columns.Item(5).HeaderText = DWSIM.App.GetLocalString("PressodeVapor") & " " & su.spmp_pressure
+        Me.DataTableLiquid.Columns.Item(7).HeaderText = DWSIM.App.GetLocalString("Tensosuperficial") & " " & su.tpmp_surfaceTension
+        Me.DataTableLiquid.Columns.Item(9).HeaderText = DWSIM.App.GetLocalString("ViscosidadeLquido") & " " & su.spmp_viscosity
+        Me.DataTableLiquid.Columns.Item(11).HeaderText = DWSIM.App.GetLocalString("LiquidDensity") & " " & su.spmp_density
+        Me.DataTableLiquid.Columns.Item(13).HeaderText = DWSIM.App.GetLocalString("Condutividadetrmica") & " " & su.spmp_thermalConductivity
 
-        Me.DataTable.Columns.Item(1).HeaderText = DWSIM.App.GetLocalString("CapacidadeCalorficaP2") & " " & su.spmp_heatCapacityCp
-        Me.DataTable.Columns.Item(3).HeaderText = DWSIM.App.GetLocalString("PressodeVapor") & " " & su.spmp_pressure
-        Me.DataTable.Columns.Item(5).HeaderText = DWSIM.App.GetLocalString("ViscosidadeLquido") & " " & su.spmp_viscosity
-        Me.DataTable.Columns.Item(7).HeaderText = DWSIM.App.GetLocalString("EntalpiadeVaporizao") & " " & su.spmp_enthalpy
-        Me.DataTable.Columns.Item(9).HeaderText = DWSIM.App.GetLocalString("LiquidDensity") & " " & su.spmp_density
-        Me.DataTable.Columns.Item(11).HeaderText = DWSIM.App.GetLocalString("SolidDensity") & " " & su.spmp_density
-        Me.DataTable.Columns.Item(13).HeaderText = DWSIM.App.GetLocalString("SolidCp") & " " & su.spmp_heatCapacityCp
+        'setting up vapour table
+        Me.DataTableVapour.Rows.Clear()
+        Me.DataTableVapour.Rows.Add(51)
+        Me.DataTableVapour.Columns.Item(0).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTableVapour.Columns.Item(2).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTableVapour.Columns.Item(4).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTableVapour.Columns.Item(1).HeaderText = DWSIM.App.GetLocalString("CapacidadeCalorfica") & " " & su.spmp_heatCapacityCp
+        Me.DataTableVapour.Columns.Item(3).HeaderText = DWSIM.App.GetLocalString("ViscosidadeLquido") & " " & su.spmp_viscosity
+        Me.DataTableVapour.Columns.Item(5).HeaderText = DWSIM.App.GetLocalString("Condutividadetrmica") & " " & su.spmp_thermalConductivity
+
+        'setting up solid table
+        Me.DataTableSolid.Rows.Clear()
+        Me.DataTableSolid.Rows.Add(51)
+        Me.DataTableSolid.Columns.Item(0).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTableSolid.Columns.Item(2).HeaderText = "Temp " & su.spmp_temperature
+        Me.DataTableSolid.Columns.Item(1).HeaderText = DWSIM.App.GetLocalString("SolidDensity") & " " & su.spmp_density
+        Me.DataTableSolid.Columns.Item(3).HeaderText = DWSIM.App.GetLocalString("SolidCp") & " " & su.spmp_heatCapacityCp
 
         'setting up curves
         Dim T As Double
         Dim Tmin, Tmax, delta As Double
+
+
+        '======== vapour properties ===================================================================
 
         'ideal gas heat capacity
         Tmin = 200
@@ -115,12 +138,107 @@ Public Class FormPureComp
                 VD = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_CPi(constprop.Name, T))
                 vxCp.Add(TD)
                 vyCp.Add(VD)
-                Me.DataTable.Item(0, Row).Value = Format(TD, nf)
-                Me.DataTable.Item(1, Row).Value = Format(VD, nf)
+                Me.DataTableVapour.Item(0, Row).Value = Format(TD, nf)
+                Me.DataTableVapour.Item(1, Row).Value = Format(VD, nf)
                 T += delta
                 Row += 1
             Loop Until T > Tmax
         End If
+
+        With Me.GraphCp.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxCp.ToArray(GetType(Double)), Me.vyCp.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
+            .YAxis.Title.Text = "Cp [ " & su.spmp_heatCapacityCp & " ] "
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphCp.Invalidate()
+
+
+        'vapor viscosity
+        With constprop
+            Tmin = 0.6 * .Critical_Temperature
+            Tmax = .Critical_Temperature
+            delta = (Tmax - Tmin) / 50
+        End With
+        T = Tmin
+        Row = 0
+        vxVapVisc.Clear()
+        vyVapVisc.Clear()
+        If Not constprop.IsIon And Not constprop.IsSalt Then
+            Do
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_viscosity, pp.AUX_VAPVISCi(constprop, T))
+                vxVapVisc.Add(TD)
+                vyVapVisc.Add(VD)
+                Me.DataTableVapour.Item(2, Row).Value = Format(TD, nf)
+                Me.DataTableVapour.Item(3, Row).Value = Format(VD, nf)
+                T += delta
+                Row += 1
+            Loop Until Row = 51
+        End If
+
+        With Me.GraphVapVisc.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxVapVisc.ToArray(GetType(Double)), Me.vyVapVisc.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
+            .YAxis.Title.Text = "Visc [ " & su.spmp_viscosity & " ] "
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphVapVisc.Invalidate()
+
+
+        'vapor thermal conductivity
+        With constprop
+            Tmin = .Vapor_Thermal_Conductivity_Tmin
+            Tmax = .Vapor_Thermal_Conductivity_Tmax
+            If Tmin = 0 Then Tmin = .Normal_Boiling_Point
+            If Tmax = 0 Then Tmax = .Critical_Temperature
+            delta = (Tmax - Tmin) / 50
+        End With
+        T = Tmin
+        Row = 0
+        vxVapThCond.Clear()
+        vyVapThCond.Clear()
+        If Not constprop.IsIon And Not constprop.IsSalt Then
+            Do
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_thermalConductivity, pp.AUX_VAPTHERMCONDi(constprop, T, 101325))
+                vxVapThCond.Add(TD)
+                vyVapThCond.Add(VD)
+                Me.DataTableVapour.Item(4, Row).Value = Format(TD, nf)
+                Me.DataTableVapour.Item(5, Row).Value = Format(VD, nf)
+                T += delta
+                Row += 1
+            Loop Until Row = 51
+        End If
+
+        With Me.GraphVapThermCond.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxVapThCond.ToArray(GetType(Double)), Me.vyVapThCond.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
+            .YAxis.Title.Text = DWSIM.App.GetLocalString("CondutividadetrmicaF3") & " [ " & su.spmp_thermalConductivity & " ] "
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphVapThermCond.Invalidate()
+
+
+        '======== liquid properties ===================================================================
 
         'liquid heat capacity
         With constprop
@@ -142,83 +260,26 @@ Public Class FormPureComp
                 VD = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_LIQ_Cpi(constprop, T))
                 vxLiqCp.Add(TD)
                 vyLiqCp.Add(VD)
-                'Me.DataTable.Item(0, Row).Value = Format(TD, nf)
-                'Me.DataTable.Item(1, Row).Value = Format(VD, nf)
+                Me.DataTableLiquid.Item(0, Row).Value = Format(TD, nf)
+                Me.DataTableLiquid.Item(1, Row).Value = Format(VD, nf)
                 T += delta
                 Row += 1
             Loop Until T > Tmax
         End If
 
-        'vapor pressure
-        With constprop
-            Tmin = .Vapor_Pressure_TMIN
-            Tmax = .Vapor_Pressure_TMAX
-            If Tmin = 0 Then Tmin = 0.4 * .Critical_Temperature
-            If Tmax = 0 Then Tmax = .Critical_Temperature
-            delta = (Tmax - Tmin) / 50
+        With Me.GraphLiqCp.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxLiqCp.ToArray(GetType(Double)), Me.vyLiqCp.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
+            .YAxis.Title.Text = "Cp [ " & su.spmp_heatCapacityCp & " ] "
+            .AxisChange(Me.CreateGraphics)
         End With
-        T = Tmin
-        Row = 0
-        vxPvap.Clear()
-        vyPvap.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
-            Do
-                TD = cv.ConverterDoSI(su.spmp_temperature, T)
-                VD = cv.ConverterDoSI(su.spmp_pressure, pp.AUX_PVAPi(constprop.Name, T))
-                vxPvap.Add(TD)
-                vyPvap.Add(VD)
-                Me.DataTable.Item(2, Row).Value = Format(TD, nf)
-                Me.DataTable.Item(3, Row).Value = Format(VD, nf)
-                T += delta
-                Row += 1
-            Loop Until Row = 51
-        End If
-
-        'liquid viscosity
-        With constprop
-            Tmin = 0.6 * .Critical_Temperature
-            Tmax = .Critical_Temperature
-            delta = (Tmax - Tmin) / 50
-        End With
-        T = Tmin
-        Row = 0
-        vxVisc.Clear()
-        vyVisc.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
-            Do
-                TD = cv.ConverterDoSI(su.spmp_temperature, T)
-                VD = cv.ConverterDoSI(su.spmp_viscosity, pp.AUX_LIQVISCi(constprop.Name, T))
-                vxVisc.Add(TD)
-                vyVisc.Add(VD)
-                Me.DataTable.Item(4, Row).Value = Format(TD, nf)
-                Me.DataTable.Item(5, Row).Value = Format(VD, nf)
-                T += delta
-                Row += 1
-            Loop Until Row = 51
-        End If
-
-        'vapor viscosity
-        With constprop
-            Tmin = 0.6 * .Critical_Temperature
-            Tmax = .Critical_Temperature
-            delta = (Tmax - Tmin) / 50
-        End With
-        T = Tmin
-        Row = 0
-        vxVapVisc.Clear()
-        vyVapVisc.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
-            Do
-                TD = cv.ConverterDoSI(su.spmp_temperature, T)
-                VD = cv.ConverterDoSI(su.spmp_viscosity, pp.AUX_VAPVISCi(constprop, T))
-                vxVapVisc.Add(TD)
-                vyVapVisc.Add(VD)
-                'Me.DataTable.Item(4, Row).Value = Format(TD, nf)
-                'Me.DataTable.Item(5, Row).Value = Format(VD, nf)
-                T += delta
-                Row += 1
-            Loop Until Row = 51
-        End If
+        Me.GraphLiqCp.Invalidate()
 
         'vaporization enthalpy
         With constprop
@@ -238,12 +299,68 @@ Public Class FormPureComp
                 VD = cv.ConverterDoSI(su.spmp_enthalpy, pp.AUX_HVAPi(constprop.Name, T))
                 vxDHvap.Add(TD)
                 vyDHvap.Add(VD)
-                Me.DataTable.Item(6, Row).Value = Format(TD, nf)
-                Me.DataTable.Item(7, Row).Value = Format(VD, nf)
+                Me.DataTableLiquid.Item(2, Row).Value = Format(TD, nf)
+                Me.DataTableLiquid.Item(3, Row).Value = Format(VD, nf)
                 T += delta
                 Row += 1
             Loop Until Row = 51
         End If
+
+        With Me.GraphDHVAP.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxDHvap.ToArray(GetType(Double)), Me.vyDHvap.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
+            .YAxis.Title.Text = "DHvap [ " & su.spmp_enthalpy & " ] "
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphDHVAP.Invalidate()
+
+
+        'vapor pressure
+        With constprop
+            Tmin = .Vapor_Pressure_TMIN
+            Tmax = .Vapor_Pressure_TMAX
+            If Tmin = 0 Then Tmin = 0.4 * .Critical_Temperature
+            If Tmax = 0 Then Tmax = .Critical_Temperature
+            delta = (Tmax - Tmin) / 50
+        End With
+        T = Tmin
+        Row = 0
+        vxPvap.Clear()
+        vyPvap.Clear()
+        If Not constprop.IsIon And Not constprop.IsSalt Then
+            Do
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_pressure, pp.AUX_PVAPi(constprop.Name, T))
+                vxPvap.Add(TD)
+                vyPvap.Add(VD)
+                Me.DataTableLiquid.Item(4, Row).Value = Format(TD, nf)
+                Me.DataTableLiquid.Item(5, Row).Value = Format(VD, nf)
+                T += delta
+                Row += 1
+            Loop Until Row = 51
+        End If
+
+        With Me.GraphPvap.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxPvap.ToArray(GetType(Double)), Me.vyPvap.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
+            .YAxis.Title.Text = "Pvap [ " & su.spmp_pressure & " ] "
+            .YAxis.Type = ZedGraph.AxisType.Log
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphPvap.Invalidate()
+
 
         'liquid surface tension
         With constprop
@@ -264,12 +381,65 @@ Public Class FormPureComp
                 VD = cv.ConverterDoSI(su.tpmp_surfaceTension, pp.AUX_SURFTi(constprop, T))
                 vxSurfTens.Add(TD)
                 vySurfTens.Add(VD)
-                'Me.DataTable.Item(8, Row).Value = Format(TD, nf)
-                'Me.DataTable.Item(9, Row).Value = Format(VD, nf)
+                Me.DataTableLiquid.Item(6, Row).Value = Format(TD, nf)
+                Me.DataTableLiquid.Item(7, Row).Value = Format(VD, nf)
                 T += delta
                 Row += 1
             Loop Until Row = 51
         End If
+
+        With Me.GraphSurfT.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxSurfTens.ToArray(GetType(Double)), Me.vySurfTens.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
+            .YAxis.Title.Text = DWSIM.App.GetLocalString("Tensosuperficial") & " [ " & su.tpmp_surfaceTension & " ] "
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphSurfT.Invalidate()
+
+
+        'liquid viscosity
+        With constprop
+            Tmin = 0.6 * .Critical_Temperature
+            Tmax = .Critical_Temperature
+            delta = (Tmax - Tmin) / 50
+        End With
+        T = Tmin
+        Row = 0
+        vxVisc.Clear()
+        vyVisc.Clear()
+        If Not constprop.IsIon And Not constprop.IsSalt Then
+            Do
+                TD = cv.ConverterDoSI(su.spmp_temperature, T)
+                VD = cv.ConverterDoSI(su.spmp_viscosity, pp.AUX_LIQVISCi(constprop.Name, T))
+                vxVisc.Add(TD)
+                vyVisc.Add(VD)
+                Me.DataTableLiquid.Item(8, Row).Value = Format(TD, nf)
+                Me.DataTableLiquid.Item(9, Row).Value = Format(VD, nf)
+                T += delta
+                Row += 1
+            Loop Until Row = 51
+        End If
+
+        With Me.GraphVisc.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxVisc.ToArray(GetType(Double)), Me.vyVisc.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
+            .YAxis.Title.Text = "Visc [ " & su.spmp_viscosity & " ] "
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphVisc.Invalidate()
+
 
         'liquid density
         With constprop
@@ -290,38 +460,26 @@ Public Class FormPureComp
                 VD = cv.ConverterDoSI(su.spmp_density, pp.AUX_LIQDENSi(constprop, T))
                 vxLD.Add(TD)
                 vyLD.Add(VD)
-                Me.DataTable.Item(8, Row).Value = Format(TD, nf)
-                Me.DataTable.Item(9, Row).Value = Format(VD, nf)
+                Me.DataTableLiquid.Item(10, Row).Value = Format(TD, nf)
+                Me.DataTableLiquid.Item(11, Row).Value = Format(VD, nf)
                 T += delta
                 Row += 1
             Loop Until Row = 51
         End If
 
-        'solid density
-        With constprop
-            Tmin = .Solid_Density_Tmin
-            Tmax = .Solid_Density_Tmax
-            If Tmin = 0 Then Tmin = 50
-            If Tmax = 0 Then Tmax = .TemperatureOfFusion
-            If .TemperatureOfFusion = 0 Then Tmax = .Normal_Boiling_Point * 0.3
-            delta = (Tmax - Tmin) / 50
+        With Me.GraphLiqDens.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxLD.ToArray(GetType(Double)), Me.vyLD.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
+            .YAxis.Title.Text = DWSIM.App.GetLocalString("LiquidDensity") & " [ " & su.spmp_density & " ] "
+            .AxisChange(Me.CreateGraphics)
         End With
-        T = Tmin
-        Row = 0
-        vxSD.Clear()
-        vySD.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
-            Do
-                TD = cv.ConverterDoSI(su.spmp_temperature, T)
-                VD = cv.ConverterDoSI(su.spmp_density, pp.AUX_SOLIDDENSi(constprop, T))
-                vxSD.Add(TD)
-                vySD.Add(VD)
-                Me.DataTable.Item(10, Row).Value = Format(TD, nf)
-                Me.DataTable.Item(11, Row).Value = Format(VD, nf)
-                T += delta
-                Row += 1
-            Loop Until Row = 51
-        End If
+        Me.GraphLiqDens.Invalidate()
 
         'liquid thermal conductivity
         With constprop
@@ -342,37 +500,72 @@ Public Class FormPureComp
                 VD = cv.ConverterDoSI(su.spmp_thermalConductivity, pp.AUX_LIQTHERMCONDi(constprop, T))
                 vxLiqThCond.Add(TD)
                 vyLiqThCond.Add(VD)
-                'Me.DataTable.Item(8, Row).Value = Format(TD, nf)
-                'Me.DataTable.Item(9, Row).Value = Format(VD, nf)
+                Me.DataTableLiquid.Item(12, Row).Value = Format(TD, nf)
+                Me.DataTableLiquid.Item(13, Row).Value = Format(VD, nf)
                 T += delta
                 Row += 1
             Loop Until Row = 51
         End If
 
-        'vapor thermal conductivity
+        With Me.GraphLiqThermCond.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxLiqThCond.ToArray(GetType(Double)), Me.vyLiqThCond.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
+            .YAxis.Title.Text = DWSIM.App.GetLocalString("CondutividadetrmicaF2") & " [ " & su.spmp_thermalConductivity & " ] "
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphLiqThermCond.Invalidate()
+
+
+        '======== solid properties ====================================================================
+        'solid density
         With constprop
-            Tmin = .Vapor_Thermal_Conductivity_Tmin
-            Tmax = .Vapor_Thermal_Conductivity_Tmax
-            If Tmin = 0 Then Tmin = .Normal_Boiling_Point
-            If Tmax = 0 Then Tmax = .Critical_Temperature
+            Tmin = .Solid_Density_Tmin
+            Tmax = .Solid_Density_Tmax
+            If Tmin = 0 Then Tmin = 50
+            If Tmax = 0 Then Tmax = .TemperatureOfFusion
+            If .TemperatureOfFusion = 0 Then Tmax = .Normal_Boiling_Point * 0.3
             delta = (Tmax - Tmin) / 50
         End With
         T = Tmin
         Row = 0
-        vxVapThCond.Clear()
-        vyVapThCond.Clear()
+        vxSD.Clear()
+        vySD.Clear()
         If Not constprop.IsIon And Not constprop.IsSalt Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
-                VD = cv.ConverterDoSI(su.spmp_thermalConductivity, pp.AUX_VAPTHERMCONDi(constprop, T, 101325))
-                vxVapThCond.Add(TD)
-                vyVapThCond.Add(VD)
-                'Me.DataTable.Item(8, Row).Value = Format(TD, nf)
-                'Me.DataTable.Item(9, Row).Value = Format(VD, nf)
+                VD = cv.ConverterDoSI(su.spmp_density, pp.AUX_SOLIDDENSi(constprop, T))
+                vxSD.Add(TD)
+                vySD.Add(VD)
+                'Me.DataTable.Item(10, Row).Value = Format(TD, nf)
+                'Me.DataTable.Item(11, Row).Value = Format(VD, nf)
+
+                Me.DataTableSolid.Item(0, Row).Value = Format(TD, nf)
+                Me.DataTableSolid.Item(1, Row).Value = Format(VD, nf)
                 T += delta
                 Row += 1
             Loop Until Row = 51
         End If
+
+        With Me.GraphSolidDens.GraphPane
+            .CurveList.Clear()
+            With .AddCurve("", Me.vxSD.ToArray(GetType(Double)), Me.vySD.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
+                .Color = Color.SteelBlue
+                .Line.IsSmooth = False
+                .Symbol.Fill.Type = ZedGraph.FillType.Solid
+            End With
+            .Title.IsVisible = False
+            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
+            .YAxis.Title.Text = DWSIM.App.GetLocalString("SolidDensity") & " [ " & su.spmp_density & " ] "
+            .AxisChange(Me.CreateGraphics)
+        End With
+        Me.GraphSolidDens.Invalidate()
+
 
         'solid heat capacity
         With constprop
@@ -393,166 +586,15 @@ Public Class FormPureComp
                 VD = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_SolidHeatCapacity(constprop, T))
                 vxSCP.Add(TD)
                 vySCP.Add(VD)
-                Me.DataTable.Item(12, Row).Value = Format(TD, nf)
-                Me.DataTable.Item(13, Row).Value = Format(VD, nf)
+                'Me.DataTable.Item(12, Row).Value = Format(TD, nf)
+                'Me.DataTable.Item(13, Row).Value = Format(VD, nf)
+
+                Me.DataTableSolid.Item(2, Row).Value = Format(TD, nf)
+                Me.DataTableSolid.Item(3, Row).Value = Format(VD, nf)
                 T += delta
                 Row += 1
             Loop Until Row = 51
         End If
-        With Me.GraphCp.GraphPane
-            .CurveList.Clear()
-            With .AddCurve("", Me.vxCp.ToArray(GetType(Double)), Me.vyCp.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
-                .Color = Color.SteelBlue
-                .Line.IsSmooth = False
-                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-            End With
-            .Title.IsVisible = False
-            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
-            .YAxis.Title.Text = "Cp [ " & su.spmp_heatCapacityCp & " ] "
-            .AxisChange(Me.CreateGraphics)
-        End With
-        Me.GraphCp.Invalidate()
-
-        With Me.GraphLiqCp.GraphPane
-            .CurveList.Clear()
-            With .AddCurve("", Me.vxLiqCp.ToArray(GetType(Double)), Me.vyLiqCp.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
-                .Color = Color.SteelBlue
-                .Line.IsSmooth = False
-                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-            End With
-            .Title.IsVisible = False
-            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
-            .YAxis.Title.Text = "Cp [ " & su.spmp_heatCapacityCp & " ] "
-            .AxisChange(Me.CreateGraphics)
-        End With
-        Me.GraphLiqCp.Invalidate()
-
-        With Me.GraphPvap.GraphPane
-            .CurveList.Clear()
-            With .AddCurve("", Me.vxPvap.ToArray(GetType(Double)), Me.vyPvap.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
-                .Color = Color.SteelBlue
-                .Line.IsSmooth = False
-                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-            End With
-            .Title.IsVisible = False
-            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
-            .YAxis.Title.Text = "Pvap [ " & su.spmp_pressure & " ] "
-            .YAxis.Type = ZedGraph.AxisType.Log
-            .AxisChange(Me.CreateGraphics)
-        End With
-        Me.GraphPvap.Invalidate()
-
-        With Me.GraphVisc.GraphPane
-            .CurveList.Clear()
-            With .AddCurve("", Me.vxVisc.ToArray(GetType(Double)), Me.vyVisc.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
-                .Color = Color.SteelBlue
-                .Line.IsSmooth = False
-                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-            End With
-            .Title.IsVisible = False
-            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
-            .YAxis.Title.Text = "Visc [ " & su.spmp_viscosity & " ] "
-            .AxisChange(Me.CreateGraphics)
-        End With
-        Me.GraphVisc.Invalidate()
-
-        With Me.GraphVapVisc.GraphPane
-            .CurveList.Clear()
-            With .AddCurve("", Me.vxVapVisc.ToArray(GetType(Double)), Me.vyVapVisc.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
-                .Color = Color.SteelBlue
-                .Line.IsSmooth = False
-                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-            End With
-            .Title.IsVisible = False
-            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
-            .YAxis.Title.Text = "Visc [ " & su.spmp_viscosity & " ] "
-            .AxisChange(Me.CreateGraphics)
-        End With
-        Me.GraphVapVisc.Invalidate()
-
-        With Me.GraphDHVAP.GraphPane
-            .CurveList.Clear()
-            With .AddCurve("", Me.vxDHvap.ToArray(GetType(Double)), Me.vyDHvap.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
-                .Color = Color.SteelBlue
-                .Line.IsSmooth = False
-                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-            End With
-            .Title.IsVisible = False
-            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
-            .YAxis.Title.Text = "DHvap [ " & su.spmp_enthalpy & " ] "
-            .AxisChange(Me.CreateGraphics)
-        End With
-        Me.GraphDHVAP.Invalidate()
-
-        With Me.GraphSurfT.GraphPane
-            .CurveList.Clear()
-            With .AddCurve("", Me.vxSurfTens.ToArray(GetType(Double)), Me.vySurfTens.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
-                .Color = Color.SteelBlue
-                .Line.IsSmooth = False
-                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-            End With
-            .Title.IsVisible = False
-            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
-            .YAxis.Title.Text = DWSIM.App.GetLocalString("Tensosuperficial") & " [ " & su.tpmp_surfaceTension & " ] "
-            .AxisChange(Me.CreateGraphics)
-        End With
-        Me.GraphSurfT.Invalidate()
-
-        With Me.GraphLiqDens.GraphPane
-            .CurveList.Clear()
-            With .AddCurve("", Me.vxLD.ToArray(GetType(Double)), Me.vyLD.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
-                .Color = Color.SteelBlue
-                .Line.IsSmooth = False
-                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-            End With
-            .Title.IsVisible = False
-            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
-            .YAxis.Title.Text = DWSIM.App.GetLocalString("LiquidDensity") & " [ " & su.spmp_density & " ] "
-            .AxisChange(Me.CreateGraphics)
-        End With
-        Me.GraphLiqDens.Invalidate()
-
-        With Me.GraphLiqThermCond.GraphPane
-            .CurveList.Clear()
-            With .AddCurve("", Me.vxLiqThCond.ToArray(GetType(Double)), Me.vyLiqThCond.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
-                .Color = Color.SteelBlue
-                .Line.IsSmooth = False
-                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-            End With
-            .Title.IsVisible = False
-            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
-            .YAxis.Title.Text = DWSIM.App.GetLocalString("CondutividadetrmicaF2") & " [ " & su.spmp_thermalConductivity & " ] "
-            .AxisChange(Me.CreateGraphics)
-        End With
-        Me.GraphLiqThermCond.Invalidate()
-
-        With Me.GraphVapThermCond.GraphPane
-            .CurveList.Clear()
-            With .AddCurve("", Me.vxVapThCond.ToArray(GetType(Double)), Me.vyVapThCond.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
-                .Color = Color.SteelBlue
-                .Line.IsSmooth = False
-                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-            End With
-            .Title.IsVisible = False
-            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
-            .YAxis.Title.Text = DWSIM.App.GetLocalString("CondutividadetrmicaF3") & " [ " & su.spmp_thermalConductivity & " ] "
-            .AxisChange(Me.CreateGraphics)
-        End With
-        Me.GraphVapThermCond.Invalidate()
-
-        With Me.GraphSolidDens.GraphPane
-            .CurveList.Clear()
-            With .AddCurve("", Me.vxSD.ToArray(GetType(Double)), Me.vySD.ToArray(GetType(Double)), Color.Blue, ZedGraph.SymbolType.Circle)
-                .Color = Color.SteelBlue
-                .Line.IsSmooth = False
-                .Symbol.Fill.Type = ZedGraph.FillType.Solid
-            End With
-            .Title.IsVisible = False
-            .XAxis.Title.Text = "T [ " & su.spmp_temperature & " ] "
-            .YAxis.Title.Text = DWSIM.App.GetLocalString("SolidDensity") & " [ " & su.spmp_density & " ] "
-            .AxisChange(Me.CreateGraphics)
-        End With
-        Me.GraphSolidDens.Invalidate()
 
         With Me.GraphCpSolid.GraphPane
             .CurveList.Clear()
@@ -567,6 +609,9 @@ Public Class FormPureComp
             .AxisChange(Me.CreateGraphics)
         End With
         Me.GraphCpSolid.Invalidate()
+
+        '======== finished therm dependent properties ====================================================
+
 
         'UNIFAC
         tbUNIFAC.Text = ""

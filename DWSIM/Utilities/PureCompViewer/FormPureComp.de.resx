@@ -128,13 +128,13 @@
     <value>Standardwerte wiederherstellen</value>
   </data>
   <data name="chkEnableEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>333, 19</value>
+    <value>389, 19</value>
   </data>
   <data name="chkEnableEdit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 17</value>
+    <value>198, 17</value>
   </data>
   <data name="chkEnableEdit.Text" xml:space="preserve">
-    <value>Aktivieren Eigenschaften bearbeiten Konstanten</value>
+    <value>Konstante Eigenschaften bearbeiten</value>
   </data>
   <data name="ComboBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>88, 16</value>
@@ -203,10 +203,7 @@
   <data name="FaTabStripItem6.Title" xml:space="preserve">
     <value>Molekül</value>
   </data>
-  <data name="FaTabStripItem2.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="FaTabStripItem2.Title" xml:space="preserve">
+  <data name="FaTabStripItemCPLIQ.Title" xml:space="preserve">
     <value>Wärmekapazität</value>
   </data>
   <data name="FaTabStripItemHVAP.Title" xml:space="preserve">
@@ -227,6 +224,9 @@
   <data name="FaTabStripItemLIQTCOND.Title" xml:space="preserve">
     <value>Therm. Leitfähigkeit</value>
   </data>
+  <data name="FaTabStripItemTabLiq.Title" xml:space="preserve">
+    <value>Datentabelle</value>
+  </data>
   <data name="FaTabStripItem16.Title" xml:space="preserve">
     <value>Eigenschaften Flüssigkeit</value>
   </data>
@@ -239,6 +239,9 @@
   <data name="FaTabStripItemVAPTCOND.Title" xml:space="preserve">
     <value>Therm. Leitfähigkeit</value>
   </data>
+  <data name="FaTabStripItemDataTab.Title" xml:space="preserve">
+    <value>Datentabelle</value>
+  </data>
   <data name="FaTabStripItem17.Title" xml:space="preserve">
     <value>Eigenschaften Dampf</value>
   </data>
@@ -247,6 +250,9 @@
   </data>
   <data name="FaTabStripItemSOLIDDENS.Title" xml:space="preserve">
     <value>Dichte</value>
+  </data>
+  <data name="FaTabStripItemTabela.Title" xml:space="preserve">
+    <value>Datentabelle</value>
   </data>
   <data name="FaTabStripItem18.Title" xml:space="preserve">
     <value>Eigenschaften Feststoff</value>
