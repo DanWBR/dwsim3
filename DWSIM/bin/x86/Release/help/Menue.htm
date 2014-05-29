@@ -167,30 +167,44 @@ function BGCol(ID)
 </div>
 
 <div class="heading1" onclick="ToggleSubfolder('SimObjects')">Simulation Objects</div>
-  <div id='SimObjects' style="display:none;">
-  <a id="SO0" onclick="BGCol('SO0')" href="SO_Material_Stream.htm" target="content">Material Stream</a>
-  <a id="SO1" onclick="BGCol('SO1')" href="SO_Energy_Stream.htm" target="content">Energy Stream</a>
-  <a id="SO2" onclick="BGCol('SO2')" href="SO_Mixer.htm" target="content">Mixer</a>
-  <a id="SO3" onclick="BGCol('SO3')" href="SO_Splitter.htm" target="content">Splitter</a>
-  <a id="SO4" onclick="BGCol('SO4')" href="SO_Separator.htm" target="content">Separator</a>
-  <a id="SO5" onclick="BGCol('SO5')" href="SO_Tank.htm" target="content">Tank</a>
-  <a id="SO6" onclick="BGCol('SO6')" href="SO_Pipe_Segment.htm" target="content">Pipe Segment</a>
-  <a id="SO7" onclick="BGCol('SO7')" href="SO_Valve.htm" target="content">Valve</a>
-  <a id="SO8" onclick="BGCol('SO8')" href="SO_Pump.htm" target="content">Pump</a>
-  <a id="SO9" onclick="BGCol('SO9')" href="SO_Compressor.htm" target="content">Compressor</a>
-  <a id="SO10" onclick="BGCol('SO10')" href="SO_Expander.htm" target="content">Expander</a>
-  <a id="SO11" onclick="BGCol('SO11')" href="SO_Heater.htm" target="content">Heater</a>
-  <a id="SO12" onclick="BGCol('SO12')" href="SO_Cooler.htm" target="content">Cooler</a>
-  <a id="SO13" onclick="BGCol('SO13')" href="SO_Shortcut_Column.htm" target="content">Shortcut Column</a>
-  <a id="SO14" onclick="BGCol('SO14')" href="SO_Rigorous_Column.htm" target="content">Rigorous Column</a>
-  <a id="SO15" onclick="BGCol('SO15')" href="SO_Heatexchanger.htm" target="content">Heat Exchanger</a>
-  <a id="SO16" onclick="BGCol('SO16')" href="SO_CompSep.htm" target="content">Component Separator</a>
-  <a id="SO17" onclick="BGCol('SO17')" href="SO_OrificePlate.htm" target="content">Orifice Plate</a>
-  <a id="SO18" onclick="BGCol('SO18')" href="SO_CustomUO.htm" target="content">Custom Unit Operation</a>
-  <a id="SO19" onclick="BGCol('SO19')" href="SO_SolidSeparator.htm" target="content">Solid Separator</a>
-  <a id="SO20" onclick="BGCol('SO20')" href="SO_CakeFilter.htm" target="content">Continuous Cake Filter</a>
-  <a id="SO21" onclick="BGCol('SO21')" href="SO_Reactor.htm" target="content">Reactor</a>
-  </div>
+<div id='SimObjects' style="display:none;">
+
+   <div class="heading2" onclick="ToggleSubfolder('Streams')">Streams</div>
+   <div id='Streams' style="display:none;">
+   <a id="SO0" onclick="BGCol('SO0')" href="SO_Material_Stream.htm" target="content">Material Stream</a>
+   <a id="SO1" onclick="BGCol('SO1')" href="SO_Energy_Stream.htm" target="content">Energy Stream</a>
+   </div>
+   
+   <div class="heading2" onclick="ToggleSubfolder('UnitOps')">Unit Operations</div>
+   <div id='UnitOps' style="display:none;">
+   <a id="SO2" onclick="BGCol('SO2')" href="SO_Mixer.htm" target="content">Mixer</a>
+   <a id="SO3" onclick="BGCol('SO3')" href="SO_Splitter.htm" target="content">Splitter</a>
+   <a id="SO4" onclick="BGCol('SO4')" href="SO_Separator.htm" target="content">Separator</a>
+   <a id="SO5" onclick="BGCol('SO5')" href="SO_Tank.htm" target="content">Tank</a>
+   <a id="SO6" onclick="BGCol('SO6')" href="SO_Pipe_Segment.htm" target="content">Pipe Segment</a>
+   <a id="SO7" onclick="BGCol('SO7')" href="SO_Valve.htm" target="content">Valve</a>
+   <a id="SO8" onclick="BGCol('SO8')" href="SO_Pump.htm" target="content">Pump</a>
+   <a id="SO9" onclick="BGCol('SO9')" href="SO_Compressor.htm" target="content">Compressor</a>
+   <a id="SO10" onclick="BGCol('SO10')" href="SO_Expander.htm" target="content">Expander</a>
+   <a id="SO11" onclick="BGCol('SO11')" href="SO_Heater.htm" target="content">Heater</a>
+   <a id="SO12" onclick="BGCol('SO12')" href="SO_Cooler.htm" target="content">Cooler</a>
+   <a id="SO13" onclick="BGCol('SO13')" href="SO_Shortcut_Column.htm" target="content">Shortcut Column</a>
+   <a id="SO14" onclick="BGCol('SO14')" href="SO_Rigorous_Column.htm" target="content">Rigorous Column</a>
+   <a id="SO15" onclick="BGCol('SO15')" href="SO_Heatexchanger.htm" target="content">Heat Exchanger</a>
+   <a id="SO16" onclick="BGCol('SO16')" href="SO_CompSep.htm" target="content">Component Separator</a>
+   <a id="SO17" onclick="BGCol('SO17')" href="SO_OrificePlate.htm" target="content">Orifice Plate</a>
+   <a id="SO18" onclick="BGCol('SO18')" href="SO_CustomUO.htm" target="content">Custom Unit Operation</a>
+   <a id="SO19" onclick="BGCol('SO19')" href="SO_SolidSeparator.htm" target="content">Solid Separator</a>
+   <a id="SO20" onclick="BGCol('SO20')" href="SO_CakeFilter.htm" target="content">Continuous Cake Filter</a>
+   <a id="SO21" onclick="BGCol('SO21')" href="SO_Reactor.htm" target="content">Reactor</a>
+   </div>
+
+   <div class="heading2" onclick="ToggleSubfolder('LogicalOps')">Logical Operations</div>
+   <div id='LogicalOps' style="display:none;">
+   <a id="SO22" onclick="BGCol('SO22')" href="SO_Recycle.htm" target="content">Recycle</a>
+   <a id="SO23" onclick="BGCol('SO23')" href="SO_Adjust.htm" target="content">Adjust</a>
+   <a id="SO24" onclick="BGCol('SO24')" href="SO_Specification.htm" target="content">Specification</a>
+   </div>
 </div>
 
 <div class="heading1" onclick="ToggleSubfolder('Utilities')">Utilities</div>

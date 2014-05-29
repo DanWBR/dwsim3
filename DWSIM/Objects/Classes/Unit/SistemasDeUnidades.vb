@@ -520,7 +520,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .molar_volume = "m3/kmol"
                 .reac_rate = "kmol.[m3.s]"
                 .spec_vol = "m3/kg"
-                .time = "s"
+                .time = "h"
                 .volume = "m3"
                 .thickness = "mm"
                 .molar_enthalpy = "kJ/kmol"

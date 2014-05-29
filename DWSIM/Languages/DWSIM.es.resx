@@ -1318,7 +1318,7 @@
     <value>Propiedades - OK. </value>
   </data>
   <data name="Personalizado4" xml:space="preserve">
-    <value>Custom 4</value>
+    <value>Personalizado 4</value>
   </data>
   <data name="Capacidadecalorficad" xml:space="preserve">
     <value>Capacidad Calorífica a presión constante </value>
@@ -4784,5 +4784,8 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   </data>
   <data name="DescCPPP" xml:space="preserve">
     <value>CoolProp is an open-source database of fluid and humid air properties, formulated based on the most accurate formulations in open literature. It has been validated against the most accurate data available from the relevant references.</value>
+  </data>
+  <data name="Personalizado5" xml:space="preserve">
+    <value>Personalizado5</value>
   </data>
 </root>
