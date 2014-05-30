@@ -8249,7 +8249,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to .
+        '''  Looks up a localized string similar to Uma nova versão está disponível para download..
         '''</summary>
         Friend Shared ReadOnly Property NewVersionAvailable() As String
             Get

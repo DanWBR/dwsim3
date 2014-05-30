@@ -135,14 +135,14 @@ Partial Class FormSensAnalysis
         'btnRun
         '
         resources.ApplyResources(Me.btnRun, "btnRun")
-        Me.btnRun.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.btnRun.ImageKey = ""
         Me.btnRun.Name = "btnRun"
         Me.btnRun.UseVisualStyleBackColor = True
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label1.ImageKey = ""
         Me.Label1.Name = "Label1"
         '
         'cbObjIndVar1
@@ -204,7 +204,7 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
-        Me.Column1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column1.ToolTipText = ""
         '
         'Column2
         '
@@ -213,7 +213,7 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.Column2, "Column2")
         Me.Column2.Name = "Column2"
         Me.Column2.ReadOnly = True
-        Me.Column2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column2.ToolTipText = ""
         '
         'GroupBox2
         '
@@ -229,28 +229,28 @@ Partial Class FormSensAnalysis
         'btnDeleteCase
         '
         resources.ApplyResources(Me.btnDeleteCase, "btnDeleteCase")
-        Me.btnDeleteCase.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.btnDeleteCase.ImageKey = ""
         Me.btnDeleteCase.Name = "btnDeleteCase"
         Me.btnDeleteCase.UseVisualStyleBackColor = True
         '
         'btnSaveCase
         '
         resources.ApplyResources(Me.btnSaveCase, "btnSaveCase")
-        Me.btnSaveCase.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.btnSaveCase.ImageKey = ""
         Me.btnSaveCase.Name = "btnSaveCase"
         Me.btnSaveCase.UseVisualStyleBackColor = True
         '
         'btnCopyCase
         '
         resources.ApplyResources(Me.btnCopyCase, "btnCopyCase")
-        Me.btnCopyCase.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.btnCopyCase.ImageKey = ""
         Me.btnCopyCase.Name = "btnCopyCase"
         Me.btnCopyCase.UseVisualStyleBackColor = True
         '
         'btnNewCase
         '
         resources.ApplyResources(Me.btnNewCase, "btnNewCase")
-        Me.btnNewCase.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.btnNewCase.ImageKey = ""
         Me.btnNewCase.Name = "btnNewCase"
         Me.btnNewCase.UseVisualStyleBackColor = True
         '
@@ -278,7 +278,7 @@ Partial Class FormSensAnalysis
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label4.ImageKey = ""
         Me.Label4.Name = "Label4"
         '
         'tbCaseName
@@ -289,7 +289,7 @@ Partial Class FormSensAnalysis
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label3.ImageKey = ""
         Me.Label3.Name = "Label3"
         '
         'GroupBox4
@@ -318,7 +318,7 @@ Partial Class FormSensAnalysis
         'Label8
         '
         resources.ApplyResources(Me.Label8, "Label8")
-        Me.Label8.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label8.ImageKey = ""
         Me.Label8.Name = "Label8"
         '
         'tbUnitIndVar1
@@ -331,7 +331,7 @@ Partial Class FormSensAnalysis
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label2.ImageKey = ""
         Me.Label2.Name = "Label2"
         '
         'tbLowerLimIndVar1
@@ -342,7 +342,7 @@ Partial Class FormSensAnalysis
         'Label7
         '
         resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label7.ImageKey = ""
         Me.Label7.Name = "Label7"
         '
         'nuNumPointsIndVar1
@@ -355,7 +355,7 @@ Partial Class FormSensAnalysis
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label6.ImageKey = ""
         Me.Label6.Name = "Label6"
         '
         'cbPropIndVar1
@@ -369,7 +369,7 @@ Partial Class FormSensAnalysis
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label5.ImageKey = ""
         Me.Label5.Name = "Label5"
         '
         'GroupBox5
@@ -400,7 +400,7 @@ Partial Class FormSensAnalysis
         'Label14
         '
         resources.ApplyResources(Me.Label14, "Label14")
-        Me.Label14.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label14.ImageKey = ""
         Me.Label14.Name = "Label14"
         '
         'cbObjIndVar2
@@ -419,13 +419,13 @@ Partial Class FormSensAnalysis
         'Label13
         '
         resources.ApplyResources(Me.Label13, "Label13")
-        Me.Label13.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label13.ImageKey = ""
         Me.Label13.Name = "Label13"
         '
         'Label9
         '
         resources.ApplyResources(Me.Label9, "Label9")
-        Me.Label9.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label9.ImageKey = ""
         Me.Label9.Name = "Label9"
         '
         'cbPropIndVar2
@@ -446,13 +446,13 @@ Partial Class FormSensAnalysis
         'Label12
         '
         resources.ApplyResources(Me.Label12, "Label12")
-        Me.Label12.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label12.ImageKey = ""
         Me.Label12.Name = "Label12"
         '
         'Label10
         '
         resources.ApplyResources(Me.Label10, "Label10")
-        Me.Label10.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label10.ImageKey = ""
         Me.Label10.Name = "Label10"
         '
         'nuNumPointsIndVar2
@@ -470,13 +470,13 @@ Partial Class FormSensAnalysis
         'Label11
         '
         resources.ApplyResources(Me.Label11, "Label11")
-        Me.Label11.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label11.ImageKey = ""
         Me.Label11.Name = "Label11"
         '
         'chkIndVar2
         '
         resources.ApplyResources(Me.chkIndVar2, "chkIndVar2")
-        Me.chkIndVar2.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.chkIndVar2.ImageKey = ""
         Me.chkIndVar2.Name = "chkIndVar2"
         Me.chkIndVar2.UseVisualStyleBackColor = True
         '
@@ -493,7 +493,7 @@ Partial Class FormSensAnalysis
         'rbExp
         '
         resources.ApplyResources(Me.rbExp, "rbExp")
-        Me.rbExp.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.rbExp.ImageKey = ""
         Me.rbExp.Name = "rbExp"
         Me.rbExp.UseVisualStyleBackColor = True
         '
@@ -501,7 +501,7 @@ Partial Class FormSensAnalysis
         '
         resources.ApplyResources(Me.rbVar, "rbVar")
         Me.rbVar.Checked = True
-        Me.rbVar.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.rbVar.ImageKey = ""
         Me.rbVar.Name = "rbVar"
         Me.rbVar.TabStop = True
         Me.rbVar.UseVisualStyleBackColor = True
@@ -549,7 +549,7 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.Column8, "Column8")
         Me.Column8.Name = "Column8"
         Me.Column8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column8.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column8.ToolTipText = ""
         '
         'DataGridViewTextBoxColumn1
         '
@@ -557,7 +557,7 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.DataGridViewTextBoxColumn1, "DataGridViewTextBoxColumn1")
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
         Me.DataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.DataGridViewTextBoxColumn1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewTextBoxColumn1.ToolTipText = ""
         '
         'DataGridViewComboBoxColumn2
         '
@@ -566,7 +566,7 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.DataGridViewComboBoxColumn2, "DataGridViewComboBoxColumn2")
         Me.DataGridViewComboBoxColumn2.Name = "DataGridViewComboBoxColumn2"
         Me.DataGridViewComboBoxColumn2.Sorted = True
-        Me.DataGridViewComboBoxColumn2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewComboBoxColumn2.ToolTipText = ""
         '
         'Column4
         '
@@ -574,7 +574,7 @@ Partial Class FormSensAnalysis
         Me.Column4.FillWeight = 40.0!
         resources.ApplyResources(Me.Column4, "Column4")
         Me.Column4.Name = "Column4"
-        Me.Column4.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column4.ToolTipText = ""
         '
         'Column10
         '
@@ -583,7 +583,7 @@ Partial Class FormSensAnalysis
         Me.Column10.Name = "Column10"
         Me.Column10.ReadOnly = True
         Me.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column10.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column10.ToolTipText = ""
         '
         'Column9
         '
@@ -592,7 +592,7 @@ Partial Class FormSensAnalysis
         Me.Column9.Name = "Column9"
         Me.Column9.ReadOnly = True
         Me.Column9.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column9.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Column9.ToolTipText = ""
         '
         'ToolStrip1
         '
@@ -607,7 +607,7 @@ Partial Class FormSensAnalysis
         Me.tsbAddVar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbAddVar.Image = Global.DWSIM.My.Resources.Resources.add
         Me.tsbAddVar.Name = "tsbAddVar"
-        Me.tsbAddVar.Text = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.tsbAddVar.Text = ""
         '
         'tsbDelVar
         '
@@ -632,7 +632,7 @@ Partial Class FormSensAnalysis
         '
         resources.ApplyResources(Me.btnClear, "btnClear")
         Me.btnClear.Image = Global.DWSIM.My.Resources.Resources.cross
-        Me.btnClear.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.btnClear.ImageKey = ""
         Me.btnClear.Name = "btnClear"
         Me.btnClear.UseVisualStyleBackColor = True
         '
@@ -640,7 +640,7 @@ Partial Class FormSensAnalysis
         '
         resources.ApplyResources(Me.btnVerify, "btnVerify")
         Me.btnVerify.Image = Global.DWSIM.My.Resources.Resources.tick1
-        Me.btnVerify.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.btnVerify.ImageKey = ""
         Me.btnVerify.Name = "btnVerify"
         Me.btnVerify.UseVisualStyleBackColor = True
         '
@@ -653,7 +653,7 @@ Partial Class FormSensAnalysis
         'Label15
         '
         resources.ApplyResources(Me.Label15, "Label15")
-        Me.Label15.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label15.ImageKey = ""
         Me.Label15.Name = "Label15"
         '
         'tbExpression
@@ -664,7 +664,7 @@ Partial Class FormSensAnalysis
         'Label17
         '
         resources.ApplyResources(Me.Label17, "Label17")
-        Me.Label17.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.Label17.ImageKey = ""
         Me.Label17.Name = "Label17"
         '
         'gbVar
@@ -709,7 +709,7 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.DataGridViewTextBoxColumn2, "DataGridViewTextBoxColumn2")
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.DataGridViewTextBoxColumn2.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewTextBoxColumn2.ToolTipText = ""
         '
         'DataGridViewComboBoxColumn1
         '
@@ -718,7 +718,7 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.DataGridViewComboBoxColumn1, "DataGridViewComboBoxColumn1")
         Me.DataGridViewComboBoxColumn1.Name = "DataGridViewComboBoxColumn1"
         Me.DataGridViewComboBoxColumn1.Sorted = True
-        Me.DataGridViewComboBoxColumn1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewComboBoxColumn1.ToolTipText = ""
         '
         'DataGridViewComboBoxColumn3
         '
@@ -726,7 +726,7 @@ Partial Class FormSensAnalysis
         Me.DataGridViewComboBoxColumn3.FillWeight = 60.0!
         resources.ApplyResources(Me.DataGridViewComboBoxColumn3, "DataGridViewComboBoxColumn3")
         Me.DataGridViewComboBoxColumn3.Name = "DataGridViewComboBoxColumn3"
-        Me.DataGridViewComboBoxColumn3.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewComboBoxColumn3.ToolTipText = ""
         '
         'DataGridViewTextBoxColumn5
         '
@@ -735,7 +735,7 @@ Partial Class FormSensAnalysis
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
         Me.DataGridViewTextBoxColumn5.ReadOnly = True
         Me.DataGridViewTextBoxColumn5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.DataGridViewTextBoxColumn5.ToolTipText = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.DataGridViewTextBoxColumn5.ToolTipText = ""
         '
         'ToolStrip2
         '
@@ -750,7 +750,7 @@ Partial Class FormSensAnalysis
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.add
         Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.ToolStripButton1.Text = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.ToolStripButton1.Text = ""
         '
         'ToolStripButton2
         '
@@ -778,14 +778,14 @@ Partial Class FormSensAnalysis
         'btnRegressData
         '
         resources.ApplyResources(Me.btnRegressData, "btnRegressData")
-        Me.btnRegressData.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.btnRegressData.ImageKey = ""
         Me.btnRegressData.Name = "btnRegressData"
         Me.btnRegressData.UseVisualStyleBackColor = True
         '
         'btnAbort
         '
         resources.ApplyResources(Me.btnAbort, "btnAbort")
-        Me.btnAbort.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
+        Me.btnAbort.ImageKey = ""
         Me.btnAbort.Name = "btnAbort"
         Me.btnAbort.UseVisualStyleBackColor = True
         '

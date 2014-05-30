@@ -2590,9 +2590,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Objects\Classes\Pipe\pipes.dat" />
     <EmbeddedResource Include="Objects\Classes\Pipe\fittings.dat" />
-    <EmbeddedResource Include="Languages\DWSIM.de.resx" />
-    <EmbeddedResource Include="Languages\DWSIM.en.resx" />
-    <EmbeddedResource Include="Languages\DWSIM.es.resx" />
+    <EmbeddedResource Include="Languages\DWSIM.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\DWSIM.en.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\DWSIM.es.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Languages\Properties.de.resx" />
     <EmbeddedResource Include="Languages\Properties.en.resx" />
     <EmbeddedResource Include="Languages\Properties.es.resx" />

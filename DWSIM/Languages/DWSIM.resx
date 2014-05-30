@@ -4490,7 +4490,7 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
     <value>Deseja fazer o download da nova versão (após o download, feche o DWSIM e execute o arquivo de instalação para atualizar)</value>
   </data>
   <data name="NewVersionAvailable" xml:space="preserve">
-    <value />
+    <value>Uma nova versão está disponível para download.</value>
   </data>
   <data name="CapeOpenUnitOperation1" xml:space="preserve">
     <value>Operações Unitárias CAPE-OPEN</value>

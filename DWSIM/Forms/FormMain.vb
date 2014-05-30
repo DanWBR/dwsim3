@@ -680,7 +680,7 @@ Public Class FormMain
         If Not DWSIM.App.IsRunningOnMono Then
             Me.LoadCPDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "coolprop.txt")
         End If
- 
+
         Dim invaliddbs As New List(Of String)
 
         'load user databases
@@ -781,7 +781,7 @@ Public Class FormMain
                 If Not Me.AvailableComponents.ContainsKey(cp.Name) Then
                     Me.AvailableComponents.Add(cp.Name, cp)
                 Else
-                    Me.AvailableComponents(cp.Name).IsCOOLPROPSupported = true
+                    Me.AvailableComponents(cp.Name).IsCOOLPROPSupported = True
                 End If
             Next
         End If

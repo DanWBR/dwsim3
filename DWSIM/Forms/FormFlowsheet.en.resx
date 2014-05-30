@@ -154,6 +154,12 @@
   <data name="ToolStripButton2.Text" xml:space="preserve">
     <value>Zoom flowsheet</value>
   </data>
+  <data name="ToolStripButton20.Text" xml:space="preserve">
+    <value>Zoom All</value>
+  </data>
+  <data name="ToolStripButton3.Text" xml:space="preserve">
+    <value>Default Zoom (100%)</value>
+  </data>
   <data name="ToolStripButton18.Text" xml:space="preserve">
     <value>Save as Image</value>
   </data>

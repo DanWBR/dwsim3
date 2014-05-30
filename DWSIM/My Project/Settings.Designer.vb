@@ -54,311 +54,311 @@ Namespace My
             End Get
         End Property
         
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("")> _
         Public Property UserUnits() As String
             Get
-                Return CType(Me("UserUnits"),String)
+                Return CType(Me("UserUnits"), String)
             End Get
-            Set
+            Set(value As String)
                 Me("UserUnits") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
         Public Property ShowTips() As Boolean
             Get
-                Return CType(Me("ShowTips"),Boolean)
+                Return CType(Me("ShowTips"), Boolean)
             End Get
-            Set
+            Set(value As Boolean)
                 Me("ShowTips") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")> _
         Public Property RenderMode() As Integer
             Get
-                Return CType(Me("RenderMode"),Integer)
+                Return CType(Me("RenderMode"), Integer)
             End Get
-            Set
+            Set(value As Integer)
                 Me("RenderMode") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("4")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("4")> _
         Public Property PaletteMode() As Integer
             Get
-                Return CType(Me("PaletteMode"),Integer)
+                Return CType(Me("PaletteMode"), Integer)
             End Get
-            Set
+            Set(value As Integer)
                 Me("PaletteMode") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("")> _
         Public Property BackupFolder() As String
             Get
-                Return CType(Me("BackupFolder"),String)
+                Return CType(Me("BackupFolder"), String)
             End Get
-            Set
+            Set(value As String)
                 Me("BackupFolder") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
         Public Property BackupActivated() As Boolean
             Get
-                Return CType(Me("BackupActivated"),Boolean)
+                Return CType(Me("BackupActivated"), Boolean)
             End Get
-            Set
+            Set(value As Boolean)
                 Me("BackupActivated") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("5")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("5")> _
         Public Property BackupInterval() As Integer
             Get
-                Return CType(Me("BackupInterval"),Integer)
+                Return CType(Me("BackupInterval"), Integer)
             End Get
-            Set
+            Set(value As Integer)
                 Me("BackupInterval") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()> _
         Public Property BackupFiles() As Global.System.Collections.Specialized.StringCollection
             Get
-                Return CType(Me("BackupFiles"),Global.System.Collections.Specialized.StringCollection)
+                Return CType(Me("BackupFiles"), Global.System.Collections.Specialized.StringCollection)
             End Get
-            Set
+            Set(value As Global.System.Collections.Specialized.StringCollection)
                 Me("BackupFiles") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("en-US")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("en-US")> _
         Public Property CultureInfo() As String
             Get
-                Return CType(Me("CultureInfo"),String)
+                Return CType(Me("CultureInfo"), String)
             End Get
-            Set
+            Set(value As String)
                 Me("CultureInfo") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
         Public Property ShowLangForm() As Boolean
             Get
-                Return CType(Me("ShowLangForm"),Boolean)
+                Return CType(Me("ShowLangForm"), Boolean)
             End Get
-            Set
+            Set(value As Boolean)
                 Me("ShowLangForm") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()> _
         Public Property GeneralSettings() As Global.System.Collections.Specialized.StringCollection
             Get
-                Return CType(Me("GeneralSettings"),Global.System.Collections.Specialized.StringCollection)
+                Return CType(Me("GeneralSettings"), Global.System.Collections.Specialized.StringCollection)
             End Get
-            Set
+            Set(value As Global.System.Collections.Specialized.StringCollection)
                 Me("GeneralSettings") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("")> _
         Public Property ChemSepDatabasePath() As String
             Get
-                Return CType(Me("ChemSepDatabasePath"),String)
+                Return CType(Me("ChemSepDatabasePath"), String)
             End Get
-            Set
+            Set(value As String)
                 Me("ChemSepDatabasePath") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")> _
         Public Property ReplaceComps() As Boolean
             Get
-                Return CType(Me("ReplaceComps"),Boolean)
+                Return CType(Me("ReplaceComps"), Boolean)
             End Get
-            Set
+            Set(value As Boolean)
                 Me("ReplaceComps") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()> _
         Public Property UserDatabases() As Global.System.Collections.Specialized.StringCollection
             Get
-                Return CType(Me("UserDatabases"),Global.System.Collections.Specialized.StringCollection)
+                Return CType(Me("UserDatabases"), Global.System.Collections.Specialized.StringCollection)
             End Get
-            Set
+            Set(value As Global.System.Collections.Specialized.StringCollection)
                 Me("UserDatabases") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()> _
         Public Property ScriptPaths() As Global.System.Collections.Specialized.StringCollection
             Get
-                Return CType(Me("ScriptPaths"),Global.System.Collections.Specialized.StringCollection)
+                Return CType(Me("ScriptPaths"), Global.System.Collections.Specialized.StringCollection)
             End Get
-            Set
+            Set(value As Global.System.Collections.Specialized.StringCollection)
                 Me("ScriptPaths") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")> _
         Public Property RedirectOutput() As Boolean
             Get
-                Return CType(Me("RedirectOutput"),Boolean)
+                Return CType(Me("RedirectOutput"), Boolean)
             End Get
-            Set
+            Set(value As Boolean)
                 Me("RedirectOutput") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
         Public Property UseCOPersistenceSupport() As Boolean
             Get
-                Return CType(Me("UseCOPersistenceSupport"),Boolean)
+                Return CType(Me("UseCOPersistenceSupport"), Boolean)
             End Get
-            Set
+            Set(value As Boolean)
                 Me("UseCOPersistenceSupport") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
         Public Property SetCOSimulationContext() As Boolean
             Get
-                Return CType(Me("SetCOSimulationContext"),Boolean)
+                Return CType(Me("SetCOSimulationContext"), Boolean)
             End Get
-            Set
+            Set(value As Boolean)
                 Me("SetCOSimulationContext") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
         Public Property CheckForUpdates() As Boolean
             Get
-                Return CType(Me("CheckForUpdates"),Boolean)
+                Return CType(Me("CheckForUpdates"), Boolean)
             End Get
-            Set
+            Set(value As Boolean)
                 Me("CheckForUpdates") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
         Public Property ShowDonateForm() As Boolean
             Get
-                Return CType(Me("ShowDonateForm"),Boolean)
+                Return CType(Me("ShowDonateForm"), Boolean)
             End Get
-            Set
+            Set(value As Boolean)
                 Me("ShowDonateForm") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
         Public Property UpgradeRequired() As Boolean
             Get
-                Return CType(Me("UpgradeRequired"),Boolean)
+                Return CType(Me("UpgradeRequired"), Boolean)
             End Get
-            Set
+            Set(value As Boolean)
                 Me("UpgradeRequired") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")> _
         Public Property EnableParallelProcessing() As Boolean
             Get
-                Return CType(Me("EnableParallelProcessing"),Boolean)
+                Return CType(Me("EnableParallelProcessing"), Boolean)
             End Get
-            Set
+            Set(value As Boolean)
                 Me("EnableParallelProcessing") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("<?xml version=""1.0"" encoding=""utf-16""?>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<ArrayOfString xmlns:xsi=""http://www.w3."& _ 
-            "org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" />")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("<?xml version=""1.0"" encoding=""utf-16""?>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<ArrayOfString xmlns:xsi=""http://www.w3." & _
+            "org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" />")> _
         Public Property MostRecentFiles() As Global.System.Collections.Specialized.StringCollection
             Get
-                Return CType(Me("MostRecentFiles"),Global.System.Collections.Specialized.StringCollection)
+                Return CType(Me("MostRecentFiles"), Global.System.Collections.Specialized.StringCollection)
             End Get
-            Set
+            Set(value As Global.System.Collections.Specialized.StringCollection)
                 Me("MostRecentFiles") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("-1")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("-1")> _
         Public Property MaxDegreeOfParallelism() As Integer
             Get
-                Return CType(Me("MaxDegreeOfParallelism"),Integer)
+                Return CType(Me("MaxDegreeOfParallelism"), Integer)
             End Get
-            Set
+            Set(value As Integer)
                 Me("MaxDegreeOfParallelism") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")> _
         Public Property EnableGPUProcessing() As Boolean
             Get
-                Return CType(Me("EnableGPUProcessing"),Boolean)
+                Return CType(Me("EnableGPUProcessing"), Boolean)
             End Get
-            Set
+            Set(value As Boolean)
                 Me("EnableGPUProcessing") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("")> _
         Public Property SelectedGPU() As String
             Get
-                Return CType(Me("SelectedGPU"),String)
+                Return CType(Me("SelectedGPU"), String)
             End Get
-            Set
+            Set(value As String)
                 Me("SelectedGPU") = value
             End Set
         End Property
