@@ -120,7 +120,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
             End If
 
-            Dim Ti, Pi, Hi, Wi, ei, ein, T2, P2, H2 As Double
+            Dim Ti, Pi, Hi, Wi, ei, ein, T2, P2, H2, H2c As Double
 
             Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
             Ti = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.temperature.GetValueOrDefault.ToString
@@ -142,6 +142,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
             T2 = tmp(2)
+            H2c = tmp(4)
+
+            Dim htol As Double = Me.PropertyPackage.Parameters("PP_PHFELT")
+            Dim herr As Double = Math.Abs((H2c - H2) / H2)
+
+            If herr > htol Then Throw New Exception("The enthalpy difference between outlet and inlet streams is above the tolerance defined through the Property Package. Result is invalid.")
 
             Me.DeltaT = T2 - Ti
             Me.DeltaQ = 0
@@ -346,19 +352,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Item.Add(DWSIM.App.GetLocalString("Mensagemdeerro"), Me, "ErrorMessage", True, DWSIM.App.GetLocalString("Miscelnea4"), DWSIM.App.GetLocalString("Mensagemretornadaqua"), True)
                     With .Item(.Item.Count - 1)
                         .DefaultType = GetType(System.String)
-                    End With
-                End If
-
-                If Me.IsSpecAttached = True Then
-                    .Item.Add(DWSIM.App.GetLocalString("ObjetoUtilizadopor"), FlowSheet.Collections.ObjectCollection(Me.AttachedSpecId).GraphicObject.Tag, True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
-                    .Item.Add(DWSIM.App.GetLocalString("Utilizadocomo"), Me.SpecVarType, True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
-                End If
-
-                If Not Me.Annotation Is Nothing Then
-                    .Item.Add(DWSIM.App.GetLocalString("Anotaes"), Me, "Annotation", False, DWSIM.App.GetLocalString("Outros"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = False
-                        .CustomEditor = New DWSIM.Editors.Annotation.UIAnnotationEditor
                     End With
                 End If
 

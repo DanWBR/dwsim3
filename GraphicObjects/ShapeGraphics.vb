@@ -4039,8 +4039,6 @@ Namespace GraphicObjects
 
             MyBase.LoadData(data)
 
-
-
         End Function
 
     End Class

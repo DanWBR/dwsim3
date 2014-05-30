@@ -296,7 +296,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                 If formC.Collections.ObjectCollection.ContainsKey(Me.TargetObjectData.m_ID) Then
 
                     With Me.TargetObjectData
-                        Return Me.formC.Collections.ObjectCollection(.m_ID).GetPropertyValue(.m_Name, su)
+                        Return Me.formC.Collections.ObjectCollection(.m_ID).GetPropertyValue(.m_Property, su)
                     End With
 
                 Else
@@ -326,7 +326,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                 If formC.Collections.ObjectCollection.ContainsKey(Me.SourceObjectData.m_ID) Then
 
                     With Me.SourceObjectData
-                        Return Me.formC.Collections.ObjectCollection(.m_ID).GetPropertyValue(.m_Name, su)
+                        Return Me.formC.Collections.ObjectCollection(.m_ID).GetPropertyValue(.m_Property, su)
                     End With
 
                 Else
@@ -354,7 +354,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                 If formC.Collections.ObjectCollection.ContainsKey(Me.TargetObjectData.m_ID) Then
 
                     With Me.TargetObjectData
-                        Return Me.formC.Collections.ObjectCollection(.m_ID).SetPropertyValue(.m_Name, val, su)
+                        Return Me.formC.Collections.ObjectCollection(.m_ID).SetPropertyValue(.m_Property, val, su)
                     End With
 
                 Else
@@ -409,8 +409,8 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                         '// Define an int variable
                         'context.Variables.DefineVariable(DWSIM.App.GetLocalString("a"), typeof(int));
                         'context.Variables.SetVariableValue(DWSIM.App.GetLocalString("a"), 100);
-                        .ExpContext.Variables.SetVariableValue("X", .GetSourceVarValue)
-                        .ExpContext.Variables.SetVariableValue("Y", .GetTargetVarValue)
+                        .ExpContext.Variables.SetVariableValue("X", Double.Parse(.GetSourceVarValue))
+                        .ExpContext.Variables.SetVariableValue("Y", Double.Parse(.GetTargetVarValue))
                         '// Create a dynamic expression that evaluates to an Object
                         'IDynamicExpression eDynamic = ExpressionFactory.CreateDynamic("sqrt(a) + 1", context);
                         '// Create a generic expression that evaluates to a double

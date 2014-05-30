@@ -1171,6 +1171,8 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
 
             dt = d2 - d1
 
+            If PP.AUX_CheckTrivial(Ki) Then Throw New Exception("TV Flash [GM]: Invalid result: converged to the trivial solution (P = " & P & " ).")
+
             Console.WriteLine("TV Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L, V, Vx, Vy, P, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
@@ -1377,8 +1379,8 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
 
                     Tant = T
                     T = T - fval / dFdT
-                    If T < Tmin Then T = Tmin
-                    If T > Tmax Then T = Tmax
+                    'If T < Tmin Then T = Tmin
+                    'If T > Tmax Then T = Tmax
 
                     Console.WriteLine("PV Flash [GM]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
 
@@ -1479,8 +1481,8 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
 
                     Tant = T
                     T = T - fval / dFdT
-                    If T < Tmin Then T = Tmin
-                    If T > Tmax Then T = Tmax
+                    'If T < Tmin Then T = Tmin
+                    'If T > Tmax Then T = Tmax
 
                     Console.WriteLine("PV Flash [GM]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
 
@@ -1493,6 +1495,8 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
             d2 = Date.Now
 
             dt = d2 - d1
+
+            If PP.AUX_CheckTrivial(Ki) Then Throw New Exception("PV Flash [GM]: Invalid result: converged to the trivial solution (T = " & T & " ).")
 
             Console.WriteLine("PV Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 

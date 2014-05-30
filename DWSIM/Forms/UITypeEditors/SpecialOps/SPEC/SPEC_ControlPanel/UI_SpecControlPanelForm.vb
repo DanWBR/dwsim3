@@ -26,8 +26,8 @@ Public Class UI_SpecControlPanelForm
         With mySPEC
             Me.tbSVID.Text = .SourceObjectData.m_Name & " (" & .SourceObjectData.m_Type & ") / " & .SourceObjectData.m_Property
             Me.tbTVID.Text = .TargetObjectData.m_Name & " (" & .TargetObjectData.m_Type & ") / " & .TargetObjectData.m_Property
-            Me.tbSVVal.Text = Format(.GetSourceVarValue, nf) & " " & .GetSourceVarUnit
-            Me.tbTVVal.Text = Format(.GetTargetVarValue, nf) & " " & .GetTargetVarUnit
+            Me.tbSVVal.Text = Format(Double.Parse(.GetSourceVarValue), nf) & " " & .GetSourceVarUnit
+            Me.tbTVVal.Text = Format(Double.Parse(.GetTargetVarValue), nf) & " " & .GetTargetVarUnit
             Me.tbExp.Text = .Expression
         End With
 
@@ -59,8 +59,8 @@ Public Class UI_SpecControlPanelForm
             '// Define an int variable
             'context.Variables.DefineVariable(DWSIM.App.GetLocalString("a"), typeof(int));
             'context.Variables.SetVariableValue(DWSIM.App.GetLocalString("a"), 100);
-            .ExpContext.Variables.SetVariableValue("X", .GetSourceVarValue)
-            .ExpContext.Variables.SetVariableValue("Y", .GetTargetVarValue)
+            .ExpContext.Variables.SetVariableValue("X", Double.Parse(.GetSourceVarValue))
+            .ExpContext.Variables.SetVariableValue("Y", Double.Parse(.GetTargetVarValue))
 
             '// Create a dynamic expression that evaluates to an Object
             'IDynamicExpression eDynamic = ExpressionFactory.CreateDynamic("sqrt(a) + 1", context);

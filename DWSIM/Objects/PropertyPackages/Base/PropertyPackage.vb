@@ -1461,6 +1461,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
+                            If Double.IsNaN(P) Or Double.IsInfinity(P) Then P = 0.0#
+
                             Dim Vx, Vx2, Vy As Double()
 
                             If Me.AUX_IS_SINGLECOMP(Fase.Mixture) Then
@@ -1576,6 +1578,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
                             If Double.IsNaN(H) Or Double.IsInfinity(H) Then H = Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_enthalpy.GetValueOrDefault / Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
+                            If Double.IsNaN(T) Or Double.IsInfinity(T) Then T = 0.0#
 
                             If Me.AUX_IS_SINGLECOMP(Fase.Mixture) Then
 
@@ -1969,6 +1972,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                             T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+
+                            If Double.IsNaN(T) Or Double.IsInfinity(T) Then P = 0.0#
 
                             Dim Vx, Vx2, Vy As Double()
 

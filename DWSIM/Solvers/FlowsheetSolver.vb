@@ -282,7 +282,7 @@ Namespace DWSIM.Flowsheet
 
             Dim calculated As Boolean
 
-            If W.HasValue And T > 0 And P > 0 And comp >= 0 Then
+            If W.HasValue And comp >= 0 Then
                 With ms.PropertyPackage
                     .CurrentMaterialStream = ms
                     .DW_CalcVazaoMolar()
@@ -475,7 +475,7 @@ Namespace DWSIM.Flowsheet
                 sobj.Calculated = True
                 form.UpdateStatusLabel(preLab)
                 calculated = True
-            ElseIf Q.HasValue And T > 0 And P > 0 And comp >= 0 Then
+            ElseIf Q.HasValue And comp >= 0 Then
                 With ms.PropertyPackage
                     .CurrentMaterialStream = ms
                     .DW_CalcVazaoMassica()
@@ -657,7 +657,7 @@ Namespace DWSIM.Flowsheet
                 sobj.Calculated = True
                 form.UpdateStatusLabel(preLab)
                 calculated = True
-            ElseIf QV.HasValue And T > 0 And P > 0 And comp >= 0 Then
+            ElseIf QV.HasValue And comp >= 0 Then
                 With ms.PropertyPackage
                     .CurrentMaterialStream = ms
 

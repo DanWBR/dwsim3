@@ -3295,7 +3295,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Try
                         T1 = pp.DW_CalcBubT(zm, P(0))(4) '* 1.01
                     Catch ex As Exception
-                        T1 = MathEx.Common.Max(FT)
+                        T1 = MathEx.Common.Min(FT)
                     End Try
                     Try
                         T2 = pp.DW_CalcDewT(zm, P(ns))(4) '* 0.99

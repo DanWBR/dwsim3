@@ -4822,4 +4822,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Personalizado5" xml:space="preserve">
     <value>Personalizado5</value>
   </data>
+  <data name="SpecSource" xml:space="preserve">
+    <value>Fonte</value>
+  </data>
 </root>

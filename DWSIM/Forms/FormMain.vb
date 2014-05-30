@@ -2355,11 +2355,11 @@ Public Class FormMain
                     Dim so2 As DWSIM.SimulationObjects.SpecialOps.Spec = so
                     If form.Collections.ObjectCollection.ContainsKey(so2.TargetObjectData.m_ID) Then
                         so2.TargetObject = form.Collections.ObjectCollection(so2.TargetObjectData.m_ID)
-                        DirectCast(so2.GraphicObject, SpecGraphic).ConnectedToSv = so2.SourceObject.GraphicObject
+                        DirectCast(so2.GraphicObject, SpecGraphic).ConnectedToTv = so2.TargetObject.GraphicObject
                     End If
                     If form.Collections.ObjectCollection.ContainsKey(so2.SourceObjectData.m_ID) Then
                         so2.SourceObject = form.Collections.ObjectCollection(so2.SourceObjectData.m_ID)
-                        DirectCast(so2.GraphicObject, SpecGraphic).ConnectedToTv = so2.TargetObject.GraphicObject
+                        DirectCast(so2.GraphicObject, SpecGraphic).ConnectedToSv = so2.SourceObject.GraphicObject
                     End If
                 End If
                 If TryCast(so, DWSIM.SimulationObjects.UnitOps.CapeOpenUO) IsNot Nothing Then

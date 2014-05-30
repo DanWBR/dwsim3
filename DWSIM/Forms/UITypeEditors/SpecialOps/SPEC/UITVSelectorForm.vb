@@ -77,11 +77,11 @@ Public Class UITVSelectorForm
             Select Case TreeView1.SelectedNode.Index
                 Case 0
                     For Each obj In formC.Collections.MaterialStreamCollection.Values
-                        If obj.InputConnectors(0).IsAttached = True Then .Add(obj.Name, obj.Tag).Tag = obj.Name
+                        If obj.InputConnectors(0).IsAttached = False Then .Add(obj.Name, obj.Tag).Tag = obj.Name
                     Next
                 Case 1
                     For Each obj In formC.Collections.EnergyStreamCollection.Values
-                        If obj.InputConnectors(0).IsAttached = True Then .Add(obj.Name, obj.Tag).Tag = obj.Name
+                        If obj.InputConnectors(0).IsAttached = False Then .Add(obj.Name, obj.Tag).Tag = obj.Name
                     Next
                 Case 2
                     For Each obj In formC.Collections.MixerCollection.Values

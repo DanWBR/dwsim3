@@ -43,7 +43,7 @@ Namespace DWSIM.Editors.SpecialOps
 
                 Dim selectionControl As New UISVSelectorForm
                 Dim form As FormFlowsheet = My.Application.ActiveSimulation
-                selectionControl.Text = form.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & " - Variável Fonte"
+                selectionControl.Text = form.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
                 selectionControl.selectionData = value
                 selectionControl.gi = context
 

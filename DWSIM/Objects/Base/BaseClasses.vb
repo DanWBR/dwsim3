@@ -1907,6 +1907,22 @@ End Class
             With .Item(.Item.Count - 1)
                 .CustomEditor = New DWSIM.Editors.PropertyPackages.UIPPSelector
             End With
+            If Me.IsSpecAttached = True Then
+                .Item.Add(DWSIM.App.GetLocalString("ObjetoUtilizadopor"), FlowSheet.Collections.ObjectCollection(Me.AttachedSpecId).GraphicObject.Tag, True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
+                Select Case Me.SpecVarType
+                    Case SpecialOps.Helpers.Spec.TipoVar.Destino
+                        .Item.Add(DWSIM.App.GetLocalString("Utilizadocomo"), DWSIM.App.GetLocalString(Me.SpecVarType.ToString), True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
+                    Case SpecialOps.Helpers.Spec.TipoVar.Fonte
+                        .Item.Add(DWSIM.App.GetLocalString("Utilizadocomo"), DWSIM.App.GetLocalString("SpecSource"), True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
+                End Select
+            End If
+            If Not Me.Annotation Is Nothing Then
+                .Item.Add(DWSIM.App.GetLocalString("Anotaes"), Me, "Annotation", False, DWSIM.App.GetLocalString("Outros"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
+                With .Item(.Item.Count - 1)
+                    .IsBrowsable = False
+                    .CustomEditor = New DWSIM.Editors.Annotation.UIAnnotationEditor
+                End With
+            End If
         End With
     End Sub
 
