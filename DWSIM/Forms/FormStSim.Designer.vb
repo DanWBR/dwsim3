@@ -1351,7 +1351,6 @@ Partial Class FormStSim
         '
         Me.Column5.FalseValue = "False"
         Me.Column5.FillWeight = 20.0!
-        Me.Column5.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         resources.ApplyResources(Me.Column5, "Column5")
         Me.Column5.Name = "Column5"
         Me.Column5.ReadOnly = True
@@ -1363,7 +1362,6 @@ Partial Class FormStSim
         '
         Me.Column10.FalseValue = "False"
         Me.Column10.FillWeight = 20.0!
-        Me.Column10.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         resources.ApplyResources(Me.Column10, "Column10")
         Me.Column10.Name = "Column10"
         Me.Column10.ReadOnly = True

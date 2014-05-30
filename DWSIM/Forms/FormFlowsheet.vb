@@ -320,30 +320,27 @@ Imports DWSIM.DWSIM.GraphicObjects
 
             Application.DoEvents()
 
-            Dim fw As New FormConfigWizard
-            With fw
-                .StartPosition = FormStartPosition.CenterScreen
-                .WindowState = FormWindowState.Normal
-                .ShowDialog(Me)
-                If .switch Then
-                    With Me.FrmStSim1
-                        '.Text = Me.Text & " - Assistente de Configuração"
-                        '.MdiParent = My.Forms.FormParent
-                        .WindowState = FormWindowState.Normal
-                        .StartPosition = FormStartPosition.CenterScreen
-                        .ShowDialog(Me)
-                        'MUST CALL THE DISPOSE METHOD!!!!!!!!!
-                    End With
-                End If
-            End With
-            'With Me.FrmStSim1
-            '    '.Text = Me.Text & " - Assistente de Configuração"
-            '    '.MdiParent = My.Forms.FormParent
-            '    .WindowState = FormWindowState.Normal
-            '    .StartPosition = FormStartPosition.CenterScreen
-            '    .ShowDialog(Me)
-            '    'MUST CALL THE DISPOSE METHOD!!!!!!!!!
-            'End With
+            If Not DWSIM.App.IsRunningOnMono Then
+                Dim fw As New FormConfigWizard
+                With fw
+                    .StartPosition = FormStartPosition.CenterScreen
+                    .WindowState = FormWindowState.Normal
+                    .ShowDialog(Me)
+                    If .switch Then
+                        With Me.FrmStSim1
+                            .WindowState = FormWindowState.Normal
+                            .StartPosition = FormStartPosition.CenterScreen
+                            .ShowDialog(Me)
+                        End With
+                    End If
+                End With
+            Else
+                With Me.FrmStSim1
+                    .WindowState = FormWindowState.Normal
+                    .StartPosition = FormStartPosition.CenterScreen
+                    .ShowDialog(Me)
+                End With
+            End If
         Else
             Dim array1(FormMain.AvailableUnitSystems.Count - 1) As String
             FormMain.AvailableUnitSystems.Keys.CopyTo(array1, 0)

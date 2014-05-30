@@ -676,9 +676,11 @@ Public Class FormMain
         'load Electrolyte XML database
         Me.LoadEDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "electrolyte.xml")
 
-        'load Electrolyte XML database
-        Me.LoadCPDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "coolprop.txt")
-
+        'load CoolProp list of compounds
+        If Not DWSIM.App.IsRunningOnMono Then
+            Me.LoadCPDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "coolprop.txt")
+        End If
+ 
         Dim invaliddbs As New List(Of String)
 
         'load user databases
