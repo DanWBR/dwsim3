@@ -769,11 +769,11 @@ Imports DWSIM.DWSIM.GraphicObjects
                 Case TipoObjeto.DistillationColumn
                     DWSIM.App.HelpRequested("SO_Rigorous_Column.htm")
                 Case TipoObjeto.AbsorptionColumn
-                    DWSIM.App.HelpRequested("frame.htm") 'no topic yet
+                    DWSIM.App.HelpRequested("NoHelp.htm") 'no topic yet
                 Case TipoObjeto.ReboiledAbsorber
-                    DWSIM.App.HelpRequested("frame.htm") 'no topic yet
+                    DWSIM.App.HelpRequested("NoHelp.htm") 'no topic yet
                 Case TipoObjeto.RefluxedAbsorber
-                    DWSIM.App.HelpRequested("frame.htm") 'no topic yet
+                    DWSIM.App.HelpRequested("NoHelp.htm") 'no topic yet
                 Case TipoObjeto.ComponentSeparator
                     DWSIM.App.HelpRequested("SO_CompSep.htm")
                 Case TipoObjeto.OrificePlate

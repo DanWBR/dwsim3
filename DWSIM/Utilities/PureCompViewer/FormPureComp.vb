@@ -855,4 +855,7 @@ Public Class FormPureComp
 
     End Sub
 
+    Private Sub FormPureComp_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
+        DWSIM.App.HelpRequested("UT_PureCompProps.htm")
+    End Sub
 End Class

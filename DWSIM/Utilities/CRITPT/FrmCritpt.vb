@@ -180,4 +180,7 @@ Public Class FrmCritpt
 
     End Sub
 
+    Private Sub FrmCritpt_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
+        DWSIM.App.HelpRequested("UT_TrueCriticalPoint.htm")
+    End Sub
 End Class

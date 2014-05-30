@@ -483,7 +483,7 @@ Partial Class FormFlowsheet
         Me.TSTable.IsDrawn = True
         Me.TSTable.Name = "TSTable"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.TSTable, resources.GetString("TSTable.StatusBarText"))
-        Me.TSTable.Title = ""
+        Me.TSTable.Title = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'ToolStrip2
         '
@@ -541,7 +541,7 @@ Partial Class FormFlowsheet
         Me.ToolStripComboBoxUnitSystem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ToolStripComboBoxUnitSystem.Name = "ToolStripComboBoxUnitSystem"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripComboBoxUnitSystem, resources.GetString("ToolStripComboBoxUnitSystem.StatusBarText"))
-        Me.ToolStripComboBoxUnitSystem.Text = ""
+        Me.ToolStripComboBoxUnitSystem.Text = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'ToolStripButton7
         '
@@ -570,7 +570,7 @@ Partial Class FormFlowsheet
         Me.ToolStripComboBoxNumberFormatting.Items.AddRange(New Object() {resources.GetString("ToolStripComboBoxNumberFormatting.Items"), resources.GetString("ToolStripComboBoxNumberFormatting.Items1"), resources.GetString("ToolStripComboBoxNumberFormatting.Items2"), resources.GetString("ToolStripComboBoxNumberFormatting.Items3"), resources.GetString("ToolStripComboBoxNumberFormatting.Items4"), resources.GetString("ToolStripComboBoxNumberFormatting.Items5"), resources.GetString("ToolStripComboBoxNumberFormatting.Items6"), resources.GetString("ToolStripComboBoxNumberFormatting.Items7"), resources.GetString("ToolStripComboBoxNumberFormatting.Items8"), resources.GetString("ToolStripComboBoxNumberFormatting.Items9"), resources.GetString("ToolStripComboBoxNumberFormatting.Items10"), resources.GetString("ToolStripComboBoxNumberFormatting.Items11"), resources.GetString("ToolStripComboBoxNumberFormatting.Items12"), resources.GetString("ToolStripComboBoxNumberFormatting.Items13"), resources.GetString("ToolStripComboBoxNumberFormatting.Items14"), resources.GetString("ToolStripComboBoxNumberFormatting.Items15"), resources.GetString("ToolStripComboBoxNumberFormatting.Items16"), resources.GetString("ToolStripComboBoxNumberFormatting.Items17"), resources.GetString("ToolStripComboBoxNumberFormatting.Items18"), resources.GetString("ToolStripComboBoxNumberFormatting.Items19"), resources.GetString("ToolStripComboBoxNumberFormatting.Items20"), resources.GetString("ToolStripComboBoxNumberFormatting.Items21"), resources.GetString("ToolStripComboBoxNumberFormatting.Items22"), resources.GetString("ToolStripComboBoxNumberFormatting.Items23"), resources.GetString("ToolStripComboBoxNumberFormatting.Items24"), resources.GetString("ToolStripComboBoxNumberFormatting.Items25"), resources.GetString("ToolStripComboBoxNumberFormatting.Items26"), resources.GetString("ToolStripComboBoxNumberFormatting.Items27"), resources.GetString("ToolStripComboBoxNumberFormatting.Items28")})
         Me.ToolStripComboBoxNumberFormatting.Name = "ToolStripComboBoxNumberFormatting"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripComboBoxNumberFormatting, resources.GetString("ToolStripComboBoxNumberFormatting.StatusBarText"))
-        Me.ToolStripComboBoxNumberFormatting.Text = ""
+        Me.ToolStripComboBoxNumberFormatting.Text = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'ToolStripSeparator3
         '
@@ -591,7 +591,7 @@ Partial Class FormFlowsheet
         Me.ToolStripComboBoxNumberFractionFormatting.Items.AddRange(New Object() {resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items1"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items2"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items3"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items4"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items5"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items6"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items7"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items8"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items9"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items10"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items11"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items12"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items13"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items14"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items15"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items16"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items17"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items18"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items19"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items20"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items21"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items22"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items23"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items24"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items25"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items26"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items27"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items28")})
         Me.ToolStripComboBoxNumberFractionFormatting.Name = "ToolStripComboBoxNumberFractionFormatting"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripComboBoxNumberFractionFormatting, resources.GetString("ToolStripComboBoxNumberFractionFormatting.StatusBarText"))
-        Me.ToolStripComboBoxNumberFractionFormatting.Text = ""
+        Me.ToolStripComboBoxNumberFractionFormatting.Text = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'MenuStrip1
         '
@@ -1253,8 +1253,8 @@ Partial Class FormFlowsheet
         '
         'OpenFileName
         '
-        Me.OpenFileName.Filter = ""
-        Me.OpenFileName.Title = ""
+        Me.OpenFileName.Filter = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.OpenFileName.Title = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'FormFlowsheet
         '

@@ -23,7 +23,7 @@ Partial Class FormPhEnv
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormPhEnv))
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.TextBox1 = New System.Windows.Forms.NumericUpDown()
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
@@ -80,25 +80,25 @@ Partial Class FormPhEnv
         resources.ApplyResources(Me.CheckBox2, "CheckBox2")
         Me.CheckBox2.Checked = True
         Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox2.ImageKey = ""
+        Me.CheckBox2.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.CheckBox2.Name = "CheckBox2"
         '
         'CheckBox3
         '
         resources.ApplyResources(Me.CheckBox3, "CheckBox3")
-        Me.CheckBox3.ImageKey = ""
+        Me.CheckBox3.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.CheckBox3.Name = "CheckBox3"
         '
         'CheckBox1
         '
         resources.ApplyResources(Me.CheckBox1, "CheckBox1")
-        Me.CheckBox1.ImageKey = ""
+        Me.CheckBox1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.CheckBox1.Name = "CheckBox1"
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = ""
+        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Button1.Name = "Button1"
         '
         'ComboBox3
@@ -111,7 +111,7 @@ Partial Class FormPhEnv
         'Label23
         '
         resources.ApplyResources(Me.Label23, "Label23")
-        Me.Label23.ImageKey = ""
+        Me.Label23.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label23.Name = "Label23"
         '
         'GroupBox1
@@ -133,7 +133,7 @@ Partial Class FormPhEnv
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = ""
+        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label1.Name = "Label1"
         '
         'GroupBox2
@@ -190,8 +190,8 @@ Partial Class FormPhEnv
         Me.Grid1.AllowUserToDeleteRows = False
         Me.Grid1.AllowUserToOrderColumns = True
         Me.Grid1.AllowUserToResizeRows = False
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Grid1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Grid1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.Grid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.Grid1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.Grid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize

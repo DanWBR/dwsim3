@@ -180,4 +180,7 @@ Public Class FormHYD_DET
 
     End Sub
 
+    Private Sub FormHYD_DET_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
+        DWSIM.App.HelpRequested("UT_HydrateDissociation.htm")
+    End Sub
 End Class

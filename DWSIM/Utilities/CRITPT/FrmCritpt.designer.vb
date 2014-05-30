@@ -20,20 +20,20 @@ Partial Class FrmCritpt
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmCritpt))
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.Grid1 = New System.Windows.Forms.DataGridView
-        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox
-        Me.LblSelected = New System.Windows.Forms.Label
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.ComboBox3 = New System.Windows.Forms.ComboBox
-        Me.Label23 = New System.Windows.Forms.Label
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Grid1 = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.LblSelected = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.ComboBox3 = New System.Windows.Forms.ComboBox()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.GroupBox2.SuspendLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox6.SuspendLayout()
@@ -41,88 +41,26 @@ Partial Class FrmCritpt
         '
         'GroupBox2
         '
-        Me.GroupBox2.AccessibleDescription = Nothing
-        Me.GroupBox2.AccessibleName = Nothing
-        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.BackgroundImage = Nothing
         Me.GroupBox2.Controls.Add(Me.Grid1)
-        Me.GroupBox2.Font = Nothing
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
         'Grid1
         '
-        Me.Grid1.AccessibleDescription = Nothing
-        Me.Grid1.AccessibleName = Nothing
         Me.Grid1.AllowUserToAddRows = False
         Me.Grid1.AllowUserToDeleteRows = False
         Me.Grid1.AllowUserToOrderColumns = True
         Me.Grid1.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.Grid1, "Grid1")
         Me.Grid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.Grid1.BackgroundImage = Nothing
         Me.Grid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.Grid1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6})
-        Me.Grid1.Font = Nothing
+        resources.ApplyResources(Me.Grid1, "Grid1")
         Me.Grid1.Name = "Grid1"
         Me.Grid1.ReadOnly = True
         Me.Grid1.RowHeadersVisible = False
         Me.Grid1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.Grid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        '
-        'BackgroundWorker1
-        '
-        Me.BackgroundWorker1.WorkerSupportsCancellation = True
-        '
-        'GroupBox6
-        '
-        Me.GroupBox6.AccessibleDescription = Nothing
-        Me.GroupBox6.AccessibleName = Nothing
-        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
-        Me.GroupBox6.BackgroundImage = Nothing
-        Me.GroupBox6.Controls.Add(Me.LblSelected)
-        Me.GroupBox6.Controls.Add(Me.Button1)
-        Me.GroupBox6.Controls.Add(Me.ComboBox3)
-        Me.GroupBox6.Controls.Add(Me.Label23)
-        Me.GroupBox6.Font = Nothing
-        Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.TabStop = False
-        '
-        'LblSelected
-        '
-        Me.LblSelected.AccessibleDescription = Nothing
-        Me.LblSelected.AccessibleName = Nothing
-        resources.ApplyResources(Me.LblSelected, "LblSelected")
-        Me.LblSelected.Font = Nothing
-        Me.LblSelected.Name = "LblSelected"
-        '
-        'Button1
-        '
-        Me.Button1.AccessibleDescription = Nothing
-        Me.Button1.AccessibleName = Nothing
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.BackgroundImage = Nothing
-        Me.Button1.Font = Nothing
-        Me.Button1.Name = "Button1"
-        '
-        'ComboBox3
-        '
-        Me.ComboBox3.AccessibleDescription = Nothing
-        Me.ComboBox3.AccessibleName = Nothing
-        resources.ApplyResources(Me.ComboBox3, "ComboBox3")
-        Me.ComboBox3.BackgroundImage = Nothing
-        Me.ComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox3.DropDownWidth = 120
-        Me.ComboBox3.Font = Nothing
-        Me.ComboBox3.Name = "ComboBox3"
-        '
-        'Label23
-        '
-        Me.Label23.AccessibleDescription = Nothing
-        Me.Label23.AccessibleName = Nothing
-        resources.ApplyResources(Me.Label23, "Label23")
-        Me.Label23.Font = Nothing
-        Me.Label23.Name = "Label23"
         '
         'Column1
         '
@@ -166,18 +104,49 @@ Partial Class FrmCritpt
         Me.Column6.Name = "Column6"
         Me.Column6.ReadOnly = True
         '
+        'BackgroundWorker1
+        '
+        Me.BackgroundWorker1.WorkerSupportsCancellation = True
+        '
+        'GroupBox6
+        '
+        Me.GroupBox6.Controls.Add(Me.LblSelected)
+        Me.GroupBox6.Controls.Add(Me.Button1)
+        Me.GroupBox6.Controls.Add(Me.ComboBox3)
+        Me.GroupBox6.Controls.Add(Me.Label23)
+        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.TabStop = False
+        '
+        'LblSelected
+        '
+        resources.ApplyResources(Me.LblSelected, "LblSelected")
+        Me.LblSelected.Name = "LblSelected"
+        '
+        'Button1
+        '
+        resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.Name = "Button1"
+        '
+        'ComboBox3
+        '
+        Me.ComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox3.DropDownWidth = 120
+        resources.ApplyResources(Me.ComboBox3, "ComboBox3")
+        Me.ComboBox3.Name = "ComboBox3"
+        '
+        'Label23
+        '
+        resources.ApplyResources(Me.Label23, "Label23")
+        Me.Label23.Name = "Label23"
+        '
         'FrmCritpt
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.GroupBox6)
         Me.Controls.Add(Me.GroupBox2)
-        Me.Font = Nothing
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Icon = Nothing
         Me.MaximizeBox = False
         Me.Name = "FrmCritpt"
         Me.ShowIcon = False

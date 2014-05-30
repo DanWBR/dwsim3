@@ -311,4 +311,8 @@ Public Class FormHYD
             .ShowDialog(Me)
         End With
     End Sub
+
+    Private Sub FormHYD_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
+        DWSIM.App.HelpRequested("UT_HydrateDissociation.htm")
+    End Sub
 End Class

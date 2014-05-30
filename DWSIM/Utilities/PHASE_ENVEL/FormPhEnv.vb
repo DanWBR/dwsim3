@@ -841,4 +841,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
         If Me.CheckBox2.Checked Then Me.showoppoint = True Else Me.showoppoint = False
     End Sub
 
+    Private Sub FormPhEnv_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
+        DWSIM.App.HelpRequested("UT_PhaseEnvelope.htm")
+    End Sub
 End Class

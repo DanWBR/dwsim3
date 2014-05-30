@@ -961,4 +961,8 @@ Public Class FormBinEnv
         rbEutectic.Enabled = chkSLE.Checked
         rbSolidSolution.Enabled = chkSLE.Checked
     End Sub
+
+    Private Sub FormBinEnv_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
+        DWSIM.App.HelpRequested("UT_BinaryEnvelope.htm")
+    End Sub
 End Class

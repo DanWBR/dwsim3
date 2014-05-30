@@ -154,12 +154,6 @@
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Object Selection</value>
   </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>464, 47</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Options</value>
-  </data>
   <data name="ComboBox1.Items" xml:space="preserve">
     <value>Pressure vs. Temperature</value>
   </data>
@@ -208,14 +202,14 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Envelope type</value>
   </data>
-  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 171</value>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>464, 47</value>
   </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>464, 371</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Options</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Results</value>
+  <data name="GraphControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>456, 331</value>
   </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>456, 331</value>
@@ -229,7 +223,13 @@
   <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>458, 352</value>
   </data>
-  <data name="GraphControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>456, 331</value>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 171</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>464, 371</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Results</value>
   </data>
 </root>
