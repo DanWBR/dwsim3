@@ -347,14 +347,14 @@ Namespace DWSIM.SimulationObjects.Streams
 
                 .Clear()
 
-                .Add(0, New DWSIM.Outros.NodeItem("T", "", "", 0, 1, ""))
-                .Add(1, New DWSIM.Outros.NodeItem("P", "", "", 1, 1, ""))
-                .Add(2, New DWSIM.Outros.NodeItem("W", "", "", 2, 1, ""))
-                .Add(3, New DWSIM.Outros.NodeItem("M", "", "", 3, 1, ""))
-                .Add(4, New DWSIM.Outros.NodeItem("Q", "", "", 4, 1, ""))
-                .Add(5, New DWSIM.Outros.NodeItem("VF", "", "", 5, 1, ""))
-                .Add(6, New DWSIM.Outros.NodeItem("H", "", "", 6, 1, ""))
-                .Add(7, New DWSIM.Outros.NodeItem("S", "", "", 7, 1, ""))
+                .Add(0, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("Temperatura"), "", "", 0, 1, ""))
+                .Add(1, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("Presso"), "", "", 1, 1, ""))
+                .Add(2, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("Vazomssica"), "", "", 2, 1, ""))
+                .Add(3, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("Vazomolar"), "", "", 3, 1, ""))
+                .Add(4, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("Vazovolumtrica"), "", "", 4, 1, ""))
+                .Add(5, New DWSIM.Outros.NodeItem(DWSIM.App.GetPropertyName("PROP_MS_106"), "", "", 5, 1, ""))
+                .Add(6, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("EntalpiaEspecfica"), "", "", 6, 1, ""))
+                .Add(7, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("EntropiaEspecfica"), "", "", 7, 1, ""))
 
             End With
 
@@ -4975,7 +4975,7 @@ Namespace DWSIM.SimulationObjects.Streams
 
                 .Clear()
 
-                .Add(0, New DWSIM.Outros.NodeItem("E", "", "", 0, 1, ""))
+                .Add(0, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("Energia"), "", "", 0, 1, ""))
 
             End With
 
