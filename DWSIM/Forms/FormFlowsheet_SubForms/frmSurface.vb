@@ -623,7 +623,17 @@ Public Class frmSurface
                                     tabela.Tag = obj.Nome
                                     tabela.Name = "QTAB-" & Guid.NewGuid.ToString
                                     tabela.HeaderText = gobj.Tag
+                                    tabela.AdditionalInfo = Me.FlowsheetDesignSurface.Zoom
                                     Me.m_qt = tabela
+                                    If Not Me.m_qt Is Nothing Then
+                                        If FlowsheetDesignSurface.AutoScrollPosition.X + px2.X * FlowsheetDesignSurface.Zoom + m_qt.Width * FlowsheetDesignSurface.Zoom > FlowsheetDesignSurface.ClientRectangle.Width Then
+                                            px2.X -= 50 + m_qt.Width / FlowsheetDesignSurface.Zoom
+                                        End If
+                                        If FlowsheetDesignSurface.AutoScrollPosition.Y + px2.Y * FlowsheetDesignSurface.Zoom + m_qt.Height * FlowsheetDesignSurface.Zoom > FlowsheetDesignSurface.ClientRectangle.Height Then
+                                            px2.Y -= 50 + m_qt.Height / FlowsheetDesignSurface.Zoom
+                                        End If
+                                        Me.m_qt.SetPosition(px2)
+                                    End If
                                     Me.FlowsheetDesignSurface.drawingObjects.Add(tabela)
                                     Me.FlowsheetDesignSurface.Invalidate()
                                     Me.ticks = 0
@@ -633,6 +643,7 @@ Public Class frmSurface
                             Else
 
                                 Me.m_qt = obj.TabelaRapida
+                                Me.m_qt.AdditionalInfo = Me.FlowsheetDesignSurface.Zoom
 
                                 If Not Me.m_qt Is Nothing Then
                                     If FlowsheetDesignSurface.AutoScrollPosition.X + px2.X * FlowsheetDesignSurface.Zoom + m_qt.Width * FlowsheetDesignSurface.Zoom > FlowsheetDesignSurface.ClientRectangle.Width Then
