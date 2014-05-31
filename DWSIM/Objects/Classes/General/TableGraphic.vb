@@ -1206,6 +1206,8 @@ Namespace DWSIM.GraphicObjects
 
                     Me.Opacity = 225
 
+                    'g.ScaleTransform(1 / Me.AdditionalInfo, 1 / Me.AdditionalInfo)
+
                     Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
                     Dim myMatrix As Drawing2D.Matrix
                     gContainer = g.BeginContainer()
@@ -1215,12 +1217,13 @@ Namespace DWSIM.GraphicObjects
                         g.Transform = myMatrix
                     End If
 
+                    
                     'If Not Me.TextRenderStyle = -1 Then g.TextRenderingHint = Me.TextRenderStyle
 
                     Dim maxL1, maxL2, maxL3, count As Integer
                     Dim maxH As Integer
 
-                    Me.HeaderFont = New Font("Arial", 11, FontStyle.Regular, GraphicsUnit.Pixel, 0, False)
+                    Me.HeaderFont = New Font("Arial", 11 / Me.AdditionalInfo, FontStyle.Regular, GraphicsUnit.Pixel, 0, False)
 
                     g.TextRenderingHint = Text.TextRenderingHint.SystemDefault
 
@@ -1247,7 +1250,7 @@ Namespace DWSIM.GraphicObjects
                     'size = g.MeasureString(Me.HeaderText, Me.HeaderFont, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     'If size.Width > maxL1 Then maxL1 = size.Width
                     'If size.Height > maxH Then maxH = size.Height
-                    Me.Padding = 3
+                    Me.Padding = 3 / Me.AdditionalInfo
 
                     If maxH = 0 Then maxH = 20
 
@@ -1324,6 +1327,7 @@ Namespace DWSIM.GraphicObjects
                         n += 1
                     Next
 
+                    Me.m_BorderPen.Width /= Me.AdditionalInfo
 
                     'g.DrawRectangle(Me.m_BorderPen, New Rectangle(Me.X, Me.Y, Me.Width, Me.Height))
                     DrawRoundRect(g, Me.m_BorderPen, Me.X, Me.Y, Me.Width, Me.Height, 3, Brushes.Transparent)
