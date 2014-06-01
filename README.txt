@@ -1,6 +1,6 @@
 ==================================================
 DWSIM - Open Source Process Simulator
-Version 3.0, Build 5162 - February 2014
+Version 3.1, Build 5265 - June 2014
 Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo León
 ==================================================
 
@@ -100,6 +100,43 @@ VERSION HISTORY / CHANGELOG
 ==================================================
 
 The full changelog, including code changes and their authors can be viewed at https://github.com/DanWBR/dwsim3/commits/master
+
+Version 3.1 Build 5265
+
+- [FIX] Mono Runtime compatibility fixes
+- [FIX] Fixed Spreadsheet bugs
+- [FIX] Fixed bugs in the Adjust and Set logical operations
+- [FIX] Fixed PV/TV Flash temperature search limits
+- [FIX] Fix for sensitivity analysis window resizing
+- [CHG] Updated quickview table
+- [CHG] Fixed zoom level of the quickview table at 100%
+
+Version 3.1 Beta Build 5259
+
+- [NEW] Rewritten flowsheet solver for faster calculation times and recycle optimization
+- [NEW] CoolProp Property Package (www.coolprop.org)
+- [NEW] Simulation Configuration Wizard
+- [CHG] Redesigned Online Help file
+- [CHG] Activity Coefficient-based Property Packages now default to Ideal Vapor Phase modeling
+- [CHG] Properties like Viscosity, Thermal Conductivity and Surface Tension are now calculated using experimental data whenever available
+- [CHG] Enhanced Pure Compound Property Viewer to show all T-dependent properties
+- [FIX] Restored compatibility with pre-3.0 binary format simulation files (*.dwsim)
+- [FIX] Small interface updates and general bug fixes
+
+Version 3.0 Build 5212
+
+- [FIX] Fixed Material Stream molar/volumetric flow input through the Property Grid.
+
+Version 3.0 Build 5209
+
+- [FIX] Fixed ratios not being set in the Splitter Op.
+- [FIX] Fixed a small bug in Gibbs PH flash calculation.
+
+Version 3.0 Build 5206
+
+- [NEW] New Nested-Loops Three-Phase algorithm
+- [FIX] Various fixes and stability/reliability enhancements for the flash algorithms
+- [FIX] Minor bug fixes.
 
 Version 3.0 Build 5162
 
