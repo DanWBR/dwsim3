@@ -1,5 +1,5 @@
-﻿'    Boston-Britt Inside-Out Flash Algorithms
-'    Copyright 2010 Daniel Wagner O. de Medeiros
+'    Boston-Britt Inside-Out Flash Algorithms
+'    Copyright 2010-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -330,7 +330,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 CheckCalculatorStatus()
 
-            Loop Until AbsSum(fx) < etol Or Abs(R - Rant) < 0.0000000001
+            Loop Until AbsSum(fx) < etol
 
             d2 = Date.Now
 
