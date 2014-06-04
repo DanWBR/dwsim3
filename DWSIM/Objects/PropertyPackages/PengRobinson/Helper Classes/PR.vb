@@ -20,6 +20,7 @@ Imports DWSIM.DWSIM.MathEx
 Imports Cudafy
 Imports Cudafy.Translator
 Imports Cudafy.Host
+Imports System.Numerics
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
@@ -162,7 +163,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim n, R, coeff(3) As Double
             Dim Vant(0, 4) As Double
-            Dim beta As Double
             Dim criterioOK As Boolean = False
             Dim AG, BG, aml, bml As Double
             Dim t1, t2, t3, t4, t5 As Double
@@ -172,7 +172,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Dim ai(n), bi(n), tmp(n + 1), a(n, n), b(n, n)
             Dim aml2(n), amv2(n), LN_CF(n), PHI(n) As Double
             Dim Tc(n), Pc(n), W(n), alpha(n), m(n), Tr(n)
-            Dim rho, rho0, rho_mc, Tmc, dPdrho, dPdrho_ As Double
 
             R = 8.314
 
@@ -237,50 +236,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             _zarray = CalcZ(T, P, Vx, VKij, VTc, VPc, Vw)
             If forcephase <> "" Then
                 If forcephase = "L" Then
-                    If _zarray.Count > 0 Then
-                        Z = Common.Min(_zarray.ToArray())
-                    Else
-                        Dim P_lim, rho_lim, Pcalc, rho_calc As Double
-                        Dim C0, C1 As Double
-                        rho_lim = New Auxiliary.PengRobinson().ESTIMAR_RhoLim(aml, bml, T, P)
-                        P_lim = R * T * rho_lim / (1 - rho_lim * bml) - aml * rho_lim ^ 2 / (1 + 2 * bml * rho_lim - (rho_lim * bml) ^ 2)
-                        C1 = (rho - 0.7 * rho_mc) * dPdrho
-                        C0 = P_lim - C1 * Math.Log(rho_lim - 0.7 * rho_mc)
-                        rho_calc = Math.Exp((P - C0) / C1) + 0.7 * rho_mc
-                        Pcalc = R * T * rho_calc / (1 - rho_calc * bml) - aml * rho_calc ^ 2 / (1 + 2 * bml * rho_calc - (rho_calc * bml) ^ 2)
-                        Z = P / (rho_calc * R * T)
-                    End If
+                    Z = Common.Min(_zarray.ToArray())
                 ElseIf forcephase = "V" Then
-                    If _zarray.Count > 0 Then
-                        Z = Common.Max(_zarray.ToArray())
-                    Else
-                        Dim aa, bb As Double
-                        Dim P_lim, rho_lim, Pcalc, rho_calc, rho_x As Double
-                        rho_lim = New Auxiliary.PengRobinson().ESTIMAR_RhoLim(aml, bml, T, P)
-                        P_lim = R * T * rho_lim / (1 - rho_lim * bml) - aml * rho_lim ^ 2 / (1 + 2 * bml * rho_lim - (rho_lim * bml) ^ 2)
-                        rho_x = (rho_lim + rho_mc) / 2
-                        bb = 1 / P_lim * (1 / (rho_lim * (1 - rho_lim / rho_x)))
-                        aa = -bb / rho_x
-                        rho_calc = (1 / P + bb) / aa
-                        Pcalc = R * T * rho_calc / (1 - rho_calc * bml) - aml * rho_calc ^ 2 / (1 + 2 * bml * rho_calc - (rho_calc * bml) ^ 2)
-                        Z = P / (rho_calc * R * T)
-                    End If
+                    Z = Common.Max(_zarray.ToArray())
                 End If
             Else
                 _mingz = ZtoMinG(_zarray.ToArray, T, P, Vx, VKij, VTc, VPc, Vw)
                 Z = _zarray(_mingz(0))
             End If
 
-            beta = 1 / P * (1 - (BG * Z ^ 2 + AG * Z - 6 * BG ^ 2 * Z - 2 * BG * Z - 2 * AG * BG + 2 * BG ^ 2 + 2 * BG) / (Z * (3 * Z ^ 2 - 2 * Z + 2 * BG * Z + AG - 3 * BG ^ 2 - 2 * BG)))
-
-            rho0 = 1 / bml
-            rho_mc = 0.2599 / bml
-            Tmc = 0.20268 * aml / (R * bml)
-            rho = P / (Z * R * T)
-            dPdrho_ = 0.1 * R * T
-            dPdrho = bml * rho * R * T * (1 - bml * rho) ^ -2 + R * T * (1 - bml * rho) ^ -1 + _
-                    aml * rho ^ 2 * (1 + 2 * bml * rho - (bml * rho) ^ 2) ^ -2 * (2 * bml - 2 * bml ^ 2 * rho) + _
-                    2 * aml * rho * (1 + 2 * bml * rho - (bml * rho) ^ 2) ^ -1
+            Dim Pcorr As Double = P
+            Dim ZP As Double() = CheckRoot(Z, aml, bml, P, T, forcephase)
+            Z = ZP(0)
+            Pcorr = ZP(1)
 
             i = 0
             Do
@@ -290,7 +258,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 t4 = Math.Log((Z + (1 + 2 ^ 0.5) * BG) / (Z + (1 - 2 ^ 0.5) * BG))
                 t5 = 2 * 2 ^ 0.5 * BG
                 LN_CF(i) = t1 + t2 - (t3 * t4 / t5)
-                LN_CF(i) = LN_CF(i)
+                LN_CF(i) = LN_CF(i) + Math.Log(Pcorr / P)
                 i = i + 1
             Loop Until i = n + 1
 
@@ -1590,6 +1558,83 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Return LN_CF
 
+
+        End Function
+
+        Public Shared Function CheckRoot(Z As Double, a As Double, b As Double, P As Double, T As Double, phaselabel As String) As Double()
+
+            Dim rho, rhoold, dPdrho, d2Pdrho2, d3Pdrho3, R, Pnew, Pold, drho, drho1, P0, rho0, Zcorr As Double
+            Dim im As Complex, i As Integer
+
+            R = 8.314
+
+            rho = P / (Z * R * T)
+
+            If phaselabel = "L" Then
+                rho0 = P / (0.05 * R * T)
+            Else
+                rho0 = P / (0.99 * R * T)
+            End If
+
+            P0 = (rho0 * R * T - rho0 ^ 2 * (a - 2 * b * R * T) + rho0 ^ 3 * (a * b - b ^ 2 * R * T)) / (1 + rho0 * b - 3 * rho0 ^ 2 * b ^ 2 + rho0 ^ 3 * b ^ 3)
+
+            i = 0
+            rho = rho0
+
+            Do
+
+                dPdrho = (R * T * (-b ^ 2 * rho ^ 2 + 2 * b * rho + 1) ^ 2 - 2 * a * rho * (b * rho - 1) ^ 2 * (b * rho + 1)) / (b ^ 3 * rho ^ 3 - 3 * b ^ 2 * rho ^ 2 + b * rho + 1) ^ 2
+                d2Pdrho2 = -(2 * (b * R * T * (b ^ 2 * rho ^ 2 - 2 * b * rho - 1) ^ 3 - a * (b * rho - 1) ^ 3 * (2 * b ^ 3 * rho ^ 3 + 3 * b ^ 2 * rho ^ 2 + 1))) / (b ^ 3 * rho ^ 3 - 3 * b ^ 2 * rho ^ 2 + b * rho + 1) ^ 3
+                drho1 = -dPdrho / d2Pdrho2
+
+                Pold = Pnew
+                Pnew = (rho * R * T - rho ^ 2 * (a - 2 * b * R * T) + rho ^ 3 * (a * b - b ^ 2 * R * T)) / (1 + rho * b - 3 * rho ^ 2 * b ^ 2 + rho ^ 3 * b ^ 3)
+
+                im = Complex.Sqrt((dPdrho ^ 2 - 2 * (Pnew - P) * d2Pdrho2)) / d2Pdrho2
+
+                If im.Imaginary <> 0.0# Then
+                    drho = drho1
+                Else
+                    drho = drho1 + im.Real
+                End If
+
+                rhoold = rho
+
+                rho = rhoold + drho
+
+                i += 1
+
+            Loop Until Math.Abs(rho - rhoold) < 0.0001 Or i = 100
+
+            If d2Pdrho2 > 0 And phaselabel = "L" Then
+                'liquid root
+                Zcorr = Pnew / (rho * R * T)
+                Return New Double() {Zcorr, Pnew}
+            ElseIf d2Pdrho2 < 0 And phaselabel = "V" Then
+                'vapor root
+                Zcorr = Pnew / (rho * R * T)
+                Return New Double() {Zcorr, Pnew}
+            Else
+                If phaselabel = "L" Then
+                    'liquid root, find rhoinf
+                    i = 0
+                    rho = rho0
+                    Do
+                        d2Pdrho2 = -(2 * (b * R * T * (b ^ 2 * rho ^ 2 - 2 * b * rho - 1) ^ 3 - a * (b * rho - 1) ^ 3 * (2 * b ^ 3 * rho ^ 3 + 3 * b ^ 2 * rho ^ 2 + 1))) / (b ^ 3 * rho ^ 3 - 3 * b ^ 2 * rho ^ 2 + b * rho + 1) ^ 3
+                        d3Pdrho3 = (6 * b * (b * R * T * (-b ^ 2 * rho ^ 2 + 2 * b * rho + 1) ^ 4 - 2 * a * (b * rho - 1) ^ 4 * (b ^ 4 * rho ^ 4 + 2 * b ^ 3 * rho ^ 3 + 2 * b * rho - 1))) / (b ^ 3 * rho ^ 3 - 3 * b ^ 2 * rho ^ 2 + b * rho + 1) ^ 4
+                        rhoold = rho
+                        rho = rho - d2Pdrho2 / d3Pdrho3
+                        i += 1
+                    Loop Until Math.Abs(d2Pdrho2) < 0.000001 Or i = 100
+                    Pnew = (rho * R * T - rho ^ 2 * (a - 2 * b * R * T) + rho ^ 3 * (a * b - b ^ 2 * R * T)) / (1 + rho * b - 3 * rho ^ 2 * b ^ 2 + rho ^ 3 * b ^ 3)
+                    Zcorr = Pnew / (rho * R * T)
+                    Return New Double() {Zcorr, Pnew}
+                Else
+                    'vapor root 
+                    Zcorr = Pnew / (rho * R * T)
+                    Return New Double() {Zcorr, Pnew}
+                End If
+            End If
 
         End Function
 

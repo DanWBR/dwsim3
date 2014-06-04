@@ -1193,7 +1193,6 @@ Final3:
 
             Dim n, R, coeff(3) As Double
             Dim Vant(0, 4) As Double
-            Dim beta As Double
             Dim criterioOK As Boolean = False
             Dim ZV As Double
             Dim AG, BG, aml, bml As Double
@@ -1204,8 +1203,7 @@ Final3:
             Dim ai(n), bi(n), ci(n), tmp(n + 1), a(n, n), b(n, n)
             Dim aml2(n), amv2(n), LN_CF(n), PHI(n)
             Dim Tc(n), Pc(n), W(n), alpha(n), m(n), Tr(n)
-            Dim rho, rho0, rho_mc, Tmc, dPdrho, dPdrho_, Zcalc As Double
-            'Dim P_lim, rho_lim, Pcalc, rho_calc, rho_x As Double
+            Dim Zcalc As Double
 
             R = 8.314
 
@@ -1351,26 +1349,12 @@ Final3:
 
             End If
 
-            beta = 1 / P * (1 - (BG * ZV ^ 2 + AG * ZV - 6 * BG ^ 2 * ZV - 2 * BG * ZV - 2 * AG * BG + 2 * BG ^ 2 + 2 * BG) / (ZV * (3 * ZV ^ 2 - 2 * ZV + 2 * BG * ZV + AG - 3 * BG ^ 2 - 2 * BG)))
-
-            rho0 = 1 / bml
-            rho_mc = 0.2599 / bml
-            Tmc = 0.20268 * aml / (R * bml)
-            rho = P / (ZV * R * T)
-            dPdrho_ = 0.1 * R * T
-            dPdrho = bml * rho * R * T * (1 - bml * rho) ^ -2 + R * T * (1 - bml * rho) ^ -1 + _
-                    aml * rho ^ 2 * (1 + 2 * bml * rho - (bml * rho) ^ 2) ^ -2 * (2 * bml - 2 * bml ^ 2 * rho) + _
-                    2 * aml * rho * (1 + 2 * bml * rho - (bml * rho) ^ 2) ^ -1
+            Dim Pcorr As Double = P
+            Dim ZP As Double() = ThermoPlugs.PR.CheckRoot(ZV, aml, bml, P, T, TIPO)
+            ZV = ZP(0)
+            Pcorr = ZP(1)
 
             If TIPO = "L" Then
-                'Dim C0, C1 As Double
-                'rho_lim = Me.ESTIMAR_RhoLim(aml, bml, T, P)
-                'P_lim = R * T * rho_lim / (1 - rho_lim * bml) - aml * rho_lim ^ 2 / (1 + 2 * bml * rho_lim - (rho_lim * bml) ^ 2)
-                'C1 = (rho - 0.7 * rho_mc) * dPdrho
-                'C0 = P_lim - C1 * Math.Log(rho_lim - 0.7 * rho_mc)
-                'rho_calc = Math.Exp((P - C0) / C1) + 0.7 * rho_mc
-                'Pcalc = R * T * rho_calc / (1 - rho_calc * bml) - aml * rho_calc ^ 2 / (1 + 2 * bml * rho_calc - (rho_calc * bml) ^ 2)
-                'Zcalc = P / (rho_calc * R * T)
                 Zcalc = ZV
                 ' CALCULO DO COEFICIENTE DE FUGACIDADE DA FASE LIQUIDA
                 i = 0
@@ -1381,20 +1365,11 @@ Final3:
                     t4 = Math.Log((Zcalc + (1 + 2 ^ 0.5) * BG) / (Zcalc + (1 - 2 ^ 0.5) * BG))
                     t5 = 2 * 2 ^ 0.5 * BG
                     LN_CF(i) = t1 + t2 - (t3 * t4 / t5)
-                    LN_CF(i) = LN_CF(i) '* Pcalc / P
+                    LN_CF(i) = LN_CF(i) + Math.Log(Pcorr / P)
                     i = i + 1
                 Loop Until i = n + 1
                 Return LN_CF
             Else
-                'Dim aa, bb As Double
-                'rho_lim = Me.ESTIMAR_RhoLim(aml, bml, T, P)
-                'P_lim = R * T * rho_lim / (1 - rho_lim * bml) - aml * rho_lim ^ 2 / (1 + 2 * bml * rho_lim - (rho_lim * bml) ^ 2)
-                'rho_x = (rho_lim + rho_mc) / 2
-                'bb = 1 / P_lim * (1 / (rho_lim * (1 - rho_lim / rho_x)))
-                'aa = -bb / rho_x
-                'rho_calc = (1 / P + bb) / aa
-                'Pcalc = R * T * rho_calc / (1 - rho_calc * bml) - aml * rho_calc ^ 2 / (1 + 2 * bml * rho_calc - (rho_calc * bml) ^ 2)
-                'Zcalc = P / (rho_calc * R * T)
                 Zcalc = ZV
                 ' CALCULO DO COEFICIENTE DE FUGACIDADE DA FASE VAPOR
                 i = 0
@@ -1405,7 +1380,7 @@ Final3:
                     t4 = Math.Log((Zcalc + (1 + 2 ^ 0.5) * BG) / (Zcalc + (1 - 2 ^ 0.5) * BG))
                     t5 = 2 * 2 ^ 0.5 * BG
                     LN_CF(i) = t1 + t2 - (t3 * t4 / t5)
-                    LN_CF(i) = LN_CF(i)
+                    LN_CF(i) = LN_CF(i) + Math.Log(Pcorr / P)
                     i = i + 1
                 Loop Until i = n + 1
                 Return LN_CF
