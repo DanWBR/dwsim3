@@ -1563,15 +1563,39 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         Public Shared Function CheckRoot(Z As Double, a As Double, b As Double, P As Double, T As Double, phaselabel As String) As Double()
 
-            Dim rho, rhoold, dPdrho, d2Pdrho2, d3Pdrho3, R, Pnew, Pold, drho, drho1, P0, rho0, Zcorr As Double
+            Return New Double() {Z, P}
+
+            Dim rho, rhoold, dPdrho, d2Pdrho2, d3Pdrho3, R, Pnew, Pold, drho, drho1, P0, rho0, Zcorr, rhomax, rhomin As Double
             Dim im As Complex, i As Integer
 
             R = 8.314
 
             rho = P / (Z * R * T)
 
+            'find rhomax
+            Dim fx, dfdx As Double
+            rhomax = rho
+            i = 0
+            Do
+                fx = (1 + rhomax * b - 3 * rhomax ^ 2 * b ^ 2 + rhomax ^ 3 * b ^ 3) / (rhomax * R * T - rhomax ^ 2 * (a - 2 * b * R * T) + rhomax ^ 3 * (a * b - b ^ 2 * R * T))
+                dfdx = (2 * a * rhomax * (b * rhomax - 1) ^ 2 * (b * rhomax + 1) - R * T * (-b ^ 2 * rhomax ^ 2 + 2 * b * rhomax + 1) ^ 2) / (rhomax ^ 2 * (a * rhomax * (1 - b * rhomax) + R * T * (b ^ 2 * rhomax ^ 2 - 2 * b * rhomax - 1)) ^ 2)
+                rhomax = rhomax - fx / dfdx
+                If rhomax < 0 Then rhomax = -rhomax
+                i += 1
+            Loop Until Math.Abs(fx) < 1.0E-20 Or i = 100
+            'find rhomin
+            rhomin = rho
+            i = 0
+            Do
+                fx = (rhomin * R * T - rhomin ^ 2 * (a - 2 * b * R * T) + rhomin ^ 3 * (a * b - b ^ 2 * R * T)) / (1 + rhomin * b - 3 * rhomin ^ 2 * b ^ 2 + rhomin ^ 3 * b ^ 3)
+                dfdx = (R * T * (-b ^ 2 * rhomin ^ 2 + 2 * b * rhomin + 1) ^ 2 - 2 * a * rhomin * (b * rhomin - 1) ^ 2 * (b * rhomin + 1)) / (b ^ 3 * rhomin ^ 3 - 3 * b ^ 2 * rhomin ^ 2 + b * rhomin + 1) ^ 2
+                rhomin = rhomin - fx / dfdx
+                If rhomin < 0 Then rhomin = -rhomin
+                i += 1
+            Loop Until Math.Abs(fx) < 0.000001 Or i = 100
+
             If phaselabel = "L" Then
-                rho0 = P / (0.05 * R * T)
+                rho0 = (rhomax - rhomin) / 2
             Else
                 rho0 = P / (0.99 * R * T)
             End If
@@ -1602,6 +1626,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
                 rho = rhoold + drho
 
+                If rho > rhomax Then rho = rhomax * 0.99
+
                 i += 1
 
             Loop Until Math.Abs(rho - rhoold) < 0.0001 Or i = 100
@@ -1612,13 +1638,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 Return New Double() {Zcorr, Pnew}
             ElseIf d2Pdrho2 < 0 And phaselabel = "V" Then
                 'vapor root
-                Zcorr = Pnew / (rho * R * T)
-                Return New Double() {Zcorr, Pnew}
+                If a * b = 0.0# Then
+                    Return New Double() {Z, P}
+                Else
+                    Zcorr = Pnew / (rho * R * T)
+                    Return New Double() {Zcorr, Pnew}
+                End If
             Else
                 If phaselabel = "L" Then
                     'liquid root, find rhoinf
                     i = 0
-                    rho = rho0
+                    rho = (rhomax - rhomin) / 2
                     Do
                         d2Pdrho2 = -(2 * (b * R * T * (b ^ 2 * rho ^ 2 - 2 * b * rho - 1) ^ 3 - a * (b * rho - 1) ^ 3 * (2 * b ^ 3 * rho ^ 3 + 3 * b ^ 2 * rho ^ 2 + 1))) / (b ^ 3 * rho ^ 3 - 3 * b ^ 2 * rho ^ 2 + b * rho + 1) ^ 3
                         d3Pdrho3 = (6 * b * (b * R * T * (-b ^ 2 * rho ^ 2 + 2 * b * rho + 1) ^ 4 - 2 * a * (b * rho - 1) ^ 4 * (b ^ 4 * rho ^ 4 + 2 * b ^ 3 * rho ^ 3 + 2 * b * rho - 1))) / (b ^ 3 * rho ^ 3 - 3 * b ^ 2 * rho ^ 2 + b * rho + 1) ^ 4
@@ -1628,11 +1658,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                     Loop Until Math.Abs(d2Pdrho2) < 0.000001 Or i = 100
                     Pnew = (rho * R * T - rho ^ 2 * (a - 2 * b * R * T) + rho ^ 3 * (a * b - b ^ 2 * R * T)) / (1 + rho * b - 3 * rho ^ 2 * b ^ 2 + rho ^ 3 * b ^ 3)
                     Zcorr = Pnew / (rho * R * T)
-                    Return New Double() {Zcorr, Pnew}
+                    Return New Double() {Zcorr, P}
                 Else
                     'vapor root 
                     Zcorr = Pnew / (rho * R * T)
-                    Return New Double() {Zcorr, Pnew}
+                    If a * b <> 0.0# Then
+                        Return New Double() {Z, P}
+                    Else
+                        Return New Double() {Zcorr, Pnew}
+                    End If
                 End If
             End If
 
