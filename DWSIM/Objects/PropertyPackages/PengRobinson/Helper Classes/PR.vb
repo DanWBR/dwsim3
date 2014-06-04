@@ -1561,12 +1561,30 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         End Function
 
+        ''' <summary>
+        ''' This procedure checks if the compressibility factor is within the allowable region for the specified phase. 
+        ''' If not, it generates a pseudo-root cabable of generate properties for the specified phase in order to keep 
+        ''' the flash convergence process going forward.
+        ''' </summary>
+        ''' <param name="Z">The calculated compressibility factor, coming from the EOS</param>
+        ''' <param name="a">EOS 'a' mixture parameter</param>
+        ''' <param name="b">EOS 'b' mixture parameter</param>
+        ''' <param name="P">Pressure in Pa</param>
+        ''' <param name="T">Temperature in K</param>
+        ''' <param name="phaselabel">'L' for Liquid, 'V' for Vapor.</param>
+        ''' <returns>A vector containing the calculated compressibility factor and pressure, if required. 
+        ''' If the given compressibility factor is within the allowable range, it is returned together with 
+        ''' the specified pressure (no pseudoroot calculation is required).</returns>
+        ''' <remarks>This procedure is based on the paper: 
+        ''' Mathias, P. M., Boston, J. F. and Watanasiri, S. (1984), 
+        ''' Effective utilization of equations of state for thermodynamic properties in process simulation. 
+        ''' AIChE J., 30: 182–186. doi: 10.1002/aic.690300203</remarks>
         Public Shared Function CheckRoot(Z As Double, a As Double, b As Double, P As Double, T As Double, phaselabel As String) As Double()
 
             If a * b = 0.0# Then Return New Double() {Z, P}
 
             Dim rho, dPdrho, d2Pdrho2, d3Pdrho3, R, Pnew, P_, rho_, Tmc,
-                Zcorr, rhomax, rhomin, rhomc, dPdrholim, C0, C1 As Double
+                Zcorr, rhomax, rhomin, rhomc, dPdrholim, C0, C1, rho2 As Double
             Dim i As Integer
 
             R = 8.314
@@ -1663,11 +1681,47 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 End If
 
             Else
-                
-                Return New Double() {Z, P}
+
+                'find rho*, P*
+
+                i = 0
+                rho_ = rhomc * 0.9
+                Do
+                    fx = -0.1 * R * T + (R * T * (-b ^ 2 * rho_ ^ 2 + 2 * b * rho_ + 1) ^ 2 - 2 * a * rho_ * (b * rho_ - 1) ^ 2 * (b * rho_ + 1)) / (b ^ 3 * rho_ ^ 3 - 3 * b ^ 2 * rho_ ^ 2 + b * rho_ + 1) ^ 2
+                    dfdx = -(2 * (b * R * T * (b ^ 2 * rho_ ^ 2 - 2 * b * rho_ - 1) ^ 3 - a * (b * rho_ - 1) ^ 3 * (2 * b ^ 3 * rho_ ^ 3 + 3 * b ^ 2 * rho_ ^ 2 + 1))) / (b ^ 3 * rho_ ^ 3 - 3 * b ^ 2 * rho_ ^ 2 + b * rho_ + 1) ^ 3
+                    rho_ = rho_ - fx / dfdx
+                    If rho_ < rhomc Then rho_ = rhomc * 0.98
+                    i += 1
+                Loop Until Math.Abs(fx) < 0.000001 Or i = 100
+
+                P_ = (rho_ * R * T - rho_ ^ 2 * (a - 2 * b * R * T) + rho_ ^ 3 * (a * b - b ^ 2 * R * T)) / (1 + rho_ * b - 3 * rho_ ^ 2 * b ^ 2 + rho_ ^ 3 * b ^ 3)
+
+                rho2 = (rho_ + rhomc) / 2
+
+                C0 = -2 * rho_ * rho2 ^ 2 / (0.1 * R * T * (rho_ ^ 2 - rho2 ^ 2))
+
+                C1 = 2 * rho_ / (0.1 * R * T * (rho_ ^ 2 - rho2 ^ 2))
+
+                rho = (((1 / P) - C0) / C1) ^ 0.5
+
+                Pnew = (rho * R * T - rho ^ 2 * (a - 2 * b * R * T) + rho ^ 3 * (a * b - b ^ 2 * R * T)) / (1 + rho * b - 3 * rho ^ 2 * b ^ 2 + rho ^ 3 * b ^ 3)
+
+                Zcorr = Pnew / (rho * R * T)
+
+                If Double.IsNaN(Zcorr) Or Double.IsNaN(Pnew) Or Double.IsInfinity(Zcorr) Or Double.IsInfinity(Pnew) Then
+                    Return New Double() {Z, P}
+                Else
+                    If Zcorr < 0.0# Or Pnew < 0.0# Then
+                        Return New Double() {Z, P}
+                    Else
+                        Return New Double() {Zcorr, Pnew}
+                    End If
+                End If
 
             End If
 
+            'PR EOS P=f(rho) derivatives
+            'P = (rho * R * T - rho ^ 2 * (a - 2 * b * R * T) + rho ^ 3 * (a * b - b ^ 2 * R * T)) / (1 + rho * b - 3 * rho ^ 2 * b ^ 2 + rho ^ 3 * b ^ 3)
             'dPdrho = (R * T * (-b ^ 2 * rho ^ 2 + 2 * b * rho + 1) ^ 2 - 2 * a * rho * (b * rho - 1) ^ 2 * (b * rho + 1)) / (b ^ 3 * rho ^ 3 - 3 * b ^ 2 * rho ^ 2 + b * rho + 1) ^ 2
             'd2Pdrho2 = -(2 * (b * R * T * (b ^ 2 * rho ^ 2 - 2 * b * rho - 1) ^ 3 - a * (b * rho - 1) ^ 3 * (2 * b ^ 3 * rho ^ 3 + 3 * b ^ 2 * rho ^ 2 + 1))) / (b ^ 3 * rho ^ 3 - 3 * b ^ 2 * rho ^ 2 + b * rho + 1) ^ 3
             'd3Pdrho3 = (6 * b * (b * R * T * (-b ^ 2 * rho ^ 2 + 2 * b * rho + 1) ^ 4 - 2 * a * (b * rho - 1) ^ 4 * (b ^ 4 * rho ^ 4 + 2 * b ^ 3 * rho ^ 3 + 2 * b * rho - 1))) / (b ^ 3 * rho ^ 3 - 3 * b ^ 2 * rho ^ 2 + b * rho + 1) ^ 4
