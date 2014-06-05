@@ -858,6 +858,56 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Sub
 
+        Private Function CalcRho(ByVal T As Double, ByVal P As Double, ByVal compname As String, ByVal fluidstate As State) As Double
+
+            Dim f1, f2, x1, dfdx As Double, cnt As Integer
+            Dim satt, satp1, satp2, rhof, rhog As Double
+
+            If fluidstate = State.Liquid Then
+                x1 = CoolProp.Props("D", "T", T, "Q", 0, compname)
+            Else
+                x1 = CoolProp.Props("D", "T", T, "Q", 1, compname)
+            End If
+
+            cnt = 0
+
+            f1 = 1000
+
+            While Abs(f1) >= 0.00001
+
+                satp1 = CoolProp.Props("P", "T", T, "D", x1, compname) * 1000
+                satp2 = CoolProp.Props("P", "T", T, "D", x1 * 0.98, compname) * 1000
+                f1 = P - satp1
+                f2 = P - satp2
+                dfdx = (f2 - f1) / (-0.02 * x1)
+
+                If Abs(dfdx) < 0.0000000001 Or Double.IsNaN(f1) Or Double.IsInfinity(f1) Then
+                    Console.WriteLine("CoolProp warning: compound: " & compname & ", state: " & fluidstate.ToString)
+                    Console.WriteLine("CoolProp warning: unable to calculate density at P = " & P & " Pa and T = " & T & " K")
+                    If fluidstate = State.Liquid Then
+                        satt = CoolProp.Props("T", "P", P / 1000, "Q", 0, compname)
+                        rhof = CoolProp.Props("D", "P", P / 1000, "Q", 0, compname)
+                        Console.WriteLine("CoolProp warning: returning calculated density @ saturation temperature (" & satt & " K => " & rhof & " kg/m3")
+                        Return rhof
+                    Else
+                        satt = CoolProp.Props("T", "P", P / 1000, "Q", 1, compname)
+                        rhog = CoolProp.Props("D", "P", P / 1000, "Q", 1, compname)
+                        Console.WriteLine("CoolProp warning: returning calculated density @ saturation temperature (" & satt & " K => " & rhog & " kg/m3")
+                        Return rhog
+                    End If
+                End If
+
+                x1 = x1 - f1 / dfdx
+                cnt += 1
+
+                If cnt > 500 Then Exit While
+
+            End While
+
+            Return x1
+
+        End Function
+
 #End Region
 
     End Class
