@@ -1310,6 +1310,28 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Dim Vx2 = result(6)
                             Dim Vs = result(8)
 
+                            If Not Me.AUX_IS_SINGLECOMP(Fase.Mixture) Then
+                                If xv = 1.0# Or xl = 1.0# Then
+                                    Dim newphase, eos As String
+                                    If Me.ComponentName.Contains("SRK") Then eos = "SRK" Else eos = "PR"
+                                    If xv = 1.0# Then
+                                        newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vy, P, T, Me, eos)
+                                        If newphase = "L" Then
+                                            xv = 0.0#
+                                            xl = 1.0#
+                                            Vx = Vy
+                                        End If
+                                    Else
+                                        newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx, P, T, Me, eos)
+                                        If newphase = "V" Then
+                                            xv = 1.0#
+                                            xl = 0.0#
+                                            Vy = Vx
+                                        End If
+                                    End If
+                                End If
+                            End If
+
                             If Not My.Application.CAPEOPENMode Then
                                 If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
                                 And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
@@ -1471,7 +1493,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
 
                                 Psat = Me.AUX_PVAPM(T)
-                                
+
                                 HL = Me.DW_CalcEnthalpy(vz, T, Psat, State.Liquid)
                                 HV = Me.DW_CalcEnthalpy(vz, T, Psat, State.Vapor)
                                 SL = Me.DW_CalcEntropy(vz, T, Psat, State.Liquid)
@@ -1483,8 +1505,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 xl2 = 0.0#
 
                                 Vx = vz
-                                vy = vz
-                                vx2 = vz
+                                Vy = vz
+                                Vx2 = vz
 
                             Else
 
@@ -1558,7 +1580,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             H = HM
 
-                            
+
                             If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
                             If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid)
                             If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)

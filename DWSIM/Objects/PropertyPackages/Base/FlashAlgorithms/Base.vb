@@ -18,6 +18,7 @@
 
 Imports System.Math
 Imports System.Threading.Tasks
+Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -554,6 +555,115 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 isStable = True
                 Return New Object() {isStable, Nothing}
             End If
+
+        End Function
+
+        ''' <summary>
+        ''' This algorithm returns the state of a fluid given its composition and system conditions.
+        ''' </summary>
+        ''' <param name="Vx">Vector of mole fractions</param>
+        ''' <param name="P">Pressure in Pa</param>
+        ''' <param name="T">Temperature in K</param>
+        ''' <param name="pp">Property Package instance</param>
+        ''' <param name="eos">Equation of State: 'PR' or 'SRK'.</param>
+        ''' <returns>A string indicating the phase: 'V' or 'L'.</returns>
+        ''' <remarks>This algorithm is based on the method present in the following paper:
+        ''' G. Venkatarathnam, L.R. Oellrich, Identification of the phase of a fluid using partial derivatives of pressure, volume, and temperature
+        ''' without reference to saturation properties: Applications in phase equilibria calculations, Fluid Phase Equilibria, Volume 301, Issue 2, 
+        ''' 25 February 2011, Pages 225-233, ISSN 0378-3812, http://dx.doi.org/10.1016/j.fluid.2010.12.001.
+        ''' (http://www.sciencedirect.com/science/article/pii/S0378381210005935)
+        ''' Keywords: Phase identification; Multiphase equilibria; Process simulators</remarks>
+        Public Shared Function IdentifyPhase(Vx As Double(), P As Double, T As Double, pp As PropertyPackage, ByVal eos As String) As String
+
+            Dim TAU, Tinv As Double, newphase As String, tmp As Double()
+
+            tmp = CalcTAU(Vx, P, T, pp, eos)
+
+            TAU = tmp(0)
+            Tinv = tmp(1)
+
+            If Tinv < 2000 Then
+                Dim fx, dfdx As Double
+                Dim i As Integer = 0
+                Do
+                    fx = 1 - CalcTAU(Vx, P, Tinv, pp, eos)(0)
+                    dfdx = (fx - (1 - CalcTAU(Vx, P, Tinv - 1, pp, eos)(0)))
+                    Tinv = Tinv - fx / dfdx
+                    i += 1
+                Loop Until Math.Abs(fx) < 0.000001 Or i = 100
+            End If
+
+            If Double.IsNaN(Tinv) Or Double.IsInfinity(Tinv) Then Tinv = 2000
+
+            If T > Tinv Then
+                If TAU > 1 Then newphase = "V" Else newphase = "L"
+            Else
+                If TAU > 1 Then newphase = "L" Else newphase = "V"
+            End If
+
+            Return newphase
+
+        End Function
+
+        ''' <summary>
+        ''' This algorithm returns the TAU parameter for a fluid given its composition and system conditions.
+        ''' </summary>
+        ''' <param name="Vx">Vector of mole fractions</param>
+        ''' <param name="P">Pressure in Pa</param>
+        ''' <param name="T">Temperature in K</param>
+        ''' <param name="pp">Property Package instance</param>
+        ''' <param name="eos">Equation of State: 'PR' or 'SRK'.</param>
+        ''' <returns>A string indicating the phase: 'V' or 'L'.</returns>
+        ''' <remarks>This algorithm is based on the method present in the following paper:
+        ''' G. Venkatarathnam, L.R. Oellrich, Identification of the phase of a fluid using partial derivatives of pressure, volume, and temperature
+        ''' without reference to saturation properties: Applications in phase equilibria calculations, Fluid Phase Equilibria, Volume 301, Issue 2, 
+        ''' 25 February 2011, Pages 225-233, ISSN 0378-3812, http://dx.doi.org/10.1016/j.fluid.2010.12.001.
+        ''' (http://www.sciencedirect.com/science/article/pii/S0378381210005935)
+        ''' Keywords: Phase identification; Multiphase equilibria; Process simulators</remarks>
+        Private Shared Function CalcTAU(Vx As Double(), P As Double, T As Double, pp As PropertyPackage, ByVal eos As String) As Double()
+
+            Dim g1, g2, g3, g4, g5, g6, t1, t2, v, a, b, dadT, R As Double, tmp As Double()
+
+            If eos = "SRK" Then
+                t1 = 1
+                t2 = 0
+                tmp = ThermoPlugs.SRK.ReturnParameters(T, P, Vx, pp.RET_VKij, pp.RET_VTC, pp.RET_VPC, pp.RET_VW)
+            Else
+                t1 = 1 + 2 ^ 0.5
+                t2 = 1 - 2 ^ 0.5
+                tmp = ThermoPlugs.PR.ReturnParameters(T, P, Vx, pp.RET_VKij, pp.RET_VTC, pp.RET_VPC, pp.RET_VW)
+            End If
+
+            a = tmp(0)
+            b = tmp(1)
+            v = tmp(2)
+            dadT = tmp(3)
+
+            g1 = 1 / (v - b)
+            g2 = 1 / (v + t1 * b)
+            g3 = 1 / (v + t2 * b)
+            g4 = g2 + g3
+            g5 = dadT
+            g6 = g2 * g3
+
+            R = 8.314
+
+            Dim d2PdvdT, dPdT, d2Pdv2, dPdv As Double
+
+            d2PdvdT = -R * g1 ^ 2 + g4 * g5 * g6
+            dPdT = R * g1 - g5 * g6
+            d2Pdv2 = 2 * R * T * g1 ^ 3 - 2 * a * g6 * (g2 ^ 2 + g6 + g3 ^ 2)
+            dPdv = -R * T * g1 ^ 2 + a * g4 * g6
+
+            Dim TAU As Double
+
+            TAU = v * (d2PdvdT / dPdT - d2Pdv2 / dPdv)
+
+            Dim Tinv As Double
+
+            Tinv = 2 * a * (v - b) ^ 2 / (R * b * v ^ 2)
+
+            Return New Double() {TAU, Tinv}
 
         End Function
 

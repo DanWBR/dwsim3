@@ -24,7 +24,102 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         Inherits DWSIM.SimulationObjects.PropertyPackages.ThermoPlug
 
-        Function ZtoMinG(ByVal Z_ As Array, ByVal T As Double, ByVal P As Double, ByVal Vz As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array) As Object
+        Shared Function ReturnParameters(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array)
+
+            Dim n, R, coeff(3) As Double
+            Dim Vant(0, 4) As Double
+            Dim criterioOK As Boolean = False
+            Dim AG, BG, aml, bml As Double
+
+            n = UBound(Vx)
+
+            Dim ai(n), bi(n), ci(n), tmp(n + 1), a(n, n), b(n, n)
+            Dim aml2(n), amv2(n), LN_CF(n), PHI(n) As Double
+            Dim Tc(n), Pc(n), W(n), alpha(n), m(n), Tr(n)
+
+            R = 8.314
+
+            Dim i, j As Integer
+            i = 0
+            Do
+                Tc(i) = VTc(i)
+                Tr(i) = T / Tc(i)
+                Pc(i) = VPc(i)
+                W(i) = Vw(i)
+                i = i + 1
+            Loop Until i = n + 1
+
+            i = 0
+            Do
+                alpha(i) = (1 + (0.48 + 1.574 * W(i) - 0.176 * W(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
+                ai(i) = 0.42748 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
+                bi(i) = 0.08664 * R * Tc(i) / Pc(i)
+                ci(i) = 0.48 + 1.574 * W(i) - 0.176 * W(i) ^ 2
+                i = i + 1
+            Loop Until i = n + 1
+
+            i = 0
+            Do
+                j = 0
+                Do
+                    a(i, j) = (ai(i) * ai(j)) ^ 0.5 * (1 - VKij(i, j))
+                    j = j + 1
+                Loop Until j = n + 1
+                i = i + 1
+            Loop Until i = n + 1
+
+            i = 0
+            Do
+                aml2(i) = 0
+                i = i + 1
+            Loop Until i = n + 1
+
+            i = 0
+            aml = 0
+            Do
+                j = 0
+                Do
+                    aml = aml + Vx(i) * Vx(j) * a(i, j)
+                    aml2(i) = aml2(i) + Vx(j) * a(j, i)
+                    j = j + 1
+                Loop Until j = n + 1
+                i = i + 1
+            Loop Until i = n + 1
+
+            i = 0
+            bml = 0
+            Do
+                bml = bml + Vx(i) * bi(i)
+                i = i + 1
+            Loop Until i = n + 1
+
+            AG = aml * P / (R * T) ^ 2
+            BG = bml * P / (R * T)
+
+            Dim _zarray As ArrayList, _mingz As Object, Z As Double
+            _zarray = CalcZ(T, P, Vx, VKij, VTc, VPc, Vw)
+            _mingz = ZtoMinG(_zarray.ToArray, T, P, Vx, VKij, VTc, VPc, Vw)
+            Z = _zarray(_mingz(0))
+
+            Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
+            i = 0
+            Dim aux2 = 0
+            Do
+                j = 0
+                Do
+                    aux2 += Vx(i) * Vx(j) * (1 - VKij(i, j)) * (ci(j) * (ai(i) * Tc(j) / Pc(j)) ^ 0.5 + ci(i) * (ai(j) * Tc(i) / Pc(i)) ^ 0.5)
+                    j = j + 1
+                Loop Until j = n + 1
+                i = i + 1
+            Loop Until i = n + 1
+
+            Dim dadT = aux1 * aux2
+
+            Return New Double() {aml, bml, Z * R * T / P, dadT}
+
+        End Function
+
+        Shared Function ZtoMinG(ByVal Z_ As Array, ByVal T As Double, ByVal P As Double, ByVal Vz As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array) As Object
 
             Dim S, H, Z As Double
 
@@ -56,6 +151,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 alpha(i) = (1 + (0.48 + 1.574 * w(i) - 0.176 * w(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
                 ai(i) = 0.42748 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
                 bi(i) = 0.08664 * R * Tc(i) / Pc(i)
+                ci(i) = 0.48 + 1.574 * w(i) - 0.176 * w(i) ^ 2
                 i = i + 1
             Loop Until i = n + 1
 
@@ -251,7 +347,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         End Function
 
-        Function CalcZ(ByVal T, ByVal P, ByVal Vx, ByVal VKij, ByVal VTc, ByVal VPc, ByVal Vw) As ArrayList
+        Shared Function CalcZ(ByVal T, ByVal P, ByVal Vx, ByVal VKij, ByVal VTc, ByVal VPc, ByVal Vw) As ArrayList
 
             Dim ai(), bi(), aml2(), amv2() As Double
             Dim n, R, coeff(3), tmp() As Double
@@ -332,7 +428,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim result As New ArrayList
 
-            Try
+            If Not IsNumeric(temp1) Then
 
                 If temp1(0, 0) > temp1(1, 0) Then
                     tv = temp1(1, 0)
@@ -367,7 +463,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                     End If
                 End If
 
-            Catch ex As Exception
+                If temp1(0, 1) = 0.0# And temp1(0, 0) > 0.0# Then result.Add(temp1(0, 0))
+                If temp1(1, 1) = 0.0# And temp1(1, 0) > 0.0# Then result.Add(temp1(1, 0))
+                If temp1(2, 1) = 0.0# And temp1(2, 0) > 0.0# Then result.Add(temp1(2, 0))
+
+            Else
 
                 Dim findZV
                 Dim lc As Integer = 0
@@ -383,11 +483,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
                 Return result
 
-            End Try
-
-            If temp1(0, 1) = 0 Then result.Add(temp1(0, 0))
-            If temp1(1, 1) = 0 Then result.Add(temp1(1, 0))
-            If temp1(2, 1) = 0 Then result.Add(temp1(2, 0))
+            End If
 
             Return result
 

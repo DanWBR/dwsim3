@@ -147,7 +147,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim htol As Double = Me.PropertyPackage.Parameters("PP_PHFELT")
             Dim herr As Double = Math.Abs((H2c - H2) / H2)
 
-            If herr > htol Then Throw New Exception("The enthalpy difference between outlet and inlet streams is above the tolerance defined through the Property Package. Result is invalid.")
+            If herr > 0.01 Then Throw New Exception("The enthalpy of inlet and outlet streams doesn't match. Result is invalid.")
 
             Me.DeltaT = T2 - Ti
             Me.DeltaQ = 0

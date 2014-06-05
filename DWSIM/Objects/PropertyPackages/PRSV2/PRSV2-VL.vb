@@ -1245,7 +1245,7 @@ Final3:
                     aml = aml + Vx(i) * Vx(j) * a(i, j)
                     j = j + 1
                 Loop Until j = n + 1
-                aml2(i) += sum1(i) + sum2(i) + sum3(i)
+                If Not Double.IsNaN(sum3(i)) Then aml2(i) += sum1(i) + sum2(i) + sum3(i) Else aml2(i) += sum1(i) + sum2(i)
                 i = i + 1
             Loop Until i = n + 1
 
