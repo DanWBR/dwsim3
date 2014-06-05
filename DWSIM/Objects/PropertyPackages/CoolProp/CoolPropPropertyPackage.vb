@@ -292,7 +292,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If xv = 0.0# Then
                             vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                         Else
-                            vk(i) = CoolProp.Props("C", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                            Dim Psat As Double = CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
+                            If P > Psat Then
+                                vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                            Else
+                                vk(i) = CoolProp.Props("C", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                            End If
                         End If
                         vk(i) = subst.FracaoMassica * vk(i)
                         i = i + 1
@@ -304,7 +309,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If xv = 1.0# Then
                             vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                         Else
-                            vk(i) = CoolProp.Props("C", "T", T, "Q", 1, subst.ConstantProperties.Name)
+                            Dim Psat As Double = CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
+                            If P < Psat Then
+                                vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                            Else
+                                vk(i) = CoolProp.Props("C", "T", T, "Q", 1, subst.ConstantProperties.Name)
+                            End If
                         End If
                         vk(i) = subst.FracaoMassica * vk(i)
                         i = i + 1
@@ -351,7 +361,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If xv = 0.0# Then
                             vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                         Else
-                            vk(i) = CoolProp.Props("O", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                            Dim Psat As Double = CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
+                            If P > Psat Then
+                                vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                            Else
+                                vk(i) = CoolProp.Props("O", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                            End If
                         End If
                         vk(i) = subst.FracaoMassica * vk(i)
                         i = i + 1
@@ -363,7 +378,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If xv = 1.0# Then
                             vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
                         Else
-                            vk(i) = CoolProp.Props("O", "T", T, "Q", 1, subst.ConstantProperties.Name)
+                            Dim Psat As Double = CoolProp.Props("P", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
+                            If P < Psat Then
+                                vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                            Else
+                                vk(i) = CoolProp.Props("O", "T", T, "Q", 1, subst.ConstantProperties.Name)
+                            End If
                         End If
                         vk(i) = subst.FracaoMassica * vk(i)
                         i = i + 1
