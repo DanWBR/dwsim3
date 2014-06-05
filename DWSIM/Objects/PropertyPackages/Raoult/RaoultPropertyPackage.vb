@@ -1,5 +1,5 @@
-﻿'    Raoult`s Law Property Package 
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Raoult`s Law Property Package 
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -143,11 +143,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     result = 0.0#
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
                 Case "heatcapacity", "heatcapacitycp"
-                    resultObj = m_id.CpCv(state, T, P, RET_VMOL(phase), RET_VKij(), RET_VMAS(phase), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
+                    If state = "L" Then
+                        result = Me.AUX_LIQCPm(T, phaseID)
+                    Else
+                        result = Me.AUX_CPm(phase, T)
+                    End If
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
                 Case "heatcapacitycv"
-                    resultObj = m_id.CpCv(state, T, P, RET_VMOL(phase), RET_VKij(), RET_VMAS(phase), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
+                    If state = "L" Then
+                        result = Me.AUX_LIQCPm(T, phaseID)
+                    Else
+                        result = Me.AUX_CPm(phase, T) - 8.314 / Me.AUX_MMM(phase)
+                    End If
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
                 Case "enthalpy", "enthalpynf"
                     result = m_id.H_RA_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, phase), Me.RET_VHVAP(T))
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
@@ -273,8 +281,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 result = 0
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
                 resultObj = Me.m_id.CpCv("L", T, P, RET_VMOL(dwpl), RET_VKij(), RET_VMAS(dwpl), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = Me.AUX_LIQCPm(T, phaseID)
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp.GetValueOrDefault
                 result = Me.AUX_MMM(fase)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = result
                 result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
@@ -298,9 +306,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 result = 1
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
                 result = Me.AUX_CPm(PropertyPackages.Fase.Vapor, T)
-                resultObj = Me.m_id.CpCv("V", T, P, RET_VMOL(PropertyPackages.Fase.Vapor), RET_VKij(), RET_VMAS(PropertyPackages.Fase.Vapor), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = Me.AUX_CPm(fase.Vapor, T)
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp.GetValueOrDefault - 8.314 / Me.AUX_MMM(fase.Vapor)
                 result = Me.AUX_MMM(fase)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = result
                 result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
