@@ -6564,15 +6564,15 @@ Final3:
 
         Public Function AUX_LIQCPm(ByVal T As Double, ByVal phaseid As Double) As Double
 
-            Dim val, result As Double
+            Dim val As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
 
             val = 0
             For Each subst In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
-                val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_LIQVISCi(subst.Nome, T)
+                val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_LIQ_Cpi(subst.ConstantProperties, T)
             Next
 
-            Return result
+            Return val
 
         End Function
 
