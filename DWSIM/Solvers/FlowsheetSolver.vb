@@ -56,6 +56,8 @@ Namespace DWSIM.Flowsheet
 
                 RaiseEvent UnitOpCalculationStarted(form, New System.EventArgs(), objArgs)
 
+                My.MyApplication.IsFlowsheetSolving = True
+
                 Select Case objArgs.Tipo
                     Case TipoObjeto.MaterialStream
                         Dim myObj As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(objArgs.Nome)
@@ -189,6 +191,8 @@ Namespace DWSIM.Flowsheet
 
                 RaiseEvent UnitOpCalculationFinished(form, New System.EventArgs(), objArgs)
 
+                My.MyApplication.IsFlowsheetSolving = False
+
             End If
 
             Application.DoEvents()
@@ -207,6 +211,8 @@ Namespace DWSIM.Flowsheet
         Public Shared Sub CalculateMaterialStream(ByVal form As FormFlowsheet, ByVal ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False, Optional ByVal OnlyMe As Boolean = False)
 
             RaiseEvent MaterialStreamCalculationStarted(form, New System.EventArgs(), ms)
+
+            My.MyApplication.IsFlowsheetSolving = True
 
             If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
@@ -877,6 +883,8 @@ Namespace DWSIM.Flowsheet
             End If
 
             RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), ms)
+
+            My.MyApplication.IsFlowsheetSolving = False
 
             If Not OnlyMe Then
                 Dim objargs As New DWSIM.Outros.StatusChangeEventArgs

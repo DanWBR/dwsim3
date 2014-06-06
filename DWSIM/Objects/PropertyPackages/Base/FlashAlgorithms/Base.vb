@@ -582,16 +582,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             TAU = tmp(0)
             Tinv = tmp(1)
 
-            If Tinv < 2000 Then
-                Dim fx, dfdx As Double
-                Dim i As Integer = 0
-                Do
-                    fx = 1 - CalcTAU(Vx, P, Tinv, pp, eos)(0)
-                    dfdx = (fx - (1 - CalcTAU(Vx, P, Tinv - 1, pp, eos)(0)))
-                    Tinv = Tinv - fx / dfdx
-                    i += 1
-                Loop Until Math.Abs(fx) < 0.000001 Or i = 100
-            End If
+            'If Tinv < 2000 Then
+            '    Dim fx, dfdx As Double
+            '    Dim i As Integer = 0
+            '    Do
+            '        fx = 1 - CalcTAU(Vx, P, Tinv, pp, eos)(0)
+            '        dfdx = (fx - (1 - CalcTAU(Vx, P, Tinv - 1, pp, eos)(0)))
+            '        Tinv = Tinv - fx / dfdx
+            '        i += 1
+            '    Loop Until Math.Abs(fx) < 0.000001 Or i = 25
+            'End If
 
             If Double.IsNaN(Tinv) Or Double.IsInfinity(Tinv) Then Tinv = 2000
 

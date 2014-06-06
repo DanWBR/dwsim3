@@ -1708,7 +1708,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             'find rhomin
 
-            rhomin = rho
+            rhomin = 0.1
             i = 0
             Do
                 fx = (rhomin * R * T - rhomin ^ 2 * (a - 2 * b * R * T) + rhomin ^ 3 * (a * b - b ^ 2 * R * T)) / (1 + rhomin * b - 3 * rhomin ^ 2 * b ^ 2 + rhomin ^ 3 * b ^ 3)
