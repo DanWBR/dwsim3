@@ -880,11 +880,14 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Tf = T
 
             ReDim Vn(n), Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n)
-            Dim Vt(n), VTc(n), Tmin, Tmax, dFdT, Tsat(n), Tsatmin, Tsatmax As Double
+            Dim Vt(n), VTc(n), Tmin, Tmax, dFdT, Tsat(n) As Double
 
             Vn = PP.RET_VNAMES()
             VTc = PP.RET_VTC()
             fi = Vz.Clone
+
+            Tmin = 0.0#
+            Tmax = 0.0#
 
             If Tref = 0.0# Then
 
@@ -894,14 +897,9 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                     Tsat(i) = PP.AUX_TSATi(P, i)
                     Tref += Vz(i) * Tsat(i)
                     Tmin += 0.1 * Vz(i) * VTc(i)
-                    Tmax += 2.0 * Vz(i) * VTc(i)
+                    Tmax += 1.0 * Vz(i) * VTc(i)
                     i += 1
                 Loop Until i = n + 1
-
-                Tsatmin = Common.Min(Tsat)
-                Tsatmax = Common.Max(Tsat)
-
-                Tref = Tsatmin + V * (Tsatmax - Tsatmin)
 
             Else
 
@@ -964,6 +962,11 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 Vy(i) = Vy(i) / soma_y
                 i = i + 1
             Loop Until i = n + 1
+
+            If PP.AUX_IS_SINGLECOMP(Vz) Then
+                Console.WriteLine("PV Flash [NL]: Converged in 0 iterations.")
+                Return New Object() {L, V, Vx, Vy, T, 0, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+            End If
 
             Dim marcador3, marcador2, marcador As Integer
             Dim stmp4_ant, stmp4, Tant, fval As Double
