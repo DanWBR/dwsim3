@@ -629,6 +629,15 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 i = i + 1
             Loop Until i = n + 1
 
+            If PP.AUX_IS_SINGLECOMP(Vz) Then
+                Console.WriteLine("TV Flash [NL]: Converged in 1 iteration.")
+                P = 0
+                For i = 0 To n
+                    P += Vz(i) * PP.AUX_PVAPi(i, T)
+                Next
+                Return New Object() {L, V, Vx, Vy, P, 0, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+            End If
+
             Dim marcador3, marcador2, marcador As Integer
             Dim stmp4_ant, stmp4, Pant, fval As Double
             Dim chk As Boolean = False
@@ -964,7 +973,11 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Loop Until i = n + 1
 
             If PP.AUX_IS_SINGLECOMP(Vz) Then
-                Console.WriteLine("PV Flash [NL]: Converged in 0 iterations.")
+                Console.WriteLine("PV Flash [NL]: Converged in 1 iteration.")
+                T = 0
+                For i = 0 To n
+                    T += Vz(i) * PP.AUX_TSATi(P, i)
+                Next
                 Return New Object() {L, V, Vx, Vy, T, 0, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
             End If
 
