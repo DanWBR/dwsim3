@@ -19,6 +19,7 @@
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports System.IO
 Imports System.Text
+Imports DotNumerics
 
 Public Class FormConfigUNIQUAC
 
@@ -275,28 +276,55 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
 
     End Sub
 
+    Dim actu(5), actn(5) As Double
+    Dim ppu As DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
+    Dim uniquac As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
+    Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
+
+    Private Function FunctionValue(ByVal x() As Double) As Double
+
+        uniquac.InteractionParameters.Clear()
+        uniquac.InteractionParameters.Add(ppu.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData))
+        uniquac.InteractionParameters(ppu.RET_VIDS()(0)).Add(ppu.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData())
+        uniquac.InteractionParameters(ppu.RET_VIDS()(0))(ppu.RET_VIDS()(1)).A12 = x(0)
+        uniquac.InteractionParameters(ppu.RET_VIDS()(0))(ppu.RET_VIDS()(1)).A21 = x(1)
+
+        actn(0) = uniquac.GAMMA(298.15, New Object() {0.25, 0.75}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR, 0)
+        actn(1) = uniquac.GAMMA(298.15, New Object() {0.5, 0.5}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR, 0)
+        actn(2) = uniquac.GAMMA(298.15, New Object() {0.75, 0.25}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR, 0)
+        actn(3) = uniquac.GAMMA(298.15, New Object() {0.25, 0.75}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR, 1)
+        actn(4) = uniquac.GAMMA(298.15, New Object() {0.5, 0.5}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR, 1)
+        actn(5) = uniquac.GAMMA(298.15, New Object() {0.75, 0.25}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR, 1)
+
+        Dim fval As Double = 0.0#
+        For i As Integer = 0 To 5
+            fval += (actn(i) - actu(i)) ^ 2
+        Next
+
+        Return fval
+
+    End Function
+
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click, Button2.Click, Button5.Click
 
         Dim row As Integer = dgvu1.SelectedCells(0).RowIndex
-        Dim count As Integer = 0
-        Dim delta1 As Double = 10
-        Dim delta2 As Double = 10
+        Dim x(1) As Double
 
-        Dim ms As New DWSIM.SimulationObjects.Streams.MaterialStream("", "")
+        ms = New DWSIM.SimulationObjects.Streams.MaterialStream("", "")
 
-        Dim ppn As New DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
-        Dim uniquac As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
+        ppu = New DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
+        uniquac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
 
-        Dim ppu, unifac As Object
+        Dim ppuf, unifac As Object
 
         If sender.Name = "Button1" Then
-            ppu = New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
+            ppuf = New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
             unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
         ElseIf sender.Name = "Button5" Then
-            ppu = New DWSIM.SimulationObjects.PropertyPackages.UNIFACLLPropertyPackage
+            ppuf = New DWSIM.SimulationObjects.PropertyPackages.UNIFACLLPropertyPackage
             unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
         Else
-            ppu = New DWSIM.SimulationObjects.PropertyPackages.MODFACPropertyPackage
+            ppuf = New DWSIM.SimulationObjects.PropertyPackages.MODFACPropertyPackage
             unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
         End If
 
@@ -318,92 +346,44 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
             Next
         End With
 
-        ppn.CurrentMaterialStream = ms
         ppu.CurrentMaterialStream = ms
+        ppuf.CurrentMaterialStream = ms
 
         Dim T1 = 298.15
 
-        Dim actu(1), actn(1), actnd(1), fx(1), fxd(1), dfdx(1, 1), x(1), x0(1), dx(1) As Double
-
-        actu(0) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
-        actu(1) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
+        Try
+            actu(0) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 0)
+            actu(1) = unifac.GAMMA(T1, New Object() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 0)
+            actu(2) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 0)
+            actu(3) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 1)
+            actu(4) = unifac.GAMMA(T1, New Object() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 1)
+            actu(5) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 1)
+        Catch ex As Exception
+            MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
         x(0) = dgvu1.Rows(row).Cells(3).Value
         x(1) = dgvu1.Rows(row).Cells(4).Value
 
-        If x(0) = 0 Then x(0) = -100
-        If x(1) = 0 Then x(1) = 100
+        If x(0) = 0 Then x(0) = 0
+        If x(1) = 0 Then x(1) = 0
 
-        Do
+        Dim initval2() As Double = New Double() {x(0), x(1)}
+        Dim lconstr2() As Double = New Double() {-10000.0#, -10000.0#}
+        Dim uconstr2() As Double = New Double() {+10000.0#, +10000.0#}
+        Dim finalval2() As Double = Nothing
 
-            uniquac.InteractionParameters.Clear()
-            uniquac.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData))
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData())
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
+        Dim variables(1) As Optimization.OptBoundVariable
+        For i As Integer = 0 To 1
+            variables(i) = New Optimization.OptBoundVariable("x" & CStr(i + 1), initval2(i), False, lconstr2(i), uconstr2(i))
+        Next
+        Dim solver As New Optimization.Simplex
+        solver.Tolerance = 0.01
+        solver.MaxFunEvaluations = 1000
+        finalval2 = solver.ComputeMin(AddressOf FunctionValue, variables)
 
-            actnd(0) = uniquac.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-            actnd(1) = uniquac.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-
-            fx(0) = Math.Log(actu(0) / actnd(0))
-            fx(1) = Math.Log(actu(1) / actnd(1))
-
-            uniquac.InteractionParameters.Clear()
-            uniquac.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData))
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData())
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0) + delta1
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
-
-            actnd(0) = uniquac.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-            actnd(1) = uniquac.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-
-            fxd(0) = Math.Log(actu(0) / actnd(0))
-            fxd(1) = Math.Log(actu(1) / actnd(1))
-
-            dfdx(0, 0) = -(fxd(0) - fx(0)) / delta1
-            dfdx(1, 0) = -(fxd(1) - fx(1)) / delta1
-
-            uniquac.InteractionParameters.Clear()
-            uniquac.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData))
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData())
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1) + delta2
-
-            actnd(0) = uniquac.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-            actnd(1) = uniquac.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-
-            fxd(0) = Math.Log(actu(0) / actnd(0))
-            fxd(1) = Math.Log(actu(1) / actnd(1))
-
-            dfdx(0, 1) = -(fxd(0) - fx(0)) / delta2
-            dfdx(1, 1) = -(fxd(1) - fx(1)) / delta2
-
-            'solve linear system
-            DWSIM.MathEx.SysLin.rsolve.rmatrixsolve(dfdx, fx, UBound(fx) + 1, dx)
-
-            x0(0) = x(0)
-            x0(1) = x(1)
-
-            x(0) += dx(0)
-            x(1) += dx(1)
-
-            count += 1
-
-        Loop Until Math.Abs(fx(0) + fx(1)) < 0.01 Or count > 500
-
-        If count < 500 Then
-            dgvu1.Rows(row).Cells(3).Value = x0(0)
-            dgvu1.Rows(row).Cells(4).Value = x0(1)
-        Else
-            If Not Double.IsNaN(x0(0)) Then dgvu1.Rows(row).Cells(3).Value = x0(0) Else dgvu1.Rows(row).Cells(3).Value = 0.0#
-            If Not Double.IsNaN(x0(1)) Then dgvu1.Rows(row).Cells(4).Value = x0(1) Else dgvu1.Rows(row).Cells(4).Value = 0.0#
-            MessageBox.Show("Parameter estimation through UNIFAC failed: Reached the maximum number of iterations.", "UNIFAC Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End If
-
-        dgvu1.Rows(row).Cells(5).Value = 0.0#
-        dgvu1.Rows(row).Cells(6).Value = 0.0#
-        dgvu1.Rows(row).Cells(7).Value = 0.0#
-        dgvu1.Rows(row).Cells(8).Value = 0.0#
+        dgvu1.Rows(row).Cells(3).Value = finalval2(0)
+        dgvu1.Rows(row).Cells(4).Value = finalval2(1)
 
     End Sub
 
