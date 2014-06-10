@@ -264,6 +264,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
     Dim ppn As DWSIM.SimulationObjects.PropertyPackages.NRTLPropertyPackage
     Dim nrtl As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL
     Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
+    Dim ppu, unifac As Object
 
     Private Function FunctionValue(ByVal x() As Double) As Double
 
@@ -324,14 +325,11 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
 
         Dim row As Integer = dgvu1.SelectedCells(0).RowIndex
         Dim x(1) As Double
-        Cursor = Cursors.WaitCursor
 
         ms = New DWSIM.SimulationObjects.Streams.MaterialStream("", "")
 
         ppn = New DWSIM.SimulationObjects.PropertyPackages.NRTLPropertyPackage
         nrtl = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL
-
-        Dim ppu, unifac As Object
 
         If sender.Name = "Button1" Then
             ppu = New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
@@ -365,81 +363,278 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
         ppn.CurrentMaterialStream = ms
         ppu.CurrentMaterialStream = ms
 
-        Dim T1 = 298.15
+        Cursor = Cursors.WaitCursor
 
-        Dim a1(1), a2(1), a3(1) As Double
+        If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
-        If My.Settings.EnableParallelProcessing Then
-            My.MyApplication.IsRunningParallelTasks = True
-            If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
+        If Not chkTdep.Checked Then
+
+            Dim T1 = 298.15
+
+            Dim a1(1), a2(1), a3(1) As Double
+
             Try
-                Dim task1 As Task = New Task(Sub()
-                                                 a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
-                                             End Sub)
-                Dim task2 As Task = New Task(Sub()
-                                                 a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
-                                             End Sub)
-                Dim task3 As Task = New Task(Sub()
-                                                 a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
-                                             End Sub)
-                task1.Start()
-                task2.Start()
-                task3.Start()
-                Task.WaitAll(task1, task2, task3)
-            Catch ae As AggregateException
-                For Each ex As Exception In ae.InnerExceptions
-                    Throw ex
-                Next
-            Finally
-                If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+
+                If My.Settings.EnableParallelProcessing Then
+                    My.MyApplication.IsRunningParallelTasks = True
+                    If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
+                    Try
+                        Dim task1 As Task = New Task(Sub()
+                                                         a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
+                                                     End Sub)
+                        Dim task2 As Task = New Task(Sub()
+                                                         a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
+                                                     End Sub)
+                        Dim task3 As Task = New Task(Sub()
+                                                         a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
+                                                     End Sub)
+                        task1.Start()
+                        task2.Start()
+                        task3.Start()
+                        Task.WaitAll(task1, task2, task3)
+                    Catch ae As AggregateException
+                        For Each ex As Exception In ae.InnerExceptions
+                            Throw ex
+                        Next
+                    Finally
+                        If My.Settings.EnableGPUProcessing Then
+                            My.MyApplication.gpu.DisableMultithreading()
+                            My.MyApplication.gpu.FreeAll()
+                        End If
+                    End Try
+                    My.MyApplication.IsRunningParallelTasks = False
+                Else
+                    a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
+                    a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
+                    a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
                 End If
+
+                actu(0) = a1(0)
+                actu(1) = a2(0)
+                actu(2) = a3(0)
+                actu(3) = a1(1)
+                actu(4) = a2(1)
+                actu(5) = a3(1)
+
+                x(0) = dgvu1.Rows(row).Cells(3).Value
+                x(1) = dgvu1.Rows(row).Cells(4).Value
+
+                If x(0) = 0 Then x(0) = 0
+                If x(1) = 0 Then x(1) = 0
+
+                Dim initval2() As Double = New Double() {x(0), x(1)}
+                Dim lconstr2() As Double = New Double() {-10000.0#, -10000.0#}
+                Dim uconstr2() As Double = New Double() {+10000.0#, +10000.0#}
+                Dim finalval2() As Double = Nothing
+
+                Dim variables(1) As Optimization.OptBoundVariable
+                For i As Integer = 0 To 1
+                    variables(i) = New Optimization.OptBoundVariable("x" & CStr(i + 1), initval2(i), False, lconstr2(i), uconstr2(i))
+                Next
+                Dim solver As New Optimization.Simplex
+                solver.Tolerance = 0.000001
+                solver.MaxFunEvaluations = 5000
+                finalval2 = solver.ComputeMin(AddressOf FunctionValue, variables)
+
+                Dim avgerr As Double = 0.0#
+                For i As Integer = 0 To 5
+                    avgerr += (actn(i) - actu(i)) / actu(i) * 100 / 6
+                Next
+
+                If sender.Name = "Button1" Then
+                    ppu.CurrentMaterialStream.Flowsheet.WriteToLog("UNIQUAC interaction parameter estimation @ T = " & Format(T1, "N2") & " K using UNIFAC finished, average activity coefficient error = " & Format(avgerr, "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                ElseIf sender.Name = "Button5" Then
+                    ppu.CurrentMaterialStream.Flowsheet.WriteToLog("UNIQUAC interaction parameter estimation @ T = " & Format(T1, "N2") & " K using UNIFAC-LL finished, average activity coefficient error = " & Format(avgerr, "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                Else
+                    ppu.CurrentMaterialStream.Flowsheet.WriteToLog("UNIQUAC interaction parameter estimation @ T = " & Format(T1, "N2") & " K using MODFAC finished, average activity coefficient error = " & Format(avgerr, "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                End If
+
+                dgvu1.Rows(row).Cells(3).Value = finalval2(0)
+                dgvu1.Rows(row).Cells(4).Value = finalval2(1)
+                dgvu1.Rows(row).Cells(9).Value = 0.2
+
+                dgvu1.Rows(row).Cells(5).Value = 0.0#
+                dgvu1.Rows(row).Cells(6).Value = 0.0#
+                dgvu1.Rows(row).Cells(7).Value = 0.0#
+                dgvu1.Rows(row).Cells(8).Value = 0.0#
+
+            Catch ex As Exception
+
+                ppu.CurrentMaterialStream.Flowsheet.WriteToLog("NRTL interaction parameter estimation using MODFAC finished with an error: " & ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Informacao)
+
+            Finally
+
+                Cursor = Cursors.Default
+
             End Try
-            My.MyApplication.IsRunningParallelTasks = False
+
         Else
-            a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
-            a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
-            a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
+
+            Me.GroupBox3.Enabled = False
+
+            Me.BackgroundWorker1.RunWorkerAsync(New String() {sender.Name})
+
         End If
 
-        actu(0) = a1(0)
-        actu(1) = a2(0)
-        actu(2) = a3(0)
-        actu(3) = a1(1)
-        actu(4) = a2(1)
-        actu(5) = a3(1)
+    End Sub
 
-        x(0) = dgvu1.Rows(row).Cells(3).Value
-        x(1) = dgvu1.Rows(row).Cells(4).Value
+    Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
 
-        If x(0) = 0 Then x(0) = 0
-        If x(1) = 0 Then x(1) = 0
+        Dim Tmin, Tmax, T1, dT As Double, i, j As Integer
 
-        Dim initval2() As Double = New Double() {x(0), x(1)}
-        Dim lconstr2() As Double = New Double() {-10000.0#, -10000.0#}
-        Dim uconstr2() As Double = New Double() {+10000.0#, +10000.0#}
-        Dim finalval2() As Double = Nothing
+        Tmin = DWSIM.MathEx.Common.Max(ppn.RET_VTF())
+        Tmax = DWSIM.MathEx.Common.Min(ppn.RET_VTB())
 
-        Dim variables(1) As Optimization.OptBoundVariable
-        For i As Integer = 0 To 1
-            variables(i) = New Optimization.OptBoundVariable("x" & CStr(i + 1), initval2(i), False, lconstr2(i), uconstr2(i))
+        dT = (Tmax - Tmin) / 5
+
+        Dim a12, a21 As New ArrayList
+
+        Dim avgerr As Double = 0.0#
+
+        For i = Tmin To Tmax Step dT
+
+            T1 = i
+
+            Dim a1(1), a2(1), a3(1) As Double
+
+            If My.Settings.EnableParallelProcessing Then
+                My.MyApplication.IsRunningParallelTasks = True
+                If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
+                Try
+                    Dim task1 As Task = New Task(Sub()
+                                                     a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
+                                                 End Sub)
+                    Dim task2 As Task = New Task(Sub()
+                                                     a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
+                                                 End Sub)
+                    Dim task3 As Task = New Task(Sub()
+                                                     a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
+                                                 End Sub)
+                    task1.Start()
+                    task2.Start()
+                    task3.Start()
+                    Task.WaitAll(task1, task2, task3)
+                Catch ae As AggregateException
+                    For Each ex As Exception In ae.InnerExceptions
+                        Throw ex
+                    Next
+                Finally
+                    If My.Settings.EnableGPUProcessing Then
+                        My.MyApplication.gpu.DisableMultithreading()
+                        My.MyApplication.gpu.FreeAll()
+                    End If
+                End Try
+                My.MyApplication.IsRunningParallelTasks = False
+            Else
+                a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
+                a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
+                a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI)
+            End If
+
+            actu(0) = a1(0)
+            actu(1) = a2(0)
+            actu(2) = a3(0)
+            actu(3) = a1(1)
+            actu(4) = a2(1)
+            actu(5) = a3(1)
+
+            Dim initval2() As Double = New Double() {0.0#, 0.0#}
+
+            If a12.Count > 0 Then
+                initval2 = New Double() {a12(a12.Count - 1), a21(a21.Count - 1)}
+            End If
+
+            Dim lconstr2() As Double = New Double() {-10000.0#, -10000.0#}
+            Dim uconstr2() As Double = New Double() {+10000.0#, +10000.0#}
+            Dim finalval2() As Double = Nothing
+
+            Dim variables(1) As Optimization.OptBoundVariable
+            For j = 0 To 1
+                variables(j) = New Optimization.OptBoundVariable("x" & CStr(j + 1), initval2(j), False, lconstr2(j), uconstr2(j))
+            Next
+            Dim solver As New Optimization.Simplex
+            solver.Tolerance = 0.000001
+            solver.MaxFunEvaluations = 5000
+            finalval2 = solver.ComputeMin(AddressOf FunctionValue, variables)
+
+            a12.Add(finalval2(0))
+            a21.Add(finalval2(1))
+
+            For j = 0 To 5
+                avgerr += (actn(j) - actu(j)) / actu(j) * 100 / 6 / 5
+            Next
+
         Next
-        Dim solver As New Optimization.Simplex
-        solver.Tolerance = 0.000001
-        solver.MaxFunEvaluations = 5000
-        finalval2 = solver.ComputeMin(AddressOf FunctionValue, variables)
 
-        dgvu1.Rows(row).Cells(3).Value = finalval2(0)
-        dgvu1.Rows(row).Cells(4).Value = finalval2(1)
-        dgvu1.Rows(row).Cells(9).Value = 0.2
+        'regress calculated parameters to obtain temperature dependency
 
-        dgvu1.Rows(row).Cells(5).Value = 0.0#
-        dgvu1.Rows(row).Cells(6).Value = 0.0#
-        dgvu1.Rows(row).Cells(7).Value = 0.0#
-        dgvu1.Rows(row).Cells(8).Value = 0.0#
+        Dim px(4), py_a12(4), py_a21(4) As Double
 
+        For i = 0 To 4
+            px(i) = Tmin + i * dT
+            py_a12(i) = a12(i)
+            py_a21(i) = a21(i)
+        Next
+
+        Dim obj As Object = Nothing
+        Dim lmfit As New DWSIM.Utilities.PetroleumCharacterization.LMFit
+
+        Dim c_a12(2), c_a21(2) As Double
+        Dim r_a12, r_a21, n_a12, n_a21 As Double
+
+        c_a12(0) = py_a12(0)
+        c_a12(1) = 0.1
+        c_a12(2) = 0.01
+
+        obj = lmfit.GetCoeffs(px, py_a12, c_a12.Clone, DWSIM.Utilities.PetroleumCharacterization.LMFit.FitType.SecondDegreePoly, 0.0000000001, 0.0000000001, 0.0000000001, 10000)
+        c_a12 = obj(0)
+        r_a12 = obj(2)
+        n_a12 = obj(3)
+
+        c_a21(0) = py_a21(0)
+        c_a21(1) = 0.1
+        c_a21(2) = 0.01
+
+        obj = lmfit.GetCoeffs(px, py_a21, c_a21.Clone, DWSIM.Utilities.PetroleumCharacterization.LMFit.FitType.SecondDegreePoly, 0.0000000001, 0.0000000001, 0.0000000001, 10000)
+        c_a21 = obj(0)
+        r_a21 = obj(2)
+        n_a21 = obj(3)
+
+        e.Result = New Object() {c_a12(0), c_a21(0), c_a12(1), c_a21(1), c_a12(2), c_a21(2), avgerr, Tmin, Tmax, e.Argument(0)}
+
+    End Sub
+
+    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+
+        Me.GroupBox3.Enabled = True
         Cursor = Cursors.Default
+
+        If e.Error Is Nothing Then
+
+            If e.Result(9) = "Button1" Then
+                ppu.CurrentMaterialStream.Flowsheet.WriteToLog("NRTL interaction parameter estimation from " & Format(e.Result(7), "N2") & " to " & Format(e.Result(8), "N2") & " K using UNIFAC finished, average activity coefficient error = " & Format(e.Result(6), "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+            ElseIf e.Result(9) = "Button5" Then
+                ppu.CurrentMaterialStream.Flowsheet.WriteToLog("NRTL interaction parameter estimation from " & Format(e.Result(7), "N2") & " to " & Format(e.Result(8), "N2") & " K using UNIFAC-LL finished, average activity coefficient error = " & Format(e.Result(6), "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+            Else
+                ppu.CurrentMaterialStream.Flowsheet.WriteToLog("NRTL interaction parameter estimation from " & Format(e.Result(7), "N2") & " to " & Format(e.Result(8), "N2") & " K using MODFAC finished, average activity coefficient error = " & Format(e.Result(6), "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+            End If
+
+            Dim row As Integer = dgvu1.SelectedCells(0).RowIndex
+
+            dgvu1.Rows(row).Cells(3).Value = e.Result(0)
+            dgvu1.Rows(row).Cells(4).Value = e.Result(1)
+            dgvu1.Rows(row).Cells(5).Value = e.Result(2)
+            dgvu1.Rows(row).Cells(6).Value = e.Result(3)
+            dgvu1.Rows(row).Cells(7).Value = e.Result(4)
+            dgvu1.Rows(row).Cells(8).Value = e.Result(5)
+            dgvu1.Rows(row).Cells(9).Value = 0.2
+
+        Else
+
+            ppu.CurrentMaterialStream.Flowsheet.WriteToLog("NRTL interaction parameter estimation from " & Format(e.Result(7), "N2") & " to " & Format(e.Result(8), "N2") & " K using MODFAC finished with an error: " & e.Error.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Informacao)
+
+        End If
+
     End Sub
 
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
@@ -468,5 +663,6 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
         cell.Value = cb.SelectedItem.ToString
 
     End Sub
+
 
 End Class

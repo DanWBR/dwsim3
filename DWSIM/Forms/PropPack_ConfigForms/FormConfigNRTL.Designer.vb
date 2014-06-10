@@ -52,6 +52,7 @@ Partial Class FormConfigNRTL
         Me.Label2 = New System.Windows.Forms.Label()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.chkTdep = New System.Windows.Forms.CheckBox()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -74,6 +75,7 @@ Partial Class FormConfigNRTL
         Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem2.SuspendLayout()
@@ -196,6 +198,7 @@ Partial Class FormConfigNRTL
         'GroupBox3
         '
         resources.ApplyResources(Me.GroupBox3, "GroupBox3")
+        Me.GroupBox3.Controls.Add(Me.chkTdep)
         Me.GroupBox3.Controls.Add(Me.Button5)
         Me.GroupBox3.Controls.Add(Me.Button4)
         Me.GroupBox3.Controls.Add(Me.Button2)
@@ -204,6 +207,13 @@ Partial Class FormConfigNRTL
         Me.GroupBox3.Controls.Add(Me.LabelWithDivider3)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.TabStop = False
+        '
+        'chkTdep
+        '
+        resources.ApplyResources(Me.chkTdep, "chkTdep")
+        Me.chkTdep.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.chkTdep.Name = "chkTdep"
+        Me.chkTdep.UseVisualStyleBackColor = True
         '
         'Button5
         '
@@ -285,6 +295,7 @@ Partial Class FormConfigNRTL
         'Column5
         '
         DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle22.Format = "N2"
         Me.Column5.DefaultCellStyle = DataGridViewCellStyle22
         Me.Column5.FillWeight = 10.0!
         resources.ApplyResources(Me.Column5, "Column5")
@@ -294,6 +305,7 @@ Partial Class FormConfigNRTL
         'Column6
         '
         DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle23.Format = "N2"
         Me.Column6.DefaultCellStyle = DataGridViewCellStyle23
         Me.Column6.FillWeight = 10.0!
         resources.ApplyResources(Me.Column6, "Column6")
@@ -303,6 +315,7 @@ Partial Class FormConfigNRTL
         'b12
         '
         DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle24.Format = "N3"
         Me.b12.DefaultCellStyle = DataGridViewCellStyle24
         Me.b12.FillWeight = 10.0!
         resources.ApplyResources(Me.b12, "b12")
@@ -312,6 +325,7 @@ Partial Class FormConfigNRTL
         'b21
         '
         DataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle25.Format = "N3"
         Me.b21.DefaultCellStyle = DataGridViewCellStyle25
         Me.b21.FillWeight = 10.0!
         resources.ApplyResources(Me.b21, "b21")
@@ -321,6 +335,7 @@ Partial Class FormConfigNRTL
         'c12
         '
         DataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle26.Format = "N6"
         Me.c12.DefaultCellStyle = DataGridViewCellStyle26
         Me.c12.FillWeight = 10.0!
         resources.ApplyResources(Me.c12, "c12")
@@ -330,6 +345,7 @@ Partial Class FormConfigNRTL
         'c21
         '
         DataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle27.Format = "N6"
         Me.c21.DefaultCellStyle = DataGridViewCellStyle27
         Me.c21.FillWeight = 10.0!
         resources.ApplyResources(Me.c21, "c21")
@@ -405,6 +421,9 @@ Partial Class FormConfigNRTL
         Me.Column1.Name = "Column1"
         Me.Column1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
+        'BackgroundWorker1
+        '
+        '
         'FormConfigNRTL
         '
         resources.ApplyResources(Me, "$this")
@@ -421,6 +440,7 @@ Partial Class FormConfigNRTL
         CType(Me.KryptonDataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStripItem3.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
         CType(Me.dgvu1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStripItem1.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
@@ -453,6 +473,8 @@ Partial Class FormConfigNRTL
     Public WithEvents Button1 As System.Windows.Forms.Button
     Public WithEvents Button4 As System.Windows.Forms.Button
     Public WithEvents Button5 As System.Windows.Forms.Button
+    Friend WithEvents chkTdep As System.Windows.Forms.CheckBox
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
     Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents db As System.Windows.Forms.DataGridViewComboBoxColumn
