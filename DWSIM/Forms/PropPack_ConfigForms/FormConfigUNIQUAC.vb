@@ -340,6 +340,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
 
         Dim row As Integer = dgvu1.SelectedCells(0).RowIndex
         Dim x(1) As Double
+        Cursor = Cursors.WaitCursor
 
         ms = New DWSIM.SimulationObjects.Streams.MaterialStream("", "")
 
@@ -448,6 +449,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
         dgvu1.Rows(row).Cells(3).Value = finalval2(0)
         dgvu1.Rows(row).Cells(4).Value = finalval2(1)
 
+        Cursor = Cursors.Default
     End Sub
 
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click

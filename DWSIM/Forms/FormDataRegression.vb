@@ -2816,6 +2816,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
         Dim x(1) As Double
 
+        Cursor = Cursors.WaitCursor
+
         ppu = New DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage(True)
         uniquac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
 
@@ -2925,6 +2927,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         ms.Dispose()
         ms = Nothing
 
+        Cursor = Cursors.Default
+
         Return New Double() {finalval2(0), finalval2(1)}
 
     End Function
@@ -2932,6 +2936,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
     Function EstimateNRTL(ByVal id1 As String, ByVal id2 As String, ByVal model As String) As Double()
 
         Dim x(1) As Double
+
+        Cursor = Cursors.WaitCursor
 
         ppn = New DWSIM.SimulationObjects.PropertyPackages.NRTLPropertyPackage(True)
         nrtl = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL
@@ -3041,6 +3047,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         nrtl = Nothing
         ms.Dispose()
         ms = Nothing
+
+        Cursor = Cursors.WaitCursor
 
         Return New Double() {finalval2(0), finalval2(1), 0.2#}
 
