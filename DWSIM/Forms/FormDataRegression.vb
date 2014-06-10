@@ -2705,6 +2705,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
     Private Function FunctionValueNRTL(ByVal x() As Double) As Double
 
+        Dim a1(1), a2(1), a3(1) As Double
+
         nrtl.InteractionParameters.Clear()
         nrtl.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData))
         nrtl.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NRTL_IPData())
@@ -2712,12 +2714,40 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
         nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = 0.2
 
-        actn(0) = nrtl.GAMMA(298.15, New Object() {0.25, 0.75}, ppn.RET_VIDS, 0)
-        actn(1) = nrtl.GAMMA(298.15, New Object() {0.5, 0.5}, ppn.RET_VIDS, 0)
-        actn(2) = nrtl.GAMMA(298.15, New Object() {0.75, 0.25}, ppn.RET_VIDS, 0)
-        actn(3) = nrtl.GAMMA(298.15, New Object() {0.25, 0.75}, ppn.RET_VIDS, 1)
-        actn(4) = nrtl.GAMMA(298.15, New Object() {0.5, 0.5}, ppn.RET_VIDS, 1)
-        actn(5) = nrtl.GAMMA(298.15, New Object() {0.75, 0.25}, ppn.RET_VIDS, 1)
+        If My.Settings.EnableParallelProcessing Then
+            My.MyApplication.IsRunningParallelTasks = True
+            Try
+                Dim task1 As Task = New Task(Sub()
+                                                 a1 = nrtl.GAMMA_MR(298.15, New Object() {0.25, 0.75}, ppn.RET_VIDS)
+                                             End Sub)
+                Dim task2 As Task = New Task(Sub()
+                                                 a2 = nrtl.GAMMA_MR(298.15, New Object() {0.5, 0.5}, ppn.RET_VIDS)
+                                             End Sub)
+                Dim task3 As Task = New Task(Sub()
+                                                 a3 = nrtl.GAMMA_MR(298.15, New Object() {0.75, 0.25}, ppn.RET_VIDS)
+                                             End Sub)
+                task1.Start()
+                task2.Start()
+                task3.Start()
+                Task.WaitAll(task1, task2, task3)
+            Catch ae As AggregateException
+                For Each ex As Exception In ae.InnerExceptions
+                    Throw ex
+                Next
+            End Try
+            My.MyApplication.IsRunningParallelTasks = False
+        Else
+            a1 = nrtl.GAMMA_MR(298.15, New Object() {0.25, 0.75}, ppn.RET_VIDS)
+            a2 = nrtl.GAMMA_MR(298.15, New Object() {0.5, 0.5}, ppn.RET_VIDS)
+            a3 = nrtl.GAMMA_MR(298.15, New Object() {0.75, 0.25}, ppn.RET_VIDS)
+        End If
+
+        actn(0) = a1(0)
+        actn(1) = a2(0)
+        actn(2) = a3(0)
+        actn(3) = a1(1)
+        actn(4) = a2(1)
+        actn(5) = a3(1)
 
         Dim fval As Double = 0.0#
         For i As Integer = 0 To 5
@@ -2730,18 +2760,48 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
     Private Function FunctionValueUNIQUAC(ByVal x() As Double) As Double
 
+        Dim a1(1), a2(1), a3(1) As Double
+
         uniquac.InteractionParameters.Clear()
         uniquac.InteractionParameters.Add(ppu.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData))
         uniquac.InteractionParameters(ppu.RET_VIDS()(0)).Add(ppu.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData())
         uniquac.InteractionParameters(ppu.RET_VIDS()(0))(ppu.RET_VIDS()(1)).A12 = x(0)
         uniquac.InteractionParameters(ppu.RET_VIDS()(0))(ppu.RET_VIDS()(1)).A21 = x(1)
 
-        actn(0) = uniquac.GAMMA(298.15, New Object() {0.25, 0.75}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR, 0)
-        actn(1) = uniquac.GAMMA(298.15, New Object() {0.5, 0.5}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR, 0)
-        actn(2) = uniquac.GAMMA(298.15, New Object() {0.75, 0.25}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR, 0)
-        actn(3) = uniquac.GAMMA(298.15, New Object() {0.25, 0.75}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR, 1)
-        actn(4) = uniquac.GAMMA(298.15, New Object() {0.5, 0.5}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR, 1)
-        actn(5) = uniquac.GAMMA(298.15, New Object() {0.75, 0.25}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR, 1)
+        If My.Settings.EnableParallelProcessing Then
+            My.MyApplication.IsRunningParallelTasks = True
+            Try
+                Dim task1 As Task = New Task(Sub()
+                                                 a1 = uniquac.GAMMA_MR(298.15, New Object() {0.25, 0.75}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
+                                             End Sub)
+                Dim task2 As Task = New Task(Sub()
+                                                 a2 = uniquac.GAMMA_MR(298.15, New Object() {0.5, 0.5}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
+                                             End Sub)
+                Dim task3 As Task = New Task(Sub()
+                                                 a3 = uniquac.GAMMA_MR(298.15, New Object() {0.75, 0.25}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
+                                             End Sub)
+                task1.Start()
+                task2.Start()
+                task3.Start()
+                Task.WaitAll(task1, task2, task3)
+            Catch ae As AggregateException
+                For Each ex As Exception In ae.InnerExceptions
+                    Throw ex
+                Next
+            End Try
+            My.MyApplication.IsRunningParallelTasks = False
+        Else
+            a1 = uniquac.GAMMA_MR(298.15, New Object() {0.25, 0.75}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
+            a2 = uniquac.GAMMA_MR(298.15, New Object() {0.5, 0.5}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
+            a3 = uniquac.GAMMA_MR(298.15, New Object() {0.75, 0.25}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
+        End If
+
+        actn(0) = a1(0)
+        actn(1) = a2(0)
+        actn(2) = a3(0)
+        actn(3) = a1(1)
+        actn(4) = a2(1)
+        actn(5) = a3(1)
 
         Dim fval As Double = 0.0#
         For i As Integer = 0 To 5
@@ -2795,16 +2855,50 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
         Dim T1 = 298.15
 
-        Try
-            actu(0) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 0)
-            actu(1) = unifac.GAMMA(T1, New Object() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 0)
-            actu(2) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 0)
-            actu(3) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 1)
-            actu(4) = unifac.GAMMA(T1, New Object() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 1)
-            actu(5) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 1)
-        Catch ex As Exception
-            MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+        Dim a1(1), a2(1), a3(1) As Double
+
+        If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
+
+        If My.Settings.EnableParallelProcessing Then
+            My.MyApplication.IsRunningParallelTasks = True
+            If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
+            Try
+                Dim task1 As Task = New Task(Sub()
+                                                 a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+                                             End Sub)
+                Dim task2 As Task = New Task(Sub()
+                                                 a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+                                             End Sub)
+                Dim task3 As Task = New Task(Sub()
+                                                 a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+                                             End Sub)
+                task1.Start()
+                task2.Start()
+                task3.Start()
+                Task.WaitAll(task1, task2, task3)
+            Catch ae As AggregateException
+                For Each ex As Exception In ae.InnerExceptions
+                    Throw ex
+                Next
+            Finally
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
+            End Try
+            My.MyApplication.IsRunningParallelTasks = False
+        Else
+            a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+            a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+            a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+        End If
+
+        actu(0) = a1(0)
+        actu(1) = a2(0)
+        actu(2) = a3(0)
+        actu(3) = a1(1)
+        actu(4) = a2(1)
+        actu(5) = a3(1)
 
         x(0) = gridInEst.Rows(0).Cells(1).Value
         x(1) = gridInEst.Rows(1).Cells(1).Value
@@ -2823,8 +2917,6 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         solver.MaxFunEvaluations = 1000
         finalval2 = solver.ComputeMin(AddressOf FunctionValueUNIQUAC, variables)
 
-        Return New Double() {finalval2(0), finalval2(1)}
-
         ppuf.Dispose()
         ppuf = Nothing
         ppu.Dispose()
@@ -2832,6 +2924,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         uniquac = Nothing
         ms.Dispose()
         ms = Nothing
+
+        Return New Double() {finalval2(0), finalval2(1)}
 
     End Function
 
@@ -2878,16 +2972,50 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
         Dim T1 = 298.15
 
-        Try
-            actu(0) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 0)
-            actu(1) = unifac.GAMMA(T1, New Object() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 0)
-            actu(2) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 0)
-            actu(3) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 1)
-            actu(4) = unifac.GAMMA(T1, New Object() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 1)
-            actu(5) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI, 1)
-        Catch ex As Exception
-            MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+        Dim a1(1), a2(1), a3(1) As Double
+
+        If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
+
+        If My.Settings.EnableParallelProcessing Then
+            My.MyApplication.IsRunningParallelTasks = True
+            If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
+            Try
+                Dim task1 As Task = New Task(Sub()
+                                                 a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+                                             End Sub)
+                Dim task2 As Task = New Task(Sub()
+                                                 a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+                                             End Sub)
+                Dim task3 As Task = New Task(Sub()
+                                                 a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+                                             End Sub)
+                task1.Start()
+                task2.Start()
+                task3.Start()
+                Task.WaitAll(task1, task2, task3)
+            Catch ae As AggregateException
+                For Each ex As Exception In ae.InnerExceptions
+                    Throw ex
+                Next
+            Finally
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
+            End Try
+            My.MyApplication.IsRunningParallelTasks = False
+        Else
+            a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+            a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+            a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+        End If
+
+        actu(0) = a1(0)
+        actu(1) = a2(0)
+        actu(2) = a3(0)
+        actu(3) = a1(1)
+        actu(4) = a2(1)
+        actu(5) = a3(1)
 
         x(0) = gridInEst.Rows(0).Cells(1).Value
         x(1) = gridInEst.Rows(1).Cells(1).Value

@@ -442,7 +442,7 @@ Imports DWSIM.DWSIM.GraphicObjects
         Me.FrmStSim1.ComboBox2.Items.Add(su.nome)
         Me.ToolStripComboBoxUnitSystem.Items.Add(su.nome)
 
-        Dim bytearray2(100000) As Byte
+        Dim bytearray2(500000) As Byte
         Dim stream2 As New IO.MemoryStream(bytearray2)
         Dim formatter2 As New BinaryFormatter()
         formatter2.Serialize(stream2, myarraylist)

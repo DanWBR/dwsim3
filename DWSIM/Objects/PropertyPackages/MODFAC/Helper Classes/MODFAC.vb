@@ -53,92 +53,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function GAMMA(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI, ByVal id)
 
-            CheckParameters(VEKI)
-
-            Dim i, k, m As Integer
-
-            Dim n = UBound(Vx)
-            Dim n2 = UBound(VEKI, 2)
-
-            Dim teta(n2), s(n2) As Double
-            Dim beta(n, n2), Vgammac(n), Vgammar(n), Vgamma(n), b(n, n2) As Double
-            Dim Q(n), R(n), j(n), L(n) As Double
-            Dim j_(n)
-
-            i = 0
-            Do
-                k = 0
-                Do
-                    beta(i, k) = 0
-                    m = 0
-                    Do
-                        beta(i, k) = beta(i, k) + VEKI(i, m) * TAU(m, k, T)
-                        m = m + 1
-                    Loop Until m = n2 + 1
-                    If beta(i, k) = 0.0# Then beta(i, k) = 1.0#
-                    k = k + 1
-                Loop Until k = n2 + 1
-                i = i + 1
-            Loop Until i = n + 1
-
-            Dim soma_xq = 0
-            i = 0
-            Do
-                Q(i) = VQ(i)
-                soma_xq = soma_xq + Vx(i) * Q(i)
-                i = i + 1
-            Loop Until i = n + 1
-
-            k = 0
-            Do
-                i = 0
-                Do
-                    teta(k) = teta(k) + Vx(i) * Q(i) * VEKI(i, k)
-                    i = i + 1
-                Loop Until i = n + 1
-                teta(k) = teta(k) / soma_xq
-                k = k + 1
-            Loop Until k = n2 + 1
-
-            k = 0
-            Do
-                m = 0
-                Do
-                    s(k) = s(k) + teta(m) * TAU(m, k, T)
-                    m = m + 1
-                Loop Until m = n2 + 1
-                k = k + 1
-            Loop Until k = n2 + 1
-
-            Dim soma_xr = 0
-            Dim soma_xr_ = 0
-            i = 0
-            Do
-                R(i) = VR(i)
-                soma_xr = soma_xr + Vx(i) * R(i)
-                soma_xr_ = soma_xr_ + Vx(i) * R(i) ^ (3 / 4)
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                j(i) = R(i) / soma_xr
-                j_(i) = R(i) ^ (3 / 4) / soma_xr_
-                L(i) = Q(i) / soma_xq
-                Vgammac(i) = 1 - j_(i) + Math.Log(j_(i)) - 5 * Q(i) * (1 - j(i) / L(i) + Math.Log(j(i) / L(i)))
-                k = 0
-                Dim tmpsum = 0
-                Do
-                    tmpsum = tmpsum + teta(k) * beta(i, k) / s(k) - VEKI(i, k) * Math.Log(beta(i, k) / s(k))
-                    k = k + 1
-                Loop Until k = n2 + 1
-                Vgammar(i) = Q(i) * (1 - tmpsum)
-                Vgamma(i) = Math.Exp(Vgammac(i) + Vgammar(i))
-                If Vgamma(i) = 0 Then Vgamma(i) = 0.000001
-                i = i + 1
-            Loop Until i = n + 1
-
-            Return Vgamma(id)
+            Return GAMMA_MR(T, Vx, VQ, VR, VEKI)(id)
 
         End Function
 
@@ -160,7 +75,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Do
                 k = 0
                 Do
-                    beta(i, k) = 1.0#
+                    beta(i, k) = 0.0#
                     m = 0
                     Do
                         If VEKI(i, m) <> 0.0# And Not Double.IsNaN(VEKI(i, m)) Then
@@ -168,6 +83,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         End If
                         m = m + 1
                     Loop Until m = n2 + 1
+                    If beta(i, k) = 0.0# Then beta(i, k) = 1.0#
                     k = k + 1
                 Loop Until k = n2 + 1
                 i = i + 1

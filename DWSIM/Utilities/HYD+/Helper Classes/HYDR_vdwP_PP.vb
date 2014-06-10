@@ -124,7 +124,7 @@ Namespace DWSIM.Utilities.HYD
             Dim vm(1, 1), sumvmsI(1), sumvmsII(1)
             Dim C1(1, n), C2(1, n)
             Dim DT, Tnfp, DHm, Td
-            Dim Vxaq(n), t1, t2, t3, t4, t5
+            Dim Vxaq(n), t1, t2, t3, t4, t5 As Double
             Dim ZLinf(n), ZV
             Dim act As Double
             Dim H(n), tmp2(3)
@@ -862,7 +862,7 @@ STEP2:
             Dim vm(1, 1), sumvmsI(1), sumvmsII(1)
             Dim C1(1, n), C2(1, n)
             Dim DT, Tnfp, DHm, Td
-            Dim Vxaq(n), t1, t2, t3, t4, t5
+            Dim Vxaq(n), t1, t2, t3, t4, t5 As Double
             Dim ZLinf(n), ZV
             Dim act As Double
             Dim H(n), tmp2(3)

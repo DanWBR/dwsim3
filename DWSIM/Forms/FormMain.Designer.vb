@@ -622,7 +622,7 @@ Partial Class FormMain
 
             If Not My.Settings.UserUnits = "" Then
                 Dim formatter As New Binary.BinaryFormatter()
-                Dim bytearray() As Byte
+                Dim bytearray(500000) As Byte
                 bytearray = System.Text.Encoding.ASCII.GetBytes(My.Settings.UserUnits)
                 formatter = New Binary.BinaryFormatter()
                 Dim stream As New MemoryStream(bytearray)

@@ -119,7 +119,7 @@ Namespace DWSIM.Utilities.HYD
             Dim vm(1, 1), sumTETAsI, sumTETAsII
             Dim C1(1, n), C2(1, n)
             Dim DT, Tnfp, DHm, Td
-            Dim Vx(n), t1, t2, t3, t4, t5
+            Dim Vx(n), t1, t2, t3, t4, t5 As Double
             Dim ZLinf(n), ZV
             Dim H(n), tmp2(3)
             Dim TETA1(1, n), TETA2(1, n)
@@ -788,7 +788,7 @@ STEP2:
             Dim vm(1, 1), sumTETAsI, sumTETAsII
             Dim C1(1, n), C2(1, n)
             Dim DT, Tnfp, DHm, Td
-            Dim Vx(n), Vh(n), t1, t2, t3, t4, t5
+            Dim Vx(n), Vh(n), t1, t2, t3, t4, t5 As Double
             Dim ZLinf(n), ZV
             Dim H(n), tmp2(3)
             Dim TETA1(1, n), TETA2(1, n)

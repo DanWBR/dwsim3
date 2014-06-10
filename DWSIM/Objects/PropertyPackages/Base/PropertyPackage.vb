@@ -1311,9 +1311,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Dim Vs = result(8)
 
                             If Not Me.AUX_IS_SINGLECOMP(Fase.Mixture) Then
+                                Dim newphase, eos As String
+                                If Me.ComponentName.Contains("SRK") Then eos = "SRK" Else eos = "PR"
                                 If xv = 1.0# Or xl = 1.0# Then
-                                    Dim newphase, eos As String
-                                    If Me.ComponentName.Contains("SRK") Then eos = "SRK" Else eos = "PR"
                                     If xv = 1.0# Then
                                         newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vy, P, T, Me, eos)
                                         If newphase = "L" Then
@@ -1329,6 +1329,23 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                             Vy = Vx
                                         End If
                                     End If
+                                Else
+                                    If xl2 = 0.0# Then
+                                        newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vy, P, T, Me, eos)
+                                        If newphase = "L" Then
+                                            xl2 = xv
+                                            xv = 0.0#
+                                            Vx2 = Vy
+                                        End If
+                                    ElseIf xv = 0.0# Then
+                                        newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx2, P, T, Me, eos)
+                                        If newphase = "V" Then
+                                            xv = xl2
+                                            xl2 = 0.0#
+                                            Vy = Vx2
+                                        End If
+                                    End If
+
                                 End If
                             End If
 
@@ -1360,14 +1377,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 Vx = result(6)
                                 Vx2 = result(2)
                             ElseIf xl2 <> 0.0# And xl <> 0.0# Then
-                                Dim dens1, dens2 As Double
+                                Dim dens1, dens2, xl0, xl20, Vx0(), Vx20() As Double
                                 dens1 = Me.AUX_LIQDENS(T, Vx, P, 0, False)
                                 dens2 = Me.AUX_LIQDENS(T, Vx2, P, 0, False)
                                 If dens2 < dens1 Then
-                                    xl = result(5)
-                                    xl2 = result(0)
-                                    Vx = result(6)
-                                    Vx2 = result(2)
+                                    xl0 = xl
+                                    xl20 = xl2
+                                    Vx0 = Vx
+                                    Vx20 = Vx2
+                                    xl = xl20
+                                    xl2 = xl0
+                                    Vx = Vx20
+                                    Vx2 = Vx0
                                 End If
                             End If
 

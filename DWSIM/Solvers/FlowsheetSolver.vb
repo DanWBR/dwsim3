@@ -101,10 +101,12 @@ Namespace DWSIM.Flowsheet
                                             gobj.Calculated = False
                                             myUnitOp.DeCalculate()
                                         Finally
+                                            My.MyApplication.IsFlowsheetSolving = False
                                             form.FormSurface.FlowsheetDesignSurface.drawingObjects.Remove(gObjA)
                                             form.FormSurface.FlowsheetDesignSurface.Invalidate()
                                         End Try
                                     Else
+                                        My.MyApplication.IsFlowsheetSolving = False
                                         myUnitOp.DeCalculate()
                                         gobj = myUnitOp.GraphicObject
                                         gobj.Calculated = False
@@ -142,8 +144,11 @@ Namespace DWSIM.Flowsheet
                                         gobj.Calculated = False
                                         myUnitOp.DeCalculate()
                                         myUnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                    Finally
+                                        My.MyApplication.IsFlowsheetSolving = False
                                     End Try
                                 Else
+                                    My.MyApplication.IsFlowsheetSolving = False
                                     myUnitOp.DeCalculate()
                                     myUnitOp.GraphicObject.Calculated = False
                                 End If
@@ -156,12 +161,18 @@ Namespace DWSIM.Flowsheet
                             Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
                             myObj.GraphicObject.Calculated = False
                             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])")
-                            myObj.Solve()
-                            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                            myObj.GraphicObject.Calculated = True
-                            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                            form.FormProps.PGEx1.Refresh()
-                            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                            Try
+                                myObj.Solve()
+                                form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
+                                myObj.GraphicObject.Calculated = True
+                                If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
+                                form.FormProps.PGEx1.Refresh()
+                                myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                            Catch ex As Exception
+                                form.WriteToLog(myObj.GraphicObject.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                            Finally
+                                My.MyApplication.IsFlowsheetSolving = False
+                            End Try
                         Else
                             Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
                             Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
@@ -181,6 +192,8 @@ Namespace DWSIM.Flowsheet
                                             ms.ClearAllProps()
                                             ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                                             form.WriteToLog(gobj.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                                        Finally
+                                            My.MyApplication.IsFlowsheetSolving = False
                                         End Try
                                     End If
                                 End If
@@ -216,51 +229,6 @@ Namespace DWSIM.Flowsheet
 
             If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
-            If ms.Fases.Count <= 3 Then
-                ms.Fases.Add("3", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid1"), ""))
-                ms.Fases.Add("4", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid2"), ""))
-                ms.Fases.Add("5", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid3"), ""))
-                ms.Fases.Add("6", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Aqueous"), ""))
-                ms.Fases.Add("7", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Solid"), ""))
-                If form.Options.SelectedComponents.Count = 0 Then
-                    MessageBox.Show(DWSIM.App.GetLocalString("Nohcomponentesaadici"))
-                Else
-                    Dim comp2 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                    For Each comp2 In form.Options.SelectedComponents.Values
-                        ms.Fases(3).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        ms.Fases(3).Componentes(comp2.Name).ConstantProperties = comp2
-                        ms.Fases(4).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        ms.Fases(4).Componentes(comp2.Name).ConstantProperties = comp2
-                        ms.Fases(5).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        ms.Fases(5).Componentes(comp2.Name).ConstantProperties = comp2
-                        ms.Fases(6).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        ms.Fases(6).Componentes(comp2.Name).ConstantProperties = comp2
-                    Next
-                End If
-            ElseIf ms.Fases.Count <= 6 Then
-                ms.Fases.Add("6", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Aqueous"), ""))
-                If form.Options.SelectedComponents.Count = 0 Then
-                    MessageBox.Show(DWSIM.App.GetLocalString("Nohcomponentesaadici"))
-                Else
-                    Dim comp2 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                    For Each comp2 In form.Options.SelectedComponents.Values
-                        ms.Fases(6).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        ms.Fases(6).Componentes(comp2.Name).ConstantProperties = comp2
-                    Next
-                End If
-            ElseIf ms.Fases.Count <= 7 Then
-                ms.Fases.Add("7", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Solid"), ""))
-                If form.Options.SelectedComponents.Count = 0 Then
-                    MessageBox.Show(DWSIM.App.GetLocalString("Nohcomponentesaadici"))
-                Else
-                    Dim comp2 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                    For Each comp2 In form.Options.SelectedComponents.Values
-                        ms.Fases(7).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        ms.Fases(7).Componentes(comp2.Name).ConstantProperties = comp2
-                    Next
-                End If
-            End If
-
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
             Dim preLab As String = form.FormSurface.LabelCalculator.Text
@@ -295,12 +263,45 @@ Namespace DWSIM.Flowsheet
                     If DoNotCalcFlash Then
                         'do not do a flash calculation...
                     ElseIf form.Options.SempreCalcularFlashPH And H <> 0 Then
-                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                        Try
+                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                        Catch ex As Exception
+                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                        Finally
+                            My.MyApplication.IsFlowsheetSolving = False
+                        End Try
                     Else
                         If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Then
                             If ms.GraphicObject.InputConnectors(0).IsAttached Then
-                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                Try
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                Catch ex As Exception
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                Finally
+                                    My.MyApplication.IsFlowsheetSolving = False
+                                End Try
                             Else
+                                Try
+                                    Select Case ms.SpecType
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                    End Select
+                                Catch ex As Exception
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                Finally
+                                    My.MyApplication.IsFlowsheetSolving = False
+                                End Try
+                            End If
+                        Else
+                            Try
                                 Select Case ms.SpecType
                                     Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
                                         .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
@@ -313,20 +314,11 @@ Namespace DWSIM.Flowsheet
                                     Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
                                         .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
                                 End Select
-                            End If
-                        Else
-                            Select Case ms.SpecType
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
-                            End Select
+                            Catch ex As Exception
+                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                            Finally
+                                My.MyApplication.IsFlowsheetSolving = False
+                            End Try
                         End If
                     End If
                     If doparallel Then
@@ -424,6 +416,7 @@ Namespace DWSIM.Flowsheet
                                 Throw ex
                             Next
                         Finally
+                            My.MyApplication.IsFlowsheetSolving = False
                             If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.DisableMultithreading()
                                 My.MyApplication.gpu.FreeAll()
@@ -488,27 +481,51 @@ Namespace DWSIM.Flowsheet
                     If DoNotCalcFlash Then
                         'do not do a flash calculation...
                     ElseIf form.Options.SempreCalcularFlashPH And H <> 0 Then
-                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                        Try
+                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                        Catch ex As Exception
+                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                        Finally
+                            My.MyApplication.IsFlowsheetSolving = False
+                        End Try
                     Else
                         If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Then
                             If ms.GraphicObject.InputConnectors(0).IsAttached Then
-                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                Try
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                Catch ex As Exception
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                Finally
+                                    My.MyApplication.IsFlowsheetSolving = False
+                                End Try
                             Else
-                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                Try
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                Catch ex As Exception
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                Finally
+                                    My.MyApplication.IsFlowsheetSolving = False
+                                End Try
                             End If
                         Else
-                            Select Case ms.SpecType
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
-                            End Select
+                            Try
+                                Select Case ms.SpecType
+                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
+                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                End Select
+                            Catch ex As Exception
+                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                            Finally
+                                My.MyApplication.IsFlowsheetSolving = False
+                            End Try
                         End If
                     End If
                     If doparallel Then
@@ -606,6 +623,7 @@ Namespace DWSIM.Flowsheet
                                 Throw
                             Next
                         Finally
+                            My.MyApplication.IsFlowsheetSolving = False
                             If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.DisableMultithreading()
                                 My.MyApplication.gpu.FreeAll()
@@ -673,27 +691,51 @@ Namespace DWSIM.Flowsheet
                     If DoNotCalcFlash Then
                         'do not do a flash calculation...
                     ElseIf form.Options.SempreCalcularFlashPH And H <> 0 Then
-                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                        Try
+                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                        Catch ex As Exception
+                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                        Finally
+                            My.MyApplication.IsFlowsheetSolving = False
+                        End Try
                     Else
                         If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Then
                             If ms.GraphicObject.InputConnectors(0).IsAttached Then
-                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                Try
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                Catch ex As Exception
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                Finally
+                                    My.MyApplication.IsFlowsheetSolving = False
+                                End Try
                             Else
-                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                Try
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                Catch ex As Exception
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                Finally
+                                    My.MyApplication.IsFlowsheetSolving = False
+                                End Try
                             End If
                         Else
-                            Select Case ms.SpecType
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
-                                Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
-                            End Select
+                            Try
+                                Select Case ms.SpecType
+                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
+                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                End Select
+                            Catch ex As Exception
+                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                            Finally
+                                My.MyApplication.IsFlowsheetSolving = False
+                            End Try
                         End If
                     End If
                     If doparallel Then
@@ -791,6 +833,7 @@ Namespace DWSIM.Flowsheet
                                 Throw
                             Next
                         Finally
+                            My.MyApplication.IsFlowsheetSolving = False
                             If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.DisableMultithreading()
                                 My.MyApplication.gpu.FreeAll()
