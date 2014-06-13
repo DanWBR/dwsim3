@@ -64,6 +64,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
 
+            Dim VPc(n), VTc(n), Vw(n) As Double
+
+            VPc = PP.RET_VPC()
+            VTc = PP.RET_VTC()
+            Vw = PP.RET_VW()
+
             '--------------------------------------
             ' STEP 1 - Assume u, A, B, C, D, E, F 
             '--------------------------------------
@@ -75,11 +81,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             'Calculate Ki`s
 
-
             If Not ReuseKI Then
                 i = 0
                 Do
-                    Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                    'Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                    Vp(i) = VPc(i) * Exp(5.37 * (1 + Vw(i)) * (1 - VTc(i) / T))
                     Ki(i) = Vp(i) / P
                     i += 1
                 Loop Until i = n + 1
@@ -137,8 +143,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 V = 0.98
             ElseIf P >= Pb Then
                 'liquid only
-                L = 0.02
-                V = 0.98
+                L = 0.98
+                V = 0.02
             Else
                 'VLE
                 V = 1 - (P - Pd) / (Pb - Pd)
@@ -229,7 +235,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         dfr = (fr - Me.TPErrorFunc(R1)) / -0.001
                     End If
                     R0 = R
-                    R = R - 0.3 * fr / dfr
+                    R = R - fr / dfr
                     If R < 0.0# Then R = 0.0#
                     If R > 1.0# Then R = 1.0#
                     icount += 1
