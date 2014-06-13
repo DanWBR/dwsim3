@@ -37,10 +37,14 @@ Public Class FormOptions
 
         Me.cbGPU.Items.Clear()
 
-        CudafyModes.Target = eGPUType.Emulator
-        For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
-            Me.cbGPU.Items.Add("Emulator | " & prop.Name & " (" & prop.DeviceId & ")")
-        Next
+        Try
+            CudafyModes.Target = eGPUType.Emulator
+            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+                Me.cbGPU.Items.Add("Emulator | " & prop.Name & " (" & prop.DeviceId & ")")
+            Next
+        Catch ex As Exception
+
+        End Try
         Try
             CudafyModes.Target = eGPUType.Cuda
             For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
