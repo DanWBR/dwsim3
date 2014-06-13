@@ -1337,6 +1337,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                             xv = 0.0#
                                             Vx2 = Vy
                                         End If
+                                        newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx, P, T, Me, eos)
+                                        If newphase = "V" Then
+                                            xv = 1.0#
+                                            xl = 0.0#
+                                            xl2 = 0.0#
+                                            Vy = RET_VMOL(Fase.Mixture)
+                                        End If
                                     ElseIf xv = 0.0# Then
                                         newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx2, P, T, Me, eos)
                                         If newphase = "V" Then
