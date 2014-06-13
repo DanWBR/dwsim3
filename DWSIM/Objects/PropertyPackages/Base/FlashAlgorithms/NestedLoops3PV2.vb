@@ -1,4 +1,4 @@
-﻿'    DWSIM Three-Phase Nested Loops Flash Algorithms
+'    DWSIM Three-Phase Nested Loops Flash Algorithms
 '    Copyright 2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -67,12 +67,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
 
+            Vpc = PP.RET_VPC
+            VTc = PP.RET_VTC
+            Vw = PP.RET_VW
+
             'Calculate Ki`s
 
             If Not ReuseKI Then
                 i = 0
                 Do
-                    Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                    'Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                    Vp(i) = Vpc(i) * Exp(5.37 * (1 + Vw(i)) * (1 - VTc(i) / T))
                     Ki(i) = Vp(i) / P
                     i += 1
                 Loop Until i = n + 1
@@ -252,8 +257,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     If Abs(F) < 0.000001 Then Exit Do
 
-                    V = -0.5 * F / dF + V
-
+                    V = -F / dF + V
+                    
                 End If
 
                 L = 1 - V
