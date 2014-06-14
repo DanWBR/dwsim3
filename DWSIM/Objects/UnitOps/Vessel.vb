@@ -34,6 +34,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected m_T As Double = 0
         Protected m_P As Double = 0
 
+        Public Enum FlashSpec
+            PH
+            PVF
+        End Enum
+
+        Public Property FlashSpecification As FlashSpec = FlashSpec.PH
+
         Public Enum PressureBehavior
             Average
             Maximum
@@ -159,13 +166,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
             End If
 
-            Dim H, Hs, T, W, We, P As Double
+            Dim H, Hs, T, W, M, We, P, VF As Double
             H = 0
             Hs = 0
             T = 0
             W = 0
             We = 0
             P = 0
+            VF = 0.0#
 
             Dim i As Integer = 1
             Dim nc As Integer = 0
@@ -196,11 +204,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         P = P + ms.Fases(0).SPMProperties.pressure.GetValueOrDefault
                         i += 1
                     End If
+                    M += ms.Fases(0).SPMProperties.molarflow.GetValueOrDefault
                     We = ms.Fases(0).SPMProperties.massflow.GetValueOrDefault
                     W += We
+                    VF += ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault * ms.Fases(0).SPMProperties.molarflow.GetValueOrDefault
                     If Not Double.IsNaN(ms.Fases(0).SPMProperties.enthalpy.GetValueOrDefault) Then H += We * ms.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
                 End If
             Next
+
+            If M <> 0.0# Then VF /= M
 
             If W <> 0.0# Then Hs = H / W Else Hs = 0.0#
 
@@ -233,6 +245,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 .Fases(0).SPMProperties.massflow = W
                 .Fases(0).SPMProperties.molarfraction = 1
                 .Fases(0).SPMProperties.massfraction = 1
+                .Fases(2).SPMProperties.molarfraction = VF
                 Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                 For Each comp In .Fases(0).Componentes.Values
                     If W <> 0.0# Then comp.FracaoMassica = Vw(comp.Nome) / W
@@ -250,13 +263,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End If
                 Next
                 Me.PropertyPackage.CurrentMaterialStream = mix
-                If W <> 0.0# Then
-                    If nc > 1 Then
-                        'do a PH-Flash only if there is more than one inlet stream, otherwise the temperature won't change
-                        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P, Hs, T)
-                        T = tmp(2)
-                    End If
-                End If
                 .Fases(0).SPMProperties.temperature = T
                 .Fases(0).SPMProperties.molarflow = W / Me.PropertyPackage.AUX_MMM(PropertyPackages.Fase.Mixture) * 1000
             End With
@@ -268,8 +274,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     'if it is a single compound stream, needs to calculate a PH-Flash to get phase distribution correctly.
                     .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                 Else
-                    'A single PT-Flash will do the job.
-                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                    Select Case Me.FlashSpecification
+                        Case FlashSpec.PH
+                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                        Case FlashSpec.PVF
+                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                    End Select
                 End If
                 If mix.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
@@ -787,6 +797,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                 End With
+
+                .Item.Add(DWSIM.App.GetLocalString("FlashSpecification"), Me, "FlashSpecification", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("FlashSpecificationDesc"), True)
 
                 .Item.Add(DWSIM.App.GetLocalString("VesselOperatingMode"), Me, "OpMode", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("VesselOperatingModeDesc"), True)
 

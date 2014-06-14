@@ -139,12 +139,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 End If
             ElseIf P <= Pd Then
                 'vapor only
-                L = 0.02
-                V = 0.98
+                L = 0.5
+                V = 0.5
             ElseIf P >= Pb Then
                 'liquid only
-                L = 0.98
-                V = 0.02
+                L = 0.5
+                V = 0.5
             Else
                 'VLE
                 V = 1 - (P - Pd) / (Pb - Pd)
@@ -206,42 +206,42 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             ecount = 0
 
             R = Kb * V / (Kb * V + Kb0 * L)
-           
+          
             Do
 
                 '--------------------------------------------------------------
                 ' STEPS 2, 3, 4, 5, 6, 7 and 8 - Calculate R and Energy Balance
                 '--------------------------------------------------------------
+                'Rant = R
+                'R = Kb * V / (Kb * V + Kb0 * L)
+               
+                Dim fr As Double
+                bo2.DefineFuncDelegate(AddressOf TPErrorFunc)
                 Rant = R
-                R = Kb * V / (Kb * V + Kb0 * L)
+                fr = bo2.brentoptimize(0.0#, 1.0#, 0.0001, R)
 
-                'Dim fr As Double
+                'Dim fr, dfr, R0, R1 As Double
+                'Dim icount As Integer = 0
 
-                'bo2.DefineFuncDelegate(AddressOf TPErrorFunc)
-                'fr = bo2.brentoptimize(0, 1, 0.0000000001, R)
+                'Do
+                '    R0 = R
+                '    If R > 0.99 Then
+                '        R1 = R - 0.01
+                '        fr = Me.TPErrorFunc(R0)
+                '        dfr = (fr - Me.TPErrorFunc(R1)) / 0.01
+                '    Else
+                '        R1 = R + 0.01
+                '        fr = Me.TPErrorFunc(R0)
+                '        dfr = (fr - Me.TPErrorFunc(R1)) / -0.01
+                '    End If
+                '    R0 = R
+                '    R = R - fr / dfr
+                '    If R < 0.0# Then R = 0.0#
+                '    If R > 1.0# Then R = 1.0#
+                '    icount += 1
+                'Loop Until Abs(fr) < itol Or icount > maxit_i
 
-                Dim fr, dfr, R0, R1 As Double
-                Dim icount As Integer = 0
-
-                Do
-                    R0 = R
-                    If R > 0.999 Then
-                        R1 = R - 0.001
-                        fr = Me.TPErrorFunc(R0)
-                        dfr = (fr - Me.TPErrorFunc(R1)) / 0.001
-                    Else
-                        R1 = R + 0.001
-                        fr = Me.TPErrorFunc(R0)
-                        dfr = (fr - Me.TPErrorFunc(R1)) / -0.001
-                    End If
-                    R0 = R
-                    R = R - fr / dfr
-                    If R < 0.0# Then R = 0.0#
-                    If R > 1.0# Then R = 1.0#
-                    icount += 1
-                Loop Until Abs(fr) < itol Or icount > maxit_i
-
-                If icount > maxit_i Then R = Rant
+                'If icount > maxit_i Then R = Rant
                 If ecount > 0 Then
                     If Rant = 0.0# And R = 1.0# Then R = 0.0#
                     If Rant = 1.0# And R = 0.0# Then R = 1.0#
@@ -2203,7 +2203,7 @@ final:      d2 = Date.Now
 
             CheckCalculatorStatus()
 
-            Return eberror
+            Return eberror ^ 2
 
         End Function
 

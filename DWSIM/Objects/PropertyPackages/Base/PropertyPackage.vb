@@ -1310,49 +1310,50 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Dim Vx2 = result(6)
                             Dim Vs = result(8)
 
-                            If Not Me.AUX_IS_SINGLECOMP(Fase.Mixture) Then
-                                Dim newphase, eos As String
-                                If Me.ComponentName.Contains("SRK") Then eos = "SRK" Else eos = "PR"
-                                If xv = 1.0# Or xl = 1.0# Then
-                                    If xv = 1.0# Then
-                                        newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vy, P, T, Me, eos)
-                                        If newphase = "L" Then
-                                            xv = 0.0#
-                                            xl = 1.0#
-                                            Vx = Vy
+                            If Me.ComponentName.Contains("SRK") Or Me.ComponentName.Contains("PR") Then
+                                If Not Me.AUX_IS_SINGLECOMP(Fase.Mixture) Then
+                                    Dim newphase, eos As String
+                                    If Me.ComponentName.Contains("SRK") Then eos = "SRK" Else eos = "PR"
+                                    If xv = 1.0# Or xl = 1.0# Then
+                                        If xv = 1.0# Then
+                                            newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vy, P, T, Me, eos)
+                                            If newphase = "L" Then
+                                                xv = 0.0#
+                                                xl = 1.0#
+                                                Vx = Vy
+                                            End If
+                                        Else
+                                            newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx, P, T, Me, eos)
+                                            If newphase = "V" Then
+                                                xv = 1.0#
+                                                xl = 0.0#
+                                                Vy = Vx
+                                            End If
                                         End If
                                     Else
-                                        newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx, P, T, Me, eos)
-                                        If newphase = "V" Then
-                                            xv = 1.0#
-                                            xl = 0.0#
-                                            Vy = Vx
+                                        If xl2 = 0.0# Then
+                                            newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vy, P, T, Me, eos)
+                                            If newphase = "L" Then
+                                                xl2 = xv
+                                                xv = 0.0#
+                                                Vx2 = Vy
+                                            End If
+                                            newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx, P, T, Me, eos)
+                                            If newphase = "V" Then
+                                                xv = 1.0#
+                                                xl = 0.0#
+                                                xl2 = 0.0#
+                                                Vy = RET_VMOL(Fase.Mixture)
+                                            End If
+                                        ElseIf xv = 0.0# Then
+                                            newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx2, P, T, Me, eos)
+                                            If newphase = "V" Then
+                                                xv = xl2
+                                                xl2 = 0.0#
+                                                Vy = Vx2
+                                            End If
                                         End If
                                     End If
-                                Else
-                                    If xl2 = 0.0# Then
-                                        newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vy, P, T, Me, eos)
-                                        If newphase = "L" Then
-                                            xl2 = xv
-                                            xv = 0.0#
-                                            Vx2 = Vy
-                                        End If
-                                        newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx, P, T, Me, eos)
-                                        If newphase = "V" Then
-                                            xv = 1.0#
-                                            xl = 0.0#
-                                            xl2 = 0.0#
-                                            Vy = RET_VMOL(Fase.Mixture)
-                                        End If
-                                    ElseIf xv = 0.0# Then
-                                        newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx2, P, T, Me, eos)
-                                        If newphase = "V" Then
-                                            xv = xl2
-                                            xl2 = 0.0#
-                                            Vy = Vx2
-                                        End If
-                                    End If
-
                                 End If
                             End If
 

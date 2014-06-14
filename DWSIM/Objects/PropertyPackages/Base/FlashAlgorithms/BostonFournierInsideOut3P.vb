@@ -35,7 +35,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim maxit_e As Integer = 100
         Dim Vn(n) As String
         Dim Vx1(n), Vx2(n), Vy(n), Vp(n), ui1(n), ui2(n), uic1(n), uic2(n), pi(n), Ki1(n), Ki2(n), fi(n), Vt(n), Vpc(n), VTc(n), Vw(n) As Double
-        Dim L, L1, L2, beta, Lf, V, Vf, R, Rant, S, Sant, Tant, Pant, T, T_, Tf, P, P_, Pf, T0, P0, A, B, C, D, E, F, Ac, Bc, Cc, Dc, Ec, Fc As Double
+        Dim L, L1, L2, beta, Lf, V, Vf, R, Rant, Rt,S, Sant, Tant, Pant, T, T_, Tf, P, P_, Pf, T0, P0, A, B, C, D, E, F, Ac, Bc, Cc, Dc, Ec, Fc As Double
         Dim Kb, Kb0, Kb_ As Double
         Dim DHv, DHl, DHv1, DHv2, DHl1, DHl2, Hv0, Hvid, Hlid, Hf, DHlsp, DHvsp As Double
         Dim DSv, DSl, DSv1, DSv2, DSl1, DSl2, Sv0, Svid, Slid, Sf, DSlsp, DSvsp As Double
@@ -928,17 +928,17 @@ restart:    Do
                 Do
                     R0 = R
                     If R > 0.99 Then
-                        R1 = R - 0.0001
+                        R1 = R - 0.01
                         fr = Me.EnergyBalance(R0)
-                        dfr = (fr - Me.EnergyBalance(R1)) / 0.0001
+                        dfr = (fr - Me.EnergyBalance(R1)) / 0.01
                     Else
-                        R1 = R + 0.0001
+                        R1 = R + 0.01
                         fr = Me.EnergyBalance(R0)
-                        dfr = (fr - Me.EnergyBalance(R1)) / -0.0001
+                        dfr = (fr - Me.EnergyBalance(R1)) / -0.01
                     End If
                     R0 = R
                     If Abs(fr) < itol Then Exit Do
-                    R += -0.3 * fr / dfr
+                    R += -fr / dfr
                     If R < 0 Then R = 0.0#
                     If R > 1 Then R = 1.0#
                     icount += 1
@@ -1500,35 +1500,40 @@ restart:    Do
                 ' STEPS 2, 3, 4, 5, 6, 7 and 8 - Calculate R and Energy Balance
                 '--------------------------------------------------------------
 
+                'Rant = R
+                'R = Kb * V / (Kb * V + Kb0 * L)
+
+                Dim fr As Double
+                bo2.DefineFuncDelegate(AddressOf TPErrorFunc)
                 Rant = R
-                R = Kb * V / (Kb * V + Kb0 * L)
+                fr = bo2.brentoptimize(0.0#, 1.0#, 0.0001, R)
 
-                Dim fr, dfr, R0, R1 As Double
-                Dim icount As Integer = 0
+                'Dim fr, dfr, R0, R1 As Double
+                'Dim icount As Integer = 0
 
-                Do
-                    R0 = R
-                    If R > 0.999 Then
-                        R1 = R - 0.01
-                        fr = Me.TPErrorFunc(R0)
-                        dfr = (fr - Me.TPErrorFunc(R1)) / 0.01
-                    Else
-                        R1 = R + 0.01
-                        fr = Me.TPErrorFunc(R0)
-                        dfr = (fr - Me.TPErrorFunc(R1)) / (-0.01)
-                    End If
-                    R0 = R
-                    If (R - fr / dfr) < 0.0# Or (R - fr / dfr) > 1.0# Then
-                        If (R + 0.1) < 1.0# Then R += 0.1 Else R -= 0.1
-                    Else
-                        R = R - fr / dfr
-                    End If
-                    If R < 0.0# Then R = 0.0#
-                    If R > 1.0# Then R = 1.0#
-                    icount += 1
-                Loop Until Abs(fr) < itol Or icount > maxit_i Or R = 0 Or R = 1
+                'Do
+                '    R0 = R
+                '    If R > 0.999 Then
+                '        R1 = R - 0.01
+                '        fr = Me.TPErrorFunc(R0)
+                '        dfr = (fr - Me.TPErrorFunc(R1)) / 0.01
+                '    Else
+                '        R1 = R + 0.01
+                '        fr = Me.TPErrorFunc(R0)
+                '        dfr = (fr - Me.TPErrorFunc(R1)) / (-0.01)
+                '    End If
+                '    R0 = R
+                '    If (R - fr / dfr) < 0.0# Or (R - fr / dfr) > 1.0# Then
+                '        If (R + 0.1) < 1.0# Then R += 0.1 Else R -= 0.1
+                '    Else
+                '        R = R - fr / dfr
+                '    End If
+                '    If R < 0.0# Then R = 0.0#
+                '    If R > 1.0# Then R = 1.0#
+                '    icount += 1
+                'Loop Until Abs(fr) < itol Or icount > maxit_i Or R = 0 Or R = 1
 
-                If icount > maxit_i Then R = Rant
+                'If icount > maxit_i Then R = Rant
                 If Rant = 0.0# And R = 1.0# Then R = 0.0#
                 If Rant = 1.0# And R = 0.0# Then R = 1.0#
 
@@ -1594,8 +1599,12 @@ restart:    Do
 
                 ecount += 1
 
-                If Double.IsNaN(V) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
-                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+                If Double.IsNaN(V) Then
+                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
+                End If
+                If ecount > maxit_e Then
+                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+                End If
 
                 Console.WriteLine("PT Flash [IO]: Iteration #" & ecount & ", VF = " & V)
 
@@ -1637,25 +1646,31 @@ out:
 
         End Function
 
-        Private Function TPErrorFunc(ByVal Rt As Double) As Double
+        Private Function TPErrorFunc(ByVal Rtv As Double) As Double
 
-            Dim fr, dfr, S0, S1 As Double
+            'Dim fr, dfr, S0, S1 As Double
             Dim icount As Integer = 0
 
-            S = 1 - Rt
-            Do
-                S0 = S
-                S1 = S + 0.01
-                fr = Me.SErrorFunc(S0, Rt)
-                dfr = (fr - Me.SErrorFunc(S1, Rt)) / -0.01
-                S += -fr / dfr
-                If S < -(1 - Rt) Then S = -(1 - Rt) + 0.01
-                If S > (1 - Rt) Then S = (1 - Rt) - 0.01
-                icount += 1
-            Loop Until Abs(fr) < itol Or icount > maxit_i
+            Dim bo2 As New BrentOpt.BrentMinimize
+            Dim fr As Double
+            bo2.DefineFuncDelegate(AddressOf SErrorFuncAbs)
+            Rt = Rtv
+            fr = bo2.brentoptimize(-(1 - Rt), (1 - Rt), 0.00000001, S)
 
-            If S <= -(1 - Rt) Then S = -(1 - Rt)
-            If S >= (1 - Rt) Then S = (1 - Rt)
+            'S = 1 - Rt
+            'Do
+            '    S0 = S
+            '    S1 = S + 0.01
+            '    fr = Me.SErrorFunc(S0, Rt)
+            '    dfr = (fr - Me.SErrorFunc(S1, Rt)) / -0.01
+            '    S += -fr / dfr
+            '    If S < -(1 - Rt) Then S = -(1 - Rt) + 0.01
+            '    If S > (1 - Rt) Then S = (1 - Rt) - 0.01
+            '    icount += 1
+            'Loop Until Abs(fr) < itol Or icount > maxit_i
+
+            'If S <= -(1 - Rt) Then S = -(1 - Rt)
+            'If S >= (1 - Rt) Then S = (1 - Rt)
 
             For i = 0 To n
                 pi(i) = fi(i) / (Rt + (1 - Rt + S) / (2 * Kb0 * Exp(ui1(i))) + (1 - Rt - S) / (2 * Kb0 * Exp(ui2(i))))
@@ -1690,11 +1705,21 @@ out:
 
             CheckCalculatorStatus()
 
-            Return err1
+            Return err1 ^ 2
 
         End Function
 
-        Private Function SErrorFunc(ByVal S0 As Double, ByVal Rt As Double)
+        Private Function SErrorFuncAbs(ByVal S0 As Double) As Double
+
+            Dim errfunc As Double = 0
+            For i = 0 To n
+                errfunc += fi(i) * (1 / Exp(ui1(i)) - 1 / Exp(ui2(i))) / (Rt + (1 - Rt + S0) / (2 * Kb0 * Exp(ui1(i))) + (1 - Rt - S0) / (2 * Kb0 * Exp(ui2(i))))
+            Next
+            Return errfunc ^ 2
+
+        End Function
+
+        Private Function SErrorFunc(ByVal S0 As Double, ByVal Rt As Double) As Double
 
             Dim errfunc As Double = 0
             For i = 0 To n
