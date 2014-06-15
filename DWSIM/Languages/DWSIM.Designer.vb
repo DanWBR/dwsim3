@@ -5711,6 +5711,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Especificação do cálculo Flash.
+        '''</summary>
+        Friend Shared ReadOnly Property FlashSpecification() As String
+            Get
+                Return ResourceManager.GetString("FlashSpecification", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Selecione o tipo de cálculo Flash a ser realizado para resolver o balanço de energia no vaso..
+        '''</summary>
+        Friend Shared ReadOnly Property FlashSpecificationDesc() As String
+            Get
+                Return ResourceManager.GetString("FlashSpecificationDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Fluxo de Calor.
         '''</summary>
         Friend Shared ReadOnly Property FluxodeCalor() As String

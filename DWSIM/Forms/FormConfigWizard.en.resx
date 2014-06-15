@@ -190,34 +190,31 @@ You can configure the Property Packages in the configuration window after finish
 Click "Next" to continue.</value>
   </data>
   <data name="ListBoxPP.Items" xml:space="preserve">
-    <value>Nested Loops</value>
+    <value>Nested Loops (VLE)</value>
   </data>
   <data name="ListBoxPP.Items1" xml:space="preserve">
-    <value>Nested Loops (3-phase)</value>
+    <value>Nested Loops (VLLE)</value>
   </data>
   <data name="ListBoxPP.Items2" xml:space="preserve">
-    <value>Inside-Out (2-phase)</value>
+    <value>Inside-Out (VLE)</value>
   </data>
   <data name="ListBoxPP.Items3" xml:space="preserve">
-    <value>Inside-Out (3-phase)</value>
+    <value>Inside-Out (VLLE)</value>
   </data>
   <data name="ListBoxPP.Items4" xml:space="preserve">
-    <value>Gibbs Minimization (2-phase)</value>
+    <value>Gibbs Minimization (VLE)</value>
   </data>
   <data name="ListBoxPP.Items5" xml:space="preserve">
-    <value>Gibbs Minimization (3-phase)</value>
+    <value>Gibbs Minimization (VLLE)</value>
   </data>
   <data name="ListBoxPP.Items6" xml:space="preserve">
-    <value>Hybrid Nested Loops / Inside-Out  (3-phase)</value>
+    <value>Nested Loops (SVLE - Eutectic Systems)</value>
   </data>
   <data name="ListBoxPP.Items7" xml:space="preserve">
-    <value>Nested Loops (3-phase SVLE - Eutectic Systems)</value>
+    <value>Nested Loops (SVLE - Solid Solution Systems)</value>
   </data>
   <data name="ListBoxPP.Items8" xml:space="preserve">
-    <value>Nested Loops (3-phase SVLE - Solid Solution Systems)</value>
-  </data>
-  <data name="ListBoxPP.Items9" xml:space="preserve">
-    <value>Nested Loops (3-phase Immsicible VLLE)</value>
+    <value>Nested Loops (VLLE - Immiscible Liquids)</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Flash Algorithm</value>

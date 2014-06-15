@@ -128,19 +128,32 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Vy = Vz
                     GoTo out
                 End If
-            ElseIf P <= Pd Then
-                'vapor only
-                L = 0.0#
-                V = 1.0#
-            ElseIf P >= Pb Then
-                'liquid only
-                L = 1.0#
-                V = 0.0#
-            Else
-                'VLE
-                V = 1 - (P - Pd) / (Pb - Pd)
-                L = 1 - V
             End If
+
+
+            Dim Vmin, Vmax, g As Double
+            Vmin = 1.0#
+            Vmax = 0.0#
+            For i = 0 To n
+                If (Ki(i) * Vz(i) - 1) / (Ki(i) - 1) < Vmin Then Vmin = (Ki(i) * Vz(i) - 1) / (Ki(i) - 1)
+                If (1 - Vz(i)) / (1 - Ki(i)) > Vmax Then Vmax = (1 - Vz(i)) / (1 - Ki(i))
+            Next
+
+            If Vmin < 0.0# Then Vmin = 0.0#
+            If Vmax > 1.0# Then Vmax = 1.0#
+
+            V = (Vmin + Vmax) / 2
+
+            g = 0.0#
+            For i = 0 To n
+                g += Vz(i) * (Ki(i) - 1) / (V + (1 - V) * Ki(i))
+            Next
+
+            If g > 0 Then Vmin = V Else Vmax = V
+
+            V = Vmin + (Vmax - Vmin) / 4
+
+            L = 1 - V
 
             If n = 0 Then
                 If Vp(0) <= P Then

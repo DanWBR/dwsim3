@@ -4825,4 +4825,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SpecSource" xml:space="preserve">
     <value>Fonte</value>
   </data>
+  <data name="FlashSpecification" xml:space="preserve">
+    <value>Especificação do cálculo Flash</value>
+  </data>
+  <data name="FlashSpecificationDesc" xml:space="preserve">
+    <value>Selecione o tipo de cálculo Flash a ser realizado para resolver o balanço de energia no vaso.</value>
+  </data>
 </root>

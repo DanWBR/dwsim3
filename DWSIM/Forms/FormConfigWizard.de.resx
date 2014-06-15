@@ -214,34 +214,31 @@ Sie können das PropertyPackage nach Beendigung des Assistenten im Konfiguration
 Klicken Sie "Weiter" um fortzufahren.</value>
   </data>
   <data name="ListBoxPP.Items" xml:space="preserve">
-    <value>Nested Loops (Dampf-Flüssig Gleichgewicht)</value>
+    <value>Nested Loops (VLE)</value>
   </data>
   <data name="ListBoxPP.Items1" xml:space="preserve">
-    <value>Nested Loops (Dampf-Flüssig-Flüssig Gleichgewicht)</value>
+    <value>Nested Loops (VLLE)</value>
   </data>
   <data name="ListBoxPP.Items2" xml:space="preserve">
-    <value>Inside-Out (Dampf-Flüssig Gleichgewicht)</value>
+    <value>Inside-Out (VLE)</value>
   </data>
   <data name="ListBoxPP.Items3" xml:space="preserve">
-    <value>Inside-Out (Dampf-Flüssig-Flüssig Gleichgewicht)</value>
+    <value>Inside-Out (VLLE)</value>
   </data>
   <data name="ListBoxPP.Items4" xml:space="preserve">
-    <value>Minimierung Gibbs-Energie (Dampf-Flüssig Gleichgewicht)</value>
+    <value>Gibbs Minimization (VLE)</value>
   </data>
   <data name="ListBoxPP.Items5" xml:space="preserve">
-    <value>Minimierung Gibbs-Energie (Dampf-Flüssig-Flüssig Gleichgewicht)</value>
+    <value>Gibbs Minimization (VLLE)</value>
   </data>
   <data name="ListBoxPP.Items6" xml:space="preserve">
-    <value>Nested Loops / Inside-Out Hybridalgorithmus (Dampf-Flüssig-Flüssig Gleichgewicht)</value>
+    <value>Nested Loops (SVLE - Eutectic Systems)</value>
   </data>
   <data name="ListBoxPP.Items7" xml:space="preserve">
-    <value>Nested Loops (Fest-Flüssig Gleichgewicht - Eutektische Systeme)</value>
+    <value>Nested Loops (SVLE - Solid Solution Systems)</value>
   </data>
   <data name="ListBoxPP.Items8" xml:space="preserve">
-    <value>Nested Loops (Fest-Flüssig Gleichgewicht - Feststofflösung)</value>
-  </data>
-  <data name="ListBoxPP.Items9" xml:space="preserve">
-    <value>Nested Loops (Dampf-Flüssig-Flüssig Gleichgewicht, komplett unlösliche Flüssigphasen)</value>
+    <value>Nested Loops (VLLE - Immiscible Liquids)</value>
   </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 15</value>
@@ -409,23 +406,6 @@ Klicken Sie "Weiter" um fortzufahren.</value>
   <data name="Button8.Text" xml:space="preserve">
     <value>Hinzufügen</value>
   </data>
-  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>93, 15</value>
-  </data>
-  <data name="Label8.Text" xml:space="preserve">
-    <value>Einheitensystem</value>
-  </data>
-  <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 9</value>
-  </data>
-  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>679, 78</value>
-  </data>
-  <data name="Label7.Text" xml:space="preserve">
-    <value>Wählen Sie die gewünschten Systemeinheiten für Ihre Simulation. Sie können die Einheiten der bestehenden Systeme ändern, neue Systeme einfügen und andere Operationen im Konfigurationsfenster nach Beendigung dieses Assistenten durchführen.
-
-Klicken Sie "Beenden" um fortzufahren und die Simulation zu starten.</value>
-  </data>
   <data name="Column16.HeaderText" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -443,6 +423,23 @@ Klicken Sie "Beenden" um fortzufahren und die Simulation zu starten.</value>
   </data>
   <data name="Column4.HeaderText" xml:space="preserve">
     <value>Einheit</value>
+  </data>
+  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>93, 15</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>Einheitensystem</value>
+  </data>
+  <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>18, 9</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>679, 78</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Wählen Sie die gewünschten Systemeinheiten für Ihre Simulation. Sie können die Einheiten der bestehenden Systeme ändern, neue Systeme einfügen und andere Operationen im Konfigurationsfenster nach Beendigung dieses Assistenten durchführen.
+
+Klicken Sie "Beenden" um fortzufahren und die Simulation zu starten.</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Konfigurations Wizard</value>

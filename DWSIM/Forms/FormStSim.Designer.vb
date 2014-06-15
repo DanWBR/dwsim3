@@ -80,6 +80,14 @@ Partial Class FormStSim
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.ogc1 = New System.Windows.Forms.DataGridView()
+        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.casno = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Column10 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -111,7 +119,8 @@ Partial Class FormStSim
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.Button8 = New System.Windows.Forms.Button()
         Me.ListViewPP = New System.Windows.Forms.ListView()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.gb1 = New System.Windows.Forms.GroupBox()
+        Me.chkDoPhaseId = New System.Windows.Forms.CheckBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.tbFlashValidationTolerance = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -139,14 +148,6 @@ Partial Class FormStSim
         Me.ofdcs = New System.Windows.Forms.OpenFileDialog()
         Me.sfdxml1 = New System.Windows.Forms.SaveFileDialog()
         Me.SuperToolTip1 = New Omarslvd.Windows.Forms.SuperToolTip()
-        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.casno = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.Column10 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox18.SuspendLayout()
@@ -169,7 +170,7 @@ Partial Class FormStSim
         Me.GroupBox12.SuspendLayout()
         CType(Me.dgvpp, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox6.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
+        Me.gb1.SuspendLayout()
         Me.PanelOptions.SuspendLayout()
         Me.PanelUnits.SuspendLayout()
         Me.PanelReactions.SuspendLayout()
@@ -479,8 +480,8 @@ Partial Class FormStSim
         Me.NavigationPanePage1.ImageFooter = Nothing
         Me.NavigationPanePage1.ImageIndex = 1
         Me.NavigationPanePage1.ImageIndexFooter = -1
-        Me.NavigationPanePage1.ImageKey = ""
-        Me.NavigationPanePage1.ImageKeyFooter = ""
+        Me.NavigationPanePage1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage1.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
         Me.NavigationPanePage1.ImageList = Nothing
         Me.NavigationPanePage1.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage1.Key = "NavigationPanePage1"
@@ -541,8 +542,8 @@ Partial Class FormStSim
         Me.NavigationPanePage5.ImageFooter = Nothing
         Me.NavigationPanePage5.ImageIndex = 2
         Me.NavigationPanePage5.ImageIndexFooter = -1
-        Me.NavigationPanePage5.ImageKey = ""
-        Me.NavigationPanePage5.ImageKeyFooter = ""
+        Me.NavigationPanePage5.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage5.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
         Me.NavigationPanePage5.ImageList = Nothing
         Me.NavigationPanePage5.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage5.Key = "NavigationPanePage5"
@@ -588,8 +589,8 @@ Partial Class FormStSim
         Me.NavigationPanePage3.ImageFooter = Nothing
         Me.NavigationPanePage3.ImageIndex = 6
         Me.NavigationPanePage3.ImageIndexFooter = -1
-        Me.NavigationPanePage3.ImageKey = ""
-        Me.NavigationPanePage3.ImageKeyFooter = ""
+        Me.NavigationPanePage3.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage3.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
         Me.NavigationPanePage3.ImageList = Nothing
         Me.NavigationPanePage3.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage3.Key = "NavigationPanePage3"
@@ -635,8 +636,8 @@ Partial Class FormStSim
         Me.NavigationPanePage4.ImageFooter = Nothing
         Me.NavigationPanePage4.ImageIndex = 0
         Me.NavigationPanePage4.ImageIndexFooter = -1
-        Me.NavigationPanePage4.ImageKey = ""
-        Me.NavigationPanePage4.ImageKeyFooter = ""
+        Me.NavigationPanePage4.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.NavigationPanePage4.ImageKeyFooter = Global.DWSIM.My.Resources.DWSIM.String1
         Me.NavigationPanePage4.ImageList = Nothing
         Me.NavigationPanePage4.ImageListFooter = Me.ImageList1
         Me.NavigationPanePage4.Key = "NavigationPanePage4"
@@ -803,6 +804,70 @@ Partial Class FormStSim
         Me.ogc1.ShowRowErrors = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ogc1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ogc1, System.Drawing.Color.Empty)
+        '
+        'Column11
+        '
+        Me.Column11.FillWeight = 5.0!
+        resources.ApplyResources(Me.Column11, "Column11")
+        Me.Column11.Name = "Column11"
+        Me.Column11.ReadOnly = True
+        '
+        'Column6
+        '
+        Me.Column6.FillWeight = 83.31126!
+        resources.ApplyResources(Me.Column6, "Column6")
+        Me.Column6.Name = "Column6"
+        Me.Column6.ReadOnly = True
+        '
+        'casno
+        '
+        Me.casno.FillWeight = 44.0!
+        resources.ApplyResources(Me.casno, "casno")
+        Me.casno.Name = "casno"
+        Me.casno.ReadOnly = True
+        '
+        'Column8
+        '
+        Me.Column8.FillWeight = 20.0!
+        resources.ApplyResources(Me.Column8, "Column8")
+        Me.Column8.Name = "Column8"
+        Me.Column8.ReadOnly = True
+        '
+        'Column9
+        '
+        Me.Column9.FillWeight = 41.65563!
+        resources.ApplyResources(Me.Column9, "Column9")
+        Me.Column9.Name = "Column9"
+        Me.Column9.ReadOnly = True
+        '
+        'Column7
+        '
+        Me.Column7.FillWeight = 62.0!
+        resources.ApplyResources(Me.Column7, "Column7")
+        Me.Column7.Name = "Column7"
+        Me.Column7.ReadOnly = True
+        '
+        'Column5
+        '
+        Me.Column5.FalseValue = "False"
+        Me.Column5.FillWeight = 20.0!
+        resources.ApplyResources(Me.Column5, "Column5")
+        Me.Column5.Name = "Column5"
+        Me.Column5.ReadOnly = True
+        Me.Column5.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.Column5.TrueValue = "True"
+        '
+        'Column10
+        '
+        Me.Column10.FalseValue = "False"
+        Me.Column10.FillWeight = 20.0!
+        resources.ApplyResources(Me.Column10, "Column10")
+        Me.Column10.Name = "Column10"
+        Me.Column10.ReadOnly = True
+        Me.Column10.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.Column10.TrueValue = "True"
         '
         'Label8
         '
@@ -1080,22 +1145,30 @@ Partial Class FormStSim
         Me.ListViewPP.UseCompatibleStateImageBehavior = False
         Me.ListViewPP.View = System.Windows.Forms.View.Tile
         '
-        'GroupBox3
+        'gb1
         '
-        Me.GroupBox3.Controls.Add(Me.Label13)
-        Me.GroupBox3.Controls.Add(Me.tbFlashValidationTolerance)
-        Me.GroupBox3.Controls.Add(Me.Label12)
-        Me.GroupBox3.Controls.Add(Me.chkValidateEqCalc)
-        Me.GroupBox3.Controls.Add(Me.chkIOmode)
-        Me.GroupBox3.Controls.Add(Me.CheckBox1)
-        Me.GroupBox3.Controls.Add(Me.ComboBoxFlashAlg)
-        Me.GroupBox3.Controls.Add(Me.Label2)
-        Me.GroupBox3.Controls.Add(Me.CheckBox3)
-        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox3, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox3, System.Drawing.Color.Empty)
-        Me.GroupBox3.TabStop = False
+        Me.gb1.Controls.Add(Me.chkDoPhaseId)
+        Me.gb1.Controls.Add(Me.Label13)
+        Me.gb1.Controls.Add(Me.tbFlashValidationTolerance)
+        Me.gb1.Controls.Add(Me.Label12)
+        Me.gb1.Controls.Add(Me.chkValidateEqCalc)
+        Me.gb1.Controls.Add(Me.chkIOmode)
+        Me.gb1.Controls.Add(Me.CheckBox1)
+        Me.gb1.Controls.Add(Me.ComboBoxFlashAlg)
+        Me.gb1.Controls.Add(Me.Label2)
+        Me.gb1.Controls.Add(Me.CheckBox3)
+        resources.ApplyResources(Me.gb1, "gb1")
+        Me.gb1.Name = "gb1"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.gb1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.gb1, System.Drawing.Color.Empty)
+        Me.gb1.TabStop = False
+        '
+        'chkDoPhaseId
+        '
+        resources.ApplyResources(Me.chkDoPhaseId, "chkDoPhaseId")
+        Me.chkDoPhaseId.Name = "chkDoPhaseId"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkDoPhaseId, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkDoPhaseId, System.Drawing.Color.Empty)
         '
         'Label13
         '
@@ -1143,7 +1216,7 @@ Partial Class FormStSim
         '
         Me.ComboBoxFlashAlg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBoxFlashAlg.FormattingEnabled = True
-        Me.ComboBoxFlashAlg.Items.AddRange(New Object() {resources.GetString("ComboBoxFlashAlg.Items"), resources.GetString("ComboBoxFlashAlg.Items1"), resources.GetString("ComboBoxFlashAlg.Items2"), resources.GetString("ComboBoxFlashAlg.Items3"), resources.GetString("ComboBoxFlashAlg.Items4"), resources.GetString("ComboBoxFlashAlg.Items5"), resources.GetString("ComboBoxFlashAlg.Items7"), resources.GetString("ComboBoxFlashAlg.Items8"), resources.GetString("ComboBoxFlashAlg.Items9")})
+        Me.ComboBoxFlashAlg.Items.AddRange(New Object() {resources.GetString("ComboBoxFlashAlg.Items"), resources.GetString("ComboBoxFlashAlg.Items1"), resources.GetString("ComboBoxFlashAlg.Items2"), resources.GetString("ComboBoxFlashAlg.Items3"), resources.GetString("ComboBoxFlashAlg.Items4"), resources.GetString("ComboBoxFlashAlg.Items5"), resources.GetString("ComboBoxFlashAlg.Items6"), resources.GetString("ComboBoxFlashAlg.Items7"), resources.GetString("ComboBoxFlashAlg.Items8")})
         resources.ApplyResources(Me.ComboBoxFlashAlg, "ComboBoxFlashAlg")
         Me.ComboBoxFlashAlg.Name = "ComboBoxFlashAlg"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ComboBoxFlashAlg, System.Drawing.Color.Empty)
@@ -1214,7 +1287,7 @@ Partial Class FormStSim
         '
         Me.PanelPPAdv.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PanelPPAdv.Controls.Add(Me.GroupBox11)
-        Me.PanelPPAdv.Controls.Add(Me.GroupBox3)
+        Me.PanelPPAdv.Controls.Add(Me.gb1)
         resources.ApplyResources(Me.PanelPPAdv, "PanelPPAdv")
         Me.PanelPPAdv.Name = "PanelPPAdv"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelPPAdv, System.Drawing.Color.Empty)
@@ -1305,74 +1378,11 @@ Partial Class FormStSim
         Me.SuperToolTip1.ReshowDelay = 200
         Me.SuperToolTip1.ShowAlways = True
         '
-        'Column11
-        '
-        Me.Column11.FillWeight = 5.0!
-        resources.ApplyResources(Me.Column11, "Column11")
-        Me.Column11.Name = "Column11"
-        Me.Column11.ReadOnly = True
-        '
-        'Column6
-        '
-        Me.Column6.FillWeight = 83.31126!
-        resources.ApplyResources(Me.Column6, "Column6")
-        Me.Column6.Name = "Column6"
-        Me.Column6.ReadOnly = True
-        '
-        'casno
-        '
-        Me.casno.FillWeight = 44.0!
-        resources.ApplyResources(Me.casno, "casno")
-        Me.casno.Name = "casno"
-        Me.casno.ReadOnly = True
-        '
-        'Column8
-        '
-        Me.Column8.FillWeight = 20.0!
-        resources.ApplyResources(Me.Column8, "Column8")
-        Me.Column8.Name = "Column8"
-        Me.Column8.ReadOnly = True
-        '
-        'Column9
-        '
-        Me.Column9.FillWeight = 41.65563!
-        resources.ApplyResources(Me.Column9, "Column9")
-        Me.Column9.Name = "Column9"
-        Me.Column9.ReadOnly = True
-        '
-        'Column7
-        '
-        Me.Column7.FillWeight = 62.0!
-        resources.ApplyResources(Me.Column7, "Column7")
-        Me.Column7.Name = "Column7"
-        Me.Column7.ReadOnly = True
-        '
-        'Column5
-        '
-        Me.Column5.FalseValue = "False"
-        Me.Column5.FillWeight = 20.0!
-        resources.ApplyResources(Me.Column5, "Column5")
-        Me.Column5.Name = "Column5"
-        Me.Column5.ReadOnly = True
-        Me.Column5.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.Column5.TrueValue = "True"
-        '
-        'Column10
-        '
-        Me.Column10.FalseValue = "False"
-        Me.Column10.FillWeight = 20.0!
-        resources.ApplyResources(Me.Column10, "Column10")
-        Me.Column10.Name = "Column10"
-        Me.Column10.ReadOnly = True
-        Me.Column10.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.Column10.TrueValue = "True"
-        '
         'FormStSim
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.PanelPPAdv)
         Me.Controls.Add(Me.PanelComps)
         Me.Controls.Add(Me.PanelReactions)
         Me.Controls.Add(Me.PanelOptions)
@@ -1381,7 +1391,6 @@ Partial Class FormStSim
         Me.Controls.Add(Me.NavigationPane1)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.PanelUnits)
-        Me.Controls.Add(Me.PanelPPAdv)
         Me.Controls.Add(Me.PanelPP)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FormStSim"
@@ -1418,8 +1427,8 @@ Partial Class FormStSim
         CType(Me.dgvpp, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
+        Me.gb1.ResumeLayout(False)
+        Me.gb1.PerformLayout()
         Me.PanelOptions.ResumeLayout(False)
         Me.PanelUnits.ResumeLayout(False)
         Me.PanelReactions.ResumeLayout(False)
@@ -1507,7 +1516,7 @@ Partial Class FormStSim
     Public WithEvents Button8 As System.Windows.Forms.Button
     Public WithEvents ComboBox3 As System.Windows.Forms.ComboBox
     Public WithEvents Label1 As System.Windows.Forms.Label
-    Public WithEvents GroupBox3 As System.Windows.Forms.GroupBox
+    Public WithEvents gb1 As System.Windows.Forms.GroupBox
     Public WithEvents ComboBoxFlashAlg As System.Windows.Forms.ComboBox
     Public WithEvents Label2 As System.Windows.Forms.Label
     Public WithEvents CheckBox1 As System.Windows.Forms.CheckBox
@@ -1547,4 +1556,5 @@ Partial Class FormStSim
     Friend WithEvents Column7 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column5 As System.Windows.Forms.DataGridViewCheckBoxColumn
     Friend WithEvents Column10 As System.Windows.Forms.DataGridViewCheckBoxColumn
+    Public WithEvents chkDoPhaseId As System.Windows.Forms.CheckBox
 End Class

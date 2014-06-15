@@ -290,6 +290,7 @@ Namespace DWSIM.FormClasses
         Public CalculateBubbleAndDewPoints As Boolean = False
 
         Public ValidateEquilibriumCalc As Boolean = True
+        Public UsePhaseIdentificationAlgorithm As Boolean = True
 
         Public SimNome As String = "simulation_title"
         Public SimAutor As String = "simulation_author"

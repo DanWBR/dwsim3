@@ -186,6 +186,8 @@ Public Class FormStSim
 
         chkValidateEqCalc.Checked = Me.FrmChild.Options.ValidateEquilibriumCalc
 
+        chkDoPhaseId.Checked = Me.FrmChild.Options.UsePhaseIdentificationAlgorithm
+
         tbFlashValidationTolerance.Enabled = chkValidateEqCalc.Checked
 
         tbFlashValidationTolerance.Text = Me.FrmChild.Options.FlashValidationDGETolerancePct
@@ -1309,4 +1311,7 @@ Public Class FormStSim
         End If
     End Sub
 
+    Private Sub chkDoPhaseId_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkDoPhaseId.CheckedChanged
+        Me.FrmChild.Options.UsePhaseIdentificationAlgorithm = Me.chkDoPhaseId.Checked
+    End Sub
 End Class
