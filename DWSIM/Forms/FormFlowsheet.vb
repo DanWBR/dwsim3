@@ -428,13 +428,15 @@ Imports DWSIM.DWSIM.GraphicObjects
         If My.Settings.UserUnits <> "" Then
 
             Dim formatter As New BinaryFormatter()
-            Dim bytearray() As Byte
+            Dim bytearray(500000) As Byte
             bytearray = System.Text.Encoding.ASCII.GetBytes(My.Settings.UserUnits)
             formatter = New BinaryFormatter()
             Dim stream As New IO.MemoryStream(bytearray)
-            myarraylist = CType(formatter.Deserialize(stream), ArrayList)
+            Try
+                myarraylist = CType(formatter.Deserialize(stream), ArrayList)
+            Catch ex As Exception
+            End Try
             stream.Close()
-
         End If
 
         myarraylist.Add(su)

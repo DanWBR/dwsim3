@@ -39,6 +39,14 @@ Partial Class FormConfigWizard
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Button10 = New System.Windows.Forms.Button()
         Me.ogc1 = New System.Windows.Forms.DataGridView()
+        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.casno = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Column10 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.WizardPage3 = New AeroWizard.WizardPage()
@@ -66,14 +74,6 @@ Partial Class FormConfigWizard
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.casno = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.Column10 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         CType(Me.StepWizardControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.WizardPage1.SuspendLayout()
         Me.WizardPage2.SuspendLayout()
@@ -200,6 +200,70 @@ Partial Class FormConfigWizard
         Me.ogc1.ShowEditingIcon = False
         Me.ogc1.ShowRowErrors = False
         '
+        'Column11
+        '
+        Me.Column11.FillWeight = 5.0!
+        resources.ApplyResources(Me.Column11, "Column11")
+        Me.Column11.Name = "Column11"
+        Me.Column11.ReadOnly = True
+        '
+        'Column6
+        '
+        Me.Column6.FillWeight = 40.0!
+        resources.ApplyResources(Me.Column6, "Column6")
+        Me.Column6.Name = "Column6"
+        Me.Column6.ReadOnly = True
+        '
+        'casno
+        '
+        Me.casno.FillWeight = 25.0!
+        resources.ApplyResources(Me.casno, "casno")
+        Me.casno.Name = "casno"
+        Me.casno.ReadOnly = True
+        '
+        'Column8
+        '
+        Me.Column8.FillWeight = 20.0!
+        resources.ApplyResources(Me.Column8, "Column8")
+        Me.Column8.Name = "Column8"
+        Me.Column8.ReadOnly = True
+        '
+        'Column9
+        '
+        Me.Column9.FillWeight = 20.0!
+        resources.ApplyResources(Me.Column9, "Column9")
+        Me.Column9.Name = "Column9"
+        Me.Column9.ReadOnly = True
+        '
+        'Column7
+        '
+        Me.Column7.FillWeight = 30.0!
+        resources.ApplyResources(Me.Column7, "Column7")
+        Me.Column7.Name = "Column7"
+        Me.Column7.ReadOnly = True
+        '
+        'Column5
+        '
+        Me.Column5.FalseValue = "False"
+        Me.Column5.FillWeight = 10.0!
+        resources.ApplyResources(Me.Column5, "Column5")
+        Me.Column5.Name = "Column5"
+        Me.Column5.ReadOnly = True
+        Me.Column5.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.Column5.TrueValue = "True"
+        '
+        'Column10
+        '
+        Me.Column10.FalseValue = "False"
+        Me.Column10.FillWeight = 10.0!
+        resources.ApplyResources(Me.Column10, "Column10")
+        Me.Column10.Name = "Column10"
+        Me.Column10.ReadOnly = True
+        Me.Column10.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.Column10.TrueValue = "True"
+        '
         'Button7
         '
         resources.ApplyResources(Me.Button7, "Button7")
@@ -321,7 +385,7 @@ Partial Class FormConfigWizard
         '
         Me.ListBoxPP.FormattingEnabled = True
         resources.ApplyResources(Me.ListBoxPP, "ListBoxPP")
-        Me.ListBoxPP.Items.AddRange(New Object() {resources.GetString("ListBoxPP.Items"), resources.GetString("ListBoxPP.Items1"), resources.GetString("ListBoxPP.Items2"), resources.GetString("ListBoxPP.Items3"), resources.GetString("ListBoxPP.Items4"), resources.GetString("ListBoxPP.Items5"), resources.GetString("ListBoxPP.Items6"), resources.GetString("ListBoxPP.Items7"), resources.GetString("ListBoxPP.Items8"), resources.GetString("ListBoxPP.Items9")})
+        Me.ListBoxPP.Items.AddRange(New Object() {resources.GetString("ListBoxPP.Items"), resources.GetString("ListBoxPP.Items1"), resources.GetString("ListBoxPP.Items2"), resources.GetString("ListBoxPP.Items3"), resources.GetString("ListBoxPP.Items4"), resources.GetString("ListBoxPP.Items5"), resources.GetString("ListBoxPP.Items6"), resources.GetString("ListBoxPP.Items7"), resources.GetString("ListBoxPP.Items8")})
         Me.ListBoxPP.Name = "ListBoxPP"
         '
         'Label6
@@ -419,70 +483,6 @@ Partial Class FormConfigWizard
         '
         resources.ApplyResources(Me.Label7, "Label7")
         Me.Label7.Name = "Label7"
-        '
-        'Column11
-        '
-        Me.Column11.FillWeight = 5.0!
-        resources.ApplyResources(Me.Column11, "Column11")
-        Me.Column11.Name = "Column11"
-        Me.Column11.ReadOnly = True
-        '
-        'Column6
-        '
-        Me.Column6.FillWeight = 40.0!
-        resources.ApplyResources(Me.Column6, "Column6")
-        Me.Column6.Name = "Column6"
-        Me.Column6.ReadOnly = True
-        '
-        'casno
-        '
-        Me.casno.FillWeight = 25.0!
-        resources.ApplyResources(Me.casno, "casno")
-        Me.casno.Name = "casno"
-        Me.casno.ReadOnly = True
-        '
-        'Column8
-        '
-        Me.Column8.FillWeight = 20.0!
-        resources.ApplyResources(Me.Column8, "Column8")
-        Me.Column8.Name = "Column8"
-        Me.Column8.ReadOnly = True
-        '
-        'Column9
-        '
-        Me.Column9.FillWeight = 20.0!
-        resources.ApplyResources(Me.Column9, "Column9")
-        Me.Column9.Name = "Column9"
-        Me.Column9.ReadOnly = True
-        '
-        'Column7
-        '
-        Me.Column7.FillWeight = 30.0!
-        resources.ApplyResources(Me.Column7, "Column7")
-        Me.Column7.Name = "Column7"
-        Me.Column7.ReadOnly = True
-        '
-        'Column5
-        '
-        Me.Column5.FalseValue = "False"
-        Me.Column5.FillWeight = 10.0!
-        resources.ApplyResources(Me.Column5, "Column5")
-        Me.Column5.Name = "Column5"
-        Me.Column5.ReadOnly = True
-        Me.Column5.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.Column5.TrueValue = "True"
-        '
-        'Column10
-        '
-        Me.Column10.FalseValue = "False"
-        Me.Column10.FillWeight = 10.0!
-        resources.ApplyResources(Me.Column10, "Column10")
-        Me.Column10.Name = "Column10"
-        Me.Column10.ReadOnly = True
-        Me.Column10.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.Column10.TrueValue = "True"
         '
         'FormConfigWizard
         '
