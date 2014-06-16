@@ -29,6 +29,9 @@ Partial Class FormConfigPP
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
+        Me.TabStripUNIFAC = New FarsiLibrary.Win.FATabStripItem()
+        Me.IPGrid = New System.Windows.Forms.DataGridView()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -47,6 +50,8 @@ Partial Class FormConfigPP
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
+        Me.TabStripUNIFAC.SuspendLayout()
+        CType(Me.IPGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStripItem2.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.KryptonDataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -60,9 +65,37 @@ Partial Class FormConfigPP
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
         resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
-        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem2, Me.FaTabStripItem1})
+        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.TabStripUNIFAC, Me.FaTabStripItem2, Me.FaTabStripItem1})
         Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem2
+        Me.FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
+        '
+        'TabStripUNIFAC
+        '
+        Me.TabStripUNIFAC.CanClose = False
+        Me.TabStripUNIFAC.Controls.Add(Me.IPGrid)
+        Me.TabStripUNIFAC.IsDrawn = True
+        Me.TabStripUNIFAC.Name = "TabStripUNIFAC"
+        Me.TabStripUNIFAC.Selected = True
+        resources.ApplyResources(Me.TabStripUNIFAC, "TabStripUNIFAC")
+        '
+        'IPGrid
+        '
+        Me.IPGrid.AllowUserToAddRows = False
+        Me.IPGrid.AllowUserToDeleteRows = False
+        Me.IPGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.IPGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.IPGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.IPGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column6})
+        resources.ApplyResources(Me.IPGrid, "IPGrid")
+        Me.IPGrid.MultiSelect = False
+        Me.IPGrid.Name = "IPGrid"
+        Me.IPGrid.ReadOnly = True
+        '
+        'Column6
+        '
+        resources.ApplyResources(Me.Column6, "Column6")
+        Me.Column6.Name = "Column6"
+        Me.Column6.ReadOnly = True
         '
         'FaTabStripItem2
         '
@@ -71,7 +104,6 @@ Partial Class FormConfigPP
         Me.FaTabStripItem2.Controls.Add(Me.Label2)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
-        Me.FaTabStripItem2.Selected = True
         resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         '
         'GroupBox2
@@ -204,10 +236,12 @@ Partial Class FormConfigPP
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.FaTabStrip1)
         Me.DoubleBuffered = True
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Name = "FormConfigPP"
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStrip1.ResumeLayout(False)
+        Me.TabStripUNIFAC.ResumeLayout(False)
+        CType(Me.IPGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStripItem2.ResumeLayout(False)
         Me.FaTabStripItem2.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
@@ -235,4 +269,7 @@ Partial Class FormConfigPP
     Public WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Public WithEvents Button3 As System.Windows.Forms.Button
     Public WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents IPGrid As System.Windows.Forms.DataGridView
+    Friend WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Private WithEvents TabStripUNIFAC As FarsiLibrary.Win.FATabStripItem
 End Class

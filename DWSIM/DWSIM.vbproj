@@ -1159,9 +1159,6 @@
     <EmbeddedResource Include="Forms\FormConfigWizard.en.resx">
       <DependentUpon>FormConfigWizard.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormConfigWizard.es.resx">
-      <DependentUpon>FormConfigWizard.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormConfigWizard.resx">
       <DependentUpon>FormConfigWizard.vb</DependentUpon>
     </EmbeddedResource>

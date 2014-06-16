@@ -28,10 +28,136 @@ Public Class FormConfigPP
     Private Sub FormConfigPR_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         Me.KryptonDataGridView2.DataSource = Nothing
     End Sub
+    Private Sub FillUNIFACParamTable(ByVal type As String)
+        'fill UNIFAC interaction parameter list
+        Dim k, l As Integer
+        Dim PrimaryGroups As New SortedList()
+        Dim uni As Object
+        Dim g1, g2 As Integer
+        Dim ip, pg As String
 
+        Select Case type
+            Case "UNIFAC"
+                uni = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
+            Case "UNIFACLL"
+                uni = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
+            Case "MODFAC"
+                uni = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
+        End Select
+
+        'create list of all subgroups and primary groups
+        PrimaryGroups.Clear()
+        For Each cp As ConstantProperties In _comps.Values
+            If type = "UNIFAC" Or type = "UNIFACLL" Then
+                For Each ufg As String In cp.UNIFACGroups.Collection.Keys
+                    g1 = uni.Group2ID(ufg)
+                    pg = uni.UnifGroups.Groups(g1).PrimGroupName
+                    If Not PrimaryGroups.ContainsKey(pg) Then PrimaryGroups.Add(pg, uni.UnifGroups.Groups(g1).PrimaryGroup)
+                Next
+            Else
+                For Each ufg As String In cp.MODFACGroups.Collection.Keys
+                    g1 = uni.Group2ID(ufg)
+                    pg = uni.ModfGroups.Groups(g1).MainGroupName
+                    If Not PrimaryGroups.ContainsKey(pg) Then PrimaryGroups.Add(pg, uni.ModfGroups.Groups(g1).PrimaryGroup)
+                Next
+            End If
+        Next
+
+        IPGrid.ColumnCount = PrimaryGroups.Count + 1
+        IPGrid.RowCount = PrimaryGroups.Count + _comps.Count + 1
+        IPGrid.Columns(0).HeaderText = "Component"
+        k = 1
+        For Each gn As String In PrimaryGroups.Keys
+            IPGrid.Item(k, _comps.Count).Value = gn
+            IPGrid.Item(k, _comps.Count).ToolTipText = "Main group"
+            IPGrid.Columns(k).Width = 50
+            IPGrid.Item(0, _comps.Count + k).Value = gn
+            IPGrid.Item(0, _comps.Count + k).ToolTipText = "Main group"
+            IPGrid.Item(0, _comps.Count + k).Style.Alignment = DataGridViewContentAlignment.MiddleRight
+            IPGrid.Item(0, _comps.Count + k).Style.BackColor = Color.Crimson
+            IPGrid.Item(k, _comps.Count).Style.BackColor = Color.Crimson
+            IPGrid.Item(0, _comps.Count + k).Style.ForeColor = Color.Yellow
+            IPGrid.Item(k, _comps.Count).Style.ForeColor = Color.Yellow
+            k += 1
+        Next
+        IPGrid.Item(0, _comps.Count).Style.BackColor = Color.Crimson
+        IPGrid.Item(0, _comps.Count).Selected = True
+
+        For k = 1 To PrimaryGroups.Count
+            For l = 0 To _comps.Count - 1
+                IPGrid.Item(k, l).Style.BackColor = Color.LightGray
+            Next
+        Next
+
+        'List of components with their groups
+        For Each s1 As String In PrimaryGroups.Keys
+            For Each s2 As String In PrimaryGroups.Keys
+                g1 = PrimaryGroups.Item(s1)
+                g2 = PrimaryGroups.Item(s2)
+
+                If g1 = g2 Then
+                    IPGrid.Item(PrimaryGroups.IndexOfKey(s1) + 1, PrimaryGroups.IndexOfKey(s2) + 1 + _comps.Count).Style.BackColor = Color.Black
+                Else
+                    If type = "UNIFAC" Or type = "UNIFACLL" Then
+                        If uni.UnifGroups.InteracParam.ContainsKey(g1) Then
+                            If uni.UnifGroups.InteracParam(g1).ContainsKey(g2) Then
+                                ip = uni.UnifGroups.InteracParam(g1).Item(g2)
+                            Else
+                                ip = "X"
+                            End If
+                        Else
+                            ip = "X"
+                        End If
+                    Else
+                        If uni.ModfGroups.InteracParam_aij.ContainsKey(g1) And uni.ModfGroups.InteracParam_aij(g1).ContainsKey(g2) Then
+                            ip = "A: " & uni.ModfGroups.InteracParam_aij(g1).Item(g2) & vbCrLf & "B: " & uni.ModfGroups.InteracParam_bij(g1).Item(g2) & vbCrLf & "C: " & uni.ModfGroups.InteracParam_cij(g1).Item(g2)
+                        Else
+                            If uni.ModfGroups.InteracParam_aij.ContainsKey(g2) And uni.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) Then
+                                ip = "A: " & uni.ModfGroups.InteracParam_aji(g2).Item(g1) & vbCrLf & "B: " & uni.ModfGroups.InteracParam_bji(g2).Item(g1) & vbCrLf & "C: " & uni.ModfGroups.InteracParam_cji(g2).Item(g1)
+                            Else
+                                ip = "X"
+                            End If
+                        End If
+                    End If
+
+                    IPGrid.Item(PrimaryGroups.IndexOfKey(s1) + 1, PrimaryGroups.IndexOfKey(s2) + 1 + _comps.Count).Style.WrapMode = DataGridViewTriState.True
+                    IPGrid.Item(PrimaryGroups.IndexOfKey(s1) + 1, PrimaryGroups.IndexOfKey(s2) + 1 + _comps.Count).Value = ip
+                    If ip = "X" Then
+                        IPGrid.Item(PrimaryGroups.IndexOfKey(s1) + 1, PrimaryGroups.IndexOfKey(s2) + 1 + _comps.Count).Style.BackColor = Color.Yellow
+                    End If
+                End If
+
+            Next
+        Next
+
+
+        k = 0
+        For Each cp As ConstantProperties In _comps.Values
+            IPGrid.Item(0, k).Value = cp.Name
+            IPGrid.Item(0, k).Style.BackColor = Color.CadetBlue
+            IPGrid.Item(0, k).Style.ForeColor = Color.White
+            IPGrid.Item(0, k).Style.Alignment = DataGridViewContentAlignment.MiddleRight
+            If type = "UNIFAC" Or type = "UNIFACLL" Then
+                For Each ufg As String In cp.UNIFACGroups.Collection.Keys
+                    l = uni.Group2ID(ufg)
+                    pg = uni.UnifGroups.Groups(l).PrimGroupName
+                    l = PrimaryGroups.IndexOfKey(pg)
+                    IPGrid.Item(l + 1, k).Value = IPGrid.Item(l + 1, k).Value + cp.UNIFACGroups.Collection.Item(ufg)
+                Next
+            Else
+                For Each ufg As String In cp.MODFACGroups.Collection.Keys
+                    l = uni.Group2ID(ufg)
+                    pg = uni.ModfGroups.Groups(l).MainGroupName
+                    l = PrimaryGroups.IndexOfKey(pg)
+                    IPGrid.Item(l + 1, k).Value = IPGrid.Item(l + 1, k).Value + cp.MODFACGroups.Collection.Item(ufg)
+                Next
+            End If
+            k += 1
+        Next
+    End Sub
     Private Sub FormConfigPR_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        Me.Text = DWSIM.App.GetLocalString("ConfigurarPacotedePropriedades") & _pp.Tag & ")"
+        Me.Text = DWSIM.App.GetLocalString("ConfigurarPacotedePropriedades") & _pp.Tag & " - " & _pp.ComponentName & ")"
 
 
         With Me.KryptonDataGridView1.Rows
@@ -55,10 +181,25 @@ Public Class FormConfigPP
             Me.FaTabStripItem1.Selected = True
         End If
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
-
+        If TypeOf _pp Is UNIFACPropertyPackage Then
+            TabStripUNIFAC.Visible = True
+            FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
+            TabStripUNIFAC.Title = "UNIFAC Interactions"
+        End If
+        If TypeOf _pp Is UNIFACLLPropertyPackage Then
+            TabStripUNIFAC.Visible = True
+            FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
+            TabStripUNIFAC.Title = "UNIFACLL Interactions"
+        End If
+        If TypeOf _pp Is MODFACPropertyPackage Then
+            TabStripUNIFAC.Visible = True
+            FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
+            TabStripUNIFAC.Title = "MODFAC Interactions"
+        End If
         Me.KryptonDataGridView2.Rows.Clear()
 
         Dim nf As String = "0.####"
+
 
         If TypeOf _pp Is SRKPropertyPackage Then
 
@@ -100,6 +241,7 @@ gt1:            If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
         ElseIf TypeOf _pp Is UNIFACPropertyPackage Then
 
             Dim ppu As UNIFACPropertyPackage = _pp
+            FillUNIFACParamTable("UNIFAC")
 
             For Each cp As ConstantProperties In _comps.Values
 gtu:            If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
@@ -137,6 +279,7 @@ gtu:            If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
         ElseIf TypeOf _pp Is UNIFACLLPropertyPackage Then
 
             Dim ppu As UNIFACLLPropertyPackage = _pp
+            FillUNIFACParamTable("UNIFACLL")
 
             For Each cp As ConstantProperties In _comps.Values
 gtul:           If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
@@ -174,6 +317,7 @@ gtul:           If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
         ElseIf TypeOf _pp Is MODFACPropertyPackage Then
 
             Dim ppu As MODFACPropertyPackage = _pp
+            FillUNIFACParamTable("MODFAC")
 
             For Each cp As ConstantProperties In _comps.Values
 gtmu:           If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
@@ -382,4 +526,6 @@ gt2:            If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
         Next
 
     End Sub
+
+   
 End Class

@@ -915,7 +915,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 fields = parser.ReadFields()
                 While Not parser.EndOfData
                     fields = parser.ReadFields()
-                    Me.Groups.Add(fields(1), New UnifacGroup(fields(3), fields(0), fields(1), Double.Parse(fields(4), cult), Double.Parse(fields(5), cult)))
+                    Me.Groups.Add(fields(1), New UnifacGroup(fields(2), fields(3), fields(0), fields(1), Double.Parse(fields(4), cult), Double.Parse(fields(5), cult)))
                 End While
             End Using
 
@@ -984,7 +984,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 fields = parser.ReadFields()
                 While Not parser.EndOfData
                     fields = parser.ReadFields()
-                    Me.Groups.Add(fields(1), New UnifacGroup(fields(3), fields(0), fields(1), Double.Parse(fields(4), cult), Double.Parse(fields(5), cult)))
+                    Me.Groups.Add(fields(1), New UnifacGroup(fields(2), fields(3), fields(0), fields(1), Double.Parse(fields(4), cult), Double.Parse(fields(5), cult)))
                 End While
             End Using
 
@@ -1031,6 +1031,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
     <System.Serializable()> Public Class UnifacGroup
 
+        Protected m_primarygroupname As String
         Protected m_groupname As String
 
         Protected m_main_group As Integer
@@ -1038,7 +1039,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Protected m_r As Double
         Protected m_q As Double
-
+        Public Property PrimGroupName() As String
+            Get
+                Return m_primarygroupname
+            End Get
+            Set(ByVal value As String)
+                m_primarygroupname = value
+            End Set
+        End Property
         Public Property GroupName() As String
             Get
                 Return m_groupname
@@ -1084,7 +1092,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             End Set
         End Property
 
-        Sub New(ByVal Nome As String, ByVal PrimGroup As String, ByVal SecGroup As String, ByVal R As Double, ByVal Q As Double)
+        Sub New(ByVal MainGroupName As String, ByVal Nome As String, ByVal PrimGroup As String, ByVal SecGroup As String, ByVal R As Double, ByVal Q As Double)
+            Me.PrimGroupName = MainGroupName
             Me.GroupName = Nome
             Me.PrimaryGroup = PrimGroup
             Me.Secondary_Group = SecGroup
