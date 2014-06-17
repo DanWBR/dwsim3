@@ -556,6 +556,6 @@
     <value>FormConfigPP</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>DWSIM.FormConfigBase, DWSIM, Version=3.1.5280.37043, Culture=neutral, PublicKeyToken=null</value>
+    <value>DWSIM.FormConfigBase, DWSIM, Version=3.1.5281.34112, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

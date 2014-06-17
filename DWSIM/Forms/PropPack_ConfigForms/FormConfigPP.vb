@@ -73,7 +73,6 @@ Public Class FormConfigPP
             IPGrid.Columns(k).HeaderText = gn
             IPGrid.Item(k, _comps.Count).Value = gn
             IPGrid.Item(k, _comps.Count).ToolTipText = "Main group"
-            'IPGrid.Columns(k).Width = 50
             IPGrid.Item(0, _comps.Count + k).Value = gn
             IPGrid.Item(0, _comps.Count + k).ToolTipText = "Main group"
             IPGrid.Item(0, _comps.Count + k).Style.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -114,9 +113,13 @@ Public Class FormConfigPP
                     Else
                         If uni.ModfGroups.InteracParam_aij.ContainsKey(g1) And uni.ModfGroups.InteracParam_aij(g1).ContainsKey(g2) Then
                             ip = "A: " & uni.ModfGroups.InteracParam_aij(g1).Item(g2) & vbCrLf & "B: " & uni.ModfGroups.InteracParam_bij(g1).Item(g2) & vbCrLf & "C: " & uni.ModfGroups.InteracParam_cij(g1).Item(g2)
+
+                            If uni.ModfGroups.InteracParam_aij(g1).Item(g2) = 0 Then IPGrid.Item(PrimaryGroups.IndexOfKey(s1) + 1, PrimaryGroups.IndexOfKey(s2) + 1 + _comps.Count).Style.BackColor = Color.Yellow
                         Else
                             If uni.ModfGroups.InteracParam_aij.ContainsKey(g2) And uni.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) Then
                                 ip = "A: " & uni.ModfGroups.InteracParam_aji(g2).Item(g1) & vbCrLf & "B: " & uni.ModfGroups.InteracParam_bji(g2).Item(g1) & vbCrLf & "C: " & uni.ModfGroups.InteracParam_cji(g2).Item(g1)
+
+                                If uni.ModfGroups.InteracParam_aji(g2).Item(g1) = 0 Then IPGrid.Item(PrimaryGroups.IndexOfKey(s1) + 1, PrimaryGroups.IndexOfKey(s2) + 1 + _comps.Count).Style.BackColor = Color.Yellow
                             Else
                                 ip = "X"
                             End If
@@ -141,19 +144,32 @@ Public Class FormConfigPP
             IPGrid.Item(0, k).Style.ForeColor = Color.White
             IPGrid.Item(0, k).Style.Alignment = DataGridViewContentAlignment.MiddleRight
             If type = "UNIFAC" Or type = "UNIFACLL" Then
-                For Each ufg As String In cp.UNIFACGroups.Collection.Keys
-                    l = uni.Group2ID(ufg)
-                    pg = uni.UnifGroups.Groups(l).PrimGroupName
-                    l = PrimaryGroups.IndexOfKey(pg)
-                    IPGrid.Item(l + 1, k).Value = IPGrid.Item(l + 1, k).Value + cp.UNIFACGroups.Collection.Item(ufg)
-                Next
+                If cp.UNIFACGroups.Collection.Count > 0 Then
+                    For Each ufg As String In cp.UNIFACGroups.Collection.Keys
+                        l = uni.Group2ID(ufg)
+                        pg = uni.UnifGroups.Groups(l).PrimGroupName
+                        l = PrimaryGroups.IndexOfKey(pg)
+                        IPGrid.Item(l + 1, k).Value = IPGrid.Item(l + 1, k).Value + cp.UNIFACGroups.Collection.Item(ufg)
+                    Next
+                Else
+                    IPGrid.Item(0, k).Style.BackColor = Color.Yellow
+                    IPGrid.Item(0, k).Style.ForeColor = Color.Black
+                End If
+                
             Else
-                For Each ufg As String In cp.MODFACGroups.Collection.Keys
-                    l = uni.Group2ID(ufg)
-                    pg = uni.ModfGroups.Groups(l).MainGroupName
-                    l = PrimaryGroups.IndexOfKey(pg)
-                    IPGrid.Item(l + 1, k).Value = IPGrid.Item(l + 1, k).Value + cp.MODFACGroups.Collection.Item(ufg)
-                Next
+                If cp.MODFACGroups.Collection.Count > 0 Then
+                    For Each ufg As String In cp.MODFACGroups.Collection.Keys
+                        l = uni.Group2ID(ufg)
+                        pg = uni.ModfGroups.Groups(l).MainGroupName
+                        l = PrimaryGroups.IndexOfKey(pg)
+                        g1 = IPGrid.Item(l + 1, k).Value
+                        g2 = cp.MODFACGroups.Collection.Item(ufg)
+                        IPGrid.Item(l + 1, k).Value = g1 + g2
+                    Next
+                Else
+                    IPGrid.Item(0, k).Style.BackColor = Color.Yellow
+                    IPGrid.Item(0, k).Style.ForeColor = Color.Black
+                End If
             End If
             k += 1
         Next
