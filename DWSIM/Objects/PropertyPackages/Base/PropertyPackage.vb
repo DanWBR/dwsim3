@@ -2029,7 +2029,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
-                            If Double.IsNaN(T) Or Double.IsInfinity(T) Then P = 0.0#
+                            If Double.IsNaN(T) Or Double.IsInfinity(T) Then T = 0.0#
 
                             Dim Vx, Vx2, Vy As Double()
 

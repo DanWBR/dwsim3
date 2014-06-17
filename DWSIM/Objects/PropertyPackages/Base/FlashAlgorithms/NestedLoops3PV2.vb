@@ -1088,7 +1088,18 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
                     gv = hv - T * sv
 
                     If gl < gv Then 'liquid-like
-                        result = Flash_TV_3P(Vz, result(1), result(0) / 2, result(0) / 2, result(3), result(2), vx2est, T, V, result(4), PP)
+
+                        'do a simple LLE calculation to get initial estimates.
+                        Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = result(2), .InitialEstimatesForPhase2 = vx2est, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
+                        Dim resultL As Object = slle.Flash_PT(Vz, P, T * 0.9, PP)
+
+                        L1 = resultL(0)
+                        L2 = resultL(5)
+                        Vx1 = resultL(2)
+                        Vx2 = resultL(6)
+
+                        result = Flash_TV_3P(Vz, result(1), result(0) * L1, result(0) * L2, result(3), Vx1, Vx2, T, V, result(4), PP)
+
                     End If
 
                 End If
@@ -1191,7 +1202,18 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
                     gv = hv - T * sv
 
                     If gl < gv Then 'liquid-like
-                        result = Flash_PV_3P(Vz, result(1), result(0) / 2, result(0) / 2, result(3), result(2), vx2est, P, V, result(4), PP)
+
+                        'do a simple LLE calculation to get initial estimates.
+                        Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = result(2), .InitialEstimatesForPhase2 = vx2est, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
+                        Dim resultL As Object = slle.Flash_PT(Vz, P, T * 0.9, PP)
+
+                        L1 = resultL(0)
+                        L2 = resultL(5)
+                        Vx1 = resultL(2)
+                        Vx2 = resultL(6)
+
+                        result = Flash_PV_3P(Vz, result(1), result(0) * L1, result(0) * L2, result(3), Vx1, Vx2, P, V, T, PP)
+
                     End If
 
                 End If
@@ -1450,7 +1472,7 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
                     L2 += -dL2 * 0.3
 
                     If L2 < 0.0# Then L2 = 0.0#
-                    If L2 > 1.0# Then L2 = 1.0# - V
+                    If L2 > 1.0# - V Then L2 = 1.0# - V
 
                     L1 = 1 - V - L2
 
@@ -1723,7 +1745,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
                     L2 += -dL2 * 0.3
 
                     If L2 < 0.0# Then L2 = 0.0#
-                    If L2 > 1.0# Then L2 = 1.0# - V
+                    If L2 > 1.0# - V Then L2 = 1.0# - V
 
                     L1 = 1 - V - L2
 
