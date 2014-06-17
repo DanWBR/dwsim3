@@ -1382,7 +1382,6 @@ Partial Class FormStSim
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.PanelPPAdv)
         Me.Controls.Add(Me.PanelComps)
         Me.Controls.Add(Me.PanelReactions)
         Me.Controls.Add(Me.PanelOptions)
@@ -1392,6 +1391,7 @@ Partial Class FormStSim
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.PanelUnits)
         Me.Controls.Add(Me.PanelPP)
+        Me.Controls.Add(Me.PanelPPAdv)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FormStSim"
         Me.ShowIcon = False

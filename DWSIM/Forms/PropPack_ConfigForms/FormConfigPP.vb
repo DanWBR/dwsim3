@@ -28,11 +28,13 @@ Public Class FormConfigPP
     Private Sub FormConfigPR_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         Me.KryptonDataGridView2.DataSource = Nothing
     End Sub
+
     Private Sub FillUNIFACParamTable(ByVal type As String)
+
         'fill UNIFAC interaction parameter list
         Dim k, l As Integer
         Dim PrimaryGroups As New SortedList()
-        Dim uni As Object
+        Dim uni As Object = Nothing
         Dim g1, g2 As Integer
         Dim ip, pg As String
 
@@ -68,9 +70,10 @@ Public Class FormConfigPP
         IPGrid.Columns(0).HeaderText = "Component"
         k = 1
         For Each gn As String In PrimaryGroups.Keys
+            IPGrid.Columns(k).HeaderText = gn
             IPGrid.Item(k, _comps.Count).Value = gn
             IPGrid.Item(k, _comps.Count).ToolTipText = "Main group"
-            IPGrid.Columns(k).Width = 50
+            'IPGrid.Columns(k).Width = 50
             IPGrid.Item(0, _comps.Count + k).Value = gn
             IPGrid.Item(0, _comps.Count + k).ToolTipText = "Main group"
             IPGrid.Item(0, _comps.Count + k).Style.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -133,7 +136,7 @@ Public Class FormConfigPP
 
         k = 0
         For Each cp As ConstantProperties In _comps.Values
-            IPGrid.Item(0, k).Value = cp.Name
+            IPGrid.Item(0, k).Value = DWSIM.App.GetComponentName(cp.Name)
             IPGrid.Item(0, k).Style.BackColor = Color.CadetBlue
             IPGrid.Item(0, k).Style.ForeColor = Color.White
             IPGrid.Item(0, k).Style.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -155,6 +158,7 @@ Public Class FormConfigPP
             k += 1
         Next
     End Sub
+
     Private Sub FormConfigPR_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         Me.Text = DWSIM.App.GetLocalString("ConfigurarPacotedePropriedades") & _pp.Tag & " - " & _pp.ComponentName & ")"
@@ -184,17 +188,17 @@ Public Class FormConfigPP
         If TypeOf _pp Is UNIFACPropertyPackage Then
             TabStripUNIFAC.Visible = True
             FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
-            TabStripUNIFAC.Title = "UNIFAC Interactions"
+            TabStripUNIFAC.Title = "UNIFAC Interaction Parameters"
         End If
         If TypeOf _pp Is UNIFACLLPropertyPackage Then
             TabStripUNIFAC.Visible = True
             FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
-            TabStripUNIFAC.Title = "UNIFACLL Interactions"
+            TabStripUNIFAC.Title = "UNIFAC-LL Interaction Parameters"
         End If
         If TypeOf _pp Is MODFACPropertyPackage Then
             TabStripUNIFAC.Visible = True
             FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
-            TabStripUNIFAC.Title = "MODFAC Interactions"
+            TabStripUNIFAC.Title = "MODFAC Interaction Parameters"
         End If
         Me.KryptonDataGridView2.Rows.Clear()
 
@@ -241,6 +245,7 @@ gt1:            If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
         ElseIf TypeOf _pp Is UNIFACPropertyPackage Then
 
             Dim ppu As UNIFACPropertyPackage = _pp
+
             FillUNIFACParamTable("UNIFAC")
 
             For Each cp As ConstantProperties In _comps.Values
@@ -279,6 +284,7 @@ gtu:            If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
         ElseIf TypeOf _pp Is UNIFACLLPropertyPackage Then
 
             Dim ppu As UNIFACLLPropertyPackage = _pp
+
             FillUNIFACParamTable("UNIFACLL")
 
             For Each cp As ConstantProperties In _comps.Values
@@ -317,6 +323,7 @@ gtul:           If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
         ElseIf TypeOf _pp Is MODFACPropertyPackage Then
 
             Dim ppu As MODFACPropertyPackage = _pp
+
             FillUNIFACParamTable("MODFAC")
 
             For Each cp As ConstantProperties In _comps.Values

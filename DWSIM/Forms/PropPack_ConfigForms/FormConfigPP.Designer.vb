@@ -22,6 +22,7 @@ Partial Class FormConfigPP
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormConfigPP))
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -31,7 +32,6 @@ Partial Class FormConfigPP
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
         Me.TabStripUNIFAC = New FarsiLibrary.Win.FATabStripItem()
         Me.IPGrid = New System.Windows.Forms.DataGridView()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -48,6 +48,7 @@ Partial Class FormConfigPP
         Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.TabStripUNIFAC.SuspendLayout()
@@ -65,7 +66,7 @@ Partial Class FormConfigPP
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
         resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
-        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.TabStripUNIFAC, Me.FaTabStripItem2, Me.FaTabStripItem1})
+        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem2, Me.FaTabStripItem1, Me.TabStripUNIFAC})
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
         '
@@ -82,7 +83,7 @@ Partial Class FormConfigPP
         '
         Me.IPGrid.AllowUserToAddRows = False
         Me.IPGrid.AllowUserToDeleteRows = False
-        Me.IPGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.IPGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.IPGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.IPGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.IPGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column6})
@@ -90,12 +91,6 @@ Partial Class FormConfigPP
         Me.IPGrid.MultiSelect = False
         Me.IPGrid.Name = "IPGrid"
         Me.IPGrid.ReadOnly = True
-        '
-        'Column6
-        '
-        resources.ApplyResources(Me.Column6, "Column6")
-        Me.Column6.Name = "Column6"
-        Me.Column6.ReadOnly = True
         '
         'FaTabStripItem2
         '
@@ -230,6 +225,12 @@ Partial Class FormConfigPP
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
         '
+        'Column6
+        '
+        Me.Column6.HeaderText = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.Column6.Name = "Column6"
+        Me.Column6.ReadOnly = True
+        '
         'FormConfigPP
         '
         resources.ApplyResources(Me, "$this")
@@ -270,6 +271,6 @@ Partial Class FormConfigPP
     Public WithEvents Button3 As System.Windows.Forms.Button
     Public WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents IPGrid As System.Windows.Forms.DataGridView
-    Friend WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
     Private WithEvents TabStripUNIFAC As FarsiLibrary.Win.FATabStripItem
+    Friend WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class
