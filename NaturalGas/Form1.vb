@@ -1,4 +1,4 @@
-﻿'Natural Gas Properties Plugin for DWSIM
+'Natural Gas Properties Plugin for DWSIM
 'Copyright 2010 Daniel Medeiros
 
 Imports FileHelpers
@@ -224,23 +224,23 @@ Public Class Form1
 
                 'calculation of heating values at various conditions
                 For Each c As DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia In dobj.Fases(0).Componentes.Values
-                    If dmc.ContainsKey(c.Nome) Then
-                        hhv25m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.Nome).sup25 * 1000
-                        hhv20m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.Nome).sup20 * 1000
-                        hhv15m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.Nome).sup15 * 1000
-                        hhv0m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.Nome).sup0 * 1000
-                        lhv25m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.Nome).inf25 * 1000
-                        lhv20m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.Nome).inf20 * 1000
-                        lhv15m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.Nome).inf15 * 1000
-                        lhv0m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.Nome).inf0 * 1000
+                    If dmc.ContainsKey(c.ConstantProperties.CAS_Number) Then
+                        hhv25m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.ConstantProperties.CAS_Number).sup25 * 1000
+                        hhv20m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.ConstantProperties.CAS_Number).sup20 * 1000
+                        hhv15m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.ConstantProperties.CAS_Number).sup15 * 1000
+                        hhv0m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.ConstantProperties.CAS_Number).sup0 * 1000
+                        lhv25m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.ConstantProperties.CAS_Number).inf25 * 1000
+                        lhv20m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.ConstantProperties.CAS_Number).inf20 * 1000
+                        lhv15m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.ConstantProperties.CAS_Number).inf15 * 1000
+                        lhv0m += c.FracaoMolar * c.ConstantProperties.Molar_Weight / mw * dmc(c.ConstantProperties.CAS_Number).inf0 * 1000
                     End If
-                    If dvc.ContainsKey(c.Nome) Then
-                        hhv1515v += c.FracaoMolar * dvc(c.Nome).sup1515 * 1000
-                        hhv00v += c.FracaoMolar * dvc(c.Nome).sup00 * 1000
-                        hhv2020v += c.FracaoMolar * dvc(c.Nome).sup2020 * 1000
-                        lhv1515v += c.FracaoMolar * dvc(c.Nome).inf1515 * 1000
-                        lhv00v += c.FracaoMolar * dvc(c.Nome).inf00 * 1000
-                        lhv2020v += c.FracaoMolar * dvc(c.Nome).inf2020 * 1000
+                    If dvc.ContainsKey(c.ConstantProperties.CAS_Number) Then
+                        hhv1515v += c.FracaoMolar * dvc(c.ConstantProperties.CAS_Number).sup1515 * 1000
+                        hhv00v += c.FracaoMolar * dvc(c.ConstantProperties.CAS_Number).sup00 * 1000
+                        hhv2020v += c.FracaoMolar * dvc(c.ConstantProperties.CAS_Number).sup2020 * 1000
+                        lhv1515v += c.FracaoMolar * dvc(c.ConstantProperties.CAS_Number).inf1515 * 1000
+                        lhv00v += c.FracaoMolar * dvc(c.ConstantProperties.CAS_Number).inf00 * 1000
+                        lhv2020v += c.FracaoMolar * dvc(c.ConstantProperties.CAS_Number).inf2020 * 1000
                     End If
                 Next
 
