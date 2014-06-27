@@ -575,19 +575,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         ''' Keywords: Phase identification; Multiphase equilibria; Process simulators</remarks>
         Public Shared Function IdentifyPhase(Vx As Double(), P As Double, T As Double, pp As PropertyPackage, ByVal eos As String) As String
 
-            Dim TAU, Tinv As Double, newphase As String, tmp As Double()
+            Dim PIP, Tinv As Double, newphase As String, tmp As Double()
 
-            tmp = CalcTAU(Vx, P, T, pp, eos)
+            tmp = CalcPIP(Vx, P, T, pp, eos)
 
-            TAU = tmp(0)
+            PIP = tmp(0)
             Tinv = tmp(1)
 
             If Tinv < 500 Then
                 Dim fx, dfdx As Double
                 Dim i As Integer = 0
                 Do
-                    fx = 1 - CalcTAU(Vx, P, Tinv, pp, eos)(0)
-                    dfdx = (fx - (1 - CalcTAU(Vx, P, Tinv - 1, pp, eos)(0)))
+                    fx = 1 - CalcPIP(Vx, P, Tinv, pp, eos)(0)
+                    dfdx = (fx - (1 - CalcPIP(Vx, P, Tinv - 1, pp, eos)(0)))
                     Tinv = Tinv - fx / dfdx
                     i += 1
                 Loop Until Math.Abs(fx) < 0.000001 Or i = 25
@@ -596,9 +596,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             If Double.IsNaN(Tinv) Or Double.IsInfinity(Tinv) Then Tinv = 2000
 
             If T > Tinv Then
-                If TAU > 1 Then newphase = "V" Else newphase = "L"
+                If PIP > 1 Then newphase = "V" Else newphase = "L"
             Else
-                If TAU > 1 Then newphase = "L" Else newphase = "V"
+                If PIP > 1 Then newphase = "L" Else newphase = "V"
             End If
 
             Return newphase
@@ -606,7 +606,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         End Function
 
         ''' <summary>
-        ''' This algorithm returns the TAU parameter for a fluid given its composition and system conditions.
+        ''' This algorithm returns the Phase Identification (PI) parameter for a fluid given its composition and system conditions.
         ''' </summary>
         ''' <param name="Vx">Vector of mole fractions</param>
         ''' <param name="P">Pressure in Pa</param>
@@ -620,7 +620,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         ''' 25 February 2011, Pages 225-233, ISSN 0378-3812, http://dx.doi.org/10.1016/j.fluid.2010.12.001.
         ''' (http://www.sciencedirect.com/science/article/pii/S0378381210005935)
         ''' Keywords: Phase identification; Multiphase equilibria; Process simulators</remarks>
-        Private Shared Function CalcTAU(Vx As Double(), P As Double, T As Double, pp As PropertyPackage, ByVal eos As String) As Double()
+        Private Shared Function CalcPIP(Vx As Double(), P As Double, T As Double, pp As PropertyPackage, ByVal eos As String) As Double()
 
             Dim g1, g2, g3, g4, g5, g6, t1, t2, v, a, b, dadT, R As Double, tmp As Double()
 
@@ -655,15 +655,38 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             d2Pdv2 = 2 * R * T * g1 ^ 3 - 2 * a * g6 * (g2 ^ 2 + g6 + g3 ^ 2)
             dPdv = -R * T * g1 ^ 2 + a * g4 * g6
 
-            Dim TAU As Double
+            Dim PIP As Double
 
-            TAU = v * (d2PdvdT / dPdT - d2Pdv2 / dPdv)
+            PIP = v * (d2PdvdT / dPdT - d2Pdv2 / dPdv)
 
             Dim Tinv As Double
 
             Tinv = 2 * a * (v - b) ^ 2 / (R * b * v ^ 2)
 
-            Return New Double() {TAU, Tinv}
+            Return New Double() {PIP, Tinv}
+
+        End Function
+
+        Public Shared Function CalcPIPressure(Vx As Double(), Pest As Double, T As Double, pp As PropertyPackage, ByVal eos As String) As String
+
+            Dim P, PIP As Double
+
+            Dim brent As New MathEx.BrentOpt.Brent
+            brent.DefineFuncDelegate(AddressOf PIPressureF)
+
+            P = brent.BrentOpt(101325, Pest, 1000, 0.0000000001, 1000, New Object() {Vx, T, pp, eos})
+
+            PIP = CalcPIP(Vx, P, T, pp, eos)(0)
+
+            If P < 0 Or Abs(P - Pest) <= (Pest - 101325) / 1000 Then P = 0.0#
+
+            Return P
+
+        End Function
+
+        Private Shared Function PIPressureF(x As Double, otherargs As Object)
+
+            Return 1 - CalcPIP(otherargs(0), x, otherargs(1), otherargs(2), otherargs(3))(0)
 
         End Function
 

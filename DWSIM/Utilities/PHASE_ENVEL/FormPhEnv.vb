@@ -31,10 +31,11 @@ Public Class FormPhEnv
     Private loaded As Boolean = False
     Private calculated As Boolean = False
     Private qualitycalc As Boolean = False
+    Private phaseidentification As Boolean = False
     Private showoppoint As Boolean = True
 
     'desmembrar vetores
-    Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, PHsI, PHsII, THsI, THsII, TQ, PQ As New ArrayList
+    Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, PHsI, PHsII, THsI, THsII, TQ, PQ, TI, PI As New ArrayList
     Dim UT, UP, UH, US, UV As New ArrayList
     Dim PC As ArrayList
     Dim ot, op, ov, oh, os As Double
@@ -101,8 +102,9 @@ exec:       With Me.GraphControl.GraphPane.Legend
             End With
             If Me.CheckBox1.Enabled Then Me.qualitycalc = Me.CheckBox1.Checked Else Me.qualitycalc = False
             If Me.CheckBox2.Checked Then Me.showoppoint = True Else Me.showoppoint = False
+            Me.phaseidentification = chkpip.Checked
             Me.Enabled = False
-            Me.BackgroundWorker1.RunWorkerAsync(New Object() {0, Me.TextBox1.Text, Me.CheckBox1.Checked, Me.CheckBox3.Checked})
+            Me.BackgroundWorker1.RunWorkerAsync(New Object() {0, Me.TextBox1.Text, Me.CheckBox1.Checked, Me.CheckBox3.Checked, Me.chkpip.Checked, Me.chkhyd.Checked})
             fpec = New FormPEC
             fpec.bw = Me.BackgroundWorker1
             fpec.Label2.Tag = fpec.Label2.Text
@@ -124,7 +126,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 0
 
-                    Dim px1, py1, px2, py2, px3, py3, px4, py4, ph1, ph2, th1, th2 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3, px4, py4, ph1, ph2, th1, th2, px5, py5 As New ArrayList
 
                     Dim i As Integer
 
@@ -143,6 +145,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                     For i = 0 To TQ.Count - 1
                         py4.Add(cv.ConverterDoSI(su.spmp_temperature, TQ(i)))
                         px4.Add(cv.ConverterDoSI(su.spmp_pressure, PQ(i)))
+                    Next
+                    For i = 0 To TI.Count - 1
+                        py5.Add(cv.ConverterDoSI(su.spmp_temperature, TI(i)))
+                        px5.Add(cv.ConverterDoSI(su.spmp_pressure, PI(i)))
                     Next
                     
                     With Me.GraphControl.GraphPane
@@ -173,6 +179,15 @@ exec:       With Me.GraphControl.GraphPane.Legend
                                 .Color = Color.DarkGreen
                                 .Line.IsSmooth = False
                                 .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                            End With
+                        End If
+                        If phaseidentification Then
+                            With .AddCurve("Phase Identification Parameter = 1", px5.ToArray(GetType(Double)), py5.ToArray(GetType(Double)), Color.Brown, ZedGraph.SymbolType.Circle)
+                                .Color = Color.Brown
+                                .Line.IsSmooth = True
+                                .Line.IsVisible = True
+                                .Line.Width = 2
+                                .Symbol.IsVisible = False
                             End With
                         End If
                         If Me.showoppoint Then
@@ -311,7 +326,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 4
 
-                    Dim px1, py1, px2, py2, px3, py3, px4, py4, ph1, ph2, th1, th2 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3, px4, py4, ph1, ph2, th1, th2, px5, py5 As New ArrayList
 
                     Dim i As Integer
 
@@ -330,6 +345,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                     For i = 0 To TQ.Count - 1
                         px4.Add(cv.ConverterDoSI(su.spmp_temperature, TQ(i)))
                         py4.Add(cv.ConverterDoSI(su.spmp_pressure, PQ(i)))
+                    Next
+                    For i = 0 To TI.Count - 1
+                        px5.Add(cv.ConverterDoSI(su.spmp_temperature, TI(i)))
+                        py5.Add(cv.ConverterDoSI(su.spmp_pressure, PI(i)))
                     Next
 
                     With Me.GraphControl.GraphPane
@@ -360,6 +379,15 @@ exec:       With Me.GraphControl.GraphPane.Legend
                                 .Color = Color.DarkGreen
                                 .Line.IsSmooth = False
                                 .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                            End With
+                        End If
+                        If phaseidentification Then
+                            With .AddCurve("Phase Identification Parameter = 1", px5.ToArray(GetType(Double)), py5.ToArray(GetType(Double)), Color.Brown, ZedGraph.SymbolType.Circle)
+                                .Color = Color.Brown
+                                .Line.IsSmooth = True
+                                .Line.IsVisible = True
+                                .Line.Width = 2
+                                .Symbol.IsVisible = False
                             End With
                         End If
                         .Title.Text = strname
@@ -740,6 +768,8 @@ exec:       With Me.GraphControl.GraphPane.Legend
         PC = r(15)
         TQ = r(16)
         PQ = r(17)
+        TI = r(18)
+        PI = r(19)
 
         calculated = True
 
@@ -757,10 +787,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
             .Add("c10", DWSIM.App.GetLocalString("Vorvm3mol"))
             .Add("c11", "Test (" & su.spmp_temperature & ")")
             .Add("c12", DWSIM.App.GetLocalString("Pest") & su.spmp_pressure & ")")
-            If Me.CheckBox1.Checked Then
-                .Add("c13", "TQ (" & su.spmp_temperature & ")")
-                .Add("c14", "PQ (" & su.spmp_pressure & ")")
-            End If
+            .Add("c13", "TQ (" & su.spmp_temperature & ")")
+            .Add("c14", "PQ (" & su.spmp_pressure & ")")
+            .Add("c15", "TPIP (" & su.spmp_temperature & ")")
+            .Add("c16", "PPIP (" & su.spmp_pressure & ")")
         End With
 
         For Each c As DataGridViewColumn In Me.Grid1.Columns
@@ -769,13 +799,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
             c.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
         Next
 
-        Dim maxl As Integer = DWSIM.MathEx.Common.Max(New Object() {TVB.Count, TVD.Count, TE.Count, TQ.Count}) - 1
+        Dim maxl As Integer = DWSIM.MathEx.Common.Max(New Object() {TVB.Count, TVD.Count, TE.Count, TQ.Count, TI.Count}) - 1
 
         Dim k, j As Integer
-        Dim maxc As Integer = 11
-        If Me.CheckBox1.Checked Then
-            maxc = 13
-        End If
+        Dim maxc As Integer = Me.Grid1.Columns.Count - 1
         Dim data(maxc, maxl) As String
 
         j = 0
@@ -802,15 +829,19 @@ exec:       With Me.GraphControl.GraphPane.Legend
             data(11, j) = cv.ConverterDoSI(su.spmp_pressure, PE(j))
             j = j + 1
         Next
-        If Me.CheckBox1.Checked Then
-            j = 0
-            For Each d As Double In TQ
-                data(12, j) = cv.ConverterDoSI(su.spmp_temperature, d)
-                data(13, j) = cv.ConverterDoSI(su.spmp_pressure, PQ(j))
-                j = j + 1
-            Next
-        End If
-
+        j = 0
+        For Each d As Double In TQ
+            data(12, j) = cv.ConverterDoSI(su.spmp_temperature, d)
+            data(13, j) = cv.ConverterDoSI(su.spmp_pressure, PQ(j))
+            j = j + 1
+        Next
+        j = 0
+        For Each d As Double In TI
+            data(14, j) = cv.ConverterDoSI(su.spmp_temperature, d)
+            data(15, j) = cv.ConverterDoSI(su.spmp_pressure, PI(j))
+            j = j + 1
+        Next
+        
         With Me.Grid1.Rows
             .Clear()
             k = 0

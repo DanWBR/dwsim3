@@ -2694,7 +2694,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Loop Until i = n + 1
 
             Dim Pmin, Tmin, dP, dT, T, P As Double
-            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ As New ArrayList
+            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ, TI, PI As New ArrayList
             Dim TCR, PCR, VCR As Double
 
             Dim CP As New ArrayList
@@ -2977,6 +2977,26 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 PE.Add(0)
             End If
 
+            Dim Pest, Tmax As Double, eos As String
+
+            If Me.ComponentName.Contains("PR") Then eos = "PR" Else eos = "SRK"
+
+            Pest = PCR * 10
+            Tmin = MathEx.Common.Max(Me.RET_VTF)
+            Tmax = TCR * 1.4
+
+            If CBool(parameters(4)) = True Then
+                If bw IsNot Nothing Then bw.ReportProgress(0, "Phase Identification Parameter")
+                For T = Tmin To Tmax Step 5
+                    TI.Add(T)
+                    PI.Add(Auxiliary.FlashAlgorithms.FlashAlgorithm.CalcPIPressure(Vz, Pest, T, Me, eos))
+                    Pest = PI(PI.Count - 1)
+                Next
+            Else
+                TI.Add(0)
+                PI.Add(0)
+            End If
+
             If TVB.Count > 1 Then TVB.RemoveAt(TVB.Count - 1)
             If PB.Count > 1 Then PB.RemoveAt(PB.Count - 1)
             If HB.Count > 1 Then HB.RemoveAt(HB.Count - 1)
@@ -3001,10 +3021,10 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
             If TQ.Count > 1 Then TQ.RemoveAt(TQ.Count - 1)
             If PQ.Count > 1 Then PQ.RemoveAt(PQ.Count - 1)
-            If TQ.Count > 1 Then TQ.RemoveAt(TQ.Count - 1)
-            If PQ.Count > 1 Then PQ.RemoveAt(PQ.Count - 1)
+            If TI.Count > 1 Then TI.RemoveAt(TI.Count - 1)
+            If PI.Count > 1 Then PI.RemoveAt(PI.Count - 1)
 
-            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ}
+            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI}
 
         End Function
 

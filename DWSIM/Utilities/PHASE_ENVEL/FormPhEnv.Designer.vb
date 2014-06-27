@@ -22,9 +22,12 @@ Partial Class FormPhEnv
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormPhEnv))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.chkpip = New System.Windows.Forms.CheckBox()
+        Me.chkhyd = New System.Windows.Forms.CheckBox()
         Me.TextBox1 = New System.Windows.Forms.NumericUpDown()
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.CheckBox3 = New System.Windows.Forms.CheckBox()
@@ -56,6 +59,8 @@ Partial Class FormPhEnv
         'GroupBox6
         '
         resources.ApplyResources(Me.GroupBox6, "GroupBox6")
+        Me.GroupBox6.Controls.Add(Me.chkpip)
+        Me.GroupBox6.Controls.Add(Me.chkhyd)
         Me.GroupBox6.Controls.Add(Me.TextBox1)
         Me.GroupBox6.Controls.Add(Me.CheckBox2)
         Me.GroupBox6.Controls.Add(Me.CheckBox3)
@@ -65,6 +70,22 @@ Partial Class FormPhEnv
         Me.GroupBox6.Controls.Add(Me.Label23)
         Me.GroupBox6.Name = "GroupBox6"
         Me.GroupBox6.TabStop = False
+        '
+        'chkpip
+        '
+        resources.ApplyResources(Me.chkpip, "chkpip")
+        Me.chkpip.Checked = True
+        Me.chkpip.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkpip.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.chkpip.Name = "chkpip"
+        '
+        'chkhyd
+        '
+        resources.ApplyResources(Me.chkhyd, "chkhyd")
+        Me.chkhyd.Checked = True
+        Me.chkhyd.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkhyd.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.chkhyd.Name = "chkhyd"
         '
         'TextBox1
         '
@@ -190,8 +211,8 @@ Partial Class FormPhEnv
         Me.Grid1.AllowUserToDeleteRows = False
         Me.Grid1.AllowUserToOrderColumns = True
         Me.Grid1.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Grid1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Grid1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.Grid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.Grid1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.Grid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -248,4 +269,6 @@ Partial Class FormPhEnv
     Public WithEvents CheckBox2 As System.Windows.Forms.CheckBox
     Public WithEvents CheckBox3 As System.Windows.Forms.CheckBox
     Public WithEvents TextBox1 As System.Windows.Forms.NumericUpDown
+    Public WithEvents chkpip As System.Windows.Forms.CheckBox
+    Public WithEvents chkhyd As System.Windows.Forms.CheckBox
 End Class

@@ -118,26 +118,35 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkpip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 17</value>
+  </data>
+  <data name="chkpip.Text" xml:space="preserve">
+    <value>Include Phase Identification Parameter Limit</value>
+  </data>
+  <data name="chkhyd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 17</value>
+  </data>
+  <data name="chkhyd.Text" xml:space="preserve">
+    <value>Include hydrate equilibrium curve</value>
+  </data>
   <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>137, 42</value>
+    <value>208, 42</value>
   </data>
   <data name="TextBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 20</value>
-  </data>
-  <data name="CheckBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 19</value>
   </data>
   <data name="CheckBox2.Text" xml:space="preserve">
     <value>Arbeitspunkt einschließen</value>
   </data>
   <data name="CheckBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>224, 19</value>
+    <value>220, 17</value>
   </data>
   <data name="CheckBox3.Text" xml:space="preserve">
     <value>Stabilitätskurve einschließen (nur PT/TP)</value>
   </data>
   <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 19</value>
+    <value>147, 17</value>
   </data>
   <data name="CheckBox1.Text" xml:space="preserve">
     <value>Qualitätslinie einschließen</value>
@@ -151,11 +160,14 @@
   <data name="Label23.Text" xml:space="preserve">
     <value>Stoffstrom</value>
   </data>
+  <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>571, 121</value>
+  </data>
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Objektauswahl</value>
   </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>464, 47</value>
+    <value>571, 47</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Optionen</value>
@@ -199,6 +211,9 @@
   <data name="ComboBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>112, 16</value>
   </data>
+  <data name="ComboBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>322, 21</value>
+  </data>
   <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 20</value>
   </data>
@@ -212,13 +227,13 @@
     <value>6, 171</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>464, 371</value>
+    <value>571, 453</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Ergebnisse</value>
   </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>456, 331</value>
+    <value>563, 413</value>
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Grafische Darstellung</value>
@@ -227,9 +242,12 @@
     <value>Tabelle</value>
   </data>
   <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>458, 352</value>
+    <value>565, 434</value>
   </data>
   <data name="GraphControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>456, 331</value>
+    <value>563, 413</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>582, 627</value>
   </data>
 </root>

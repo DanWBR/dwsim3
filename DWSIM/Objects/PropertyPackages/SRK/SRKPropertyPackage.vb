@@ -609,7 +609,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Loop Until i = n + 1
 
             Dim Pmin, Tmin, dP, dT, T, P As Double
-            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ As New ArrayList
+            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ, TI, PI As New ArrayList
             Dim TCR, PCR, VCR As Double
 
             Dim CP As New ArrayList
@@ -887,11 +887,29 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     PE.Add(res(i)(1))
                     i += 1
                 Loop Until i = res.Count
-                'TE.Add(0)
-                'PE.Add(0)
             Else
                 TE.Add(0)
                 PE.Add(0)
+            End If
+
+            Dim Pest, Tmax As Double
+
+            Pest = PCR * 10
+            Tmin = MathEx.Common.Max(Me.RET_VTF)
+            Tmax = TCR * 1.4
+
+            PI.Clear()
+            TI.Clear()
+
+            If CBool(parameters(4)) = True Then
+                If bw IsNot Nothing Then bw.ReportProgress(0, "Phase Identification Parameter")
+                For T = Tmin To Tmax Step 5
+                    TI.Add(T)
+                    PI.Add(Auxiliary.FlashAlgorithms.FlashAlgorithm.CalcPIPressure(Vz, Pest, T, Me, "SRK"))
+                Next
+            Else
+                TI.Add(0)
+                PI.Add(0)
             End If
 
             If TVB.Count > 1 Then TVB.RemoveAt(TVB.Count - 1)
@@ -918,10 +936,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If TQ.Count > 1 Then TQ.RemoveAt(TQ.Count - 1)
             If PQ.Count > 1 Then PQ.RemoveAt(PQ.Count - 1)
-            If TQ.Count > 1 Then TQ.RemoveAt(TQ.Count - 1)
-            If PQ.Count > 1 Then PQ.RemoveAt(PQ.Count - 1)
+            If TI.Count > 1 Then TI.RemoveAt(TI.Count - 1)
+            If PI.Count > 1 Then PI.RemoveAt(PI.Count - 1)
 
-            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ}
+            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI}
 
         End Function
 
@@ -971,13 +989,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 End If
                 i = i + 1
             Loop Until i = n + 1
-            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ As New ArrayList
+            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ, TI, PI As New ArrayList
             Dim TCR, PCR, VCR As Double
             Dim CP As New ArrayList
 
             My.MyApplication.IsRunningParallelTasks = True
 
-            Dim tasks(4) As task
+            Dim tasks(5) As task
 
             tasks(0) = Task.Factory.StartNew(Sub()
                                                  If n > 0 Then
@@ -1240,11 +1258,27 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                  End If
                                              End Sub)
 
+            tasks(5) = Task.Factory.StartNew(Sub()
+                                                 Dim Pest, Tmax, Tmin, T As Double
+                                                 Pest = PCR * 10
+                                                 Tmin = MathEx.Common.Max(Me.RET_VTF)
+                                                 Tmax = TCR * 1.4
+                                                 If CBool(parameters(4)) = True Then
+                                                     For T = Tmin To Tmax Step 5
+                                                         TI.Add(T)
+                                                         PI.Add(Auxiliary.FlashAlgorithms.FlashAlgorithm.CalcPIPressure(Vz, Pest, T, Me, "SRK"))
+                                                     Next
+                                                 Else
+                                                     TI.Add(0)
+                                                     PI.Add(0)
+                                                 End If
+                                             End Sub)
+
             Try
-                Task.WaitAll(New Task() {tasks(1), tasks(2), tasks(3), tasks(4)})
+                Task.WaitAll(New Task() {tasks(1), tasks(2), tasks(3), tasks(4), tasks(5)})
             Catch ae As AggregateException
                 For Each ex As Exception In ae.InnerExceptions
-                    Throw
+                    Throw ex
                 Next
             End Try
 
@@ -1272,10 +1306,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If TQ.Count > 1 Then TQ.RemoveAt(TQ.Count - 1)
             If PQ.Count > 1 Then PQ.RemoveAt(PQ.Count - 1)
-            If TQ.Count > 1 Then TQ.RemoveAt(TQ.Count - 1)
-            If PQ.Count > 1 Then PQ.RemoveAt(PQ.Count - 1)
+            If TI.Count > 1 Then TI.RemoveAt(TI.Count - 1)
+            If PI.Count > 1 Then PI.RemoveAt(PI.Count - 1)
 
-            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ}
+            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI}
 
         End Function
 
