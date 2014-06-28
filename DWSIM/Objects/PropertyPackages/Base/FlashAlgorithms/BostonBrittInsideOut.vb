@@ -1298,9 +1298,11 @@ restart:    Do
                 i = 0
                 T = 0
                 Do
-                    T += Vz(i) * PP.AUX_TSATi(P, i)
-                    Vp(i) = PP.AUX_PVAPi(Vn(i), T)
-                    Ki(i) = Vp(i) / P
+                    If Vz(i) > 0 Then
+                        T += Vz(i) * PP.AUX_TSATi(P, i)
+                        Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                        Ki(i) = Vp(i) / P
+                    End If
                     i += 1
                 Loop Until i = n + 1
                 Vx = Vz
@@ -1581,6 +1583,7 @@ final:      d2 = Date.Now
                 i = 0
                 P = 0
                 Do
+                    Vp(i) = PP.AUX_PVAPi(Vn(i), T)
                     P += Vz(i) * Vp(i)
                     i += 1
                 Loop Until i = n + 1

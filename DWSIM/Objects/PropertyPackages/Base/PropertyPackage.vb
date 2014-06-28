@@ -3268,14 +3268,14 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 If i = 0 Then
                                     tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)
                                     calcP = tmp(4)
-                                    Pest1 = calcT
+                                    Pest1 = calcP
                                     tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 1, 0, Me)
                                     y2 = tmp(4)
                                     Pest2 = y2
                                 Else
                                     tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, Pest1, Me)
                                     calcP = tmp(4)
-                                    Pest1 = calcT
+                                    Pest1 = calcP
                                     tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 1, Pest2, Me)
                                     y2 = tmp(4)
                                     Pest2 = y2

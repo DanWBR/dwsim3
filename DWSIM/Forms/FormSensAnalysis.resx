@@ -214,7 +214,7 @@
     <value>Vertical</value>
   </data>
   <data name="tbStats.Size" type="System.Drawing.Size, System.Drawing">
-    <value>514, 133</value>
+    <value>480, 133</value>
   </data>
   <data name="tbStats.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -235,7 +235,7 @@
     <value>455, 11</value>
   </data>
   <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>520, 152</value>
+    <value>486, 152</value>
   </data>
   <data name="GroupBox7.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -295,7 +295,7 @@
     <value>3, 621</value>
   </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>981, 170</value>
+    <value>947, 170</value>
   </data>
   <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -535,7 +535,7 @@
     <value>399, 3</value>
   </data>
   <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>585, 134</value>
+    <value>551, 134</value>
   </data>
   <data name="GroupBox3.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1153,7 +1153,7 @@
     <value>3, 16</value>
   </data>
   <data name="pnIndvar2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>520, 89</value>
+    <value>486, 89</value>
   </data>
   <data name="pnIndvar2.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -1201,7 +1201,7 @@
     <value>458, 143</value>
   </data>
   <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>526, 108</value>
+    <value>492, 108</value>
   </data>
   <data name="GroupBox5.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1330,7 +1330,7 @@
     <value>3, 41</value>
   </data>
   <data name="dgVariables.Size" type="System.Drawing.Size, System.Drawing">
-    <value>502, 124</value>
+    <value>468, 124</value>
   </data>
   <data name="dgVariables.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1375,7 +1375,7 @@
     <value>3, 16</value>
   </data>
   <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>502, 25</value>
+    <value>468, 25</value>
   </data>
   <data name="ToolStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1399,7 +1399,7 @@
     <value>6, 18</value>
   </data>
   <data name="GroupBox9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>508, 168</value>
+    <value>474, 168</value>
   </data>
   <data name="GroupBox9.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -1597,7 +1597,7 @@
     <value>9, 186</value>
   </data>
   <data name="GroupBox8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>504, 117</value>
+    <value>470, 117</value>
   </data>
   <data name="GroupBox8.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -1621,7 +1621,7 @@
     <value>455, 18</value>
   </data>
   <data name="gbExp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>520, 310</value>
+    <value>486, 310</value>
   </data>
   <data name="gbExp.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -1789,7 +1789,7 @@
     <value>3, 254</value>
   </data>
   <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>981, 335</value>
+    <value>947, 335</value>
   </data>
   <data name="GroupBox6.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
