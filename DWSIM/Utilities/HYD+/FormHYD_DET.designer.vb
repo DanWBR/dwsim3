@@ -47,12 +47,12 @@ Partial Class FormHYD_DET
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.Grid1 = New System.Windows.Forms.DataGridView()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Label22 = New System.Windows.Forms.Label()
-        Me.Label23 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox9.SuspendLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -60,6 +60,7 @@ Partial Class FormHYD_DET
         '
         'GroupBox1
         '
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Controls.Add(Me.Label21)
         Me.GroupBox1.Controls.Add(Me.Label20)
         Me.GroupBox1.Controls.Add(Me.Label19)
@@ -80,125 +81,144 @@ Partial Class FormHYD_DET
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
         'Label21
         '
         resources.ApplyResources(Me.Label21, "Label21")
+        Me.Label21.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label21.Name = "Label21"
         '
         'Label20
         '
         resources.ApplyResources(Me.Label20, "Label20")
+        Me.Label20.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label20.Name = "Label20"
         '
         'Label19
         '
         resources.ApplyResources(Me.Label19, "Label19")
+        Me.Label19.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label19.Name = "Label19"
         '
         'Label18
         '
         resources.ApplyResources(Me.Label18, "Label18")
+        Me.Label18.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label18.Name = "Label18"
         '
         'Label16
         '
         resources.ApplyResources(Me.Label16, "Label16")
+        Me.Label16.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label16.Name = "Label16"
         '
         'Label15
         '
         resources.ApplyResources(Me.Label15, "Label15")
+        Me.Label15.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label15.Name = "Label15"
         '
         'Label14
         '
         resources.ApplyResources(Me.Label14, "Label14")
+        Me.Label14.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label14.Name = "Label14"
         '
         'Label13
         '
         resources.ApplyResources(Me.Label13, "Label13")
+        Me.Label13.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label13.Name = "Label13"
         '
         'Label12
         '
         resources.ApplyResources(Me.Label12, "Label12")
+        Me.Label12.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label12.Name = "Label12"
         '
         'Label11
         '
         resources.ApplyResources(Me.Label11, "Label11")
+        Me.Label11.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label11.Name = "Label11"
         '
         'Label10
         '
         resources.ApplyResources(Me.Label10, "Label10")
+        Me.Label10.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label10.Name = "Label10"
         '
         'Label9
         '
         resources.ApplyResources(Me.Label9, "Label9")
+        Me.Label9.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label9.Name = "Label9"
         '
         'Label8
         '
         resources.ApplyResources(Me.Label8, "Label8")
+        Me.Label8.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label8.Name = "Label8"
         '
         'Label7
         '
         resources.ApplyResources(Me.Label7, "Label7")
+        Me.Label7.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label7.Name = "Label7"
         '
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
+        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label6.Name = "Label6"
         '
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label5.Name = "Label5"
         '
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label4.Name = "Label4"
         '
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label3.Name = "Label3"
         '
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label2.Name = "Label2"
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label1.Name = "Label1"
         '
         'GroupBox9
         '
-        Me.GroupBox9.Controls.Add(Me.Grid1)
         resources.ApplyResources(Me.GroupBox9, "GroupBox9")
+        Me.GroupBox9.Controls.Add(Me.Grid1)
         Me.GroupBox9.Name = "GroupBox9"
         Me.GroupBox9.TabStop = False
         '
         'Grid1
         '
+        resources.ApplyResources(Me.Grid1, "Grid1")
         Me.Grid1.AllowUserToAddRows = False
         Me.Grid1.AllowUserToResizeRows = False
         Me.Grid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.Grid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.Grid1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column5, Me.Column3, Me.Column4})
-        resources.ApplyResources(Me.Grid1, "Grid1")
         Me.Grid1.Name = "Grid1"
         Me.Grid1.ReadOnly = True
         Me.Grid1.RowHeadersVisible = False
@@ -207,6 +227,18 @@ Partial Class FormHYD_DET
         Me.Grid1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.Grid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grid1.ShowRowErrors = False
+        '
+        'Label22
+        '
+        resources.ApplyResources(Me.Label22, "Label22")
+        Me.Label22.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.Label22.Name = "Label22"
+        '
+        'Label23
+        '
+        resources.ApplyResources(Me.Label23, "Label23")
+        Me.Label23.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
+        Me.Label23.Name = "Label23"
         '
         'Column1
         '
@@ -217,6 +249,7 @@ Partial Class FormHYD_DET
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
+        Me.Column1.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'Column5
         '
@@ -225,6 +258,7 @@ Partial Class FormHYD_DET
         resources.ApplyResources(Me.Column5, "Column5")
         Me.Column5.Name = "Column5"
         Me.Column5.ReadOnly = True
+        Me.Column5.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'Column3
         '
@@ -233,6 +267,7 @@ Partial Class FormHYD_DET
         resources.ApplyResources(Me.Column3, "Column3")
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
+        Me.Column3.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'Column4
         '
@@ -241,16 +276,7 @@ Partial Class FormHYD_DET
         resources.ApplyResources(Me.Column4, "Column4")
         Me.Column4.Name = "Column4"
         Me.Column4.ReadOnly = True
-        '
-        'Label22
-        '
-        resources.ApplyResources(Me.Label22, "Label22")
-        Me.Label22.Name = "Label22"
-        '
-        'Label23
-        '
-        resources.ApplyResources(Me.Label23, "Label23")
-        Me.Label23.Name = "Label23"
+        Me.Column4.ToolTipText = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'FormHYD_DET
         '
@@ -298,8 +324,8 @@ Partial Class FormHYD_DET
     Public WithEvents Grid1 As System.Windows.Forms.DataGridView
     Public WithEvents Label22 As System.Windows.Forms.Label
     Public WithEvents Label23 As System.Windows.Forms.Label
-    Public WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents Column5 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

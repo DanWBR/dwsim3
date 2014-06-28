@@ -31,6 +31,7 @@ Public Class FormPhEnv
     Private loaded As Boolean = False
     Private calculated As Boolean = False
     Private qualitycalc As Boolean = False
+    Private hydratecalc As Boolean = False
     Private phaseidentification As Boolean = False
     Private showoppoint As Boolean = True
 
@@ -103,6 +104,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
             If Me.CheckBox1.Enabled Then Me.qualitycalc = Me.CheckBox1.Checked Else Me.qualitycalc = False
             If Me.CheckBox2.Checked Then Me.showoppoint = True Else Me.showoppoint = False
             Me.phaseidentification = chkpip.Checked
+            Me.hydratecalc = chkhyd.Checked
             Me.Enabled = False
             Me.BackgroundWorker1.RunWorkerAsync(New Object() {0, Me.TextBox1.Text, Me.CheckBox1.Checked, Me.CheckBox3.Checked, Me.chkpip.Checked, Me.chkhyd.Checked})
             fpec = New FormPEC
@@ -150,6 +152,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         py5.Add(cv.ConverterDoSI(su.spmp_temperature, TI(i)))
                         px5.Add(cv.ConverterDoSI(su.spmp_pressure, PI(i)))
                     Next
+                    For i = 0 To THsI.Count - 1
+                        th1.Add(cv.ConverterDoSI(su.spmp_temperature, THsI(i)))
+                        ph1.Add(cv.ConverterDoSI(su.spmp_pressure, PHsI(i)))
+                    Next
+                    For i = 0 To THsI.Count - 1
+                        th2.Add(cv.ConverterDoSI(su.spmp_temperature, THsII(i)))
+                        ph2.Add(cv.ConverterDoSI(su.spmp_pressure, PHsII(i)))
+                    Next
                     
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -184,6 +194,22 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         If phaseidentification Then
                             With .AddCurve("Phase Identification Parameter = 1", px5.ToArray(GetType(Double)), py5.ToArray(GetType(Double)), Color.Brown, ZedGraph.SymbolType.Circle)
                                 .Color = Color.Brown
+                                .Line.IsSmooth = True
+                                .Line.IsVisible = True
+                                .Line.Width = 2
+                                .Symbol.IsVisible = False
+                            End With
+                        End If
+                        If hydratecalc Then
+                            With .AddCurve("Hydrate Equilibrium Curve (sI)", ph1.ToArray(GetType(Double)), th1.ToArray(GetType(Double)), Color.LightCoral, ZedGraph.SymbolType.Circle)
+                                .Color = Color.LightCoral
+                                .Line.IsSmooth = True
+                                .Line.IsVisible = True
+                                .Line.Width = 2
+                                .Symbol.IsVisible = False
+                            End With
+                            With .AddCurve("Hydrate Equilibrium Curve (sII)", ph2.ToArray(GetType(Double)), th2.ToArray(GetType(Double)), Color.Violet, ZedGraph.SymbolType.Circle)
+                                .Color = Color.Violet
                                 .Line.IsSmooth = True
                                 .Line.IsVisible = True
                                 .Line.Width = 2
@@ -350,6 +376,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         px5.Add(cv.ConverterDoSI(su.spmp_temperature, TI(i)))
                         py5.Add(cv.ConverterDoSI(su.spmp_pressure, PI(i)))
                     Next
+                    For i = 0 To THsI.Count - 1
+                        th1.Add(cv.ConverterDoSI(su.spmp_temperature, THsI(i)))
+                        ph1.Add(cv.ConverterDoSI(su.spmp_pressure, PHsI(i)))
+                    Next
+                    For i = 0 To THsI.Count - 1
+                        th2.Add(cv.ConverterDoSI(su.spmp_temperature, THsII(i)))
+                        ph2.Add(cv.ConverterDoSI(su.spmp_pressure, PHsII(i)))
+                    Next
 
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -384,6 +418,22 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         If phaseidentification Then
                             With .AddCurve("Phase Identification Parameter = 1", px5.ToArray(GetType(Double)), py5.ToArray(GetType(Double)), Color.Brown, ZedGraph.SymbolType.Circle)
                                 .Color = Color.Brown
+                                .Line.IsSmooth = True
+                                .Line.IsVisible = True
+                                .Line.Width = 2
+                                .Symbol.IsVisible = False
+                            End With
+                        End If
+                        If hydratecalc Then
+                            With .AddCurve("Hydrate Equilibrium Curve (sI)", th1.ToArray(GetType(Double)), ph1.ToArray(GetType(Double)), Color.Violet, ZedGraph.SymbolType.Circle)
+                                .Color = Color.Violet
+                                .Line.IsSmooth = True
+                                .Line.IsVisible = True
+                                .Line.Width = 2
+                                .Symbol.IsVisible = False
+                            End With
+                            With .AddCurve("Hydrate Equilibrium Curve (sII)", th2.ToArray(GetType(Double)), ph2.ToArray(GetType(Double)), Color.Coral, ZedGraph.SymbolType.Circle)
+                                .Color = Color.Coral
                                 .Line.IsSmooth = True
                                 .Line.IsVisible = True
                                 .Line.Width = 2
@@ -725,14 +775,54 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
         pp.CurrentMaterialStream = mat
 
-        Dim th1, th2, ph1, ph2 As New ArrayList
+        Dim diagdata As Object = pp.DW_ReturnPhaseEnvelope(e.Argument, Me.BackgroundWorker1)
 
-        th1.Add(CDbl(0))
-        th2.Add(CDbl(0))
-        ph1.Add(CDbl(0))
-        ph2.Add(CDbl(0))
+        PC = diagdata(15)
 
-        e.Result = New Object() {pp.DW_ReturnPhaseEnvelope(e.Argument, Me.BackgroundWorker1), ph1, th1, ph2, th2}
+        Dim th1, th2, ph1, ph2 As New ArrayList, Ph, Th As Object, Pmin, Pmax As Double, Vz() As Double, Vn() As String
+
+        If e.Argument(5) = True Then
+
+            Me.BackgroundWorker1.ReportProgress(99, "Hydrate Equilibrium Curves")
+
+            Pmin = 101325
+            Pmax = PC(0)(1) * 1.3
+            Dim i As Integer = 0
+            Vz = pp.RET_VMOL(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
+            Vn = pp.RET_VNAMES
+
+            Dim hid As New DWSIM.Utilities.HYD.vdwP_PP(mat)
+            Dim m_aux As New DWSIM.Utilities.HYD.AuxMethods
+
+            For Ph = Pmin To Pmax Step 101325
+                Try
+                    Th = hid.HYD_vdwP2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn))
+                    ph1.Add(Ph)
+                    ph2.Add(Ph)
+                    th1.Add(Th(0))
+                    th2.Add(Th(1))
+                Catch ex As Exception
+                End Try
+            Next
+
+            If th1.Count = 0 Then
+                th1.Add(0.0#)
+                ph1.Add(0.0#)
+                th2.Add(0.0#)
+                ph2.Add(0.0#)
+            End If
+
+        Else
+
+            th1.Add(0.0#)
+            ph1.Add(0.0#)
+            th2.Add(0.0#)
+            ph2.Add(0.0#)
+
+        End If
+
+
+        e.Result = New Object() {diagdata, ph1, th1, ph2, th2}
 
     End Sub
 
@@ -791,6 +881,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
             .Add("c14", "PQ (" & su.spmp_pressure & ")")
             .Add("c15", "TPIP (" & su.spmp_temperature & ")")
             .Add("c16", "PPIP (" & su.spmp_pressure & ")")
+            .Add("c17", "THsI (" & su.spmp_temperature & ")")
+            .Add("c18", "PHsI (" & su.spmp_pressure & ")")
+            .Add("c19", "THsII (" & su.spmp_temperature & ")")
+            .Add("c20", "PHsII (" & su.spmp_pressure & ")")
         End With
 
         For Each c As DataGridViewColumn In Me.Grid1.Columns
@@ -799,7 +893,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
             c.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
         Next
 
-        Dim maxl As Integer = DWSIM.MathEx.Common.Max(New Object() {TVB.Count, TVD.Count, TE.Count, TQ.Count, TI.Count}) - 1
+        Dim maxl As Integer = DWSIM.MathEx.Common.Max(New Object() {TVB.Count, TVD.Count, TE.Count, TQ.Count, TI.Count, THsI.Count}) - 1
 
         Dim k, j As Integer
         Dim maxc As Integer = Me.Grid1.Columns.Count - 1
@@ -839,6 +933,18 @@ exec:       With Me.GraphControl.GraphPane.Legend
         For Each d As Double In TI
             data(14, j) = cv.ConverterDoSI(su.spmp_temperature, d)
             data(15, j) = cv.ConverterDoSI(su.spmp_pressure, PI(j))
+            j = j + 1
+        Next
+        j = 0
+        For Each d As Double In THsI
+            data(16, j) = cv.ConverterDoSI(su.spmp_temperature, d)
+            data(17, j) = cv.ConverterDoSI(su.spmp_pressure, PHsI(j))
+            j = j + 1
+        Next
+        j = 0
+        For Each d As Double In THsII
+            data(18, j) = cv.ConverterDoSI(su.spmp_temperature, d)
+            data(19, j) = cv.ConverterDoSI(su.spmp_pressure, PHsII(j))
             j = j + 1
         Next
         

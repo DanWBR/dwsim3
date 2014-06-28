@@ -21,8 +21,8 @@ Namespace DWSIM.Utilities.HYD
     Public Class ChenGuo
 
         Dim am As DWSIM.Utilities.HYD.AuxMethods
-        Dim unf As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
-        Dim unfPP As DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
+        Dim unf As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
+        Dim unfPP As DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
         Dim prPP As DWSIM.SimulationObjects.PropertyPackages.PengRobinsonPropertyPackage
         Dim raPP As DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage
 
@@ -31,8 +31,8 @@ Namespace DWSIM.Utilities.HYD
 
             am = New DWSIM.Utilities.HYD.AuxMethods
             prPP = New DWSIM.SimulationObjects.PropertyPackages.PengRobinsonPropertyPackage
-            unf = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
-            unfPP = New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
+            unf = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
+            unfPP = New DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
             raPP = New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage
 
             unfPP.CurrentMaterialStream = materialStream
@@ -125,7 +125,7 @@ Namespace DWSIM.Utilities.HYD
             Dim TETA1(1, n), TETA2(1, n)
             Dim vi_(n)
             Dim Vp(n), Tc(n), Tb(n), Pc(n), Vc(n), Zc(n), W(n), Tr(n)
-            Dim Vy(n), pos
+            Dim Vy(n) As Double, pos
             Dim R = 8.314
             Dim temp1, tv, tv2
             Dim bg As Double
@@ -166,8 +166,8 @@ Namespace DWSIM.Utilities.HYD
 
             Dim L = eqtmp(0)
             Dim V = eqtmp(1)
-            Vx(i) = eqtmp(2)
-            Vy(i) = eqtmp(3)
+            Vx = eqtmp(2)
+            Vy = eqtmp(3)
 
             'PR
 
@@ -344,10 +344,12 @@ Namespace DWSIM.Utilities.HYD
             Loop Until i = n + 1
             Vx(pos) = 1 - sum_vxaq
 
+            Dim WAC As Double = unf.GAMMA(T, Vx, unfPP.RET_VIDS, unfPP.RET_VQ, unfPP.RET_VR, pos)
+
             'CALCULO DA DEPRESSÃO NO PONTO DE FUSÃO DA ÁGUA
             Tnfp = 273.15
             DHm = 6001700.0 / 1000
-            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vx(pos) * unf.GAMMA(T, Vx, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos))
+            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vx(pos) * WAC)
             Td = DT + Tnfp
 
             If TIPO_HIDRATO = "sI" Then
@@ -394,7 +396,7 @@ Namespace DWSIM.Utilities.HYD
                     F0Ps1(i) = Math.Exp(0.4242 / 100000 * P / T)
                     consts = F0Pconst(Vids(i), "sI")
                     F0Ts1(i) = consts(0) * Math.Exp(consts(1) / (T - consts(2))) * 100000
-                    F0As1(i) = (Vx(pos) * unf.GAMMA(T, Vx, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos)) ^ (-23 / 3)
+                    F0As1(i) = (Vx(pos) * WAC) ^ (-23 / 3)
                     F0sI(i) = F0Ps1(i) * F0Ts1(i) * F0As1(i)
                     If T < Td Then F0sI(i) = F0sI(i) * Math.Exp(22.5 * (T - 273.15) / T)
                     i = i + 1
@@ -468,7 +470,7 @@ Namespace DWSIM.Utilities.HYD
                     F0Ps2(i) = Math.Exp(1.0224 / 100000 * P / T)
                     consts2 = F0Pconst(Vids(i), "sII")
                     F0Ts2(i) = Math.Exp(-sumAIJ(i) / T) * consts2(0) * Math.Exp(consts2(1) / (T - consts2(2))) * 100000
-                    F0As2(i) = (Vx(pos) * unf.GAMMA(T, Vx, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos)) ^ (-17)
+                    F0As2(i) = (Vx(pos) * WAC) ^ (-17)
                     F0sII(i) = F0Ps2(i) * F0Ts2(i) * F0As2(i)
                     If T < Td Then F0sII(i) = F0sII(i) * Math.Exp(49.5 * (T - 273.15) / T)
                     i = i + 1
@@ -794,7 +796,7 @@ STEP2:
             Dim TETA1(1, n), TETA2(1, n)
             Dim vi_(n)
             Dim Vp(n), Tc(n), Tb(n), Pc(n), Vc(n), Zc(n), W(n), Tr(n)
-            Dim Vy(n), pos
+            Dim Vy(n) As Double, pos
             Dim R = 8.314
             Dim temp1, tv, tv2
             Dim bg As Double
@@ -826,8 +828,8 @@ STEP2:
 
             Dim L = eqtmp(0)
             Dim V = eqtmp(1)
-            Vx(i) = eqtmp(2)
-            Vy(i) = eqtmp(3)
+            Vx = eqtmp(2)
+            Vy = eqtmp(3)
 
             'PR
 
@@ -960,10 +962,12 @@ STEP2:
                 i = i + 1
             Loop Until i = n + 1
 
+            Dim WAC As Double = unf.GAMMA(T, Vx, unfPP.RET_VIDS, unfPP.RET_VQ, unfPP.RET_VR, pos)
+
             'CALCULO DA DEPRESSÃO NO PONTO DE FUSÃO DA ÁGUA
             Tnfp = 273.15
             DHm = 6001700.0 / 1000
-            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vx(pos) * unf.GAMMA(T, Vx, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos))
+            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vx(pos) * WAC)
             Td = DT + Tnfp
 
             If TIPO_HIDRATO = "sI" Then
@@ -1010,7 +1014,7 @@ STEP2:
                     F0Ps1(i) = Math.Exp(0.4242 / 100000 * P / T)
                     consts = F0Pconst(Vids(i), "sI")
                     F0Ts1(i) = consts(0) * Math.Exp(consts(1) / (T - consts(2))) * 100000
-                    F0As1(i) = (Vx(pos) * unf.GAMMA(T, Vx, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos)) ^ (-23 / 3)
+                    F0As1(i) = (Vx(pos) * WAC) ^ (-23 / 3)
                     F0sI(i) = F0Ps1(i) * F0Ts1(i) * F0As1(i)
                     If T < Td Then F0sI(i) = F0sI(i) * Math.Exp(22.5 * (T - 273.15) / T)
                     i = i + 1
@@ -1085,7 +1089,7 @@ STEP2:
                     F0Ps2(i) = Math.Exp(1.0224 / 100000 * P / T)
                     consts2 = F0Pconst(Vids(i), "sII")
                     F0Ts2(i) = Math.Exp(-sumAIJ(i) / T) * consts2(0) * Math.Exp(consts2(1) / (T - consts2(2))) * 100000
-                    F0As2(i) = (Vx(pos) * unf.GAMMA(T, Vx, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos)) ^ (-17)
+                    F0As2(i) = (Vx(pos) * WAC) ^ (-17)
                     F0sII(i) = F0Ps2(i) * F0Ts2(i) * F0As2(i)
                     If T < Td Then F0sII(i) = F0sII(i) * Math.Exp(49.5 * (T - 273.15) / T)
                     i = i + 1
@@ -1103,7 +1107,7 @@ STEP2:
 
             End If
 
-            Dim res As Object = New Object() {Td, unf.GAMMA(T, Vx, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos), 0, 0, Vx, Vy, Vh}
+            Dim res As Object = New Object() {Td, WAC, 0, 0, Vx, Vy, Vh}
             DET_HYD_CG = res
 
         End Function

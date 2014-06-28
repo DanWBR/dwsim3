@@ -21,14 +21,15 @@ Namespace DWSIM.Utilities.HYD
     Public Class vdwP_PP
 
         Dim am As DWSIM.Utilities.HYD.AuxMethods
-        Dim unf As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
-        Dim unfPP As DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
+        Dim unf As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
+        Dim unfPP As DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
 
         Sub New(ByVal materialStream As DWSIM.SimulationObjects.Streams.MaterialStream)
 
             am = New DWSIM.Utilities.HYD.AuxMethods
-            unf = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
-            unfPP = New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
+            unf = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
+
+            unfPP = New DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
 
             unfPP.CurrentMaterialStream = materialStream
 
@@ -376,10 +377,12 @@ Namespace DWSIM.Utilities.HYD
             Loop Until i = n + 1
             Vxaq(pos) = 1 - sum_vxaq
 
+            Dim WAC As Double = unf.GAMMA(T, Vxaq, unfPP.RET_VIDS, unfPP.RET_VQ, unfPP.RET_VR, pos)
+
             'CALCULO DA DEPRESSÃO NO PONTO DE FUSÃO DA ÁGUA
             Tnfp = 273.15
             DHm = 6001700.0 / 1000
-            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vxaq(pos) * unf.GAMMA(T, Vxaq, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos))
+            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vxaq(pos) * WAC)
             Td = DT + Tnfp
 
             If TIPO_HIDRATO = "sI" Then
@@ -390,7 +393,7 @@ Namespace DWSIM.Utilities.HYD
                 PQG = PQRG * R * T + 3 * 0.000001 * (P - PR)
 
                 'CALCULO DO POTENCIAL QUÍMICO DA ÁGUA NA FASE LÍQUIDA
-                act = unf.GAMMA(T, Vxaq, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos)
+                act = WAC
                 DH = -4.1868 * (1463.3 + 275 + (9.11 + 0.0336 * 273.1) * (T - T0) - 0.0168 * (T ^ 2 - T0 ^ 2))
                 PQRL = 302 * 4.1868 / (R * T0) + DH / R * (1 / T - 1 / T0) + (3 * 0.000001 + Math.Exp(-10.9241) - 0.00001912) / R * dPdT * Math.Log(T / T0)
                 PQL = PQRL * R * T + (3 * 0.000001 + Math.Exp(-10.9241) - 0.00001912) * (P - PR)
@@ -475,7 +478,7 @@ Namespace DWSIM.Utilities.HYD
                 PQG = PQRG * R * T + 3.4 * 0.000001 * (P - PR)
 
                 'CALCULO DO POTENCIAL QUÍMICO DA ÁGUA NA FASE LÍQUIDA
-                act = unf.GAMMA(T, Vxaq, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos)
+                act = WAC
                 DH = -4.1868 * (1463.3 + 193 + (9.11 + 0.0336 * 273.1) * (T - T0) - 0.0168 * (T ^ 2 - T0 ^ 2))
                 PQRL = 211 * 4.1868 / (R * T0) + DH / R * (1 / T - 1 / T0) + (3.4 * 0.000001 + Math.Exp(-10.9241) - 0.00001912) / R * dPdT * Math.Log(T / T0)
                 PQL = PQRL * R * T + (3.4 * 0.000001 + Math.Exp(-10.9241) - 0.00001912) * (P - PR)
@@ -1115,10 +1118,12 @@ STEP2:
             Loop Until i = n + 1
             Vxaq(pos) = 1 - sum_vxaq
 
+            Dim WAC As Double = unf.GAMMA(T, Vxaq, unfPP.RET_VIDS, unfPP.RET_VQ, unfPP.RET_VR, pos)
+
             'CALCULO DA DEPRESSÃO NO PONTO DE FUSÃO DA ÁGUA
             Tnfp = 273.15
             DHm = 6001700.0 / 1000
-            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vxaq(pos) * unf.GAMMA(T, Vxaq, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos))
+            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vxaq(pos) * WAC)
             Td = DT + Tnfp
 
             If TIPO_HIDRATO = "sI" Then
@@ -1129,7 +1134,7 @@ STEP2:
                 PQG = PQRG * R * T + 3 * 0.000001 * (P - PR)
 
                 'CALCULO DO POTENCIAL QUÍMICO DA ÁGUA NA FASE LÍQUIDA
-                act = unf.GAMMA(T, Vxaq, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos)
+                act = WAC
                 DH = -4.1868 * (1463.3 + 275 + (9.11 + 0.0336 * 273.1) * (T - T0) - 0.0168 * (T ^ 2 - T0 ^ 2))
                 PQRL = 302 * 4.1868 / (R * T0) + DH / R * (1 / T - 1 / T0) + (3 * 0.000001 + Math.Exp(-10.9241) - 0.00001912) / R * dPdT * Math.Log(T / T0)
                 PQL = PQRL * R * T + (3 * 0.000001 + Math.Exp(-10.9241) - 0.00001912) * (P - PR)
@@ -1216,7 +1221,7 @@ STEP2:
                 PQG = PQRG * R * T + 3.4 * 0.000001 * (P - PR)
 
                 'CALCULO DO POTENCIAL QUÍMICO DA ÁGUA NA FASE LÍQUIDA
-                act = unf.GAMMA(T, Vxaq, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos)
+                act = WAC
                 DH = -4.1868 * (1463.3 + 193 + (9.11 + 0.0336 * 273.1) * (T - T0) - 0.0168 * (T ^ 2 - T0 ^ 2))
                 PQRL = 211 * 4.1868 / (R * T0) + DH / R * (1 / T - 1 / T0) + (3.4 * 0.000001 + Math.Exp(-10.9241) - 0.00001912) / R * dPdT * Math.Log(T / T0)
                 PQL = PQRL * R * T + (3.4 * 0.000001 + Math.Exp(-10.9241) - 0.00001912) * (P - PR)

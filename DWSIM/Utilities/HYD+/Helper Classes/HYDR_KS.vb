@@ -21,14 +21,14 @@ Namespace DWSIM.Utilities.HYD
     Public Class KlaudaSandler
 
         Dim am As DWSIM.Utilities.HYD.AuxMethods
-        Dim unf As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
-        Dim unfPP As DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
+        Dim unf As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
+        Dim unfPP As DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
 
         Sub New(ByVal materialStream As DWSIM.SimulationObjects.Streams.MaterialStream)
 
             am = New DWSIM.Utilities.HYD.AuxMethods
-            unf = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
-            unfPP = New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
+            unf = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
+            unfPP = New DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
 
             unfPP.CurrentMaterialStream = materialStream
 
@@ -487,10 +487,12 @@ Namespace DWSIM.Utilities.HYD
             Loop Until i = n + 1
             Vxaq(pos) = 1 - sum_vxaq
 
+            Dim WAC As Double = unf.GAMMA(T, Vxaq, unfPP.RET_VIDS, unfPP.RET_VQ, unfPP.RET_VR, pos)
+
             'CALCULO DA DEPRESSÃO NO PONTO DE FUSÃO DA ÁGUA
             Tnfp = 273.15
             DHm = 6001700.0 / 1000
-            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vxaq(pos) * unf.GAMMA(T, Vxaq, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos))
+            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vxaq(pos) * WAC)
             Td = DT + Tnfp
 
             'CALCULO DO VOLUME MOLAR DO GELO
@@ -500,7 +502,7 @@ Namespace DWSIM.Utilities.HYD
             FG = Math.Exp(4.6056 * Math.Log(T) - 5501.1243 / T + 2.9446 - 0.0081431 * T) * Math.Exp((VMG / (R * T) * (P - Math.Exp(4.6056 * Math.Log(T) - 5501.1243 / T + 2.9446 - 0.0081431 * T))))
 
             'CALCULO DA FUGACIDADE DA ÁGUA NA FASE LÍQUIDA
-            act = unf.GAMMA(T, Vxaq, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos)
+            act = WAC
             FL = Vxaq(pos) * act * Math.Exp(4.1539 * Math.Log(T) - 5500.9332 / T + 7.6537 - 0.0161277 * T) * Math.Exp((VLW / (R * T) * (P - Math.Exp(4.1539 * Math.Log(T) - 5500.9332 / T + 2.9446 - 0.0161266 * T))))
 
             If T < Td Then FGAG = FG
@@ -1242,10 +1244,12 @@ STEP2:
             Loop Until i = n + 1
             Vxaq(pos) = 1 - sum_vxaq
 
+            Dim WAC As Double = unf.GAMMA(T, Vxaq, unfPP.RET_VIDS, unfPP.RET_VQ, unfPP.RET_VR, pos)
+
             'CALCULO DA DEPRESSÃO NO PONTO DE FUSÃO DA ÁGUA
             Tnfp = 273.15
             DHm = 6001700.0 / 1000
-            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vxaq(pos) * unf.GAMMA(T, Vxaq, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos))
+            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vxaq(pos) * wac)
             Td = DT + Tnfp
 
             'CALCULO DO VOLUME MOLAR DO GELO
@@ -1255,7 +1259,7 @@ STEP2:
             FG = Math.Exp(4.6056 * Math.Log(T) - 5501.1243 / T + 2.9446 - 0.0081431 * T) * Math.Exp((VMG / (R * T) * (P - Math.Exp(4.6056 * Math.Log(T) - 5501.1243 / T + 2.9446 - 0.0081431 * T))))
 
             'CALCULO DA FUGACIDADE DA ÁGUA NA FASE LÍQUIDA
-            act = unf.GAMMA(T, Vxaq, unfPP.RET_VQ, unfPP.RET_VR, unfPP.RET_VEKI, pos)
+            act = wac
             FL = Vxaq(pos) * act * Math.Exp(4.1539 * Math.Log(T) - 5500.9332 / T + 7.6537 - 0.0161277 * T) * Math.Exp((VLW / (R * T) * (P - Math.Exp(4.1539 * Math.Log(T) - 5500.9332 / T + 2.9446 - 0.0161266 * T))))
 
             If T < Td Then FGAG = FG

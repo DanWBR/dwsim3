@@ -62,7 +62,6 @@ Public Class FormHYD
             Dim gobj As Microsoft.MSDN.Samples.GraphicObjects.GraphicObject = FormFlowsheet.SearchSurfaceObjectsByTag(Me.ComboBox3.SelectedItem, Frm.FormSurface.FlowsheetDesignSurface)
             Me.mat = Frm.Collections.CLCS_MaterialStreamCollection(gobj.Name)
 
-
             If mat.Fases(0).Componentes.ContainsKey(DWSIM.App.GetLocalString("Agua")) Then
 
                 If mat.Fases(0).Componentes(DWSIM.App.GetLocalString("Agua")).FracaoMolar.GetValueOrDefault > 0 Then
