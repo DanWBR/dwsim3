@@ -256,39 +256,39 @@ Namespace DWSIM.Utilities.HYD
 
             Dim str As String
             For Each str In nomes
-                If str = "Metano" Then
+                If str = "Metano" Or str = "Methane" Then
                     res.Add(1)
-                ElseIf str = "Etano" Then
+                ElseIf str = "Etano" Or str = "Ethane" Then
                     res.Add(2)
-                ElseIf str = "Propano" Then
+                ElseIf str = "Propano" Or str = "Propane" Then
                     res.Add(3)
-                ElseIf str = "nButano" Then
+                ElseIf str = "nButano" Or str = "N-butane" Then
                     res.Add(5)
-                ElseIf str = "iButano" Then
+                ElseIf str = "iButano" Or str = "Isobutane" Then
                     res.Add(4)
-                ElseIf str = "nPentano" Then
+                ElseIf str = "nPentano" Or str = "N-pentane" Then
                     res.Add(7)
-                ElseIf str = "iPentano" Then
+                ElseIf str = "iPentano" Or str = "Isopentane" Then
                     res.Add(6)
-                ElseIf str = "nHexano" Then
+                ElseIf str = "nHexano" Or str = "N-hexane" Then
                     res.Add(8)
-                ElseIf str = "nHeptano" Then
+                ElseIf str = "nHeptano" Or str = "N-heptane" Then
                     res.Add(9)
-                ElseIf str = "nOctano" Then
+                ElseIf str = "nOctano" Or str = "N-octane" Then
                     res.Add(10)
-                ElseIf str = "nNonano" Then
+                ElseIf str = "nNonano" Or str = "N-nonane" Then
                     res.Add(11)
-                ElseIf str = "nDecano" Then
+                ElseIf str = "nDecano" Or str = "N-decane" Then
                     res.Add(12)
-                ElseIf str = "Oxigenio" Then
+                ElseIf str = "Oxigenio" Or str = "Oxygen" Then
                     res.Add(17)
-                ElseIf str = "Nitrogenio" Then
+                ElseIf str = "Nitrogenio" Or str = "Nitrogen" Then
                     res.Add(16)
-                ElseIf str = "Agua" Then
+                ElseIf str = "Agua" Or str = "Water" Then
                     res.Add(13)
-                ElseIf str = "DioxidoDeCarbono" Then
+                ElseIf str = "DioxidoDeCarbono" Or str = "Carbon dioxide" Then
                     res.Add(15)
-                ElseIf str = "SulfetoDeHidrogenio" Then
+                ElseIf str = "SulfetoDeHidrogenio" Or str = "Hydrogen sulfide" Then
                     res.Add(14)
                 ElseIf str.Contains("ol") Then
                     res.Add(100)
