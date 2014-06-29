@@ -6845,6 +6845,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Curva de Equilíbrio de Hidratos.
+        '''</summary>
+        Friend Shared ReadOnly Property HydrateEquilibriumCurve() As String
+            Get
+                Return ResourceManager.GetString("HydrateEquilibriumCurve", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to [Eletrólito] Número de Hidratação.
         '''</summary>
         Friend Shared ReadOnly Property HydrationNumber() As String
@@ -9509,6 +9518,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Parâmetro de Identificação da Fase = 1.
+        '''</summary>
+        Friend Shared ReadOnly Property PhaseIdentificationParameter() As String
+            Get
+                Return ResourceManager.GetString("PhaseIdentificationParameter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Plástico.
         '''</summary>
         Friend Shared ReadOnly Property Plstico() As String
@@ -9559,6 +9577,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property PontosdeOrvalho() As String
             Get
                 Return ResourceManager.GetString("PontosdeOrvalho", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Pontos de Orvalho (Base Seca).
+        '''</summary>
+        Friend Shared ReadOnly Property PontosdeOrvalhoWF() As String
+            Get
+                Return ResourceManager.GetString("PontosdeOrvalhoWF", resourceCulture)
             End Get
         End Property
         

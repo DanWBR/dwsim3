@@ -4808,4 +4808,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="FlashSpecificationDesc" xml:space="preserve">
     <value>Select the flash calculation type to be done to solve the energy balance in the vessel.</value>
   </data>
+  <data name="HydrateEquilibriumCurve" xml:space="preserve">
+    <value>Hydrate Equilibrium Curve</value>
+  </data>
+  <data name="PhaseIdentificationParameter" xml:space="preserve">
+    <value>Phase Identification Parameter = 1</value>
+  </data>
+  <data name="PontosdeOrvalhoWF" xml:space="preserve">
+    <value>Dew Points (Dry Basis)</value>
+  </data>
 </root>

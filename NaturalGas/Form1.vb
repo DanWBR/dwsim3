@@ -5,6 +5,8 @@ Imports FileHelpers
 Imports Microsoft.MSDN.Samples.GraphicObjects
 Imports DWSIM
 Imports System.Windows.Forms
+Imports System.Linq
+Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 
 Public Class Form1
 
@@ -106,6 +108,10 @@ Public Class Form1
                 Dim iw15r As Double = 0
                 Dim iw20r As Double = 0
 
+                'methane number variables
+                Dim mon, mn, xc1, xc2, xc3, xc4, xco2, xn2 As Double
+                Dim c1, c2, c3, ic4, nc4, co2, n2 As Substancia
+
                 'molecular weight
                 Dim mw As Double = dobj.Fases(0).SPMProperties.molecularWeight
 
@@ -123,7 +129,7 @@ Public Class Form1
                 Dim iw As Integer = -1
                 For Each c As DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia In dobj.Fases(0).Componentes.Values
                     vx(i) = c.FracaoMolar
-                    If c.Nome = "Agua" Or c.Nome = "Water" Then
+                    If c.ConstantProperties.CAS_Number = "7732-18-5" Then
                         iw = i
                     End If
                     i += 1
@@ -262,6 +268,26 @@ Public Class Form1
                 iw15r = hhv1515vr / d15 ^ 0.5
                 iw20r = hhv2020vr / d20 ^ 0.5
 
+                'methane number
+                c1 = (From c As Substancia In dobj.Fases(0).Componentes.Values Select c Where c.ConstantProperties.CAS_Number = "74-82-8").FirstOrDefault
+                c2 = (From c As Substancia In dobj.Fases(0).Componentes.Values Select c Where c.ConstantProperties.CAS_Number = "74-84-0").FirstOrDefault
+                c3 = (From c As Substancia In dobj.Fases(0).Componentes.Values Select c Where c.ConstantProperties.CAS_Number = "74-98-6").FirstOrDefault
+                nc4 = (From c As Substancia In dobj.Fases(0).Componentes.Values Select c Where c.ConstantProperties.CAS_Number = "106-97-8").FirstOrDefault
+                ic4 = (From c As Substancia In dobj.Fases(0).Componentes.Values Select c Where c.ConstantProperties.CAS_Number = "75-28-5").FirstOrDefault
+                co2 = (From c As Substancia In dobj.Fases(0).Componentes.Values Select c Where c.ConstantProperties.CAS_Number = "124-38-9").FirstOrDefault
+                n2 = (From c As Substancia In dobj.Fases(0).Componentes.Values Select c Where c.ConstantProperties.CAS_Number = "7727-37-9").FirstOrDefault
+
+                If Not c1 Is Nothing Then xc1 = c1.FracaoMolar.GetValueOrDefault
+                If Not c2 Is Nothing Then xc2 = c2.FracaoMolar.GetValueOrDefault
+                If Not c3 Is Nothing Then xc3 = c3.FracaoMolar.GetValueOrDefault
+                If Not nc4 Is Nothing Then xc4 = nc4.FracaoMolar.GetValueOrDefault
+                If Not ic4 Is Nothing Then xc4 += ic4.FracaoMolar.GetValueOrDefault
+                If Not co2 Is Nothing Then xco2 = co2.FracaoMolar.GetValueOrDefault
+                If Not n2 Is Nothing Then xn2 = n2.FracaoMolar.GetValueOrDefault
+
+                mon = 137.78 * xc1 + 29.948 * xc2 - 18.193 * xc3 - 167.062 * xc4 + 181.233 * xco2 + 26.994 * xn2
+                mn = 1.445 * mon - 103.42
+
                 'get a reference to the current number format.
                 Dim nf As String = fsheet.Options.NumberFormat
 
@@ -319,6 +345,8 @@ Public Class Form1
                     .Item.Add("Wobbe Index @ NC (kJ/m3)", Format(iw0r, nf), True, "Natural Gas Properties", "NC = Normal Conditions (T = 0 °C, P = 1 atm)", True)
                     .Item.Add("Wobbe Index @ SC (kJ/m3)", Format(iw15r, nf), True, "Natural Gas Properties", "SC = Standard Conditions (T = 15.56 °C, P = 1 atm)", True)
                     .Item.Add("Wobbe Index @ BR (kJ/m3)", Format(iw20r, nf), True, "Natural Gas Properties", "BR = CNTP (T = 20 °C, P = 1 atm)", True)
+                    .Item.Add("Motor Octane Number (MON)", Format(mon, nf), True, "Natural Gas Properties", "Motor Octane Number", True)
+                    .Item.Add("Methane Number (MN)", Format(mn, nf), True, "Natural Gas Properties", "Methane Number", True)
                     .Item.Add("Water Dew Point @ P (" & su.spmp_temperature & ")", Format(cv.ConverterDoSI(su.spmp_temperature, wdp), nf), True, "Natural Gas Properties", "", True)
                     .Item.Add("Water Dew Point @ 1 atm (" & su.spmp_temperature & ")", Format(cv.ConverterDoSI(su.spmp_temperature, wdp1), nf), True, "Natural Gas Properties", "", True)
                     .Item.Add("Water Dew Point (Ideal) @ P (" & su.spmp_temperature & ")", Format(cv.ConverterDoSI(su.spmp_temperature, iwdp), nf), True, "Natural Gas Properties", "Water Dew Point at System Pressure, calculated using Raoult's Law and Water's Vapor Pressure experimental curve.", True)

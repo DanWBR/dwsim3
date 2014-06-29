@@ -2694,7 +2694,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Loop Until i = n + 1
 
             Dim Pmin, Tmin, dP, dT, T, P As Double
-            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ, TI, PI As New ArrayList
+            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ, TI, PI, TOWF, POWF, VOWF, HOWF, SOWF As New ArrayList
             Dim TCR, PCR, VCR As Double
 
             Dim CP As New ArrayList
@@ -2983,6 +2983,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
             Pest = PCR * 10
             Tmin = MathEx.Common.Max(Me.RET_VTF)
+            If Tmin = 0.0# Then Tmin = MathEx.Common.Min(Me.RET_VTB) * 0.4
             Tmax = TCR * 1.4
 
             If CBool(parameters(4)) = True Then
@@ -3008,11 +3009,18 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             If SB.Count > 1 Then SB.RemoveAt(SB.Count - 1)
             If VB.Count > 1 Then VB.RemoveAt(VB.Count - 1)
 
+            If ToWF.Count > 1 Then ToWF.RemoveAt(ToWF.Count - 1)
+            If PoWF.Count > 1 Then PoWF.RemoveAt(PoWF.Count - 1)
+            If HoWF.Count > 1 Then HoWF.RemoveAt(HoWF.Count - 1)
+            If SoWF.Count > 1 Then SoWF.RemoveAt(SoWF.Count - 1)
+            If VoWF.Count > 1 Then VoWF.RemoveAt(VoWF.Count - 1)
+
             If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
             If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
             If HO.Count > 1 Then HO.RemoveAt(HO.Count - 1)
             If SO.Count > 1 Then SO.RemoveAt(SO.Count - 1)
             If VO.Count > 1 Then VO.RemoveAt(VO.Count - 1)
+
             If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
             If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
             If HO.Count > 1 Then HO.RemoveAt(HO.Count - 1)
@@ -3024,7 +3032,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             If TI.Count > 1 Then TI.RemoveAt(TI.Count - 1)
             If PI.Count > 1 Then PI.RemoveAt(PI.Count - 1)
 
-            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI}
+            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI, ToWF, PoWF, HoWF, SoWF, VoWF}
 
         End Function
 
@@ -7406,7 +7414,7 @@ Final3:
 
         End Function
 
-        Public Function RET_VCAS()
+        Public Function RET_VCAS() As String()
 
             Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As String
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7421,7 +7429,7 @@ Final3:
 
         End Function
 
-        Public Function RET_VNAMES()
+        Public Function RET_VNAMES() As String()
 
             Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As String
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia

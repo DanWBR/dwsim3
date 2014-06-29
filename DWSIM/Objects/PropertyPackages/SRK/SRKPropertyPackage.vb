@@ -21,6 +21,7 @@
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 Imports System.Math
 Imports System.Threading.Tasks
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.PropertyPackages
 
@@ -609,7 +610,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Loop Until i = n + 1
 
             Dim Pmin, Tmin, dP, dT, T, P As Double
-            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ, TI, PI As New ArrayList
+            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ, TI, PI, TOWF, POWF, VOWF, HOWF, SOWF As New ArrayList
             Dim TCR, PCR, VCR As Double
 
             Dim CP As New ArrayList
@@ -717,7 +718,108 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Double.IsNaN(TVB(i - 1)) = True Or Math.Abs(T - TCR) / TCR < 0.002 And _
                         Math.Abs(P - PCR) / PCR < 0.002
 
-            Dim Switch = False
+            If Me.RET_VCAS().Contains("7732-18-5") Then
+
+                Dim wi As Integer = Array.IndexOf(Me.RET_VCAS(), "7732-18-5")
+                Dim wmf As Double = Vz(wi)
+                Dim Vzwf(n) As Double
+                For i = 0 To n
+                    If i <> wi Then
+                        Vzwf(i) = Vz(i) / (1 - wmf)
+                    Else
+                        Vzwf(i) = 0.0#
+                    End If
+                Next
+
+                beta = 10
+
+                j = 0
+                Do
+                    KI(j) = 0
+                    j = j + 1
+                Loop Until j = n + 1
+
+                'water-free calc
+                i = 0
+                P = Pmin
+                Do
+                    If i < 2 Then
+                        Try
+                            tmp2 = Me.FlashBase.Flash_PV(Vzwf, P, 1, 0, Me)
+                            TOWF.Add(tmp2(4))
+                            POWF.Add(P)
+                            T = TOWF(i)
+                            HOWF.Add(Me.DW_CalcEnthalpy(Vzwf, T, P, State.Vapor))
+                            SOWF.Add(Me.DW_CalcEntropy(Vzwf, T, P, State.Vapor))
+                            VOWF.Add(1 / Me.AUX_VAPDENS(T, P) * Me.AUX_MMM(Vzwf))
+                            KI = tmp2(6)
+                        Catch ex As Exception
+                        Finally
+                            If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
+                                P = P + dP * 0.1
+                            Else
+                                P = P + dP
+                            End If
+                        End Try
+                    Else
+                        If Abs(beta) < 2 Then
+                            Try
+                                tmp2 = Me.FlashBase.Flash_TV(Vzwf, T, 1, POWF(i - 1), Me, True, KI)
+                                TOWF.Add(T)
+                                POWF.Add(tmp2(4))
+                                P = POWF(i)
+                                HOWF.Add(Me.DW_CalcEnthalpy(Vzwf, T, P, State.Vapor))
+                                SOWF.Add(Me.DW_CalcEntropy(Vzwf, T, P, State.Vapor))
+                                VOWF.Add(1 / Me.AUX_VAPDENS(T, P) * Me.AUX_MMM(Vzwf))
+                                KI = tmp2(6)
+                            Catch ex As Exception
+                            Finally
+                                If TOWF(i) - TOWF(i - 1) <= 0 Then
+                                    If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
+                                        T = T - dT * 0.1
+                                    Else
+                                        T = T - dT
+                                    End If
+                                Else
+                                    If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
+                                        T = T + dT * 0.1
+                                    Else
+                                        T = T + dT
+                                    End If
+                                End If
+                            End Try
+                        Else
+                            Try
+                                tmp2 = Me.FlashBase.Flash_PV(Vzwf, P, 1, TOWF(i - 1), Me, False, KI)
+                                TOWF.Add(tmp2(4))
+                                POWF.Add(P)
+                                T = TOWF(i)
+                                HOWF.Add(Me.DW_CalcEnthalpy(Vzwf, T, P, State.Vapor))
+                                SOWF.Add(Me.DW_CalcEntropy(Vzwf, T, P, State.Vapor))
+                                VOWF.Add(1 / Me.AUX_VAPDENS(T, P) * Me.AUX_MMM(Vzwf))
+                                KI = tmp2(6)
+                            Catch ex As Exception
+                            Finally
+                                If Math.Abs(T - TCR) / TCR < 0.05 And Math.Abs(P - PCR) / PCR < 0.05 Then
+                                    P = P + dP * 0.25
+                                Else
+                                    P = P + dP
+                                End If
+                            End Try
+                        End If
+                        If i >= POWF.Count Then
+                            i = i - 1
+                        End If
+                        beta = (Math.Log(POWF(i) / 101325) - Math.Log(POWF(i - 1) / 101325)) / (Math.Log(TOWF(i)) - Math.Log(TOWF(i - 1)))
+                        If Double.IsNaN(beta) Or Double.IsInfinity(beta) Then beta = 0
+                    End If
+                    If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Dew Points (Water-Free) (" & i + 1 & "/200)")
+                    i = i + 1
+                Loop Until i >= 200 Or POWF(i - 1) = 0 Or POWF(i - 1) < 0 Or TOWF(i - 1) < 0 Or _
+                            Double.IsNaN(POWF(i - 1)) = True Or Double.IsNaN(TOWF(i - 1)) = True Or _
+                            Math.Abs(T - TCR) / TCR < 0.03 And Math.Abs(P - PCR) / PCR < 0.03
+
+            End If
 
             beta = 10
 
@@ -896,6 +998,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Pest = PCR * 10
             Tmin = MathEx.Common.Max(Me.RET_VTF)
+            If Tmin = 0.0# Then Tmin = MathEx.Common.Min(Me.RET_VTB) * 0.4
             Tmax = TCR * 1.4
 
             PI.Clear()
@@ -923,11 +1026,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             If SB.Count > 1 Then SB.RemoveAt(SB.Count - 1)
             If VB.Count > 1 Then VB.RemoveAt(VB.Count - 1)
 
+            If TOWF.Count > 1 Then TOWF.RemoveAt(TOWF.Count - 1)
+            If POWF.Count > 1 Then POWF.RemoveAt(POWF.Count - 1)
+            If HOWF.Count > 1 Then HOWF.RemoveAt(HOWF.Count - 1)
+            If SOWF.Count > 1 Then SOWF.RemoveAt(SOWF.Count - 1)
+            If VOWF.Count > 1 Then VOWF.RemoveAt(VOWF.Count - 1)
+
             If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
             If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
             If HO.Count > 1 Then HO.RemoveAt(HO.Count - 1)
             If SO.Count > 1 Then SO.RemoveAt(SO.Count - 1)
             If VO.Count > 1 Then VO.RemoveAt(VO.Count - 1)
+
             If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
             If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
             If HO.Count > 1 Then HO.RemoveAt(HO.Count - 1)
@@ -939,7 +1049,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             If TI.Count > 1 Then TI.RemoveAt(TI.Count - 1)
             If PI.Count > 1 Then PI.RemoveAt(PI.Count - 1)
 
-            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI}
+            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI, TOWF, POWF, HOWF, SOWF, VOWF}
 
         End Function
 
@@ -989,13 +1099,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 End If
                 i = i + 1
             Loop Until i = n + 1
-            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ, TI, PI As New ArrayList
+            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ, TI, PI, TOWF, POWF, VOWF, HOWF, SOWF As New ArrayList
             Dim TCR, PCR, VCR As Double
             Dim CP As New ArrayList
 
             My.MyApplication.IsRunningParallelTasks = True
 
-            Dim tasks(5) As task
+            Dim tasks(6) As task
 
             tasks(0) = Task.Factory.StartNew(Sub()
                                                  If n > 0 Then
@@ -1174,7 +1284,119 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                                              End Sub)
 
+            tasks(6) = Task.Factory.StartNew(Sub()
 
+                                                                                           If Me.RET_VCAS().Contains("7732-18-5") Then
+
+                                                     Dim ii As Integer = 0
+                                                     Dim wi As Integer = Array.IndexOf(Me.RET_VCAS(), "7732-18-5")
+                                                     Dim wmf As Double = Vz(wi)
+                                                     Dim Vzwf(n) As Double
+                                                     For ii = 0 To n
+                                                         If ii <> wi Then
+                                                             Vzwf(ii) = Vz(ii) / (1 - wmf)
+                                                         Else
+                                                             Vzwf(ii) = 0.0#
+                                                         End If
+                                                     Next
+
+                                                     beta = 10
+                                                     Dim Pmin, Tmin, dP, dT, T, P As Double
+                                                     Pmin = 101325
+                                                     Tmin = 0.3 * TCR
+                                                     dP = (PCR - Pmin) / 50
+                                                     dT = (TCR - Tmin) / 50
+                                                     Dim tmp2 As Object
+                                                     Dim KI(n) As Double
+                                                     j = 0
+                                                     Do
+                                                         KI(j) = 0
+                                                         j = j + 1
+                                                     Loop Until j = n + 1
+                                                     P = Pmin
+
+                                                     'water-free calc
+                                                     ii = 0
+                                                     P = Pmin
+                                                     Do
+                                                         If ii < 2 Then
+                                                             Try
+                                                                 tmp2 = Me.FlashBase.Flash_PV(Vzwf, P, 1, 0, Me)
+                                                                 TOWF.Add(tmp2(4))
+                                                                 POWF.Add(P)
+                                                                 T = TOWF(ii)
+                                                                 HOWF.Add(Me.DW_CalcEnthalpy(Vzwf, T, P, State.Vapor))
+                                                                 SOWF.Add(Me.DW_CalcEntropy(Vzwf, T, P, State.Vapor))
+                                                                 VOWF.Add(1 / Me.AUX_VAPDENS(T, P) * Me.AUX_MMM(Vzwf))
+                                                                 KI = tmp2(6)
+                                                             Catch ex As Exception
+                                                             Finally
+                                                                 If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
+                                                                     P = P + dP * 0.1
+                                                                 Else
+                                                                     P = P + dP
+                                                                 End If
+                                                             End Try
+                                                         Else
+                                                             If Abs(beta) < 2 Then
+                                                                 Try
+                                                                     tmp2 = Me.FlashBase.Flash_TV(Vzwf, T, 1, POWF(ii - 1), Me, True, KI)
+                                                                     TOWF.Add(T)
+                                                                     POWF.Add(tmp2(4))
+                                                                     P = POWF(ii)
+                                                                     HOWF.Add(Me.DW_CalcEnthalpy(Vzwf, T, P, State.Vapor))
+                                                                     SOWF.Add(Me.DW_CalcEntropy(Vzwf, T, P, State.Vapor))
+                                                                     VOWF.Add(1 / Me.AUX_VAPDENS(T, P) * Me.AUX_MMM(Vzwf))
+                                                                     KI = tmp2(6)
+                                                                 Catch ex As Exception
+                                                                 Finally
+                                                                     If TOWF(ii) - TOWF(ii - 1) <= 0 Then
+                                                                         If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
+                                                                             T = T - dT * 0.1
+                                                                         Else
+                                                                             T = T - dT
+                                                                         End If
+                                                                     Else
+                                                                         If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
+                                                                             T = T + dT * 0.1
+                                                                         Else
+                                                                             T = T + dT
+                                                                         End If
+                                                                     End If
+                                                                 End Try
+                                                             Else
+                                                                 Try
+                                                                     tmp2 = Me.FlashBase.Flash_PV(Vzwf, P, 1, TOWF(ii - 1), Me, False, KI)
+                                                                     TOWF.Add(tmp2(4))
+                                                                     POWF.Add(P)
+                                                                     T = TOWF(ii)
+                                                                     HOWF.Add(Me.DW_CalcEnthalpy(Vzwf, T, P, State.Vapor))
+                                                                     SOWF.Add(Me.DW_CalcEntropy(Vzwf, T, P, State.Vapor))
+                                                                     VOWF.Add(1 / Me.AUX_VAPDENS(T, P) * Me.AUX_MMM(Vzwf))
+                                                                     KI = tmp2(6)
+                                                                 Catch ex As Exception
+                                                                 Finally
+                                                                     If Math.Abs(T - TCR) / TCR < 0.05 And Math.Abs(P - PCR) / PCR < 0.05 Then
+                                                                         P = P + dP * 0.25
+                                                                     Else
+                                                                         P = P + dP
+                                                                     End If
+                                                                 End Try
+                                                             End If
+                                                             If ii >= POWF.Count Then
+                                                                 ii = ii - 1
+                                                             End If
+                                                             beta = (Math.Log(POWF(ii) / 101325) - Math.Log(POWF(ii - 1) / 101325)) / (Math.Log(TOWF(ii)) - Math.Log(TOWF(ii - 1)))
+                                                             If Double.IsNaN(beta) Or Double.IsInfinity(beta) Then beta = 0
+                                                         End If
+                                                         ii = ii + 1
+                                                     Loop Until ii >= 200 Or POWF(ii - 1) = 0 Or POWF(ii - 1) < 0 Or TOWF(ii - 1) < 0 Or _
+                                                                 Double.IsNaN(POWF(ii - 1)) = True Or Double.IsNaN(TOWF(ii - 1)) = True Or _
+                                                                 Math.Abs(T - TCR) / TCR < 0.03 And Math.Abs(P - PCR) / PCR < 0.03
+
+                                                 End If
+
+                                             End Sub)
 
             tasks(3) = Task.Factory.StartNew(Sub()
                                                  If CBool(parameters(2)) = True Then
@@ -1262,6 +1484,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                  Dim Pest, Tmax, Tmin, T As Double
                                                  Pest = PCR * 10
                                                  Tmin = MathEx.Common.Max(Me.RET_VTF)
+                                                 If Tmin = 0.0# Then Tmin = MathEx.Common.Min(Me.RET_VTB) * 0.4
                                                  Tmax = TCR * 1.4
                                                  If CBool(parameters(4)) = True Then
                                                      For T = Tmin To Tmax Step 5
@@ -1275,7 +1498,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                              End Sub)
 
             Try
-                Task.WaitAll(New Task() {tasks(1), tasks(2), tasks(3), tasks(4), tasks(5)})
+                Task.WaitAll(New Task() {tasks(1), tasks(2), tasks(3), tasks(4), tasks(5), tasks(6)})
             Catch ae As AggregateException
                 For Each ex As Exception In ae.InnerExceptions
                     Throw ex
@@ -1293,11 +1516,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             If SB.Count > 1 Then SB.RemoveAt(SB.Count - 1)
             If VB.Count > 1 Then VB.RemoveAt(VB.Count - 1)
 
+            If ToWF.Count > 1 Then ToWF.RemoveAt(ToWF.Count - 1)
+            If PoWF.Count > 1 Then PoWF.RemoveAt(PoWF.Count - 1)
+            If HoWF.Count > 1 Then HoWF.RemoveAt(HoWF.Count - 1)
+            If SoWF.Count > 1 Then SoWF.RemoveAt(SoWF.Count - 1)
+            If VoWF.Count > 1 Then VoWF.RemoveAt(VoWF.Count - 1)
+
             If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
             If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
             If HO.Count > 1 Then HO.RemoveAt(HO.Count - 1)
             If SO.Count > 1 Then SO.RemoveAt(SO.Count - 1)
             If VO.Count > 1 Then VO.RemoveAt(VO.Count - 1)
+
             If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
             If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
             If HO.Count > 1 Then HO.RemoveAt(HO.Count - 1)
@@ -1309,7 +1539,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             If TI.Count > 1 Then TI.RemoveAt(TI.Count - 1)
             If PI.Count > 1 Then PI.RemoveAt(PI.Count - 1)
 
-            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI}
+            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI, ToWF, PoWF, HoWF, SoWF, VoWF}
 
         End Function
 

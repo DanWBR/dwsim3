@@ -15,6 +15,8 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
+Imports System.Linq
+
 Public Class FormPhEnv
 
     Inherits System.Windows.Forms.Form
@@ -36,7 +38,7 @@ Public Class FormPhEnv
     Private showoppoint As Boolean = True
 
     'desmembrar vetores
-    Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, PHsI, PHsII, THsI, THsII, TQ, PQ, TI, PI As New ArrayList
+    Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, PHsI, PHsII, THsI, THsII, TQ, PQ, TI, PI, POWF, TOWF, HOWF, SOWF, VOWF As New ArrayList
     Dim UT, UP, UH, US, UV As New ArrayList
     Dim PC As ArrayList
     Dim ot, op, ov, oh, os As Double
@@ -64,15 +66,19 @@ Public Class FormPhEnv
 
         Me.Text = DWSIM.App.GetLocalString("DWSIMUtilitriosDiagr1")
 
+        If Not mat.PropertyPackage Is Nothing Then Me.chkhyd.Enabled = mat.PropertyPackage.RET_VCAS().Contains("7732-18-5")
+
         If Frm.Options.SelectedPropertyPackage.ComponentName.Contains("(PR)") Or _
            Frm.Options.SelectedPropertyPackage.ComponentName.Contains("(SRK)") Then
             Me.CheckBox1.Enabled = True
             Me.TextBox1.Enabled = True
             Me.CheckBox3.Enabled = True
+            chkpip.Enabled = True
         Else
             Me.CheckBox1.Enabled = False
             Me.TextBox1.Enabled = False
             Me.CheckBox3.Enabled = False
+            chkpip.Enabled = False
         End If
 
     End Sub
@@ -128,7 +134,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 0
 
-                    Dim px1, py1, px2, py2, px3, py3, px4, py4, ph1, ph2, th1, th2, px5, py5 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3, px4, py4, ph1, ph2, th1, th2, px5, py5, px6, py6 As New ArrayList
 
                     Dim i As Integer
 
@@ -160,6 +166,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         th2.Add(cv.ConverterDoSI(su.spmp_temperature, THsII(i)))
                         ph2.Add(cv.ConverterDoSI(su.spmp_pressure, PHsII(i)))
                     Next
+                    For i = 0 To TOWF.Count - 1
+                        py6.Add(cv.ConverterDoSI(su.spmp_temperature, TOWF(i)))
+                        px6.Add(cv.ConverterDoSI(su.spmp_pressure, POWF(i)))
+                    Next
                     
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -174,6 +184,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                             .Color = Color.YellowGreen
+                            .Line.IsSmooth = False
+                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        End With
+                        With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalhoWF"), px6.ToArray(GetType(Double)), py6.ToArray(GetType(Double)), Color.DarkBlue, ZedGraph.SymbolType.Circle)
+                            .Color = Color.DarkBlue
                             .Line.IsSmooth = False
                             .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         End With
@@ -192,7 +207,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
                             End With
                         End If
                         If phaseidentification Then
-                            With .AddCurve("Phase Identification Parameter = 1", px5.ToArray(GetType(Double)), py5.ToArray(GetType(Double)), Color.Brown, ZedGraph.SymbolType.Circle)
+                            With .AddCurve(DWSIM.App.GetLocalString("PhaseIdentificationParameter"), px5.ToArray(GetType(Double)), py5.ToArray(GetType(Double)), Color.Brown, ZedGraph.SymbolType.Circle)
                                 .Color = Color.Brown
                                 .Line.IsSmooth = True
                                 .Line.IsVisible = True
@@ -201,14 +216,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
                             End With
                         End If
                         If hydratecalc Then
-                            With .AddCurve("Hydrate Equilibrium Curve (sI)", ph1.ToArray(GetType(Double)), th1.ToArray(GetType(Double)), Color.LightCoral, ZedGraph.SymbolType.Circle)
+                            With .AddCurve(DWSIM.App.GetLocalString("HydrateEquilibriumCurve") & " (sI)", ph1.ToArray(GetType(Double)), th1.ToArray(GetType(Double)), Color.LightCoral, ZedGraph.SymbolType.Circle)
                                 .Color = Color.LightCoral
                                 .Line.IsSmooth = True
                                 .Line.IsVisible = True
                                 .Line.Width = 2
                                 .Symbol.IsVisible = False
                             End With
-                            With .AddCurve("Hydrate Equilibrium Curve (sII)", ph2.ToArray(GetType(Double)), th2.ToArray(GetType(Double)), Color.Violet, ZedGraph.SymbolType.Circle)
+                            With .AddCurve(DWSIM.App.GetLocalString("HydrateEquilibriumCurve") & " (sII)", ph2.ToArray(GetType(Double)), th2.ToArray(GetType(Double)), Color.Violet, ZedGraph.SymbolType.Circle)
                                 .Color = Color.Violet
                                 .Line.IsSmooth = True
                                 .Line.IsVisible = True
@@ -233,7 +248,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 1
 
-                    Dim px1, py1, px2, py2 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3 As New ArrayList
                     Dim i As Integer
                     For i = 0 To PB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_pressure, PB(i)))
@@ -243,6 +258,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         px2.Add(cv.ConverterDoSI(su.spmp_pressure, PO(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_enthalpy, HO(i)))
                     Next
+                    For i = 0 To POWF.Count - 1
+                        px3.Add(cv.ConverterDoSI(su.spmp_pressure, POWF(i)))
+                        py3.Add(cv.ConverterDoSI(su.spmp_enthalpy, HOWF(i)))
+                    Next
+
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
                         '.AddCurve(DWSIM.App.GetLocalString("PontoCrtico"), New Double() {cv.ConverterDoSI(su.spmp_temperature, TC)}, New Double() {cv.ConverterDoSI(su.spmp_pressure, PC)}, Color.Black, ZedGraph.SymbolType.Circle)
@@ -253,6 +273,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                             .Color = Color.YellowGreen
+                            .Line.IsSmooth = False
+                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        End With
+                        With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalhoWF"), px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.DarkBlue, ZedGraph.SymbolType.Circle)
+                            .Color = Color.DarkBlue
                             .Line.IsSmooth = False
                             .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         End With
@@ -272,7 +297,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 2
 
-                    Dim px1, py1, px2, py2 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3 As New ArrayList
                     Dim i As Integer
                     For i = 0 To PB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_pressure, PB(i)))
@@ -281,6 +306,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                     For i = 0 To PO.Count - 1
                         px2.Add(cv.ConverterDoSI(su.spmp_pressure, PO(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_entropy, SO(i)))
+                    Next
+                    For i = 0 To POWF.Count - 1
+                        px3.Add(cv.ConverterDoSI(su.spmp_pressure, POWF(i)))
+                        py3.Add(cv.ConverterDoSI(su.spmp_entropy, SOWF(i)))
                     Next
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -291,6 +320,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                             .Color = Color.YellowGreen
+                            .Line.IsSmooth = False
+                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        End With
+                        With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalhoWF"), px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.DarkBlue, ZedGraph.SymbolType.Circle)
+                            .Color = Color.DarkBlue
                             .Line.IsSmooth = False
                             .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         End With
@@ -310,7 +344,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 3
 
-                    Dim px1, py1, px2, py2 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3 As New ArrayList
                     Dim i As Integer
                     For i = 0 To PB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_pressure, PB(i)))
@@ -319,6 +353,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                     For i = 0 To PO.Count - 1
                         px2.Add(cv.ConverterDoSI(su.spmp_pressure, PO(i)))
                         py2.Add(cv.ConverterDoSI(su.molar_volume, VO(i)))
+                    Next
+                    For i = 0 To POWF.Count - 1
+                        px3.Add(cv.ConverterDoSI(su.spmp_pressure, POWF(i)))
+                        py3.Add(cv.ConverterDoSI(su.spmp_entropy, VOWF(i)))
                     Next
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -333,6 +371,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                             .Color = Color.YellowGreen
+                            .Line.IsSmooth = False
+                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        End With
+                        With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalhoWF"), px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.DarkBlue, ZedGraph.SymbolType.Circle)
+                            .Color = Color.DarkBlue
                             .Line.IsSmooth = False
                             .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         End With
@@ -352,7 +395,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 4
 
-                    Dim px1, py1, px2, py2, px3, py3, px4, py4, ph1, ph2, th1, th2, px5, py5 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3, px4, py4, ph1, ph2, th1, th2, px5, py5, px6, py6 As New ArrayList
 
                     Dim i As Integer
 
@@ -384,6 +427,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         th2.Add(cv.ConverterDoSI(su.spmp_temperature, THsII(i)))
                         ph2.Add(cv.ConverterDoSI(su.spmp_pressure, PHsII(i)))
                     Next
+                    For i = 0 To TOWF.Count - 1
+                        px6.Add(cv.ConverterDoSI(su.spmp_temperature, TOWF(i)))
+                        py6.Add(cv.ConverterDoSI(su.spmp_pressure, POWF(i)))
+                    Next
 
                     With Me.GraphControl.GraphPane
                         .CurveList.Clear()
@@ -398,6 +445,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                             .Color = Color.YellowGreen
+                            .Line.IsSmooth = False
+                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        End With
+                        With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalhoWF"), px6.ToArray(GetType(Double)), py6.ToArray(GetType(Double)), Color.DarkBlue, ZedGraph.SymbolType.Circle)
+                            .Color = Color.DarkBlue
                             .Line.IsSmooth = False
                             .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         End With
@@ -416,7 +468,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
                             End With
                         End If
                         If phaseidentification Then
-                            With .AddCurve("Phase Identification Parameter = 1", px5.ToArray(GetType(Double)), py5.ToArray(GetType(Double)), Color.Brown, ZedGraph.SymbolType.Circle)
+                            With .AddCurve(DWSIM.App.GetLocalString("PhaseIdentificationParameter"), px5.ToArray(GetType(Double)), py5.ToArray(GetType(Double)), Color.Brown, ZedGraph.SymbolType.Circle)
                                 .Color = Color.Brown
                                 .Line.IsSmooth = True
                                 .Line.IsVisible = True
@@ -425,15 +477,15 @@ exec:       With Me.GraphControl.GraphPane.Legend
                             End With
                         End If
                         If hydratecalc Then
-                            With .AddCurve("Hydrate Equilibrium Curve (sI)", th1.ToArray(GetType(Double)), ph1.ToArray(GetType(Double)), Color.Violet, ZedGraph.SymbolType.Circle)
-                                .Color = Color.Violet
+                            With .AddCurve(DWSIM.App.GetLocalString("HydrateEquilibriumCurve") & " (sI)", th1.ToArray(GetType(Double)), ph1.ToArray(GetType(Double)), Color.LightCoral, ZedGraph.SymbolType.Circle)
+                                .Color = Color.LightCoral
                                 .Line.IsSmooth = True
                                 .Line.IsVisible = True
                                 .Line.Width = 2
                                 .Symbol.IsVisible = False
                             End With
-                            With .AddCurve("Hydrate Equilibrium Curve (sII)", th2.ToArray(GetType(Double)), ph2.ToArray(GetType(Double)), Color.Coral, ZedGraph.SymbolType.Circle)
-                                .Color = Color.Coral
+                            With .AddCurve(DWSIM.App.GetLocalString("HydrateEquilibriumCurve") & " (sII)", th2.ToArray(GetType(Double)), ph2.ToArray(GetType(Double)), Color.Violet, ZedGraph.SymbolType.Circle)
+                                .Color = Color.Violet
                                 .Line.IsSmooth = True
                                 .Line.IsVisible = True
                                 .Line.Width = 2
@@ -456,7 +508,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 5
 
-                    Dim px1, py1, px2, py2 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3 As New ArrayList
                     Dim i As Integer
                     For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_temperature, TVB(i)))
@@ -465,6 +517,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                     For i = 0 To TVD.Count - 1
                         px2.Add(cv.ConverterDoSI(su.spmp_temperature, TVD(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_enthalpy, HO(i)))
+                    Next
+                    For i = 0 To TOWF.Count - 1
+                        px3.Add(cv.ConverterDoSI(su.molar_volume, TOWF(i)))
+                        py3.Add(cv.ConverterDoSI(su.spmp_entropy, HOWF(i)))
                     Next
 
                     With Me.GraphControl.GraphPane
@@ -476,6 +532,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                             .Color = Color.YellowGreen
+                            .Line.IsSmooth = False
+                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        End With
+                        With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalhoWF"), px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.DarkBlue, ZedGraph.SymbolType.Circle)
+                            .Color = Color.DarkBlue
                             .Line.IsSmooth = False
                             .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         End With
@@ -495,7 +556,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 6
 
-                    Dim px1, py1, px2, py2 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3 As New ArrayList
                     Dim i As Integer
                     For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_temperature, TVB(i)))
@@ -504,6 +565,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                     For i = 0 To TVD.Count - 1
                         px2.Add(cv.ConverterDoSI(su.spmp_temperature, TVD(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_entropy, SO(i)))
+                    Next
+                    For i = 0 To TOWF.Count - 1
+                        px3.Add(cv.ConverterDoSI(su.molar_volume, TOWF(i)))
+                        py3.Add(cv.ConverterDoSI(su.spmp_entropy, SOWF(i)))
                     Next
 
                     With Me.GraphControl.GraphPane
@@ -515,6 +580,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                             .Color = Color.YellowGreen
+                            .Line.IsSmooth = False
+                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        End With
+                        With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalhoWF"), px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.DarkBlue, ZedGraph.SymbolType.Circle)
+                            .Color = Color.DarkBlue
                             .Line.IsSmooth = False
                             .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         End With
@@ -534,7 +604,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 7
 
-                    Dim px1, py1, px2, py2 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3 As New ArrayList
                     Dim i As Integer
                     For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.spmp_temperature, TVB(i)))
@@ -543,6 +613,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                     For i = 0 To TVB.Count - 1
                         px2.Add(cv.ConverterDoSI(su.spmp_temperature, TVD(i)))
                         py2.Add(cv.ConverterDoSI(su.molar_volume, VO(i)))
+                    Next
+                    For i = 0 To TOWF.Count - 1
+                        px3.Add(cv.ConverterDoSI(su.molar_volume, TOWF(i)))
+                        py3.Add(cv.ConverterDoSI(su.spmp_entropy, VOWF(i)))
                     Next
 
                     With Me.GraphControl.GraphPane
@@ -558,6 +632,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                             .Color = Color.YellowGreen
+                            .Line.IsSmooth = False
+                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        End With
+                        With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalhoWF"), px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.DarkBlue, ZedGraph.SymbolType.Circle)
+                            .Color = Color.DarkBlue
                             .Line.IsSmooth = False
                             .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         End With
@@ -577,7 +656,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 8
 
-                    Dim px1, py1, px2, py2 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3 As New ArrayList
                     Dim i As Integer
                     For i = 0 To PB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.molar_volume, VB(i)))
@@ -586,6 +665,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                     For i = 0 To PO.Count - 1
                         px2.Add(cv.ConverterDoSI(su.molar_volume, VO(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_pressure, PO(i)))
+                    Next
+                    For i = 0 To TOWF.Count - 1
+                        px3.Add(cv.ConverterDoSI(su.molar_volume, VOWF(i)))
+                        py3.Add(cv.ConverterDoSI(su.spmp_entropy, POWF(i)))
                     Next
 
                     With Me.GraphControl.GraphPane
@@ -601,6 +684,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                             .Color = Color.YellowGreen
+                            .Line.IsSmooth = False
+                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        End With
+                        With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalhoWF"), px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.DarkBlue, ZedGraph.SymbolType.Circle)
+                            .Color = Color.DarkBlue
                             .Line.IsSmooth = False
                             .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         End With
@@ -620,7 +708,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 9
 
-                    Dim px1, py1, px2, py2 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3 As New ArrayList
                     Dim i As Integer
                     For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.molar_volume, VB(i)))
@@ -629,6 +717,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                     For i = 0 To TVD.Count - 1
                         px2.Add(cv.ConverterDoSI(su.molar_volume, VO(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_temperature, TVD(i)))
+                    Next
+                    For i = 0 To TOWF.Count - 1
+                        px3.Add(cv.ConverterDoSI(su.molar_volume, VOWF(i)))
+                        py3.Add(cv.ConverterDoSI(su.spmp_entropy, TOWF(i)))
                     Next
 
                     With Me.GraphControl.GraphPane
@@ -644,6 +736,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                             .Color = Color.YellowGreen
+                            .Line.IsSmooth = False
+                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        End With
+                        With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalhoWF"), px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.DarkBlue, ZedGraph.SymbolType.Circle)
+                            .Color = Color.DarkBlue
                             .Line.IsSmooth = False
                             .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         End With
@@ -663,7 +760,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 10
 
-                    Dim px1, py1, px2, py2 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3 As New ArrayList
                     Dim i As Integer
                     For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.molar_volume, VB(i)))
@@ -672,6 +769,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                     For i = 0 To TVD.Count - 1
                         px2.Add(cv.ConverterDoSI(su.molar_volume, VO(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_enthalpy, HO(i)))
+                    Next
+                    For i = 0 To TOWF.Count - 1
+                        px3.Add(cv.ConverterDoSI(su.molar_volume, VOWF(i)))
+                        py3.Add(cv.ConverterDoSI(su.spmp_entropy, HOWF(i)))
                     Next
 
                     With Me.GraphControl.GraphPane
@@ -683,6 +784,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                             .Color = Color.YellowGreen
+                            .Line.IsSmooth = False
+                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        End With
+                        With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalhoWF"), px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.DarkBlue, ZedGraph.SymbolType.Circle)
+                            .Color = Color.DarkBlue
                             .Line.IsSmooth = False
                             .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         End With
@@ -702,7 +808,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
                 Case 11
 
-                    Dim px1, py1, px2, py2 As New ArrayList
+                    Dim px1, py1, px2, py2, px3, py3 As New ArrayList
                     Dim i As Integer
                     For i = 0 To TVB.Count - 1
                         px1.Add(cv.ConverterDoSI(su.molar_volume, VB(i)))
@@ -711,6 +817,10 @@ exec:       With Me.GraphControl.GraphPane.Legend
                     For i = 0 To TVD.Count - 1
                         px2.Add(cv.ConverterDoSI(su.molar_volume, VO(i)))
                         py2.Add(cv.ConverterDoSI(su.spmp_entropy, SO(i)))
+                    Next
+                    For i = 0 To TOWF.Count - 1
+                        px3.Add(cv.ConverterDoSI(su.molar_volume, VOWF(i)))
+                        py3.Add(cv.ConverterDoSI(su.spmp_entropy, SOWF(i)))
                     Next
 
                     With Me.GraphControl.GraphPane
@@ -722,6 +832,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), px2.ToArray(GetType(Double)), py2.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
                             .Color = Color.YellowGreen
+                            .Line.IsSmooth = False
+                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        End With
+                        With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalhoWF"), px3.ToArray(GetType(Double)), py3.ToArray(GetType(Double)), Color.DarkBlue, ZedGraph.SymbolType.Circle)
+                            .Color = Color.DarkBlue
                             .Line.IsSmooth = False
                             .Symbol.Fill.Type = ZedGraph.FillType.Solid
                         End With
@@ -821,7 +936,6 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
         End If
 
-
         e.Result = New Object() {diagdata, ph1, th1, ph2, th2}
 
     End Sub
@@ -860,6 +974,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
         PQ = r(17)
         TI = r(18)
         PI = r(19)
+        TOWF = r(20)
+        POWF = r(21)
+        HOWF = r(22)
+        SOWF = r(23)
+        VOWF = r(24)
 
         calculated = True
 
@@ -885,6 +1004,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
             .Add("c18", "PHsI (" & su.spmp_pressure & ")")
             .Add("c19", "THsII (" & su.spmp_temperature & ")")
             .Add("c20", "PHsII (" & su.spmp_pressure & ")")
+            .Add("c21", "TDWF (" & su.spmp_temperature & ")")
+            .Add("c22", "PDWF (" & su.spmp_pressure & ")")
+            .Add("c23", "HDWF (" & su.spmp_enthalpy & ")")
+            .Add("c24", "SDWF (" & su.spmp_entropy & ")")
+            .Add("c25", "VDWF (m3/mol)")
         End With
 
         For Each c As DataGridViewColumn In Me.Grid1.Columns
@@ -893,7 +1017,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
             c.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
         Next
 
-        Dim maxl As Integer = DWSIM.MathEx.Common.Max(New Object() {TVB.Count, TVD.Count, TE.Count, TQ.Count, TI.Count, THsI.Count}) - 1
+        Dim maxl As Integer = DWSIM.MathEx.Common.Max(New Object() {TVB.Count, TVD.Count, TE.Count, TQ.Count, TI.Count, THsI.Count, TOWF.Count}) - 1
 
         Dim k, j As Integer
         Dim maxc As Integer = Me.Grid1.Columns.Count - 1
@@ -945,6 +1069,15 @@ exec:       With Me.GraphControl.GraphPane.Legend
         For Each d As Double In THsII
             data(18, j) = cv.ConverterDoSI(su.spmp_temperature, d)
             data(19, j) = cv.ConverterDoSI(su.spmp_pressure, PHsII(j))
+            j = j + 1
+        Next
+        j = 0
+        For Each d As Double In TOWF
+            data(20, j) = cv.ConverterDoSI(su.spmp_temperature, d)
+            data(21, j) = cv.ConverterDoSI(su.spmp_pressure, POWF(j))
+            data(22, j) = cv.ConverterDoSI(su.spmp_enthalpy, HOWF(j))
+            data(23, j) = cv.ConverterDoSI(su.spmp_entropy, SOWF(j))
+            data(24, j) = VOWF(j)
             j = j + 1
         Next
         

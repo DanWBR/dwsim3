@@ -4831,4 +4831,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="FlashSpecificationDesc" xml:space="preserve">
     <value>Selecione o tipo de cálculo Flash a ser realizado para resolver o balanço de energia no vaso.</value>
   </data>
+  <data name="HydrateEquilibriumCurve" xml:space="preserve">
+    <value>Curva de Equilíbrio de Hidratos</value>
+  </data>
+  <data name="PhaseIdentificationParameter" xml:space="preserve">
+    <value>Parâmetro de Identificação da Fase = 1</value>
+  </data>
+  <data name="PontosdeOrvalhoWF" xml:space="preserve">
+    <value>Pontos de Orvalho (Base Seca)</value>
+  </data>
 </root>
