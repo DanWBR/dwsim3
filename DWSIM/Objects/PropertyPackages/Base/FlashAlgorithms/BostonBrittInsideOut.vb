@@ -1585,6 +1585,7 @@ final:      d2 = Date.Now
                 Do
                     Vp(i) = PP.AUX_PVAPi(Vn(i), T)
                     P += Vz(i) * Vp(i)
+                    Ki(i) = Vz(i)
                     i += 1
                 Loop Until i = n + 1
                 Vx = Vz

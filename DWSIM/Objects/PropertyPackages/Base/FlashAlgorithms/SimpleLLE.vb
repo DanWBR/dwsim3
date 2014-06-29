@@ -114,7 +114,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 err_ant = err
                 err = 0.0#
                 For i = 0 To n
-                    err += Vx1(i) * gamma1(i) - Vx2(i) * gamma2(i)
+                    err += Abs(Vx1(i) * gamma1(i) - Vx2(i) * gamma2(i))
                 Next
 
                 If Double.IsNaN(err) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
