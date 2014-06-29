@@ -10501,6 +10501,7 @@ Final3:
 
             Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
 
+            Me.UniqueID = (From el As XElement In data Select el Where el.Name = "ID").SingleOrDefault.Value
             Me.ComponentName = (From el As XElement In data Select el Where el.Name = "ComponentName").SingleOrDefault.Value
             Me.ComponentDescription = (From el As XElement In data Select el Where el.Name = "ComponentDescription").SingleOrDefault.Value
             Me.Tag = (From el As XElement In data Select el Where el.Name = "Tag").SingleOrDefault.Value

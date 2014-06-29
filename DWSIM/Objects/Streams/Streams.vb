@@ -143,11 +143,13 @@ Namespace DWSIM.SimulationObjects.Streams
                     Else
                         Try
                             For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In Flowsheet.Options.PropertyPackages.Values
+                                _ppid = pp.UniqueID
                                 Return pp
                                 Exit For
                             Next
                         Catch ex As Exception
                             For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In Flowsheet.Options.PropertyPackages.Values
+                                _ppid = pp.UniqueID
                                 Return pp
                                 Exit For
                             Next
@@ -155,6 +157,7 @@ Namespace DWSIM.SimulationObjects.Streams
                         End Try
                     End If
                 Else
+                    _ppid = _pp.UniqueID
                     Return _pp
                 End If
                 Return Nothing
