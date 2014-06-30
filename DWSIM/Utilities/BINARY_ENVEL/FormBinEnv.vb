@@ -76,7 +76,6 @@ Public Class FormBinEnv
 
             Me.GraphControl.IsShowPointValues = True
 
-
         Else
 
             MessageBox.Show(DWSIM.App.GetLocalString("BinEnvError_TwoCompoundsMinimum"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -177,13 +176,11 @@ Public Class FormBinEnv
     Private Sub BackgroundWorker1_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
 
         Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
-        Dim pp2 As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
         Dim uniqueID As String = cbPropPack.SelectedItem.ToString.Substring(cbPropPack.SelectedItem.ToString.IndexOf("[") + 1, cbPropPack.SelectedItem.ToString.Length - cbPropPack.SelectedItem.ToString.IndexOf("[") - 2)
         pp = Me.Frm.Options.PropertyPackages(uniqueID)
         mat.SetFlowsheet(Me.Frm)
         pp.CurrentMaterialStream = mat
-        pp2.CurrentMaterialStream = mat
-        e.Result = New Object() {pp.DW_ReturnBinaryEnvelope(e.Argument, Me.BackgroundWorker1), pp2.DW_ReturnBinaryEnvelope(New Object() {e.Argument(0), e.Argument(1), e.Argument(2), e.Argument(3), False, False, False, False})}
+        e.Result = New Object() {pp.DW_ReturnBinaryEnvelope(e.Argument, Me.BackgroundWorker1)}
 
     End Sub
 
@@ -198,7 +195,6 @@ Public Class FormBinEnv
         fpec.Close()
 
         Dim r = e.Result(0)
-        Dim r2 = e.Result(1)
 
         Dim c(1) As String
         c(0) = cbComp1.SelectedItem.ToString
@@ -216,12 +212,6 @@ Public Class FormBinEnv
                         r(1)(i) = r(1)(i) * mw1 / (r(1)(i) * mw1 + (1 - r(1)(i)) * mw2)
                     End If
                 Next
-                For i = 0 To r2(0).count - 1
-                    r2(0)(i) = r2(0)(i) * mw1 / (r2(0)(i) * mw1 + (1 - r2(0)(i)) * mw2)
-                    If Me.RadioButton3.Checked Or Me.RadioButton4.Checked Then
-                        r2(1)(i) = r2(1)(i) * mw1 / (r2(1)(i) * mw1 + (1 - r2(1)(i)) * mw2)
-                    End If
-                Next
                 If r.Length > 2 Then
                     For i = 0 To r(3).count - 1
                         r(3)(i) = r(3)(i) * mw1 / (r(3)(i) * mw1 + (1 - r(3)(i)) * mw2)
@@ -235,12 +225,6 @@ Public Class FormBinEnv
                     r(0)(i) = r(0)(i) * 100
                     If Me.RadioButton3.Checked Or Me.RadioButton4.Checked Then
                         r(1)(i) = r(1)(i) * 100
-                    End If
-                Next
-                For i = 0 To r2(0).count - 1
-                    r2(0)(i) = r2(0)(i) * 100
-                    If Me.RadioButton3.Checked Or Me.RadioButton4.Checked Then
-                        r2(1)(i) = r2(1)(i) * 100
                     End If
                 Next
                 If r.Length > 2 Then
@@ -258,12 +242,6 @@ Public Class FormBinEnv
                         r(1)(i) = r(1)(i) * mw1 / (r(1)(i) * mw1 + (1 - r(1)(i)) * mw2) * 100
                     End If
                 Next
-                For i = 0 To r2(0).count - 1
-                    r2(0)(i) = r2(0)(i) * mw1 / (r2(0)(i) * mw1 + (1 - r2(0)(i)) * mw2) * 100
-                    If Me.RadioButton3.Checked Or Me.RadioButton4.Checked Then
-                        r2(1)(i) = r2(1)(i) * mw1 / (r2(1)(i) * mw1 + (1 - r2(1)(i)) * mw2) * 100
-                    End If
-                Next
                 If r.Length > 2 Then
                     For i = 0 To r(3).count - 1
                         r(3)(i) = r(3)(i) * mw1 / (r(3)(i) * mw1 + (1 - r(3)(i)) * mw2) * 100
@@ -277,13 +255,10 @@ Public Class FormBinEnv
 
         If Me.RadioButton1.Checked Then
 
-            Dim px, py1, py2, pxi, py1i, py2i, px1l1, px1l2, py3, pxs1, pys1, pxs2, pys2, pxc, pyc As New ArrayList
+            Dim px, py1, py2, px1l1, px1l2, py3, pxs1, pys1, pxs2, pys2, pxc, pyc As New ArrayList
             px = r(0)
             py1 = r(1)
             py2 = r(2)
-            pxi = r2(0)
-            py1i = r2(1)
-            py2i = r2(2)
 
             px1l1 = r(3)
             px1l2 = r(4)
@@ -296,7 +271,7 @@ Public Class FormBinEnv
             pxc = r(10)
             pyc = r(11)
 
-            Dim vx1, vx2, vy1, vy2, vxi, vy1i, vy2i, vx1l1, vx1l2, vy3, vxs1, vys1, vxs2, vys2, vxc, vyc As New ArrayList
+            Dim vx1, vx2, vy1, vy2, vx1l1, vx1l2, vy3, vxs1, vys1, vxs2, vys2, vxc, vyc As New ArrayList
 
             If py1.Count > 0 Then
                 i = 0
@@ -311,14 +286,6 @@ Public Class FormBinEnv
                     End If
                     i += 1
                 Loop Until i = px.Count
-
-                i = 0
-                Do
-                    vxi.Add(pxi(i))
-                    vy1i.Add(cv.ConverterDoSI(su.spmp_temperature, py1i(i)))
-                    vy2i.Add(cv.ConverterDoSI(su.spmp_temperature, py2i(i)))
-                    i += 1
-                Loop Until i = pxi.Count
             End If
 
             If px1l1.Count > 0 Then
@@ -456,18 +423,6 @@ Public Class FormBinEnv
                     .Line.IsSmooth = False
                     .Symbol.Fill.Type = ZedGraph.FillType.Solid
                 End With
-                With .AddCurve(DWSIM.App.GetLocalString("Ideal"), vxi.ToArray(GetType(Double)), vy1i.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
-                    .Color = Color.SteelBlue
-                    .Line.IsSmooth = False
-                    .Line.Style = Drawing2D.DashStyle.Dash
-                    .Symbol.IsVisible = False
-                End With
-                With .AddCurve(DWSIM.App.GetLocalString("Ideal"), vxi.ToArray(GetType(Double)), vy2i.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
-                    .Color = Color.YellowGreen
-                    .Line.IsSmooth = False
-                    .Line.Style = Drawing2D.DashStyle.Dash
-                    .Symbol.IsVisible = False
-                End With
                 If vx1l1.Count > 0 Then
                     With .AddCurve(DWSIM.App.GetLocalString("LLE LP1"), vx1l1.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Circle)
                         .Symbol.Fill.Type = ZedGraph.FillType.Solid
@@ -516,18 +471,15 @@ Public Class FormBinEnv
 
         ElseIf Me.RadioButton2.Checked Then
 
-            Dim px, py1, py2, pxi, py1i, py2i, px1l1, px1l2, py3 As New ArrayList
+            Dim px, py1, py2, px1l1, px1l2, py3 As New ArrayList
             px = r(0)
             py1 = r(1)
             py2 = r(2)
-            pxi = r2(0)
-            py1i = r2(1)
-            py2i = r2(2)
             px1l1 = r(3)
             px1l2 = r(4)
             py3 = r(5)
 
-            Dim vx1, vx2, vy1, vy2, vxi, vy1i, vy2i, vx1l1, vx1l2, vy3 As New ArrayList
+            Dim vx1, vx2, vy1, vy2, vx1l1, vx1l2, vy3 As New ArrayList
 
             i = 0
             Do
@@ -541,14 +493,6 @@ Public Class FormBinEnv
                 End If
                 i += 1
             Loop Until i = px.Count
-
-            i = 0
-            Do
-                vxi.Add(pxi(i))
-                vy1i.Add(cv.ConverterDoSI(su.spmp_pressure, py1i(i)))
-                vy2i.Add(cv.ConverterDoSI(su.spmp_pressure, py2i(i)))
-                i += 1
-            Loop Until i = pxi.Count
 
             If px1l1.Count > 0 Then
                 i = 0
@@ -617,18 +561,6 @@ Public Class FormBinEnv
                     .Line.IsSmooth = True
                     .Symbol.Fill.Type = ZedGraph.FillType.Solid
                 End With
-                With .AddCurve(DWSIM.App.GetLocalString("Ideal"), vxi.ToArray(GetType(Double)), vy1i.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.None)
-                    .Color = Color.SteelBlue
-                    .Line.IsSmooth = True
-                    .Line.Style = Drawing2D.DashStyle.Dash
-                    .Symbol.IsVisible = False
-                End With
-                With .AddCurve(DWSIM.App.GetLocalString("Ideal"), vxi.ToArray(GetType(Double)), vy2i.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.None)
-                    .Color = Color.YellowGreen
-                    .Line.IsSmooth = True
-                    .Line.Style = Drawing2D.DashStyle.Dash
-                    .Symbol.IsVisible = False
-                End With
                 If vx1l1.Count > 0 Then
                     With .AddCurve(DWSIM.App.GetLocalString("LLE LP1"), vx1l1.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Diamond)
                         .Line.IsVisible = False
@@ -654,13 +586,11 @@ Public Class FormBinEnv
 
         ElseIf Me.RadioButton3.Checked Then
 
-            Dim px, py, pxi, pyi As New ArrayList
+            Dim px, py As New ArrayList
             px = r(0)
             py = r(1)
-            pxi = r2(0)
-            pyi = r2(1)
 
-            Dim vx, vy, vxi, vyi As New ArrayList
+            Dim vx, vy As New ArrayList
 
             i = 0
             Do
@@ -668,13 +598,6 @@ Public Class FormBinEnv
                 vy.Add(py(i))
                 i += 1
             Loop Until i = px.Count
-
-            i = 0
-            Do
-                vxi.Add(pxi(i))
-                vyi.Add(pyi(i))
-                i += 1
-            Loop Until i = pxi.Count
 
             With Me.Grid1.Columns
                 .Clear()
@@ -720,13 +643,6 @@ Public Class FormBinEnv
                     .Line.IsSmooth = True
                     .Symbol.Fill.Type = ZedGraph.FillType.Solid
                 End With
-                With .AddCurve("", vxi.ToArray(GetType(Double)), vyi.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
-                    .Color = Color.SteelBlue
-                    .Line.IsSmooth = True
-                    .Line.Style = Drawing2D.DashStyle.Dash
-                    .Symbol.IsVisible = False
-                End With
-
                 vx.Clear()
                 vx.Add(0.0)
                 vx.Add(1.0)
@@ -751,13 +667,11 @@ Public Class FormBinEnv
 
         ElseIf Me.RadioButton4.Checked Then
 
-                Dim px, py, pxi, pyi As New ArrayList
-                px = r(0)
-                py = r(1)
-                pxi = r2(0)
-                pyi = r2(1)
+            Dim px, py As New ArrayList
+            px = r(0)
+            py = r(1)
 
-                Dim vx, vy, vxi, vyi As New ArrayList
+            Dim vx, vy As New ArrayList
 
                 i = 0
                 Do
@@ -765,13 +679,6 @@ Public Class FormBinEnv
                     vy.Add(py(i))
                     i += 1
                 Loop Until i = px.Count
-
-                i = 0
-                Do
-                    vxi.Add(pxi(i))
-                    vyi.Add(pyi(i))
-                    i += 1
-                Loop Until i = pxi.Count
 
                 With Me.Grid1.Columns
                     .Clear()
@@ -816,14 +723,6 @@ Public Class FormBinEnv
                         .Color = Color.SteelBlue
                         .Line.IsSmooth = True
                         .Symbol.Fill.Type = ZedGraph.FillType.Solid
-                End With
-
-                    With .AddCurve("", vxi.ToArray(GetType(Double)), vyi.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
-                        .Color = Color.SteelBlue
-                        .Line.IsSmooth = True
-                        .Line.Style = Drawing2D.DashStyle.Dash
-                    .Symbol.IsVisible = False
-
                 End With
 
                 vx.Clear()

@@ -270,7 +270,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 problem.AddOption("mu_strategy", "adaptive")
                 problem.AddOption("hessian_approximation", "limited-memory")
                 'problem.AddOption("hessian_approximation", "exact")
-                problem.SetIntermediateCallback(AddressOf intermediate)
+                'problem.SetIntermediateCallback(AddressOf intermediate)
                 'solve the problem 
                 status = problem.SolveProblem(initval, obj, Nothing, Nothing, Nothing, Nothing)
             End Using
@@ -482,7 +482,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                         problem.AddOption("max_iter", maxit_e)
                                         problem.AddOption("mu_strategy", "adaptive")
                                         problem.AddOption("hessian_approximation", "limited-memory")
-                                        problem.SetIntermediateCallback(AddressOf intermediate)
+                                        'problem.SetIntermediateCallback(AddressOf intermediate)
                                         'solve the problem 
                                         status = problem.SolveProblem(initval2, obj, g, Nothing, Nothing, Nothing)
                                     End Using
@@ -861,7 +861,6 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
         Function Serror(ByVal Tt As Double, ByVal otherargs As Object) As Double
             Return OBJ_FUNC_PS_FLASH(Tt, Sf, Pf, fi)
         End Function
-
 
         Public Overrides Function Flash_TV(ByVal Vz As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
@@ -1270,6 +1269,7 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
                     e2 = e2 + (Vy(i) - Vyant(i))
                     i = i + 1
                 Loop Until i = n + 1
+
                 e3 = (T - Tant) + (L1 - L1ant) + (L2 - L2ant)
 
                 If (Math.Abs(e1) + Math.Abs(e4) + Math.Abs(e3) + Math.Abs(e2) + Math.Abs(L1ant - L1) + Math.Abs(L2ant - L2)) < etol Then
@@ -1282,12 +1282,12 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
 
                 Else
 
-                    Ki12 = PP.DW_CalcKvalue(Vx1, Vy, T + 0.05, P)
-                    Ki22 = PP.DW_CalcKvalue(Vx2, Vy, T + 0.05, P)
+                    Ki12 = PP.DW_CalcKvalue(Vx1, Vy, T + 0.5, P)
+                    Ki22 = PP.DW_CalcKvalue(Vx2, Vy, T + 0.5, P)
 
                     For i = 0 To n
-                        db1dT(i) = ((1 - Ki12(i) ^ -1) - (1 - Ki1(i) ^ -1)) / 0.05
-                        db2dT(i) = ((1 - Ki22(i) ^ -1) - (1 - Ki2(i) ^ -1)) / 0.05
+                        db1dT(i) = ((1 - Ki12(i) ^ -1) - (1 - Ki1(i) ^ -1)) / 0.5
+                        db2dT(i) = ((1 - Ki22(i) ^ -1) - (1 - Ki2(i) ^ -1)) / 0.5
                     Next
 
                     Dim F1 = 0.0#, F2 = 0.0#
@@ -2111,7 +2111,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
 
         Private Function FunctionHessian(ByVal x() As Double) As Double()
 
-            Dim epsilon As Double = 0.01
+            Dim epsilon As Double = 0.001
 
             Dim f2() As Double = Nothing
             Dim f3() As Double = Nothing
