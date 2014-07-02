@@ -1421,12 +1421,12 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
 
                 Else
 
-                    Ki12 = PP.DW_CalcKvalue(Vx1, Vy, T + 0.5, P)
-                    Ki22 = PP.DW_CalcKvalue(Vx2, Vy, T + 0.5, P)
+                    Ki12 = PP.DW_CalcKvalue(Vx1, Vy, T + 2, P)
+                    Ki22 = PP.DW_CalcKvalue(Vx2, Vy, T + 2, P)
 
                     For i = 0 To n
-                        db1dT(i) = ((1 - Ki12(i) ^ -1) - (1 - Ki1(i) ^ -1)) / 0.5
-                        db2dT(i) = ((1 - Ki22(i) ^ -1) - (1 - Ki2(i) ^ -1)) / 0.5
+                        db1dT(i) = ((1 - Ki12(i) ^ -1) - (1 - Ki1(i) ^ -1)) / 2
+                        db2dT(i) = ((1 - Ki22(i) ^ -1) - (1 - Ki2(i) ^ -1)) / 2
                     Next
 
                     Dim F1 = 0.0#, F2 = 0.0#
@@ -1468,7 +1468,6 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
                     L1ant = L1
                     Tant = T
 
-                    T += -dT * 0.3
                     L2 += -dL2 * 0.3
 
                     If L2 < 0.0# Then L2 = 0.0#
@@ -1488,6 +1487,8 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
                         Vx2 = result(6)
                         Exit Do
                     End If
+
+                    T += -dT * 0.3
 
                 End If
 

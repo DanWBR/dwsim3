@@ -3294,7 +3294,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 py1.Add(y1)
                                 py2.Add(y2)
                                 'check if liquid phase is stable.
-                                result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, calcP, T, Me)
+                                result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, calcP * 1.3, T, Me)
                                 If result(5) > 0.0# Then
                                     Dim fcl1(1), fcl2(1) As Double
                                     fcl1 = Me.DW_CalcFugCoeff(result(2), T, calcP, State.Liquid)

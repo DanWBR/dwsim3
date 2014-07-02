@@ -970,7 +970,7 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
 
             dt = d2 - d1
 
-            Console.WriteLine("TV Flash [NL-3PV2]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            Console.WriteLine("TV Flash [GM-3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return result
 
@@ -1084,7 +1084,7 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
 
             dt = d2 - d1
 
-            Console.WriteLine("PV Flash [NL-3PV2]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            Console.WriteLine("PV Flash [GM-3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return result
 
@@ -1210,7 +1210,7 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
             L1 = L1est
             L2 = L2est
 
-            Console.WriteLine("PV Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
+            Console.WriteLine("PV Flash [GM-3P]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
 
             Do
 
@@ -1282,12 +1282,12 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
 
                 Else
 
-                    Ki12 = PP.DW_CalcKvalue(Vx1, Vy, T + 0.5, P)
-                    Ki22 = PP.DW_CalcKvalue(Vx2, Vy, T + 0.5, P)
+                    Ki12 = PP.DW_CalcKvalue(Vx1, Vy, T + 2, P)
+                    Ki22 = PP.DW_CalcKvalue(Vx2, Vy, T + 2, P)
 
                     For i = 0 To n
-                        db1dT(i) = ((1 - Ki12(i) ^ -1) - (1 - Ki1(i) ^ -1)) / 0.5
-                        db2dT(i) = ((1 - Ki22(i) ^ -1) - (1 - Ki2(i) ^ -1)) / 0.5
+                        db1dT(i) = ((1 - Ki12(i) ^ -1) - (1 - Ki1(i) ^ -1)) / 2
+                        db2dT(i) = ((1 - Ki22(i) ^ -1) - (1 - Ki2(i) ^ -1)) / 2
                     Next
 
                     Dim F1 = 0.0#, F2 = 0.0#
@@ -1329,7 +1329,6 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
                     L1ant = L1
                     Tant = T
 
-                    T += -dT * 0.3
                     L2 += -dL2 * 0.3
 
                     If L2 < 0.0# Then L2 = 0.0#
@@ -1337,13 +1336,28 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
 
                     L1 = 1 - V - L2
 
+                    If V = 0.0# Then
+                        'switch to simple LLE flash procedure.
+                        Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = Vx1EST, .InitialEstimatesForPhase2 = Vx2EST, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
+                        Dim result As Object = slle.Flash_PT(Vz, P, T, PP)
+                        L1 = result(0)
+                        V = result(1)
+                        L2 = result(5)
+                        Vx1 = result(2)
+                        Vy = result(3)
+                        Vx2 = result(6)
+                        Exit Do
+                    End If
+
+                    T += -dT * 0.3
+
                 End If
 
                 If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
 
                 ecount += 1
 
-                Console.WriteLine("PV Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
+                Console.WriteLine("PV Flash [GM-3P]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
 
             Loop
 
@@ -1471,7 +1485,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
             L1 = L1est
             L2 = L2est
 
-            Console.WriteLine("TV Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
+            Console.WriteLine("TV Flash [GM-3P]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
 
             Do
 
@@ -1603,7 +1617,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
 
                 ecount += 1
 
-                Console.WriteLine("TV Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
+                Console.WriteLine("TV Flash [GM-3P]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
 
             Loop
 
