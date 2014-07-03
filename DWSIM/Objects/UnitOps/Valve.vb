@@ -144,10 +144,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
             T2 = tmp(2)
             H2c = tmp(4)
 
-            Dim htol As Double = Me.PropertyPackage.Parameters("PP_PHFELT")
-            Dim herr As Double = Math.Abs((H2c - H2) / H2)
+            'Dim htol As Double = Me.PropertyPackage.Parameters("PP_PHFELT")
+            'Dim herr As Double = Math.Abs((H2c - H2) / H2)
 
-            If herr > 0.01 Then Throw New Exception("The enthalpy of inlet and outlet streams doesn't match. Result is invalid.")
+            'If herr > 0.01 Then Throw New Exception("The enthalpy of inlet and outlet streams doesn't match. Result is invalid.")
 
             Me.DeltaT = T2 - Ti
             Me.DeltaQ = 0

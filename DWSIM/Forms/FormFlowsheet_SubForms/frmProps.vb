@@ -124,8 +124,12 @@ Public Class frmProps
                         ms.Fases(2).SPMProperties.molarfraction = VF
                     End If
 
-                    If Not My.MyApplication.IsFlowsheetSolving Then CalculateObject(ChildParent, sobj.Name)
+                    If ChildParent.Options.CalculatorActivated Then
 
+                        If Not My.MyApplication.IsFlowsheetSolving Then CalculateObject(ChildParent, sobj.Name)
+
+                    End If
+                  
                 End If
 
             ElseIf sobj.TipoObjeto = TipoObjeto.EnergyStream Then

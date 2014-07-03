@@ -735,10 +735,10 @@ STEP2:
 
 START_LOOP:
 
-            Tinf = 600
-            Tsup = 10
+            Tinf = 350
+            Tsup = 200
 
-            nsub = 10
+            nsub = 5
 
             delta_T = (Tsup - Tinf) / nsub
 
