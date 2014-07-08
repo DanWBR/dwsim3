@@ -1,4 +1,4 @@
-﻿'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -14,6 +14,8 @@
 '
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
+
+Imports System.Linq
 
 Public Class FormHYD
 
@@ -62,208 +64,202 @@ Public Class FormHYD
             Dim gobj As Microsoft.MSDN.Samples.GraphicObjects.GraphicObject = FormFlowsheet.SearchSurfaceObjectsByTag(Me.ComboBox3.SelectedItem, Frm.FormSurface.FlowsheetDesignSurface)
             Me.mat = Frm.Collections.CLCS_MaterialStreamCollection(gobj.Name)
 
-            If mat.Fases(0).Componentes.ContainsKey(DWSIM.App.GetLocalString("Agua")) Then
+            mat.PropertyPackage.CurrentMaterialStream = mat
 
-                If mat.Fases(0).Componentes(DWSIM.App.GetLocalString("Agua")).FracaoMolar.GetValueOrDefault > 0 Then
+            If mat.PropertyPackage.RET_VCAS().Contains("7732-18-5") Then
 
-                    Dim unif As New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
+                Dim unif As New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
 
-                    unif.CurrentMaterialStream = mat
+                unif.CurrentMaterialStream = mat
 
-                    Dim n As Integer = mat.Fases(0).Componentes.Count - 1
+                Dim n As Integer = mat.Fases(0).Componentes.Count - 1
 
-                    Dim Vz(n), T, P As Double
-                    Dim nomes(mat.Fases(0).Componentes.Count - 1) As String
-                    Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-                    Dim i As Integer = 0
-                    For Each comp In mat.Fases(0).Componentes.Values
-                        Vz(i) = comp.FracaoMolar.GetValueOrDefault
-                        nomes(i) = comp.Nome
-                        i += 1
-                    Next
-                    nomesglobal = nomes
-                    T = mat.Fases(0).SPMProperties.temperature
-                    P = mat.Fases(0).SPMProperties.pressure
+                Dim Vz(n), T, P As Double
+                Dim nomes(mat.Fases(0).Componentes.Count - 1) As String
+                Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                Dim i As Integer = 0
+                For Each comp In mat.Fases(0).Componentes.Values
+                    Vz(i) = comp.FracaoMolar.GetValueOrDefault
+                    nomes(i) = comp.Nome
+                    i += 1
+                Next
+                nomesglobal = nomes
+                T = mat.Fases(0).SPMProperties.temperature
+                P = mat.Fases(0).SPMProperties.pressure
 
-                    Dim pform(1) As Object, tform(1) As Object, PH As Double, TH As Double
+                Dim pform(1) As Object, tform(1) As Object, PH As Double, TH As Double
 
-                    If ComboBox1.SelectedIndex = 0 Then
+                If ComboBox1.SelectedIndex = 0 Then
 
-                        Dim hid As New DWSIM.Utilities.HYD.vdwP_PP(mat)
-                        pform = hid.HYD_vdwP2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                        tform = hid.HYD_vdwP2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    Dim hid As New DWSIM.Utilities.HYD.vdwP_PP(mat)
+                    pform = hid.HYD_vdwP2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    tform = hid.HYD_vdwP2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
 
-                        'verificar qual estrutura se forma primeiro
-                        If pform(0) <= pform(1) Then
-                            tipoTC = "sI"
-                            PH = pform(0)
-                        Else
-                            tipoTC = "sII"
-                            PH = pform(1)
-                        End If
-                        'MsgBox(tform(0) & " " & tform(1))
-                        'MsgBox(pform(0) & " " & pform(1))
-
-                        If tform(0) >= tform(1) Then
-                            tipoPC = "sI"
-                            TH = tform(0)
-                        Else
-                            tipoPC = "sII"
-                            TH = tform(1)
-                        End If
-
-                        resPC = hid.DET_HYD_vdwP(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                        resTC = hid.DET_HYD_vdwP(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-
-                    ElseIf ComboBox1.SelectedIndex = 1 Then
-
-                        Dim hid As New DWSIM.Utilities.HYD.KlaudaSandler(mat)
-                        pform = hid.HYD_KS2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                        tform = hid.HYD_KS2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-
-                        'verificar qual estrutura se forma primeiro
-                        If pform(0) <= pform(1) Then
-                            tipoTC = "sI"
-                            PH = pform(0)
-                        Else
-                            tipoTC = "sII"
-                            PH = pform(1)
-                        End If
-                        'MsgBox(tform(0) & " " & tform(1))
-                        'MsgBox(pform(0) & " " & pform(1))
-                        If tform(0) >= tform(1) Then
-                            tipoPC = "sI"
-                            TH = tform(0)
-                        Else
-                            tipoPC = "sII"
-                            TH = tform(1)
-                        End If
-
-                        resPC = hid.DET_HYD_KS(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                        resTC = hid.DET_HYD_KS(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-
-                    ElseIf ComboBox1.SelectedIndex = 3 Then
-
-                        Dim hid As New DWSIM.Utilities.HYD.KlaudaSandlerMOD(mat)
-                        pform = hid.HYD_KS2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                        tform = hid.HYD_KS2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-
-                        'verificar qual estrutura se forma primeiro
-                        If pform(0) <= pform(1) Then
-                            tipoTC = "sI"
-                            PH = pform(0)
-                        Else
-                            tipoTC = "sII"
-                            PH = pform(1)
-                        End If
-                        'MsgBox(tform(0) & " " & tform(1))
-                        'MsgBox(pform(0) & " " & pform(1))
-                        If tform(0) >= tform(1) Then
-                            tipoPC = "sI"
-                            TH = tform(0)
-                        Else
-                            tipoPC = "sII"
-                            TH = tform(1)
-                        End If
-
-                        If TH > 0 Then resPC = hid.DET_HYD_KS(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                        resTC = hid.DET_HYD_KS(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-
+                    'verificar qual estrutura se forma primeiro
+                    If pform(0) <= pform(1) Then
+                        tipoTC = "sI"
+                        PH = pform(0)
                     Else
+                        tipoTC = "sII"
+                        PH = pform(1)
+                    End If
+                    'MsgBox(tform(0) & " " & tform(1))
+                    'MsgBox(pform(0) & " " & pform(1))
 
-                        Dim hid As New DWSIM.Utilities.HYD.ChenGuo(mat)
-                        pform = hid.HYD_CG2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                        tform = hid.HYD_CG2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-
-
-                        'verificar qual estrutura se forma primeiro
-                        If pform(0) <= pform(1) Then
-                            tipoTC = "sI"
-                            PH = pform(0)
-                        Else
-                            tipoTC = "sII"
-                            PH = pform(1)
-                        End If
-                        'MsgBox(tform(0) & " " & tform(1))
-                        'MsgBox(pform(0) & " " & pform(1))
-                        If tform(0) >= tform(1) Then
-                            tipoPC = "sI"
-                            TH = tform(0)
-                        Else
-                            tipoPC = "sII"
-                            TH = tform(1)
-                        End If
-
-                        resPC = hid.DET_HYD_CG(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                        resTC = hid.DET_HYD_CG(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-
+                    If tform(0) >= tform(1) Then
+                        tipoPC = "sI"
+                        TH = tform(0)
+                    Else
+                        tipoPC = "sII"
+                        TH = tform(1)
                     End If
 
-                    'unidades
-                    Dim uP, uT As String
-                    uP = su.spmp_pressure
-                    uT = su.spmp_temperature
+                    resPC = hid.DET_HYD_vdwP(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    resTC = hid.DET_HYD_vdwP(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
 
-                    Label5.Text = uP
-                    Label15.Text = uP
-                    Label1.Text = uT
-                    Label16.Text = uT
+                ElseIf ComboBox1.SelectedIndex = 1 Then
 
-                    Dim fasesTC As String = ""
-                    If PH > 600 * 101325 Then
-                        Label8.Text = DWSIM.App.GetLocalString("ND")
-                        Me.KryptonButton2.Enabled = False
-                        fasesTC = DWSIM.App.GetLocalString("ND")
+                    Dim hid As New DWSIM.Utilities.HYD.KlaudaSandler(mat)
+                    pform = hid.HYD_KS2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    tform = hid.HYD_KS2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+
+                    'verificar qual estrutura se forma primeiro
+                    If pform(0) <= pform(1) Then
+                        tipoTC = "sI"
+                        PH = pform(0)
                     Else
-                        Label8.Text = Format(cv.ConverterDoSI(su.spmp_pressure, PH), nf)
-                        Me.KryptonButton2.Enabled = True
-                        If Math.Abs(T - resTC(0)) < 0.1 Or T = resTC(0) Then
-                            fasesTC = DWSIM.App.GetLocalString("SlidoGeloLquidoguaGs1") & tipoTC & ")"
-                        ElseIf T < resTC(0) Then
-                            fasesTC = DWSIM.App.GetLocalString("SlidoGeloGseHidrato1") & tipoTC & ")"
-                        ElseIf T > resTC(0) Then
-                            fasesTC = DWSIM.App.GetLocalString("LquidoguaGseHidrato") & tipoTC & ")"
-                        End If
+                        tipoTC = "sII"
+                        PH = pform(1)
                     End If
-                    Dim fasesPC As String = ""
-                    If TH < 0 Then
-                        Label14.Text = DWSIM.App.GetLocalString("ND")
-                        Me.KryptonButton3.Enabled = False
-                        fasesPC = DWSIM.App.GetLocalString("ND")
+                    'MsgBox(tform(0) & " " & tform(1))
+                    'MsgBox(pform(0) & " " & pform(1))
+                    If tform(0) >= tform(1) Then
+                        tipoPC = "sI"
+                        TH = tform(0)
                     Else
-                        Label14.Text = Format(cv.ConverterDoSI(su.spmp_temperature, TH), nf)
-                        Me.KryptonButton3.Enabled = True
-                        fasesPC = DWSIM.App.GetLocalString("SlidoGeloGseHidrato1") & tipoPC & ")"
-                        If TH > resPC(0) Then fasesPC = DWSIM.App.GetLocalString("LquidoguaGseHidrato") & tipoPC & ")"
-                        If Math.Abs(TH - resPC(0)) < 0.01 Then fasesPC = DWSIM.App.GetLocalString("SlidoGeloLquidoguaGs1") & tipoPC & ")"
-                    End If
-                    Label17.Text = Format(cv.ConverterDoSI(su.spmp_pressure, P), nf)
-                    Label9.Text = Format(cv.ConverterDoSI(su.spmp_temperature, T), nf)
-                    Label12.Text = fasesPC
-                    Label10.Text = fasesTC
-
-                    'lógica para verificar se forma hidrato ou não
-                    If T <= TH Then
-                        Label21.Text = DWSIM.App.GetLocalString("Sim")
-                        Label20.Text = tipoTC
-                    ElseIf P >= PH Then
-                        Label21.Text = DWSIM.App.GetLocalString("Sim")
-                        Label20.Text = tipoPC
-                    Else
-                        Label21.Text = DWSIM.App.GetLocalString("No")
-                        Label20.Text = DWSIM.App.GetLocalString("NA")
+                        tipoPC = "sII"
+                        TH = tform(1)
                     End If
 
-                    GroupBox1.Enabled = True
+                    resPC = hid.DET_HYD_KS(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    resTC = hid.DET_HYD_KS(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
 
-                    unif.CurrentMaterialStream = Nothing
-                    unif = Nothing
+                ElseIf ComboBox1.SelectedIndex = 3 Then
+
+                    Dim hid As New DWSIM.Utilities.HYD.KlaudaSandlerMOD(mat)
+                    pform = hid.HYD_KS2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    tform = hid.HYD_KS2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+
+                    'verificar qual estrutura se forma primeiro
+                    If pform(0) <= pform(1) Then
+                        tipoTC = "sI"
+                        PH = pform(0)
+                    Else
+                        tipoTC = "sII"
+                        PH = pform(1)
+                    End If
+                    'MsgBox(tform(0) & " " & tform(1))
+                    'MsgBox(pform(0) & " " & pform(1))
+                    If tform(0) >= tform(1) Then
+                        tipoPC = "sI"
+                        TH = tform(0)
+                    Else
+                        tipoPC = "sII"
+                        TH = tform(1)
+                    End If
+
+                    If TH > 0 Then resPC = hid.DET_HYD_KS(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    resTC = hid.DET_HYD_KS(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
 
                 Else
 
-                    MessageBox.Show(DWSIM.App.GetLocalString("Noexisteguanacorrent"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Dim hid As New DWSIM.Utilities.HYD.ChenGuo(mat)
+                    pform = hid.HYD_CG2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    tform = hid.HYD_CG2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+
+
+                    'verificar qual estrutura se forma primeiro
+                    If pform(0) <= pform(1) Then
+                        tipoTC = "sI"
+                        PH = pform(0)
+                    Else
+                        tipoTC = "sII"
+                        PH = pform(1)
+                    End If
+                    'MsgBox(tform(0) & " " & tform(1))
+                    'MsgBox(pform(0) & " " & pform(1))
+                    If tform(0) >= tform(1) Then
+                        tipoPC = "sI"
+                        TH = tform(0)
+                    Else
+                        tipoPC = "sII"
+                        TH = tform(1)
+                    End If
+
+                    resPC = hid.DET_HYD_CG(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    resTC = hid.DET_HYD_CG(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
 
                 End If
+
+                'unidades
+                Dim uP, uT As String
+                uP = su.spmp_pressure
+                uT = su.spmp_temperature
+
+                Label5.Text = uP
+                Label15.Text = uP
+                Label1.Text = uT
+                Label16.Text = uT
+
+                Dim fasesTC As String = ""
+                If PH > 600 * 101325 Then
+                    Label8.Text = DWSIM.App.GetLocalString("ND")
+                    Me.KryptonButton2.Enabled = False
+                    fasesTC = DWSIM.App.GetLocalString("ND")
+                Else
+                    Label8.Text = Format(cv.ConverterDoSI(su.spmp_pressure, PH), nf)
+                    Me.KryptonButton2.Enabled = True
+                    If Math.Abs(T - resTC(0)) < 0.1 Or T = resTC(0) Then
+                        fasesTC = DWSIM.App.GetLocalString("SlidoGeloLquidoguaGs1") & tipoTC & ")"
+                    ElseIf T < resTC(0) Then
+                        fasesTC = DWSIM.App.GetLocalString("SlidoGeloGseHidrato1") & tipoTC & ")"
+                    ElseIf T > resTC(0) Then
+                        fasesTC = DWSIM.App.GetLocalString("LquidoguaGseHidrato") & tipoTC & ")"
+                    End If
+                End If
+                Dim fasesPC As String = ""
+                If TH < 0 Then
+                    Label14.Text = DWSIM.App.GetLocalString("ND")
+                    Me.KryptonButton3.Enabled = False
+                    fasesPC = DWSIM.App.GetLocalString("ND")
+                Else
+                    Label14.Text = Format(cv.ConverterDoSI(su.spmp_temperature, TH), nf)
+                    Me.KryptonButton3.Enabled = True
+                    fasesPC = DWSIM.App.GetLocalString("SlidoGeloGseHidrato1") & tipoPC & ")"
+                    If TH > resPC(0) Then fasesPC = DWSIM.App.GetLocalString("LquidoguaGseHidrato") & tipoPC & ")"
+                    If Math.Abs(TH - resPC(0)) < 0.01 Then fasesPC = DWSIM.App.GetLocalString("SlidoGeloLquidoguaGs1") & tipoPC & ")"
+                End If
+                Label17.Text = Format(cv.ConverterDoSI(su.spmp_pressure, P), nf)
+                Label9.Text = Format(cv.ConverterDoSI(su.spmp_temperature, T), nf)
+                Label12.Text = fasesPC
+                Label10.Text = fasesTC
+
+                'lógica para verificar se forma hidrato ou não
+                If T <= TH Then
+                    Label21.Text = DWSIM.App.GetLocalString("Sim")
+                    Label20.Text = tipoTC
+                ElseIf P >= PH Then
+                    Label21.Text = DWSIM.App.GetLocalString("Sim")
+                    Label20.Text = tipoPC
+                Else
+                    Label21.Text = DWSIM.App.GetLocalString("No")
+                    Label20.Text = DWSIM.App.GetLocalString("NA")
+                End If
+
+                GroupBox1.Enabled = True
+
+                unif.CurrentMaterialStream = Nothing
+                unif = Nothing
 
             Else
 
