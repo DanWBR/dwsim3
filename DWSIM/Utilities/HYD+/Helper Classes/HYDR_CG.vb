@@ -1,4 +1,4 @@
-﻿'    Hydrate Calculation Routines (Chen & Guo)
+'    Hydrate Calculation Routines (Chen & Guo)
 '    Copyright 2008 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -24,8 +24,6 @@ Namespace DWSIM.Utilities.HYD
         Dim unf As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
         Dim unfPP As DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
         Dim prPP As DWSIM.SimulationObjects.PropertyPackages.PengRobinsonPropertyPackage
-        Dim raPP As DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage
-
 
         Sub New(ByVal materialStream As DWSIM.SimulationObjects.Streams.MaterialStream)
 
@@ -33,11 +31,9 @@ Namespace DWSIM.Utilities.HYD
             prPP = New DWSIM.SimulationObjects.PropertyPackages.PengRobinsonPropertyPackage
             unf = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
             unfPP = New DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
-            raPP = New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage
 
             unfPP.CurrentMaterialStream = materialStream
             prPP.CurrentMaterialStream = materialStream
-            raPP.CurrentMaterialStream = materialStream
 
         End Sub
 
@@ -162,7 +158,7 @@ Namespace DWSIM.Utilities.HYD
 
             'CALCULAR EQUILIBRIO L-V
 
-            Dim eqtmp = raPP.FlashBase.Flash_PT(Vz, P, T, raPP)
+            Dim eqtmp = prPP.FlashBase.Flash_PT(Vz, P, T, prPP)
 
             Dim L = eqtmp(0)
             Dim V = eqtmp(1)
@@ -824,7 +820,7 @@ STEP2:
 
             'CALCULAR EQUILIBRIO L-V
 
-            Dim eqtmp = raPP.FlashBase.Flash_PT(Vz, P, T, raPP)
+            Dim eqtmp = prPP.FlashBase.Flash_PT(Vz, P, T, prPP)
 
             Dim L = eqtmp(0)
             Dim V = eqtmp(1)
