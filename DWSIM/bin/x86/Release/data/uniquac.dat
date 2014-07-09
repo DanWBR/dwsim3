@@ -275,3 +275,103 @@
 1921;510;-310.5637;1655.4649;Water/Isopropylbenzene p465 1/1a
 2640;1101;1653.8373;-379.2679;Halothane/Methanol p33 1/2c
 2851;1101;319.3243;-34.2606;Methanol/Formamide p30 1/2c
+1921;1921;0;0;Water/Water
+1;1921;-1.67124361;11.6847948;Methane/Water
+2;1921;-8.1873052;-3.2590244;Ethane/Water
+3;1921;6.3988162;14.7252261;Propane/Water
+4;1921;-4.9878971;15.0233076;Isobutane/Water
+5;1921;1.08104224;16.096401;N-butane/Water
+909;1921;2.4641404;1.51226681;Carbon dioxide/Water
+1922;1921;-0.1589768;17.8451458;Hydrogen sulfide/Water
+900;1921;5.365467;-4.769304;Nitrogen/Water
+1101;1921;-1.192326;-6.359072;Methanol/Water
+1921;1;11.6847948;-1.67124361;Water/Methane
+1;1;0;0;Methane/Methane
+2;1;10.6514456;0.020070821;Ethane/Methane
+3;1;2.8615824;-0.8942445;Propane/Methane
+4;1;13.711749;-0.7551398;Isobutane/Methane
+5;1;1.39899584;0.82071773;N-butane/Methane
+909;1;2.2455473;0.040936526;Carbon dioxide/Methane
+1922;1;-1.2121981;17.487448;Hydrogen sulfide/Methane
+900;1;-1.0333492;8.2866657;Nitrogen/Methane
+1101;1;8.942445;-15.89768;Methanol/Methane
+1921;2;-3.2590244;-8.1873052;Water/Ethane
+1;2;0.020070821;10.6514456;Methane/Ethane
+2;2;0;0;Ethane/Ethane
+3;2;5.0673855;-1.6295122;Propane/Ethane
+4;2;12.718144;9.141166;Isobutane/Ethane
+5;2;0;0;N-butane/Ethane
+909;2;0.9339887;17.3284712;Carbon dioxide/Ethane
+1922;2;0;0;Hydrogen sulfide/Ethane
+900;2;13.91047;-7.94884;Nitrogen/Ethane
+1101;2;-10.929655;-17.090006;Methanol/Ethane
+1921;3;14.7252261;6.3988162;Water/Propane
+1;3;-0.8942445;2.8615824;Methane/Propane
+2;3;-1.6295122;5.0673855;Ethane/Propane
+3;3;0;0;Propane/Propane
+4;3;16.295122;13.91047;Isobutane/Propane
+5;3;-2.185931;-38.353153;N-butane/Propane
+909;3;7.2135723;1.21021089;Carbon dioxide/Propane
+1922;3;-4.0936526;17.686169;Hydrogen sulfide/Propane
+900;3;-3.3583849;12.320702;Nitrogen/Propane
+1101;3;13.314307;-20.070821;Methanol/Propane
+1921;4;15.0233076;-4.9878971;Water/Isobutane
+1;4;-0.7551398;13.711749;Methane/Isobutane
+2;4;9.141166;12.718144;Ethane/Isobutane
+3;4;13.91047;16.295122;Propane/Isobutane
+4;4;0;0;Isobutane/Isobutane
+5;4;22.455473;11.6053064;N-butane/Isobutane
+909;4;2.384652;8.1674331;Carbon dioxide/Isobutane
+1922;4;0;0;Hydrogen sulfide/Isobutane
+900;4;-13.91047;-9.93605;Nitrogen/Isobutane
+1101;4;0;0;Methanol/Isobutane
+1921;5;16.096401;1.08104224;Water/N-butane
+1;5;0.82071773;1.39899584;Methane/N-butane
+2;5;0;0;Ethane/N-butane
+3;5;-38.353153;-2.185931;Propane/N-butane
+4;5;11.6053064;22.455473;Isobutane/N-butane
+5;5;0;0;N-butane/N-butane
+909;5;-22.455473;-6.3391999;Carbon dioxide/N-butane
+1922;5;0;0;Hydrogen sulfide/N-butane
+900;5;0;0;Nitrogen/N-butane
+1101;5;0;0;Methanol/N-butane
+1921;909;1.51226681;2.4641404;Water/Carbon dioxide
+1;909;0.040936526;2.2455473;Methane/Carbon dioxide
+2;909;17.3284712;0.9339887;Ethane/Carbon dioxide
+3;909;1.21021089;7.2135723;Propane/Carbon dioxide
+4;909;8.1674331;2.384652;Isobutane/Carbon dioxide
+5;909;-6.3391999;-22.455473;N-butane/Carbon dioxide
+909;909;0;0;Carbon dioxide/Carbon dioxide
+1922;909;12.718144;15.301517;Hydrogen sulfide/Carbon dioxide
+900;909;-9.3200149;-28.218382;Nitrogen/Carbon dioxide
+1101;909;16.295122;2.583373;Methanol/Carbon dioxide
+1921;1922;17.8451458;-0.1589768;Water/Hydrogen sulfide
+1;1922;17.487448;-1.2121981;Methane/Hydrogen sulfide
+2;1922;0;0;Ethane/Hydrogen sulfide
+3;1922;17.686169;-4.0936526;Propane/Hydrogen sulfide
+4;1922;0;0;Isobutane/Hydrogen sulfide
+5;1922;0;0;N-butane/Hydrogen sulfide
+909;1922;15.301517;12.718144;Carbon dioxide/Hydrogen sulfide
+1922;1922;0;0;Hydrogen sulfide/Hydrogen sulfide
+900;1922;0;0;Nitrogen/Hydrogen sulfide
+1101;1922;12.320702;-0.198721;Methanol/Hydrogen sulfide
+1921;900;-4.769304;5.365467;Water/Nitrogen
+1;900;8.2866657;-1.0333492;Methane/Nitrogen
+2;900;-7.94884;13.91047;Ethane/Nitrogen
+3;900;12.320702;-3.3583849;Propane/Nitrogen
+4;900;-9.93605;-13.91047;Isobutane/Nitrogen
+5;900;0;0;N-butane/Nitrogen
+909;900;-28.218382;-9.3200149;Carbon dioxide/Nitrogen
+1922;900;0;0;Hydrogen sulfide/Nitrogen
+900;900;0;0;Nitrogen/Nitrogen
+1101;900;0;0;Methanol/Nitrogen
+1921;1101;-6.359072;-1.192326;Water/Methanol
+1;1101;-15.89768;8.942445;Methane/Methanol
+2;1101;-17.090006;-10.929655;Ethane/Methanol
+3;1101;-20.070821;13.314307;Propane/Methanol
+4;1101;0;0;Isobutane/Methanol
+5;1101;0;0;N-butane/Methanol
+909;1101;2.583373;16.295122;Carbon dioxide/Methanol
+1922;1101;-0.198721;12.320702;Hydrogen sulfide/Methanol
+900;1101;0;0;Nitrogen/Methanol
+1101;1101;0;0;Methanol/Methanol
