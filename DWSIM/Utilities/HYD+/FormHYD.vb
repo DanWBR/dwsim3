@@ -171,7 +171,7 @@ Public Class FormHYD
                     If TH > 0 Then resPC = hid.DET_HYD_KS(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
                     resTC = hid.DET_HYD_KS(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
 
-                Else
+                ElseIf ComboBox1.SelectedIndex = 2 Then
 
                     Dim hid As New DWSIM.Utilities.HYD.ChenGuo(mat)
                     pform = hid.HYD_CG2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))

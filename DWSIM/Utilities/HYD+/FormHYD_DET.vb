@@ -70,14 +70,16 @@ Public Class FormHYD_DET
             i = i + 1
         Loop Until i = n
 
-        Dim Vx, Vy, Vh, VxH As Object
+        Dim Vx, VxHC, Vy, Vh, VxH As Object
 
         Vx = res(4)
         Vy = res(5)
         Vh = res(6)
         Try
             VxH = res(7)
+            VxHC = res(8)
         Catch
+            VxHC = res(7)
             VxH = New Object(n - 1) {}
             i = 0
             Do
@@ -150,9 +152,10 @@ Public Class FormHYD_DET
 
             i = 0
             Do
-                Grid1.Rows(i).Cells(1).Value = Format(Vx2(i), "####0.0000")
-                Grid1.Rows(i).Cells(2).Value = Format(Vy2(i), "####0.0000")
-                Grid1.Rows(i).Cells(3).Value = Format(Vh2(i), "####0.0000")
+                Grid1.Rows(i).Cells(1).Value = Format(VxHC(i), "####0.0000")
+                Grid1.Rows(i).Cells(2).Value = Format(Vx2(i), "####0.0000")
+                Grid1.Rows(i).Cells(3).Value = Format(Vy2(i), "####0.0000")
+                Grid1.Rows(i).Cells(4).Value = Format(Vh2(i), "####0.0000")
                 'Grid1.Rows(i).Cells(4).Value = Format(VxH(i), "####0.0000")
                 i = i + 1
             Loop Until i = Grid1.Rows.Count
@@ -169,9 +172,10 @@ Public Class FormHYD_DET
 
             i = 0
             Do
-                Grid1.Rows(i).Cells(1).Value = Format(Vx2(i), "####0.0000")
-                Grid1.Rows(i).Cells(2).Value = Format(Vy2(i), "####0.0000")
-                Grid1.Rows(i).Cells(3).Value = Format(Vh2(i), "####0.0000")
+                Grid1.Rows(i).Cells(1).Value = Format(VxHC(i), "####0.0000")
+                Grid1.Rows(i).Cells(2).Value = Format(Vx2(i), "####0.0000")
+                Grid1.Rows(i).Cells(3).Value = Format(Vy2(i), "####0.0000")
+                Grid1.Rows(i).Cells(4).Value = Format(Vh2(i), "####0.0000")
                 'Grid1.Rows(i).Cells(4).Value = Format(VxH(i), "####0.0000")
                 i = i + 1
             Loop Until i = Grid1.Rows.Count

@@ -158,6 +158,7 @@ Namespace DWSIM.Utilities.HYD
 
             'CALCULAR EQUILIBRIO L-V
 
+            prPP.Parameters("PP_FLASHALGORITHM") = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
             Dim eqtmp = prPP.FlashBase.Flash_PT(Vz, P, T, prPP)
 
             Dim L = eqtmp(0)
@@ -329,6 +330,7 @@ Namespace DWSIM.Utilities.HYD
             i = 0
             Do
                 If i <> pos Then Vx(i) = PHIV(i) / (H(i) * Math.Exp(ZLinf(i)))
+                If H(i) = 101325.0# Then Vx(i) = 0.0#
                 i = i + 1
             Loop Until i = n + 1
 
@@ -786,7 +788,7 @@ STEP2:
             Dim vm(1, 1), sumTETAsI, sumTETAsII
             Dim C1(1, n), C2(1, n)
             Dim DT, Tnfp, DHm, Td
-            Dim Vx(n), Vh(n), t1, t2, t3, t4, t5 As Double
+            Dim Vx(n), VxHC(n), Vh(n), Ki(n), t1, t2, t3, t4, t5 As Double
             Dim ZLinf(n), ZV
             Dim H(n), tmp2(3)
             Dim TETA1(1, n), TETA2(1, n)
@@ -820,6 +822,7 @@ STEP2:
 
             'CALCULAR EQUILIBRIO L-V
 
+            prPP.Parameters("PP_FLASHALGORITHM") = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
             Dim eqtmp = prPP.FlashBase.Flash_PT(Vz, P, T, prPP)
 
             Dim L = eqtmp(0)
@@ -955,6 +958,63 @@ STEP2:
                 t5 = 8 ^ 0.5 * bmv * R * T
                 LN_CFV(i) = t1 + t2 - (t3 * t4 / t5)
                 PHIV(i) = Math.Exp(LN_CFV(i)) * Vy(i) * P
+                i = i + 1
+            Loop Until i = n + 1
+
+            'CALCULO DOS VOLUMES PARCIAIS MOLARES À DILUIÇÃO INFINITA
+
+            Dim VLW = Math.Exp(-10.9241 + 0.00025 * (T - 273.15) - 0.0003532 * (P / 1000000.0 - 0.101325) + 0.0000001559 * (P / 1000000.0 - 0.101325) ^ 2)
+            i = 0
+            Do
+                vi_(i) = (R * T / (VLW - bi(pos)) * (1 + bi(i) / (VLW - bi(pos))) - (2 * ai(pos) - 2 * ai(pos) * bi(i) * (VLW - bi(pos)) / (VLW * (VLW + bi(pos)) + bi(pos) * (VLW - bi(pos)))) / (VLW * (VLW + bi(pos)) + bi(pos) * (VLW - bi(pos)))) / (R * T / (VLW - bi(pos)) ^ 2 - 2 * ai(pos) * (VLW + bi(pos)) / (VLW * (VLW + bi(pos)) + bi(pos) * (VLW - bi(pos))) ^ 2)
+                i = i + 1
+            Loop Until i = n + 1
+
+            'CALCULO DOS FATORES DE COMPRESSIBILIDADE À DILUIÇÃO INFINITA
+
+            i = 0
+            Do
+                ZLinf(i) = P * vi_(i) / (R * T)
+                i = i + 1
+            Loop Until i = n + 1
+            'CALCULO DA CONSTANTE DE HENRY
+
+            i = 0
+            Do
+                If i <> pos Then
+                    tmp2 = am.GET_HS_KS(Vids(i))
+                    H(i) = 101325 * Math.Exp(-tmp2(0) - tmp2(1) / T - tmp2(2) * Math.Log(T) - tmp2(3) * T)
+                End If
+                i = i + 1
+            Loop Until i = n + 1
+
+            'CALCULO DAS FRAÇÕES MOLARES DOS COMPONENTES NA FASE AQUOSA
+
+            Ki = unfPP.DW_CalcKvalue(Vy, T, P)
+
+            i = 0
+            Do
+                If i <> pos Then Vx(i) = PHIV(i) / (H(i) * Math.Exp(ZLinf(i)))
+                If H(i) = 101325.0# Then
+                    Vx(i) = 0.0#
+                End If
+                If i <> pos Then VxHC(i) = Vy(i) / Ki(i)
+                i = i + 1
+            Loop Until i = n + 1
+
+            Dim sum_vxaq = 0
+            Dim sum_vxhc = 0
+            i = 0
+            Do
+                If i <> pos Then sum_vxaq += Vx(i)
+                sum_vxhc += VxHC(i)
+                i = i + 1
+            Loop Until i = n + 1
+            Vx(pos) = 1 - sum_vxaq
+
+            i = 0
+            Do
+                VxHC(i) = VxHC(i) / sum_vxhc
                 i = i + 1
             Loop Until i = n + 1
 
@@ -1103,7 +1163,7 @@ STEP2:
 
             End If
 
-            Dim res As Object = New Object() {Td, WAC, 0, 0, Vx, Vy, Vh}
+            Dim res As Object = New Object() {Td, WAC, 0, 0, Vx, Vy, Vh, VxHC}
             DET_HYD_CG = res
 
         End Function

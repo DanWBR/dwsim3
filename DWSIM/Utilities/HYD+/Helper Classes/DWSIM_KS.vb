@@ -477,6 +477,7 @@ Namespace DWSIM.Utilities.HYD
             Do
                 If i <> pos And Vids(i) <> 100 Then
                     Vxaq(i) = PHIV(i) / (H(i) * Math.Exp(ZLinf(i)))
+                    If H(i) = 101325.0# Then Vxaq(i) = 0.0#
                 Else
                     Vxaq(i) = 0
                 End If
@@ -1030,7 +1031,7 @@ STEP2:
             Dim VbsI, VbsII, Nbw
             Dim C1(1, n), C2(1, n)
             Dim DT, Tnfp, DHm, Td
-            Dim Vxaq(n), t1, t2, t3, t4, t5 As Double
+            Dim Vxaq(n), VxHC(n), Ki(n), t1, t2, t3, t4, t5 As Double
             Dim ZLinf(n), ZV
             Dim act As Double
             Dim H(n), tmp2(3)
@@ -1039,7 +1040,7 @@ STEP2:
             Dim vi_(n), VLW
             Dim VysI, VysII, VsI(n), VsII(n), Vh(n)
             Dim Vp(n), Tc(n), Tb(n), Pc(n), Vc(n), Zc(n), W(n), Tr(n)
-            Dim Vy(n), pos, sum
+            Dim Vy(n) As Double, pos, sum
             Dim sum2sI, sum2sII
             Dim R = 8.314
             Dim temp1, tv, tv2, tm1
@@ -1239,26 +1240,39 @@ STEP2:
 
             'CALCULO DAS FRAÇÕES MOLARES DOS COMPONENTES NA FASE AQUOSA
 
+            Ki = unfPP.DW_CalcKvalue(Vy, T, P)
+
             i = 0
             Do
-                If i <> pos And Vids(i) <> 100 Then
-                    Vxaq(i) = PHIV(i) / (H(i) * Math.Exp(ZLinf(i)))
-                Else
-                    Vxaq(i) = 0
+                If i <> pos Then Vxaq(i) = PHIV(i) / (H(i) * Math.Exp(ZLinf(i)))
+                If H(i) = 101325.0# Then
+                    Vxaq(i) = 0.0#
+                End If
+                If Vids(i) <> 100 And Vids(i) <> 13 Then
+                    VxHC(i) = Vy(i) / Ki(i)
                 End If
                 i = i + 1
             Loop Until i = n + 1
+
             Dim sum_vxaq = 0
+            Dim sum_vxhc = 0
             i = 0
             Do
-                sum_vxaq += Vxaq(i)
+                sum_vxhc += VxHC(i)
                 i = i + 1
             Loop Until i = n + 1
+
             i = 0
             Do
                 If Vids(i) = 100 Or Vids(i) = 13 Then
                     Vxaq(i) = Vz(i) / (1 - sum) * (1 - sum_vxaq)
                 End If
+                i = i + 1
+            Loop Until i = n + 1
+
+            i = 0
+            Do
+                VxHC(i) = VxHC(i) / sum_vxhc
                 i = i + 1
             Loop Until i = n + 1
 
@@ -1495,7 +1509,7 @@ STEP2:
 
             End If
 
-            Dim res As Object = New Object() {Td, act, FGAG, FGHYD, Vxaq, Vy, Vh}
+            Dim res As Object = New Object() {Td, act, FGAG, FGHYD, Vxaq, Vy, Vh, VxHC}
 
             DET_HYD_KS = res
 

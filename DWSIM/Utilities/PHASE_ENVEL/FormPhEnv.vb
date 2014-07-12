@@ -49,6 +49,7 @@ Public Class FormPhEnv
     Private Sub FormPhEnv_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         Me.ComboBox1.SelectedIndex = 0
+        Me.ComboBox2.SelectedIndex = 0
 
         Me.Frm = My.Application.ActiveSimulation
 
@@ -83,6 +84,8 @@ Public Class FormPhEnv
             Me.CheckBox3.Enabled = False
             chkpip.Enabled = False
         End If
+
+        ComboBox2.Enabled = chkhyd.Checked
 
     End Sub
 
@@ -909,12 +912,20 @@ exec:       With Me.GraphControl.GraphPane.Legend
             Vz = pp.RET_VMOL(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
             Vn = pp.RET_VNAMES
 
-            Dim hid As New DWSIM.Utilities.HYD.vdwP_PP(mat)
             Dim m_aux As New DWSIM.Utilities.HYD.AuxMethods
 
-            For Ph = Pmin To Pmax Step 101325
+            For Ph = Pmin To Pmax Step 5 * 101325
                 Try
-                    Th = hid.HYD_vdwP2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn))
+                    Select Case Me.ComboBox2.SelectedIndex
+                        Case 0
+                            Th = New DWSIM.Utilities.HYD.vdwP_PP(mat).HYD_vdwP2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn))
+                        Case 1
+                            Th = New DWSIM.Utilities.HYD.KlaudaSandler(mat).HYD_KS2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn))
+                        Case 2
+                            Th = New DWSIM.Utilities.HYD.ChenGuo(mat).HYD_CG2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn))
+                        Case Else
+                            Th = New DWSIM.Utilities.HYD.KlaudaSandlerMOD(mat).HYD_KS2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn))
+                    End Select
                     ph1.Add(Ph)
                     ph2.Add(Ph)
                     th1.Add(Th(0))
@@ -1116,5 +1127,9 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
     Private Sub FormPhEnv_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
         DWSIM.App.HelpRequested("UT_PhaseEnvelope.htm")
+    End Sub
+
+    Private Sub chkhyd_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkhyd.CheckedChanged
+        ComboBox2.Enabled = chkhyd.Checked
     End Sub
 End Class

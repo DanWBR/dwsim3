@@ -366,6 +366,7 @@ Namespace DWSIM.Utilities.HYD
             i = 0
             Do
                 If i <> pos Then Vxaq(i) = PHIV(i) / (H(i) * Math.Exp(ZLinf(i)))
+                If H(i) = 101325.0# Then Vxaq(i) = 0.0#
                 i = i + 1
             Loop Until i = n + 1
 
@@ -872,9 +873,9 @@ STEP2:
             Dim PQG, PQL, DH
             Dim TETA1(1, n), TETA2(1, n)
             Dim vi_(n), VLW
-            Dim VysI, VysII, VsI(n), VsII(n), Vh(n)
+            Dim VysI, VysII, VsI(n), VsII(n), Vh(n), VxHC(n), Ki(n) As Double
             Dim Vp(n), Tc(n), Tb(n), Pc(n), Vc(n), Zc(n), W(n), Tr(n)
-            Dim Vy(n), pos, sum
+            Dim Vy(n) As Double, pos, sum
             Dim sum2sI, sum2sII
             Dim R = 8.314, T0 = 273.15
             Dim temp1, tv, tv2
@@ -1104,19 +1105,33 @@ STEP2:
 
             'CALCULO DAS FRAÇÕES MOLARES DOS COMPONENTES NA FASE AQUOSA
 
+            Ki = unfPP.DW_CalcKvalue(Vy, T, P)
+
             i = 0
             Do
                 If i <> pos Then Vxaq(i) = PHIV(i) / (H(i) * Math.Exp(ZLinf(i)))
+                If H(i) = 101325.0# Then
+                    Vxaq(i) = 0.0#
+                End If
+                VxHC(i) = Vy(i) / Ki(i)
                 i = i + 1
             Loop Until i = n + 1
 
             Dim sum_vxaq = 0
+            Dim sum_vxhc = 0
             i = 0
             Do
                 If i <> pos Then sum_vxaq += Vxaq(i)
+                sum_vxhc += VxHC(i)
                 i = i + 1
             Loop Until i = n + 1
             Vxaq(pos) = 1 - sum_vxaq
+
+            i = 0
+            Do
+                VxHC(i) = VxHC(i) / sum_vxhc
+                i = i + 1
+            Loop Until i = n + 1
 
             Dim WAC As Double = unf.GAMMA(T, Vxaq, unfPP.RET_VIDS, unfPP.RET_VQ, unfPP.RET_VR, pos)
 
@@ -1302,7 +1317,7 @@ STEP2:
 
             End If
 
-            Dim res As Object = New Object() {Td, act, PQAG, PQHYD, Vxaq, Vy, Vh}
+            Dim res As Object = New Object() {Td, act, PQAG, PQHYD, Vxaq, Vy, Vh, VxHC}
 
             DET_HYD_vdwP = res
 
