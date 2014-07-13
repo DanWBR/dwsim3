@@ -990,7 +990,22 @@ STEP2:
 
             'CALCULO DAS FRAÇÕES MOLARES DOS COMPONENTES NA FASE AQUOSA
 
-            Ki = unfPP.DW_CalcKvalue(Vy, T, P)
+            Dim VyNW(n) As Double
+            For i = 0 To n
+                If i = pos Then VyNW(i) = 0.0# Else VyNW(i) = Vy(i) / (1 - Vy(pos))
+            Next
+
+            Dim fresult As Object = unfPP.FlashBase.Flash_PT(VyNW, P, T, unfPP)
+            If fresult(0) > 0.0# Then
+                For i = 0 To n
+                    Ki(i) = fresult(3)(i) / fresult(2)(i)
+                    If Double.IsNaN(Ki(i)) Then Ki(i) = Double.PositiveInfinity
+                Next
+            Else
+                For i = 0 To n
+                    Ki(i) = Double.PositiveInfinity
+                Next
+            End If
 
             i = 0
             Do
@@ -1014,7 +1029,7 @@ STEP2:
 
             i = 0
             Do
-                VxHC(i) = VxHC(i) / sum_vxhc
+                If sum_vxhc <> 0.0# Then VxHC(i) = VxHC(i) / sum_vxhc
                 i = i + 1
             Loop Until i = n + 1
 
