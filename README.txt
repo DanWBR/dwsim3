@@ -1,7 +1,7 @@
 ==================================================
 DWSIM - Open Source Process Simulator
-Version 3.1, Build 5265 - June 2014
-Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo León
+Version 3.2, Build 5296 - July 2014
+Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo LeÃ³n
 ==================================================
 
 DWSIM is a software for modeling, simulation and optimization of steady-state chemical processes.
@@ -100,6 +100,20 @@ VERSION HISTORY / CHANGELOG
 ==================================================
 
 The full changelog, including code changes and their authors can be viewed at https://github.com/DanWBR/dwsim3/commits/master
+
+Version 3.2 Build 5296
+
+- [NEW] New Phase Identification Algorithm based on the work of Venkatarathnam et al (http://dx.doi.org/10.1016/j.fluid.2010.12.001)
+- [NEW] Enhanced Phase Envelope Utility now shows hydrate curves, dry-basis dew points for wet natural gas mixtures and phase identification boundary for PR and SRK EOS
+- [NEW] Added Motor Octane Number (MON) and Methane Number (MN) properties to the Natural Gas Properties Plugin
+- [NEW] New flash calculation spec added to the Separator Vessel model
+- [CHG] Enhanced NRTL/UNIQUAC interaction parameter estimation procedures, can now estimate temperature dependency
+- [CHG] Enhanced flash algorithm initialization
+- [CHG] All three-phase flash algorithms now calculate true tree-phase saturation points if required
+- [CHG] Enhanced Hydrate Formation Utility with faster calculation times and ChemSep compound support
+- [CHG] Updated UNIFAC/MODFAC Property Packages' configuration dialog with UNIFAC group information
+- [FIX] Fixed reporting tool
+- [FIX] Minor bug fixes
 
 Version 3.1 Build 5265
 
@@ -543,7 +557,7 @@ Version 1.8 Build 3908
 
 Version 1.7 Build 3875
 
-- [NEW] Added German translation by Rainer Göllnitz
+- [NEW] Added German translation by Rainer GÃ¶llnitz
 
 Version 1.7 Build 3868
 
@@ -553,7 +567,7 @@ Version 1.7 Build 3868
 
 Version 1.7 Build 3850
 
-- [NEW] Lee-Kesler-Plöcker Property Package
+- [NEW] Lee-Kesler-PlÃ¶cker Property Package
 - [FIX] Fixed K-value calculation call in the Sum Rates method for solving Absorption Columns
 - [FIX] Fixed IO Flash calculation in single phase region
 - [FIX] Fixed Critical Point calculation with PR and SRK Equations of State
@@ -613,7 +627,7 @@ Version 1.6 Build 3618
 
 Version 1.6 Build 3605
 
-- [NEW] Added Spanish GUI translation (many thanks to Abad Lira and Gustavo León!)
+- [NEW] Added Spanish GUI translation (many thanks to Abad Lira and Gustavo LeÃ³n!)
 - [NEW] Added a Multivariate, Constrained Optimization utility
 - [NEW] Added a Sensitivity Analysis utility supporting up to 2 independent variables
 - [NEW] Added "command-line run mode" (read the documentation for more details)
