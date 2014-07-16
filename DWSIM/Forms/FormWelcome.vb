@@ -32,7 +32,7 @@ Public Class FormWelcome
 
         For Each f As String In My.Settings.MostRecentFiles
             If File.Exists(f) And Path.GetExtension(f).ToLower <> ".dwbcs" Then
-                Me.lvlatest.Items.Add(Path.GetFileName(f), 0).Tag = f
+                Me.lvlatest.Items.Add(f, 0).Tag = f
                 Select Case Path.GetExtension(f).ToLower
                     Case ".dwsim"
                         Me.lvlatest.Items(Me.lvlatest.Items.Count - 1).ImageIndex = 0
@@ -173,5 +173,9 @@ Public Class FormWelcome
         Me.Close()
         Application.DoEvents()
         Process.Start(My.Application.Info.DirectoryPath & "\docs\")
+    End Sub
+
+    Private Sub Button8_Click(sender As System.Object, e As System.EventArgs) Handles Button8.Click
+        Process.Start("https://sourceforge.net/p/dwsim/donate/?source=navbar")
     End Sub
 End Class
