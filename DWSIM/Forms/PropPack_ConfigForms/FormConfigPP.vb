@@ -1,4 +1,4 @@
-﻿'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Copyright 2008 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -174,7 +174,6 @@ Public Class FormConfigPP
             k += 1
         Next
     End Sub
-
     Private Sub FormConfigPR_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         Me.Text = DWSIM.App.GetLocalString("ConfigurarPacotedePropriedades") & _pp.Tag & " - " & _pp.ComponentName & ")"
@@ -192,7 +191,8 @@ Public Class FormConfigPP
         If _pp.ComponentName.ToString.Contains("Raoult") Or _
            _pp.ComponentName.ToString.Contains(DWSIM.App.GetLocalString("Vapor")) Or _
            _pp.ComponentName.ToString.Contains(DWSIM.App.GetLocalString("Chao-Seader")) Or _
-           _pp.ComponentName.ToString.Contains(DWSIM.App.GetLocalString("Grayson-Streed")) Then
+           _pp.ComponentName.ToString.Contains(DWSIM.App.GetLocalString("Grayson-Streed")) Or _
+           _pp.ComponentName.ToString.Contains("CoolProp") Then
             Me.FaTabStripItem2.Visible = False
             Me.FaTabStripItem1.Selected = True
             Exit Sub
@@ -374,7 +374,8 @@ gtmu:           If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
                     GoTo gtmu
                 End If
             Next
-        Else
+
+        ElseIf TypeOf _pp Is PengRobinsonPropertyPackage Then
 
             Dim ppu As PengRobinsonPropertyPackage = _pp
 
