@@ -403,27 +403,38 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             Dim vn As String() = Me.RET_VNAMES
+            Dim Vxw As Double() = AUX_CONVERT_MOL_TO_MASS(Vx)
             Dim n As Integer = Vx.Length - 1
             Select Case st
                 Case State.Liquid
                     For i = 0 To n
                         CheckIfCompoundIsSupported(vn(i))
-                        If xv = 0.0# Then
-                            vk(i) = CoolProp.Props("H", "T", T, "P", P / 1000, vn(i))
-                        Else
+                        Dim Psat As Double = AUX_PVAPi(i, T)
+                        If Abs(P - Psat) < 100 Then
                             vk(i) = CoolProp.Props("H", "T", T, "Q", 0, vn(i))
+                        Else
+                            If P > Psat Then
+                                vk(i) = CoolProp.Props("H", "T", T, "P", P / 1000, vn(i))
+                            Else
+                                vk(i) = CoolProp.Props("H", "T", T, "Q", 0, vn(i))
+                            End If
                         End If
-                        vk(i) = Vx(i) * vk(i)
+                        vk(i) = Vxw(i) * vk(i)
                     Next
                 Case State.Vapor
                     For i = 0 To n
                         CheckIfCompoundIsSupported(vn(i))
-                        If xv = 1.0# Then
-                            vk(i) = CoolProp.Props("H", "T", T, "P", P / 1000, vn(i))
-                        Else
+                        Dim Psat As Double = AUX_PVAPi(i, T)
+                        If Abs(P - AUX_PVAPi(i, T)) < 100 Then
                             vk(i) = CoolProp.Props("H", "T", T, "Q", 1, vn(i))
+                        Else
+                            If P < Psat Then
+                                vk(i) = CoolProp.Props("H", "T", T, "P", P / 1000, vn(i))
+                            Else
+                                vk(i) = CoolProp.Props("H", "T", T, "Q", 1, vn(i))
+                            End If
                         End If
-                        vk(i) = Vx(i) * vk(i)
+                        vk(i) = Vxw(i) * vk(i)
                     Next
             End Select
 
@@ -447,26 +458,37 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim vn As String() = Me.RET_VNAMES
             Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             Dim n As Integer = Vx.Length - 1
+            Dim Vxw As Double() = AUX_CONVERT_MOL_TO_MASS(Vx)
             Select Case st
                 Case State.Liquid
                     For i = 0 To n
                         CheckIfCompoundIsSupported(vn(i))
-                        If xv = 0.0# Then
-                            vk(i) = CoolProp.Props("S", "T", T, "P", P / 1000, vn(i))
-                        Else
+                        Dim Psat As Double = AUX_PVAPi(i, T)
+                        If Abs(P - Psat) < 100 Then
                             vk(i) = CoolProp.Props("S", "T", T, "Q", 0, vn(i))
+                        Else
+                            If P > Psat Then
+                                vk(i) = CoolProp.Props("S", "T", T, "P", P / 1000, vn(i))
+                            Else
+                                vk(i) = CoolProp.Props("S", "T", T, "Q", 0, vn(i))
+                            End If
                         End If
-                        vk(i) = Vx(i) * vk(i)
+                        vk(i) = Vxw(i) * vk(i)
                     Next
                 Case State.Vapor
                     For i = 0 To n
                         CheckIfCompoundIsSupported(vn(i))
-                        If xv = 1.0# Then
-                            vk(i) = CoolProp.Props("S", "T", T, "P", P / 1000, vn(i))
-                        Else
+                        Dim Psat As Double = AUX_PVAPi(i, T)
+                        If Abs(P - Psat) < 100 Then
                             vk(i) = CoolProp.Props("S", "T", T, "Q", 1, vn(i))
+                        Else
+                            If P < Psat Then
+                                vk(i) = CoolProp.Props("S", "T", T, "P", P / 1000, vn(i))
+                            Else
+                                vk(i) = CoolProp.Props("S", "T", T, "Q", 1, vn(i))
+                            End If
                         End If
-                        vk(i) = Vx(i) * vk(i)
+                        vk(i) = Vxw(i) * vk(i)
                     Next
             End Select
 
@@ -586,10 +608,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = AUX_LIQDENS(T, P, 0.0#, phaseID)
 
-                result = Me.DW_CalcEnthalpy(RET_VMAS(dwpl), T, P, State.Liquid)
+                result = Me.DW_CalcEnthalpy(RET_VMOL(dwpl), T, P, State.Liquid)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
 
-                result = Me.DW_CalcEntropy(RET_VMAS(dwpl), T, P, State.Liquid)
+                result = Me.DW_CalcEntropy(RET_VMOL(dwpl), T, P, State.Liquid)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
 
                 result = P / (Me.AUX_LIQDENS(T, P, 0, phaseID) * 8.314 * T) / 1000 * AUX_MMM(fase)
@@ -604,10 +626,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 result = Me.AUX_MMM(fase)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = result
 
-                result = Me.DW_CalcEnthalpy(RET_VMAS(dwpl), T, P, State.Liquid) * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
+                result = Me.DW_CalcEnthalpy(RET_VMOL(dwpl), T, P, State.Liquid) * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = result
 
-                result = Me.DW_CalcEntropy(RET_VMAS(dwpl), T, P, State.Liquid) * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
+                result = Me.DW_CalcEntropy(RET_VMOL(dwpl), T, P, State.Liquid) * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = result
 
                 result = Me.AUX_CONDTL(T)
@@ -623,10 +645,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 result = Me.AUX_VAPDENS(T, P)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
 
-                result = Me.DW_CalcEnthalpy(RET_VMAS(dwpl), T, P, State.Vapor)
+                result = Me.DW_CalcEnthalpy(RET_VMOL(dwpl), T, P, State.Vapor)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
 
-                result = Me.DW_CalcEntropy(RET_VMAS(dwpl), T, P, State.Vapor)
+                result = Me.DW_CalcEntropy(RET_VMOL(dwpl), T, P, State.Vapor)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
 
                 result = P / (Me.AUX_VAPDENS(T, P) * 8.314 * T) / 1000 * AUX_MMM(fase)
@@ -641,10 +663,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 result = Me.AUX_MMM(fase)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = result
 
-                result = Me.DW_CalcEnthalpy(RET_VMAS(dwpl), T, P, State.Vapor) * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
+                result = Me.DW_CalcEnthalpy(RET_VMOL(dwpl), T, P, State.Vapor) * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = result
 
-                result = Me.DW_CalcEntropy(RET_VMAS(dwpl), T, P, State.Vapor) * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
+                result = Me.DW_CalcEntropy(RET_VMOL(dwpl), T, P, State.Vapor) * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = result
 
                 result = Me.AUX_CONDTG(T, P)
@@ -913,4 +935,3 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
     End Class
 
 End Namespace
-
