@@ -1,5 +1,5 @@
-﻿'    Heat Exchanger Calculation Routines 
-'    Copyright 2008-2011 Daniel Wagner O. de Medeiros
+'    Heat Exchanger Calculation Routines 
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -314,23 +314,32 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Hc2 = Hc1 + DeltaHc
                     Hh2 = Hh1 + DeltaHh
                     If My.Settings.EnableParallelProcessing Then
-                        Dim pp As PropertyPackages.PropertyPackage = Me.PropertyPackage
-                        pp.CurrentMaterialStream = StInCold
-                        Dim Vzc As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
-                        pp.CurrentMaterialStream = StInHot
-                        Dim Vzh As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
-                        Dim tasks(1) As Task
-                        tasks(0) = Task.Factory.StartNew(Sub()
-                                                             Dim tmp As Object
-                                                             tmp = pp.FlashBase.Flash_PH(Vzc, Pc2, Hc2, Tc1, pp)
-                                                             Tc2 = tmp(4)
-                                                         End Sub)
-                        tasks(1) = Task.Factory.StartNew(Sub()
-                                                             Dim tmp As Object
-                                                             tmp = pp.FlashBase.Flash_PH(Vzh, Ph2, Hh2, Th1, pp)
-                                                             Th2 = tmp(4)
-                                                         End Sub)
-                        Task.WaitAll(tasks)
+                        Try
+                            My.MyApplication.IsRunningParallelTasks = True
+                            Dim pp As PropertyPackages.PropertyPackage = Me.PropertyPackage
+                            pp.CurrentMaterialStream = StInCold
+                            Dim Vzc As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
+                            pp.CurrentMaterialStream = StInHot
+                            Dim Vzh As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
+                            Dim tasks(1) As Task
+                            tasks(0) = Task.Factory.StartNew(Sub()
+                                                                 Dim tmp As Object
+                                                                 tmp = pp.FlashBase.Flash_PH(Vzc, Pc2, Hc2, Tc1, pp)
+                                                                 Tc2 = tmp(4)
+                                                             End Sub)
+                            tasks(1) = Task.Factory.StartNew(Sub()
+                                                                 Dim tmp As Object
+                                                                 tmp = pp.FlashBase.Flash_PH(Vzh, Ph2, Hh2, Th1, pp)
+                                                                 Th2 = tmp(4)
+                                                             End Sub)
+                            Task.WaitAll(tasks)
+                        Catch ae As AggregateException
+                            For Each ex As Exception In ae.InnerExceptions
+                                Throw ex
+                            Next
+                        Finally
+                            My.MyApplication.IsRunningParallelTasks = False
+                        End Try
                     Else
                         Me.PropertyPackage.CurrentMaterialStream = StInCold
                         Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc1)
@@ -800,25 +809,34 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             Hc2 = Hc1 + DeltaHc
                             Hh2 = Hh1 + DeltaHh
                             If My.Settings.EnableParallelProcessing Then
-                                Dim pp As PropertyPackages.PropertyPackage = Me.PropertyPackage
-                                pp.CurrentMaterialStream = StInCold
-                                Dim Vzc As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
-                                pp.CurrentMaterialStream = StInHot
-                                Dim Vzh As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
-                                Dim tasks(1) As Task
-                                tasks(0) = Task.Factory.StartNew(Sub()
-                                                                     tmp = pp.FlashBase.Flash_PH(Vzc, Pc2, Hc2, Tc2, pp)
-                                                                     Tc2_ant = Tc2
-                                                                     Tc2 = tmp(4)
-                                                                     Tc2 = 0.6 * Tc2 + 0.4 * Tc2_ant
-                                                                 End Sub)
-                                tasks(1) = Task.Factory.StartNew(Sub()
-                                                                     tmp = pp.FlashBase.Flash_PH(Vzh, Ph2, Hh2, Th2, pp)
-                                                                     Th2_ant = Th2
-                                                                     Th2 = tmp(4)
-                                                                     Th2 = 0.6 * Th2 + 0.4 * Th2_ant
-                                                                 End Sub)
-                                Task.WaitAll(tasks)
+                                Try
+                                    My.MyApplication.IsRunningParallelTasks = True
+                                    Dim pp As PropertyPackages.PropertyPackage = Me.PropertyPackage
+                                    pp.CurrentMaterialStream = StInCold
+                                    Dim Vzc As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
+                                    pp.CurrentMaterialStream = StInHot
+                                    Dim Vzh As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
+                                    Dim tasks(1) As Task
+                                    tasks(0) = Task.Factory.StartNew(Sub()
+                                                                         tmp = pp.FlashBase.Flash_PH(Vzc, Pc2, Hc2, Tc2, pp)
+                                                                         Tc2_ant = Tc2
+                                                                         Tc2 = tmp(4)
+                                                                         Tc2 = 0.6 * Tc2 + 0.4 * Tc2_ant
+                                                                     End Sub)
+                                    tasks(1) = Task.Factory.StartNew(Sub()
+                                                                         tmp = pp.FlashBase.Flash_PH(Vzh, Ph2, Hh2, Th2, pp)
+                                                                         Th2_ant = Th2
+                                                                         Th2 = tmp(4)
+                                                                         Th2 = 0.6 * Th2 + 0.4 * Th2_ant
+                                                                     End Sub)
+                                    Task.WaitAll(tasks)
+                                Catch ae As AggregateException
+                                    For Each ex As Exception In ae.InnerExceptions
+                                        Throw ex
+                                    Next
+                                Finally
+                                    My.MyApplication.IsRunningParallelTasks = False
+                                End Try
                             Else
                                 Me.PropertyPackage.CurrentMaterialStream = StInCold
                                 tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc2)
