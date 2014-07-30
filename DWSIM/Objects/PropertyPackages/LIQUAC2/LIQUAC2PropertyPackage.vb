@@ -1,4 +1,4 @@
-﻿'    LIQUAC2 Property Package 
+'    LIQUAC2 Property Package 
 '    Copyright 2013 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -836,6 +836,145 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 #End Region
 
 #Region "    CalcEquilibrium Override"
+
+        Public Overrides Function DW_CalcEquilibrio_ISOL(spec1 As FlashSpec, spec2 As FlashSpec, val1 As Double, val2 As Double, estimate As Double) As Object
+
+            Dim P, T, H, S, xv, xl, xs, M, W As Double
+            Dim result As Dictionary(Of String, Object)
+            Dim n As Integer = Me.CurrentMaterialStream.Fases(0).Componentes.Count
+            Dim Vx(n - 1), Vy(n - 1) As Double
+            Dim i As Integer = 0
+
+            'for TVF/PVF/PH/PS flashes
+            xv = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
+            H = Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+            S = Me.CurrentMaterialStream.Fases(0).SPMProperties.entropy.GetValueOrDefault
+
+            Dim constprops As New List(Of ConstantProperties)
+            For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                constprops.Add(su.ConstantProperties)
+            Next
+
+            Me.m_elec = New Auxiliary.Electrolyte
+            If Me.ElectrolyteFlash Is Nothing Then Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
+            Me.ElectrolyteFlash.CompoundProperties = constprops
+            Me.ElectrolyteFlash.proppack = Me
+
+            Select Case spec1
+
+                Case FlashSpec.T
+
+                    Select Case spec2
+
+                        Case FlashSpec.P
+
+                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+
+                            result = Me.ElectrolyteFlash.Flash_PT(RET_VMOL(Fase.Mixture), T, P)
+
+                            xl = result("LiquidPhaseMoleFraction")
+                            xv = result("VaporPhaseMoleFraction")
+                            xs = result("SolidPhaseMoleFraction")
+
+                            M = result("MoleSum")
+                            W = Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault
+
+                            Dim Vnf = result("MixtureMoleFlows")
+
+                            Vx = result("LiquidPhaseMolarComposition")
+                            Vy = result("VaporPhaseMolarComposition")
+                            Dim Vs = result("SolidPhaseMolarComposition")
+
+                            Dim HM, HV, HL, HS As Double
+
+                            If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
+                            If xs <> 0 Then HS = Me.DW_CalcEnthalpy(Vs, T, P, State.Solid)
+                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+                            HM = xl * HL + xs * HS + xv * HV
+
+                            H = HM
+
+                            Dim SM, SV, SL, SS As Double
+
+                            If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
+                            If xs <> 0 Then SS = Me.DW_CalcEntropy(Vs, T, P, State.Solid)
+                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)
+                            SM = xl * SL + xs * SS + xv * SV
+
+                            S = SM
+
+                        Case FlashSpec.H
+
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTHNotSupported"))
+
+                        Case FlashSpec.S
+
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTSNotSupported"))
+
+                        Case FlashSpec.VAP
+
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTVNotSupported"))
+
+                    End Select
+
+                Case FlashSpec.P
+
+                    Select Case spec2
+
+                        Case FlashSpec.H
+
+                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+                            H = Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+
+                            result = Me.ElectrolyteFlash.Flash_PH(RET_VMOL(Fase.Mixture), P, H, T)
+
+                            T = result("Temperature")
+
+                            xl = result("LiquidPhaseMoleFraction")
+                            xv = result("VaporPhaseMoleFraction")
+                            xs = result("SolidPhaseMoleFraction")
+
+                            Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
+                            Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = 0.0#
+                            Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
+                            Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction = xs
+
+                            M = result("MoleSum")
+                            W = Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault
+
+                            Dim Vnf = result("MixtureMoleFlows")
+
+                            Vx = result("LiquidPhaseMolarComposition")
+                            Vy = result("VaporPhaseMolarComposition")
+                            Dim Vs = result("SolidPhaseMolarComposition")
+
+                            Dim SM, SV, SL, SS As Double
+
+
+                            If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
+                            If xs <> 0 Then SS = Me.DW_CalcEntropy(Vs, T, P, State.Solid)
+                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)
+                            SM = xl * SL + xs * SS + xv * SV
+
+                            S = SM
+
+                        Case FlashSpec.S
+
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashPSNotSupported"))
+
+                        Case FlashSpec.VAP
+
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashPVNotSupported"))
+
+                    End Select
+
+            End Select
+
+            Return New Object() {xl, xv, T, P, H, S, 1, 1, Vx, Vy, Nothing}
+
+        End Function
 
        Public Overrides Sub DW_CalcEquilibrium(spec1 As FlashSpec, spec2 As FlashSpec)
 
