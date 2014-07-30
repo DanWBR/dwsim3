@@ -96,7 +96,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Next
 
             Return Me.m_elec.LiquidDensity(RET_VMOL(phase), T, constprops)
-            
+
         End Function
 
         Public Function RET_KIJ(ByVal id1 As String, ByVal id2 As String) As Double
@@ -868,8 +868,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                         Case FlashSpec.P
 
-                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+                            T = val1
+                            P = val2
 
                             result = Me.ElectrolyteFlash.Flash_PT(RET_VMOL(Fase.Mixture), T, P)
 
@@ -923,10 +923,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Select Case spec2
 
                         Case FlashSpec.H
-
-                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                            H = Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
-                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+                            
+                            If estimate <> 0 Then
+                                T = estimate
+                            Else
+                                T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+                            End If
+                            P = val1
+                            H = val2
 
                             result = Me.ElectrolyteFlash.Flash_PH(RET_VMOL(Fase.Mixture), P, H, T)
 
@@ -976,7 +980,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
-       Public Overrides Sub DW_CalcEquilibrium(spec1 As FlashSpec, spec2 As FlashSpec)
+        Public Overrides Sub DW_CalcEquilibrium(spec1 As FlashSpec, spec2 As FlashSpec)
 
             Me.CurrentMaterialStream.AtEquilibrium = False
 
