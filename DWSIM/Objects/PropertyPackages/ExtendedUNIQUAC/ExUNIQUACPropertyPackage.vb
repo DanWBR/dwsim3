@@ -667,7 +667,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Public Overrides Function DW_CalcEnthalpyDeparture(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
-           
+
             Dim H As Double
 
             Dim constprops As New List(Of ConstantProperties)
@@ -750,7 +750,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Public Overrides Function DW_CalcEntropyDeparture(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
-        
+
             Return 0.0#
 
         End Function
@@ -870,9 +870,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Select Case spec2
 
                         Case FlashSpec.P
-
-                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+                            
+                            T = val1
+                            P = val2
 
                             result = Me.ElectrolyteFlash.Flash_PT(RET_VMOL(Fase.Mixture), T, P)
 
@@ -927,9 +927,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                         Case FlashSpec.H
 
-                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                            H = Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
-                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+                            If estimate <> 0 Then
+                                T = estimate
+                            Else
+                                T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+                            End If
+                            P = val1
+                            H = val2
 
                             result = Me.ElectrolyteFlash.Flash_PH(RET_VMOL(Fase.Mixture), P, H, T)
 
@@ -1047,7 +1051,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Dim Vnf = result("MixtureMoleFlows")
 
                             MW = Me.AUX_MMM(Vnf)
-                            
+
                             Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow *= M '* W / MW * 1000
 
                             i = 0
