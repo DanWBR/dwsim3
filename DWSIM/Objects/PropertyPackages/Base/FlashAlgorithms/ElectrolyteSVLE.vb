@@ -757,15 +757,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             deltaT = 1
 
-            Do
-                Tsat = Tsat - deltaT
-                tmp = Flash_PT(Vz, Tsat, P)
-                wac = tmp("LiquidPhaseActivityCoefficients")(wid)
-                wx = tmp("LiquidPhaseMolarComposition")(wid)
-            Loop Until wx > 0.0#
+            If Vz(wid) <> 0.0# Then
+                Do
+                    Tsat = Tsat - deltaT
+                    tmp = Flash_PT(Vz, Tsat, P)
+                    wac = tmp("LiquidPhaseActivityCoefficients")(wid)
+                    wx = tmp("LiquidPhaseMolarComposition")(wid)
+                Loop Until wx > 0.0#
 
-            Psat = P / (wx * wac)
-            Tsat = proppack.AUX_TSATi(Psat, wid)
+                Psat = P / (wx * wac)
+                Tsat = proppack.AUX_TSATi(Psat, wid)
+            End If
+
 
             hl = proppack.DW_CalcEnthalpy(Vz, Tsat, P, State.Liquid)
             hv = proppack.DW_CalcEnthalpy(Vz, Tsat, P, State.Vapor)
