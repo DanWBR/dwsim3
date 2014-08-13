@@ -5912,6 +5912,22 @@ Final3:
 
         End Function
 
+        Public Function RET_HVAPM(ByVal Vxw As Array, ByVal T As Double) As Double
+
+            Dim val As Double = 0.0#
+            Dim i As Integer
+            Dim n As Integer = Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1
+
+            i = 0
+            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                val += Vxw(i) * Me.AUX_HVAPi(subst.Nome, T)
+                i += 1
+            Next
+
+            Return val
+
+        End Function
+
         Public Function AUX_HVAPi(ByVal sub1 As String, ByVal T As Double)
 
             Dim A, B, C, D, Tr, result As Double
