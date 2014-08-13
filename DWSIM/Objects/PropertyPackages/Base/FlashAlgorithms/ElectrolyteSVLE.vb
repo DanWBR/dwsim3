@@ -1,5 +1,5 @@
 '    Flash Algorithm for Electrolyte solutions
-'    Copyright 2013 Daniel Wagner O. de Medeiros
+'    Copyright 2013-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -53,6 +53,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Property CalculateChemicalEquilibria As Boolean = True
 
         Private Vx0 As Double()
+
+        Private LoopVarF, LoopVarX As Double, LoopVarState As State
 
         Public Function Flash_PT(Vx As Array, T As Double, P As Double) As Dictionary(Of String, Object)
 
@@ -195,13 +197,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Next
 
                     'check for vapors
-                    For i = 0 To n
-                        If P < Vp(i) Then
-                            Vxl(i) = 0
-                            Vnl(i) = 0
-                            Vnv(i) = Vf(i)
-                        End If
-                    Next
+                    'For i = 0 To n
+                    '    If P < Vp(i) Then
+                    '        Vxl(i) = 0
+                    '        Vnl(i) = 0
+                    '        Vnv(i) = Vf(i)
+                    '    End If
+                    'Next
 
                     'liquid mole amounts
 
@@ -731,67 +733,94 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Hf = H
             Pf = P
 
-            Dim Vx(n), Vx2(n), Vy(n), Vs(n) As Double
+            Dim Vx(n), Vx2(n), Vy(n), Vs(n), Vz0(n) As Double
 
             Dim maxitINT As Integer = Me.MaximumIterations
             Dim maxitEXT As Integer = Me.MaximumIterations
             Dim tolINT As Double = 0.0001
             Dim tolEXT As Double = 0.0001
 
-            Dim Tsup, Tinf
+            Dim brentsolverT As New BrentOpt.Brent
+            brentsolverT.DefineFuncDelegate(AddressOf EnthalpyTx)
 
-            If Tref <> 0 Then
-                Tinf = Tref - 200
-                Tsup = Tref + 200
-            Else
-                Tinf = 100
-                Tsup = 2000
-            End If
-            If Tinf < 100 Then Tinf = 100
+            Dim hl, hv, Tsat, Psat, xv, xl, wac, wx, deltaT, sumnw As Double
 
-            Dim bo As New BrentOpt.Brent
-            bo.DefineFuncDelegate(AddressOf Herror)
-            Console.WriteLine("PH Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
+            Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Water").SingleOrDefault)
 
-            Dim fx, fx2, dfdx, x1 As Double
+            Dim tmp As Dictionary(Of String, Object) = Nothing
 
-            Dim cnt As Integer = 0
+            'calculate water saturation temperature.
 
-            If Tref = 0 Then Tref = 298.15
-            x1 = Tref
+            Tsat = proppack.AUX_TSATi(P, wid)
+
+            'calculate activity coefficient
+
+            deltaT = 1
+
             Do
-                fx = Herror(x1, {P, Vz})
-                fx2 = Herror(x1 + 1, {P, Vz})
-                If Abs(fx) < tolINT Then Exit Do
-                dfdx = (fx2 - fx)
-                x1 = x1 - fx / dfdx
-                If x1 < 0 Then GoTo alt
-                cnt += 1
-            Loop Until cnt > 100 Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Then
-alt:            T = bo.BrentOpt(Tinf, Tsup, 5, tolEXT, maxitEXT, {P, Vz})
+                Tsat = Tsat - deltaT
+                tmp = Flash_PT(Vz, Tsat, P)
+                wac = tmp("LiquidPhaseActivityCoefficients")(wid)
+                wx = tmp("LiquidPhaseMolarComposition")(wid)
+            Loop Until wx > 0.0#
+
+            Psat = P / (wx * wac)
+            Tsat = proppack.AUX_TSATi(Psat, wid)
+
+            hl = proppack.DW_CalcEnthalpy(Vz, Tsat, P, State.Liquid)
+            hv = proppack.DW_CalcEnthalpy(Vz, Tsat, P, State.Vapor)
+
+            If H <= hl Then
+                xv = 0
+                LoopVarState = State.Liquid
+            ElseIf H >= hv Then
+                xv = 1
+                LoopVarState = State.Vapor
             Else
-                T = x1
+                xv = (H - hl) / (hv - hl)
+            End If
+            xl = 1 - xv
+
+            If xv <> 0.0# And xv <> 1.0# Then
+                T = Tsat
+            Else
+                LoopVarF = H
+                LoopVarX = P
+                T = brentsolverT.BrentOpt(proppack.AUX_TFM(Fase.Mixture), 2000, 20, 0.0001, 1000, Nothing)
             End If
 
-            'End If
+            Vz0 = Vz.Clone
 
-            Dim tmp As Dictionary(Of String, Object) = Flash_PT(Vz, T, P)
+            V = Vz0(wid) * xv
+            Vz(wid) = Vz0(wid) * (1 - xv)
+            sumnw = 0.0#
+            For i = 0 To n
+                If i <> wid Then
+                    sumnw += Vz0(i)
+                End If
+            Next
+            For i = 0 To n
+                If i <> wid Then
+                    Vz(i) = Vz0(i) / sumnw * (1 - Vz(wid))
+                End If
+            Next
 
-            L = tmp("LiquidPhaseMoleFraction")
-            V = tmp("VaporPhaseMoleFraction")
-            S = tmp("SolidPhaseMoleFraction")
+            tmp = Flash_PT(Vz, T, P)
+
+            L = tmp("LiquidPhaseMoleFraction") * (1 - V)
+            S = tmp("SolidPhaseMoleFraction") * (1 - V)
             Vx = tmp("LiquidPhaseMolarComposition")
-            Vy = tmp("VaporPhaseMolarComposition")
+            Vy = proppack.RET_NullVector()
+            Vy(wid) = 1.0#
             Vs = tmp("SolidPhaseMolarComposition")
             sumN = tmp("MoleSum")
-            Vz = tmp("MixtureMoleFlows")
+            Vz = Vz0
 
             d2 = Date.Now
 
             dt = d2 - d1
 
-            Console.WriteLine("PH Flash [Electrolyte]: Converged in " & cnt & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            Console.WriteLine("PH Flash [Electrolyte]: Converged successfully. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             'return flash calculation results.
 
@@ -850,6 +879,13 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 5, tolEXT, maxitEXT, {P, Vz})
 
         Function Herror(ByVal Tt As Double, ByVal otherargs As Object) As Double
             Return OBJ_FUNC_PH_FLASH(Tt, Hf, otherargs(0), otherargs(1))
+        End Function
+
+        Private Function EnthalpyTx(ByVal x As Double, ByVal otherargs As Object) As Double
+
+            Dim er As Double = LoopVarF - proppack.DW_CalcEnthalpy(proppack.RET_VMOL(Fase.Mixture), x, LoopVarX, LoopVarState)
+            Return er
+
         End Function
 
     End Class
