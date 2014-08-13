@@ -1,5 +1,5 @@
 '    Petroleum Cold Flow Properties Utility
-'    Copyright 2009 Daniel Wagner O. de Medeiros
+'    Copyright 2009-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -62,7 +62,7 @@ Public Class FrmColdProperties
         If Not Me.ComboBox3.SelectedItem Is Nothing Then
 
             Dim gobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = FormFlowsheet.SearchSurfaceObjectsByTag(Me.ComboBox3.SelectedItem, frm.FormSurface.FlowsheetDesignSurface)
-            Me.mat = frm.Collections.CLCS_MaterialStreamCollection(gobj.Name)
+            Me.mat = frm.Collections.CLCS_MaterialStreamCollection(gobj.Name).Clone
 
             Dim pp As PropertyPackages.PropertyPackage = frm.Options.SelectedPropertyPackage
             Dim MABP, CABP, MeABP, K, SG, API As Double
@@ -92,32 +92,31 @@ Public Class FrmColdProperties
 
             Dim FlashPoint, PourPoint, CloudPoint, FreezingPoint, RVP, TVP, RefractionIndex, Huang_I, CetaneIndex, v1, v2, kv1 As Double
 
-            TVP = pp.DW_CalcBubP(Vx, 310.95)(0)
+            TVP = pp.DW_CalcBubP(Vx, 310.95, 101325)(4)
             v1 = pp.DW_CalcViscosidadeDinamica_ISOL(PropertyPackages.Fase.Liquid, 310.95, 101325)
             kv1 = v1 / pp.DW_CalcMassaEspecifica_ISOL(PropertyPackages.Fase.Liquid, 310.95, 101325)
             v2 = pp.DW_CalcViscosidadeDinamica_ISOL(PropertyPackages.Fase.Liquid, 372.05, 101325)
 
             Dim t10ASTM, t10TBP, bt, dp As Double
             Try
-                bt = pp.DW_CalcBubT(Vx, 101325)(0)
+                bt = pp.DW_CalcBubT(Vx, 101325)(4)
             Catch ex As Exception
-                bt = ppi.DW_CalcBubT(Vx, 101325)(0)
+                bt = ppi.DW_CalcBubT(Vx, 101325)(4)
             End Try
             Try
-                dp = pp.DW_CalcDewP(Vx, 310.95)(0)
+                dp = pp.DW_CalcDewP(Vx, 310.95)(4)
             Catch ex As Exception
-                dp = ppi.DW_CalcDewP(Vx, 310.95)(0)
+                dp = ppi.DW_CalcDewP(Vx, 310.95)(4)
             End Try
 
             If dp < 0 Or Double.IsNaN(dp) Or Double.IsInfinity(dp) Then
-                dp = ppi.DW_CalcDewP(Vx, 310.95)(0)
+                dp = ppi.DW_CalcDewP(Vx, 310.95)(4)
             End If
 
-            Dim tmp, vv, vl, dv, dl, mwv, mwl, sum1, sum2 As Object
+            Dim tmp, vv, vl, dv, dl, mwv, mwl As Object
             Dim vwl(mat.Fases(0).Componentes.Count - 1), vwv(mat.Fases(0).Componentes.Count - 1) As Double
 
-            Dim t, t_ant, t_ant2, ft, ft_ant, ft_ant2, v As Double
-            Dim j As Integer
+            Dim t, t_ant, t_ant2, ft, ft_ant, ft_ant2, v As Double, j As Integer
 
             t = bt + 2
             i = 0
@@ -139,35 +138,52 @@ Public Class FrmColdProperties
                 mwv = pp.AUX_MMM(vv)
                 mwl = pp.AUX_MMM(vl)
 
-                j = 0
-                sum1 = 0
-                sum2 = 0
-                For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                    sum1 += vl(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                    sum2 += vv(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                    j = j + 1
-                Next
-                j = 0
-                For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                    vwl(j) = vl(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault / sum1
-                    vwv(j) = vv(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault / sum1
-                    j = j + 1
-                Next
-                j = 0
-                dl = 0
-                dv = 0
-                For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                    dl += vwl(j) / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                    dv += vwv(j) / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                    j = j + 1
-                Next
+                'j = 0
+                'sum1 = 0
+                'sum2 = 0
+                'For Each subst As Substancia In mat.Fases(0).Componentes.Values
+                '    sum1 += vl(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault
+                '    sum2 += vv(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault
+                '    j = j + 1
+                'Next
+                'j = 0
+                'For Each subst As Substancia In mat.Fases(0).Componentes.Values
+                '    vwl(j) = vl(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault / sum1
+                '    vwv(j) = vv(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault / sum1
+                '    j = j + 1
+                'Next
+                'j = 0
+                'dl = 0
+                'dv = 0
+                'For Each subst As Substancia In mat.Fases(0).Componentes.Values
+                '    dl += vwl(j) / subst.ConstantProperties.PF_SG.GetValueOrDefault
+                '    dv += vwv(j) / subst.ConstantProperties.PF_SG.GetValueOrDefault
+                '    j = j + 1
+                'Next
 
-                dl = 1 / dl
-                dv = 1 / dv
+                'dl = 1 / dl
+                'dv = 1 / dv
+
+                mat.Fases(0).SPMProperties.temperature = t
+                mat.Fases(0).SPMProperties.pressure = 101325
+                j = 0
+                For Each subst As Substancia In mat.Fases(1).Componentes.Values
+                    subst.FracaoMolar = vl(j)
+                    j += 1
+                Next
+                pp.DW_CalcProp("density", PropertyPackages.Fase.Liquid)
+                dl = mat.Fases(1).SPMProperties.density.GetValueOrDefault
+                j = 0
+                For Each subst As Substancia In mat.Fases(1).Componentes.Values
+                    subst.FracaoMolar = vv(j)
+                    j += 1
+                Next
+                pp.DW_CalcProp("density", PropertyPackages.Fase.Liquid)
+                dv = mat.Fases(1).SPMProperties.density.GetValueOrDefault
 
                 If v = 0 Then v = i * 0.0001
 
-                ft = v - (0.1 / dv) / ((0.1 / dv) + (0.8 / dl))
+                ft = v - (0.1 / dv) / ((0.1 / dv) + (0.9 / dl))
 
                 t_ant2 = t_ant
                 t_ant = t
@@ -181,7 +197,7 @@ Public Class FrmColdProperties
                     t = t - 1
                 End If
                 i = i + 1
-            Loop Until Abs(ft) < 0.1 Or t < 0 Or Double.IsNaN(t) Or Double.IsInfinity(t) Or i > 100
+            Loop Until Abs(ft) < 0.001 Or t < 0 Or Double.IsNaN(t) Or Double.IsInfinity(t) Or i > 100
             t10TBP = t
 
             t10ASTM = (t10TBP / 0.5564) ^ (1 / 1.09)
@@ -231,31 +247,48 @@ Public Class FrmColdProperties
                 mwv = pp.AUX_MMM(vv)
                 mwl = pp.AUX_MMM(vl)
 
-                j = 0
-                sum1 = 0
-                sum2 = 0
-                For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                    sum1 += vl(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                    sum2 += vv(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                    j = j + 1
-                Next
-                j = 0
-                For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                    vwl(j) = vl(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault / sum1
-                    vwv(j) = vv(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault / sum1
-                    j = j + 1
-                Next
-                j = 0
-                dl = 0
-                dv = 0
-                For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                    dl += vwl(j) / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                    dv += vwv(j) / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                    j = j + 1
-                Next
+                'j = 0
+                'sum1 = 0
+                'sum2 = 0
+                'For Each subst As Substancia In mat.Fases(0).Componentes.Values
+                '    sum1 += vl(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault
+                '    sum2 += vv(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault
+                '    j = j + 1
+                'Next
+                'j = 0
+                'For Each subst As Substancia In mat.Fases(0).Componentes.Values
+                '    vwl(j) = vl(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault / sum1
+                '    vwv(j) = vv(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault / sum1
+                '    j = j + 1
+                'Next
+                'j = 0
+                'dl = 0
+                'dv = 0
+                'For Each subst As Substancia In mat.Fases(0).Componentes.Values
+                '    dl += vwl(j) / subst.ConstantProperties.PF_SG.GetValueOrDefault
+                '    dv += vwv(j) / subst.ConstantProperties.PF_SG.GetValueOrDefault
+                '    j = j + 1
+                'Next
 
-                dl = 1 / dl
-                dv = 1 / dv
+                'dl = 1 / dl
+                'dv = 1 / dv
+
+                mat.Fases(0).SPMProperties.temperature = t
+                mat.Fases(0).SPMProperties.pressure = 101325
+                j = 0
+                For Each subst As Substancia In mat.Fases(1).Componentes.Values
+                    subst.FracaoMolar = vl(j)
+                    j += 1
+                Next
+                pp.DW_CalcProp("density", PropertyPackages.Fase.Liquid)
+                dl = mat.Fases(1).SPMProperties.density.GetValueOrDefault
+                j = 0
+                For Each subst As Substancia In mat.Fases(1).Componentes.Values
+                    subst.FracaoMolar = vv(j)
+                    j += 1
+                Next
+                pp.DW_CalcProp("density", PropertyPackages.Fase.Liquid)
+                dv = mat.Fases(1).SPMProperties.density.GetValueOrDefault
 
                 If v = 1 Then v = 1 - i * 0.0001
 
@@ -273,7 +306,7 @@ Public Class FrmColdProperties
                     p = p * 0.9999
                 End If
                 i = i + 1
-            Loop Until Abs(fp) < 0.01 Or p <= 0 Or Double.IsNaN(p) Or Double.IsInfinity(p) Or i > 100
+            Loop Until Abs(fp) < 0.001 Or p <= 0 Or Double.IsNaN(p) Or Double.IsInfinity(p) Or i > 100
 
             RVP = p
 
