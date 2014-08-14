@@ -179,8 +179,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Sub
 
-
-
         Public Overrides Sub DW_CalcOverallProps()
             MyBase.DW_CalcOverallProps()
         End Sub

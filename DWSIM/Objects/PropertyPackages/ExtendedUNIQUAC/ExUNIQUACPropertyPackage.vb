@@ -143,7 +143,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = result
                     ElseIf phase = Fase.Vapor Then
-                        result = m_id.H_RA_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, phase), Me.RET_VHVAP(T))
+                        result = Me.m_elec.LiquidEnthalpy(T, RET_VMOL(phase), constprops, Me.m_uni.GAMMA_MR(T + 0.1, RET_VMOL(phase), constprops), Me.m_uni.GAMMA_MR(T, RET_VMOL(phase), constprops), False)
+                        result += Me.RET_HVAPM(RET_VMAS(phase), T)
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
                         result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = result
@@ -306,12 +307,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             End If
 
-            If phaseID = 3 Or phaseID = 4 Or phaseID = 5 Or phaseID = 6 Then
+            Dim constprops As New List(Of ConstantProperties)
+            For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                constprops.Add(su.ConstantProperties)
+            Next
 
-                Dim constprops As New List(Of ConstantProperties)
-                For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                    constprops.Add(su.ConstantProperties)
-                Next
+            If phaseID = 3 Or phaseID = 4 Or phaseID = 5 Or phaseID = 6 Then
 
                 result = Me.AUX_LIQDENS(T, P, 0.0#, phaseID, False)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
@@ -339,7 +340,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 result = Me.AUX_VAPDENS(T, P)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
-                result = Me.m_id.H_RA_MIX("V", T, P, RET_VMOL(fase.Vapor), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, fase.Vapor), Me.RET_VHVAP(T))
+                result = Me.m_elec.LiquidEnthalpy(T, RET_VMOL(fase.Vapor), constprops, Me.m_uni.GAMMA_MR(T + 0.1, RET_VMOL(fase.Vapor), constprops), Me.m_uni.GAMMA_MR(T, RET_VMOL(fase.Vapor), constprops), False)
+                result += Me.RET_HVAPM(RET_VMAS(fase.Vapor), T)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
                 result = Me.m_id.S_RA_MIX("V", T, P, RET_VMOL(fase.Vapor), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, fase.Vapor), Me.RET_VHVAP(T), Me.RET_Hid(298.15, T, fase.Vapor))
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
@@ -365,10 +367,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 result = Me.AUX_SOLIDDENS
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
-                Dim constprops As New List(Of ConstantProperties)
-                For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                    constprops.Add(su.ConstantProperties)
-                Next
                 result = Me.m_elec.SolidEnthalpy(T, RET_VMOL(PropertyPackages.Fase.Solid), constprops)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = 0.0# 'result
@@ -424,7 +422,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Case State.Solid
                     H = Me.m_elec.SolidEnthalpy(T, Vx, constprops)
                 Case State.Vapor
-                    H = m_id.H_RA_MIX("V", T, P, Vx, RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, Vx), Me.RET_VHVAP(T))
+                    H = Me.m_elec.LiquidEnthalpy(T, Vx, constprops, Me.m_uni.GAMMA_MR(T + 0.1, Vx, constprops), Me.m_uni.GAMMA_MR(T, Vx, constprops), False)
+                    H += Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
             End Select
 
             Return H

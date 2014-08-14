@@ -743,7 +743,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim brentsolverT As New BrentOpt.Brent
             brentsolverT.DefineFuncDelegate(AddressOf EnthalpyTx)
 
-            Dim hl, hv, Tsat, Psat, xv, xl, wac, wx, deltaT, sumnw As Double
+            Dim hl, hv, Tsat, Tsat_ant, Psat, xv, xv_ant, xl, wac, wx, deltaT, sumnw As Double
 
             Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Water").SingleOrDefault)
 
@@ -769,55 +769,68 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Tsat = proppack.AUX_TSATi(Psat, wid)
             End If
 
+            Do
 
-            hl = proppack.DW_CalcEnthalpy(Vz, Tsat, P, State.Liquid)
-            hv = proppack.DW_CalcEnthalpy(Vz, Tsat, P, State.Vapor)
+                hl = proppack.DW_CalcEnthalpy(Vz, Tsat, P, State.Liquid)
+                hv = proppack.DW_CalcEnthalpy(Vz, Tsat, P, State.Vapor)
 
-            If H <= hl Then
-                xv = 0
-                LoopVarState = State.Liquid
-            ElseIf H >= hv Then
-                xv = 1
-                LoopVarState = State.Vapor
-            Else
-                xv = (H - hl) / (hv - hl)
-            End If
-            xl = 1 - xv
+                xv_ant = xv
 
-            If xv <> 0.0# And xv <> 1.0# Then
-                T = Tsat
-            Else
-                LoopVarF = H
-                LoopVarX = P
-                T = brentsolverT.BrentOpt(proppack.AUX_TFM(Fase.Mixture), 2000, 20, 0.0001, 1000, Nothing)
-            End If
-
-            Vz0 = Vz.Clone
-
-            V = Vz0(wid) * xv
-            Vz(wid) = Vz0(wid) * (1 - xv)
-            sumnw = 0.0#
-            For i = 0 To n
-                If i <> wid Then
-                    sumnw += Vz0(i)
+                If H <= hl Then
+                    xv = 0
+                    LoopVarState = State.Liquid
+                ElseIf H >= hv Then
+                    xv = 1
+                    LoopVarState = State.Vapor
+                Else
+                    xv = (H - hl) / (hv - hl)
                 End If
-            Next
-            For i = 0 To n
-                If i <> wid Then
-                    Vz(i) = Vz0(i) / sumnw * (1 - Vz(wid))
+                xl = 1 - xv
+
+                If xv <> 0.0# And xv <> 1.0# Then
+                    T = Tsat
+                Else
+                    LoopVarF = H
+                    LoopVarX = P
+                    T = brentsolverT.BrentOpt(proppack.AUX_TFM(Fase.Mixture), 2000, 20, 0.0001, 1000, Nothing)
                 End If
-            Next
 
-            tmp = Flash_PT(Vz, T, P)
+                Vz0 = Vz.Clone
 
-            L = tmp("LiquidPhaseMoleFraction") * (1 - V)
-            S = tmp("SolidPhaseMoleFraction") * (1 - V)
-            Vx = tmp("LiquidPhaseMolarComposition")
-            Vy = proppack.RET_NullVector()
-            Vy(wid) = 1.0#
-            Vs = tmp("SolidPhaseMolarComposition")
-            sumN = tmp("MoleSum")
-            Vz = Vz0
+                V = Vz0(wid) * xv
+                Vz(wid) = Vz0(wid) * (1 - xv)
+                sumnw = 0.0#
+                For i = 0 To n
+                    If i <> wid Then
+                        sumnw += Vz0(i)
+                    End If
+                Next
+                For i = 0 To n
+                    If i <> wid Then
+                        Vz(i) = Vz0(i) / sumnw * (1 - Vz(wid))
+                    End If
+                Next
+
+                tmp = Flash_PT(Vz, T, P)
+
+                L = tmp("LiquidPhaseMoleFraction") * (1 - V)
+                S = tmp("SolidPhaseMoleFraction") * (1 - V)
+                Vx = tmp("LiquidPhaseMolarComposition")
+                Vy = proppack.RET_NullVector()
+                Vy(wid) = 1.0#
+                Vs = tmp("SolidPhaseMolarComposition")
+                sumN = tmp("MoleSum")
+                Vz = Vz0
+
+                If Vz(wid) <> 0.0# And xv <> 0.0# And xv <> 1.0# Then
+                    wac = tmp("LiquidPhaseActivityCoefficients")(wid)
+                    wx = tmp("LiquidPhaseMolarComposition")(wid)
+                    Psat = P / (wx * wac)
+                    Tsat_ant = Tsat
+                    Tsat = proppack.AUX_TSATi(Psat, wid)
+                End If
+
+            Loop Until Abs(xv - xv_ant) < 0.001 Or Double.IsNaN(Tsat)
 
             d2 = Date.Now
 

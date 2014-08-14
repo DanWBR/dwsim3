@@ -146,11 +146,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             H = (CpT + Cp0) / 2 * (T - T0)
 
-            Hex = 0
-            For i As Integer = 0 To n
-                Hex += -8.314 * T ^ 2 * Vx(i) * (Log(activcoeffT2(i)) - Log(activcoeffT1(i))) / (0.1) 'kJ/kmol
-                MW += Vx(i) * cprops(i).Molar_Weight
-            Next
+            Dim wid As Integer = cprops.IndexOf((From c2 As ConstantProperties In cprops Select c2 Where c2.Name = "Water").SingleOrDefault)
+
+            Hex = 0.0#
+            MW = 1.0#
+
+            If Vx(wid) <> 1.0# Then
+                MW = 0.0#
+                For i As Integer = 0 To n
+                    Hex += -8.314 * T ^ 2 * Vx(i) * (Log(activcoeffT2(i)) - Log(activcoeffT1(i))) / (0.1) 'kJ/kmol
+                    MW += Vx(i) * cprops(i).Molar_Weight
+                Next
+            End If
 
             If ExcessOnly Then Return Hex / MW Else Return H + Hex / MW 'kJ/kg
 
