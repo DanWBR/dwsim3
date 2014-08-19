@@ -2,6 +2,7 @@ Imports System.IO
 Imports System.Runtime.Serialization.Formatters
 Imports Infralution.Localization
 Imports System.Globalization
+Imports System.Linq
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormMain
@@ -621,17 +622,46 @@ Partial Class FormMain
             Dim myarraylist As New ArrayList
 
             If Not My.Settings.UserUnits = "" Then
-                Dim formatter As New Binary.BinaryFormatter()
-                Dim bytearray(500000) As Byte
-                bytearray = System.Text.Encoding.ASCII.GetBytes(My.Settings.UserUnits)
-                formatter = New Binary.BinaryFormatter()
-                Dim stream As New MemoryStream(bytearray)
+
+                Dim xdoc As New XDocument()
+                Dim xel As XElement
+                
                 Try
-                    myarraylist = CType(formatter.Deserialize(stream), ArrayList)
+                    xdoc = XDocument.Load(New StringReader(My.Settings.UserUnits))
                 Catch ex As Exception
-                Finally
-                    stream.Close()
+
                 End Try
+                
+                If xdoc.Root Is Nothing Then
+
+                    Dim formatter As New Binary.BinaryFormatter()
+                    Dim bytearray(500000) As Byte
+                    bytearray = System.Text.Encoding.ASCII.GetBytes(My.Settings.UserUnits)
+                    formatter = New Binary.BinaryFormatter()
+                    Dim stream As New MemoryStream(bytearray)
+                    Try
+                        myarraylist = CType(formatter.Deserialize(stream), ArrayList)
+                    Catch ex As Exception
+                    Finally
+                        stream.Close()
+                    End Try
+
+                Else
+
+                    Dim data As List(Of XElement) = xdoc.Element("Units").Elements.ToList
+
+                    For Each xel In data
+                        Try
+                            Dim su As New DWSIM.SistemasDeUnidades.UnidadesSI()
+                            su.LoadData(xel.Elements.ToList)
+                            myarraylist.Add(su)
+                        Catch ex As Exception
+
+                        End Try
+                    Next
+
+                End If
+
             End If
 
             If myarraylist.Count > 0 Then

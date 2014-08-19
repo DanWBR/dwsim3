@@ -22,7 +22,8 @@ Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Runtime.Serialization.Formatters
 Imports System.IO
 Imports DWSIM.DWSIM.Outros
-Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
+Imports System.Linq
 
 Public Class FormStSim
 
@@ -754,13 +755,46 @@ Public Class FormStSim
             Me.ComboBox2.SelectedItem <> DWSIM.App.GetLocalString("Personalizado3CNTP") Then
 
             Dim myarraylist As New ArrayList
-            Dim formatter As New BinaryFormatter()
-            Dim bytearray() As Byte
-            bytearray = System.Text.Encoding.ASCII.GetBytes(My.Settings.UserUnits)
-            formatter = New BinaryFormatter()
-            Dim stream As New IO.MemoryStream(bytearray)
-            myarraylist = CType(formatter.Deserialize(stream), ArrayList)
-            stream.Close()
+
+            Dim xdoc As New XDocument()
+            Dim xel As XElement
+
+            If My.Settings.UserUnits <> "" Then
+                
+                Try
+                    xdoc = XDocument.Load(New StringReader(My.Settings.UserUnits))
+                Catch ex As Exception
+
+                End Try
+
+                If xdoc.Root Is Nothing Then
+
+                    Dim formatter As New BinaryFormatter()
+                    Dim bytearray() As Byte
+                    bytearray = System.Text.Encoding.ASCII.GetBytes(My.Settings.UserUnits)
+                    formatter = New BinaryFormatter()
+                    Dim stream As New IO.MemoryStream(bytearray)
+                    myarraylist = CType(formatter.Deserialize(stream), ArrayList)
+                    stream.Close()
+
+                Else
+                    
+                    Dim data As List(Of XElement) = xdoc.Element("Units").Elements.ToList
+
+                    For Each xel In data
+                        Try
+                            Dim su As New DWSIM.SistemasDeUnidades.UnidadesSI()
+                            su.LoadData(xel.Elements.ToList)
+                            myarraylist.Add(su)
+                        Catch ex As Exception
+
+                        End Try
+                    Next
+
+                End If
+
+
+            End If
 
             Dim str = Me.ComboBox2.SelectedItem
             myarraylist.Remove(FormMain.AvailableUnitSystems.Item(str))
@@ -770,12 +804,22 @@ Public Class FormStSim
             Me.FrmChild.ToolStripComboBoxUnitSystem.SelectedIndex = 0
             Me.FrmChild.ToolStripComboBoxUnitSystem.Items.Remove(str)
 
-            Dim bytearray2(1000000) As Byte
-            Dim stream2 As New IO.MemoryStream(bytearray2)
-            Dim formatter2 As New BinaryFormatter()
-            formatter2.Serialize(stream2, myarraylist)
-            stream2.Close()
-            My.Settings.UserUnits = System.Text.Encoding.ASCII.GetString(bytearray2)
+            xdoc = New XDocument
+            xdoc.Add(New XElement("Units"))
+            
+            For Each su2 As DWSIM.SistemasDeUnidades.Unidades In myarraylist
+                xdoc.Element("Units").Add(New XElement(su2.nome.Replace(" ", "_")))
+                xel = xdoc.Element("Units").Element(su2.nome.Replace(" ", "_"))
+                xel.Add(su2.SaveData())
+            Next
+            
+            Using sw As New StringWriter()
+                Using xw As New XmlTextWriter(sw)
+                    xdoc.Save(xw)
+                    My.Settings.UserUnits = sw.ToString
+                End Using
+            End Using
+
         Else
             MessageBox.Show(DWSIM.App.GetLocalString("EsteSistemadeUnidade"))
         End If
@@ -982,9 +1026,9 @@ Public Class FormStSim
             btnDeletePP.Enabled = True
             If FrmChild.Options.PropertyPackages.ContainsKey(dgvpp.SelectedRows(0).Cells(0).Value) Then
                 If FrmChild.Options.PropertyPackages(dgvpp.SelectedRows(0).Cells(0).Value).IsConfigurable And Not DWSIM.App.IsRunningOnMono Then btnConfigPP.Enabled = True Else btnConfigPP.Enabled = False
-                    btnCopyPP.Enabled = True
-                End If
+                btnCopyPP.Enabled = True
             End If
+        End If
     End Sub
 
     Private Sub Button9_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button9.Click
@@ -1169,7 +1213,7 @@ Public Class FormStSim
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
                 Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = True
-           Case 6
+            Case 6
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
                 Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = False
@@ -1298,7 +1342,7 @@ Public Class FormStSim
     Private Sub LinkLabelPropertyMethods_LinkClicked(sender As System.Object, e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabelPropertyMethods.LinkClicked
         Process.Start("http://dwsim.inforside.com.br/wiki/index.php?title=Property_Methods_and_Correlation_Profiles")
     End Sub
-    
+
     Private Sub ogc1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles ogc1.CellDoubleClick
         If e.RowIndex > -1 Then
             AddCompToSimulation(e.RowIndex)

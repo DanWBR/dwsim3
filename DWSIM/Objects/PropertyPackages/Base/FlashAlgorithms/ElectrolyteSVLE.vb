@@ -955,7 +955,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             deltaT = 1
 
-            xv = V
+            xv = V / Vz0(wid)
             xl = 1 - xv
 
             Dim icount As Integer = 0
@@ -978,7 +978,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Vz0 = Vz.Clone
 
-                V = Vz0(wid) * xv
                 Vz(wid) = Vz0(wid) * (1 - xv)
                 sumnw = 0.0#
                 For i = 0 To n
