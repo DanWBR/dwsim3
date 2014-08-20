@@ -754,71 +754,13 @@ Public Class FormStSim
             Me.ComboBox2.SelectedItem <> DWSIM.App.GetLocalString("Personalizado2SC") And _
             Me.ComboBox2.SelectedItem <> DWSIM.App.GetLocalString("Personalizado3CNTP") Then
 
-            Dim myarraylist As New ArrayList
-
-            Dim xdoc As New XDocument()
-            Dim xel As XElement
-
-            If My.Settings.UserUnits <> "" Then
-                
-                Try
-                    xdoc = XDocument.Load(New StringReader(My.Settings.UserUnits))
-                Catch ex As Exception
-
-                End Try
-
-                If xdoc.Root Is Nothing Then
-
-                    Dim formatter As New BinaryFormatter()
-                    Dim bytearray() As Byte
-                    bytearray = System.Text.Encoding.ASCII.GetBytes(My.Settings.UserUnits)
-                    formatter = New BinaryFormatter()
-                    Dim stream As New IO.MemoryStream(bytearray)
-                    myarraylist = CType(formatter.Deserialize(stream), ArrayList)
-                    stream.Close()
-
-                Else
-                    
-                    Dim data As List(Of XElement) = xdoc.Element("Units").Elements.ToList
-
-                    For Each xel In data
-                        Try
-                            Dim su As New DWSIM.SistemasDeUnidades.UnidadesSI()
-                            su.LoadData(xel.Elements.ToList)
-                            myarraylist.Add(su)
-                        Catch ex As Exception
-
-                        End Try
-                    Next
-
-                End If
-
-
-            End If
-
             Dim str = Me.ComboBox2.SelectedItem
-            myarraylist.Remove(FormMain.AvailableUnitSystems.Item(str))
+            My.MyApplication.UserUnitSystems.Remove(str)
             FormMain.AvailableUnitSystems.Remove(Me.ComboBox2.SelectedItem)
             Me.ComboBox2.SelectedIndex = 0
             Me.ComboBox2.Items.Remove(str)
             Me.FrmChild.ToolStripComboBoxUnitSystem.SelectedIndex = 0
             Me.FrmChild.ToolStripComboBoxUnitSystem.Items.Remove(str)
-
-            xdoc = New XDocument
-            xdoc.Add(New XElement("Units"))
-            
-            For Each su2 As DWSIM.SistemasDeUnidades.Unidades In myarraylist
-                xdoc.Element("Units").Add(New XElement(su2.nome.Replace(" ", "_")))
-                xel = xdoc.Element("Units").Element(su2.nome.Replace(" ", "_"))
-                xel.Add(su2.SaveData())
-            Next
-            
-            Using sw As New StringWriter()
-                Using xw As New XmlTextWriter(sw)
-                    xdoc.Save(xw)
-                    My.Settings.UserUnits = sw.ToString
-                End Using
-            End Using
 
         Else
             MessageBox.Show(DWSIM.App.GetLocalString("EsteSistemadeUnidade"))

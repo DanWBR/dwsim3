@@ -619,59 +619,11 @@ Partial Class FormMain
             .Add(DWSIM.App.GetLocalString("Personalizado4"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv4)
             .Add(DWSIM.App.GetLocalString("Personalizado5"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv5)
 
-            Dim myarraylist As New ArrayList
-
-            If Not My.Settings.UserUnits = "" Then
-
-                Dim xdoc As New XDocument()
-                Dim xel As XElement
-                
-                Try
-                    xdoc = XDocument.Load(New StringReader(My.Settings.UserUnits))
-                Catch ex As Exception
-
-                End Try
-                
-                If xdoc.Root Is Nothing Then
-
-                    Dim formatter As New Binary.BinaryFormatter()
-                    Dim bytearray(500000) As Byte
-                    bytearray = System.Text.Encoding.ASCII.GetBytes(My.Settings.UserUnits)
-                    formatter = New Binary.BinaryFormatter()
-                    Dim stream As New MemoryStream(bytearray)
-                    Try
-                        myarraylist = CType(formatter.Deserialize(stream), ArrayList)
-                    Catch ex As Exception
-                    Finally
-                        stream.Close()
-                    End Try
-
-                Else
-
-                    Dim data As List(Of XElement) = xdoc.Element("Units").Elements.ToList
-
-                    For Each xel In data
-                        Try
-                            Dim su As New DWSIM.SistemasDeUnidades.UnidadesSI()
-                            su.LoadData(xel.Elements.ToList)
-                            myarraylist.Add(su)
-                        Catch ex As Exception
-
-                        End Try
-                    Next
-
-                End If
-
-            End If
-
-            If myarraylist.Count > 0 Then
+            If My.MyApplication.UserUnitSystems.Count > 0 Then
                 Dim su As New DWSIM.SistemasDeUnidades.Unidades
-                Dim i As Integer = 0
-                Do
-                    su = CType(myarraylist.Item(i), DWSIM.SistemasDeUnidades.Unidades)
+                For Each su In My.MyApplication.UserUnitSystems.Values
                     If Not .ContainsKey(su.nome) Then .Add(su.nome, su)
-                    i += 1
-                Loop Until i = myarraylist.Count
+                Next
             End If
 
         End With

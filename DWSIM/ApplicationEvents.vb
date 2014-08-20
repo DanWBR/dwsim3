@@ -1,4 +1,7 @@
 Imports Cudafy
+Imports System.Linq
+Imports System.IO
+Imports System.Runtime.Serialization.Formatters.Binary
 
 Namespace My
 
@@ -21,12 +24,41 @@ Namespace My
 
         Public Shared IsRunningParallelTasks As Boolean = False
         Public Shared IsFlowsheetSolving As Boolean = False
-        
+
         Public ActiveSimulation As FormFlowsheet
         Public CAPEOPENMode As Boolean = False
         Public Shared gpu As Cudafy.Host.GPGPU
         Public Shared gpumod As CudafyModule
         Public Shared prevlang As Integer = 0 '0 = CUDA, 1 = OpenCL
+
+        Public Shared UserUnitSystems As Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
+
+        Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
+
+            'save user unit systems
+
+            Dim xdoc As New XDocument()
+            Dim xel As XElement
+
+            xdoc = New XDocument
+            xdoc.Add(New XElement("Units"))
+
+            For Each su2 As DWSIM.SistemasDeUnidades.Unidades In UserUnitSystems.Values
+                xdoc.Element("Units").Add(New XElement(XmlConvert.EncodeName(su2.nome)))
+                xel = xdoc.Element("Units").Element(XmlConvert.EncodeName(su2.nome))
+                xel.Add(su2.SaveData())
+            Next
+
+            Using sw As New StringWriter()
+                Using xw As New XmlTextWriter(sw)
+                    xdoc.Save(xw)
+                    My.Settings.UserUnits = sw.ToString
+                End Using
+            End Using
+
+            My.Settings.Save()
+
+        End Sub
 
         Private Sub MyApplication_Startup(ByVal sender As Object, ByVal e As Microsoft.VisualBasic.ApplicationServices.StartupEventArgs) Handles Me.Startup
 
@@ -82,6 +114,60 @@ Namespace My
             'set CUDA params
             CudafyModes.Compiler = eGPUCompiler.All
             CudafyModes.Target = My.Settings.CudafyTarget
+
+            'load user unit systems
+
+            UserUnitSystems = New Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
+
+            Dim xdoc As New XDocument()
+            Dim xel As XElement
+
+            If My.Settings.UserUnits <> "" Then
+
+                Dim myarraylist As New ArrayList
+
+                Try
+                    xdoc = XDocument.Load(New StringReader(My.Settings.UserUnits))
+                Catch ex As Exception
+
+                End Try
+
+                If xdoc.Root Is Nothing Then
+
+                    Dim formatter As New BinaryFormatter()
+                    Dim bytearray() As Byte
+                    bytearray = System.Text.Encoding.ASCII.GetBytes(My.Settings.UserUnits)
+                    formatter = New BinaryFormatter()
+                    Dim stream As New IO.MemoryStream(bytearray)
+
+                    Try
+                        myarraylist = CType(formatter.Deserialize(stream), ArrayList)
+                    Catch ex As Exception
+                    Finally
+                        stream.Close()
+                    End Try
+
+                Else
+
+                    Dim data As List(Of XElement) = xdoc.Element("Units").Elements.ToList
+
+                    For Each xel In data
+                        Try
+                            Dim su As New DWSIM.SistemasDeUnidades.UnidadesSI()
+                            su.LoadData(xel.Elements.ToList)
+                            myarraylist.Add(su)
+                        Catch ex As Exception
+
+                        End Try
+                    Next
+
+                End If
+
+                For Each su As DWSIM.SistemasDeUnidades.Unidades In myarraylist
+                    UserUnitSystems.Add(su.nome, su)
+                Next
+
+            End If
 
         End Sub
 

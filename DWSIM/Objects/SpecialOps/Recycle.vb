@@ -264,7 +264,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
             End If
 
-            Dim Tnew, Pnew, Wnew As Double
+            Dim Tnew, Pnew, Wnew, Hnew, Snew As Double
 
             Dim ems As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
             With ems.Fases(0).SPMProperties
@@ -284,6 +284,9 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                 Me.ConvergenceHistory.Temperatura = .temperature.GetValueOrDefault
                 Me.ConvergenceHistory.Pressao = .pressure.GetValueOrDefault
                 Me.ConvergenceHistory.VazaoMassica = .massflow.GetValueOrDefault
+
+                Hnew = .enthalpy.GetValueOrDefault
+                Snew = .entropy.GetValueOrDefault
 
             End With
 
@@ -379,10 +382,10 @@ SS:             Tnew = Me.ConvergenceHistory.Temperatura
             Select Case Me.FlashType
                 Case Helpers.Recycle.FlashType.FlashTP
                     tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tnew, Pnew, 0)
-                    'Case Helpers.Recycle.FlashType.FlashPS
-                    '    tmp = form.Options.SelectedPropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.S, Pnew, Snew, Tnew)
-                    'Case Helpers.Recycle.FlashType.FlashPH
-                    '    tmp = form.Options.SelectedPropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pnew, Hnew, Tnew)
+                Case Helpers.Recycle.FlashType.FlashPS
+                    tmp = form.Options.SelectedPropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.S, Pnew, Snew, Tnew)
+                Case Helpers.Recycle.FlashType.FlashPH
+                    tmp = form.Options.SelectedPropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pnew, Hnew, Tnew)
                 Case Else
                     tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tnew, Pnew, 0)
             End Select

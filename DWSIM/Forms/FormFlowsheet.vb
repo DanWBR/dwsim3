@@ -424,75 +424,14 @@ Imports DWSIM.DWSIM.GraphicObjects
 
     Public Sub AddUnitSystem(ByVal su As DWSIM.SistemasDeUnidades.Unidades)
 
-        Dim myarraylist As New ArrayList
-
-        Dim xdoc As New XDocument()
-        Dim xel As XElement
-
-        If My.Settings.UserUnits <> "" Then
-
-            Try
-                xdoc = XDocument.Load(New StringReader(My.Settings.UserUnits))
-            Catch ex As Exception
-
-            End Try
-
-            If xdoc.Root Is Nothing Then
-
-                Try
-                    Dim formatter As New BinaryFormatter()
-                    Dim bytearray(500000) As Byte
-                    bytearray = System.Text.Encoding.ASCII.GetBytes(My.Settings.UserUnits)
-                    formatter = New BinaryFormatter()
-                    Dim stream As New IO.MemoryStream(bytearray)
-                    Try
-                        myarraylist = CType(formatter.Deserialize(stream), ArrayList)
-                    Catch ex As Exception
-                    End Try
-                    stream.Close()
-                Catch ex As Exception
-
-                End Try
-
-            Else
-
-                Dim data As List(Of XElement) = xdoc.Element("Units").Elements.ToList
-
-                For Each xel In data
-                    Try
-                        Dim su2 As New DWSIM.SistemasDeUnidades.UnidadesSI()
-                        su2.LoadData(xel.Elements.ToList)
-                        myarraylist.Add(su2)
-                    Catch ex As Exception
-
-                    End Try
-                Next
-
-            End If
-
-            myarraylist.Add(su)
-
+        If Not My.MyApplication.UserUnitSystems.ContainsKey(su.nome) Then
+            My.MyApplication.UserUnitSystems.Add(su.nome, su)
+            FormMain.AvailableUnitSystems.Add(su.nome, su)
+            Me.FrmStSim1.ComboBox2.Items.Add(su.nome)
+            Me.ToolStripComboBoxUnitSystem.Items.Add(su.nome)
+        Else
+            MessageBox.Show("Please input a different name for the unit system.")
         End If
-
-        FormMain.AvailableUnitSystems.Add(su.nome, su)
-        Me.FrmStSim1.ComboBox2.Items.Add(su.nome)
-        Me.ToolStripComboBoxUnitSystem.Items.Add(su.nome)
-
-        xdoc = New XDocument
-        xdoc.Add(New XElement("Units"))
-
-        For Each su2 As DWSIM.SistemasDeUnidades.Unidades In myarraylist
-            xdoc.Element("Units").Add(New XElement(su2.nome.Replace(" ", "_")))
-            xel = xdoc.Element("Units").Element(su2.nome.Replace(" ", "_"))
-            xel.Add(su2.SaveData())
-        Next
-
-        Using sw As New StringWriter()
-            Using xw As New XmlTextWriter(sw)
-                xdoc.Save(xw)
-                My.Settings.UserUnits = sw.ToString
-            End Using
-        End Using
 
     End Sub
 
