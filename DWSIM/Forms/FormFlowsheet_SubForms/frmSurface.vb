@@ -835,8 +835,10 @@ Public Class frmSurface
 
                 If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.MaterialStream Then
                     EditCompTSMI.Visible = True
+                    RestoreTSMI.Visible = True
                 Else
                     EditCompTSMI.Visible = False
+                    RestoreTSMI.Visible = False
                 End If
 
             Catch ex As Exception
@@ -882,6 +884,7 @@ Public Class frmSurface
             Me.RecalcularToolStripMenuItem.Visible = False
             Me.ToolStripSeparator6.Visible = False
             Me.EditCompTSMI.Visible = False
+            Me.RestoreTSMI.Visible = False
 
         End If
         'Me.InverterToolStripMenuItem.Visible = False
@@ -3303,6 +3306,65 @@ Public Class frmSurface
         Catch ex As Exception
             Me.ChildParent.WriteToLog("Error copying data to clipboard: " & ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
         End Try
+
+    End Sub
+
+    Private Sub RestoreTSMI_Click(sender As Object, e As EventArgs) Handles RestoreTSMI.Click
+
+        If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
+
+            If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.MaterialStream Then
+
+                Dim mystr As DWSIM.SimulationObjects.Streams.MaterialStream = ChildParent.Collections.CLCS_MaterialStreamCollection(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+
+                If Not mystr.GraphicObject.InputConnectors(0).IsAttached Then
+
+                    'assign default values for temperature, pressure and mass flow
+                    mystr.Fases(0).SPMProperties.temperature = 298.15
+                    mystr.Fases(0).SPMProperties.pressure = 101325
+                    mystr.Fases(0).SPMProperties.massflow = 1
+
+                    mystr.EqualizeOverallComposition()
+
+                    Application.DoEvents()
+                    CalculateMaterialStream(ChildParent, mystr)
+                    Application.DoEvents()
+                    Call ChildParent.FormSurface.UpdateSelectedObject()
+                    Application.DoEvents()
+                    Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
+                    Application.DoEvents()
+                    ProcessCalculationQueue(ChildParent)
+                    Application.DoEvents()
+
+                ElseIf mystr.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.OT_Reciclo Then
+
+                    'assign default values for temperature, pressure and mass flow
+                    mystr.Fases(0).SPMProperties.temperature = 298.15
+                    mystr.Fases(0).SPMProperties.pressure = 101325
+                    mystr.Fases(0).SPMProperties.massflow = 1
+
+                    mystr.EqualizeOverallComposition()
+
+                    Application.DoEvents()
+                    CalculateMaterialStream(ChildParent, mystr)
+                    Application.DoEvents()
+                    Call ChildParent.FormSurface.UpdateSelectedObject()
+                    Application.DoEvents()
+                    Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
+                    Application.DoEvents()
+                    ProcessCalculationQueue(ChildParent)
+                    Application.DoEvents()
+
+                Else
+
+                    MessageBox.Show("The selected Material Stream is read-only.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                End If
+
+            End If
+        End If
+
+
 
     End Sub
 

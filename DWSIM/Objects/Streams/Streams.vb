@@ -16,7 +16,7 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports CapeOpen
 Imports System.Linq
@@ -228,6 +228,7 @@ Namespace DWSIM.SimulationObjects.Streams
 
             Me.FillNodeItems()
             Me.QTFillNodeItems()
+
         End Sub
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
@@ -274,7 +275,7 @@ Namespace DWSIM.SimulationObjects.Streams
 
             Me.QTNodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
             Me.QTFillNodeItems()
-            
+
             With Me.QTNodeTableItems
 
                 Dim valor As String
@@ -482,6 +483,14 @@ Namespace DWSIM.SimulationObjects.Streams
             For Each c As Substancia In Me.Fases(0).Componentes.Values
                 c.FracaoMolar = Vx(i)
                 i += 1
+            Next
+
+        End Sub
+
+        Public Sub EqualizeOverallComposition()
+
+            For Each c As Substancia In Me.Fases(0).Componentes.Values
+                c.FracaoMolar = 1 / Me.Fases(0).Componentes.Count
             Next
 
         End Sub
@@ -1296,7 +1305,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 Return ""
 
             End If
-            
+
         End Function
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()

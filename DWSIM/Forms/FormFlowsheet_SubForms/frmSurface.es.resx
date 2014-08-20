@@ -145,83 +145,89 @@
   <data name="CopiarParaAÁreaDeTransferênciaToolStripMenuItem.Text" xml:space="preserve">
     <value>Capture Snapshot and Send to Clipboard</value>
   </data>
+  <data name="CMS_Sel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>257, 304</value>
+  </data>
   <data name="TSMI_Label.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 22</value>
+    <value>256, 22</value>
   </data>
   <data name="ToolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>251, 6</value>
+    <value>253, 6</value>
   </data>
   <data name="RecalcularToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 22</value>
+    <value>256, 22</value>
   </data>
   <data name="EditCompTSMI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 22</value>
+    <value>256, 22</value>
   </data>
   <data name="EditCompTSMI.Text" xml:space="preserve">
     <value>Editar composición de la corriente</value>
   </data>
+  <data name="RestoreTSMI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>256, 22</value>
+  </data>
+  <data name="RestoreTSMI.Text" xml:space="preserve">
+    <value>Restaurar Propiedades por Defecto</value>
+  </data>
   <data name="ToolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>251, 6</value>
+    <value>253, 6</value>
   </data>
   <data name="ConectarAToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 22</value>
+    <value>256, 22</value>
   </data>
   <data name="ConectarAToolStripMenuItem.Text" xml:space="preserve">
     <value>Conectar-se a...</value>
   </data>
   <data name="DesconectarDeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 22</value>
+    <value>256, 22</value>
   </data>
   <data name="ToolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>251, 6</value>
+    <value>253, 6</value>
   </data>
   <data name="TSMI_Girar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 22</value>
+    <value>256, 22</value>
   </data>
   <data name="TSMI_Girar.Text" xml:space="preserve">
     <value>Rotar</value>
   </data>
   <data name="HorizontalmenteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 22</value>
+    <value>256, 22</value>
   </data>
   <data name="HorizontalmenteToolStripMenuItem.Text" xml:space="preserve">
     <value>Voltear horizontalmente</value>
   </data>
   <data name="ToolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>251, 6</value>
+    <value>253, 6</value>
   </data>
   <data name="ClonarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 22</value>
+    <value>256, 22</value>
   </data>
   <data name="ClonarToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Crea copia exacta del objeto seleccionado.</value>
   </data>
   <data name="ExcluirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 22</value>
+    <value>256, 22</value>
   </data>
   <data name="ExcluirToolStripMenuItem.Text" xml:space="preserve">
     <value>Eliminar</value>
   </data>
   <data name="ToolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>251, 6</value>
+    <value>253, 6</value>
   </data>
   <data name="TabelaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 22</value>
+    <value>256, 22</value>
   </data>
   <data name="TabelaToolStripMenuItem.Text" xml:space="preserve">
     <value>Tabla</value>
   </data>
   <data name="ToolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>251, 6</value>
+    <value>253, 6</value>
   </data>
   <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>254, 22</value>
+    <value>256, 22</value>
   </data>
   <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Text" xml:space="preserve">
     <value>Copiar datos en el portapapeles</value>
-  </data>
-  <data name="CMS_Sel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>255, 282</value>
   </data>
   <data name="PreviewDialog.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -266,7 +272,7 @@
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
+    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Diagrama de flujo</value>
