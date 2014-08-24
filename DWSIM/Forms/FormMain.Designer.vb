@@ -619,11 +619,13 @@ Partial Class FormMain
             .Add(DWSIM.App.GetLocalString("Personalizado4"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv4)
             .Add(DWSIM.App.GetLocalString("Personalizado5"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv5)
 
-            If My.MyApplication.UserUnitSystems.Count > 0 Then
-                Dim su As New DWSIM.SistemasDeUnidades.Unidades
-                For Each su In My.MyApplication.UserUnitSystems.Values
-                    If Not .ContainsKey(su.nome) Then .Add(su.nome, su)
-                Next
+            If Not My.MyApplication.UserUnitSystems Is Nothing Then
+                If My.MyApplication.UserUnitSystems.Count > 0 Then
+                    Dim su As New DWSIM.SistemasDeUnidades.Unidades
+                    For Each su In My.MyApplication.UserUnitSystems.Values
+                        If Not .ContainsKey(su.nome) Then .Add(su.nome, su)
+                    Next
+                End If
             End If
 
         End With
