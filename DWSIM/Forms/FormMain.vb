@@ -2238,6 +2238,7 @@ Public Class FormMain
                                     form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
                 obj.GraphicObject = gobj
                 obj.FillNodeItems(True)
+                obj.QTFillNodeItems()
                 If Not gobj Is Nothing Then
                     form.Collections.ObjectCollection.Add(id, obj)
                     obj.LoadData(xel.Elements.ToList)
@@ -2329,7 +2330,6 @@ Public Class FormMain
                                 .CLCS_FilterCollection.Add(id, obj)
                         End Select
                     End With
-                    obj.QTFillNodeItems()
                     obj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                 End If
             Catch ex As Exception
@@ -2402,6 +2402,7 @@ Public Class FormMain
                     End If
                     obj.LoadData(xel2.Elements.ToList)
                     DirectCast(obj, DWSIM.GraphicObjects.TableGraphic).BaseOwner = form.Collections.ObjectCollection(xel2.<Owner>.Value)
+                    form.Collections.ObjectCollection(xel2.<Owner>.Value).Tabela = obj
                     form.FormSurface.FlowsheetDesignSurface.drawingObjects.Add(obj)
                 Catch ex As Exception
                     excs.Add(New Exception("Error Loading Flowsheet Table Information", ex))

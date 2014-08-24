@@ -3,20 +3,90 @@
   <Settings>
     <Type>DWSIM.DWSIM.FormClasses.ClsFormOptions</Type>
     <SimulationMode></SimulationMode>
+    <SelectedUnitSystem>
+      <Type>DWSIM.DWSIM.SistemasDeUnidades.UnidadesSI</Type>
+      <nome>SI System</nome>
+      <area>m2</area>
+      <distance>m</distance>
+      <time>s</time>
+      <volume>m3</volume>
+      <molar_volume>m3/kmol</molar_volume>
+      <diameter>mm</diameter>
+      <thickness>mm</thickness>
+      <molar_conc>mol/m3</molar_conc>
+      <mass_conc>kg/m3</mass_conc>
+      <heat_transf_coeff>W/[m2.K]</heat_transf_coeff>
+      <force>N</force>
+      <accel>m2/s</accel>
+      <spec_vol>m3/kg</spec_vol>
+      <reac_rate>mol/[m3.s]</reac_rate>
+      <velocity>m/s</velocity>
+      <foulingfactor>K.m2/W</foulingfactor>
+      <cakeresistance>m/kg</cakeresistance>
+      <mediumresistance>m-1</mediumresistance>
+      <molar_enthalpy>kJ/kmol</molar_enthalpy>
+      <molar_entropy>kJ/[kmol.K]</molar_entropy>
+      <tdp_idealGasHeatCapacity>kJ/[kg.K]</tdp_idealGasHeatCapacity>
+      <tdp_surfaceTension>N/m</tdp_surfaceTension>
+      <tdp_thermalConductivityOfLiquid>W/[m.K]</tdp_thermalConductivityOfLiquid>
+      <tdp_thermalConductivityOfVapor>W/[m.K]</tdp_thermalConductivityOfVapor>
+      <tdp_vaporPressure>Pa</tdp_vaporPressure>
+      <tdp_viscosityOfLiquid>Pa.s</tdp_viscosityOfLiquid>
+      <tdp_viscosityOfVapor>Pa.s</tdp_viscosityOfVapor>
+      <pdp_boilingPointTemperature>K</pdp_boilingPointTemperature>
+      <pdp_meltingTemperature>K</pdp_meltingTemperature>
+      <spmp_activity>Pa</spmp_activity>
+      <spmp_activityCoefficient>-</spmp_activityCoefficient>
+      <spmp_compressibility>Pa-1</spmp_compressibility>
+      <spmp_compressibilityFactor>-</spmp_compressibilityFactor>
+      <spmp_density>kg/m3</spmp_density>
+      <spmp_enthalpy>kJ/kg</spmp_enthalpy>
+      <spmp_entropy>kJ/[kg.K]</spmp_entropy>
+      <spmp_excessEnthalpy>kJ/kg</spmp_excessEnthalpy>
+      <spmp_excessEntropy>kJ/[kg.K]</spmp_excessEntropy>
+      <spmp_molarflow>mol/s</spmp_molarflow>
+      <spmp_massflow>kg/s</spmp_massflow>
+      <spmp_molarfraction>-</spmp_molarfraction>
+      <spmp_massfraction>-</spmp_massfraction>
+      <spmp_fugacity>Pa</spmp_fugacity>
+      <spmp_fugacityCoefficient>-</spmp_fugacityCoefficient>
+      <spmp_heatCapacityCp>kJ/[kg.K]</spmp_heatCapacityCp>
+      <spmp_heatCapacityCv>kJ/[kg.K]</spmp_heatCapacityCv>
+      <spmp_jouleThomsonCoefficient>K/Pa</spmp_jouleThomsonCoefficient>
+      <spmp_logFugacityCoefficient>-</spmp_logFugacityCoefficient>
+      <spmp_molecularWeight>kg/kmol</spmp_molecularWeight>
+      <spmp_pressure>Pa</spmp_pressure>
+      <spmp_temperature>K</spmp_temperature>
+      <spmp_speedOfSound>m/s</spmp_speedOfSound>
+      <spmp_thermalConductivity>W/[m.K]</spmp_thermalConductivity>
+      <spmp_viscosity>Pa.s</spmp_viscosity>
+      <spmp_cinematic_viscosity>m2/s</spmp_cinematic_viscosity>
+      <spmp_volumetricFlow>m3/s</spmp_volumetricFlow>
+      <spmp_heatflow>kW</spmp_heatflow>
+      <spmp_head>m</spmp_head>
+      <spmp_deltaT>K</spmp_deltaT>
+      <spmp_deltaP>Pa</spmp_deltaP>
+      <tpmp_kvalue>-</tpmp_kvalue>
+      <tpmp_logKvalue>-</tpmp_logKvalue>
+      <tpmp_surfaceTension>N/m</tpmp_surfaceTension>
+    </SelectedUnitSystem>
     <NumberFormat>#0.0####</NumberFormat>
     <FractionNumberFormat>#0.0######</FractionNumberFormat>
     <SempreCalcularFlashPH>false</SempreCalcularFlashPH>
     <CalculateBubbleAndDewPoints>false</CalculateBubbleAndDewPoints>
     <ValidateEquilibriumCalc>false</ValidateEquilibriumCalc>
+    <UsePhaseIdentificationAlgorithm>true</UsePhaseIdentificationAlgorithm>
     <SimNome>simulation_title</SimNome>
     <SimAutor>PETROBRAS\ptc0</SimAutor>
     <SimComentario>simulation_details</SimComentario>
-    <FilePath>C:\Users\Daniel\Documents\Visual Studio 2010\Projects\DWSIM\DWSIM3\DWSIM\bin\x86\Release\samples\Heat Exchanger Sizing and Design.dwsim</FilePath>
-    <BackupFileName>69925357.dwbcs</BackupFileName>
+    <FilePath>C:\Users\Daniel\Documents\Visual Studio 2010\Projects\DWSIM\DWSIM3\DWSIM\bin\x86\Release\samples\Heat Exchanger Sizing and Design.dwxml</FilePath>
+    <BackupFileName>35165332.dwbcs</BackupFileName>
     <CalculatorActivated>true</CalculatorActivated>
     <PropertyPackageFlashAlgorithm>DWSIMDefault</PropertyPackageFlashAlgorithm>
     <PropertyPackageIOFlashQuickMode>true</PropertyPackageIOFlashQuickMode>
     <ThreePhaseFlashStabTestSeverity>0</ThreePhaseFlashStabTestSeverity>
+    <FlashValidationDGETolerancePct>0.01</FlashValidationDGETolerancePct>
+    <Password></Password>
     <UsePassword>false</UsePassword>
   </Settings>
   <SimulationObjects>
@@ -24,6 +94,7 @@
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
       <SpecType>Temperature_and_Pressure</SpecType>
       <IsElectrolyteStream>false</IsElectrolyteStream>
+      <ReferenceSolvent></ReferenceSolvent>
       <AtEquilibrium>true</AtEquilibrium>
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-492759b1-1cbe-404e-a1d7-c14eab187cc7</ComponentDescription>
@@ -40,11 +111,11 @@
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems>
-        <NodeItem ID="1837756403" Checked="true" Text="PROP_MS_0" />
-        <NodeItem ID="531845731" Checked="true" Text="PROP_MS_1" />
-        <NodeItem ID="983650394" Checked="true" Text="PROP_MS_3" />
+        <NodeItem ID="174221253" Checked="true" Text="PROP_MS_0" Value="377.038888888889" Unit="K" />
+        <NodeItem ID="1040282642" Checked="true" Text="PROP_MS_1" Value="1116948.66173003" Unit="Pa" />
+        <NodeItem ID="1297806793" Checked="true" Text="PROP_MS_3" Value="212.943712588452" Unit="mol/s" />
       </NodeItems>
-      <PropertyPackage></PropertyPackage>
+      <PropertyPackage>3d4b62a7-0ebb-4f44-8e1d-c93c533c7519</PropertyPackage>
       <Phases>
         <Phase>
           <ID>0</ID>
@@ -63,7 +134,7 @@
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
-              <VolumetricFraction>0</VolumetricFraction>
+              <VolumetricFraction>NaN</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -81,43 +152,43 @@
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
-              <VolumetricFraction>0</VolumetricFraction>
+              <VolumetricFraction>NaN</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nOctano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>5.15356093118791E-05</lnKvalue>
-              <Kvalue>1.00005153693729</Kvalue>
+              <lnKvalue>0.623519161138367</lnKvalue>
+              <Kvalue>1.8654814336277</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.1</FracaoMolar>
               <FracaoMassica>0.0910391156305654</FracaoMassica>
-              <MolarFlow>10.7321845309074</MolarFlow>
-              <MassFlow>1.37648852356512</MassFlow>
+              <MolarFlow>21.2943712588452</MolarFlow>
+              <MassFlow>2.73117346891696</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.00210297990853316</VolumetricFlow>
-              <VolumetricFraction>0.0929686503047923</VolumetricFraction>
+              <VolumetricFlow>0.00416341429129745</VolumetricFlow>
+              <VolumetricFraction>Infinity</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nNonano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-5.72634276155392E-06</lnKvalue>
-              <Kvalue>0.999994273673634</Kvalue>
+              <lnKvalue>-0.10110801894844</lnKvalue>
+              <Kvalue>0.903835396263589</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.9</FracaoMolar>
               <FracaoMassica>0.908960884369435</FracaoMassica>
-              <MolarFlow>96.5896607781662</MolarFlow>
-              <MassFlow>13.7432598838214</MassFlow>
+              <MolarFlow>191.649341329606</MolarFlow>
+              <MassFlow>27.2688265310831</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.020517332440185</VolumetricFlow>
-              <VolumetricFraction>0.907031349695208</VolumetricFraction>
+              <VolumetricFlow>0.0406195773693101</VolumetricFlow>
+              <VolumetricFraction>Infinity</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nDecano</Nome>
             </Compound>
@@ -126,24 +197,24 @@
           <Nome>Mistura</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <density>668.41466087197</density>
+            <density>669.897183898702</density>
             <enthalpy>-171.849894109174</enthalpy>
-            <entropy>-0.264187181499215</entropy>
-            <molarflow>107.321845309074</molarflow>
-            <massflow>15.1197484073865</massflow>
+            <entropy>-0.264187181499214</entropy>
+            <molarflow>212.943712588452</molarflow>
+            <massflow>30</massflow>
             <heatCapacityCp>2.52612235501895</heatCapacityCp>
             <heatCapacityCv>2.09883066610991</heatCapacityCv>
             <molecularWeight>140.8823</molecularWeight>
             <pressure>1116948.66173003</pressure>
             <temperature>377.038888888889</temperature>
             <thermalConductivity>0.115049071236854</thermalConductivity>
-            <volumetric_flow>0.0226203123487182</volumetric_flow>
+            <volumetric_flow>0.0447829916606075</volumetric_flow>
             <molar_enthalpy>-24210.6083368568</molar_enthalpy>
-            <molar_entropy>-37.2192977601269</molar_entropy>
+            <molar_entropy>-37.2192977601267</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
-            <surfaceTension>0.0162027927113858</surfaceTension>
+            <surfaceTension>0.0162027927113857</surfaceTension>
           </TPMProperties>
         </Phase>
         <Phase>
@@ -192,8 +263,8 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.1</FracaoMolar>
               <FracaoMassica>0.0910391156305654</FracaoMassica>
-              <MolarFlow>10.7321845309074</MolarFlow>
-              <MassFlow>1.37648852356512</MassFlow>
+              <MolarFlow>21.2943712588452</MolarFlow>
+              <MassFlow>2.73117346891696</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000195611498349209</PartialVolume>
@@ -210,8 +281,8 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.9</FracaoMolar>
               <FracaoMassica>0.908960884369435</FracaoMassica>
-              <MolarFlow>96.5896607781662</MolarFlow>
-              <MassFlow>13.7432598838214</MassFlow>
+              <MolarFlow>191.649341329606</MolarFlow>
+              <MassFlow>27.268826531083</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000212049690085977</PartialVolume>
@@ -227,11 +298,11 @@
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <compressibilityFactor>0</compressibilityFactor>
-            <density>668.41466087197</density>
+            <density>669.897183898702</density>
             <enthalpy>-171.849894109174</enthalpy>
-            <entropy>-0.264187181499215</entropy>
-            <molarflow>107.321845309074</molarflow>
-            <massflow>15.1197484073865</massflow>
+            <entropy>-0.264187181499214</entropy>
+            <molarflow>212.943712588452</molarflow>
+            <massflow>30</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
             <heatCapacityCp>2.52612235501895</heatCapacityCp>
@@ -239,10 +310,10 @@
             <molecularWeight>140.8823</molecularWeight>
             <thermalConductivity>0.115049071236854</thermalConductivity>
             <viscosity>0.000343214974892081</viscosity>
-            <kinematic_viscosity>5.13476132382172E-07</kinematic_viscosity>
+            <kinematic_viscosity>5.12339778612922E-07</kinematic_viscosity>
             <volumetric_flow>0</volumetric_flow>
             <molar_enthalpy>-24210.6083368568</molar_enthalpy>
-            <molar_entropy>-37.2192977601269</molar_entropy>
+            <molar_entropy>-37.2192977601267</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -260,7 +331,7 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>1.02164552885013</FugacityCoeff>
+              <FugacityCoeff>1.0210552088165</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -278,7 +349,7 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.0493258299329</FugacityCoeff>
+              <FugacityCoeff>0.0493208962342298</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -292,11 +363,11 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.100005153693729</FracaoMolar>
-              <FracaoMassica>0.0910438542250449</FracaoMassica>
+              <FracaoMolar>0.18654814336277</FracaoMolar>
+              <FracaoMassica>0.171307974842815</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.0232380703419793</FugacityCoeff>
+              <FugacityCoeff>0.0232369306825079</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -310,11 +381,11 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.899994846306271</FracaoMolar>
-              <FracaoMassica>0.908956145774955</FracaoMassica>
+              <FracaoMolar>0.81345185663723</FracaoMolar>
+              <FracaoMassica>0.828692025157185</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.0108745352483568</FugacityCoeff>
+              <FugacityCoeff>0.0108746245787706</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -353,7 +424,7 @@
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>1.02164556374077</FugacityCoeff>
-              <ActivityCoeff>9.81932324029402</ActivityCoeff>
+              <ActivityCoeff>9.81932324029404</ActivityCoeff>
               <PartialVolume>1.88286666740391E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
@@ -370,8 +441,8 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.0493258302300796</FugacityCoeff>
-              <ActivityCoeff>1.03978291392069</ActivityCoeff>
+              <FugacityCoeff>0.0493258302300799</FugacityCoeff>
+              <ActivityCoeff>1.0397829139207</ActivityCoeff>
               <PartialVolume>0.000179784677001828</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
@@ -386,13 +457,13 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.1</FracaoMolar>
               <FracaoMassica>0.0910391156305654</FracaoMassica>
-              <MolarFlow>10.7321845309074</MolarFlow>
-              <MassFlow>1.37648852356512</MassFlow>
-              <FugacityCoeff>0.023238070412366</FugacityCoeff>
+              <MolarFlow>21.2943712588452</MolarFlow>
+              <MassFlow>2.73117346891696</MassFlow>
+              <FugacityCoeff>0.0232380704123661</FugacityCoeff>
               <ActivityCoeff>1.07203765827588</ActivityCoeff>
               <PartialVolume>0.000195611498349209</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.00210297990853316</VolumetricFlow>
+              <VolumetricFlow>0.00416341429129745</VolumetricFlow>
               <VolumetricFraction>0.0929686503047923</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nNonano</Nome>
@@ -404,13 +475,13 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.9</FracaoMolar>
               <FracaoMassica>0.908960884369435</FracaoMassica>
-              <MolarFlow>96.5896607781662</MolarFlow>
-              <MassFlow>13.7432598838214</MassFlow>
+              <MolarFlow>191.649341329606</MolarFlow>
+              <MassFlow>27.268826531083</MassFlow>
               <FugacityCoeff>0.0108745352446969</FugacityCoeff>
-              <ActivityCoeff>1.0979942572105</ActivityCoeff>
+              <ActivityCoeff>1.09799425721049</ActivityCoeff>
               <PartialVolume>0.000212049690085977</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.020517332440185</VolumetricFlow>
+              <VolumetricFlow>0.0406195773693101</VolumetricFlow>
               <VolumetricFraction>0.907031349695208</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nDecano</Nome>
@@ -421,11 +492,11 @@
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <compressibilityFactor>0.0754748783511603</compressibilityFactor>
-            <density>668.41466087197</density>
+            <density>669.897183898702</density>
             <enthalpy>-171.849894109174</enthalpy>
-            <entropy>-0.264187181499215</entropy>
-            <molarflow>107.321845309074</molarflow>
-            <massflow>15.1197484073865</massflow>
+            <entropy>-0.264187181499214</entropy>
+            <molarflow>212.943712588452</molarflow>
+            <massflow>30</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
             <heatCapacityCp>2.52612235501895</heatCapacityCp>
@@ -433,10 +504,10 @@
             <molecularWeight>140.8823</molecularWeight>
             <thermalConductivity>0.115049071236854</thermalConductivity>
             <viscosity>0.000343214974892081</viscosity>
-            <kinematic_viscosity>5.13476132382172E-07</kinematic_viscosity>
-            <volumetric_flow>0.0226203123487182</volumetric_flow>
+            <kinematic_viscosity>5.12339778612922E-07</kinematic_viscosity>
+            <volumetric_flow>0.0447829916606075</volumetric_flow>
             <molar_enthalpy>-24210.6083368568</molar_enthalpy>
-            <molar_entropy>-37.2192977601269</molar_entropy>
+            <molar_entropy>-37.2192977601267</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -771,9 +842,10 @@
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
       <SpecType>Temperature_and_Pressure</SpecType>
-      <IsElectrolyteStream>false</IsElectrolyteStream>
-      <AtEquilibrium>true</AtEquilibrium>
       <CompositionBasis>Molar_Fractions</CompositionBasis>
+      <IsElectrolyteStream>false</IsElectrolyteStream>
+      <ReferenceSolvent></ReferenceSolvent>
+      <AtEquilibrium>true</AtEquilibrium>
       <ComponentDescription>MAT-43b02ad7-e095-420e-b8d7-5f40882c3ced</ComponentDescription>
       <ComponentName>water</ComponentName>
       <code>0</code>
@@ -788,9 +860,9 @@
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems>
-        <NodeItem ID="1837756403" Checked="true" Text="PROP_MS_0" />
-        <NodeItem ID="531845731" Checked="true" Text="PROP_MS_1" />
-        <NodeItem ID="983650394" Checked="true" Text="PROP_MS_3" />
+        <NodeItem ID="174221253" Checked="true" Text="PROP_MS_0" Value="304.261111111111" Unit="K" />
+        <NodeItem ID="1040282642" Checked="true" Text="PROP_MS_1" Value="606737.544643473" Unit="Pa" />
+        <NodeItem ID="1297806793" Checked="true" Text="PROP_MS_3" Value="3077.38426276717" Unit="mol/s" />
       </NodeItems>
       <PropertyPackage></PropertyPackage>
       <Phases>
@@ -1283,6 +1355,8 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -1299,6 +1373,8 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -1315,6 +1391,8 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -1331,6 +1409,8 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -1360,6 +1440,8 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -1376,6 +1458,8 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -1392,6 +1476,8 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -1408,6 +1494,8 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -1544,19 +1632,19 @@
         <Tube_ThermalConductivity>70</Tube_ThermalConductivity>
         <OverallFoulingFactor>0.000984586426947862</OverallFoulingFactor>
       </STProperties>
-      <LMTD_F>0.983501182401142</LMTD_F>
+      <LMTD_F>0.987113285067451</LMTD_F>
       <FlowDir>CounterCurrent</FlowDir>
       <DefinedTemperature>Cold_Fluid</DefinedTemperature>
       <CalculationMode>ShellandTube_Rating</CalculationMode>
-      <OverallCoefficient>337.831477147101</OverallCoefficient>
+      <OverallCoefficient>424.376255911168</OverallCoefficient>
       <Area>193.363662432594</Area>
       <DeltaP>0</DeltaP>
-      <Q>2155.90859347179</Q>
-      <HotSidePressureDrop>7256.22602126258</HotSidePressureDrop>
-      <ColdSidePressureDrop>25887.3191604242</ColdSidePressureDrop>
-      <HotSideOutletTemperature>318.394755484739</HotSideOutletTemperature>
-      <ColdSideOutletTemperature>311.563739939086</ColdSideOutletTemperature>
-      <LMTD>33.5567955433505</LMTD>
+      <Q>3384.35088048985</Q>
+      <HotSidePressureDrop>26543.2453470069</HotSidePressureDrop>
+      <ColdSidePressureDrop>25887.3191604241</ColdSidePressureDrop>
+      <HotSideOutletTemperature>331.194574472918</HotSideOutletTemperature>
+      <ColdSideOutletTemperature>315.761883753225</ColdSideOutletTemperature>
+      <LMTD>41.7813478567004</LMTD>
       <ScriptExt_FontName>Courier New</ScriptExt_FontName>
       <ScriptExt_FontSize>10</ScriptExt_FontSize>
       <ScriptExt_ScriptTextB></ScriptExt_ScriptTextB>
@@ -1567,6 +1655,7 @@
       <ComponentName>HE-70e691af-9074-4bf2-8c11-b33821ab3bb7</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
       <code>0</code>
+      <selectedReport></selectedReport>
       <IsAdjustAttached>false</IsAdjustAttached>
       <AttachedAdjustId></AttachedAdjustId>
       <AdjustVarType>Nenhum</AdjustVarType>
@@ -1578,17 +1667,18 @@
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems>
-        <NodeItem ID="551621648" Checked="true" Text="PROP_HX_0" />
-        <NodeItem ID="2006745787" Checked="true" Text="PROP_HX_1" />
+        <NodeItem ID="1279872275" Checked="true" Text="PROP_HX_0" Value="424.376255911168" Unit="W/[m2.K]" />
+        <NodeItem ID="1126742274" Checked="true" Text="PROP_HX_1" Value="193.363662432594" Unit="m2" />
       </NodeItems>
       <PropertyPackage></PropertyPackage>
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
       <SpecType>Temperature_and_Pressure</SpecType>
-      <IsElectrolyteStream>false</IsElectrolyteStream>
-      <AtEquilibrium>true</AtEquilibrium>
       <CompositionBasis>Molar_Fractions</CompositionBasis>
+      <IsElectrolyteStream>false</IsElectrolyteStream>
+      <ReferenceSolvent></ReferenceSolvent>
+      <AtEquilibrium>true</AtEquilibrium>
       <ComponentDescription>MAT-98dff685-1b51-48fc-aa6b-ee58791f1722</ComponentDescription>
       <ComponentName>gas-out</ComponentName>
       <code>0</code>
@@ -1603,10 +1693,10 @@
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems>
-        <NodeItem ID="1837756403" Checked="true" Text="PROP_MS_0" />
-        <NodeItem ID="531845731" Checked="true" Text="PROP_MS_1" />
+        <NodeItem ID="174221253" Checked="true" Text="PROP_MS_0" Value="331.194574472918" Unit="K" />
+        <NodeItem ID="1040282642" Checked="true" Text="PROP_MS_1" Value="1090405.41638302" Unit="Pa" />
       </NodeItems>
-      <PropertyPackage></PropertyPackage>
+      <PropertyPackage>3d4b62a7-0ebb-4f44-8e1d-c93c533c7519</PropertyPackage>
       <Phases>
         <Phase>
           <ID>0</ID>
@@ -1649,37 +1739,37 @@
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>9.69834654292639E-05</lnKvalue>
-              <Kvalue>1.00009698816848</Kvalue>
+              <lnKvalue>0.724235566535506</lnKvalue>
+              <Kvalue>2.06315335353641</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.1</FracaoMolar>
               <FracaoMassica>0.0910391156305654</FracaoMassica>
-              <MolarFlow>10.7321845309074</MolarFlow>
-              <MassFlow>1.37648852356512</MassFlow>
+              <MolarFlow>21.2943712588452</MolarFlow>
+              <MassFlow>2.73117346891696</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.00195605414693175</VolumetricFlow>
-              <VolumetricFraction>0.0925849809839246</VolumetricFraction>
+              <VolumetricFlow>0.00393234764369525</VolumetricFlow>
+              <VolumetricFraction>0.0926571575454251</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nNonano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-1.07765212307712E-05</lnKvalue>
-              <Kvalue>0.999989223536836</Kvalue>
+              <lnKvalue>-0.125708528761804</lnKvalue>
+              <Kvalue>0.881871849607066</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.9</FracaoMolar>
               <FracaoMassica>0.908960884369435</FracaoMassica>
-              <MolarFlow>96.5896607781662</MolarFlow>
-              <MassFlow>13.7432598838214</MassFlow>
+              <MolarFlow>191.649341329606</MolarFlow>
+              <MassFlow>27.2688265310831</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0191710674028516</VolumetricFlow>
-              <VolumetricFraction>0.907415019016075</VolumetricFraction>
+              <VolumetricFlow>0.0385074135994383</VolumetricFlow>
+              <VolumetricFraction>0.907342842454575</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nDecano</Nome>
             </Compound>
@@ -1688,24 +1778,24 @@
           <Nome>Mistura</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <density>715.655863093264</density>
-            <enthalpy>-314.32601511294</enthalpy>
-            <entropy>-0.679129559304094</entropy>
-            <molarflow>107.321845309074</molarflow>
-            <massflow>15.1197484073865</massflow>
-            <heatCapacityCp>2.28469106241428</heatCapacityCp>
-            <heatCapacityCv>1.91581089341887</heatCapacityCv>
+            <density>706.884278357098</density>
+            <enthalpy>-284.594028706513</enthalpy>
+            <entropy>-0.58690097186933</entropy>
+            <molarflow>212.943712588452</molarflow>
+            <massflow>30</massflow>
+            <heatCapacityCp>2.33996341528309</heatCapacityCp>
+            <heatCapacityCv>1.95269024145002</heatCapacityCv>
             <molecularWeight>140.8823</molecularWeight>
-            <pressure>1109692.43570877</pressure>
-            <temperature>318.394755484739</temperature>
-            <thermalConductivity>0.128653009884501</thermalConductivity>
-            <volumetric_flow>0.0211271215497833</volumetric_flow>
-            <molar_enthalpy>-44282.9719589457</molar_enthalpy>
-            <molar_entropy>-95.6773343127472</molar_entropy>
+            <pressure>1090405.41638302</pressure>
+            <temperature>331.194574472918</temperature>
+            <thermalConductivity>0.125689088000975</thermalConductivity>
+            <volumetric_flow>0.0424397612431336</volumetric_flow>
+            <molar_enthalpy>-40094.2613304396</molar_enthalpy>
+            <molar_entropy>-82.6839587891865</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
-            <surfaceTension>0.0212023151078829</surfaceTension>
+            <surfaceTension>0.0200906090692291</surfaceTension>
           </TPMProperties>
         </Phase>
         <Phase>
@@ -1722,7 +1812,7 @@
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>1.76486086596731E-05</PartialVolume>
+              <PartialVolume>1.78863113946783E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -1740,7 +1830,7 @@
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>0.000166282207286774</PartialVolume>
+              <PartialVolume>0.000168944287971546</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -1754,11 +1844,11 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.1</FracaoMolar>
               <FracaoMassica>0.0910391156305654</FracaoMassica>
-              <MolarFlow>10.7321845309074</MolarFlow>
-              <MassFlow>1.37648852356512</MassFlow>
+              <MolarFlow>21.2943712588452</MolarFlow>
+              <MassFlow>2.73117346891696</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>0.000182049511405247</PartialVolume>
+              <PartialVolume>0.00018475105312452</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -1772,11 +1862,11 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.9</FracaoMolar>
               <FracaoMassica>0.908960884369435</FracaoMassica>
-              <MolarFlow>96.5896607781662</MolarFlow>
-              <MassFlow>13.7432598838214</MassFlow>
+              <MolarFlow>191.649341329606</MolarFlow>
+              <MassFlow>27.268826531083</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>0.000198249650210956</PartialVolume>
+              <PartialVolume>0.000201018884058683</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -1791,25 +1881,25 @@
             <activity>0</activity>
             <activityCoefficient>0</activityCoefficient>
             <compressibilityFactor>0</compressibilityFactor>
-            <density>715.655863093264</density>
-            <enthalpy>-314.32601511294</enthalpy>
-            <entropy>-0.679129559304094</entropy>
-            <molarflow>107.321845309074</molarflow>
-            <massflow>15.1197484073865</massflow>
+            <density>706.884278357098</density>
+            <enthalpy>-284.594028706513</enthalpy>
+            <entropy>-0.58690097186933</entropy>
+            <molarflow>212.943712588452</molarflow>
+            <massflow>30</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
             <fugacity>0</fugacity>
             <fugacityCoefficient>0</fugacityCoefficient>
-            <heatCapacityCp>2.28469106241428</heatCapacityCp>
-            <heatCapacityCv>1.91581089341887</heatCapacityCv>
+            <heatCapacityCp>2.33996341528309</heatCapacityCp>
+            <heatCapacityCv>1.95269024145002</heatCapacityCv>
             <logFugacityCoefficient>0</logFugacityCoefficient>
             <molecularWeight>140.8823</molecularWeight>
-            <thermalConductivity>0.128653009884501</thermalConductivity>
-            <viscosity>0.000637466342253936</viscosity>
-            <kinematic_viscosity>8.90744246122191E-07</kinematic_viscosity>
+            <thermalConductivity>0.125689088000975</thermalConductivity>
+            <viscosity>0.000545265567034804</viscosity>
+            <kinematic_viscosity>7.71364682635297E-07</kinematic_viscosity>
             <volumetric_flow>0</volumetric_flow>
-            <molar_enthalpy>-44282.9719589457</molar_enthalpy>
-            <molar_entropy>-95.6773343127472</molar_entropy>
+            <molar_enthalpy>-40094.2613304396</molar_enthalpy>
+            <molar_entropy>-82.6839587891865</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -1827,7 +1917,7 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.277086824819747</FugacityCoeff>
+              <FugacityCoeff>0.394759107584061</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1845,7 +1935,7 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.00532571615491045</FugacityCoeff>
+              <FugacityCoeff>0.00958219126883527</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1859,11 +1949,11 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.100009698816848</FracaoMolar>
-              <FracaoMassica>0.091048033269677</FracaoMassica>
+              <FracaoMolar>0.206315335353641</FracaoMolar>
+              <FracaoMassica>0.189837144965651</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.00195262207264337</FugacityCoeff>
+              <FugacityCoeff>0.00374288467052198</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1877,11 +1967,11 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.899990301183152</FracaoMolar>
-              <FracaoMassica>0.908951966730323</FracaoMassica>
+              <FracaoMolar>0.793684664646359</FracaoMolar>
+              <FracaoMassica>0.810162855034349</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.00070466148255207</FugacityCoeff>
+              <FugacityCoeff>0.00144259113181692</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1919,9 +2009,9 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.277086873017106</FugacityCoeff>
-              <ActivityCoeff>31.6272784586933</ActivityCoeff>
-              <PartialVolume>1.76486086596731E-05</PartialVolume>
+              <FugacityCoeff>0.395391014569264</FugacityCoeff>
+              <ActivityCoeff>23.6700742627964</ActivityCoeff>
+              <PartialVolume>1.78863113946783E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -1937,9 +2027,9 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.00532571623343715</FugacityCoeff>
-              <ActivityCoeff>1.10363315668825</ActivityCoeff>
-              <PartialVolume>0.000166282207286774</PartialVolume>
+              <FugacityCoeff>0.00958354509718782</FugacityCoeff>
+              <ActivityCoeff>1.08719993344096</ActivityCoeff>
+              <PartialVolume>0.000168944287971546</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -1953,14 +2043,14 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.1</FracaoMolar>
               <FracaoMassica>0.0910391156305654</FracaoMassica>
-              <MolarFlow>10.7321845309074</MolarFlow>
-              <MassFlow>1.37648852356512</MassFlow>
-              <FugacityCoeff>0.00195262208856436</FugacityCoeff>
-              <ActivityCoeff>1.15052614135825</ActivityCoeff>
-              <PartialVolume>0.000182049511405247</PartialVolume>
+              <MolarFlow>21.2943712588452</MolarFlow>
+              <MassFlow>2.73117346891696</MassFlow>
+              <FugacityCoeff>0.00374316675839661</FugacityCoeff>
+              <ActivityCoeff>1.12724645815087</ActivityCoeff>
+              <PartialVolume>0.00018475105312452</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.00195605414693175</VolumetricFlow>
-              <VolumetricFraction>0.0925849809839246</VolumetricFraction>
+              <VolumetricFlow>0.00393234764369525</VolumetricFlow>
+              <VolumetricFraction>0.092657157545425</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nNonano</Nome>
             </Compound>
@@ -1971,14 +2061,14 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.9</FracaoMolar>
               <FracaoMassica>0.908960884369435</FracaoMassica>
-              <MolarFlow>96.5896607781662</MolarFlow>
-              <MassFlow>13.7432598838214</MassFlow>
-              <FugacityCoeff>0.000704661481913633</FugacityCoeff>
-              <ActivityCoeff>1.17928083073434</ActivityCoeff>
-              <PartialVolume>0.000198249650210956</PartialVolume>
+              <MolarFlow>191.649341329606</MolarFlow>
+              <MassFlow>27.268826531083</MassFlow>
+              <FugacityCoeff>0.00144257142235409</FugacityCoeff>
+              <ActivityCoeff>1.15392051373899</ActivityCoeff>
+              <PartialVolume>0.000201018884058683</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0191710674028516</VolumetricFlow>
-              <VolumetricFraction>0.907415019016075</VolumetricFraction>
+              <VolumetricFlow>0.0385074135994383</VolumetricFlow>
+              <VolumetricFraction>0.907342842454575</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nDecano</Nome>
             </Compound>
@@ -1987,23 +2077,23 @@
           <Nome>Líquido 1</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <compressibilityFactor>0.0827412930934472</compressibilityFactor>
-            <density>715.655863093264</density>
-            <enthalpy>-314.32601511294</enthalpy>
-            <entropy>-0.679129559304094</entropy>
-            <molarflow>107.321845309074</molarflow>
-            <massflow>15.1197484073865</massflow>
+            <compressibilityFactor>0.079295787250881</compressibilityFactor>
+            <density>706.884278357098</density>
+            <enthalpy>-284.594028706513</enthalpy>
+            <entropy>-0.58690097186933</entropy>
+            <molarflow>212.943712588452</molarflow>
+            <massflow>30</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
-            <heatCapacityCp>2.28469106241428</heatCapacityCp>
-            <heatCapacityCv>1.91581089341887</heatCapacityCv>
+            <heatCapacityCp>2.33996341528309</heatCapacityCp>
+            <heatCapacityCv>1.95269024145002</heatCapacityCv>
             <molecularWeight>140.8823</molecularWeight>
-            <thermalConductivity>0.128653009884501</thermalConductivity>
-            <viscosity>0.000637466342253936</viscosity>
-            <kinematic_viscosity>8.90744246122192E-07</kinematic_viscosity>
-            <volumetric_flow>0.0211271215497833</volumetric_flow>
-            <molar_enthalpy>-44282.9719589457</molar_enthalpy>
-            <molar_entropy>-95.6773343127472</molar_entropy>
+            <thermalConductivity>0.125689088000975</thermalConductivity>
+            <viscosity>0.000545265567034804</viscosity>
+            <kinematic_viscosity>7.71364682635297E-07</kinematic_viscosity>
+            <volumetric_flow>0.0424397612431336</volumetric_flow>
+            <molar_enthalpy>-40094.2613304396</molar_enthalpy>
+            <molar_entropy>-82.6839587891865</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -2338,9 +2428,10 @@
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
       <SpecType>Temperature_and_Pressure</SpecType>
-      <IsElectrolyteStream>false</IsElectrolyteStream>
-      <AtEquilibrium>true</AtEquilibrium>
       <CompositionBasis>Molar_Fractions</CompositionBasis>
+      <IsElectrolyteStream>false</IsElectrolyteStream>
+      <ReferenceSolvent></ReferenceSolvent>
+      <AtEquilibrium>true</AtEquilibrium>
       <ComponentDescription>MAT-2271699c-7470-4627-bb8b-14d581936ff5</ComponentDescription>
       <ComponentName>water-out</ComponentName>
       <code>0</code>
@@ -2355,18 +2446,18 @@
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems>
-        <NodeItem ID="1837756403" Checked="true" Text="PROP_MS_0" />
-        <NodeItem ID="531845731" Checked="true" Text="PROP_MS_1" />
+        <NodeItem ID="174221253" Checked="true" Text="PROP_MS_0" Value="315.720767358532" Unit="K" />
+        <NodeItem ID="1040282642" Checked="true" Text="PROP_MS_1" Value="580850.225483049" Unit="Pa" />
       </NodeItems>
-      <PropertyPackage></PropertyPackage>
+      <PropertyPackage>3d4b62a7-0ebb-4f44-8e1d-c93c533c7519</PropertyPackage>
       <Phases>
         <Phase>
           <ID>0</ID>
           <Compounds>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-Infinity</lnKvalue>
-              <Kvalue>0</Kvalue>
+              <lnKvalue>0</lnKvalue>
+              <Kvalue>1</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>1</FracaoMolar>
               <FracaoMassica>1</FracaoMassica>
@@ -2376,8 +2467,8 @@
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0539443597062121</VolumetricFlow>
-              <VolumetricFraction>1.00000001166354</VolumetricFraction>
+              <VolumetricFlow>0.0541677642999886</VolumetricFlow>
+              <VolumetricFraction>0.99999999999856</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -2440,24 +2531,24 @@
           <Nome>Mistura</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <density>1027.70850920613</density>
-            <enthalpy>-2561.49242414143</enthalpy>
-            <entropy>-6.86841091369792</entropy>
+            <density>1023.46992182881</density>
+            <enthalpy>-2539.33412797258</enthalpy>
+            <entropy>-6.79763601850647</entropy>
             <molarflow>3077.38426276717</molarflow>
             <massflow>55.4390774937505</massflow>
-            <heatCapacityCp>5.33284041578679</heatCapacityCp>
-            <heatCapacityCv>2.70688023467342</heatCapacityCv>
+            <heatCapacityCp>5.34146844042844</heatCapacityCp>
+            <heatCapacityCv>2.68448326160843</heatCapacityCv>
             <molecularWeight>18.015</molecularWeight>
             <pressure>580850.225483049</pressure>
-            <temperature>311.569520479865</temperature>
-            <thermalConductivity>0.300329282423102</thermalConductivity>
-            <volumetric_flow>0.0539443597062121</volumetric_flow>
-            <molar_enthalpy>-46145.2860209079</molar_enthalpy>
-            <molar_entropy>-123.734422610268</molar_entropy>
+            <temperature>315.720767358532</temperature>
+            <thermalConductivity>0.298253322666597</thermalConductivity>
+            <volumetric_flow>0.0541677642999886</volumetric_flow>
+            <molar_enthalpy>-45746.104315426</molar_enthalpy>
+            <molar_entropy>-122.459412873394</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
-            <surfaceTension>0.101511124048062</surfaceTension>
+            <surfaceTension>0.0999783707342997</surfaceTension>
           </TPMProperties>
         </Phase>
         <Phase>
@@ -2474,7 +2565,7 @@
               <MassFlow>55.4390774937505</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>1.7527495038257E-05</PartialVolume>
+              <PartialVolume>1.76018851319144E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -2492,7 +2583,7 @@
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>0.000165068819484146</PartialVolume>
+              <PartialVolume>0.000165896522855805</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -2510,7 +2601,7 @@
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>0.000180809884084942</PartialVolume>
+              <PartialVolume>0.000181652718104035</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -2528,7 +2619,7 @@
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>0.000196969913036946</PartialVolume>
+              <PartialVolume>0.000197836005529179</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -2543,25 +2634,25 @@
             <activity>0</activity>
             <activityCoefficient>0</activityCoefficient>
             <compressibilityFactor>0</compressibilityFactor>
-            <density>1027.70850920613</density>
-            <enthalpy>-2561.49242414143</enthalpy>
-            <entropy>-6.86841091369792</entropy>
+            <density>1023.46992182881</density>
+            <enthalpy>-2539.33412797258</enthalpy>
+            <entropy>-6.79763601850647</entropy>
             <molarflow>3077.38426276717</molarflow>
             <massflow>55.4390774937505</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
             <fugacity>0</fugacity>
             <fugacityCoefficient>0</fugacityCoefficient>
-            <heatCapacityCp>5.33284041578679</heatCapacityCp>
-            <heatCapacityCv>2.70688023467342</heatCapacityCv>
+            <heatCapacityCp>5.34146844042844</heatCapacityCp>
+            <heatCapacityCv>2.68448326160843</heatCapacityCv>
             <logFugacityCoefficient>0</logFugacityCoefficient>
             <molecularWeight>18.015</molecularWeight>
-            <thermalConductivity>0.300329282423102</thermalConductivity>
-            <viscosity>0.000691784777345365</viscosity>
-            <kinematic_viscosity>6.73133258261863E-07</kinematic_viscosity>
+            <thermalConductivity>0.298253322666597</thermalConductivity>
+            <viscosity>0.000639411915445272</viscosity>
+            <kinematic_viscosity>6.24749102839024E-07</kinematic_viscosity>
             <volumetric_flow>0</volumetric_flow>
-            <molar_enthalpy>-46145.2860209079</molar_enthalpy>
-            <molar_entropy>-123.734422610268</molar_entropy>
+            <molar_enthalpy>-45746.104315426</molar_enthalpy>
+            <molar_entropy>-122.459412873394</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -2575,14 +2666,14 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
+              <FracaoMolar>1</FracaoMolar>
+              <FracaoMassica>1</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>NaN</FugacityCoeff>
-              <ActivityCoeff>0</ActivityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
+              <ActivityCoeff>1</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
-              <PartialPressure>0</PartialPressure>
+              <PartialPressure>580850.225483049</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
@@ -2597,10 +2688,10 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>NaN</FugacityCoeff>
-              <ActivityCoeff>0</ActivityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
+              <ActivityCoeff>1</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
-              <PartialPressure>0</PartialPressure>
+              <PartialPressure>580850.225483049</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
@@ -2615,10 +2706,10 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>NaN</FugacityCoeff>
-              <ActivityCoeff>0</ActivityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
+              <ActivityCoeff>1</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
-              <PartialPressure>0</PartialPressure>
+              <PartialPressure>580850.225483049</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
@@ -2633,10 +2724,10 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>NaN</FugacityCoeff>
-              <ActivityCoeff>0</ActivityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
+              <ActivityCoeff>1</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
-              <PartialPressure>0</PartialPressure>
+              <PartialPressure>580850.225483049</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
@@ -2671,11 +2762,11 @@
               <FracaoMassica>1</FracaoMassica>
               <MolarFlow>3077.38426276717</MolarFlow>
               <MassFlow>55.4390774937505</MassFlow>
-              <FugacityCoeff>0.010152687197066</FugacityCoeff>
-              <ActivityCoeff>0.86859172048701</ActivityCoeff>
-              <PartialVolume>1.7527495038257E-05</PartialVolume>
-              <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0539443597062121</VolumetricFlow>
+              <FugacityCoeff>0.0127580489324042</FugacityCoeff>
+              <ActivityCoeff>0.875509559400781</ActivityCoeff>
+              <PartialVolume>1.76018851319144E-05</PartialVolume>
+              <PartialPressure>580850.225483049</PartialPressure>
+              <VolumetricFlow>0.0541677642999886</VolumetricFlow>
               <VolumetricFraction>1</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
@@ -2689,10 +2780,10 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>4283063548333.92</FugacityCoeff>
-              <ActivityCoeff>650099387107207</ActivityCoeff>
-              <PartialVolume>0.000165068819484146</PartialVolume>
-              <PartialPressure>0</PartialPressure>
+              <FugacityCoeff>2313919494723.34</FugacityCoeff>
+              <ActivityCoeff>285699399154314</ActivityCoeff>
+              <PartialVolume>0.000165896522855805</PartialVolume>
+              <PartialPressure>580850.225483049</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
@@ -2707,10 +2798,10 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>245018375923758</FugacityCoeff>
-              <ActivityCoeff>1.10050958358183E+17</ActivityCoeff>
-              <PartialVolume>0.000180809884084942</PartialVolume>
-              <PartialPressure>0</PartialPressure>
+              <FugacityCoeff>119284823333239</FugacityCoeff>
+              <ActivityCoeff>4.25251168364928E+16</ActivityCoeff>
+              <PartialVolume>0.000181652718104035</PartialVolume>
+              <PartialPressure>580850.225483049</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
@@ -2725,10 +2816,10 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>2.04022697174488E+16</FugacityCoeff>
-              <ActivityCoeff>2.70496188455484E+19</ActivityCoeff>
-              <PartialVolume>0.000196969913036946</PartialVolume>
-              <PartialPressure>0</PartialPressure>
+              <FugacityCoeff>8.88519000453927E+15</FugacityCoeff>
+              <ActivityCoeff>9.13133349230374E+18</ActivityCoeff>
+              <PartialVolume>0.000197836005529179</PartialVolume>
+              <PartialPressure>580850.225483049</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
@@ -2739,23 +2830,23 @@
           <Nome>Líquido 1</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <compressibilityFactor>0.00473780875465277</compressibilityFactor>
-            <density>1027.70850920613</density>
-            <enthalpy>-2561.49242414143</enthalpy>
-            <entropy>-6.86841091369792</entropy>
+            <compressibilityFactor>0.00469583994074461</compressibilityFactor>
+            <density>1023.46992182881</density>
+            <enthalpy>-2539.33412797258</enthalpy>
+            <entropy>-6.79763601850647</entropy>
             <molarflow>3077.38426276717</molarflow>
             <massflow>55.4390774937505</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
-            <heatCapacityCp>5.33284041578679</heatCapacityCp>
-            <heatCapacityCv>2.70688023467342</heatCapacityCv>
+            <heatCapacityCp>5.34146844042844</heatCapacityCp>
+            <heatCapacityCv>2.68448326160843</heatCapacityCv>
             <molecularWeight>18.015</molecularWeight>
-            <thermalConductivity>0.300329282423102</thermalConductivity>
-            <viscosity>0.000691784777345365</viscosity>
-            <kinematic_viscosity>6.73133258261863E-07</kinematic_viscosity>
-            <volumetric_flow>0.0539443597062121</volumetric_flow>
-            <molar_enthalpy>-46145.2860209079</molar_enthalpy>
-            <molar_entropy>-123.734422610268</molar_entropy>
+            <thermalConductivity>0.298253322666597</thermalConductivity>
+            <viscosity>0.000639411915445272</viscosity>
+            <kinematic_viscosity>6.24749102839024E-07</kinematic_viscosity>
+            <volumetric_flow>0.0541677642999886</volumetric_flow>
+            <molar_enthalpy>-45746.104315426</molar_enthalpy>
+            <molar_entropy>-122.459412873394</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -2769,8 +2860,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
@@ -2787,8 +2876,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
@@ -2805,8 +2892,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
@@ -2823,8 +2908,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
@@ -3008,8 +3091,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
@@ -3026,8 +3107,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
@@ -3044,8 +3123,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
@@ -3062,8 +3139,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
@@ -3132,13 +3207,18 @@
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.MaterialStreamGraphic</Type>
-      <LineWidth>2</LineWidth>
       <GradientMode>true</GradientMode>
-      <LineColor>SteelBlue</LineColor>
-      <Fill>true</Fill>
-      <FillColor>WhiteSmoke</FillColor>
       <GradientColor1>LightGrey</GradientColor1>
       <GradientColor2>White</GradientColor2>
+      <FillColor>WhiteSmoke</FillColor>
+      <LineWidth>2</LineWidth>
+      <Width>20</Width>
+      <Height>20</Height>
+      <Rotation>0</Rotation>
+      <X>5061</X>
+      <Y>3610</Y>
+      <LineColor>SteelBlue</LineColor>
+      <Fill>true</Fill>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -3154,12 +3234,7 @@
       <Tag>water</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
-      <X>5061</X>
-      <Y>3610</Y>
       <Name>MAT-43b02ad7-e095-420e-b8d7-5f40882c3ced</Name>
-      <Height>20</Height>
-      <Width>20</Width>
-      <Rotation>0</Rotation>
       <InputConnectors>
         <Connector IsAttached="False" />
       </InputConnectors>
@@ -3180,8 +3255,8 @@
       <FillColor>WhiteSmoke</FillColor>
       <GradientColor1>LightGrey</GradientColor1>
       <GradientColor2>White</GradientColor2>
-      <MixPoint>false</MixPoint>
-      <SplitPoint>false</SplitPoint>
+      <MixPoint>true</MixPoint>
+      <SplitPoint>true</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
       <Status>Calculated</Status>
       <Description>HeatExchanger</Description>
@@ -3216,13 +3291,18 @@
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.MaterialStreamGraphic</Type>
-      <LineWidth>2</LineWidth>
       <GradientMode>true</GradientMode>
-      <LineColor>SteelBlue</LineColor>
-      <Fill>true</Fill>
-      <FillColor>WhiteSmoke</FillColor>
       <GradientColor1>LightGrey</GradientColor1>
       <GradientColor2>White</GradientColor2>
+      <FillColor>WhiteSmoke</FillColor>
+      <LineWidth>2</LineWidth>
+      <Width>20</Width>
+      <Height>20</Height>
+      <Rotation>0</Rotation>
+      <X>5230</X>
+      <Y>3610</Y>
+      <LineColor>SteelBlue</LineColor>
+      <Fill>true</Fill>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -3238,12 +3318,7 @@
       <Tag>gas-out</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
-      <X>5230</X>
-      <Y>3610</Y>
       <Name>MAT-98dff685-1b51-48fc-aa6b-ee58791f1722</Name>
-      <Height>20</Height>
-      <Width>20</Width>
-      <Rotation>0</Rotation>
       <InputConnectors>
         <Connector IsAttached="True" ConnType="ConIn" AttachedFromObjID="HE-70e691af-9074-4bf2-8c11-b33821ab3bb7" AttachedFromConnIndex="0" AttachedFromEnergyConn="False" />
       </InputConnectors>
@@ -3257,13 +3332,18 @@
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.MaterialStreamGraphic</Type>
-      <LineWidth>2</LineWidth>
       <GradientMode>true</GradientMode>
-      <LineColor>SteelBlue</LineColor>
-      <Fill>true</Fill>
-      <FillColor>WhiteSmoke</FillColor>
       <GradientColor1>LightGrey</GradientColor1>
       <GradientColor2>White</GradientColor2>
+      <FillColor>WhiteSmoke</FillColor>
+      <LineWidth>2</LineWidth>
+      <Width>20</Width>
+      <Height>20</Height>
+      <Rotation>0</Rotation>
+      <X>5230</X>
+      <Y>3706</Y>
+      <LineColor>SteelBlue</LineColor>
+      <Fill>true</Fill>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -3279,18 +3359,52 @@
       <Tag>water-out</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
-      <X>5230</X>
-      <Y>3706</Y>
       <Name>MAT-2271699c-7470-4627-bb8b-14d581936ff5</Name>
-      <Height>20</Height>
-      <Width>20</Width>
-      <Rotation>0</Rotation>
       <InputConnectors>
         <Connector IsAttached="True" ConnType="ConIn" AttachedFromObjID="HE-70e691af-9074-4bf2-8c11-b33821ab3bb7" AttachedFromConnIndex="1" AttachedFromEnergyConn="False" />
       </InputConnectors>
       <OutputConnectors>
         <Connector IsAttached="False" />
       </OutputConnectors>
+      <EnergyConnector>
+        <Connector IsAttached="False" />
+      </EnergyConnector>
+      <SpecialConnectors />
+    </GraphicObject>
+    <GraphicObject>
+      <Type>Microsoft.MSDN.Samples.GraphicObjects.TextGraphic</Type>
+      <Font>[Font: Name=Arial, Size=10, Units=2, GdiCharSet=1, GdiVerticalFont=False]</Font>
+      <Text>SHELL AND TUBE HX RATING / DESIGN
+
+This example shows how to use the Shell and Tube model in DWSIM to rate / design
+a heat exchanger required to cool gasoline from 219 to 100 F using water @ 88 F.
+
+Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. internal shell diameter. </Text>
+      <Color>Black</Color>
+      <TextRenderStyle>Default</TextRenderStyle>
+      <MixPoint>false</MixPoint>
+      <SplitPoint>false</SplitPoint>
+      <ShapeOverride>DefaultShape</ShapeOverride>
+      <Status>ErrorCalculating</Status>
+      <Description></Description>
+      <Shape>0</Shape>
+      <FlippedH>false</FlippedH>
+      <FlippedV>false</FlippedV>
+      <TipoObjeto>GO_Texto</TipoObjeto>
+      <IsEnergyStream>false</IsEnergyStream>
+      <Active>true</Active>
+      <Calculated>false</Calculated>
+      <Tag>LABEL-d2cce595-b69f-4e54-b7b1-2541a516cb73</Tag>
+      <AutoSize>true</AutoSize>
+      <IsConnector>false</IsConnector>
+      <X>5021</X>
+      <Y>3513</Y>
+      <Name></Name>
+      <Height>70</Height>
+      <Width>440</Width>
+      <Rotation>0</Rotation>
+      <InputConnectors />
+      <OutputConnectors />
       <EnergyConnector>
         <Connector IsAttached="False" />
       </EnergyConnector>
@@ -3323,7 +3437,7 @@
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
-      <Status>NotCalculated</Status>
+      <Status>ErrorCalculating</Status>
       <Description></Description>
       <Shape>0</Shape>
       <FlippedH>false</FlippedH>
@@ -3348,45 +3462,6 @@
       </EnergyConnector>
       <SpecialConnectors />
       <Owner>MAT-98dff685-1b51-48fc-aa6b-ee58791f1722</Owner>
-    </GraphicObject>
-    <GraphicObject>
-      <Type>Microsoft.MSDN.Samples.GraphicObjects.TextGraphic</Type>
-      <Font>[Font: Name=Arial, Size=10, Units=2, GdiCharSet=1, GdiVerticalFont=False]</Font>
-      <Text>SHELL AND TUBE HX RATING / DESIGN
-
-This example shows how to use the Shell and Tube model in DWSIM to rate / design
-a heat exchanger required to cool gasoline from 219 to 100 F using water @ 88 F.
-
-Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. internal shell diameter. </Text>
-      <Color>Black</Color>
-      <TextRenderStyle>Default</TextRenderStyle>
-      <MixPoint>false</MixPoint>
-      <SplitPoint>false</SplitPoint>
-      <ShapeOverride>DefaultShape</ShapeOverride>
-      <Status>NotCalculated</Status>
-      <Description></Description>
-      <Shape>0</Shape>
-      <FlippedH>false</FlippedH>
-      <FlippedV>false</FlippedV>
-      <TipoObjeto>GO_Texto</TipoObjeto>
-      <IsEnergyStream>false</IsEnergyStream>
-      <Active>true</Active>
-      <Calculated>false</Calculated>
-      <Tag>LABEL-d2cce595-b69f-4e54-b7b1-2541a516cb73</Tag>
-      <AutoSize>true</AutoSize>
-      <IsConnector>false</IsConnector>
-      <X>5021</X>
-      <Y>3513</Y>
-      <Name></Name>
-      <Height>70</Height>
-      <Width>440</Width>
-      <Rotation>0</Rotation>
-      <InputConnectors />
-      <OutputConnectors />
-      <EnergyConnector>
-        <Connector IsAttached="False" />
-      </EnergyConnector>
-      <SpecialConnectors />
     </GraphicObject>
     <GraphicObject>
       <Type>DWSIM.DWSIM.GraphicObjects.TableGraphic</Type>
@@ -3415,7 +3490,7 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
-      <Status>NotCalculated</Status>
+      <Status>ErrorCalculating</Status>
       <Description></Description>
       <Shape>0</Shape>
       <FlippedH>false</FlippedH>
@@ -3468,7 +3543,7 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
-      <Status>NotCalculated</Status>
+      <Status>ErrorCalculating</Status>
       <Description></Description>
       <Shape>0</Shape>
       <FlippedH>false</FlippedH>
@@ -3521,7 +3596,7 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
-      <Status>NotCalculated</Status>
+      <Status>ErrorCalculating</Status>
       <Description></Description>
       <Shape>0</Shape>
       <FlippedH>false</FlippedH>
@@ -3574,7 +3649,7 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
-      <Status>NotCalculated</Status>
+      <Status>ErrorCalculating</Status>
       <Description></Description>
       <Shape>0</Shape>
       <FlippedH>false</FlippedH>
@@ -3603,10 +3678,10 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
   </GraphicObjects>
   <PropertyPackages>
     <PropertyPackage>
-      <ID>PP-5f517980-eb7c-440a-9dc1-ed32b7b132e5</ID>
+      <ID>3d4b62a7-0ebb-4f44-8e1d-c93c533c7519</ID>
       <Type>DWSIM.DWSIM.SimulationObjects.PropertyPackages.PengRobinsonLKPropertyPackage</Type>
-      <ComponentName />
-      <ComponentDescription />
+      <ComponentName></ComponentName>
+      <ComponentDescription></ComponentDescription>
       <Tag>PP_2</Tag>
       <IOQUick>true</IOQUick>
       <TPSeverity>0</TPSeverity>
@@ -3637,6 +3712,9 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <Name>Agua</Name>
       <CAS_Number>7732-18-5</CAS_Number>
       <Formula>H2O</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>18.015</Molar_Weight>
       <Critical_Temperature>647.13</Critical_Temperature>
       <Critical_Pressure>22055000</Critical_Pressure>
@@ -3691,6 +3769,20 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <Liquid_Thermal_Conductivity_Const_E>0</Liquid_Thermal_Conductivity_Const_E>
       <Liquid_Thermal_Conductivity_Tmin>0</Liquid_Thermal_Conductivity_Tmin>
       <Liquid_Thermal_Conductivity_Tmax>0</Liquid_Thermal_Conductivity_Tmax>
+      <Vapor_Thermal_Conductivity_Const_A>0</Vapor_Thermal_Conductivity_Const_A>
+      <Vapor_Thermal_Conductivity_Const_B>0</Vapor_Thermal_Conductivity_Const_B>
+      <Vapor_Thermal_Conductivity_Const_C>0</Vapor_Thermal_Conductivity_Const_C>
+      <Vapor_Thermal_Conductivity_Const_D>0</Vapor_Thermal_Conductivity_Const_D>
+      <Vapor_Thermal_Conductivity_Const_E>0</Vapor_Thermal_Conductivity_Const_E>
+      <Vapor_Thermal_Conductivity_Tmin>0</Vapor_Thermal_Conductivity_Tmin>
+      <Vapor_Thermal_Conductivity_Tmax>0</Vapor_Thermal_Conductivity_Tmax>
+      <Vapor_Viscosity_Const_A>0</Vapor_Viscosity_Const_A>
+      <Vapor_Viscosity_Const_B>0</Vapor_Viscosity_Const_B>
+      <Vapor_Viscosity_Const_C>0</Vapor_Viscosity_Const_C>
+      <Vapor_Viscosity_Const_D>0</Vapor_Viscosity_Const_D>
+      <Vapor_Viscosity_Const_E>0</Vapor_Viscosity_Const_E>
+      <Vapor_Viscosity_Tmin>0</Vapor_Viscosity_Tmin>
+      <Vapor_Viscosity_Tmax>0</Vapor_Viscosity_Tmax>
       <Solid_Density_Const_A>0</Solid_Density_Const_A>
       <Solid_Density_Const_B>0</Solid_Density_Const_B>
       <Solid_Density_Const_C>0</Solid_Density_Const_C>
@@ -3698,6 +3790,13 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <Solid_Density_Const_E>0</Solid_Density_Const_E>
       <Solid_Density_Tmin>0</Solid_Density_Tmin>
       <Solid_Density_Tmax>0</Solid_Density_Tmax>
+      <Surface_Tension_Const_A>0</Surface_Tension_Const_A>
+      <Surface_Tension_Const_B>0</Surface_Tension_Const_B>
+      <Surface_Tension_Const_C>0</Surface_Tension_Const_C>
+      <Surface_Tension_Const_D>0</Surface_Tension_Const_D>
+      <Surface_Tension_Const_E>0</Surface_Tension_Const_E>
+      <Surface_Tension_Tmin>0</Surface_Tension_Tmin>
+      <Surface_Tension_Tmax>0</Surface_Tension_Tmax>
       <Solid_Heat_Capacity_Const_A>0</Solid_Heat_Capacity_Const_A>
       <Solid_Heat_Capacity_Const_B>0</Solid_Heat_Capacity_Const_B>
       <Solid_Heat_Capacity_Const_C>0</Solid_Heat_Capacity_Const_C>
@@ -3717,10 +3816,20 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <HVap_TMAX>647</HVap_TMAX>
       <UNIQUAC_R>0.92</UNIQUAC_R>
       <UNIQUAC_Q>1.4</UNIQUAC_Q>
+      <IsFPROPSSupported>false</IsFPROPSSupported>
+      <IsCOOLPROPSupported>false</IsCOOLPROPSupported>
       <VaporPressureEquation></VaporPressureEquation>
       <IdealgasCpEquation></IdealgasCpEquation>
       <LiquidViscosityEquation></LiquidViscosityEquation>
+      <VaporViscosityEquation></VaporViscosityEquation>
       <VaporizationEnthalpyEquation></VaporizationEnthalpyEquation>
+      <LiquidDensityEquation></LiquidDensityEquation>
+      <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
+      <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <VaporThermalConductivityEquation></VaporThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
+      <SurfaceTensionEquation></SurfaceTensionEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
@@ -3732,6 +3841,8 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -3765,8 +3876,11 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
     <Compound>
       <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.ConstantProperties</Type>
       <Name>nOctano</Name>
-      <CAS_Number>-</CAS_Number>
+      <CAS_Number>111-65-9</CAS_Number>
       <Formula>C8H18</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>114.231</Molar_Weight>
       <Critical_Temperature>568.7</Critical_Temperature>
       <Critical_Pressure>2490000</Critical_Pressure>
@@ -3821,6 +3935,20 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <Liquid_Thermal_Conductivity_Const_E>0</Liquid_Thermal_Conductivity_Const_E>
       <Liquid_Thermal_Conductivity_Tmin>0</Liquid_Thermal_Conductivity_Tmin>
       <Liquid_Thermal_Conductivity_Tmax>0</Liquid_Thermal_Conductivity_Tmax>
+      <Vapor_Thermal_Conductivity_Const_A>0</Vapor_Thermal_Conductivity_Const_A>
+      <Vapor_Thermal_Conductivity_Const_B>0</Vapor_Thermal_Conductivity_Const_B>
+      <Vapor_Thermal_Conductivity_Const_C>0</Vapor_Thermal_Conductivity_Const_C>
+      <Vapor_Thermal_Conductivity_Const_D>0</Vapor_Thermal_Conductivity_Const_D>
+      <Vapor_Thermal_Conductivity_Const_E>0</Vapor_Thermal_Conductivity_Const_E>
+      <Vapor_Thermal_Conductivity_Tmin>0</Vapor_Thermal_Conductivity_Tmin>
+      <Vapor_Thermal_Conductivity_Tmax>0</Vapor_Thermal_Conductivity_Tmax>
+      <Vapor_Viscosity_Const_A>0</Vapor_Viscosity_Const_A>
+      <Vapor_Viscosity_Const_B>0</Vapor_Viscosity_Const_B>
+      <Vapor_Viscosity_Const_C>0</Vapor_Viscosity_Const_C>
+      <Vapor_Viscosity_Const_D>0</Vapor_Viscosity_Const_D>
+      <Vapor_Viscosity_Const_E>0</Vapor_Viscosity_Const_E>
+      <Vapor_Viscosity_Tmin>0</Vapor_Viscosity_Tmin>
+      <Vapor_Viscosity_Tmax>0</Vapor_Viscosity_Tmax>
       <Solid_Density_Const_A>0</Solid_Density_Const_A>
       <Solid_Density_Const_B>0</Solid_Density_Const_B>
       <Solid_Density_Const_C>0</Solid_Density_Const_C>
@@ -3828,6 +3956,13 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <Solid_Density_Const_E>0</Solid_Density_Const_E>
       <Solid_Density_Tmin>0</Solid_Density_Tmin>
       <Solid_Density_Tmax>0</Solid_Density_Tmax>
+      <Surface_Tension_Const_A>0</Surface_Tension_Const_A>
+      <Surface_Tension_Const_B>0</Surface_Tension_Const_B>
+      <Surface_Tension_Const_C>0</Surface_Tension_Const_C>
+      <Surface_Tension_Const_D>0</Surface_Tension_Const_D>
+      <Surface_Tension_Const_E>0</Surface_Tension_Const_E>
+      <Surface_Tension_Tmin>0</Surface_Tension_Tmin>
+      <Surface_Tension_Tmax>0</Surface_Tension_Tmax>
       <Solid_Heat_Capacity_Const_A>0</Solid_Heat_Capacity_Const_A>
       <Solid_Heat_Capacity_Const_B>0</Solid_Heat_Capacity_Const_B>
       <Solid_Heat_Capacity_Const_C>0</Solid_Heat_Capacity_Const_C>
@@ -3847,10 +3982,20 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <HVap_TMAX>569</HVap_TMAX>
       <UNIQUAC_R>5.8486</UNIQUAC_R>
       <UNIQUAC_Q>4.936</UNIQUAC_Q>
+      <IsFPROPSSupported>false</IsFPROPSSupported>
+      <IsCOOLPROPSupported>false</IsCOOLPROPSupported>
       <VaporPressureEquation></VaporPressureEquation>
       <IdealgasCpEquation></IdealgasCpEquation>
       <LiquidViscosityEquation></LiquidViscosityEquation>
+      <VaporViscosityEquation></VaporViscosityEquation>
       <VaporizationEnthalpyEquation></VaporizationEnthalpyEquation>
+      <LiquidDensityEquation></LiquidDensityEquation>
+      <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
+      <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <VaporThermalConductivityEquation></VaporThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
+      <SurfaceTensionEquation></SurfaceTensionEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
@@ -3862,6 +4007,8 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -3897,8 +4044,11 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
     <Compound>
       <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.ConstantProperties</Type>
       <Name>nNonano</Name>
-      <CAS_Number>-</CAS_Number>
+      <CAS_Number>111-84-2</CAS_Number>
       <Formula>C9H20</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>128.258</Molar_Weight>
       <Critical_Temperature>594.6</Critical_Temperature>
       <Critical_Pressure>2290000</Critical_Pressure>
@@ -3953,6 +4103,20 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <Liquid_Thermal_Conductivity_Const_E>0</Liquid_Thermal_Conductivity_Const_E>
       <Liquid_Thermal_Conductivity_Tmin>0</Liquid_Thermal_Conductivity_Tmin>
       <Liquid_Thermal_Conductivity_Tmax>0</Liquid_Thermal_Conductivity_Tmax>
+      <Vapor_Thermal_Conductivity_Const_A>0</Vapor_Thermal_Conductivity_Const_A>
+      <Vapor_Thermal_Conductivity_Const_B>0</Vapor_Thermal_Conductivity_Const_B>
+      <Vapor_Thermal_Conductivity_Const_C>0</Vapor_Thermal_Conductivity_Const_C>
+      <Vapor_Thermal_Conductivity_Const_D>0</Vapor_Thermal_Conductivity_Const_D>
+      <Vapor_Thermal_Conductivity_Const_E>0</Vapor_Thermal_Conductivity_Const_E>
+      <Vapor_Thermal_Conductivity_Tmin>0</Vapor_Thermal_Conductivity_Tmin>
+      <Vapor_Thermal_Conductivity_Tmax>0</Vapor_Thermal_Conductivity_Tmax>
+      <Vapor_Viscosity_Const_A>0</Vapor_Viscosity_Const_A>
+      <Vapor_Viscosity_Const_B>0</Vapor_Viscosity_Const_B>
+      <Vapor_Viscosity_Const_C>0</Vapor_Viscosity_Const_C>
+      <Vapor_Viscosity_Const_D>0</Vapor_Viscosity_Const_D>
+      <Vapor_Viscosity_Const_E>0</Vapor_Viscosity_Const_E>
+      <Vapor_Viscosity_Tmin>0</Vapor_Viscosity_Tmin>
+      <Vapor_Viscosity_Tmax>0</Vapor_Viscosity_Tmax>
       <Solid_Density_Const_A>0</Solid_Density_Const_A>
       <Solid_Density_Const_B>0</Solid_Density_Const_B>
       <Solid_Density_Const_C>0</Solid_Density_Const_C>
@@ -3960,6 +4124,13 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <Solid_Density_Const_E>0</Solid_Density_Const_E>
       <Solid_Density_Tmin>0</Solid_Density_Tmin>
       <Solid_Density_Tmax>0</Solid_Density_Tmax>
+      <Surface_Tension_Const_A>0</Surface_Tension_Const_A>
+      <Surface_Tension_Const_B>0</Surface_Tension_Const_B>
+      <Surface_Tension_Const_C>0</Surface_Tension_Const_C>
+      <Surface_Tension_Const_D>0</Surface_Tension_Const_D>
+      <Surface_Tension_Const_E>0</Surface_Tension_Const_E>
+      <Surface_Tension_Tmin>0</Surface_Tension_Tmin>
+      <Surface_Tension_Tmax>0</Surface_Tension_Tmax>
       <Solid_Heat_Capacity_Const_A>0</Solid_Heat_Capacity_Const_A>
       <Solid_Heat_Capacity_Const_B>0</Solid_Heat_Capacity_Const_B>
       <Solid_Heat_Capacity_Const_C>0</Solid_Heat_Capacity_Const_C>
@@ -3979,10 +4150,20 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <HVap_TMAX>594</HVap_TMAX>
       <UNIQUAC_R>6.523</UNIQUAC_R>
       <UNIQUAC_Q>5.476</UNIQUAC_Q>
+      <IsFPROPSSupported>false</IsFPROPSSupported>
+      <IsCOOLPROPSupported>false</IsCOOLPROPSupported>
       <VaporPressureEquation></VaporPressureEquation>
       <IdealgasCpEquation></IdealgasCpEquation>
       <LiquidViscosityEquation></LiquidViscosityEquation>
+      <VaporViscosityEquation></VaporViscosityEquation>
       <VaporizationEnthalpyEquation></VaporizationEnthalpyEquation>
+      <LiquidDensityEquation></LiquidDensityEquation>
+      <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
+      <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <VaporThermalConductivityEquation></VaporThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
+      <SurfaceTensionEquation></SurfaceTensionEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
@@ -3994,6 +4175,8 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -4029,8 +4212,11 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
     <Compound>
       <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.ConstantProperties</Type>
       <Name>nDecano</Name>
-      <CAS_Number>-</CAS_Number>
+      <CAS_Number>124-18-5</CAS_Number>
       <Formula>C10H22</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>142.285</Molar_Weight>
       <Critical_Temperature>617.7</Critical_Temperature>
       <Critical_Pressure>2110000</Critical_Pressure>
@@ -4085,6 +4271,20 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <Liquid_Thermal_Conductivity_Const_E>0</Liquid_Thermal_Conductivity_Const_E>
       <Liquid_Thermal_Conductivity_Tmin>0</Liquid_Thermal_Conductivity_Tmin>
       <Liquid_Thermal_Conductivity_Tmax>0</Liquid_Thermal_Conductivity_Tmax>
+      <Vapor_Thermal_Conductivity_Const_A>0</Vapor_Thermal_Conductivity_Const_A>
+      <Vapor_Thermal_Conductivity_Const_B>0</Vapor_Thermal_Conductivity_Const_B>
+      <Vapor_Thermal_Conductivity_Const_C>0</Vapor_Thermal_Conductivity_Const_C>
+      <Vapor_Thermal_Conductivity_Const_D>0</Vapor_Thermal_Conductivity_Const_D>
+      <Vapor_Thermal_Conductivity_Const_E>0</Vapor_Thermal_Conductivity_Const_E>
+      <Vapor_Thermal_Conductivity_Tmin>0</Vapor_Thermal_Conductivity_Tmin>
+      <Vapor_Thermal_Conductivity_Tmax>0</Vapor_Thermal_Conductivity_Tmax>
+      <Vapor_Viscosity_Const_A>0</Vapor_Viscosity_Const_A>
+      <Vapor_Viscosity_Const_B>0</Vapor_Viscosity_Const_B>
+      <Vapor_Viscosity_Const_C>0</Vapor_Viscosity_Const_C>
+      <Vapor_Viscosity_Const_D>0</Vapor_Viscosity_Const_D>
+      <Vapor_Viscosity_Const_E>0</Vapor_Viscosity_Const_E>
+      <Vapor_Viscosity_Tmin>0</Vapor_Viscosity_Tmin>
+      <Vapor_Viscosity_Tmax>0</Vapor_Viscosity_Tmax>
       <Solid_Density_Const_A>0</Solid_Density_Const_A>
       <Solid_Density_Const_B>0</Solid_Density_Const_B>
       <Solid_Density_Const_C>0</Solid_Density_Const_C>
@@ -4092,6 +4292,13 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <Solid_Density_Const_E>0</Solid_Density_Const_E>
       <Solid_Density_Tmin>0</Solid_Density_Tmin>
       <Solid_Density_Tmax>0</Solid_Density_Tmax>
+      <Surface_Tension_Const_A>0</Surface_Tension_Const_A>
+      <Surface_Tension_Const_B>0</Surface_Tension_Const_B>
+      <Surface_Tension_Const_C>0</Surface_Tension_Const_C>
+      <Surface_Tension_Const_D>0</Surface_Tension_Const_D>
+      <Surface_Tension_Const_E>0</Surface_Tension_Const_E>
+      <Surface_Tension_Tmin>0</Surface_Tension_Tmin>
+      <Surface_Tension_Tmax>0</Surface_Tension_Tmax>
       <Solid_Heat_Capacity_Const_A>0</Solid_Heat_Capacity_Const_A>
       <Solid_Heat_Capacity_Const_B>0</Solid_Heat_Capacity_Const_B>
       <Solid_Heat_Capacity_Const_C>0</Solid_Heat_Capacity_Const_C>
@@ -4111,10 +4318,20 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <HVap_TMAX>617</HVap_TMAX>
       <UNIQUAC_R>7.2</UNIQUAC_R>
       <UNIQUAC_Q>6.02</UNIQUAC_Q>
+      <IsFPROPSSupported>false</IsFPROPSSupported>
+      <IsCOOLPROPSupported>false</IsCOOLPROPSupported>
       <VaporPressureEquation></VaporPressureEquation>
       <IdealgasCpEquation></IdealgasCpEquation>
       <LiquidViscosityEquation></LiquidViscosityEquation>
+      <VaporViscosityEquation></VaporViscosityEquation>
       <VaporizationEnthalpyEquation></VaporizationEnthalpyEquation>
+      <LiquidDensityEquation></LiquidDensityEquation>
+      <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
+      <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <VaporThermalConductivityEquation></VaporThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
+      <SurfaceTensionEquation></SurfaceTensionEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
@@ -4126,6 +4343,8 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -4180,7 +4399,7 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
 &lt;!--DockPanel configuration file. Author: Weifen Luo, all rights reserved.--&gt;
 &lt;!--!!! AUTOMATICALLY GENERATED FILE. DO NOT MODIFY !!!--&gt;
 &lt;DockPanel FormatVersion="1.0" DockLeftPortion="0.304075235109718" DockRightPortion="0.176991150442478" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="3" ActivePane="3"&gt;
-  &lt;Contents Count="10"&gt;
+  &lt;Contents Count="8"&gt;
     &lt;Content ID="0" PersistString="DWSIM.frmObjListView" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="1" PersistString="DWSIM.frmLog" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="2" PersistString="DWSIM.frmObjList" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
@@ -4189,10 +4408,8 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
     &lt;Content ID="5" PersistString="DWSIM.SpreadsheetForm" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="6" PersistString="DWSIM.frmSurface" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="7" PersistString="DWSIM.frmWatch" AutoHidePortion="0.25" IsHidden="True" IsFloat="False" /&gt;
-    &lt;Content ID="8" PersistString="DWSIM.frmOutput" AutoHidePortion="0.25" IsHidden="True" IsFloat="False" /&gt;
-    &lt;Content ID="9" PersistString="DWSIM.frmQueue" AutoHidePortion="0.25" IsHidden="True" IsFloat="False" /&gt;
   &lt;/Contents&gt;
-  &lt;Panes Count="7"&gt;
+  &lt;Panes Count="5"&gt;
     &lt;Pane ID="0" DockState="DockRight" ActiveContent="0"&gt;
       &lt;Contents Count="1"&gt;
         &lt;Content ID="0" RefID="0" /&gt;
@@ -4221,16 +4438,6 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
         &lt;Content ID="0" RefID="7" /&gt;
       &lt;/Contents&gt;
     &lt;/Pane&gt;
-    &lt;Pane ID="5" DockState="DockBottom" ActiveContent="-1"&gt;
-      &lt;Contents Count="1"&gt;
-        &lt;Content ID="0" RefID="8" /&gt;
-      &lt;/Contents&gt;
-    &lt;/Pane&gt;
-    &lt;Pane ID="6" DockState="DockBottom" ActiveContent="-1"&gt;
-      &lt;Contents Count="1"&gt;
-        &lt;Content ID="0" RefID="9" /&gt;
-      &lt;/Contents&gt;
-    &lt;/Pane&gt;
   &lt;/Panes&gt;
   &lt;DockWindows&gt;
     &lt;DockWindow ID="0" DockState="Document" ZOrderIndex="1"&gt;
@@ -4252,11 +4459,9 @@ Final Heat Exchanger dimensions are: length 30 ft., 500 tubes and 29 in. interna
       &lt;NestedPanes Count="0" /&gt;
     &lt;/DockWindow&gt;
     &lt;DockWindow ID="4" DockState="DockBottom" ZOrderIndex="3"&gt;
-      &lt;NestedPanes Count="4"&gt;
+      &lt;NestedPanes Count="2"&gt;
         &lt;Pane ID="0" RefID="1" PrevPane="-1" Alignment="Right" Proportion="0.5" /&gt;
-        &lt;Pane ID="1" RefID="5" PrevPane="1" Alignment="Right" Proportion="0.5" /&gt;
-        &lt;Pane ID="2" RefID="6" PrevPane="5" Alignment="Right" Proportion="0.5" /&gt;
-        &lt;Pane ID="3" RefID="4" PrevPane="6" Alignment="Right" Proportion="0.5" /&gt;
+        &lt;Pane ID="1" RefID="4" PrevPane="1" Alignment="Right" Proportion="0.5" /&gt;
       &lt;/NestedPanes&gt;
     &lt;/DockWindow&gt;
   &lt;/DockWindows&gt;
