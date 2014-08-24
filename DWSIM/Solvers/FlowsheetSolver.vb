@@ -271,7 +271,7 @@ Namespace DWSIM.Flowsheet
                             My.MyApplication.IsFlowsheetSolving = False
                         End Try
                     Else
-                        If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Then
+                        If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
                             If ms.GraphicObject.InputConnectors(0).IsAttached Then
                                 Try
                                     .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
@@ -489,7 +489,7 @@ Namespace DWSIM.Flowsheet
                             My.MyApplication.IsFlowsheetSolving = False
                         End Try
                     Else
-                        If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Then
+                        If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
                             If ms.GraphicObject.InputConnectors(0).IsAttached Then
                                 Try
                                     .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
@@ -699,7 +699,7 @@ Namespace DWSIM.Flowsheet
                             My.MyApplication.IsFlowsheetSolving = False
                         End Try
                     Else
-                        If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Then
+                        If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
                             If ms.GraphicObject.InputConnectors(0).IsAttached Then
                                 Try
                                     .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)

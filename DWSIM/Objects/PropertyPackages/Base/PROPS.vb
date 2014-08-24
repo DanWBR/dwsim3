@@ -26,7 +26,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function Cpl_rb(cpig As Double, T As Double, Tc As Double, w As Double, MW As Double) As Double
 
-            'liquid heat capacity by Rownlinson/Bondi correlation
+            'liquid heat capacity by Rowlinson/Bondi correlation
 
             'cpig = ideal gas heat capacity, kJ/kg.K
             'T = temperature in K

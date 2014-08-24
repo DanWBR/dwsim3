@@ -1335,14 +1335,16 @@ Imports DWSIM.DWSIM.GraphicObjects
                     'remove object property table, if it exists
                     Dim tables As List(Of GraphicObject) = (From t As GraphicObject In Me.FormSurface.FlowsheetDesignSurface.drawingObjects
                                                                       Select t Where t.TipoObjeto = TipoObjeto.GO_Tabela).ToList
-                    Dim table As TableGraphic = (From t As TableGraphic In tables
-                                                                      Select t Where t.BaseOwner.Nome = gobj.Name).SingleOrDefault
-                    If Not table Is Nothing Then
-                        Try
-                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(table)
-                        Catch ex As Exception
+                    Dim tablelist As List(Of TableGraphic) = (From t As TableGraphic In tables
+                                                                      Select t Where t.BaseOwner.Nome = gobj.Name).ToList
+                    If Not tablelist Is Nothing Then
+                        For Each table As TableGraphic In tablelist
+                            Try
+                                Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(table)
+                            Catch ex As Exception
 
-                        End Try
+                            End Try
+                        Next
                     End If
 
                     If SelectedObj.IsEnergyStream Then

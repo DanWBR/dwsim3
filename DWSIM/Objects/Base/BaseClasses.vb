@@ -1457,7 +1457,9 @@ Imports System.Text
             For Each kvp As KeyValuePair(Of Integer, DWSIM.Outros.NodeItem) In m_nodeitems
                 If kvp.Value.Checked Then .Item(.Count - 1).Add(New XElement("NodeItem", New XAttribute("ID", kvp.Key),
                                                                 New XAttribute("Checked", kvp.Value.Checked),
-                                                                New XAttribute("Text", kvp.Value.Text)))
+                                                                New XAttribute("Text", kvp.Value.Text),
+                                                                New XAttribute("Value", kvp.Value.Value),
+                                                                New XAttribute("Unit", kvp.Value.Unit)))
             Next
 
         End With

@@ -2234,11 +2234,10 @@ Public Class FormMain
                 Dim id As String = xel.<Nome>.Value
                 Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
                 Dim obj As SimulationObjects_BaseClass = Activator.CreateInstance(t)
-                obj.FillNodeItems(True)
-                obj.QTFillNodeItems()
                 Dim gobj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
                                     form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
                 obj.GraphicObject = gobj
+                obj.FillNodeItems(True)
                 If Not gobj Is Nothing Then
                     form.Collections.ObjectCollection.Add(id, obj)
                     obj.LoadData(xel.Elements.ToList)
@@ -2330,6 +2329,8 @@ Public Class FormMain
                                 .CLCS_FilterCollection.Add(id, obj)
                         End Select
                     End With
+                    obj.QTFillNodeItems()
+                    obj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                 End If
             Catch ex As Exception
                 excs.Add(New Exception("Error Loading Unit Operation Information", ex))

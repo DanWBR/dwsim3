@@ -30,6 +30,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected m_vol As Double = 0
         Protected m_tRes As Double = 0
 
+        Protected m_ignorephase As Boolean = True
+
+        Public Property IgnorePhase() As Boolean
+            Get
+                Return m_ignorephase
+            End Get
+            Set(ByVal value As Boolean)
+                m_ignorephase = value
+            End Set
+        End Property
+
         Public Sub New(ByVal nome As String, ByVal descricao As String)
 
             MyBase.CreateNew()
@@ -88,7 +99,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             qvi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault.ToString
 
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-            If qvi > 0 Then
+            If qvi > 0 And Me.IgnorePhase = False Then
                 'Call function to calculate flowsheet
                 With objargs
                     .Calculado = False
@@ -310,12 +321,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .DefaultType = GetType(Double)
                 End With
 
-                'valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault), FlowSheet.Options.NumberFormat)
-                '.Item.Add(FT(DWSIM.App.GetLocalString("Calor"), su.spmp_heatflow), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Calortransferido"), True)
-                'With .Item(.Item.Count - 1)
-                '    .DefaultValue = Nothing
-                '    .DefaultType = GetType(Nullable(Of Double))
-                'End With
+                .Item.Add(DWSIM.App.GetLocalString("IgnorarVapornaEntrad"), Me, "IgnorePhase", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("IgnorarVapornaEntrad"), True)
+                With .Item(.Item.Count - 1)
+                    .DefaultType = GetType(Boolean)
+                End With
 
                 If Me.GraphicObject.Calculated = False Then
                     .Item.Add(DWSIM.App.GetLocalString("Mensagemdeerro"), Me, "ErrorMessage", True, DWSIM.App.GetLocalString("Miscelnea3"), DWSIM.App.GetLocalString("Mensagemretornadaqua"), True)
