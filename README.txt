@@ -1,6 +1,6 @@
 ==================================================
 DWSIM - Open Source Process Simulator
-Version 3.2, Build 5296 - July 2014
+Version 3.2, Build 5349 - August 2014
 Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo León
 ==================================================
 
@@ -100,6 +100,22 @@ VERSION HISTORY / CHANGELOG
 ==================================================
 
 The full changelog, including code changes and their authors can be viewed at https://github.com/DanWBR/dwsim3/commits/master
+
+Version 3.2 Build 5349
+
+- [NEW] Implemented Pressure-Enthalpy (PH) and Pressure-Vapor Fraction (PVF) Flash algorithms for Electrolyte Property Packages
+- [NEW] Added an option to restore Material Streams' default properties
+- [NEW] Added "Ignore Vapor Phase" property to the Tank Unit Op
+- [CHG] Changed Units System persistence to XML format
+- [CHG] Updated calculation procedures in the Petroleum Cold Flow Properties utility
+- [CHG] Steam Tables Property Package now works with Water compound from ChemSep database
+- [FIX] Restored table property values after loading simulation from a XML file
+- [FIX] Minor bug fixes
+
+Version 3.2 Build 5309
+
+- [NEW] Added hydrate calculation method option to the phase envelope utility
+- [CHG] Enhanced hydrate models to correctly support hydrocarbons that don't form hydrates
 
 Version 3.2 Build 5296
 
