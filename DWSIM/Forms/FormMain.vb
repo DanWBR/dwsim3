@@ -2212,9 +2212,9 @@ Public Class FormMain
                 Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
                 Dim obj As PropertyPackage = Activator.CreateInstance(t)
                 obj.LoadData(xel.Elements.ToList)
-                Dim uniqueID As String = Guid.NewGuid.ToString
-                obj.UniqueID = uniqueID
-                form.Options.PropertyPackages.Add(uniqueID, obj)
+                Dim newID As String = Guid.NewGuid.ToString
+                If form.Options.PropertyPackages.ContainsKey(obj.UniqueID) Then obj.UniqueID = newID
+                form.Options.PropertyPackages.Add(obj.UniqueID, obj)
             Catch ex As Exception
                 excs.Add(New Exception("Error Loading Property Package Information", ex))
             End Try
