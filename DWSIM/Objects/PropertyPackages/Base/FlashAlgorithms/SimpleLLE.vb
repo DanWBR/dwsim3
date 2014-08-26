@@ -1,5 +1,5 @@
 '    Simplified LLE Flash Algorithm
-'    Copyright 2013 Daniel Wagner O. de Medeiros
+'    Copyright 2013-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -221,6 +221,9 @@ out:
             Do
                 If My.Settings.EnableParallelProcessing Then
                     My.MyApplication.IsRunningParallelTasks = True
+                    If My.Settings.EnableGPUProcessing Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    End If
                     Try
                         Dim task1 As Task = New Task(Sub()
                                                          fx = Herror(x1, {P, Vz, PP})
@@ -235,6 +238,11 @@ out:
                         For Each ex As Exception In ae.InnerExceptions
                             Throw
                         Next
+                    Finally
+                        If My.Settings.EnableGPUProcessing Then
+                            My.MyApplication.gpu.DisableMultithreading()
+                            My.MyApplication.gpu.FreeAll()
+                        End If
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
