@@ -1,5 +1,5 @@
-﻿'    Calculation Engine Base Classes 
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Flowsheet Object Base Classes 
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -1636,7 +1636,17 @@ End Class
     End Sub
 
     Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
-        Return MyBase.LoadData(data)
+
+        MyBase.LoadData(data)
+
+        Try
+            Me._ppid = (From xel As XElement In data Select xel Where xel.Name = "PropertyPackage").SingleOrDefault.Value
+        Catch
+
+        End Try
+
+        Return True
+
     End Function
 
     Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
@@ -2462,4 +2472,3 @@ End Class
     End Property
 
 End Class
-
