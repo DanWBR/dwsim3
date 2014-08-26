@@ -1,5 +1,5 @@
-﻿'    DWSIM Nested Loops Flash Algorithms for Simplified (Immiscible) VLLE
-'    Copyright 2013 Daniel Wagner O. de Medeiros
+'    DWSIM Nested Loops Flash Algorithms for Simplified (Immiscible) VLLE
+'    Copyright 2013-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -202,6 +202,9 @@ out:        Return New Object() {xl1, V, Vx1, Vy, ecount, xl2, Vx2, 0.0#, PP.RET
             Do
                 If My.Settings.EnableParallelProcessing Then
                     My.MyApplication.IsRunningParallelTasks = True
+                    If My.Settings.EnableGPUProcessing Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    End If
                     Try
                         Dim task1 As Task = New Task(Sub()
                                                          fx = Herror(x1, {P, Vz, PP})
@@ -216,6 +219,11 @@ out:        Return New Object() {xl1, V, Vx1, Vy, ecount, xl2, Vx2, 0.0#, PP.RET
                         For Each ex As Exception In ae.InnerExceptions
                             Throw
                         Next
+                    Finally
+                        If My.Settings.EnableGPUProcessing Then
+                            My.MyApplication.gpu.DisableMultithreading()
+                            My.MyApplication.gpu.FreeAll()
+                        End If
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
