@@ -164,7 +164,7 @@ Namespace My
                 End If
 
                 For Each su As DWSIM.SistemasDeUnidades.Unidades In myarraylist
-                    UserUnitSystems.Add(su.nome, su)
+                    If Not UserUnitSystems.ContainsKey(su.nome) Then UserUnitSystems.Add(su.nome, su)
                 Next
 
             End If
