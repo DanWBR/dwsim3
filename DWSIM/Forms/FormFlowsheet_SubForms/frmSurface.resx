@@ -144,17 +144,14 @@
   <data name="LabelSimultAdjustStatus.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="LabelSimultAdjInfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>54, 22</value>
+  <data name="&gt;&gt;Panel2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;MostrarToolStripMenuItem.Name" xml:space="preserve">
+    <value>MostrarToolStripMenuItem</value>
   </data>
   <data name="ToolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
     <value>97, 22</value>
-  </data>
-  <data name="&gt;&gt;MostrarToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PictureBox3.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="&gt;&gt;LabelSimultAdjustStatus.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -168,17 +165,14 @@
   <data name="&gt;&gt;Timer1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TSMI_Girar.Text" xml:space="preserve">
-    <value>Girar</value>
-  </data>
-  <data name="LabelTime.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 8.25pt</value>
-  </data>
   <data name="&gt;&gt;ToolStripMenuItem4.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="RecalcularToolStripMenuItem.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="&gt;&gt;CopiarParaAÁreaDeTransferênciaToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ToolStripSeparator3.Name" xml:space="preserve">
     <value>ToolStripSeparator3</value>
@@ -192,8 +186,8 @@
   <data name="Panel2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="&gt;&gt;PicSimultAdjust.Parent" xml:space="preserve">
-    <value>PanelSimultAdjust</value>
+  <data name="PreviewDialog.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="DesconectarDeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>296, 22</value>
@@ -216,14 +210,14 @@
   <data name="TableLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
     <value>929, 40</value>
   </data>
-  <data name="&gt;&gt;PictureBox4.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="TableLayoutPanel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
   <data name="LabelSimultAdjustStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
+  </data>
+  <data name="LabelCalculator.Location" type="System.Drawing.Point, System.Drawing">
+    <value>26, 5</value>
   </data>
   <data name="&gt;&gt;RecalcularToolStripMenuItem.Name" xml:space="preserve">
     <value>RecalcularToolStripMenuItem</value>
@@ -237,14 +231,23 @@
   <data name="&gt;&gt;RestoreTSMI.Name" xml:space="preserve">
     <value>RestoreTSMI</value>
   </data>
+  <data name="ToolStripMenuItem5.Text" xml:space="preserve">
+    <value>Imprimir</value>
+  </data>
   <data name="&gt;&gt;designSurfacePrintDocument.Type" xml:space="preserve">
     <value>System.Drawing.Printing.PrintDocument, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LabelCalculator.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>100, 0</value>
   </data>
+  <data name="&gt;&gt;PicSimultAdjust.Parent" xml:space="preserve">
+    <value>PanelSimultAdjust</value>
+  </data>
   <data name="CMS_Sel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 304</value>
+    <value>297, 326</value>
+  </data>
+  <data name="&gt;&gt;TableLayoutPanel1.Name" xml:space="preserve">
+    <value>TableLayoutPanel1</value>
   </data>
   <data name="&gt;&gt;ClonarToolStripMenuItem.Name" xml:space="preserve">
     <value>ClonarToolStripMenuItem</value>
@@ -258,8 +261,8 @@
   <data name="LabelSimultAdjustStatus.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
   </data>
-  <data name="LabelCalculator.Text" xml:space="preserve">
-    <value>Status: Ocioso</value>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
   <data name="PictureBox4.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 20</value>
@@ -270,11 +273,11 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Fluxograma</value>
   </data>
-  <data name="RecalcularToolStripMenuItem.Text" xml:space="preserve">
-    <value>Recalcular</value>
+  <data name="TSMI_Girar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 22</value>
   </data>
-  <data name="&gt;&gt;TableLayoutPanel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="FlowsheetDesignSurface.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;CMS_Sel.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -282,14 +285,17 @@
   <data name="LabelTime.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
-  <data name="ToolStripMenuItem5.Text" xml:space="preserve">
-    <value>Imprimir</value>
+  <data name="LabelCalculator.Text" xml:space="preserve">
+    <value>Status: Ocioso</value>
+  </data>
+  <data name="ToolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>293, 6</value>
+  </data>
+  <data name="CopyFromTSMI.Text" xml:space="preserve">
+    <value>Copiar de...</value>
   </data>
   <data name="&gt;&gt;HorizontalmenteToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="PreviewDialog.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="&gt;&gt;ToolStripSeparator6.Name" xml:space="preserve">
     <value>ToolStripSeparator6</value>
@@ -300,8 +306,8 @@
   <data name="TableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="PanelSimultAdjust.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
+  <data name="&gt;&gt;PictureBox4.Parent" xml:space="preserve">
+    <value>Panel2</value>
   </data>
   <data name="&gt;&gt;LabelCalculator.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -346,9 +352,6 @@
   <data name="PicSimultAdjust.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 40</value>
   </data>
-  <data name="&gt;&gt;LabelTime.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="PictureBox3.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>CenterImage</value>
   </data>
@@ -361,17 +364,11 @@
   <data name="ToolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>258, 6</value>
   </data>
-  <data name="TSMI_Girar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
-  </data>
   <data name="LabelTime.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 13</value>
   </data>
-  <data name="ToolStripMenuItem6.Text" xml:space="preserve">
-    <value>90°</value>
-  </data>
-  <data name="PictureBox3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;PanelSimultAdjust.Parent" xml:space="preserve">
+    <value>TableLayoutPanel2</value>
   </data>
   <data name="&gt;&gt;LabelSimultAdjustStatus.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -394,8 +391,8 @@
   <data name="ToolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
     <value>293, 6</value>
   </data>
-  <data name="FlowsheetDesignSurface.AutoScroll" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;PictureBox4.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="ConfigurarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 22</value>
@@ -421,14 +418,17 @@
   <data name="LabelCalculator.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
+  <data name="CopiarParaAÁreaDeTransferênciaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>261, 22</value>
+  </data>
   <data name="&gt;&gt;Panel2.Name" xml:space="preserve">
     <value>Panel2</value>
   </data>
   <data name="&gt;&gt;RecalcularToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ToolStripMenuItem5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;ToolStripMenuItem4.Name" xml:space="preserve">
+    <value>ToolStripMenuItem4</value>
   </data>
   <data name="LabelSimultAdjInfo.Size" type="System.Drawing.Size, System.Drawing">
     <value>364, 13</value>
@@ -436,17 +436,11 @@
   <data name="&gt;&gt;ConfigurarToolStripMenuItem.Name" xml:space="preserve">
     <value>ConfigurarToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;TableLayoutPanel1.Name" xml:space="preserve">
-    <value>TableLayoutPanel1</value>
-  </data>
-  <data name="LabelSimultAdjInfo.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 8.25pt</value>
+  <data name="&gt;&gt;ToolStripMenuItem5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;BToolStripMenuItem.Name" xml:space="preserve">
     <value>BToolStripMenuItem</value>
-  </data>
-  <data name="LabelSimultAdjustStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="PicSimultAdjust.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -454,8 +448,11 @@
   <data name="PictureBox4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
-  <data name="&gt;&gt;PictureBox4.Parent" xml:space="preserve">
-    <value>Panel2</value>
+  <data name="TableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="ToolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
     <value>293, 6</value>
@@ -466,8 +463,8 @@
   <data name="&gt;&gt;LabelTime.Parent" xml:space="preserve">
     <value>Panel2</value>
   </data>
-  <data name="TableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>929, 474</value>
+  <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 22</value>
   </data>
   <data name="&gt;&gt;ToolStripMenuItem1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -475,11 +472,17 @@
   <data name="&gt;&gt;RestoreTSMI.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;TableLayoutPanel2.Name" xml:space="preserve">
+    <value>TableLayoutPanel2</value>
+  </data>
   <data name="&gt;&gt;LabelSimultAdjInfo.Parent" xml:space="preserve">
     <value>PanelSimultAdjust</value>
   </data>
-  <data name="&gt;&gt;ToolStripMenuItem6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="PreviewDialog.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ToolStripSeparator6.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -499,8 +502,8 @@
   <data name="PictureBox4.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
     <value>CenterImage</value>
   </data>
-  <data name="ToolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>293, 6</value>
+  <data name="&gt;&gt;TabelaToolStripMenuItem.Name" xml:space="preserve">
+    <value>TabelaToolStripMenuItem</value>
   </data>
   <data name="TableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -529,14 +532,11 @@
   <data name="DesconectarDeToolStripMenuItem.Text" xml:space="preserve">
     <value>Desconectar de...</value>
   </data>
-  <data name="&gt;&gt;ToolStripMenuItem3.Name" xml:space="preserve">
-    <value>ToolStripMenuItem3</value>
-  </data>
-  <data name="&gt;&gt;PicSimultAdjust.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="ToolStripMenuItem3.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="&gt;&gt;ExcluirToolStripMenuItem.Name" xml:space="preserve">
+    <value>ExcluirToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;ToolStripSeparator7.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -544,11 +544,14 @@
   <data name="PictureBox3.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 2</value>
   </data>
-  <data name="CopiarParaAÁreaDeTransferênciaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 22</value>
+  <data name="TableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>929, 474</value>
   </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt</value>
+  <data name="LabelCalculator.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RecalcularToolStripMenuItem.Text" xml:space="preserve">
+    <value>Recalcular</value>
   </data>
   <data name="&gt;&gt;pageSetup.Type" xml:space="preserve">
     <value>System.Windows.Forms.PageSetupDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -586,8 +589,11 @@
   <data name="TableLayoutPanel2.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 434</value>
   </data>
-  <data name="&gt;&gt;LabelCalculator.Parent" xml:space="preserve">
-    <value>Panel2</value>
+  <data name="ToolStripMenuItem10.Text" xml:space="preserve">
+    <value>300%</value>
+  </data>
+  <data name="PictureBox3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="&gt;&gt;BToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -604,8 +610,8 @@
   <data name="&gt;&gt;HorizontalmenteToolStripMenuItem.Name" xml:space="preserve">
     <value>HorizontalmenteToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;PanelSimultAdjust.Parent" xml:space="preserve">
-    <value>TableLayoutPanel2</value>
+  <data name="ToolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>261, 22</value>
   </data>
   <data name="&gt;&gt;ExcluirToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -616,14 +622,11 @@
   <data name="ToolStripMenuItem8.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 22</value>
   </data>
-  <data name="ConectarAToolStripMenuItem.Text" xml:space="preserve">
-    <value>Conectar a...</value>
-  </data>
   <data name="RecalcularToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>296, 22</value>
   </data>
-  <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+  <data name="&gt;&gt;ToolStripMenuItem8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="FlowsheetDesignSurface.Size" type="System.Drawing.Size, System.Drawing">
     <value>923, 428</value>
@@ -634,17 +637,17 @@
   <data name="&gt;&gt;TSMI_Girar.Name" xml:space="preserve">
     <value>TSMI_Girar</value>
   </data>
+  <data name="&gt;&gt;DesconectarDeToolStripMenuItem.Name" xml:space="preserve">
+    <value>DesconectarDeToolStripMenuItem</value>
+  </data>
   <data name="&gt;&gt;LabelSimultAdjustStatus.Name" xml:space="preserve">
     <value>LabelSimultAdjustStatus</value>
   </data>
-  <data name="&gt;&gt;TableLayoutPanel2.Name" xml:space="preserve">
-    <value>TableLayoutPanel2</value>
+  <data name="PictureBox4.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="CMS_ItemsToConnect.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 4</value>
-  </data>
-  <data name="LabelSimultAdjustStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>54, 4</value>
   </data>
   <data name="LabelSimultAdjustStatus.Text" xml:space="preserve">
     <value>O Solver para Ajustes Simultâneos está trabalhando, aguarde...</value>
@@ -655,8 +658,11 @@
   <data name="LabelTime.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>100, 0</value>
   </data>
-  <data name="&gt;&gt;PreviewDialog.Name" xml:space="preserve">
-    <value>PreviewDialog</value>
+  <data name="LabelSimultAdjInfo.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 8.25pt</value>
+  </data>
+  <data name="&gt;&gt;TableLayoutPanel2.Parent" xml:space="preserve">
+    <value>TableLayoutPanel1</value>
   </data>
   <data name="&gt;&gt;TSMI_Girar.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -682,23 +688,17 @@
   <data name="PicSimultAdjust.Location" type="System.Drawing.Point, System.Drawing">
     <value>421, 0</value>
   </data>
-  <data name="ToolStripMenuItem3.Text" xml:space="preserve">
-    <value>Fluxograma</value>
-  </data>
   <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
     <value>261, 22</value>
   </data>
-  <data name="PicSimultAdjust.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+  <data name="RestoreTSMI.Text" xml:space="preserve">
+    <value>Restaurar Valores-Padrão</value>
   </data>
-  <data name="ClonarToolStripMenuItem.Text" xml:space="preserve">
-    <value>Clonar</value>
+  <data name="&gt;&gt;PictureBox4.Name" xml:space="preserve">
+    <value>PictureBox4</value>
   </data>
   <data name="&gt;&gt;Timer2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ConfigurarToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="PreviewDialog.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -722,8 +722,23 @@
         AABsAgAAbAIAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAHwAAAB8AAAAAAAAAA==
 </value>
   </data>
-  <data name="LabelCalculator.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="ClonarToolStripMenuItem.Text" xml:space="preserve">
+    <value>Clonar</value>
+  </data>
+  <data name="ToolStripMenuItem3.Text" xml:space="preserve">
+    <value>Fluxograma</value>
+  </data>
+  <data name="PanelSimultAdjust.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="&gt;&gt;ConfigurarToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripMenuItem6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelSimultAdjInfo.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
   </data>
   <data name="ClonarToolStripMenuItem.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>White</value>
@@ -749,8 +764,11 @@
   <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
     <value>261, 22</value>
   </data>
-  <data name="&gt;&gt;FlowsheetDesignSurface.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="PicSimultAdjust.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="ExcluirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 22</value>
   </data>
   <data name="PictureBox4.Size" type="System.Drawing.Size, System.Drawing">
     <value>20, 20</value>
@@ -767,14 +785,14 @@
   <data name="&gt;&gt;ToolStripMenuItem2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;CopyFromTSMI.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ToolStripMenuItem4.Text" xml:space="preserve">
     <value>100%</value>
   </data>
-  <data name="ToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>102, 22</value>
-  </data>
-  <data name="PictureBox4.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="&gt;&gt;CMS_NoSel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="PictureBox4.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -794,11 +812,14 @@
   <data name="&gt;&gt;PictureBox3.Parent" xml:space="preserve">
     <value>Panel2</value>
   </data>
-  <data name="&gt;&gt;ExcluirToolStripMenuItem.Name" xml:space="preserve">
-    <value>ExcluirToolStripMenuItem</value>
+  <data name="ToolStripMenuItem1.Text" xml:space="preserve">
+    <value>50%</value>
   </data>
-  <data name="&gt;&gt;ToolStripMenuItem4.Name" xml:space="preserve">
-    <value>ToolStripMenuItem4</value>
+  <data name="&gt;&gt;CopyFromTSMI.Name" xml:space="preserve">
+    <value>CopyFromTSMI</value>
+  </data>
+  <data name="&gt;&gt;CMS_NoSel.Name" xml:space="preserve">
+    <value>CMS_NoSel</value>
   </data>
   <data name="CMS_ItemsToDisconnect.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 4</value>
@@ -808,9 +829,6 @@
   </data>
   <data name="&gt;&gt;Timer1.Name" xml:space="preserve">
     <value>Timer1</value>
-  </data>
-  <data name="&gt;&gt;PictureBox4.Name" xml:space="preserve">
-    <value>PictureBox4</value>
   </data>
   <data name="TabelaToolStripMenuItem.Text" xml:space="preserve">
     <value>Tabela</value>
@@ -827,14 +845,20 @@
   <data name="&gt;&gt;ToolStripSeparator2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TabelaToolStripMenuItem.Name" xml:space="preserve">
-    <value>TabelaToolStripMenuItem</value>
+  <data name="&gt;&gt;LabelTime.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ConectarAToolStripMenuItem.Name" xml:space="preserve">
     <value>ConectarAToolStripMenuItem</value>
   </data>
+  <data name="EditCompTSMI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 22</value>
+  </data>
   <data name="&gt;&gt;ToolStripMenuItem7.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripMenuItem6.Name" xml:space="preserve">
+    <value>ToolStripMenuItem6</value>
   </data>
   <data name="LabelSimultAdjInfo.Text" xml:space="preserve">
     <value>O Solver para Ajustes Simultâneos está trabalhando, aguarde...</value>
@@ -845,8 +869,8 @@
   <data name="&gt;&gt;ToolStripSeparator5.Name" xml:space="preserve">
     <value>ToolStripSeparator5</value>
   </data>
-  <data name="ToolStripMenuItem10.Text" xml:space="preserve">
-    <value>300%</value>
+  <data name="LabelTime.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 8.25pt</value>
   </data>
   <data name="TableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="FlowsheetDesignSurface" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="TableLayoutPanel2" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,100,Absolute,40" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -857,8 +881,8 @@
   <data name="ExcluirToolStripMenuItem.Text" xml:space="preserve">
     <value>Excluir</value>
   </data>
-  <data name="FlowsheetDesignSurface.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="CopyFromTSMI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 22</value>
   </data>
   <data name="BToolStripMenuItem.Text" xml:space="preserve">
     <value>180°</value>
@@ -869,32 +893,26 @@
   <data name="LabelTime.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="&gt;&gt;CopiarParaAÁreaDeTransferênciaToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;MostrarToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ToolStripMenuItem8.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ToolStripMenuItem6.Text" xml:space="preserve">
+    <value>90°</value>
   </data>
-  <data name="&gt;&gt;MostrarToolStripMenuItem.Name" xml:space="preserve">
-    <value>MostrarToolStripMenuItem</value>
-  </data>
-  <data name="ToolStripMenuItem1.Text" xml:space="preserve">
-    <value>50%</value>
+  <data name="&gt;&gt;PicSimultAdjust.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ToolStripSeparator6.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;ToolStripMenuItem2.Name" xml:space="preserve">
-    <value>ToolStripMenuItem2</value>
-  </data>
-  <data name="&gt;&gt;CMS_NoSel.Name" xml:space="preserve">
-    <value>CMS_NoSel</value>
+  <data name="&gt;&gt;LabelCalculator.Parent" xml:space="preserve">
+    <value>Panel2</value>
   </data>
   <data name="&gt;&gt;ToolStripMenuItem8.Name" xml:space="preserve">
     <value>ToolStripMenuItem8</value>
   </data>
-  <data name="ExcluirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+  <data name="ConectarAToolStripMenuItem.Text" xml:space="preserve">
+    <value>Conectar a...</value>
   </data>
   <data name="&gt;&gt;ToolStripSeparator4.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -902,8 +920,8 @@
   <data name="&gt;&gt;LabelSimultAdjustStatus.Parent" xml:space="preserve">
     <value>PanelSimultAdjust</value>
   </data>
-  <data name="LabelSimultAdjInfo.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
+  <data name="&gt;&gt;PreviewDialog.Name" xml:space="preserve">
+    <value>PreviewDialog</value>
   </data>
   <data name="ToolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
     <value>293, 6</value>
@@ -920,14 +938,14 @@
   <data name="ToolStripMenuItem8.Text" xml:space="preserve">
     <value>200%</value>
   </data>
+  <data name="Panel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>929, 474</value>
   </data>
-  <data name="TableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="LabelTime.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="FlowsheetDesignSurface.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="&gt;&gt;pageSetup.Name" xml:space="preserve">
     <value>pageSetup</value>
@@ -938,8 +956,11 @@
   <data name="PreviewDialog.Enabled" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;Panel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;ToolStripMenuItem3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LabelSimultAdjInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 22</value>
   </data>
   <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 22</value>
@@ -947,7 +968,7 @@
   <data name="ConectarAToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>296, 22</value>
   </data>
-  <data name="&gt;&gt;Panel2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;PictureBox3.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="ClonarToolStripMenuItem.ToolTipText" xml:space="preserve">
@@ -956,14 +977,17 @@
   <data name="LabelSimultAdjInfo.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>100, 0</value>
   </data>
+  <data name="HorizontalmenteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 22</value>
+  </data>
   <data name="&gt;&gt;TableLayoutPanel1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;DesconectarDeToolStripMenuItem.Name" xml:space="preserve">
-    <value>DesconectarDeToolStripMenuItem</value>
+  <data name="LabelSimultAdjustStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;ToolStripMenuItem6.Name" xml:space="preserve">
-    <value>ToolStripMenuItem6</value>
+  <data name="ToolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 22</value>
   </data>
   <data name="ToolStripMenuItem2.Text" xml:space="preserve">
     <value>Configurar Aparência</value>
@@ -974,14 +998,14 @@
   <data name="TabelaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>296, 22</value>
   </data>
-  <data name="&gt;&gt;CMS_NoSel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;ToolStripMenuItem2.Name" xml:space="preserve">
+    <value>ToolStripMenuItem2</value>
   </data>
   <data name="&gt;&gt;ToolStripSeparator4.Name" xml:space="preserve">
     <value>ToolStripSeparator4</value>
   </data>
-  <data name="&gt;&gt;TableLayoutPanel2.Parent" xml:space="preserve">
-    <value>TableLayoutPanel1</value>
+  <data name="&gt;&gt;ToolStripMenuItem3.Name" xml:space="preserve">
+    <value>ToolStripMenuItem3</value>
   </data>
   <data name="TableLayoutPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -989,14 +1013,8 @@
   <data name="PanelSimultAdjust.Size" type="System.Drawing.Size, System.Drawing">
     <value>465, 40</value>
   </data>
-  <data name="&gt;&gt;ToolStripSeparator2.Name" xml:space="preserve">
-    <value>ToolStripSeparator2</value>
-  </data>
   <data name="&gt;&gt;CMS_ItemsToDisconnect.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Panel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
   </data>
   <data name="TableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1007,8 +1025,8 @@
   <data name="&gt;&gt;CMS_ItemsToConnect.Name" xml:space="preserve">
     <value>CMS_ItemsToConnect</value>
   </data>
-  <data name="ToolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 22</value>
+  <data name="Panel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="LabelCalculator.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
@@ -1016,8 +1034,8 @@
   <data name="PictureBox3.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
   </data>
-  <data name="RestoreTSMI.Text" xml:space="preserve">
-    <value>Restaurar Valores-Padrão</value>
+  <data name="TSMI_Girar.Text" xml:space="preserve">
+    <value>Girar</value>
   </data>
   <data name="&gt;&gt;FlowsheetDesignSurface.Parent" xml:space="preserve">
     <value>TableLayoutPanel1</value>
@@ -1025,11 +1043,11 @@
   <data name="LabelSimultAdjInfo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="EditCompTSMI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+  <data name="&gt;&gt;FlowsheetDesignSurface.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="LabelCalculator.Location" type="System.Drawing.Point, System.Drawing">
-    <value>26, 5</value>
+  <data name="&gt;&gt;TableLayoutPanel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LabelCalculator.Name" xml:space="preserve">
     <value>LabelCalculator</value>
@@ -1037,14 +1055,14 @@
   <data name="ToolStripMenuItem7.Size" type="System.Drawing.Size, System.Drawing">
     <value>97, 22</value>
   </data>
-  <data name="&gt;&gt;ToolStripMenuItem3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="LabelTime.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="&gt;&gt;PanelSimultAdjust.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="HorizontalmenteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+  <data name="LabelSimultAdjustStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>54, 4</value>
   </data>
   <data name="TableLayoutPanel2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1052,8 +1070,8 @@
   <data name="ToolStripMenuItem7.Text" xml:space="preserve">
     <value>270°</value>
   </data>
-  <data name="Panel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
+  <data name="&gt;&gt;ToolStripSeparator2.Name" xml:space="preserve">
+    <value>ToolStripSeparator2</value>
   </data>
   <data name="PanelSimultAdjust.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>

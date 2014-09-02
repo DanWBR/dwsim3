@@ -48,6 +48,7 @@ Partial Class frmSurface
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.RecalcularToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditCompTSMI = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CopyFromTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.RestoreTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         Me.ConectarAToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -246,7 +247,7 @@ Partial Class frmSurface
         'CMS_Sel
         '
         resources.ApplyResources(Me.CMS_Sel, "CMS_Sel")
-        Me.CMS_Sel.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMI_Label, Me.ToolStripSeparator3, Me.RecalcularToolStripMenuItem, Me.EditCompTSMI, Me.RestoreTSMI, Me.ToolStripSeparator6, Me.ConectarAToolStripMenuItem, Me.DesconectarDeToolStripMenuItem, Me.ToolStripSeparator4, Me.TSMI_Girar, Me.HorizontalmenteToolStripMenuItem, Me.ToolStripSeparator2, Me.ClonarToolStripMenuItem, Me.ExcluirToolStripMenuItem, Me.ToolStripSeparator5, Me.TabelaToolStripMenuItem, Me.ToolStripSeparator7, Me.CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem})
+        Me.CMS_Sel.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMI_Label, Me.ToolStripSeparator3, Me.RecalcularToolStripMenuItem, Me.EditCompTSMI, Me.CopyFromTSMI, Me.RestoreTSMI, Me.ToolStripSeparator6, Me.ConectarAToolStripMenuItem, Me.DesconectarDeToolStripMenuItem, Me.ToolStripSeparator4, Me.TSMI_Girar, Me.HorizontalmenteToolStripMenuItem, Me.ToolStripSeparator2, Me.ClonarToolStripMenuItem, Me.ExcluirToolStripMenuItem, Me.ToolStripSeparator5, Me.TabelaToolStripMenuItem, Me.ToolStripSeparator7, Me.CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem})
         Me.CMS_Sel.Name = "CMS_Sel"
         '
         'TSMI_Label
@@ -270,6 +271,12 @@ Partial Class frmSurface
         resources.ApplyResources(Me.EditCompTSMI, "EditCompTSMI")
         Me.EditCompTSMI.Image = Global.DWSIM.My.Resources.Resources.Lab_icon
         Me.EditCompTSMI.Name = "EditCompTSMI"
+        '
+        'CopyFromTSMI
+        '
+        resources.ApplyResources(Me.CopyFromTSMI, "CopyFromTSMI")
+        Me.CopyFromTSMI.Image = Global.DWSIM.My.Resources.Resources.table_row_insert1
+        Me.CopyFromTSMI.Name = "CopyFromTSMI"
         '
         'RestoreTSMI
         '
@@ -499,4 +506,5 @@ Partial Class frmSurface
     Friend WithEvents CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents RestoreTSMI As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CopyFromTSMI As System.Windows.Forms.ToolStripMenuItem
 End Class

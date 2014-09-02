@@ -151,6 +151,9 @@
   <data name="CopiarParaAÁreaDeTransferênciaToolStripMenuItem.Text" xml:space="preserve">
     <value>Capture Snapshot and Send to Clipboard</value>
   </data>
+  <data name="CMS_Sel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>295, 326</value>
+  </data>
   <data name="TSMI_Label.Size" type="System.Drawing.Size, System.Drawing">
     <value>294, 22</value>
   </data>
@@ -168,6 +171,12 @@
   </data>
   <data name="EditCompTSMI.Text" xml:space="preserve">
     <value>Bearbeiten Stream-Komposition</value>
+  </data>
+  <data name="CopyFromTSMI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>294, 22</value>
+  </data>
+  <data name="CopyFromTSMI.Text" xml:space="preserve">
+    <value>Kopieren von...</value>
   </data>
   <data name="RestoreTSMI.Size" type="System.Drawing.Size, System.Drawing">
     <value>294, 22</value>
@@ -198,6 +207,24 @@
   </data>
   <data name="TSMI_Girar.Text" xml:space="preserve">
     <value>Drehen</value>
+  </data>
+  <data name="ToolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 22</value>
+  </data>
+  <data name="ToolStripMenuItem6.Text" xml:space="preserve">
+    <value>90 °</value>
+  </data>
+  <data name="BToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 22</value>
+  </data>
+  <data name="BToolStripMenuItem.Text" xml:space="preserve">
+    <value>180 °</value>
+  </data>
+  <data name="ToolStripMenuItem7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 22</value>
+  </data>
+  <data name="ToolStripMenuItem7.Text" xml:space="preserve">
+    <value>270 °</value>
   </data>
   <data name="HorizontalmenteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>294, 22</value>
@@ -232,39 +259,6 @@
   <data name="TabelaToolStripMenuItem.Text" xml:space="preserve">
     <value>Tabelle</value>
   </data>
-  <data name="ToolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>291, 6</value>
-  </data>
-  <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>294, 22</value>
-  </data>
-  <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Text" xml:space="preserve">
-    <value>Daten in Zwischenablage kopieren</value>
-  </data>
-  <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Kopiert alle Eigenschaften mit ihren Werten in die Zwischenablage.</value>
-  </data>
-  <data name="CMS_Sel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>295, 304</value>
-  </data>
-  <data name="ToolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
-  </data>
-  <data name="ToolStripMenuItem6.Text" xml:space="preserve">
-    <value>90 °</value>
-  </data>
-  <data name="BToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
-  </data>
-  <data name="BToolStripMenuItem.Text" xml:space="preserve">
-    <value>180 °</value>
-  </data>
-  <data name="ToolStripMenuItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
-  </data>
-  <data name="ToolStripMenuItem7.Text" xml:space="preserve">
-    <value>270 °</value>
-  </data>
   <data name="MostrarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 22</value>
   </data>
@@ -276,6 +270,18 @@
   </data>
   <data name="ConfigurarToolStripMenuItem.Text" xml:space="preserve">
     <value>Konfigurieren...</value>
+  </data>
+  <data name="ToolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>291, 6</value>
+  </data>
+  <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>294, 22</value>
+  </data>
+  <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Text" xml:space="preserve">
+    <value>Daten in Zwischenablage kopieren</value>
+  </data>
+  <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Kopiert alle Eigenschaften mit ihren Werten in die Zwischenablage.</value>
   </data>
   <data name="PreviewDialog.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -299,6 +305,10 @@
         AABsAgAAbAIAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAHwAAAB8AAAAAAAAAA==
 </value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="PreviewDialog.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAEBAAAAEAGABoAwAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -317,6 +327,9 @@
         //////////////////////////////////////////////////////////////////8AAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 </value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Fließbild</value>

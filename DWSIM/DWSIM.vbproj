@@ -1922,6 +1922,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dwsim_splash.ico" />
+    <None Include="Resources\table_row_insert1.png" />
     <None Include="Resources\zoom_extend.png" />
     <None Include="Resources\zoom_refresh.png" />
     <None Include="My Project\DataSources\RssItem.datasource" />

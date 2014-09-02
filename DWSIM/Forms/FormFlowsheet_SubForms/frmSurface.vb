@@ -71,6 +71,8 @@ Public Class frmSurface
         PGEx1 = Me.ChildParent.FormProps.PGEx1
         PGEx2 = Me.ChildParent.FormProps.PGEx2
 
+        AddHandler CopyFromTSMI.DropDownItemClicked, AddressOf MaterialStreamClickHandler
+
         'If Not ChildParent.Options.SelectedPropertyPackage Is Nothing Then Me.LabelPP.Text = "PP: " & ChildParent.Options.SelectedPropertyPackage.ComponentName
 
         If DWSIM.App.IsRunningOnMono Then
@@ -757,6 +759,7 @@ Public Class frmSurface
 
         Me.CMS_ItemsToDisconnect.Items.Clear()
         Me.CMS_ItemsToConnect.Items.Clear()
+        Me.CopyFromTSMI.DropDownItems.Clear()
 
         Me.DesconectarDeToolStripMenuItem.Visible = False
         Me.ConectarAToolStripMenuItem.Visible = False
@@ -778,8 +781,11 @@ Public Class frmSurface
             Me.ClonarToolStripMenuItem.Visible = True
             Me.ExcluirToolStripMenuItem.Visible = True
             Me.HorizontalmenteToolStripMenuItem.Visible = True
+
             Try
+
                 Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
+
                 If Me.IsObjectDownstreamConnectable(obj.GraphicObject.Tag) Then
                     Dim arr As ArrayList = Me.ReturnDownstreamConnectibles(obj.GraphicObject.Tag)
                     Me.CMS_ItemsToConnect.Items.Clear()
@@ -808,6 +814,7 @@ Public Class frmSurface
                         Me.DesconectarDeToolStripMenuItem.DropDown = Me.CMS_ItemsToDisconnect
                     End If
                 End If
+
                 If Me.IsObjectUpstreamConnectable(obj.GraphicObject.Tag) = False Then
                     Dim arr As ArrayList = Me.ReturnUpstreamDisconnectables(obj.GraphicObject.Tag)
                     If naoLimparListaDeDesconectar = False Then Me.CMS_ItemsToDisconnect.Items.Clear()
@@ -822,11 +829,13 @@ Public Class frmSurface
                         Me.DesconectarDeToolStripMenuItem.DropDown = Me.CMS_ItemsToDisconnect
                     End If
                 End If
+
                 If obj.GraphicObject.FlippedH Then
                     Me.HorizontalmenteToolStripMenuItem.Checked = True
                 Else
                     Me.HorizontalmenteToolStripMenuItem.Checked = False
                 End If
+
                 If obj.Tabela Is Nothing Then
                     Me.MostrarToolStripMenuItem.Checked = False
                 Else
@@ -834,11 +843,36 @@ Public Class frmSurface
                 End If
 
                 If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.MaterialStream Then
+
                     EditCompTSMI.Visible = True
                     RestoreTSMI.Visible = True
+
+                    Dim cancopy As Boolean
+
+                    If Not obj.GraphicObject.InputConnectors(0).IsAttached Then
+                        cancopy = True
+                    Else
+                        If obj.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.OT_Reciclo Then
+                            cancopy = True
+                        Else
+                            cancopy = False
+                        End If
+                    End If
+
+                    If cancopy Then
+                        For Each mstr As Streams.MaterialStream In ChildParent.Collections.CLCS_MaterialStreamCollection.Values
+                            If mstr.GraphicObject.Tag <> obj.GraphicObject.Tag Then
+                                Dim newtsmi As New ToolStripMenuItem(mstr.GraphicObject.Tag)
+                                If mstr.GraphicObject.Calculated Then CopyFromTSMI.DropDownItems.Add(newtsmi)
+                            End If
+                        Next
+                    End If
+
                 Else
+
                     EditCompTSMI.Visible = False
                     RestoreTSMI.Visible = False
+
                 End If
 
             Catch ex As Exception
@@ -888,6 +922,22 @@ Public Class frmSurface
 
         End If
         'Me.InverterToolStripMenuItem.Visible = False
+
+    End Sub
+
+    Sub MaterialStreamClickHandler(ByVal sender As System.Object, ByVal e As ToolStripItemClickedEventArgs)
+
+        Dim obj1 As Streams.MaterialStream = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
+
+        Dim obj2 As Streams.MaterialStream = ChildParent.GetFlowsheetSimulationObject(e.ClickedItem.Text)
+
+        obj1.Assign(obj2)
+
+        CMS_Sel.Hide()
+
+        Application.DoEvents()
+
+        CalculateObject(ChildParent, obj1.Nome)
 
     End Sub
 
