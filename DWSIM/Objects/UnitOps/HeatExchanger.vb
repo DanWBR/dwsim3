@@ -316,6 +316,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     If My.Settings.EnableParallelProcessing Then
                         Try
                             My.MyApplication.IsRunningParallelTasks = True
+                            If My.Settings.EnableGPUProcessing Then
+                                My.MyApplication.gpu.EnableMultithreading()
+                            End If
                             Dim pp As PropertyPackages.PropertyPackage = Me.PropertyPackage
                             pp.CurrentMaterialStream = StInCold
                             Dim Vzc As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
@@ -338,6 +341,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 Throw ex
                             Next
                         Finally
+                            If My.Settings.EnableGPUProcessing Then
+                                My.MyApplication.gpu.DisableMultithreading()
+                                My.MyApplication.gpu.FreeAll()
+                            End If
                             My.MyApplication.IsRunningParallelTasks = False
                         End Try
                     Else
@@ -811,6 +818,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             If My.Settings.EnableParallelProcessing Then
                                 Try
                                     My.MyApplication.IsRunningParallelTasks = True
+                                    If My.Settings.EnableGPUProcessing Then
+                                        My.MyApplication.gpu.EnableMultithreading()
+                                    End If
                                     Dim pp As PropertyPackages.PropertyPackage = Me.PropertyPackage
                                     pp.CurrentMaterialStream = StInCold
                                     Dim Vzc As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
@@ -835,6 +845,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                         Throw ex
                                     Next
                                 Finally
+                                    If My.Settings.EnableGPUProcessing Then
+                                        My.MyApplication.gpu.DisableMultithreading()
+                                        My.MyApplication.gpu.FreeAll()
+                                    End If
                                     My.MyApplication.IsRunningParallelTasks = False
                                 End Try
                             Else

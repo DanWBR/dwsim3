@@ -764,6 +764,7 @@ Public Class frmSurface
         Me.DesconectarDeToolStripMenuItem.Visible = False
         Me.ConectarAToolStripMenuItem.Visible = False
         Me.ToolStripSeparator3.Visible = False
+        Me.CopyFromTSMI.Visible = False
 
         If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.GO_Figura And _
             Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.GO_Tabela And _

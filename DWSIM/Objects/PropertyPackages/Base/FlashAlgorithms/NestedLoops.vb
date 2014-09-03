@@ -336,16 +336,15 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PHFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PHFELT"))
 
-            Dim Tsup, Tinf ', Hsup, Hinf
+            Dim Tsup, Tinf, VTf(n) As Double
 
-            If Tref <> 0 Then
-                Tinf = Tref - 250
-                Tsup = Tref + 250
-            Else
-                Tinf = 100
-                Tsup = 2000
-            End If
-            If Tinf < 100 Then Tinf = 100
+            VTf = PP.RET_VTF
+
+            Tsup = 1000.0#
+            Tinf = 0.0#
+            For i = 0 To n
+                Tinf += Vz(i) * VTf(i)
+            Next
 
             Dim bo As New BrentOpt.Brent
             bo.DefineFuncDelegate(AddressOf Herror)
@@ -393,8 +392,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                 x1 = x1 - fx / dfdx
                 If x1 < 0 Then GoTo alt
                 cnt += 1
-            Loop Until cnt > 20 Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Or cnt > 20 Then
+            Loop Until cnt > 100 Or Double.IsNaN(x1)
+            If Double.IsNaN(x1) Or cnt > 100 Then
 alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Else
                 T = x1
@@ -451,16 +450,16 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PSFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PSFELT"))
 
-            Dim Tsup, Tinf ', Ssup, Sinf
+            Dim Tsup, Tinf, VTf(n) As Double
 
-            If Tref <> 0 Then
-                Tinf = Tref - 200
-                Tsup = Tref + 200
-            Else
-                Tinf = 100
-                Tsup = 2000
-            End If
-            If Tinf < 100 Then Tinf = 100
+            VTf = PP.RET_VTF
+
+            Tsup = 1000.0#
+            Tinf = 0.0#
+            For i = 0 To n
+                Tinf += Vz(i) * VTf(i)
+            Next
+
             Dim bo As New BrentOpt.Brent
             bo.DefineFuncDelegate(AddressOf Serror)
             Console.WriteLine("PS Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
@@ -507,8 +506,8 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 x1 = x1 - fx / dfdx
                 If x1 < 0 Then GoTo alt
                 cnt += 1
-            Loop Until cnt > 50 Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Then
+            Loop Until cnt > 100 Or Double.IsNaN(x1)
+            If Double.IsNaN(x1) Or cnt > 100 Then
 alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Else
                 T = x1
