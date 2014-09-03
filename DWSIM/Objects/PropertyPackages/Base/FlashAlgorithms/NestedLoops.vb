@@ -1,5 +1,5 @@
 '    DWSIM Nested Loops Flash Algorithms
-'    Copyright 2010 Daniel Wagner O. de Medeiros
+'    Copyright 2010-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -264,25 +264,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 End If
 
-                L = 1 - V
+                If V > Vmax Then V = Vmax
+                If V < Vmin Then V = Vmin
 
-                If V > 1 Then
-                    V = 1
-                    L = 0
-                    i = 0
-                    Do
-                        Vy(i) = Vz(i)
-                        i = i + 1
-                    Loop Until i = n + 1
-                ElseIf V < 0 Then
-                    V = 0
-                    L = 1
-                    i = 0
-                    Do
-                        Vx(i) = Vz(i)
-                        i = i + 1
-                    Loop Until i = n + 1
-                End If
+                L = 1 - V
 
                 ecount += 1
 
@@ -341,10 +326,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             VTf = PP.RET_VTF
 
             Tsup = 1000.0#
-            Tinf = 0.0#
-            For i = 0 To n
-                Tinf += Vz(i) * VTf(i)
-            Next
+            Tinf = 150.0#
 
             Dim bo As New BrentOpt.Brent
             bo.DefineFuncDelegate(AddressOf Herror)
@@ -367,7 +349,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                                                          fx = Herror(x1, {P, Vz, PP})
                                                      End Sub)
                         Dim task2 As Task = New Task(Sub()
-                                                         fx2 = Herror(x1 + 1, {P, Vz, PP})
+                                                         fx2 = Herror(x1 + 0.01, {P, Vz, PP})
                                                      End Sub)
                         task1.Start()
                         task2.Start()
@@ -385,16 +367,16 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
                     fx = Herror(x1, {P, Vz, PP})
-                    fx2 = Herror(x1 + 1, {P, Vz, PP})
+                    fx2 = Herror(x1 + 0.01, {P, Vz, PP})
                 End If
-                If Abs(fx) < etol Then Exit Do
-                dfdx = (fx2 - fx)
-                x1 = x1 - fx / dfdx
+                If Abs(fx) < tolEXT Then Exit Do
+                dfdx = (fx2 - fx) / 0.01
+                x1 = x1 - 0.7 * fx / dfdx
                 If x1 < 0 Then GoTo alt
                 cnt += 1
-            Loop Until cnt > 100 Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Or cnt > 100 Then
-alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
+            Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+            If Double.IsNaN(x1) Or cnt > maxitEXT Then
+alt:            T = bo.BrentOpt(150, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Else
                 T = x1
             End If
@@ -455,10 +437,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             VTf = PP.RET_VTF
 
             Tsup = 1000.0#
-            Tinf = 0.0#
-            For i = 0 To n
-                Tinf += Vz(i) * VTf(i)
-            Next
+            Tinf = MathEx.Common.Max(VTf, Vz)
 
             Dim bo As New BrentOpt.Brent
             bo.DefineFuncDelegate(AddressOf Serror)
@@ -481,7 +460,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                                                          fx = Serror(x1, {P, Vz, PP})
                                                      End Sub)
                         Dim task2 As Task = New Task(Sub()
-                                                         fx2 = Serror(x1 + 1, {P, Vz, PP})
+                                                         fx2 = Serror(x1 + 0.01, {P, Vz, PP})
                                                      End Sub)
                         task1.Start()
                         task2.Start()
@@ -496,19 +475,19 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                             My.MyApplication.gpu.FreeAll()
                         End If
                     End Try
-                        My.MyApplication.IsRunningParallelTasks = False
-                    Else
-                        fx = Serror(x1, {P, Vz, PP})
-                        fx2 = Serror(x1 + 1, {P, Vz, PP})
-                    End If
-                If Abs(fx) < etol Then Exit Do
-                dfdx = (fx2 - fx)
+                    My.MyApplication.IsRunningParallelTasks = False
+                Else
+                    fx = Serror(x1, {P, Vz, PP})
+                    fx2 = Serror(x1 + 0.01, {P, Vz, PP})
+                End If
+                If Abs(fx) < tolEXT Then Exit Do
+                dfdx = (fx2 - fx) / 0.01
                 x1 = x1 - fx / dfdx
                 If x1 < 0 Then GoTo alt
                 cnt += 1
-            Loop Until cnt > 100 Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Or cnt > 100 Then
-alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
+            Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+            If Double.IsNaN(x1) Or cnt > maxitEXT Then
+alt:            T = bo.BrentOpt(Tinf, Tsup, 5, tolEXT, maxitEXT, {P, Vz, PP})
             Else
                 T = x1
             End If
