@@ -313,49 +313,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     DeltaHh = -Q / Wh
                     Hc2 = Hc1 + DeltaHc
                     Hh2 = Hh1 + DeltaHh
-                    If My.Settings.EnableParallelProcessing Then
-                        Try
-                            My.MyApplication.IsRunningParallelTasks = True
-                            If My.Settings.EnableGPUProcessing Then
-                                My.MyApplication.gpu.EnableMultithreading()
-                            End If
-                            Dim pp As PropertyPackages.PropertyPackage = Me.PropertyPackage
-                            pp.CurrentMaterialStream = StInCold
-                            Dim Vzc As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
-                            pp.CurrentMaterialStream = StInHot
-                            Dim Vzh As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
-                            Dim tasks(1) As Task
-                            tasks(0) = Task.Factory.StartNew(Sub()
-                                                                 Dim tmp As Object
-                                                                 tmp = pp.FlashBase.Flash_PH(Vzc, Pc2, Hc2, Tc1, pp)
-                                                                 Tc2 = tmp(4)
-                                                             End Sub)
-                            tasks(1) = Task.Factory.StartNew(Sub()
-                                                                 Dim tmp As Object
-                                                                 tmp = pp.FlashBase.Flash_PH(Vzh, Ph2, Hh2, Th1, pp)
-                                                                 Th2 = tmp(4)
-                                                             End Sub)
-                            Task.WaitAll(tasks)
-                        Catch ae As AggregateException
-                            For Each ex As Exception In ae.InnerExceptions
-                                Throw ex
-                            Next
-                        Finally
-                            If My.Settings.EnableGPUProcessing Then
-                                My.MyApplication.gpu.DisableMultithreading()
-                                My.MyApplication.gpu.FreeAll()
-                            End If
-                            My.MyApplication.IsRunningParallelTasks = False
-                        End Try
-                    Else
-                        Me.PropertyPackage.CurrentMaterialStream = StInCold
-                        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc1)
-                        Tc2 = tmp(2)
-                        Hh2 = Hh1 + DeltaHh
-                        Me.PropertyPackage.CurrentMaterialStream = StInHot
-                        tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th1)
-                        Th2 = tmp(2)
-                    End If
+                    Me.PropertyPackage.CurrentMaterialStream = StInCold
+                    Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc1)
+                    Tc2 = tmp(2)
+                    Hh2 = Hh1 + DeltaHh
+                    Me.PropertyPackage.CurrentMaterialStream = StInHot
+                    tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th1)
+                    Th2 = tmp(2)
                     Select Case Me.FlowDir
                         Case FlowDirection.CoCurrent
                             LMTD = ((Th1 - Tc1) - (Th2 - Tc2)) / Math.Log((Th1 - Tc1) / (Th2 - Tc2))
@@ -815,55 +779,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             DeltaHh = -Q / Wh
                             Hc2 = Hc1 + DeltaHc
                             Hh2 = Hh1 + DeltaHh
-                            If My.Settings.EnableParallelProcessing Then
-                                Try
-                                    My.MyApplication.IsRunningParallelTasks = True
-                                    If My.Settings.EnableGPUProcessing Then
-                                        My.MyApplication.gpu.EnableMultithreading()
-                                    End If
-                                    Dim pp As PropertyPackages.PropertyPackage = Me.PropertyPackage
-                                    pp.CurrentMaterialStream = StInCold
-                                    Dim Vzc As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
-                                    pp.CurrentMaterialStream = StInHot
-                                    Dim Vzh As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
-                                    Dim tasks(1) As Task
-                                    tasks(0) = Task.Factory.StartNew(Sub()
-                                                                         tmp = pp.FlashBase.Flash_PH(Vzc, Pc2, Hc2, Tc2, pp)
-                                                                         Tc2_ant = Tc2
-                                                                         Tc2 = tmp(4)
-                                                                         Tc2 = 0.6 * Tc2 + 0.4 * Tc2_ant
-                                                                     End Sub)
-                                    tasks(1) = Task.Factory.StartNew(Sub()
-                                                                         tmp = pp.FlashBase.Flash_PH(Vzh, Ph2, Hh2, Th2, pp)
-                                                                         Th2_ant = Th2
-                                                                         Th2 = tmp(4)
-                                                                         Th2 = 0.6 * Th2 + 0.4 * Th2_ant
-                                                                     End Sub)
-                                    Task.WaitAll(tasks)
-                                Catch ae As AggregateException
-                                    For Each ex As Exception In ae.InnerExceptions
-                                        Throw ex
-                                    Next
-                                Finally
-                                    If My.Settings.EnableGPUProcessing Then
-                                        My.MyApplication.gpu.DisableMultithreading()
-                                        My.MyApplication.gpu.FreeAll()
-                                    End If
-                                    My.MyApplication.IsRunningParallelTasks = False
-                                End Try
-                            Else
-                                Me.PropertyPackage.CurrentMaterialStream = StInCold
-                                tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc2)
-                                Tc2_ant = Tc2
-                                Tc2 = tmp(2)
-                                Tc2 = 0.6 * Tc2 + 0.4 * Tc2_ant
-                                Me.PropertyPackage.CurrentMaterialStream = StInHot
-                                tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th2)
-                                Th2_ant = Th2
-                                Th2 = tmp(2)
-                                Th2 = 0.6 * Th2 + 0.4 * Th2_ant
+                            Me.PropertyPackage.CurrentMaterialStream = StInCold
+                            tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc2)
+                            Tc2_ant = Tc2
+                            Tc2 = tmp(2)
+                            Tc2 = 0.6 * Tc2 + 0.4 * Tc2_ant
+                            Me.PropertyPackage.CurrentMaterialStream = StInHot
+                            tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th2)
+                            Th2_ant = Th2
+                            Th2 = tmp(2)
+                            Th2 = 0.6 * Th2 + 0.4 * Th2_ant
                             End If
-                        End If
                         If STProperties.Shell_Fluid = 0 Then
                             Pc2 = Pc1 - dps
                             Ph2 = Ph1 - dpt
