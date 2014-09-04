@@ -414,6 +414,9 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                     'switch to a bubble point temperature calculation...
                     Dim tmp = _pp.DW_CalcBubT(_xc(i), _P(i), _Tj(i), Nothing, False)
                     _Tj(i) = tmp(4)
+                    If Double.IsNaN(_Tj(i)) Or Double.IsInfinity(_Tj(i)) Then
+                        If i > 0 Then _Tj(i) = _Tj_ant(i - 1)
+                    End If
                     CheckCalculatorStatus()
                 End If
             Next
@@ -1627,27 +1630,22 @@ restart:            fx = Me.FunctionValue(xvar)
                         xvar_ant(i) = xvar(i)
                         xvar(i) += dx(i) * df
 
-                        'If Abs((dx(i) * df) / xvar_ant(i)) > 10 Then
-                        '    'perturb = True
-                        '    xvar(i) = xvar_ant(i) - df * (xvar_ant(i) - xlowbound) * 0.5
-                        'End If
-                        'If Double.IsNaN(dx(i)) Or Double.IsInfinity(dx(i)) Then
-                        '    bypass = True
-                        'End If
+                        If Abs((dx(i) * df) / xvar_ant(i)) > 10 Then
+                            'perturb = True
+                            'xvar(i) = xvar_ant(i) - df * (xvar_ant(i) - xlowbound) * 0.5
+                            xvar(i) = xvar_ant(i) * (1 + Math.Sign(dx(i)))
+                        End If
+                        If Double.IsNaN(dx(i)) Or Double.IsInfinity(dx(i)) Then
+                            bypass = True
+                        End If
+
                     Next
 
-                    'If perturb Then
-                    '    For i = 0 To el
-                    '        xvar(i) = xvar_ant(i) * (1 + 0.3 * Math.Sign(dx(i)))
-                    '    Next
-                    'End If
-
-                    'If bypass Then
-                    '    For i = 0 To el
-                    '        xvar(i) = xvar_ant(i) * 0.95
-                    '    Next
-                    'End If
-
+                    If bypass Then
+                        For i = 0 To el
+                            xvar(i) = xvar_ant(i) * 0.95
+                        Next
+                    End If
 
                     il_err_ant = il_err
 

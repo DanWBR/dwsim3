@@ -22,81 +22,85 @@ Partial Class UIInitialEstimatesEditorForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UIInitialEstimatesEditorForm))
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.Button4 = New System.Windows.Forms.Button
-        Me.Button3 = New System.Windows.Forms.Button
-        Me.Button2 = New System.Windows.Forms.Button
-        Me.TextBox1 = New System.Windows.Forms.TextBox
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip
-        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem
-        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton7 = New System.Windows.Forms.ToolStripButton
-        Me.dgvv = New System.Windows.Forms.DataGridView
-        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem
-        Me.ToolStrip2 = New System.Windows.Forms.ToolStrip
-        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton8 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton9 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton10 = New System.Windows.Forms.ToolStripButton
-        Me.dgvcl = New System.Windows.Forms.DataGridView
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.FaTabStripItem5 = New FarsiLibrary.Win.FATabStripItem
-        Me.ToolStrip5 = New System.Windows.Forms.ToolStrip
-        Me.ToolStripButton21 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton22 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton23 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton24 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton25 = New System.Windows.Forms.ToolStripButton
-        Me.dgvcv = New System.Windows.Forms.DataGridView
-        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
+        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton7 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripButton28 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton27 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton26 = New System.Windows.Forms.ToolStripButton()
+        Me.dgvv = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
+        Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton8 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton9 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton10 = New System.Windows.Forms.ToolStripButton()
+        Me.dgvcl = New System.Windows.Forms.DataGridView()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FaTabStripItem5 = New FarsiLibrary.Win.FATabStripItem()
+        Me.ToolStrip5 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton21 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton22 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton23 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton24 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton25 = New System.Windows.Forms.ToolStripButton()
+        Me.dgvcv = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip
-        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem
-        Me.ToolStrip3 = New System.Windows.Forms.ToolStrip
-        Me.ToolStripButton11 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton12 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton13 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton14 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton15 = New System.Windows.Forms.ToolStripButton
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem
-        Me.ToolStrip4 = New System.Windows.Forms.ToolStrip
-        Me.ToolStripButton16 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton17 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton18 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton19 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton20 = New System.Windows.Forms.ToolStripButton
-        Me.DataGridView2 = New System.Windows.Forms.DataGridView
-        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.sfd1 = New System.Windows.Forms.SaveFileDialog
-        Me.ofd1 = New System.Windows.Forms.OpenFileDialog
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip()
+        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
+        Me.ToolStrip3 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton11 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton12 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton13 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton14 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton15 = New System.Windows.Forms.ToolStripButton()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
+        Me.ToolStrip4 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton16 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton17 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton18 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton19 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton20 = New System.Windows.Forms.ToolStripButton()
+        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.sfd1 = New System.Windows.Forms.SaveFileDialog()
+        Me.ofd1 = New System.Windows.Forms.OpenFileDialog()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -121,27 +125,19 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'GroupBox1
         '
-        Me.GroupBox1.AccessibleDescription = Nothing
-        Me.GroupBox1.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox1, "GroupBox1")
-        Me.GroupBox1.BackgroundImage = Nothing
         Me.GroupBox1.Controls.Add(Me.Button4)
         Me.GroupBox1.Controls.Add(Me.Button3)
         Me.GroupBox1.Controls.Add(Me.Button2)
         Me.GroupBox1.Controls.Add(Me.TextBox1)
         Me.GroupBox1.Controls.Add(Me.Button1)
-        Me.GroupBox1.Font = Nothing
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         Me.ToolTip1.SetToolTip(Me.GroupBox1, resources.GetString("GroupBox1.ToolTip"))
         '
         'Button4
         '
-        Me.Button4.AccessibleDescription = Nothing
-        Me.Button4.AccessibleName = Nothing
         resources.ApplyResources(Me.Button4, "Button4")
-        Me.Button4.BackgroundImage = Nothing
-        Me.Button4.Font = Nothing
         Me.Button4.Image = Global.DWSIM.My.Resources.Resources.disk
         Me.Button4.Name = "Button4"
         Me.ToolTip1.SetToolTip(Me.Button4, resources.GetString("Button4.ToolTip"))
@@ -149,11 +145,7 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'Button3
         '
-        Me.Button3.AccessibleDescription = Nothing
-        Me.Button3.AccessibleName = Nothing
         resources.ApplyResources(Me.Button3, "Button3")
-        Me.Button3.BackgroundImage = Nothing
-        Me.Button3.Font = Nothing
         Me.Button3.Image = Global.DWSIM.My.Resources.Resources.arrow_rotate_clockwise
         Me.Button3.Name = "Button3"
         Me.ToolTip1.SetToolTip(Me.Button3, resources.GetString("Button3.ToolTip"))
@@ -161,11 +153,7 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'Button2
         '
-        Me.Button2.AccessibleDescription = Nothing
-        Me.Button2.AccessibleName = Nothing
         resources.ApplyResources(Me.Button2, "Button2")
-        Me.Button2.BackgroundImage = Nothing
-        Me.Button2.Font = Nothing
         Me.Button2.Image = Global.DWSIM.My.Resources.Resources.tick
         Me.Button2.Name = "Button2"
         Me.ToolTip1.SetToolTip(Me.Button2, resources.GetString("Button2.ToolTip"))
@@ -173,22 +161,14 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'TextBox1
         '
-        Me.TextBox1.AccessibleDescription = Nothing
-        Me.TextBox1.AccessibleName = Nothing
         resources.ApplyResources(Me.TextBox1, "TextBox1")
-        Me.TextBox1.BackgroundImage = Nothing
-        Me.TextBox1.Font = Nothing
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
         Me.ToolTip1.SetToolTip(Me.TextBox1, resources.GetString("TextBox1.ToolTip"))
         '
         'Button1
         '
-        Me.Button1.AccessibleDescription = Nothing
-        Me.Button1.AccessibleName = Nothing
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.BackgroundImage = Nothing
-        Me.Button1.Font = Nothing
         Me.Button1.Image = Global.DWSIM.My.Resources.Resources.folder_page_white
         Me.Button1.Name = "Button1"
         Me.ToolTip1.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip"))
@@ -196,23 +176,17 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'GroupBox2
         '
-        Me.GroupBox2.AccessibleDescription = Nothing
-        Me.GroupBox2.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.BackgroundImage = Nothing
         Me.GroupBox2.Controls.Add(Me.FaTabStrip1)
-        Me.GroupBox2.Font = Nothing
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         Me.ToolTip1.SetToolTip(Me.GroupBox2, resources.GetString("GroupBox2.ToolTip"))
         '
         'FaTabStrip1
         '
-        Me.FaTabStrip1.AccessibleDescription = Nothing
-        Me.FaTabStrip1.AccessibleName = Nothing
+        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
-        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2, Me.FaTabStripItem5})
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
@@ -220,8 +194,6 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'FaTabStripItem1
         '
-        Me.FaTabStripItem1.AccessibleDescription = Nothing
-        Me.FaTabStripItem1.AccessibleName = Nothing
         resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         Me.FaTabStripItem1.CanClose = False
         Me.FaTabStripItem1.Controls.Add(Me.ToolStrip1)
@@ -233,97 +205,124 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.AccessibleDescription = Nothing
-        Me.ToolStrip1.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
-        Me.ToolStrip1.BackgroundImage = Nothing
-        Me.ToolStrip1.Font = Nothing
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton5, Me.ToolStripButton6, Me.ToolStripButton7})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton5, Me.ToolStripButton6, Me.ToolStripButton7, Me.ToolStripSeparator1, Me.ToolStripButton28, Me.ToolStripButton27, Me.ToolStripButton26})
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolTip1.SetToolTip(Me.ToolStrip1, resources.GetString("ToolStrip1.ToolTip"))
         '
         'ToolStripButton1
         '
-        Me.ToolStripButton1.AccessibleDescription = Nothing
-        Me.ToolStripButton1.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
-        Me.ToolStripButton1.BackgroundImage = Nothing
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.copy
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'ToolStripButton2
         '
-        Me.ToolStripButton2.AccessibleDescription = Nothing
-        Me.ToolStripButton2.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
-        Me.ToolStripButton2.BackgroundImage = Nothing
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.paste_plain
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'ToolStripButton5
         '
-        Me.ToolStripButton5.AccessibleDescription = Nothing
-        Me.ToolStripButton5.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
-        Me.ToolStripButton5.BackgroundImage = Nothing
         Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton5.Image = Global.DWSIM.My.Resources.Resources.cross
         Me.ToolStripButton5.Name = "ToolStripButton5"
         '
         'ToolStripButton6
         '
-        Me.ToolStripButton6.AccessibleDescription = Nothing
-        Me.ToolStripButton6.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
-        Me.ToolStripButton6.BackgroundImage = Nothing
         Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.lock
         Me.ToolStripButton6.Name = "ToolStripButton6"
         '
         'ToolStripButton7
         '
-        Me.ToolStripButton7.AccessibleDescription = Nothing
-        Me.ToolStripButton7.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton7, "ToolStripButton7")
-        Me.ToolStripButton7.BackgroundImage = Nothing
         Me.ToolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton7.Image = Global.DWSIM.My.Resources.Resources.lock_open
         Me.ToolStripButton7.Name = "ToolStripButton7"
         '
+        'ToolStripSeparator1
+        '
+        resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        '
+        'ToolStripButton28
+        '
+        resources.ApplyResources(Me.ToolStripButton28, "ToolStripButton28")
+        Me.ToolStripButton28.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton28.Image = Global.DWSIM.My.Resources.Resources.chart_line1
+        Me.ToolStripButton28.Name = "ToolStripButton28"
+        '
+        'ToolStripButton27
+        '
+        resources.ApplyResources(Me.ToolStripButton27, "ToolStripButton27")
+        Me.ToolStripButton27.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton27.Image = Global.DWSIM.My.Resources.Resources.chart_line1
+        Me.ToolStripButton27.Name = "ToolStripButton27"
+        '
+        'ToolStripButton26
+        '
+        resources.ApplyResources(Me.ToolStripButton26, "ToolStripButton26")
+        Me.ToolStripButton26.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton26.Image = Global.DWSIM.My.Resources.Resources.chart_line1
+        Me.ToolStripButton26.Name = "ToolStripButton26"
+        '
         'dgvv
         '
-        Me.dgvv.AccessibleDescription = Nothing
-        Me.dgvv.AccessibleName = Nothing
+        resources.ApplyResources(Me.dgvv, "dgvv")
         Me.dgvv.AllowUserToAddRows = False
         Me.dgvv.AllowUserToDeleteRows = False
         Me.dgvv.AllowUserToOrderColumns = True
         Me.dgvv.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.dgvv, "dgvv")
         Me.dgvv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dgvv.BackgroundImage = Nothing
         Me.dgvv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvv.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column4, Me.Column3})
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Tahoma", 8.25!)
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.NullValue = "<empty>"
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvv.DefaultCellStyle = DataGridViewCellStyle2
-        Me.dgvv.Font = Nothing
-        Me.dgvv.MultiSelect = False
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Tahoma", 8.25!)
+        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle12.NullValue = "<empty>"
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvv.DefaultCellStyle = DataGridViewCellStyle12
         Me.dgvv.Name = "dgvv"
         Me.dgvv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.ToolTip1.SetToolTip(Me.dgvv, resources.GetString("dgvv.ToolTip"))
         '
+        'Column1
+        '
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle11
+        Me.Column1.FillWeight = 30.0!
+        resources.ApplyResources(Me.Column1, "Column1")
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        '
+        'Column2
+        '
+        Me.Column2.FillWeight = 30.0!
+        resources.ApplyResources(Me.Column2, "Column2")
+        Me.Column2.Name = "Column2"
+        '
+        'Column4
+        '
+        Me.Column4.FillWeight = 40.0!
+        resources.ApplyResources(Me.Column4, "Column4")
+        Me.Column4.Name = "Column4"
+        '
+        'Column3
+        '
+        Me.Column3.FillWeight = 40.0!
+        resources.ApplyResources(Me.Column3, "Column3")
+        Me.Column3.Name = "Column3"
+        '
         'FaTabStripItem2
         '
-        Me.FaTabStripItem2.AccessibleDescription = Nothing
-        Me.FaTabStripItem2.AccessibleName = Nothing
         resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         Me.FaTabStripItem2.CanClose = False
         Me.FaTabStripItem2.Controls.Add(Me.ToolStrip2)
@@ -334,105 +333,79 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'ToolStrip2
         '
-        Me.ToolStrip2.AccessibleDescription = Nothing
-        Me.ToolStrip2.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStrip2, "ToolStrip2")
-        Me.ToolStrip2.BackgroundImage = Nothing
-        Me.ToolStrip2.Font = Nothing
         Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripButton8, Me.ToolStripButton9, Me.ToolStripButton10})
         Me.ToolStrip2.Name = "ToolStrip2"
         Me.ToolTip1.SetToolTip(Me.ToolStrip2, resources.GetString("ToolStrip2.ToolTip"))
         '
         'ToolStripButton3
         '
-        Me.ToolStripButton3.AccessibleDescription = Nothing
-        Me.ToolStripButton3.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
-        Me.ToolStripButton3.BackgroundImage = Nothing
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.copy
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'ToolStripButton4
         '
-        Me.ToolStripButton4.AccessibleDescription = Nothing
-        Me.ToolStripButton4.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
-        Me.ToolStripButton4.BackgroundImage = Nothing
         Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton4.Image = Global.DWSIM.My.Resources.Resources.paste_plain
         Me.ToolStripButton4.Name = "ToolStripButton4"
         '
         'ToolStripButton8
         '
-        Me.ToolStripButton8.AccessibleDescription = Nothing
-        Me.ToolStripButton8.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton8, "ToolStripButton8")
-        Me.ToolStripButton8.BackgroundImage = Nothing
         Me.ToolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton8.Image = Global.DWSIM.My.Resources.Resources.cross
         Me.ToolStripButton8.Name = "ToolStripButton8"
         '
         'ToolStripButton9
         '
-        Me.ToolStripButton9.AccessibleDescription = Nothing
-        Me.ToolStripButton9.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton9, "ToolStripButton9")
-        Me.ToolStripButton9.BackgroundImage = Nothing
         Me.ToolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton9.Image = Global.DWSIM.My.Resources.Resources.lock
         Me.ToolStripButton9.Name = "ToolStripButton9"
         '
         'ToolStripButton10
         '
-        Me.ToolStripButton10.AccessibleDescription = Nothing
-        Me.ToolStripButton10.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton10, "ToolStripButton10")
-        Me.ToolStripButton10.BackgroundImage = Nothing
         Me.ToolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton10.Image = Global.DWSIM.My.Resources.Resources.lock_open
         Me.ToolStripButton10.Name = "ToolStripButton10"
         '
         'dgvcl
         '
-        Me.dgvcl.AccessibleDescription = Nothing
-        Me.dgvcl.AccessibleName = Nothing
+        resources.ApplyResources(Me.dgvcl, "dgvcl")
         Me.dgvcl.AllowUserToAddRows = False
         Me.dgvcl.AllowUserToDeleteRows = False
         Me.dgvcl.AllowUserToOrderColumns = True
         Me.dgvcl.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.dgvcl, "dgvcl")
         Me.dgvcl.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
-        Me.dgvcl.BackgroundImage = Nothing
         Me.dgvcl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvcl.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column5})
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Tahoma", 8.25!)
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle4.NullValue = "<empty>"
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvcl.DefaultCellStyle = DataGridViewCellStyle4
-        Me.dgvcl.Font = Nothing
-        Me.dgvcl.MultiSelect = False
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Tahoma", 8.25!)
+        DataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle14.NullValue = "<empty>"
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvcl.DefaultCellStyle = DataGridViewCellStyle14
         Me.dgvcl.Name = "dgvcl"
         Me.dgvcl.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.ToolTip1.SetToolTip(Me.dgvcl, resources.GetString("dgvcl.ToolTip"))
         '
         'Column5
         '
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle13.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle13
         resources.ApplyResources(Me.Column5, "Column5")
         Me.Column5.Name = "Column5"
         Me.Column5.ReadOnly = True
         '
         'FaTabStripItem5
         '
-        Me.FaTabStripItem5.AccessibleDescription = Nothing
-        Me.FaTabStripItem5.AccessibleName = Nothing
         resources.ApplyResources(Me.FaTabStripItem5, "FaTabStripItem5")
         Me.FaTabStripItem5.CanClose = False
         Me.FaTabStripItem5.Controls.Add(Me.ToolStrip5)
@@ -443,115 +416,87 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'ToolStrip5
         '
-        Me.ToolStrip5.AccessibleDescription = Nothing
-        Me.ToolStrip5.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStrip5, "ToolStrip5")
-        Me.ToolStrip5.BackgroundImage = Nothing
-        Me.ToolStrip5.Font = Nothing
         Me.ToolStrip5.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton21, Me.ToolStripButton22, Me.ToolStripButton23, Me.ToolStripButton24, Me.ToolStripButton25})
         Me.ToolStrip5.Name = "ToolStrip5"
         Me.ToolTip1.SetToolTip(Me.ToolStrip5, resources.GetString("ToolStrip5.ToolTip"))
         '
         'ToolStripButton21
         '
-        Me.ToolStripButton21.AccessibleDescription = Nothing
-        Me.ToolStripButton21.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton21, "ToolStripButton21")
-        Me.ToolStripButton21.BackgroundImage = Nothing
         Me.ToolStripButton21.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton21.Image = Global.DWSIM.My.Resources.Resources.copy
         Me.ToolStripButton21.Name = "ToolStripButton21"
         '
         'ToolStripButton22
         '
-        Me.ToolStripButton22.AccessibleDescription = Nothing
-        Me.ToolStripButton22.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton22, "ToolStripButton22")
-        Me.ToolStripButton22.BackgroundImage = Nothing
         Me.ToolStripButton22.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton22.Image = Global.DWSIM.My.Resources.Resources.paste_plain
         Me.ToolStripButton22.Name = "ToolStripButton22"
         '
         'ToolStripButton23
         '
-        Me.ToolStripButton23.AccessibleDescription = Nothing
-        Me.ToolStripButton23.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton23, "ToolStripButton23")
-        Me.ToolStripButton23.BackgroundImage = Nothing
         Me.ToolStripButton23.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton23.Image = Global.DWSIM.My.Resources.Resources.cross
         Me.ToolStripButton23.Name = "ToolStripButton23"
         '
         'ToolStripButton24
         '
-        Me.ToolStripButton24.AccessibleDescription = Nothing
-        Me.ToolStripButton24.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton24, "ToolStripButton24")
-        Me.ToolStripButton24.BackgroundImage = Nothing
         Me.ToolStripButton24.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton24.Image = Global.DWSIM.My.Resources.Resources.lock
         Me.ToolStripButton24.Name = "ToolStripButton24"
         '
         'ToolStripButton25
         '
-        Me.ToolStripButton25.AccessibleDescription = Nothing
-        Me.ToolStripButton25.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton25, "ToolStripButton25")
-        Me.ToolStripButton25.BackgroundImage = Nothing
         Me.ToolStripButton25.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton25.Image = Global.DWSIM.My.Resources.Resources.lock_open
         Me.ToolStripButton25.Name = "ToolStripButton25"
         '
         'dgvcv
         '
-        Me.dgvcv.AccessibleDescription = Nothing
-        Me.dgvcv.AccessibleName = Nothing
+        resources.ApplyResources(Me.dgvcv, "dgvcv")
         Me.dgvcv.AllowUserToAddRows = False
         Me.dgvcv.AllowUserToDeleteRows = False
         Me.dgvcv.AllowUserToOrderColumns = True
         Me.dgvcv.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.dgvcv, "dgvcv")
         Me.dgvcv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
-        Me.dgvcv.BackgroundImage = Nothing
         Me.dgvcv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvcv.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn6})
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Tahoma", 8.25!)
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle6.NullValue = "<empty>"
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvcv.DefaultCellStyle = DataGridViewCellStyle6
-        Me.dgvcv.Font = Nothing
-        Me.dgvcv.MultiSelect = False
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle16.Font = New System.Drawing.Font("Tahoma", 8.25!)
+        DataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle16.NullValue = "<empty>"
+        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvcv.DefaultCellStyle = DataGridViewCellStyle16
         Me.dgvcv.Name = "dgvcv"
         Me.dgvcv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.ToolTip1.SetToolTip(Me.dgvcv, resources.GetString("dgvcv.ToolTip"))
         '
         'DataGridViewTextBoxColumn6
         '
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle15.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle15
         resources.ApplyResources(Me.DataGridViewTextBoxColumn6, "DataGridViewTextBoxColumn6")
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
         Me.DataGridViewTextBoxColumn6.ReadOnly = True
         '
         'FaTabStrip2
         '
-        Me.FaTabStrip2.AccessibleDescription = Nothing
-        Me.FaTabStrip2.AccessibleName = Nothing
+        resources.ApplyResources(Me.FaTabStrip2, "FaTabStrip2")
         Me.FaTabStrip2.AlwaysShowClose = False
         Me.FaTabStrip2.AlwaysShowMenuGlyph = False
-        resources.ApplyResources(Me.FaTabStrip2, "FaTabStrip2")
         Me.FaTabStrip2.Name = "FaTabStrip2"
         Me.ToolTip1.SetToolTip(Me.FaTabStrip2, resources.GetString("FaTabStrip2.ToolTip"))
         '
         'FaTabStripItem3
         '
-        Me.FaTabStripItem3.AccessibleDescription = Nothing
-        Me.FaTabStripItem3.AccessibleName = Nothing
         resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         Me.FaTabStripItem3.CanClose = False
         Me.FaTabStripItem3.Controls.Add(Me.ToolStrip3)
@@ -562,88 +507,65 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'ToolStrip3
         '
-        Me.ToolStrip3.AccessibleDescription = Nothing
-        Me.ToolStrip3.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStrip3, "ToolStrip3")
-        Me.ToolStrip3.BackgroundImage = Nothing
-        Me.ToolStrip3.Font = Nothing
         Me.ToolStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton11, Me.ToolStripButton12, Me.ToolStripButton13, Me.ToolStripButton14, Me.ToolStripButton15})
         Me.ToolStrip3.Name = "ToolStrip3"
         Me.ToolTip1.SetToolTip(Me.ToolStrip3, resources.GetString("ToolStrip3.ToolTip"))
         '
         'ToolStripButton11
         '
-        Me.ToolStripButton11.AccessibleDescription = Nothing
-        Me.ToolStripButton11.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton11, "ToolStripButton11")
-        Me.ToolStripButton11.BackgroundImage = Nothing
         Me.ToolStripButton11.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton11.Image = Global.DWSIM.My.Resources.Resources.copy
         Me.ToolStripButton11.Name = "ToolStripButton11"
         '
         'ToolStripButton12
         '
-        Me.ToolStripButton12.AccessibleDescription = Nothing
-        Me.ToolStripButton12.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton12, "ToolStripButton12")
-        Me.ToolStripButton12.BackgroundImage = Nothing
         Me.ToolStripButton12.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton12.Image = Global.DWSIM.My.Resources.Resources.paste_plain
         Me.ToolStripButton12.Name = "ToolStripButton12"
         '
         'ToolStripButton13
         '
-        Me.ToolStripButton13.AccessibleDescription = Nothing
-        Me.ToolStripButton13.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton13, "ToolStripButton13")
-        Me.ToolStripButton13.BackgroundImage = Nothing
         Me.ToolStripButton13.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton13.Image = Global.DWSIM.My.Resources.Resources.cross
         Me.ToolStripButton13.Name = "ToolStripButton13"
         '
         'ToolStripButton14
         '
-        Me.ToolStripButton14.AccessibleDescription = Nothing
-        Me.ToolStripButton14.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton14, "ToolStripButton14")
-        Me.ToolStripButton14.BackgroundImage = Nothing
         Me.ToolStripButton14.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton14.Image = Global.DWSIM.My.Resources.Resources.lock
         Me.ToolStripButton14.Name = "ToolStripButton14"
         '
         'ToolStripButton15
         '
-        Me.ToolStripButton15.AccessibleDescription = Nothing
-        Me.ToolStripButton15.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton15, "ToolStripButton15")
-        Me.ToolStripButton15.BackgroundImage = Nothing
         Me.ToolStripButton15.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton15.Image = Global.DWSIM.My.Resources.Resources.lock_open
         Me.ToolStripButton15.Name = "ToolStripButton15"
         '
         'DataGridView1
         '
-        Me.DataGridView1.AccessibleDescription = Nothing
-        Me.DataGridView1.AccessibleName = Nothing
+        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.AllowUserToAddRows = False
         Me.DataGridView1.AllowUserToDeleteRows = False
         Me.DataGridView1.AllowUserToOrderColumns = True
         Me.DataGridView1.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DataGridView1.BackgroundImage = Nothing
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4})
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.NullValue = "<empty>"
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle8
-        Me.DataGridView1.Font = Nothing
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle18.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle18.NullValue = "<empty>"
+        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle18
         Me.DataGridView1.MultiSelect = False
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
@@ -652,8 +574,8 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'DataGridViewTextBoxColumn1
         '
-        DataGridViewCellStyle7.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle17.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle17
         Me.DataGridViewTextBoxColumn1.FillWeight = 10.0!
         resources.ApplyResources(Me.DataGridViewTextBoxColumn1, "DataGridViewTextBoxColumn1")
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
@@ -679,8 +601,6 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'FaTabStripItem4
         '
-        Me.FaTabStripItem4.AccessibleDescription = Nothing
-        Me.FaTabStripItem4.AccessibleName = Nothing
         resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
         Me.FaTabStripItem4.CanClose = False
         Me.FaTabStripItem4.Controls.Add(Me.ToolStrip4)
@@ -692,88 +612,65 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'ToolStrip4
         '
-        Me.ToolStrip4.AccessibleDescription = Nothing
-        Me.ToolStrip4.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStrip4, "ToolStrip4")
-        Me.ToolStrip4.BackgroundImage = Nothing
-        Me.ToolStrip4.Font = Nothing
         Me.ToolStrip4.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton16, Me.ToolStripButton17, Me.ToolStripButton18, Me.ToolStripButton19, Me.ToolStripButton20})
         Me.ToolStrip4.Name = "ToolStrip4"
         Me.ToolTip1.SetToolTip(Me.ToolStrip4, resources.GetString("ToolStrip4.ToolTip"))
         '
         'ToolStripButton16
         '
-        Me.ToolStripButton16.AccessibleDescription = Nothing
-        Me.ToolStripButton16.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton16, "ToolStripButton16")
-        Me.ToolStripButton16.BackgroundImage = Nothing
         Me.ToolStripButton16.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton16.Image = Global.DWSIM.My.Resources.Resources.copy
         Me.ToolStripButton16.Name = "ToolStripButton16"
         '
         'ToolStripButton17
         '
-        Me.ToolStripButton17.AccessibleDescription = Nothing
-        Me.ToolStripButton17.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton17, "ToolStripButton17")
-        Me.ToolStripButton17.BackgroundImage = Nothing
         Me.ToolStripButton17.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton17.Image = Global.DWSIM.My.Resources.Resources.paste_plain
         Me.ToolStripButton17.Name = "ToolStripButton17"
         '
         'ToolStripButton18
         '
-        Me.ToolStripButton18.AccessibleDescription = Nothing
-        Me.ToolStripButton18.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton18, "ToolStripButton18")
-        Me.ToolStripButton18.BackgroundImage = Nothing
         Me.ToolStripButton18.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton18.Image = Global.DWSIM.My.Resources.Resources.cross
         Me.ToolStripButton18.Name = "ToolStripButton18"
         '
         'ToolStripButton19
         '
-        Me.ToolStripButton19.AccessibleDescription = Nothing
-        Me.ToolStripButton19.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton19, "ToolStripButton19")
-        Me.ToolStripButton19.BackgroundImage = Nothing
         Me.ToolStripButton19.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton19.Image = Global.DWSIM.My.Resources.Resources.lock
         Me.ToolStripButton19.Name = "ToolStripButton19"
         '
         'ToolStripButton20
         '
-        Me.ToolStripButton20.AccessibleDescription = Nothing
-        Me.ToolStripButton20.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripButton20, "ToolStripButton20")
-        Me.ToolStripButton20.BackgroundImage = Nothing
         Me.ToolStripButton20.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton20.Image = Global.DWSIM.My.Resources.Resources.lock_open
         Me.ToolStripButton20.Name = "ToolStripButton20"
         '
         'DataGridView2
         '
-        Me.DataGridView2.AccessibleDescription = Nothing
-        Me.DataGridView2.AccessibleName = Nothing
+        resources.ApplyResources(Me.DataGridView2, "DataGridView2")
         Me.DataGridView2.AllowUserToAddRows = False
         Me.DataGridView2.AllowUserToDeleteRows = False
         Me.DataGridView2.AllowUserToOrderColumns = True
         Me.DataGridView2.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.DataGridView2, "DataGridView2")
         Me.DataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
-        Me.DataGridView2.BackgroundImage = Nothing
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn5})
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle10.NullValue = "<empty>"
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridView2.DefaultCellStyle = DataGridViewCellStyle10
-        Me.DataGridView2.Font = Nothing
+        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle20.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle20.NullValue = "<empty>"
+        DataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView2.DefaultCellStyle = DataGridViewCellStyle20
         Me.DataGridView2.MultiSelect = False
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
@@ -782,8 +679,8 @@ Partial Class UIInitialEstimatesEditorForm
         '
         'DataGridViewTextBoxColumn5
         '
-        DataGridViewCellStyle9.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle19.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle19
         resources.ApplyResources(Me.DataGridViewTextBoxColumn5, "DataGridViewTextBoxColumn5")
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
         Me.DataGridViewTextBoxColumn5.ReadOnly = True
@@ -800,45 +697,13 @@ Partial Class UIInitialEstimatesEditorForm
         resources.ApplyResources(Me.ofd1, "ofd1")
         Me.ofd1.RestoreDirectory = True
         '
-        'Column1
-        '
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Column1.FillWeight = 30.0!
-        resources.ApplyResources(Me.Column1, "Column1")
-        Me.Column1.Name = "Column1"
-        Me.Column1.ReadOnly = True
-        '
-        'Column2
-        '
-        Me.Column2.FillWeight = 30.0!
-        resources.ApplyResources(Me.Column2, "Column2")
-        Me.Column2.Name = "Column2"
-        '
-        'Column4
-        '
-        Me.Column4.FillWeight = 40.0!
-        resources.ApplyResources(Me.Column4, "Column4")
-        Me.Column4.Name = "Column4"
-        '
-        'Column3
-        '
-        Me.Column3.FillWeight = 40.0!
-        resources.ApplyResources(Me.Column3, "Column3")
-        Me.Column3.Name = "Column3"
-        '
         'UIInitialEstimatesEditorForm
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Font = Nothing
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Icon = Nothing
         Me.Name = "UIInitialEstimatesEditorForm"
         Me.ShowInTaskbar = False
         Me.ToolTip1.SetToolTip(Me, resources.GetString("$this.ToolTip"))
@@ -939,4 +804,8 @@ Partial Class UIInitialEstimatesEditorForm
     Public WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Public WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
     Public WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Public WithEvents ToolStripButton28 As System.Windows.Forms.ToolStripButton
+    Public WithEvents ToolStripButton27 As System.Windows.Forms.ToolStripButton
+    Public WithEvents ToolStripButton26 As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
 End Class

@@ -19,7 +19,7 @@ Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
 Imports DWSIM.DWSIM.SimulationObjects.UnitOps
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.IO
-
+Imports DWSIM.DWSIM.MathEx.Interpolation
 
 Public Class UIInitialEstimatesEditorForm
 
@@ -36,10 +36,6 @@ Public Class UIInitialEstimatesEditorForm
     Dim cvt As DWSIM.SistemasDeUnidades.Conversor
     Dim su As DWSIM.SistemasDeUnidades.Unidades
     Dim nf As String
-
-    Private Sub UIInitialEstimatesEditorForm_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-
-    End Sub
 
     Private Sub UIInitialEstimatesEditorForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -126,11 +122,9 @@ Public Class UIInitialEstimatesEditorForm
     End Sub
 
     Private Sub ToolStripButton5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton5.Click
-        If dgvv.SelectedCells.Count > 0 Then
-            If Not dgvv.SelectedCells(0).ReadOnly Then
-                dgvv.SelectedCells(0).Value = Nothing
-            End If
-        End If
+        For Each c As DataGridViewCell In dgvv.SelectedCells
+            If c.ColumnIndex <> 0 Then c.Value = Nothing
+        Next
     End Sub
 
     Private Sub ToolStripButton6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton6.Click
@@ -162,11 +156,9 @@ Public Class UIInitialEstimatesEditorForm
     End Sub
 
     Private Sub ToolStripButton8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton8.Click
-        If dgvcl.SelectedCells.Count > 0 Then
-            If Not dgvcl.SelectedCells(0).ReadOnly Then
-                dgvcl.SelectedCells(0).Value = Nothing
-            End If
-        End If
+        For Each c As DataGridViewCell In dgvcl.SelectedCells
+            If c.ColumnIndex <> 0 Then c.Value = Nothing
+        Next
     End Sub
 
     Private Sub ToolStripButton9_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton9.Click
@@ -268,11 +260,9 @@ Public Class UIInitialEstimatesEditorForm
     End Sub
 
     Private Sub ToolStripButton23_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton23.Click
-        If dgvcv.SelectedCells.Count > 0 Then
-            If Not dgvcv.SelectedCells(0).ReadOnly Then
-                dgvcv.SelectedCells(0).Value = Nothing
-            End If
-        End If
+        For Each c As DataGridViewCell In dgvcv.SelectedCells
+            If c.ColumnIndex <> 0 Then c.Value = Nothing
+        Next
     End Sub
 
     Private Sub ToolStripButton24_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton24.Click
@@ -330,6 +320,9 @@ Public Class UIInitialEstimatesEditorForm
         For Each st As Stage In dc.Stages
             dgvv.Rows.Add(New Object() {dc.Stages(i).Name, Format(cvt.ConverterDoSI(su.spmp_temperature, _ies.StageTemps(i).Value), nf), Format(cvt.ConverterDoSI(su.spmp_molarflow, _ies.VapMolarFlows(i).Value), nf), Format(cvt.ConverterDoSI(su.spmp_molarflow, _ies.LiqMolarFlows(i).Value), nf)})
             dgvv.Rows(dgvv.Rows.Count - 1).HeaderCell.Value = i
+            dgvv_CellValueChanged(Me, New DataGridViewCellEventArgs(1, dgvcv.Rows.Count - 1))
+            dgvv_CellValueChanged(Me, New DataGridViewCellEventArgs(2, dgvcv.Rows.Count - 1))
+            dgvv_CellValueChanged(Me, New DataGridViewCellEventArgs(3, dgvcv.Rows.Count - 1))
             i += 1
         Next
 
@@ -350,6 +343,9 @@ Public Class UIInitialEstimatesEditorForm
                 j = j + 1
             Next
             dgvcl.Rows.Add(ob)
+            For j = 1 To form.Options.SelectedComponents.Count
+                dgvc_CellValueChanged(Me, New DataGridViewCellEventArgs(j, dgvcl.Rows.Count - 1))
+            Next
             dgvcl.Rows(dgvcl.Rows.Count - 1).HeaderCell.Value = i
             i += 1
         Next
@@ -363,11 +359,77 @@ Public Class UIInitialEstimatesEditorForm
                 j = j + 1
             Next
             dgvcv.Rows.Add(ob)
+            For j = 1 To form.Options.SelectedComponents.Count
+                dgvcv_CellValueChanged(Me, New DataGridViewCellEventArgs(j, dgvcv.Rows.Count - 1))
+            Next
             dgvcv.Rows(dgvcv.Rows.Count - 1).HeaderCell.Value = i
             i += 1
         Next
 
         loaded = True
+
+    End Sub
+
+    Private Sub ToolStripButton28_Click(sender As Object, e As EventArgs) Handles ToolStripButton28.Click
+
+        Dim i, n As Integer, px, py As New ArrayList
+
+        n = dgvv.Rows.Count - 1
+
+        For i = 0 To n
+            If dgvv.Rows(i).Cells(1).Value IsNot Nothing Then
+                If Double.TryParse(dgvv.Rows(i).Cells(1).Value.ToString, New Double) Then
+                    px.Add(Double.Parse(i))
+                    py.Add(Double.Parse(dgvv.Rows(i).Cells(1).Value))
+                End If
+            End If
+        Next
+
+        For Each c As DataGridViewCell In Me.dgvv.SelectedCells
+            If c.Value Is Nothing And c.ColumnIndex = 1 Then c.Value = DWSIM.MathEx.Interpolation.polinterpolation.nevilleinterpolation(px.ToArray(Type.GetType("System.Double")), py.ToArray(Type.GetType("System.Double")), px.Count, c.RowIndex)
+        Next
+
+    End Sub
+
+    Private Sub ToolStripButton27_Click(sender As Object, e As EventArgs) Handles ToolStripButton27.Click
+
+        Dim i, n As Integer, px, py As New ArrayList
+
+        n = dgvv.Rows.Count - 1
+
+        For i = 0 To n
+            If dgvv.Rows(i).Cells(2).Value IsNot Nothing Then
+                If Double.TryParse(dgvv.Rows(i).Cells(2).Value.ToString, New Double) Then
+                    px.Add(Double.Parse(i))
+                    py.Add(Double.Parse(dgvv.Rows(i).Cells(2).Value))
+                End If
+            End If
+        Next
+
+        For Each c As DataGridViewCell In Me.dgvv.SelectedCells
+            If c.Value Is Nothing And c.ColumnIndex = 2 Then c.Value = DWSIM.MathEx.Interpolation.polinterpolation.nevilleinterpolation(px.ToArray(Type.GetType("System.Double")), py.ToArray(Type.GetType("System.Double")), px.Count, c.RowIndex)
+        Next
+
+    End Sub
+
+    Private Sub ToolStripButton26_Click(sender As Object, e As EventArgs) Handles ToolStripButton26.Click
+
+        Dim i, n As Integer, px, py As New ArrayList
+
+        n = dgvv.Rows.Count - 1
+
+        For i = 0 To n
+            If dgvv.Rows(i).Cells(3).Value IsNot Nothing Then
+                If Double.TryParse(dgvv.Rows(i).Cells(3).Value.ToString, New Double) Then
+                    px.Add(Double.Parse(i))
+                    py.Add(Double.Parse(dgvv.Rows(i).Cells(3).Value))
+                End If
+            End If
+        Next
+
+        For Each c As DataGridViewCell In Me.dgvv.SelectedCells
+            If c.Value Is Nothing And c.ColumnIndex = 3 Then c.Value = DWSIM.MathEx.Interpolation.polinterpolation.nevilleinterpolation(px.ToArray(Type.GetType("System.Double")), py.ToArray(Type.GetType("System.Double")), px.Count, c.RowIndex)
+        Next
 
     End Sub
 End Class

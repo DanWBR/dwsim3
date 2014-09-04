@@ -861,6 +861,7 @@ Public Class frmSurface
                     End If
 
                     If cancopy Then
+                        Me.CopyFromTSMI.Visible = True
                         For Each mstr As Streams.MaterialStream In ChildParent.Collections.CLCS_MaterialStreamCollection.Values
                             If mstr.GraphicObject.Tag <> obj.GraphicObject.Tag Then
                                 Dim newtsmi As New ToolStripMenuItem(mstr.GraphicObject.Tag)

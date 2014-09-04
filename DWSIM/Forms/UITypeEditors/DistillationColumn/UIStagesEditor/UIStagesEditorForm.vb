@@ -130,20 +130,6 @@ Public Class UIStagesEditorForm
         End If
     End Sub
 
-    'Private Sub TSMI2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TSMI2.Click
-    '    Dim x1, x2, x3, y1, y2, y3 As Double
-    '    For Each r As DataGridViewRow In dgv1.Rows
-    '        If Not r.Cells(1).ReadOnly Then
-    '            x1 = dgv1.Rows(0).Index + 1
-    '            x2 = dgv1.Rows(dgv1.Rows.Count - 1).Index + 1
-    '            x3 = r.Index + 1
-    '            y1 = dgv1.Rows(0).Cells(1).Value
-    '            y2 = dgv1.Rows(dgv1.Rows.Count - 1).Cells(1).Value
-    '            r.Cells(1).Value = DWSIM.MathEx.Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2}, New Double() {y1, y2}, 2, x3)
-    '        End If
-    '    Next
-    'End Sub
-
     Private Sub ToolStripButton4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton4.Click
         For Each r As DataGridViewRow In dgv1.Rows
             If Not r.Cells(1).ReadOnly Then

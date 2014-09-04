@@ -482,7 +482,7 @@ alt:            T = bo.BrentOpt(150, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 End If
                 If Abs(fx) < tolEXT Then Exit Do
                 dfdx = (fx2 - fx) / 0.01
-                x1 = x1 - fx / dfdx
+                x1 = x1 - 0.7 * fx / dfdx
                 If x1 < 0 Then GoTo alt
                 cnt += 1
             Loop Until cnt > maxitEXT Or Double.IsNaN(x1)

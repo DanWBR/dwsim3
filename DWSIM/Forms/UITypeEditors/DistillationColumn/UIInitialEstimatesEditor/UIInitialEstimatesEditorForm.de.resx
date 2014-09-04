@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Button4.ToolTip" xml:space="preserve">
     <value>Speichert Startwerte in einer Datei</value>
@@ -132,20 +132,48 @@
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Datei</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ToolStripButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 20</value>
+  </data>
   <data name="ToolStripButton1.ToolTipText" xml:space="preserve">
     <value>Kopieren</value>
+  </data>
+  <data name="ToolStripButton2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 20</value>
   </data>
   <data name="ToolStripButton2.ToolTipText" xml:space="preserve">
     <value>Einfügen</value>
   </data>
+  <data name="ToolStripButton5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 20</value>
+  </data>
   <data name="ToolStripButton5.ToolTipText" xml:space="preserve">
     <value>Löschen</value>
+  </data>
+  <data name="ToolStripButton6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 20</value>
   </data>
   <data name="ToolStripButton6.ToolTipText" xml:space="preserve">
     <value>Verriegeln</value>
   </data>
+  <data name="ToolStripButton7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 20</value>
+  </data>
   <data name="ToolStripButton7.ToolTipText" xml:space="preserve">
     <value>Entriegeln</value>
+  </data>
+  <data name="ToolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 6</value>
+  </data>
+  <data name="ToolStripButton28.ToolTipText" xml:space="preserve">
+    <value>Interpolieren Temperatur</value>
+  </data>
+  <data name="ToolStripButton27.ToolTipText" xml:space="preserve">
+    <value>Interpolieren Dampfstrom</value>
+  </data>
+  <data name="ToolStripButton26.ToolTipText" xml:space="preserve">
+    <value>Interpolieren Flüssigkeitsstrom</value>
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Stufe</value>
@@ -161,6 +189,15 @@
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Variablen</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Zusammensetzungen (Flüssigphase)</value>
+  </data>
+  <data name="FaTabStripItem5.Title" xml:space="preserve">
+    <value>Zusammensetzungen (Dampfphase)</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Startwerte</value>
   </data>
   <data name="ToolStripButton3.ToolTipText" xml:space="preserve">
     <value>Kopieren</value>
@@ -180,12 +217,9 @@
   <data name="Column5.HeaderText" xml:space="preserve">
     <value>Stufe</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Column5.Width" type="System.Int32, mscorlib">
     <value>58</value>
-  </data>
-  <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Zusammensetzungen (Flüssigphase)</value>
   </data>
   <data name="ToolStripButton21.ToolTipText" xml:space="preserve">
     <value>Kopieren</value>
@@ -208,11 +242,8 @@
   <data name="DataGridViewTextBoxColumn6.Width" type="System.Int32, mscorlib">
     <value>58</value>
   </data>
-  <data name="FaTabStripItem5.Title" xml:space="preserve">
-    <value>Zusammensetzungen (Dampfphase)</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Startwerte</value>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Variablen</value>
   </data>
   <data name="ToolStripButton11.ToolTipText" xml:space="preserve">
     <value>Kopieren</value>
@@ -238,8 +269,8 @@
   <data name="DataGridViewTextBoxColumn4.HeaderText" xml:space="preserve">
     <value>Dampfstrom</value>
   </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Variablen</value>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Zusammensetzungen</value>
   </data>
   <data name="ToolStripButton16.ToolTipText" xml:space="preserve">
     <value>Kopieren</value>
@@ -258,9 +289,6 @@
   </data>
   <data name="DataGridViewTextBoxColumn5.HeaderText" xml:space="preserve">
     <value>Stufe</value>
-  </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Zusammensetzungen</value>
   </data>
   <data name="sfd1.Filter" xml:space="preserve">
     <value>Destillationskolonnen Startwertedatei|*.dwcdi</value>
