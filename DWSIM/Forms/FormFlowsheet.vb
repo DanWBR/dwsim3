@@ -67,6 +67,7 @@ Imports DWSIM.DWSIM.GraphicObjects
     Public FormStabAn As New FrmStabAn
     Public FormHid As New FormHYD
     Public FormPE As New FormPhEnv
+    Public FormLLEDiag As New FormLLEDiagram
     Public FormBE As New FormBinEnv
     Public FormPSVS As New FrmPsvSize
     Public FormVS As New FrmDAVP
@@ -950,7 +951,11 @@ Imports DWSIM.DWSIM.GraphicObjects
         Me.FormPE = New FormPhEnv
         Me.FormPE.ShowDialog(Me)
     End Sub
-
+    Private Sub LLEDiagramToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles LLEDiagramToolStripMenuItem.Click
+        'hier Diagram einfügen
+        Me.FormLLEDiag = New FormLLEDiagram
+        Me.FormLLEDiag.ShowDialog(Me)
+    End Sub
     Private Sub DiagramaBinárioToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DiagramaBinárioToolStripMenuItem.Click
         Me.FormBE = New FormBinEnv
         Me.FormBE.ShowDialog(Me)
@@ -2474,5 +2479,6 @@ Imports DWSIM.DWSIM.GraphicObjects
     End Property
 
 #End Region
+
 
 End Class

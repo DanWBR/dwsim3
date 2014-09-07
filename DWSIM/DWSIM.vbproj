@@ -1027,6 +1027,12 @@
     <Compile Include="Utilities\ColdProperties\FrmColdProperties.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utilities\LLE_Diagram\FormLLEDiagram.Designer.vb">
+      <DependentUpon>FormLLEDiagram.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\LLE_Diagram\FormLLEDiagram.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Utilities\Spreadsheet\SpreadsheetCell.vb" />
     <Compile Include="Utilities\Spreadsheet\SpreadsheetForm.Designer.vb">
       <DependentUpon>SpreadsheetForm.vb</DependentUpon>
@@ -1627,6 +1633,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\BINARY_ENVEL\FormBinEnv.en.resx">
       <DependentUpon>FormBinEnv.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\LLE_Diagram\FormLLEDiagram.de.resx">
+      <DependentUpon>FormLLEDiagram.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\LLE_Diagram\FormLLEDiagram.en.resx">
+      <DependentUpon>FormLLEDiagram.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\LLE_Diagram\FormLLEDiagram.es.resx">
+      <DependentUpon>FormLLEDiagram.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\LLE_Diagram\FormLLEDiagram.resx">
+      <DependentUpon>FormLLEDiagram.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\Spreadsheet\SpreadsheetForm.resx">
       <SubType>Designer</SubType>

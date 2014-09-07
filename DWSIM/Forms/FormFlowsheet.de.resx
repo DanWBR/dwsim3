@@ -1182,4 +1182,10 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Simulation</value>
   </data>
+  <data name="LLEDiagramToolStripMenuItem.StatusBarText" xml:space="preserve">
+    <value>Utility um LLE Dreiecksdiagramm zu zeichnen</value>
+  </data>
+  <data name="LLEDiagramToolStripMenuItem.Text" xml:space="preserve">
+    <value>LLE Diagramm</value>
+  </data>
 </root>
