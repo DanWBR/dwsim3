@@ -66,40 +66,8 @@ Public Class FormLLEDiagram
             Me.lblP.Text = su.spmp_pressure
             Me.tbP.Text = Format(cv.ConverterDoSI(su.spmp_pressure, 101400), nf)
 
+           
 
-            For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
-                For Each cp As ConstantProperties In Me.Frm.Options.SelectedComponents.Values
-                    If DWSIM.App.GetComponentName(cp.Name) = cbComp1.SelectedItem.ToString Then
-                        With phase
-                            .Componentes.Add(cp.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(cp.Name, ""))
-                            .Componentes(cp.Name).ConstantProperties = cp
-                        End With
-                        Exit For
-                    End If
-                Next
-            Next
-            For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
-                For Each cp As ConstantProperties In Me.Frm.Options.SelectedComponents.Values
-                    If DWSIM.App.GetComponentName(cp.Name) = cbComp2.SelectedItem.ToString Then
-                        With phase
-                            .Componentes.Add(cp.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(cp.Name, ""))
-                            .Componentes(cp.Name).ConstantProperties = cp
-                        End With
-                        Exit For
-                    End If
-                Next
-            Next
-            For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
-                For Each cp As ConstantProperties In Me.Frm.Options.SelectedComponents.Values
-                    If DWSIM.App.GetComponentName(cp.Name) = cbComp3.SelectedItem.ToString Then
-                        With phase
-                            .Componentes.Add(cp.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(cp.Name, ""))
-                            .Componentes(cp.Name).ConstantProperties = cp
-                        End With
-                        Exit For
-                    End If
-                Next
-            Next
         Else
             MessageBox.Show(DWSIM.App.GetLocalString("BinEnvError_ThreeCompoundsMinimum"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.Close()
@@ -298,6 +266,7 @@ Public Class FormLLEDiagram
         'calculate compositions
         mat.Fases(0).Componentes(cbComp1.Text).FracaoMolar = Pt.X
         mat.Fases(0).Componentes(cbComp2.Text).FracaoMolar = Pt.Y
+
         mat.Fases(0).Componentes(cbComp3.Text).FracaoMolar = 1 - Pt.X - Pt.Y
 
         mat.CalcEquilibrium("tp", Nothing)
@@ -321,6 +290,34 @@ Public Class FormLLEDiagram
         Dim C(2) As Double
         Dim k As Integer
 
+
+        '=============================
+        ' assign components to phases
+        '=============================
+        For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
+            phase.Componentes.Clear() 'delete old assignment
+        Next
+
+        Dim N As String
+        N = cbComp1.SelectedItem
+        For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
+            phase.Componentes.Add(N, New DWSIM.ClassesBasicasTermodinamica.Substancia(N, ""))
+            phase.Componentes(N).ConstantProperties = Frm.Options.SelectedComponents(N)
+        Next
+        N = cbComp2.SelectedItem
+        For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
+            phase.Componentes.Add(N, New DWSIM.ClassesBasicasTermodinamica.Substancia(N, ""))
+            phase.Componentes(N).ConstantProperties = Frm.Options.SelectedComponents(N)
+        Next
+        N = cbComp3.SelectedItem
+        For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
+            phase.Componentes.Add(N, New DWSIM.ClassesBasicasTermodinamica.Substancia(N, ""))
+            phase.Componentes(N).ConstantProperties = Frm.Options.SelectedComponents(N)
+        Next
+
+        '==========================================================
+        ' define points for initial search of two phase region
+        '==========================================================
         InitialPoints.Add(New PointF With {.X = 0.5, .Y = 0})
         InitialPoints.Add(New PointF With {.X = 0, .Y = 0.5})
         InitialPoints.Add(New PointF With {.X = 0.5, .Y = 0.5})
@@ -366,6 +363,7 @@ Public Class FormLLEDiagram
             End If
         Next
         If Not first Then
+            Me.Cursor = Cursors.Default
             Exit Sub 'no two liquid phases found -> exit
         End If
 
@@ -388,7 +386,7 @@ Public Class FormLLEDiagram
                 Ko.X21 = mat.Fases(4).Componentes(cbComp1.Text).FracaoMolar
                 Ko.X22 = mat.Fases(4).Componentes(cbComp2.Text).FracaoMolar
 
-                If (Ko.X21 + Ko.X22 > 0) And Not final Then 'if second liquid phase is existing
+                If (Ko.X21 + Ko.X22 > 0) Then 'if second liquid phase is existing
                     If first Then
                         LastKo = Ko.copy
                         first = False
@@ -416,11 +414,16 @@ Public Class FormLLEDiagram
                 Exit Do
             End Try
 
-            Pt = NewPt(Ko, 0.001 + 0.05 * w ^ 2, dir) 'calculate new global composition as perpendicular to last konode
-
+            If final Then
+                Exit Do
+            Else
+                Pt = NewPt(Ko, 0.001 + 0.05 * w ^ 2, dir) 'calculate new global composition as perpendicular to last konode
+            End If
+            
 
 
             If Not CheckValidComp(Pt.X, Pt.Y) Then 'adjust new point if invalid 
+                w = 0
                 C(0) = Pt.X
                 C(1) = Pt.Y
                 C(2) = 1 - Pt.X - Pt.Y
@@ -429,9 +432,9 @@ Public Class FormLLEDiagram
                     If C(k) > 1 Then C(k) = 1
                     w += C(k)
                 Next
-                For k = 0 To 2
-                    C(k) = C(k) / w
-                Next
+                Pt.X = C(0) / w
+                Pt.Y = C(1) / w
+
                 final = True
             End If
         Loop
