@@ -559,4 +559,11 @@ Public Class CompositionEditorForm
         Next
     End Sub
 
-End Class
+    Private Sub tbTag_TextChanged(sender As Object, e As EventArgs) Handles tbTag.TextChanged
+        If loaded Then
+            Stream.GraphicObject.Tag = Me.tbTag.Text
+            Me.Text = Me.tbTag.Text & DWSIM.App.GetLocalString("EditComp")
+        End If
+    End Sub
+
+ End Class

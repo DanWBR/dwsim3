@@ -54,6 +54,7 @@ Namespace DWSIM.Editors.Composition
                 selectionControl.Solvent = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).ReferenceSolvent
                 selectionControl.InitialComposition = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).InputComposition
                 selectionControl.Stream = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                selectionControl.tbTag.Text = form.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
 
                 editorService.ShowDialog(selectionControl)
 

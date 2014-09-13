@@ -130,6 +130,9 @@
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Zusammensetzung</value>
   </data>
+  <data name="GroupBox38.Text" xml:space="preserve">
+    <value>Aufgaben</value>
+  </data>
   <data name="ButtonEqualize.Text" xml:space="preserve">
     <value>Gleichen</value>
   </data>
@@ -139,15 +142,24 @@
   <data name="KButton1.Text" xml:space="preserve">
     <value>Löschen</value>
   </data>
-  <data name="GroupBox38.Text" xml:space="preserve">
-    <value>Aufgaben</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 62</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Basis</value>
+  </data>
   <data name="RadioButton7.Size" type="System.Drawing.Size, System.Drawing">
     <value>188, 17</value>
   </data>
   <data name="RadioButton7.Text" xml:space="preserve">
     <value>Volumenanteil in flüssigem zustand</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Einheit: Mols gelösten / kg Lösungsmittel</value>
   </data>
   <data name="ComboBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>254, 47</value>
@@ -191,8 +203,8 @@
   <data name="RadioButton1.Text" xml:space="preserve">
     <value>Molanteil</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Basis</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Aktionen</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 13</value>
@@ -218,7 +230,7 @@
   <data name="Label2.Text" xml:space="preserve">
     <value>Undefiniert</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Aktionen</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Identifizierung</value>
   </data>
 </root>

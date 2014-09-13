@@ -126,6 +126,9 @@
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Composition</value>
   </data>
+  <data name="GroupBox38.Text" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
   <data name="ButtonEqualize.Text" xml:space="preserve">
     <value>Equalize</value>
   </data>
@@ -135,15 +138,24 @@
   <data name="KButton1.Text" xml:space="preserve">
     <value>Erase</value>
   </data>
-  <data name="GroupBox38.Text" xml:space="preserve">
-    <value>Tasks</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 62</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Basis</value>
+  </data>
   <data name="RadioButton7.Size" type="System.Drawing.Size, System.Drawing">
     <value>197, 17</value>
   </data>
   <data name="RadioButton7.Text" xml:space="preserve">
     <value>Standard Liquid Volumetric Fractions</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Units: mols solute / kg solvent</value>
   </data>
   <data name="ComboBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>220, 47</value>
@@ -187,22 +199,12 @@
   <data name="RadioButton1.Text" xml:space="preserve">
     <value>Mole Fractions</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Basis</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Actions</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
-  </data>
-  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>34, 13</value>
-  </data>
-  <data name="Label5.Text" xml:space="preserve">
-    <value>Total:</value>
   </data>
   <data name="KButton3.Text" xml:space="preserve">
     <value>Close</value>
@@ -216,7 +218,10 @@
   <data name="Label2.Text" xml:space="preserve">
     <value>Undefined</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Actions</value>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Name/Tag</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Identification</value>
   </data>
 </root>

@@ -765,6 +765,7 @@ Public Class frmSurface
         Me.ConectarAToolStripMenuItem.Visible = False
         Me.ToolStripSeparator3.Visible = False
         Me.CopyFromTSMI.Visible = False
+        Me.RestoreTSMI.Visible = False
 
         If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.GO_Figura And _
             Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.GO_Tabela And _
@@ -3222,6 +3223,8 @@ Public Class frmSurface
                     selectionControl.W = mystr.Fases(0).SPMProperties.massflow.GetValueOrDefault
                     selectionControl.Solvent = mystr.ReferenceSolvent
                     selectionControl.InitialComposition = mystr.InputComposition
+                    selectionControl.Stream = mystr
+                    selectionControl.tbTag.Text = mystr.GraphicObject.Tag
 
                     selectionControl.ShowDialog()
 

@@ -1,4 +1,5 @@
 ﻿Imports DWSIM.DWSIM.SimulationObjects
+Imports System.Linq
 
 Public Class FormPropSelection
 
@@ -235,7 +236,12 @@ Public Class FormPropSelection
                     ssheet.UpdateValue(ssheet.DataGridView1.SelectedCells(0), cparams.Expression)
                 End If
             Else
-                Me.wi = New DWSIM.Outros.WatchItem(Me.TreeView2.SelectedNode.Tag, Me.TreeView3.SelectedNode.Tag, False)
+                Dim obj As SimulationObjects_BaseClass = formC.GetFlowsheetSimulationObject(Me.TreeView2.SelectedNode.Text)
+                If obj.GetProperties(SimulationObjects_BaseClass.PropertyType.RO).Contains(Me.TreeView3.SelectedNode.Tag) Then
+                    Me.wi = New DWSIM.Outros.WatchItem(Me.TreeView2.SelectedNode.Tag, Me.TreeView3.SelectedNode.Tag, True)
+                Else
+                    Me.wi = New DWSIM.Outros.WatchItem(Me.TreeView2.SelectedNode.Tag, Me.TreeView3.SelectedNode.Tag, False)
+                End If
             End If
         End If
         Me.Close()

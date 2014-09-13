@@ -130,14 +130,14 @@
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Composición</value>
   </data>
+  <data name="GroupBox38.Text" xml:space="preserve">
+    <value>Tareas</value>
+  </data>
   <data name="ButtonEqualize.Text" xml:space="preserve">
     <value>Ecualizar</value>
   </data>
   <data name="KButton1.Text" xml:space="preserve">
     <value>Cero</value>
-  </data>
-  <data name="GroupBox38.Text" xml:space="preserve">
-    <value>Tareas</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="RadioButton7.Size" type="System.Drawing.Size, System.Drawing">
@@ -182,6 +182,9 @@
   <data name="RadioButton1.Text" xml:space="preserve">
     <value>Fracción Molar</value>
   </data>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Administrar</value>
+  </data>
   <data name="KButton3.Text" xml:space="preserve">
     <value>Cerrar</value>
   </data>
@@ -200,7 +203,19 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Estado:</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Administrar</value>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Nombre/Tag</value>
+  </data>
+  <data name="tbTag.Location" type="System.Drawing.Point, System.Drawing">
+    <value>84, 19</value>
+  </data>
+  <data name="tbTag.Size" type="System.Drawing.Size, System.Drawing">
+    <value>551, 20</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Identificación</value>
   </data>
 </root>
