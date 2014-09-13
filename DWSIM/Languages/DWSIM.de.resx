@@ -1259,10 +1259,10 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>DWSIM - Hilfsmittel: Auslegung von Abscheidebehältern</value>
   </data>
   <data name="DWSIMUtilitriosDiagr" xml:space="preserve">
-    <value>DWSIM - Hilfmittel: Phasengleichgewichtskurve (binär)</value>
+    <value>DWSIM - Hilfsmittel: Phasengleichgewichtsdiagramm (binär)</value>
   </data>
   <data name="DWSIMUtilitriosDiagr1" xml:space="preserve">
-    <value>DWSIM - Hilfsmittel: Phasengleichgewichtskurve</value>
+    <value>DWSIM - Hilfsmittel: Phasengleichgewichtsdiagramm</value>
   </data>
   <data name="DWSIMUtilitriosDimen" xml:space="preserve">
     <value>DWSIM - Hilfsmittel: Sicherheitsventilauslegung</value>
@@ -4816,5 +4816,23 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   </data>
   <data name="PontosdeOrvalhoWF" xml:space="preserve">
     <value>Dew Points (Dry Basis)</value>
+  </data>
+  <data name="DWSIMUtilitriosDiagr2" xml:space="preserve">
+    <value>DWSIM - Hilfsmittel: Phasengleichgewichtsdiagramm LLE</value>
+  </data>
+  <data name="BinEnvError_DuplicateCompound" xml:space="preserve">
+    <value>Komponenten doppelt vorhanden</value>
+  </data>
+  <data name="BinEnvError_TwoCompoundsMinimum" xml:space="preserve">
+    <value>Mindestens zwei Komponenten erforderlich</value>
+  </data>
+  <data name="LLEEnvError_DuplicateCompound" xml:space="preserve">
+    <value>Komponenten doppelt vorhanden</value>
+  </data>
+  <data name="LLEEnvError_ThreeCompoundsMinimum" xml:space="preserve">
+    <value>Mindestens drei Komponenten erforderlich</value>
+  </data>
+  <data name="LLEDiagrama" xml:space="preserve">
+    <value>LLE Diagramm</value>
   </data>
 </root>

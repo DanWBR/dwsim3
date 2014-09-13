@@ -379,7 +379,7 @@
     <value>143, 211</value>
   </data>
   <data name="cbPropPack.Size" type="System.Drawing.Size, System.Drawing">
-    <value>415, 21</value>
+    <value>210, 21</value>
   </data>
   <data name="cbPropPack.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
@@ -841,7 +841,7 @@
     <value>Top, Right</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>564, 210</value>
+    <value>371, 209</value>
   </data>
   <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 23</value>

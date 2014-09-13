@@ -58,7 +58,7 @@ Public Class FormBinEnv
 
             Me.cbPropPack.Items.Clear()
             For Each pp As propertypackage In Me.Frm.Options.PropertyPackages.Values
-                Me.cbPropPack.Items.Add(pp.Tag & " (" & pp.ComponentName & ")" & " [" & pp.UniqueID & "]")
+                Me.cbPropPack.Items.Add(pp.Tag & " (" & pp.ComponentName & ")")
             Next
 
             If Me.cbPropPack.Items.Count > 0 Then Me.cbPropPack.SelectedIndex = 0
@@ -174,10 +174,16 @@ Public Class FormBinEnv
     End Sub
 
     Private Sub BackgroundWorker1_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+        Dim k As Integer
+        Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = Nothing
+        '==========================
+        ' assign property package
+        '==========================
+        For Each pp1 As PropertyPackage In Frm.Options.PropertyPackages.Values
+            If k = cbPropPack.SelectedIndex Then pp = pp1
+            k += 1
+        Next
 
-        Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
-        Dim uniqueID As String = cbPropPack.SelectedItem.ToString.Substring(cbPropPack.SelectedItem.ToString.IndexOf("[") + 1, cbPropPack.SelectedItem.ToString.Length - cbPropPack.SelectedItem.ToString.IndexOf("[") - 2)
-        pp = Me.Frm.Options.PropertyPackages(uniqueID)
         mat.SetFlowsheet(Me.Frm)
         pp.CurrentMaterialStream = mat
         e.Result = New Object() {pp.DW_ReturnBinaryEnvelope(e.Argument, Me.BackgroundWorker1)}
@@ -840,7 +846,7 @@ Public Class FormBinEnv
         Me.PrintDialog1.ShowDialog()
     End Sub
 
-    Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TSB_PageSetup.Click
+    Private Sub TSB_PageSetup_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TSB_PageSetup.Click
         Me.GraphControl.DoPageSetup()
     End Sub
 
