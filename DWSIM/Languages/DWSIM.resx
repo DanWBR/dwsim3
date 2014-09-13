@@ -4840,4 +4840,22 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PontosdeOrvalhoWF" xml:space="preserve">
     <value>Pontos de Orvalho (Base Seca)</value>
   </data>
+  <data name="BinEnvError_DuplicateCompound" xml:space="preserve">
+    <value>Componente duplicado</value>
+  </data>
+  <data name="BinEnvError_TwoCompoundsMinimum" xml:space="preserve">
+    <value>Pelo menos dois componentes são necessários</value>
+  </data>
+  <data name="DWSIMUtilitriosDiagr2" xml:space="preserve">
+    <value>DWSIM - Utilitários: Diagrama de Fases LLE</value>
+  </data>
+  <data name="LLEEnvError_DuplicateCompound" xml:space="preserve">
+    <value>Componente duplicado</value>
+  </data>
+  <data name="LLEEnvError_ThreeCompoundsMinimum" xml:space="preserve">
+    <value>Mínimo de três componentes necessários</value>
+  </data>
+  <data name="LLEDiagrama" xml:space="preserve">
+    <value>LLE Diagrama</value>
+  </data>
 </root>
