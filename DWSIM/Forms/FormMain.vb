@@ -42,6 +42,7 @@ Imports DWSIM.DWSIM.SimulationObjects
 Imports System.Text
 Imports System.Xml.Linq
 Imports Microsoft.Msdn.Samples.GraphicObjects
+Imports DWSIM.DWSIM.Outros
 
 Public Class FormMain
 
@@ -1102,10 +1103,10 @@ Public Class FormMain
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                                 .CLCS_CapeOpenUOCollection(gObj.Name).GraphicObject = gObj
                                 .CapeOpenUOCollection(gObj.Name) = gObj
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
                                 .CLCS_SolidsSeparatorCollection(gObj.Name).GraphicObject = gObj
                                 .SolidsSeparatorCollection(gObj.Name) = gObj
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Filter
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
                                 .CLCS_FilterCollection(gObj.Name).GraphicObject = gObj
                                 .FilterCollection(gObj.Name) = gObj
                         End Select
@@ -2389,7 +2390,7 @@ Public Class FormMain
                 form.FormObjList.ACSC.AddRange(arrays.ToArray(Type.GetType("System.String")))
                 form.FormObjList.TBSearch.AutoCompleteCustomSource = form.FormObjList.ACSC
             End If
-        
+
             data = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
 
             For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.<Type>.Value.Equals("DWSIM.DWSIM.GraphicObjects.TableGraphic")).ToList
@@ -2490,6 +2491,31 @@ Public Class FormMain
                 excs.Add(New Exception("Error Loading Petroleum Assay Information", ex))
             End Try
         Next
+
+        If Not forcommandline Then
+            fls.Label2.Text = "Loading Watch Items..."
+            Application.DoEvents()
+        End If
+
+        If xdoc.Element("DWSIM_Simulation_Data").Element("WatchItems") IsNot Nothing Then
+
+            data = xdoc.Element("DWSIM_Simulation_Data").Element("WatchItems").Elements.ToList
+
+            Dim i As Integer = 0
+            For Each xel As XElement In data
+                Try
+                    Dim obj As New WatchItem
+                    obj.LoadData(xel.Elements.ToList)
+                    form.FormWatch.items.Add(i, obj)
+                Catch ex As Exception
+                    excs.Add(New Exception("Error Loading Watch Item Information", ex))
+                End Try
+                i += 1
+            Next
+
+            form.FormWatch.PopulateList()
+
+        End If
 
         If Not forcommandline Then
             fls.Label2.Text = "Loading Spreadsheet Data..."
@@ -2726,6 +2752,13 @@ Public Class FormMain
 
         For Each pp As KeyValuePair(Of String, DWSIM.Utilities.PetroleumCharacterization.Assay.Assay) In form.Options.PetroleumAssays
             xel.Add(New XElement("Assay", pp.Value.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("WatchItems"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("WatchItems")
+
+        For Each wi As WatchItem In form.FormWatch.items.Values
+            xel.Add(New XElement("WatchItem", wi.SaveData().ToArray()))
         Next
 
         xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Spreadsheet"))

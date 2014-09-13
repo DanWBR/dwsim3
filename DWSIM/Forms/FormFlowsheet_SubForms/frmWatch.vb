@@ -80,7 +80,7 @@
         Dim newitem As WatchItem = frmprop.wi
 
         If Not newitem Is Nothing Then
-            Dim id As Integer = Date.Now.Year + Date.Now.Month + Date.Now.Day + Date.Now.Hour + Date.Now.Minute + Date.Now.Second + Date.Now.Millisecond
+            Dim id As Integer = New Random().Next
             Me.items.Add(id, newitem)
             Me.PopulateList()
         End If

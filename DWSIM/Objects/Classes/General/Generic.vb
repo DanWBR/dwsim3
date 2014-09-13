@@ -248,6 +248,8 @@ Namespace DWSIM.Outros
 
     <System.Serializable()> Public Class WatchItem
 
+        Implements XMLSerializer.Interfaces.ICustomXMLSerialization
+
         Public ObjID As String = ""
         Public PropID As String = ""
         Public ROnly As Boolean = False
@@ -261,6 +263,14 @@ Namespace DWSIM.Outros
             PropID = pid
             ROnly = ro
         End Sub
+
+        Public Function LoadData(data As List(Of XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
+        End Function
+
+        Public Function SaveData() As List(Of XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
+            Return XMLSerializer.XMLSerializer.Serialize(Me, True)
+        End Function
 
     End Class
 
