@@ -35,6 +35,10 @@ Partial Class FormLLEDiagram
         Me.PanelDiag = New System.Windows.Forms.Panel()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.X11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.X12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.X21 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.X22 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.PanelMenu = New System.Windows.Forms.Panel()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -57,10 +61,6 @@ Partial Class FormLLEDiagram
         Me.TSB_Print = New System.Windows.Forms.ToolStripButton()
         Me.TSB_PrinterSetup = New System.Windows.Forms.ToolStripButton()
         Me.TSB_CalcDiagr = New System.Windows.Forms.ToolStripButton()
-        Me.X11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.X12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.X21 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.X22 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -127,147 +127,6 @@ Partial Class FormLLEDiagram
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
         '
-        'PanelMenu
-        '
-        resources.ApplyResources(Me.PanelMenu, "PanelMenu")
-        Me.PanelMenu.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.PanelMenu.Controls.Add(Me.Label8)
-        Me.PanelMenu.Controls.Add(Me.Label7)
-        Me.PanelMenu.Controls.Add(Me.Label6)
-        Me.PanelMenu.Controls.Add(Me.lblP)
-        Me.PanelMenu.Controls.Add(Me.tbP)
-        Me.PanelMenu.Controls.Add(Me.cbPropPack)
-        Me.PanelMenu.Controls.Add(Me.btnCalcDiagram)
-        Me.PanelMenu.Controls.Add(Me.lblT)
-        Me.PanelMenu.Controls.Add(Me.tbT)
-        Me.PanelMenu.Controls.Add(Me.Label5)
-        Me.PanelMenu.Controls.Add(Me.Label4)
-        Me.PanelMenu.Controls.Add(Me.Label3)
-        Me.PanelMenu.Controls.Add(Me.Label2)
-        Me.PanelMenu.Controls.Add(Me.cbComp3)
-        Me.PanelMenu.Controls.Add(Me.cbComp2)
-        Me.PanelMenu.Controls.Add(Me.cbComp1)
-        Me.PanelMenu.Controls.Add(Me.Label1)
-        Me.PanelMenu.Name = "PanelMenu"
-        '
-        'Label8
-        '
-        resources.ApplyResources(Me.Label8, "Label8")
-        Me.Label8.Name = "Label8"
-        '
-        'Label7
-        '
-        resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.Name = "Label7"
-        '
-        'Label6
-        '
-        resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.Name = "Label6"
-        '
-        'lblP
-        '
-        resources.ApplyResources(Me.lblP, "lblP")
-        Me.lblP.Name = "lblP"
-        '
-        'tbP
-        '
-        resources.ApplyResources(Me.tbP, "tbP")
-        Me.tbP.Name = "tbP"
-        '
-        'cbPropPack
-        '
-        Me.cbPropPack.FormattingEnabled = True
-        resources.ApplyResources(Me.cbPropPack, "cbPropPack")
-        Me.cbPropPack.Name = "cbPropPack"
-        '
-        'btnCalcDiagram
-        '
-        Me.btnCalcDiagram.Image = Global.DWSIM.My.Resources.Resources.chart_LLE
-        resources.ApplyResources(Me.btnCalcDiagram, "btnCalcDiagram")
-        Me.btnCalcDiagram.Name = "btnCalcDiagram"
-        Me.btnCalcDiagram.UseVisualStyleBackColor = True
-        '
-        'lblT
-        '
-        resources.ApplyResources(Me.lblT, "lblT")
-        Me.lblT.Name = "lblT"
-        '
-        'tbT
-        '
-        resources.ApplyResources(Me.tbT, "tbT")
-        Me.tbT.Name = "tbT"
-        '
-        'Label5
-        '
-        resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.Name = "Label5"
-        '
-        'Label4
-        '
-        resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.Name = "Label4"
-        '
-        'Label3
-        '
-        resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.Name = "Label3"
-        '
-        'Label2
-        '
-        resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.Name = "Label2"
-        '
-        'cbComp3
-        '
-        Me.cbComp3.FormattingEnabled = True
-        resources.ApplyResources(Me.cbComp3, "cbComp3")
-        Me.cbComp3.Name = "cbComp3"
-        '
-        'cbComp2
-        '
-        Me.cbComp2.FormattingEnabled = True
-        resources.ApplyResources(Me.cbComp2, "cbComp2")
-        Me.cbComp2.Name = "cbComp2"
-        '
-        'cbComp1
-        '
-        Me.cbComp1.FormattingEnabled = True
-        resources.ApplyResources(Me.cbComp1, "cbComp1")
-        Me.cbComp1.Name = "cbComp1"
-        '
-        'Label1
-        '
-        resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.Name = "Label1"
-        '
-        'ToolStrip1
-        '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSB_Print, Me.TSB_PrinterSetup, Me.TSB_CalcDiagr})
-        resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
-        Me.ToolStrip1.Name = "ToolStrip1"
-        '
-        'TSB_Print
-        '
-        Me.TSB_Print.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.TSB_Print.Image = Global.DWSIM.My.Resources.Resources.printer
-        resources.ApplyResources(Me.TSB_Print, "TSB_Print")
-        Me.TSB_Print.Name = "TSB_Print"
-        '
-        'TSB_PrinterSetup
-        '
-        Me.TSB_PrinterSetup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.TSB_PrinterSetup.Image = Global.DWSIM.My.Resources.Resources.printer_add
-        resources.ApplyResources(Me.TSB_PrinterSetup, "TSB_PrinterSetup")
-        Me.TSB_PrinterSetup.Name = "TSB_PrinterSetup"
-        '
-        'TSB_CalcDiagr
-        '
-        Me.TSB_CalcDiagr.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.TSB_CalcDiagr.Image = Global.DWSIM.My.Resources.Resources.chart_LLE
-        resources.ApplyResources(Me.TSB_CalcDiagr, "TSB_CalcDiagr")
-        Me.TSB_CalcDiagr.Name = "TSB_CalcDiagr"
-        '
         'X11
         '
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
@@ -319,13 +178,162 @@ Partial Class FormLLEDiagram
         Me.X22.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.X22.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
+        'PanelMenu
+        '
+        resources.ApplyResources(Me.PanelMenu, "PanelMenu")
+        Me.PanelMenu.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.PanelMenu.Controls.Add(Me.Label8)
+        Me.PanelMenu.Controls.Add(Me.Label7)
+        Me.PanelMenu.Controls.Add(Me.Label6)
+        Me.PanelMenu.Controls.Add(Me.lblP)
+        Me.PanelMenu.Controls.Add(Me.tbP)
+        Me.PanelMenu.Controls.Add(Me.cbPropPack)
+        Me.PanelMenu.Controls.Add(Me.btnCalcDiagram)
+        Me.PanelMenu.Controls.Add(Me.lblT)
+        Me.PanelMenu.Controls.Add(Me.tbT)
+        Me.PanelMenu.Controls.Add(Me.Label5)
+        Me.PanelMenu.Controls.Add(Me.Label4)
+        Me.PanelMenu.Controls.Add(Me.Label3)
+        Me.PanelMenu.Controls.Add(Me.Label2)
+        Me.PanelMenu.Controls.Add(Me.cbComp3)
+        Me.PanelMenu.Controls.Add(Me.cbComp2)
+        Me.PanelMenu.Controls.Add(Me.cbComp1)
+        Me.PanelMenu.Controls.Add(Me.Label1)
+        Me.PanelMenu.Name = "PanelMenu"
+        '
+        'Label8
+        '
+        resources.ApplyResources(Me.Label8, "Label8")
+        Me.Label8.Name = "Label8"
+        '
+        'Label7
+        '
+        resources.ApplyResources(Me.Label7, "Label7")
+        Me.Label7.Name = "Label7"
+        '
+        'Label6
+        '
+        resources.ApplyResources(Me.Label6, "Label6")
+        Me.Label6.Name = "Label6"
+        '
+        'lblP
+        '
+        resources.ApplyResources(Me.lblP, "lblP")
+        Me.lblP.Name = "lblP"
+        '
+        'tbP
+        '
+        resources.ApplyResources(Me.tbP, "tbP")
+        Me.tbP.Name = "tbP"
+        '
+        'cbPropPack
+        '
+        Me.cbPropPack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbPropPack.FormattingEnabled = True
+        resources.ApplyResources(Me.cbPropPack, "cbPropPack")
+        Me.cbPropPack.Name = "cbPropPack"
+        '
+        'btnCalcDiagram
+        '
+        Me.btnCalcDiagram.Image = Global.DWSIM.My.Resources.Resources.chart_LLE
+        resources.ApplyResources(Me.btnCalcDiagram, "btnCalcDiagram")
+        Me.btnCalcDiagram.Name = "btnCalcDiagram"
+        Me.btnCalcDiagram.UseVisualStyleBackColor = True
+        '
+        'lblT
+        '
+        resources.ApplyResources(Me.lblT, "lblT")
+        Me.lblT.Name = "lblT"
+        '
+        'tbT
+        '
+        resources.ApplyResources(Me.tbT, "tbT")
+        Me.tbT.Name = "tbT"
+        '
+        'Label5
+        '
+        resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.Name = "Label5"
+        '
+        'Label4
+        '
+        resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.Name = "Label4"
+        '
+        'Label3
+        '
+        resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.Name = "Label3"
+        '
+        'Label2
+        '
+        resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.Name = "Label2"
+        '
+        'cbComp3
+        '
+        Me.cbComp3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbComp3.FormattingEnabled = True
+        resources.ApplyResources(Me.cbComp3, "cbComp3")
+        Me.cbComp3.Name = "cbComp3"
+        '
+        'cbComp2
+        '
+        Me.cbComp2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbComp2.FormattingEnabled = True
+        resources.ApplyResources(Me.cbComp2, "cbComp2")
+        Me.cbComp2.Name = "cbComp2"
+        '
+        'cbComp1
+        '
+        Me.cbComp1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbComp1.FormattingEnabled = True
+        resources.ApplyResources(Me.cbComp1, "cbComp1")
+        Me.cbComp1.Name = "cbComp1"
+        '
+        'Label1
+        '
+        resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.Name = "Label1"
+        '
+        'ToolStrip1
+        '
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSB_Print, Me.TSB_PrinterSetup, Me.TSB_CalcDiagr})
+        resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        '
+        'TSB_Print
+        '
+        Me.TSB_Print.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.TSB_Print.Image = Global.DWSIM.My.Resources.Resources.printer
+        resources.ApplyResources(Me.TSB_Print, "TSB_Print")
+        Me.TSB_Print.Name = "TSB_Print"
+        '
+        'TSB_PrinterSetup
+        '
+        Me.TSB_PrinterSetup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.TSB_PrinterSetup.Image = Global.DWSIM.My.Resources.Resources.printer_add
+        resources.ApplyResources(Me.TSB_PrinterSetup, "TSB_PrinterSetup")
+        Me.TSB_PrinterSetup.Name = "TSB_PrinterSetup"
+        '
+        'TSB_CalcDiagr
+        '
+        Me.TSB_CalcDiagr.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.TSB_CalcDiagr.Image = Global.DWSIM.My.Resources.Resources.chart_LLE
+        resources.ApplyResources(Me.TSB_CalcDiagr, "TSB_CalcDiagr")
+        Me.TSB_CalcDiagr.Name = "TSB_CalcDiagr"
+        '
         'FormLLEDiagram
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.ToolStrip1)
         Me.Controls.Add(Me.Panel1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Name = "FormLLEDiagram"
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
         Me.Panel1.ResumeLayout(False)
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)

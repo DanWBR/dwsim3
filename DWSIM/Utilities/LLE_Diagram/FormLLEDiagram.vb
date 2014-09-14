@@ -20,6 +20,7 @@ Imports DWSIM.DWSIM.SimulationObjects.Streams
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
 Public Class FormLLEDiagram
+
     Dim mat As DWSIM.SimulationObjects.Streams.MaterialStream
     Dim Frm As FormFlowsheet
 
@@ -35,17 +36,22 @@ Public Class FormLLEDiagram
     Dim P, T As Double
 
     Private Sub FormLLEDiagram_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        Text = DWSIM.App.GetLocalString("DWSIMUtilitriosDiagr2")
+
+        'translated the form name directly on the editor.
+        'Text = DWSIM.App.GetLocalString("DWSIMUtilitriosDiagr2")
 
         Frm = My.Application.ActiveSimulation
         mat = New MaterialStream("", "")
 
         If Me.Frm.Options.SelectedComponents.Count > 2 Then
+
             su = Frm.Options.SelectedUnitSystem
             nf = Frm.Options.NumberFormat
+
             cbComp1.Items.Clear()
             cbComp2.Items.Clear()
             cbComp3.Items.Clear()
+
             For Each co As ConstantProperties In Frm.Options.SelectedComponents.Values
                 cbComp1.Items.Add(DWSIM.App.GetComponentName(co.Name))
                 cbComp2.Items.Add(DWSIM.App.GetComponentName(co.Name))
@@ -68,17 +74,22 @@ Public Class FormLLEDiagram
             Me.lblP.Text = su.spmp_pressure
             Me.tbP.Text = Format(cv.ConverterDoSI(su.spmp_pressure, 101400), nf)
 
-
             DataGridView1.Columns(0).HeaderText = "[1] " & cbComp1.Text
             DataGridView1.Columns(1).HeaderText = "[1] " & cbComp2.Text
             DataGridView1.Columns(2).HeaderText = "[2] " & cbComp1.Text
             DataGridView1.Columns(3).HeaderText = "[2] " & cbComp2.Text
+
         Else
+
             MessageBox.Show(DWSIM.App.GetLocalString("LLEEnvError_ThreeCompoundsMinimum"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.Close()
+
         End If
+
     End Sub
+
     Private Function Transform(ByVal G As Graphics, ByVal X As Double, ByVal Y As Double) As Point
+
         Dim R As Point
         Dim Size, Shift As Double
         Size = Math.Min(G.VisibleClipBounds.Width - DiagMargins.Left - DiagMargins.Right, G.VisibleClipBounds.Height - DiagMargins.Top - DiagMargins.Bottom)
@@ -87,9 +98,11 @@ Public Class FormLLEDiagram
         R.X = DiagMargins.Left + Shift + (X + Y / 2) * Size
         R.Y = G.VisibleClipBounds.Height - DiagMargins.Bottom - Y * Size
         Return R
+
     End Function
-    
+
     Private Sub DrawDiagram(ByVal G As Graphics)
+
         Dim pt1, pt2 As Point
         Dim P As PointF
         Dim MyPen As Pen
@@ -100,7 +113,6 @@ Public Class FormLLEDiagram
         Dim stringSize As SizeF = New SizeF()
         Dim k As Integer
         Dim Ko1, KO2 As Konode
-
 
         G.Clear(Color.WhiteSmoke)
 
@@ -137,6 +149,7 @@ Public Class FormLLEDiagram
         '=========================
         ' draw diagram background
         '=========================
+
         MyBrush = New SolidBrush(Color.Snow)
 
         pt1 = Transform(G, 0, 0)
@@ -170,6 +183,7 @@ Public Class FormLLEDiagram
             Next
 
             G.FillPolygon(MyBrush, MiscGap)
+
         End If
 
 
@@ -259,7 +273,7 @@ Public Class FormLLEDiagram
     Private Sub PanelDiag_Resize(sender As System.Object, e As System.EventArgs) Handles PanelDiag.Resize
         PanelDiag.Refresh() 'redraw Diagram
     End Sub
-    
+
     Private Function NewPt(ByVal ko As Konode, ByVal Length As Double, ByRef LastDir() As Double) As PointF
         Dim V, M, R, N As PointF
         Dim L, SP As Double
@@ -303,14 +317,17 @@ Public Class FormLLEDiagram
 
         mat.CalcEquilibrium("tp", Nothing)
 
-        Ko.X11 = mat.Fases(3).Componentes(cbComp1.Text).FracaoMolar
-        Ko.X12 = mat.Fases(3).Componentes(cbComp2.Text).FracaoMolar
-        Ko.X21 = mat.Fases(4).Componentes(cbComp1.Text).FracaoMolar
-        Ko.X22 = mat.Fases(4).Componentes(cbComp2.Text).FracaoMolar
+        'added .GetValueOrDefault to avoid null object errors
+
+        Ko.X11 = mat.Fases(3).Componentes(cbComp1.Text).FracaoMolar.GetValueOrDefault
+        Ko.X12 = mat.Fases(3).Componentes(cbComp2.Text).FracaoMolar.GetValueOrDefault
+        Ko.X21 = mat.Fases(4).Componentes(cbComp1.Text).FracaoMolar.GetValueOrDefault
+        Ko.X22 = mat.Fases(4).Componentes(cbComp2.Text).FracaoMolar.GetValueOrDefault
 
         Return Ko
     End Function
     Private Sub btnCalcDiagram_Click(sender As System.Object, e As System.EventArgs) Handles TSB_CalcDiagr.Click, btnCalcDiagram.Click
+
         Dim Ko, LastKo As New Konode
         Dim Pt As PointF
         Dim InitialPoints As New ArrayList
@@ -344,6 +361,7 @@ Public Class FormLLEDiagram
         '=============================
         ' assign components to phases
         '=============================
+
         For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
             phase.Componentes.Clear() 'delete old assignment
         Next
@@ -490,6 +508,7 @@ Public Class FormLLEDiagram
         Me.Cursor = Cursors.Default
 
         PanelDiag.Refresh() 'redraw Diagram
+
     End Sub
     Private Sub PrintDocument1_PrintPage(sender As System.Object, e As System.Drawing.Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
         DrawDiagram(e.Graphics)
