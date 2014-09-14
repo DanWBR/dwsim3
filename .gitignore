@@ -13,11 +13,14 @@ obj
 /PropertyGridEx/PropertyGridEx/bin
 /DWSIM/bin/Debug
 /DWSIM/bin/x86/Debug
+/DWSIM/bin/x86/Release/AeroWizard.dll
+/DWSIM/bin/x86/Release/AeroWizard.xml
 /DWSIM/bin/x86/Release/Ascend.Resources.dll
 /DWSIM/bin/x86/Release/Ascend.Windows.Forms.dll
 /DWSIM/bin/x86/Release/Ascend.dll
 /DWSIM/bin/x86/Release/CapeOpen.dll
 /DWSIM/bin/x86/Release/Ciloci.Flee.dll
+/DWSIM/bin/x86/Release/CoolPropInterface.dll
 /DWSIM/bin/x86/Release/Cureos.Numerics.dll
 /DWSIM/bin/x86/Release/DWSIM.XMLSerializer.dll
 /DWSIM/bin/x86/Release/DWSIM.XMLSerializer.pdb
@@ -33,6 +36,8 @@ obj
 /DWSIM/bin/x86/Release/DotNumerics.dll
 /DWSIM/bin/x86/Release/EWSoftware.StatusBarText.dll
 /DWSIM/bin/x86/Release/ExcelDna.Integration.dll
+/DWSIM/bin/x86/Release/ExcelAPI.dll
+/DWSIM/bin/x86/Release/ExcelAPI.xml
 /DWSIM/bin/x86/Release/FileHelpers.dll
 /DWSIM/bin/x86/Release/GemBox.Spreadsheet.dll
 /DWSIM/bin/x86/Release/GraphicObjects.dll
@@ -71,6 +76,8 @@ obj
 /DWSIM/bin/x86/Release/NeoDataType.MyNeoReport.dll
 /DWSIM/bin/x86/Release/NeoDataType.Serialization.1.2.dll
 /DWSIM/bin/x86/Release/Nini.dll
+/DWSIM/bin/x86/Release/OfficeAPI.dll
+/DWSIM/bin/x86/Release/OfficeAPI.xml
 /DWSIM/bin/x86/Release/OutlookGrid.dll
 /DWSIM/bin/x86/Release/PropertyGridEx.dll
 /DWSIM/bin/x86/Release/PropertyGridEx.pdb
@@ -94,6 +101,8 @@ obj
 /DWSIM/bin/x86/Release/indigo-dotnet.dll
 /DWSIM/bin/x86/Release/indigo-inchi-dotnet.dll
 /DWSIM/bin/x86/Release/indigo-renderer-dotnet.dll
+/DWSIM/bin/x86/Release/VBIDEApi.dll
+/DWSIM/bin/x86/Release/VBIDEApi.xml
 
 /DWSIM/bin/x86/Release/Broyden.cdfy
 /DWSIM/bin/x86/Release/CUDAFYSOURCETEMP.cu
@@ -103,5 +112,6 @@ obj
 /DWSIM/bin/x86/Release/Cudafy.NET.dll
 /DWSIM/bin/x86/Release/Cudafy.NET.xml
 /DWSIM/bin/x86/Release/DWSIM.exe.eqbak
+/DWSIM/bin/x86/Release/DWSIM.ini
 /DWSIM/bin/x86/Release/EQATEC.Profiler.RuntimeFullNet.dll
 /DWSIM/bin/x86/Release/app.eqconfig
