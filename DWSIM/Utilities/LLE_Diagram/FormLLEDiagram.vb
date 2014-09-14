@@ -443,8 +443,9 @@ Public Class FormLLEDiagram
         Do
             Try
                 Ko = CalcKonode(Pt)
+                w = Ko.Distance
 
-                If (Ko.X21 + Ko.X22 > 0) Then 'if second liquid phase is existing
+                If (Ko.X21 + Ko.X22 > 0) And w > 0.001 Then 'if second liquid phase is existing
                     If first Then
                         LastKo = Ko.copy
                         first = False
@@ -474,8 +475,8 @@ Public Class FormLLEDiagram
                     searchmode = True
                 End If
 
-                w = Ko.Distance
-                If (w < 0.01 And Not searchmode) Or stepsize < 0.005 Then Exit Do
+
+                If (w < 0.01 And Not searchmode) Or stepsize < 0.001 Then Exit Do
 
             Catch ex As Exception
                 MsgBox("Error" & vbCrLf & ex.Message)

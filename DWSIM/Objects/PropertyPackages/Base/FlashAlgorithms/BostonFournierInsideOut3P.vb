@@ -161,7 +161,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             L2 = Abs(L2)
                         End If
 
-                        For i = 0 To n
+                        For i = 0 To nc
                             If i <> imaxl Then
                                 vx1e(i) = Vz(i) - V * result(3)(i) - L2 * vx2est(i)
                             Else
@@ -170,11 +170,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Next
 
                         Dim sumvx2 = 0
-                        For i = 0 To n
+                        For i = 0 To nc
                             sumvx2 += Abs(vx1e(i))
                         Next
 
-                        For i = 0 To n
+                        For i = 0 To nc
                             vx1e(i) = Abs(vx1e(i)) / sumvx2
                         Next
 
