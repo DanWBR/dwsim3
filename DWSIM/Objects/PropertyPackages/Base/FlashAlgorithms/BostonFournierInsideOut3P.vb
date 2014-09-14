@@ -303,11 +303,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Next
 
                         Dim sumvx2 = 0
-                        For i = 0 To n
+                        For i = 0 To nc
                             sumvx2 += Abs(vx1e(i))
                         Next
 
-                        For i = 0 To n
+                        For i = 0 To nc
                             vx1e(i) = Abs(vx1e(i)) / sumvx2
                         Next
 
@@ -435,11 +435,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Next
 
                         Dim sumvx2 = 0
-                        For i = 0 To n
+                        For i = 0 To nc
                             sumvx2 += Abs(vx1e(i))
                         Next
 
-                        For i = 0 To n
+                        For i = 0 To nc
                             vx1e(i) = Abs(vx1e(i)) / sumvx2
                         Next
 
