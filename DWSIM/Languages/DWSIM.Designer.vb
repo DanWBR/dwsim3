@@ -4199,15 +4199,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Sucht eine lokalisierte Zeichenfolge, die DWSIM - Utilitários: Diagrama de Fases LLE ähnelt.
-        '''</summary>
-        Friend Shared ReadOnly Property DWSIMUtilitriosDiagr2() As String
-            Get
-                Return ResourceManager.GetString("DWSIMUtilitriosDiagr2", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Sucht eine lokalisierte Zeichenfolge, die DWSIM - Utilitários: Dimensionamento de PSVs ähnelt.
         '''</summary>
         Friend Shared ReadOnly Property DWSIMUtilitriosDimen() As String

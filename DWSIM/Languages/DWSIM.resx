@@ -4846,9 +4846,6 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="BinEnvError_TwoCompoundsMinimum" xml:space="preserve">
     <value>Pelo menos dois componentes são necessários</value>
   </data>
-  <data name="DWSIMUtilitriosDiagr2" xml:space="preserve">
-    <value>DWSIM - Utilitários: Diagrama de Fases LLE</value>
-  </data>
   <data name="LLEEnvError_DuplicateCompound" xml:space="preserve">
     <value>Componente duplicado</value>
   </data>

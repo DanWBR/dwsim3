@@ -4837,9 +4837,6 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PontosdeOrvalhoWF" xml:space="preserve">
     <value>Dew Points (Dry Basis)</value>
   </data>
-  <data name="DWSIMUtilitriosDiagr2" xml:space="preserve">
-    <value>DWSIM - Utilities: Phase Envelope (LLE)</value>
-  </data>
   <data name="BinEnvError_DuplicateCompound" xml:space="preserve">
     <value>Duplicate Components</value>
   </data>

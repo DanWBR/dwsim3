@@ -37,9 +37,6 @@ Public Class FormLLEDiagram
 
     Private Sub FormLLEDiagram_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        'translated the form name directly on the editor.
-        'Text = DWSIM.App.GetLocalString("DWSIMUtilitriosDiagr2")
-
         Frm = My.Application.ActiveSimulation
         mat = New MaterialStream("", "")
 
@@ -332,8 +329,8 @@ Public Class FormLLEDiagram
         Dim Pt As PointF
         Dim InitialPoints As New ArrayList
         Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = Nothing
-        Dim final, first As Boolean
-        Dim w, D1, D2 As Double
+        Dim final, first, searchmode As Boolean
+        Dim w, stepsize, D1, D2 As Double
         Dim dir(1) As Double
         Dim C(2) As Double
         Dim k As Integer
@@ -416,6 +413,7 @@ Public Class FormLLEDiagram
         LLECurve.Clear()
         LLEPoints.Clear()
         final = False
+        stepsize = 0.03
 
         '===============================
         ' find starting point
@@ -435,6 +433,7 @@ Public Class FormLLEDiagram
         Next
         If Not first Then
             Me.Cursor = Cursors.Default
+            PanelDiag.Refresh() 'redraw Diagram
             Exit Sub 'no two liquid phases found -> exit
         End If
 
@@ -443,8 +442,6 @@ Public Class FormLLEDiagram
         '==========================
         Do
             Try
-                LLEPoints.Add(New PointF With {.X = Pt.X, .Y = Pt.Y})
-
                 Ko = CalcKonode(Pt)
 
                 If (Ko.X21 + Ko.X22 > 0) Then 'if second liquid phase is existing
@@ -452,17 +449,18 @@ Public Class FormLLEDiagram
                         LastKo = Ko.copy
                         first = False
                     Else
-                        D1 = Math.Sqrt((LastKo.X11 - Ko.X11) ^ 2 + (LastKo.X12 - Ko.X12) ^ 2)
-                        D2 = Math.Sqrt((LastKo.X11 - Ko.X21) ^ 2 + (LastKo.X12 - Ko.X22) ^ 2)
+                        ' check if phases need to be swaped back due to phase ordering of flash 
+                        D1 = (LastKo.X11 - Ko.X11) ^ 2 + (LastKo.X12 - Ko.X12) ^ 2 'distance of last point phase 1 to new point of phase 1
+                        D2 = (LastKo.X11 - Ko.X21) ^ 2 + (LastKo.X12 - Ko.X22) ^ 2 'distance of last point phase 1 to new point of phase 2
 
-                        If D2 < D1 Then
+                        If D2 < D1 Then 'check if phases are swaped
                             Ko.SwapPoints()
                         End If
                         LastKo = Ko.copy
-
                     End If
 
                     LLECurve.Add(New Konode With {.X11 = Ko.X11, .X12 = Ko.X12, .X21 = Ko.X21, .X22 = Ko.X22})
+                    LLEPoints.Add(New PointF With {.X = (Ko.X11 + Ko.X21) / 2, .Y = (Ko.X12 + Ko.X22) / 2})
 
                     With DataGridView1
                         .RowCount += 1
@@ -472,11 +470,12 @@ Public Class FormLLEDiagram
                         .Rows(.RowCount - 1).Cells(3).Value = Ko.X22
                     End With
                 Else
-                    Exit Do
+                    'outside miscibility gap
+                    searchmode = True
                 End If
 
                 w = Ko.Distance
-                If w < 0.01 Then Exit Do
+                If (w < 0.01 And Not searchmode) Or stepsize < 0.005 Then Exit Do
 
             Catch ex As Exception
                 MsgBox("Error" & vbCrLf & ex.Message)
@@ -486,7 +485,15 @@ Public Class FormLLEDiagram
             If final Then
                 Exit Do
             Else
-                Pt = NewPt(Ko, 0.001 + 0.05 * w ^ 2, dir) 'calculate new global composition as perpendicular point to last center of konode
+                If searchmode Then
+                    stepsize /= 3
+                    Pt = NewPt(LastKo, stepsize, dir)
+                    searchmode = False
+                Else
+                    'calculate new global composition as perpendicular point to last center of konode
+                    Pt = NewPt(Ko, stepsize, dir)
+                End If
+
             End If
 
             If Not CheckValidComp(Pt.X, Pt.Y) Then 'adjust new point if invalid 
@@ -518,6 +525,10 @@ Public Class FormLLEDiagram
     End Sub
     Private Sub TSB_PrinterSetup_Click(sender As System.Object, e As System.EventArgs) Handles TSB_PrinterSetup.Click
         PrintDialog1.ShowDialog()
+    End Sub
+
+    Private Sub TSB_Test_Click(sender As System.Object, e As System.EventArgs)
+        'Das ist ein Test
     End Sub
 End Class
 Public Class Rec
