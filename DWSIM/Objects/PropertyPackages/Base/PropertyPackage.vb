@@ -1,4 +1,3 @@
-'    Property Package Base Class
 '    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -16,11120 +15,3950 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports DWSIM.DWSIM.SimulationObjects.Streams
-Imports DWSIM.DWSIM.SimulationObjects
+'Imports DWSIM.SimulationObjects
+Imports System.ComponentModel
+Imports FileHelpers
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
-Imports System.Runtime.Serialization.Formatters.Binary
+Imports System.Runtime.Serialization.Formatters
 Imports System.Runtime.Serialization
 Imports System.IO
 Imports System.Linq
-Imports System.Math
-Imports CapeOpen
-Imports System.Runtime.InteropServices.ComTypes
-Imports iop = System.Runtime.InteropServices
-Imports DWSIM.Interfaces2
-Imports System.Xml.Serialization
-Imports System.Runtime.Serialization.Formatters
+Imports ICSharpCode.SharpZipLib.Core
+Imports ICSharpCode.SharpZipLib.Zip
+Imports WeifenLuo.WinFormsUI.Docking
+Imports WeifenLuo.WinFormsUI
+Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
+Imports System.Runtime.Serialization.Formatters.Binary
+Imports Microsoft.Msdn.Samples
+Imports Infralution.Localization
+Imports System.Globalization
+Imports DWSIM.DWSIM.FormClasses
 Imports System.Threading.Tasks
-Imports DWSIM.DWSIM.MathEx
+Imports System.Xml.Serialization
+Imports System.Xml
+Imports System.Reflection
+Imports Microsoft.Win32
+Imports DWSIM.DWSIM.SimulationObjects
+Imports System.Text
+Imports System.Xml.Linq
+Imports Microsoft.Msdn.Samples.GraphicObjects
+Imports DWSIM.DWSIM.Outros
 
-Namespace DWSIM.SimulationObjects.PropertyPackages
+Public Class FormMain
 
-#Region "    Global Enumerations"
+    Inherits Form
 
-    Public Enum Fase
+    Public Shared m_childcount As Integer = 1
+    Public filename As String
+    Public sairdevez As Boolean = False
+    Public SairDiretoERRO As Boolean = False
+    Public loadedCSDB As Boolean = False
+    Public pathsep As Char
 
-        Liquid
-        Liquid1
-        Liquid2
-        Liquid3
-        Aqueous
-        Vapor
-        Solid
-        Mixture
+    Public WithEvents FrmLoadSave As New FormLS
+    Public FrmOptions As FormOptions
+    Public FrmRec As FormRecoverFiles
 
-    End Enum
+    Private dropdownlist As ArrayList
 
-    Public Enum State
-        Liquid = 0
-        Vapor = 1
-        Solid = 2
-    End Enum
+    Private dlok As Boolean = False
 
-    Public Enum FlashSpec
+    Private tmpform2 As FormFlowsheet
 
-        P
-        T
-        S
-        H
-        V
-        U
-        VAP
+    Public AvailableComponents As New Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.ConstantProperties)
+    Public AvailableUnitSystems As New Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
+    Public PropertyPackages As New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.PropertyPackage)
 
-    End Enum
+    Public UtilityPlugins As New Dictionary(Of String, Interfaces.IUtilityPlugin)
+    Public COMonitoringObjects As New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.CapeOpenUnitOpInfo)
 
-    Public Enum ThermoProperty
-        ActivityCoefficient
-        Fugacity
-        FugacityCoefficient
-    End Enum
+#Region "    Form Events"
 
-    Public Enum PackageType
-        EOS = 0
-        ActivityCoefficient = 1
-        ChaoSeader = 2
-        VaporPressure = 3
-        Miscelaneous = 4
-        CorrespondingStates = 5
-        CAPEOPEN = 6
-    End Enum
+    Private Sub FormMain_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Me.DragDrop
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            Dim MyFiles() As String
+            Dim i As Integer
+            ' Assign the files to an array.
+            MyFiles = e.Data.GetData(DataFormats.FileDrop)
+            ' Loop through the array and add the files to the list.
+            For i = 0 To MyFiles.Length - 1
+                Select Case Path.GetExtension(MyFiles(i)).ToLower
+                    Case ".dwxml"
+                        Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + MyFiles(i) + "..."
+                        Application.DoEvents()
+                        Me.LoadXML(MyFiles(i))
+                    Case ".dwxmz"
+                        Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + MyFiles(i) + "..."
+                        Application.DoEvents()
+                        Me.LoadAndExtractXMLZIP(MyFiles(i))
+                    Case ".dwsim"
+                        Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + MyFiles(i) + "..."
+                        Application.DoEvents()
+                        Me.LoadF(MyFiles(i))
+                    Case ".dwcsd"
+                        Dim NewMDIChild As New FormCompoundCreator()
+                        NewMDIChild.MdiParent = Me
+                        NewMDIChild.Show()
+                        Dim objStreamReader As New FileStream(MyFiles(i), FileMode.Open)
+                        Dim x As New BinaryFormatter()
+                        NewMDIChild.mycase = x.Deserialize(objStreamReader)
+                        objStreamReader.Close()
+                        NewMDIChild.WriteData()
+                        If Not My.Settings.MostRecentFiles.Contains(MyFiles(i)) Then
+                            My.Settings.MostRecentFiles.Add(MyFiles(i))
+                            Me.UpdateMRUList()
+                        End If
+                    Case ".dwrsd"
+                        Dim NewMDIChild As New FormDataRegression()
+                        NewMDIChild.MdiParent = Me
+                        NewMDIChild.Show()
+                        Dim objStreamReader As New FileStream(MyFiles(i), FileMode.Open)
+                        Dim x As New BinaryFormatter()
+                        NewMDIChild.currcase = x.Deserialize(objStreamReader)
+                        objStreamReader.Close()
+                        NewMDIChild.LoadCase(NewMDIChild.currcase, False)
+                        If Not My.Settings.MostRecentFiles.Contains(MyFiles(i)) Then
+                            My.Settings.MostRecentFiles.Add(MyFiles(i))
+                            Me.UpdateMRUList()
+                        End If
+                End Select
+            Next
+        End If
+    End Sub
 
-    Public Enum FlashMethod
-        GlobalSetting = 2
-        DWSIMDefault = 0
-        InsideOut = 1
-        InsideOut3P = 3
-        GibbsMin2P = 4
-        GibbsMin3P = 5
-        NestedLoops3P = 6
-        NestedLoopsSLE = 7
-        NestedLoopsImmiscible = 8
-        SimpleLLE = 9
-        NestedLoopsSLE_SS = 10
-        NestedLoops3PV2 = 11
-    End Enum
+    Private Sub FormMain_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles Me.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.All
+        End If
+    End Sub
+
+    Private Sub FormParent_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+
+        If Not Me.SairDiretoERRO Then
+            If Me.MdiChildren.Length > 0 Then
+                Dim ms As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Existemsimulaesabert"), DWSIM.App.GetLocalString("Ateno"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                If ms = MsgBoxResult.No Then e.Cancel = True
+            End If
+        End If
+
+        'Check if DWSIM is running in Portable/Mono mode, then save settings to file.
+        If File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "default.ini") Or DWSIM.App.IsRunningOnMono Then
+            DWSIM.App.SaveSettings()
+        End If
+        My.Application.SaveMySettingsOnExit = True
+        My.Settings.Save()
+        'save an ini file for Excel/CAPE-OPEN compatibility purposes
+        Try
+            If Not Directory.Exists(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data") Then
+                Directory.CreateDirectory(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data")
+            End If
+            DWSIM.App.SaveSettings(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini")
+        Catch ex As Exception
+            Console.WriteLine(ex.ToString)
+        End Try
+
+    End Sub
+
+    Private Sub MyApplication_UnhandledException(ByVal sender As Object, ByVal e As System.Threading.ThreadExceptionEventArgs)
+        Try
+            Dim frmEx As New FormUnhandledException
+            frmEx.TextBox1.Text = e.Exception.ToString
+            frmEx.ex = e.Exception
+            frmEx.ShowDialog()
+        Finally
+
+        End Try
+    End Sub
+
+    Private Sub MyApplication_UnhandledException2(ByVal sender As Object, ByVal e As System.UnhandledExceptionEventArgs)
+        Try
+            Dim frmEx As New FormUnhandledException
+            frmEx.TextBox1.Text = e.ExceptionObject.ToString
+            frmEx.ex = e.ExceptionObject
+            frmEx.ShowDialog()
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        If My.Settings.BackupFolder = "" Then My.Settings.BackupFolder = My.Computer.FileSystem.SpecialDirectories.Temp & Path.DirectorySeparatorChar & "DWSIM"
+        If My.Settings.BackupActivated Then
+            Me.TimerBackup.Interval = My.Settings.BackupInterval * 60000
+            Me.TimerBackup.Enabled = True
+        End If
+
+        Me.Text = DWSIM.App.GetLocalString("FormParent_FormText")
+
+        Global.EWSoftware.StatusBarText.StatusBarTextProvider.ApplicationStatusBar = Me.ToolStripStatusLabel1
+
+        Me.StatusBarTextProvider1.InstanceStatusBar = Me.ToolStripStatusLabel1
+
+        Me.dropdownlist = New ArrayList
+        Me.UpdateMRUList()
+
+        'load plugins from 'Plugins' folder
+
+        Dim pluginlist As List(Of Interfaces.IUtilityPlugin) = GetPlugins(LoadPluginAssemblies())
+
+        For Each ip As Interfaces.IUtilityPlugin In pluginlist
+            Me.UtilityPlugins.Add(ip.UniqueID, ip)
+        Next
+
+        'load external property packages from 'propertypackages' folder, if there is any
+        Dim epplist As List(Of PropertyPackage) = GetExternalPPs(LoadExternalPPs())
+
+        For Each pp As PropertyPackage In epplist
+            PropertyPackages.Add(pp.ComponentName, pp)
+        Next
+
+        'Search and populate CAPE-OPEN Flowsheet Monitoring Object collection
+        'SearchCOMOs() 'doing this only when the user hovers the mouse over the plugins toolstrip menu item
+
+        If My.Settings.ScriptPaths Is Nothing Then My.Settings.ScriptPaths = New Collections.Specialized.StringCollection()
+
+    End Sub
+
+    Sub SearchCOMOs()
+
+        Dim keys As String() = My.Computer.Registry.ClassesRoot.OpenSubKey("CLSID", False).GetSubKeyNames()
+
+        For Each k In keys
+            Dim mykey As RegistryKey = My.Computer.Registry.ClassesRoot.OpenSubKey("CLSID", False).OpenSubKey(k, False)
+            Dim mykeys As String() = mykey.GetSubKeyNames()
+            For Each s As String In mykeys
+                If s = "Implemented Categories" Then
+                    Dim arr As Array = mykey.OpenSubKey("Implemented Categories").GetSubKeyNames()
+                    For Each s2 As String In arr
+                        If s2.ToLower = "{7ba1af89-b2e4-493d-bd80-2970bf4cbe99}" Then
+                            'this is a CAPE-OPEN MO
+                            Dim myuo As New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.CapeOpenUnitOpInfo
+                            With myuo
+                                .AboutInfo = mykey.OpenSubKey("CapeDescription").GetValue("About")
+                                .CapeVersion = mykey.OpenSubKey("CapeDescription").GetValue("CapeVersion")
+                                .Description = mykey.OpenSubKey("CapeDescription").GetValue("Description")
+                                .HelpURL = mykey.OpenSubKey("CapeDescription").GetValue("HelpURL")
+                                .Name = mykey.OpenSubKey("CapeDescription").GetValue("Name")
+                                .VendorURL = mykey.OpenSubKey("CapeDescription").GetValue("VendorURL")
+                                .Version = mykey.OpenSubKey("CapeDescription").GetValue("ComponentVersion")
+                                Try
+                                    .TypeName = mykey.OpenSubKey("ProgID").GetValue("")
+                                Catch ex As Exception
+                                End Try
+                                Try
+                                    .Location = mykey.OpenSubKey("InProcServer32").GetValue("")
+                                Catch ex As Exception
+                                    .Location = mykey.OpenSubKey("LocalServer32").GetValue("")
+                                End Try
+                            End With
+                            Me.COMonitoringObjects.Add(myuo.TypeName, myuo)
+                        End If
+                    Next
+                End If
+            Next
+            mykey.Close()
+        Next
+
+    End Sub
+
+    Private Function LoadPluginAssemblies() As List(Of Assembly)
+
+        Dim pluginassemblylist As List(Of Assembly) = New List(Of Assembly)
+
+        If Directory.Exists(Path.Combine(Environment.CurrentDirectory, "plugins")) Then
+
+            Dim dinfo As New DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "plugins"))
+
+            Dim files() As FileInfo = dinfo.GetFiles("*.*", SearchOption.TopDirectoryOnly)
+
+            If Not files Is Nothing Then
+                For Each fi As FileInfo In files
+                    Try
+                        pluginassemblylist.Add(Assembly.LoadFile(fi.FullName))
+                    Catch ex As Exception
+
+                    End Try
+                Next
+            End If
+
+        End If
+
+        Return pluginassemblylist
+
+    End Function
+
+    Function GetPlugins(ByVal alist As List(Of Assembly)) As List(Of Interfaces.IUtilityPlugin)
+
+        Dim availableTypes As New List(Of Type)()
+
+        For Each currentAssembly As Assembly In alist
+            Try
+                availableTypes.AddRange(currentAssembly.GetTypes())
+            Catch ex As ReflectionTypeLoadException
+                Dim errstr As New StringBuilder()
+                For Each lex As Exception In ex.LoaderExceptions
+                    errstr.AppendLine(lex.ToString)
+                Next
+                MessageBox.Show(errstr.ToString, "Error loading plugin", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        Next
+
+        Dim pluginlist As List(Of Type) = availableTypes.FindAll(AddressOf isPlugin)
+
+        Return pluginlist.ConvertAll(Of Interfaces.IUtilityPlugin)(Function(t As Type) TryCast(Activator.CreateInstance(t), Interfaces.IUtilityPlugin))
+
+    End Function
+
+    Function isPlugin(ByVal t As Type)
+        Dim interfaceTypes As New List(Of Type)(t.GetInterfaces())
+        Return (interfaceTypes.Contains(GetType(Interfaces.IUtilityPlugin)))
+    End Function
+
+    Private Function LoadExternalPPs() As List(Of Assembly)
+
+        Dim pluginassemblylist As List(Of Assembly) = New List(Of Assembly)
+
+        If Directory.Exists(Path.Combine(Environment.CurrentDirectory, "propertypackages")) Then
+
+            Dim dinfo As New DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "propertypackages"))
+
+            Dim files() As FileInfo = dinfo.GetFiles("*.dll")
+
+            If Not files Is Nothing Then
+                For Each fi As FileInfo In files
+                    pluginassemblylist.Add(Assembly.LoadFile(fi.FullName))
+                Next
+            End If
+
+        End If
+
+        Return pluginassemblylist
+
+    End Function
+
+    Function GetExternalPPs(ByVal alist As List(Of Assembly)) As List(Of PropertyPackage)
+
+        Dim availableTypes As New List(Of Type)()
+
+        For Each currentAssembly As Assembly In alist
+            Try
+                availableTypes.AddRange(currentAssembly.GetTypes())
+            Catch ex As Exception
+                MessageBox.Show(ex.Message.ToCharArray, "Error loading plugin", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        Next
+
+        Dim ppList As List(Of Type) = availableTypes.FindAll(AddressOf isPP)
+
+        Return ppList.ConvertAll(Of PropertyPackage)(Function(t As Type) TryCast(Activator.CreateInstance(t), PropertyPackage))
+
+    End Function
+
+    Function isPP(ByVal t As Type)
+        Return (t Is GetType(PropertyPackage))
+    End Function
+
+    Private Sub UpdateMRUList()
+
+        'process MRU file list
+
+        If My.Settings.MostRecentFiles.Count > 10 Then
+            My.Settings.MostRecentFiles.RemoveAt(0)
+        End If
+
+        Dim j As Integer = 0
+        For Each k As String In Me.dropdownlist
+            Dim tsmi As ToolStripItem = Me.FileToolStripMenuItem.DropDownItems(CInt(k - j))
+            If tsmi.DisplayStyle = ToolStripItemDisplayStyle.Text Or TypeOf tsmi Is ToolStripSeparator Then
+                Me.FileToolStripMenuItem.DropDownItems.Remove(tsmi)
+                j = j + 1
+            End If
+        Next
+
+        Me.dropdownlist.Clear()
+
+        Dim toremove As New ArrayList
+
+        If Not My.Settings.MostRecentFiles Is Nothing Then
+            For Each str As String In My.Settings.MostRecentFiles
+                If File.Exists(str) Then
+                    Dim tsmi As New ToolStripMenuItem
+                    With tsmi
+                        .Text = str
+                        .Tag = str
+                        .DisplayStyle = ToolStripItemDisplayStyle.Text
+                    End With
+                    Me.FileToolStripMenuItem.DropDownItems.Insert(Me.FileToolStripMenuItem.DropDownItems.Count - 1, tsmi)
+                    Me.dropdownlist.Add(Me.FileToolStripMenuItem.DropDownItems.Count - 2)
+                    AddHandler tsmi.Click, AddressOf Me.OpenRecent_click
+                Else
+                    toremove.Add(str)
+                End If
+            Next
+            For Each s As String In toremove
+                My.Settings.MostRecentFiles.Remove(s)
+            Next
+            If My.Settings.MostRecentFiles.Count > 0 Then
+                Me.FileToolStripMenuItem.DropDownItems.Insert(Me.FileToolStripMenuItem.DropDownItems.Count - 1, New ToolStripSeparator())
+                Me.dropdownlist.Add(Me.FileToolStripMenuItem.DropDownItems.Count - 2)
+            End If
+        Else
+            My.Settings.MostRecentFiles = New System.Collections.Specialized.StringCollection
+        End If
+
+    End Sub
+
+    Sub AddPropPacks()
+
+        Dim FPP As FPROPSPropertyPackage = New FPROPSPropertyPackage()
+        FPP.ComponentName = DWSIM.App.GetLocalString("FPP")
+        FPP.ComponentDescription = DWSIM.App.GetLocalString("DescFPP")
+        PropertyPackages.Add(FPP.ComponentName.ToString, FPP)
+
+        If Not DWSIM.App.IsRunningOnMono Then
+
+            Dim CPPP As CoolPropPropertyPackage = New CoolPropPropertyPackage()
+            CPPP.ComponentName = "CoolProp"
+            CPPP.ComponentDescription = DWSIM.App.GetLocalString("DescCPPP")
+
+            PropertyPackages.Add(CPPP.ComponentName.ToString, CPPP)
+
+        End If
+
+        Dim STPP As SteamTablesPropertyPackage = New SteamTablesPropertyPackage()
+        STPP.ComponentName = DWSIM.App.GetLocalString("TabelasdeVaporSteamT")
+        STPP.ComponentDescription = DWSIM.App.GetLocalString("DescSteamTablesPP")
+        PropertyPackages.Add(STPP.ComponentName.ToString, STPP)
+
+        Dim PCSAFTPP As PCSAFTPropertyPackage = New PCSAFTPropertyPackage()
+        PCSAFTPP.ComponentName = "PC-SAFT"
+        PCSAFTPP.ComponentDescription = DWSIM.App.GetLocalString("DescPCSAFTPP")
+        PropertyPackages.Add(PCSAFTPP.ComponentName.ToString, PCSAFTPP)
+
+        Dim PRPP As PengRobinsonPropertyPackage = New PengRobinsonPropertyPackage()
+        PRPP.ComponentName = "Peng-Robinson (PR)"
+        PRPP.ComponentDescription = DWSIM.App.GetLocalString("DescPengRobinsonPP")
+        PropertyPackages.Add(PRPP.ComponentName.ToString, PRPP)
+
+        Dim PRSV2PP As PRSV2PropertyPackage = New PRSV2PropertyPackage()
+        PRSV2PP.ComponentName = "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)"
+        PRSV2PP.ComponentDescription = DWSIM.App.GetLocalString("DescPRSV2PP")
+        PropertyPackages.Add(PRSV2PP.ComponentName.ToString, PRSV2PP)
+
+        Dim PRSV2PPVL As PRSV2VLPropertyPackage = New PRSV2VLPropertyPackage()
+        PRSV2PPVL.ComponentName = "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)"
+        PRSV2PPVL.ComponentDescription = DWSIM.App.GetLocalString("DescPRSV2VLPP")
+        PropertyPackages.Add(PRSV2PPVL.ComponentName.ToString, PRSV2PPVL)
+
+        Dim SRKPP As SRKPropertyPackage = New SRKPropertyPackage()
+        SRKPP.ComponentName = "Soave-Redlich-Kwong (SRK)"
+        SRKPP.ComponentDescription = DWSIM.App.GetLocalString("DescSoaveRedlichKwongSRK")
+        PropertyPackages.Add(SRKPP.ComponentName.ToString, SRKPP)
+
+        Dim PRLKPP As PengRobinsonLKPropertyPackage = New PengRobinsonLKPropertyPackage()
+        PRLKPP.ComponentName = "Peng-Robinson / Lee-Kesler (PR/LK)"
+        PRLKPP.ComponentDescription = DWSIM.App.GetLocalString("DescPRLK")
+
+        PropertyPackages.Add(PRLKPP.ComponentName.ToString, PRLKPP)
+
+        Dim UPP As UNIFACPropertyPackage = New UNIFACPropertyPackage()
+        UPP.ComponentName = "UNIFAC"
+        UPP.ComponentDescription = DWSIM.App.GetLocalString("DescUPP")
+
+        PropertyPackages.Add(UPP.ComponentName.ToString, UPP)
+
+        Dim ULLPP As UNIFACLLPropertyPackage = New UNIFACLLPropertyPackage()
+        ULLPP.ComponentName = "UNIFAC-LL"
+        ULLPP.ComponentDescription = DWSIM.App.GetLocalString("DescUPP")
+
+        PropertyPackages.Add(ULLPP.ComponentName.ToString, ULLPP)
+
+        Dim MUPP As MODFACPropertyPackage = New MODFACPropertyPackage()
+        MUPP.ComponentName = "Modified UNIFAC (Dortmund)"
+        MUPP.ComponentDescription = DWSIM.App.GetLocalString("DescMUPP")
+
+        PropertyPackages.Add(MUPP.ComponentName.ToString, MUPP)
+
+        Dim NRTLPP As NRTLPropertyPackage = New NRTLPropertyPackage()
+        NRTLPP.ComponentName = "NRTL"
+        NRTLPP.ComponentDescription = DWSIM.App.GetLocalString("DescNRTLPP")
+
+        PropertyPackages.Add(NRTLPP.ComponentName.ToString, NRTLPP)
+
+        Dim UQPP As UNIQUACPropertyPackage = New UNIQUACPropertyPackage()
+        UQPP.ComponentName = "UNIQUAC"
+        UQPP.ComponentDescription = DWSIM.App.GetLocalString("DescUNIQUACPP")
+
+        PropertyPackages.Add(UQPP.ComponentName.ToString, UQPP)
+
+        Dim CSLKPP As ChaoSeaderPropertyPackage = New ChaoSeaderPropertyPackage()
+        CSLKPP.ComponentName = "Chao-Seader"
+        CSLKPP.ComponentDescription = DWSIM.App.GetLocalString("DescCSLKPP")
+
+        PropertyPackages.Add(CSLKPP.ComponentName.ToString, CSLKPP)
+
+        Dim GSLKPP As GraysonStreedPropertyPackage = New GraysonStreedPropertyPackage()
+        GSLKPP.ComponentName = "Grayson-Streed"
+        GSLKPP.ComponentDescription = DWSIM.App.GetLocalString("DescGSLKPP")
+
+        PropertyPackages.Add(GSLKPP.ComponentName.ToString, GSLKPP)
+
+        Dim RPP As RaoultPropertyPackage = New RaoultPropertyPackage()
+        RPP.ComponentName = DWSIM.App.GetLocalString("LeideRaoultGsSoluoId")
+        RPP.ComponentDescription = DWSIM.App.GetLocalString("DescRPP")
+
+        PropertyPackages.Add(RPP.ComponentName.ToString, RPP)
+
+        Dim LKPPP As LKPPropertyPackage = New LKPPropertyPackage()
+        LKPPP.ComponentName = "Lee-Kesler-Plöcker"
+        LKPPP.ComponentDescription = DWSIM.App.GetLocalString("DescLKPPP")
+
+        PropertyPackages.Add(LKPPP.ComponentName.ToString, LKPPP)
+
+        'Check if DWSIM is running in Portable/Mono mode, if not then load the COSMO-SAC Property Package.
+        If Not File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "default.ini") Or Not DWSIM.App.IsRunningOnMono Then
+
+            Dim CSPP As COSMOSACPropertyPackage = New COSMOSACPropertyPackage()
+            CSPP.ComponentName = "COSMO-SAC (JCOSMO)"
+            CSPP.ComponentDescription = DWSIM.App.GetLocalString("DescCSPP")
+
+            PropertyPackages.Add(CSPP.ComponentName.ToString, CSPP)
+
+        End If
+
+        If Not DWSIM.App.IsRunningOnMono Then
+
+            Dim COPP As CAPEOPENPropertyPackage = New CAPEOPENPropertyPackage()
+            COPP.ComponentName = "CAPE-OPEN"
+            COPP.ComponentDescription = DWSIM.App.GetLocalString("DescCOPP")
+
+            PropertyPackages.Add(COPP.ComponentName.ToString, COPP)
+
+        End If
+
+        Dim LQPP As LIQUAC2PropertyPackage = New LIQUAC2PropertyPackage()
+        LQPP.ComponentName = "LIQUAC2 (Aqueous Electrolytes)"
+        LQPP.ComponentDescription = DWSIM.App.GetLocalString("DescLQPP")
+
+        PropertyPackages.Add(LQPP.ComponentName.ToString, LQPP)
+
+        Dim EUQPP As ExUNIQUACPropertyPackage = New ExUNIQUACPropertyPackage()
+        EUQPP.ComponentName = "Extended UNIQUAC (Aqueous Electrolytes)"
+        EUQPP.ComponentDescription = DWSIM.App.GetLocalString("DescEUPP")
+
+        PropertyPackages.Add(EUQPP.ComponentName.ToString, EUQPP)
+
+    End Sub
+
+    Private Sub FormParent_MdiChildActivate(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.MdiChildActivate
+        If Me.MdiChildren.Length >= 1 Then
+            Me.ToolStripButton1.Enabled = True
+            Me.SaveAllToolStripButton.Enabled = True
+            Me.SaveToolStripButton.Enabled = True
+            Me.SaveToolStripMenuItem.Enabled = True
+            Me.SaveAllToolStripMenuItem.Enabled = True
+            Me.SaveAsToolStripMenuItem.Enabled = True
+            Me.ToolStripButton1.Enabled = True
+            Me.CloseAllToolstripMenuItem.Enabled = True
+            If Not Me.ActiveMdiChild Is Nothing Then
+                If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
+                    My.Application.ActiveSimulation = Me.ActiveMdiChild
+                End If
+            End If
+
+        End If
+    End Sub
+
+    Private Sub FormParent_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
+
+        Dim cmdLine() As String = System.Environment.GetCommandLineArgs()
+        If UBound(cmdLine) = 1 And Not cmdLine(0).StartsWith("-") Then
+            Try
+                Me.filename = cmdLine(1)
+                Try
+                    Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " (" + Me.filename + ")"
+                    Application.DoEvents()
+                    Select Case Path.GetExtension(Me.filename).ToLower()
+                        Case ".dwsim"
+                            Me.LoadF(Me.filename)
+                        Case ".dwxml"
+                            Me.LoadXML(Me.filename)
+                        Case ".dwxmz"
+                            Me.LoadAndExtractXMLZIP(Me.filename)
+                        Case ".dwcsd"
+                            Dim NewMDIChild As New FormCompoundCreator()
+                            NewMDIChild.MdiParent = Me
+                            NewMDIChild.Show()
+                            Dim objStreamReader As New FileStream(Me.filename, FileMode.Open)
+                            Dim x As New BinaryFormatter()
+                            NewMDIChild.mycase = x.Deserialize(objStreamReader)
+                            objStreamReader.Close()
+                            NewMDIChild.WriteData()
+                        Case ".dwrsd"
+                            Dim NewMDIChild As New FormDataRegression()
+                            NewMDIChild.MdiParent = Me
+                            NewMDIChild.Show()
+                            Dim objStreamReader As New FileStream(Me.filename, FileMode.Open)
+                            Dim x As New BinaryFormatter()
+                            NewMDIChild.currcase = x.Deserialize(objStreamReader)
+                            objStreamReader.Close()
+                            NewMDIChild.LoadCase(NewMDIChild.currcase, False)
+                    End Select
+                Catch ex As Exception
+                    MessageBox.Show(DWSIM.App.GetLocalString("Erroaoabrirarquivo") & " " & ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Finally
+                    Me.ToolStripStatusLabel1.Text = ""
+                End Try
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        Else
+            If My.Settings.BackupFiles.Count > 0 Then
+                Me.FrmRec = New FormRecoverFiles
+                Me.FrmRec.ShowDialog(Me)
+            Else
+                If My.Settings.ShowTips Then
+                    Dim frmw As New FormWelcome
+                    frmw.ShowDialog(Me)
+                End If
+            End If
+
+        End If
+
+        'check for updates
+        If My.Settings.CheckForUpdates Then Me.bgUpdater.RunWorkerAsync()
+
+    End Sub
 
 #End Region
 
-    ''' <summary>
-    ''' The Property Package Class contains methods to do thermodynamic calculations for all supported phases in DWSIM.
-    ''' </summary>
-    ''' <remarks>The base class is inherited by each implemented property package, which contains its own methods.</remarks>
-    <System.Serializable()> Public MustInherit Class PropertyPackage
+#Region "    Load Databases / Property Packages"
 
-        'CAPE-OPEN 1.0 Interfaces
-        Implements ICloneable, ICapeIdentification, ICapeThermoPropertyPackage, ICapeUtilities, ICapeThermoEquilibriumServer, ICapeThermoCalculationRoutine
+    Private Function GetComponents()
 
-        'CAPE-OPEN 1.1 Interfaces
-        Implements ICapeThermoPhases, ICapeThermoPropertyRoutine, ICapeThermoCompounds, ICapeThermoUniversalConstant
-        Implements ICapeThermoMaterialContext, ICapeThermoEquilibriumRoutine
-
-        'CAPE-OPEN Persistence Interface
-        Implements IPersistStreamInit
-
-        'CAPE-OPEN Error Interfaces
-        Implements ECapeUser, ECapeUnknown, ECapeRoot
-
-        'IDisposable
-        Implements IDisposable
-
-        'DWSIM XML support
-        Implements XMLSerializer.Interfaces.ICustomXMLSerialization
-
-        Public Const ClassId As String = ""
-
-        Private m_props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
-        Private m_ms As DWSIM.SimulationObjects.Streams.MaterialStream = Nothing
-        Private m_ss As New System.Collections.Generic.List(Of String)
-        Private m_configurable As Boolean = False
-
-        Public m_par As New System.Collections.Generic.Dictionary(Of String, Double)
-
-        Private _tag As String = ""
-        Private _uniqueID As String = ""
-
-        Private m_ip As DataTable
-
-        Private _flashalgorithm As FlashMethod
-
-        Public _packagetype As PackageType
-
-        Public _brio3 As New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P
-        Public _bbio As New Auxiliary.FlashAlgorithms.BostonBrittInsideOut
-        Public _dwdf As New Auxiliary.FlashAlgorithms.DWSIMDefault
-        Public _gm3 As New Auxiliary.FlashAlgorithms.GibbsMinimization3P
-        Public _nl3 As New Auxiliary.FlashAlgorithms.NestedLoops3P
-        Public _nl3v2 As New Auxiliary.FlashAlgorithms.NestedLoops3PV2
-        Public _nlsle As New Auxiliary.FlashAlgorithms.NestedLoopsSLE
-        Public _nli As New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
-        Public _simplelle As New Auxiliary.FlashAlgorithms.SimpleLLE
-
-        Public _ioquick As Boolean = True
-        Public _tpseverity As Integer = 0
-        Public _tpcompids As String() = New String() {}
-
-        Public _phasemappings As New Dictionary(Of String, PhaseInfo)
-
-        Friend IsElectrolytePP As Boolean = False
-
-        Private LoopVarF, LoopVarX As Double, LoopVarState As State
-
-        <System.NonSerialized()> Private _como As Object 'CAPE-OPEN Material Object
-
-        <System.NonSerialized()> Public ConfigForm As FormConfigBase 'System.Windows.Forms.Form
-
-#Region "   Constructor"
-
-        Sub New()
-
-            'Me.New(False)
-
-            MyBase.New()
-
-            Initialize()
-
-        End Sub
-
-        Sub New(ByVal capeopenmode As Boolean)
-
-            My.Application.CAPEOPENMode = capeopenmode
-
-            If capeopenmode Then
-
-                'initialize collections
-
-                _selectedcomps = New Dictionary(Of String, ConstantProperties)
-                _availablecomps = New Dictionary(Of String, ConstantProperties)
-
-                'load databases
-
-                Dim pathsep = IO.Path.DirectorySeparatorChar
-
-                'try to find chemsep xml database
-
+        'try to find chemsep xml database
+        If File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "dwsim.ini") Or DWSIM.App.IsRunningOnMono Then
+            'PORTABLE/MONO MODE
+            My.Settings.ChemSepDatabasePath = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "chemsepdb" & Path.DirectorySeparatorChar & "chemsep1.xml"
+        Else
+            Try
                 Dim cspath As String = ""
-                Try
-                    If My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96") IsNot Nothing Then
-                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96").GetValue("")
-                    ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95") IsNot Nothing Then
-                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95").GetValue("")
-                    ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94") IsNot Nothing Then
-                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94").GetValue("")
-                    ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93") IsNot Nothing Then
-                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93").GetValue("")
-                    End If
-                    cspath += Path.DirectorySeparatorChar + "pcd" + pathsep + "chemsep1.xml"
-                Catch ex As Exception
-                    Console.WriteLine(ex.ToString)
-                Finally
-                    If Not File.Exists(cspath) Then
-                        cspath = My.Application.Info.DirectoryPath & pathsep & "chemsepdb" & pathsep & "chemsep1.xml"
-                        If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
-                    Else
-                        My.Settings.ChemSepDatabasePath = cspath
-                    End If
-                End Try
-
-                'load chempsep database if existent
-
-                Try
-                    If File.Exists(My.Settings.ChemSepDatabasePath) Then Me.LoadCSDB(My.Settings.ChemSepDatabasePath)
-                Catch ex As Exception
-                    Console.WriteLine(ex.ToString)
-                End Try
-
-                'load DWSIM XML database
-
-                Try
-                    Me.LoadDWSIMDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "dwsim.xml")
-                Catch ex As Exception
-                    Console.WriteLine(ex.ToString)
-                End Try
-
-                'load user databases
-
-                If Not My.Settings.UserDatabases Is Nothing Then
-                    For Each fpath As String In My.Settings.UserDatabases
-                        Try
-                            Dim componentes As ConstantProperties()
-                            componentes = DWSIM.Databases.UserDB.ReadComps(fpath)
-                            If componentes.Length > 0 Then
-                                If My.Settings.ReplaceComps Then
-                                    For Each c As ConstantProperties In componentes
-                                        If Not _availablecomps.ContainsKey(c.Name) Then
-                                            _availablecomps.Add(c.Name, c)
-                                        Else
-                                            _availablecomps(c.Name) = c
-                                        End If
-                                    Next
-                                Else
-                                    For Each c As ConstantProperties In componentes
-                                        If Not _availablecomps.ContainsKey(c.Name) Then
-                                            _availablecomps.Add(c.Name, c)
-                                        End If
-                                    Next
-                                End If
-                            End If
-                        Catch ex As Exception
-                            MsgBox(ex.ToString)
-                        End Try
-                    Next
+                If My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96") IsNot Nothing Then
+                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96").GetValue("")
+                ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95") IsNot Nothing Then
+                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95").GetValue("")
+                ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94") IsNot Nothing Then
+                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94").GetValue("")
+                ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93") IsNot Nothing Then
+                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93").GetValue("")
                 End If
-
-
-            End If
-
-                Initialize()
-
-        End Sub
-
-        Sub ConfigParameters()
-            m_par = New System.Collections.Generic.Dictionary(Of String, Double)
-            With Me.Parameters
-                .Clear()
-                .Add("PP_PHFILT", 0.001)
-                .Add("PP_PSFILT", 0.001)
-                .Add("PP_PHFELT", 0.001)
-                .Add("PP_PSFELT", 0.001)
-                .Add("PP_PHFMEI", 50)
-                .Add("PP_PSFMEI", 50)
-                .Add("PP_PHFMII", 100)
-                .Add("PP_PSFMII", 100)
-                .Add("PP_PTFMEI", 100)
-                .Add("PP_PTFMII", 100)
-                .Add("PP_PTFILT", 0.001)
-                .Add("PP_PTFELT", 0.001)
-                .Add("PP_RIG_BUB_DEW_FLASH_INIT", 0)
-                .Add("PP_IDEAL_MIXRULE_LIQDENS", 0)
-                .Add("PP_FLASHALGORITHM", 2)
-            End With
-        End Sub
-
-        Public Sub CreatePhaseMappings()
-            Me._phasemappings = New Dictionary(Of String, PhaseInfo)
-            With Me._phasemappings
-                .Add("Vapor", New PhaseInfo("", 2, Fase.Vapor))
-                .Add("Liquid1", New PhaseInfo("", 3, Fase.Liquid1))
-                .Add("Liquid2", New PhaseInfo("", 4, Fase.Liquid2))
-                .Add("Liquid3", New PhaseInfo("", 5, Fase.Liquid3))
-                .Add("Aqueous", New PhaseInfo("", 6, Fase.Aqueous))
-                .Add("Solid", New PhaseInfo("", 7, Fase.Solid))
-            End With
-        End Sub
-
-        Public Sub CreatePhaseMappingsDW()
-            Me._phasemappings = New Dictionary(Of String, PhaseInfo)
-            With Me._phasemappings
-                .Add("Vapor", New PhaseInfo("Vapor", 2, Fase.Vapor))
-                .Add("Liquid1", New PhaseInfo("Liquid", 3, Fase.Liquid1))
-                .Add("Liquid2", New PhaseInfo("Liquid2", 4, Fase.Liquid2))
-                .Add("Solid", New PhaseInfo("Solid", 7, Fase.Solid))
-            End With
-        End Sub
-
-#End Region
-
-#Region "   Properties"
-
-        Public ReadOnly Property PhaseMappings() As Dictionary(Of String, PhaseInfo)
-            Get
-                If Me._phasemappings Is Nothing Then
-                    CreatePhaseMappingsDW()
-                ElseIf Me._phasemappings.Count = 0 Then
-                    CreatePhaseMappingsDW()
-                End If
-                Return _phasemappings
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Returns the flash algorithm selected for this property package.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>A FlashMethod value with information about the selected flash algorithm.</returns>
-        ''' <remarks></remarks>
-        Public Property FlashAlgorithm() As FlashMethod
-            Get
-                If My.Application.CAPEOPENMode Then
-                    Return _flashalgorithm
-                Else
-                    If _flashalgorithm = FlashMethod.GlobalSetting Then
-                        If Me.CurrentMaterialStream.Flowsheet Is Nothing Then
-                            Return FlashMethod.DWSIMDefault
-                        Else
-                            Return Me.CurrentMaterialStream.Flowsheet.Options.PropertyPackageFlashAlgorithm
-                        End If
-                    Else
-                        Return _flashalgorithm
-                    End If
-                End If
-            End Get
-            Set(ByVal value As FlashMethod)
-                _flashalgorithm = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Returns the FlashAlgorithm object instance for this property package.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>A FlashAlgorithm object to be used in flash calculations.</returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property FlashBase() As Auxiliary.FlashAlgorithms.FlashAlgorithm
-            Get
-                If Not My.Application.CAPEOPENMode And Not My.MyApplication.IsRunningParallelTasks Then
-                    If Not Me.Parameters.ContainsKey("PP_FLASHALGORITHM") Then
-                        Me.Parameters.Add("PP_FLASHALGORITHM", 2)
-                    End If
-                    Me.FlashAlgorithm = Me.Parameters("PP_FLASHALGORITHM")
-                End If
-                Select Case FlashAlgorithm
-                    Case FlashMethod.DWSIMDefault
-                        If _dwdf Is Nothing Then _dwdf = New Auxiliary.FlashAlgorithms.DWSIMDefault
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.DWSIMDefault Else Return _dwdf
-                    Case FlashMethod.InsideOut
-                        If _bbio Is Nothing Then _bbio = New Auxiliary.FlashAlgorithms.BostonBrittInsideOut
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.BostonBrittInsideOut Else Return _bbio
-                    Case FlashMethod.InsideOut3P
-                        If _brio3 Is Nothing Then _brio3 = New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P Else Return _brio3
-                    Case FlashMethod.GibbsMin2P
-                        If _gm3 Is Nothing Then _gm3 = New Auxiliary.FlashAlgorithms.GibbsMinimization3P
-                        _gm3.ForceTwoPhaseOnly = True
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.GibbsMinimization3P With {.ForceTwoPhaseOnly = True} Else Return _gm3
-                    Case FlashMethod.GibbsMin3P
-                        If _gm3 Is Nothing Then _gm3 = New Auxiliary.FlashAlgorithms.GibbsMinimization3P
-                        _gm3.ForceTwoPhaseOnly = False
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.GibbsMinimization3P With {.ForceTwoPhaseOnly = False} Else Return _gm3
-                    Case FlashMethod.NestedLoops3P
-                        If _nl3 Is Nothing Then _nl3 = New Auxiliary.FlashAlgorithms.NestedLoops3P
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoops3P Else Return _nl3
-                    Case FlashMethod.NestedLoops3PV2
-                        If _nl3v2 Is Nothing Then _nl3v2 = New Auxiliary.FlashAlgorithms.NestedLoops3PV2
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoops3P Else Return _nl3v2
-                    Case FlashMethod.NestedLoopsSLE
-                        If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE
-                        Dim constprops As New List(Of ConstantProperties)
-                        For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                            constprops.Add(su.ConstantProperties)
-                        Next
-                        _nlsle.CompoundProperties = constprops
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops} Else Return _nlsle
-                    Case FlashMethod.NestedLoopsSLE_SS
-                        If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.SolidSolution = True}
-                        Dim constprops As New List(Of ConstantProperties)
-                        For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                            constprops.Add(su.ConstantProperties)
-                        Next
-                        _nlsle.CompoundProperties = constprops
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops, .SolidSolution = True} Else Return _nlsle
-                    Case FlashMethod.NestedLoopsImmiscible
-                        If _nli Is Nothing Then _nli = New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
-                        Dim constprops As New List(Of ConstantProperties)
-                        For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                            constprops.Add(su.ConstantProperties)
-                        Next
-                        _nli.CompoundProperties = constprops
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible With {.CompoundProperties = constprops} Else Return _nli
-                    Case FlashMethod.SimpleLLE
-                        If _simplelle Is Nothing Then _simplelle = New Auxiliary.FlashAlgorithms.SimpleLLE
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.SimpleLLE Else Return _simplelle
-                    Case Else
-                        If _dwdf Is Nothing Then _dwdf = New Auxiliary.FlashAlgorithms.DWSIMDefault
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.DWSIMDefault Else Return _dwdf
-                        Return _dwdf
-                End Select
-            End Get
-        End Property
-
-        Public Property UniqueID() As String
-            Get
-                Return _uniqueID
-            End Get
-            Set(ByVal value As String)
-                _uniqueID = value
-            End Set
-        End Property
-
-        Public Property Tag() As String
-            Get
-                If _tag = "" Then Return Me.ComponentName Else Return _tag
-            End Get
-            Set(ByVal value As String)
-                _tag = value
-            End Set
-        End Property
-
-        Public ReadOnly Property PackageType() As PackageType
-            Get
-                Return _packagetype
-            End Get
-        End Property
-
-        Public Property ParametrosDeInteracao() As DataTable
-            Get
-                Return m_ip
-            End Get
-            Set(ByVal value As DataTable)
-                m_ip = value
-            End Set
-        End Property
-
-        Public ReadOnly Property Parameters() As Dictionary(Of String, Double)
-            Get
-                If Me.m_par Is Nothing Then ConfigParameters()
-                Return Me.m_par
-            End Get
-        End Property
-
-        Public Property IsConfigurable() As Boolean
-            Get
-                Return m_configurable
-            End Get
-            Set(ByVal value As Boolean)
-                m_configurable = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Gets or sets the current material stream for this property package.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Property CurrentMaterialStream() As MaterialStream
-            Get
-                Return m_ms
-            End Get
-            Set(ByVal MatStr As MaterialStream)
-                m_ms = MatStr
-            End Set
-        End Property
-
-        Public ReadOnly Property SupportedComponents() As System.Collections.Generic.List(Of String)
-            Get
-                Return m_ss
-            End Get
-        End Property
-#End Region
-
-#Region "   Cloning Support"
-
-        Public Function Clone() As Object Implements System.ICloneable.Clone
-
-            Return ObjectCopy(Me)
-
-        End Function
-
-        Function ObjectCopy(ByVal obj As Object) As Object
-
-            Dim objMemStream As New MemoryStream(50000)
-            Dim objBinaryFormatter As New BinaryFormatter(Nothing, New StreamingContext(StreamingContextStates.Clone))
-
-            objBinaryFormatter.Serialize(objMemStream, obj)
-
-            objMemStream.Seek(0, SeekOrigin.Begin)
-
-            ObjectCopy = objBinaryFormatter.Deserialize(objMemStream)
-
-            objMemStream.Close()
-        End Function
-#End Region
-
-#Region "   Must Override or Overridable Functions"
-
-        Public Overridable Sub ShowConfigForm(Optional ByVal owner As IWin32Window = Nothing)
-            If Not owner Is Nothing Then Me.ConfigForm.Show(owner) Else Me.ConfigForm.Show()
-        End Sub
-
-        Public Overridable Sub ReconfigureConfigForm()
-
-        End Sub
-
-        ''' <summary>
-        ''' Provides a wrapper function for CAPE-OPEN CalcProp/CalcSingleProp functions.
-        ''' </summary>
-        ''' <param name="property">The property to be calculated.</param>
-        ''' <param name="phase">The phase where the property must be calculated for.</param>
-        ''' <remarks>This function is necessary since DWSIM's internal property calculation function calculates all properties at once,
-        ''' while the CAPE-OPEN standards require that only the property that was asked for to be calculated, leaving the others unchanged.</remarks>
-        Public MustOverride Sub DW_CalcProp(ByVal [property] As String, ByVal phase As Fase)
-
-        ''' <summary>
-        ''' Provides a default implementation for solid phase property calculations in CAPE-OPEN mode. Should be used by all derived propety packages.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Overridable Sub DW_CalcSolidPhaseProps()
-
-            Dim phaseID As Integer = 7
-            Dim result As Double = 0.0#
-
-            Dim T, P As Double
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
-            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure
-
-            result = Me.AUX_SOLIDDENS
-            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
-            Dim constprops As New List(Of ConstantProperties)
-            For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                constprops.Add(su.ConstantProperties)
-            Next
-            result = Me.DW_CalcSolidEnthalpy(T, RET_VMOL(PropertyPackages.Fase.Solid), constprops)
-            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
-            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result / T
-            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = 0.0#
-            result = Me.DW_CalcSolidHeatCapacityCp(T, RET_VMOL(PropertyPackages.Fase.Solid), constprops)
-            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
-            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
-            result = Me.AUX_MMM(Fase.Solid)
-            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = result
-            result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
-            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = result
-            result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
-            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = result
-            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = 0.0#
-            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = 1.0E+20
-            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = 1.0E+20
-
-        End Sub
-
-        ''' <summary>
-        ''' Calculates the enthalpy of a mixture.
-        ''' </summary>
-        ''' <param name="Vx">Vector of doubles containing the molar composition of the mixture.</param>
-        ''' <param name="T">Temperature (K)</param>
-        ''' <param name="P">Pressure (Pa)</param>
-        ''' <param name="st">State enum indicating the state of the mixture (liquid or vapor).</param>
-        ''' <returns>The enthalpy of the mixture in kJ/kg.</returns>
-        ''' <remarks>The basis for the calculated enthalpy/entropy in DWSIM is zero at 25 C and 1 atm.</remarks>
-        Public MustOverride Function DW_CalcEnthalpy(ByVal Vx As Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
-
-        ''' <summary>
-        ''' Calculates the enthalpy departure of a mixture.
-        ''' </summary>
-        ''' <param name="Vx">Vector of doubles containing the molar composition of the mixture.</param>
-        ''' <param name="T">Temperature (K)</param>
-        ''' <param name="P">Pressure (Pa)</param>
-        ''' <param name="st">State enum indicating the state of the mixture (liquid or vapor).</param>
-        ''' <returns>The enthalpy departure of the mixture in kJ/kg.</returns>
-        ''' <remarks>The basis for the calculated enthalpy/entropy in DWSIM is zero at 25 C and 1 atm.</remarks>
-        Public MustOverride Function DW_CalcEnthalpyDeparture(ByVal Vx As Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
-
-        ''' <summary>
-        ''' Calculates the entropy of a mixture.
-        ''' </summary>
-        ''' <param name="Vx">Vector of doubles containing the molar composition of the mixture.</param>
-        ''' <param name="T">Temperature (K)</param>
-        ''' <param name="P">Pressure (Pa)</param>
-        ''' <param name="st">State enum indicating the state of the mixture (liquid or vapor).</param>
-        ''' <returns>The entropy of the mixture in kJ/kg.K.</returns>
-        ''' <remarks>The basis for the calculated enthalpy/entropy in DWSIM is zero at 25 C and 1 atm.</remarks>
-        Public MustOverride Function DW_CalcEntropy(ByVal Vx As Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
-
-        ''' <summary>
-        ''' Calculates the entropy departure of a mixture.
-        ''' </summary>
-        ''' <param name="Vx">Vector of doubles containing the molar composition of the mixture.</param>
-        ''' <param name="T">Temperature (K)</param>
-        ''' <param name="P">Pressure (Pa)</param>
-        ''' <param name="st">State enum indicating the state of the mixture (liquid or vapor).</param>
-        ''' <returns>The entropy departure of the mixture in kJ/kg.K.</returns>
-        ''' <remarks>The basis for the calculated enthalpy/entropy in DWSIM is zero at 25 C and 1 atm.</remarks>
-        Public MustOverride Function DW_CalcEntropyDeparture(ByVal Vx As Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
-
-        ''' <summary>
-        ''' Calculates K-values of components in a mixture.
-        ''' </summary>
-        ''' <param name="Vx">Vector of doubles containing the molar composition of the liquid phase.</param>
-        ''' <param name="Vy">Vector of doubles containing the molar composition of the vapor phase.</param>
-        ''' <param name="T">Temperature of the system.</param>
-        ''' <param name="P">Pressure of the system.</param>
-        ''' <returns>An array containing K-values for all components in the mixture.</returns>
-        ''' <remarks>The composition vector must follow the same sequence as the components which were added in the material stream.</remarks>
-        Public Overridable Overloads Function DW_CalcKvalue(ByVal Vx As System.Array, ByVal Vy As System.Array, ByVal T As Double, ByVal P As Double, Optional ByVal type As String = "LV") As Object
-
-            Dim fugvap As Object = Nothing
-            Dim fugliq As Object = Nothing
-
-            Dim alreadymt As Boolean = False
-
-            If My.Settings.EnableParallelProcessing Then
-                My.MyApplication.IsRunningParallelTasks = True
-                If My.Settings.EnableGPUProcessing Then
-                    If Not My.MyApplication.gpu.IsMultithreadingEnabled Then
-                        My.MyApplication.gpu.EnableMultithreading()
-                    Else
-                        alreadymt = True
-                    End If
-                End If
-                Try
-                    Dim task1 As Task = New Task(Sub()
-                                                     fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                                                 End Sub)
-                    Dim task2 As Task = New Task(Sub()
-                                                     If type = "LV" Then
-                                                         fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-                                                     Else ' LL
-                                                         fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Liquid)
-                                                     End If
-                                                 End Sub)
-
-                    task1.Start()
-                    task2.Start()
-                    Task.WaitAll(task1, task2)
-                Catch ae As AggregateException
-                    For Each ex As Exception In ae.InnerExceptions
-                        Throw ex
-                    Next
-                Finally
-                    If My.Settings.EnableGPUProcessing Then
-                        If Not alreadymt Then
-                            My.MyApplication.gpu.DisableMultithreading()
-                            My.MyApplication.gpu.FreeAll()
-                        End If
-                    End If
-                End Try
-                My.MyApplication.IsRunningParallelTasks = False
-            Else
-                fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                If type = "LV" Then
-                    fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-                Else ' LL
-                    fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Liquid)
-                End If
-            End If
-
-            Dim n As Integer = UBound(fugvap)
-            Dim i As Integer
-            Dim K(n) As Double
-
-            For i = 0 To n
-                K(i) = fugliq(i) / fugvap(i)
-            Next
-
-            i = 0
-            For Each subst As ClassesBasicasTermodinamica.Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
-                If K(i) = 0 Or Double.IsInfinity(K(i)) Or Double.IsNaN(K(i)) Then
-                    Dim Pc, Tc, w As Double
-                    Pc = subst.ConstantProperties.Critical_Pressure
-                    Tc = subst.ConstantProperties.Critical_Temperature
-                    w = subst.ConstantProperties.Acentric_Factor
-                    If type = "LV" Then
-                        K(i) = Pc / P * Math.Exp(5.373 * (1 + w) * (1 - Tc / T))
-                    Else
-                        K(i) = 1.0#
-                    End If
-                End If
-                i += 1
-            Next
-
-            If Me.AUX_CheckTrivial(K) Then
-                i = 0
-                For Each subst As ClassesBasicasTermodinamica.Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
-                    Dim Pc, Tc, w As Double
-                    Pc = subst.ConstantProperties.Critical_Pressure
-                    Tc = subst.ConstantProperties.Critical_Temperature
-                    w = subst.ConstantProperties.Acentric_Factor
-                    If type = "LV" Then
-                        K(i) = Pc / P * Math.Exp(5.373 * (1 + w) * (1 - Tc / T))
-                    Else
-                        K(i) = 1.0#
-                    End If
-                    i += 1
-                Next
-            End If
-
-            Return K
-
-        End Function
-
-        ''' <summary>
-        ''' Calculates K-values of components in a mixture.
-        ''' </summary>
-        ''' <param name="Vx">Vector of doubles containing the molar composition of the mixture.</param>
-        ''' <param name="T">Temperature of the system, in K.</param>
-        ''' <param name="P">Pressure of the system, in Pa.</param>
-        ''' <returns>An array containing K-values for all components in the mixture.</returns>
-        ''' <remarks>The composition vector must follow the same sequence as the components which were added in the material stream.</remarks>
-        Public Overridable Overloads Function DW_CalcKvalue(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double) As [Object]
-
-            Dim i As Integer
-            Dim result = Me.FlashBase.Flash_PT(Vx, P, T, Me)
-            Dim n As Integer = UBound(Vx)
-            Dim K(n) As Double
-
-            i = 0
-            For Each subst As ClassesBasicasTermodinamica.Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
-                K(i) = (result(3)(i) / result(2)(i))
-                i += 1
-            Next
-
-            i = 0
-            For Each subst As ClassesBasicasTermodinamica.Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
-                If K(i) = 0 Then K(i) = Me.AUX_PVAPi(subst.Nome, T) / P
-                If Double.IsInfinity(K(i)) Or Double.IsNaN(K(i)) Then
-                    Dim Pc, Tc, w As Double
-                    Pc = subst.ConstantProperties.Critical_Pressure
-                    Tc = subst.ConstantProperties.Critical_Temperature
-                    w = subst.ConstantProperties.Acentric_Factor
-                    K(i) = Pc / P * Math.Exp(5.373 * (1 + w) * (1 - Tc / T))
-                End If
-                i += 1
-            Next
-
-            If Me.AUX_CheckTrivial(K) Then
-                For i = 0 To UBound(Vx)
-                    K(i) = Me.AUX_PVAPi(i, T) / P
-                    i += 1
-                Next
-            End If
-
-            Return K
-
-        End Function
-
-        ''' <summary>
-        ''' Does a Bubble Pressure calculation for the specified liquid composition at the specified temperature.
-        ''' </summary>
-        ''' <param name="Vx">Vector of doubles containing liquid phase molar composition for each component in the mixture.</param>
-        ''' <param name="T">Temperature in K</param>
-        ''' <param name="Pref">Initial estimate for Pressure, in Pa</param>
-        ''' <param name="K">Vector with initial estimates for K-values</param>
-        ''' <param name="ReuseK">Boolean indicating wether to use the initial estimates for K-values or not.</param>
-        ''' <returns>Returns the object vector {L, V, Vx, Vy, P, ecount, Ki} where L is the liquid phase molar fraction, 
-        ''' V is the vapor phase molar fraction, Vx is the liquid phase molar composition vector, Vy is the vapor phase molar 
-        ''' composition vector, P is the calculated Pressure in Pa, ecount is the number of iterations and Ki is a vector containing 
-        ''' the calculated K-values.</returns>
-        ''' <remarks>The composition vector must follow the same sequence as the components which were added in the material stream.</remarks>
-        Public Overridable Function DW_CalcBubP(ByVal Vx As System.Array, ByVal T As Double, Optional ByVal Pref As Double = 0, Optional ByVal K As System.Array = Nothing, Optional ByVal ReuseK As Boolean = False) As Object
-            Return Me.FlashBase.Flash_TV(Vx, T, 0, Pref, Me, ReuseK, K)
-        End Function
-
-        ''' <summary>
-        ''' Does a Bubble Temperature calculation for the specified liquid composition at the specified pressure.
-        ''' </summary>
-        ''' <param name="Vx">Vector of doubles containing liquid phase molar composition for each component in the mixture.</param>
-        ''' <param name="P"></param>
-        ''' <param name="Tref"></param>
-        ''' <param name="K">Vector with initial estimates for K-values</param>
-        ''' <param name="ReuseK">Boolean indicating wether to use the initial estimates for K-values or not.</param>
-        ''' <returns>Returns the object vector {L, V, Vx, Vy, T, ecount, Ki} where L is the liquid phase molar fraction, 
-        ''' V is the vapor phase molar fraction, Vx is the liquid phase molar composition vector, Vy is the vapor phase molar 
-        ''' composition vector, T is the calculated Temperature in K, ecount is the number of iterations and Ki is a vector containing 
-        ''' the calculated K-values.</returns>
-        ''' <remarks>The composition vector must follow the same sequence as the components which were added in the material stream.</remarks>
-        Public Overridable Function DW_CalcBubT(ByVal Vx As System.Array, ByVal P As Double, Optional ByVal Tref As Double = 0, Optional ByVal K As System.Array = Nothing, Optional ByVal ReuseK As Boolean = False) As Object
-            Return Me.FlashBase.Flash_PV(Vx, P, 0, Tref, Me, ReuseK, K)
-        End Function
-
-        ''' <summary>
-        ''' Does a Dew Pressure calculation for the specified vapor phase composition at the specified temperature.
-        ''' </summary>
-        ''' <param name="Vx">Vector of doubles containing vapor phase molar composition for each component in the mixture.</param>
-        ''' <param name="T">Temperature in K</param>
-        ''' <param name="Pref">Initial estimate for Pressure, in Pa</param>
-        ''' <param name="K">Vector with initial estimates for K-values</param>
-        ''' <param name="ReuseK">Boolean indicating wether to use the initial estimates for K-values or not.</param>
-        ''' <returns>Returns the object vector {L, V, Vx, Vy, P, ecount, Ki} where L is the liquid phase molar fraction, 
-        ''' V is the vapor phase molar fraction, Vx is the liquid phase molar composition vector, Vy is the vapor phase molar 
-        ''' composition vector, P is the calculated Pressure in Pa, ecount is the number of iterations and Ki is a vector containing 
-        ''' the calculated K-values.</returns>
-        ''' <remarks>The composition vector must follow the same sequence as the components which were added in the material stream.</remarks>
-        Public Overridable Function DW_CalcDewP(ByVal Vx As System.Array, ByVal T As Double, Optional ByVal Pref As Double = 0, Optional ByVal K As System.Array = Nothing, Optional ByVal ReuseK As Boolean = False) As Object
-            Return Me.FlashBase.Flash_TV(Vx, T, 1, Pref, Me, ReuseK, K)
-        End Function
-
-        ''' <summary>
-        ''' Does a Dew Temperature calculation for the specified vapor composition at the specified pressure.
-        ''' </summary>
-        ''' <param name="Vx">Vector of doubles containing vapor phase molar composition for each component in the mixture.</param>
-        ''' <param name="P"></param>
-        ''' <param name="Tref"></param>
-        ''' <param name="K">Vector with initial estimates for K-values</param>
-        ''' <param name="ReuseK">Boolean indicating wether to use the initial estimates for K-values or not.</param>
-        ''' <returns>Returns the object vector {L, V, Vx, Vy, T, ecount, Ki} where L is the liquid phase molar fraction, 
-        ''' V is the vapor phase molar fraction, Vx is the liquid phase molar composition vector, Vy is the vapor phase molar 
-        ''' composition vector, T is the calculated Temperature in K, ecount is the number of iterations and Ki is a vector containing 
-        ''' the calculated K-values.</returns>
-        ''' <remarks>The composition vector must follow the same sequence as the components which were added in the material stream.</remarks>
-        Public Overridable Function DW_CalcDewT(ByVal Vx As System.Array, ByVal P As Double, Optional ByVal Tref As Double = 0, Optional ByVal K As System.Array = Nothing, Optional ByVal ReuseK As Boolean = False) As Object
-            Return Me.FlashBase.Flash_PV(Vx, P, 1, Tref, Me, ReuseK, K)
-        End Function
-
-        ''' <summary>
-        ''' Calculates fugacity coefficients for the specified composition at the specified conditions.
-        ''' </summary>
-        ''' <param name="Vx">Vector of doubles containing the molar composition of the mixture.</param>
-        ''' <param name="T">Temperature in K</param>
-        ''' <param name="P">Pressure in Pa</param>
-        ''' <param name="st">Mixture state (Liquid or Vapor)</param>
-        ''' <returns>A vector of doubles containing fugacity coefficients for the components in the mixture.</returns>
-        ''' <remarks>The composition vector must follow the same sequence as the components which were added in the material stream.</remarks>
-        Public MustOverride Function DW_CalcFugCoeff(ByVal Vx As Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Object
-
-        Public MustOverride Function SupportsComponent(ByVal comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties) As Boolean
-
-        Public MustOverride Sub DW_CalcPhaseProps(ByVal fase As Fase)
-
-        Public MustOverride Sub DW_CalcTwoPhaseProps(ByVal fase1 As Fase, ByVal fase2 As Fase)
-
-        Public Function DW_CalcGibbsEnergy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double) As Double
-
-            Dim fugvap As Object = Nothing
-            Dim fugliq As Object = Nothing
-
-            If My.Settings.EnableParallelProcessing Then
-                My.MyApplication.IsRunningParallelTasks = True
-                If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.EnableMultithreading()
-                End If
-                Try
-                    Dim task1 As Task = New Task(Sub()
-                                                     fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                                                 End Sub)
-                    Dim task2 As Task = New Task(Sub()
-                                                     fugvap = Me.DW_CalcFugCoeff(Vx, T, P, State.Vapor)
-                                                 End Sub)
-                    task1.Start()
-                    task2.Start()
-                    Task.WaitAll(task1, task2)
-                Catch ae As AggregateException
-                    For Each ex As Exception In ae.InnerExceptions
-                        Throw ex
-                    Next
-                Finally
-                    If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.DisableMultithreading()
-                        My.MyApplication.gpu.FreeAll()
-                    End If
-                End Try
-                My.MyApplication.IsRunningParallelTasks = False
-            Else
-                fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                fugvap = Me.DW_CalcFugCoeff(Vx, T, P, State.Vapor)
-            End If
-
-            Dim n As Integer = UBound(Vx)
-            Dim i As Integer
-
-            Dim g, gid, gexv, gexl As Double
-
-            gid = 0.0#
-
-            'If MathEx.Common.Sum(Vx) <> 0.0# Then
-            '    gid = RET_Gid(298.15, T, P, Vx) * AUX_MMM(Vx) 'kJ/kmol
-            'End If
-
-            gexv = 0.0#
-            gexl = 0.0#
-            For i = 0 To n
-                If Vx(i) <> 0.0# Then gexv += Vx(i) * Log(fugvap(i)) * 8.314 * T
-                If Vx(i) <> 0.0# Then gexl += Vx(i) * Log(fugliq(i)) * 8.314 * T
-            Next
-
-            If gexv < gexl Then g = gid + gexv Else g = gid + gexl
-
-            Return g 'kJ/kmol
-
-        End Function
-
-        Public Overridable Sub DW_CalcOverallProps()
-
-            Dim HL, HV, HS, SL, SV, SS, DL, DV, DS, CPL, CPV, CPS, KL, KV, KS, CVL, CVV, CSV As Nullable(Of Double)
-            Dim xl, xv, xs, wl, wv, ws, vl, vv, vs, result As Double
-
-            xl = Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault
-            xv = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
-            xs = Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault
-
-            wl = Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction.GetValueOrDefault
-            wv = Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault
-            ws = Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault
-
-            DL = Me.CurrentMaterialStream.Fases(1).SPMProperties.density.GetValueOrDefault
-            DV = Me.CurrentMaterialStream.Fases(2).SPMProperties.density.GetValueOrDefault
-            DS = Me.CurrentMaterialStream.Fases(7).SPMProperties.density.GetValueOrDefault
-
-            If Double.IsNaN(DL) Then DL = 0.0#
-
-            Dim tl As Double = 0.0#
-            Dim tv As Double = 0.0#
-            Dim ts As Double = 0.0#
-
-            If DL <> 0.0# And Not Double.IsNaN(DL) Then tl = Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction.GetValueOrDefault / DL.GetValueOrDefault
-            If DV <> 0.0# And Not Double.IsNaN(DV) Then tv = Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault / DV.GetValueOrDefault
-            If DS <> 0.0# And Not Double.IsNaN(DS) Then ts = Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault / DS.GetValueOrDefault
-
-            vl = tl / (tl + tv + ts)
-            vv = tv / (tl + tv + ts)
-            vs = ts / (tl + tv + ts)
-
-            If xl = 1 Then
-                vl = 1
-                vv = 0
-            ElseIf xl = 0 Then
-                vl = 0
-                vv = 1
-            End If
-
-            result = vl * DL.GetValueOrDefault + vv * DV.GetValueOrDefault + vs * DS.GetValueOrDefault
-            Me.CurrentMaterialStream.Fases(0).SPMProperties.density = result
-
-            HL = Me.CurrentMaterialStream.Fases(1).SPMProperties.enthalpy.GetValueOrDefault
-            HV = Me.CurrentMaterialStream.Fases(2).SPMProperties.enthalpy.GetValueOrDefault
-            HS = Me.CurrentMaterialStream.Fases(7).SPMProperties.enthalpy.GetValueOrDefault
-
-            result = wl * HL.GetValueOrDefault + wv * HV.GetValueOrDefault + ws * HS.GetValueOrDefault
-            Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy = result
-
-            SL = Me.CurrentMaterialStream.Fases(1).SPMProperties.entropy.GetValueOrDefault
-            SV = Me.CurrentMaterialStream.Fases(2).SPMProperties.entropy.GetValueOrDefault
-            SS = Me.CurrentMaterialStream.Fases(7).SPMProperties.entropy.GetValueOrDefault
-
-            result = wl * SL.GetValueOrDefault + wv * SV.GetValueOrDefault + ws * SS.GetValueOrDefault
-            Me.CurrentMaterialStream.Fases(0).SPMProperties.entropy = result
-
-            Me.CurrentMaterialStream.Fases(0).SPMProperties.compressibilityFactor = Nothing
-
-            CPL = Me.CurrentMaterialStream.Fases(1).SPMProperties.heatCapacityCp.GetValueOrDefault
-            CPV = Me.CurrentMaterialStream.Fases(2).SPMProperties.heatCapacityCp.GetValueOrDefault
-            CPS = Me.CurrentMaterialStream.Fases(7).SPMProperties.heatCapacityCp.GetValueOrDefault
-
-            result = wl * CPL.GetValueOrDefault + wv * CPV.GetValueOrDefault + ws * CPS.GetValueOrDefault
-            Me.CurrentMaterialStream.Fases(0).SPMProperties.heatCapacityCp = result
-
-            CVL = Me.CurrentMaterialStream.Fases(1).SPMProperties.heatCapacityCv.GetValueOrDefault
-            CVV = Me.CurrentMaterialStream.Fases(2).SPMProperties.heatCapacityCv.GetValueOrDefault
-            CSV = Me.CurrentMaterialStream.Fases(7).SPMProperties.heatCapacityCv.GetValueOrDefault
-
-            result = wl * CVL.GetValueOrDefault + wv * CVV.GetValueOrDefault + ws * CSV.GetValueOrDefault
-            Me.CurrentMaterialStream.Fases(0).SPMProperties.heatCapacityCv = result
-
-            result = Me.AUX_MMM(Fase.Mixture)
-            Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight = result
-
-            result = Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
-            Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_enthalpy = result
-            result = Me.CurrentMaterialStream.Fases(0).SPMProperties.entropy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
-            Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_entropy = result
-
-            KL = Me.CurrentMaterialStream.Fases(1).SPMProperties.thermalConductivity.GetValueOrDefault
-            KV = Me.CurrentMaterialStream.Fases(2).SPMProperties.thermalConductivity.GetValueOrDefault
-            KS = Me.CurrentMaterialStream.Fases(7).SPMProperties.thermalConductivity.GetValueOrDefault
-
-            result = xl * KL.GetValueOrDefault + xv * KV.GetValueOrDefault + xs * KS.GetValueOrDefault
-            Me.CurrentMaterialStream.Fases(0).SPMProperties.thermalConductivity = result
-
-            Me.CurrentMaterialStream.Fases(0).SPMProperties.viscosity = Nothing
-
-            Me.CurrentMaterialStream.Fases(0).SPMProperties.kinematic_viscosity = Nothing
-
-            Dim P As Double = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-            Dim T As Double = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-
-            If Not My.Application.CAPEOPENMode And Not My.Application.ActiveSimulation Is Nothing Then
-                If My.Application.ActiveSimulation.Options.CalculateBubbleAndDewPoints _
-                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
-                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
-                    Try
-                        Dim Vz As Double() = Me.RET_VMOL(Fase.Mixture)
-                        Dim myres As Object = Me.FlashBase.Flash_PV(Vz, P, 0, 0, Me)
-                        'check if liquid phase is stable.
-                        Dim myres2 As Object = Me.FlashBase.Flash_PT(Vz, P, myres(4), Me)
-                        If myres2(5) > 0.0# Then
-                            If Abs(myres2(2)(0) - myres2(6)(0)) > 0.01 Then
-                                Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = Me.FlashBase.BubbleTemperature_LLE(Vz, myres2(2), myres2(6), P, myres(4) - 40, myres(4) + 40, Me)
-                            End If
-                        Else
-                            Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature = myres(4)
-                        End If
-                    Catch ex As Exception
-                        Me.CurrentMaterialStream.Flowsheet.WriteToLog("Bubble Temperature calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
-                    End Try
-                    Try
-                        result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.P, FlashSpec.VAP, P, 1, 0)(2)
-                        Me.CurrentMaterialStream.Fases(0).SPMProperties.dewTemperature = result
-                    Catch ex As Exception
-                        Me.CurrentMaterialStream.Flowsheet.WriteToLog("Dew Temperature calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
-                    End Try
-                    Try
-                        Dim Vz As Double() = Me.RET_VMOL(Fase.Mixture)
-                        Dim myres As Object = Me.FlashBase.Flash_TV(Vz, T, 0, 0, Me)
-                        'check if liquid phase is stable.
-                        Dim myres2 As Object = Me.FlashBase.Flash_PT(Vz, myres(4), T, Me)
-                        If myres2(5) > 0.0# Then
-                            If Abs(myres2(2)(0) - myres2(6)(0)) > 0.01 Then
-                                Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = Me.FlashBase.BubblePressure_LLE(Vz, myres2(2), myres2(6), myres(4), T, Me)
-                            End If
-                        Else
-                            Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure = myres(4)
-                        End If
-                    Catch ex As Exception
-                        Me.CurrentMaterialStream.Flowsheet.WriteToLog("Bubble Pressure calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
-                    End Try
-                    Try
-                        result = Me.DW_CalcEquilibrio_ISOL(FlashSpec.T, FlashSpec.VAP, T, 1, 0)(3)
-                        Me.CurrentMaterialStream.Fases(0).SPMProperties.dewPressure = result
-                    Catch ex As Exception
-                        Me.CurrentMaterialStream.Flowsheet.WriteToLog("Dew Pressure calculation error: " & ex.Message.ToString, Color.OrangeRed, FormClasses.TipoAviso.Erro)
-                    End Try
-                End If
-            End If
-
-        End Sub
-
-        Public Overridable Sub DW_CalcLiqMixtureProps()
-
-            Dim hl, hl1, hl2, hl3, hw, sl, sl1, sl2, sl3, sw, dl, dl1, dl2, dl3, dw As Double
-            Dim cpl, cpl1, cpl2, cpl3, cpw, cvl, cvl1, cvl2, cvl3, cvw As Double
-            Dim kl, kl1, kl2, kl3, kw, vil, vil1, vil2, vil3, viw As Double
-            Dim xl, xl1, xl2, xl3, xw, wl, wl1, wl2, wl3, ww As Double
-            Dim xlf, xlf1, xlf2, xlf3, xwf, wlf, wlf1, wlf2, wlf3, wwf As Double
-            Dim cml, cml1, cml2, cml3, cmw, cwl, cwl1, cwl2, cwl3, cww As Double
-
-            xl1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction.GetValueOrDefault
-            xl2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction.GetValueOrDefault
-            xl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.molarfraction.GetValueOrDefault
-            xw = Me.CurrentMaterialStream.Fases(6).SPMProperties.molarfraction.GetValueOrDefault
-
-            xl = xl1 + xl2 + xl3 + xw
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction = xl
-
-            wl1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault
-            wl2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault
-            wl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.massfraction.GetValueOrDefault
-            ww = Me.CurrentMaterialStream.Fases(6).SPMProperties.massfraction.GetValueOrDefault
-
-            wl = wl1 + wl2 + wl3 + ww
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction = wl
-
-            xlf1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.molarflow.GetValueOrDefault
-            xlf2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.molarflow.GetValueOrDefault
-            xlf3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.molarflow.GetValueOrDefault
-            xwf = Me.CurrentMaterialStream.Fases(6).SPMProperties.molarflow.GetValueOrDefault
-
-            xlf = xlf1 + xlf2 + xlf3 + xwf
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.molarflow = xlf
-
-            wlf1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.massflow.GetValueOrDefault
-            wlf2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.massflow.GetValueOrDefault
-            wlf3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.massflow.GetValueOrDefault
-            wwf = Me.CurrentMaterialStream.Fases(6).SPMProperties.massflow.GetValueOrDefault
-
-            wlf = wlf1 + wlf2 + wlf3 + wwf
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.massflow = wlf
-
-            For Each c As Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
-                cml1 = Me.CurrentMaterialStream.Fases(3).Componentes(c.Nome).FracaoMolar.GetValueOrDefault
-                cml2 = Me.CurrentMaterialStream.Fases(4).Componentes(c.Nome).FracaoMolar.GetValueOrDefault
-                cml3 = Me.CurrentMaterialStream.Fases(5).Componentes(c.Nome).FracaoMolar.GetValueOrDefault
-                cmw = Me.CurrentMaterialStream.Fases(6).Componentes(c.Nome).FracaoMolar.GetValueOrDefault
-                cwl1 = Me.CurrentMaterialStream.Fases(3).Componentes(c.Nome).FracaoMassica.GetValueOrDefault
-                cwl2 = Me.CurrentMaterialStream.Fases(4).Componentes(c.Nome).FracaoMassica.GetValueOrDefault
-                cwl3 = Me.CurrentMaterialStream.Fases(5).Componentes(c.Nome).FracaoMassica.GetValueOrDefault
-                cww = Me.CurrentMaterialStream.Fases(6).Componentes(c.Nome).FracaoMassica.GetValueOrDefault
-                cml = (xl1 * cml1 + xl2 * cml2 + xl3 * cml3 + xw * cmw) / xl
-                cwl = (wl1 * cwl1 + wl2 * cwl2 + wl3 * cwl3 + ww * cww) / wl
-                c.FracaoMolar = cml
-                c.FracaoMassica = cwl
-            Next
-
-            If wl1 > 0 Then dl1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.density.GetValueOrDefault Else dl1 = 1
-            If wl2 > 0 Then dl2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.density.GetValueOrDefault Else dl2 = 1
-            If wl3 > 0 Then dl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.density.GetValueOrDefault Else dl3 = 1
-            If ww > 0 Then dw = Me.CurrentMaterialStream.Fases(6).SPMProperties.density.GetValueOrDefault Else dw = 1
-
-            dl = wl1 / dl1 + wl2 / dl2 + wl3 / dl3 + ww / dw
-            dl = wl / dl
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.density = dl
-
-
-            If Double.IsNaN(wlf / dl) Then
-                Me.CurrentMaterialStream.Fases(1).SPMProperties.volumetric_flow = 0.0#
-            Else
-                Me.CurrentMaterialStream.Fases(1).SPMProperties.volumetric_flow = wlf / dl
-            End If
-
-            If wl = 0 Then wl = 1.0#
-
-            hl1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.enthalpy.GetValueOrDefault
-            hl2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.enthalpy.GetValueOrDefault
-            hl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.enthalpy.GetValueOrDefault
-            hw = Me.CurrentMaterialStream.Fases(6).SPMProperties.enthalpy.GetValueOrDefault
-
-            hl = hl1 * wl1 + hl2 * wl2 + hl3 * wl3 + hw * ww
-
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.enthalpy = hl / wl
-
-            sl1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.entropy.GetValueOrDefault
-            sl2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.entropy.GetValueOrDefault
-            sl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.entropy.GetValueOrDefault
-            sw = Me.CurrentMaterialStream.Fases(6).SPMProperties.entropy.GetValueOrDefault
-
-            sl = sl1 * wl1 + sl2 * wl2 + sl3 * wl3 + sw * ww
-
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.entropy = sl / wl
-
-            cpl1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.heatCapacityCp.GetValueOrDefault
-            cpl2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.heatCapacityCp.GetValueOrDefault
-            cpl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.heatCapacityCp.GetValueOrDefault
-            cpw = Me.CurrentMaterialStream.Fases(6).SPMProperties.heatCapacityCp.GetValueOrDefault
-
-            cpl = cpl1 * wl1 + cpl2 * wl2 + cpl3 * wl3 + cpw * ww
-
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.heatCapacityCp = cpl / wl
-
-            cvl1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.heatCapacityCv.GetValueOrDefault
-            cvl2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.heatCapacityCv.GetValueOrDefault
-            cvl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.heatCapacityCv.GetValueOrDefault
-            cvw = Me.CurrentMaterialStream.Fases(6).SPMProperties.heatCapacityCv.GetValueOrDefault
-
-            cvl = cvl1 * wl1 + cvl2 * wl2 + cvl3 * wl3 + cvw * ww
-
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.heatCapacityCv = cvl / wl
-
-            Dim result As Double
-
-            result = Me.AUX_MMM(Fase.Liquid)
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.molecularWeight = result
-
-            result = Me.CurrentMaterialStream.Fases(1).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(1).SPMProperties.molecularWeight.GetValueOrDefault
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.molar_enthalpy = result
-
-            result = Me.CurrentMaterialStream.Fases(1).SPMProperties.entropy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(1).SPMProperties.molecularWeight.GetValueOrDefault
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.molar_entropy = result
-
-            kl1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.thermalConductivity.GetValueOrDefault
-            kl2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.thermalConductivity.GetValueOrDefault
-            kl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.thermalConductivity.GetValueOrDefault
-            kw = Me.CurrentMaterialStream.Fases(6).SPMProperties.thermalConductivity.GetValueOrDefault
-
-            kl = kl1 * wl1 + kl2 * wl2 + kl3 * kl3 + kw * ww
-
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.thermalConductivity = kl / wl
-
-            vil1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.viscosity.GetValueOrDefault
-            vil2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.viscosity.GetValueOrDefault
-            vil3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.viscosity.GetValueOrDefault
-            viw = Me.CurrentMaterialStream.Fases(6).SPMProperties.viscosity.GetValueOrDefault
-
-            vil = vil1 * wl1 + vil2 * vil2 + kl3 * vil3 + viw * ww
-
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.viscosity = vil / wl
-
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.kinematic_viscosity = vil / dl
-
-            Me.CurrentMaterialStream.Fases(1).SPMProperties.compressibilityFactor = 0.0#
-
-        End Sub
-
-        Public Overridable Sub DW_CalcEquilibrium(ByVal spec1 As FlashSpec, ByVal spec2 As FlashSpec)
-
-            Me.CurrentMaterialStream.AtEquilibrium = False
-
-            If Not My.Application.CAPEOPENMode Then
-                Try
-                    Me._ioquick = Me.CurrentMaterialStream.Flowsheet.Options.PropertyPackageIOFlashQuickMode
-                    Me._tpseverity = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestSeverity
-                    Me._tpcompids = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestCompIds
-                Catch ex As Exception
-                    Me._tpseverity = 0
-                    Me._tpcompids = New String() {}
-                    Me._ioquick = True
-                Finally
-                End Try
-            End If
-
-            Try
-                If Me._brio3 Is Nothing Then Me._brio3 = New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P
-                If Me._nl3 Is Nothing Then Me._nl3 = New Auxiliary.FlashAlgorithms.NestedLoops3P
-                If Me._nl3v2 Is Nothing Then Me._nl3v2 = New Auxiliary.FlashAlgorithms.NestedLoops3PV2
-                If Me._nli Is Nothing Then Me._nli = New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
-                Me._brio3.StabSearchCompIDs = _tpcompids
-                Me._brio3.StabSearchSeverity = _tpseverity
-                Me._nl3.StabSearchCompIDs = _tpcompids
-                Me._nl3.StabSearchSeverity = _tpseverity
-                Me._nl3v2.StabSearchCompIDs = _tpcompids
-                Me._nl3v2.StabSearchSeverity = _tpseverity
-                Me._nli.StabSearchCompIDs = _tpcompids
-                Me._nli.StabSearchSeverity = _tpseverity
+                cspath += Path.DirectorySeparatorChar + "pcd" + Path.DirectorySeparatorChar + "chemsep1.xml"
+                If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
             Catch ex As Exception
+                Console.WriteLine("Error: Unable to find ChemSep database: " & ex.ToString)
             End Try
+        End If
 
-            Dim P, T, H, S, xv, xl, xl2, xs As Double
-            Dim result As Object = Nothing
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim n As Integer = Me.CurrentMaterialStream.Fases(0).Componentes.Count
-            Dim i As Integer = 0
+        Try
+            'load chempsep database, if existent
+            If File.Exists(My.Settings.ChemSepDatabasePath) Then Me.LoadCSDB(My.Settings.ChemSepDatabasePath)
+        Catch ex As Exception
+            ex.Data.Add("Reason", "Error loading ChemSep database")
+            Throw ex
+        End Try
 
-            'for TVF/PVF/PH/PS flashes
-            xv = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
-            H = Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
-            S = Me.CurrentMaterialStream.Fases(0).SPMProperties.entropy.GetValueOrDefault
+        'load DWSIM XML database
+        Me.LoadDWSIMDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "dwsim.xml")
 
-            Me.DW_ZerarPhaseProps(Fase.Vapor)
-            Me.DW_ZerarPhaseProps(Fase.Liquid)
-            Me.DW_ZerarPhaseProps(Fase.Liquid1)
-            Me.DW_ZerarPhaseProps(Fase.Liquid2)
-            Me.DW_ZerarPhaseProps(Fase.Liquid3)
-            Me.DW_ZerarPhaseProps(Fase.Aqueous)
-            Me.DW_ZerarPhaseProps(Fase.Solid)
-            Me.DW_ZerarComposicoes(Fase.Vapor)
-            Me.DW_ZerarComposicoes(Fase.Liquid)
-            Me.DW_ZerarComposicoes(Fase.Liquid1)
-            Me.DW_ZerarComposicoes(Fase.Liquid2)
-            Me.DW_ZerarComposicoes(Fase.Liquid3)
-            Me.DW_ZerarComposicoes(Fase.Aqueous)
-            Me.DW_ZerarComposicoes(Fase.Solid)
+        'load Biodiesel XML database
+        Me.LoadBDDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "biod_db.xml")
 
-            Select Case spec1
+        'load Electrolyte XML database
+        Me.LoadEDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "electrolyte.xml")
 
-                Case FlashSpec.T
+        'load CoolProp list of compounds
+        If Not DWSIM.App.IsRunningOnMono Then
+            Me.LoadCPDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "coolprop.txt")
+        End If
 
-                    Select Case spec2
+        Dim invaliddbs As New List(Of String)
 
-                        Case FlashSpec.P
-
-                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                            Dim ige As Double = 0
-                            Dim fge As Double = 0
-                            Dim dge As Double = 0
-
-                            If Not My.Application.CAPEOPENMode Then
-                                If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
-                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
-                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
-
-                                    ige = Me.DW_CalcGibbsEnergy(RET_VMOL(Fase.Mixture), T, P)
-
-                                End If
-                            End If
-
-                            result = Me.FlashBase.Flash_PT(RET_VMOL(Fase.Mixture), P, T, Me)
-
-                            xl = result(0)
-                            xv = result(1)
-                            xl2 = result(5)
-                            xs = result(7)
-
-                            Dim Vx = result(2)
-                            Dim Vy = result(3)
-                            Dim Vx2 = result(6)
-                            Dim Vs = result(8)
-
-                            If Not My.Application.CAPEOPENMode Then
-
-                                'identify phase
-                                If Me.CurrentMaterialStream.Flowsheet.Options.UsePhaseIdentificationAlgorithm Then
-                                    If Me.ComponentName.Contains("SRK") Or Me.ComponentName.Contains("PR") Then
-                                        If Not Me.AUX_IS_SINGLECOMP(Fase.Mixture) Then
-                                            Dim newphase, eos As String
-                                            If Me.ComponentName.Contains("SRK") Then eos = "SRK" Else eos = "PR"
-                                            If xv = 1.0# Or xl = 1.0# Then
-                                                If xv = 1.0# Then
-                                                    newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vy, P, T, Me, eos)
-                                                    If newphase = "L" Then
-                                                        xv = 0.0#
-                                                        xl = 1.0#
-                                                        Vx = Vy
-                                                    End If
-                                                Else
-                                                    newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx, P, T, Me, eos)
-                                                    If newphase = "V" Then
-                                                        xv = 1.0#
-                                                        xl = 0.0#
-                                                        Vy = Vx
-                                                    End If
-                                                End If
-                                            Else
-                                                If xl2 = 0.0# Then
-                                                    newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vy, P, T, Me, eos)
-                                                    If newphase = "L" Then
-                                                        xl2 = xv
-                                                        xv = 0.0#
-                                                        Vx2 = Vy
-                                                    End If
-                                                    newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx, P, T, Me, eos)
-                                                    If newphase = "V" Then
-                                                        xv = 1.0#
-                                                        xl = 0.0#
-                                                        xl2 = 0.0#
-                                                        Vy = RET_VMOL(Fase.Mixture)
-                                                    End If
-                                                ElseIf xv = 0.0# Then
-                                                    newphase = Auxiliary.FlashAlgorithms.FlashAlgorithm.IdentifyPhase(Vx2, P, T, Me, eos)
-                                                    If newphase = "V" Then
-                                                        xv = xl2
-                                                        xl2 = 0.0#
-                                                        Vy = Vx2
-                                                    End If
-                                                End If
-                                            End If
-                                        End If
-                                    End If
-                                End If
-
-                                If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
-                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
-                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
-
-                                    fge = xl * Me.DW_CalcGibbsEnergy(Vx, T, P)
-                                    fge += xl2 * Me.DW_CalcGibbsEnergy(Vx2, T, P)
-                                    fge += xv * Me.DW_CalcGibbsEnergy(Vy, T, P)
-
-                                    dge = fge - ige
-
-                                    Dim dgtol As Double = Me.CurrentMaterialStream.Flowsheet.Options.FlashValidationDGETolerancePct
-
-                                    If dge > 0.0# And Math.Abs(dge / ige * 100) > Math.Abs(dgtol) Then
-                                        Throw New Exception(DWSIM.App.GetLocalString("InvalidFlashResult") & "(DGE = " & dge & " kJ/kg, " & Format(dge / ige * 100, "0.00") & "%)")
-                                    End If
-
-                                End If
-
-                            End If
-
-                            'do a density calculation check to order liquid phases from lighter to heavier
-
-                            If xl2 <> 0.0# And xl = 0.0# Then
-                                xl = result(5)
-                                xl2 = 0.0#
-                                Vx = result(6)
-                                Vx2 = result(2)
-                            ElseIf xl2 <> 0.0# And xl <> 0.0# Then
-                                Dim dens1, dens2, xl0, xl20, Vx0(), Vx20() As Double
-                                dens1 = Me.AUX_LIQDENS(T, Vx, P, 0, False)
-                                dens2 = Me.AUX_LIQDENS(T, Vx2, P, 0, False)
-                                If dens2 < dens1 Then
-                                    xl0 = xl
-                                    xl20 = xl2
-                                    Vx0 = Vx
-                                    Vx20 = Vx2
-                                    xl = xl20
-                                    xl2 = xl0
-                                    Vx = Vx20
-                                    Vx2 = Vx0
-                                End If
-                            End If
-
-                            Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                            Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = xl2
-                            Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-                            Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction = xs
-
-                            Dim FCL = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                            Dim FCL2 = Me.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                            Dim FCV = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-                            Dim FCS = Me.DW_CalcFugCoeff(Vs, T, P, State.Solid)
-
-                            i = 0
-                            For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                                subst.FracaoMolar = Vx(i)
-                                subst.FugacityCoeff = FCL(i)
-                                subst.ActivityCoeff = 0
-                                subst.PartialVolume = 0
-                                subst.PartialPressure = 0
-                                i += 1
-                            Next
-                            For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 3)
-                            Next
-                            i = 0
-                            For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                                subst.FracaoMolar = Vx2(i)
-                                subst.FugacityCoeff = FCL2(i)
-                                subst.ActivityCoeff = 0
-                                subst.PartialVolume = 0
-                                subst.PartialPressure = 0
-                                i += 1
-                            Next
-                            For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 4)
-                            Next
-                            i = 0
-                            For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                                subst.FracaoMolar = Vy(i)
-                                subst.FugacityCoeff = FCV(i)
-                                subst.ActivityCoeff = 0
-                                subst.PartialVolume = 0
-                                subst.PartialPressure = 0
-                                i += 1
-                            Next
-                            For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 2)
-                            Next
-                            i = 0
-                            For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
-                                subst.FracaoMolar = Vs(i)
-                                subst.FugacityCoeff = FCS(i)
-                                subst.ActivityCoeff = 0
-                                subst.PartialVolume = 0
-                                subst.PartialPressure = 0
-                                i += 1
-                            Next
-                            For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
-                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 7)
-                            Next
-
-                            Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl * Me.AUX_MMM(Fase.Liquid1) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor) + xs * Me.AUX_MMM(Fase.Solid))
-                            Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction = xl2 * Me.AUX_MMM(Fase.Liquid2) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor) + xs * Me.AUX_MMM(Fase.Solid))
-                            Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv * Me.AUX_MMM(Fase.Vapor) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor) + xs * Me.AUX_MMM(Fase.Solid))
-                            Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction = xs * Me.AUX_MMM(Fase.Solid) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor) + xs * Me.AUX_MMM(Fase.Solid))
-
-                            Dim constprops As New List(Of ConstantProperties)
-                            For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                                constprops.Add(su.ConstantProperties)
-                            Next
-
-                            Dim HM, HV, HL, HL2, HS As Double
-
-                            If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-                            If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
-                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-                            If xs <> 0 Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops)
-                            HM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * HL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * HL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * HV + Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault * HS
-
-                            H = HM
-
-                            Dim SM, SV, SL, SL2, SS As Double
-
-                            If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
-                            If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid)
-                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)
-                            If xs <> 0 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15)
-                            SM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * SL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * SL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * SV + Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault * SS
-
-                            S = SM
-
-                        Case FlashSpec.H
-
-                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTHNotSupported"))
-
-                        Case FlashSpec.S
-
-                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTSNotSupported"))
-
-                        Case FlashSpec.VAP
-
-                            Dim KI(n) As Double
-                            Dim HM, HV, HL, HL2 As Double
-                            Dim SM, SV, SL, SL2 As Double
-
-                            i = 0
-                            Do
-                                KI(i) = 0
-                                i = i + 1
-                            Loop Until i = n + 1
-
-                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                            If Double.IsNaN(P) Or Double.IsInfinity(P) Then P = 0.0#
-
-                            Dim Vx, Vx2, Vy As Double()
-
-                            If Me.AUX_IS_SINGLECOMP(Fase.Mixture) Then
-
-                                Dim Psat As Double
-                                Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
-
-                                Psat = Me.AUX_PVAPM(T)
-
-                                HL = Me.DW_CalcEnthalpy(vz, T, Psat, State.Liquid)
-                                HV = Me.DW_CalcEnthalpy(vz, T, Psat, State.Vapor)
-                                SL = Me.DW_CalcEntropy(vz, T, Psat, State.Liquid)
-                                SV = Me.DW_CalcEntropy(vz, T, Psat, State.Vapor)
-                                H = xv * HV + (1 - xv) * HL
-                                S = xv * SV + (1 - xv) * SL
-                                P = Psat
-                                xl = 1 - xv
-                                xl2 = 0.0#
-
-                                Vx = vz
-                                Vy = vz
-                                Vx2 = vz
-
-                            Else
-
-                                result = Me.FlashBase.Flash_TV(RET_VMOL(Fase.Mixture), T, xv, P, Me)
-
-                                P = result(4)
-
-                                xl = result(0)
-                                xv = result(1)
-                                xl2 = result(7)
-
-                                Vx = result(2)
-                                Vy = result(3)
-                                Vx2 = result(8)
-
-                            End If
-
-                            Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                            Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = xl2
-                            Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-
-                            Dim FCL = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                            Dim FCL2 = Me.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                            Dim FCV = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-
-                            i = 0
-                            For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                                subst.FracaoMolar = Vx(i)
-                                subst.FugacityCoeff = FCL(i)
-                                subst.ActivityCoeff = 0
-                                subst.PartialVolume = 0
-                                subst.PartialPressure = 0
-                                i += 1
-                            Next
-                            For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 3)
-                            Next
-                            i = 0
-                            For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                                subst.FracaoMolar = Vx2(i)
-                                subst.FugacityCoeff = FCL2(i)
-                                subst.ActivityCoeff = 0
-                                subst.PartialVolume = 0
-                                subst.PartialPressure = 0
-                                i += 1
-                            Next
-                            For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 4)
-                            Next
-                            i = 0
-                            For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                                subst.FracaoMolar = Vy(i)
-                                subst.FugacityCoeff = FCV(i)
-                                subst.ActivityCoeff = 0
-                                subst.PartialVolume = 0
-                                subst.PartialPressure = 0
-                                i += 1
-                            Next
-                            For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 2)
-                            Next
-
-                            Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl * Me.AUX_MMM(Fase.Liquid1) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                            Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction = xl2 * Me.AUX_MMM(Fase.Liquid2) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                            Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv * Me.AUX_MMM(Fase.Vapor) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-
-                            If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-                            If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
-                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-                            HM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * HL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * HL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * HV
-
-                            H = HM
-
-
-                            If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
-                            If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid)
-                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)
-                            SM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * SL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * SL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * SV
-
-                            S = SM
-
-                    End Select
-
-                Case FlashSpec.P
-
-                    Select Case spec2
-
-                        Case FlashSpec.H
-
-                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                            If Double.IsNaN(H) Or Double.IsInfinity(H) Then H = Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_enthalpy.GetValueOrDefault / Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
-                            If Double.IsNaN(T) Or Double.IsInfinity(T) Then T = 0.0#
-
-                            If Me.AUX_IS_SINGLECOMP(Fase.Mixture) And Me.ComponentName <> "FPROPS" And Me.ComponentName <> "CoolProp" Then
-
-                                Dim brentsolverT As New BrentOpt.Brent
-                                brentsolverT.DefineFuncDelegate(AddressOf EnthalpyTx)
-
-                                Dim hl, hv, sl, sv, Tsat As Double
-                                Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
-
-                                P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                                Tsat = 0.0#
-                                For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                                    Tsat += subst.FracaoMolar * Me.AUX_TSATi(P, subst.Nome)
-                                Next
-
-                                hl = Me.DW_CalcEnthalpy(vz, Tsat, P, State.Liquid)
-                                hv = Me.DW_CalcEnthalpy(vz, Tsat, P, State.Vapor)
-                                sl = Me.DW_CalcEntropy(vz, Tsat, P, State.Liquid)
-                                sv = Me.DW_CalcEntropy(vz, Tsat, P, State.Vapor)
-                                If H <= hl Then
-                                    xv = 0
-                                    LoopVarState = State.Liquid
-                                ElseIf H >= hv Then
-                                    xv = 1
-                                    LoopVarState = State.Vapor
-                                Else
-                                    xv = (H - hl) / (hv - hl)
-                                End If
-                                If Tsat > Me.AUX_TCM(Fase.Mixture) Then
-                                    xv = 1.0#
-                                    LoopVarState = State.Vapor
-                                End If
-                                xl = 1 - xv
-
-                                If xv <> 0.0# And xv <> 1.0# Then
-                                    T = Tsat
-                                    S = xv * sv + (1 - xv) * sl
-                                Else
-                                    LoopVarF = H
-                                    LoopVarX = P
-                                    T = brentsolverT.BrentOpt(Me.AUX_TFM(Fase.Mixture), 2000, 20, 0.0001, 1000, Nothing)
-                                    If xv = 0.0# Then
-                                        S = Me.DW_CalcEntropy(vz, T, P, State.Liquid)
-                                    Else
-                                        S = Me.DW_CalcEntropy(vz, T, P, State.Vapor)
-                                    End If
-                                End If
-
-                                If T <= Me.AUX_TFM(Fase.Mixture) Then
-
-                                    'solid only.
-
-                                    xv = 0.0#
-                                    xl = 0.0#
-                                    xs = 1.0#
-
-                                    Dim constprops As New List(Of ConstantProperties)
-                                    For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                                        constprops.Add(su.ConstantProperties)
-                                    Next
-
-                                    S = Me.DW_CalcSolidEnthalpy(T, vz, constprops) / (T - 298.15)
-
-                                    Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                                    Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-                                    Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl
-                                    Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv
-                                    Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction = xs
-                                    Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction = xs
-                                    Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction = 0.0#
-                                    Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = 0.0#
-
-                                    i = 0
-                                    For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
-                                        subst.FracaoMolar = vz(i)
-                                        subst.FugacityCoeff = 1
-                                        subst.ActivityCoeff = 1
-                                        subst.PartialVolume = 0
-                                        subst.PartialPressure = P
-                                        subst.FracaoMassica = vz(i)
-                                        i += 1
-                                    Next
-
-                                Else
-
-                                    Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                                    Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-                                    Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl
-                                    Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv
-
-                                    i = 0
-                                    For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                                        subst.FracaoMolar = vz(i)
-                                        subst.FugacityCoeff = 1
-                                        subst.ActivityCoeff = 1
-                                        subst.PartialVolume = 0
-                                        subst.PartialPressure = P
-                                        subst.FracaoMassica = vz(i)
-                                        i += 1
-                                    Next
-                                    i = 0
-                                    For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                                        subst.FracaoMolar = vz(i)
-                                        subst.FugacityCoeff = 1
-                                        subst.ActivityCoeff = 1
-                                        subst.PartialVolume = 0
-                                        subst.PartialPressure = P
-                                        subst.FracaoMassica = vz(i)
-                                        i += 1
-                                    Next
-
-                                End If
-
-                            Else
-
-redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mixture), P, H, T, Me)
-
-                                T = result(4)
-
-                                xl = result(0)
-                                xv = result(1)
-                                xl2 = result(7)
-                                xs = result(9)
-
-                                Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                                Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = xl2
-                                Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-                                Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction = xs
-
-                                Dim Vx = result(2)
-                                Dim Vy = result(3)
-                                Dim Vx2 = result(8)
-                                Dim Vs = result(10)
-
-                                Dim FCL = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                                Dim FCL2 = Me.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                                Dim FCV = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-                                Dim FCS = Me.DW_CalcFugCoeff(Vs, T, P, State.Solid)
-
-                                i = 0
-                                For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                                    subst.FracaoMolar = Vx(i)
-                                    subst.FugacityCoeff = FCL(i)
-                                    subst.ActivityCoeff = 0
-                                    subst.PartialVolume = 0
-                                    subst.PartialPressure = 0
-                                    i += 1
-                                Next
-                                i = 1
-                                For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 3)
-                                    i += 1
-                                Next
-                                i = 0
-                                For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                                    subst.FracaoMolar = Vx2(i)
-                                    subst.FugacityCoeff = FCL2(i)
-                                    subst.ActivityCoeff = 0
-                                    subst.PartialVolume = 0
-                                    subst.PartialPressure = 0
-                                    i += 1
-                                Next
-                                i = 1
-                                For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 4)
-                                    i += 1
-                                Next
-                                i = 0
-                                For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                                    subst.FracaoMolar = Vy(i)
-                                    subst.FugacityCoeff = FCV(i)
-                                    subst.ActivityCoeff = 0
-                                    subst.PartialVolume = 0
-                                    subst.PartialPressure = 0
-                                    i += 1
-                                Next
-                                i = 1
-                                For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 2)
-                                    i += 1
-                                Next
-                                i = 0
-                                For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
-                                    subst.FracaoMolar = Vs(i)
-                                    subst.FugacityCoeff = FCS(i)
-                                    subst.ActivityCoeff = 0
-                                    subst.PartialVolume = 0
-                                    subst.PartialPressure = 0
-                                    i += 1
-                                Next
-                                For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
-                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 7)
-                                Next
-
-                                Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl * Me.AUX_MMM(Fase.Liquid1) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor) + xs * Me.AUX_MMM(Fase.Solid))
-                                Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction = xl2 * Me.AUX_MMM(Fase.Liquid2) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor) + xs * Me.AUX_MMM(Fase.Solid))
-                                Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv * Me.AUX_MMM(Fase.Vapor) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor) + xs * Me.AUX_MMM(Fase.Solid))
-                                Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction = xs * Me.AUX_MMM(Fase.Solid) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor) + xs * Me.AUX_MMM(Fase.Solid))
-
-                                Dim constprops As New List(Of ConstantProperties)
-                                For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                                    constprops.Add(su.ConstantProperties)
-                                Next
-
-                                Dim SM, SV, SL, SL2, SS As Double
-
-                                If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
-                                If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid)
-                                If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)
-                                If xs <> 0 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15)
-                                SM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * SL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * SL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * SV + Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault * SS
-
-                                S = SM
-
-                            End If
-
-                        Case FlashSpec.S
-
-                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                            If Double.IsNaN(S) Or Double.IsInfinity(S) Then S = Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_entropy.GetValueOrDefault / Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
-
-                            If Me.AUX_IS_SINGLECOMP(Fase.Mixture) And Me.ComponentName <> "FPROPS" And Me.ComponentName <> "CoolProp" Then
-
-                                Dim brentsolverT As New BrentOpt.Brent
-                                brentsolverT.DefineFuncDelegate(AddressOf EntropyTx)
-
-                                Dim hl, hv, sl, sv, Tsat As Double
-                                Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
-
-                                P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                                Tsat = 0.0#
-                                For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                                    Tsat += subst.FracaoMolar * Me.AUX_TSATi(P, subst.Nome)
-                                Next
-
-                                hl = Me.DW_CalcEnthalpy(vz, Tsat, P, State.Liquid)
-                                hv = Me.DW_CalcEnthalpy(vz, Tsat, P, State.Vapor)
-                                sl = Me.DW_CalcEntropy(vz, Tsat, P, State.Liquid)
-                                sv = Me.DW_CalcEntropy(vz, Tsat, P, State.Vapor)
-                                If S <= sl Then
-                                    xv = 0
-                                    LoopVarState = State.Liquid
-                                ElseIf S >= sv Then
-                                    xv = 1
-                                    LoopVarState = State.Vapor
-                                Else
-                                    xv = (S - sl) / (sv - sl)
-                                End If
-                                If Tsat > Me.AUX_TCM(Fase.Mixture) Then
-                                    xv = 1.0#
-                                    LoopVarState = State.Vapor
-                                End If
-                                xl = 1 - xv
-
-                                If xv <> 0.0# And xv <> 1.0# Then
-                                    T = Tsat
-                                    H = xv * hv + (1 - xv) * hl
-                                Else
-                                    LoopVarF = S
-                                    LoopVarX = P
-                                    T = brentsolverT.BrentOpt(Me.AUX_TFM(Fase.Mixture), 2000, 20, 0.0001, 1000, Nothing)
-                                    If xv = 0.0# Then
-                                        H = Me.DW_CalcEnthalpy(vz, T, P, State.Liquid)
-                                    Else
-                                        H = Me.DW_CalcEnthalpy(vz, T, P, State.Vapor)
-                                    End If
-                                End If
-
-                                Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                                Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-                                Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl
-                                Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv
-
-                                i = 0
-                                For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                                    subst.FracaoMolar = vz(i)
-                                    subst.FugacityCoeff = 1
-                                    subst.ActivityCoeff = 1
-                                    subst.PartialVolume = 0
-                                    subst.PartialPressure = P
-                                    subst.FracaoMassica = vz(i)
-                                    i += 1
-                                Next
-                                i = 0
-                                For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                                    subst.FracaoMolar = vz(i)
-                                    subst.FugacityCoeff = 1
-                                    subst.ActivityCoeff = 1
-                                    subst.PartialVolume = 0
-                                    subst.PartialPressure = P
-                                    subst.FracaoMassica = vz(i)
-                                    i += 1
-                                Next
-
-                            Else
-
-redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mixture), P, S, T, Me)
-
-                                T = result(4)
-
-                                xl = result(0)
-                                xv = result(1)
-                                xl2 = result(7)
-
-                                Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                                Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = xl2
-                                Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-
-                                Dim Vx = result(2)
-                                Dim Vy = result(3)
-                                Dim Vx2 = result(8)
-
-                                Dim FCL = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                                Dim FCL2 = Me.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                                Dim FCV = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-
-                                i = 0
-                                For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                                    subst.FracaoMolar = Vx(i)
-                                    subst.FugacityCoeff = FCL(i)
-                                    subst.ActivityCoeff = 0
-                                    subst.PartialVolume = 0
-                                    subst.PartialPressure = 0
-                                    i += 1
-                                Next
-                                i = 1
-                                For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 3)
-                                    i += 1
-                                Next
-                                i = 0
-                                For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                                    subst.FracaoMolar = Vx2(i)
-                                    subst.FugacityCoeff = FCL2(i)
-                                    subst.ActivityCoeff = 0
-                                    subst.PartialVolume = 0
-                                    subst.PartialPressure = 0
-                                    i += 1
-                                Next
-                                i = 1
-                                For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 4)
-                                    i += 1
-                                Next
-                                i = 0
-                                For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                                    subst.FracaoMolar = Vy(i)
-                                    subst.FugacityCoeff = FCV(i)
-                                    subst.ActivityCoeff = 0
-                                    subst.PartialVolume = 0
-                                    subst.PartialPressure = 0
-                                    i += 1
-                                Next
-
-                                i = 1
-                                For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 2)
-                                    i += 1
-                                Next
-
-                                Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl * Me.AUX_MMM(Fase.Liquid1) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                                Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction = xl2 * Me.AUX_MMM(Fase.Liquid2) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                                Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv * Me.AUX_MMM(Fase.Vapor) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-
-                                Dim HM, HV, HL, HL2 As Double
-
-                                If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-                                If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
-                                If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-                                HM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * HL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * HL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * HV
-
-                                H = HM
-
-                            End If
-
-                        Case FlashSpec.VAP
-
-                            Dim KI(n) As Double
-                            Dim HM, HV, HL, HL2 As Double
-                            Dim SM, SV, SL, SL2 As Double
-
-                            i = 0
-                            Do
-                                KI(i) = 0
-                                i = i + 1
-                            Loop Until i = n + 1
-
-                            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                            If Double.IsNaN(T) Or Double.IsInfinity(T) Then T = 0.0#
-
-                            Dim Vx, Vx2, Vy As Double()
-
-                            If Me.AUX_IS_SINGLECOMP(Fase.Mixture) Then
-
-                                Dim Tsat As Double
-                                Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
-
-                                Tsat = 0.0#
-                                For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                                    Tsat += subst.FracaoMolar * Me.AUX_TSATi(P, subst.Nome)
-                                Next
-
-                                HL = Me.DW_CalcEnthalpy(vz, Tsat, P, State.Liquid)
-                                HV = Me.DW_CalcEnthalpy(vz, Tsat, P, State.Vapor)
-                                SL = Me.DW_CalcEntropy(vz, Tsat, P, State.Liquid)
-                                SV = Me.DW_CalcEntropy(vz, Tsat, P, State.Vapor)
-                                H = xv * HV + (1 - xv) * HL
-                                S = xv * SV + (1 - xv) * SL
-                                T = Tsat
-                                xl = 1 - xv
-                                xl2 = 0.0#
-
-                                Vx = vz
-                                Vy = vz
-                                Vx2 = vz
-
-                            Else
-
-                                result = Me.FlashBase.Flash_PV(RET_VMOL(Fase.Mixture), P, xv, T, Me)
-
-                                T = result(4)
-
-                                xl = result(0)
-                                xv = result(1)
-                                xl2 = result(7)
-
-                                Vx = result(2)
-                                Vy = result(3)
-                                Vx2 = result(8)
-
-                            End If
-
-                            Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction = xl
-                            Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction = xl2
-                            Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = xv
-
-                            Dim FCL = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                            Dim FCL2 = Me.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                            Dim FCV = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-
-                            i = 0
-                            For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                                subst.FracaoMolar = Vx(i)
-                                subst.FugacityCoeff = FCL(i)
-                                subst.ActivityCoeff = 0
-                                subst.PartialVolume = 0
-                                subst.PartialPressure = 0
-                                i += 1
-                            Next
-                            For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 3)
-                            Next
-                            i = 0
-                            For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                                subst.FracaoMolar = Vx2(i)
-                                subst.FugacityCoeff = FCL2(i)
-                                subst.ActivityCoeff = 0
-                                subst.PartialVolume = 0
-                                subst.PartialPressure = 0
-                                i += 1
-                            Next
-                            For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 4)
-                            Next
-                            i = 0
-                            For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                                subst.FracaoMolar = Vy(i)
-                                subst.FugacityCoeff = FCV(i)
-                                subst.ActivityCoeff = 0
-                                subst.PartialVolume = 0
-                                subst.PartialPressure = 0
-                                i += 1
-                            Next
-                            For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                                subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 2)
-                            Next
-
-                            Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction = xl * Me.AUX_MMM(Fase.Liquid1) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                            Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction = xl2 * Me.AUX_MMM(Fase.Liquid2) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-                            Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction = xv * Me.AUX_MMM(Fase.Vapor) / (xl * Me.AUX_MMM(Fase.Liquid1) + xl2 * Me.AUX_MMM(Fase.Liquid2) + xv * Me.AUX_MMM(Fase.Vapor))
-
-                            If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-                            If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
-                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-                            HM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * HL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * HL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * HV
-
-                            H = HM
-
-                            If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
-                            If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid)
-                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)
-                            SM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * SL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * SL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * SV
-
-                            S = SM
-
-                    End Select
-
-            End Select
-
-            If My.Application.CAPEOPENMode Then
-                Dim summf As Double = 0, sumwf As Double = 0
-                For Each pi As PhaseInfo In Me.PhaseMappings.Values
-                    If Not pi.PhaseLabel = "Disabled" Then
-                        summf += Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction.GetValueOrDefault
-                        sumwf += Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.massfraction.GetValueOrDefault
-                    End If
-                Next
-                If Abs(summf - 1) > 0.0001 Then
-                    For Each pi As PhaseInfo In Me.PhaseMappings.Values
-                        If Not pi.PhaseLabel = "Disabled" Then
-                            If Not Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction.HasValue Then
-                                Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction = 1 - summf
-                                Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.massfraction = 1 - sumwf
-                            End If
-                        End If
-                    Next
-                End If
-            End If
-            
-            With Me.CurrentMaterialStream
-
-                .Fases(0).SPMProperties.temperature = T
-                .Fases(0).SPMProperties.pressure = P
-                .Fases(0).SPMProperties.enthalpy = H
-                .Fases(0).SPMProperties.entropy = S
-
-            End With
-
-            Me.CurrentMaterialStream.AtEquilibrium = True
-
-        End Sub
-
-        Private Function EnthalpyTx(ByVal x As Double, ByVal otherargs As Object) As Double
-
-            Dim er As Double = LoopVarF - Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), x, LoopVarX, LoopVarState)
-            Return er
-
-        End Function
-
-        Private Function EnthalpyPx(ByVal x As Double, ByVal otherargs As Object) As Double
-
-            Dim er As Double = LoopVarF - Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), LoopVarX, x, LoopVarState)
-            Return er
-
-        End Function
-
-        Private Function EntropyTx(ByVal x As Double, ByVal otherargs As Object) As Double
-
-            Dim er As Double = LoopVarF - Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), x, LoopVarX, LoopVarState)
-            Return er
-
-        End Function
-
-        Private Function EntropyPx(ByVal x As Double, ByVal otherargs As Object) As Double
-
-            Dim er As Double = LoopVarF - Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), LoopVarX, x, LoopVarState)
-            Return er
-
-        End Function
-
-        Public MustOverride Sub DW_CalcVazaoMolar()
-
-        Public MustOverride Sub DW_CalcVazaoMassica()
-
-        Public MustOverride Sub DW_CalcVazaoVolumetrica()
-
-        Public MustOverride Function DW_CalcMassaEspecifica_ISOL(ByVal fase1 As Fase, ByVal T As Double, ByVal P As Double, Optional ByVal Pvp As Double = 0) As Double
-
-        Public MustOverride Function DW_CalcViscosidadeDinamica_ISOL(ByVal fase1 As Fase, ByVal T As Double, ByVal P As Double) As Double
-
-        Public MustOverride Function DW_CalcTensaoSuperficial_ISOL(ByVal fase1 As Fase, ByVal T As Double, ByVal P As Double) As Double
-
-        ''' <summary>
-        ''' Calculates thermodynamic equilibrium for the current material stream without updating results, returning them as an object.
-        ''' </summary>
-        ''' <param name="spec1">P, T, H or S</param>
-        ''' <param name="spec2">P, T, H or S</param>
-        ''' <param name="val1">spec1 value</param>
-        ''' <param name="val2">spec2 value</param>
-        ''' <param name="estimate"></param>
-        ''' <returns>A vector containing compositions and state variables.</returns>
-        ''' <remarks></remarks>
-        Public Overridable Function DW_CalcEquilibrio_ISOL(ByVal spec1 As FlashSpec, ByVal spec2 As FlashSpec, ByVal val1 As Double, ByVal val2 As Double, ByVal estimate As Double) As Object
-
+        'load user databases
+        For Each fpath As String In My.Settings.UserDatabases
             Try
-                Me._ioquick = Me.CurrentMaterialStream.Flowsheet.Options.PropertyPackageIOFlashQuickMode
-                Me._tpseverity = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestSeverity
-                Me._tpcompids = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestCompIds
+                Dim componentes As ConstantProperties()
+                componentes = DWSIM.Databases.UserDB.ReadComps(fpath)
+                If componentes.Length > 0 Then
+                    If My.Settings.ReplaceComps Then
+                        For Each c As ConstantProperties In componentes
+                            If Not Me.AvailableComponents.ContainsKey(c.Name) Then
+                                Me.AvailableComponents.Add(c.Name, c)
+                            Else
+                                Me.AvailableComponents(c.Name) = c
+                            End If
+                        Next
+                    Else
+                        For Each c As ConstantProperties In componentes
+                            If Not Me.AvailableComponents.ContainsKey(c.Name) Then
+                                Me.AvailableComponents.Add(c.Name, c)
+                            End If
+                        Next
+                    End If
+                End If
             Catch ex As Exception
-                Me._tpseverity = 0
-                Me._tpcompids = New String() {}
-                Me._ioquick = True
-            Finally
+                invaliddbs.Add(fpath)
             End Try
-
-            Try
-                Me._brio3.StabSearchCompIDs = _tpcompids
-                Me._brio3.StabSearchSeverity = _tpseverity
-                Me._nl3.StabSearchCompIDs = _tpcompids
-                Me._nl3.StabSearchSeverity = _tpseverity
-                Me._nl3v2.StabSearchCompIDs = _tpcompids
-                Me._nl3v2.StabSearchSeverity = _tpseverity
-                Me._nli.StabSearchCompIDs = _tpcompids
-                Me._nli.StabSearchSeverity = _tpseverity
-            Catch ex As Exception
-
-            End Try
-
-            Dim P, T, H, S, xv, xl, xl2 As Double
-            Dim result As Object = Nothing
-            Dim n As Integer = Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1
-            Dim Vx2(n), Vx(n), Vy(n) As Double
-            Dim i As Integer = 0
-
-            Select Case spec1
-
-                Case FlashSpec.T
-
-                    Select Case spec2
-
-                        Case FlashSpec.P
-
-                            T = val1
-                            P = val2
-
-                            Dim ige As Double = 0.0#
-                            Dim fge As Double = 0.0#
-                            Dim dge As Double = 0.0#
-
-                            If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc Then
-
-                                ige = Me.DW_CalcGibbsEnergy(RET_VMOL(Fase.Mixture), T, P)
-
-                            End If
-
-                            result = Me.FlashBase.Flash_PT(RET_VMOL(Fase.Mixture), P, T, Me)
-
-                            xl = result(0)
-                            xv = result(1)
-                            xl2 = result(5)
-
-                            Vx = result(2)
-                            Vy = result(3)
-                            Vx2 = result(6)
-
-                            If Not My.Application.CAPEOPENMode Then
-                                If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
-                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE _
-                                And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
-
-                                    fge = xl * Me.DW_CalcGibbsEnergy(Vx, T, P)
-                                    fge += xl2 * Me.DW_CalcGibbsEnergy(Vx2, T, P)
-                                    fge += xv * Me.DW_CalcGibbsEnergy(Vy, T, P)
-
-                                    dge = fge - ige
-
-                                    Dim dgtol As Double = Me.CurrentMaterialStream.Flowsheet.Options.FlashValidationDGETolerancePct
-
-                                    If dge > 0.0# And Math.Abs(dge / ige * 100) > Math.Abs(dgtol) Then
-                                        Throw New Exception(DWSIM.App.GetLocalString("InvalidFlashResult") & "(DGE = " & dge & " kJ/kg, " & Format(dge / ige * 100, "0.00") & "%)")
-                                    End If
-
-                                End If
-                            End If
-
-                            Dim HM, HV, HL1, HL2 As Double
-
-                            If xl <> 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            HM = (xl * HL1 + xl2 * HL2 + xv * HV) / Me.AUX_MMM(Fase.Mixture)
-
-                            H = HM
-
-                            Dim SM, SV, SL1, SL2 As Double
-
-                            If xl <> 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            SM = (xl * SL1 + xl2 * SL2 + xv * SV) / Me.AUX_MMM(Fase.Mixture)
-
-                            S = SM
-
-                        Case FlashSpec.H
-
-                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTHNotSupported"))
-
-                        Case FlashSpec.S
-
-                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTSNotSupported"))
-
-                        Case FlashSpec.VAP
-
-                            Dim KI(n) As Double
-
-                            i = 0
-                            Do
-                                KI(i) = 0
-                                i = i + 1
-                            Loop Until i = n + 1
-
-                            If estimate <> 0 Then
-                                P = estimate
-                            Else
-                                P = 0
-                            End If
-                            T = val1
-                            xv = val2
-
-                            result = Me.FlashBase.Flash_TV(RET_VMOL(Fase.Mixture), T, xv, 0, Me)
-
-                            P = result(4)
-
-                            Vx = result(2)
-                            Vy = result(3)
-
-                            xl = 1 - xv
-
-                            Dim HM, HV, HL As Double
-
-                            If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            HM = (xl * HL + xv * HV) / Me.AUX_MMM(Fase.Mixture)
-
-                            H = HM
-
-                            Dim SM, SV, SL As Double
-
-                            If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            SM = (xl * SL + xv * SV) / Me.AUX_MMM(Fase.Mixture)
-
-                            S = SM
-
-                    End Select
-
-                Case FlashSpec.P
-
-                    Select Case spec2
-
-                        Case FlashSpec.H
-
-                            If estimate <> 0 Then
-                                T = estimate
-                            Else
-                                T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                            End If
-                            P = val1
-                            H = val2
-
-                            If Me.AUX_IS_SINGLECOMP(Fase.Mixture) And Me.ComponentName <> "FPROPS" And Me.ComponentName <> "CoolProp" Then
-
-                                Dim brentsolverT As New BrentOpt.Brent
-                                brentsolverT.DefineFuncDelegate(AddressOf EnthalpyTx)
-
-                                Dim hl, hv, sl, sv, Tsat As Double
-                                Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
-
-                                P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                                Tsat = 0.0#
-                                For i = 0 To n
-                                    Tsat += vz(i) * Me.AUX_TSATi(P, i)
-                                Next
-
-                                hl = Me.DW_CalcEnthalpy(vz, Tsat, P, State.Liquid)
-                                hv = Me.DW_CalcEnthalpy(vz, Tsat, P, State.Vapor)
-                                sl = Me.DW_CalcEntropy(vz, Tsat, P, State.Liquid)
-                                sv = Me.DW_CalcEntropy(vz, Tsat, P, State.Vapor)
-                                If H <= hl Then
-                                    xv = 0
-                                    LoopVarState = State.Liquid
-                                ElseIf H >= hv Then
-                                    xv = 1
-                                    LoopVarState = State.Vapor
-                                Else
-                                    xv = (H - hl) / (hv - hl)
-                                End If
-                                If Tsat > Me.AUX_TCM(Fase.Mixture) Then
-                                    xv = 1.0#
-                                    LoopVarState = State.Vapor
-                                End If
-                                xl = 1 - xv
-
-                                If xv <> 0.0# And xv <> 1.0# Then
-                                    T = Tsat
-                                    S = xv * sv + (1 - xv) * sl
-                                Else
-                                    LoopVarF = H
-                                    LoopVarX = P
-                                    T = brentsolverT.BrentOpt(Me.AUX_TFM(Fase.Mixture), 2000, 20, 0.000000000001, 1000, Nothing)
-                                    If xv = 0.0# Then
-                                        S = Me.DW_CalcEntropy(vz, T, P, State.Liquid)
-                                    Else
-                                        S = Me.DW_CalcEntropy(vz, T, P, State.Vapor)
-                                    End If
-                                End If
-
-                                Vx = vz
-                                Vy = vz
-
-                            Else
-
-redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mixture), P, H, T, Me)
-
-                                T = result(4)
-                                xl = result(0)
-                                xv = result(1)
-                                xl2 = result(7)
-
-                                Vx = result(2)
-                                Vy = result(3)
-                                Vx2 = result(8)
-
-                                Dim HM, HV, HL1, HL2 As Double
-
-                                If xl <> 0.0# Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                                If xl2 <> 0.0# Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                                If xv <> 0.0# Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                                HM = (xl * HL1 + xl2 * HL2 + xv * HV) / Me.AUX_MMM(Fase.Mixture)
-
-                                H = HM
-
-                                Dim SM, SV, SL1, SL2 As Double
-
-                                If xl <> 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                                If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                                If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                                SM = (xl * SL1 + xl2 * SL2 + xv * SV) / Me.AUX_MMM(Fase.Mixture)
-
-                                S = SM
-
-
-                            End If
-
-                        Case FlashSpec.S
-
-                            If estimate <> 0 Then
-                                T = estimate
-                            Else
-                                T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                            End If
-                            P = val1
-                            S = val2
-
-                            If Me.AUX_IS_SINGLECOMP(Fase.Mixture) And Me.ComponentName <> "FPROPS" And Me.ComponentName <> "CoolProp" Then
-
-                                Dim brentsolverT As New BrentOpt.Brent
-                                brentsolverT.DefineFuncDelegate(AddressOf EntropyTx)
-
-                                Dim hl, hv, sl, sv, Tsat As Double
-                                Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
-
-                                Tsat = 0.0#
-                                For i = 0 To n
-                                    Tsat += vz(i) * Me.AUX_TSATi(P, i)
-                                Next
-
-                                hl = Me.DW_CalcEnthalpy(vz, Tsat, P, State.Liquid)
-                                hv = Me.DW_CalcEnthalpy(vz, Tsat, P, State.Vapor)
-                                sl = Me.DW_CalcEntropy(vz, Tsat, P, State.Liquid)
-                                sv = Me.DW_CalcEntropy(vz, Tsat, P, State.Vapor)
-                                If S <= sl Then
-                                    xv = 0
-                                    LoopVarState = State.Liquid
-                                ElseIf S >= sv Then
-                                    xv = 1
-                                    LoopVarState = State.Vapor
-                                Else
-                                    xv = (S - sl) / (sv - sl)
-                                End If
-                                If Tsat > Me.AUX_TCM(Fase.Mixture) Then
-                                    xv = 1.0#
-                                    LoopVarState = State.Vapor
-                                End If
-                                xl = 1 - xv
-
-                                If xv <> 0.0# And xv <> 1.0# Then
-                                    T = Tsat
-                                    H = xv * hv + (1 - xv) * hl
-                                Else
-                                    LoopVarF = S
-                                    LoopVarX = P
-                                    T = brentsolverT.BrentOpt(Me.AUX_TFM(Fase.Mixture), 2000, 20, 0.000000000001, 1000, Nothing)
-                                    If xv = 0.0# Then
-                                        H = Me.DW_CalcEnthalpy(vz, T, P, State.Liquid)
-                                    Else
-                                        H = Me.DW_CalcEnthalpy(vz, T, P, State.Vapor)
-                                    End If
-                                End If
-
-                                Vx = vz
-                                Vy = vz
-
-                            Else
-
-redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mixture), P, S, T, Me)
-
-                                T = result(4)
-                                xl = result(0)
-                                xv = result(1)
-                                xl2 = result(7)
-
-                                Vx = result(2)
-                                Vy = result(3)
-                                Vx2 = result(8)
-
-                                Dim HM, HV, HL1, HL2 As Double
-
-                                If xl <> 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                                If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                                If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                                HM = (xl * HL1 + xl2 * HL2 + xv * HV) / Me.AUX_MMM(Fase.Mixture)
-
-                                H = HM
-
-                                Dim SM, SV, SL1, SL2 As Double
-
-                                If xl <> 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                                If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                                If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                                SM = (xl * SL1 + xl2 * SL2 + xv * SV) / Me.AUX_MMM(Fase.Mixture)
-
-                            End If
-
-                        Case FlashSpec.VAP
-
-                            Dim KI(n) As Double
-
-                            i = 0
-                            Do
-                                KI(i) = 0
-                                i = i + 1
-                            Loop Until i = n + 1
-
-                            If estimate <> 0 Then
-                                T = estimate
-                            Else
-                                T = 0
-                            End If
-                            P = val1
-                            xv = val2
-
-                            result = Me.FlashBase.Flash_PV(RET_VMOL(Fase.Mixture), P, xv, 0, Me)
-
-                            T = result(4)
-
-                            Vx = result(2)
-                            Vy = result(3)
-
-                            xl = 1 - xv
-
-                            Dim HM, HV, HL As Double
-
-                            If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            HM = (xl * HL + xv * HV) / Me.AUX_MMM(Fase.Mixture)
-
-                            H = HM
-
-                            Dim SM, SV, SL As Double
-
-                            If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            SM = (xl * SL + xv * SV) / Me.AUX_MMM(Fase.Mixture)
-
-                            S = SM
-
-                    End Select
-
-            End Select
-
-            Return New Object() {xl, xv, T, P, H, S, 1, 1, Vx, Vy, result}
-
-        End Function
-
-        Public MustOverride Function DW_CalcEnergiaMistura_ISOL(ByVal T As Double, ByVal P As Double) As Double
-
-        Public MustOverride Function DW_CalcCp_ISOL(ByVal fase1 As DWSIM.SimulationObjects.PropertyPackages.Fase, ByVal T As Double, ByVal P As Double) As Double
-
-        Public MustOverride Function DW_CalcCv_ISOL(ByVal fase1 As DWSIM.SimulationObjects.PropertyPackages.Fase, ByVal T As Double, ByVal P As Double) As Double
-
-        Public MustOverride Function DW_CalcK_ISOL(ByVal fase1 As DWSIM.SimulationObjects.PropertyPackages.Fase, ByVal T As Double, ByVal P As Double) As Double
-
-        Public MustOverride Function DW_CalcMM_ISOL(ByVal fase1 As DWSIM.SimulationObjects.PropertyPackages.Fase, ByVal T As Double, ByVal P As Double) As Double
-
-        Public MustOverride Function DW_CalcPVAP_ISOL(ByVal T As Double) As Double
-
-        ''' <summary>
-        ''' This function returns points to build the phase envelope.
-        ''' </summary>
-        ''' <param name="parameters"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Overridable Function DW_ReturnPhaseEnvelope(ByVal parameters As Object, Optional ByVal bw As System.ComponentModel.BackgroundWorker = Nothing) As Object
-
-            If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
-
-            Dim cpc As New DWSIM.Utilities.TCP.Methods
-
-            Dim i As Integer
-
-            Dim n As Integer = Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1
-
-            Dim Vz(n) As Double
-            Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            i = 0
-            For Each comp In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                Vz(i) += comp.FracaoMolar.GetValueOrDefault
-                i += 1
+        Next
+
+        'remove non-existent or broken user databases from the list
+        For Each str As String In invaliddbs
+            My.Settings.UserDatabases.Remove(str)
+        Next
+
+        Return Nothing
+
+    End Function
+
+    Public Sub LoadCSDB(ByVal filename As String)
+        If File.Exists(filename) Then
+            Dim csdb As New DWSIM.Databases.ChemSep
+            Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+            csdb.Load(filename)
+            cpa = csdb.Transfer()
+            For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
+                cp.IsFPROPSSupported = FPROPSPropertyPackage.SupportsCompound(cp.Name)
+                If Not Me.AvailableComponents.ContainsKey(cp.Name) Then
+                    Me.AvailableComponents.Add(cp.Name, cp)
+                End If
             Next
+            loadedCSDB = True
+        End If
+    End Sub
 
-            Dim j, k, l As Integer
-            i = 0
-            Do
-                If Vz(i) = 0 Then j += 1
-                i = i + 1
-            Loop Until i = n + 1
+    Public Sub LoadDWSIMDB(ByVal filename As String)
+        If File.Exists(filename) Then
+            Dim dwdb As New DWSIM.Databases.DWSIM
+            Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+            dwdb.Load(filename)
+            cpa = dwdb.Transfer()
+            For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
+                If Not Me.AvailableComponents.ContainsKey(cp.Name) Then Me.AvailableComponents.Add(cp.Name, cp)
+            Next
+        End If
+    End Sub
 
-            Dim VTc(n), Vpc(n), Vw(n), VVc(n), VKij(n, n) As Double
-            Dim Vm2(UBound(Vz) - j), VPc2(UBound(Vz) - j), VTc2(UBound(Vz) - j), VVc2(UBound(Vz) - j), Vw2(UBound(Vz) - j), VKij2(UBound(Vz) - j, UBound(Vz) - j)
+    Public Sub LoadBDDB(ByVal filename As String)
+        If File.Exists(filename) Then
+            Dim bddb As New DWSIM.Databases.Biodiesel
+            Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+            bddb.Load(filename)
+            cpa = bddb.Transfer()
+            For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
+                If Not Me.AvailableComponents.ContainsKey(cp.Name) Then Me.AvailableComponents.Add(cp.Name, cp)
+            Next
+        End If
+    End Sub
 
-            VTc = Me.RET_VTC()
-            Vpc = Me.RET_VPC()
-            VVc = Me.RET_VVC()
-            Vw = Me.RET_VW()
-            VKij = Me.RET_VKij
+    Public Sub LoadEDB(ByVal filename As String)
+        If File.Exists(filename) Then
+            Dim edb As New DWSIM.Databases.Electrolyte
+            Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+            edb.Load(filename)
+            cpa = edb.Transfer()
+            For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
+                If Not Me.AvailableComponents.ContainsKey(cp.Name) Then Me.AvailableComponents.Add(cp.Name, cp)
+            Next
+        End If
+    End Sub
 
-            i = 0
-            k = 0
-            Do
-                If Vz(i) <> 0 Then
-                    Vm2(k) = Vz(i)
-                    VTc2(k) = VTc(i)
-                    VPc2(k) = Vpc(i)
-                    VVc2(k) = VVc(i)
-                    Vw2(k) = Vw(i)
-                    j = 0
-                    l = 0
-                    Do
-                        If Vz(l) <> 0 Then
-                            VKij2(k, j) = VKij(i, l)
-                            j = j + 1
-                        End If
-                        l = l + 1
-                    Loop Until l = n + 1
-                    k = k + 1
-                End If
-                i = i + 1
-            Loop Until i = n + 1
-
-            Dim Pmin, Tmin, dP, dT, T, P As Double
-            Dim PB, PO, TVB, TVD, HB, HO, SB, SO, VB, VO, TE, PE, TH, PHsI, PHsII, TQ, PQ, TI, PI, TOWF, POWF, VOWF, HOWF, SOWF As New ArrayList
-            Dim TCR, PCR, VCR As Double
-
-            Dim CP As New ArrayList
-            If n > 0 Then
-                CP = cpc.CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
-                If CP.Count > 0 Then
-                    Dim cp0 = CP(0)
-                    TCR = cp0(0)
-                    PCR = cp0(1)
-                    VCR = cp0(2)
+    Public Sub LoadCPDB(ByVal filename As String)
+        If File.Exists(filename) Then
+            Dim cpdb As New DWSIM.Databases.CoolProp
+            Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+            cpdb.Load(filename)
+            cpa = cpdb.Transfer()
+            For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
+                If Not Me.AvailableComponents.ContainsKey(cp.Name) Then
+                    Me.AvailableComponents.Add(cp.Name, cp)
                 Else
-                    TCR = 0
-                    PCR = 0
-                    VCR = 0
+                    Me.AvailableComponents(cp.Name).IsCOOLPROPSupported = True
                 End If
-            Else
-                TCR = Me.AUX_TCM(Fase.Mixture)
-                PCR = Me.AUX_PCM(Fase.Mixture)
-                VCR = Me.AUX_VCM(Fase.Mixture)
-                CP.Add(New Object() {TCR, PCR, VCR})
-            End If
+            Next
+        End If
+    End Sub
 
-            Pmin = 101325
-            Tmin = 0.3 * TCR
+    Public Function CopyPropertyPackages() As Object
 
-            dP = (PCR - Pmin) / 30
-            dT = (TCR - Tmin) / 30
+        Dim col As New System.Collections.Generic.Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.PropertyPackage)
 
-            Dim beta As Double = 10
+        For Each pp As PropertyPackage In Me.PropertyPackages.Values
+            col.Add(pp.ComponentName, CType(pp.Clone, PropertyPackage))
+        Next
 
-            Dim tmp2 As Object
-            Dim KI(n) As Double
+        Return col
 
-            j = 0
-            Do
-                KI(j) = 0
-                j = j + 1
-            Loop Until j = n + 1
-
-            i = 0
-            P = Pmin
-            T = Tmin
-            Do
-                If i < 2 Then
-                    Try
-                        tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 0, 0, Me)
-                        TVB.Add(tmp2(4))
-                        PB.Add(P)
-                        T = TVB(i)
-                        HB.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
-                        SB.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
-                        VB.Add(1 / Me.AUX_LIQDENS(T, P, 0, 0, False) * Me.AUX_MMM(Fase.Mixture))
-                        KI = tmp2(6)
-                    Catch ex As Exception
-
-                    Finally
-                        P = P + dP
-                    End Try
-                Else
-                    If beta < 20 Then
-                        Try
-                            tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, 0, PB(i - 1), Me, True, KI)
-                            TVB.Add(T)
-                            PB.Add(tmp2(4))
-                            P = PB(i)
-                            HB.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
-                            SB.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
-                            VB.Add(1 / Me.AUX_LIQDENS(T, P, 0, 0, False) * Me.AUX_MMM(Fase.Mixture))
-                            KI = tmp2(6)
-                        Catch ex As Exception
-
-                        Finally
-                            If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                T = T + dT * 0.5
-                            Else
-                                T = T + dT
-                            End If
-                        End Try
-                    Else
-                        Try
-                            tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 0, TVB(i - 1), Me, True, KI)
-                            TVB.Add(tmp2(4))
-                            PB.Add(P)
-                            T = TVB(i)
-                            HB.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
-                            SB.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Liquid))
-                            VB.Add(1 / Me.AUX_LIQDENS(T, P, 0, 0, False) * Me.AUX_MMM(Fase.Mixture))
-                            KI = tmp2(6)
-                        Catch ex As Exception
-
-                        Finally
-                            If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
-                                P = P + dP * 0.1
-                            Else
-                                P = P + dP
-                            End If
-                        End Try
-                    End If
-                    beta = (Math.Log(PB(i) / 101325) - Math.Log(PB(i - 1) / 101325)) / (Math.Log(TVB(i)) - Math.Log(TVB(i - 1)))
-                End If
-                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Bubble Points (" & i + 1 & "/200)")
-                i = i + 1
-            Loop Until i >= 200 Or PB(i - 1) = 0 Or PB(i - 1) < 0 Or TVB(i - 1) < 0 Or _
-                        T >= TCR Or Double.IsNaN(PB(i - 1)) = True Or _
-                        Double.IsNaN(TVB(i - 1)) = True Or Math.Abs(T - TCR) / TCR < 0.002 And _
-                        Math.Abs(P - PCR) / PCR < 0.002
-
-            Dim Switch = False
-
-            beta = 10
-
-            j = 0
-            Do
-                KI(j) = 0
-                j = j + 1
-            Loop Until j = n + 1
-
-            i = 0
-            P = Pmin
-            Do
-                If i < 2 Then
-                    Try
-                        tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 1, 0, Me)
-                        TVD.Add(tmp2(4))
-                        PO.Add(P)
-                        T = TVD(i)
-                        HO.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
-                        SO.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
-                        VO.Add(1 / Me.AUX_VAPDENS(T, P) * Me.AUX_MMM(Fase.Mixture))
-                        KI = tmp2(6)
-                    Catch ex As Exception
-                    Finally
-                        If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
-                            P = P + dP * 0.1
-                        Else
-                            P = P + dP
-                        End If
-                    End Try
-                Else
-                    If Abs(beta) < 2 Then
-                        Try
-                            tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, 1, PO(i - 1), Me, True, KI)
-                            TVD.Add(T)
-                            PO.Add(tmp2(4))
-                            P = PO(i)
-                            HO.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
-                            SO.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
-                            VO.Add(1 / Me.AUX_VAPDENS(T, P) * Me.AUX_MMM(Fase.Mixture))
-                            KI = tmp2(6)
-                        Catch ex As Exception
-                        Finally
-                            If TVD(i) - TVD(i - 1) <= 0 Then
-                                If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                    T = T - dT * 0.1
-                                Else
-                                    T = T - dT
-                                End If
-                            Else
-                                If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                    T = T + dT * 0.1
-                                Else
-                                    T = T + dT
-                                End If
-                            End If
-                        End Try
-                    Else
-                        Try
-                            tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 1, TVD(i - 1), Me, False, KI)
-                            TVD.Add(tmp2(4))
-                            PO.Add(P)
-                            T = TVD(i)
-                            HO.Add(Me.DW_CalcEnthalpy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
-                            SO.Add(Me.DW_CalcEntropy(Me.RET_VMOL(Fase.Mixture), T, P, State.Vapor))
-                            VO.Add(1 / Me.AUX_VAPDENS(T, P) * Me.AUX_MMM(Fase.Mixture))
-                            KI = tmp2(6)
-                        Catch ex As Exception
-                        Finally
-                            If Math.Abs(T - TCR) / TCR < 0.05 And Math.Abs(P - PCR) / PCR < 0.05 Then
-                                P = P + dP * 0.25
-                            Else
-                                P = P + dP
-                            End If
-                        End Try
-                    End If
-                    If i >= PO.Count Then
-                        i = i - 1
-                    End If
-                    beta = (Math.Log(PO(i) / 101325) - Math.Log(PO(i - 1) / 101325)) / (Math.Log(TVD(i)) - Math.Log(TVD(i - 1)))
-                    If Double.IsNaN(beta) Or Double.IsInfinity(beta) Then beta = 0
-                End If
-                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Dew Points (" & i + 1 & "/200)")
-                i = i + 1
-            Loop Until i >= 200 Or PO(i - 1) = 0 Or PO(i - 1) < 0 Or TVD(i - 1) < 0 Or _
-                        Double.IsNaN(PO(i - 1)) = True Or Double.IsNaN(TVD(i - 1)) = True Or _
-                        Math.Abs(T - TCR) / TCR < 0.03 And Math.Abs(P - PCR) / PCR < 0.03
-
-            beta = 10
-
-            If CBool(parameters(2)) = True Then
-
-                j = 0
-                Do
-                    KI(j) = 0
-                    j = j + 1
-                Loop Until j = n + 1
-
-                i = 0
-                P = 400000
-                T = TVD(0)
-                Do
-                    If i < 2 Then
-                        Try
-                            tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, parameters(1), 0, Me, False, KI)
-                            TQ.Add(tmp2(4))
-                            PQ.Add(P)
-                            T = TQ(i)
-                            KI = tmp2(6)
-                        Catch ex As Exception
-                        Finally
-                            P = P + dP
-                        End Try
-                    Else
-                        If beta < 2 Then
-                            Try
-                                tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, parameters(1), PQ(i - 1), Me, True, KI)
-                                TQ.Add(T)
-                                PQ.Add(tmp2(4))
-                                P = PQ(i)
-                                KI = tmp2(6)
-                            Catch ex As Exception
-                            Finally
-                                If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.2 Then
-                                    T = T + dT * 0.25
-                                Else
-                                    T = T + dT
-                                End If
-                            End Try
-                        Else
-                            Try
-                                tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, parameters(1), TQ(i - 1), Me, True, KI)
-                                TQ.Add(tmp2(4))
-                                PQ.Add(P)
-                                T = TQ(i)
-                                KI = tmp2(6)
-                            Catch ex As Exception
-                            Finally
-                                If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.1 Then
-                                    P = P + dP * 0.1
-                                Else
-                                    P = P + dP
-                                End If
-                            End Try
-                        End If
-                        beta = (Math.Log(PQ(i) / 101325) - Math.Log(PQ(i - 1) / 101325)) / (Math.Log(TQ(i)) - Math.Log(TQ(i - 1)))
-                    End If
-                    If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Quality Line (" & i + 1 & "/200)")
-                    i = i + 1
-                    If i > 2 Then
-                        If PQ(i - 1) = PQ(i - 2) Or TQ(i - 1) = TQ(i - 2) Then Exit Do
-                    End If
-                Loop Until i >= 200 Or PQ(i - 1) = 0 Or PQ(i - 1) < 0 Or TQ(i - 1) < 0 Or _
-                            Double.IsNaN(PQ(i - 1)) = True Or Double.IsNaN(TQ(i - 1)) = True Or _
-                            Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02
-            Else
-                TQ.Add(0)
-                PQ.Add(0)
-            End If
-
-            If n > 0 And CBool(parameters(3)) = True Then
-                If bw IsNot Nothing Then bw.ReportProgress(0, "Stability Line")
-                Dim res As ArrayList = cpc.STABILITY_CURVE(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
-                i = 0
-                Do
-                    TE.Add(res(i)(0))
-                    PE.Add(res(i)(1))
-                    i += 1
-                Loop Until i = res.Count
-            Else
-                TE.Add(0)
-                PE.Add(0)
-            End If
-
-            Dim Pest, Tmax As Double, eos As String
-
-            If Me.ComponentName.Contains("PR") Then eos = "PR" Else eos = "SRK"
-
-            Pest = PCR * 10
-            Tmin = MathEx.Common.Max(Me.RET_VTF)
-            If Tmin = 0.0# Then Tmin = MathEx.Common.Min(Me.RET_VTB) * 0.4
-            Tmax = TCR * 1.4
-
-            If CBool(parameters(4)) = True Then
-                If bw IsNot Nothing Then bw.ReportProgress(0, "Phase Identification Parameter")
-                For T = Tmin To Tmax Step 5
-                    TI.Add(T)
-                    PI.Add(Auxiliary.FlashAlgorithms.FlashAlgorithm.CalcPIPressure(Vz, Pest, T, Me, eos))
-                    Pest = PI(PI.Count - 1)
-                Next
-            Else
-                TI.Add(0)
-                PI.Add(0)
-            End If
-
-            If TVB.Count > 1 Then TVB.RemoveAt(TVB.Count - 1)
-            If PB.Count > 1 Then PB.RemoveAt(PB.Count - 1)
-            If HB.Count > 1 Then HB.RemoveAt(HB.Count - 1)
-            If SB.Count > 1 Then SB.RemoveAt(SB.Count - 1)
-            If VB.Count > 1 Then VB.RemoveAt(VB.Count - 1)
-            If TVB.Count > 1 Then TVB.RemoveAt(TVB.Count - 1)
-            If PB.Count > 1 Then PB.RemoveAt(PB.Count - 1)
-            If HB.Count > 1 Then HB.RemoveAt(HB.Count - 1)
-            If SB.Count > 1 Then SB.RemoveAt(SB.Count - 1)
-            If VB.Count > 1 Then VB.RemoveAt(VB.Count - 1)
-
-            If ToWF.Count > 1 Then ToWF.RemoveAt(ToWF.Count - 1)
-            If PoWF.Count > 1 Then PoWF.RemoveAt(PoWF.Count - 1)
-            If HoWF.Count > 1 Then HoWF.RemoveAt(HoWF.Count - 1)
-            If SoWF.Count > 1 Then SoWF.RemoveAt(SoWF.Count - 1)
-            If VoWF.Count > 1 Then VoWF.RemoveAt(VoWF.Count - 1)
-
-            If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
-            If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
-            If HO.Count > 1 Then HO.RemoveAt(HO.Count - 1)
-            If SO.Count > 1 Then SO.RemoveAt(SO.Count - 1)
-            If VO.Count > 1 Then VO.RemoveAt(VO.Count - 1)
-
-            If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
-            If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
-            If HO.Count > 1 Then HO.RemoveAt(HO.Count - 1)
-            If SO.Count > 1 Then SO.RemoveAt(SO.Count - 1)
-            If VO.Count > 1 Then VO.RemoveAt(VO.Count - 1)
-
-            If TQ.Count > 1 Then TQ.RemoveAt(TQ.Count - 1)
-            If PQ.Count > 1 Then PQ.RemoveAt(PQ.Count - 1)
-            If TI.Count > 1 Then TI.RemoveAt(TI.Count - 1)
-            If PI.Count > 1 Then PI.RemoveAt(PI.Count - 1)
-
-            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI, ToWF, PoWF, HoWF, SoWF, VoWF}
-
-        End Function
-
-        ''' <summary>
-        ''' This function returns points to build the binary phase envelope.
-        ''' </summary>
-        ''' <param name="parameters"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Overridable Function DW_ReturnBinaryEnvelope(ByVal parameters As Object, Optional ByVal bw As System.ComponentModel.BackgroundWorker = Nothing) As Object
-
-            If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
-
-            Dim n, i As Integer
-
-            n = Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1
-
-            Dim dx As Double = 0.025
-
-            Dim tipocalc As String
-            Dim result As Object
-            Dim P, T As Double
-            Dim calcP, calcT As Double
-            Dim VLE, SLE, LLE, Critical, SolidSolution As Boolean
-
-            tipocalc = parameters(0)
-            P = parameters(1)
-            T = parameters(2)
-            VLE = parameters(3)
-            LLE = parameters(4)
-            SLE = parameters(5)
-            Critical = parameters(6)
-            SolidSolution = parameters(7)
-
-            Select Case tipocalc
-
-                Case "T-x-y"
-
-                    Dim px, py1, py2, px1l1, px1l2, py3 As New ArrayList 'vle, lle
-                    Dim pxs1, pys1, pxs2, pys2 As New ArrayList 'sle
-                    Dim pxc, pyc As New ArrayList 'critical
-                    Dim unstable As Boolean = False
-                    Dim ui, ut As New ArrayList
-                    Dim x, y1, y2, Test1, Test2 As Double
-                    Dim tmp As Object = Nothing
-
-                    If VLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
-                        i = 0
-                        Do
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
-                            Try
-                                If i = 0 Then
-                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)
-                                    calcT = tmp(4)
-                                    Test1 = calcT
-                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, 0, Me)
-                                    y2 = tmp(4)
-                                    Test2 = y2
-                                Else
-                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, Test1, Me)
-                                    calcT = tmp(4)
-                                    Test1 = calcT
-                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, Test2, Me)
-                                    y2 = tmp(4)
-                                    Test2 = y2
-                                End If
-                                x = i * dx
-                                y1 = calcT
-                                px.Add(x)
-                                py1.Add(y1)
-                                py2.Add(y2)
-                                'check if liquid phase is stable.
-                                'Test2 = x * Me.RET_VTF()(0) + (1 - x) * Me.RET_VTF()(1)
-                                result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, P, Test1 * 0.8, Me)
-                                If result(5) > 0.0# Then
-                                    If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
-                                        unstable = True
-                                        ui.Add(px.Count - 1)
-                                        ut.Add(Me.FlashBase.BubbleTemperature_LLE(New Double() {i * dx, 1 - i * dx}, result(2), result(6), P, y1 - 50, y2 + 20, Me))
-                                        py1(py1.Count - 1) = ut(ut.Count - 1)
-                                    End If
-                                End If
-                            Catch ex As Exception
-                            End Try
-                            i = i + 1
-                        Loop Until (i - 1) * dx >= 1
-                    End If
-
-                    If LLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
-
-                        Select Case Me.FlashAlgorithm
-                            Case FlashMethod.DWSIMDefault, FlashMethod.GibbsMin2P, FlashMethod.InsideOut, FlashMethod.NestedLoopsImmiscible, FlashMethod.NestedLoopsSLE
-                                Throw New Exception(DWSIM.App.GetLocalString("UnsuitableFlashAlgorithmSelected"))
-                        End Select
-
-                        If unstable Then
-                            Dim ti, tf, uim As Double, tit As Integer
-                            ti = (ut(0) + ut(ut.Count - 1)) / 2
-                            uim = (ui(0) + ui(ui.Count - 1)) / 2
-                            tf = MathEx.Common.Max(Me.RET_VTF())
-                            If tf = 0.0# Then tf = ti * 0.7
-                            i = 0
-                            For tit = tf To ti Step (ti - tf) / 25
-                                If bw IsNot Nothing Then If bw.CancellationPending Then Exit For Else bw.ReportProgress(0, "LLE (" & i + 1 & "/28)")
-                                result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, P, tit, Me)
-                                If result(5) > 0.0# Then
-                                    If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
-                                        px1l1.Add(result(2)(0))
-                                        px1l2.Add(result(6)(0))
-                                        py3.Add(tit)
-                                    End If
-                                End If
-                                i += 1
-                            Next
-                        End If
-                    End If
-
-                    If SLE Then
-
-                        Dim nlsle As New Auxiliary.FlashAlgorithms.NestedLoopsSLE
-                        Dim L1, L2 As Double
-
-                        If SolidSolution Then
-                            L1 = 0.0#
-                            L2 = 1.0#
-                        Else
-                            L1 = 0.001
-                            L2 = 0.999
-                        End If
-
-                        nlsle.SolidSolution = SolidSolution
-
-                        Dim constprops As New List(Of ConstantProperties)
-                        For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                            constprops.Add(su.ConstantProperties)
-                        Next
-                        nlsle.CompoundProperties = constprops
-
-                        i = 0
-                        Do
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 1 (" & i + 1 & "/42)")
-                            Try
-                                tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, L1, 0, Me)
-                                y1 = tmp(4)
-                                x = i * dx
-                                pxs1.Add(x)
-                                pys1.Add(y1)
-                            Catch ex As Exception
-                            End Try
-                            i = i + 1
-                        Loop Until (i - 1) * dx >= 1
-
-                        i = 0
-                        Do
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 2 (" & i + 1 & "/42)")
-                            Try
-                                tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, L2, 0, Me)
-                                y2 = tmp(4)
-                                Test2 = y2
-                                x = i * dx
-                                pxs2.Add(x)
-                                pys2.Add(y2)
-                            Catch ex As Exception
-                            End Try
-                            i = i + 1
-                        Loop Until (i - 1) * dx >= 1
-                    End If
-
-                    If Critical Then
-
-                        Dim cpc As New DWSIM.Utilities.TCP.Methods
-                        Dim cpcs As New DWSIM.Utilities.TCP.Methods_SRK
-                        Dim CP As New ArrayList
-                        Dim TCR, PCR, VCR As Double
-
-                        i = 0
-                        Do
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Critical (" & i + 1 & "/42)")
-                            Try
-                                If TypeOf Me Is PengRobinsonPropertyPackage Then
-                                    If i = 0 Or (i * dx) >= 1 Then
-                                        Dim Tc As Double() = Me.RET_VTC
-                                        TCR = (i * dx) * Tc(0) + (1 - i * dx) * Tc(1)
-                                        PCR = 0.0#
-                                        VCR = 0.0#
-                                        CP.Clear()
-                                        CP.Add(New Double() {TCR, PCR, VCR})
-                                    Else
-                                        CP = cpc.CRITPT_PR(New Double() {i * dx, 1 - i * dx}, Me.RET_VTC, Me.RET_VPC, Me.RET_VVC, Me.RET_VW, Me.RET_VKij)
-                                    End If
-                                ElseIf TypeOf Me Is SRKPropertyPackage Then
-                                    If i = 0 Or (i * dx) >= 1 Then
-                                        Dim Tc As Double() = Me.RET_VTC
-                                        TCR = (i * dx) * Tc(0) + (1 - i * dx) * Tc(1)
-                                        PCR = 0.0#
-                                        VCR = 0.0#
-                                        CP.Clear()
-                                        CP.Add(New Double() {TCR, PCR, VCR})
-                                    Else
-                                        CP = cpcs.CRITPT_PR(New Double() {i * dx, 1 - i * dx}, Me.RET_VTC, Me.RET_VPC, Me.RET_VVC, Me.RET_VW, Me.RET_VKij)
-                                    End If
-                                Else
-                                    Dim Tc As Double() = Me.RET_VTC
-                                    TCR = (i * dx) * Tc(0) + (1 - i * dx) * Tc(1)
-                                    PCR = 0.0#
-                                    VCR = 0.0#
-                                    CP.Clear()
-                                    CP.Add(New Double() {TCR, PCR, VCR})
-                                End If
-                                If CP.Count > 0 Then
-                                    Dim cp0 = CP(0)
-                                    TCR = cp0(0)
-                                    PCR = cp0(1)
-                                    VCR = cp0(2)
-                                    x = i * dx
-                                    pxc.Add(x)
-                                    pyc.Add(TCR)
-                                End If
-                            Catch ex As Exception
-                            End Try
-                            i = i + 1
-                        Loop Until (i - 1) * dx >= 1
-                    End If
-
-                    Return New Object() {px, py1, py2, px1l1, px1l2, py3, pxs1, pys1, pxs2, pys2, pxc, pyc}
-
-                Case "P-x-y"
-
-                    Dim px, py1, py2, px1l1, px1l2, py3 As New ArrayList
-                    Dim unstable As Boolean = False
-                    Dim ui, up As New ArrayList
-                    Dim x, y1, y2, Pest1, Pest2 As Double
-                    Dim tmp As Object = Nothing
-
-                    If Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
-
-                        i = 0
-                        Do
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
-                            Try
-                                If i = 0 Then
-                                    tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)
-                                    calcP = tmp(4)
-                                    Pest1 = calcP
-                                    tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 1, 0, Me)
-                                    y2 = tmp(4)
-                                    Pest2 = y2
-                                Else
-                                    tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, Pest1, Me)
-                                    calcP = tmp(4)
-                                    Pest1 = calcP
-                                    tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 1, Pest2, Me)
-                                    y2 = tmp(4)
-                                    Pest2 = y2
-                                End If
-                                x = i * dx
-                                y1 = calcP
-                                px.Add(x)
-                                py1.Add(y1)
-                                py2.Add(y2)
-                                'check if liquid phase is stable.
-                                result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, calcP * 1.3, T, Me)
-                                If result(5) > 0.0# Then
-                                    Dim fcl1(1), fcl2(1) As Double
-                                    fcl1 = Me.DW_CalcFugCoeff(result(2), T, calcP, State.Liquid)
-                                    calcP = result(2)(0) * fcl1(0) * calcP + result(2)(1) * fcl1(1) * calcP
-                                    unstable = True
-                                    ui.Add(px.Count - 1)
-                                    'up.Add(calcP)
-                                    If up.Count = 0 Then up.Add(calcP)
-                                    py1(py1.Count - 1) = up(0)
-                                End If
-                            Catch ex As Exception
-                            End Try
-                            i = i + 1
-                        Loop Until (i - 1) * dx >= 1
-                    
-                        If unstable Then
-                            Dim pi, pf, uim As Double, pit As Integer
-                            pi = up(0)
-                            uim = (ui(0) + ui(ui.Count - 1)) / 2
-                            pf = 2 * pi
-                            i = 0
-                            For pit = pi To pf Step (pf - pi) / 10
-                                If bw IsNot Nothing Then If bw.CancellationPending Then Exit For Else bw.ReportProgress(0, "LLE (" & i + 1 & "/28)")
-                                result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, pit, T, Me)
-                                If result(5) > 0.0# Then
-                                    If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
-                                        px1l1.Add(result(2)(0))
-                                        px1l2.Add(result(6)(0))
-                                        py3.Add(pit)
-                                    End If
-                                End If
-                                i += 1
-                            Next
-                        End If
-
-                    End If
-
-                    Return New Object() {px, py1, py2, px1l1, px1l2, py3}
-
-                Case "(T)x-y"
-
-                    Dim px, py As New ArrayList
-
-                    If Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
-
-                        i = 0
-                        Do
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
-                            px.Add(i * dx)
-                            Try
-                                py.Add(Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)(6)(0) * i * dx)
-                            Catch ex As Exception
-                                py.Add(0.0#)
-                            End Try
-                            i = i + 1
-                        Loop Until (i - 1) * dx >= 1
-
-                    End If
-
-                    Return New Object() {px, py}
-
-                Case Else
-
-                    Dim px, py As New ArrayList
-
-                    If Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
-
-                        i = 0
-                        Do
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
-                            px.Add(i * dx)
-                            Try
-                                py.Add(Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)(6)(0) * i * dx)
-                            Catch ex As Exception
-                                py.Add(0.0#)
-                            End Try
-                            i = i + 1
-                        Loop Until (i - 1) * dx >= 1
-
-                    End If
-
-                    Return New Object() {px, py}
-
-            End Select
-
-        End Function
-
-        Public MustOverride Sub DW_CalcCompPartialVolume(ByVal phase As DWSIM.SimulationObjects.PropertyPackages.Fase, ByVal T As Double, ByVal P As Double)
-
-        ''' <summary>
-        ''' This procedure fills the property grid with property package specific information (phase compositions, distributions and properties).
-        ''' </summary>
-        ''' <param name="pg">Reference to the Property Grid which will be filled.</param>
-        ''' <param name="Flowsheet">Reference to the active Flowsheet.</param>
-        ''' <param name="su">Unit system to convert variables to.</param>
-        ''' <remarks>This function is overridable, so newly developed property packages can give different information to the user, not necessarily the ones provided by this default implementation.</remarks>
-        Public Overridable Sub PopulatePropertyGrid(ByRef pg As PropertyGridEx.PropertyGridEx, ByRef Flowsheet As FormFlowsheet, ByVal su As SistemasDeUnidades.Unidades)
-
-            If Me.CurrentMaterialStream.Fases.Count <= 3 Then
-                Me.CurrentMaterialStream.Fases.Add("3", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid1"), ""))
-                Me.CurrentMaterialStream.Fases.Add("4", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid2"), ""))
-                Me.CurrentMaterialStream.Fases.Add("5", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid3"), ""))
-                If Flowsheet.Options.SelectedComponents.Count = 0 Then
-                Else
-                    Dim comp2 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                    For Each comp2 In Flowsheet.Options.SelectedComponents.Values
-                        Me.CurrentMaterialStream.Fases(3).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        Me.CurrentMaterialStream.Fases(3).Componentes(comp2.Name).ConstantProperties = comp2
-                        Me.CurrentMaterialStream.Fases(4).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        Me.CurrentMaterialStream.Fases(4).Componentes(comp2.Name).ConstantProperties = comp2
-                        Me.CurrentMaterialStream.Fases(5).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        Me.CurrentMaterialStream.Fases(5).Componentes(comp2.Name).ConstantProperties = comp2
-                    Next
-                End If
-            ElseIf Me.CurrentMaterialStream.Fases.Count <= 6 Then
-                Me.CurrentMaterialStream.Fases.Add("6", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Aqueous"), ""))
-                If Flowsheet.Options.SelectedComponents.Count = 0 Then
-                Else
-                    Dim comp2 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                    For Each comp2 In Flowsheet.Options.SelectedComponents.Values
-                        Me.CurrentMaterialStream.Fases(6).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        Me.CurrentMaterialStream.Fases(6).Componentes(comp2.Name).ConstantProperties = comp2
-                    Next
-                End If
-            ElseIf Me.CurrentMaterialStream.Fases.Count <= 7 Then
-                Me.CurrentMaterialStream.Fases.Add("7", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Solid"), ""))
-                If Flowsheet.Options.SelectedComponents.Count = 0 Then
-                Else
-                    Dim comp2 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                    For Each comp2 In Flowsheet.Options.SelectedComponents.Values
-                        Me.CurrentMaterialStream.Fases(7).Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                        Me.CurrentMaterialStream.Fases(7).Componentes(comp2.Name).ConstantProperties = comp2
-                    Next
-                End If
-            End If
-
-            Dim Conversor As New DWSIM.SistemasDeUnidades.Conversor
-            Dim valor As Double = 0.0#
-
-            With pg
-
-                Select Case Me.CurrentMaterialStream.CompositionBasis
-                    Case DWSIM.SimulationObjects.Streams.MaterialStream.CompBasis.Molar_Fractions
-                        'PropertyGridEx.CustomPropertyCollection - Mistura
-                        Dim m As New PropertyGridEx.CustomPropertyCollection()
-                        Dim comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(0).Componentes(comp.Name).FracaoMolar.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            m.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaMistura"), True)
-                            m.Item(m.Count - 1).IsReadOnly = True
-                            m.Item(m.Count - 1).DefaultValue = Nothing
-                            m.Item(m.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Vapor
-                        Dim v As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(2).Componentes(comp.Name).FracaoMolar.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            v.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseVapor"), True)
-                            v.Item(v.Count - 1).IsReadOnly = True
-                            v.Item(v.Count - 1).DefaultValue = Nothing
-                            v.Item(v.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(1).Componentes(comp.Name).FracaoMolar.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), True)
-                            l.Item(l.Count - 1).IsReadOnly = True
-                            l.Item(l.Count - 1).DefaultValue = Nothing
-                            l.Item(l.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l1 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(3).Componentes(comp.Name).FracaoMolar.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l1.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), True)
-                            l1.Item(l1.Count - 1).IsReadOnly = True
-                            l1.Item(l1.Count - 1).DefaultValue = Nothing
-                            l1.Item(l1.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l2 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(4).Componentes(comp.Name).FracaoMolar.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l2.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), True)
-                            l2.Item(l2.Count - 1).IsReadOnly = True
-                            l2.Item(l2.Count - 1).DefaultValue = Nothing
-                            l2.Item(l2.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l3 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(5).Componentes(comp.Name).FracaoMolar.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l3.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), True)
-                            l3.Item(l3.Count - 1).IsReadOnly = True
-                            l3.Item(l3.Count - 1).DefaultValue = Nothing
-                            l3.Item(l3.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l4 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(6).Componentes(comp.Name).FracaoMolar.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l4.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), True)
-                            l4.Item(l4.Count - 1).IsReadOnly = True
-                            l4.Item(l4.Count - 1).DefaultValue = Nothing
-                            l4.Item(l4.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim s As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(7).Componentes(comp.Name).FracaoMolar.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            s.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseSolida"), True)
-                            s.Item(s.Count - 1).IsReadOnly = True
-                            s.Item(s.Count - 1).DefaultValue = Nothing
-                            s.Item(s.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        .Item.Add("[1] " & DWSIM.App.GetLocalString("Mistura"), m, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Composiomolardamistu"), True)
-                        With .Item(.Item.Count - 1)
-                            If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                            .IsBrowsable = True
-                            .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                            .CustomEditor = New System.Drawing.Design.UITypeEditor
-                        End With
-                        If Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[2] " & DWSIM.App.GetLocalString("Vapor"), v, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[3] " & DWSIM.App.GetLocalString("OverallLiquid"), l, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas2"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[4] " & DWSIM.App.GetLocalString("Liquid1"), l1, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas2"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[5] " & DWSIM.App.GetLocalString("Liquid2"), l2, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas2"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[6] " & DWSIM.App.GetLocalString("Liquid3"), l3, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas2"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[7] " & DWSIM.App.GetLocalString("Aqueous"), l4, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas2"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[8] " & DWSIM.App.GetLocalString("Solid"), s, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas2"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                    Case DWSIM.SimulationObjects.Streams.MaterialStream.CompBasis.Mass_Fractions
-                        'PropertyGridEx.CustomPropertyCollection - Mistura
-                        Dim m As New PropertyGridEx.CustomPropertyCollection()
-                        Dim comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(0).Componentes(comp.Name).FracaoMassica.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            m.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomssicanaMistura"), True)
-                            m.Item(m.Count - 1).IsReadOnly = True
-                            m.Item(m.Count - 1).DefaultValue = Nothing
-                            m.Item(m.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Vapor
-                        Dim v As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(2).Componentes(comp.Name).FracaoMassica.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            v.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomssicanaFaseVapo"), True)
-                            v.Item(v.Count - 1).IsReadOnly = True
-                            v.Item(v.Count - 1).DefaultValue = Nothing
-                            v.Item(v.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(1).Componentes(comp.Name).FracaoMassica.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomssicanaFaseLqui"), True)
-                            l.Item(l.Count - 1).IsReadOnly = True
-                            l.Item(l.Count - 1).DefaultValue = Nothing
-                            l.Item(l.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l1 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(3).Componentes(comp.Name).FracaoMassica.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l1.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomssicanaFaseLqui"), True)
-                            l1.Item(l1.Count - 1).IsReadOnly = True
-                            l1.Item(l1.Count - 1).DefaultValue = Nothing
-                            l1.Item(l1.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l2 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(4).Componentes(comp.Name).FracaoMassica.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l2.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomssicanaFaseLqui"), True)
-                            l2.Item(l2.Count - 1).IsReadOnly = True
-                            l2.Item(l2.Count - 1).DefaultValue = Nothing
-                            l2.Item(l2.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l3 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(5).Componentes(comp.Name).FracaoMassica.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l3.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomssicanaFaseLqui"), True)
-                            l3.Item(l3.Count - 1).IsReadOnly = True
-                            l3.Item(l3.Count - 1).DefaultValue = Nothing
-                            l3.Item(l3.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l4 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(6).Componentes(comp.Name).FracaoMassica.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l4.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomssicanaFaseLqui"), True)
-                            l4.Item(l4.Count - 1).IsReadOnly = True
-                            l4.Item(l4.Count - 1).DefaultValue = Nothing
-                            l4.Item(l4.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Solido
-                        Dim s As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(7).Componentes(comp.Name).FracaoMassica.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            s.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomssicanaFaseLqui"), True)
-                            s.Item(s.Count - 1).IsReadOnly = True
-                            s.Item(s.Count - 1).DefaultValue = Nothing
-                            s.Item(s.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        .Item.Add("[1] " & DWSIM.App.GetLocalString("Mistura"), m, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Composiomssicadamist"), True)
-                        With .Item(.Item.Count - 1)
-                            If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                            .IsBrowsable = True
-                            .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                            .CustomEditor = New System.Drawing.Design.UITypeEditor
-                        End With
-                        If Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[2] " & DWSIM.App.GetLocalString("Vapor"), v, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas3"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[3] " & DWSIM.App.GetLocalString("OverallLiquid"), l, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas4"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[4] " & DWSIM.App.GetLocalString("Liquid1"), l1, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas4"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[5] " & DWSIM.App.GetLocalString("Liquid2"), l2, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas4"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[6] " & DWSIM.App.GetLocalString("Liquid3"), l3, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas4"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[7] " & DWSIM.App.GetLocalString("Aqueous"), l4, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas4"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[8] " & DWSIM.App.GetLocalString("Solid"), s, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas4"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-
-                    Case DWSIM.SimulationObjects.Streams.MaterialStream.CompBasis.Volumetric_Fractions
-                        'PropertyGridEx.CustomPropertyCollection - Mistura
-                        Dim m As New PropertyGridEx.CustomPropertyCollection()
-                        Dim comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(0).Componentes(comp.Name).VolumetricFraction.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            m.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VolFractionMixture"), True)
-                            m.Item(m.Count - 1).IsReadOnly = True
-                            m.Item(m.Count - 1).DefaultValue = Nothing
-                            m.Item(m.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Vapor
-                        Dim v As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(2).Componentes(comp.Name).VolumetricFraction.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            v.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VolFractionVaporPhase"), True)
-                            v.Item(v.Count - 1).IsReadOnly = True
-                            v.Item(v.Count - 1).DefaultValue = Nothing
-                            v.Item(v.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(1).Componentes(comp.Name).VolumetricFraction.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VolFractionLiqPhase"), True)
-                            l.Item(l.Count - 1).IsReadOnly = True
-                            l.Item(l.Count - 1).DefaultValue = Nothing
-                            l.Item(l.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l1 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(3).Componentes(comp.Name).VolumetricFraction.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l1.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VolFractionLiqPhase"), True)
-                            l1.Item(l1.Count - 1).IsReadOnly = True
-                            l1.Item(l1.Count - 1).DefaultValue = Nothing
-                            l1.Item(l1.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l2 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(4).Componentes(comp.Name).VolumetricFraction.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l2.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VolFractionLiqPhase"), True)
-                            l2.Item(l2.Count - 1).IsReadOnly = True
-                            l2.Item(l2.Count - 1).DefaultValue = Nothing
-                            l2.Item(l2.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l3 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(5).Componentes(comp.Name).VolumetricFraction.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l3.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VolFractionLiqPhase"), True)
-                            l3.Item(l3.Count - 1).IsReadOnly = True
-                            l3.Item(l3.Count - 1).DefaultValue = Nothing
-                            l3.Item(l3.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l4 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(6).Componentes(comp.Name).VolumetricFraction.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            l4.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VolFractionLiqPhase"), True)
-                            l4.Item(l4.Count - 1).IsReadOnly = True
-                            l4.Item(l4.Count - 1).DefaultValue = Nothing
-                            l4.Item(l4.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Solid
-                        Dim s As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(7).Componentes(comp.Name).VolumetricFraction.GetValueOrDefault, Flowsheet.Options.FractionNumberFormat)
-                            s.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VolFractionSolPhase"), True)
-                            s.Item(s.Count - 1).IsReadOnly = True
-                            s.Item(s.Count - 1).DefaultValue = Nothing
-                            s.Item(s.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        .Item.Add("[1] " & DWSIM.App.GetLocalString("Mistura"), m, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Composiomssicadamist"), True)
-                        With .Item(.Item.Count - 1)
-                            If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                            .IsBrowsable = True
-                            .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                            .CustomEditor = New System.Drawing.Design.UITypeEditor
-                        End With
-                        If Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[2] " & DWSIM.App.GetLocalString("Vapor"), v, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas3"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[3] " & DWSIM.App.GetLocalString("OverallLiquid"), l, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas4"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[4] " & DWSIM.App.GetLocalString("Liquid1"), l1, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas4"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[5] " & DWSIM.App.GetLocalString("Liquid2"), l2, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas4"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[6] " & DWSIM.App.GetLocalString("Liquid3"), l3, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas4"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[7] " & DWSIM.App.GetLocalString("Aqueous"), l4, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas4"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[8] " & DWSIM.App.GetLocalString("Solid"), s, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas4"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                    Case DWSIM.SimulationObjects.Streams.MaterialStream.CompBasis.Mass_Flows
-                        'PropertyGridEx.CustomPropertyCollection - Mistura
-                        Dim m As New PropertyGridEx.CustomPropertyCollection()
-                        Dim comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.CurrentMaterialStream.Fases(0).Componentes(comp.Name).MassFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            m.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_massflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazomssicanaMistura"), True)
-                            m.Item(m.Count - 1).IsReadOnly = True
-                            m.Item(m.Count - 1).DefaultValue = Nothing
-                            m.Item(m.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Vapor
-                        Dim v As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.CurrentMaterialStream.Fases(2).Componentes(comp.Name).MassFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            v.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_massflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazomssicanaFaseVapo"), True)
-                            v.Item(v.Count - 1).IsReadOnly = True
-                            v.Item(v.Count - 1).DefaultValue = Nothing
-                            v.Item(v.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.CurrentMaterialStream.Fases(1).Componentes(comp.Name).MassFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_massflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazomssicanaFaseLqui"), True)
-                            l.Item(l.Count - 1).IsReadOnly = True
-                            l.Item(l.Count - 1).DefaultValue = Nothing
-                            l.Item(l.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l1 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.CurrentMaterialStream.Fases(3).Componentes(comp.Name).MassFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l1.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_massflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazomssicanaFaseLqui"), True)
-                            l1.Item(l1.Count - 1).IsReadOnly = True
-                            l1.Item(l1.Count - 1).DefaultValue = Nothing
-                            l1.Item(l1.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l2 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.CurrentMaterialStream.Fases(4).Componentes(comp.Name).MassFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l2.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_massflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazomssicanaFaseLqui"), True)
-                            l2.Item(l2.Count - 1).IsReadOnly = True
-                            l2.Item(l2.Count - 1).DefaultValue = Nothing
-                            l2.Item(l2.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l3 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.CurrentMaterialStream.Fases(5).Componentes(comp.Name).MassFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l3.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_massflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazomssicanaFaseLqui"), True)
-                            l3.Item(l3.Count - 1).IsReadOnly = True
-                            l3.Item(l3.Count - 1).DefaultValue = Nothing
-                            l3.Item(l3.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l4 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.CurrentMaterialStream.Fases(6).Componentes(comp.Name).MassFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l4.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_massflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazomssicanaFaseLqui"), True)
-                            l4.Item(l4.Count - 1).IsReadOnly = True
-                            l4.Item(l4.Count - 1).DefaultValue = Nothing
-                            l4.Item(l4.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Solid
-                        Dim s As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.CurrentMaterialStream.Fases(7).Componentes(comp.Name).MassFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            s.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_massflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazomssicanaFaseSolida"), True)
-                            s.Item(s.Count - 1).IsReadOnly = True
-                            s.Item(s.Count - 1).DefaultValue = Nothing
-                            s.Item(s.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        .Item.Add("[1] " & DWSIM.App.GetLocalString("Mistura"), m, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Vazomssicadamistura"), True)
-                        With .Item(.Item.Count - 1)
-                            If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                            .IsBrowsable = True
-                            .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                            .CustomEditor = New System.Drawing.Design.UITypeEditor
-                        End With
-                        If Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[2] " & DWSIM.App.GetLocalString("Vapor"), v, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas5"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[3] " & DWSIM.App.GetLocalString("OverallLiquid"), l, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas6"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[4] " & DWSIM.App.GetLocalString("Liquid1"), l1, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas6"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[5] " & DWSIM.App.GetLocalString("Liquid2"), l2, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas6"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[6] " & DWSIM.App.GetLocalString("Liquid3"), l3, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas6"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[7] " & DWSIM.App.GetLocalString("Aqueous"), l4, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas6"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[8] " & DWSIM.App.GetLocalString("Solid"), s, True, DWSIM.App.GetLocalString("Composiesmssicas2"), DWSIM.App.GetLocalString("Mostraacomposiodafas7"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                    Case DWSIM.SimulationObjects.Streams.MaterialStream.CompBasis.Molar_Flows
-                        'PropertyGridEx.CustomPropertyCollection - Mistura
-                        Dim m As New PropertyGridEx.CustomPropertyCollection()
-                        Dim comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.CurrentMaterialStream.Fases(0).Componentes(comp.Name).MolarFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            m.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_molarflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaMistura"), True)
-                            m.Item(m.Count - 1).IsReadOnly = True
-                            m.Item(m.Count - 1).DefaultValue = Nothing
-                            m.Item(m.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Vapor
-                        Dim v As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.CurrentMaterialStream.Fases(2).Componentes(comp.Name).MolarFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            v.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_molarflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseVapor"), True)
-                            v.Item(v.Count - 1).IsReadOnly = True
-                            v.Item(v.Count - 1).DefaultValue = Nothing
-                            v.Item(v.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.CurrentMaterialStream.Fases(1).Componentes(comp.Name).MolarFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_molarflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), True)
-                            l.Item(l.Count - 1).IsReadOnly = True
-                            l.Item(l.Count - 1).DefaultValue = Nothing
-                            l.Item(l.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l1 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.CurrentMaterialStream.Fases(3).Componentes(comp.Name).MolarFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l1.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_molarflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), True)
-                            l1.Item(l1.Count - 1).IsReadOnly = True
-                            l1.Item(l1.Count - 1).DefaultValue = Nothing
-                            l1.Item(l1.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l2 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.CurrentMaterialStream.Fases(4).Componentes(comp.Name).MolarFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l2.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_molarflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), True)
-                            l2.Item(l2.Count - 1).IsReadOnly = True
-                            l2.Item(l2.Count - 1).DefaultValue = Nothing
-                            l2.Item(l2.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l3 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.CurrentMaterialStream.Fases(5).Componentes(comp.Name).MolarFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l3.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_molarflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), True)
-                            l3.Item(l3.Count - 1).IsReadOnly = True
-                            l3.Item(l3.Count - 1).DefaultValue = Nothing
-                            l3.Item(l3.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l4 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.CurrentMaterialStream.Fases(6).Componentes(comp.Name).MolarFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l4.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_molarflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseLquid"), True)
-                            l4.Item(l4.Count - 1).IsReadOnly = True
-                            l4.Item(l4.Count - 1).DefaultValue = Nothing
-                            l4.Item(l4.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Solid
-                        Dim s As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.CurrentMaterialStream.Fases(7).Componentes(comp.Name).MolarFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            s.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_molarflow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("FraomolarnaFaseSolida"), True)
-                            s.Item(s.Count - 1).IsReadOnly = True
-                            s.Item(s.Count - 1).DefaultValue = Nothing
-                            s.Item(s.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        .Item.Add("[1] " & DWSIM.App.GetLocalString("Mistura"), m, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Composiomolardamistu"), True)
-                        With .Item(.Item.Count - 1)
-                            If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                            .IsBrowsable = True
-                            .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                            .CustomEditor = New System.Drawing.Design.UITypeEditor
-                        End With
-                        If Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[2] " & DWSIM.App.GetLocalString("Vapor"), v, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas7"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[3] " & DWSIM.App.GetLocalString("OverallLiquid"), l, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas8"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[4] " & DWSIM.App.GetLocalString("Liquid1"), l1, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas8"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[5] " & DWSIM.App.GetLocalString("Liquid2"), l2, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas8"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[6] " & DWSIM.App.GetLocalString("Liquid3"), l3, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas8"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[7] " & DWSIM.App.GetLocalString("Aqueous"), l4, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas8"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[8] " & DWSIM.App.GetLocalString("Solid"), s, True, DWSIM.App.GetLocalString("Composiesmolares2"), DWSIM.App.GetLocalString("Mostraacomposiodafas8"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                    Case DWSIM.SimulationObjects.Streams.MaterialStream.CompBasis.Volumetric_Flows
-                        'PropertyGridEx.CustomPropertyCollection - Mistura
-                        Dim m As New PropertyGridEx.CustomPropertyCollection()
-                        Dim comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.CurrentMaterialStream.Fases(0).Componentes(comp.Name).VolumetricFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            m.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_volumetricFlow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazovolumtricanaMist"), True)
-                            m.Item(m.Count - 1).IsReadOnly = True
-                            m.Item(m.Count - 1).DefaultValue = Nothing
-                            m.Item(m.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Vapor
-                        Dim v As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.CurrentMaterialStream.Fases(2).Componentes(comp.Name).VolumetricFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            v.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_volumetricFlow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazovolumtricanaFase"), True)
-                            v.Item(v.Count - 1).IsReadOnly = True
-                            v.Item(v.Count - 1).DefaultValue = Nothing
-                            v.Item(v.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.CurrentMaterialStream.Fases(1).Componentes(comp.Name).VolumetricFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_volumetricFlow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazovolumtricanaFase"), True)
-                            l.Item(l.Count - 1).IsReadOnly = True
-                            l.Item(l.Count - 1).DefaultValue = Nothing
-                            l.Item(l.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l1 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.CurrentMaterialStream.Fases(3).Componentes(comp.Name).VolumetricFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l1.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_volumetricFlow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazovolumtricanaFase"), True)
-                            l1.Item(l1.Count - 1).IsReadOnly = True
-                            l1.Item(l1.Count - 1).DefaultValue = Nothing
-                            l1.Item(l1.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l2 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.CurrentMaterialStream.Fases(4).Componentes(comp.Name).VolumetricFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l2.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_volumetricFlow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazovolumtricanaFase"), True)
-                            l2.Item(l2.Count - 1).IsReadOnly = True
-                            l2.Item(l2.Count - 1).DefaultValue = Nothing
-                            l2.Item(l2.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l3 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.CurrentMaterialStream.Fases(5).Componentes(comp.Name).VolumetricFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l3.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_volumetricFlow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazovolumtricanaFase"), True)
-                            l3.Item(l3.Count - 1).IsReadOnly = True
-                            l3.Item(l3.Count - 1).DefaultValue = Nothing
-                            l3.Item(l3.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Liquido
-                        Dim l4 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.CurrentMaterialStream.Fases(6).Componentes(comp.Name).VolumetricFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            l4.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_volumetricFlow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazovolumtricanaFase"), True)
-                            l4.Item(l4.Count - 1).IsReadOnly = True
-                            l4.Item(l4.Count - 1).DefaultValue = Nothing
-                            l4.Item(l4.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        'PropertyGridEx.CustomPropertyCollection - Solid
-                        Dim s As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.CurrentMaterialStream.Fases(7).Componentes(comp.Name).VolumetricFlow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                            s.Add(Flowsheet.FT(DWSIM.App.GetComponentName(comp.Name), su.spmp_volumetricFlow), Format(valor, Flowsheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("VazovolumtricanaFaseSolida"), True)
-                            s.Item(s.Count - 1).IsReadOnly = True
-                            s.Item(s.Count - 1).DefaultValue = Nothing
-                            s.Item(s.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        .Item.Add("[1] " & DWSIM.App.GetLocalString("Mistura"), m, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Vazovolumtricadamist"), True)
-                        With .Item(.Item.Count - 1)
-                            If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                            .IsBrowsable = True
-                            .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                            .CustomEditor = New System.Drawing.Design.UITypeEditor
-                        End With
-                        If Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[2] " & DWSIM.App.GetLocalString("Vapor"), v, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas9"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[3] " & DWSIM.App.GetLocalString("OverallLiquid"), l, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas10"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[4] " & DWSIM.App.GetLocalString("Liquid1"), l1, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas10"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[5] " & DWSIM.App.GetLocalString("Liquid2"), l2, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas10"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[6] " & DWSIM.App.GetLocalString("Liquid3"), l3, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas10"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[7] " & DWSIM.App.GetLocalString("Aqueous"), l4, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas10"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                        If Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .Item.Add("[8] " & DWSIM.App.GetLocalString("Solid"), s, True, DWSIM.App.GetLocalString("Composiesvolumtrica2"), DWSIM.App.GetLocalString("Mostraacomposiodafas10"), True)
-                            With .Item(.Item.Count - 1)
-                                If Me.CurrentMaterialStream.GraphicObject.InputConnectors(0).IsAttached Then .IsReadOnly = True
-                                .IsBrowsable = True
-                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                                .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            End With
-                        End If
-                    Case Else
-
-                End Select
-
-                If Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 And _
-                    Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                    'Kvalues
-                    Dim comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                    Dim k0 As New PropertyGridEx.CustomPropertyCollection()
-                    For Each comp In Flowsheet.Options.SelectedComponents.Values
-                        valor = Format(Me.CurrentMaterialStream.Fases(0).Componentes(comp.Name).Kvalue, Flowsheet.Options.NumberFormat)
-                        k0.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("Kvalues"), DWSIM.App.GetLocalString("Kvalues"), True)
-                        k0.Item(k0.Count - 1).IsReadOnly = True
-                        k0.Item(k0.Count - 1).DefaultValue = Nothing
-                        k0.Item(k0.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                    Next
-                    .Item.Add(DWSIM.App.GetLocalString("Kvalues"), k0, True, DWSIM.App.GetLocalString("ComponentDistribution"), DWSIM.App.GetLocalString("ComponentDistribution"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsReadOnly = True
-                        .IsBrowsable = True
-                        .CustomEditor = New System.Drawing.Design.UITypeEditor
-                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                    End With
-                    Dim k1 As New PropertyGridEx.CustomPropertyCollection()
-                    For Each comp In Flowsheet.Options.SelectedComponents.Values
-                        valor = Format(Me.CurrentMaterialStream.Fases(0).Componentes(comp.Name).lnKvalue, Flowsheet.Options.NumberFormat)
-                        k1.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("LnKvalues"), DWSIM.App.GetLocalString("LnKvalues"), True)
-                        k1.Item(k1.Count - 1).IsReadOnly = True
-                        k1.Item(k1.Count - 1).DefaultValue = Nothing
-                        k1.Item(k1.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                    Next
-                    .Item.Add(DWSIM.App.GetLocalString("LnKvalues"), k1, True, DWSIM.App.GetLocalString("ComponentDistribution"), DWSIM.App.GetLocalString("ComponentDistribution"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsReadOnly = True
-                        .IsBrowsable = True
-                        .CustomEditor = New System.Drawing.Design.UITypeEditor
-                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                    End With
-                End If
-
-                Dim val, refval As Nullable(Of Double)
-
-                Dim tmp As Nullable(Of Double)
-                Dim it As PropertyGridEx.CustomProperty = Nothing
-
-                If Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 And _
-                    (Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Or _
-                     Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0) Then
-
-                    Dim pm As New PropertyGridEx.CustomPropertyCollection()
-                    'PropertyGridEx.CustomPropertyCollection - Mistura
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("EntalpiaEspecficadam"), True)
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("EntropiaEspecficadam"), True)
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEnthalpy"), su.molar_enthalpy), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("MolarEnthalpy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEntropy"), su.molar_entropy), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("MolarEntropy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molecularWeight, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massamolar"), su.spmp_molecularWeight), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("Massamolardamistura"), True)
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_density, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massaespecfica"), su.spmp_density), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("Massaespecficadamist"), True)
-                    'refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault / CDbl(Me.CurrentMaterialStream.Fases(0).SPMProperties.density.GetValueOrDefault)
-                    'If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, refval), Flowsheet.Options.NumberFormat)
-                    'pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("VazoTP"), su.spmp_volumetricFlow), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("Vazovolumtricanascon"), True)
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.thermalConductivity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Condutividadetrmica"), su.spmp_thermalConductivity), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("Condutividadetrmicad"), True)
-
-                    If Flowsheet.Options.CalculateBubbleAndDewPoints Then
-                        refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure.GetValueOrDefault
-                        If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_pressure, refval), Flowsheet.Options.NumberFormat)
-                        pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("BubblePress"), su.spmp_pressure), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("BubblePress"), True)
-                        refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.dewPressure.GetValueOrDefault
-                        If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_pressure, refval), Flowsheet.Options.NumberFormat)
-                        pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("DewPress"), su.spmp_pressure), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("DewPress"), True)
-                        refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature.GetValueOrDefault
-                        If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_temperature, refval), Flowsheet.Options.NumberFormat)
-                        pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("BubbleTemp"), su.spmp_temperature), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("BubbleTemp"), True)
-                        refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.dewTemperature.GetValueOrDefault
-                        If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_temperature, refval), Flowsheet.Options.NumberFormat)
-                        pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("DewTemp"), su.spmp_temperature), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("DewTemp"), True)
-                    End If
-
-                    For Each it In pm
-                        it.DefaultValue = Nothing
-                        it.DefaultType = GetType(Nullable(Of Double))
-                    Next
-
-                    .Item.Add("[P1] " & DWSIM.App.GetLocalString("Mistura"), pm, True, DWSIM.App.GetLocalString("Propriedades3"), DWSIM.App.GetLocalString("Propriedadesdamistur"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = True
-                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                        .CustomEditor = New System.Drawing.Design.UITypeEditor
-                    End With
-
-                ElseIf Flowsheet.Options.CalculateBubbleAndDewPoints Then
-
-                    Dim pm As New PropertyGridEx.CustomPropertyCollection()
-
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.bubblePressure.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_pressure, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("BubblePress"), su.spmp_pressure), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("BubblePress"), True)
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.dewPressure.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_pressure, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("DewPress"), su.spmp_pressure), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("DewPress"), True)
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.bubbleTemperature.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_temperature, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("BubbleTemp"), su.spmp_temperature), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("BubbleTemp"), True)
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.dewTemperature.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_temperature, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("DewTemp"), su.spmp_temperature), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("DewTemp"), True)
-
-                    For Each it In pm
-                        it.DefaultValue = Nothing
-                        it.DefaultType = GetType(Nullable(Of Double))
-                    Next
-
-                    .Item.Add("[P1] " & DWSIM.App.GetLocalString("Mistura"), pm, True, DWSIM.App.GetLocalString("Propriedades3"), DWSIM.App.GetLocalString("Propriedadesdamistur"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = True
-                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                        .CustomEditor = New System.Drawing.Design.UITypeEditor
-                    End With
-
-                End If
-
-                val = Nothing
-
-                If Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-
-                    Dim pv As New PropertyGridEx.CustomPropertyCollection()
-                    'PropertyGridEx.CustomPropertyCollection - Vapor
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("EntalpiaEspecficadaf"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("EntropiaEspecficadaf"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.molar_enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEnthalpy"), su.molar_enthalpy), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("MolarEnthalpy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.molar_entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEntropy"), su.molar_entropy), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("MolarEntropy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.molecularWeight.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molecularWeight, refval), Flowsheet.Options.NumberFormat)
-                    pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massamolar"), su.spmp_molecularWeight), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Massamolardafasevapo"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_density, refval), Flowsheet.Options.NumberFormat)
-                    pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massaespecfica"), su.spmp_density), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Massaespecficadafase"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.massflow.GetValueOrDefault / CDbl(Me.CurrentMaterialStream.Fases(2).SPMProperties.density.GetValueOrDefault)
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, refval), Flowsheet.Options.NumberFormat)
-                    pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("VazoTP"), su.spmp_volumetricFlow), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Vazovolumtricanascon"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.massflow.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
-                    pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pv.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pv.Add(DWSIM.App.GetLocalString("Fraomssicadafase"), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Fraomssicadafasenami"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.compressibilityFactor.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pv.Add("Z", val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Fatordecompressibili"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.heatCapacityCp.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
-                    pv.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.heatCapacityCp.GetValueOrDefault / CDbl(Me.CurrentMaterialStream.Fases(2).SPMProperties.heatCapacityCv.GetValueOrDefault)
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
-                    pv.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.thermalConductivity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
-                    pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Condutividadetrmica"), su.spmp_thermalConductivity), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Condutividadetrmicad1"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.kinematic_viscosity.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then val = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, refval), "E")
-                    pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadecinemtica"), su.spmp_cinematic_viscosity), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Viscosidadecinemtica2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.viscosity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_viscosity, refval), "E")
-                    pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadedinmica"), su.spmp_viscosity), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Viscosidadedinmicada"), True)
-
-                    For Each it In pv
-                        it.DefaultValue = Nothing
-                        it.DefaultType = GetType(Nullable(Of Double))
-                    Next
-
-                    .Item.Add("[P2] " & DWSIM.App.GetLocalString("Vapor"), pv, True, DWSIM.App.GetLocalString("Propriedades3"), DWSIM.App.GetLocalString("Propriedadesdafaseva"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = True
-                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                        .CustomEditor = New System.Drawing.Design.UITypeEditor
-                    End With
-
-                End If
-
-                val = Nothing
-
-                If Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-
-                    Dim pl As New PropertyGridEx.CustomPropertyCollection()
-                    'PropertyGridEx.CustomPropertyCollection - Liquido
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("EntalpiaEspecficadaf2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("EntropiaEspecficadaf2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.molar_enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEnthalpy"), su.molar_enthalpy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("MolarEnthalpy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.molar_entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEntropy"), su.molar_entropy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("MolarEntropy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.molecularWeight.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molecularWeight, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massamolar"), su.spmp_molecularWeight), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Massamolardafaselqui"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_density, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massaespecfica"), su.spmp_density), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Massaespecficadafase2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.massflow.GetValueOrDefault / Me.CurrentMaterialStream.Fases(1).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("VazoTP"), su.spmp_volumetricFlow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazovolumtricanascon"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.massflow.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add(DWSIM.App.GetLocalString("Fraomssicadafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomssicadafasenami"), True)
-                    'refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.compressibilityFactor.GetValueOrDefault
-                    'If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    'pl.Add("Z", val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fatordecompressibili"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.heatCapacityCp.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.CurrentMaterialStream.Fases(1).SPMProperties.heatCapacityCv.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
-                    pl.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(0).TPMProperties.surfaceTension.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.tdp_surfaceTension, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Tensosuperficial"), su.tdp_surfaceTension), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Tensosuperficialentr"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.thermalConductivity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Condutividadetrmica"), su.spmp_thermalConductivity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Condutividadetrmicad2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.kinematic_viscosity.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then val = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, refval), "E")
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadecinemtica"), su.spmp_cinematic_viscosity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Viscosidadecinemtica2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.viscosity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_viscosity, refval), "E")
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadedinmica"), su.spmp_viscosity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Viscosidadedinmicada"), True)
-
-                    For Each it In pl
-                        it.DefaultValue = Nothing
-                        it.DefaultType = GetType(Nullable(Of Double))
-                    Next
-
-                    .Item.Add("[P3] " & DWSIM.App.GetLocalString("OverallLiquid"), pl, True, DWSIM.App.GetLocalString("Propriedades3"), DWSIM.App.GetLocalString("PropriedadesdaFaseLq"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = True
-                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                        .CustomEditor = New System.Drawing.Design.UITypeEditor
-                    End With
-
-                End If
-
-                If Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-
-                    Dim pl As New PropertyGridEx.CustomPropertyCollection()
-                    'PropertyGridEx.CustomPropertyCollection - Liquido
-
-                    If Me.IsElectrolytePP Then
-
-                        'Liquid Phase Activity Coefficients
-                        Dim comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                        Dim k0 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each comp In Flowsheet.Options.SelectedComponents.Values
-                            valor = Format(Me.CurrentMaterialStream.Fases(3).Componentes(comp.Name).ActivityCoeff, Flowsheet.Options.NumberFormat)
-                            k0.Add(DWSIM.App.GetComponentName(comp.Name), valor, False, DWSIM.App.GetLocalString("ActivityCoefficients"), DWSIM.App.GetLocalString("ActivityCoefficients"), True)
-                            k0.Item(k0.Count - 1).IsReadOnly = True
-                            k0.Item(k0.Count - 1).DefaultValue = Nothing
-                            k0.Item(k0.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
-                        pl.Add(DWSIM.App.GetLocalString("ActivityCoefficients"), k0, True, DWSIM.App.GetLocalString("ActivityCoefficients"), DWSIM.App.GetLocalString("LiquidPhaseActivityCoefficients"), True)
-                        With pl.Item(pl.Count - 1)
-                            .IsReadOnly = True
-                            .IsBrowsable = True
-                            .CustomEditor = New System.Drawing.Design.UITypeEditor
-                            .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                        End With
-
-                        refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.pH.GetValueOrDefault
-                        If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                        pl.Add(DWSIM.App.GetLocalString("pH"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("pH"), True)
-
-                        refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.osmoticCoefficient.GetValueOrDefault
-                        If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                        pl.Add(DWSIM.App.GetLocalString("OsmoticCoefficient"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("OsmoticCoefficient"), True)
-
-                        refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.freezingPoint.GetValueOrDefault
-                        If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_temperature, refval), Flowsheet.Options.NumberFormat)
-                        pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("FreezingPoint"), su.spmp_temperature), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("FreezingPoint"), True)
-
-                        refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.freezingPointDepression.GetValueOrDefault
-                        If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_deltaT, refval), Flowsheet.Options.NumberFormat)
-                        pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("FreezingPointDepression"), su.spmp_deltaT), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("FreezingPointDepression"), True)
-
-                    End If
-
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("EntalpiaEspecficadaf2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("EntropiaEspecficadaf2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.molar_enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEnthalpy"), su.molar_enthalpy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("MolarEnthalpy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.molar_entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEntropy"), su.molar_entropy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("MolarEntropy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.molecularWeight.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molecularWeight, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massamolar"), su.spmp_molecularWeight), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Massamolardafaselqui"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_density, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massaespecfica"), su.spmp_density), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Massaespecficadafase2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.massflow.GetValueOrDefault / Me.CurrentMaterialStream.Fases(3).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("VazoTP"), su.spmp_volumetricFlow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazovolumtricanascon"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.massflow.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add(DWSIM.App.GetLocalString("Fraomssicadafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomssicadafasenami"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.compressibilityFactor.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add("Z", val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fatordecompressibili"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.heatCapacityCp.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.CurrentMaterialStream.Fases(3).SPMProperties.heatCapacityCv.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
-                    pl.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.thermalConductivity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Condutividadetrmica"), su.spmp_thermalConductivity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Condutividadetrmicad2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.kinematic_viscosity.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then val = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, refval), "E")
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadecinemtica"), su.spmp_cinematic_viscosity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Viscosidadecinemtica2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.viscosity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_viscosity, refval), "E")
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadedinmica"), su.spmp_viscosity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Viscosidadedinmicada"), True)
-
-                    For Each it In pl
-                        it.DefaultValue = Nothing
-                        it.DefaultType = GetType(Nullable(Of Double))
-                    Next
-
-                    .Item.Add("[P4] " & DWSIM.App.GetLocalString("Liquid1"), pl, True, DWSIM.App.GetLocalString("Propriedades3"), DWSIM.App.GetLocalString("PropriedadesdaFaseLq"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = True
-                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                        .CustomEditor = New System.Drawing.Design.UITypeEditor
-                    End With
-
-                End If
-
-                If Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-
-                    Dim pl As New PropertyGridEx.CustomPropertyCollection()
-                    'PropertyGridEx.CustomPropertyCollection - Liquido
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("EntalpiaEspecficadaf2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("EntropiaEspecficadaf2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.molar_enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEnthalpy"), su.molar_enthalpy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("MolarEnthalpy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.molar_entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEntropy"), su.molar_entropy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("MolarEntropy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.molecularWeight.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molecularWeight, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massamolar"), su.spmp_molecularWeight), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Massamolardafaselqui"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_density, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massaespecfica"), su.spmp_density), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Massaespecficadafase2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.massflow.GetValueOrDefault / Me.CurrentMaterialStream.Fases(4).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("VazoTP"), su.spmp_volumetricFlow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazovolumtricanascon"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.massflow.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add(DWSIM.App.GetLocalString("Fraomssicadafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomssicadafasenami"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.compressibilityFactor.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add("Z", val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fatordecompressibili"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.heatCapacityCp.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.CurrentMaterialStream.Fases(4).SPMProperties.heatCapacityCv.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
-                    pl.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.thermalConductivity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Condutividadetrmica"), su.spmp_thermalConductivity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Condutividadetrmicad2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.kinematic_viscosity.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then val = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadecinemtica"), su.spmp_cinematic_viscosity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Viscosidadecinemtica2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.viscosity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_viscosity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadedinmica"), su.spmp_viscosity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Viscosidadedinmicada"), True)
-
-                    For Each it In pl
-                        it.DefaultValue = Nothing
-                        it.DefaultType = GetType(Nullable(Of Double))
-                    Next
-
-                    .Item.Add("[P5] " & DWSIM.App.GetLocalString("Liquid2"), pl, True, DWSIM.App.GetLocalString("Propriedades3"), DWSIM.App.GetLocalString("PropriedadesdaFaseLq"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = True
-                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                        .CustomEditor = New System.Drawing.Design.UITypeEditor
-                    End With
-
-                End If
-
-                If Me.CurrentMaterialStream.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-
-                    Dim pl As New PropertyGridEx.CustomPropertyCollection()
-                    'PropertyGridEx.CustomPropertyCollection - Liquido
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("EntalpiaEspecficadaf2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("EntropiaEspecficadaf2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.molar_enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEnthalpy"), su.molar_enthalpy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("MolarEnthalpy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.molar_entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEntropy"), su.molar_entropy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("MolarEntropy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.molecularWeight.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molecularWeight, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massamolar"), su.spmp_molecularWeight), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Massamolardafaselqui"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_density, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massaespecfica"), su.spmp_density), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Massaespecficadafase2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.massflow.GetValueOrDefault / Me.CurrentMaterialStream.Fases(5).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("VazoTP"), su.spmp_volumetricFlow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazovolumtricanascon"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.massflow.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.molarfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.massfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add(DWSIM.App.GetLocalString("Fraomssicadafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomssicadafasenami"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.compressibilityFactor.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add("Z", val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fatordecompressibili"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.heatCapacityCp.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.CurrentMaterialStream.Fases(5).SPMProperties.heatCapacityCv.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
-                    pl.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.thermalConductivity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Condutividadetrmica"), su.spmp_thermalConductivity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Condutividadetrmicad2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.kinematic_viscosity.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then val = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadecinemtica"), su.spmp_cinematic_viscosity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Viscosidadecinemtica2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.viscosity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_viscosity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadedinmica"), su.spmp_viscosity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Viscosidadedinmicada"), True)
-
-                    For Each it In pl
-                        it.DefaultValue = Nothing
-                        it.DefaultType = GetType(Nullable(Of Double))
-                    Next
-
-                    .Item.Add("[P6] " & DWSIM.App.GetLocalString("Liquid3"), pl, True, DWSIM.App.GetLocalString("Propriedades3"), DWSIM.App.GetLocalString("PropriedadesdaFaseLq"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = True
-                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                        .CustomEditor = New System.Drawing.Design.UITypeEditor
-                    End With
-
-                End If
-
-                If Me.CurrentMaterialStream.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-
-                    Dim pl As New PropertyGridEx.CustomPropertyCollection()
-                    'PropertyGridEx.CustomPropertyCollection - Liquido
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("EntalpiaEspecficadaf2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("EntropiaEspecficadaf2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.molar_enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEnthalpy"), su.molar_enthalpy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("MolarEnthalpy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.molar_entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEntropy"), su.molar_entropy), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("MolarEntropy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.molecularWeight.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molecularWeight, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massamolar"), su.spmp_molecularWeight), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Massamolardafaselqui"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_density, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massaespecfica"), su.spmp_density), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Massaespecficadafase2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.massflow.GetValueOrDefault / Me.CurrentMaterialStream.Fases(6).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("VazoTP"), su.spmp_volumetricFlow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazovolumtricanascon"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.massflow.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.molarfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.massfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add(DWSIM.App.GetLocalString("Fraomssicadafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomssicadafasenami"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.compressibilityFactor.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add("Z", val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fatordecompressibili"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.heatCapacityCp.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.CurrentMaterialStream.Fases(6).SPMProperties.heatCapacityCv.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
-                    pl.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.thermalConductivity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Condutividadetrmica"), su.spmp_thermalConductivity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Condutividadetrmicad2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.kinematic_viscosity.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then val = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadecinemtica"), su.spmp_cinematic_viscosity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Viscosidadecinemtica2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.viscosity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_viscosity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadedinmica"), su.spmp_viscosity), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Viscosidadedinmicada"), True)
-
-                    For Each it In pl
-                        it.DefaultValue = Nothing
-                        it.DefaultType = GetType(Nullable(Of Double))
-                    Next
-
-                    .Item.Add("[P7] " & DWSIM.App.GetLocalString("Aqueous"), pl, True, DWSIM.App.GetLocalString("Propriedades3"), DWSIM.App.GetLocalString("PropriedadesdaFaseLq"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = True
-                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                        .CustomEditor = New System.Drawing.Design.UITypeEditor
-                    End With
-
-                End If
-
-                If Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-
-                    Dim pl As New PropertyGridEx.CustomPropertyCollection()
-                    'PropertyGridEx.CustomPropertyCollection - Solid
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("EntalpiaEspecficadaf2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("EntropiaEspecficadaf2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.molar_enthalpy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_enthalpy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEnthalpy"), su.molar_enthalpy), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("MolarEnthalpy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.molar_entropy.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.molar_entropy, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("MolarEntropy"), su.molar_entropy), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("MolarEntropy"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.molecularWeight.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molecularWeight, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massamolar"), su.spmp_molecularWeight), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Massamolardafaselqui"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_density, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Massaespecfica"), su.spmp_density), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Massaespecficadafase2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.massflow.GetValueOrDefault / Me.CurrentMaterialStream.Fases(7).SPMProperties.density.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("VazoTP"), su.spmp_volumetricFlow), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Vazovolumtricanascon"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.massflow.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add(DWSIM.App.GetLocalString("Fraomssicadafase"), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Fraomssicadafasenami"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.compressibilityFactor.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
-                    pl.Add("Z", val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Fatordecompressibili"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.heatCapacityCp.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_heatCapacityCp, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT("Cp", su.spmp_heatCapacityCp), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Capacidadecalorficad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.heatCapacityCp.GetValueOrDefault / Me.CurrentMaterialStream.Fases(7).SPMProperties.heatCapacityCv.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then tmp = Format(refval, Flowsheet.Options.NumberFormat) Else tmp = 0.0#
-                    pl.Add("Cp/Cv", tmp, True, DWSIM.App.GetLocalString("lquida"), DWSIM.App.GetLocalString("Razoentreascapacidad"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.thermalConductivity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Condutividadetrmica"), su.spmp_thermalConductivity), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Condutividadetrmicad2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.kinematic_viscosity.GetValueOrDefault
-                    If refval.HasValue = True And Double.IsNaN(refval) = False Then val = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadecinemtica"), su.spmp_cinematic_viscosity), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Viscosidadecinemtica2"), True)
-                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.viscosity.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_viscosity, refval), Flowsheet.Options.NumberFormat)
-                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Viscosidadedinmica"), su.spmp_viscosity), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Viscosidadedinmicada"), True)
-
-                    For Each it In pl
-                        it.DefaultValue = Nothing
-                        it.DefaultType = GetType(Nullable(Of Double))
-                    Next
-
-                    .Item.Add("[P8] " & DWSIM.App.GetLocalString("Solid"), pl, True, DWSIM.App.GetLocalString("Propriedades3"), DWSIM.App.GetLocalString("PropriedadesdaFaseSolida"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = True
-                        .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                        .CustomEditor = New System.Drawing.Design.UITypeEditor
-                    End With
-
-                End If
-
-            End With
-
-        End Sub
+    End Function
 
 #End Region
 
-#Region "   Commmon Functions"
+#Region "    Open/Save Files"
 
-        Public Overloads Sub DW_CalcKvalue()
+    Shared Sub SaveState(ByRef flowsheet As FormFlowsheet)
 
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+        Dim st As New FlowsheetState()
 
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                subst.Kvalue = Me.CurrentMaterialStream.Fases(2).Componentes(subst.Nome).FracaoMolar.GetValueOrDefault / Me.CurrentMaterialStream.Fases(1).Componentes(subst.Nome).FracaoMolar.GetValueOrDefault
-                subst.lnKvalue = Log(subst.Kvalue)
-            Next
+        Dim rect As Rectangle = New Rectangle(0, 0, flowsheet.FormSurface.FlowsheetDesignSurface.Width - 14, flowsheet.FormSurface.FlowsheetDesignSurface.Height - 14)
+        st.Snapshot = New Bitmap(rect.Width, rect.Height)
+        flowsheet.FormSurface.FlowsheetDesignSurface.DrawToBitmap(st.Snapshot, flowsheet.FormSurface.FlowsheetDesignSurface.Bounds)
 
-        End Sub
+        Dim fs As New FormState
+        fs.TextBox2.Text = Date.Now.ToString
+        fs.TextBox1.Text = "state_" & Date.Now.ToString
+        fs.PictureBox1.Image = st.Snapshot
 
-        Public Sub DW_CalcCompMolarFlow(ByVal phaseID As Integer)
+        fs.btnOK.Text = DWSIM.App.GetLocalString("SaveState")
 
-            If Not phaseID = -1 Then
-                With Me.CurrentMaterialStream.Fases(phaseID)
-                    For Each subs As Substancia In .Componentes.Values
-                        subs.MolarFlow = .SPMProperties.molarflow.GetValueOrDefault * subs.FracaoMolar.GetValueOrDefault
-                    Next
-                End With
-            Else
-                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In Me.CurrentMaterialStream.Fases.Values
-                    With phase
-                        For Each subs As Substancia In .Componentes.Values
-                            subs.MolarFlow = .SPMProperties.molarflow.GetValueOrDefault * subs.FracaoMolar.GetValueOrDefault
-                        Next
-                    End With
-                Next
-            End If
+        If fs.ShowDialog(flowsheet) = Windows.Forms.DialogResult.OK Then
 
-        End Sub
-
-        Public Overridable Sub DW_CalcCompFugCoeff(ByVal f As Fase)
-
-            Dim fc As Object
-            Dim vmol As Object = Me.RET_VMOL(f)
-            Dim P, T As Double
-            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-            Select Case f
-                Case Fase.Vapor
-                    fc = Me.DW_CalcFugCoeff(vmol, T, P, State.Vapor)
-                Case Else
-                    fc = Me.DW_CalcFugCoeff(vmol, T, P, State.Liquid)
-            End Select
-            Dim i As Integer = 0
-            For Each subs As Substancia In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(f)).Componentes.Values
-                subs.FugacityCoeff = fc(i)
-                subs.ActivityCoeff = fc(i) * P / Me.AUX_PVAPi(i, T)
-                i += 1
-            Next
-
-        End Sub
-
-        Public Sub DW_CalcCompMassFlow(ByVal phaseID As Integer)
-
-            If Not phaseID = -1 Then
-                With Me.CurrentMaterialStream.Fases(phaseID)
-                    For Each subs As Substancia In .Componentes.Values
-                        subs.MassFlow = .SPMProperties.massflow.GetValueOrDefault * subs.FracaoMassica.GetValueOrDefault
-                    Next
-                End With
-            Else
-                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In Me.CurrentMaterialStream.Fases.Values
-                    With phase
-                        For Each subs As Substancia In .Componentes.Values
-                            subs.MassFlow = .SPMProperties.massflow.GetValueOrDefault * subs.FracaoMassica.GetValueOrDefault
-                        Next
-                    End With
-                Next
-            End If
-
-        End Sub
-
-        Public Sub DW_CalcCompVolFlow(ByVal phaseID As Integer)
-
-            Dim TotalMolarFlow, TotalVolFlow, MolarFrac, PartialVol, VolFrac, VolFlow, Sum As Double
-
-            Dim T, P As Double
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-            Me.DW_CalcCompPartialVolume(Me.RET_PHASECODE(phaseID), T, P)
-
-            If Not phaseID = -1 Then
-                With Me.CurrentMaterialStream.Fases(phaseID)
-
-                    Sum = 0
-
-                    For Each subs As Substancia In .Componentes.Values
-                        TotalMolarFlow = .SPMProperties.molarflow.GetValueOrDefault
-                        TotalVolFlow = .SPMProperties.volumetric_flow.GetValueOrDefault
-                        MolarFrac = subs.FracaoMolar.GetValueOrDefault
-                        PartialVol = subs.PartialVolume.GetValueOrDefault
-                        VolFlow = TotalMolarFlow * MolarFrac * PartialVol
-                        If TotalVolFlow > 0 Then
-                            VolFrac = VolFlow / TotalVolFlow
-                        Else
-                            VolFrac = 0
-                        End If
-                        subs.VolumetricFraction = VolFrac
-                        Sum += VolFrac
-                    Next
-
-                    'Normalization is still needed due to minor deviations in the partial molar volume estimation. Summation of partial flow rates
-                    'should match phase flow rate.
-                    For Each subs As Substancia In .Componentes.Values
-                        If Sum > 0 Then
-                            subs.VolumetricFraction = subs.VolumetricFraction.GetValueOrDefault / Sum
-                        Else
-                            subs.VolumetricFraction = 0
-                        End If
-                        'Corrects volumetric flow rate after normalization of fractions.
-                        subs.VolumetricFlow = subs.VolumetricFraction.GetValueOrDefault * TotalVolFlow
-                    Next
-
-                End With
-            Else
-                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In Me.CurrentMaterialStream.Fases.Values
-                    With phase
-
-                        Sum = 0
-
-                        For Each subs As Substancia In .Componentes.Values
-                            TotalMolarFlow = .SPMProperties.molarflow.GetValueOrDefault
-                            TotalVolFlow = .SPMProperties.volumetric_flow.GetValueOrDefault
-                            MolarFrac = subs.FracaoMolar.GetValueOrDefault
-                            PartialVol = subs.PartialVolume.GetValueOrDefault
-                            VolFlow = TotalMolarFlow * MolarFrac * PartialVol
-                            If TotalVolFlow > 0 Then
-                                VolFrac = VolFlow / TotalVolFlow
-                            Else
-                                VolFrac = 0
-                            End If
-                            subs.VolumetricFraction = VolFrac
-                            Sum += VolFrac
-                        Next
-
-                        'Normalization is still needed due to minor deviations in the partial molar volume estimation. Summation of partial flow rates
-                        'should match phase flow rate.
-                        For Each subs As Substancia In .Componentes.Values
-                            If Sum > 0 Then
-                                subs.VolumetricFraction = subs.VolumetricFraction.GetValueOrDefault / Sum
-                            Else
-                                subs.VolumetricFraction = 0
-                            End If
-                            'Corrects volumetric flow rate after normalization of fractions.
-                            subs.VolumetricFlow = subs.VolumetricFraction.GetValueOrDefault * TotalVolFlow
-                        Next
-
-                    End With
-                Next
-            End If
-
-            'Totalization for the mixture "phase" should be made separatly, since the concept o partial molar volume is non sense for the whole mixture.
-            For Each Subs As Substancia In CurrentMaterialStream.Fases(0).Componentes.Values
-                Subs.VolumetricFraction = 0
-                Subs.VolumetricFlow = 0
-            Next
-
-            'Summation of volumetric flow rates over all phases.
-            For APhaseID As Integer = 1 To Me.CurrentMaterialStream.Fases.Count - 1
-                For Each Subs As String In CurrentMaterialStream.Fases(APhaseID).Componentes.Keys
-                    CurrentMaterialStream.Fases(0).Componentes(Subs).VolumetricFlow = CurrentMaterialStream.Fases(0).Componentes(Subs).VolumetricFlow.GetValueOrDefault + CurrentMaterialStream.Fases(APhaseID).Componentes(Subs).VolumetricFlow.GetValueOrDefault
-                Next
-            Next
-
-            'Calculate volumetric fractions for the mixture.
-            For Each Subs As Substancia In CurrentMaterialStream.Fases(0).Componentes.Values
-                Subs.VolumetricFraction = Subs.VolumetricFlow.GetValueOrDefault / CurrentMaterialStream.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
-            Next
-
-        End Sub
-
-        Public Sub DW_ZerarPhaseProps(ByVal fase As Fase)
-
-            Dim phaseID As Integer
-
-            phaseID = Me.RET_PHASEID(fase)
-
-            If Me.CurrentMaterialStream.Fases.ContainsKey(phaseID) Then
-
-                If phaseID <> 0 Then
-
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpyF = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropyF = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpyF = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropyF = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.speedOfSound = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.volumetric_flow = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.jouleThomsonCoefficient = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEnthalpy = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEntropy = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibility = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubbleTemperature = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubblePressure = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewTemperature = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewPressure = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarflow = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massflow = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massfraction = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarfraction = Nothing
-
-                Else
-
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpyF = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropyF = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpyF = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropyF = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.speedOfSound = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.volumetric_flow = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.jouleThomsonCoefficient = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEnthalpy = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEntropy = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibility = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubbleTemperature = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.bubblePressure = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewTemperature = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.dewPressure = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = Nothing
-
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarflow = Nothing
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massflow = Nothing
-
-                End If
-
-            End If
-
-        End Sub
-
-        Public Sub DW_ZerarTwoPhaseProps(ByVal fase1 As Fase, ByVal fase2 As Fase)
-
-            Me.CurrentMaterialStream.Fases(0).TPMProperties.kvalue = Nothing
-            Me.CurrentMaterialStream.Fases(0).TPMProperties.logKvalue = Nothing
-            Me.CurrentMaterialStream.Fases(0).TPMProperties.surfaceTension = Nothing
-
-        End Sub
-
-        Public Sub DW_ZerarOverallProps()
-
-        End Sub
-
-        Public Sub DW_ZerarVazaoMolar()
-            With Me.CurrentMaterialStream
-                .Fases(0).SPMProperties.molarflow = 0
-            End With
-        End Sub
-
-        Public Sub DW_ZerarVazaoVolumetrica()
-            With Me.CurrentMaterialStream
-                .Fases(0).SPMProperties.volumetric_flow = 0
-            End With
-        End Sub
-
-        Public Sub DW_ZerarVazaoMassica()
-            With Me.CurrentMaterialStream
-                .Fases(0).SPMProperties.massflow = 0
-            End With
-        End Sub
-
-        Public Sub DW_ZerarComposicoes(ByVal fase As Fase)
-
-            Dim phaseID As Integer
-            phaseID = Me.RET_PHASEID(fase)
-
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
-                subst.FracaoMolar = Nothing
-                subst.FracaoMassica = Nothing
-            Next
-
-        End Sub
-
-        Public Function AUX_TCM(ByVal fase As Fase) As Double
-
-            Dim Tc As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                Tc += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Critical_Temperature
-            Next
-
-            Return Tc
-
-        End Function
-
-        Public Function AUX_TBM(ByVal fase As Fase) As Double
-
-            Dim Tb As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                Tb += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Normal_Boiling_Point
-            Next
-
-            Return Tb
-
-        End Function
-
-        Public Function AUX_TFM(ByVal fase As Fase) As Double
-
-            Dim Tf As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                Tf += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.TemperatureOfFusion
-            Next
-
-            Return Tf
-
-        End Function
-
-        Public Function AUX_WM(ByVal fase As Fase) As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                val += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Acentric_Factor
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function AUX_ZCM(ByVal fase As Fase) As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                val += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Critical_Compressibility
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function AUX_ZRAM(ByVal fase As Fase) As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                If subst.ConstantProperties.Z_Rackett <> 0 Then
-                    val += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Z_Rackett
-                Else
-                    val += subst.FracaoMolar.GetValueOrDefault * (0.29056 - 0.08775 * subst.ConstantProperties.Acentric_Factor)
-                End If
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function AUX_VCM(ByVal fase As Fase) As Double
-
-            Dim val, vc As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                vc = subst.ConstantProperties.Critical_Volume
-                If vc = 0.0# Then
-                    vc = m_props.Vc(subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor)
-                End If
-                val += subst.FracaoMolar.GetValueOrDefault * vc
-            Next
-
-            Return val / 1000
-
-        End Function
-
-        Public Function AUX_PCM(ByVal fase As Fase) As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                val += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Critical_Pressure
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function AUX_PVAPM(ByVal T) As Double
-
-            Dim val As Double = 0
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, T)
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function AUX_KIJ(ByVal sub1 As String, ByVal sub2 As String) As Double
-
-            Dim Vc1 As Double = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Volume
-            Dim Vc2 As Double = Me.CurrentMaterialStream.Fases(0).Componentes(sub2).ConstantProperties.Critical_Volume
-
-            Dim tmp As Double = 1 - 8 * (Vc1 * Vc2) ^ 0.5 / ((Vc1 ^ (1 / 3) + Vc2 ^ (1 / 3)) ^ 3)
-
-            Return tmp
-
-            Return 0
-
-        End Function
-
-        Public Function AUX_MMM(ByVal fase As Fase) As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                val += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Molar_Weight
-            Next
-
-            Return val
-
-        End Function
-
-        Private Function AUX_Rackett_PHIi(ByVal sub1 As String, ByVal fase As Fase) As Double
-
-            Dim val, vc As Double
-            vc = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Volume
-            If vc = 0.0# Then vc = m_props.Vc(Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes(sub1).ConstantProperties.Critical_Temperature, Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes(sub1).ConstantProperties.Critical_Pressure, Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes(sub1).ConstantProperties.Acentric_Factor)
-
-            val = Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes(sub1).FracaoMolar.GetValueOrDefault * vc
-
-            val = val / Me.AUX_VCM(fase) / 1000
-
-            Return val
-
-        End Function
-
-        Private Function AUX_Rackett_Kij(ByVal sub1 As String, ByVal sub2 As String) As Double
-
-            Dim Vc1 As Double = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Volume
-            Dim Vc2 As Double = Me.CurrentMaterialStream.Fases(0).Componentes(sub2).ConstantProperties.Critical_Volume
-
-            If Vc1 = 0.0# Then Vc1 = m_props.Vc(Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Pressure, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Acentric_Factor)
-            If Vc2 = 0.0# Then Vc2 = m_props.Vc(Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Pressure, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Acentric_Factor)
-
-            Dim tmp As Double = 8 * (Vc1 * Vc2) ^ 0.5 / ((Vc1 ^ (1 / 3) + Vc2 ^ (1 / 3)) ^ 3)
-
-            Return tmp
-
-        End Function
-
-        Private Function AUX_Rackett_Tcij(ByVal sub1 As String, ByVal sub2 As String) As Double
-
-            Dim Tc1 As Double = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature
-            Dim Tc2 As Double = Me.CurrentMaterialStream.Fases(0).Componentes(sub2).ConstantProperties.Critical_Temperature
-
-            Dim tmp As Double = Me.AUX_Rackett_Kij(sub1, sub2) * (Tc1 * Tc2) ^ 0.5
-
-            Return tmp
-
-        End Function
-
-        Private Function AUX_Rackett_Tcm(ByVal fase As Fase) As Double
-
-            Dim Tc As Double
-            Dim subst1, subst2 As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst1 In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                For Each subst2 In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                    Tc += Me.AUX_Rackett_PHIi(subst1.Nome, fase) * Me.AUX_Rackett_PHIi(subst2.Nome, fase) * Me.AUX_Rackett_Tcij(subst1.Nome, subst2.Nome)
-                Next
-            Next
-
-            Return Tc
-
-        End Function
-
-        Public Overridable Function AUX_CPi(ByVal sub1 As String, ByVal T As Double)
-
-            If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.IsPF = 1 Then
-
-                With Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties
-
-                    Return Me.m_props.Cpig_lk(.PF_Watson_K, .Acentric_Factor, T) '* .Molar_Weight
-
-                End With
-
-            Else
-
-                If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "DWSIM" Or _
-                Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "" Then
-                    Dim A, B, C, D, E, result As Double
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_E
-                    'Cp = A + B*T + C*T^2 + D*T^3 + E*T^4 where Cp in kJ/kg-mol , T in K 
-                    result = A + B * T + C * T ^ 2 + D * T ^ 3 + E * T ^ 4
-                    Return result / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "CheResources" Then
-                    Dim A, B, C, D, E, result As Double
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_E
-                    'CAL/MOL.K [CP=A+(B*T)+(C*T^2)+(D*T^3)], T in K
-                    result = A + B * T + C * T ^ 2 + D * T ^ 3
-                    Return result / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight * 4.1868
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "ChemSep" Or _
-                Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "User" Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.IdealgasCpEquation
-                    Dim mw As Double = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_E
-                    '<rppc name="Ideal gas heat capacity (RPP)"  units="J/kmol/K" >
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) / 1000 / mw 'kJ/kg.K
-                    Return result
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "Biodiesel" Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.IdealgasCpEquation
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_E
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'kJ/kg.K
-                    Return result
-                Else
-                    Return 0
-                End If
-
-            End If
-
-        End Function
-
-        Public Function AUX_CPm(ByVal fase As Fase, ByVal T As Double) As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_CPi(subst.Nome, T)
-            Next
-
-            Return val
-
-        End Function
-
-        Public Overridable Function AUX_HFm25(ByVal fase As Fase) As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                val += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.IG_Enthalpy_of_Formation_25C * subst.ConstantProperties.Molar_Weight
-            Next
-
-            Dim mw As Double = Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).SPMProperties.molecularWeight.GetValueOrDefault
-
-            If mw <> 0.0# Then Return val / mw Else Return 0.0#
-
-        End Function
-
-        Public Overridable Function AUX_SFm25(ByVal fase As Fase) As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                val += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.IG_Entropy_of_Formation_25C * subst.ConstantProperties.Molar_Weight
-            Next
-
-            Dim mw As Double = Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).SPMProperties.molecularWeight.GetValueOrDefault
-
-            If mw <> 0.0# Then Return val / mw Else Return 0.0#
-
-        End Function
-
-        Public Overridable Function AUX_PVAPi(ByVal sub1 As String, ByVal T As Double)
-
-            If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.IsPF = 1 Then
-
-                With Me.CurrentMaterialStream.Fases(0).Componentes(sub1)
-
-                    Return Me.m_props.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
-
-                End With
-
-            Else
-
-
-                If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "DWSIM" Or _
-                Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "" Then
-                    Dim A, B, C, D, E, result As Double
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_E
-                    result = Math.Exp(A + B / T + C * Math.Log(T) + D * T ^ E)
-                    Return result
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "CheResources" Then
-                    Dim A, B, C, result As Double
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_C
-                    '[LN(P)=A-B/(T+C), P(mmHG) T(K)]
-                    result = Math.Exp(A - B / (T + C)) * 133.322368 'mmHg to Pascal
-                    Return result
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "ChemSep" Or _
-                Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "User" Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.VaporPressureEquation
-                    Dim mw As Double = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_E
-                    '<vp_c name="Vapour pressure"  units="Pa" >
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'Pa
-                    If eqno = "0" Then
-                        With Me.CurrentMaterialStream.Fases(0).Componentes(sub1)
-                            result = Me.m_props.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
-                        End With
-                    End If
-                    Return result
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "Biodiesel" Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.VaporPressureEquation
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Vapor_Pressure_Constant_E
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'kPa
-                    Return result * 1000
-                Else
-                    Return 0
-                End If
-
-            End If
-
-        End Function
-
-        Public Overridable Function AUX_PVAPi(ByVal index As Integer, ByVal T As Double)
-
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim nome As String = ""
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                If i = index Then nome = subst.Nome
-                i += 1
-            Next
-            If Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.IsPF = 1 Then
-                With Me.CurrentMaterialStream.Fases(0).Componentes(nome)
-                    Return Me.m_props.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
-                End With
-            Else
-                If Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "DWSIM" Or _
-                Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "" Then
-                    Dim A, B, C, D, E, result As Double
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_E
-                    result = Math.Exp(A + B / T + C * Math.Log(T) + D * T ^ E)
-                    Return result
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "CheResources" Then
-                    Dim A, B, C, result As Double
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_C
-                    '[LN(P)=A-B/(T+C), P(mmHG) T(K)]
-                    result = Math.Exp(A - B / (T + C)) * 133.322368 'mmHg to Pascal
-                    Return result
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "ChemSep" Or _
-                Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "User" Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.VaporPressureEquation
-                    Dim mw As Double = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Molar_Weight
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_E
-                    '<vp_c name="Vapour pressure"  units="Pa" >
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'Pa.s
-                    If eqno = "0" Then
-                        With Me.CurrentMaterialStream.Fases(0).Componentes(nome)
-                            result = Me.m_props.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
-                        End With
-                    End If
-                    Return result
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "Biodiesel" Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.VaporPressureEquation
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_E
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'kPa
-                    Return result * 1000
-                Else
-                    Return 0
-                End If
-            End If
-
-        End Function
-
-        Public Function AUX_TSATi(ByVal PVAP As Double, ByVal subst As String) As Double
-
-            Dim i As Integer
-
-            Dim Tinf, Tsup As Double
-
-            Dim fT, fT_inf, nsub, delta_T As Double
-
-            Tinf = 100
-            Tsup = 2000
-
-            nsub = 10
-
-            delta_T = (Tsup - Tinf) / nsub
-
-            i = 0
-            Do
-                i = i + 1
-                fT = PVAP - Me.AUX_PVAPi(subst, Tinf)
-                Tinf = Tinf + delta_T
-                fT_inf = PVAP - Me.AUX_PVAPi(subst, Tinf)
-            Loop Until fT * fT_inf < 0 Or fT_inf > fT Or i >= 100
-            Tsup = Tinf
-            Tinf = Tinf - delta_T
-
-            'método de Brent para encontrar Vc
-
-            Dim aaa, bbb, ccc, ddd, eee, min11, min22, faa, fbb, fcc, ppp, qqq, rrr, sss, tol11, xmm As Double
-            Dim ITMAX2 As Integer = 100
-            Dim iter2 As Integer
-
-            aaa = Tinf
-            bbb = Tsup
-            ccc = Tsup
-
-            faa = PVAP - Me.AUX_PVAPi(subst, aaa)
-            fbb = PVAP - Me.AUX_PVAPi(subst, bbb)
-            fcc = fbb
-
-            iter2 = 0
-            Do
-                If (fbb > 0 And fcc > 0) Or (fbb < 0 And fcc < 0) Then
-                    ccc = aaa
-                    fcc = faa
-                    ddd = bbb - aaa
-                    eee = ddd
-                End If
-                If Math.Abs(fcc) < Math.Abs(fbb) Then
-                    aaa = bbb
-                    bbb = ccc
-                    ccc = aaa
-                    faa = fbb
-                    fbb = fcc
-                    fcc = faa
-                End If
-                tol11 = 0.0001
-                xmm = 0.5 * (ccc - bbb)
-                If (Math.Abs(xmm) <= tol11) Or (fbb = 0) Then GoTo Final3
-                If (Math.Abs(eee) >= tol11) And (Math.Abs(faa) > Math.Abs(fbb)) Then
-                    sss = fbb / faa
-                    If aaa = ccc Then
-                        ppp = 2 * xmm * sss
-                        qqq = 1 - sss
-                    Else
-                        qqq = faa / fcc
-                        rrr = fbb / fcc
-                        ppp = sss * (2 * xmm * qqq * (qqq - rrr) - (bbb - aaa) * (rrr - 1))
-                        qqq = (qqq - 1) * (rrr - 1) * (sss - 1)
-                    End If
-                    If ppp > 0 Then qqq = -qqq
-                    ppp = Math.Abs(ppp)
-                    min11 = 3 * xmm * qqq - Math.Abs(tol11 * qqq)
-                    min22 = Math.Abs(eee * qqq)
-                    Dim tvar2 As Double
-                    If min11 < min22 Then tvar2 = min11
-                    If min11 > min22 Then tvar2 = min22
-                    If 2 * ppp < tvar2 Then
-                        eee = ddd
-                        ddd = ppp / qqq
-                    Else
-                        ddd = xmm
-                        eee = ddd
-                    End If
-                Else
-                    ddd = xmm
-                    eee = ddd
-                End If
-                aaa = bbb
-                faa = fbb
-                If (Math.Abs(ddd) > tol11) Then
-                    bbb += ddd
-                Else
-                    bbb += Math.Sign(xmm) * tol11
-                End If
-                fbb = PVAP - Me.AUX_PVAPi(subst, bbb)
-                iter2 += 1
-            Loop Until iter2 = ITMAX2
-
-Final3:
-
-            Return bbb
-
-        End Function
-
-        Public Function AUX_TSATi(ByVal PVAP As Double, ByVal index As Integer) As Double
-
-            Dim i As Integer
-
-            Dim Tinf, Tsup As Double
-
-            Dim fT, fT_inf, nsub, delta_T As Double
-
-            Tinf = 10
-            Tsup = 2000
-
-            nsub = 10
-
-            delta_T = (Tsup - Tinf) / nsub
-
-            i = 0
-            Do
-                i = i + 1
-                fT = PVAP - Me.AUX_PVAPi(index, Tinf)
-                Tinf = Tinf + delta_T
-                fT_inf = PVAP - Me.AUX_PVAPi(index, Tinf)
-            Loop Until fT * fT_inf < 0 Or fT_inf > fT Or i >= 100
-            Tsup = Tinf
-            Tinf = Tinf - delta_T
-
-            'método de Brent para encontrar Vc
-
-            Dim aaa, bbb, ccc, ddd, eee, min11, min22, faa, fbb, fcc, ppp, qqq, rrr, sss, tol11, xmm As Double
-            Dim ITMAX2 As Integer = 100
-            Dim iter2 As Integer
-
-            aaa = Tinf
-            bbb = Tsup
-            ccc = Tsup
-
-            faa = PVAP - Me.AUX_PVAPi(index, aaa)
-            fbb = PVAP - Me.AUX_PVAPi(index, bbb)
-            fcc = fbb
-
-            iter2 = 0
-            Do
-                If (fbb > 0 And fcc > 0) Or (fbb < 0 And fcc < 0) Then
-                    ccc = aaa
-                    fcc = faa
-                    ddd = bbb - aaa
-                    eee = ddd
-                End If
-                If Math.Abs(fcc) < Math.Abs(fbb) Then
-                    aaa = bbb
-                    bbb = ccc
-                    ccc = aaa
-                    faa = fbb
-                    fbb = fcc
-                    fcc = faa
-                End If
-                tol11 = 0.0001
-                xmm = 0.5 * (ccc - bbb)
-                If (Math.Abs(xmm) <= tol11) Or (fbb = 0) Then GoTo Final3
-                If (Math.Abs(eee) >= tol11) And (Math.Abs(faa) > Math.Abs(fbb)) Then
-                    sss = fbb / faa
-                    If aaa = ccc Then
-                        ppp = 2 * xmm * sss
-                        qqq = 1 - sss
-                    Else
-                        qqq = faa / fcc
-                        rrr = fbb / fcc
-                        ppp = sss * (2 * xmm * qqq * (qqq - rrr) - (bbb - aaa) * (rrr - 1))
-                        qqq = (qqq - 1) * (rrr - 1) * (sss - 1)
-                    End If
-                    If ppp > 0 Then qqq = -qqq
-                    ppp = Math.Abs(ppp)
-                    min11 = 3 * xmm * qqq - Math.Abs(tol11 * qqq)
-                    min22 = Math.Abs(eee * qqq)
-                    Dim tvar2 As Double
-                    If min11 < min22 Then tvar2 = min11
-                    If min11 > min22 Then tvar2 = min22
-                    If 2 * ppp < tvar2 Then
-                        eee = ddd
-                        ddd = ppp / qqq
-                    Else
-                        ddd = xmm
-                        eee = ddd
-                    End If
-                Else
-                    ddd = xmm
-                    eee = ddd
-                End If
-                aaa = bbb
-                faa = fbb
-                If (Math.Abs(ddd) > tol11) Then
-                    bbb += ddd
-                Else
-                    bbb += Math.Sign(xmm) * tol11
-                End If
-                fbb = PVAP - Me.AUX_PVAPi(index, bbb)
-                iter2 += 1
-            Loop Until iter2 = ITMAX2
-
-Final3:
-
-            Return bbb
-
-        End Function
-
-        Public Function RET_HVAPM(ByVal Vxw As Array, ByVal T As Double) As Double
-
-            Dim val As Double = 0.0#
-            Dim i As Integer
-            Dim n As Integer = Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1
-
-            i = 0
-            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val += Vxw(i) * Me.AUX_HVAPi(subst.Nome, T)
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function AUX_HVAPi(ByVal sub1 As String, ByVal T As Double)
-
-            Dim A, B, C, D, Tr, result As Double
-            A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A
-            B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_B
-            C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_C
-            D = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_D
-
-            Tr = T / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature
-
-            If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "DWSIM" Or _
-                                Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "" Then
-                If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.IsHYPO = 1 Or _
-                Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.IsPF = 1 Then
-                    Dim tr1 As Double
-                    tr1 = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Normal_Boiling_Point / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature
-                    result = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A * ((1 - Tr) / (1 - tr1)) ^ 0.375
-                    Return result 'kJ/kg
-                Else
-                    result = A * (1 - Tr) ^ (B + C * Tr + D * Tr ^ 2)
-                    Return result / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight / 1000 'kJ/kg
-                End If
-            ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "CheResources" Or _
-            Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "User" Then
-                Dim tr1 As Double
-                tr1 = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Normal_Boiling_Point / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature
-                If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A = 0.0# Then
-                    Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A = New DWSIM.Utilities.Hypos.Methods.HYP().DHvb_Vetere(Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Pressure, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Normal_Boiling_Point)
-                    Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A /= Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight
-                End If
-                result = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A * ((1 - Tr) / (1 - tr1)) ^ 0.375
-                Return result 'kJ/kg
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "ChemSep" Then
-                    Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.VaporizationEnthalpyEquation
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, 0, T, T / Tr) / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight / 1000 'kJ/kg
-                    Return result
-                Else
-                    Return 0
-                End If
-
-        End Function
-
-        Public Overridable Function AUX_LIQVISCi(ByVal sub1 As String, ByVal T As Double)
-
-            If T / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature < 1 Then
-
-                If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.IsPF = 1 Then
-
-                    With Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties
-
-                        Return Me.m_props.oilvisc_twu(T, .PF_Tv1, .PF_Tv2, .PF_v1, .PF_v2) * Me.m_props.liq_dens_rackett(T, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight, .Z_Rackett)
-
-                    End With
-
-                Else
-                    If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "DWSIM" Or _
-                    Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "" Then
-                        Dim A, B, C, D, E, result As Double
-                        A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Liquid_Viscosity_Const_A
-                        B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Liquid_Viscosity_Const_B
-                        C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Liquid_Viscosity_Const_C
-                        D = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Liquid_Viscosity_Const_D
-                        E = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Liquid_Viscosity_Const_E
-                        result = Math.Exp(A + B / T + C * Math.Log(T) + D * T ^ E)
-                        Return result
-                    ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "CheResources" Then
-                        Dim B, C, result As Double
-                        B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Liquid_Viscosity_Const_B
-                        C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Liquid_Viscosity_Const_C
-                        '[LOG(V)=B*(1/T-1/C), T(K) V(CP)]
-                        result = Exp(B * (1 / T - 1 / C)) * 0.001
-                        Return result
-                    ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "ChemSep" Or _
-                    Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "User" Then
-                        Dim A, B, C, D, E, result As Double
-                        Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.LiquidViscosityEquation
-                        Dim mw As Double = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight
-                        A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Liquid_Viscosity_Const_A
-                        B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Liquid_Viscosity_Const_B
-                        C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Liquid_Viscosity_Const_C
-                        D = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Liquid_Viscosity_Const_D
-                        E = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Liquid_Viscosity_Const_E
-                        '<lvsc name="Liquid viscosity"  units="Pa.s" >
-                        result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'Pa.s
-                        If eqno = "0" Or eqno = "" Then
-                            Dim Tc, Pc, w As Double
-                            Tc = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature
-                            Pc = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Pressure
-                            w = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Acentric_Factor
-                            mw = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight
-                            result = Me.m_props.viscl_letsti(T, Tc, Pc, w, mw)
-                        End If
-                        Return result
-                    ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "Biodiesel" Then
-                        Dim result As Double
-                        Dim Tc, Pc, w, Mw As Double
-                        Tc = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature
-                        Pc = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Pressure
-                        w = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Acentric_Factor
-                        Mw = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight
-                        result = Me.m_props.viscl_letsti(T, Tc, Pc, w, Mw)
-                        Return result
-                    Else
-                        Return 0
-                    End If
-
-                End If
-
-            Else
-
-                Return 0
-
-            End If
-
-        End Function
-
-        Public Function AUX_LIQVISCm(ByVal T As Double, Optional ByVal phaseid As Integer = 3) As Double
-
-            Dim val, val2, logvisc, result As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            val = 0
-            val2 = 0
-            For Each subst In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
-                'logvisc = Math.Log(Me.AUX_LIQVISCi(subst.Nome, T))
-                If Not Double.IsInfinity(logvisc) Then
-                    val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_LIQVISCi(subst.Nome, T)
-                Else
-                    val2 += subst.FracaoMolar.GetValueOrDefault
-                End If
-            Next
-
-            result = (val / (1 - val2))
-
-            Return result
-
-        End Function
-
-        Public Overridable Function AUX_SURFTM(ByVal T As Double) As Double
-
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
-            Dim val As Double = 0
-            Dim nbp As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim ftotal As Double = 1
-
-            For Each subst In Me.CurrentMaterialStream.Fases(1).Componentes.Values
-                If T / subst.ConstantProperties.Critical_Temperature < 1 Then
-                    With subst.ConstantProperties
-                        If .SurfaceTensionEquation <> "" And .SurfaceTensionEquation <> "0" And Not .IsIon And Not .IsSalt Then
-                            subst.TDProperties.surfaceTension = Me.CalcCSTDepProp(.SurfaceTensionEquation, .Surface_Tension_Const_A, .Surface_Tension_Const_B, .Surface_Tension_Const_C, .Surface_Tension_Const_D, .Surface_Tension_Const_E, T, .Critical_Temperature)
-                        ElseIf .IsIon Or .IsSalt Then
-                            subst.TDProperties.surfaceTension = 0.0#
-                        Else
-                            nbp = subst.ConstantProperties.Normal_Boiling_Point
-                            If nbp = 0 Then nbp = 0.7 * subst.ConstantProperties.Critical_Temperature
-                            subst.TDProperties.surfaceTension = Me.m_props.sigma_bb(T, nbp, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure)
-                        End If
-                    End With
-                Else
-                    subst.TDProperties.surfaceTension = 0
-                    ftotal -= subst.FracaoMolar.GetValueOrDefault
-                End If
-                val += subst.FracaoMolar.GetValueOrDefault * subst.TDProperties.surfaceTension.GetValueOrDefault / ftotal
-            Next
-
-            Return val
-
-        End Function
-
-        Public Overridable Function AUX_SURFTi(ByVal constprop As ConstantProperties, ByVal T As Double) As Double
-
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
-            Dim val As Double = 0
-            Dim nbp As Double
-            Dim ftotal As Double = 1
-
-            If T / constprop.Critical_Temperature < 1 Then
-                With constprop
-                    If .SurfaceTensionEquation <> "" And .SurfaceTensionEquation <> "0" And Not .IsIon And Not .IsSalt Then
-                        val = Me.CalcCSTDepProp(.SurfaceTensionEquation, .Surface_Tension_Const_A, .Surface_Tension_Const_B, .Surface_Tension_Const_C, .Surface_Tension_Const_D, .Surface_Tension_Const_E, T, .Critical_Temperature)
-                    ElseIf .IsIon Or .IsSalt Then
-                        val = 0.0#
-                    Else
-                        nbp = constprop.Normal_Boiling_Point
-                        If nbp = 0 Then nbp = 0.7 * constprop.Critical_Temperature
-                        val = Me.m_props.sigma_bb(T, nbp, constprop.Critical_Temperature, constprop.Critical_Pressure)
-                    End If
-                End With
-            Else
-            End If
-
-            Return val
-
-        End Function
-
-        Public Overridable Function AUX_CONDTL(ByVal T As Double, Optional ByVal phaseid As Integer = 3) As Double
-
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim vcl(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1)
-            Dim i As Integer = 0
-            For Each subst In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
-                If subst.ConstantProperties.LiquidThermalConductivityEquation <> "" Then
-                    vcl(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidThermalConductivityEquation, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_A, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_B, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_C, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_D, subst.ConstantProperties.Liquid_Thermal_Conductivity_Const_E, T, subst.ConstantProperties.Critical_Temperature)
-                ElseIf subst.ConstantProperties.IsIon Or subst.ConstantProperties.IsSalt Then
-                    vcl(i) = 0.0#
-                Else
-                    vcl(i) = Me.m_props.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Molar_Weight, "")
-                End If
-
-                i = i + 1
-            Next
-            val = Me.m_props.condlm_li(Me.RET_VVC, vcl, Me.RET_VMOL(Me.RET_PHASECODE(phaseid)))
-            Return val
-
-        End Function
-
-        Public Overridable Function AUX_CONDTG(ByVal T As Double, ByVal P As Double) As Double
-
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-            For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                If subst.ConstantProperties.VaporThermalConductivityEquation <> "" Then
-                    val += subst.FracaoMolar.GetValueOrDefault * Me.CalcCSTDepProp(subst.ConstantProperties.VaporThermalConductivityEquation, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_A, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_B, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_C, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_D, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_E, T, subst.ConstantProperties.Critical_Temperature)
-                Else
-                    val += subst.FracaoMolar.GetValueOrDefault * Me.m_props.condtg_elyhanley(T, Me.AUX_TCM(Fase.Vapor), Me.AUX_VCM(Fase.Vapor), Me.AUX_ZCM(Fase.Vapor), Me.AUX_WM(Fase.Vapor), Me.AUX_MMM(Fase.Vapor), Me.DW_CalcCv_ISOL(Fase.Vapor, T, P) * Me.AUX_MMM(Fase.Vapor))
-                End If
-                i = i + 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Overridable Function AUX_LIQTHERMCONDi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
-
-            Dim val As Double
-
-            If cprop.LiquidThermalConductivityEquation <> "" And cprop.LiquidThermalConductivityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
-                val = Me.CalcCSTDepProp(cprop.LiquidThermalConductivityEquation, cprop.Liquid_Thermal_Conductivity_Const_A, cprop.Liquid_Thermal_Conductivity_Const_B, cprop.Liquid_Thermal_Conductivity_Const_C, cprop.Liquid_Thermal_Conductivity_Const_D, cprop.Liquid_Thermal_Conductivity_Const_E, T, cprop.Critical_Temperature)
-            ElseIf cprop.IsIon Or cprop.IsSalt Then
-                val = 0.0#
-            Else
-                val = Me.m_props.condl_latini(T, cprop.Normal_Boiling_Point, cprop.Critical_Temperature, cprop.Molar_Weight, "")
-            End If
-
-            Return val
-
-        End Function
-
-        Public Overridable Function AUX_VAPTHERMCONDi(ByVal cprop As ConstantProperties, ByVal T As Double, ByVal P As Double) As Double
-
-            Dim val As Double
-
-            If cprop.VaporThermalConductivityEquation <> "" And cprop.VaporThermalConductivityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
-                val = Me.CalcCSTDepProp(cprop.VaporThermalConductivityEquation, cprop.Vapor_Thermal_Conductivity_Const_A, cprop.Vapor_Thermal_Conductivity_Const_B, cprop.Vapor_Thermal_Conductivity_Const_C, cprop.Vapor_Thermal_Conductivity_Const_D, cprop.Vapor_Thermal_Conductivity_Const_E, T, cprop.Critical_Temperature)
-            ElseIf cprop.IsIon Or cprop.IsSalt Then
-                val = 0.0#
-            Else
-                val = Me.m_props.condtg_elyhanley(T, cprop.Critical_Temperature, cprop.Critical_Volume / 1000, cprop.Critical_Compressibility, cprop.Acentric_Factor, cprop.Molar_Weight, Me.AUX_CPi(cprop.Name, T) * cprop.Molar_Weight - 8.314)
-            End If
-
-            Return val
-
-        End Function
-
-        Public Overridable Function AUX_VAPVISCm(ByVal T As Double, ByVal RHO As Double, ByVal MM As Double) As Double
-
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
-            Dim val As Double = 0.0#
-
-            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_VAPVISCi(subst.ConstantProperties, T)
-            Next
-
-            val = Me.m_props.viscg_jossi_stiel_thodos(val, T, MM / RHO / 1000, AUX_TCM(Fase.Vapor), AUX_PCM(Fase.Vapor), AUX_VCM(Fase.Vapor), AUX_MMM(Fase.Vapor))
-
-            Return val
-
-        End Function
-
-        Public Overridable Function AUX_VAPVISCi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
-
-            Dim val As Double
-
-            If cprop.VaporViscosityEquation <> "" And cprop.VaporViscosityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
-                val = Me.CalcCSTDepProp(cprop.VaporViscosityEquation, cprop.Vapor_Viscosity_Const_A, cprop.Vapor_Viscosity_Const_B, cprop.Vapor_Viscosity_Const_C, cprop.Vapor_Viscosity_Const_D, cprop.Vapor_Viscosity_Const_E, T, cprop.Critical_Temperature)
-            ElseIf cprop.IsIon Or cprop.IsSalt Then
-                val = 0.0#
-            Else
-                val = Me.m_props.viscg_lucas(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight)
-            End If
-
-            Return val
-
-        End Function
-
-        Public Overridable Function AUX_SOLIDDENS() As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim zerodens As Double = 0
-            Dim db As String
-            Dim T As Double = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
-
-            For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
-                db = subst.ConstantProperties.OriginalDB
-                If db = "ChemSep" Or (db = "User" And subst.ConstantProperties.SolidDensityEquation <> "") Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = subst.ConstantProperties.SolidDensityEquation
-                    Dim mw As Double = subst.ConstantProperties.Molar_Weight
-                    A = subst.ConstantProperties.Solid_Density_Const_A
-                    B = subst.ConstantProperties.Solid_Density_Const_B
-                    C = subst.ConstantProperties.Solid_Density_Const_C
-                    D = subst.ConstantProperties.Solid_Density_Const_D
-                    E = subst.ConstantProperties.Solid_Density_Const_E
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'kmol/m3
-                    val += subst.FracaoMassica.GetValueOrDefault * 1 / (result * mw)
-                Else
-                    If subst.ConstantProperties.SolidDensityAtTs <> 0.0# Then
-                        val += subst.FracaoMassica.GetValueOrDefault * 1 / subst.ConstantProperties.SolidDensityAtTs
-                    Else
-                        zerodens += subst.FracaoMassica.GetValueOrDefault
-                    End If
-                End If
-            Next
-
-            Return 1 / val / (1 - zerodens)
-
-        End Function
-
-        Public Overridable Function AUX_SOLIDDENSi(cprop As ConstantProperties, T As Double) As Double
-
-            Dim val As Double
-            Dim zerodens As Double = 0
-
-            If cprop.OriginalDB = "ChemSep" Or (cprop.OriginalDB = "User" And cprop.SolidDensityEquation <> "") Then
-                Dim A, B, C, D, E, result As Double
-                Dim eqno As String = cprop.SolidDensityEquation
-                Dim mw As Double = cprop.Molar_Weight
-                A = cprop.Solid_Density_Const_A
-                B = cprop.Solid_Density_Const_B
-                C = cprop.Solid_Density_Const_C
-                D = cprop.Solid_Density_Const_D
-                E = cprop.Solid_Density_Const_E
-                result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'kmol/m3
-                val = 1 / (result * mw)
-            Else
-                If cprop.SolidDensityAtTs <> 0.0# Then
-                    val = 1 / cprop.SolidDensityAtTs
-                Else
-                    val = 1.0E+20
-                End If
-            End If
-
-            Return 1 / val
-
-        End Function
-
-        Public Overridable Function AUX_SolidHeatCapacity(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
-
-            Dim val As Double
-
-            If cprop.OriginalDB = "ChemSep" Or (cprop.OriginalDB = "User" And cprop.SolidDensityEquation <> "") Then
-                Dim A, B, C, D, E, result As Double
-                Dim eqno As String = cprop.SolidHeatCapacityEquation
-                Dim mw As Double = cprop.Molar_Weight
-                A = cprop.Solid_Heat_Capacity_Const_A
-                B = cprop.Solid_Heat_Capacity_Const_B
-                C = cprop.Solid_Heat_Capacity_Const_C
-                D = cprop.Solid_Heat_Capacity_Const_D
-                E = cprop.Solid_Heat_Capacity_Const_E
-                result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'J/kmol/K
-                val = result / 1000 / mw 'kJ/kg.K
-            Else
-                val = 3 ' replacement if no params available
-            End If
-
-            Return val
-
-        End Function
-
-        Public Function AUX_SOLIDCP(ByVal Vxm As Array, ByVal cprops As List(Of ConstantProperties), ByVal T As Double) As Double
-
-            Dim n As Integer = UBound(Vxm)
-            Dim val As Double = 0
-            For i As Integer = 0 To n
-                val += Vxm(i) * AUX_SolidHeatCapacity(cprops(i), T)
-            Next
-            Return val
-
-        End Function
-
-        Public Overridable Function AUX_LIQDENS(ByVal T As Double, Optional ByVal P As Double = 0, Optional ByVal Pvp As Double = 0, Optional ByVal phaseid As Integer = 3, Optional ByVal FORCE_EOS As Boolean = False) As Double
-
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
-            Dim val As Double
-            Dim m_pr2 As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PengRobinson
-
-            If phaseid = 1 Then
-
-                If T / Me.AUX_TCM(Fase.Liquid) > 1 Then
-
-                    Dim Z = m_pr2.Z_PR(T, P, RET_VMOL(Fase.Liquid), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
-                    val = 1 / (8.314 * Z * T / P)
-                    val = val * Me.AUX_MMM(Fase.Liquid) / 1000
-
-                Else
-
-                    If Me.Parameters.ContainsKey("PP_IDEAL_MIXRULE_LIQDENS") Then
-                        If CInt(Me.Parameters("PP_IDEAL_MIXRULE_LIQDENS")) = 1 Then
-                            Dim i As Integer
-                            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-                            i = 0
-                            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
-                                If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
-                                    If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
-                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
-                                            vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
-                                            vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
-                                        Else
-                                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                        End If
-                                    Else
-                                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                    End If
-                                Else
-                                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                End If
-                                vk(i) = subst.FracaoMassica / vk(i)
-                                i = i + 1
-                            Next
-                            val = 1 / MathEx.Common.Sum(vk)
-                        Else
-                            val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid), Me.AUX_PCM(Fase.Liquid), Me.AUX_WM(Fase.Liquid), Me.AUX_MMM(Fase.Liquid), Me.AUX_ZRAM(Fase.Liquid), P, Me.AUX_PVAPM(T))
-                        End If
-                    Else
-                        val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid), Me.AUX_PCM(Fase.Liquid), Me.AUX_WM(Fase.Liquid), Me.AUX_MMM(Fase.Liquid), Me.AUX_ZRAM(Fase.Liquid), P, Me.AUX_PVAPM(T))
-                    End If
-
-                End If
-
-            ElseIf phaseid = 2 Then
-
-                If T / Me.AUX_TCM(Fase.Vapor) > 1 Then
-
-                    Dim Z = m_pr2.Z_PR(T, P, RET_VMOL(Fase.Vapor), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
-                    val = 1 / (8.314 * Z * T / P)
-                    val = val * Me.AUX_MMM(Fase.Vapor) / 1000
-
-                Else
-
-                    Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-                    val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Vapor), Me.AUX_PCM(Fase.Vapor), Me.AUX_WM(Fase.Vapor), Me.AUX_MMM(Fase.Vapor), Me.AUX_ZRAM(Fase.Vapor), P, Me.AUX_PVAPM(T))
-
-                End If
-            ElseIf phaseid = 3 Then
-
-                If T / Me.AUX_TCM(Fase.Liquid1) > 1 Then
-
-                    Dim Z = m_pr2.Z_PR(T, P, RET_VMOL(Fase.Liquid1), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
-                    val = 1 / (8.314 * Z * T / P)
-                    val = val * Me.AUX_MMM(Fase.Liquid1) / 1000
-
-                Else
-
-                    If Me.Parameters.ContainsKey("PP_IDEAL_MIXRULE_LIQDENS") Then
-                        If CInt(Me.Parameters("PP_IDEAL_MIXRULE_LIQDENS")) = 1 Then
-                            Dim i As Integer
-                            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-                            i = 0
-                            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
-                                If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
-                                    If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
-                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
-                                            vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
-                                            vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
-                                        Else
-                                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                        End If
-                                        If subst.ConstantProperties.IsIon Or subst.ConstantProperties.IsSalt Then
-                                            vk(i) = 1.0E+20
-                                        End If
-                                    Else
-                                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                    End If
-                                Else
-                                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                End If
-                                vk(i) = subst.FracaoMassica / vk(i)
-                                i = i + 1
-                            Next
-                            val = 1 / MathEx.Common.Sum(vk)
-                        Else
-                            val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid1), Me.AUX_PCM(Fase.Liquid1), Me.AUX_WM(Fase.Liquid1), Me.AUX_MMM(Fase.Liquid1), Me.AUX_ZRAM(Fase.Liquid1), P, Me.AUX_PVAPM(T))
-                        End If
-                    Else
-                        val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid1), Me.AUX_PCM(Fase.Liquid1), Me.AUX_WM(Fase.Liquid1), Me.AUX_MMM(Fase.Liquid1), Me.AUX_ZRAM(Fase.Liquid1), P, Me.AUX_PVAPM(T))
-                    End If
-
-                End If
-            ElseIf phaseid = 4 Then
-                If T / Me.AUX_TCM(Fase.Liquid2) > 1 Then
-
-                    Dim Z = m_pr2.Z_PR(T, P, RET_VMOL(Fase.Liquid2), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
-                    val = 1 / (8.314 * Z * T / P)
-                    val = val * Me.AUX_MMM(Fase.Liquid2) / 1000
-
-                Else
-
-                    If Me.Parameters.ContainsKey("PP_IDEAL_MIXRULE_LIQDENS") Then
-                        If CInt(Me.Parameters("PP_IDEAL_MIXRULE_LIQDENS")) = 1 Then
-                            Dim i As Integer
-                            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-                            i = 0
-                            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
-                                If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
-                                    If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
-                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
-                                            vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
-                                            vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
-                                        Else
-                                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                        End If
-                                    Else
-                                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                    End If
-                                Else
-                                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                End If
-                                vk(i) = subst.FracaoMassica / vk(i)
-                                i = i + 1
-                            Next
-                            val = 1 / MathEx.Common.Sum(vk)
-                        Else
-                            val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid2), Me.AUX_PCM(Fase.Liquid2), Me.AUX_WM(Fase.Liquid2), Me.AUX_MMM(Fase.Liquid2), Me.AUX_ZRAM(Fase.Liquid2), P, Me.AUX_PVAPM(T))
-                        End If
-                    Else
-                        val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid2), Me.AUX_PCM(Fase.Liquid2), Me.AUX_WM(Fase.Liquid2), Me.AUX_MMM(Fase.Liquid2), Me.AUX_ZRAM(Fase.Liquid2), P, Me.AUX_PVAPM(T))
-                    End If
-
-                End If
-            ElseIf phaseid = 5 Then
-                If T / Me.AUX_TCM(Fase.Liquid3) > 1 Then
-
-                    Dim Z = m_pr2.Z_PR(T, P, RET_VMOL(Fase.Liquid3), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
-                    val = 1 / (8.314 * Z * T / P)
-                    val = val * Me.AUX_MMM(Fase.Liquid3) / 1000
-
-                Else
-
-                    If Me.Parameters.ContainsKey("PP_IDEAL_MIXRULE_LIQDENS") Then
-                        If CInt(Me.Parameters("PP_IDEAL_MIXRULE_LIQDENS")) = 1 Then
-                            Dim i As Integer
-                            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-                            i = 0
-                            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
-                                If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
-                                    If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
-                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
-                                            vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
-                                            vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
-                                        Else
-                                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                        End If
-                                    Else
-                                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                    End If
-                                Else
-                                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                End If
-                                vk(i) = subst.FracaoMassica / vk(i)
-                                i = i + 1
-                            Next
-                            val = 1 / MathEx.Common.Sum(vk)
-                        Else
-                            val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid3), Me.AUX_PCM(Fase.Liquid3), Me.AUX_WM(Fase.Liquid3), Me.AUX_MMM(Fase.Liquid3), Me.AUX_ZRAM(Fase.Liquid3), P, Me.AUX_PVAPM(T))
-                        End If
-                    Else
-                        val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid3), Me.AUX_PCM(Fase.Liquid3), Me.AUX_WM(Fase.Liquid3), Me.AUX_MMM(Fase.Liquid3), Me.AUX_ZRAM(Fase.Liquid3), P, Me.AUX_PVAPM(T))
-                    End If
-
-                End If
-            ElseIf phaseid = 6 Then
-                If T / Me.AUX_TCM(Fase.Aqueous) > 1 Then
-
-                    Dim Z = m_pr2.Z_PR(T, P, RET_VMOL(Fase.Aqueous), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
-                    val = 1 / (8.314 * Z * T / P)
-                    val = val * Me.AUX_MMM(Fase.Aqueous) / 1000
-
-                Else
-
-                    If Me.Parameters.ContainsKey("PP_IDEAL_MIXRULE_LIQDENS") Then
-                        If CInt(Me.Parameters("PP_IDEAL_MIXRULE_LIQDENS")) = 1 Then
-                            Dim i As Integer
-                            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-                            i = 0
-                            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
-                                If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
-                                    If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
-                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
-                                            vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
-                                            vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
-                                        Else
-                                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                        End If
-                                    Else
-                                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                    End If
-                                Else
-                                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                End If
-                                vk(i) = subst.FracaoMassica / vk(i)
-                                i = i + 1
-                            Next
-                            val = 1 / MathEx.Common.Sum(vk)
-                        Else
-                            val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Aqueous), Me.AUX_PCM(Fase.Aqueous), Me.AUX_WM(Fase.Aqueous), Me.AUX_MMM(Fase.Aqueous), Me.AUX_ZRAM(Fase.Aqueous), P, Me.AUX_PVAPM(T))
-                        End If
-                    Else
-                        val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Aqueous), Me.AUX_PCM(Fase.Aqueous), Me.AUX_WM(Fase.Aqueous), Me.AUX_MMM(Fase.Aqueous), Me.AUX_ZRAM(Fase.Aqueous), P, Me.AUX_PVAPM(T))
-                    End If
-
-                End If
-            End If
-
-            m_pr2 = Nothing
-
-            Return val
-
-        End Function
-
-        Public Overridable Function AUX_LIQDENS(ByVal T As Double, ByVal Vx As Array, Optional ByVal P As Double = 0, Optional ByVal Pvp As Double = 0, Optional ByVal FORCE_EOS As Boolean = False) As Double
-
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
-            Dim val As Double
-            Dim m_pr2 As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PengRobinson
-
-            Dim i As Integer
-            Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            i = 0
-            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
-                If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
-                    If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
-                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
-                            vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
-                            vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
-                        Else
-                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                        End If
-                    Else
-                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                    End If
-                Else
-                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                End If
-                If T > subst.ConstantProperties.Critical_Temperature Then
-                    vk(i) = 1.0E+20
-                End If
-                If Not Double.IsNaN(vk(i)) Then vk(i) = Vx(i) / vk(i) Else vk(i) = 0.0#
-                i = i + 1
-            Next
-            val = 1 / MathEx.Common.Sum(vk)
-
-            m_pr2 = Nothing
-
-            Return val 'kg/m3
-
-        End Function
-
-        Public Overridable Function AUX_LIQDENSi(ByVal subst As Substancia, ByVal T As Double) As Double
-
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
-            Dim val As Double
-
-            If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
-                val = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
-                val = subst.ConstantProperties.Molar_Weight * val
-            Else
-                val = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, 101325, Me.AUX_PVAPi(subst.Nome, T))
-            End If
-
-            Return val 'kg/m3
-
-        End Function
-
-        Public Overridable Function AUX_LIQDENSi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
-
-            Dim val As Double
-
-            If cprop.LiquidDensityEquation <> "" And cprop.LiquidDensityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
-                val = Me.CalcCSTDepProp(cprop.LiquidDensityEquation, cprop.Liquid_Density_Const_A, cprop.Liquid_Density_Const_B, cprop.Liquid_Density_Const_C, cprop.Liquid_Density_Const_D, cprop.Liquid_Density_Const_E, T, cprop.Critical_Temperature)
-                val = cprop.Molar_Weight * val
-            Else
-                val = Me.m_props.liq_dens_rackett(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight, cprop.Z_Rackett, 101325, Me.AUX_PVAPi(cprop.Name, T))
-            End If
-
-            Return val 'kg/m3
-
-        End Function
-
-        Public Function AUX_LIQCPm(ByVal T As Double, ByVal phaseid As Double) As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            val = 0
-            For Each subst In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
-                val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_LIQ_Cpi(subst.ConstantProperties, T)
-            Next
-
-            Return val
-
-        End Function
-
-        Public Overridable Function AUX_LIQ_Cpi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
-
-            Dim val As Double
-
-            If cprop.LiquidHeatCapacityEquation <> "" And cprop.LiquidHeatCapacityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
-                val = Me.CalcCSTDepProp(cprop.LiquidHeatCapacityEquation, cprop.Liquid_Heat_Capacity_Const_A, cprop.Liquid_Heat_Capacity_Const_B, cprop.Liquid_Heat_Capacity_Const_C, cprop.Liquid_Heat_Capacity_Const_D, cprop.Liquid_Heat_Capacity_Const_E, T, cprop.Critical_Temperature)
-                val = val / 1000 / cprop.Molar_Weight 'kJ/kg.K
-            Else
-                'estimate using Rownlinson/Bondi correlation
-                val = Me.m_props.Cpl_rb(AUX_CPi(cprop.Name, T), T, cprop.Critical_Temperature, cprop.Acentric_Factor, cprop.Molar_Weight) 'kJ/kg.K
-            End If
-
-            Return val
-
-        End Function
-
-        Public MustOverride Function AUX_VAPDENS(ByVal T As Double, ByVal P As Double) As Double
-
-        Public Function AUX_INT_CPDTi(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String)
-
-            Dim A, B, C, D, E, result As Double
-            A = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_A
-            B = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_B
-            C = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_C
-            D = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_D
-            E = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_E
-
-            result = A * (T2 - T1) + B / 2 * (T2 ^ 2 - T1 ^ 2) + C / 3 * (T2 ^ 3 - T1 ^ 3) + D / 4 * (T2 ^ 4 - T1 ^ 4) + E / 5 * (T2 ^ 5 - T1 ^ 5)
-
-            Dim deltaT As Double = (T2 - T1) / 10
-            Dim result2, Ti As Double
-            Dim i As Integer = 0
-            Dim integral As Double = 0
-
-            Ti = T1 + deltaT
-            For i = 0 To 9
-                integral += Me.AUX_CPi(subst, Ti) * deltaT
-                Ti += deltaT
-            Next
-
-            'result = Me.IntegralSimpsonCp(T1, T2, 0.001, subst)
-
-            result = result / Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Molar_Weight
-
-            result2 = integral '/ Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Molar_Weight
-
-            Return result2
-
-        End Function
-
-        Public Function AUX_INT_CPDT_Ti(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String)
-
-            Dim A, B, C, D, E, result As Double
-            A = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_A
-            B = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_B
-            C = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_C
-            D = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_D
-            E = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_E
-
-            result = A * Log(T2 / T1) + B * (T2 - T1) + C / 2 * (T2 ^ 2 - T1 ^ 2) + D / 3 * (T2 ^ 3 - T1 ^ 3) + E / 4 * (T2 ^ 4 - T1 ^ 4)
-
-            Dim deltaT As Double = (T2 - T1) / 10
-            Dim result2, Ti As Double
-            Dim i As Integer = 0
-            Dim integral As Double = 0
-
-            Ti = T1 + deltaT
-            For i = 0 To 9
-                integral += Me.AUX_CPi(subst, Ti) * deltaT / (Ti - deltaT) '* Log(Ti / (Ti - deltaT))
-                Ti += deltaT
-            Next
-
-            'result = Me.IntegralSimpsonCp(T1, T2, 0.001, subst)
-
-            result = result / Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Molar_Weight
-
-            result2 = integral '/ Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Molar_Weight
-
-            Return result2
-
-        End Function
-
-        Public Function AUX_INT_CPDTm(ByVal T1 As Double, ByVal T2 As Double, ByVal fase As Fase)
-
-            Dim val As Double = 0
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            Select Case fase
-
-                Case DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture
-
-                    For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
-                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
-                        End If
-                        val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
-                    Next
-
-                Case DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid
-
-                    For Each subst In Me.CurrentMaterialStream.Fases(1).Componentes.Values
-                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
-                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
-                        End If
-                        val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
-                    Next
-
-                Case DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1
-
-                    For Each subst In Me.CurrentMaterialStream.Fases(3).Componentes.Values
-                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
-                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
-                        End If
-                        val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
-                    Next
-
-                Case DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2
-
-                    For Each subst In Me.CurrentMaterialStream.Fases(4).Componentes.Values
-                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
-                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
-                        End If
-                        val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
-                    Next
-
-                Case DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3
-
-                    For Each subst In Me.CurrentMaterialStream.Fases(5).Componentes.Values
-                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
-                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
-                        End If
-                        val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
-                    Next
-
-                Case DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor
-
-                    For Each subst In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                        If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
-                            subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
-                        End If
-                        val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
-                    Next
-
-            End Select
-
-            Return val
-
-        End Function
-
-        Public Function AUX_INT_CPDT_Tm(ByVal T1 As Double, ByVal T2 As Double, ByVal fase As Fase)
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                If subst.FracaoMolar.GetValueOrDefault <> 0.0# And subst.FracaoMassica.GetValueOrDefault = 0.0# Then
-                    subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, Me.RET_PHASEID(fase))
-                End If
-                val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_INT_CPDT_Ti(T1, T2, subst.Nome)
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function AUX_DELGF_T(ByVal T1 As Double, ByVal T2 As Double, ByVal id As String, Optional ByVal mode2 As Boolean = False) As Double
-
-            Dim dA As Double = 0
-            Dim dB As Double = 0
-            Dim dC As Double = 0
-            Dim dD As Double = 0
-            Dim dE As Double = 0
-            Dim dHr As Double = 0
-            Dim dGr As Double = 0
-            Dim term3 As Double = 0
-
-            Dim int1, int2 As Double
-            Dim R = 8.314
-
-            With Me.CurrentMaterialStream.Fases(0).Componentes(id).ConstantProperties
-
-                dHr = .IG_Enthalpy_of_Formation_25C
-                dGr = .IG_Gibbs_Energy_of_Formation_25C
-
-                If mode2 Then
-                    If .IsIon Or .IsSalt Then
-                        term3 = .Electrolyte_Cp0 * 1000 / .Molar_Weight * (Log(T2 / T1) + (T1 / T2) - 1) / R
-                    Else
-                        int1 = Me.AUX_INT_CPDTi(T1, T2, id)
-                        int2 = Me.AUX_INT_CPDT_Ti(T1, T2, id)
-                        term3 = int1 / (R * T2) - int2 / R
-                    End If
-                Else
-                    int1 = Me.AUX_INT_CPDTi(T1, T2, id)
-                    int2 = Me.AUX_INT_CPDT_Ti(T1, T2, id)
-                    term3 = int1 / (R * T2) - int2 / R
-                End If
-
-
-            End With
-
-            Dim result As Double
-
-            If mode2 Then
-                result = dGr / (R * T1) + dHr / R * (1 / T2 - 1 / T1) + term3
-            Else
-                result = (dGr - dHr) / (R * T1) + dHr / (R * T2) + term3
-            End If
-
-            Return result
-
-        End Function
-
-        Public Function AUX_DELGig_RT(ByVal T1 As Double, ByVal T2 As Double, ByVal ID() As String, ByVal stcoeff() As Double, ByVal baseID As Integer, Optional ByVal mode2 As Boolean = False) As Double
-
-            Dim n As Integer = ID.Length
-
-            Dim int1(n - 1), int2(n - 1), sint1, sint2, dgfT(n - 1), sumdgft As Double
-
-            Dim dHr As Double = 0
-            Dim dGr As Double = 0
-
-            sint1 = 0
-            sint2 = 0
-
-            With Me.CurrentMaterialStream
-
-                Dim i As Integer = 0
-                sumdgft = 0
-                Do
-                    dHr += stcoeff(i) * .Fases(0).Componentes(ID(i)).ConstantProperties.IG_Enthalpy_of_Formation_25C * .Fases(0).Componentes(ID(i)).ConstantProperties.Molar_Weight
-                    dGr += stcoeff(i) * .Fases(0).Componentes(ID(i)).ConstantProperties.IG_Gibbs_Energy_of_Formation_25C * .Fases(0).Componentes(ID(i)).ConstantProperties.Molar_Weight
-                    int1(i) = stcoeff(i) * Me.AUX_INT_CPDTi(T1, T2, ID(i)) / stcoeff(baseID) * .Fases(0).Componentes(ID(i)).ConstantProperties.Molar_Weight
-                    int2(i) = stcoeff(i) * Me.AUX_INT_CPDT_Ti(T1, T2, ID(i)) / stcoeff(baseID) * .Fases(0).Componentes(ID(i)).ConstantProperties.Molar_Weight
-                    sint1 += int1(i)
-                    sint2 += int2(i)
-                    dgfT(i) = stcoeff(i) * Me.AUX_DELGF_T(T1, T2, ID(i), mode2) * .Fases(0).Componentes(ID(i)).ConstantProperties.Molar_Weight
-                    sumdgft += dgfT(i) '/ stcoeff(baseID)
-                    i = i + 1
-                Loop Until i = n
-
-            End With
-            dHr /= Abs(stcoeff(baseID))
-            dGr /= Abs(stcoeff(baseID))
-
-            Dim R = 8.314
-
-            Dim result = (dGr - dHr) / (R * T1) + dHr / (R * T2) + sint1 / (R * T2) - sint2 / R
-
-            Return sumdgft
-
-        End Function
-
-        Public Function AUX_DELHig_RT(ByVal T1 As Double, ByVal T2 As Double, ByVal ID() As String, ByVal stcoeff() As Double, ByVal baseID As Integer) As Double
-
-            Dim n As Integer = ID.Length
-
-            Dim int1(n - 1), sint1 As Double
-
-            Dim dHr As Double = 0
-
-            sint1 = 0
-
-            With Me.CurrentMaterialStream
-
-                Dim i As Integer = 0
-                Do
-                    dHr += stcoeff(i) * .Fases(0).Componentes(ID(i)).ConstantProperties.IG_Enthalpy_of_Formation_25C * .Fases(0).Componentes(ID(i)).ConstantProperties.Molar_Weight
-                    int1(i) = stcoeff(i) * Me.AUX_INT_CPDTi(T1, T2, ID(i)) / Abs(stcoeff(baseID)) * .Fases(0).Componentes(ID(i)).ConstantProperties.Molar_Weight
-                    sint1 += int1(i)
-                    i = i + 1
-                Loop Until i = n
-
-            End With
-            dHr /= Abs(stcoeff(baseID))
-
-            Dim result = dHr + sint1
-
-            Return result / (8.314 * T2)
-
-        End Function
-
-        Public Function AUX_CONVERT_MOL_TO_MASS(ByVal subst As String, ByVal phasenumber As Integer) As Double
-
-            Dim mol_x_mm As Double
-            Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
-            For Each sub1 In Me.CurrentMaterialStream.Fases(phasenumber).Componentes.Values
-                mol_x_mm += sub1.FracaoMolar.GetValueOrDefault * sub1.ConstantProperties.Molar_Weight
-            Next
-
-            sub1 = Me.CurrentMaterialStream.Fases(phasenumber).Componentes(subst)
-            If mol_x_mm <> 0.0# Then
-                Return sub1.FracaoMolar.GetValueOrDefault * sub1.ConstantProperties.Molar_Weight / mol_x_mm
-            Else
-                Return 0.0#
-            End If
-
-        End Function
-
-        Public Function AUX_CONVERT_MASS_TO_MOL(ByVal subst As String, ByVal phasenumber As Integer) As Double
-
-            Dim mass_div_mm As Double
-            Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
-            For Each sub1 In Me.CurrentMaterialStream.Fases(phasenumber).Componentes.Values
-                mass_div_mm += sub1.FracaoMassica.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight
-            Next
-
-            sub1 = Me.CurrentMaterialStream.Fases(phasenumber).Componentes(subst)
-            Return sub1.FracaoMassica.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight / mass_div_mm
-
-        End Function
-
-        Public Overridable Function DW_CalcSolidEnthalpy(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double
-
-            Dim n As Integer = UBound(Vx)
-            Dim i As Integer
-            Dim HS As Double = 0.0#
-            Dim Cpi As Double
-
-            For i = 0 To n
-                If cprops(i).OriginalDB = "ChemSep" Or cprops(i).OriginalDB = "User" Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = cprops(i).SolidHeatCapacityEquation
-                    Dim mw As Double = cprops(i).Molar_Weight
-                    A = cprops(i).Solid_Heat_Capacity_Const_A
-                    B = cprops(i).Solid_Heat_Capacity_Const_B
-                    C = cprops(i).Solid_Heat_Capacity_Const_C
-                    D = cprops(i).Solid_Heat_Capacity_Const_D
-                    E = cprops(i).Solid_Heat_Capacity_Const_E
-                    '<SolidHeatCapacityCp name="Solid heat capacity"  units="J/kmol/K" >
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) / 1000 / mw 'kJ/kg.K
-                    Cpi = result
-                Else
-                    Cpi = 0.0#
-                End If
-                HS += Vx(i) * Cpi * (T - 298)
-            Next
-
-            Return HS 'kJ/kg
-
-        End Function
-
-        Public Overridable Function DW_CalcSolidHeatCapacityCp(ByVal T As Double, ByVal Vx As Double(), cprops As List(Of ConstantProperties)) As Double
-
-            Dim n As Integer = UBound(Vx)
-            Dim i As Integer
-            Dim Cp As Double = 0.0#
-            Dim Cpi As Double
-
-            For i = 0 To n
-                If cprops(i).OriginalDB = "ChemSep" Or cprops(i).OriginalDB = "User" Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = cprops(i).SolidHeatCapacityEquation
-                    Dim mw As Double = cprops(i).Molar_Weight
-                    A = cprops(i).Solid_Heat_Capacity_Const_A
-                    B = cprops(i).Solid_Heat_Capacity_Const_B
-                    C = cprops(i).Solid_Heat_Capacity_Const_C
-                    D = cprops(i).Solid_Heat_Capacity_Const_D
-                    E = cprops(i).Solid_Heat_Capacity_Const_E
-                    '<SolidHeatCapacityCp name="Solid heat capacity"  units="J/kmol/K" >
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) / 1000 / mw 'kJ/kg.K
-                    Cpi = result
-                Else
-                    Cpi = 0.0#
-                End If
-                Cp += Vx(i) * Cpi
-            Next
-
-            Return Cp 'kJ/kg.K
-
-        End Function
-
-        Public Function RET_VMOL(ByVal fase As Fase) As Double()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                val(i) = subst.FracaoMolar.GetValueOrDefault
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VMM()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = subst.ConstantProperties.Molar_Weight
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VMAS(ByVal fase As Fase) As Double()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-            Dim sum As Double = 0.0#
-
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                val(i) = subst.FracaoMassica.GetValueOrDefault
-                sum += val(i)
-                i += 1
-            Next
-
-            If sum <> 0.0# Then
-                Return val
-            Else
-                Return AUX_CONVERT_MOL_TO_MASS(RET_VMOL(fase))
-            End If
-
-        End Function
-
-        Public Function RET_VTC()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = subst.ConstantProperties.Critical_Temperature
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VTF()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = subst.ConstantProperties.TemperatureOfFusion
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VTB()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = subst.ConstantProperties.Normal_Boiling_Point
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VPC()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = subst.ConstantProperties.Critical_Pressure
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VZC()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = subst.ConstantProperties.Critical_Compressibility
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VZRa()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = subst.ConstantProperties.Z_Rackett
-                i += 1
-            Next
-            Return val
-
-        End Function
-
-        Public Function RET_VVC()
-
-            Dim vc, val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                vc = subst.ConstantProperties.Critical_Volume
-                If subst.ConstantProperties.Critical_Volume = 0.0# Then
-                    vc = m_props.Vc(subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor)
-                End If
-                val(i) = vc
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VW()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = subst.ConstantProperties.Acentric_Factor
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VCP(ByVal T As Double)
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = Me.AUX_CPi(subst.Nome, T)
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VHVAP(ByVal T As Double) As Array
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = Me.AUX_HVAPi(subst.Nome, T)
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_Hid(ByVal T1 As Double, ByVal T2 As Double, ByVal fase As Fase) As Double
-
-            Dim val As Double
-            'Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            Dim phaseID As Integer
-
-            If fase = PropertyPackages.Fase.Liquid Then phaseID = 1
-            If fase = PropertyPackages.Fase.Liquid1 Then phaseID = 3
-            If fase = PropertyPackages.Fase.Liquid2 Then phaseID = 4
-            If fase = PropertyPackages.Fase.Liquid3 Then phaseID = 5
-            If fase = PropertyPackages.Fase.Vapor Then phaseID = 2
-            If fase = PropertyPackages.Fase.Mixture Then phaseID = 0
-
-            'For Each subst In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
-            '    val += subst.FracaoMassica.GetValueOrDefault * subst.ConstantProperties.Enthalpy_of_Formation_25C
-            'Next
-
-            Return Me.AUX_INT_CPDTm(T1, T2, fase) + val
-
-        End Function
-
-        Public Function RET_Hid(ByVal T1 As Double, ByVal T2 As Double, ByVal Vz As Object) As Double
-
-            Dim val As Double
-            'Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            Dim i As Integer = 0
-
-            'For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-            '    val += Me.AUX_CONVERT_MOL_TO_MASS(Vz)(i) * subst.ConstantProperties.Enthalpy_of_Formation_25C
-            '    i = i + 1
-            'Next
-
-            Return Me.AUX_INT_CPDTm(T1, T2, Me.AUX_CONVERT_MOL_TO_MASS(Vz)) + val
-
-        End Function
-
-        Public Function RET_Hid_i(ByVal T1 As Double, ByVal T2 As Double, ByVal id As String) As Double
-
-            Return Me.AUX_INT_CPDTi(T1, T2, id)
-
-        End Function
-
-        Public Function RET_Sid(ByVal T1 As Double, ByVal T2 As Double, ByVal P2 As Double, ByVal fase As Fase) As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            Dim phaseID As Integer
-
-            If fase = PropertyPackages.Fase.Liquid Then phaseID = 1
-            If fase = PropertyPackages.Fase.Liquid1 Then phaseID = 3
-            If fase = PropertyPackages.Fase.Liquid2 Then phaseID = 4
-            If fase = PropertyPackages.Fase.Liquid3 Then phaseID = 5
-            If fase = PropertyPackages.Fase.Vapor Then phaseID = 2
-            If fase = PropertyPackages.Fase.Mixture Then phaseID = 0
-            'subst.FracaoMassica.GetValueOrDefault * subst.ConstantProperties.Standard_Absolute_Entropy 
-            For Each subst In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
-                If subst.FracaoMolar.GetValueOrDefault <> 0 Then val += -8.314 * subst.FracaoMolar.GetValueOrDefault * Math.Log(subst.FracaoMolar.GetValueOrDefault) / subst.ConstantProperties.Molar_Weight
-            Next
-
-            Dim tmp = Me.AUX_INT_CPDT_Tm(T1, T2, fase) + val - 8.314 * Math.Log(P2 / 101325) / Me.AUX_MMM(fase)
-
-            Return tmp
-
-        End Function
-
-        Public Function RET_Sid(ByVal T1 As Double, ByVal T2 As Double, ByVal P2 As Double, ByVal Vz As Object) As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim Vw = Me.AUX_CONVERT_MOL_TO_MASS(Vz)
-
-            Dim i As Integer = 0
-
-            'Vw(i) * subst.ConstantProperties.Standard_Absolute_Entropy
-            val = 0
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                If Vz(i) <> 0 Then val += -8.314 * Vz(i) * Math.Log(Vz(i)) / subst.ConstantProperties.Molar_Weight
-                i = i + 1
-            Next
-            Dim tmp1 = 8.314 * Math.Log(P2 / 101325) / Me.AUX_MMM(Vz)
-            Dim tmp2 = Me.AUX_INT_CPDT_Tm(T1, T2, Me.AUX_CONVERT_MOL_TO_MASS(Vz))
-            Return tmp2 + val - tmp1
-
-        End Function
-
-        Public Function RET_Sid_i(ByVal T1 As Double, ByVal T2 As Double, ByVal P2 As Double, ByVal id As String) As Double
-
-            Dim val As Double
-
-            Dim tmp1 = 8.314 * Math.Log(P2 / 101325) / Me.CurrentMaterialStream.Fases(0).Componentes(id).ConstantProperties.Molar_Weight
-            Dim tmp2 = Me.AUX_INT_CPDT_Ti(T1, T2, id)
-            Return tmp2 + val - tmp1
-
-        End Function
-
-        Public Function RET_Gid(ByVal T1 As Double, ByVal T2 As Double, ByVal P2 As Double, ByVal Vz As Object) As Double
-
-            Dim hid = Me.RET_Hid(T1, T2, Vz)
-            Dim sid = Me.RET_Sid(T1, T2, P2, Vz)
-
-            Return hid - T2 * sid
-
-        End Function
-
-        Public Function RET_Gid_i(ByVal T1 As Double, ByVal T2 As Double, ByVal P2 As Double, ByVal id As String) As Double
-
-            Dim hid = Me.RET_Hid_i(T1, T2, id)
-            Dim sid = Me.RET_Sid_i(T1, T2, P2, id)
-
-            Return hid - T2 * sid
-
-        End Function
-
-        Public Function RET_Gid(ByVal T1 As Double, ByVal T2 As Double, ByVal P2 As Double, ByVal fase As Fase) As Double
-
-            Dim hid = Me.RET_Hid(T1, T2, fase)
-            Dim sid = Me.RET_Sid(T1, T2, P2, fase)
-
-            Return hid - T2 * sid
-
-        End Function
-
-        Public Overridable Function RET_VKij() As Double(,)
-
-            If Me.ParametrosDeInteracao Is Nothing Then
-                Me.ParametrosDeInteracao = New DataTable
-                With Me.ParametrosDeInteracao.Columns
-                    For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                        .Add(subst.ConstantProperties.ID, GetType(System.Double))
-                    Next
-                End With
-
-                With Me.ParametrosDeInteracao.Rows
-                    For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                        .Add()
-                    Next
-                End With
-            End If
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1, Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim i As Integer = 0
-            Dim l As Integer = 0
-            For Each r As DataRow In Me.ParametrosDeInteracao.Rows
-                i = 0
-                Do
-                    If l <> i And r.Item(i).GetType().ToString <> "System.DBNull" Then
-                        Dim value As Double
-                        If Double.TryParse(r.Item(i), value) Then
-                            val(l, i) = r.Item(i)
-                        Else
-                            val(l, i) = 0
-                        End If
-                    Else
-                        val(l, i) = 0
-                    End If
-                    i = i + 1
-                Loop Until i = Me.ParametrosDeInteracao.Rows.Count
-                l = l + 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VCSACIDS()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As String
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = subst.ConstantProperties.COSMODBName
-                If val(i) = "" Then val(i) = subst.ConstantProperties.CAS_Number
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VIDS()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As String
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = subst.ConstantProperties.ID
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VCAS() As String()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As String
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = subst.ConstantProperties.CAS_Number
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_VNAMES() As String()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As String
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = subst.ConstantProperties.Name
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function RET_NullVector()
-
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim i As Integer = 0
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val(i) = 0.0#
-                i += 1
-            Next
-            Return val
-
-        End Function
-
-        Public Function RET_PHASECODE(ByVal phaseID As Integer) As SimulationObjects.PropertyPackages.Fase
-            Select Case phaseID
-                Case 0
-                    Return Fase.Mixture
-                Case 1
-                    Return Fase.Liquid
-                Case 2
-                    Return Fase.Vapor
-                Case 3
-                    Return Fase.Liquid1
-                Case 4
-                    Return Fase.Liquid2
-                Case 5
-                    Return Fase.Liquid3
-                Case 6
-                    Return Fase.Aqueous
-                Case 7
-                    Return Fase.Solid
-            End Select
-        End Function
-
-        Public Function RET_PHASEID(ByVal phasecode As SimulationObjects.PropertyPackages.Fase) As Integer
-            Select Case phasecode
-                Case Fase.Mixture
-                    Return 0
-                Case Fase.Liquid
-                    Return 1
-                Case Fase.Vapor
-                    Return 2
-                Case Fase.Liquid1
-                    Return 3
-                Case Fase.Liquid2
-                    Return 4
-                Case Fase.Liquid3
-                    Return 5
-                Case Fase.Aqueous
-                    Return 6
-                Case Fase.Solid
-                    Return 7
-                Case Else
-                    Return -1
-            End Select
-        End Function
-
-        Public Function AUX_MMM(ByVal Vz As Object) As Double
-
-            Dim val As Double
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            Dim i As Integer = 0
-
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val += Vz(i) * subst.ConstantProperties.Molar_Weight
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function AUX_NORMALIZE(ByVal Vx As Object) As Double()
-
-            Dim sum As Double = 0
-            Dim i, n As Integer
-
-            n = UBound(Vx)
-
-            Dim Vxnew(n) As Double
-
-            For i = 0 To n
-                sum += Vx(i)
-            Next
-
-            For i = 0 To n
-                Vxnew(i) = Vx(i) / sum
-                If Double.IsNaN(Vxnew(i)) Then Vxnew(i) = 0.0#
-            Next
-
-            Return Vxnew
-
-        End Function
-
-        Public Function AUX_ERASE(ByVal Vx As Object) As Double()
-
-            Dim i, n As Integer
-
-            n = UBound(Vx)
-
-            Dim Vx2(n) As Double
-
-            For i = 0 To n
-                Vx2(i) = 0
-            Next
-
-            Return Vx2
-
-        End Function
-
-        Public Function AUX_SINGLECOMPIDX(ByVal Vx As Object) As Integer
-
-            Dim i, n As Integer
-
-            n = UBound(Vx)
-
-            For i = 0 To n
-                If Vx(i) <> 0 Then Return i
-            Next
-
-            Return -1
-
-        End Function
-
-        Public Function AUX_SINGLECOMPIDX(ByVal fase As Fase) As Integer
-
-            Dim i As Integer
-
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            i = 0
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                If subst.FracaoMolar.GetValueOrDefault <> 0 Then Return i
-            Next
-
-            Return -1
-
-        End Function
-
-        Public Function AUX_IS_SINGLECOMP(ByVal Vx As Object) As Boolean
-
-            Dim i, c, n As Integer
-
-            n = UBound(Vx)
-
-            c = 0
-            For i = 0 To n
-                If Vx(i) <> 0 Then c += 1
-            Next
-
-            If c = 1 Then Return True Else Return False
-
-        End Function
-
-        Public Function AUX_IS_SINGLECOMP(ByVal fase As Fase) As Boolean
-
-            Dim c As Integer
-
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-
-            c = 0
-            For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                If subst.FracaoMolar.GetValueOrDefault <> 0 Then c += 1
-            Next
-
-            If c = 1 Then Return True Else Return False
-
-        End Function
-
-        Public Function AUX_INT_CPDTm(ByVal T1 As Double, ByVal T2 As Double, ByVal Vw As Object)
-
-            Dim val As Double
-            Dim i As Integer = 0
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val += Vw(i) * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function AUX_INT_CPDT_Tm(ByVal T1 As Double, ByVal T2 As Double, ByVal Vw As Object)
-
-            Dim val As Double
-            Dim i As Integer = 0
-            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val += Vw(i) * Me.AUX_INT_CPDT_Ti(T1, T2, subst.Nome)
-                i += 1
-            Next
-
-            Return val
-
-        End Function
-
-        Public Function AUX_CONVERT_MOL_TO_MASS(ByVal Vz As Object) As Double()
-
-            Dim Vwe(UBound(Vz)) As Double
-            Dim mol_x_mm As Double = 0
-            Dim i As Integer = 0
-            Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
-            For Each sub1 In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                mol_x_mm += Vz(i) * sub1.ConstantProperties.Molar_Weight
-                i += 1
-            Next
-
-            i = 0
-            For Each sub1 In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                If mol_x_mm <> 0 Then
-                    Vwe(i) = Vz(i) * sub1.ConstantProperties.Molar_Weight / mol_x_mm
-                Else
-                    Vwe(i) = 0.0#
-                End If
-                i += 1
-            Next
-
-            Return Vwe
-
-        End Function
-
-        Public Function AUX_CONVERT_MASS_TO_MOL(ByVal Vz As Object) As Double()
-
-            Dim Vw(UBound(Vz)) As Double
-            Dim mass_div_mm As Double
-            Dim i As Integer = 0
-            Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
-            For Each sub1 In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                mass_div_mm += Vz(i) / sub1.ConstantProperties.Molar_Weight
-                i += 1
-            Next
-
-            i = 0
-            For Each sub1 In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                Vw(i) = Vz(i) / sub1.ConstantProperties.Molar_Weight / mass_div_mm
-                i += 1
-            Next
-
-            Return Vw
-
-        End Function
-
-        Public Function AUX_CalculateSumSquares(ByVal Vz As Object) As Double
-
-            Dim n, i As Integer
-            n = UBound(Vz)
-            Dim sum As Double = 0.0#
-
-            For i = 0 To n
-                sum += Vz(i) ^ 2
-            Next
-
-            Return sum
-
-        End Function
-
-        Public Function AUX_CalculateAbsSumSquares(ByVal Vz As Object) As Double
-
-            Dim n, i As Integer
-            n = UBound(Vz)
-            Dim sum As Double = 0.0#
-
-            For i = 0 To n
-                sum += Abs(Vz(i)) ^ 2
-            Next
-
-            Return sum
-
-        End Function
-
-        Public Function AUX_CalculateSum(ByVal Vz As Object) As Double
-
-            Dim n, i As Integer
-            n = UBound(Vz)
-            Dim sum As Double = 0.0#
-
-            For i = 0 To n
-                sum += Vz(i)
-            Next
-
-            Return sum
-
-        End Function
-
-        Public Function AUX_CalculateAbsSum(ByVal Vz As Object) As Double
-
-            Dim n, i As Integer
-            n = UBound(Vz)
-            Dim sum As Double = 0.0#
-
-            For i = 0 To n
-                sum += Abs(Vz(i))
-            Next
-
-            Return sum
-
-        End Function
-
-        Public Function AUX_CheckTrivial(ByVal KI As Object) As Boolean
-
-            Dim isTrivial As Boolean = True
-            Dim n, i As Integer
-            n = UBound(KI)
-
-            For i = 0 To n
-                If Abs(KI(i) - 1) > 0.01 Then isTrivial = False
-            Next
-
-            Return isTrivial
-
-        End Function
-
-        Function CalcCSTDepProp(ByVal eqno As String, ByVal A As Double, ByVal B As Double, ByVal C As Double, ByVal D As Double, ByVal E As Double, ByVal T As Double, ByVal Tc As Double) As Double
-
-            Dim Tr As Double = T / Tc
-
-            Select Case eqno
-                Case "1"
-                    Return A
-                Case "2"
-                    Return A + B * T
-                Case "3"
-                    Return A + B * T + C * T ^ 2
-                Case "4"
-                    Return A + B * T + C * T ^ 2 + D * T ^ 3
-                Case "5"
-                    Return A + B * T + C * T ^ 2 + D * T ^ 3 + E * T ^ 4
-                Case "10"
-                    Return Exp(A - B / (T + C))
-                Case "11"
-                    Return Exp(A)
-                Case "12"
-                    Return Exp(A + B * T)
-                Case "13"
-                    Return Exp(A + B * T + C * T ^ 2)
-                Case "14"
-                    Return Exp(A + B * T + C * T ^ 2 + D * T ^ 3)
-                Case "15"
-                    Return Exp(A + B * T + C * T ^ 2 + D * T ^ 3 + E * T ^ 4)
-                Case "16"
-                    Return A + Exp(B / T + C + D * T + E * T ^ 2)
-                Case "17"
-                    Return A + Exp(B + C * T + D * T ^ 2 + E * T ^ 3)
-                Case "45"
-                    Return A * T + B * T ^ 2 / 2 + C * T ^ 3 / 3 + D * T ^ 4 / 4 + E * T ^ 5 / 5
-                Case "75"
-                    Return B + 2 * C * T + 3 * D * T ^ 2 + 4 * E * T ^ 3
-                Case "100"
-                    Return A + B * T + C * T ^ 2 + D * T ^ 3 + E * T ^ 4
-                Case "101"
-                    Return Exp(A + B / T + C * Log(T) + D * T ^ E)
-                Case "102"
-                    Return A * T ^ B / (1 + C / T + D / T ^ 2)
-                Case "103"
-                    Return A + B * Exp(-C / (T ^ D))
-                Case "104"
-                    Return A + B / T + C / T ^ 2 + D / T ^ 8 + E / T ^ 9
-                Case "105"
-                    Return A / (B ^ (1 + (1 - T / C) ^ D))
-                Case "106"
-                    Return A * (1 - Tr) ^ (B + C * Tr + D * Tr ^ 2 + E * Tr ^ 3)
-                Case "107"
-                    Return A + B * (C / T / Sinh(C / T)) ^ 2 + D * (D / T / Cosh(D / T)) ^ 2
-                Case "114"
-                    Return A * T + B * T ^ 2 / 2 + C * T ^ 3 / 3 + D * T ^ 4 / 4
-                Case "115"
-                    Return Exp(A + B / T + C * Log(T) + D * T ^ 2 + E / T ^ 2)
-                Case "116"
-                    Return A + B * (1 - Tr) ^ 0.35 + C * (1 - Tr) ^ (2 / 3) + D * (1 - Tr) + E * (1 - Tr) ^ (4 / 3)
-                Case "117"
-                    Return A * T + B * (C / T) / Tanh(C / T) - D * (E / T) / Tanh(E / T)
-                Case "207"
-                    Return Exp(A - B / (T + C))
-                Case "208"
-                    Return 10 ^ (A - B / (T + C))
-                Case "209"
-                    Return 10 ^ (A * (1 / T - 1 / B))
-                Case "210"
-                    Return 10 ^ (A + B / T + C * T + D * T ^ 2)
-                Case "211"
-                    Return A * ((B - T) / (B - C)) ^ D
-                Case Else
-                    Return 0
-            End Select
-
-
-        End Function
-
-#End Region
-
-#Region "   CAPE-OPEN 1.0 Methods and Properties"
-
-        Private _compdesc, _compname As String
-
-        ''' <summary>
-        ''' Gets the name of the component.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>CapeString</returns>
-        ''' <remarks>Implements CapeOpen.ICapeIdentification.ComponentDescription</remarks>
-        Public Overridable Property ComponentDescription() As String Implements CapeOpen.ICapeIdentification.ComponentDescription
-            Get
-                Return _compdesc
-            End Get
-            Set(ByVal value As String)
-                _compdesc = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Gets the description of the component.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>CapeString</returns>
-        ''' <remarks>Implements CapeOpen.ICapeIdentification.ComponentName</remarks>
-        Public Overridable Property ComponentName() As String Implements CapeOpen.ICapeIdentification.ComponentName
-            Get
-                Return _compname
-            End Get
-            Set(ByVal value As String)
-                _compname = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Method responsible for calculating/delegating phase equilibria.
-        ''' </summary>
-        ''' <param name="materialObject">The Material Object</param>
-        ''' <param name="flashType">Flash calculation type.</param>
-        ''' <param name="props">Properties to be calculated at equilibrium. UNDEFINED for no
-        ''' properties. If a list, then the property values should be set for each
-        ''' phase present at equilibrium. (not including the overall phase).</param>
-        ''' <remarks><para>On the Material Object the CalcEquilibrium method must set the amounts (phaseFraction) and compositions
-        ''' (fraction) for all phases present at equilibrium, as well as the temperature and pressure for the overall
-        ''' mixture, if these are not set as part of the calculation specifications. The CalcEquilibrium method must not
-        ''' set on the Material Object any other value - in particular it must not set any values for phases that do not
-        ''' exist. See 5.2.1 for more information.</para>
-        ''' <para>The available list of flashes is given in section 5.6.1.</para>
-        ''' <para>When calling this method, it is advised not to combine a flash calculation with a property calculation.
-        ''' Through the returned error one cannot see which has failed, plus the additional arguments available in a
-        ''' CalcProp call (such as calculation type) cannot be specified in a CalcEquilibrium call. Advice is to perform a
-        ''' CalcEquilibrium, get the phaseIDs and perform a CalcProp for the existing phases.</para></remarks>
-        Public Overridable Sub CalcEquilibrium(ByVal materialObject As Object, ByVal flashType As String, ByVal props As Object) Implements CapeOpen.ICapeThermoPropertyPackage.CalcEquilibrium
-
-            Dim mymat As ICapeThermoMaterial = materialObject
-            Me.CurrentMaterialStream = mymat
-            Select Case flashType.ToLower
-                Case "tp"
-                    Me.DW_CalcEquilibrium(FlashSpec.T, FlashSpec.P)
-                Case "ph"
-                    Me.DW_CalcEquilibrium(FlashSpec.P, FlashSpec.H)
-                Case "ps"
-                    Me.DW_CalcEquilibrium(FlashSpec.P, FlashSpec.S)
-                Case "tvf"
-                    Me.DW_CalcEquilibrium(FlashSpec.T, FlashSpec.VAP)
-                Case "pvf"
-                    Me.DW_CalcEquilibrium(FlashSpec.P, FlashSpec.VAP)
-                Case "pt"
-                    Me.DW_CalcEquilibrium(FlashSpec.T, FlashSpec.P)
-                Case "hp"
-                    Me.DW_CalcEquilibrium(FlashSpec.P, FlashSpec.H)
-                Case "sp"
-                    Me.DW_CalcEquilibrium(FlashSpec.P, FlashSpec.S)
-                Case "vft"
-                    Me.DW_CalcEquilibrium(FlashSpec.T, FlashSpec.VAP)
-                Case "vfp"
-                    Me.DW_CalcEquilibrium(FlashSpec.P, FlashSpec.VAP)
-                Case Else
-                    Throw New CapeOpen.CapeNoImplException()
-            End Select
-
-        End Sub
-
-        ''' <summary>
-        ''' This method is responsible for doing all calculations on behalf of the Calculation Routine component.
-        ''' </summary>
-        ''' <param name="materialObject">The Material Object of the calculation.</param>
-        ''' <param name="props">The list of properties to be calculated.</param>
-        ''' <param name="phases">List of phases for which the properties are to be calculated.</param>
-        ''' <param name="calcType">Type of calculation: Mixture Property or Pure Compound Property. For
-        ''' partial property, such as fugacity coefficients of compounds in a
-        ''' mixture, use “Mixture” CalcType. For pure compound fugacity
-        ''' coefficients, use “Pure” CalcType.</param>
-        ''' <remarks></remarks>
-        Public Overridable Sub CalcProp(ByVal materialObject As Object, ByVal props As Object, ByVal phases As Object, ByVal calcType As String) Implements CapeOpen.ICapeThermoPropertyPackage.CalcProp
-            Dim mymat As MaterialStream = materialObject
-            Me.CurrentMaterialStream = mymat
-            Dim ph As String() = phases
-            For Each f As String In ph
-                For Each pi As PhaseInfo In Me.PhaseMappings.Values
-                    If f = pi.PhaseLabel Then
-                        If Not pi.DWPhaseID = Fase.Solid Then
-                            For Each p As String In props
-                                Me.DW_CalcProp(p, pi.DWPhaseID)
-                            Next
-                            Exit For
-                        Else
-                            Me.DW_CalcSolidPhaseProps()
-                        End If
-                    End If
-                Next
-            Next
-        End Sub
-
-        ''' <summary>
-        ''' Returns the values of the Constant properties of the compounds contained in the passed Material Object.
-        ''' </summary>
-        ''' <param name="materialObject">The Material Object.</param>
-        ''' <param name="props">The list of properties.</param>
-        ''' <returns>Compound Constant values.</returns>
-        ''' <remarks></remarks>
-        Public Overridable Function GetComponentConstant(ByVal materialObject As Object, ByVal props As Object) As Object Implements CapeOpen.ICapeThermoPropertyPackage.GetComponentConstant
-            Dim vals As New ArrayList
-            Dim mymat As MaterialStream = materialObject
-            For Each c As Substancia In mymat.Fases(0).Componentes.Values
-                For Each p As String In props
-                    Select Case p.ToLower
-                        Case "molecularweight"
-                            vals.Add(c.ConstantProperties.Molar_Weight)
-                        Case "criticaltemperature"
-                            vals.Add(c.ConstantProperties.Critical_Temperature)
-                        Case "criticalpressure"
-                            vals.Add(c.ConstantProperties.Critical_Pressure)
-                        Case "criticalvolume"
-                            vals.Add(c.ConstantProperties.Critical_Volume / 1000)
-                        Case "criticalcompressibilityfactor"
-                            vals.Add(c.ConstantProperties.Critical_Compressibility)
-                        Case "acentricfactor"
-                            vals.Add(c.ConstantProperties.Acentric_Factor)
-                        Case "normalboilingpoint"
-                            vals.Add(c.ConstantProperties.Normal_Boiling_Point)
-                        Case "idealgasgibbsfreeenergyofformationat25c"
-                            vals.Add(c.ConstantProperties.IG_Gibbs_Energy_of_Formation_25C * c.ConstantProperties.Molar_Weight)
-                        Case "idealgasenthalpyofformationat25c"
-                            vals.Add(c.ConstantProperties.IG_Enthalpy_of_Formation_25C * c.ConstantProperties.Molar_Weight)
-                        Case "casregistrynumber"
-                            vals.Add(c.ConstantProperties.CAS_Number)
-                        Case "chemicalformula"
-                            vals.Add(c.ConstantProperties.Formula)
-                        Case Else
-                            Throw New CapeOpen.CapeNoImplException
-                    End Select
-                Next
-            Next
-            Dim arr2(vals.Count) As Double
-            Array.Copy(vals.ToArray, arr2, vals.Count)
-            Return arr2
-        End Function
-
-        ''' <summary>
-        ''' Returns the list of compounds of a given Property Package.
-        ''' </summary>
-        ''' <param name="compIds">List of compound IDs</param>
-        ''' <param name="formulae">List of compound formulae</param>
-        ''' <param name="names">List of compound names.</param>
-        ''' <param name="boilTemps">List of boiling point temperatures.</param>
-        ''' <param name="molWt">List of molecular weights.</param>
-        ''' <param name="casNo">List of CAS numbers .</param>
-        ''' <remarks>Compound identification could be necessary if the PME has internal knowledge of chemical compounds, or in case of
-        ''' use of multiple Property Packages. In order to identify the compounds of a Property Package, the PME will use the
-        ''' 'casno’ argument instead of the compIds. The reason is that different PMEs may give different names to the same
-        ''' chemical compounds, whereas CAS Numbers are universal. Therefore, it is recommended to provide a value for the
-        ''' casno argument wherever available.</remarks>
-        Public Overridable Sub GetComponentList(ByRef compIds As Object, ByRef formulae As Object, ByRef names As Object, ByRef boilTemps As Object, ByRef molWt As Object, ByRef casNo As Object) Implements CapeOpen.ICapeThermoPropertyPackage.GetComponentList
-
-            Dim ids, formulas, nms, bts, casnos, molws As New ArrayList
-
-            If My.Application.CAPEOPENMode Then
-                For Each c As ConstantProperties In _selectedcomps.Values
-                    ids.Add(c.Name)
-                    formulas.Add(c.Formula)
-                    nms.Add(DWSIM.App.GetComponentName(c.Name))
-                    bts.Add(c.Normal_Boiling_Point)
-                    If c.CAS_Number <> "" Then casnos.Add(c.CAS_Number) Else casnos.Add(c.Name)
-                    molws.Add(c.Molar_Weight)
-                Next
-            Else
-                For Each c As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                    ids.Add(c.ConstantProperties.Name)
-                    formulas.Add(c.ConstantProperties.Formula)
-                    nms.Add(DWSIM.App.GetComponentName(c.ConstantProperties.Name))
-                    bts.Add(c.ConstantProperties.Normal_Boiling_Point)
-                    If c.ConstantProperties.CAS_Number <> "" Then casnos.Add(c.ConstantProperties.CAS_Number) Else casnos.Add(c.ConstantProperties.Name)
-                    molws.Add(c.ConstantProperties.Molar_Weight)
-                Next
-            End If
-
-            Dim _i(ids.Count - 1) As String
-            Dim _f(ids.Count - 1) As String
-            Dim _n(ids.Count - 1) As String
-            Dim _c(ids.Count - 1) As String
-            Dim _b(ids.Count - 1) As Double
-            Dim _m(ids.Count - 1) As Double
-
-            Array.Copy(ids.ToArray, _i, ids.Count)
-            Array.Copy(formulas.ToArray, _f, ids.Count)
-            Array.Copy(nms.ToArray, _n, ids.Count)
-            Array.Copy(casnos.ToArray, _c, ids.Count)
-            Array.Copy(bts.ToArray, _b, ids.Count)
-            Array.Copy(molws.ToArray, _m, ids.Count)
-
-            If ids.Count > 0 Then
-                compIds = _i
-                formulae = _f
-                names = _n
-                boilTemps = _b
-                casNo = _c
-                molWt = _m
-            Else
-                compIds = Nothing
-                formulae = Nothing
-                names = Nothing
-                casNo = Nothing
-                boilTemps = Nothing
-                molWt = Nothing
-            End If
-
-        End Sub
-
-        ''' <summary>
-        ''' Provides the list of the supported phases. When supported for one or more property calculations, the Overall
-        ''' phase and multiphase identifiers must be returned by this method.
-        ''' </summary>
-        ''' <returns>The list of phases supported by the Property Package.</returns>
-        ''' <remarks></remarks>
-        Public Overridable Function GetPhaseList() As Object Implements CapeOpen.ICapeThermoPropertyPackage.GetPhaseList
-            Dim pl As New ArrayList
-            For Each pi As PhaseInfo In Me.PhaseMappings.Values
-                If pi.PhaseLabel <> "Disabled" Then
-                    pl.Add(pi.PhaseLabel)
-                End If
-            Next
-            pl.Add("Overall")
-            Dim arr(pl.Count - 1) As String
-            Array.Copy(pl.ToArray, arr, pl.Count)
-            Return arr
-        End Function
-
-        ''' <summary>
-        ''' Returns list of properties supported by the Property Package.
-        ''' </summary>
-        ''' <returns>List of all supported Properties.</returns>
-        ''' <remarks>GetPropList should return identifiers for the non-constant properties calculated by CalcProp. Standard
-        ''' identifiers are listed in 3.10.1. Other non-standard properties that are supported by the Property Package can
-        ''' also be returned. GetPropList must not return identifiers for compound constant properties returned by
-        ''' GetComponentConstant.
-        ''' The properties temperature, pressure, fraction, flow, phaseFraction, totalFlow cannot be returned by
-        ''' GetPropList, since all thermodynamic software components must support them. Although the property
-        ''' identifier of derivative properties is formed from the identifier of another property, the GetPropList method
-        ''' must return the identifiers of all supported derivative and non-derivative properties. For instance, a Property
-        ''' Package could return the following list:
-        ''' enthalpy, enthalpy.Dtemperature, entropy, entropy.Dpressure.</remarks>
-        Public Overridable Function GetPropList() As Object Implements CapeOpen.ICapeThermoPropertyPackage.GetPropList
-            Dim arr As New ArrayList
-            With arr
-                .Add("vaporPressure")
-                .Add("surfaceTension")
-                .Add("compressibilityFactor")
-                .Add("heatOfVaporization")
-                .Add("heatCapacity")
-                .Add("heatCapacityCv")
-                .Add("idealGasHeatCapacity")
-                .Add("idealGasEnthalpy")
-                .Add("excessEnthalpy")
-                .Add("excessGibbsFreeEnergy")
-                .Add("excessEntropy")
-                .Add("viscosity")
-                .Add("thermalConductivity")
-                .Add("fugacity")
-                .Add("fugacityCoefficient")
-                .Add("activity")
-                .Add("activityCoefficient")
-                .Add("dewPointPressure")
-                .Add("dewPointTemperature")
-                .Add("kvalue")
-                .Add("logFugacityCoefficient")
-                .Add("logkvalue")
-                .Add("volume")
-                .Add("density")
-                .Add("enthalpy")
-                .Add("entropy")
-                .Add("enthalpyF")
-                .Add("entropyF")
-                .Add("enthalpyNF")
-                .Add("entropyNF")
-                .Add("gibbsFreeEnergy")
-                .Add("moles")
-                .Add("mass")
-                .Add("molecularWeight")
-                .Add("boilingPointTemperature")
-            End With
-
-            Dim arr2(arr.Count) As String
-            Array.Copy(arr.ToArray, arr2, arr.Count)
-            Return arr2
-
-        End Function
-
-        ''' <summary>
-        ''' Returns the values of the Universal Constants.
-        ''' </summary>
-        ''' <param name="materialObject">The Material Object.</param>
-        ''' <param name="props">List of requested Universal Constants;</param>
-        ''' <returns>Values of Universal Constants.</returns>
-        ''' <remarks></remarks>
-        Public Overridable Function GetUniversalConstant(ByVal materialObject As Object, ByVal props As Object) As Object Implements CapeOpen.ICapeThermoPropertyPackage.GetUniversalConstant
-            Dim res As New ArrayList
-            For Each p As String In props
-                Select Case p.ToLower
-                    Case "standardaccelerationofgravity"
-                        res.Add(9.80665)
-                    Case "avogadroconstant"
-                        res.Add(6.0221419947E+23)
-                    Case "boltzmannconstant"
-                        res.Add(1.38065324E-23)
-                    Case "molargasconstant"
-                        res.Add(8.31447215)
-                End Select
-            Next
-
-            Dim arr2(res.Count) As Double
-            Array.Copy(res.ToArray, arr2, res.Count)
-            Return arr2
-
-        End Function
-
-        ''' <summary>
-        ''' Check to see if properties can be calculated.
-        ''' </summary>
-        ''' <param name="materialObject">The Material Object for the calculations.</param>
-        ''' <param name="props">List of Properties to check.</param>
-        ''' <returns>The array of booleans for each property.</returns>
-        ''' <remarks>As it was unclear from the original specification what PropCheck should exactly be checking, and as the
-        ''' argument list does not include a phase specification, implementations vary. It is generally expected that
-        ''' PropCheck at least verifies that the Property is available for calculation in the property Package. However,
-        ''' this can also be verified with PropList. It is advised not to use PropCheck.</remarks>
-        Public Overridable Function PropCheck(ByVal materialObject As Object, ByVal props As Object) As Object Implements CapeOpen.ICapeThermoPropertyPackage.PropCheck
-            Return True
-        End Function
-
-        ''' <summary>
-        ''' Checks the validity of the calculation. This method is deprecated.
-        ''' </summary>
-        ''' <param name="materialObject">The Material Object for the calculations.</param>
-        ''' <param name="props">The list of properties to check.</param>
-        ''' <returns>The properties for which reliability is checked.</returns>
-        ''' <remarks>The ValidityCheck method must not be used, since the ICapeThermoReliability interface is not yet defined.</remarks>
-        Public Overridable Function ValidityCheck(ByVal materialObject As Object, ByVal props As Object) As Object Implements CapeOpen.ICapeThermoPropertyPackage.ValidityCheck
-            Return True
-        End Function
-
-        ''' <summary>
-        ''' Method responsible for calculating phase equilibria.
-        ''' </summary>
-        ''' <param name="materialObject">Material Object of the calculation</param>
-        ''' <param name="flashType">Flash calculation type.</param>
-        ''' <param name="props">Properties to be calculated at equilibrium. UNDEFINED for no
-        ''' properties. If a list, then the property values should be set for each
-        ''' phase present at equilibrium. (not including the overall phase).</param>
-        ''' <remarks>The CalcEquilibrium method must set on the Material Object the amounts (phaseFraction) and compositions
-        ''' (fraction) for all phases present at equilibrium, as well as the temperature and pressure for the overall
-        ''' mixture, if not set as part of the calculation specifications. The CalcEquilibrium method must not set on the
-        ''' Material Object any other value - in particular it must not set any values for phases that do not exist. See
-        ''' 5.2.1 for more information.
-        ''' The available list of flashes is given in section 5.6.1.
-        ''' It is advised not to combine a flash calculation with a property calculation. By the returned error one cannot
-        ''' see which has failed, plus the additional arguments to CalcProp (such as calculation type) cannot be
-        ''' specified. Advice is to perform a CalcEquilibrium, get the phaseIDs and perform a CalcProp for those
-        ''' phases.</remarks>
-        Public Overridable Sub CalcEquilibrium2(ByVal materialObject As Object, ByVal flashType As String, ByVal props As Object) Implements CapeOpen.ICapeThermoEquilibriumServer.CalcEquilibrium
-            CalcEquilibrium(materialObject, flashType, props)
-        End Sub
-
-        ''' <summary>
-        ''' Checks to see if a given type of flash calculations can be performed and whether the properties can be
-        ''' calculated after the flash calculation.
-        ''' </summary>
-        ''' <param name="materialObject">The Material Object for the calculations.</param>
-        ''' <param name="flashType">Type of flash calculation to check</param>
-        ''' <param name="props">List of Properties to check. UNDEFINED for none.</param>
-        ''' <param name="valid">The array of booleans for flash and property. First element is reserved for flashType.</param>
-        ''' <remarks>As it was unclear from the original specification what PropCheck should exactly be checking, and as the
-        ''' argument list does not include a phase specification, implementations vary. It is generally expected that
-        ''' PropCheck at least verifies that the Property is available for calculation in the Material Object. However, this
-        ''' can also be verified with PropList. It is advised not to use PropCheck.
-        ''' DWSIM doesn't implement this interface.</remarks>
-        Public Overridable Sub PropCheck1(ByVal materialObject As Object, ByVal flashType As String, ByVal props As Object, ByRef valid As Object) Implements CapeOpen.ICapeThermoEquilibriumServer.PropCheck
-            Throw New CapeOpen.CapeNoImplException
-        End Sub
-
-        ''' <summary>
-        ''' Returns the flash types, properties, phases, and calculation types that are supported by a given Equilibrium Server Routine.
-        ''' </summary>
-        ''' <param name="flashType">Type of flash calculations supported.</param>
-        ''' <param name="props">List of supported properties.</param>
-        ''' <param name="phases">List of supported phases.</param>
-        ''' <param name="calcType">List of supported calculation types.</param>
-        ''' <remarks></remarks>
-        Public Overridable Sub PropList(ByRef flashType As Object, ByRef props As Object, ByRef phases As Object, ByRef calcType As Object) Implements CapeOpen.ICapeThermoEquilibriumServer.PropList
-            props = GetPropList()
-            flashType = New String() {"TP", "PH", "PS", "TVF", "PVF", "PT", "HP", "SP", "VFT", "VFP"}
-            phases = New String() {"Vapor", "Liquid1", "Liquid2", "Solid", "Overall"}
-            calcType = New String() {"Mixture"}
-        End Sub
-
-        Public Overridable Sub ValidityCheck1(ByVal materialObject As Object, ByVal props As Object, ByRef relList As Object) Implements CapeOpen.ICapeThermoEquilibriumServer.ValidityCheck
-            Throw New CapeOpen.CapeNoImplException
-        End Sub
-
-        Public Overridable Sub CalcProp1(ByVal materialObject As Object, ByVal props As Object, ByVal phases As Object, ByVal calcType As String) Implements CapeOpen.ICapeThermoCalculationRoutine.CalcProp
-            CalcProp(materialObject, props, phases, calcType)
-        End Sub
-
-        Public Overridable Function GetPropList1() As Object Implements CapeOpen.ICapeThermoCalculationRoutine.GetPropList
-            Return GetPropList()
-        End Function
-
-        Public Overridable Function PropCheck2(ByVal materialObject As Object, ByVal props As Object) As Object Implements CapeOpen.ICapeThermoCalculationRoutine.PropCheck
-            Return True
-        End Function
-
-        Public Overridable Function ValidityCheck2(ByVal materialObject As Object, ByVal props As Object) As Object Implements CapeOpen.ICapeThermoCalculationRoutine.ValidityCheck
-            Return True
-        End Function
-
-#End Region
-
-#Region "   CAPE-OPEN 1.1 Thermo & Physical Properties"
-
-        ''' <summary>
-        ''' Returns the values of constant Physical Properties for the specified Compounds.
-        ''' </summary>
-        ''' <param name="props">The list of Physical Property identifiers. Valid
-        ''' identifiers for constant Physical Properties are listed in section 7.5.2.</param>
-        ''' <param name="compIds">List of Compound identifiers for which constants are to
-        ''' be retrieved. Set compIds to UNDEFINED to denote all Compounds in the component that implements the ICapeThermoCompounds interface.</param>
-        ''' <returns>Values of constants for the specified Compounds.</returns>
-        ''' <remarks>The GetConstPropList method can be used in order to check which constant Physical
-        ''' Properties are available.
-        ''' If the number of requested Physical Properties is P and the number of Compounds is C, the
-        ''' propvals array will contain C*P variants. The first C variants will be the values for the first
-        ''' requested Physical Property (one variant for each Compound) followed by C values of constants
-        ''' for the second Physical Property, and so on. The actual type of values returned
-        ''' (Double, String, etc.) depends on the Physical Property as specified in section 7.5.2.
-        ''' Physical Properties are returned in a fixed set of units as specified in section 7.5.2.
-        ''' If the compIds argument is set to UNDEFINED this is a request to return property values for
-        ''' all compounds in the component that implements the ICapeThermoCompounds interface
-        ''' with the compound order the same as that returned by the GetCompoundList method. For
-        ''' example, if the interface is implemented by a Property Package component the property
-        ''' request with compIds set to UNDEFINED means all compounds in the Property Package
-        ''' rather than all compounds in the Material Object passed to the Property package.
-        ''' If any Physical Property is not available for one or more Compounds, then undefined values
-        ''' must be returned for those combinations and an ECapeThrmPropertyNotAvailable exception
-        ''' must be raised. If the exception is raised, the client should check all the values returned to
-        ''' determine which is undefined.</remarks>
-        Public Overridable Function GetCompoundConstant(ByVal props As Object, ByVal compIds As Object) As Object Implements ICapeThermoCompounds.GetCompoundConstant
-            Dim vals As New ArrayList
-            For Each s As String In compIds
-                Dim c As Substancia = Me.CurrentMaterialStream.Fases(0).Componentes(s)
-                For Each p As String In props
-                    Select Case p.ToLower
-                        Case "molecularweight"
-                            vals.Add(c.ConstantProperties.Molar_Weight)
-                        Case "criticaltemperature"
-                            vals.Add(c.ConstantProperties.Critical_Temperature)
-                        Case "criticalpressure"
-                            vals.Add(c.ConstantProperties.Critical_Pressure)
-                        Case "criticalvolume"
-                            vals.Add(c.ConstantProperties.Critical_Volume / 1000)
-                        Case "criticalcompressibilityfactor"
-                            vals.Add(c.ConstantProperties.Critical_Compressibility)
-                        Case "acentricfactor"
-                            vals.Add(c.ConstantProperties.Acentric_Factor)
-                        Case "normalboilingpoint"
-                            vals.Add(c.ConstantProperties.Normal_Boiling_Point)
-                        Case "idealgasgibbsfreeenergyofformationat25c"
-                            vals.Add(c.ConstantProperties.IG_Gibbs_Energy_of_Formation_25C * c.ConstantProperties.Molar_Weight)
-                        Case "idealgasenthalpyofformationat25c"
-                            vals.Add(c.ConstantProperties.IG_Enthalpy_of_Formation_25C * c.ConstantProperties.Molar_Weight)
-                        Case "casregistrynumber"
-                            vals.Add(c.ConstantProperties.CAS_Number)
-                        Case "chemicalformula", "structureformula"
-                            vals.Add(c.ConstantProperties.Formula)
-                        Case Else
-                            Throw New CapeOpen.CapeNoImplException
-                    End Select
-                Next
-            Next
-            Dim arr2(vals.Count - 1) As Object
-            Array.Copy(vals.ToArray, arr2, vals.Count)
-            Return arr2
-        End Function
-
-        ''' <summary>
-        ''' Returns the list of all Compounds. This includes the Compound identifiers recognised and extra
-        '''information that can be used to further identify the Compounds.
-        ''' </summary>
-        ''' <param name="compIds">List of Compound identifiers</param>
-        ''' <param name="formulae">List of Compound formulae</param>
-        ''' <param name="names">List of Compound names.</param>
-        ''' <param name="boilTemps">List of boiling point temperatures.</param>
-        ''' <param name="molwts">List of molecular weights.</param>
-        ''' <param name="casnos">List of Chemical Abstract Service (CAS) Registry numbers.</param>
-        ''' <remarks>If any item cannot be returned then the value should be set to UNDEFINED. The same information
-        ''' can also be extracted using the GetCompoundConstant method. The equivalences
-        ''' between GetCompoundList arguments and Compound constant Physical Properties, as
-        ''' specified in section 7.5.2, is given in the table below.
-        ''' When the ICapeThermoCompounds interface is implemented by a Material Object, the list
-        ''' of Compounds returned is fixed when the Material Object is configured.
-        ''' For a Property Package component, the Property Package will normally contain a limited set
-        ''' of Compounds selected for a particular application, rather than all possible Compounds that
-        ''' could be available to a proprietary Properties System.
-        ''' The compIds returned by the GetCompoundList method must be unique within the
-        ''' component that implements the ICapeThermoCompounds interface. There is no restriction
-        ''' on the length of the strings returned in compIds. However, it should be recognised that a
-        ''' PME may restrict the length of Compound identifiers internally. In such a case the PME’s
-        ''' CAPE-OPEN socket must maintain a method of mapping the, potentially long, identifiers
-        ''' used by a CAPE-OPEN Property package component to the identifiers used within the PME.
-        ''' In order to identify the Compounds of a Property Package, the PME, or other client, will use
-        ''' the casnos argument rather than the compIds. This is because different PMEs and different
-        ''' Property Packages may give different names to the same Compounds and the casnos is
-        ''' (almost always) unique. If the casnos is not available (e.g. for petroleum fractions), or not
-        ''' unique, the other pieces of information returned by GetCompoundList can be used to
-        ''' distinguish the Compounds. It should be noted, however, that for communication with a
-        ''' Property Package a client must use the Compound identifiers returned in the compIds
-        ''' argument. It is the responsibility of the client to maintain appropriate data structures that
-        ''' allow it to reconcile the different Compound identifiers used by different Property Packages
-        ''' and any native property system.</remarks>
-        Public Overridable Sub GetCompoundList(ByRef compIds As Object, ByRef formulae As Object, ByRef names As Object, ByRef boilTemps As Object, ByRef molwts As Object, ByRef casnos As Object) Implements ICapeThermoCompounds.GetCompoundList
-            GetComponentList(compIds, formulae, names, boilTemps, molwts, casnos)
-        End Sub
-
-        ''' <summary>
-        ''' Returns the list of supported constant Physical Properties.
-        ''' </summary>
-        ''' <returns>List of identifiers for all supported constant Physical Properties. The standard constant property identifiers are listed in section 7.5.2.</returns>
-        ''' <remarks>GetConstPropList returns identifiers for all the constant Physical Properties that can be
-        ''' retrieved by the GetCompoundConstant method. If no properties are supported,
-        ''' UNDEFINED should be returned. The CAPE-OPEN standards do not define a minimum list
-        ''' of Physical Properties to be made available by a software component that implements the
-        ''' ICapeThermoCompounds interface.
-        ''' A component that implements the ICapeThermoCompounds interface may return constant
-        ''' Physical Property identifiers which do not belong to the list defined in section 7.5.2.
-        ''' However, these proprietary identifiers may not be understood by most of the clients of this
-        ''' component.</remarks>
-        Public Overridable Function GetConstPropList() As Object Implements ICapeThermoCompounds.GetConstPropList
-            Dim vals As New ArrayList
-            With vals
-                .Add("molecularweight")
-                .Add("criticaltemperature")
-                .Add("criticalpressure")
-                .Add("criticalvolume")
-                .Add("criticalcompressibilityfactor")
-                .Add("acentricfactor")
-                .Add("normalboilingpoint")
-                .Add("idealgasgibbsfreeenergyofformationat25c")
-                .Add("idealgasenthalpyofformationat25c")
-                .Add("casregistrynumber")
-                .Add("chemicalformula")
-            End With
-            Dim arr2(vals.Count - 1) As String
-            Array.Copy(vals.ToArray, arr2, vals.Count)
-            Return arr2
-        End Function
-
-        ''' <summary>
-        ''' Returns the number of Compounds supported.
-        ''' </summary>
-        ''' <returns>Number of Compounds supported.</returns>
-        ''' <remarks>The number of Compounds returned by this method must be equal to the number of
-        ''' Compound identifiers that are returned by the GetCompoundList method of this interface. It
-        ''' must be zero or a positive number.</remarks>
-        Public Overridable Function GetNumCompounds() As Integer Implements ICapeThermoCompounds.GetNumCompounds
-            If My.Application.CAPEOPENMode Then
-                Return Me._selectedcomps.Count
-            Else
-                Return Me.CurrentMaterialStream.Fases(0).Componentes.Count
-            End If
-        End Function
-
-        ''' <summary>
-        ''' Returns the values of pressure-dependent Physical Properties for the specified pure Compounds.
-        ''' </summary>
-        ''' <param name="props">The list of Physical Property identifiers. Valid identifiers for pressure-dependent 
-        ''' Physical Properties are listed in section 7.5.4</param>
-        ''' <param name="pressure">Pressure (in Pa) at which Physical Properties are evaluated</param>
-        ''' <param name="compIds">List of Compound identifiers for which Physical Properties are to be retrieved. 
-        ''' Set compIds to UNDEFINED to denote all Compounds in the component that implements the ICapeThermoCompounds interface.</param>
-        ''' <param name="propVals">Property values for the Compounds specified.</param>
-        ''' <remarks></remarks>
-        Public Overridable Sub GetPDependentProperty(ByVal props As Object, ByVal pressure As Double, ByVal compIds As Object, ByRef propVals As Object) Implements ICapeThermoCompounds.GetPDependentProperty
-            Dim vals As New ArrayList
-            For Each c As String In compIds
-                For Each p As String In props
-                    Select Case p.ToLower
-                        Case "boilingpointtemperature"
-                            vals.Add(Me.AUX_TSATi(pressure, c))
-                    End Select
-                Next
-            Next
-            Dim arr2(vals.Count - 1) As Double
-            Array.Copy(vals.ToArray, arr2, vals.Count)
-            propVals = arr2
-        End Sub
-
-        ''' <summary>
-        ''' Returns the list of supported pressure-dependent properties.
-        ''' </summary>
-        ''' <returns>The list of Physical Property identifiers for all supported pressure-dependent properties. The standard identifiers are listed in section 7.5.4</returns>
-        ''' <remarks>GetPDependentPropList returns identifiers for all the pressure-dependent properties that can
-        ''' be retrieved by the GetPDependentProperty method. If no properties are supported
-        ''' UNDEFINED should be returned. The CAPE-OPEN standards do not define a minimum list
-        ''' of Physical Properties to be made available by a software component that implements the
-        ''' ICapeThermoCompounds interface.
-        ''' A component that implements the ICapeThermoCompounds interface may return identifiers
-        ''' which do not belong to the list defined in section 7.5.4. However, these proprietary
-        ''' identifiers may not be understood by most of the clients of this component.</remarks>
-        Public Overridable Function GetPDependentPropList() As Object Implements ICapeThermoCompounds.GetPDependentPropList
-            Return New String() {"boilingPointTemperature"}
-        End Function
-
-        ''' <summary>
-        ''' Returns the values of temperature-dependent Physical Properties for the specified pure Compounds.
-        ''' </summary>
-        ''' <param name="props">The list of Physical Property identifiers. Valid identifiers for 
-        ''' temperature-dependent Physical Properties are listed in section 7.5.3</param>
-        ''' <param name="temperature">Temperature (in K) at which properties are evaluated</param>
-        ''' <param name="compIds">List of Compound identifiers for which Physical Properties are to be retrieved. 
-        ''' Set compIds to UNDEFINED to denote all Compounds in the component that implements the ICapeThermoCompounds interface.</param>
-        ''' <param name="propVals">Physical Property values for the Compounds specified.</param>
-        ''' <remarks>The GetTDependentPropList method can be used in order to check which Physical
-        ''' Properties are available.
-        ''' If the number of requested Physical Properties is P and the number of Compounds is C, the
-        ''' propvals array will contain C*P values. The first C will be the values for the first requested
-        ''' Physical Property followed by C values for the second Physical Property, and so on.
-        ''' Properties are returned in a fixed set of units as specified in section 7.5.3.
-        ''' If the compIds argument is set to UNDEFINED this is a request to return property values for
-        ''' all compounds in the component that implements the ICapeThermoCompounds interface
-        ''' with the compound order the same as that returned by the GetCompoundList method. For
-        ''' example, if the interface is implemented by a Property Package component the property
-        ''' request with compIds set to UNDEFINED means all compounds in the Property Package
-        ''' rather than all compounds in the Material Object passed to the Property package.
-        ''' If any Physical Property is not available for one or more Compounds, then undefined values
-        ''' must be returned for those combinations and an ECapeThrmPropertyNotAvailable exception
-        ''' must be raised. If the exception is raised, the client should check all the values returned to
-        ''' determine which is undefined.</remarks>
-        Public Overridable Sub GetTDependentProperty(ByVal props As Object, ByVal temperature As Double, ByVal compIds As Object, ByRef propVals As Object) Implements ICapeThermoCompounds.GetTDependentProperty
-            Dim vals As New ArrayList
-            For Each c As String In compIds
-                For Each p As String In props
-                    Select Case p.ToLower
-                        Case "heatofvaporization"
-                            vals.Add(Me.AUX_HVAPi(c, temperature) * Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties.Molar_Weight)
-                        Case "idealgasenthalpy"
-                            vals.Add(Me.RET_Hid_i(298.15, temperature, c) * Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties.Molar_Weight)
-                        Case "idealgasentropy"
-                            vals.Add(Me.RET_Sid_i(298.15, temperature, 101325, c) * Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties.Molar_Weight)
-                        Case "idealgasheatcapacity"
-                            vals.Add(Me.AUX_CPi(c, temperature) * Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties.Molar_Weight)
-                        Case "vaporpressure"
-                            vals.Add(Me.AUX_PVAPi(c, temperature))
-                        Case "viscosityofliquid"
-                            vals.Add(Me.AUX_LIQVISCi(c, temperature))
-                        Case "heatcapacityofliquid"
-                            vals.Add(Me.AUX_LIQ_Cpi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature) * Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties.Molar_Weight)
-                        Case "heatcapacityofsolid"
-                            vals.Add(Me.AUX_SolidHeatCapacity(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature) * Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties.Molar_Weight)
-                        Case "thermalconductivityofliquid"
-                            vals.Add(Me.AUX_LIQTHERMCONDi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature))
-                        Case "thermalconductivityofvapor"
-                            vals.Add(Me.AUX_VAPTHERMCONDi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature, Me.AUX_PVAPi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties.Name, temperature)))
-                        Case "viscosityofvapor"
-                            vals.Add(Me.AUX_VAPVISCi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature))
-                        Case "densityofliquid"
-                            vals.Add(Me.AUX_LIQDENSi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature))
-                        Case "densityofsolid"
-                            vals.Add(Me.AUX_SOLIDDENSi(Me.CurrentMaterialStream.Fases(0).Componentes(c).ConstantProperties, temperature))
-                    End Select
-                Next
-            Next
-            Dim arr2(vals.Count - 1) As Double
-            Array.Copy(vals.ToArray, arr2, vals.Count)
-            propVals = arr2
-        End Sub
-
-        ''' <summary>
-        ''' Returns the list of supported temperature-dependent Physical Properties.
-        ''' </summary>
-        ''' <returns>The list of Physical Property identifiers for all supported temperature-dependent 
-        ''' properties. The standard identifiers are listed in section 7.5.3</returns>
-        ''' <remarks>GetTDependentPropList returns identifiers for all the temperature-dependent Physical
-        ''' Properties that can be retrieved by the GetTDependentProperty method. If no properties are
-        ''' supported UNDEFINED should be returned. The CAPE-OPEN standards do not define a
-        ''' minimum list of properties to be made available by a software component that implements
-        ''' the ICapeThermoCompounds interface.
-        ''' A component that implements the ICapeThermoCompounds interface may return identifiers
-        ''' which do not belong to the list defined in section 7.5.3. However, these proprietary identifiers
-        ''' may not be understood by most of the clients of this component.</remarks>
-        Public Overridable Function GetTDependentPropList() As Object Implements ICapeThermoCompounds.GetTDependentPropList
-            Dim vals As New ArrayList
-            With vals
-
-                .Add("heatOfVaporization")
-                .Add("idealGasEnthalpy")
-                .Add("idealGasEntropy")
-                .Add("idealGasHeatCapacity")
-                .Add("vaporPressure")
-                .Add("viscosityOfLiquid")
-
-                .Add("heatCapacityOfLiquid")
-                .Add("heatCapacityOfSolid")
-                .Add("thermalConductivityOfLiquid")
-                .Add("thermalConductivityOfVapor")
-                .Add("viscosityOfVapor")
-
-                .Add("densityOfLiquid")
-                .Add("densityOfSolid")
-
-            End With
-            Dim arr2(vals.Count - 1) As String
-            Array.Copy(vals.ToArray, arr2, vals.Count)
-            Return arr2
-        End Function
-
-        Public Overridable Function GetNumPhases() As Integer Implements ICapeThermoPhases.GetNumPhases
-            Dim i As Integer = 0
-            For Each pi As PhaseInfo In Me.PhaseMappings.Values
-                If pi.PhaseLabel <> "Disabled" Then
-                    i += 1
-                End If
-            Next
-            Return i
-        End Function
-
-        ''' <summary>
-        ''' Returns information on an attribute associated with a Phase for the purpose of understanding 
-        ''' what lies behind a Phase label.
-        ''' </summary>
-        ''' <param name="phaseLabel">A (single) Phase label. This must be one of the values returned by GetPhaseList method.</param>
-        ''' <param name="phaseAttribute">One of the Phase attribute identifiers from the table below.</param>
-        ''' <returns>The value corresponding to the Phase attribute identifier – see table below.</returns>
-        ''' <remarks>GetPhaseInfo is intended to allow a PME, or other client, to identify a Phase with an arbitrary
-        ''' label. A PME, or other client, will need to do this to map stream data into a Material
-        ''' Object, or when importing a Property Package. If the client cannot identify the Phase, it can
-        ''' ask the user to provide a mapping based on the values of these properties.
-        ''' The list of supported Phase attributes is defined in the following table:
-        ''' 
-        ''' Phase attribute identifier            Supported values
-        ''' 
-        ''' StateOfAggregation                    One of the following strings:
-        '''                                       Vapor
-        '''                                       Liquid
-        '''                                       Solid
-        '''                                       Unknown
-        ''' 
-        ''' KeyCompoundId                         The identifier of the Compound (compId as returned by GetCompoundList) 
-        '''                                       that is expected to be present in highest concentration in the Phase. 
-        '''                                       May be undefined in which case UNDEFINED should be returned.
-        ''' 
-        ''' ExcludedCompoundId                    The identifier of the Compound (compId as returned by
-        '''                                       GetCompoundList) that is expected to be present in low or zero
-        '''                                       concentration in the Phase. May not be defined in which case
-        '''                                       UNDEFINED should be returned.
-        ''' 
-        ''' DensityDescription                    A description that indicates the density range expected for the Phase.
-        '''                                       One of the following strings or UNDEFINED:
-        '''                                       Heavy
-        '''                                       Light
-        ''' 
-        ''' UserDescription                       A description that helps the user or PME to identify the Phase.
-        '''                                       It can be any string or UNDEFINED.
-        ''' 
-        ''' TypeOfSolid                           A description that provides more information about a solid Phase. For
-        '''                                       Phases with a “Solid” state of aggregation it may be one of the
-        '''                                       following standard strings or UNDEFINED:
-        '''                                       PureSolid
-        '''                                       SolidSolution
-        '''                                       HydrateI
-        '''                                       HydrateII
-        '''                                       HydrateH
-        '''                                       Other values may be returned for solid Phases but these may not be
-        '''                                       understood by most clients.
-        '''                                       For Phases with any other state of aggregation it must be
-        '''                                       UNDEFINED.</remarks>
-        Public Overridable Function GetPhaseInfo(ByVal phaseLabel As String, ByVal phaseAttribute As String) As Object Implements ICapeThermoPhases.GetPhaseInfo
-            Dim retval As Object = Nothing
-            Select Case phaseLabel
-                Case "Vapor"
-                    Select Case phaseAttribute
-                        Case "StateOfAggregation"
-                            retval = "Vapor"
-                        Case "keyCompoundId"
-                            retval = Nothing
-                        Case "ExcludedCompoundId"
-                            retval = Nothing
-                        Case "DensityDescription"
-                            retval = Nothing
-                        Case "UserDescription"
-                            retval = "Vapor Phase"
-                        Case Else
-                            retval = Nothing
-                    End Select
-                Case "Liquid1", "Liquid2", "Liquid3", "Liquid", "Aqueous"
-                    Select Case phaseAttribute
-                        Case "StateOfAggregation"
-                            retval = "Liquid"
-                        Case "keyCompoundId"
-                            retval = Nothing
-                        Case "ExcludedCompoundId"
-                            retval = Nothing
-                        Case "DensityDescription"
-                            retval = Nothing
-                        Case "UserDescription"
-                            retval = "Liquid Phase"
-                        Case Else
-                            retval = Nothing
-                    End Select
-                Case "Solid"
-                    Select Case phaseAttribute
-                        Case "StateOfAggregation"
-                            retval = "Solid"
-                        Case "TypeOfSolid"
-                            retval = "SolidSolution"
-                        Case "keyCompoundId"
-                            retval = Nothing
-                        Case "ExcludedCompoundId"
-                            retval = Nothing
-                        Case "DensityDescription"
-                            retval = Nothing
-                        Case "UserDescription"
-                            retval = "Solid Phase"
-                        Case Else
-                            retval = Nothing
-                    End Select
-            End Select
-            Return retval
-        End Function
-
-        ''' <summary>
-        ''' Returns Phase labels and other important descriptive information for all the Phases supported.
-        ''' </summary>
-        ''' <param name="phaseLabels">he list of Phase labels for the Phases supported. A Phase label can 
-        ''' be any string but each Phase must have a unique label. If, for some reason, no Phases are 
-        ''' supported an UNDEFINED value should be returned for the phaseLabels. The number of Phase labels 
-        ''' must also be equal to the number of Phases returned by the GetNumPhases method.</param>
-        ''' <param name="stateOfAggregation">The physical State of Aggregation associated with each of the 
-        ''' Phases. This must be one of the following strings: ”Vapor”, “Liquid”, “Solid” or “Unknown”. Each 
-        ''' Phase must have a single State of Aggregation. The value must not be left undefined, but may be 
-        ''' set to “Unknown”.</param>
-        ''' <param name="keyCompoundId">The key Compound for the Phase. This must be the Compound identifier 
-        ''' (as returned by GetCompoundList), or it may be undefined in which case a UNDEFINED value is returned. 
-        ''' The key Compound is an indication of the Compound that is expected to be present in high concentration 
-        ''' in the Phase, e.g. water for an aqueous liquid phase. Each Phase can have a single key Compound.</param>
-        ''' <remarks>The Phase label allows the phase to be uniquely identified in methods of the ICapeThermo-
-        ''' Phases interface and other CAPE-OPEN interfaces. The State of Aggregation and key
-        ''' Compound provide a way for the PME, or other client, to interpret the meaning of a Phase
-        ''' label in terms of the physical characteristics of the Phase.
-        ''' All arrays returned by this method must be of the same length, i.e. equal to the number of
-        ''' Phase labels.
-        ''' To get further information about a Phase, use the GetPhaseInfo method.</remarks>
-        Public Overridable Sub GetPhaseList1(ByRef phaseLabels As Object, ByRef stateOfAggregation As Object, ByRef keyCompoundId As Object) Implements ICapeThermoPhases.GetPhaseList
-            Dim pl, sa, kci As New ArrayList, tmpstr As Object
-            For Each pin As PhaseInfo In Me.PhaseMappings.Values
-                If pin.PhaseLabel <> "Disabled" Then
-                    pl.Add(pin.PhaseLabel)
-                    tmpstr = Me.GetPhaseInfo(pin.PhaseLabel, "StateOfAggregation")
-                    sa.Add(tmpstr)
-                    tmpstr = Me.GetPhaseInfo(pin.PhaseLabel, "keyCompoundId")
-                    kci.Add(tmpstr)
-                End If
-            Next
-            Dim myarr1(pl.Count - 1), myarr2(pl.Count - 1), myarr3(pl.Count - 1) As String
-            Array.Copy(pl.ToArray, myarr1, pl.Count)
-            Array.Copy(sa.ToArray, myarr2, pl.Count)
-            Array.Copy(kci.ToArray, myarr3, pl.Count)
-            phaseLabels = myarr1
-            stateOfAggregation = myarr2
-            keyCompoundId = myarr3
-        End Sub
-
-        ''' <summary>
-        ''' This method is used to calculate the natural logarithm of the fugacity coefficients (and
-        ''' optionally their derivatives) in a single Phase mixture. The values of temperature, pressure
-        ''' and composition are specified in the argument list and the results are also returned through
-        ''' the argument list.
-        ''' </summary>
-        ''' <param name="phaseLabel">Phase label of the Phase for which the properties are to be calculated. 
-        ''' The Phase label must be one of the strings returned by the GetPhaseList method on the ICapeThermoPhases interface.</param>
-        ''' <param name="temperature">The temperature (K) for the calculation.</param>
-        ''' <param name="pressure">The pressure (Pa) for the calculation.</param>
-        ''' <param name="moleNumbers">Number of moles of each Compound in the mixture.</param>
-        ''' <param name="fFlags">Code indicating whether natural logarithm of the fugacity coefficients and/or derivatives 
-        ''' should be calculated (see notes).</param>
-        ''' <param name="lnPhi">Natural logarithm of the fugacity coefficients (if requested).</param>
-        ''' <param name="lnPhiDT">Derivatives of natural logarithm of the fugacity coefficients w.r.t. temperature (if requested).</param>
-        ''' <param name="lnPhiDP">Derivatives of natural logarithm of the fugacity coefficients w.r.t. pressure (if requested).</param>
-        ''' <param name="lnPhiDn">Derivatives of natural logarithm of the fugacity coefficients w.r.t. mole numbers (if requested).</param>
-        ''' <remarks>This method is provided to allow the natural logarithm of the fugacity coefficient, which is
-        ''' the most commonly used thermodynamic property, to be calculated and returned in a highly
-        ''' efficient manner.
-        ''' The temperature, pressure and composition (mole numbers) for the calculation are specified
-        ''' by the arguments and are not obtained from the Material Object by a separate request. Likewise,
-        ''' any quantities calculated are returned through the arguments and are not stored in the
-        ''' Material Object. The state of the Material Object is not affected by calling this method. It
-        ''' should be noted however, that prior to calling CalcAndGetLnPhi a valid Material Object
-        ''' must have been defined by calling the SetMaterial method on the
-        ''' ICapeThermoMaterialContext interface of the component that implements the
-        ''' ICapeThermoPropertyRoutine interface. The compounds in the Material Object must have
-        ''' been identified and the number of values supplied in the moleNumbers argument must be
-        ''' equal to the number of Compounds in the Material Object.
-        ''' The fugacity coefficient information is returned as the natural logarithm of the fugacity
-        ''' coefficient. This is because thermodynamic models naturally provide the natural logarithm
-        ''' of this quantity and also a wider range of values may be safely returned.
-        ''' The quantities actually calculated and returned by this method are controlled by an integer
-        ''' code fFlags. The code is formed by summing contributions for the property and each
-        ''' derivative required using the enumerated constants eCapeCalculationCode (defined in the
-        ''' Thermo version 1.1 IDL) shown in the following table. For example, to calculate log
-        ''' fugacity coefficients and their T-derivatives the fFlags argument would be set to
-        ''' CAPE_LOG_FUGACITY_COEFFICIENTS + CAPE_T_DERIVATIVE.
-        ''' 
-        '''                                       code                            numerical value
-        ''' no calculation                        CAPE_NO_CALCULATION             0
-        ''' log fugacity coefficients             CAPE_LOG_FUGACITY_COEFFICIENTS  1
-        ''' T-derivative                          CAPE_T_DERIVATIVE               2
-        ''' P-derivative                          CAPE_P_DERIVATIVE               4
-        ''' mole number derivatives               CAPE_MOLE_NUMBERS_DERIVATIVES   8
-        ''' 
-        ''' If CalcAndGetLnPhi is called with fFlags set to CAPE_NO_CALCULATION no property
-        ''' values are returned.
-        ''' A typical sequence of operations for this method when implemented by a Property Package
-        ''' component would be:
-        ''' - Check that the phaseLabel specified is valid.
-        ''' - Check that the moleNumbers array contains the number of values expected
-        ''' (should be consistent with the last call to the SetMaterial method).
-        ''' - Calculate the requested properties/derivatives at the T/P/composition specified in
-        ''' the argument list.
-        ''' - Store values for the properties/derivatives in the corresponding arguments.
-        ''' Note that this calculation can be carried out irrespective of whether the Phase actually exists
-        ''' in the Material Object.</remarks>
-        Public Overridable Sub CalcAndGetLnPhi(ByVal phaseLabel As String, ByVal temperature As Double, ByVal pressure As Double, ByVal moleNumbers As Object, ByVal fFlags As Integer, ByRef lnPhi As Object, ByRef lnPhiDT As Object, ByRef lnPhiDP As Object, ByRef lnPhiDn As Object) Implements ICapeThermoPropertyRoutine.CalcAndGetLnPhi
-            Select Case fFlags
-                Case CapeCalculationCode.CAPE_LOG_FUGACITY_COEFFICIENTS
-                    'normalize mole fractions
-                    Dim tmols As Double, Vx(moleNumbers.length) As Double
-                    For i As Integer = 0 To moleNumbers.length - 1
-                        tmols += moleNumbers(i)
-                    Next
-                    For i As Integer = 0 To moleNumbers.length - 1
-                        moleNumbers(i) /= tmols
-                    Next
-                    Select Case phaseLabel
-                        Case "Vapor"
-                            lnPhi = Me.DW_CalcFugCoeff(Vx, temperature, pressure, State.Vapor)
-                        Case "Liquid"
-                            lnPhi = Me.DW_CalcFugCoeff(Vx, temperature, pressure, State.Liquid)
-                        Case "Solid"
-                            lnPhi = Me.DW_CalcFugCoeff(Vx, temperature, pressure, State.Solid)
-                    End Select
-                    For i As Integer = 0 To moleNumbers.length - 1
-                        lnPhi(i) = Log(lnPhi(i))
-                    Next
-                Case Else
-                    Throw New CapeOpen.CapeThrmPropertyNotAvailableException
-            End Select
-        End Sub
-
-        ''' <summary>
-        ''' CalcSinglePhaseProp is used to calculate properties and property derivatives of a mixture in
-        ''' a single Phase at the current values of temperature, pressure and composition set in the
-        ''' Material Object. CalcSinglePhaseProp does not perform phase Equilibrium Calculations.
-        ''' </summary>
-        ''' <param name="props">The list of identifiers for the single-phase properties or derivatives to 
-        ''' be calculated. See sections 7.5.5 and 7.6 for the standard identifiers.</param>
-        ''' <param name="phaseLabel">Phase label of the Phase for which the properties are to be calculated. 
-        ''' The Phase label must be one of the strings returned by the GetPhaseList method on the 
-        ''' ICapeThermoPhases interface and the phase must be present in the Material Object.</param>
-        ''' <remarks>CalcSinglePhaseProp calculates properties, such as enthalpy or viscosity that are defined for
-        ''' a single Phase. Physical Properties that depend on more than one Phase, for example surface
-        ''' tension or K-values, are handled by CalcTwoPhaseProp method.
-        ''' Components that implement this method must get the input specification for the calculation
-        ''' (temperature, pressure and composition) from the associated Material Object and set the
-        ''' results in the Material Object.
-        ''' Thermodynamic and Physical Properties Components, such as a Property Package or Property
-        ''' Calculator, must implement the ICapeThermoMaterialContext interface so that an
-        ''' ICapeThermoMaterial interface can be passed via the SetMaterial method.
-        ''' The component that implements the ICapeThermoPropertyRoutine interface (e.g. a Property
-        ''' Package or Property Calculator) must also implement the ICapeThermoPhases interface so
-        ''' that it is possible to get a list of supported phases. The phaseLabel passed to this method
-        ''' must be one of the phase labels returned by the GetPhaseList method of the
-        ''' ICapeThermoPhases interface and it must also be present in the Material Object, ie. one of
-        ''' the phase labels returned by the GetPresentPhases method of the ICapeThermoMaterial
-        ''' interface. This latter condition will be satisfied if the phase is made present explicitly by
-        ''' calling the SetPresentPhases method or if any phase properties have been set by calling the
-        ''' SetSinglePhaseProp or SetTwoPhaseProp methods.
-        ''' A typical sequence of operations for CalcSinglePhaseProp when implemented by a Property
-        ''' Package component would be:
-        ''' - Check that the phaseLabel specified is valid.
-        ''' - Use the GetTPFraction method (of the Material Object specified in the last call to the
-        ''' SetMaterial method) to get the temperature, pressure and composition of the
-        ''' specified Phase.
-        ''' - Calculate the properties.
-        ''' - Store values for the properties of the Phase in the Material Object using the
-        ''' SetSinglePhaseProp method of the ICapeThermoMaterial interface.
-        ''' CalcSinglePhaseProp will request the input Property values it requires from the Material
-        ''' Object through GetSinglePhaseProp calls. If a requested property is not available, the
-        ''' exception raised will be ECapeThrmPropertyNotAvailable. If this error occurs then the
-        ''' Property Package can return it to the client, or request a different property. Material Object
-        ''' implementations must be able to supply property values using the client’s choice of basis by
-        ''' implementing conversion from one basis to another.
-        ''' Clients should not assume that Phase fractions and Compound fractions in a Material Object
-        ''' are normalised. Fraction values may also lie outside the range 0 to 1. If fractions are not
-        ''' normalised, or are outside the expected range, it is the responsibility of the Property Package
-        ''' to decide how to deal with the situation.
-        ''' It is recommended that properties are requested one at a time in order to simplify error
-        ''' handling. However, it is recognised that there are cases where the potential efficiency gains
-        ''' of requesting several properties simultaneously are more important. One such example
-        ''' might be when a property and its derivatives are required.
-        ''' If a client uses multiple properties in a call and one of them fails then the whole call should
-        ''' be considered to have failed. This implies that no value should be written back to the Material
-        ''' Object by the Property Package until it is known that the whole request can be satisfied.
-        ''' It is likely that a PME might request values of properties for a Phase at conditions of temperature,
-        ''' pressure and composition where the Phase does not exist (according to the
-        ''' mathematical/physical models used to represent properties). The exception
-        ''' ECapeThrmPropertyNotAvailable may be raised or an extrapolated value may be returned.
-        ''' It is responsibility of the implementer to decide how to handle this circumstance.</remarks>
-        Public Overridable Sub CalcSinglePhaseProp(ByVal props As Object, ByVal phaseLabel As String) Implements ICapeThermoPropertyRoutine.CalcSinglePhaseProp
-
-            If Not My.Application.CAPEOPENMode Then
-
-                For Each pi As PhaseInfo In Me.PhaseMappings.Values
-                    If phaseLabel = pi.PhaseLabel Then
-                        For Each p As String In props
-                            Me.DW_CalcProp(p, pi.DWPhaseID)
-                        Next
-                        'Me.DW_CalcPhaseProps(pi.DWPhaseID)
-                        Exit For
-                    End If
-                Next
-
-            Else
-
-                Dim res As New ArrayList
-                Dim comps As New ArrayList
-
-                If TryCast(Me, PropertyPackages.CAPEOPENPropertyPackage) IsNot Nothing Then
-                    Dim complist As Object = Nothing
-                    Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
-                    For Each s As String In complist
-                        For Each kvp As KeyValuePair(Of String, String) In CType(Me, PropertyPackages.CAPEOPENPropertyPackage)._mappings
-                            If kvp.Value = s Then
-                                comps.Add(kvp.Key)
-                                Exit For
-                            End If
-                        Next
-                    Next
-                Else
-                    For Each c As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                        comps.Add(c.Nome)
-                    Next
-                End If
-
-                Dim f As Integer = -1
-                Dim phs As DWSIM.SimulationObjects.PropertyPackages.Fase
-                Select Case phaseLabel.ToLower
-                    Case "overall"
-                        f = 0
-                        phs = PropertyPackages.Fase.Mixture
-                    Case Else
-                        For Each pi As PhaseInfo In Me.PhaseMappings.Values
-                            If phaseLabel = pi.PhaseLabel Then
-                                f = pi.DWPhaseIndex
-                                phs = pi.DWPhaseID
-                                Exit For
-                            End If
-                        Next
-                End Select
-
-                If f = -1 Then
-                    Dim ex As New CapeOpen.CapeInvalidArgumentException("Invalid Phase ID", New ArgumentException, 0)
-                    Dim hcode As Integer = 0
-                    ThrowCAPEException(ex, "Error", ex.Message, "ICapeThermoMaterial", ex.Source, ex.StackTrace, "CalcSinglePhaseProp", hcode)
-                End If
-
-                Dim basis As String = "Mole"
-
-                For Each [property] As String In props
-
-                    Dim mymo As ICapeThermoMaterial = _como
-                    Dim T As Double
-                    Dim P As Double
-                    Dim Vx As Object = Nothing
-
-                    mymo.GetTPFraction(phaseLabel, T, P, Vx)
-
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature = T
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure = P
-                    Me.CurrentMaterialStream.SetPhaseComposition(Vx, phs)
-
-                    If phs = Fase.Solid Then
-                        Me.DW_CalcSolidPhaseProps()
-                    Else
-                        Me.DW_CalcProp([property], phs)
-                    End If
-
-                    basis = "Mole"
-                    Select Case [property].ToLower
-                        Case "compressibilityfactor"
-                            res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.compressibilityFactor.GetValueOrDefault)
-                            basis = ""
-                        Case "heatofvaporization"
-                        Case "heatcapacity", "heatcapacitycp"
-                            Select Case basis
-                                Case "Molar", "molar", "mole", "Mole"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.heatCapacityCp.GetValueOrDefault * Me.AUX_MMM(phs))
-                                Case "Mass", "mass"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.heatCapacityCp.GetValueOrDefault * 1000)
-                            End Select
-                        Case "heatcapacitycv"
-                            Select Case basis
-                                Case "Molar", "molar", "mole", "Mole"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.heatCapacityCv.GetValueOrDefault * Me.AUX_MMM(phs))
-                                Case "Mass", "mass"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.heatCapacityCv.GetValueOrDefault * 1000)
-                            End Select
-                        Case "idealgasheatcapacity"
-                            If f = 1 Then
-                                res.Add(Me.CurrentMaterialStream.PropertyPackage.AUX_CPm(PropertyPackages.Fase.Liquid, Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature * 1000))
-                            ElseIf f = 2 Then
-                                res.Add(Me.CurrentMaterialStream.PropertyPackage.AUX_CPm(PropertyPackages.Fase.Vapor, Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature * 1000))
-                            Else
-                                res.Add(Me.CurrentMaterialStream.PropertyPackage.AUX_CPm(PropertyPackages.Fase.Solid, Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature * 1000))
-                            End If
-                        Case "idealgasenthalpy"
-                            If f = 1 Then
-                                res.Add(Me.CurrentMaterialStream.PropertyPackage.RET_Hid(298.15, Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault * 1000, PropertyPackages.Fase.Liquid))
-                            ElseIf f = 2 Then
-                                res.Add(Me.CurrentMaterialStream.PropertyPackage.RET_Hid(298.15, Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault * 1000, PropertyPackages.Fase.Vapor))
-                            Else
-                                res.Add(Me.CurrentMaterialStream.PropertyPackage.RET_Hid(298.15, Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault * 1000, PropertyPackages.Fase.Solid))
-                            End If
-                        Case "excessenthalpy"
-                            Select Case basis
-                                Case "Molar", "molar", "mole", "Mole"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.excessEnthalpy.GetValueOrDefault * Me.AUX_MMM(phs))
-                                Case "Mass", "mass"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.excessEnthalpy.GetValueOrDefault * 1000)
-                            End Select
-                        Case "excessentropy"
-                            Select Case basis
-                                Case "Molar", "molar", "mole", "Mole"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.excessEntropy.GetValueOrDefault * Me.AUX_MMM(phs))
-                                Case "Mass", "mass"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.excessEntropy.GetValueOrDefault * 1000)
-                            End Select
-                        Case "viscosity"
-                            res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.viscosity.GetValueOrDefault)
-                            basis = ""
-                        Case "thermalconductivity"
-                            res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.thermalConductivity.GetValueOrDefault)
-                            basis = ""
-                        Case "fugacity"
-                            For Each c As String In comps
-                                res.Add(Me.CurrentMaterialStream.Fases(f).Componentes(c).FracaoMolar.GetValueOrDefault * Me.CurrentMaterialStream.Fases(f).Componentes(c).FugacityCoeff.GetValueOrDefault * Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault)
-                            Next
-                            basis = ""
-                        Case "activity"
-                            For Each c As String In comps
-                                res.Add(Me.CurrentMaterialStream.Fases(f).Componentes(c).ActivityCoeff.GetValueOrDefault * Me.CurrentMaterialStream.Fases(f).Componentes(c).FracaoMolar.GetValueOrDefault)
-                            Next
-                            basis = ""
-                        Case "fugacitycoefficient"
-                            For Each c As String In comps
-                                res.Add(Me.CurrentMaterialStream.Fases(f).Componentes(c).FugacityCoeff.GetValueOrDefault)
-                            Next
-                            basis = ""
-                        Case "activitycoefficient"
-                            For Each c As String In comps
-                                res.Add(Me.CurrentMaterialStream.Fases(f).Componentes(c).ActivityCoeff.GetValueOrDefault)
-                            Next
-                            basis = ""
-                        Case "logfugacitycoefficient"
-                            For Each c As String In comps
-                                res.Add(Math.Log(Me.CurrentMaterialStream.Fases(f).Componentes(c).FugacityCoeff.GetValueOrDefault))
-                            Next
-                            basis = ""
-                        Case "volume"
-                            res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.molecularWeight.GetValueOrDefault / Me.CurrentMaterialStream.Fases(f).SPMProperties.density.GetValueOrDefault / 1000)
-                        Case "density"
-                            res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.density.GetValueOrDefault / Me.AUX_MMM(phs) * 1000)
-                        Case "enthalpy", "enthalpynf"
-                            Select Case basis
-                                Case "Molar", "molar", "mole", "Mole"
-                                    Dim val = Me.CurrentMaterialStream.Fases(f).SPMProperties.molecularWeight.GetValueOrDefault
-                                    If val = 0.0# Then
-                                        res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.molar_enthalpy.GetValueOrDefault)
-                                    Else
-                                        res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.enthalpy.GetValueOrDefault * val)
-                                    End If
-                                Case "Mass", "mass"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.enthalpy.GetValueOrDefault * 1000)
-                            End Select
-                        Case "entropy", "entropynf"
-                            Select Case basis
-                                Case "Molar", "molar", "mole", "Mole"
-                                    Dim val = Me.CurrentMaterialStream.Fases(f).SPMProperties.molecularWeight.GetValueOrDefault
-                                    If val = 0.0# Then
-                                        res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.molar_entropy.GetValueOrDefault)
-                                    Else
-                                        res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.entropy.GetValueOrDefault * val)
-                                    End If
-                                Case "Mass", "mass"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.entropy.GetValueOrDefault * 1000)
-                            End Select
-                        Case "enthalpyf"
-                            Select Case basis
-                                Case "Molar", "molar", "mole", "Mole"
-                                    Dim val = Me.CurrentMaterialStream.Fases(f).SPMProperties.molecularWeight.GetValueOrDefault
-                                    If val = 0.0# Then
-                                        res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.molar_enthalpyF.GetValueOrDefault)
-                                    Else
-                                        res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.enthalpyF.GetValueOrDefault * val)
-                                    End If
-                                Case "Mass", "mass"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.enthalpyF.GetValueOrDefault * 1000)
-                            End Select
-                        Case "entropyf"
-                            Select Case basis
-                                Case "Molar", "molar", "mole", "Mole"
-                                    Dim val = Me.CurrentMaterialStream.Fases(f).SPMProperties.molecularWeight.GetValueOrDefault
-                                    If val = 0.0# Then
-                                        res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.molar_entropyF.GetValueOrDefault)
-                                    Else
-                                        res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.entropyF.GetValueOrDefault * val)
-                                    End If
-                                Case "Mass", "mass"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.entropy.GetValueOrDefault * 1000)
-                            End Select
-                        Case "moles"
-                            res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.molarflow.GetValueOrDefault)
-                            basis = ""
-                        Case "mass"
-                            res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.massflow.GetValueOrDefault)
-                            basis = ""
-                        Case "molecularweight"
-                            res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.molecularWeight.GetValueOrDefault)
-                            basis = ""
-                        Case "temperature"
-                            res.Add(Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault)
-                            basis = ""
-                        Case "pressure"
-                            res.Add(Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault)
-                            basis = ""
-                        Case "flow"
-                            Select Case basis
-                                Case "Molar", "molar", "mole", "Mole"
-                                    For Each c As String In comps
-                                        res.Add(Me.CurrentMaterialStream.Fases(f).Componentes(c).MolarFlow.GetValueOrDefault)
-                                    Next
-                                Case "Mass", "mass"
-                                    For Each c As String In comps
-                                        res.Add(Me.CurrentMaterialStream.Fases(f).Componentes(c).MassFlow.GetValueOrDefault)
-                                    Next
-                            End Select
-                        Case "fraction", "massfraction", "molarfraction"
-                            Select Case basis
-                                Case "Molar", "molar", "mole", "Mole"
-                                    For Each c As String In comps
-                                        res.Add(Me.CurrentMaterialStream.Fases(f).Componentes(c).FracaoMolar.GetValueOrDefault)
-                                    Next
-                                Case "Mass", "mass"
-                                    For Each c As String In comps
-                                        res.Add(Me.CurrentMaterialStream.Fases(f).Componentes(c).FracaoMassica.GetValueOrDefault)
-                                    Next
-                                Case ""
-                                    If [property].ToLower.Contains("mole") Then
-                                        For Each c As String In comps
-                                            res.Add(Me.CurrentMaterialStream.Fases(f).Componentes(c).FracaoMolar.GetValueOrDefault)
-                                        Next
-                                    ElseIf [property].ToLower.Contains("mass") Then
-                                        For Each c As String In comps
-                                            res.Add(Me.CurrentMaterialStream.Fases(f).Componentes(c).FracaoMassica.GetValueOrDefault)
-                                        Next
-                                    End If
-                            End Select
-                        Case "concentration"
-                            For Each c As String In comps
-                                res.Add(Me.CurrentMaterialStream.Fases(f).Componentes(c).MassFlow.GetValueOrDefault / Me.CurrentMaterialStream.Fases(f).SPMProperties.volumetric_flow.GetValueOrDefault)
-                            Next
-                            basis = ""
-                        Case "molarity"
-                            For Each c As String In comps
-                                res.Add(Me.CurrentMaterialStream.Fases(f).Componentes(c).MolarFlow.GetValueOrDefault / Me.CurrentMaterialStream.Fases(f).SPMProperties.volumetric_flow.GetValueOrDefault)
-                            Next
-                            basis = ""
-                        Case "phasefraction"
-                            Select Case basis
-                                Case "Molar", "molar", "mole", "Mole"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.molarfraction.GetValueOrDefault)
-                                Case "Mass", "mass"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.massfraction.GetValueOrDefault)
-                            End Select
-                        Case "totalflow"
-                            Select Case basis
-                                Case "Molar", "molar", "mole", "Mole"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.molarflow.GetValueOrDefault)
-                                Case "Mass", "mass"
-                                    res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.massflow.GetValueOrDefault)
-                            End Select
-                        Case Else
-                            Dim ex = New CapeOpen.CapeThrmPropertyNotAvailableException
-                            Dim hcode As Integer = 0
-                            ThrowCAPEException(ex, "Error", ex.Message, "ICapeThermoMaterial", ex.Source, ex.StackTrace, "CalcSinglePhaseProp", hcode)
-                    End Select
-
-                    Dim i As Integer
-                    For i = 0 To res.Count - 1
-                        If Double.IsNaN(res(i)) Then res(i) = 0.0#
-                    Next
-
-                    Dim arr(res.Count - 1) As Double
-                    Array.Copy(res.ToArray, arr, res.Count)
-
-                    mymo.SetSinglePhaseProp([property], phaseLabel, basis, arr)
-
-                Next
-
-            End If
-
-        End Sub
-
-        ''' <summary>
-        ''' CalcTwoPhaseProp is used to calculate mixture properties and property derivatives that depend on
-        ''' two Phases at the current values of temperature, pressure and composition set in the Material Object.
-        ''' It does not perform Equilibrium Calculations.
-        ''' </summary>
-        ''' <param name="props">The list of identifiers for properties to be calculated. This must be one or more 
-        ''' of the supported two-phase properties and derivatives (as given by the GetTwoPhasePropList method). 
-        ''' The standard identifiers for two-phase properties are given in section 7.5.6 and 7.6.</param>
-        ''' <param name="phaseLabels">Phase labels of the phases for which the properties are to be calculated. 
-        ''' The phase labels must be two of the strings returned by the GetPhaseList method on the ICapeThermoPhases 
-        ''' interface and the phases must also be present in the Material Object.</param>
-        ''' <remarks>CalcTwoPhaseProp calculates the values of properties such as surface tension or K-values.
-        ''' Properties that pertain to a single Phase are handled by the CalcSinglePhaseProp method of
-        ''' the ICapeThermoPropertyRoutine interface.Components that implement this method must
-        ''' get the input specification for the calculation (temperature, pressure and composition) from
-        ''' the associated Material Object and set the results in the Material Object.
-        ''' Components such as a Property Package or Property Calculator must implement the
-        ''' ICapeThermoMaterialContext interface so that an ICapeThermoMaterial interface can be
-        ''' passed via the SetMaterial method.
-        ''' The component that implements the ICapeThermoPropertyRoutine interface (e.g. a Property
-        ''' Package or Property Calculator) must also implement the ICapeThermoPhases interface so
-        ''' that it is possible to get a list of supported phases. The phaseLabels passed to this method
-        ''' must be in the list of phase labels returned by the GetPhaseList method of the
-        ''' ICapeThermoPhases interface and they must also be present in the Material Object, ie. in the
-        ''' list of phase labels returned by the GetPresentPhases method of the ICapeThermoMaterial
-        ''' interface. This latter condition will be satisfied if the phases are made present explicitly by
-        ''' calling the SetPresentPhases method or if any phase properties have been set by calling the
-        ''' SetSinglePhaseProp or SetTwoPhaseProp methods.</remarks>
-        Public Overridable Sub CalcTwoPhaseProp(ByVal props As Object, ByVal phaseLabels As Object) Implements ICapeThermoPropertyRoutine.CalcTwoPhaseProp
-
-            Me.DW_CalcTwoPhaseProps(Fase.Liquid, Fase.Vapor)
-
-            If My.Application.CAPEOPENMode Then
-
-                Dim res As New ArrayList
-                Dim comps As New ArrayList
-                For Each c As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                    comps.Add(c.Nome)
-                Next
-
-                Dim basis As String = Nothing
-
-                For Each [property] As String In props
-                    Select Case [property].ToLower
-                        Case "kvalue"
-                            For Each c As String In comps
-                                res.Add(Me.CurrentMaterialStream.Fases(0).Componentes(c).Kvalue)
-                            Next
-                        Case "logkvalue"
-                            For Each c As String In comps
-                                res.Add(Me.CurrentMaterialStream.Fases(0).Componentes(c).lnKvalue)
-                            Next
-                        Case "surfacetension"
-                            res.Add(Me.CurrentMaterialStream.Fases(0).TPMProperties.surfaceTension.GetValueOrDefault)
-                        Case Else
-                            Dim ex = New CapeOpen.CapeThrmPropertyNotAvailableException
-                            Dim hcode As Integer = 0
-                            ThrowCAPEException(ex, "Error", ex.Message, "ICapeThermoMaterial", ex.Source, ex.StackTrace, "CalcTwoPhaseProp", hcode)
-                    End Select
-
-                    Dim arr(res.Count - 1) As Double
-                    Array.Copy(res.ToArray, arr, res.Count)
-
-                    Dim mymo As ICapeThermoMaterial = _como
-                    mymo.SetTwoPhaseProp([property], phaseLabels, basis, arr)
-
-                Next
-
-            End If
-
-        End Sub
-
-        ''' <summary>
-        ''' Checks whether it is possible to calculate a property with the CalcSinglePhaseProp method for a given Phase.
-        ''' </summary>
-        ''' <param name="property">The identifier of the property to check. To be valid this must be one of the supported 
-        ''' single-phase properties or derivatives (as given by the GetSinglePhasePropList method).</param>
-        ''' <param name="phaseLabel">The Phase label for the calculation check. This must be one of the labels 
-        ''' returned by the GetPhaseList method on the ICapeThermoPhases interface.</param>
-        ''' <returns>Set to True if the combination of property and phaseLabel is supported or False if 
-        ''' not supported.</returns>
-        ''' <remarks>The result of the check should only depend on the capabilities and configuration
-        ''' (Compounds and Phases supported) of the component that implements the
-        ''' ICapeThermoPropertyRoutine interface (e.g. a Property Package). It should not depend on
-        ''' whether a Material Object has been set nor on the state (temperature, pressure, composition
-        ''' etc.), or configuration of a Material Object that might be set.
-        ''' It is expected that the PME, or other client, will use this method to check whether the properties
-        ''' it requires are supported by the Property Package when the package is imported. If any
-        ''' essential properties are not available, the import process should be aborted.
-        ''' If either the property or the phaseLabel arguments are not recognised by the component that
-        ''' implements the ICapeThermoPropertyRoutine interface this method should return False.</remarks>
-        Public Overridable Function CheckSinglePhasePropSpec(ByVal [property] As String, ByVal phaseLabel As String) As Boolean Implements ICapeThermoPropertyRoutine.CheckSinglePhasePropSpec
-            Select Case [property].ToLower
-                Case "compressibilityfactor", "heatofvaporization", "heatcapacity", "heatcapacitycv", _
-                    "idealgasheatcapacity", "idealgasenthalpy", "excessenthalpy", "excessentropy", _
-                    "viscosity", "thermalconductivity", "fugacity", "fugacitycoefficient", "activity", "activitycoefficient", _
-                    "dewpointpressure", "dewpointtemperature", "logfugacitycoefficient", "volume", "density", _
-                    "enthalpy", "entropy", "gibbsfreeenergy", "moles", "mass", "molecularweight", "totalflow"
-                    Return True
-                Case Else
-                    Return False
-            End Select
-        End Function
-
-        ''' <summary>
-        ''' Checks whether it is possible to calculate a property with the CalcTwoPhaseProp method for a given set of Phases.
-        ''' </summary>
-        ''' <param name="property">The identifier of the property to check. To be valid this must be one of the supported 
-        ''' two-phase properties (including derivatives), as given by the GetTwoPhasePropList method.</param>
-        ''' <param name="phaseLabels">Phase labels of the Phases for which the properties are to be calculated. The Phase 
-        ''' labels must be two of the identifiers returned by the GetPhaseList method on the ICapeThermoPhases interface.</param>
-        ''' <returns>Set to True if the combination of property and phaseLabels is supported, or False if not supported.</returns>
-        ''' <remarks>The result of the check should only depend on the capabilities and configuration
-        ''' (Compounds and Phases supported) of the component that implements the
-        ''' ICapeThermoPropertyRoutine interface (e.g. a Property Package). It should not depend on
-        ''' whether a Material Object has been set nor on the state (temperature, pressure, composition
-        ''' etc.), or configuration of a Material Object that might be set.
-        ''' It is expected that the PME, or other client, will use this method to check whether the
-        ''' properties it requires are supported by the Property Package when the Property Package is
-        ''' imported. If any essential properties are not available, the import process should be aborted.
-        ''' If either the property argument or the values in the phaseLabels arguments are not
-        ''' recognised by the component that implements the ICapeThermoPropertyRoutine interface
-        ''' this method should return False.</remarks>
-        Public Overridable Function CheckTwoPhasePropSpec(ByVal [property] As String, ByVal phaseLabels As Object) As Boolean Implements ICapeThermoPropertyRoutine.CheckTwoPhasePropSpec
-            Return True
-        End Function
-
-        ''' <summary>
-        ''' Returns the list of supported non-constant single-phase Physical Properties.
-        ''' </summary>
-        ''' <returns>List of all supported non-constant single-phase property identifiers. 
-        ''' The standard single-phase property identifiers are listed in section 7.5.5.</returns>
-        ''' <remarks>A non-constant property depends on the state of the Material Object.
-        ''' Single-phase properties, e.g. enthalpy, only depend on the state of one phase.
-        ''' GetSinglePhasePropList must return all the single-phase properties that can be calculated by
-        ''' CalcSinglePhaseProp. If derivatives can be calculated these must also be returned. The list
-        ''' of standard property identifiers in section 7.5.5 also contains properties such as temperature,
-        ''' pressure, fraction, phaseFraction, flow and totalFlow that are not usually calculated by the
-        ''' CalcSinglePhaseProp method and hence these property identifiers would not be returned by
-        ''' GetSinglePhasePropList. These properties would normally be used in calls to the
-        ''' Set/GetSinglePhaseProp methods of the ICapeThermoMaterial interface.
-        ''' If no single-phase properties are supported this method should return UNDEFINED.
-        ''' To get the list of supported two-phase properties, use GetTwoPhasePropList.
-        ''' A component that implements this method may return non-constant single-phase property
-        ''' identifiers which do not belong to the list defined in section 7.5.5. However, these
-        ''' proprietary identifiers may not be understood by most of the clients of this component.</remarks>
-        Public Overridable Function GetSinglePhasePropList() As Object Implements ICapeThermoPropertyRoutine.GetSinglePhasePropList
-            Dim arr As New ArrayList
-            With arr
-                .Add("compressibilityFactor")
-                .Add("heatCapacityCp")
-                .Add("heatCapacityCv")
-                .Add("excessEnthalpy")
-                .Add("excessEntropy")
-                .Add("viscosity")
-                .Add("thermalConductivity")
-                .Add("fugacity")
-                .Add("fugacityCoefficient")
-                .Add("activity")
-                .Add("activityCoefficient")
-                .Add("logFugacityCoefficient")
-                .Add("volume")
-                .Add("density")
-                .Add("enthalpy")
-                .Add("entropy")
-                .Add("enthalpyF")
-                .Add("entropyF")
-                .Add("enthalpyNF")
-                .Add("entropyNF")
-                .Add("molecularWeight")
-            End With
-            Dim arr2(arr.Count - 1) As String
-            Array.Copy(arr.ToArray, arr2, arr.Count)
-            Return arr2
-        End Function
-
-        ''' <summary>
-        ''' Returns the list of supported non-constant two-phase properties.
-        ''' </summary>
-        ''' <returns>List of all supported non-constant two-phase property identifiers. The standard two-phase 
-        ''' property identifiers are listed in section 7.5.6.</returns>
-        ''' <remarks>A non-constant property depends on the state of the Material Object. Two-phase properties
-        ''' are those that depend on more than one co-existing phase, e.g. K-values.
-        ''' GetTwoPhasePropList must return all the properties that can be calculated by
-        ''' CalcTwoPhaseProp. If derivatives can be calculated, these must also be returned.
-        ''' If no two-phase properties are supported this method should return UNDEFINED.
-        ''' To check whether a property can be evaluated for a particular set of phase labels use the
-        ''' CheckTwoPhasePropSpec method.
-        ''' A component that implements this method may return non-constant two-phase property
-        ''' identifiers which do not belong to the list defined in section 7.5.6. However, these
-        ''' proprietary identifiers may not be understood by most of the clients of this component.
-        ''' To get the list of supported single-phase properties, use GetSinglePhasePropList.</remarks>
-        Public Overridable Function GetTwoPhasePropList() As Object Implements ICapeThermoPropertyRoutine.GetTwoPhasePropList
-            Return New String() {"kvalue", "logKvalue", "surfaceTension"}
-        End Function
-
-        ''' <summary>
-        ''' Retrieves the value of a Universal Constant.
-        ''' </summary>
-        ''' <param name="constantId">Identifier of Universal Constant. The list of constants supported should be 
-        ''' obtained by using the GetUniversalConstantList method.</param>
-        ''' <returns>Value of Universal Constant. This could be a numeric or a string value. For numeric values 
-        ''' the units of measurement are specified in section 7.5.1.</returns>
-        ''' <remarks>Universal Constants (often called fundamental constants) are quantities like the gas constant,
-        ''' or the Avogadro constant.</remarks>
-        Public Overridable Function GetUniversalConstant1(ByVal constantId As String) As Object Implements ICapeThermoUniversalConstant.GetUniversalConstant
-            Dim res As New ArrayList
-            Select Case constantId.ToLower
-                Case "standardaccelerationofgravity"
-                    res.Add(9.80665)
-                Case "avogadroconstant"
-                    res.Add(6.0221419947E+23)
-                Case "boltzmannconstant"
-                    res.Add(1.38065324E-23)
-                Case "molargasconstant"
-                    res.Add(8.31447215)
-            End Select
-            Dim arr2(res.Count) As Object
-            Array.Copy(res.ToArray, arr2, res.Count)
-            Return arr2
-        End Function
-
-        ''' <summary>
-        ''' Returns the identifiers of the supported Universal Constants.
-        ''' </summary>
-        ''' <returns>List of identifiers of Universal Constants. The list of standard identifiers is given in section 7.5.1.</returns>
-        ''' <remarks>A component may return Universal Constant identifiers that do not belong to the list defined
-        ''' in section 7.5.1. However, these proprietary identifiers may not be understood by most of the
-        ''' clients of this component.</remarks>
-        Public Overridable Function GetUniversalConstantList() As Object Implements ICapeThermoUniversalConstant.GetUniversalConstantList
-            Return New String() {"standardAccelerationOfGravity", "avogadroConstant", "boltzmannConstant", "molarGasConstant"}
-        End Function
-
-        ''' <summary>
-        ''' CalcEquilibrium is used to calculate the amounts and compositions of Phases at equilibrium.
-        ''' CalcEquilibrium will calculate temperature and/or pressure if these are not among the two
-        ''' specifications that are mandatory for each Equilibrium Calculation considered.
-        ''' </summary>
-        ''' <param name="specification1">First specification for the Equilibrium Calculation. The 
-        ''' specification information is used to retrieve the value of the specification from the 
-        ''' Material Object. See below for details.</param>
-        ''' <param name="specification2">Second specification for the Equilibrium Calculation in 
-        ''' the same format as specification1.</param>
-        ''' <param name="solutionType">The identifier for the required solution type. The
-        ''' standard identifiers are given in the following list:
-        ''' Unspecified
-        ''' Normal
-        ''' Retrograde
-        ''' The meaning of these terms is defined below in the notes. Other identifiers may be supported 
-        ''' but their interpretation is not part of the CO standard.</param>
-        ''' <remarks>The specification1 and specification2 arguments provide the information necessary to
-        ''' retrieve the values of two specifications, for example the pressure and temperature, for the
-        ''' Equilibrium Calculation. The CheckEquilibriumSpec method can be used to check for
-        ''' supported specifications. Each specification variable contains a sequence of strings in the
-        ''' order defined in the following table (hence, the specification arguments may have 3 or 4
-        ''' items):
-        ''' 
-        ''' item                        meaning
-        ''' 
-        ''' property identifier         The property identifier can be any of the identifiers listed in section 7.5.5 but
-        '''                             only certain property specifications will normally be supported by any
-        '''                             Equilibrium Routine.
-        ''' 
-        ''' basis                       The basis for the property value. Valid settings for basis are given in section
-        '''                             7.4. Use UNDEFINED as a placeholder for a property for which basis does
-        '''                             not apply. For most Equilibrium Specifications, the result of the calculation
-        '''                             is not dependent on the basis, but, for example, for phase fraction
-        '''                             specifications the basis (Mole or Mass) does make a difference.
-        ''' 
-        ''' phase label                 The phase label denotes the Phase to which the specification applies. It must
-        '''                             either be one of the labels returned by GetPresentPhases, or the special value
-        '''                             “Overall”.
-        ''' 
-        ''' compound identifier         The compound identifier allows for specifications that depend on a particular
-        '''                             Compound. This item of the specification array is optional and may be
-        '''                             omitted. In case of a specification without compound identifier, the array
-        '''                             element may be present and empty, or may be absent.
-        '''                             The values corresponding to the specifications in the argument list and the overall
-        '''                             composition of the mixture must be set in the associated Material Object before a call to
-        '''                             CalcEquilibrium.
-        ''' 
-        ''' Components such as a Property Package or an Equilibrium Calculator must implement the
-        ''' ICapeThermoMaterialContext interface, so that an ICapeThermoMaterial interface can be
-        ''' passed via the SetMaterial method. It is the responsibility of the implementation of
-        ''' CalcEquilibrium to validate the Material Object before attempting a calculation.
-        ''' The Phases that will be considered in the Equilibrium Calculation are those that exist in the
-        ''' Material Object, i.e. the list of phases specified in a SetPresentPhases call. This provides a
-        ''' way for a client to specify whether, for example, a vapour-liquid, liquid-liquid, or vapourliquid-
-        ''' liquid calculation is required. CalcEquilibrium must use the GetPresentPhases method
-        ''' to retrieve the list of Phases and the associated Phase status flags. The Phase status flags may
-        ''' be used by the client to provide information about the Phases, for example whether estimates
-        ''' of the equilibrium state are provided. See the description of the GetPresentPhases and
-        ''' SetPresentPhases methods of the ICapeThermoMaterial interface for details. When the
-        ''' Equilibrium Calculation has been completed successfully, the SetPresentPhases method
-        ''' must be used to specify which Phases are present at equilibrium and the Phase status flags
-        ''' for the phases should be set to Cape_AtEquilibrium. This must include any Phases that are
-        ''' present in zero amount such as the liquid Phase in a dew point calculation.
-        ''' Some types of Phase equilibrium specifications may result in more than one solution. A
-        ''' common example of this is the case of a dew point calculation. However, CalcEquilibrium
-        ''' can provide only one solution through the Material Object. The solutionType argument
-        ''' allows the “Normal” or “Retrograde” solution to be explicitly requested. When none of the
-        ''' specifications includes a phase fraction, the solutionType argument should be set to
-        ''' “Unspecified”.
-        ''' 
-        ''' CalcEquilibrium must set the amounts (phase fractions), compositions, temperature and
-        ''' pressure for all Phases present at equilibrium, as well as the temperature and pressure for the
-        ''' overall mixture if not set as part of the calculation specifications. It must not set any other
-        ''' values – in particular it must not set any values for phases that are not present.
-        ''' 
-        ''' As an example, the following sequence of operations might be performed by
-        ''' CalcEquilibrium in the case of an Equilibrium Calculation at fixed pressure and temperature:
-        ''' 
-        ''' - With the ICapeThermoMaterial interface of the supplied Material Object:
-        ''' 
-        ''' -- Use the GetPresentPhases method to find the list of Phases that the Equilibrium
-        ''' Calculation should consider.
-        ''' 
-        ''' -- With the ICapeThermoCompounds interface of the Material Object use the
-        ''' GetCompoundList method to find which Compounds are present.
-        ''' 
-        ''' -- Use the GetOverallProp method to get the temperature, pressure and composition
-        ''' for the overall mixture.
-        ''' 
-        ''' - Perform the Equilibrium Calculation.
-        ''' 
-        ''' -- Use SetPresentPhases to specify the Phases present at equilibrium and set the
-        ''' Phase status flags to Cape_AtEquilibrium.
-        ''' 
-        ''' -- Use SetSinglePhaseProp to set pressure, temperature, Phase amount (or Phase
-        ''' fraction) and composition for all Phases present.</remarks>
-        Public Overridable Sub CalcEquilibrium1(ByVal specification1 As Object, ByVal specification2 As Object, ByVal solutionType As String) Implements ICapeThermoEquilibriumRoutine.CalcEquilibrium
-
-            Dim spec1, spec2 As FlashSpec
-            If specification1(0).ToString.ToLower = "temperature" And specification2(0).ToString.ToLower = "pressure" Then
-                spec1 = FlashSpec.T
-                spec2 = FlashSpec.P
-            ElseIf specification1(0).ToString.ToLower = "pressure" And specification2(0).ToString.ToLower = "enthalpy" Then
-                spec1 = FlashSpec.P
-                spec2 = FlashSpec.H
-            ElseIf specification1(0).ToString.ToLower = "pressure" And specification2(0).ToString.ToLower = "entropy" Then
-                spec1 = FlashSpec.P
-                spec2 = FlashSpec.S
-            ElseIf specification1(0).ToString.ToLower = "pressure" And specification2(0).ToString.ToLower = "phasefraction" Then
-                spec1 = FlashSpec.P
-                spec2 = FlashSpec.VAP
-            ElseIf specification1(0).ToString.ToLower = "temperature" And specification2(0).ToString.ToLower = "phasefraction" Then
-                spec1 = FlashSpec.T
-                spec2 = FlashSpec.VAP
-            ElseIf specification2(0).ToString.ToLower = "temperature" And specification1(0).ToString.ToLower = "pressure" Then
-                spec1 = FlashSpec.T
-                spec2 = FlashSpec.P
-            ElseIf specification2(0).ToString.ToLower = "pressure" And specification1(0).ToString.ToLower = "enthalpy" Then
-                spec1 = FlashSpec.P
-                spec2 = FlashSpec.H
-            ElseIf specification2(0).ToString.ToLower = "pressure" And specification1(0).ToString.ToLower = "entropy" Then
-                spec1 = FlashSpec.P
-                spec2 = FlashSpec.S
-            ElseIf specification2(0).ToString.ToLower = "pressure" And specification1(0).ToString.ToLower = "phasefraction" Then
-                spec1 = FlashSpec.P
-                spec2 = FlashSpec.VAP
-            ElseIf specification2(0).ToString.ToLower = "temperature" And specification1(0).ToString.ToLower = "phasefraction" Then
-                spec1 = FlashSpec.T
-                spec2 = FlashSpec.VAP
-            Else
-                Throw New CapeOpen.CapeLimitedImplException("Flash spec not supported.")
-            End If
-
-            Dim T, P, Hm, Sm As Double
-
-            If My.Application.CAPEOPENMode Then
-
-                Dim res As Object = Nothing
-
-                Dim mys As ICapeThermoMaterial = _como
-
-                If spec1 = FlashSpec.T And spec2 = P Then
-                    mys.GetOverallProp("temperature", Nothing, res)
-                    T = res(0)
-                    mys.GetOverallProp("pressure", Nothing, res)
-                    P = res(0)
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature = T
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure = P
-                ElseIf spec1 = FlashSpec.T And spec2 = FlashSpec.VAP Then
-                    mys.GetOverallProp("temperature", Nothing, res)
-                    T = res(0)
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature = T
-                    mys.GetSinglePhaseProp("phaseFraction", "Vapor", "Mole", res)
-                    Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = res(0)
-                ElseIf spec1 = FlashSpec.P And spec2 = FlashSpec.H Then
-                    mys.GetOverallProp("pressure", Nothing, res)
-                    P = res(0)
-                    mys.GetOverallProp("enthalpy", "Mole", res)
-                    Hm = res(0) / AUX_MMM(Fase.Mixture)
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.enthalpy = Hm
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure = P
-                ElseIf spec1 = FlashSpec.P And spec2 = FlashSpec.S Then
-                    mys.GetOverallProp("pressure", Nothing, res)
-                    P = res(0)
-                    mys.GetOverallProp("entropy", "Mole", res)
-                    Sm = res(0) / AUX_MMM(Fase.Mixture)
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.entropy = Sm
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure = P
-                ElseIf spec1 = FlashSpec.P And spec2 = FlashSpec.VAP Then
-                    mys.GetOverallProp("pressure", Nothing, res)
-                    P = res(0)
-                    Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure = P
-                    mys.GetSinglePhaseProp("phaseFraction", "Vapor", "Mole", res)
-                    Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction = res(0)
-                End If
-
-            End If
-
-            Try
-                Me.DW_CalcEquilibrium(spec1, spec2)
-            Catch ex As Exception
-                ThrowCAPEException(ex, ex.GetType.ToString, ex.ToString, "ICapeThermoEquilibriumRoutine", ex.ToString, "CalcEquilibrium", "", 0)
-            End Try
-
-            If My.Application.CAPEOPENMode Then
-
-                Dim ms As MaterialStream = Me.CurrentMaterialStream
-                Dim mo As ICapeThermoMaterial = _como
-
-                Dim vok As Boolean = False
-                Dim l1ok As Boolean = False
-                Dim l2ok As Boolean = False
-                Dim sok As Boolean = False
-
-                If ms.Fases(2).SPMProperties.molarfraction.HasValue Then vok = True
-                If ms.Fases(3).SPMProperties.molarfraction.HasValue Then l1ok = True
-                If ms.Fases(4).SPMProperties.molarfraction.HasValue Then l2ok = True
-                If ms.Fases(7).SPMProperties.molarfraction.HasValue Then sok = True
-
-                Dim phases As String() = Nothing
-                Dim statuses As CapePhaseStatus() = Nothing
-
-                If vok And l1ok And l2ok Then
-                    phases = New String() {"Vapor", "Liquid", "Liquid2"}
-                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM}
-                ElseIf vok And l1ok And Not l2ok Then
-                    phases = New String() {"Vapor", "Liquid"}
-                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM}
-                ElseIf vok And l1ok And Not l2ok And sok Then
-                    phases = New String() {"Vapor", "Liquid", "Solid"}
-                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM}
-                ElseIf vok And Not l1ok And l2ok Then
-                    phases = New String() {"Vapor", "Liquid2"}
-                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM}
-                ElseIf Not vok And l1ok And l2ok Then
-                    phases = New String() {"Liquid", "Liquid2"}
-                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM}
-                ElseIf vok And Not l1ok And Not l2ok Then
-                    phases = New String() {"Vapor"}
-                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM}
-                ElseIf Not vok And l1ok And Not l2ok Then
-                    phases = New String() {"Liquid"}
-                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM}
-                ElseIf vok And Not l1ok And sok Then
-                    phases = New String() {"Vapor", "Solid"}
-                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM}
-                ElseIf Not vok And l1ok And sok Then
-                    phases = New String() {"Liquid", "Solid"}
-                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM, CapePhaseStatus.CAPE_ATEQUILIBRIUM}
-                ElseIf Not vok And Not l1ok And l2ok Then
-                    phases = New String() {"Liquid2"}
-                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM}
-                ElseIf Not vok And Not l1ok And sok Then
-                    phases = New String() {"Solid"}
-                    statuses = New CapePhaseStatus() {CapePhaseStatus.CAPE_ATEQUILIBRIUM}
-                End If
-
-                mo.SetPresentPhases(phases, statuses)
-
-                Dim nc As Integer = ms.Fases(0).Componentes.Count
-                T = ms.Fases(0).SPMProperties.temperature.GetValueOrDefault
-                P = ms.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-                Dim vz(nc - 1), pf As Double, i As Integer
-
-                mo.SetOverallProp("temperature", Nothing, New Double() {T})
-                mo.SetOverallProp("pressure", Nothing, New Double() {P})
-
-                If vok Then
-
-                    i = 0
-                    For Each s As Substancia In ms.Fases(2).Componentes.Values
-                        vz(i) = s.FracaoMolar.GetValueOrDefault
-                        i += 1
-                    Next
-                    pf = ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
-
-                    mo.SetSinglePhaseProp("temperature", "Vapor", Nothing, New Double() {T})
-                    mo.SetSinglePhaseProp("pressure", "Vapor", Nothing, New Double() {P})
-                    mo.SetSinglePhaseProp("phasefraction", "Vapor", "Mole", New Double() {pf})
-                    mo.SetSinglePhaseProp("fraction", "Vapor", "Mole", vz)
-
-                End If
-
-                If l1ok Then
-
-                    i = 0
-                    For Each s As Substancia In ms.Fases(3).Componentes.Values
-                        vz(i) = s.FracaoMolar.GetValueOrDefault
-                        i += 1
-                    Next
-                    pf = ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault
-
-                    mo.SetSinglePhaseProp("temperature", "Liquid", Nothing, New Double() {T})
-                    mo.SetSinglePhaseProp("pressure", "Liquid", Nothing, New Double() {P})
-                    mo.SetSinglePhaseProp("phasefraction", "Liquid", "Mole", New Double() {pf})
-                    mo.SetSinglePhaseProp("fraction", "Liquid", "Mole", vz)
-
-                End If
-
-                If l2ok Then
-
-                    i = 0
-                    For Each s As Substancia In ms.Fases(4).Componentes.Values
-                        vz(i) = s.FracaoMolar.GetValueOrDefault
-                        i += 1
-                    Next
-                    pf = ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault
-
-                    mo.SetSinglePhaseProp("temperature", "Liquid2", Nothing, New Double() {T})
-                    mo.SetSinglePhaseProp("pressure", "Liquid2", Nothing, New Double() {P})
-                    mo.SetSinglePhaseProp("phasefraction", "Liquid2", "Mole", New Double() {pf})
-                    mo.SetSinglePhaseProp("fraction", "Liquid2", "Mole", vz)
-
-                End If
-
-                If sok Then
-
-                    i = 0
-                    For Each s As Substancia In ms.Fases(7).Componentes.Values
-                        vz(i) = s.FracaoMolar.GetValueOrDefault
-                        i += 1
-                    Next
-                    pf = ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault
-
-                    mo.SetSinglePhaseProp("temperature", "Solid", Nothing, New Double() {T})
-                    mo.SetSinglePhaseProp("pressure", "Solid", Nothing, New Double() {P})
-                    mo.SetSinglePhaseProp("phasefraction", "Solid", "Mole", New Double() {pf})
-                    mo.SetSinglePhaseProp("fraction", "Solid", "Mole", vz)
-
-                End If
-
-            End If
-
-        End Sub
-
-        ''' <summary>
-        ''' Checks whether the Property Package can support a particular type of Equilibrium Calculation.
-        ''' </summary>
-        ''' <param name="specification1">First specification for the Equilibrium Calculation.</param>
-        ''' <param name="specification2">Second specification for the Equilibrium Calculation.</param>
-        ''' <param name="solutionType">The required solution type.</param>
-        ''' <returns>Set to True if the combination of specifications and solutionType is supported 
-        ''' for a particular combination of present phases or False if not supported.</returns>
-        ''' <remarks>The meaning of the specification1, specification2 and solutionType arguments is the same as
-        ''' for the CalcEquilibrium method. If solutionType, specification1 and specification2
-        ''' arguments appear valid but the actual specifications are not supported or not recognised a
-        ''' False value should be returned.
-        ''' The result of the check should depend primarily on the capabilities and configuration
-        ''' (compounds and phases supported) of the component that implements the ICapeThermo-
-        ''' EquilibriumRoutine interface (egg. a Property package). A component that supports
-        ''' calculation specifications for any combination of supported phases is capable of checking
-        ''' the specification without any reference to a Material Object. However, it is possible that
-        ''' there may be restrictions on the combinations of phases supported in an equilibrium
-        ''' calculation. For example a component may support vapor-liquid and liquid-liquid
-        ''' calculations but not vapor-liquid-liquid calculations. In general it is therefore a necessary
-        ''' prerequisite that a Material Object has been set (using the SetMaterial method of the
-        ''' ICapeThermoMaterialContext interface) and that the SetPresentPhases method of the
-        ''' ICapeThermoMaterial interface has been called to specify the combination of phases for the
-        ''' equilibrium calculation. The result of the check should not depend on the state (temperature,
-        ''' pressure, composition etc.) of the Material Object.</remarks>
-        Public Overridable Function CheckEquilibriumSpec(ByVal specification1 As Object, ByVal specification2 As Object, ByVal solutionType As String) As Boolean Implements ICapeThermoEquilibriumRoutine.CheckEquilibriumSpec
-            If specification1(0).ToString.ToLower = "temperature" And specification2(0).ToString.ToLower = "pressure" Then
-                Return True
-            ElseIf specification1(0).ToString.ToLower = "pressure" And specification2(0).ToString.ToLower = "enthalpy" Then
-                Return True
-            ElseIf specification1(0).ToString.ToLower = "pressure" And specification2(0).ToString.ToLower = "entropy" Then
-                Return True
-            ElseIf specification1(0).ToString.ToLower = "pressure" And specification2(0).ToString.ToLower = "phasefraction" Then
-                Return True
-            ElseIf specification1(0).ToString.ToLower = "temperature" And specification2(0).ToString.ToLower = "phasefraction" Then
-                Return True
-            ElseIf specification2(0).ToString.ToLower = "temperature" And specification1(0).ToString.ToLower = "pressure" Then
-                Return True
-            ElseIf specification2(0).ToString.ToLower = "pressure" And specification1(0).ToString.ToLower = "enthalpy" Then
-                Return True
-            ElseIf specification2(0).ToString.ToLower = "pressure" And specification1(0).ToString.ToLower = "entropy" Then
-                Return True
-            ElseIf specification2(0).ToString.ToLower = "pressure" And specification1(0).ToString.ToLower = "phasefraction" Then
-                Return True
-            ElseIf specification2(0).ToString.ToLower = "temperature" And specification1(0).ToString.ToLower = "phasefraction" Then
-                Return True
-            Else
-                Return False
-            End If
-        End Function
-
-        ''' <summary>
-        ''' Allows the client of a component that implements this interface to pass an ICapeThermoMaterial 
-        ''' interface to the component, so that it can access the properties of a Material.
-        ''' </summary>
-        ''' <param name="material">The Material interface.</param>
-        ''' <remarks>The SetMaterial method allows a Thermodynamic and Physical Properties component, such
-        ''' as a Property Package, to be given the ICapeThermoMaterial interface of a Material Object.
-        ''' This interface gives the component access to the description of the Material for which
-        ''' Property Calculations or Equilibrium Calculations are required. The component can access
-        ''' property values directly using this interface. A client can also use the ICapeThermoMaterial
-        ''' interface to query a Material Object for its ICapeThermoCompounds and ICapeThermo-
-        ''' Phases interfaces, which provide access to Compound and Phase information, respectively.
-        ''' It is envisaged that the SetMaterial method will be used to check that the Material Interface
-        ''' supplied is valid and useable. For example, a Property Package may check that there are
-        ''' some Compounds in a Material Object and that those Compounds can be identified by the
-        ''' Property Package. In addition a Property Package may perform any initialisation that
-        ''' depends on the configuration of a Material Object. A Property Calculator component might
-        ''' typically use this method to query the Material Object for any required information
-        ''' concerning the Compounds.
-        ''' Calling the UnsetMaterial method of the ICapeThermoMaterialContext interface has the
-        ''' effect of removing the interface set by the SetMaterial method.
-        ''' After a call to SetMaterial() has been received, the object implementing the ICapeThermo-
-        ''' MaterialContext interface can assume that the number, name and order of compounds for
-        ''' that Material Object will remain fixed until the next call to SetMaterial() or UnsetMaterial().</remarks>
-        Public Overridable Sub SetMaterial(ByVal material As Object) Implements ICapeThermoMaterialContext.SetMaterial
-            Me.CurrentMaterialStream = Nothing
-            If _como IsNot Nothing Then
-                If System.Runtime.InteropServices.Marshal.IsComObject(_como) Then
-                    System.Runtime.InteropServices.Marshal.ReleaseComObject(_como)
-                End If
-            End If
-            If My.Application.CAPEOPENMode Then
-                _como = material
-                If TryCast(material, MaterialStream) Is Nothing Then
-                    Me.CurrentMaterialStream = COMaterialtoDWMaterial(material)
-                Else
-                    Me.CurrentMaterialStream = material
-                End If
-            Else
-                Me.CurrentMaterialStream = material
-            End If
-        End Sub
-
-        ''' <summary>
-        ''' Removes any previously set Material interface.
-        ''' </summary>
-        ''' <remarks>The UnsetMaterial method removes any Material interface previously set by a call to the
-        ''' SetMaterial method of the ICapeThermoMaterialContext interface. This means that any
-        ''' methods of other interfaces that depend on having a valid Material Interface, for example
-        ''' methods of the ICapeThermoPropertyRoutine or ICapeThermoEquilibriumRoutine
-        ''' interfaces, should behave in the same way as if the SetMaterial method had never been
-        ''' called.
-        ''' If UnsetMaterial is called before a call to SetMaterial it has no effect and no exception
-        ''' should be raised.</remarks>
-        Public Overridable Sub UnsetMaterial() Implements ICapeThermoMaterialContext.UnsetMaterial
-            Me.CurrentMaterialStream = Nothing
-            If My.Application.CAPEOPENMode Then
-                If _como IsNot Nothing Then
-                    If System.Runtime.InteropServices.Marshal.IsComObject(_como) Then
-                        System.Runtime.InteropServices.Marshal.ReleaseComObject(_como)
-                    End If
-                End If
-            End If
-        End Sub
-
-        ''' <summary>
-        ''' Converts a COM Material Object into a DWSIM Material Stream.
-        ''' </summary>
-        ''' <param name="material">The Material Object to convert from</param>
-        ''' <returns>A DWSIM Material Stream</returns>
-        ''' <remarks>This function is called by SetMaterial when DWSIM Property Packages are working in outside environments (CAPE-OPEN COSEs) like COCO/COFE.</remarks>
-        Public Function COMaterialtoDWMaterial(ByVal material As Object) As MaterialStream
-
-            Dim ms As New MaterialStream(CType(material, ICapeIdentification).ComponentName, "")
-            For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
-                For Each tmpcomp As ConstantProperties In _selectedcomps.Values
-                    phase.Componentes.Add(tmpcomp.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(tmpcomp.Name, ""))
-                    phase.Componentes(tmpcomp.Name).ConstantProperties = tmpcomp
-                Next
-            Next
-
-            'transfer values
-
-            Dim mys As ICapeThermoMaterial = material
-
-            Dim Tv, Tl1, Tl2, Ts, Pv, Pl1, Pl2, Ps, xv, xl1, xl2, xs As Double
-            Dim Vz As Object = Nothing
-            Dim Vy As Object = Nothing
-            Dim Vx1 As Object = Nothing
-            Dim Vx2 As Object = Nothing
-            Dim Vs As Object = Nothing
-            Dim Vwy As Object = Nothing
-            Dim Vwx1 As Object = Nothing
-            Dim Vwx2 As Object = Nothing
-            Dim Vws As Object = Nothing
-            Dim labels As Object = Nothing
-            Dim statuses As Object = Nothing
-            Dim res As Object = Nothing
-
-            Try
-                mys.GetOverallProp("fraction", "Mole", res)
-                Vz = res
-            Catch ex As Exception
-                Vz = RET_NullVector()
-            End Try
-
-            mys.GetPresentPhases(labels, statuses)
-
-            Dim data(0) As Double
-
-            Dim i As Integer = 0
-            Dim n As Integer = UBound(labels)
-
-            For i = 0 To n
-                If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
-                    Select Case labels(i)
-                        Case "Vapor"
-                            mys.GetTPFraction(labels(i), Tv, Pv, Vy)
-                        Case "Liquid"
-                            mys.GetTPFraction(labels(i), Tl1, Pl1, Vx1)
-                        Case "Liquid2"
-                            mys.GetTPFraction(labels(i), Tl2, Pl2, Vx2)
-                        Case "Solid"
-                            mys.GetTPFraction(labels(i), Ts, Ps, Vs)
-                    End Select
-                    Select Case labels(i)
-                        Case "Vapor"
-                            mys.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
-                            xv = res(0)
-                        Case "Liquid"
-                            mys.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
-                            xl1 = res(0)
-                        Case "Liquid2"
-                            mys.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
-                            xl2 = res(0)
-                        Case "Solid"
-                            mys.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
-                            xs = res(0)
-                    End Select
-                Else
-                    Select Case labels(i)
-                        Case "Vapor"
-                            xv = 0.0#
-                        Case "Liquid"
-                            xl1 = 0.0#
-                        Case "Liquid2"
-                            xl2 = 0.0#
-                        Case "Solid"
-                            xs = 0.0#
-                    End Select
-                End If
-            Next
-
-            Me.CurrentMaterialStream = ms
-
-            'copy fractions
-
-            With ms
-                i = 0
-                For Each s As Substancia In .Fases(0).Componentes.Values
-                    s.FracaoMolar = Vz(i)
-                    i += 1
-                Next
-                If Vy IsNot Nothing Then
-                    i = 0
-                    For Each s As Substancia In .Fases(2).Componentes.Values
-                        s.FracaoMolar = Vy(i)
-                        i += 1
-                    Next
-                    Vwy = Me.AUX_CONVERT_MOL_TO_MASS(Vy)
-                    i = 0
-                    For Each s As Substancia In .Fases(2).Componentes.Values
-                        s.FracaoMassica = Vwy(i)
-                        i += 1
-                    Next
-                Else
-                    i = 0
-                    For Each s As Substancia In .Fases(2).Componentes.Values
-                        s.FracaoMolar = 0.0#
-                        i += 1
-                    Next
-                    i = 0
-                    For Each s As Substancia In .Fases(2).Componentes.Values
-                        s.FracaoMassica = 0.0#
-                        i += 1
-                    Next
-                End If
-                .Fases(2).SPMProperties.molarfraction = xv
-                If Vx1 IsNot Nothing Then
-                    i = 0
-                    For Each s As Substancia In .Fases(3).Componentes.Values
-                        s.FracaoMolar = Vx1(i)
-                        i += 1
-                    Next
-                    Vwx1 = Me.AUX_CONVERT_MOL_TO_MASS(Vx1)
-                    i = 0
-                    For Each s As Substancia In .Fases(3).Componentes.Values
-                        s.FracaoMassica = Vwx1(i)
-                        i += 1
-                    Next
-                Else
-                    i = 0
-                    For Each s As Substancia In .Fases(3).Componentes.Values
-                        s.FracaoMolar = 0.0#
-                        i += 1
-                    Next
-                    i = 0
-                    For Each s As Substancia In .Fases(3).Componentes.Values
-                        s.FracaoMassica = 0.0#
-                        i += 1
-                    Next
-                End If
-                .Fases(3).SPMProperties.molarfraction = xl1
-                If Vx2 IsNot Nothing Then
-                    i = 0
-                    For Each s As Substancia In .Fases(4).Componentes.Values
-                        s.FracaoMolar = Vx2(i)
-                        i += 1
-                    Next
-                    Vwx2 = Me.AUX_CONVERT_MOL_TO_MASS(Vx2)
-                    i = 0
-                    For Each s As Substancia In .Fases(4).Componentes.Values
-                        s.FracaoMassica = Vwx2(i)
-                        i += 1
-                    Next
-                Else
-                    i = 0
-                    For Each s As Substancia In .Fases(4).Componentes.Values
-                        s.FracaoMolar = 0.0#
-                        i += 1
-                    Next
-                    i = 0
-                    For Each s As Substancia In .Fases(4).Componentes.Values
-                        s.FracaoMassica = 0.0#
-                        i += 1
-                    Next
-                End If
-                .Fases(4).SPMProperties.molarfraction = xl2
-                If Vs IsNot Nothing Then
-                    i = 0
-                    For Each s As Substancia In .Fases(7).Componentes.Values
-                        s.FracaoMolar = Vs(i)
-                        i += 1
-                    Next
-                    Vws = Me.AUX_CONVERT_MOL_TO_MASS(Vs)
-                    i = 0
-                    For Each s As Substancia In .Fases(7).Componentes.Values
-                        s.FracaoMassica = Vws(i)
-                        i += 1
-                    Next
-                Else
-                    i = 0
-                    For Each s As Substancia In .Fases(7).Componentes.Values
-                        s.FracaoMolar = 0.0#
-                        i += 1
-                    Next
-                    i = 0
-                    For Each s As Substancia In .Fases(7).Componentes.Values
-                        s.FracaoMassica = 0.0#
-                        i += 1
-                    Next
-                End If
-                .Fases(7).SPMProperties.molarfraction = xs
-            End With
-
-            Return ms
-
-        End Function
-
-#End Region
-
-#Region "   CAPE-OPEN ICapeUtilities Implementation"
-
-        Friend _availablecomps As Dictionary(Of String, ConstantProperties)
-        Friend _selectedcomps As Dictionary(Of String, ConstantProperties)
-
-        <System.NonSerialized()> Friend _pme As Object
-
-        ''' <summary>
-        ''' The PMC displays its user interface and allows the Flowsheet User to interact with it. If no user interface is
-        ''' available it returns an error.</summary>
-        ''' <remarks></remarks>
-        Public Overridable Sub Edit() Implements CapeOpen.ICapeUtilities.Edit
-            Dim cf As New FormConfigCAPEOPEN2
-            With cf
-                ._pp = Me
-                ._selcomps = _selectedcomps
-                ._availcomps = _availablecomps
-                .ShowDialog()
-                _selectedcomps = ._selcomps
-                _availablecomps = ._availcomps
-            End With
-        End Sub
-
-        ''' <summary>
-        ''' Initially, this method was only present in the ICapeUnit interface. Since ICapeUtilities.Initialize is now
-        ''' available for any kind of PMC, ICapeUnit. Initialize is deprecated.
-        ''' The PME will order the PMC to get initialized through this method. Any initialisation that could fail must be
-        ''' placed here. Initialize is guaranteed to be the first method called by the client (except low level methods such
-        ''' as class constructors or initialization persistence methods). Initialize has to be called once when the PMC is
-        ''' instantiated in a particular flowsheet.
-        ''' When the initialization fails, before signalling an error, the PMC must free all the resources that were
-        ''' allocated before the failure occurred. When the PME receives this error, it may not use the PMC anymore.
-        ''' The method terminate of the current interface must not either be called. Hence, the PME may only release
-        ''' the PMC through the middleware native mechanisms.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Overridable Sub Initialize() Implements CapeOpen.ICapeUtilities.Initialize
-
-            Me.m_ip = New DataTable
-            Me.m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-            ConfigParameters()
-
-        End Sub
-
-        ''' <summary>
-        ''' Returns an ICapeCollection interface.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>CapeInterface (ICapeCollection)</returns>
-        ''' <remarks>This interface will contain a collection of ICapeParameter interfaces.
-        ''' This method allows any client to access all the CO Parameters exposed by a PMC. Initially, this method was
-        ''' only present in the ICapeUnit interface. Since ICapeUtilities.GetParameters is now available for any kind of
-        ''' PMC, ICapeUnit.GetParameters is deprecated. Consult the “Open Interface Specification: Parameter
-        ''' Common Interface” document for more information about parameter. Consult the “Open Interface
-        ''' Specification: Collection Common Interface” document for more information about collection.
-        ''' If the PMC does not support exposing its parameters, it should raise the ECapeNoImpl error, instead of
-        ''' returning a NULL reference or an empty Collection. But if the PMC supports parameters but has for this call
-        ''' no parameters, it should return a valid ICapeCollection reference exposing zero parameters.</remarks>
-        Public Overridable ReadOnly Property parameters1() As Object Implements CapeOpen.ICapeUtilities.parameters
-            Get
-                Dim parms As New CapeOpen.ParameterCollection
-                For Each kvp As KeyValuePair(Of String, Double) In Me.Parameters
-                    parms.Add(New CapeOpen.RealParameter(kvp.Key, kvp.Key, kvp.Value, kvp.Value, Double.MinValue, Double.MaxValue, CapeParamMode.CAPE_OUTPUT, ""))
-                Next
-                Return parms
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Allows the PME to convey the PMC a reference to the former’s simulation context. 
-        ''' </summary>
-        ''' <value>The reference to the PME’s simulation context class. For the PMC to
-        ''' use this class, this reference will have to be converted to each of the
-        ''' defined CO Simulation Context interfaces.</value>
-        ''' <remarks>The simulation context
-        ''' will be PME objects which will expose a given set of CO interfaces. Each of these interfaces will allow the
-        ''' PMC to call back the PME in order to benefit from its exposed services (such as creation of material
-        ''' templates, diagnostics or measurement unit conversion). If the PMC does not support accessing the
-        ''' simulation context, it is recommended to raise the ECapeNoImpl error.
-        ''' Initially, this method was only present in the ICapeUnit interface. Since ICapeUtilities.SetSimulationContext
-        ''' is now available for any kind of PMC, ICapeUnit. SetSimulationContext is deprecated.</remarks>
-        Public Overridable WriteOnly Property simulationContext() As Object Implements CapeOpen.ICapeUtilities.simulationContext
-            Set(ByVal value As Object)
-                _pme = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Initially, this method was only present in the ICapeUnit interface. Since ICapeUtilities.Terminate is now
-        ''' available for any kind of PMC, ICapeUnit.Terminate is deprecated.
-        ''' The PME will order the PMC to get destroyed through this method. Any uninitialization that could fail must
-        ''' be placed here. ‘Terminate’ is guaranteed to be the last method called by the client (except low level methods
-        ''' such as class destructors). ‘Terminate’ may be called at any time, but may be only called once.
-        ''' When this method returns an error, the PME should report the user. However, after that the PME is not
-        ''' allowed to use the PMC anymore.
-        ''' The Unit specification stated that “Terminate may check if the data has been saved and return an error if
-        ''' not.” It is suggested not to follow this recommendation, since it’s the PME responsibility to save the state of
-        ''' the PMC before terminating it. In the case that a user wants to close a simulation case without saving it, it’s
-        ''' better to leave the PME to handle the situation instead of each PMC providing a different implementation.
-        ''' </summary>
-        ''' <remarks></remarks>
-        Public Overridable Sub Terminate() Implements CapeOpen.ICapeUtilities.Terminate
-            Me.CurrentMaterialStream = Nothing
-            If _como IsNot Nothing Then System.Runtime.InteropServices.Marshal.ReleaseComObject(_como)
-            Me.Dispose()
-        End Sub
-
-        Public Sub LoadCSDB(ByVal filename As String)
-            If File.Exists(filename) Then
-                Dim csdb As New DWSIM.Databases.ChemSep
-                Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                'Try
-                csdb.Load(filename)
-                cpa = csdb.Transfer()
-                For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
-                    If Not _availablecomps.ContainsKey(cp.Name) Then _availablecomps.Add(cp.Name, cp)
-                Next
-            End If
-        End Sub
-
-        Public Sub LoadDWSIMDB(ByVal filename As String)
-            If File.Exists(filename) Then
-                Dim dwdb As New DWSIM.Databases.DWSIM
-                Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-                dwdb.Load(filename)
-                cpa = dwdb.Transfer()
-                For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
-                    If Not _availablecomps.ContainsKey(cp.Name) Then _availablecomps.Add(cp.Name, cp)
-                Next
-            End If
-        End Sub
-
-#End Region
-
-#Region "   CAPE-OPEN Persistence Implementation"
-
-        Private m_dirty As Boolean = True
-
-        Public Sub GetClassID(ByRef pClassID As System.Guid) Implements IPersistStreamInit.GetClassID
-            pClassID = New Guid(PropertyPackage.ClassId)
-        End Sub
-
-        Public Sub GetSizeMax(ByRef pcbSize As Long) Implements IPersistStreamInit.GetSizeMax
-            pcbSize = 1024 * 1024
-        End Sub
-
-        Public Sub InitNew() Implements IPersistStreamInit.InitNew
-            'do nothing
-        End Sub
-
-        Public Function IsDirty() As Integer Implements IPersistStreamInit.IsDirty
-            Return m_dirty
-        End Function
-
-        Public Sub Load(ByVal pStm As System.Runtime.InteropServices.ComTypes.IStream) Implements IPersistStreamInit.Load
-
-            ' Read the length of the string  
-            Dim arrLen As Byte() = New [Byte](3) {}
-            pStm.Read(arrLen, arrLen.Length, IntPtr.Zero)
-
-            ' Calculate the length  
-            Dim cb As Integer = BitConverter.ToInt32(arrLen, 0)
-
-            ' Read the stream to get the string    
-            Dim bytes As Byte() = New Byte(cb - 1) {}
-            Dim pcb As New IntPtr()
-            pStm.Read(bytes, bytes.Length, pcb)
-            If System.Runtime.InteropServices.Marshal.IsComObject(pStm) Then System.Runtime.InteropServices.Marshal.ReleaseComObject(pStm)
-
-            ' Deserialize byte array    
-
-            Dim memoryStream As New System.IO.MemoryStream(bytes)
+            Dim frmwait As New FormLS
 
             Try
 
-                Dim domain As AppDomain = AppDomain.CurrentDomain
-                AddHandler domain.AssemblyResolve, New ResolveEventHandler(AddressOf MyResolveEventHandler)
+                frmwait.Show(flowsheet)
 
-                Dim myarr As ArrayList
+                Application.DoEvents()
 
                 Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
-                myarr = mySerializer.Deserialize(memoryStream)
 
-                _availablecomps = myarr(0)
-                _selectedcomps = myarr(1)
-                _ioquick = myarr(2)
-                _tpseverity = myarr(3)
-                _tpcompids = TryCast(myarr(4), String())
-                m_par = myarr(5)
-                _flashalgorithm = myarr(6)
+                Using stream As New MemoryStream()
+                    mySerializer.Serialize(stream, flowsheet.Collections)
+                    st.Collections = stream.ToArray()
+                End Using
 
-                Select Case Me.ComponentName
-                    Case "PC-SAFT"
-                        CType(Me, PCSAFTPropertyPackage).m_pr = myarr(7)
-                    Case "Peng-Robinson (PR)"
-                        CType(Me, PengRobinsonPropertyPackage).m_pr = myarr(7)
-                    Case "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2)"
-                        CType(Me, PRSV2PropertyPackage).m_pr = myarr(7)
-                    Case "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)"
-                        CType(Me, PRSV2VLPropertyPackage).m_pr = myarr(7)
-                    Case "Soave-Redlich-Kwong (SRK)"
-                        CType(Me, SRKPropertyPackage).m_pr = myarr(7)
-                    Case "Peng-Robinson / Lee-Kesler (PR/LK)"
-                        CType(Me, PengRobinsonLKPropertyPackage).m_pr = myarr(7)
-                        CType(Me, PengRobinsonLKPropertyPackage).m_lk = myarr(8)
-                    Case "UNIFAC"
-                        CType(Me, UNIFACPropertyPackage).m_pr = myarr(7)
-                    Case "UNIFAC-LL"
-                        CType(Me, UNIFACLLPropertyPackage).m_pr = myarr(7)
-                    Case "NRTL"
-                        CType(Me, NRTLPropertyPackage).m_pr = myarr(7)
-                        CType(Me, NRTLPropertyPackage).m_uni = myarr(8)
-                    Case "UNIQUAC"
-                        CType(Me, UNIQUACPropertyPackage).m_pr = myarr(7)
-                        CType(Me, UNIQUACPropertyPackage).m_uni = myarr(8)
-                    Case "Modified UNIFAC (Dortmund)"
-                        CType(Me, MODFACPropertyPackage).m_pr = myarr(7)
-                    Case "Chao-Seader"
-                        CType(Me, ChaoSeaderPropertyPackage).m_pr = myarr(7)
-                        CType(Me, ChaoSeaderPropertyPackage).m_lk = myarr(8)
-                        CType(Me, ChaoSeaderPropertyPackage).m_cs = myarr(9)
-                    Case "Grayson-Streed"
-                        CType(Me, GraysonStreedPropertyPackage).m_pr = myarr(7)
-                        CType(Me, GraysonStreedPropertyPackage).m_lk = myarr(8)
-                        CType(Me, GraysonStreedPropertyPackage).m_cs = myarr(9)
-                    Case "Lee-Kesler-Plöcker"
-                        CType(Me, LKPPropertyPackage).m_pr = myarr(7)
-                        CType(Me, LKPPropertyPackage).m_lk = myarr(8)
-                    Case "Raoult's Law", "IAPWS-IF97 Steam Tables"
-                    Case "COSMO-SAC (JCOSMO)"
-                        CType(Me, COSMOSACPropertyPackage).m_pr = myarr(7)
-                        CType(Me, COSMOSACPropertyPackage).m_uni = myarr(8)
-                End Select
+                Application.DoEvents()
 
-                myarr = Nothing
-                mySerializer = Nothing
+                Using stream As New MemoryStream()
+                    mySerializer.Serialize(stream, flowsheet.FormSurface.FlowsheetDesignSurface.drawingObjects)
+                    st.GraphicObjects = stream.ToArray()
+                End Using
 
-                RemoveHandler domain.AssemblyResolve, New ResolveEventHandler(AddressOf MyResolveEventHandler)
+                Application.DoEvents()
 
-            Catch p_Ex As System.Exception
+                Using stream As New MemoryStream()
+                    mySerializer.Serialize(stream, flowsheet.Options)
+                    st.Options = stream.ToArray()
+                End Using
 
-                System.Windows.Forms.MessageBox.Show(p_Ex.ToString())
+                Using stream As New MemoryStream()
+                    TreeViewDataAccess.SaveTreeViewData(flowsheet.FormObjList.TreeViewObj, stream)
+                    st.TreeViewObjects = stream.ToArray()
+                End Using
+
+                Application.DoEvents()
+
+                flowsheet.FormSpreadsheet.CopyToDT()
+
+                Using stream As New MemoryStream()
+                    mySerializer.Serialize(stream, flowsheet.FormSpreadsheet.dt1)
+                    st.SpreadsheetDT1 = stream.ToArray()
+                    mySerializer.Serialize(stream, flowsheet.FormSpreadsheet.dt2)
+                    st.SpreadsheetDT1 = stream.ToArray()
+                End Using
+
+                Application.DoEvents()
+
+                Using stream As New MemoryStream()
+                    mySerializer.Serialize(stream, flowsheet.FormSpreadsheet.dt2)
+                    st.SpreadsheetDT1 = stream.ToArray()
+                End Using
+
+                Application.DoEvents()
+
+                Using stream As New MemoryStream()
+                    mySerializer.Serialize(stream, flowsheet.FormWatch.items)
+                    st.WatchItems = stream.ToArray()
+                End Using
+
+                Application.DoEvents()
+
+                If flowsheet.FlowsheetStates Is Nothing Then
+                    flowsheet.FlowsheetStates = New Dictionary(Of Date, FlowsheetState)
+                End If
+
+                st.Description = fs.TextBox1.Text
+
+                st.SaveDate = Date.Now
+
+                flowsheet.FlowsheetStates.Add(st.SaveDate, st)
+
+                flowsheet.UpdateStateList()
+
+                flowsheet.WriteToLog(DWSIM.App.GetLocalString("SaveStateOK"), Color.Blue, TipoAviso.Informacao)
+
+            Catch ex As Exception
+
+                flowsheet.WriteToLog(DWSIM.App.GetLocalString("SaveStateError") & " " & ex.Message.ToString, Color.Red, TipoAviso.Erro)
+
+                st = Nothing
+
+            Finally
+
+                frmwait.Close()
 
             End Try
 
-            memoryStream.Close()
+        End If
 
-        End Sub
+    End Sub
 
-        Public Sub Save(ByVal pStm As System.Runtime.InteropServices.ComTypes.IStream, ByVal fClearDirty As Boolean) Implements IPersistStreamInit.Save
+    Shared Sub RestoreState(ByRef flowsheet As FormFlowsheet, ByVal st As FlowsheetState)
 
-            Dim props As New ArrayList
+        Dim fs As New FormState
+        fs.TextBox1.Enabled = False
+        fs.TextBox2.Enabled = False
+        fs.TextBox2.Text = st.SaveDate
+        fs.TextBox1.Text = st.Description
+        fs.PictureBox1.Image = st.Snapshot
 
-            With props
+        fs.btnOK.Text = DWSIM.App.GetLocalString("RestoreState")
 
-                .Add(_availablecomps)
-                .Add(_selectedcomps)
-                .Add(_ioquick)
-                .Add(_tpseverity)
-                .Add(_tpcompids)
-                .Add(m_par)
-                .Add(_flashalgorithm)
+        If fs.ShowDialog(flowsheet) = Windows.Forms.DialogResult.OK Then
 
-                Select Case Me.ComponentName
-                    Case "PC-SAFT"
-                        .Add(CType(Me, PCSAFTPropertyPackage).m_pr)
-                    Case "Peng-Robinson (PR)"
-                        .Add(CType(Me, PengRobinsonPropertyPackage).m_pr)
-                    Case "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2)"
-                        .Add(CType(Me, PRSV2PropertyPackage).m_pr)
-                    Case "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)"
-                        .Add(CType(Me, PRSV2VLPropertyPackage).m_pr)
-                    Case "Soave-Redlich-Kwong (SRK)"
-                        .Add(CType(Me, SRKPropertyPackage).m_pr)
-                    Case "Peng-Robinson / Lee-Kesler (PR/LK)"
-                        .Add(CType(Me, PengRobinsonLKPropertyPackage).m_pr)
-                        .Add(CType(Me, PengRobinsonLKPropertyPackage).m_lk)
-                    Case "UNIFAC"
-                        .Add(CType(Me, UNIFACPropertyPackage).m_pr)
-                    Case "UNIFAC-LL"
-                        .Add(CType(Me, UNIFACLLPropertyPackage).m_pr)
-                    Case "NRTL"
-                        .Add(CType(Me, NRTLPropertyPackage).m_pr)
-                        .Add(CType(Me, NRTLPropertyPackage).m_uni)
-                    Case "UNIQUAC"
-                        .Add(CType(Me, UNIQUACPropertyPackage).m_pr)
-                        .Add(CType(Me, UNIQUACPropertyPackage).m_uni)
-                    Case "Modified UNIFAC (Dortmund)"
-                        .Add(CType(Me, MODFACPropertyPackage).m_pr)
-                    Case "Chao-Seader"
-                        .Add(CType(Me, ChaoSeaderPropertyPackage).m_pr)
-                        .Add(CType(Me, ChaoSeaderPropertyPackage).m_lk)
-                        .Add(CType(Me, ChaoSeaderPropertyPackage).m_cs)
-                    Case "Grayson-Streed"
-                        .Add(CType(Me, GraysonStreedPropertyPackage).m_pr)
-                        .Add(CType(Me, GraysonStreedPropertyPackage).m_lk)
-                        .Add(CType(Me, GraysonStreedPropertyPackage).m_cs)
-                    Case "Lee-Kesler-Plöcker"
-                        .Add(CType(Me, LKPPropertyPackage).m_pr)
-                        .Add(CType(Me, LKPPropertyPackage).m_lk)
-                    Case "Raoult's Law", "IAPWS-IF97 Steam Tables"
-                    Case "COSMO-SAC (JCOSMO)"
-                        .Add(CType(Me, COSMOSACPropertyPackage).m_pr)
-                        .Add(CType(Me, COSMOSACPropertyPackage).m_uni)
-                End Select
+            Dim frmwait As New FormLS
 
-            End With
-
-            Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
-            Dim mstr As New MemoryStream
-            mySerializer.Serialize(mstr, props)
-            Dim bytes As Byte() = mstr.ToArray()
-            mstr.Close()
-
-            ' construct length (separate into two separate bytes)    
-
-            Dim arrLen As Byte() = BitConverter.GetBytes(bytes.Length)
             Try
 
-                ' Save the array in the stream    
-                pStm.Write(arrLen, arrLen.Length, IntPtr.Zero)
-                pStm.Write(bytes, bytes.Length, IntPtr.Zero)
-                If System.Runtime.InteropServices.Marshal.IsComObject(pStm) Then System.Runtime.InteropServices.Marshal.ReleaseComObject(pStm)
+                frmwait.Show(flowsheet)
 
-            Catch p_Ex As System.Exception
+                Application.DoEvents()
 
-                System.Windows.Forms.MessageBox.Show(p_Ex.ToString())
+                flowsheet.SuspendLayout()
 
-            End Try
+                Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
 
-            If fClearDirty Then
-                m_dirty = False
-            End If
+                Using stream As New MemoryStream(st.GraphicObjects)
+                    flowsheet.FormSurface.FlowsheetDesignSurface.m_drawingObjects = Nothing
+                    flowsheet.FormSurface.FlowsheetDesignSurface.m_drawingObjects = DirectCast(mySerializer.Deserialize(stream), Microsoft.Msdn.Samples.GraphicObjects.GraphicObjectCollection)
+                End Using
 
-        End Sub
+                Application.DoEvents()
 
-        Private Function MyResolveEventHandler(ByVal sender As Object, ByVal args As ResolveEventArgs) As System.Reflection.Assembly
-            Return Me.[GetType]().Assembly
-        End Function
+                Using stream As New MemoryStream(st.Collections)
+                    flowsheet.Collections = Nothing
+                    flowsheet.Collections = DirectCast(mySerializer.Deserialize(stream), DWSIM.FormClasses.ClsObjectCollections)
+                End Using
 
-#End Region
+                Application.DoEvents()
 
-#Region "   CAPE-OPEN Error Interfaces"
+                Using stream As New MemoryStream(st.Options)
+                    flowsheet.Options = Nothing
+                    flowsheet.Options = DirectCast(mySerializer.Deserialize(stream), DWSIM.FormClasses.ClsFormOptions)
+                End Using
 
-        Sub ThrowCAPEException(ByRef ex As Exception, ByVal name As String, ByVal description As String, ByVal interf As String, ByVal moreinfo As String, ByVal operation As String, ByVal scope As String, ByVal code As Integer)
+                Application.DoEvents()
 
-            _name = name
-            _code = code
-            _description = description
-            _interfacename = interf
-            _moreinfo = moreinfo
-            _operation = operation
-            _scope = scope
+                Using stream As New MemoryStream(st.TreeViewObjects)
+                    flowsheet.FormObjList.TreeViewObj.Nodes.Clear()
+                    TreeViewDataAccess.LoadTreeViewData(flowsheet.FormObjList.TreeViewObj, stream)
+                End Using
 
-            Throw ex
+                Application.DoEvents()
 
-        End Sub
-
-        Private _name, _description, _interfacename, _moreinfo, _operation, _scope As String, _code As Integer
-
-        Public ReadOnly Property Name() As String Implements CapeOpen.ECapeRoot.Name
-            Get
-                Return _name
-            End Get
-        End Property
-
-        Public ReadOnly Property code() As Integer Implements CapeOpen.ECapeUser.code
-            Get
-                Return _code
-            End Get
-        End Property
-
-        Public ReadOnly Property description() As String Implements CapeOpen.ECapeUser.description
-            Get
-                Return _description
-            End Get
-        End Property
-
-        Public ReadOnly Property interfaceName() As String Implements CapeOpen.ECapeUser.interfaceName
-            Get
-                Return _interfacename
-            End Get
-        End Property
-
-        Public ReadOnly Property moreInfo() As String Implements CapeOpen.ECapeUser.moreInfo
-            Get
-                Return _moreinfo
-            End Get
-        End Property
-
-        Public ReadOnly Property operation() As String Implements CapeOpen.ECapeUser.operation
-            Get
-                Return _operation
-            End Get
-        End Property
-
-        Public ReadOnly Property scope() As String Implements CapeOpen.ECapeUser.scope
-            Get
-                Return _scope
-            End Get
-        End Property
-
-#End Region
-
-#Region "   IDisposable Support "
-        Private disposedValue As Boolean = False        ' To detect redundant calls
-
-        ' IDisposable
-        Protected Overridable Sub Dispose(ByVal disposing As Boolean)
-            If Not Me.disposedValue Then
-                If disposing Then
-                    ' TODO: free other state (managed objects).
+                If Not st.SpreadsheetDT1 Is Nothing Then
+                    Using stream As New MemoryStream(st.SpreadsheetDT1)
+                        flowsheet.FormSpreadsheet.dt1 = DirectCast(mySerializer.Deserialize(stream), Object(,))
+                    End Using
                 End If
 
-                ' TODO: free your own state (unmanaged objects).
-                If _como IsNot Nothing Then
-                    If System.Runtime.InteropServices.Marshal.IsComObject(_como) Then
-                        System.Runtime.InteropServices.Marshal.ReleaseComObject(_como)
-                    Else
-                        _como = Nothing
-                    End If
-                End If
-                If _pme IsNot Nothing Then
-                    If System.Runtime.InteropServices.Marshal.IsComObject(_pme) Then
-                        System.Runtime.InteropServices.Marshal.ReleaseComObject(_pme)
-                    Else
-                        _pme = Nothing
-                    End If
+                Application.DoEvents()
+
+                If Not st.SpreadsheetDT2 Is Nothing Then
+                    Using stream As New MemoryStream(st.SpreadsheetDT2)
+                        flowsheet.FormSpreadsheet.dt2 = DirectCast(mySerializer.Deserialize(stream), Object(,))
+                    End Using
                 End If
 
+                Application.DoEvents()
 
-                ' TODO: set large fields to null.
-            End If
-            Me.disposedValue = True
-        End Sub
+                Using stream As New MemoryStream(st.WatchItems)
+                    flowsheet.FormWatch.items = DirectCast(mySerializer.Deserialize(stream), Dictionary(Of Integer, DWSIM.Outros.WatchItem))
+                    flowsheet.FormWatch.PopulateList()
+                End Using
 
-#Region " IDisposable Support "
-        ' This code added by Visual Basic to correctly implement the disposable pattern.
-        Public Overridable Sub Dispose() Implements IDisposable.Dispose
-            ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
-            Dispose(True)
-            GC.SuppressFinalize(Me)
-        End Sub
-#End Region
+                Application.DoEvents()
 
-#End Region
+                flowsheet.CheckCollections()
 
-#Region "   XML data persistence"
+                Application.DoEvents()
 
-        Public Overridable Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
-
-            Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
-
-            Me.UniqueID = (From el As XElement In data Select el Where el.Name = "ID").SingleOrDefault.Value
-            Me.ComponentName = (From el As XElement In data Select el Where el.Name = "ComponentName").SingleOrDefault.Value
-            Me.ComponentDescription = (From el As XElement In data Select el Where el.Name = "ComponentDescription").SingleOrDefault.Value
-            Me.Tag = (From el As XElement In data Select el Where el.Name = "Tag").SingleOrDefault.Value
-            Me._ioquick = IIf((From el As XElement In data Select el Where el.Name = "IOQUick").Value <> "", (From el As XElement In data Select el Where el.Name = "IOQUick").SingleOrDefault.Value, False)
-            Me._tpseverity = (From el As XElement In data Select el Where el.Name = "TPSeverity").SingleOrDefault.Value
-            Me._tpcompids = XMLSerializer.XMLSerializer.StringToArray2((From el As XElement In data Select el Where el.Name = "TPCompIDs").SingleOrDefault.Value, ci, Type.GetType("System.String"))
-
-            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "Parameters").SingleOrDefault.Elements.ToList
-                If m_par.ContainsKey(xel.@ID) Then m_par(xel.@ID) = Double.Parse(xel.@Value, ci) Else m_par.Add(xel.@ID, Double.Parse(xel.@Value, ci))
-            Next
-
-            Select Case Me.ComponentName
-                Case "PC-SAFT"
-
-                    Dim pp As PCSAFTPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.PCSIP() With {.compound1 = xel.@Compound1, .compound2 = xel.@Compound2, .casno1 = xel.@Compound1, .casno2 = xel.@Compound2, .kij = Double.Parse(xel.@Value, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.PCSIP)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
-                        End If
+                With flowsheet.Collections
+                    Dim gObj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject
+                    For Each gObj In flowsheet.FormSurface.FlowsheetDesignSurface.drawingObjects
+                        Select Case gObj.TipoObjeto
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Compressor
+                                .CLCS_CompressorCollection(gObj.Name).GraphicObject = gObj
+                                .CompressorCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Cooler
+                                .CLCS_CoolerCollection(gObj.Name).GraphicObject = gObj
+                                .CoolerCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.EnergyStream
+                                .CLCS_EnergyStreamCollection(gObj.Name).GraphicObject = gObj
+                                .EnergyStreamCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Heater
+                                .CLCS_HeaterCollection(gObj.Name).GraphicObject = gObj
+                                .HeaterCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream
+                                .CLCS_MaterialStreamCollection(gObj.Name).GraphicObject = gObj
+                                .MaterialStreamCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeEn
+                                .CLCS_EnergyMixerCollection(gObj.Name).GraphicObject = gObj
+                                .MixerENCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeIn
+                                .CLCS_MixerCollection(gObj.Name).GraphicObject = gObj
+                                .MixerCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeOut
+                                .CLCS_SplitterCollection(gObj.Name).GraphicObject = gObj
+                                .SplitterCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pipe
+                                .CLCS_PipeCollection(gObj.Name).GraphicObject = gObj
+                                .PipeCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pump
+                                .CLCS_PumpCollection(gObj.Name).GraphicObject = gObj
+                                .PumpCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Tank
+                                .CLCS_TankCollection(gObj.Name).GraphicObject = gObj
+                                .TankCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
+                                .CLCS_TurbineCollection(gObj.Name).GraphicObject = gObj
+                                .TurbineCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Valve
+                                .CLCS_ValveCollection(gObj.Name).GraphicObject = gObj
+                                .ValveCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Vessel
+                                .CLCS_VesselCollection(gObj.Name).GraphicObject = gObj
+                                .SeparatorCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.GO_Tabela
+                                .ObjectCollection(gObj.Tag).Tabela = gObj
+                                CType(gObj, DWSIM.GraphicObjects.TableGraphic).BaseOwner = .ObjectCollection(gObj.Tag)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
+                                .CLCS_TurbineCollection(gObj.Name).GraphicObject = gObj
+                                .TurbineCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Ajuste
+                                .CLCS_AdjustCollection(gObj.Name).GraphicObject = gObj
+                                .AdjustCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Reciclo
+                                .CLCS_RecycleCollection(gObj.Name).GraphicObject = gObj
+                                .RecycleCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Especificacao
+                                .CLCS_SpecCollection(gObj.Name).GraphicObject = gObj
+                                .SpecCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Conversion
+                                .CLCS_ReactorConversionCollection(gObj.Name).GraphicObject = gObj
+                                .ReactorConversionCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Equilibrium
+                                .CLCS_ReactorEquilibriumCollection(gObj.Name).GraphicObject = gObj
+                                .ReactorEquilibriumCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Gibbs
+                                .CLCS_ReactorGibbsCollection(gObj.Name).GraphicObject = gObj
+                                .ReactorGibbsCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_CSTR
+                                .CLCS_ReactorCSTRCollection(gObj.Name).GraphicObject = gObj
+                                .ReactorCSTRCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_PFR
+                                .CLCS_ReactorPFRCollection(gObj.Name).GraphicObject = gObj
+                                .ReactorPFRCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.HeatExchanger
+                                .CLCS_HeatExchangerCollection(gObj.Name).GraphicObject = gObj
+                                .HeatExchangerCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ShortcutColumn
+                                .CLCS_ShortcutColumnCollection(gObj.Name).GraphicObject = gObj
+                                .ShortcutColumnCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.DistillationColumn
+                                .CLCS_DistillationColumnCollection(gObj.Name).GraphicObject = gObj
+                                .DistillationColumnCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.AbsorptionColumn
+                                .CLCS_AbsorptionColumnCollection(gObj.Name).GraphicObject = gObj
+                                .AbsorptionColumnCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RefluxedAbsorber
+                                .CLCS_RefluxedAbsorberCollection(gObj.Name).GraphicObject = gObj
+                                .RefluxedAbsorberCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ReboiledAbsorber
+                                .CLCS_ReboiledAbsorberCollection(gObj.Name).GraphicObject = gObj
+                                .ReboiledAbsorberCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_EnergyRecycle
+                                .CLCS_EnergyRecycleCollection(gObj.Name).GraphicObject = gObj
+                                .EnergyRecycleCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.GO_TabelaRapida
+                                .ObjectCollection(CType(gObj, DWSIM.GraphicObjects.QuickTableGraphic).BaseOwner.Nome).TabelaRapida = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ComponentSeparator
+                                .CLCS_ComponentSeparatorCollection(gObj.Name).GraphicObject = gObj
+                                .ComponentSeparatorCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OrificePlate
+                                .CLCS_OrificePlateCollection(gObj.Name).GraphicObject = gObj
+                                .OrificePlateCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CustomUO
+                                .CLCS_CustomUOCollection(gObj.Name).GraphicObject = gObj
+                                .CustomUOCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
+                                .CLCS_CapeOpenUOCollection(gObj.Name).GraphicObject = gObj
+                                .CapeOpenUOCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                                .CLCS_SolidsSeparatorCollection(gObj.Name).GraphicObject = gObj
+                                .SolidsSeparatorCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
+                                .CLCS_FilterCollection(gObj.Name).GraphicObject = gObj
+                                .FilterCollection(gObj.Name) = gObj
+                        End Select
                     Next
+                End With
 
-                Case "Peng-Robinson (PR)"
+                Application.DoEvents()
 
-                    Dim pp As PengRobinsonPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                Dim refill As Boolean = False
+
+                'refill (quick)table items for backwards compatibility
+                For Each obj As SimulationObjects_BaseClass In flowsheet.Collections.ObjectCollection.Values
+                    With obj
+                        If .NodeTableItems.Count > 0 Then
+                            For Each nvi As DWSIM.Outros.NodeItem In .NodeTableItems.Values
+                                Try
+                                    If Not nvi.Text.Contains("PROP_") Then
+                                        refill = True
+                                        Exit For
+                                    End If
+                                Catch ex As Exception
+
+                                End Try
+                            Next
                         End If
-                    Next
-
-                Case "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2)"
-
-                    Dim pp As PRSV2PropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.PRSV2_IPData() With {.id1 = xel.@Compound1, .id2 = xel.@Compound2, .kij = Double.Parse(xel.@Value, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.PRSV2_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                        If refill Then
+                            .NodeTableItems.Clear()
+                            .QTNodeTableItems.Clear()
+                            .FillNodeItems()
+                            .QTFillNodeItems()
                         End If
-                    Next
-
-                Case "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)"
-
-                    Dim pp As PRSV2VLPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.PRSV2_IPData() With {.id1 = xel.@Compound1, .id2 = xel.@Compound2, .kij = Double.Parse(xel.@kij, ci), .kji = Double.Parse(xel.@kji, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.PRSV2_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
-                        End If
-                    Next
-
-                Case "Soave-Redlich-Kwong (SRK)"
-
-                    Dim pp As SRKPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
-                        End If
-                    Next
-
-                Case "Peng-Robinson / Lee-Kesler (PR/LK)"
-
-                    Dim pp As PengRobinsonLKPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
-                        End If
-                    Next
-
-
-                Case "UNIFAC"
-
-                    Dim pp As UNIFACPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
-                        End If
-                    Next
-
-                Case "UNIFAC-LL"
-
-                    Dim pp As UNIFACLLPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
-                        End If
-                    Next
-
-                Case "NRTL"
-
-                    Dim pp As NRTLPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters_PR").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
-                        End If
-                    Next
-
-                    pp.m_uni.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters_NRTL").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.NRTL_IPData() With {.ID1 = xel.@ID1, .ID2 = xel.@ID2, .A12 = Double.Parse(xel.@A12, ci), .A21 = Double.Parse(xel.@A21, ci),
-                                                                    .B12 = Double.Parse(xel.@B12, ci), .B21 = Double.Parse(xel.@B21, ci),
-                                                                    .C12 = Double.Parse(xel.@C12, ci), .C21 = Double.Parse(xel.@C21, ci),
-                                                                    .alpha12 = Double.Parse(xel.@alpha12, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.NRTL_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_uni.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_uni.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_uni.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
-                        End If
-                    Next
-
-                Case "UNIQUAC"
-
-                    Dim pp As UNIQUACPropertyPackage = Me
-
-                    pp.m_pr.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters_PR").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
-                        End If
-                    Next
-
-                    pp.m_uni.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters_UNIQUAC").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.UNIQUAC_IPData() With {.ID1 = xel.@ID1, .ID2 = xel.@ID2, .A12 = Double.Parse(xel.@A12, ci), .A21 = Double.Parse(xel.@A21, ci),
-                                                                       .B12 = Double.Parse(xel.@B12, ci), .B21 = Double.Parse(xel.@B21, ci),
-                                                                       .C12 = Double.Parse(xel.@C12, ci), .C21 = Double.Parse(xel.@C21, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.UNIQUAC_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_uni.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_uni.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_uni.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
-                        End If
-                    Next
-
-
-                Case "Modified UNIFAC (Dortmund)"
-
-                    Dim pp As MODFACPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
-                        End If
-                    Next
-
-                Case "COSMO-SAC (JCOSMO)"
-
-                    Dim pp As COSMOSACPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
-                    For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
-                        Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
-                        Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
-                        dic.Add(xel.@Compound2, ip)
-                        If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
-                            pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
-                        Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
-                        End If
-                    Next
-
-            End Select
-
-        End Function
-
-        Public Overridable Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
-
-            Dim elements As New System.Collections.Generic.List(Of System.Xml.Linq.XElement)
-            Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
-
-            With elements
-
-                .Add(New XElement("Type", Me.GetType.ToString))
-                .Add(New XElement("ComponentName", ComponentName))
-                .Add(New XElement("ComponentDescription", ComponentDescription))
-                .Add(New XElement("Tag", Tag))
-                .Add(New XElement("IOQUick", _ioquick))
-                .Add(New XElement("TPSeverity", _tpseverity))
-                .Add(New XElement("TPCompIDs", XMLSerializer.XMLSerializer.ArrayToString2(_tpcompids, ci)))
-
-                .Add(New XElement("Parameters"))
-
-                For Each kvp As KeyValuePair(Of String, Double) In m_par
-                    elements(elements.Count - 1).Add(New XElement("Parameter", {New XAttribute("ID", kvp.Key), New XAttribute("Value", kvp.Value.ToString(ci))}))
+                    End With
                 Next
 
-                Select Case Me.ComponentName
-                    Case "PC-SAFT"
+                Application.DoEvents()
 
-                        Dim pp As PCSAFTPropertyPackage = Me
+                flowsheet.FrmStSim1.Init(True)
 
-                        .Add(New XElement("InteractionParameters"))
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PCSIP)) In pp.m_pr.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.PCSIP) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                    Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                       New XAttribute("Compound2", kvp2.Key),
-                                                                       New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                                End If
-                            Next
+                Application.DoEvents()
+
+                flowsheet.ResumeLayout()
+
+                flowsheet.FormSurface.FlowsheetDesignSurface.Invalidate()
+
+                flowsheet.WriteToLog(DWSIM.App.GetLocalString("RestoreStateOK"), Color.Blue, TipoAviso.Informacao)
+
+            Catch ex As Exception
+
+                flowsheet.WriteToLog(DWSIM.App.GetLocalString("RestoreStateError") & " " & ex.Message.ToString, Color.Red, TipoAviso.Erro)
+
+                st = Nothing
+
+            Finally
+
+                frmwait.Close()
+
+            End Try
+
+        End If
+
+    End Sub
+
+    Function ReturnForm(ByVal str As String) As IDockContent
+        Select Case str
+            Case "DWSIM.frmProps"
+                Return Me.tmpform2.FormProps
+            Case "DWSIM.frmObjList"
+                Return Me.tmpform2.FormObjList
+            Case "DWSIM.frmLog"
+                Return Me.tmpform2.FormLog
+            Case "DWSIM.frmMatList"
+                Return Me.tmpform2.FormMatList
+            Case "DWSIM.frmSurface"
+                Return Me.tmpform2.FormSurface
+            Case "DWSIM.SpreadsheetForm"
+                Return Me.tmpform2.FormSpreadsheet
+            Case "DWSIM.frmObjListView"
+                Return Me.tmpform2.FormObjListView
+            Case "DWSIM.frmWatch"
+                Return Me.tmpform2.FormWatch
+        End Select
+        Return Nothing
+    End Function
+
+    Sub LoadF(ByVal caminho As String)
+
+        If System.IO.File.Exists(caminho) Then
+
+            Dim rnd As New Random()
+            Dim fn As String = rnd.Next(10000, 99999)
+
+            Dim diretorio As String = Path.GetDirectoryName(caminho)
+            Dim arquivo As String = Path.GetFileName(caminho)
+            Dim arquivoCAB As String = "dwsim" + fn
+
+            Dim ziperror As Boolean = False
+            Dim loadedok As Boolean = False
+            Try
+                Dim zp As New ZipFile(caminho)
+                zp = Nothing
+                'is a zip file
+            Catch ex As Exception
+                ziperror = True
+            End Try
+
+            loadedok = Me.LoadAndExtractZIP(caminho)
+
+            If Not loadedok Then Exit Sub
+
+            Me.SuspendLayout()
+            m_childcount += 1
+
+            Dim form As FormFlowsheet = New FormFlowsheet()
+            My.Application.CAPEOPENMode = False
+            My.Application.ActiveSimulation = form
+
+            'is not a zip file
+            If ziperror Then
+                Try
+                    If Not DWSIM.App.IsRunningOnMono() Then
+                        'Call Me.LoadAndExtractCAB(caminho)
+                    Else
+                        MsgBox("This file is not loadable when running DWSIM on Mono.", MsgBoxStyle.Critical, "Error!")
+                        Exit Sub
+                    End If
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    form = Nothing
+                End Try
+            End If
+
+            Me.filename = caminho
+
+            Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
+
+            mySerializer.Binder = New DWSIM.Outros.VersionDeserializationBinder
+
+            Dim fs3 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\3.bin", FileMode.Open)
+
+            Using fs3
+                form.FormSurface.FlowsheetDesignSurface.m_drawingObjects = Nothing
+                form.FormSurface.FlowsheetDesignSurface.m_drawingObjects = DirectCast(mySerializer.Deserialize(fs3), Microsoft.Msdn.Samples.GraphicObjects.GraphicObjectCollection)
+            End Using
+
+            Dim fs As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\1.bin", FileMode.Open)
+
+            Using fs
+                form.Collections = Nothing
+                form.Collections = DirectCast(mySerializer.Deserialize(fs), DWSIM.FormClasses.ClsObjectCollections)
+            End Using
+
+            Dim fs2 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\2.bin", FileMode.Open)
+
+            Using fs2
+                form.Options = Nothing
+                form.Options = DirectCast(mySerializer.Deserialize(fs2), DWSIM.FormClasses.ClsFormOptions)
+                If form.Options.PropertyPackages.Count = 0 Then form.Options.PropertyPackages = Me.PropertyPackages
+            End Using
+
+            If Not My.Settings.ReplaceCompoundConstantProperties Then
+                For Each c As ConstantProperties In form.Options.SelectedComponents.Values
+                    If Me.AvailableComponents.ContainsKey(c.Name) Then
+                        c = Me.AvailableComponents(c.Name)
+                    End If
+                Next
+            End If
+
+            If Not My.Settings.ReplaceCompoundConstantProperties Then
+                For Each ms As Streams.MaterialStream In form.Collections.CLCS_MaterialStreamCollection.Values
+                    For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
+                        For Each c As ConstantProperties In form.Options.SelectedComponents.Values
+                            If Me.AvailableComponents.ContainsKey(c.Name) Then
+                                phase.Componentes(c.Name).ConstantProperties = Me.AvailableComponents(c.Name)
+                            End If
                         Next
+                    Next
+                Next
+            End If
 
-                    Case "Peng-Robinson (PR)"
+            form.FormObjList.TreeViewObj.Nodes.Clear()
+            TreeViewDataAccess.LoadTreeViewData(form.FormObjList.TreeViewObj, My.Computer.FileSystem.SpecialDirectories.Temp & "\5.bin")
 
-                        Dim pp As PengRobinsonPropertyPackage = Me
+            Dim fs7 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\7.bin", FileMode.Open)
 
-                        .Add(New XElement("InteractionParameters"))
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                       Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                    New XAttribute("Compound2", kvp2.Key),
-                                                                    New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                                End If
-                            Next
-                        Next
+            Using fs7
+                form.Text = DirectCast(mySerializer.Deserialize(fs7), String)
+            End Using
 
-                    Case "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2)"
+            If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\8.bin") Then
+                Dim fs8 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\8.bin", FileMode.Open)
+                Using fs8
+                    form.FormLog.GridDT.Rows.Clear()
+                    form.FormLog.GridDT = DirectCast(mySerializer.Deserialize(fs8), DataTable)
+                End Using
+            End If
 
-                        Dim pp As PRSV2PropertyPackage = Me
+            If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\9.bin") Then
+                Dim fs9 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\9.bin", FileMode.Open)
+                Using fs9
+                    form.FormSpreadsheet.dt1 = DirectCast(mySerializer.Deserialize(fs9), Object(,))
+                End Using
+            End If
 
-                        .Add(New XElement("InteractionParameters"))
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PRSV2_IPData)) In pp.m_pr.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.PRSV2_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                      Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                     New XAttribute("Compound2", kvp2.Key),
-                                                                     New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                                End If
-                            Next
-                        Next
+            If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\10.bin") Then
+                Dim fs10 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\10.bin", FileMode.Open)
+                Using fs10
+                    form.FormSpreadsheet.dt2 = DirectCast(mySerializer.Deserialize(fs10), Object(,))
+                End Using
+            End If
 
-                    Case "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)"
+            If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\11.bin") Then
+                Dim fs11 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\11.bin", FileMode.Open)
+                Using fs11
+                    form.FormWatch.items = DirectCast(mySerializer.Deserialize(fs11), Dictionary(Of Integer, DWSIM.Outros.WatchItem))
+                    form.FormWatch.PopulateList()
+                End Using
+            End If
 
-                        Dim pp As PRSV2VLPropertyPackage = Me
+            If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\13.bin") Then
+                Dim fs13 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\13.bin", FileMode.Open)
+                Using fs13
+                    form.FlowsheetStates = DirectCast(mySerializer.Deserialize(fs13), Dictionary(Of Date, FlowsheetState))
+                    form.UpdateStateList()
+                End Using
+            End If
 
-                        .Add(New XElement("InteractionParameters"))
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PRSV2_IPData)) In pp.m_pr.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.PRSV2_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                        Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                    New XAttribute("Compound2", kvp2.Key),
-                                                                    New XAttribute("kij", kvp2.Value.kij.ToString(ci)),
-                                                                    New XAttribute("kji", kvp2.Value.kji.ToString(ci))))
-                                End If
-                            Next
-                        Next
+            form.CheckCollections()
 
-                    Case "Soave-Redlich-Kwong (SRK)"
-
-                        Dim pp As SRKPropertyPackage = Me
-
-                        .Add(New XElement("InteractionParameters"))
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                         Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                  New XAttribute("Compound2", kvp2.Key),
-                                                                  New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                                End If
-                            Next
-                        Next
-
-                    Case "Peng-Robinson / Lee-Kesler (PR/LK)"
-
-                        Dim pp As PengRobinsonLKPropertyPackage = Me
-
-                        .Add(New XElement("InteractionParameters"))
-
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                    Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                       New XAttribute("Compound2", kvp2.Key),
-                                                                       New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                                End If
-                            Next
-                        Next
-
-                    Case "UNIFAC"
-
-                        Dim pp As UNIFACPropertyPackage = Me
-
-                        .Add(New XElement("InteractionParameters"))
-
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                       Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                    New XAttribute("Compound2", kvp2.Key),
-                                                                    New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                                End If
-                            Next
-                        Next
-
-                    Case "UNIFAC-LL"
-
-                        Dim pp As UNIFACLLPropertyPackage = Me
-
-                        .Add(New XElement("InteractionParameters"))
-
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                     Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                      New XAttribute("Compound2", kvp2.Key),
-                                                                      New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                                End If
-                            Next
-                        Next
-
-                    Case "NRTL"
-
-                        Dim pp As NRTLPropertyPackage = Me
-
-                        .Add(New XElement("InteractionParameters_PR"))
-
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                       Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                    New XAttribute("Compound2", kvp2.Key),
-                                                                    New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                                End If
-                            Next
-                        Next
-
-                        .Add(New XElement("InteractionParameters_NRTL"))
-
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.NRTL_IPData)) In pp.m_uni.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.NRTL_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                      Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                     New XAttribute("Compound2", kvp2.Key),
-                                                                     New XAttribute("ID1", kvp2.Value.ID1),
-                                                                     New XAttribute("ID2", kvp2.Value.ID2),
-                                                                     New XAttribute("A12", kvp2.Value.A12.ToString(ci)),
-                                                                     New XAttribute("A21", kvp2.Value.A21.ToString(ci)),
-                                                                     New XAttribute("B12", kvp2.Value.B12.ToString(ci)),
-                                                                     New XAttribute("B21", kvp2.Value.B21.ToString(ci)),
-                                                                     New XAttribute("C12", kvp2.Value.C12.ToString(ci)),
-                                                                     New XAttribute("C21", kvp2.Value.C21.ToString(ci)),
-                                                                     New XAttribute("alpha12", kvp2.Value.alpha12.ToString(ci))))
-                                End If
-                            Next
-                        Next
-
-                    Case "UNIQUAC"
-
-                        Dim pp As UNIQUACPropertyPackage = Me
-
-                        .Add(New XElement("InteractionParameters_PR"))
-
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                         Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                  New XAttribute("Compound2", kvp2.Key),
-                                                                  New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                                End If
-                            Next
-                        Next
-
-                        .Add(New XElement("InteractionParameters_UNIQUAC"))
-
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.UNIQUAC_IPData)) In pp.m_uni.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.UNIQUAC_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                         Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                  New XAttribute("Compound2", kvp2.Key),
-                                                                  New XAttribute("ID1", kvp2.Value.ID1),
-                                                                  New XAttribute("ID2", kvp2.Value.ID2),
-                                                                  New XAttribute("A12", kvp2.Value.A12.ToString(ci)),
-                                                                  New XAttribute("A21", kvp2.Value.A21.ToString(ci)),
-                                                                  New XAttribute("B12", kvp2.Value.B12.ToString(ci)),
-                                                                  New XAttribute("B21", kvp2.Value.B21.ToString(ci)),
-                                                                  New XAttribute("C12", kvp2.Value.C12.ToString(ci)),
-                                                                  New XAttribute("C21", kvp2.Value.C21.ToString(ci))))
-                                End If
-                            Next
-                        Next
-
-                    Case "Modified UNIFAC (Dortmund)"
-
-                        Dim pp As MODFACPropertyPackage = Me
-
-                        .Add(New XElement("InteractionParameters"))
-
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                         Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                  New XAttribute("Compound2", kvp2.Key),
-                                                                  New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                                End If
-                            Next
-                        Next
-
-                    Case "COSMO-SAC (JCOSMO)"
-
-                        Dim pp As COSMOSACPropertyPackage = Me
-
-                        .Add(New XElement("InteractionParameters"))
-
-                        For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
-                            For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And
-                                         Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                  New XAttribute("Compound2", kvp2.Key),
-                                                                  New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                                End If
-                            Next
-                        Next
-
-                    Case "Chao-Seader"
-                    Case "Grayson-Streed"
-                    Case "Lee-Kesler-Plöcker"
-                    Case "Raoult's Law", "IAPWS-IF97 Steam Tables"
-
-                End Select
-
+            With form.Collections
+                Dim gObj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject
+                For Each gObj In form.FormSurface.FlowsheetDesignSurface.drawingObjects
+                    Select Case gObj.TipoObjeto
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Compressor
+                            .CLCS_CompressorCollection(gObj.Name).GraphicObject = gObj
+                            .CompressorCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Cooler
+                            .CLCS_CoolerCollection(gObj.Name).GraphicObject = gObj
+                            .CoolerCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.EnergyStream
+                            .CLCS_EnergyStreamCollection(gObj.Name).GraphicObject = gObj
+                            .EnergyStreamCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Heater
+                            .CLCS_HeaterCollection(gObj.Name).GraphicObject = gObj
+                            .HeaterCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream
+                            .CLCS_MaterialStreamCollection(gObj.Name).GraphicObject = gObj
+                            .MaterialStreamCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeEn
+                            .CLCS_EnergyMixerCollection(gObj.Name).GraphicObject = gObj
+                            .MixerENCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeIn
+                            .CLCS_MixerCollection(gObj.Name).GraphicObject = gObj
+                            .MixerCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeOut
+                            .CLCS_SplitterCollection(gObj.Name).GraphicObject = gObj
+                            .SplitterCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pipe
+                            .CLCS_PipeCollection(gObj.Name).GraphicObject = gObj
+                            .PipeCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pump
+                            .CLCS_PumpCollection(gObj.Name).GraphicObject = gObj
+                            .PumpCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Tank
+                            .CLCS_TankCollection(gObj.Name).GraphicObject = gObj
+                            .TankCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
+                            .CLCS_TurbineCollection(gObj.Name).GraphicObject = gObj
+                            .TurbineCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Valve
+                            .CLCS_ValveCollection(gObj.Name).GraphicObject = gObj
+                            .ValveCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Vessel
+                            .CLCS_VesselCollection(gObj.Name).GraphicObject = gObj
+                            .SeparatorCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.GO_Tabela
+                            .ObjectCollection(gObj.Tag).Tabela = gObj
+                            CType(gObj, DWSIM.GraphicObjects.TableGraphic).BaseOwner = .ObjectCollection(gObj.Tag)
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
+                            .CLCS_TurbineCollection(gObj.Name).GraphicObject = gObj
+                            .TurbineCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Ajuste
+                            .CLCS_AdjustCollection(gObj.Name).GraphicObject = gObj
+                            .AdjustCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Reciclo
+                            .CLCS_RecycleCollection(gObj.Name).GraphicObject = gObj
+                            .RecycleCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Especificacao
+                            .CLCS_SpecCollection(gObj.Name).GraphicObject = gObj
+                            .SpecCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Conversion
+                            .CLCS_ReactorConversionCollection(gObj.Name).GraphicObject = gObj
+                            .ReactorConversionCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Equilibrium
+                            .CLCS_ReactorEquilibriumCollection(gObj.Name).GraphicObject = gObj
+                            .ReactorEquilibriumCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Gibbs
+                            .CLCS_ReactorGibbsCollection(gObj.Name).GraphicObject = gObj
+                            .ReactorGibbsCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_CSTR
+                            .CLCS_ReactorCSTRCollection(gObj.Name).GraphicObject = gObj
+                            .ReactorCSTRCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_PFR
+                            .CLCS_ReactorPFRCollection(gObj.Name).GraphicObject = gObj
+                            .ReactorPFRCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.HeatExchanger
+                            .CLCS_HeatExchangerCollection(gObj.Name).GraphicObject = gObj
+                            .HeatExchangerCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ShortcutColumn
+                            .CLCS_ShortcutColumnCollection(gObj.Name).GraphicObject = gObj
+                            .ShortcutColumnCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.DistillationColumn
+                            .CLCS_DistillationColumnCollection(gObj.Name).GraphicObject = gObj
+                            .DistillationColumnCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.AbsorptionColumn
+                            .CLCS_AbsorptionColumnCollection(gObj.Name).GraphicObject = gObj
+                            .AbsorptionColumnCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RefluxedAbsorber
+                            .CLCS_RefluxedAbsorberCollection(gObj.Name).GraphicObject = gObj
+                            .RefluxedAbsorberCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ReboiledAbsorber
+                            .CLCS_ReboiledAbsorberCollection(gObj.Name).GraphicObject = gObj
+                            .ReboiledAbsorberCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_EnergyRecycle
+                            .CLCS_EnergyRecycleCollection(gObj.Name).GraphicObject = gObj
+                            .EnergyRecycleCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.GO_TabelaRapida
+                            .ObjectCollection(CType(gObj, DWSIM.GraphicObjects.QuickTableGraphic).BaseOwner.Nome).TabelaRapida = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ComponentSeparator
+                            .CLCS_ComponentSeparatorCollection(gObj.Name).GraphicObject = gObj
+                            .ComponentSeparatorCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OrificePlate
+                            .CLCS_OrificePlateCollection(gObj.Name).GraphicObject = gObj
+                            .OrificePlateCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CustomUO
+                            .CLCS_CustomUOCollection(gObj.Name).GraphicObject = gObj
+                            .CustomUOCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
+                            .CLCS_CapeOpenUOCollection(gObj.Name).GraphicObject = gObj
+                            .CapeOpenUOCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                            .CLCS_SolidsSeparatorCollection(gObj.Name).GraphicObject = gObj
+                            .SolidsSeparatorCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
+                            .CLCS_FilterCollection(gObj.Name).GraphicObject = gObj
+                            .FilterCollection(gObj.Name) = gObj
+                    End Select
+                Next
             End With
 
-            Return elements
+            My.Application.ActiveSimulation = form
 
-        End Function
+            Dim refill As Boolean = False
+
+            'refill (quick)table items for backwards compatibility
+            For Each obj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+                With obj
+                    If .NodeTableItems.Count > 0 Then
+                        For Each nvi As DWSIM.Outros.NodeItem In .NodeTableItems.Values
+                            Try
+                                If Not nvi.Text.Contains("PROP_") Then
+                                    refill = True
+                                    Exit For
+                                End If
+                            Catch ex As Exception
+
+                            End Try
+                        Next
+                    End If
+                    If refill Then
+                        .NodeTableItems.Clear()
+                        .QTNodeTableItems.Clear()
+                        .FillNodeItems()
+                        .QTFillNodeItems()
+                    End If
+                End With
+            Next
+
+            form.MdiParent = Me
+            form.m_IsLoadedFromFile = True
+
+            Me.tmpform2 = form
+            form.dckPanel.SuspendLayout(True)
+            form.FormLog.DockPanel = Nothing
+            form.FormObjList.DockPanel = Nothing
+            form.FormProps.DockPanel = Nothing
+            form.FormMatList.DockPanel = Nothing
+            form.FormSpreadsheet.DockPanel = Nothing
+            form.FormWatch.DockPanel = Nothing
+            form.FormSurface.DockPanel = Nothing
+
+            If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\4.xml") Then form.dckPanel.LoadFromXml(My.Computer.FileSystem.SpecialDirectories.Temp & "\4.xml", New DeserializeDockContent(AddressOf Me.ReturnForm))
+
+            ''Set DockPanel and Form  properties
+
+            form.dckPanel.ActiveAutoHideContent = Nothing
+            form.dckPanel.Parent = form
+
+            form.Options.FilePath = Me.filename
+            form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("carregadocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+            form.Text += " (" + Me.filename + ")"
+
+            form.FormObjListView.Show(form.dckPanel)
+            form.FormLog.Show(form.dckPanel)
+            form.FormMatList.Show(form.dckPanel)
+            form.FormSpreadsheet.Show(form.dckPanel)
+            form.FormSurface.Show(form.dckPanel)
+            form.FormObjList.Show(form.dckPanel)
+            form.FormProps.Show(form.dckPanel)
+
+            form.FormOutput.Show(form.dckPanel)
+            form.FormOutput.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft
+            form.FormOutput.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom
+            form.FormOutput.Hide()
+            form.FormQueue.Show(form.dckPanel)
+            form.FormQueue.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
+            form.FormQueue.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom
+            form.FormQueue.Hide()
+            form.FormWatch.Show(form.dckPanel)
+            form.FormWatch.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
+            form.FormWatch.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom
+            form.FormWatch.Hide()
+
+            form.dckPanel.ResumeLayout(True, True)
+            form.dckPanel.BringToFront()
+
+            Me.ResumeLayout()
+
+            Dim repositionpfd As Boolean = True
+
+            If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\12.bin") Then
+                repositionpfd = False
+            End If
+
+            If Not My.Settings.MostRecentFiles.Contains(caminho) And Path.GetExtension(caminho).ToLower <> ".dwbcs" Then
+                My.Settings.MostRecentFiles.Add(caminho)
+                Me.UpdateMRUList()
+            End If
+
+            form.MdiParent = Me
+            form.Show()
+            form.MdiParent = Me
+
+            My.Application.ActiveSimulation = form
+
+            If Not repositionpfd Then
+                Dim text As String() = File.ReadAllLines(My.Computer.FileSystem.SpecialDirectories.Temp & "\12.bin")
+                form.FormSurface.FlowsheetDesignSurface.Zoom = text(0)
+                'form.TSTBZoom.Text = CStr(CInt(text(0) * 100)) & "%"
+                form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Maximum = 7000
+                form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value = CInt(text(1))
+                form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Maximum = 10000
+                form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value = CInt(text(2))
+            Else
+                form.FormSurface.FlowsheetDesignSurface.Zoom = 1
+                form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Maximum = 7000
+                form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value = 3500
+                form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Maximum = 10000
+                form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value = 5000
+                For Each obj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects
+                    obj.X += 5000
+                    obj.Y += 3500
+                Next
+            End If
+
+            form.Invalidate()
+            Application.DoEvents()
+
+            'form = Nothing
+            Me.ToolStripStatusLabel1.Text = ""
+
+            'delete files
+
+            Dim filespath As String = My.Computer.FileSystem.SpecialDirectories.Temp & pathsep
+
+            If File.Exists(filespath & "1.bin") Then File.Delete(filespath & "1.bin")
+            If File.Exists(filespath & "2.bin") Then File.Delete(filespath & "2.bin")
+            If File.Exists(filespath & "3.bin") Then File.Delete(filespath & "3.bin")
+            If File.Exists(filespath & "4.xml") Then File.Delete(filespath & "4.xml")
+            If File.Exists(filespath & "5.bin") Then File.Delete(filespath & "5.bin")
+            If File.Exists(filespath & "7.bin") Then File.Delete(filespath & "7.bin")
+            If File.Exists(filespath & "8.bin") Then File.Delete(filespath & "8.bin")
+            If File.Exists(filespath & "9.bin") Then File.Delete(filespath & "9.bin")
+            If File.Exists(filespath & "10.bin") Then File.Delete(filespath & "10.bin")
+            If File.Exists(filespath & "11.bin") Then File.Delete(filespath & "11.bin")
+            If File.Exists(filespath & "12.bin") Then File.Delete(filespath & "12.bin")
+            If File.Exists(filespath & "13.bin") Then File.Delete(filespath & "13.bin")
+
+        Else
+
+            MessageBox.Show(DWSIM.App.GetLocalString("Oarquivonoexisteoufo"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+        End If
+
+
+    End Sub
+
+    Function LoadFileForCommandLine(ByVal caminho As String) As FormFlowsheet
+
+        If System.IO.File.Exists(caminho) Then
+
+            If Path.GetExtension(caminho).ToLower = ".dwsim" Then
+
+                Dim rnd As New Random()
+                Dim fn As String = rnd.Next(10000, 99999)
+
+                Dim diretorio As String = Path.GetDirectoryName(caminho)
+                Dim arquivo As String = Path.GetFileName(caminho)
+                Dim arquivoCAB As String = "dwsim" + fn
+
+                Dim formc As FormFlowsheet = New FormFlowsheet()
+
+                Dim ziperror As Boolean = False
+                Try
+                    Dim zp As New ZipFile(caminho)
+                    'is a zip file
+                    zp = Nothing
+                    Call Me.LoadAndExtractZIP(caminho)
+                Catch ex As Exception
+                    ziperror = True
+                End Try
+
+                'is not a zip file
+                If ziperror Then
+                    Try
+                        If Not DWSIM.App.IsRunningOnMono() Then
+                            'Call Me.LoadAndExtractCAB(caminho)
+                        Else
+                            MsgBox("This file is not loadable when running DWSIM on Mono.", MsgBoxStyle.Critical, "Error!")
+                            Return Nothing
+                            Exit Function
+                        End If
+                    Catch ex As Exception
+                        MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        formc = Nothing
+                    End Try
+                End If
+
+                Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
+
+                mySerializer.Binder = New DWSIM.Outros.VersionDeserializationBinder
+
+                Dim fs3 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\3.bin", FileMode.Open)
+                Try
+                    formc.FormSurface.FlowsheetDesignSurface.m_drawingObjects = Nothing
+                    formc.FormSurface.FlowsheetDesignSurface.m_drawingObjects = DirectCast(mySerializer.Deserialize(fs3), Microsoft.Msdn.Samples.GraphicObjects.GraphicObjectCollection)
+                Catch ex As System.Runtime.Serialization.SerializationException
+                    Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+                    MessageBox.Show(ex.Message)
+                Finally
+                    fs3.Close()
+                End Try
+                Dim fs As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\1.bin", FileMode.Open)
+                Try
+                    formc.Collections = Nothing
+                    formc.Collections = DirectCast(mySerializer.Deserialize(fs), DWSIM.FormClasses.ClsObjectCollections)
+                Catch ex As System.Runtime.Serialization.SerializationException
+                    Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+                    MessageBox.Show(ex.Message)
+                Finally
+                    fs.Close()
+                End Try
+                Dim fs2 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\2.bin", FileMode.Open)
+                Try
+                    formc.Options = Nothing
+                    formc.Options = DirectCast(mySerializer.Deserialize(fs2), DWSIM.FormClasses.ClsFormOptions)
+                    If formc.Options.PropertyPackages.Count = 0 Then formc.Options.PropertyPackages = Me.PropertyPackages
+                Catch ex As System.Runtime.Serialization.SerializationException
+                    Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+                    MessageBox.Show(ex.Message)
+                Finally
+                    fs2.Close()
+                End Try
+                If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\9.bin") Then
+                    Dim fs9 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\9.bin", FileMode.Open)
+                    Try
+                        formc.FormSpreadsheet.dt1 = DirectCast(mySerializer.Deserialize(fs9), Object(,))
+                    Catch ex As System.Runtime.Serialization.SerializationException
+                        Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+                        MessageBox.Show(ex.Message)
+                    Finally
+                        fs9.Close()
+                    End Try
+                End If
+                If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\10.bin") Then
+                    Dim fs10 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\10.bin", FileMode.Open)
+                    Try
+                        formc.FormSpreadsheet.dt2 = DirectCast(mySerializer.Deserialize(fs10), Object(,))
+                    Catch ex As System.Runtime.Serialization.SerializationException
+                        Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+                        MessageBox.Show(ex.Message)
+                    Finally
+                        fs10.Close()
+                    End Try
+                End If
+
+                With formc.Collections
+                    Dim gObj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject
+                    For Each gObj In formc.FormSurface.FlowsheetDesignSurface.drawingObjects
+                        Select Case gObj.TipoObjeto
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Compressor
+                                .CLCS_CompressorCollection(gObj.Name).GraphicObject = gObj
+                                .CompressorCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Cooler
+                                .CLCS_CoolerCollection(gObj.Name).GraphicObject = gObj
+                                .CoolerCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.EnergyStream
+                                .CLCS_EnergyStreamCollection(gObj.Name).GraphicObject = gObj
+                                .EnergyStreamCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Heater
+                                .CLCS_HeaterCollection(gObj.Name).GraphicObject = gObj
+                                .HeaterCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream
+                                .CLCS_MaterialStreamCollection(gObj.Name).GraphicObject = gObj
+                                .MaterialStreamCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeEn
+                                .CLCS_EnergyMixerCollection(gObj.Name).GraphicObject = gObj
+                                .MixerENCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeIn
+                                .CLCS_MixerCollection(gObj.Name).GraphicObject = gObj
+                                .MixerCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeOut
+                                .CLCS_SplitterCollection(gObj.Name).GraphicObject = gObj
+                                .SplitterCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pipe
+                                .CLCS_PipeCollection(gObj.Name).GraphicObject = gObj
+                                .PipeCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pump
+                                .CLCS_PumpCollection(gObj.Name).GraphicObject = gObj
+                                .PumpCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Tank
+                                .CLCS_TankCollection(gObj.Name).GraphicObject = gObj
+                                .TankCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
+                                .CLCS_TurbineCollection(gObj.Name).GraphicObject = gObj
+                                .TurbineCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Valve
+                                .CLCS_ValveCollection(gObj.Name).GraphicObject = gObj
+                                .ValveCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Vessel
+                                .CLCS_VesselCollection(gObj.Name).GraphicObject = gObj
+                                .SeparatorCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.GO_Tabela
+                                .ObjectCollection(gObj.Tag).Tabela = gObj
+                                CType(gObj, DWSIM.GraphicObjects.TableGraphic).BaseOwner = .ObjectCollection(gObj.Tag)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
+                                .CLCS_TurbineCollection(gObj.Name).GraphicObject = gObj
+                                .TurbineCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Ajuste
+                                .CLCS_AdjustCollection(gObj.Name).GraphicObject = gObj
+                                .AdjustCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Reciclo
+                                .CLCS_RecycleCollection(gObj.Name).GraphicObject = gObj
+                                .RecycleCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Especificacao
+                                .CLCS_SpecCollection(gObj.Name).GraphicObject = gObj
+                                .SpecCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Conversion
+                                .CLCS_ReactorConversionCollection(gObj.Name).GraphicObject = gObj
+                                .ReactorConversionCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Equilibrium
+                                .CLCS_ReactorEquilibriumCollection(gObj.Name).GraphicObject = gObj
+                                .ReactorEquilibriumCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Gibbs
+                                .CLCS_ReactorGibbsCollection(gObj.Name).GraphicObject = gObj
+                                .ReactorGibbsCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_CSTR
+                                .CLCS_ReactorCSTRCollection(gObj.Name).GraphicObject = gObj
+                                .ReactorCSTRCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_PFR
+                                .CLCS_ReactorPFRCollection(gObj.Name).GraphicObject = gObj
+                                .ReactorPFRCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.HeatExchanger
+                                .CLCS_HeatExchangerCollection(gObj.Name).GraphicObject = gObj
+                                .HeatExchangerCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ShortcutColumn
+                                .CLCS_ShortcutColumnCollection(gObj.Name).GraphicObject = gObj
+                                .ShortcutColumnCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.DistillationColumn
+                                .CLCS_DistillationColumnCollection(gObj.Name).GraphicObject = gObj
+                                .DistillationColumnCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.AbsorptionColumn
+                                .CLCS_AbsorptionColumnCollection(gObj.Name).GraphicObject = gObj
+                                .AbsorptionColumnCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RefluxedAbsorber
+                                .CLCS_RefluxedAbsorberCollection(gObj.Name).GraphicObject = gObj
+                                .RefluxedAbsorberCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ReboiledAbsorber
+                                .CLCS_ReboiledAbsorberCollection(gObj.Name).GraphicObject = gObj
+                                .ReboiledAbsorberCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_EnergyRecycle
+                                .CLCS_EnergyRecycleCollection(gObj.Name).GraphicObject = gObj
+                                .EnergyRecycleCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                                .CLCS_SolidsSeparatorCollection(gObj.Name).GraphicObject = gObj
+                                .SolidsSeparatorCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
+                                .CLCS_FilterCollection(gObj.Name).GraphicObject = gObj
+                                .FilterCollection(gObj.Name) = gObj
+                        End Select
+                    Next
+                End With
+
+                My.Application.ActiveSimulation = formc
+
+                Dim refill As Boolean = False
+
+                'refill (quick)table items for backwards compatibility
+                For Each obj As SimulationObjects_BaseClass In formc.Collections.ObjectCollection.Values
+                    With obj
+                        If .NodeTableItems.Count > 0 Then
+                            For Each nvi As DWSIM.Outros.NodeItem In .NodeTableItems.Values
+                                If Not nvi.Text.Contains("PROP_") Then
+                                    refill = True
+                                    Exit For
+                                End If
+                            Next
+                        End If
+                        If refill Then
+                            .NodeTableItems.Clear()
+                            .QTNodeTableItems.Clear()
+                            .FillNodeItems()
+                            .QTFillNodeItems()
+                        End If
+                    End With
+                Next
+
+                formc.m_IsLoadedFromFile = True
+
+                Return formc
+
+            ElseIf Path.GetExtension(caminho).ToLower = ".dwxml" Then
+
+                LoadXML(caminho, , True)
+
+                Return My.Application.ActiveSimulation
+
+            Else
+
+                Return Nothing
+
+            End If
+
+        Else
+
+            Return Nothing
+
+        End If
+
+    End Function
+
+    '/ '/ Generates a random string with the given length
+    '/ '/ Size of the string '/ If true, generate lowercase string
+    '/ Random string
+    Private Function RandomString(ByVal size As Integer, ByVal lowerCase As Boolean) As String
+        Dim builder As New StringBuilder()
+        Dim random As New Random()
+        Dim ch As Char
+        Dim i As Integer
+        For i = 0 To size - 1
+            ch = Convert.ToChar(Convert.ToInt32((26 * random.NextDouble() + 65)))
+            builder.Append(ch)
+        Next
+        If lowerCase Then
+            Return builder.ToString().ToLower()
+        End If
+        Return builder.ToString()
+    End Function 'RandomString 
+
+    Sub LoadXML(ByVal path As String, Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False)
+
+        Dim fls As New FormLS
+        Dim ci As CultureInfo = CultureInfo.InvariantCulture
+
+        If Not forcommandline Then
+            fls.Show(Me)
+            fls.Label1.Text = "Restoring Simulation from XML file"
+            fls.Label2.Text = "Loading XML document..."
+            Application.DoEvents()
+        End If
+
+        Dim excs As New List(Of Exception)
+
+        Dim xdoc As XDocument = XDocument.Load(path)
+
+        Me.SuspendLayout()
+
+        Dim form As FormFlowsheet = New FormFlowsheet()
+        My.Application.CAPEOPENMode = False
+        My.Application.ActiveSimulation = form
+
+        If Not forcommandline Then
+            fls.Label2.Text = "Loading Flowsheet Settings..."
+            Application.DoEvents()
+        End If
+
+        Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("Settings").Elements.ToList
+
+        Try
+            form.Options.LoadData(data)
+        Catch ex As Exception
+            excs.Add(New Exception("Error Loading Flowsheet Settings", ex))
+        End Try
+
+        If simulationfilename <> "" Then Me.filename = simulationfilename Else Me.filename = path
+
+        If Not forcommandline Then
+            fls.Label2.Text = "Loading Flowsheet Graphic Objects..."
+            Application.DoEvents()
+        End If
+
+        data = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
+
+        For Each xel As XElement In data
+            Try
+                Dim obj As GraphicObjects.GraphicObject = Nothing
+                Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
+                If Not t Is Nothing Then obj = Activator.CreateInstance(t)
+                If obj Is Nothing Then
+                    obj = GraphicObjects.GraphicObject.ReturnInstance(xel.Element("Type").Value)
+                End If
+                obj.LoadData(xel.Elements.ToList)
+                If Not TypeOf obj Is DWSIM.GraphicObjects.TableGraphic Then
+                    form.FormSurface.FlowsheetDesignSurface.drawingObjects.Add(obj)
+                    obj.CreateConnectors(0, 0)
+                    With form.Collections
+                        Select Case obj.TipoObjeto
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Compressor
+                                .CompressorCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Cooler
+                                .CoolerCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.EnergyStream
+                                .EnergyStreamCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Heater
+                                .HeaterCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream
+                                .MaterialStreamCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeEn
+                                .MixerENCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeIn
+                                .MixerCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeOut
+                                .SplitterCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pipe
+                                .PipeCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pump
+                                .PumpCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Tank
+                                .TankCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
+                                .TurbineCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Valve
+                                .ValveCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Vessel
+                                .SeparatorCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
+                                .TurbineCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Ajuste
+                                .AdjustCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Reciclo
+                                .RecycleCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Especificacao
+                                .SpecCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Conversion
+                                .ReactorConversionCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Equilibrium
+                                .ReactorEquilibriumCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Gibbs
+                                .ReactorGibbsCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_CSTR
+                                .ReactorCSTRCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_PFR
+                                .ReactorPFRCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.HeatExchanger
+                                .HeatExchangerCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ShortcutColumn
+                                .ShortcutColumnCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.DistillationColumn
+                                obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
+                                .DistillationColumnCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.AbsorptionColumn
+                                obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
+                                .AbsorptionColumnCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RefluxedAbsorber
+                                obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
+                                .RefluxedAbsorberCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ReboiledAbsorber
+                                obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
+                                .ReboiledAbsorberCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_EnergyRecycle
+                                .EnergyRecycleCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ComponentSeparator
+                                .ComponentSeparatorCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OrificePlate
+                                .OrificePlateCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CustomUO
+                                .CustomUOCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
+                                obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
+                                .CapeOpenUOCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                                .SolidsSeparatorCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
+                                .FilterCollection.Add(obj.Name, obj)
+                        End Select
+                        If Not DWSIM.App.IsRunningOnMono Then
+                            Select Case obj.TipoObjeto
+                                Case TipoObjeto.NodeIn
+                                    form.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.NodeEn
+                                    form.FormObjList.TreeViewObj.Nodes("NodeME").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeME").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.NodeOut
+                                    form.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.Pump
+                                    form.FormObjList.TreeViewObj.Nodes("NodePU").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodePU").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.Tank
+                                    form.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.Vessel
+                                    form.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.TPVessel
+                                    form.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.MaterialStream
+                                    form.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.EnergyStream
+                                    form.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.Compressor
+                                    form.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.Expander
+                                    form.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.Cooler
+                                    form.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.Heater
+                                    form.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.Pipe
+                                    form.FormObjList.TreeViewObj.Nodes("NodePI").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodePI").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.Valve
+                                    form.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.RCT_Conversion
+                                    form.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.RCT_Equilibrium
+                                    form.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.RCT_Gibbs
+                                    form.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.RCT_CSTR
+                                    form.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.RCT_PFR
+                                    form.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.HeatExchanger
+                                    form.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.ShortcutColumn
+                                    form.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.DistillationColumn
+                                    form.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.AbsorptionColumn
+                                    form.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.ReboiledAbsorber
+                                    form.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.RefluxedAbsorber
+                                    form.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.ComponentSeparator
+                                    form.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.OrificePlate
+                                    form.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.CustomUO
+                                    form.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.CapeOpenUO
+                                    form.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.SolidSeparator
+                                    form.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.Filter
+                                    form.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                            End Select
+                        End If
+                    End With
+                End If
+            Catch ex As Exception
+                excs.Add(New Exception("Error Loading Flowsheet Graphic Objects", ex))
+            End Try
+        Next
+
+        For Each xel As XElement In data
+            Try
+                Dim id As String = xel.Element("Name").Value
+                If id <> "" Then
+                    Dim obj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
+                                                            form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
+                    If Not obj Is Nothing Then
+                        Dim i As Integer = 0
+                        For Each xel2 As XElement In xel.Element("InputConnectors").Elements
+                            If xel2.@IsAttached = True Then
+                                obj.InputConnectors(i).ConnectorName = xel2.@AttachedFromObjID & "|" & xel2.@AttachedFromConnIndex
+                                obj.InputConnectors(i).Type = [Enum].Parse(obj.InputConnectors(i).Type.GetType, xel2.@ConnType)
+                            End If
+                            i += 1
+                        Next
+                    End If
+                End If
+            Catch ex As Exception
+                excs.Add(New Exception("Error Loading Flowsheet Object Connection Information", ex))
+            End Try
+        Next
+
+        For Each xel As XElement In data
+            Try
+                Dim id As String = xel.Element("Name").Value
+                If id <> "" Then
+                    Dim obj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
+                                                            form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
+                    If Not obj Is Nothing Then
+                        For Each xel2 As XElement In xel.Element("OutputConnectors").Elements
+                            If xel2.@IsAttached = True Then
+                                Dim objToID = xel2.@AttachedToObjID
+                                If objToID <> "" Then
+                                    Dim objTo As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
+                                                                                    form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = objToID).SingleOrDefault
+                                    Dim fromidx As Integer = -1
+                                    Dim cp As ConnectionPoint = (From cp2 As ConnectionPoint In objTo.InputConnectors Select cp2 Where cp2.ConnectorName.Split("|")(0) = obj.Name).SingleOrDefault
+                                    If Not cp Is Nothing Then
+                                        fromidx = cp.ConnectorName.Split("|")(1)
+                                    End If
+                                    form.ConnectObject(obj, objTo, fromidx, xel2.@AttachedToConnIndex)
+                                End If
+                            End If
+                        Next
+                        For Each xel2 As XElement In xel.Element("EnergyConnector").Elements
+                            If xel2.@IsAttached = True Then
+                                Dim objToID = xel2.@AttachedToObjID
+                                If objToID <> "" Then
+                                    Dim objTo As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
+                                                                                    form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = objToID).SingleOrDefault
+                                    form.ConnectObject(obj, objTo, -1, xel2.@AttachedToConnIndex)
+                                End If
+                            End If
+                        Next
+                    End If
+                End If
+            Catch ex As Exception
+                excs.Add(New Exception("Error Loading Flowsheet Object Connection Information", ex))
+            End Try
+        Next
+
+        If Not forcommandline Then
+            fls.Label2.Text = "Loading Compounds..."
+            Application.DoEvents()
+        End If
+
+        data = xdoc.Element("DWSIM_Simulation_Data").Element("Compounds").Elements.ToList
+
+        For Each xel As XElement In data
+            Try
+                Dim obj As New ConstantProperties
+                obj.LoadData(xel.Elements.ToList)
+                If Not My.Settings.ReplaceCompoundConstantProperties Then
+                    If Me.AvailableComponents.ContainsKey(obj.Name) Then
+                        obj = Me.AvailableComponents(obj.Name)
+                    End If
+                End If
+                form.Options.SelectedComponents.Add(obj.Name, obj)
+            Catch ex As Exception
+                excs.Add(New Exception("Error Loading Compound Information", ex))
+            End Try
+        Next
+
+        If Not forcommandline Then
+            fls.Label2.Text = "Loading Property Packages..."
+            Application.DoEvents()
+        End If
+
+        data = xdoc.Element("DWSIM_Simulation_Data").Element("PropertyPackages").Elements.ToList
+
+        For Each xel As XElement In data
+            Try
+                Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
+                Dim obj As PropertyPackage = Activator.CreateInstance(t)
+                obj.LoadData(xel.Elements.ToList)
+                Dim newID As String = Guid.NewGuid.ToString
+                If form.Options.PropertyPackages.ContainsKey(obj.UniqueID) Then obj.UniqueID = newID
+                form.Options.PropertyPackages.Add(obj.UniqueID, obj)
+            Catch ex As Exception
+                excs.Add(New Exception("Error Loading Property Package Information", ex))
+            End Try
+        Next
+
+        My.Application.ActiveSimulation = form
+
+        If Not forcommandline Then
+            fls.Label2.Text = "Loading Flowsheet Unit Operations and Streams..."
+            Application.DoEvents()
+        End If
+
+        data = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects").Elements.ToList
+
+        For Each xel As XElement In data
+            Try
+                Dim id As String = xel.<Nome>.Value
+                Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
+                Dim obj As SimulationObjects_BaseClass = Activator.CreateInstance(t)
+                Dim gobj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
+                                    form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
+                obj.GraphicObject = gobj
+                obj.FillNodeItems(True)
+                obj.QTFillNodeItems()
+                If Not gobj Is Nothing Then
+                    form.Collections.ObjectCollection.Add(id, obj)
+                    obj.LoadData(xel.Elements.ToList)
+                    If TypeOf obj Is Streams.MaterialStream Then
+                        For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
+                            For Each c As ConstantProperties In form.Options.SelectedComponents.Values
+                                phase.Componentes(c.Name).ConstantProperties = c
+                            Next
+                        Next
+                    End If
+                    With form.Collections
+                        Select Case gobj.TipoObjeto
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Compressor
+                                .CLCS_CompressorCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Cooler
+                                .CLCS_CoolerCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.EnergyStream
+                                .CLCS_EnergyStreamCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Heater
+                                .CLCS_HeaterCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream
+                                .CLCS_MaterialStreamCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeEn
+                                .CLCS_EnergyMixerCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeIn
+                                .CLCS_MixerCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeOut
+                                .CLCS_SplitterCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pipe
+                                .CLCS_PipeCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pump
+                                .CLCS_PumpCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Tank
+                                .CLCS_TankCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
+                                .CLCS_TurbineCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Valve
+                                .CLCS_ValveCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Vessel
+                                .CLCS_VesselCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.GO_Tabela
+                                .ObjectCollection(gobj.Tag).Tabela = gobj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
+                                .CLCS_TurbineCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Ajuste
+                                .CLCS_AdjustCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Reciclo
+                                .CLCS_RecycleCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Especificacao
+                                .CLCS_SpecCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Conversion
+                                .CLCS_ReactorConversionCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Equilibrium
+                                .CLCS_ReactorEquilibriumCollection.Add(id, obj)
+                                .ReactorEquilibriumCollection(gobj.Name) = gobj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Gibbs
+                                .CLCS_ReactorGibbsCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_CSTR
+                                .CLCS_ReactorCSTRCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_PFR
+                                .CLCS_ReactorPFRCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.HeatExchanger
+                                .CLCS_HeatExchangerCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ShortcutColumn
+                                .CLCS_ShortcutColumnCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.DistillationColumn
+                                .CLCS_DistillationColumnCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.AbsorptionColumn
+                                .CLCS_AbsorptionColumnCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RefluxedAbsorber
+                                .CLCS_RefluxedAbsorberCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ReboiledAbsorber
+                                .CLCS_ReboiledAbsorberCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_EnergyRecycle
+                                .CLCS_EnergyRecycleCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.GO_TabelaRapida
+                                .ObjectCollection(CType(gobj, DWSIM.GraphicObjects.QuickTableGraphic).BaseOwner.Nome).TabelaRapida = gobj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ComponentSeparator
+                                .CLCS_ComponentSeparatorCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OrificePlate
+                                .CLCS_OrificePlateCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CustomUO
+                                .CLCS_CustomUOCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
+                                .CLCS_CapeOpenUOCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                                .CLCS_SolidsSeparatorCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
+                                .CLCS_FilterCollection.Add(id, obj)
+                        End Select
+                    End With
+                    obj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                End If
+            Catch ex As Exception
+                excs.Add(New Exception("Error Loading Unit Operation Information", ex))
+            End Try
+        Next
+
+        For Each so As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+            Try
+                If TryCast(so, DWSIM.SimulationObjects.SpecialOps.Adjust) IsNot Nothing Then
+                    Dim so2 As DWSIM.SimulationObjects.SpecialOps.Adjust = so
+                    If form.Collections.ObjectCollection.ContainsKey(so2.ManipulatedObjectData.m_ID) Then
+                        so2.ManipulatedObject = form.Collections.ObjectCollection(so2.ManipulatedObjectData.m_ID)
+                        DirectCast(so2.GraphicObject, AdjustGraphic).ConnectedToMv = so2.ManipulatedObject.GraphicObject
+                    End If
+                    If form.Collections.ObjectCollection.ContainsKey(so2.ControlledObjectData.m_ID) Then
+                        so2.ControlledObject = form.Collections.ObjectCollection(so2.ControlledObjectData.m_ID)
+                        DirectCast(so2.GraphicObject, AdjustGraphic).ConnectedToCv = so2.ControlledObject.GraphicObject
+                    End If
+                    If form.Collections.ObjectCollection.ContainsKey(so2.ReferencedObjectData.m_ID) Then
+                        so2.ReferenceObject = form.Collections.ObjectCollection(so2.ReferencedObjectData.m_ID)
+                        DirectCast(so2.GraphicObject, AdjustGraphic).ConnectedToRv = so2.ReferenceObject.GraphicObject
+                    End If
+                End If
+                If TryCast(so, DWSIM.SimulationObjects.SpecialOps.Spec) IsNot Nothing Then
+                    Dim so2 As DWSIM.SimulationObjects.SpecialOps.Spec = so
+                    If form.Collections.ObjectCollection.ContainsKey(so2.TargetObjectData.m_ID) Then
+                        so2.TargetObject = form.Collections.ObjectCollection(so2.TargetObjectData.m_ID)
+                        DirectCast(so2.GraphicObject, SpecGraphic).ConnectedToTv = so2.TargetObject.GraphicObject
+                    End If
+                    If form.Collections.ObjectCollection.ContainsKey(so2.SourceObjectData.m_ID) Then
+                        so2.SourceObject = form.Collections.ObjectCollection(so2.SourceObjectData.m_ID)
+                        DirectCast(so2.GraphicObject, SpecGraphic).ConnectedToSv = so2.SourceObject.GraphicObject
+                    End If
+                End If
+                If TryCast(so, DWSIM.SimulationObjects.UnitOps.CapeOpenUO) IsNot Nothing Then
+                    DirectCast(so, DWSIM.SimulationObjects.UnitOps.CapeOpenUO).UpdateConnectors2()
+                    DirectCast(so, DWSIM.SimulationObjects.UnitOps.CapeOpenUO).UpdatePortsFromConnectors()
+                End If
+            Catch ex As Exception
+                excs.Add(New Exception("Error Loading Unit Operation Connection Information", ex))
+            End Try
+        Next
+
+        If Not forcommandline Then
+            If Not DWSIM.App.IsRunningOnMono Then
+                Dim arrays As New ArrayList
+                Dim aNode, aNode2 As TreeNode
+                Dim i As Integer = 0
+                For Each aNode In form.FormObjList.TreeViewObj.Nodes
+                    For Each aNode2 In aNode.Nodes
+                        arrays.Add(aNode2.Text)
+                        i += 1
+                    Next
+                Next
+                form.FormObjList.ACSC.Clear()
+                form.FormObjList.ACSC.AddRange(arrays.ToArray(Type.GetType("System.String")))
+                form.FormObjList.TBSearch.AutoCompleteCustomSource = form.FormObjList.ACSC
+            End If
+
+            data = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
+
+            For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.<Type>.Value.Equals("DWSIM.DWSIM.GraphicObjects.TableGraphic")).ToList
+                Try
+                    Dim obj As GraphicObjects.GraphicObject = Nothing
+                    Dim t As Type = Type.GetType(xel2.Element("Type").Value, False)
+                    If Not t Is Nothing Then obj = Activator.CreateInstance(t)
+                    If obj Is Nothing Then
+                        obj = GraphicObjects.GraphicObject.ReturnInstance(xel2.Element("Type").Value)
+                    End If
+                    obj.LoadData(xel2.Elements.ToList)
+                    DirectCast(obj, DWSIM.GraphicObjects.TableGraphic).BaseOwner = form.Collections.ObjectCollection(xel2.<Owner>.Value)
+                    form.Collections.ObjectCollection(xel2.<Owner>.Value).Tabela = obj
+                    form.FormSurface.FlowsheetDesignSurface.drawingObjects.Add(obj)
+                Catch ex As Exception
+                    excs.Add(New Exception("Error Loading Flowsheet Table Information", ex))
+                End Try
+            Next
+
+            fls.Label2.Text = "Loading Reaction Sets..."
+            Application.DoEvents()
+
+        End If
+
+        data = xdoc.Element("DWSIM_Simulation_Data").Element("ReactionSets").Elements.ToList
+
+        form.Options.ReactionSets.Clear()
+
+        For Each xel As XElement In data
+            Try
+                Dim obj As New ReactionSet()
+                obj.LoadData(xel.Elements.ToList)
+                form.Options.ReactionSets.Add(obj.ID, obj)
+            Catch ex As Exception
+                excs.Add(New Exception("Error Loading Reaction Set Information", ex))
+            End Try
+        Next
+
+        data = xdoc.Element("DWSIM_Simulation_Data").Element("Reactions").Elements.ToList
+
+        For Each xel As XElement In data
+            Try
+                Dim obj As New Reaction()
+                obj.LoadData(xel.Elements.ToList)
+                form.Options.Reactions.Add(obj.ID, obj)
+            Catch ex As Exception
+                excs.Add(New Exception("Error Loading Reaction Information", ex))
+            End Try
+        Next
+
+        If Not forcommandline Then
+            fls.Label2.Text = "Loading Optimization Cases..."
+            Application.DoEvents()
+        End If
+
+        data = xdoc.Element("DWSIM_Simulation_Data").Element("OptimizationCases").Elements.ToList
+
+        For Each xel As XElement In data
+            Try
+                Dim obj As New DWSIM.Optimization.OptimizationCase
+                obj.LoadData(xel.Elements.ToList)
+                form.Collections.OPT_OptimizationCollection.Add(obj)
+            Catch ex As Exception
+                excs.Add(New Exception("Error Loading Optimization Case Information", ex))
+            End Try
+        Next
+
+        If Not forcommandline Then
+            fls.Label2.Text = "Loading Sensitivity Analysis Cases..."
+            Application.DoEvents()
+        End If
+
+        data = xdoc.Element("DWSIM_Simulation_Data").Element("SensitivityAnalysis").Elements.ToList
+
+        For Each xel As XElement In data
+            Try
+                Dim obj As New DWSIM.Optimization.SensitivityAnalysisCase
+                obj.LoadData(xel.Elements.ToList)
+                form.Collections.OPT_SensAnalysisCollection.Add(obj)
+            Catch ex As Exception
+                excs.Add(New Exception("Error Loading Sensitivity Analysis Case Information", ex))
+            End Try
+        Next
+
+        If Not forcommandline Then
+            fls.Label2.Text = "Loading Petroleum Assays..."
+            Application.DoEvents()
+        End If
+
+        data = xdoc.Element("DWSIM_Simulation_Data").Element("PetroleumAssays").Elements.ToList
+
+        For Each xel As XElement In data
+            Try
+                Dim obj As New DWSIM.Utilities.PetroleumCharacterization.Assay.Assay()
+                obj.LoadData(xel.Elements.ToList)
+                form.Options.PetroleumAssays.Add(obj.Name, obj)
+            Catch ex As Exception
+                excs.Add(New Exception("Error Loading Petroleum Assay Information", ex))
+            End Try
+        Next
+
+        If Not forcommandline Then
+            fls.Label2.Text = "Loading Watch Items..."
+            Application.DoEvents()
+        End If
+
+        If xdoc.Element("DWSIM_Simulation_Data").Element("WatchItems") IsNot Nothing Then
+
+            data = xdoc.Element("DWSIM_Simulation_Data").Element("WatchItems").Elements.ToList
+
+            Dim i As Integer = 0
+            For Each xel As XElement In data
+                Try
+                    Dim obj As New WatchItem
+                    obj.LoadData(xel.Elements.ToList)
+                    form.FormWatch.items.Add(i, obj)
+                Catch ex As Exception
+                    excs.Add(New Exception("Error Loading Watch Item Information", ex))
+                End Try
+                i += 1
+            Next
+
+            form.FormWatch.PopulateList()
+
+        End If
+
+        If Not forcommandline Then
+            fls.Label2.Text = "Loading Spreadsheet Data..."
+            Application.DoEvents()
+        End If
+
+        Try
+            Dim data1 As String = xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("Data1").Value
+            Dim data2 As String = xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("Data2").Value
+            If data1 <> "" Then form.FormSpreadsheet.CopyDT1FromString(data1)
+            If data2 <> "" Then form.FormSpreadsheet.CopyDT2FromString(data2)
+        Catch ex As Exception
+            excs.Add(New Exception("Error Loading Spreadsheet Information", ex))
+        End Try
+
+        For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In form.Options.PropertyPackages.Values
+            Try
+                If pp.ConfigForm Is Nothing Then pp.ReconfigureConfigForm()
+            Catch ex As Exception
+                excs.Add(New Exception("Error Reconfiguring Property Package", ex))
+            End Try
+        Next
+
+        form.Options.NotSelectedComponents = New Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.ConstantProperties)
+
+        Dim tmpc As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+        For Each tmpc In Me.AvailableComponents.Values
+            Dim newc As New DWSIM.ClassesBasicasTermodinamica.ConstantProperties
+            newc = tmpc
+            If Not form.Options.SelectedComponents.ContainsKey(tmpc.Name) Then
+                form.Options.NotSelectedComponents.Add(tmpc.Name, newc)
+            End If
+        Next
+
+        If Not forcommandline Then
+
+            fls.Label2.Text = "Restoring Window Layout..."
+            Application.DoEvents()
+
+            My.Application.ActiveSimulation = form
+
+            Me.ResumeLayout()
+            m_childcount += 1
+
+            form.MdiParent = Me
+            form.m_IsLoadedFromFile = True
+
+            ' Set DockPanel properties
+            form.dckPanel.ActiveAutoHideContent = Nothing
+            form.dckPanel.Parent = form
+
+            Me.tmpform2 = form
+            'form.dckPanel.SuspendLayout(True)
+            form.FormLog.DockPanel = Nothing
+            form.FormObjList.DockPanel = Nothing
+            form.FormProps.DockPanel = Nothing
+            form.FormMatList.DockPanel = Nothing
+            form.FormSpreadsheet.DockPanel = Nothing
+            form.FormWatch.DockPanel = Nothing
+            form.FormSurface.DockPanel = Nothing
+
+            Try
+                Dim pnl As String = xdoc.Element("DWSIM_Simulation_Data").Element("PanelLayout").Value
+                Dim myfile As String = My.Computer.FileSystem.GetTempFileName()
+                File.WriteAllText(myfile, pnl)
+                form.dckPanel.LoadFromXml(myfile, New DeserializeDockContent(AddressOf Me.ReturnForm))
+                File.Delete(myfile)
+                form.FormLog.Show(form.dckPanel)
+                form.FormObjListView.Show(form.dckPanel)
+                form.FormObjList.Show(form.dckPanel)
+                form.FormProps.Show(form.dckPanel)
+                'form.FormMatList.Show(form.dckPanel)
+                form.FormSpreadsheet.Show(form.dckPanel)
+                form.FormSurface.Show(form.dckPanel)
+                form.dckPanel.BringToFront()
+                form.dckPanel.UpdateDockWindowZOrder(DockStyle.Fill, True)
+            Catch ex As Exception
+                excs.Add(New Exception("Error Restoring Window Layout", ex))
+            End Try
+
+            fls.Label2.Text = "Done!"
+            Application.DoEvents()
+
+            Me.Invalidate()
+            Application.DoEvents()
+
+            Dim mypath As String = simulationfilename
+            If mypath = "" Then mypath = [path]
+            If Not My.Settings.MostRecentFiles.Contains(mypath) And IO.Path.GetExtension(mypath).ToLower <> ".dwbcs" Then
+                My.Settings.MostRecentFiles.Add(mypath)
+                Me.UpdateMRUList()
+            End If
+
+            My.Application.ActiveSimulation = form
+
+            form.MdiParent = Me
+            form.Show()
+            form.MdiParent = Me
+
+
+            Try
+                form.FormSpreadsheet.EvaluateAll()
+            Catch ex As Exception
+                excs.Add(New Exception("Error Updating Spreadsheet Variables", ex))
+            End Try
+
+            form.FormChild_Shown(Me, New EventArgs)
+
+            form.Invalidate()
+
+            If xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView") IsNot Nothing Then
+                Try
+                    Dim flsconfig As String = xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView").Value
+                    If flsconfig <> "" Then
+                        form.FormSurface.FlowsheetDesignSurface.Zoom = Single.Parse(flsconfig.Split(";")(0), ci)
+                        form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value = Integer.Parse(flsconfig.Split(";")(1))
+                        form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value = Integer.Parse(flsconfig.Split(";")(2))
+                        form.TSTBZoom.Text = Format(form.FormSurface.FlowsheetDesignSurface.Zoom, "#%")
+                    End If
+                Catch ex As Exception
+                    excs.Add(New Exception("Error Restoring Flowsheet Zoom Information", ex))
+                End Try
+            End If
+
+            Application.DoEvents()
+
+        End If
+
+        fls.Close()
+        fls = Nothing
+
+        form.Options.FilePath = Me.filename
+
+        If excs.Count > 0 Then
+            form.WriteToLog("Some errors where found while parsing the XML file. The simulation might not work as expected. Please read the subsequent messages for more details.", Color.DarkRed, TipoAviso.Erro)
+            For Each ex As Exception In excs
+                form.WriteToLog(ex.Message.ToString & ": " & ex.InnerException.ToString, Color.Red, TipoAviso.Erro)
+            Next
+        Else
+            form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("carregadocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+        End If
+
+        form.Text += " (" + Me.filename + ")"
+
+        Me.ResumeLayout()
+        Me.ToolStripStatusLabel1.Text = ""
+        Application.DoEvents()
+
+    End Sub
+
+    Sub SaveXML(ByVal path As String, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "")
+
+        Dim xdoc As New XDocument()
+        Dim xel As XElement
+
+        Dim ci As CultureInfo = CultureInfo.InvariantCulture
+
+        xdoc.Add(New XElement("DWSIM_Simulation_Data"))
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Settings"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("Settings")
+
+        xel.Add(form.Options.SaveData().ToArray())
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("SimulationObjects"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects")
+
+        For Each so As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+            xel.Add(New XElement("SimulationObject", {so.SaveData().ToArray()}))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GraphicObjects"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects")
+
+        For Each go As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects
+            If Not go.IsConnector Then xel.Add(New XElement("GraphicObject", go.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("PropertyPackages"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("PropertyPackages")
+
+        For Each pp As KeyValuePair(Of String, PropertyPackage) In form.Options.PropertyPackages
+            Dim createdms As Boolean = False
+            If pp.Value.CurrentMaterialStream Is Nothing Then
+                Dim ms As New Streams.MaterialStream("", "", form, pp.Value)
+                form.AddComponentsRows(ms)
+                pp.Value.CurrentMaterialStream = ms
+                createdms = True
+            End If
+            xel.Add(New XElement("PropertyPackage", {New XElement("ID", pp.Key),
+                                                     pp.Value.SaveData().ToArray()}))
+            If createdms Then pp.Value.CurrentMaterialStream = Nothing
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Compounds"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("Compounds")
+
+        For Each cp As ConstantProperties In form.Options.SelectedComponents.Values
+            xel.Add(New XElement("Compound", cp.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("ReactionSets"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("ReactionSets")
+
+        For Each pp As KeyValuePair(Of String, ReactionSet) In form.Options.ReactionSets
+            xel.Add(New XElement("ReactionSet", pp.Value.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Reactions"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("Reactions")
+
+        For Each pp As KeyValuePair(Of String, Reaction) In form.Options.Reactions
+            xel.Add(New XElement("Reaction", {pp.Value.SaveData().ToArray()}))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("OptimizationCases"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("OptimizationCases")
+
+        For Each pp As DWSIM.Optimization.OptimizationCase In form.Collections.OPT_OptimizationCollection
+            xel.Add(New XElement("OptimizationCase", {pp.SaveData().ToArray()}))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("SensitivityAnalysis"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("SensitivityAnalysis")
+
+        For Each pp As DWSIM.Optimization.SensitivityAnalysisCase In form.Collections.OPT_SensAnalysisCollection
+            xel.Add(New XElement("SensitivityAnalysisCase", {pp.SaveData().ToArray()}))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("PetroleumAssays"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("PetroleumAssays")
+
+        If form.Options.PetroleumAssays Is Nothing Then form.Options.PetroleumAssays = New Dictionary(Of String, DWSIM.Utilities.PetroleumCharacterization.Assay.Assay)
+
+        For Each pp As KeyValuePair(Of String, DWSIM.Utilities.PetroleumCharacterization.Assay.Assay) In form.Options.PetroleumAssays
+            xel.Add(New XElement("Assay", pp.Value.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("WatchItems"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("WatchItems")
+
+        For Each wi As WatchItem In form.FormWatch.items.Values
+            xel.Add(New XElement("WatchItem", wi.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Spreadsheet"))
+        xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Add(New XElement("Data1"))
+        xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Add(New XElement("Data2"))
+        xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("Data1").Value = form.FormSpreadsheet.CopyDT1ToString()
+        xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("Data2").Value = form.FormSpreadsheet.CopyDT2ToString()
+
+        Dim flsconfig As New StringBuilder()
+
+        With flsconfig
+            .Append(form.FormSurface.FlowsheetDesignSurface.Zoom.ToString(ci) & ";")
+            .Append(form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value & ";")
+            .Append(form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value)
+        End With
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("FlowsheetView"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView")
+
+        xel.Add(flsconfig.ToString)
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("PanelLayout"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("PanelLayout")
+
+        Dim myfile As String = My.Computer.FileSystem.GetTempFileName()
+        form.dckPanel.SaveAsXml(myfile, Encoding.UTF8)
+        xel.Add(File.ReadAllText(myfile).ToString)
+        File.Delete(myfile)
+
+        xdoc.Save(path)
+
+        Me.UIThread(New Action(Sub()
+                                   Dim mypath As String = simulationfilename
+                                   If mypath = "" Then mypath = [path]
+                                   'process recent files list
+                                   If Not My.Settings.MostRecentFiles.Contains(mypath) Then
+                                       My.Settings.MostRecentFiles.Add(mypath)
+                                       If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
+                                   End If
+                                   form.Options.FilePath = Me.filename
+                                   form.Text = form.Options.SimNome + " (" + form.Options.FilePath + ")"
+                                   form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                                   Me.ToolStripStatusLabel1.Text = ""
+                               End Sub))
+
+        Application.DoEvents()
+
+    End Sub
+
+    Sub SaveF(ByVal caminho As String, ByVal form As FormFlowsheet)
+
+        Dim rndfolder As String = My.Computer.FileSystem.SpecialDirectories.Temp & pathsep & RandomString(8, True) & pathsep
+
+        Directory.CreateDirectory(rndfolder)
+
+        Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
+        Dim fs As New FileStream(rndfolder & "1.bin", FileMode.Create)
+        Try
+            mySerializer.Serialize(fs, form.Collections)
+        Catch ex As Exception
+            Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+            MessageBox.Show(ex.Message)
+        Finally
+            fs.Close()
+        End Try
+        Dim fs2 As New FileStream(rndfolder & "2.bin", FileMode.Create)
+        Try
+            mySerializer.Serialize(fs2, form.Options)
+        Catch ex As System.Runtime.Serialization.SerializationException
+            Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+            MessageBox.Show(ex.Message)
+        Finally
+            fs2.Close()
+        End Try
+        Dim fs3 As New FileStream(rndfolder & "3.bin", FileMode.Create)
+        Try
+            mySerializer.Serialize(fs3, form.FormSurface.FlowsheetDesignSurface.drawingObjects)
+        Catch ex As System.Runtime.Serialization.SerializationException
+            Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+            MessageBox.Show(ex.Message)
+        Finally
+            fs3.Close()
+        End Try
+        Try
+            form.dckPanel.SaveAsXml(rndfolder & "4.xml")
+        Catch ex As Exception
+            Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+            MessageBox.Show(ex.Message)
+        Finally
+
+        End Try
+        Try
+            TreeViewDataAccess.SaveTreeViewData(form.FormObjList.TreeViewObj, rndfolder & "5.bin")
+        Catch ex As System.Runtime.Serialization.SerializationException
+            Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+            MessageBox.Show(ex.Message)
+        Finally
+
+        End Try
+        Dim fs7 As New FileStream(rndfolder & "7.bin", FileMode.Create)
+        Try
+            mySerializer.Serialize(fs7, form.Options.SimNome)
+        Catch ex As System.Runtime.Serialization.SerializationException
+            Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+            MessageBox.Show(ex.Message)
+        Finally
+            fs7.Close()
+        End Try
+        Dim fs8 As New FileStream(rndfolder & "8.bin", FileMode.Create)
+        Try
+            mySerializer.Serialize(fs8, form.FormLog.GridDT)
+        Catch ex As System.Runtime.Serialization.SerializationException
+            Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+            MessageBox.Show(ex.Message)
+        Finally
+            fs8.Close()
+        End Try
+        form.FormSpreadsheet.CopyToDT()
+        Dim fs9 As New FileStream(rndfolder & "9.bin", FileMode.Create)
+        Try
+            mySerializer.Serialize(fs9, form.FormSpreadsheet.dt1)
+        Catch ex As System.Runtime.Serialization.SerializationException
+            Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+            MessageBox.Show(ex.Message)
+        Finally
+            fs9.Close()
+        End Try
+        Dim fs10 As New FileStream(rndfolder & "10.bin", FileMode.Create)
+        Try
+            mySerializer.Serialize(fs10, form.FormSpreadsheet.dt2)
+        Catch ex As System.Runtime.Serialization.SerializationException
+            Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+            MessageBox.Show(ex.Message)
+        Finally
+            fs10.Close()
+        End Try
+        Dim fs11 As New FileStream(rndfolder & "11.bin", FileMode.Create)
+        Try
+            mySerializer.Serialize(fs11, form.FormWatch.items)
+        Catch ex As System.Runtime.Serialization.SerializationException
+            Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+            MessageBox.Show(ex.Message)
+        Finally
+            fs11.Close()
+        End Try
+
+        Dim flsconfig As New StringBuilder()
+
+        With flsconfig
+            .AppendLine(form.FormSurface.FlowsheetDesignSurface.Zoom)
+            .AppendLine(form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value)
+            .AppendLine(form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value)
+        End With
+
+        File.WriteAllText(rndfolder & "12.bin", flsconfig.ToString)
+
+        Dim fs13 As New FileStream(rndfolder & "13.bin", FileMode.Create)
+        Try
+            If form.FlowsheetStates Is Nothing Then form.FlowsheetStates = New Dictionary(Of Date, FlowsheetState)
+            mySerializer.Serialize(fs13, form.FlowsheetStates)
+        Catch ex As System.Runtime.Serialization.SerializationException
+            Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+            MessageBox.Show(ex.Message)
+        Finally
+            fs13.Close()
+        End Try
+
+        Dim pwd As String = Nothing
+        If form.Options.UsePassword Then pwd = form.Options.Password
+
+        Try
+            Call Me.SaveZIP(caminho, rndfolder, pwd)
+        Catch ex As Exception
+            form.WriteToLog("Error saving file: " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+        End Try
+
+        Dim ext As String = Path.GetExtension(caminho)
+
+        Me.UIThread(New System.Action(Sub()
+                                          If ext <> ".dwbcs" Then
+                                              'lista dos mais recentes, modificar
+                                              With My.Settings.MostRecentFiles
+                                                  If Not .Contains(Me.filename) Then
+                                                      If My.Settings.MostRecentFiles.Count = 3 Then
+                                                          .Item(2) = .Item(1)
+                                                          .Item(1) = .Item(0)
+                                                          .Item(0) = Me.filename
+                                                      ElseIf My.Settings.MostRecentFiles.Count = 2 Then
+                                                          .Add(.Item(1))
+                                                          .Item(1) = .Item(0)
+                                                          .Item(0) = Me.filename
+                                                      ElseIf My.Settings.MostRecentFiles.Count = 1 Then
+                                                          .Add(.Item(0))
+                                                          .Item(0) = Me.filename
+                                                      ElseIf My.Settings.MostRecentFiles.Count = 0 Then
+                                                          .Add(Me.filename)
+                                                      End If
+                                                  End If
+                                              End With
+                                              'processar lista de arquivos recentes
+                                              If Not My.Settings.MostRecentFiles.Contains(caminho) Then
+                                                  My.Settings.MostRecentFiles.Add(caminho)
+                                                  If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
+                                              End If
+                                              form.Options.FilePath = Me.filename
+                                              form.Text = form.Options.SimNome + " (" + form.Options.FilePath + ")"
+                                              form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                                          End If
+                                      End Sub))
+
+    End Sub
+
+    Private Function IsZipFilePasswordProtected(ByVal ZipFile As String) As Boolean
+        Using fsIn As New FileStream(ZipFile, FileMode.Open, FileAccess.Read)
+            Using zipInStream As New ZipInputStream(fsIn)
+                Dim zEntry As ZipEntry = zipInStream.GetNextEntry()
+                Return zEntry.IsCrypted
+            End Using
+        End Using
+    End Function
+
+    Function LoadAndExtractZIP(ByVal caminho As String) As Boolean
+
+        Dim pathtosave As String = My.Computer.FileSystem.SpecialDirectories.Temp + Path.DirectorySeparatorChar
+
+        If (caminho.Length < 1) Then
+            MsgBox("Usage UnzipFile NameOfFile")
+            Return False
+        ElseIf Not File.Exists(caminho) Then
+            MsgBox("Cannot find file '{0}'", caminho)
+            Return False
+        Else
+            Dim pwd As String = Nothing
+            If IsZipFilePasswordProtected(caminho) Then
+                Dim fp As New FormPassword
+                If fp.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                    pwd = fp.tbPassword.Text
+                End If
+            End If
+
+            Try
+                Using stream As ZipInputStream = New ZipInputStream(File.OpenRead(caminho))
+                    stream.Password = pwd
+                    Dim entry As ZipEntry
+Label_00CC:
+                    entry = stream.GetNextEntry()
+                    Do While (Not entry Is Nothing)
+                        Dim fileName As String = Path.GetFileName(entry.Name)
+                        If (fileName <> String.Empty) Then
+                            Using stream2 As FileStream = File.Create(pathtosave + Path.GetFileName(entry.Name))
+                                Dim count As Integer = 2048
+                                Dim buffer As Byte() = New Byte(2048) {}
+                                Do While True
+                                    count = stream.Read(buffer, 0, buffer.Length)
+                                    If (count <= 0) Then
+                                        GoTo Label_00CC
+                                    End If
+                                    stream2.Write(buffer, 0, count)
+                                Loop
+                            End Using
+                        End If
+                        entry = stream.GetNextEntry
+                    Loop
+                End Using
+                Return True
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return False
+            End Try
+        End If
+
+    End Function
+
+    Function LoadAndExtractXMLZIP(ByVal caminho As String) As Boolean
+
+        Dim pathtosave As String = My.Computer.FileSystem.SpecialDirectories.Temp + Path.DirectorySeparatorChar
+        Dim fullname As String = ""
+
+        Dim pwd As String = Nothing
+        If IsZipFilePasswordProtected(caminho) Then
+            Dim fp As New FormPassword
+            If fp.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                pwd = fp.tbPassword.Text
+            End If
+        End If
+
+        Try
+            Using stream As ZipInputStream = New ZipInputStream(File.OpenRead(caminho))
+                stream.Password = pwd
+                Dim entry As ZipEntry
+Label_00CC:
+                entry = stream.GetNextEntry()
+                Do While (Not entry Is Nothing)
+                    Dim fileName As String = Path.GetFileName(entry.Name)
+                    If (fileName <> String.Empty) Then
+                        Using stream2 As FileStream = File.Create(pathtosave + Path.GetFileName(entry.Name))
+                            Dim count As Integer = 2048
+                            Dim buffer As Byte() = New Byte(2048) {}
+                            Do While True
+                                count = stream.Read(buffer, 0, buffer.Length)
+                                If (count <= 0) Then
+                                    fullname = pathtosave + Path.GetFileName(entry.Name)
+                                    GoTo Label_00CC
+                                End If
+                                stream2.Write(buffer, 0, count)
+                            Loop
+                        End Using
+                    End If
+                    entry = stream.GetNextEntry
+                Loop
+            End Using
+            LoadXML(fullname, caminho)
+            File.Delete(fullname)
+            Return True
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+
+    End Function
+
+    Sub SaveZIP(ByVal caminho As String, ByVal filespath As String, ByVal password As String)
+
+        Dim i_Files As ArrayList = New ArrayList()
+        If File.Exists(filespath & "1.bin") Then i_Files.Add(filespath & "1.bin")
+        If File.Exists(filespath & "2.bin") Then i_Files.Add(filespath & "2.bin")
+        If File.Exists(filespath & "3.bin") Then i_Files.Add(filespath & "3.bin")
+        If File.Exists(filespath & "4.xml") Then i_Files.Add(filespath & "4.xml")
+        If File.Exists(filespath & "5.bin") Then i_Files.Add(filespath & "5.bin")
+        If File.Exists(filespath & "7.bin") Then i_Files.Add(filespath & "7.bin")
+        If File.Exists(filespath & "8.bin") Then i_Files.Add(filespath & "8.bin")
+        If File.Exists(filespath & "9.bin") Then i_Files.Add(filespath & "9.bin")
+        If File.Exists(filespath & "10.bin") Then i_Files.Add(filespath & "10.bin")
+        If File.Exists(filespath & "11.bin") Then i_Files.Add(filespath & "11.bin")
+        If File.Exists(filespath & "12.bin") Then i_Files.Add(filespath & "12.bin")
+        If File.Exists(filespath & "13.bin") Then i_Files.Add(filespath & "13.bin")
+
+        Dim astrFileNames() As String = i_Files.ToArray(GetType(String))
+        Dim strmZipOutputStream As ZipOutputStream
+
+        strmZipOutputStream = New ZipOutputStream(File.Create(caminho))
+
+        ' Compression Level: 0-9
+        ' 0: no(Compression)
+        ' 9: maximum compression
+        strmZipOutputStream.SetLevel(9)
+
+        'save with password, if set
+        strmZipOutputStream.Password = password
+
+        Dim strFile As String
+
+        For Each strFile In astrFileNames
+
+            Dim strmFile As FileStream = File.OpenRead(strFile)
+            Dim abyBuffer(strmFile.Length - 1) As Byte
+
+            strmFile.Read(abyBuffer, 0, abyBuffer.Length)
+            Dim objZipEntry As ZipEntry = New ZipEntry(strFile)
+
+            objZipEntry.DateTime = DateTime.Now
+            objZipEntry.Size = strmFile.Length
+            strmFile.Close()
+            strmZipOutputStream.PutNextEntry(objZipEntry)
+            strmZipOutputStream.Write(abyBuffer, 0, abyBuffer.Length)
+
+        Next
+
+        strmZipOutputStream.Finish()
+        strmZipOutputStream.Close()
+
+        Dim ext As String = Path.GetExtension(caminho)
+        Dim diretorio As String = Path.GetDirectoryName(caminho)
+
+        If ext <> ".dwbcs" Then
+            If File.Exists(caminho) Then
+                File.Copy(caminho, diretorio + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(caminho) + ".dwbak", True)
+            End If
+        End If
+
+        Directory.Delete(filespath, True)
+
+    End Sub
+
+    Sub SaveXMLZIP(ByVal zipfilename As String, ByVal form As FormFlowsheet)
+
+        Dim xmlfile As String = My.Computer.FileSystem.GetTempFileName
+        Me.SaveXML(xmlfile, form, zipfilename)
+
+        Dim i_Files As ArrayList = New ArrayList()
+        If File.Exists(xmlfile) Then i_Files.Add(xmlfile)
+
+        Dim astrFileNames() As String = i_Files.ToArray(GetType(String))
+        Dim strmZipOutputStream As ZipOutputStream
+
+        strmZipOutputStream = New ZipOutputStream(File.Create(zipfilename))
+
+        ' Compression Level: 0-9
+        ' 0: no(Compression)
+        ' 9: maximum compression
+        strmZipOutputStream.SetLevel(9)
+
+        'save with password, if set
+        If form.Options.UsePassword Then strmZipOutputStream.Password = form.Options.Password
+
+        Dim strFile As String
+
+        For Each strFile In astrFileNames
+
+            Dim strmFile As FileStream = File.OpenRead(strFile)
+            Dim abyBuffer(strmFile.Length - 1) As Byte
+
+            strmFile.Read(abyBuffer, 0, abyBuffer.Length)
+            Dim objZipEntry As ZipEntry = New ZipEntry(strFile)
+
+            objZipEntry.DateTime = DateTime.Now
+            objZipEntry.Size = strmFile.Length
+            strmFile.Close()
+            strmZipOutputStream.PutNextEntry(objZipEntry)
+            strmZipOutputStream.Write(abyBuffer, 0, abyBuffer.Length)
+
+        Next
+
+        strmZipOutputStream.Finish()
+        strmZipOutputStream.Close()
+
+        File.Delete(xmlfile)
+
+    End Sub
+
+    Sub LoadFileDialog()
+
+        If Me.OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            Select Case Me.OpenFileDialog1.FilterIndex
+                Case 1
+simx:               Dim myStream As System.IO.FileStream
+                    myStream = Me.OpenFileDialog1.OpenFile()
+                    If Not (myStream Is Nothing) Then
+                        Dim nome = myStream.Name
+                        myStream.Close()
+                        Me.filename = nome
+                        Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + nome + "..."
+                        Application.DoEvents()
+                        Me.LoadXML(Me.filename)
+                    End If
+                Case 2
+simx2:              Dim myStream As System.IO.FileStream
+                    myStream = Me.OpenFileDialog1.OpenFile()
+                    If Not (myStream Is Nothing) Then
+                        Dim nome = myStream.Name
+                        myStream.Close()
+                        Me.filename = nome
+                        Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + nome + "..."
+                        Application.DoEvents()
+                        Me.LoadAndExtractXMLZIP(Me.filename)
+                    End If
+                Case 3
+sim:                Dim myStream As System.IO.FileStream
+                    myStream = Me.OpenFileDialog1.OpenFile()
+                    If Not (myStream Is Nothing) Then
+                        Dim nome = myStream.Name
+                        myStream.Close()
+                        Me.filename = nome
+                        Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + nome + "..."
+                        Application.DoEvents()
+                        Me.LoadF(Me.filename)
+                    End If
+                Case 4
+csd:                Dim NewMDIChild As New FormCompoundCreator()
+                    NewMDIChild.MdiParent = Me
+                    NewMDIChild.Show()
+                    Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
+                    Dim x As New BinaryFormatter()
+                    NewMDIChild.mycase = x.Deserialize(objStreamReader)
+                    NewMDIChild.mycase.Filename = Me.OpenFileDialog1.FileName
+                    objStreamReader.Close()
+                    NewMDIChild.WriteData()
+                    If Not My.Settings.MostRecentFiles.Contains(Me.OpenFileDialog1.FileName) Then
+                        My.Settings.MostRecentFiles.Add(Me.OpenFileDialog1.FileName)
+                        Me.UpdateMRUList()
+                    End If
+                Case 5
+rsd:                Dim NewMDIChild As New FormDataRegression()
+                    NewMDIChild.MdiParent = Me
+                    NewMDIChild.Show()
+                    Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
+                    Dim x As New BinaryFormatter()
+                    NewMDIChild.currcase = x.Deserialize(objStreamReader)
+                    NewMDIChild.currcase.filename = Me.OpenFileDialog1.FileName
+                    objStreamReader.Close()
+                    NewMDIChild.LoadCase(NewMDIChild.currcase, False)
+                    If Not My.Settings.MostRecentFiles.Contains(Me.OpenFileDialog1.FileName) Then
+                        My.Settings.MostRecentFiles.Add(Me.OpenFileDialog1.FileName)
+                        Me.UpdateMRUList()
+                    End If
+                Case 6
+                    Select Case Path.GetExtension(Me.OpenFileDialog1.FileName).ToLower()
+                        Case ".dwxml"
+                            GoTo simx
+                        Case ".dwxmz"
+                            GoTo simx2
+                        Case ".dwsim"
+                            GoTo sim
+                        Case ".dwcsd"
+                            GoTo csd
+                        Case ".dwrsd"
+                            GoTo rsd
+                    End Select
+            End Select
+        End If
+
+    End Sub
+
+    Sub SaveFileDialog()
+
+        If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
+            Dim myStream As System.IO.FileStream
+            If Me.SaveFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                myStream = Me.SaveFileDialog1.OpenFile()
+                Me.filename = myStream.Name
+                myStream.Close()
+                If Not (myStream Is Nothing) Then
+                    Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
+                    Application.DoEvents()
+                    If Path.GetExtension(Me.filename).ToLower = ".dwxml" Then
+                        Dim t As Task = Task.Factory.StartNew(Sub()
+                                                                  Me.SaveXML(Me.filename, Me.ActiveMdiChild)
+                                                              End Sub)
+                        While Not t.IsCompleted
+                            Application.DoEvents()
+                        End While
+                    ElseIf Path.GetExtension(Me.filename).ToLower = ".dwxmz" Then
+                        Dim t As Task = Task.Factory.StartNew(Sub()
+                                                                  Me.SaveXMLZIP(Me.filename, Me.ActiveMdiChild)
+                                                              End Sub)
+                        While Not t.IsCompleted
+                            Application.DoEvents()
+                        End While
+                    Else
+                        Me.bgSaveFile.RunWorkerAsync()
+                    End If
+                End If
+            End If
+        ElseIf TypeOf Me.ActiveMdiChild Is FormCompoundCreator Then
+            If Me.SaveStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
+                Dim objStreamWriter As New FileStream(Me.SaveStudyDlg.FileName, FileMode.OpenOrCreate)
+                Dim x As New BinaryFormatter
+                x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
+                objStreamWriter.Close()
+                CType(Me.ActiveMdiChild, FormCompoundCreator).SetCompCreatorSaveStatus(True)
+                Me.filename = Me.SaveStudyDlg.FileName
+                Me.ActiveMdiChild.Text = Me.filename
+            End If
+        ElseIf TypeOf Me.ActiveMdiChild Is FormDataRegression Then
+            If Me.SaveRegStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                Dim objStreamWriter As New FileStream(Me.SaveRegStudyDlg.FileName, FileMode.OpenOrCreate)
+                Dim x As New BinaryFormatter
+                x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormDataRegression).StoreCase())
+                objStreamWriter.Close()
+                Me.filename = Me.SaveRegStudyDlg.FileName
+                Me.ActiveMdiChild.Text = Me.filename
+            End If
+        End If
+
+
+
+    End Sub
+
+    Sub SaveFileDialog_NoBG()
+
+        Dim myStream As System.IO.FileStream
+
+        Me.SaveFileDialog1.Filter = DWSIM.App.GetLocalString("SimulaesdoDWSIMdwsim")
+        Me.SaveFileDialog1.AddExtension = True
+        If Me.SaveFileDialog1.FilterIndex = 1 Then
+            If Me.SaveFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                myStream = Me.SaveFileDialog1.OpenFile()
+                Me.filename = myStream.Name
+                myStream.Close()
+                If Not (myStream Is Nothing) Then
+                    Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
+                    Application.DoEvents()
+                    Me.SaveF(Me.filename, Me.ActiveMdiChild)
+                End If
+            End If
+        End If
+
+    End Sub
+
+    Private Sub OpenToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripButton.Click, OpenToolStripMenuItem.Click
+
+        Call Me.LoadFileDialog()
+
+    End Sub
+
+    Private Sub bgLoadFile_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgLoadFile.DoWork
+        Dim bw As BackgroundWorker = CType(sender, BackgroundWorker)
+        ' Start the time-consuming operation.
+        Me.LoadF(Me.filename)
+    End Sub
+
+    Private Sub bgSaveFile_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgSaveFile.DoWork
+        Dim bw As BackgroundWorker = CType(sender, BackgroundWorker)
+        ' Start the time-consuming operation.
+        Me.SaveF(Me.filename, Me.ActiveMdiChild)
+    End Sub
+
+    Private Sub bgLoadFile_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgLoadFile.RunWorkerCompleted
+        If Not (e.Error Is Nothing) Then
+            ' There was an error during the operation.
+            'FrmLoadSave.Hide()
+            MessageBox.Show("Erro ao carregar arquivo: " & e.Error.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            'Me.Close()
+        Else
+            'Me.FrmLoadSave.Close()
+        End If
+        Me.ToolStripStatusLabel1.Text = ""
+    End Sub
+
+    Private Sub bgSaveFile_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgSaveFile.RunWorkerCompleted
+        If Not (e.Error Is Nothing) Then
+            ' There was an error during the operation.
+            MessageBox.Show("Erro ao salvar arquivo: " & e.Error.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Else
+
+            'lista dos mais recentes, modificar
+
+            With My.Settings.MostRecentFiles
+                If Not .Contains(Me.filename) Then
+                    .Item(2) = .Item(1)
+                    .Item(1) = .Item(0)
+                    .Item(0) = Me.filename
+                End If
+            End With
+
+            'processar lista de arquivos recentes
+
+
+        End If
+        Me.ToolStripStatusLabel1.Text = ""
+    End Sub
 
 #End Region
 
-    End Class
+#Region "    Click Handlers"
 
-    ''' <summary>
-    ''' Class to store Phase Info and mapping for CAPE-OPEN Property Packages
-    ''' </summary>
-    ''' <remarks>Used only in the context of CAPE-OPEN Objects.</remarks>
-    <System.Serializable()> Public Class PhaseInfo
+    Private Sub LR1_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs)
 
-        Public PhaseLabel As String = ""
-        Public DWPhaseIndex As Integer
-        Public DWPhaseID As Fase = Fase.Mixture
+        Dim myLink As LinkLabel = CType(sender, LinkLabel)
 
-        Sub New(ByVal pl As String, ByVal pi As Integer, ByVal pid As Fase)
-            PhaseLabel = pl
-            DWPhaseIndex = pi
-            DWPhaseID = pid
-        End Sub
-
-    End Class
-
-    ''' <summary>
-    ''' COM IStream Class Implementation
-    ''' </summary>
-    ''' <remarks></remarks>
-    <System.Serializable()> Public Class ComStreamWrapper
-        Inherits System.IO.Stream
-        Private mSource As IStream
-        Private mInt64 As IntPtr
-
-        Public Sub New(ByVal source As IStream)
-            mSource = source
-            mInt64 = iop.Marshal.AllocCoTaskMem(8)
-        End Sub
-
-        Protected Overrides Sub Finalize()
+        If myLink.Text <> DWSIM.App.GetLocalString("vazio") Then
+            Dim nome = myLink.Tag.ToString
+            Me.filename = nome
+            Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " (" + nome + ")"
+            Application.DoEvents()
             Try
-                iop.Marshal.FreeCoTaskMem(mInt64)
+                Select Case Path.GetExtension(Me.filename).ToLower
+                    Case ".dwsim"
+                        Me.LoadF(Me.filename)
+                    Case ".dwcsd"
+                        Dim NewMDIChild As New FormCompoundCreator()
+                        NewMDIChild.MdiParent = Me
+                        NewMDIChild.Show()
+                        Dim objStreamReader As New FileStream(Me.filename, FileMode.Open)
+                        Dim x As New BinaryFormatter()
+                        NewMDIChild.mycase = x.Deserialize(objStreamReader)
+                        objStreamReader.Close()
+                        NewMDIChild.WriteData()
+                    Case ".dwrsd"
+                        Dim NewMDIChild As New FormDataRegression()
+                        NewMDIChild.MdiParent = Me
+                        NewMDIChild.Show()
+                        Dim objStreamReader As New FileStream(Me.filename, FileMode.Open)
+                        Dim x As New BinaryFormatter()
+                        NewMDIChild.currcase = x.Deserialize(objStreamReader)
+                        objStreamReader.Close()
+                        NewMDIChild.LoadCase(NewMDIChild.currcase, False)
+                End Select
+            Catch ex As Exception
+                MessageBox.Show("Erro ao carregar arquivo: " & ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Finally
-                MyBase.Finalize()
+                Me.ToolStripStatusLabel1.Text = ""
             End Try
-        End Sub
+            'Me.bgLoadFile.RunWorkerAsync()
+        End If
+    End Sub
 
-        Public Overrides ReadOnly Property CanRead() As Boolean
-            Get
-                Return True
-            End Get
-        End Property
+    Private Sub NewToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NewToolStripButton.Click, NewToolStripMenuItem.Click
 
-        Public Overrides ReadOnly Property CanSeek() As Boolean
-            Get
-                Return True
-            End Get
-        End Property
+        Dim NewMDIChild As New FormFlowsheet()
 
-        Public Overrides ReadOnly Property CanWrite() As Boolean
-            Get
-                Return True
-            End Get
-        End Property
+        'Set the Parent Form of the Child window.
+        NewMDIChild.MdiParent = Me
+        'Display the new form.
+        NewMDIChild.Text = "Simulation" & m_childcount
+        NewMDIChild.Show()
+        Application.DoEvents()
+        Me.ActivateMdiChild(NewMDIChild)
+        m_childcount += 1
 
-        Public Overrides Sub Flush()
-            mSource.Commit(0)
-        End Sub
+    End Sub
 
-        Public Overrides ReadOnly Property Length() As Long
-            Get
-                Dim stat As STATSTG
-                stat = Nothing
-                mSource.Stat(stat, 1)
-                Return stat.cbSize
-            End Get
-        End Property
+    Private Sub CascadeToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles CascadeToolStripMenuItem.Click
+        Me.LayoutMdi(MdiLayout.Cascade)
+        If Me.CascadeToolStripMenuItem.Checked = True Then
+            Me.TileVerticalToolStripMenuItem.Checked = False
+            Me.TileHorizontalToolStripMenuItem.Checked = False
+        Else
+            Me.TileHorizontalToolStripMenuItem.Checked = False
+            Me.TileVerticalToolStripMenuItem.Checked = False
+            Me.CascadeToolStripMenuItem.Checked = True
+        End If
+    End Sub
 
-        Public Overrides Property Position() As Long
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(ByVal value As Long)
-                Throw New NotImplementedException()
-            End Set
-        End Property
+    Private Sub TileVerticleToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles TileVerticalToolStripMenuItem.Click
+        Me.LayoutMdi(MdiLayout.TileVertical)
+        If Me.TileVerticalToolStripMenuItem.Checked = True Then
+            Me.TileHorizontalToolStripMenuItem.Checked = False
+            Me.CascadeToolStripMenuItem.Checked = False
+        Else
+            Me.TileHorizontalToolStripMenuItem.Checked = False
+            Me.TileVerticalToolStripMenuItem.Checked = True
+            Me.CascadeToolStripMenuItem.Checked = False
+        End If
+    End Sub
 
-        Public Overrides Function Read(ByVal buffer As Byte(), ByVal offset As Integer, ByVal count As Integer) As Integer
-            If offset <> 0 Then
-                Throw New NotImplementedException()
+    Private Sub TileHorizontalToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles TileHorizontalToolStripMenuItem.Click
+        Me.LayoutMdi(MdiLayout.TileHorizontal)
+        If Me.TileHorizontalToolStripMenuItem.Checked = True Then
+            Me.TileVerticalToolStripMenuItem.Checked = False
+            Me.CascadeToolStripMenuItem.Checked = False
+        Else
+            Me.TileHorizontalToolStripMenuItem.Checked = True
+            Me.TileVerticalToolStripMenuItem.Checked = False
+            Me.CascadeToolStripMenuItem.Checked = False
+        End If
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
+        Me.Close()
+    End Sub
+
+    Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
+        If Not DWSIM.App.IsRunningOnMono Then
+            Dim frmAbout As New AboutBoxNET
+            frmAbout.ShowDialog(Me)
+        Else
+            Dim frmAbout As New AboutBoxMONO
+            frmAbout.ShowDialog(Me)
+        End If
+    End Sub
+
+    Private Sub LinkLabel7_LinkClicked_1(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs)
+        Call Me.OpenToolStripButton_Click(sender, e)
+    End Sub
+
+    Private Sub LinkLabel5_LinkClicked_1(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs)
+        Call Me.NewToolStripButton_Click(sender, e)
+    End Sub
+
+    Private Sub OpenRecent_click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+
+        Dim myLink As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
+        If myLink.Text <> DWSIM.App.GetLocalString("vazio") Then
+            If File.Exists(myLink.Tag.ToString) Then
+                Dim nome = myLink.Tag.ToString
+                Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " (" + nome + ")"
+                Me.filename = nome
+                Application.DoEvents()
+                Dim objStreamReader As FileStream = Nothing
+                Try
+                    Select Case Path.GetExtension(nome).ToLower()
+                        Case ".dwxml"
+                            Me.LoadXML(nome)
+                        Case ".dwsim"
+                            Me.LoadF(nome)
+                        Case ".dwcsd"
+                            Dim NewMDIChild As New FormCompoundCreator()
+                            NewMDIChild.MdiParent = Me
+                            NewMDIChild.Show()
+                            objStreamReader = New FileStream(nome, FileMode.Open)
+                            Dim x As New BinaryFormatter()
+                            NewMDIChild.mycase = x.Deserialize(objStreamReader)
+                            objStreamReader.Close()
+                            NewMDIChild.WriteData()
+                        Case ".dwrsd"
+                            Dim NewMDIChild As New FormDataRegression()
+                            NewMDIChild.MdiParent = Me
+                            NewMDIChild.Show()
+                            objStreamReader = New FileStream(nome, FileMode.Open)
+                            Dim x As New BinaryFormatter()
+                            NewMDIChild.currcase = x.Deserialize(objStreamReader)
+                            objStreamReader.Close()
+                            NewMDIChild.LoadCase(NewMDIChild.currcase, False)
+                    End Select
+                Catch ex As Exception
+                    MessageBox.Show("Erro ao carregar arquivo: " & ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Finally
+                    Me.ToolStripStatusLabel1.Text = ""
+                    If objStreamReader IsNot Nothing Then objStreamReader.Close()
+                End Try
             End If
-            mSource.Read(buffer, count, mInt64)
-            Return iop.Marshal.ReadInt32(mInt64)
-        End Function
+        End If
+    End Sub
 
-        Public Overrides Function Seek(ByVal offset As Long, ByVal origin As System.IO.SeekOrigin) As Long
-            mSource.Seek(offset, CInt(origin), mInt64)
-            Return iop.Marshal.ReadInt64(mInt64)
-        End Function
-
-        Public Overrides Sub SetLength(ByVal value As Long)
-            mSource.SetSize(value)
-        End Sub
-
-        Public Overrides Sub Write(ByVal buffer As Byte(), ByVal offset As Integer, ByVal count As Integer)
-            If offset <> 0 Then
-                Throw New NotImplementedException()
+    Private Sub SaveAllToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveAllToolStripButton.Click, SaveAllToolStripMenuItem.Click
+        If Me.MdiChildren.Length > 0 Then
+            Dim result As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Istoirsalvartodasass"), DWSIM.App.GetLocalString("Ateno2"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If result = MsgBoxResult.Yes Then
+                For Each form0 As Form In Me.MdiChildren
+                    If TypeOf form0 Is FormFlowsheet Then
+                        Dim form2 As FormFlowsheet = form0
+                        If form2.Options.FilePath <> "" Then
+                            Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
+                            Try
+                                If Path.GetExtension(form2.Options.FilePath).ToLower = ".dwsim" Then
+                                    SaveF(form2.Options.FilePath, form2)
+                                Else
+                                    SaveXML(form2.Options.FilePath, form2)
+                                End If
+                            Catch ex As Exception
+                                MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Finally
+                                Me.ToolStripStatusLabel1.Text = ""
+                            End Try
+                        Else
+                            Dim myStream As System.IO.FileStream
+                            If Me.SaveFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                                myStream = Me.SaveFileDialog1.OpenFile()
+                                myStream.Close()
+                                If Not (myStream Is Nothing) Then
+                                    Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
+                                    Try
+                                        If Path.GetExtension(myStream.Name).ToLower = ".dwsim" Then
+                                            SaveF(myStream.Name, form2)
+                                        Else
+                                            SaveXML(myStream.Name, form2)
+                                        End If
+                                    Catch ex As Exception
+                                        MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                    Finally
+                                        Me.ToolStripStatusLabel1.Text = ""
+                                    End Try
+                                End If
+                            End If
+                        End If
+                    ElseIf TypeOf form0 Is FormCompoundCreator Then
+                        Dim filename As String = CType(Me.ActiveMdiChild, FormCompoundCreator).mycase.Filename
+                        If filename = "" Then
+                            If Me.SaveStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                                CType(Me.ActiveMdiChild, FormCompoundCreator).mycase.Filename = Me.SaveStudyDlg.FileName
+                                CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
+                                Dim objStreamWriter As New FileStream(Me.SaveStudyDlg.FileName, FileMode.OpenOrCreate)
+                                Dim x As New BinaryFormatter
+                                x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
+                                objStreamWriter.Close()
+                                CType(Me.ActiveMdiChild, FormCompoundCreator).SetCompCreatorSaveStatus(True)
+                            End If
+                        Else
+                            CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
+                            Dim objStreamWriter As New FileStream(filename, FileMode.OpenOrCreate)
+                            Dim x As New BinaryFormatter
+                            x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
+                            objStreamWriter.Close()
+                            CType(Me.ActiveMdiChild, FormCompoundCreator).SetCompCreatorSaveStatus(True)
+                        End If
+                    ElseIf TypeOf form0 Is FormDataRegression Then
+                        If Me.SaveRegStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                            Dim objStreamWriter As New FileStream(Me.SaveRegStudyDlg.FileName, FileMode.OpenOrCreate)
+                            Dim x As New BinaryFormatter
+                            x.Serialize(objStreamWriter, CType(form0, FormDataRegression).StoreCase())
+                            objStreamWriter.Close()
+                        End If
+                    End If
+                Next
             End If
-            mSource.Write(buffer, count, IntPtr.Zero)
-        End Sub
+        Else
+            MessageBox.Show(DWSIM.App.GetLocalString("Noexistemsimulaesase"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
 
-    End Class
+    Public Sub SaveToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveToolStripButton.Click, SaveToolStripMenuItem.Click
 
-End Namespace
+        If Not Me.ActiveMdiChild Is Nothing Then
+            If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
+                Dim form2 As FormFlowsheet = Me.ActiveMdiChild
+                If form2.Options.FilePath <> "" Then
+                    Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
+                    Application.DoEvents()
+                    Try
+                        Me.filename = form2.Options.FilePath
+                        If Path.GetExtension(Me.filename).ToLower = ".dwsim" Then
+                            SaveF(form2.Options.FilePath, form2)
+                        Else
+                            SaveXML(form2.Options.FilePath, form2)
+                        End If
+                    Catch ex As Exception
+                        MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Finally
+                        Me.ToolStripStatusLabel1.Text = ""
+                    End Try
+                Else
+                    Dim myStream As System.IO.FileStream
+                    If Me.SaveFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                        myStream = Me.SaveFileDialog1.OpenFile()
+                        Me.filename = myStream.Name
+                        myStream.Close()
+                        If Not (myStream Is Nothing) Then
+                            Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
+                            Application.DoEvents()
+                            Try
+                                If Path.GetExtension(Me.filename).ToLower = ".dwsim" Then
+                                    SaveF(myStream.Name, form2)
+                                Else
+                                    SaveXML(myStream.Name, form2)
+                                End If
+                            Catch ex As Exception
+                                MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Finally
+                                Me.ToolStripStatusLabel1.Text = ""
+                            End Try
+                        End If
+                    End If
+                End If
+            ElseIf TypeOf Me.ActiveMdiChild Is FormCompoundCreator Then
+                Dim filename As String = CType(Me.ActiveMdiChild, FormCompoundCreator).mycase.Filename
+                If filename = "" Then
+                    If Me.SaveStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                        CType(Me.ActiveMdiChild, FormCompoundCreator).mycase.Filename = Me.SaveStudyDlg.FileName
+                        CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
+                        Dim objStreamWriter As New FileStream(Me.SaveStudyDlg.FileName, FileMode.OpenOrCreate)
+                        Dim x As New BinaryFormatter
+                        x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
+                        objStreamWriter.Close()
+                        CType(Me.ActiveMdiChild, FormCompoundCreator).SetCompCreatorSaveStatus(True)
+                        Me.filename = Me.SaveStudyDlg.FileName
+                        Me.ActiveMdiChild.Text = Me.filename
+                    End If
+                Else
+                    CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
+                    Dim objStreamWriter As New FileStream(filename, FileMode.OpenOrCreate)
+                    Dim x As New BinaryFormatter
+                    x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormCompoundCreator).mycase)
+                    objStreamWriter.Close()
+                    CType(Me.ActiveMdiChild, FormCompoundCreator).SetCompCreatorSaveStatus(True)
+                    Me.filename = filename
+                    Me.ActiveMdiChild.Text = filename
+                End If
+            ElseIf TypeOf Me.ActiveMdiChild Is FormDataRegression Then
+                If Me.SaveRegStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                    Dim objStreamWriter As New FileStream(Me.SaveRegStudyDlg.FileName, FileMode.OpenOrCreate)
+                    Dim x As New BinaryFormatter
+                    x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormDataRegression).StoreCase())
+                    objStreamWriter.Close()
+                    Me.filename = Me.SaveRegStudyDlg.FileName
+                    Me.ActiveMdiChild.Text = Me.filename
+                End If
+            End If
+        Else
+            MessageBox.Show(DWSIM.App.GetLocalString("Noexistemsimulaesati"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+    End Sub
+
+    Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click, SaveAsToolStripMenuItem.Click
+        Call Me.SaveFileDialog()
+    End Sub
+
+    Private Sub FecharTodasAsSimulaçõesAbertasToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseAllToolstripMenuItem.Click
+        If Me.MdiChildren.Length > 0 Then
+            Dim form2 As Form
+            For Each form2 In Me.MdiChildren
+                Application.DoEvents()
+                Try
+                    form2.Close()
+                Catch ex As Exception
+                    Console.WriteLine(ex.ToString)
+                End Try
+                Application.DoEvents()
+            Next
+        Else
+            MessageBox.Show(DWSIM.App.GetLocalString("Noexistemsimulaesase"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
+    Private Sub BlogDeDesenvolvimentoToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BlogDeDesenvolvimentoToolStripMenuItem.Click
+        System.Diagnostics.Process.Start("http://dwsim.inforside.com.br/blog")
+    End Sub
+
+    Private Sub DownloadsToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DownloadsToolStripMenuItem.Click
+        System.Diagnostics.Process.Start("http://sourceforge.net/projects/dwsim/files/")
+    End Sub
+
+    Private Sub WikiToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WikiToolStripMenuItem.Click
+        System.Diagnostics.Process.Start("http://dwsim.inforside.com.br")
+    End Sub
+
+    Private Sub FórumToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FórumToolStripMenuItem.Click
+        System.Diagnostics.Process.Start("http://sourceforge.net/p/dwsim/discussion/")
+    End Sub
+
+    Private Sub RastreamentoDeBugsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RastreamentoDeBugsToolStripMenuItem.Click
+        System.Diagnostics.Process.Start("http://sourceforge.net/apps/mantisbt/dwsim/")
+    End Sub
+
+    Private Sub DonateToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DonateToolStripMenuItem.Click
+        System.Diagnostics.Process.Start("http://sourceforge.net/p/dwsim/donate/")
+    End Sub
+
+    Private Sub MostrarBarraDeFerramentasToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MostrarBarraDeFerramentasToolStripMenuItem.Click
+        If Me.MostrarBarraDeFerramentasToolStripMenuItem.Checked Then
+            Me.ToolStrip1.Visible = True
+        Else
+            Me.ToolStrip1.Visible = False
+        End If
+    End Sub
+
+    Private Sub ToolStripButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton2.Click
+        Me.PreferênciasDoDWSIMToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub ToolStripButton3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton3.Click
+        Me.CascadeToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub ToolStripButton5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton5.Click
+        Me.TileVerticleToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub ToolStripButton4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton4.Click
+        Me.TileHorizontalToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub ToolStripButton7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton7.Click
+        Me.DonateToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub ToolStripButton8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton8.Click
+        Me.AboutToolStripMenuItem_Click(sender, e)
+    End Sub
+
+    Private Sub ContentsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ContentsToolStripMenuItem.Click
+        'call general help
+        DWSIM.App.HelpRequested("frame.htm")
+    End Sub
+
+    Private Sub RegistrarTiposCOMToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RegistrarTiposCOMToolStripMenuItem.Click
+
+        Dim windir As String = Environment.GetEnvironmentVariable("SystemRoot")
+        Process.Start(windir & "\Microsoft.NET\Framework\v4.0.30319\RegAsm.exe", "/codebase /silent " & Chr(34) & My.Application.Info.DirectoryPath & " \DWSIM.exe" & Chr(34))
+
+    End Sub
+
+    Private Sub DeToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DeToolStripMenuItem.Click
+
+        Dim windir As String = Environment.GetEnvironmentVariable("SystemRoot")
+        Process.Start(windir & "\Microsoft.NET\Framework\v4.0.30319\RegAsm.exe", "/u " & Chr(34) & My.Application.Info.DirectoryPath & " \DWSIM.exe" & Chr(34))
+
+    End Sub
+
+    Private Sub tslupd_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles tslupd.Click
+        Dim myfile As String = My.Computer.FileSystem.SpecialDirectories.Temp & Path.DirectorySeparatorChar & "DWSIM" & Path.DirectorySeparatorChar & "dwsim.txt"
+        Dim txt() As String = File.ReadAllLines(myfile)
+        Dim build As Integer, bdate As Date, fname As String, dlpath As String, changelog As String = ""
+        build = txt(0)
+        bdate = Date.Parse(txt(1), New CultureInfo("en-US"))
+        dlpath = txt(2)
+        fname = txt(3)
+        For i As Integer = 4 To txt.Length - 1
+            changelog += txt(i) + vbCrLf
+        Next
+        Dim strb As New StringBuilder()
+        With strb
+            .AppendLine(DWSIM.App.GetLocalString("BuildNumber") & ": " & build & vbCrLf)
+            .AppendLine(DWSIM.App.GetLocalString("BuildDate") & ": " & bdate.ToString(My.Application.Culture.DateTimeFormat.ShortDatePattern, My.Application.Culture) & vbCrLf)
+            .AppendLine(DWSIM.App.GetLocalString("Changes") & ": " & vbCrLf & changelog & vbCrLf)
+            .AppendLine(DWSIM.App.GetLocalString("DownloadQuestion"))
+        End With
+        Dim msgresult As MsgBoxResult = MessageBox.Show(strb.ToString, DWSIM.App.GetLocalString("NewVersionAvailable"), MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+        If msgresult = MsgBoxResult.Yes Then
+            'Me.sfdUpdater.FileName = fname
+            'If Me.sfdUpdater.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+            'Try
+            'My.Computer.Network.DownloadFile(dlpath, Me.sfdUpdater.FileName, "", "", True, 100000, True, FileIO.UICancelOption.DoNothing)
+            Process.Start(dlpath)
+            tslupd.Visible = False
+            'Catch ex As Exception
+            'MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            'End Try
+            'End If
+        End If
+    End Sub
+
+    Private Sub NovoEstudoDoCriadorDeComponentesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NovoEstudoDoCriadorDeComponentesToolStripMenuItem.Click
+        Dim NewMDIChild As New FormCompoundCreator()
+        'Set the Parent Form of the Child window.
+        NewMDIChild.MdiParent = Me
+        'Display the new form.
+        NewMDIChild.Text = "CompCreator" & m_childcount
+        Me.ActivateMdiChild(NewMDIChild)
+        NewMDIChild.Show()
+        m_childcount += 1
+    End Sub
+
+    Private Sub NovoEstudoDeRegressãoDeDadosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Click
+        Dim NewMDIChild As New FormDataRegression()
+        'Set the Parent Form of the Child window.
+        NewMDIChild.MdiParent = Me
+        'Display the new form.
+        NewMDIChild.Text = "DataRegression" & m_childcount
+        Me.ActivateMdiChild(NewMDIChild)
+        NewMDIChild.Show()
+        m_childcount += 1
+    End Sub
+
+    Private Sub PreferênciasDoDWSIMToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PreferênciasDoDWSIMToolStripMenuItem.Click
+        Me.FrmOptions = New FormOptions
+        Me.FrmOptions.ShowDialog(Me)
+    End Sub
+
+    Private Sub FormMain_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
+
+        'Load help - no special topic
+        DWSIM.App.HelpRequested("frame.htm")
+    End Sub
+#End Region
+
+#Region "    Backup/Update"
+
+    Private Sub TimerBackup_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles TimerBackup.Tick
+
+        Dim folder As String = My.Settings.BackupFolder
+        If Not Directory.Exists(folder) And folder <> "" Then
+            Try
+                Directory.CreateDirectory(folder)
+            Catch ex As Exception
+                MessageBox.Show(DWSIM.App.GetLocalString("Erroaocriardiretriop") & vbCrLf & DWSIM.App.GetLocalString("Verifiquesevoctemonv"), _
+                             DWSIM.App.GetLocalString("Cpiasdesegurana"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
+
+        If Directory.Exists(folder) Then
+            If Not Me.bgSaveBackup.IsBusy Then Me.bgSaveBackup.RunWorkerAsync()
+        End If
+
+    End Sub
+
+    Private Sub bgSaveBackup_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgSaveBackup.DoWork
+        Dim bw As BackgroundWorker = CType(sender, BackgroundWorker)
+        ' Start the time-consuming operation.
+        Dim folder As String = My.Settings.BackupFolder
+        Dim path As String = ""
+        For Each form0 As Form In Me.MdiChildren
+            If TypeOf form0 Is FormFlowsheet Then
+                path = folder + "\" + CType(form0, FormFlowsheet).Options.BackupFileName
+                Me.SaveF(path, form0)
+                If Not My.Settings.BackupFiles.Contains(path) Then
+                    My.Settings.BackupFiles.Add(path)
+                    My.Settings.Save()
+                End If
+            End If
+        Next
+    End Sub
+
+    Private Sub bgSaveBackup_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgSaveBackup.RunWorkerCompleted
+        If Not (e.Error Is Nothing) Then
+            ' There was an error during the operation.
+            MessageBox.Show("Erro ao salvar cópias de segurança: " & e.Error.Message & vbCrLf & DWSIM.App.GetLocalString("Paranovermaisesseavi"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            My.Application.Log.WriteException(e.Error)
+        End If
+    End Sub
+
+    Private Sub bgUpdater_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgUpdater.DoWork
+
+        Dim myfile As String = My.Computer.FileSystem.SpecialDirectories.Temp & Path.DirectorySeparatorChar & "DWSIM" & Path.DirectorySeparatorChar & "dwsim.txt"
+        Dim webp As New System.Net.WebProxy
+        webp.UseDefaultCredentials = True
+        Dim webcl As New System.Net.WebClient()
+        webcl.Proxy = webp
+        webcl.DownloadFile("http://dwsim.inforside.com.br/dwsim.txt", myfile)
+        dlok = True
+
+    End Sub
+
+    Private Sub bgUpdater_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgUpdater.RunWorkerCompleted
+        If dlok Then
+            Dim myfile As String = My.Computer.FileSystem.SpecialDirectories.Temp & Path.DirectorySeparatorChar & "DWSIM" & Path.DirectorySeparatorChar & "dwsim.txt"
+            If File.Exists(myfile) Then
+                Dim txt() As String = File.ReadAllLines(myfile)
+                Dim build As Integer
+                build = txt(0)
+                If My.Application.Info.Version.Build < CInt(build) Then
+                    tslupd.Visible = True
+                    tslupd.Text = DWSIM.App.GetLocalString("NewVersionAvailable")
+                End If
+            End If
+        End If
+    End Sub
+
+#End Region
+
+End Class
