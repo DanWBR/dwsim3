@@ -27720,7 +27720,7 @@
   <group id="20"  value="1" />
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
-  <group id="78"  value="4" />
+  <group id="2"  value="4" />
   <group id="19"  value="1" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="108-94-1" />
@@ -28610,9 +28610,9 @@
   <group id="15"  value="1" />
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
-  <group id="78"  value="5" />
-  <group id="79"  value="1" />
-  <group id="81"  value="1" />
+  <group id="2"  value="5" />
+  <group id="3"  value="1" />
+  <group id="14"  value="1" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="108-93-0" />
 <Smiles name="SMILES"  value="OC1CCCCC1" />
@@ -37260,13 +37260,11 @@
 <ChaoSeaderLiquidVolume name="Chao-Seader liquid volume"  units="m3/kmol"  value="0.138585" />
 <UnifacVLE name="UNIFAC" >
   <group id="2"  value="2" />
-  <group id="3"  value="4" />
-  <group id="6"  value="2" />
+  <group id="6"  value="4" />
   </UnifacVLE>
 <UnifacLLE name="UNIFAC-LLE" >
   <group id="2"  value="2" />
-  <group id="3"  value="4" />
-  <group id="6"  value="2" />
+  <group id="6"  value="4" />
   </UnifacLLE>
 <Asog name="ASOG" >
   <group id="2"  value="2" />
@@ -37275,13 +37273,11 @@
   </Asog>
 <Umr name="UMR" >
   <group id="2"  value="2" />
-  <group id="3"  value="4" />
-  <group id="6"  value="2" />
+  <group id="6"  value="4" />
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
-  <group id="6"  value="2" />
-  <group id="78"  value="2" />
-  <group id="79"  value="4" />
+  <group id="2"  value="2" />
+  <group id="6"  value="4" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="77-73-6" />
 <Smiles name="SMILES"  value="C1=CC2C(C3)C=CC3C2C1" />
@@ -58464,7 +58460,7 @@
   <group id="6"  value="1" />
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
-  <group id="78"  value="4" />
+  <group id="2"  value="4" />
   <group id="6"  value="1" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="110-83-8" />
@@ -58690,8 +58686,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="78"  value="4" />
-  <group id="80"  value="1" />
+  <group id="2"  value="4" />
+  <group id="4"  value="1" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="1638-26-2" />
 <Smiles name="SMILES"  value="C1(C)(C)CCCC1" />
@@ -58912,8 +58908,8 @@
   </GCmethod>
 <Umr name="UMR" >
   <group id="1"  value="2" />
-  <group id="78"  value="3" />
-  <group id="79"  value="2" />
+  <group id="2"  value="3" />
+  <group id="3"  value="2" />
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
@@ -59140,8 +59136,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="78"  value="3" />
-  <group id="79"  value="2" />
+  <group id="2"  value="3" />
+  <group id="3"  value="2" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="822-50-4" />
 <Smiles name="SMILES"  value="C1[C@](C)([H])([C@]([H])(C)(CC1))" />
@@ -59364,8 +59360,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="78"  value="3" />
-  <group id="79"  value="2" />
+  <group id="2"  value="3" />
+  <group id="3"  value="2" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="2532-58-3" />
 <Smiles name="SMILES"  value="C1[C@@](C)([H])(C[C@]([H])(C)(C1))" />
@@ -59595,8 +59591,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="78"  value="3" />
-  <group id="79"  value="2" />
+  <group id="2"  value="3" />
+  <group id="3"  value="2" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="1759-58-6" />
 <Smiles name="SMILES"  value="C1[C@](C)([H])(C[C@]([H])(C)(C1))" />
@@ -59822,9 +59818,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="3"  value="1" />
-  <group id="78"  value="4" />
-  <group id="79"  value="1" />
+  <group id="2"  value="4" />
+  <group id="3"  value="2" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="3875-51-2" />
 <Smiles name="SMILES"  value="C1CCCC1(C(C)C)" />
@@ -60047,9 +60042,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="2"  value="1" />
-  <group id="78"  value="4" />
-  <group id="80"  value="1" />
+  <group id="2"  value="5" />
+  <group id="4"  value="1" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="16747-50-5" />
 <Smiles name="SMILES"  value="C1CCCC1(C)(CC)" />
@@ -60275,9 +60269,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="1" />
-  <group id="2"  value="3" />
-  <group id="78"  value="4" />
-  <group id="79"  value="1" />
+  <group id="2"  value="7" />
+  <group id="3"  value="1" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="2040-95-1" />
 <Smiles name="SMILES"  value="C1CCCC1(CCCC)" />
@@ -60506,8 +60499,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="78"  value="5" />
-  <group id="80"  value="1" />
+  <group id="2"  value="5" />
+  <group id="4"  value="1" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="590-66-9" />
 <Smiles name="SMILES"  value="C1CCCCC1(C)(C)" />
@@ -60733,8 +60726,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="78"  value="4" />
-  <group id="79"  value="2" />
+  <group id="2"  value="4" />
+  <group id="3"  value="2" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="2207-01-4" />
 <Smiles name="SMILES"  value="C1[C@@](C)([H])([C@]([H])(C)(CCC1))" />
@@ -60963,8 +60956,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="78"  value="4" />
-  <group id="79"  value="2" />
+  <group id="2"  value="4" />
+  <group id="3"  value="2" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="6876-23-9" />
 <Smiles name="SMILES"  value="C1[C@](C)([H])([C@]([H])(C)(CCC1))" />
@@ -61193,8 +61186,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="78"  value="4" />
-  <group id="79"  value="2" />
+  <group id="2"  value="4" />
+  <group id="3"  value="2" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="638-04-0" />
 <Smiles name="SMILES"  value="C1[C@@](C)([H])(C[C@]([H])(C)(CC1))" />
@@ -61420,8 +61413,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="78"  value="4" />
-  <group id="79"  value="2" />
+  <group id="2"  value="4" />
+  <group id="3"  value="2" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="2207-03-6" />
 <Smiles name="SMILES"  value="C1[C@](C)([H])(C[C@]([H])(C)(CC1))" />
@@ -61650,8 +61643,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="78"  value="4" />
-  <group id="79"  value="2" />
+  <group id="2"  value="4" />
+  <group id="3"  value="2" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="624-29-3" />
 <Smiles name="SMILES"  value="C1[C@@](C)([H])(CC[C@]([H])(C)(C1))" />
@@ -61877,8 +61870,8 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="2" />
-  <group id="78"  value="4" />
-  <group id="79"  value="2" />
+  <group id="2"  value="4" />
+  <group id="3"  value="2" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="2207-04-7" />
 <Smiles name="SMILES"  value="C1[C@](C)([H])(CC[C@]([H])(C)(C1))" />
@@ -62102,12 +62095,11 @@
   </Umr>
 <ModifiedUnifac name="Modified UNIFAC" >
   <group id="1"  value="3" />
+  <group id="2"  value="5" />
+  <group id="3"  value="1" />
   <group id="4"  value="1" />
-  <group id="78"  value="5" />
-  <group id="79"  value="1" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="3178-22-1" />
-<Smiles name="SMILES"  value="CC(C)(C)C1CCCCC1" />
 </compound>
 
 <compound>
@@ -80773,7 +80765,6 @@
   <group id="103"  value="1" />
   </Umr>
 <CAS name="CAS number"  value="20333-39-5" />
-<Smiles name="SMILES"  value="CCSSC" />
 </compound>
 
 <compound>
@@ -80978,7 +80969,6 @@
   <group id="103"  value="2" />
   </Umr>
 <CAS name="CAS number"  value="30453-31-7" />
-<Smiles name="SMILES"  value="CCCSSCC" />
 </compound>
 
 <compound>
@@ -81176,7 +81166,6 @@
   <group id="10"  value="0" />
   </UnifacLLE>
 <CAS name="CAS number"  value="882-33-7" />
-<Smiles name="SMILES"  value="C1=CC=C(C=C1)SSC2=CC=CC=C2" />
 </compound>
 
 <compound>
@@ -91159,7 +91148,6 @@
   <group id="120"  value="1" />
   </Umr>
 <CAS name="CAS number"  value="105-58-8" />
-<Smiles name="SMILES"  value="CCOC(=O)OCC" />
 </compound>
 
 <compound>
@@ -91273,7 +91261,6 @@
   <group id="120"  value="1" />
   </Umr>
 <CAS name="CAS number"  value="623-53-0" />
-<Smiles name="SMILES"  value="CCOC(=O)OC" />
 </compound>
 
 <compound>
@@ -91390,7 +91377,6 @@
   <group id="120"  value="1" />
   </Umr>
 <CAS name="CAS number"  value="13509-27-8" />
-<Smiles name="SMILES"  value="COC(=O)OC1=CC=CC=C1" />
 </compound>
 
 <compound>
@@ -91509,12 +91495,11 @@
   <group id="120"  value="1" />
   </Umr>
 <CAS name="CAS number"  value="3878-46-4" />
-<Smiles name="SMILES"  value="CCOC(=O)OC1=CC=CC=C1" />
 </compound>
 
 <compound>
 <LibraryIndex name="Index"  value="13125" />
-<CompoundID name="Name"  value="Diphenyl Carbonate" />
+<CompoundID name="Name"  value="DiPhenyl Carbonate" />
 <StructureFormula name="Structure"  value="(C6H5)2(OCOO)" />
 <Family name="Family"  value="79" />
 <CriticalTemperature name="Critical temperature"  units="K"  value="799.32" />
@@ -91666,7 +91651,6 @@
   <group id="120"  value="1" />
   </Umr>
 <CAS name="CAS number"  value="102-09-0" />
-<Smiles name="SMILES"  value="C1=CC=C(C=C1)OC(=O)OC2=CC=CC=C2" />
 </compound>
 
 <compound>
@@ -92455,7 +92439,6 @@
   <group id="2"  value="4" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="76589-16-7" />
-<Smiles name="SMILES"  value="CCCCCC(C)COC" />
 </compound>
 
 <compound>
@@ -92591,7 +92574,6 @@
   <group id="81"  value="1" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="625-25-2" />
-<Smiles name="SMILES"  value="CCCCCC(C)(C)O" />
 </compound>
 
 <compound>
@@ -93684,7 +93666,6 @@
   <group id="78"  value="4" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="287-23-0" />
-<Smiles name="SMILES"  value="C1CCC1" />
 </compound>
 
 <compound>
@@ -93880,7 +93861,6 @@
   <group id="15"  value="1" />
   </GCmethod>
 <CAS name="CAS number"  value="75-33-2" />
-<Smiles name="SMILES"  value="CC(C)S" />
 </compound>
 
 <compound>
@@ -94529,7 +94509,6 @@
   <group id="14"  value="1" />
   </ModifiedUnifac>
 <CAS name="CAS number"  value="75-85-4" />
-<Smiles name="SMILES"  value="CCC(C)(C)O" />
 </compound>
 
 <compound>
