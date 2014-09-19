@@ -54,7 +54,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Private Vx0 As Double()
 
-        Private LoopVarF, LoopVarX As Double, LoopVarState As State
+        Private LoopVarF, LoopVarX As Double, LoopVarVz As Double(), LoopVarState As State
 
         Public Function Flash_PT(Vx As Array, T As Double, P As Double) As Dictionary(Of String, Object)
 
@@ -794,7 +794,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Else
                     LoopVarF = H
                     LoopVarX = P
-                    T = brentsolverT.BrentOpt(proppack.AUX_TFM(Fase.Mixture), 2000, 20, 0.0001, 1000, Nothing)
+                    LoopVarVz = Vz
+                    T = brentsolverT.BrentOpt(270, 500, 100, 0.0001, 1000, Nothing)
                 End If
 
                 Vz0 = Vz.Clone
@@ -914,7 +915,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Private Function EnthalpyTx(ByVal x As Double, ByVal otherargs As Object) As Double
 
-            Dim er As Double = LoopVarF - proppack.DW_CalcEnthalpy(proppack.RET_VMOL(Fase.Mixture), x, LoopVarX, LoopVarState)
+            Dim er As Double = LoopVarF - proppack.DW_CalcEnthalpy(LoopVarVz, x, LoopVarX, LoopVarState)
             Return er
 
         End Function
