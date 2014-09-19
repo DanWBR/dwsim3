@@ -433,18 +433,27 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Dim brentsolver As New BrentOpt.BrentMinimize
                 brentsolver.DefineFuncDelegate(AddressOf MinimizeError)
 
-                Dim niter As Integer
+                Dim niter As Integer, allok As Boolean
 
                 Me.T = T
                 Me.P = P
 
                 x = REx
                 niter = 0
+                allok = True
                 Do
 
                     fx = Me.FunctionValue2N(x)
 
-                    If SumSqr(fx) < Tolerance Then Exit Do
+                    For i = 0 To r
+                        If x(i) < 0.5 And Abs(x(i)) ^ 2 > Tolerance Then
+                            allok = False
+                        ElseIf x(i) >= 0.5 And Abs(x(i) - 1.0#) ^ 2 > Tolerance Then
+                            allok = False
+                        End If
+                    Next
+
+                    If SumSqr(fx) < Tolerance Or allok Then Exit Do
 
                     dfdx_ant = dfdx.Clone
                     dfdx = Me.FunctionGradient2N(x)
@@ -640,7 +649,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Private Function FunctionGradient2N(ByVal x() As Double) As Double(,)
 
-            Dim epsilon As Double = 0.0001
+            Dim epsilon As Double = 0.000001
 
             Dim f1(), f2() As Double
             Dim g(x.Length - 1, x.Length - 1), x2(x.Length - 1) As Double
@@ -740,9 +749,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim tolINT As Double = 0.0001
             Dim tolEXT As Double = 0.0001
 
-            Dim brentsolverT As New BrentOpt.Brent
-            brentsolverT.DefineFuncDelegate(AddressOf EnthalpyTx)
-
             Dim hl, hv, Tsat, Tsat_ant, Psat, xv, xv_ant, xl, wac, wx, deltaT, sumnw As Double
 
             Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Water").SingleOrDefault)
@@ -760,9 +766,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             If Vz(wid) <> 0.0# Then
                 Do
                     Tsat = Tsat - deltaT
-                    tmp = Flash_PT(Vz, Tsat, P)
-                    wac = tmp("LiquidPhaseActivityCoefficients")(wid)
-                    wx = tmp("LiquidPhaseMolarComposition")(wid)
+                    Try
+                        tmp = Flash_PT(Vz, Tsat, P)
+                        wac = tmp("LiquidPhaseActivityCoefficients")(wid)
+                        wx = tmp("LiquidPhaseMolarComposition")(wid)
+                    Catch ex As Exception
+                        wx = 0.0#
+                    End Try
                 Loop Until wx > 0.0#
 
                 Psat = P / (wx * wac)
@@ -795,7 +805,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     LoopVarF = H
                     LoopVarX = P
                     LoopVarVz = Vz
-                    T = brentsolverT.BrentOpt(270, 500, 100, 0.0001, 1000, Nothing)
+                    Dim x0, x, fx, dfdx As Double, k As Integer
+                    x = Tsat - 5
+                    k = 0
+                    Do
+                        fx = EnthalpyTx(x, Nothing)
+                        If Abs(fx) < 0.0001 Then Exit Do
+                        dfdx = (EnthalpyTx(x + 0.1, Nothing) - EnthalpyTx(x, Nothing)) / 0.1
+                        x0 = x
+                        x -= fx / dfdx
+                        k += 1
+                    Loop Until k >= 100 Or Double.IsNaN(x)
+                    If Double.IsNaN(x) Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
+                    T = x
                 End If
 
                 Vz0 = Vz.Clone
