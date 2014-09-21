@@ -640,7 +640,9 @@ Public Class FormMain
         'try to find chemsep xml database
         If File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "dwsim.ini") Or DWSIM.App.IsRunningOnMono Then
             'PORTABLE/MONO MODE
-            'My.Settings.ChemSepDatabasePath = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "chemsepdb" & Path.DirectorySeparatorChar & "chemsep1.xml"
+            If File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "chemsepdb" & Path.DirectorySeparatorChar & "chemsep1.xml") Then
+                My.Settings.ChemSepDatabasePath = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "chemsepdb" & Path.DirectorySeparatorChar & "chemsep1.xml"
+            End If
         Else
             Try
                 Dim cspath As String = ""

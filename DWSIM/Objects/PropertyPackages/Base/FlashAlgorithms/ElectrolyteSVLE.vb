@@ -140,7 +140,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     'calculate chemical equilibria between ions, salts and water. 
                     ''SolveChemicalEquilibria' returns the equilibrium molar amounts in the liquid phase, including precipitates.
 
-                    If CalculateChemicalEquilibria And Not Vnf(wid) <= 0.5 Then
+                    If CalculateChemicalEquilibria And Not Vnf(wid) <= 0.1 Then
                         result = SolveChemicalEquilibria(Vf, T, P, ids, rext)
                         Vf = result(0).clone
                         rext = result(1)
@@ -764,19 +764,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             deltaT = 1
 
             If Vz(wid) <> 0.0# Then
-                Do
-                    Tsat = Tsat - deltaT
-                    Try
-                        tmp = Flash_PT(Vz, Tsat, P)
-                        wac = tmp("LiquidPhaseActivityCoefficients")(wid)
-                        wx = tmp("LiquidPhaseMolarComposition")(wid)
-                    Catch ex As Exception
-                        wx = 0.0#
-                    End Try
-                Loop Until wx > 0.0#
+                'Do
+                '    Tsat = Tsat - deltaT
+                '    Try
+                '        tmp = Flash_PT(Vz, Tsat, P)
+                '        wac = tmp("LiquidPhaseActivityCoefficients")(wid)
+                '        wx = tmp("LiquidPhaseMolarComposition")(wid)
+                '    Catch ex As Exception
+                '        wx = 0.0#
+                '    End Try
+                'Loop Until wx > 0.0#
 
-                Psat = P / (wx * wac)
-                Tsat = proppack.AUX_TSATi(Psat, wid)
+                Psat = P '/ (wx * wac)
+                Tsat = 300 'proppack.AUX_TSATi(Psat, wid)
             End If
 
             Dim icount As Integer = 0
@@ -851,14 +851,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     wac = tmp("LiquidPhaseActivityCoefficients")(wid)
                     wx = tmp("LiquidPhaseMolarComposition")(wid)
 
-                    If wx < 0.6 Then Throw New Exception("Water mole fraction in liquid phase is less than 0.6. Calculation aborted.")
+                    'If wx < 0.6 Then Throw New Exception("Water mole fraction in liquid phase is less than 0.6. Calculation aborted.")
 
                     Psat = P / (wx * wac)
                     Tsat_ant = Tsat
                     Tsat = proppack.AUX_TSATi(Psat, wid)
                 End If
 
-                If wx < 0.6 Then Throw New Exception("Water mole fraction in liquid phase is less than 0.6. Calculation aborted.")
+                'If wx < 0.6 Then Throw New Exception("Water mole fraction in liquid phase is less than 0.6. Calculation aborted.")
 
                 If Double.IsNaN(Tsat) Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
 
