@@ -118,7 +118,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
             Me.phaseidentification = chkpip.Checked
             Me.hydratecalc = chkhyd.Checked
             Me.Enabled = False
-            Me.BackgroundWorker1.RunWorkerAsync(New Object() {0, Me.TextBox1.Text, Me.CheckBox1.Checked, Me.CheckBox3.Checked, Me.chkpip.Checked, Me.chkhyd.Checked})
+            Me.BackgroundWorker1.RunWorkerAsync(New Object() {0, Me.TextBox1.Text, Me.CheckBox1.Checked, Me.CheckBox3.Checked, Me.chkpip.Checked, Me.chkhyd.Checked, Me.CheckBoxHYDVAP.Checked})
             fpec = New FormPEC
             fpec.bw = Me.BackgroundWorker1
             fpec.Label2.Tag = fpec.Label2.Text
@@ -918,13 +918,13 @@ exec:       With Me.GraphControl.GraphPane.Legend
                 Try
                     Select Case Me.ComboBox2.SelectedIndex
                         Case 0
-                            Th = New DWSIM.Utilities.HYD.vdwP_PP(mat).HYD_vdwP2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn))
+                            Th = New DWSIM.Utilities.HYD.vdwP_PP(mat).HYD_vdwP2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn), e.Argument(6))
                         Case 1
-                            Th = New DWSIM.Utilities.HYD.KlaudaSandler(mat).HYD_KS2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn))
+                            Th = New DWSIM.Utilities.HYD.KlaudaSandler(mat).HYD_KS2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn), e.Argument(6))
                         Case 2
-                            Th = New DWSIM.Utilities.HYD.ChenGuo(mat).HYD_CG2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn))
+                            Th = New DWSIM.Utilities.HYD.ChenGuo(mat).HYD_CG2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn), e.Argument(6))
                         Case Else
-                            Th = New DWSIM.Utilities.HYD.KlaudaSandlerMOD(mat).HYD_KS2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn))
+                            Th = New DWSIM.Utilities.HYD.KlaudaSandlerMOD(mat).HYD_KS2T(Ph, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(Vn), e.Argument(6))
                     End Select
                     ph1.Add(Ph)
                     ph2.Add(Ph)
@@ -1131,5 +1131,9 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
     Private Sub chkhyd_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkhyd.CheckedChanged
         ComboBox2.Enabled = chkhyd.Checked
+    End Sub
+
+    Private Sub ComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox2.SelectedIndexChanged
+        If ComboBox2.SelectedIndex = 2 Then CheckBoxHYDVAP.Enabled = False Else CheckBoxHYDVAP.Enabled = True
     End Sub
 End Class

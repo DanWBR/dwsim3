@@ -106,7 +106,7 @@ Namespace DWSIM.Utilities.HYD
 
         End Function
 
-        Function OBJ_FUNC_HYD_CG(ByVal TIPO_HIDRATO As String, ByVal P As Double, ByVal T As Double, ByVal Vz As Object, ByVal Vids As Object) As Object
+        Function OBJ_FUNC_HYD_CG(ByVal TIPO_HIDRATO As String, ByVal P As Double, ByVal T As Double, ByVal Vz As Object, ByVal Vids As Object, Optional ByVal vaporonly As Boolean = False) As Object
 
             Dim n = UBound(Vz)
             Dim F0Ts1(n), F0Ps1(n), F0As1(n), consts, F0sI(n)
@@ -489,7 +489,7 @@ Namespace DWSIM.Utilities.HYD
 
         End Function
 
-        Function HYD_CG2(ByVal T As Double, ByVal Vz As Object, ByVal Vids As Object) As Object
+        Function HYD_CG2(ByVal T As Double, ByVal Vz As Object, ByVal Vids As Object, Optional ByVal vaporonly As Boolean = False) As Object
 
             Dim TIPO_HIDRATO As String = "sI"
             Dim sI_formers As Boolean = False
@@ -522,9 +522,9 @@ START_LOOP:
             delta_P = (Psup - Pinf) / nsub
 
             Do
-                fP = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, Pinf, T, Vz, Vids)
+                fP = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, Pinf, T, Vz, Vids, vaporonly)
                 Pinf = Pinf + delta_P
-                fP_inf = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, Pinf, T, Vz, Vids)
+                fP_inf = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, Pinf, T, Vz, Vids, vaporonly)
             Loop Until fP * fP_inf < 0 Or Pinf > Psup
             If Pinf > Psup Then GoTo Final4
             Psup = Pinf
@@ -540,8 +540,8 @@ START_LOOP:
             bbb = Psup
             ccc = Psup
 
-            faa = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, aaa, T, Vz, Vids)
-            fbb = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, bbb, T, Vz, Vids)
+            faa = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, aaa, T, Vz, Vids, vaporonly)
+            fbb = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, bbb, T, Vz, Vids, vaporonly)
             fcc = fbb
 
             iter2 = 0
@@ -599,7 +599,7 @@ START_LOOP:
                 Else
                     bbb += Math.Sign(xmm) * tol11
                 End If
-                fbb = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, bbb, T, Vz, Vids)
+                fbb = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, bbb, T, Vz, Vids, vaporonly)
                 iter2 += 1
             Loop Until iter2 = ITMAX2
 
@@ -634,7 +634,7 @@ STEP2:
 
         End Function
 
-        Function HYD_CG2T(ByVal P As Double, ByVal Vz As Object, ByVal Vids As Object) As Object
+        Function HYD_CG2T(ByVal P As Double, ByVal Vz As Object, ByVal Vids As Object, Optional ByVal vaporonly As Boolean = False) As Object
 
             Dim TIPO_HIDRATO As String = "sI"
             Dim sI_formers As Boolean = False
@@ -667,9 +667,9 @@ START_LOOP:
             delta_T = (Tsup - Tinf) / nsub
 
             Do
-                fT = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, P, Tinf, Vz, Vids)
+                fT = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, P, Tinf, Vz, Vids, vaporonly)
                 Tinf = Tinf + delta_T
-                fT_inf = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, P, Tinf, Vz, Vids)
+                fT_inf = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, P, Tinf, Vz, Vids, vaporonly)
             Loop Until fT * fT_inf < 0 Or Tinf < Tsup
             If Tinf < Tsup Then GoTo Final4
             Tsup = Tinf
@@ -685,8 +685,8 @@ START_LOOP:
             bbb = Tsup
             ccc = Tsup
 
-            faa = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, P, aaa, Vz, Vids)
-            fbb = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, P, bbb, Vz, Vids)
+            faa = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, P, aaa, Vz, Vids, vaporonly)
+            fbb = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, P, bbb, Vz, Vids, vaporonly)
             fcc = fbb
 
             iter2 = 0
@@ -744,7 +744,7 @@ START_LOOP:
                 Else
                     bbb += Math.Sign(xmm) * tol11
                 End If
-                fbb = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, P, bbb, Vz, Vids)
+                fbb = OBJ_FUNC_HYD_CG(TIPO_HIDRATO, P, bbb, Vz, Vids, vaporonly)
                 iter2 += 1
             Loop Until iter2 = ITMAX2
 
@@ -779,7 +779,7 @@ STEP2:
 
         End Function
 
-        Function DET_HYD_CG(ByVal TIPO_HIDRATO As String, ByVal P As Double, ByVal T As Double, ByVal Vz As Object, ByVal Vids As Object) As Object
+        Function DET_HYD_CG(ByVal TIPO_HIDRATO As String, ByVal P As Double, ByVal T As Double, ByVal Vz As Object, ByVal Vids As Object, Optional ByVal vaporonly As Boolean = False) As Object
 
             Dim n = UBound(Vz)
             Dim F0Ts1(n), F0Ps1(n), F0As1(n), consts, F0sI(n)

@@ -119,12 +119,12 @@ Public Class FormHYD_DET
         i = 0
         Do
             If Vids(i) > 100 Then
-                Vx2(i) = Vzprel(i) / soma
+                If soma <> 0.0# Then Vx2(i) = Vzprel(i) / soma Else Vx2(i) = 0.0#
                 Vy2(i) = 0
                 Vh2(i) = 0
                 VxH(i) = 0
             Else
-                Vx2(i) = Vx(i) / soma
+                If soma <> 0.0# Then Vx2(i) = Vx(i) / soma Else Vx2(i) = 0.0#
                 Vy2(i) = Vy(i)
                 Vh2(i) = Vh(i) * (1 - xwH)
             End If
@@ -139,6 +139,7 @@ Public Class FormHYD_DET
         If T < res(0) Then fases = DWSIM.App.GetLocalString("SlidoGeloGseHidrato")
         If T > res(0) Then fases = DWSIM.App.GetLocalString("LquidoguaGseHidrato2")
         If Math.Abs(T - res(0)) < 0.01 Then fases = DWSIM.App.GetLocalString("SlidoGeloLquidoguaGs")
+        If soma = 0.0# Then fases = DWSIM.App.GetLocalString("VaporAndHydrate")
 
         If model <> 2 Then
 

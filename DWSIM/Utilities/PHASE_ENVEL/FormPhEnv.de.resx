@@ -117,6 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="CheckBoxHYDVAP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>451, 93</value>
+  </data>
+  <data name="CheckBoxHYDVAP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 17</value>
+  </data>
+  <data name="CheckBoxHYDVAP.Text" xml:space="preserve">
+    <value>Vapor only</value>
+  </data>
   <data name="ComboBox2.Items" xml:space="preserve">
     <value>van der Waals &amp; Platteeuw modifiziert (Parrish und Prausnitz) (1972)</value>
   </data>
@@ -129,9 +139,11 @@
   <data name="ComboBox2.Items3" xml:space="preserve">
     <value>Klauda &amp; Sandler (mit Inhibitorunterstützung)</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ComboBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>196, 91</value>
+  </data>
   <data name="ComboBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>240, 21</value>
+    <value>249, 21</value>
   </data>
   <data name="chkpip.Size" type="System.Drawing.Size, System.Drawing">
     <value>232, 17</value>
@@ -140,7 +152,7 @@
     <value>Include Phase Identification Parameter Limit</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>417, 133</value>
+    <value>372, 158</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Berechnen</value>
@@ -150,6 +162,9 @@
   </data>
   <data name="chkhyd.Text" xml:space="preserve">
     <value>Include hydrate equilibrium curve</value>
+  </data>
+  <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>196, 46</value>
   </data>
   <data name="CheckBox2.Text" xml:space="preserve">
     <value>Arbeitspunkt einschließen</value>
@@ -176,10 +191,16 @@
     <value>Stoffstrom</value>
   </data>
   <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>536, 162</value>
+    <value>536, 191</value>
   </data>
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Objektauswahl</value>
+  </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>536, 46</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Optionen</value>
   </data>
   <data name="ComboBox1.Items" xml:space="preserve">
     <value>Temperatur als Funktion der Druck</value>
@@ -226,17 +247,14 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Gleichgewichtstyp</value>
   </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>536, 46</value>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>536, 440</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Optionen</value>
-  </data>
-  <data name="GraphControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>528, 435</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Ergebnisse</value>
   </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>528, 435</value>
+    <value>528, 400</value>
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Grafische Darstellung</value>
@@ -245,13 +263,10 @@
     <value>Tabelle</value>
   </data>
   <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>530, 456</value>
+    <value>530, 421</value>
   </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>536, 475</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Ergebnisse</value>
+  <data name="GraphControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>528, 400</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>547, 696</value>

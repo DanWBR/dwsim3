@@ -123,9 +123,6 @@
   <data name="ComboBox1.Items3" xml:space="preserve">
     <value>Klauda &amp; Sandler (with inhibitor support)</value>
   </data>
-  <data name="ComboBox1.Items4" xml:space="preserve">
-    <value>Enhanced van der Waals &amp; Platteeuw</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 48</value>
@@ -135,6 +132,12 @@
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Model</value>
+  </data>
+  <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 17</value>
+  </data>
+  <data name="CheckBox1.Text" xml:space="preserve">
+    <value>Vapor Only</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Calculate</value>

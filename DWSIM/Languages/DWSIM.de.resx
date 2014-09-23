@@ -4832,4 +4832,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="LLEDiagrama" xml:space="preserve">
     <value>LLE Diagramm</value>
   </data>
+  <data name="VaporAndHydrate" xml:space="preserve">
+    <value>Gas und Hydrat</value>
+  </data>
 </root>

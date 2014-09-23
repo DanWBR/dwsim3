@@ -92,8 +92,8 @@ Public Class FormHYD
                 If ComboBox1.SelectedIndex = 0 Then
 
                     Dim hid As New DWSIM.Utilities.HYD.vdwP_PP(mat)
-                    pform = hid.HYD_vdwP2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                    tform = hid.HYD_vdwP2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    pform = hid.HYD_vdwP2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
+                    tform = hid.HYD_vdwP2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
 
                     'verificar qual estrutura se forma primeiro
                     If pform(0) <= pform(1) Then
@@ -114,14 +114,14 @@ Public Class FormHYD
                         TH = tform(1)
                     End If
 
-                    resPC = hid.DET_HYD_vdwP(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                    resTC = hid.DET_HYD_vdwP(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    resPC = hid.DET_HYD_vdwP(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
+                    resTC = hid.DET_HYD_vdwP(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
 
                 ElseIf ComboBox1.SelectedIndex = 1 Then
 
                     Dim hid As New DWSIM.Utilities.HYD.KlaudaSandler(mat)
-                    pform = hid.HYD_KS2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                    tform = hid.HYD_KS2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    pform = hid.HYD_KS2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
+                    tform = hid.HYD_KS2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
 
                     'verificar qual estrutura se forma primeiro
                     If pform(0) <= pform(1) Then
@@ -141,14 +141,14 @@ Public Class FormHYD
                         TH = tform(1)
                     End If
 
-                    resPC = hid.DET_HYD_KS(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                    resTC = hid.DET_HYD_KS(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    resPC = hid.DET_HYD_KS(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
+                    resTC = hid.DET_HYD_KS(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
 
                 ElseIf ComboBox1.SelectedIndex = 3 Then
 
                     Dim hid As New DWSIM.Utilities.HYD.KlaudaSandlerMOD(mat)
-                    pform = hid.HYD_KS2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                    tform = hid.HYD_KS2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    pform = hid.HYD_KS2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
+                    tform = hid.HYD_KS2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
 
                     'verificar qual estrutura se forma primeiro
                     If pform(0) <= pform(1) Then
@@ -168,14 +168,14 @@ Public Class FormHYD
                         TH = tform(1)
                     End If
 
-                    If TH > 0 Then resPC = hid.DET_HYD_KS(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                    resTC = hid.DET_HYD_KS(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    If TH > 0 Then resPC = hid.DET_HYD_KS(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
+                    resTC = hid.DET_HYD_KS(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
 
                 ElseIf ComboBox1.SelectedIndex = 2 Then
 
                     Dim hid As New DWSIM.Utilities.HYD.ChenGuo(mat)
-                    pform = hid.HYD_CG2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                    tform = hid.HYD_CG2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    pform = hid.HYD_CG2(T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
+                    tform = hid.HYD_CG2T(P, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
 
 
                     'verificar qual estrutura se forma primeiro
@@ -196,8 +196,8 @@ Public Class FormHYD
                         TH = tform(1)
                     End If
 
-                    resPC = hid.DET_HYD_CG(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
-                    resTC = hid.DET_HYD_CG(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes))
+                    resPC = hid.DET_HYD_CG(tipoPC, P, TH, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
+                    resTC = hid.DET_HYD_CG(tipoTC, PH, T, Vz, m_aux.RetornarIDsParaCalculoDeHidratos(nomes), CheckBox1.Checked)
 
                 End If
 
@@ -219,12 +219,16 @@ Public Class FormHYD
                 Else
                     Label8.Text = Format(cv.ConverterDoSI(su.spmp_pressure, PH), nf)
                     Me.KryptonButton2.Enabled = True
-                    If Math.Abs(T - resTC(0)) < 0.1 Or T = resTC(0) Then
-                        fasesTC = DWSIM.App.GetLocalString("SlidoGeloLquidoguaGs1") & tipoTC & ")"
-                    ElseIf T < resTC(0) Then
-                        fasesTC = DWSIM.App.GetLocalString("SlidoGeloGseHidrato1") & tipoTC & ")"
-                    ElseIf T > resTC(0) Then
-                        fasesTC = DWSIM.App.GetLocalString("LquidoguaGseHidrato") & tipoTC & ")"
+                    If CheckBox1.Checked Then
+                        fasesTC = DWSIM.App.GetLocalString("VaporAndHydrate") & " (" & tipoTC & ")"
+                    Else
+                        If Math.Abs(T - resTC(0)) < 0.1 Or T = resTC(0) Then
+                            fasesTC = DWSIM.App.GetLocalString("SlidoGeloLquidoguaGs1") & tipoTC & ")"
+                        ElseIf T < resTC(0) Then
+                            fasesTC = DWSIM.App.GetLocalString("SlidoGeloGseHidrato1") & tipoTC & ")"
+                        ElseIf T > resTC(0) Then
+                            fasesTC = DWSIM.App.GetLocalString("LquidoguaGseHidrato") & tipoTC & ")"
+                        End If
                     End If
                 End If
                 Dim fasesPC As String = ""
@@ -235,10 +239,14 @@ Public Class FormHYD
                 Else
                     Label14.Text = Format(cv.ConverterDoSI(su.spmp_temperature, TH), nf)
                     Me.KryptonButton3.Enabled = True
-                    fasesPC = DWSIM.App.GetLocalString("SlidoGeloGseHidrato1") & tipoPC & ")"
-                    If TH > resPC(0) Then fasesPC = DWSIM.App.GetLocalString("LquidoguaGseHidrato") & tipoPC & ")"
-                    If Math.Abs(TH - resPC(0)) < 0.01 Then fasesPC = DWSIM.App.GetLocalString("SlidoGeloLquidoguaGs1") & tipoPC & ")"
-                End If
+                    If CheckBox1.Checked Then
+                        fasesPC = DWSIM.App.GetLocalString("VaporAndHydrate") & " (" & tipoPC & ")"
+                    Else
+                        fasesPC = DWSIM.App.GetLocalString("SlidoGeloGseHidrato1") & tipoPC & ")"
+                        If TH > resPC(0) Then fasesPC = DWSIM.App.GetLocalString("LquidoguaGseHidrato") & tipoPC & ")"
+                        If Math.Abs(TH - resPC(0)) < 0.01 Then fasesPC = DWSIM.App.GetLocalString("SlidoGeloLquidoguaGs1") & tipoPC & ")"
+                    End If
+                    End If
                 Label17.Text = Format(cv.ConverterDoSI(su.spmp_pressure, P), nf)
                 Label9.Text = Format(cv.ConverterDoSI(su.spmp_temperature, T), nf)
                 Label12.Text = fasesPC
@@ -268,12 +276,12 @@ Public Class FormHYD
             End If
 
 
-        Else
+            Else
 
-            Me.mat = Nothing
-            Me.LblSelected.Text = ""
+                Me.mat = Nothing
+                Me.LblSelected.Text = ""
 
-        End If
+            End If
 
     End Sub
 
@@ -309,5 +317,9 @@ Public Class FormHYD
 
     Private Sub FormHYD_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
         DWSIM.App.HelpRequested("UT_HydrateDissociation.htm")
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        If ComboBox1.SelectedIndex = 2 Then CheckBox1.Enabled = False Else CheckBox1.Enabled = True
     End Sub
 End Class

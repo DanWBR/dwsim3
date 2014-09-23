@@ -190,6 +190,9 @@
   <data name="Column5.HeaderText" xml:space="preserve">
     <value>Aqueous</value>
   </data>
+  <data name="Column3.HeaderText" xml:space="preserve">
+    <value>Gas</value>
+  </data>
   <data name="Column4.HeaderText" xml:space="preserve">
     <value>Hydrate</value>
   </data>

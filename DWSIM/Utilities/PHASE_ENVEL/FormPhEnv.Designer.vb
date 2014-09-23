@@ -26,6 +26,7 @@ Partial Class FormPhEnv
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormPhEnv))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.CheckBoxHYDVAP = New System.Windows.Forms.CheckBox()
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.chkpip = New System.Windows.Forms.CheckBox()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -60,6 +61,7 @@ Partial Class FormPhEnv
         'GroupBox6
         '
         resources.ApplyResources(Me.GroupBox6, "GroupBox6")
+        Me.GroupBox6.Controls.Add(Me.CheckBoxHYDVAP)
         Me.GroupBox6.Controls.Add(Me.ComboBox2)
         Me.GroupBox6.Controls.Add(Me.chkpip)
         Me.GroupBox6.Controls.Add(Me.Button1)
@@ -73,6 +75,13 @@ Partial Class FormPhEnv
         Me.GroupBox6.Name = "GroupBox6"
         Me.GroupBox6.TabStop = False
         '
+        'CheckBoxHYDVAP
+        '
+        resources.ApplyResources(Me.CheckBoxHYDVAP, "CheckBoxHYDVAP")
+        Me.CheckBoxHYDVAP.Checked = True
+        Me.CheckBoxHYDVAP.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBoxHYDVAP.Name = "CheckBoxHYDVAP"
+        '
         'ComboBox2
         '
         resources.ApplyResources(Me.ComboBox2, "ComboBox2")
@@ -84,26 +93,23 @@ Partial Class FormPhEnv
         'chkpip
         '
         resources.ApplyResources(Me.chkpip, "chkpip")
-        Me.chkpip.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.chkpip.Name = "chkpip"
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Button1.Name = "Button1"
         '
         'chkhyd
         '
         resources.ApplyResources(Me.chkhyd, "chkhyd")
-        Me.chkhyd.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.chkhyd.Name = "chkhyd"
         '
         'TextBox1
         '
-        resources.ApplyResources(Me.TextBox1, "TextBox1")
         Me.TextBox1.DecimalPlaces = 2
         Me.TextBox1.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
         Me.TextBox1.Maximum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Value = New Decimal(New Integer() {5, 0, 0, 65536})
@@ -113,19 +119,16 @@ Partial Class FormPhEnv
         resources.ApplyResources(Me.CheckBox2, "CheckBox2")
         Me.CheckBox2.Checked = True
         Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox2.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.CheckBox2.Name = "CheckBox2"
         '
         'CheckBox3
         '
         resources.ApplyResources(Me.CheckBox3, "CheckBox3")
-        Me.CheckBox3.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.CheckBox3.Name = "CheckBox3"
         '
         'CheckBox1
         '
         resources.ApplyResources(Me.CheckBox1, "CheckBox1")
-        Me.CheckBox1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.CheckBox1.Name = "CheckBox1"
         '
         'ComboBox3
@@ -138,7 +141,6 @@ Partial Class FormPhEnv
         'Label23
         '
         resources.ApplyResources(Me.Label23, "Label23")
-        Me.Label23.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label23.Name = "Label23"
         '
         'GroupBox1
@@ -160,7 +162,6 @@ Partial Class FormPhEnv
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label1.Name = "Label1"
         '
         'GroupBox2
@@ -172,26 +173,26 @@ Partial Class FormPhEnv
         '
         'FaTabStrip1
         '
-        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
+        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2})
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
         '
         'FaTabStripItem1
         '
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         Me.FaTabStripItem1.CanClose = False
         Me.FaTabStripItem1.Controls.Add(Me.GraphControl)
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
         Me.FaTabStripItem1.Selected = True
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         '
         'GraphControl
         '
-        resources.ApplyResources(Me.GraphControl, "GraphControl")
         Me.GraphControl.Cursor = System.Windows.Forms.Cursors.Default
+        resources.ApplyResources(Me.GraphControl, "GraphControl")
         Me.GraphControl.IsAntiAlias = True
         Me.GraphControl.IsAutoScrollRange = True
         Me.GraphControl.Name = "GraphControl"
@@ -205,15 +206,14 @@ Partial Class FormPhEnv
         '
         'FaTabStripItem2
         '
-        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         Me.FaTabStripItem2.CanClose = False
         Me.FaTabStripItem2.Controls.Add(Me.Grid1)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         '
         'Grid1
         '
-        resources.ApplyResources(Me.Grid1, "Grid1")
         Me.Grid1.AllowUserToAddRows = False
         Me.Grid1.AllowUserToDeleteRows = False
         Me.Grid1.AllowUserToOrderColumns = True
@@ -223,6 +223,7 @@ Partial Class FormPhEnv
         Me.Grid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
         Me.Grid1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.Grid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        resources.ApplyResources(Me.Grid1, "Grid1")
         Me.Grid1.Name = "Grid1"
         Me.Grid1.ReadOnly = True
         Me.Grid1.RowHeadersVisible = False
@@ -279,4 +280,5 @@ Partial Class FormPhEnv
     Public WithEvents chkpip As System.Windows.Forms.CheckBox
     Public WithEvents chkhyd As System.Windows.Forms.CheckBox
     Public WithEvents ComboBox2 As System.Windows.Forms.ComboBox
+    Public WithEvents CheckBoxHYDVAP As System.Windows.Forms.CheckBox
 End Class

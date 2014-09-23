@@ -254,7 +254,7 @@ Namespace DWSIM.Utilities.HYD
 
         End Function
 
-        Function OBJ_FUNC_HYD_KS(ByVal TIPO_HIDRATO As String, ByVal P As Double, ByVal T As Double, ByVal Vz As Object, ByVal Vids As Object) As Object
+        Function OBJ_FUNC_HYD_KS(ByVal TIPO_HIDRATO As String, ByVal P As Double, ByVal T As Double, ByVal Vz As Object, ByVal Vids As Object, Optional ByVal vaporonly As Boolean = False) As Object
 
             Dim n = UBound(Vz)
             Dim FGsI, FGsII, FGHYD, FGAG As Double
@@ -304,12 +304,20 @@ Namespace DWSIM.Utilities.HYD
                 If i <> pos Then sum += Vz(i)
                 i = i + 1
             Loop Until (i = n + 1)
-            i = 0
-            Do
-                If i <> pos Then Vy(i) = Vz(i) / sum
-                If i = pos Then Vy(i) = 0
-                i = i + 1
-            Loop Until i = n + 1
+            If vaporonly Then
+                i = 0
+                Do
+                    Vy(i) = Vz(i)
+                    i = i + 1
+                Loop Until i = n + 1
+            Else
+                i = 0
+                Do
+                    If i <> pos Then Vy(i) = Vz(i) / sum
+                    If i = pos Then Vy(i) = 0
+                    i = i + 1
+                Loop Until i = n + 1
+            End If
 
             'PRSV
 
@@ -471,43 +479,53 @@ Namespace DWSIM.Utilities.HYD
                 i = i + 1
             Loop Until i = n + 1
 
-            'CALCULO DAS FRAÇÕES MOLARES DOS COMPONENTES NA FASE AQUOSA
+            If vaporonly Then
 
-            i = 0
-            Do
-                If i <> pos Then Vxaq(i) = PHIV(i) / (H(i) * Math.Exp(ZLinf(i)))
-                If H(i) = 101325.0# Then Vxaq(i) = 0.0#
-                i = i + 1
-            Loop Until i = n + 1
+                Td = 273.15
 
-            Dim sum_vxaq = 0
-            i = 0
-            Do
-                If i <> pos Then sum_vxaq += Vxaq(i)
-                i = i + 1
-            Loop Until i = n + 1
-            Vxaq(pos) = 1 - sum_vxaq
+                FGAG = PHIV(pos)
 
-            Dim WAC As Double = unf.GAMMA(T, Vxaq, unfPP.RET_VIDS, unfPP.RET_VQ, unfPP.RET_VR, pos)
+            Else
 
-            'CALCULO DA DEPRESSÃO NO PONTO DE FUSÃO DA ÁGUA
-            Tnfp = 273.15
-            DHm = 6001700.0 / 1000
-            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vxaq(pos) * WAC)
-            Td = DT + Tnfp
+                'CALCULO DAS FRAÇÕES MOLARES DOS COMPONENTES NA FASE AQUOSA
 
-            'CALCULO DO VOLUME MOLAR DO GELO
-            VMG = 0.00001912 + 0.0000000008387 * T + 0.000000000004016 * T ^ 2
+                i = 0
+                Do
+                    If i <> pos Then Vxaq(i) = PHIV(i) / (H(i) * Math.Exp(ZLinf(i)))
+                    If H(i) = 101325.0# Then Vxaq(i) = 0.0#
+                    i = i + 1
+                Loop Until i = n + 1
 
-            'CALCULO DA FUGACIDADE DA ÁGUA NO GELO
-            FG = Math.Exp(4.6056 * Math.Log(T) - 5501.1243 / T + 2.9446 - 0.0081431 * T) * Math.Exp((VMG / (R * T) * (P - Math.Exp(4.6056 * Math.Log(T) - 5501.1243 / T + 2.9446 - 0.0081431 * T))))
+                Dim sum_vxaq = 0
+                i = 0
+                Do
+                    If i <> pos Then sum_vxaq += Vxaq(i)
+                    i = i + 1
+                Loop Until i = n + 1
+                Vxaq(pos) = 1 - sum_vxaq
 
-            'CALCULO DA FUGACIDADE DA ÁGUA NA FASE LÍQUIDA
-            act = WAC
-            FL = Vxaq(pos) * act * Math.Exp(4.1539 * Math.Log(T) - 5500.9332 / T + 7.6537 - 0.0161277 * T) * Math.Exp((VLW / (R * T) * (P - Math.Exp(4.1539 * Math.Log(T) - 5500.9332 / T + 2.9446 - 0.0161266 * T))))
+                Dim WAC As Double = unf.GAMMA(T, Vxaq, unfPP.RET_VIDS, unfPP.RET_VQ, unfPP.RET_VR, pos)
 
-            If T < Td Then FGAG = FG
-            If T > Td Then FGAG = FL
+                'CALCULO DA DEPRESSÃO NO PONTO DE FUSÃO DA ÁGUA
+                Tnfp = 273.15
+                DHm = 6001700.0 / 1000
+                DT = R * Tnfp ^ 2 / DHm * Math.Log(Vxaq(pos) * WAC)
+                Td = DT + Tnfp
+
+                'CALCULO DO VOLUME MOLAR DO GELO
+                VMG = 0.00001912 + 0.0000000008387 * T + 0.000000000004016 * T ^ 2
+
+                'CALCULO DA FUGACIDADE DA ÁGUA NO GELO
+                FG = Math.Exp(4.6056 * Math.Log(T) - 5501.1243 / T + 2.9446 - 0.0081431 * T) * Math.Exp((VMG / (R * T) * (P - Math.Exp(4.6056 * Math.Log(T) - 5501.1243 / T + 2.9446 - 0.0081431 * T))))
+
+                'CALCULO DA FUGACIDADE DA ÁGUA NA FASE LÍQUIDA
+                act = WAC
+                FL = Vxaq(pos) * act * Math.Exp(4.1539 * Math.Log(T) - 5500.9332 / T + 7.6537 - 0.0161277 * T) * Math.Exp((VLW / (R * T) * (P - Math.Exp(4.1539 * Math.Log(T) - 5500.9332 / T + 2.9446 - 0.0161266 * T))))
+
+                If T < Td Then FGAG = FG
+                If T > Td Then FGAG = FL
+
+            End If
 
             If TIPO_HIDRATO = "sI" Then
 
@@ -721,7 +739,7 @@ Namespace DWSIM.Utilities.HYD
 
         End Function
 
-        Function HYD_KS2(ByVal T As Double, ByVal Vz As Object, ByVal Vids As Object) As Object
+        Function HYD_KS2(ByVal T As Double, ByVal Vz As Object, ByVal Vids As Object, Optional ByVal vaporonly As Boolean = False) As Object
 
             Dim TIPO_HIDRATO As String = "sI"
             Dim sI_formers As Boolean = False
@@ -754,9 +772,9 @@ START_LOOP:
             delta_P = (Psup - Pinf) / nsub
 
             Do
-                fP = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, Pinf, T, Vz, Vids)
+                fP = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, Pinf, T, Vz, Vids, vaporonly)
                 Pinf = Pinf + delta_P
-                fP_inf = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, Pinf, T, Vz, Vids)
+                fP_inf = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, Pinf, T, Vz, Vids, vaporonly)
             Loop Until fP * fP_inf < 0 Or Pinf > Psup
             If Pinf > Psup Then GoTo Final4
             Psup = Pinf
@@ -773,8 +791,8 @@ START_LOOP:
             bbb = Psup
             ccc = Psup
 
-            faa = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, aaa, T, Vz, Vids)
-            fbb = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, bbb, T, Vz, Vids)
+            faa = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, aaa, T, Vz, Vids, vaporonly)
+            fbb = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, bbb, T, Vz, Vids, vaporonly)
             fcc = fbb
 
             iter2 = 0
@@ -832,7 +850,7 @@ START_LOOP:
                 Else
                     bbb += Math.Sign(xmm) * tol11
                 End If
-                fbb = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, bbb, T, Vz, Vids)
+                fbb = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, bbb, T, Vz, Vids, vaporonly)
                 iter2 += 1
             Loop Until iter2 = ITMAX2
 
@@ -867,7 +885,7 @@ STEP2:
 
         End Function
 
-        Function HYD_KS2T(ByVal P As Double, ByVal Vz As Object, ByVal Vids As Object) As Object
+        Function HYD_KS2T(ByVal P As Double, ByVal Vz As Object, ByVal Vids As Object, Optional ByVal vaporonly As Boolean = False) As Object
 
             Dim TIPO_HIDRATO As String = "sI"
             Dim sI_formers As Boolean = False
@@ -900,9 +918,9 @@ START_LOOP:
             delta_T = (Tsup - Tinf) / nsub
 
             Do
-                fT = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, P, Tinf, Vz, Vids)
+                fT = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, P, Tinf, Vz, Vids, vaporonly)
                 Tinf = Tinf + delta_T
-                fT_inf = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, P, Tinf, Vz, Vids)
+                fT_inf = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, P, Tinf, Vz, Vids, vaporonly)
             Loop Until fT * fT_inf < 0 Or Tinf < Tsup
             If Tinf < Tsup Then GoTo Final4
             Tsup = Tinf
@@ -918,8 +936,8 @@ START_LOOP:
             bbb = Tsup
             ccc = Tsup
 
-            faa = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, P, aaa, Vz, Vids)
-            fbb = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, P, bbb, Vz, Vids)
+            faa = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, P, aaa, Vz, Vids, vaporonly)
+            fbb = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, P, bbb, Vz, Vids, vaporonly)
             fcc = fbb
 
             iter2 = 0
@@ -977,7 +995,7 @@ START_LOOP:
                 Else
                     bbb += Math.Sign(xmm) * tol11
                 End If
-                fbb = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, P, bbb, Vz, Vids)
+                fbb = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, P, bbb, Vz, Vids, vaporonly)
                 iter2 += 1
             Loop Until iter2 = ITMAX2
 
@@ -1012,7 +1030,7 @@ STEP2:
 
         End Function
 
-        Function DET_HYD_KS(ByVal TIPO_HIDRATO As String, ByVal P As Double, ByVal T As Double, ByVal Vz As Object, ByVal Vids As Object) As Object
+        Function DET_HYD_KS(ByVal TIPO_HIDRATO As String, ByVal P As Double, ByVal T As Double, ByVal Vz As Object, ByVal Vids As Object, Optional ByVal vaporonly As Boolean = False) As Object
 
             Dim n = UBound(Vz)
             Dim FGsI, FGsII, FGHYD, FGAG As Double
@@ -1062,12 +1080,20 @@ STEP2:
                 If i <> pos Then sum += Vz(i)
                 i = i + 1
             Loop Until (i = n + 1)
-            i = 0
-            Do
-                If i <> pos Then Vy(i) = Vz(i) / sum
-                If i = pos Then Vy(i) = 0
-                i = i + 1
-            Loop Until i = n + 1
+            If vaporonly Then
+                i = 0
+                Do
+                    Vy(i) = Vz(i)
+                    i = i + 1
+                Loop Until i = n + 1
+            Else
+                i = 0
+                Do
+                    If i <> pos Then Vy(i) = Vz(i) / sum
+                    If i = pos Then Vy(i) = 0
+                    i = i + 1
+                Loop Until i = n + 1
+            End If
 
             'PRSV
 
@@ -1229,66 +1255,76 @@ STEP2:
                 i = i + 1
             Loop Until i = n + 1
 
-            'CALCULO DAS FRAÇÕES MOLARES DOS COMPONENTES NA FASE AQUOSA
+            If vaporonly Then
 
-            Dim fresult As Object = unfPP.FlashBase.Flash_PT(Vy, P, T, unfPP)
-            If fresult(0) > 0.0# Then
-                For i = 0 To n
-                    Ki(i) = fresult(3)(i) / fresult(2)(i)
-                    If Double.IsNaN(Ki(i)) Then Ki(i) = Double.PositiveInfinity
-                Next
+                Td = 273.15
+
+                FGAG = PHIV(pos)
+
             Else
-                For i = 0 To n
-                    Ki(i) = Double.PositiveInfinity
-                Next
-            End If
 
-            i = 0
-            Do
-                If i <> pos Then Vxaq(i) = PHIV(i) / (H(i) * Math.Exp(ZLinf(i)))
-                If H(i) = 101325.0# Then
-                    Vxaq(i) = 0.0#
+                'CALCULO DAS FRAÇÕES MOLARES DOS COMPONENTES NA FASE AQUOSA
+
+                Dim fresult As Object = unfPP.FlashBase.Flash_PT(Vy, P, T, unfPP)
+                If fresult(0) > 0.0# Then
+                    For i = 0 To n
+                        Ki(i) = fresult(3)(i) / fresult(2)(i)
+                        If Double.IsNaN(Ki(i)) Then Ki(i) = Double.PositiveInfinity
+                    Next
+                Else
+                    For i = 0 To n
+                        Ki(i) = Double.PositiveInfinity
+                    Next
                 End If
-                VxHC(i) = Vy(i) / Ki(i)
-                i = i + 1
-            Loop Until i = n + 1
 
-            Dim sum_vxaq = 0
-            Dim sum_vxhc = 0
-            i = 0
-            Do
-                If i <> pos Then sum_vxaq += Vxaq(i)
-                sum_vxhc += VxHC(i)
-                i = i + 1
-            Loop Until i = n + 1
-            Vxaq(pos) = 1 - sum_vxaq
+                i = 0
+                Do
+                    If i <> pos Then Vxaq(i) = PHIV(i) / (H(i) * Math.Exp(ZLinf(i)))
+                    If H(i) = 101325.0# Then
+                        Vxaq(i) = 0.0#
+                    End If
+                    VxHC(i) = Vy(i) / Ki(i)
+                    i = i + 1
+                Loop Until i = n + 1
 
-            i = 0
-            Do
-                If sum_vxhc <> 0.0# Then VxHC(i) = VxHC(i) / sum_vxhc
-                i = i + 1
-            Loop Until i = n + 1
+                Dim sum_vxaq = 0
+                Dim sum_vxhc = 0
+                i = 0
+                Do
+                    If i <> pos Then sum_vxaq += Vxaq(i)
+                    sum_vxhc += VxHC(i)
+                    i = i + 1
+                Loop Until i = n + 1
+                Vxaq(pos) = 1 - sum_vxaq
 
-            Dim WAC As Double = unf.GAMMA(T, Vxaq, unfPP.RET_VIDS, unfPP.RET_VQ, unfPP.RET_VR, pos)
+                i = 0
+                Do
+                    If sum_vxhc <> 0.0# Then VxHC(i) = VxHC(i) / sum_vxhc
+                    i = i + 1
+                Loop Until i = n + 1
 
-            'CALCULO DA DEPRESSÃO NO PONTO DE FUSÃO DA ÁGUA
-            Tnfp = 273.15
-            DHm = 6001700.0 / 1000
-            DT = R * Tnfp ^ 2 / DHm * Math.Log(Vxaq(pos) * wac)
-            Td = DT + Tnfp
+                Dim WAC As Double = unf.GAMMA(T, Vxaq, unfPP.RET_VIDS, unfPP.RET_VQ, unfPP.RET_VR, pos)
 
-            'CALCULO DO VOLUME MOLAR DO GELO
-            VMG = 0.00001912 + 0.0000000008387 * T + 0.000000000004016 * T ^ 2
+                'CALCULO DA DEPRESSÃO NO PONTO DE FUSÃO DA ÁGUA
+                Tnfp = 273.15
+                DHm = 6001700.0 / 1000
+                DT = R * Tnfp ^ 2 / DHm * Math.Log(Vxaq(pos) * WAC)
+                Td = DT + Tnfp
 
-            'CALCULO DA FUGACIDADE DA ÁGUA NO GELO
-            FG = Math.Exp(4.6056 * Math.Log(T) - 5501.1243 / T + 2.9446 - 0.0081431 * T) * Math.Exp((VMG / (R * T) * (P - Math.Exp(4.6056 * Math.Log(T) - 5501.1243 / T + 2.9446 - 0.0081431 * T))))
+                'CALCULO DO VOLUME MOLAR DO GELO
+                VMG = 0.00001912 + 0.0000000008387 * T + 0.000000000004016 * T ^ 2
 
-            'CALCULO DA FUGACIDADE DA ÁGUA NA FASE LÍQUIDA
-            act = wac
-            FL = Vxaq(pos) * act * Math.Exp(4.1539 * Math.Log(T) - 5500.9332 / T + 7.6537 - 0.0161277 * T) * Math.Exp((VLW / (R * T) * (P - Math.Exp(4.1539 * Math.Log(T) - 5500.9332 / T + 2.9446 - 0.0161266 * T))))
+                'CALCULO DA FUGACIDADE DA ÁGUA NO GELO
+                FG = Math.Exp(4.6056 * Math.Log(T) - 5501.1243 / T + 2.9446 - 0.0081431 * T) * Math.Exp((VMG / (R * T) * (P - Math.Exp(4.6056 * Math.Log(T) - 5501.1243 / T + 2.9446 - 0.0081431 * T))))
 
-            If T < Td Then FGAG = FG
-            If T > Td Then FGAG = FL
+                'CALCULO DA FUGACIDADE DA ÁGUA NA FASE LÍQUIDA
+                act = WAC
+                FL = Vxaq(pos) * act * Math.Exp(4.1539 * Math.Log(T) - 5500.9332 / T + 7.6537 - 0.0161277 * T) * Math.Exp((VLW / (R * T) * (P - Math.Exp(4.1539 * Math.Log(T) - 5500.9332 / T + 2.9446 - 0.0161266 * T))))
+
+                If T < Td Then FGAG = FG
+                If T > Td Then FGAG = FL
+
+            End If
 
             If TIPO_HIDRATO = "sI" Then
 
