@@ -328,6 +328,12 @@
     <Compile Include="Forms\FormConfigWizard.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\FormCoolPropWarning.Designer.vb">
+      <DependentUpon>FormCoolPropWarning.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCoolPropWarning.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FormDataRegression.Designer.vb">
       <DependentUpon>FormDataRegression.vb</DependentUpon>
     </Compile>
@@ -1171,6 +1177,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormConfigWizard.resx">
       <DependentUpon>FormConfigWizard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCoolPropWarning.de.resx">
+      <DependentUpon>FormCoolPropWarning.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCoolPropWarning.en.resx">
+      <DependentUpon>FormCoolPropWarning.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCoolPropWarning.resx">
+      <DependentUpon>FormCoolPropWarning.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormDataRegression.de.resx">
       <DependentUpon>FormDataRegression.vb</DependentUpon>

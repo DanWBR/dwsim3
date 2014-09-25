@@ -323,10 +323,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             Dim Tsup, Tinf, VTf(n) As Double
 
-            VTf = PP.RET_VTF
-
             Tsup = 1000.0#
-            Tinf = 150.0#
+            Tinf = 200.0#
 
             Dim bo As New BrentOpt.Brent
             bo.DefineFuncDelegate(AddressOf Herror)
@@ -376,7 +374,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                 cnt += 1
             Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
             If Double.IsNaN(x1) Or cnt > maxitEXT Then
-alt:            T = bo.BrentOpt(150, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
+alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Else
                 T = x1
             End If

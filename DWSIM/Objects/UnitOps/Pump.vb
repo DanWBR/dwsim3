@@ -631,7 +631,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     H2 = Hi + Me.DeltaQ / Wi
 
-                    Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
+                    Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, 0.0#)
                     T2 = tmp(2)
 
                     Me.DeltaT = T2 - Ti

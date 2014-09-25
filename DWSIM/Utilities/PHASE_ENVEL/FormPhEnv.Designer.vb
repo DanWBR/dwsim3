@@ -78,8 +78,6 @@ Partial Class FormPhEnv
         'CheckBoxHYDVAP
         '
         resources.ApplyResources(Me.CheckBoxHYDVAP, "CheckBoxHYDVAP")
-        Me.CheckBoxHYDVAP.Checked = True
-        Me.CheckBoxHYDVAP.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBoxHYDVAP.Name = "CheckBoxHYDVAP"
         '
         'ComboBox2

@@ -1,5 +1,5 @@
 ﻿Imports WeifenLuo.WinFormsUI.Docking
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports DWSIM.DWSIM
@@ -129,7 +129,7 @@ Public Class frmProps
                         If Not My.MyApplication.IsFlowsheetSolving Then CalculateObject(ChildParent, sobj.Name)
 
                     End If
-                  
+
                 End If
 
             ElseIf sobj.TipoObjeto = TipoObjeto.EnergyStream Then
@@ -233,32 +233,6 @@ Public Class frmProps
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
 
                     If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedeentrada")) Then
-
-                    If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
-                        Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y, e.ChangedItem.Value)
-                    End If
-
-                    If Not sobj.InputConnectors(0).IsAttached Then
-                        ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj)
-                    Else
-                        ChildParent.DisconnectObject(sobj.InputConnectors(0).AttachedConnector.AttachedFrom, sobj)
-                        ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj)
-                    End If
-
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Correntedesada")) Then
-
-                    If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
-                        Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
-                    End If
-
-                    If Not sobj.OutputConnectors(0).IsAttached Then
-                        ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
-                    Else
-                        ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
-                        ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
-                    End If
 
                 End If
 

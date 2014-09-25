@@ -2350,7 +2350,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             T = val1
                             xv = val2
 
-                            result = Me.FlashBase.Flash_TV(RET_VMOL(Fase.Mixture), T, xv, 0, Me)
+                            result = Me.FlashBase.Flash_TV(RET_VMOL(Fase.Mixture), T, xv, P, Me)
 
                             P = result(4)
 
