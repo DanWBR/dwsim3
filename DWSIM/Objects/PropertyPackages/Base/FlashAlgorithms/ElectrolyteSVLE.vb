@@ -140,7 +140,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     'calculate chemical equilibria between ions, salts and water. 
                     ''SolveChemicalEquilibria' returns the equilibrium molar amounts in the liquid phase, including precipitates.
 
-                    If CalculateChemicalEquilibria And Not Vnf(wid) <= 0.1 Then
+                    If CalculateChemicalEquilibria Then
                         result = SolveChemicalEquilibria(Vf, T, P, ids, rext)
                         Vf = result(0).clone
                         rext = result(1)
@@ -230,7 +230,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Next
                     err += (L - L_ant) ^ 2
 
-                    If err < Tolerance Then Exit Do
+                    If err < Tolerance And int_count > 0 Then Exit Do
 
                     int_count += 1
 
@@ -420,8 +420,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         REx(i) = prevx(i) * 0.9
                     Next
                 Else
-                    For i = 0 To r
-                        REx(i) = ubound(i) * 0.0001
+                    i = 0
+                    For Each rxnsb As ReactionSetBase In form.Options.ReactionSets(Me.ReactionSet).Reactions.Values
+                        If form.Options.Reactions(rxnsb.ReactionID).ReactionType = ReactionType.Equilibrium And rxnsb.IsActive Then
+                            rxn = form.Options.Reactions(rxnsb.ReactionID)
+                            If rxn.ConstantKeqValue < 1 Then
+                                REx(i) = 0.0#
+                            ElseIf rxn.ConstantKeqValue > 10 Then
+                                REx(i) = ubound(i)
+                            Else
+                                REx(i) = ubound(i) * 0.5
+                            End If
+                            i += 1
+                        End If
                     Next
                 End If
 
@@ -529,7 +540,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Return New Object() {Vx, Nothing}
 
-            End If
+                End If
 
         End Function
 
@@ -619,14 +630,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 For Each s As String In Me.ComponentIDs
                     With proppack.CurrentMaterialStream.Flowsheet.Options.Reactions(Me.Reactions(i))
                         If .Components.ContainsKey(s) Then
-                            'If .Components(s).StoichCoeff > 0 Then
-                            For j = 0 To nc
-                                If CompoundProperties(j).Name = s Then
-                                    prod(i) *= CP(j) ^ .Components(s).StoichCoeff
-                                    Exit For
-                                End If
-                            Next
-                            'End If
+                            If .Components(s).StoichCoeff > 0 Then
+                                For j = 0 To nc
+                                    If CompoundProperties(j).Name = s Then
+                                        prod(i) *= CP(j) ^ .Components(s).StoichCoeff
+                                        Exit For
+                                    End If
+                                Next
+                            End If
                         End If
                     End With
                 Next
@@ -850,9 +861,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If Vz(wid) <> 0.0# And xv <> 0.0# And xv <> 1.0# Then
                     wac = tmp("LiquidPhaseActivityCoefficients")(wid)
                     wx = tmp("LiquidPhaseMolarComposition")(wid)
-
                     'If wx < 0.6 Then Throw New Exception("Water mole fraction in liquid phase is less than 0.6. Calculation aborted.")
-
                     Psat = P / (wx * wac)
                     Tsat_ant = Tsat
                     Tsat = proppack.AUX_TSATi(Psat, wid)
@@ -862,7 +871,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 If Double.IsNaN(Tsat) Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
 
-                If Tsat < 273.15 Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
+                'If Tsat < 273.15 Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
 
                 If icount > maxitINT Then Throw New Exception("Temperature loop did not converge. Maximum iterations reached.")
 

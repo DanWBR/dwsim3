@@ -637,7 +637,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             Dim Vnf = result("MixtureMoleFlows")
 
-                            MW = Me.AUX_MMM(Vnf)
+                            'MW = Me.AUX_MMM(Vnf)
 
                             Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow *= M '* W / MW * 1000
 
@@ -646,7 +646,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 subst.FracaoMolar = Vnf(i) / M
                                 i += 1
                             Next
-                            For Each subst In Me.CurrentMaterialStream.Fases(7).Componentes.Values
+                            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                                 subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, 0)
                             Next
 
