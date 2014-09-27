@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Label1.Text" xml:space="preserve">
-    <value>CoolProp Datenbank-Verbindungen sind nur mit CoolProp Immobilienpaket kompatibel. Sie sie auf Ihren Simulation nicht hinzufügen, wenn Sie beabsichtigen, einen anderen Thermodynamisches Modell zu verwenden.</value>
+    <value>CoolProp Datenbank-Komponenten sind nur mit dem CoolProp Property Package kompatibel. Fügen Sie diese Ihrer Simulation nicht hinzu, wenn Sie beabsichtigen, ein anderes thermodynamisches Modell zu verwenden.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
