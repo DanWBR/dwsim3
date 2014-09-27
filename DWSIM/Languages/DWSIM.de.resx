@@ -2744,7 +2744,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Betriebspunkt</value>
   </data>
   <data name="PontoNormaldeEbulio" xml:space="preserve">
-    <value>Normaler Siedepunkt,</value>
+    <value>Normaler Siedepunkt</value>
   </data>
   <data name="PontosdeBolha" xml:space="preserve">
     <value>Siedepunkte</value>
@@ -4834,5 +4834,17 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   </data>
   <data name="VaporAndHydrate" xml:space="preserve">
     <value>Gas und Hydrat</value>
+  </data>
+  <data name="EnthalpyOfFusionAtTf" xml:space="preserve">
+    <value>Schmelzenthalpie @ Schmelzpunkt Tf</value>
+  </data>
+  <data name="SolidDensityAtTs" xml:space="preserve">
+    <value>Feststoffdichte @ Referenztemperatur Ts</value>
+  </data>
+  <data name="TemperatureOfFusion" xml:space="preserve">
+    <value>Schmelztemperatur Tf</value>
+  </data>
+  <data name="TemperatureOfSolidDensity_Ts" xml:space="preserve">
+    <value>Referenztemperatur Ts für Feststoffdichte</value>
   </data>
 </root>
