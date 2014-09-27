@@ -47,7 +47,8 @@ Partial Class FormPureComp
         Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.LblModified = New System.Windows.Forms.Label()
+        Me.BtnRestaurar = New System.Windows.Forms.Button()
         Me.chkEnableEdit = New System.Windows.Forms.CheckBox()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -173,7 +174,8 @@ Partial Class FormPureComp
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.Button1)
+        Me.GroupBox1.Controls.Add(Me.LblModified)
+        Me.GroupBox1.Controls.Add(Me.BtnRestaurar)
         Me.GroupBox1.Controls.Add(Me.chkEnableEdit)
         Me.GroupBox1.Controls.Add(Me.ComboBox1)
         Me.GroupBox1.Controls.Add(Me.Label1)
@@ -182,11 +184,18 @@ Partial Class FormPureComp
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
-        'Button1
+        'LblModified
         '
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.Name = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.LblModified, "LblModified")
+        Me.LblModified.BackColor = System.Drawing.Color.Lime
+        Me.LblModified.ForeColor = System.Drawing.Color.Black
+        Me.LblModified.Name = "LblModified"
+        '
+        'BtnRestaurar
+        '
+        resources.ApplyResources(Me.BtnRestaurar, "BtnRestaurar")
+        Me.BtnRestaurar.Name = "BtnRestaurar"
+        Me.BtnRestaurar.UseVisualStyleBackColor = True
         '
         'chkEnableEdit
         '
@@ -1097,7 +1106,7 @@ Partial Class FormPureComp
     Public WithEvents FaTabStripItemHVAP As FarsiLibrary.Win.FATabStripItem
     Public WithEvents GraphDHVAP As ZedGraph.ZedGraphControl
     Friend WithEvents chkEnableEdit As System.Windows.Forms.CheckBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents BtnRestaurar As System.Windows.Forms.Button
     Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Friend WithEvents pbRender As System.Windows.Forms.PictureBox
@@ -1167,4 +1176,5 @@ Partial Class FormPureComp
     Friend WithEvents DataGridViewTextBoxColumn30 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn31 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn32 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Public WithEvents LblModified As System.Windows.Forms.Label
 End Class

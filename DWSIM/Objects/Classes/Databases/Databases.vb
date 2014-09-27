@@ -112,7 +112,7 @@ Namespace DWSIM.Databases
 
         End Sub
 
-        Public Function Transfer() As ClassesBasicasTermodinamica.ConstantProperties()
+        Public Function Transfer(Optional ByVal CompName As String = "") As ClassesBasicasTermodinamica.ConstantProperties()
 
             Dim cp As ClassesBasicasTermodinamica.ConstantProperties
             Dim cpa As New ArrayList()
@@ -455,7 +455,16 @@ Namespace DWSIM.Databases
                             Next
                     End Select
                 Next
-                cpa.Add(cp)
+
+                If CompName = "" Then
+                    cpa.Add(cp)
+                Else
+                    If cp.Name = CompName Then
+                        cpa.Add(cp)
+                        Exit For
+                    End If
+                End If
+
             Next
 
             Return cpa.ToArray(Type.GetType("DWSIM.DWSIM.ClassesBasicasTermodinamica.ConstantProperties"))
@@ -488,7 +497,7 @@ Namespace DWSIM.Databases
 
         End Sub
 
-        Public Function Transfer() As ClassesBasicasTermodinamica.ConstantProperties()
+        Public Function Transfer(Optional ByVal CompName As String = "") As ClassesBasicasTermodinamica.ConstantProperties()
 
             Dim cp As ClassesBasicasTermodinamica.ConstantProperties
             Dim cpa As New ArrayList()
@@ -616,7 +625,16 @@ Namespace DWSIM.Databases
                         End Select
                     Next
                 End With
-                cpa.Add(cp)
+
+                If CompName = "" Then
+                    cpa.Add(cp)
+                Else
+                    If cp.Name = CompName Then
+                        cpa.Add(cp)
+                        Exit For
+                    End If
+                End If
+
             Next
 
             Return cpa.ToArray(Type.GetType("DWSIM.DWSIM.ClassesBasicasTermodinamica.ConstantProperties"))
@@ -649,7 +667,7 @@ Namespace DWSIM.Databases
 
         End Sub
 
-        Public Function Transfer() As ClassesBasicasTermodinamica.ConstantProperties()
+        Public Function Transfer(Optional ByVal CompName As String = "") As ClassesBasicasTermodinamica.ConstantProperties()
 
             Dim cp As ClassesBasicasTermodinamica.ConstantProperties
             Dim cpa As New ArrayList()
@@ -727,7 +745,16 @@ Namespace DWSIM.Databases
                     .IdealgasCpEquation = 5
                     .Critical_Compressibility = 0.291 - 0.08 * .Acentric_Factor
                 End With
-                cpa.Add(cp)
+
+                If CompName = "" Then
+                    cpa.Add(cp)
+                Else
+                    If cp.Name = CompName Then
+                        cpa.Add(cp)
+                        Exit For
+                    End If
+                End If
+
                 i += 1
             Next
 
@@ -1368,7 +1395,7 @@ Namespace DWSIM.Databases
 
         End Sub
 
-        Public Function Transfer() As ClassesBasicasTermodinamica.ConstantProperties()
+        Public Function Transfer(Optional ByVal CompName As String = "") As ClassesBasicasTermodinamica.ConstantProperties()
 
             Dim cp As ClassesBasicasTermodinamica.ConstantProperties
             Dim cpa As New ArrayList()
@@ -1449,7 +1476,16 @@ Namespace DWSIM.Databases
                     .VaporPressureEquation = 101
                     .IdealgasCpEquation = 5
                 End With
-                cpa.Add(cp)
+
+                If CompName = "" Then
+                    cpa.Add(cp)
+                Else
+                    If cp.Name = CompName Then
+                        cpa.Add(cp)
+                        Exit For
+                    End If
+                End If
+
                 i += 1
             Next
 

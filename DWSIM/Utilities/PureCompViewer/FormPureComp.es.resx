@@ -117,27 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>726, 16</value>
-  </data>
-  <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>213, 23</value>
-  </data>
-  <data name="Button1.Text" xml:space="preserve">
+  <data name="BtnRestaurar.Text" xml:space="preserve">
     <value>Restablecer valores predeterminados</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkEnableEdit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>490, 19</value>
+    <value>559, 18</value>
   </data>
   <data name="chkEnableEdit.Size" type="System.Drawing.Size, System.Drawing">
     <value>239, 17</value>
   </data>
   <data name="chkEnableEdit.Text" xml:space="preserve">
     <value>Permitir la edición de propiedades constantes</value>
-  </data>
-  <data name="ComboBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 21</value>
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Propiedad</value>
@@ -306,28 +297,6 @@
   </data>
   <data name="FaTabStripItem18.Size" type="System.Drawing.Size, System.Drawing">
     <value>935, 542</value>
-  </data>
-  <data name="DataGridViewTextBoxColumn2.HeaderText" xml:space="preserve">
-    <value>Cantidad</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="DataGridViewTextBoxColumn2.Width" type="System.Int32, mscorlib">
-    <value>59</value>
-  </data>
-  <data name="DataGridViewTextBoxColumn4.HeaderText" xml:space="preserve">
-    <value>Cantidad</value>
-  </data>
-  <data name="DataGridViewTextBoxColumn4.Width" type="System.Int32, mscorlib">
-    <value>59</value>
-  </data>
-  <data name="DataTable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>935, 542</value>
-  </data>
-  <data name="FaTabStripItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>935, 542</value>
-  </data>
-  <data name="FaTabStripItem7.Title" xml:space="preserve">
-    <value>Tabla de Datos</value>
   </data>
   <data name="FaTabStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 51</value>

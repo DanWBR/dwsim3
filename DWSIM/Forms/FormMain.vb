@@ -2192,11 +2192,11 @@ Public Class FormMain
             Try
                 Dim obj As New ConstantProperties
                 obj.LoadData(xel.Elements.ToList)
-                If Not My.Settings.ReplaceCompoundConstantProperties Then
-                    If Me.AvailableComponents.ContainsKey(obj.Name) Then
-                        obj = Me.AvailableComponents(obj.Name)
-                    End If
-                End If
+                'If Not My.Settings.ReplaceCompoundConstantProperties Then
+                '    If Me.AvailableComponents.ContainsKey(obj.Name) Then
+                '        obj = Me.AvailableComponents(obj.Name)
+                '    End If
+                'End If
                 form.Options.SelectedComponents.Add(obj.Name, obj)
             Catch ex As Exception
                 excs.Add(New Exception("Error Loading Compound Information", ex))

@@ -1,6 +1,7 @@
 ﻿Imports com.ggasoftware.indigo
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.SimulationObjects.Streams
+Imports System.IO
 
 '    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '              2013-2014 Gregor Reichert
@@ -33,7 +34,6 @@ Public Class FormPureComp
     Dim vxCp, vyCp, vxPvap, vyPvap, vxVisc, vyVisc, vxDHvap, vyDHvap, vxLD, vyLD, vxSD, vySD, vxSCP, vySCP, vxVapVisc,
         vyVapVisc, vxVapThCond, vyVapThCond, vxLiqThCond, vyLiqThCond, vxSurfTens, vySurfTens, vxLiqCp, vyLiqCp As New ArrayList
     Public constprop As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-    Public constprop_orig As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
 
     Private Sub FormPureComp_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -719,6 +719,7 @@ Public Class FormPureComp
             Dim name As String = ComboBox1.SelectedItem.ToString.Substring(ComboBox1.SelectedItem.ToString.IndexOf("[") + 1, ComboBox1.SelectedItem.ToString.Length - ComboBox1.SelectedItem.ToString.IndexOf("[") - 2)
             constprop = Nothing
             constprop = Me.ChildParent.Options.SelectedComponents(name)
+            SetCompStatus()
         End If
         Call Me.Populate()
     End Sub
@@ -793,6 +794,9 @@ Public Class FormPureComp
                 constprop.StandardStateMolarVolume = GridProps.Rows(e.RowIndex).Cells(1).Value
         End Select
 
+        constprop.IsModified = True
+        SetCompStatus()
+
         For Each mat As DWSIM.SimulationObjects.Streams.MaterialStream In Me.ChildParent.Collections.CLCS_MaterialStreamCollection.Values
             For Each p As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
                 For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In p.Componentes.Values
@@ -805,27 +809,113 @@ Public Class FormPureComp
         Next
 
     End Sub
-
+    Private Sub SetCompStatus()
+        If constprop.IsModified Then
+            LblModified.Text = DWSIM.App.GetLocalString("DataModified")
+            LblModified.BackColor = Color.Red
+            LblModified.ForeColor = Color.White
+        Else
+            LblModified.Text = DWSIM.App.GetLocalString("DataOriginal")
+            LblModified.BackColor = Color.Lime
+            LblModified.ForeColor = Color.Black
+        End If
+        Me.BtnRestaurar.Enabled = constprop.IsModified
+    End Sub
     Private Sub chkEnableEdit_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkEnableEdit.CheckedChanged
         If chkEnableEdit.Checked Then
             Me.ComboBox1.Enabled = False
-            Me.Button1.Enabled = True
-            constprop_orig = constprop.Clone
-            Colorize()
+            Colorize(False)
         Else
             Me.ComboBox1.Enabled = True
-            Me.Button1.Enabled = False
-            constprop_orig = Nothing
-            For Each r As DataGridViewRow In GridProps.Rows
-                r.Cells(1).ReadOnly = True
-                r.Cells(1).Style.ForeColor = r.DefaultCellStyle.ForeColor
-            Next
+            Colorize(True)
         End If
     End Sub
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+    Private Sub BtnRestaurar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnRestaurar.Click
+        Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
 
-        constprop = constprop_orig.Clone
+        Select Case constprop.OriginalDB
+            Case "DWSIM"
+                Dim filename As String = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "data" & Path.DirectorySeparatorChar & "databases" & Path.DirectorySeparatorChar & "dwsim.xml"
+                Try
+                    'load DWSIM database, if existent
+                    If File.Exists(filename) Then
+                        Dim dwdb As New DWSIM.Databases.DWSIM
+                        dwdb.Load(filename)
+                        cpa = dwdb.Transfer(constprop.Name)
+                        If cpa.Length = 1 Then
+                            constprop = cpa(0)
+                            Me.ChildParent.Options.SelectedComponents(constprop.Name) = constprop
+                        End If
+                    End If
+                Catch ex As Exception
+                    ex.Data.Add("Reason", "Error loading component from DWSIM database")
+                    Throw ex
+                End Try
+            Case "ChemSep"
+                Try
+                    'load chempsep database, if existent
+                    If File.Exists(My.Settings.ChemSepDatabasePath) Then
+                        Dim csdb As New DWSIM.Databases.ChemSep
+                        csdb.Load(My.Settings.ChemSepDatabasePath)
+                        cpa = csdb.Transfer(constprop.Name)
+                        If cpa.Length = 1 Then
+                            constprop = cpa(0)
+                            Me.ChildParent.Options.SelectedComponents(constprop.Name) = constprop
+                        End If
+                    End If
+                Catch ex As Exception
+                    ex.Data.Add("Reason", "Error loading component from ChemSep database")
+                    Throw ex
+                End Try
+            Case "User"
+                'find database of component
+                Dim componentes As ConstantProperties()
+                For Each fpath As String In My.Settings.UserDatabases
+                    componentes = DWSIM.Databases.UserDB.ReadComps(fpath)
+                    For Each cp As ConstantProperties In componentes
+                        If cp.Name = constprop.Name Then
+                            constprop = cp
+                            Me.ChildParent.Options.SelectedComponents(constprop.Name) = constprop
+                            Exit Select
+                        End If
+                    Next
+                Next
+            Case "Electrolytes"
+                Dim filename As String = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "data" & Path.DirectorySeparatorChar & "databases" & Path.DirectorySeparatorChar & "electrolyte.xml"
+                Try
+                    'load electrolytes database, if existent
+                    If File.Exists(filename) Then
+                        Dim edb As New DWSIM.Databases.Electrolyte
+                        edb.Load(filename)
+                        cpa = edb.Transfer(constprop.Name)
+                        If cpa.Length = 1 Then
+                            constprop = cpa(0)
+                            Me.ChildParent.Options.SelectedComponents(constprop.Name) = constprop
+                        End If
+                    End If
+                Catch ex As Exception
+                    ex.Data.Add("Reason", "Error loading component from Electrolytes database")
+                    Throw ex
+                End Try
+            Case "Biodiesel"
+                Dim filename As String = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "data" & Path.DirectorySeparatorChar & "databases" & Path.DirectorySeparatorChar & "biod_db.xml"
+                Try
+                    'load electrolytes database, if existent
+                    If File.Exists(filename) Then
+                        Dim bddb As New DWSIM.Databases.Biodiesel
+                        bddb.Load(filename)
+                        cpa = bddb.Transfer(constprop.Name)
+                        If cpa.Length = 1 Then
+                            constprop = cpa(0)
+                            Me.ChildParent.Options.SelectedComponents(constprop.Name) = constprop
+                        End If
+                    End If
+                Catch ex As Exception
+                    ex.Data.Add("Reason", "Error loading component from Biodiesel database")
+                    Throw ex
+                End Try
+        End Select
 
         For Each mat As DWSIM.SimulationObjects.Streams.MaterialStream In Me.ChildParent.Collections.CLCS_MaterialStreamCollection.Values
             For Each p As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
@@ -835,21 +925,27 @@ Public Class FormPureComp
             Next
         Next
 
-        Populate()
+        constprop.IsModified = False
+        SetCompStatus()
 
-        Colorize()
+        Populate()
 
     End Sub
 
-    Sub Colorize()
+    Sub Colorize(ByVal LockCells As Boolean)
 
         For Each r As DataGridViewRow In GridProps.Rows
             If r.Index >= 4 Then
-                r.Cells(1).ReadOnly = False
-                r.Cells(1).Style.ForeColor = Color.Red
+                If LockCells Then
+                    r.Cells(1).ReadOnly = True
+                    r.Cells(1).Style.ForeColor = Color.Black
+                Else
+                    r.Cells(1).ReadOnly = False
+                    r.Cells(1).Style.ForeColor = Color.Red
+                End If
             Else
                 r.Cells(1).ReadOnly = True
-                r.Cells(1).Style.ForeColor = Color.DarkGray
+                r.Cells(1).Style.ForeColor = Color.Black
             End If
         Next
 

@@ -4855,4 +4855,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="VaporAndHydrate" xml:space="preserve">
     <value>Gas and Hydrate</value>
   </data>
+  <data name="DataModified" xml:space="preserve">
+    <value>Data modified</value>
+  </data>
+  <data name="DataOriginal" xml:space="preserve">
+    <value>Original Data</value>
+  </data>
 </root>

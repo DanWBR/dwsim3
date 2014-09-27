@@ -2157,6 +2157,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         Public IsFPROPSSupported As Boolean = False
         Public IsCOOLPROPSupported As Boolean = False
+        Public IsModified As Boolean = False
 
         Public UNIFACGroups As UNIFACGroupCollection
         Public MODFACGroups As UNIFACGroupCollection

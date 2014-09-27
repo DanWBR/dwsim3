@@ -4847,4 +4847,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="TemperatureOfSolidDensity_Ts" xml:space="preserve">
     <value>Referenztemperatur Ts für Feststoffdichte</value>
   </data>
+  <data name="DataModified" xml:space="preserve">
+    <value>Daten modifiziert</value>
+  </data>
+  <data name="DataOriginal" xml:space="preserve">
+    <value>Originaldaten</value>
+  </data>
 </root>
