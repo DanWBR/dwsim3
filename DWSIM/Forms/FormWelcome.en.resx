@@ -132,7 +132,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACU
-        JQAAAk1TRnQBSQFMAgEBBAEAAQgBAAEIAQABHAEAARwBAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAFw
+        JQAAAk1TRnQBSQFMAgEBBAEAASABAAEgAQABHAEAARwBAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAFw
         AwABOAMAAQEBAAEQBgABMf8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/ALIAAVwBWwE7AU8BOwFPATsBTwE7AU8BOwFPATsBTwE7AU8BOwFPATsBTwE7AU8BOwFPATsBTwE7
         AU8BOwFPATsBTwE7AU8BOwFPATsBTwE7AVMQAAFcAVsBOwFPATsBTwE7AU8BOwFPATsBTwE7AU8BOwFP
@@ -306,10 +306,6 @@
   </data>
   <data name="Label12.Text" xml:space="preserve">
     <value>Create a New Data Regression Study</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lvlatest.Alignment" type="System.Windows.Forms.ListViewAlignment, System.Windows.Forms">
-    <value>Top</value>
   </data>
   <data name="Label5.Location" type="System.Drawing.Point, System.Drawing">
     <value>472, 166</value>

@@ -527,9 +527,8 @@ Public Class FormLLEDiagram
     Private Sub TSB_PrinterSetup_Click(sender As System.Object, e As System.EventArgs) Handles TSB_PrinterSetup.Click
         PrintDialog1.ShowDialog()
     End Sub
-
-    Private Sub TSB_Test_Click(sender As System.Object, e As System.EventArgs)
-        'Das ist ein Test
+    Private Sub FormLLEDiagram_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
+        DWSIM.App.HelpRequested("UT_Triangular_LLE.htm")
     End Sub
 End Class
 Public Class Rec
