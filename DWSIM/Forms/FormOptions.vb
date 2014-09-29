@@ -107,8 +107,6 @@ Public Class FormOptions
 
         Me.cbudb.Checked = My.Settings.ReplaceComps
 
-        Me.CheckBoxConstantProperties.Checked = My.Settings.ReplaceCompoundConstantProperties
-
         If TrackBar1.Value = 1 Then
             Me.KryptonLabel3.Text = DWSIM.App.GetLocalString("minuto1")
         Else
@@ -538,7 +536,4 @@ Public Class FormOptions
         My.Settings.EnableGPUProcessing = chkEnableGPUProcessing.Checked
     End Sub
 
-    Private Sub CheckBoxConstantProperties_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CheckBoxConstantProperties.CheckedChanged
-        My.Settings.ReplaceCompoundConstantProperties = CheckBoxConstantProperties.Checked
-    End Sub
 End Class

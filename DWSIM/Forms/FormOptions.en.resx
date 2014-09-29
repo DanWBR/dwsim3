@@ -229,18 +229,6 @@
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Features</value>
   </data>
-  <data name="Label8.Text" xml:space="preserve">
-    <value>If checked, when you load a simulation file, if the simulation compounds are also present in one of the loaded databases, DWSIM will use the constant properties loaded from the simulation file instead of the ones existing in the loaded databases.</value>
-  </data>
-  <data name="CheckBoxConstantProperties.Size" type="System.Drawing.Size, System.Drawing">
-    <value>388, 17</value>
-  </data>
-  <data name="CheckBoxConstantProperties.Text" xml:space="preserve">
-    <value>Replace database constant properties with the ones from the simulation file</value>
-  </data>
-  <data name="GroupBox9.Text" xml:space="preserve">
-    <value>Compound Constant Properties</value>
-  </data>
   <data name="cbudb.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 47</value>
   </data>
@@ -295,10 +283,10 @@
 </value>
   </data>
   <data name="dgvdb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>740, 209</value>
+    <value>740, 289</value>
   </data>
   <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>746, 232</value>
+    <value>746, 312</value>
   </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Compound Databases</value>
@@ -413,7 +401,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABw
-        KgAAAk1TRnQBSQFMAgEBCgEAAfwBAAH8AQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAQwBAQEMAQEBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAeQCogHiAqAB4QKfAd4CnAHcAZwBmgHaApgB2gKYAdkClwHXApUB1gKU
         AdMCkQHTApEB0QKPAc8CjQHPAo0BzwKNAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKf
         Ad4CnAHeApwB3AKaAdoCmAHaApgB2gKYAdoCmGAAA+wD8APuA+0B6gHrAeoD6APnAuUB5gLjAeQD4gPh

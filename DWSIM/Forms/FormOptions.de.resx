@@ -117,31 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Funktionen</value>
-  </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Komponenten</value>
-  </data>
-  <data name="FaTabStripItem6.Title" xml:space="preserve">
-    <value>Wechselwirkungsparameter</value>
-  </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Sprache</value>
-  </data>
-  <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Backups</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>746, 268</value>
-  </data>
-  <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Mittel</value>
-  </data>
   <data name="GroupBox8.Text" xml:space="preserve">
     <value>Informationen GPU gewählt</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
     <value>222, 51</value>
   </data>
@@ -172,8 +151,11 @@
   <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
     <value>Aktiviere parallele Berechnungen</value>
   </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Anderen</value>
+  <data name="GroupBox7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>746, 268</value>
+  </data>
+  <data name="GroupBox7.Text" xml:space="preserve">
+    <value>Mittel</value>
   </data>
   <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
     <value>196, 17</value>
@@ -187,8 +169,8 @@
   <data name="chkconsole.Text" xml:space="preserve">
     <value>Umleitung der Konsolenausgabe</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Meldungen</value>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Anderen</value>
   </data>
   <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>227, 17</value>
@@ -196,20 +178,11 @@
   <data name="KryptonCheckBox1.Text" xml:space="preserve">
     <value>Zeige beim Start den Eröffnungsbildschirm</value>
   </data>
-  <data name="GroupBox9.Text" xml:space="preserve">
-    <value>Reinstoffdaten der Komponenten</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Meldungen</value>
   </data>
-  <data name="Label8.Text" xml:space="preserve">
-    <value>Wenn das stimmt, laden Sie eine bestehende Simulation zu Simulation, wenn Substanzen auch in der Datenbank vorhanden sind, werden sie für die Eigenschaften in der Datei Simulation anstelle der vorhandenen Datenbank enthalten sind, verwendet werden.</value>
-  </data>
-  <data name="CheckBoxConstantProperties.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 17</value>
-  </data>
-  <data name="CheckBoxConstantProperties.Text" xml:space="preserve">
-    <value>Ersetze Reinstoffdaten von Komponenten in der Simulation</value>
-  </data>
-  <data name="GroupBox11.Text" xml:space="preserve">
-    <value>Aufgaben</value>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Funktionen</value>
   </data>
   <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
     <value>330, 17</value>
@@ -235,20 +208,60 @@
   <data name="Button7.Text" xml:space="preserve">
     <value>Anwenderdatenbank hinzufügen</value>
   </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>Aufgaben</value>
+  </data>
+  <data name="DataGridViewCellStyle1.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        Qk32AgAAAAAAADYAAAAoAAAADgAAABAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEgoTGw8bGw8bGw8bGw8bGw8bGw8bG
+        w8bGw8bGw8bGw8bGw8bGw8YAAAAAAISChP///////////////////////////////////////////8bD
+        xgAAAAAAhIKE////////////////////////////////////////////xsPGAAAAAACEgoT/////////
+        ///////////////////////////////////Gw8YAAAAAAISChP//////////////////////////////
+        /////////////8bDxgAAAAAAhIKE////////////AAD/AAD/////////AAD/AAD/////////xsPGAAAA
+        AACEgoT///////////////8AAP8AAP8AAP8AAP/////////////Gw8YAAAAAAISChP//////////////
+        /////wAA/wAA/////////////////8bDxgAAAAAAhIKE////////////////AAD/AAD/AAD/AAD/////
+        ////////xsPGAAAAAACEgoT///////////8AAP8AAP////////8AAP8AAP/////////Gw8YAAAAAAISC
+        hP///////////////////////////////////////////8bDxgAAAAAAhIKE////////////////////
+        ////////////////////////xsPGAAAAAACEgoT/////////////////////////////////////////
+        ///Gw8YAAAAAAISChP///////////////////////////////////////////8bDxgAAAAAAhIKEhIKE
+        hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
+</value>
+  </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Datenbanken Komponenten</value>
   </data>
-  <data name="GroupBox12.Text" xml:space="preserve">
-    <value>Aufgaben</value>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Komponenten</value>
   </data>
   <data name="Button4.Text" xml:space="preserve">
     <value>Datenbank für Wechselwirkungsparameter hinzufügen</value>
   </data>
+  <data name="GroupBox12.Text" xml:space="preserve">
+    <value>Aufgaben</value>
+  </data>
+  <data name="DataGridViewCellStyle2.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        Qk32AgAAAAAAADYAAAAoAAAADgAAABAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEgoTGw8bGw8bGw8bGw8bGw8bGw8bG
+        w8bGw8bGw8bGw8bGw8bGw8YAAAAAAISChP///////////////////////////////////////////8bD
+        xgAAAAAAhIKE////////////////////////////////////////////xsPGAAAAAACEgoT/////////
+        ///////////////////////////////////Gw8YAAAAAAISChP//////////////////////////////
+        /////////////8bDxgAAAAAAhIKE////////////AAD/AAD/////////AAD/AAD/////////xsPGAAAA
+        AACEgoT///////////////8AAP8AAP8AAP8AAP/////////////Gw8YAAAAAAISChP//////////////
+        /////wAA/wAA/////////////////8bDxgAAAAAAhIKE////////////////AAD/AAD/AAD/AAD/////
+        ////////xsPGAAAAAACEgoT///////////8AAP8AAP////////8AAP8AAP/////////Gw8YAAAAAAISC
+        hP///////////////////////////////////////////8bDxgAAAAAAhIKE////////////////////
+        ////////////////////////xsPGAAAAAACEgoT/////////////////////////////////////////
+        ///Gw8YAAAAAAISChP///////////////////////////////////////////8bDxgAAAAAAhIKEhIKE
+        hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
+</value>
+  </data>
   <data name="GroupBox10.Text" xml:space="preserve">
     <value>Datenbanken Wechselwirkungsparameter</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Sprache</value>
+  <data name="FaTabStripItem6.Title" xml:space="preserve">
+    <value>Wechselwirkungsparameter</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
     <value>279, 47</value>
@@ -327,7 +340,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABw
-        KgAAAk1TRnQBSQFMAgEBCgEAAbQBAAG0AQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAbwBAAG8AQABEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAeQCogHiAqAB4QKfAd4CnAHcAZwBmgHaApgB2gKYAdkClwHXApUB1gKU
         AdMCkQHTApEB0QKPAc8CjQHPAo0BzwKNAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKf
         Ad4CnAHeApwB3AKaAdoCmAHaApgB2gKYAdoCmGAAA+wD8APuA+0B6gHrAeoD6APnAuUB5gLjAeQD4gPh
@@ -526,8 +539,11 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Wählen Sie eine Sprache für die Oberfläche aus der Liste aus und klicken Sie für die Bestätigung 'OK':</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Backupkopie</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Sprache</value>
   </data>
   <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>292, 25</value>
@@ -559,8 +575,11 @@
   <data name="KryptonCheckBox6.Text" xml:space="preserve">
     <value>Aktiviere Backupkopien</value>
   </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>IronPython und IronRuby</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Backupkopie</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Backups</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>33, 13</value>
@@ -579,6 +598,9 @@
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Verwalten Sie die Pfade, wo der Compiler nach Dateien suchen soll, um die Skripte zu importieren:</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>IronPython und IronRuby</value>
   </data>
   <data name="FolderBrowserDialog1.Description" xml:space="preserve">
     <value>Auswahl eines Verzeichnisses...</value>
