@@ -41,6 +41,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             MyBase.New(comode)
             With Me.Parameters
                 .Add("PP_IDEAL_VAPOR_PHASE_FUG", 1)
+                .Add("PP_ENTH_CP_CALC_METHOD", 0)
             End With
         End Sub
 
@@ -50,6 +51,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             With Me.Parameters
                 .Add("PP_IDEAL_VAPOR_PHASE_FUG", 1)
+                .Add("PP_ENTH_CP_CALC_METHOD", 0)
             End With
 
             Me.IsConfigurable = True
@@ -206,26 +208,96 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     result = Me.m_lk.Z_LK(state, T / Me.AUX_TCM(phase), P / Me.AUX_PCM(phase), Me.AUX_WM(phase))(0)
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
                 Case "heatcapacity", "heatcapacitycp"
-                    resultObj = Me.m_lk.CpCvR_LK(state, T, P, RET_VMOL(phase), RET_VKij(), RET_VMAS(phase), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
+                    If state = "V" Then
+                        resultObj = Me.m_lk.CpCvR_LK(state, T, P, RET_VMOL(phase), RET_VKij(), RET_VMAS(phase), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
+                        result = resultObj(1)
+                    Else
+                        Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                            Case 0 'LK
+                                resultObj = Me.m_lk.CpCvR_LK(state, T, P, RET_VMOL(phase), RET_VKij(), RET_VMAS(phase), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
+                                result = resultObj(1)
+                            Case 1 'Ideal
+                                result = Me.AUX_LIQCPm(T, phaseID)
+                            Case 2 'Excess
+                                result = Me.AUX_LIQCPm(T, phaseID) + Me.m_uni.CPEX_MIX(T, RET_VMOL(phase), Me.RET_VNAMES) / Me.AUX_MMM(phase)
+                        End Select
+                    End If
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
                 Case "heatcapacitycv"
-                    resultObj = Me.m_lk.CpCvR_LK(state, T, P, RET_VMOL(phase), RET_VKij(), RET_VMAS(phase), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
-                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
+                    If state = "V" Then
+                        resultObj = Me.m_lk.CpCvR_LK(state, T, P, RET_VMOL(phase), RET_VKij(), RET_VMAS(phase), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
+                        result = resultObj(2)
+                    Else
+                        Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                            Case 0 'LK
+                                resultObj = Me.m_lk.CpCvR_LK(state, T, P, RET_VMOL(phase), RET_VKij(), RET_VMAS(phase), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
+                                result = resultObj(2)
+                            Case 1 'Ideal
+                                result = Me.AUX_LIQCPm(T, phaseID)
+                            Case 2 'Excess
+                                result = Me.AUX_LIQCPm(T, phaseID) + Me.m_uni.CPEX_MIX(T, RET_VMOL(phase), Me.RET_VNAMES) / Me.AUX_MMM(phase)
+                        End Select
+                    End If
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
                 Case "enthalpy", "enthalpynf"
-                    result = Me.m_lk.H_LK_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, phase))
+                    If state = "V" Then
+                        result = Me.m_lk.H_LK_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, phase))
+                    Else
+                        Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                            Case 0 'LK
+                                result = Me.m_lk.H_LK_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, phase))
+                            Case 1 'Ideal
+                                result = Me.RET_Hid_L(298.15, T, RET_VMOL(phase))
+                            Case 2 'Excess
+                                result = Me.RET_Hid_L(298.15, T, RET_VMOL(phase)) + Me.m_uni.HEX_MIX(T, RET_VMOL(phase), Me.RET_VNAMES) / Me.AUX_MMM(phase)
+                        End Select
+                    End If
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
                     result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = result
                 Case "entropy", "entropynf"
-                    result = Me.m_lk.S_LK_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, phase))
+                    If state = "V" Then
+                        result = Me.m_lk.S_LK_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, phase))
+                    Else
+                        Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                            Case 0 'LK
+                                result = Me.m_lk.S_LK_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, phase))
+                            Case 1 'Ideal
+                                result = Me.RET_Hid_L(298.15, T, RET_VMOL(phase)) / T
+                            Case 2 'Excess
+                                result = (Me.RET_Hid_L(298.15, T, RET_VMOL(phase)) + Me.m_uni.HEX_MIX(T, RET_VMOL(phase), Me.RET_VNAMES)) / Me.AUX_MMM(phase) / T
+                        End Select
+                    End If
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
                     result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = result
                 Case "excessenthalpy"
-                    result = Me.m_lk.H_LK_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), 0)
+                    If state = "V" Then
+                        result = Me.m_lk.H_LK_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), 0)
+                    Else
+                        Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                            Case 0 'LK
+                                result = Me.m_lk.H_LK_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), 0)
+                            Case 1 'Ideal
+                                result = 0.0#
+                            Case 2 'Excess
+                                result = Me.m_uni.HEX_MIX(T, RET_VMOL(phase), Me.RET_VNAMES) / Me.AUX_MMM(phase)
+                        End Select
+                    End If
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEnthalpy = result
                 Case "excessentropy"
-                    result = Me.m_lk.S_LK_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), 0)
+                    If state = "V" Then
+                        result = Me.m_lk.S_LK_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), 0)
+                    Else
+                        Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                            Case 0 'LK
+                                result = Me.m_lk.S_LK_MIX(state, T, P, RET_VMOL(phase), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), 0)
+                            Case 1 'Ideal
+                                result = 0.0#
+                            Case 2 'Excess
+                                result = Me.m_uni.HEX_MIX(T, RET_VMOL(phase), Me.RET_VNAMES) / Me.AUX_MMM(phase) / T
+                        End Select
+                    End If
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.excessEntropy = result
                 Case "enthalpyf"
                     Dim entF As Double = Me.AUX_HFm25(phase)
@@ -329,16 +401,40 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 result = Me.AUX_LIQDENS(T, P, 0.0#, phaseID, False)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
-                result = Me.m_lk.H_LK_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, dwpl))
+                Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                    Case 0 'LK
+                        result = Me.m_lk.H_LK_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, dwpl))
+                    Case 1 'Ideal
+                        result = Me.RET_Hid_L(298.15, T, RET_VMOL(dwpl))
+                    Case 2 'Excess
+                        result = Me.RET_Hid_L(298.15, T, RET_VMOL(dwpl)) + Me.m_uni.HEX_MIX(T, RET_VMOL(dwpl), Me.RET_VNAMES) / Me.AUX_MMM(dwpl)
+                End Select
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
-                result = Me.m_lk.S_LK_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, dwpl))
+                Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                    Case 0 'LK
+                        result = Me.m_lk.S_LK_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, dwpl))
+                    Case 1 'Ideal
+                        result = Me.RET_Hid_L(298.15, T, RET_VMOL(dwpl)) / T
+                    Case 2 'Excess
+                        result = (Me.RET_Hid_L(298.15, T, RET_VMOL(dwpl)) + Me.m_uni.HEX_MIX(T, RET_VMOL(dwpl), Me.RET_VNAMES)) / Me.AUX_MMM(dwpl) / T
+                End Select
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
-                'result = Me.m_pr.Z_PR(T, P, RET_VMOL(dwpl), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
                 result = Me.m_lk.Z_LK("L", T / Me.AUX_TCM(dwpl), P / Me.AUX_PCM(dwpl), Me.AUX_WM(dwpl))(0)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
-                resultObj = Me.m_lk.CpCvR_LK("L", T, P, RET_VMOL(dwpl), RET_VKij(), RET_VMAS(dwpl), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
+                Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                    Case 0 'LK
+                        resultObj = Me.m_lk.CpCvR_LK("L", T, P, RET_VMOL(dwpl), RET_VKij(), RET_VMAS(dwpl), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
+                        Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
+                        Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
+                    Case 1 'Ideal
+                        result = Me.AUX_LIQCPm(T, phaseID)
+                        Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
+                        Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
+                    Case 2 'Excess
+                        result = Me.AUX_LIQCPm(T, phaseID) + Me.m_uni.CPEX_MIX(T, RET_VMOL(dwpl), Me.RET_VNAMES) / Me.AUX_MMM(dwpl)
+                        Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
+                        Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
+                End Select
                 result = Me.AUX_MMM(fase)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = result
                 result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
@@ -696,7 +792,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim H As Double
 
             If st = State.Liquid Then
-                H = Me.m_lk.H_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Hid(298.15, T, Vx))
+                Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                    Case 0 'LK
+                        H = Me.m_lk.H_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Hid(298.15, T, Vx))
+                    Case 1 'Ideal
+                        H = Me.RET_Hid_L(298.15, T, Vx)
+                    Case 2 'Excess
+                        H = Me.RET_Hid_L(298.15, T, Vx) + Me.m_uni.HEX_MIX(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx)
+                End Select
             Else
                 H = Me.m_lk.H_LK_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Hid(298.15, T, Vx))
             End If
@@ -709,7 +812,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim H As Double
 
             If st = State.Liquid Then
-                H = Me.m_lk.H_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
+                Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                    Case 0 'LK
+                        H = Me.m_lk.H_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
+                    Case 1 'Ideal
+                        H = 0.0#
+                    Case 2 'Excess
+                        H = Me.m_uni.HEX_MIX(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx)
+                End Select
             Else
                 H = Me.m_lk.H_LK_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
             End If
@@ -781,7 +891,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim S As Double
 
             If st = State.Liquid Then
-                S = Me.m_lk.S_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Sid(298.15, T, P, Vx))
+                Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                    Case 0 'LK
+                        S = Me.m_lk.S_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Sid(298.15, T, P, Vx))
+                    Case 1 'Ideal
+                        S = Me.RET_Hid_L(298.15, T, Vx) / T
+                    Case 2 'Excess
+                        S = (Me.RET_Hid_L(298.15, T, Vx) + Me.m_uni.HEX_MIX(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx)) / T
+                End Select
             Else
                 S = Me.m_lk.S_LK_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Sid(298.15, T, P, Vx))
             End If
@@ -794,7 +911,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim S As Double
 
             If st = State.Liquid Then
-                S = Me.m_lk.S_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
+                Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                    Case 0 'LK
+                        S = Me.m_lk.S_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
+                    Case 1 'Ideal
+                        S = 0
+                    Case 2 'Excess
+                        S = (Me.m_uni.HEX_MIX(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx)) / T
+                End Select
             Else
                 S = Me.m_lk.S_LK_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
             End If

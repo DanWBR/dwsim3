@@ -6641,7 +6641,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_LIQCPm(ByVal T As Double, ByVal phaseid As Double) As Double
+        Public Function AUX_LIQCPm(ByVal T As Double, ByVal phaseid As Integer) As Double
 
             Dim val As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -6704,6 +6704,24 @@ Final3:
             Return result2
 
         End Function
+
+        Public Function AUX_INT_CPDTi_L(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String)
+
+            Dim deltaT As Double = (T2 - T1) / 10
+            Dim Ti As Double
+            Dim i As Integer = 0
+            Dim integral As Double = 0
+
+            Ti = T1 + deltaT
+            For i = 0 To 9
+                integral += Me.AUX_LIQ_Cpi(Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties, Ti) * deltaT
+                Ti += deltaT
+            Next
+
+            Return integral
+
+        End Function
+
 
         Public Function AUX_INT_CPDT_Ti(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String)
 
@@ -7256,23 +7274,31 @@ Final3:
 
         Public Function RET_Hid(ByVal T1 As Double, ByVal T2 As Double, ByVal Vz As Object) As Double
 
-            Dim val As Double
-            'Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+            Return Me.AUX_INT_CPDTm(T1, T2, Me.AUX_CONVERT_MOL_TO_MASS(Vz))
 
-            Dim i As Integer = 0
+        End Function
 
-            'For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-            '    val += Me.AUX_CONVERT_MOL_TO_MASS(Vz)(i) * subst.ConstantProperties.Enthalpy_of_Formation_25C
-            '    i = i + 1
-            'Next
+        Public Function RET_Hid_L(ByVal T1 As Double, ByVal T2 As Double, ByVal Vz As Object) As Double
 
-            Return Me.AUX_INT_CPDTm(T1, T2, Me.AUX_CONVERT_MOL_TO_MASS(Vz)) + val
+            Return Me.AUX_INT_CPDTm_L(T1, T2, Me.AUX_CONVERT_MOL_TO_MASS(Vz))
+
+        End Function
+
+        Public Function RET_Sid_L(ByVal T1 As Double, ByVal T2 As Double, ByVal Vz As Object) As Double
+
+            Return Me.RET_Hid_L(T1, T2, Vz) / T2
 
         End Function
 
         Public Function RET_Hid_i(ByVal T1 As Double, ByVal T2 As Double, ByVal id As String) As Double
 
             Return Me.AUX_INT_CPDTi(T1, T2, id)
+
+        End Function
+
+        Public Function RET_Hid_i_L(ByVal T1 As Double, ByVal T2 As Double, ByVal id As String) As Double
+
+            Return Me.AUX_INT_CPDTi_L(T1, T2, id)
 
         End Function
 
@@ -7637,6 +7663,20 @@ Final3:
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 val += Vw(i) * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
+                i += 1
+            Next
+
+            Return val
+
+        End Function
+
+        Public Function AUX_INT_CPDTm_L(ByVal T1 As Double, ByVal T2 As Double, ByVal Vw As Object)
+
+            Dim val As Double
+            Dim i As Integer = 0
+            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                val += Vw(i) * Me.AUX_INT_CPDTi_L(T1, T2, subst.Nome)
                 i += 1
             Next
 

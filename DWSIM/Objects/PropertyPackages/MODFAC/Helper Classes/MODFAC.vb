@@ -302,6 +302,55 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
+
+        Function DLNGAMMA_DT(ByVal T As Double, ByVal Vx As Array, ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As Double(,)) As Array
+
+            Dim gamma1, gamma2 As Double()
+
+            Dim epsilon As Double = 0.001
+
+            gamma1 = GAMMA_MR(T, Vx, VQ, VR, VEKI)
+            gamma2 = GAMMA_MR(T + epsilon, Vx, VQ, VR, VEKI)
+
+            Dim dgamma(gamma1.Length - 1) As Double
+
+            For i As Integer = 0 To Vx.Length - 1
+                dgamma(i) = (gamma2(i) - gamma1(i)) / (epsilon)
+            Next
+
+            Return dgamma
+
+        End Function
+
+        Function HEX_MIX(ByVal T As Double, ByVal Vx As Array, ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As Double(,)) As Double
+
+            Dim dgamma As Double() = DLNGAMMA_DT(T, Vx, VQ, VR, VEKI)
+
+            Dim hex As Double = 0.0#
+
+            For i As Integer = 0 To Vx.Length - 1
+                hex += -8.314 * T ^ 2 * Vx(i) * dgamma(i)
+            Next
+
+            Return hex 'kJ/kmol
+
+        End Function
+
+        Function CPEX_MIX(ByVal T As Double, ByVal Vx As Array, ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As Double(,)) As Double
+
+            Dim hex1, hex2, cpex As Double
+
+            Dim epsilon As Double = 0.001
+
+            hex1 = HEX_MIX(T, Vx, VQ, VR, VEKI)
+            hex2 = HEX_MIX(T + epsilon, Vx, VQ, VR, VEKI)
+
+            cpex = (hex2 - hex1) / epsilon
+
+            Return cpex 'kJ/kmol.K
+
+        End Function
+
     End Class
 
     <System.Serializable()> Public Class ModfacGroups

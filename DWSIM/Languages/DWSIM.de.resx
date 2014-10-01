@@ -4853,4 +4853,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="DataOriginal" xml:space="preserve">
     <value>Originaldaten</value>
   </data>
+  <data name="PP_ENTH_CP_CALC_METHOD" xml:space="preserve">
+    <value>Enthalpy/Entropy/Cp calculation method (0 = Lee-Kesler, 1 = Ideal, 2 = Excess)</value>
+  </data>
 </root>
