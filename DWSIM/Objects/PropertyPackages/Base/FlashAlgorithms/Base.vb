@@ -142,6 +142,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             nt = UBound(VzArray, 1)
 
             Dim Y, K As Double(,), tol As Double
+            Dim fcv(n), fcl(n) As Double
 
             Select Case searchseverity
                 Case 0
@@ -175,7 +176,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim h(n), lnfi_z(n), Y_ant(m, n) As Double
 
-            Dim gl, hl, sl, gv, hv, sv As Double
+            Dim gl, gv As Double
 
             If My.Settings.EnableParallelProcessing Then
                 My.MyApplication.IsRunningParallelTasks = True
@@ -184,22 +185,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 End If
                 Try
                     Dim task1 As Task = New Task(Sub()
-                                                     hl = pp.DW_CalcEnthalpy(Vz, T, P, State.Liquid)
+                                                     fcv = pp.DW_CalcFugCoeff(Vz, T, P, State.Vapor)
                                                  End Sub)
                     Dim task2 As Task = New Task(Sub()
-                                                     sl = pp.DW_CalcEntropy(Vz, T, P, State.Liquid)
-                                                 End Sub)
-                    Dim task3 As Task = New Task(Sub()
-                                                     hv = pp.DW_CalcEnthalpy(Vz, T, P, State.Vapor)
-                                                 End Sub)
-                    Dim task4 As Task = New Task(Sub()
-                                                     sv = pp.DW_CalcEntropy(Vz, T, P, State.Vapor)
+                                                     fcl = pp.DW_CalcFugCoeff(Vz, T, P, State.Liquid)
                                                  End Sub)
                     task1.Start()
                     task2.Start()
-                    task3.Start()
-                    task4.Start()
-                    Task.WaitAll(task1, task2, task3, task4)
+                    Task.WaitAll(task1, task2)
                 Catch ae As AggregateException
                     For Each ex As Exception In ae.InnerExceptions
                         Throw ex
@@ -212,19 +205,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 End Try
                 My.MyApplication.IsRunningParallelTasks = False
             Else
-                hl = pp.DW_CalcEnthalpy(Vz, T, P, State.Liquid)
-                sl = pp.DW_CalcEntropy(Vz, T, P, State.Liquid)
-                hv = pp.DW_CalcEnthalpy(Vz, T, P, State.Vapor)
-                sv = pp.DW_CalcEntropy(Vz, T, P, State.Vapor)
+                fcv = pp.DW_CalcFugCoeff(Vz, T, P, State.Vapor)
+                fcl = pp.DW_CalcFugCoeff(Vz, T, P, State.Liquid)
             End If
 
-            gl = hl - T * sl
-            gv = hv - T * sv
+            gv = 0.0#
+            gl = 0.0#
+            For i = 0 To n
+                gv += Vz(i) * Log(fcv(i) * Vz(i))
+                gl += Vz(i) * Log(fcl(i) * Vz(i))
+            Next
 
             If gl <= gv Then
-                lnfi_z = pp.DW_CalcFugCoeff(Vz, T, P, State.Liquid)
+                lnfi_z = fcl
             Else
-                lnfi_z = pp.DW_CalcFugCoeff(Vz, T, P, State.Vapor)
+                lnfi_z = fcv
             End If
 
             For i = 0 To n
@@ -315,22 +310,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             End If
                             Try
                                 Dim task1 As Task = New Task(Sub()
-                                                                 hl = pp.DW_CalcEnthalpy(currcomp, T, P, State.Liquid)
+                                                                 fcv = pp.DW_CalcFugCoeff(currcomp, T, P, State.Vapor)
                                                              End Sub)
                                 Dim task2 As Task = New Task(Sub()
-                                                                 sl = pp.DW_CalcEntropy(currcomp, T, P, State.Liquid)
-                                                             End Sub)
-                                Dim task3 As Task = New Task(Sub()
-                                                                 hv = pp.DW_CalcEnthalpy(currcomp, T, P, State.Vapor)
-                                                             End Sub)
-                                Dim task4 As Task = New Task(Sub()
-                                                                 sv = pp.DW_CalcEntropy(currcomp, T, P, State.Vapor)
+                                                                 fcl = pp.DW_CalcFugCoeff(currcomp, T, P, State.Liquid)
                                                              End Sub)
                                 task1.Start()
                                 task2.Start()
-                                task3.Start()
-                                task4.Start()
-                                Task.WaitAll(task1, task2, task3, task4)
+                                Task.WaitAll(task1, task2)
                             Catch ae As AggregateException
                                 For Each ex As Exception In ae.InnerExceptions
                                     Throw ex
@@ -343,19 +330,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             End Try
                             My.MyApplication.IsRunningParallelTasks = False
                         Else
-                            hl = pp.DW_CalcEnthalpy(currcomp, T, P, State.Liquid)
-                            sl = pp.DW_CalcEntropy(currcomp, T, P, State.Liquid)
-                            hv = pp.DW_CalcEnthalpy(currcomp, T, P, State.Vapor)
-                            sv = pp.DW_CalcEntropy(currcomp, T, P, State.Vapor)
+                            fcv = pp.DW_CalcFugCoeff(currcomp, T, P, State.Vapor)
+                            fcl = pp.DW_CalcFugCoeff(currcomp, T, P, State.Liquid)
                         End If
 
-                        gl = hl - T * sl
-                        gv = hv - T * sv
+                        gv = 0.0#
+                        gl = 0.0#
+                        For j = 0 To n
+                            gv += Vz(j) * Log(fcv(j) * Vz(j))
+                            gl += Vz(j) * Log(fcl(j) * Vz(j))
+                        Next
 
                         If gl <= gv Then
-                            tmpfug = pp.DW_CalcFugCoeff(currcomp, T, P, State.Liquid)
+                            tmpfug = fcl
                         Else
-                            tmpfug = pp.DW_CalcFugCoeff(currcomp, T, P, State.Vapor)
+                            tmpfug = fcv
                         End If
 
                         j = 0
