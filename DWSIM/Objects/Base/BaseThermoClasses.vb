@@ -2195,6 +2195,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         'User databases are XML-serialized versions of this base class, and they may include hypos and pseudos.
         Public OriginalDB As String = "DWSIM"
         Public CurrentDB As String = "DWSIM"
+        Public CompCreatorStudyFile As String = ""
 
         'COSMO-SAC's database equivalent name
         Public COSMODBName = ""

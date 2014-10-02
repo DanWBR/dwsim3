@@ -701,6 +701,35 @@
   <data name="Column13.Width" type="System.Int32, mscorlib">
     <value>50</value>
   </data>
+  <metadata name="BtnEdit.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="DataGridViewCellStyle2.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        Qk32AgAAAAAAADYAAAAoAAAADgAAABAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEgoTGw8bGw8bGw8bGw8bGw8bGw8bG
+        w8bGw8bGw8bGw8bGw8bGw8YAAAAAAISChP///////////////////////////////////////////8bD
+        xgAAAAAAhIKE////////////////////////////////////////////xsPGAAAAAACEgoT/////////
+        ///////////////////////////////////Gw8YAAAAAAISChP//////////////////////////////
+        /////////////8bDxgAAAAAAhIKE////////////AAD/AAD/////////AAD/AAD/////////xsPGAAAA
+        AACEgoT///////////////8AAP8AAP8AAP8AAP/////////////Gw8YAAAAAAISChP//////////////
+        /////wAA/wAA/////////////////8bDxgAAAAAAhIKE////////////////AAD/AAD/AAD/AAD/////
+        ////////xsPGAAAAAACEgoT///////////8AAP8AAP////////8AAP8AAP/////////Gw8YAAAAAAISC
+        hP///////////////////////////////////////////8bDxgAAAAAAhIKE////////////////////
+        ////////////////////////xsPGAAAAAACEgoT/////////////////////////////////////////
+        ///Gw8YAAAAAAISChP///////////////////////////////////////////8bDxgAAAAAAhIKEhIKE
+        hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
+</value>
+  </data>
+  <data name="BtnEdit.HeaderText" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="BtnEdit.MinimumWidth" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
+  <data name="BtnEdit.Width" type="System.Int32, mscorlib">
+    <value>50</value>
+  </data>
   <data name="dgvdb.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Bottom</value>
   </data>
@@ -857,7 +886,7 @@
   <metadata name="DataGridViewImageColumn1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="DataGridViewCellStyle2.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="DataGridViewCellStyle3.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         Qk32AgAAAAAAADYAAAAoAAAADgAAABAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEgoTGw8bGw8bGw8bGw8bGw8bGw8bG
@@ -1060,7 +1089,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABo
-        KgAAAk1TRnQBSQFMAgEBCgEAASwBAwEsAQMBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAATQBAwE0AQMBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKfAd4CnAHe
         ApwB3AKaAdoCmAHaApgB2gKYAdoCmAHkAqIB4gKgAeECnwHeApwB3AGcAZoB2gKYAdoCmAHZApcB1wKV
         AdYClAHTApEB0wKRAdECjwHPAo0BzwKNAc8CjWAABvYD9APzAfIB8wHyA/ED8APuA+0D6wPpA+gB5wLm
@@ -1898,30 +1927,6 @@
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Configurações Gerais</value>
   </data>
-  <data name="&gt;&gt;Column12.Name" xml:space="preserve">
-    <value>Column12</value>
-  </data>
-  <data name="&gt;&gt;Column12.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Column14.Name" xml:space="preserve">
-    <value>Column14</value>
-  </data>
-  <data name="&gt;&gt;Column14.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Column15.Name" xml:space="preserve">
-    <value>Column15</value>
-  </data>
-  <data name="&gt;&gt;Column15.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Column13.Name" xml:space="preserve">
-    <value>Column13</value>
-  </data>
-  <data name="&gt;&gt;Column13.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewImageColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;DataGridViewTextBoxColumn1.Name" xml:space="preserve">
     <value>DataGridViewTextBoxColumn1</value>
   </data>
@@ -1975,6 +1980,36 @@
   </data>
   <data name="&gt;&gt;SuperToolTip1.Type" xml:space="preserve">
     <value>Omarslvd.Windows.Forms.SuperToolTip, SuperToolTip, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;Column12.Name" xml:space="preserve">
+    <value>Column12</value>
+  </data>
+  <data name="&gt;&gt;Column12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Column14.Name" xml:space="preserve">
+    <value>Column14</value>
+  </data>
+  <data name="&gt;&gt;Column14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Column15.Name" xml:space="preserve">
+    <value>Column15</value>
+  </data>
+  <data name="&gt;&gt;Column15.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Column13.Name" xml:space="preserve">
+    <value>Column13</value>
+  </data>
+  <data name="&gt;&gt;Column13.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewImageColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BtnEdit.Name" xml:space="preserve">
+    <value>BtnEdit</value>
+  </data>
+  <data name="&gt;&gt;BtnEdit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewImageColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormOptions</value>

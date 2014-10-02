@@ -559,6 +559,7 @@ Public Class FormCompoundCreator
             .database = tbDBPath.Text
             .cp.Acentric_Factor = TextBoxAF.Text
             .cp.CAS_Number = TextBoxCAS.Text
+            .cp.CompCreatorStudyFile = .Filename
             .cp.Chao_Seader_Acentricity = TextBoxCSAF.Text
             .cp.Chao_Seader_Liquid_Molar_Volume = TextBoxCSLV.Text
             .cp.Chao_Seader_Solubility_Parameter = TextBoxCSSP.Text

@@ -95,6 +95,7 @@ Partial Class FormMain
         Me.sfdUpdater = New System.Windows.Forms.SaveFileDialog()
         Me.SaveStudyDlg = New System.Windows.Forms.SaveFileDialog()
         Me.SaveRegStudyDlg = New System.Windows.Forms.SaveFileDialog()
+        Me.DatabaseManagerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
@@ -186,7 +187,7 @@ Partial Class FormMain
         '
         'VerToolStripMenuItem
         '
-        Me.VerToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PreferênciasDoDWSIMToolStripMenuItem, Me.MostrarBarraDeFerramentasToolStripMenuItem})
+        Me.VerToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PreferênciasDoDWSIMToolStripMenuItem, Me.MostrarBarraDeFerramentasToolStripMenuItem, Me.DatabaseManagerToolStripMenuItem})
         Me.VerToolStripMenuItem.Name = "VerToolStripMenuItem"
         Me.VerToolStripMenuItem.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
         resources.ApplyResources(Me.VerToolStripMenuItem, "VerToolStripMenuItem")
@@ -498,6 +499,12 @@ Partial Class FormMain
         '
         resources.ApplyResources(Me.SaveRegStudyDlg, "SaveRegStudyDlg")
         '
+        'DatabaseManagerToolStripMenuItem
+        '
+        Me.DatabaseManagerToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_form_edit
+        Me.DatabaseManagerToolStripMenuItem.Name = "DatabaseManagerToolStripMenuItem"
+        resources.ApplyResources(Me.DatabaseManagerToolStripMenuItem, "DatabaseManagerToolStripMenuItem")
+        '
         'FormMain
         '
         Me.AllowDrop = True
@@ -677,5 +684,6 @@ Partial Class FormMain
     Friend WithEvents NovoEstudoDoCriadorDeComponentesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SaveStudyDlg As System.Windows.Forms.SaveFileDialog
     Friend WithEvents SaveRegStudyDlg As System.Windows.Forms.SaveFileDialog
+    Friend WithEvents DatabaseManagerToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

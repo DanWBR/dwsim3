@@ -352,6 +352,12 @@
     <Compile Include="Forms\FormCompoundCreator.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\FormDBManager.Designer.vb">
+      <DependentUpon>FormDBManager.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormDBManager.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FormPassword.Designer.vb">
       <DependentUpon>FormPassword.vb</DependentUpon>
     </Compile>
@@ -1192,6 +1198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormDataRegression.es.resx">
       <DependentUpon>FormDataRegression.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormDBManager.resx">
+      <DependentUpon>FormDBManager.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormMain.resx">
       <SubType>Designer</SubType>

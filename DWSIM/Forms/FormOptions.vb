@@ -266,9 +266,10 @@ Public Class FormOptions
         If Not My.Settings.UserDatabases.Contains(path) And File.Exists(path) Then
             My.Settings.UserDatabases.Add(path)
             My.Settings.Save()
-            Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path, My.Resources.disconnect})
+            Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path, My.Resources.disconnect, My.Resources.application_form_edit})
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ReadOnly = True
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Remove")
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(4).ToolTipText = DWSIM.App.GetLocalString("Cliqueparaeditar")
         End If
     End Sub
 
@@ -292,6 +293,7 @@ Public Class FormOptions
             Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.lock})
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(4).ToolTipText = DWSIM.App.GetLocalString("Selado")
         End If
 
         name = "Biodiesel   "
@@ -300,6 +302,7 @@ Public Class FormOptions
             Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.lock})
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(4).ToolTipText = DWSIM.App.GetLocalString("Selado")
         End If
 
         name = "Electrolyte   "
@@ -308,6 +311,7 @@ Public Class FormOptions
             Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.lock})
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(4).ToolTipText = DWSIM.App.GetLocalString("Selado")
         End If
 
         name = "CoolProp   "
@@ -316,6 +320,7 @@ Public Class FormOptions
             Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.lock})
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
+            Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(4).ToolTipText = DWSIM.App.GetLocalString("Selado")
         End If
 
         'chemsep database
@@ -326,6 +331,7 @@ Public Class FormOptions
                 Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.disconnect})
                 Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ReadOnly = True
                 Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Remove")
+                Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(4).ToolTipText = DWSIM.App.GetLocalString("Selado")
             End If
         End If
 
@@ -334,11 +340,11 @@ Public Class FormOptions
         'user databases
         If Not My.Settings.UserDatabases Is Nothing Then
             For Each str As String In My.Settings.UserDatabases
-                path2 = str
-                If File.Exists(path2) Then
-                    Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, "User   " & CStr(i) & "   ", path2, My.Resources.disconnect})
+                If File.Exists(str) Then
+                    Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, "User   " & CStr(i) & "   ", str, My.Resources.disconnect, My.Resources.application_form_edit})
                     Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).ReadOnly = True
                     Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Remove")
+                    Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(4).ToolTipText = DWSIM.App.GetLocalString("Cliqueparaeditar")
                     i = i + 1
                 End If
             Next
@@ -387,25 +393,34 @@ Public Class FormOptions
     Private Sub dgvdb_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvdb.CellContentClick
         'remove component database
         If e.ColumnIndex = 3 And e.RowIndex > 3 Then
+            Dim result = MessageBox.Show("Delete database " & dgvdb.Rows(e.RowIndex).Cells(1).Value & " ?", "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)
+            If result = DialogResult.OK Then
+                If Me.dgvdb.Rows(e.RowIndex).Cells(1).Value = "ChemSep   " Then
 
-            If Me.dgvdb.Rows(e.RowIndex).Cells(1).Value = "ChemSep   " Then
+                    'remove chemsep database
+                    My.Settings.ChemSepDatabasePath = ""
+                    Me.dgvdb.Rows.RemoveAt(e.RowIndex)
+                    MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
 
-                'remove chemsep database
-                My.Settings.ChemSepDatabasePath = ""
-                Me.dgvdb.Rows.RemoveAt(e.RowIndex)
-                MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
+                Else
 
-            Else
+                    'remove user database
+                    My.Settings.UserDatabases.Remove(Me.dgvdb.Rows(e.RowIndex).Cells(2).Value)
+                    Me.dgvdb.Rows.RemoveAt(e.RowIndex)
+                    MessageBox.Show(DWSIM.App.GetLocalString("UDBRemoved"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                'remove user database
-                My.Settings.UserDatabases.Remove(Me.dgvdb.Rows(e.RowIndex).Cells(2).Value)
-                Me.dgvdb.Rows.RemoveAt(e.RowIndex)
-                MessageBox.Show(DWSIM.App.GetLocalString("UDBRemoved"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
-
+                End If
             End If
 
         End If
-      
+
+        If e.ColumnIndex = 4 Then
+            If Mid(Me.dgvdb.Rows(e.RowIndex).Cells(1).Value, 1, 4) = "User" Then
+                'call database editor
+                FormDBManager.DBPath = Me.dgvdb.Rows(e.RowIndex).Cells(2).Value
+                FormDBManager.ShowDialog()
+            End If
+        End If
     End Sub
     Private Sub dgvIPDB_CellContentClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvIPDB.CellContentClick
         'remove user interactions database
@@ -419,6 +434,7 @@ Public Class FormOptions
             End If
 
         End If
+        
     End Sub
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         If Me.ListView1.SelectedIndices.Count > 0 Then

@@ -1,4 +1,4 @@
-'    Copyright 2008-2011 Daniel Wagner O. de Medeiros
+﻿'    Copyright 2008-2011 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -952,7 +952,6 @@ Imports DWSIM.DWSIM.GraphicObjects
         Me.FormPE.ShowDialog(Me)
     End Sub
     Private Sub LLEDiagramToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles LLEDiagramToolStripMenuItem.Click
-        'hier Diagram einfügen
         Me.FormLLEDiag = New FormLLEDiagram
         Me.FormLLEDiag.ShowDialog(Me)
     End Sub

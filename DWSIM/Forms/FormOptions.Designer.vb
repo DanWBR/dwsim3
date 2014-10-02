@@ -24,6 +24,7 @@ Partial Class FormOptions
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormOptions))
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
@@ -49,10 +50,6 @@ Partial Class FormOptions
         Me.Button7 = New System.Windows.Forms.Button()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.dgvdb = New System.Windows.Forms.DataGridView()
-        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column15 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column13 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.FaTabStripItem6 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox12 = New System.Windows.Forms.GroupBox()
         Me.Button4 = New System.Windows.Forms.Button()
@@ -92,6 +89,11 @@ Partial Class FormOptions
         Me.ofdcs = New System.Windows.Forms.OpenFileDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SuperToolTip1 = New Omarslvd.Windows.Forms.SuperToolTip()
+        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column15 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column13 = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.BtnEdit = New System.Windows.Forms.DataGridViewImageColumn()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
@@ -124,7 +126,7 @@ Partial Class FormOptions
         resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem3, Me.FaTabStripItem6, Me.FaTabStripItem4, Me.FaTabStripItem2, Me.FaTabStripItem5})
         Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
+        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem3
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStrip1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStrip1, System.Drawing.Color.Empty)
         '
@@ -136,7 +138,6 @@ Partial Class FormOptions
         Me.FaTabStripItem1.Controls.Add(Me.GroupBox2)
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
-        Me.FaTabStripItem1.Selected = True
         resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem1, System.Drawing.Color.Empty)
@@ -266,6 +267,7 @@ Partial Class FormOptions
         Me.FaTabStripItem3.Controls.Add(Me.GroupBox4)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
+        Me.FaTabStripItem3.Selected = True
         resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem3, System.Drawing.Color.Empty)
@@ -326,7 +328,7 @@ Partial Class FormOptions
         Me.dgvdb.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.dgvdb.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvdb.ColumnHeadersVisible = False
-        Me.dgvdb.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column12, Me.Column14, Me.Column15, Me.Column13})
+        Me.dgvdb.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column12, Me.Column14, Me.Column15, Me.Column13, Me.BtnEdit})
         resources.ApplyResources(Me.dgvdb, "dgvdb")
         Me.dgvdb.GridColor = System.Drawing.SystemColors.Control
         Me.dgvdb.Name = "dgvdb"
@@ -339,45 +341,6 @@ Partial Class FormOptions
         Me.dgvdb.ShowCellErrors = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.dgvdb, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.dgvdb, System.Drawing.Color.Empty)
-        '
-        'Column12
-        '
-        Me.Column12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.Column12.FillWeight = 10.0!
-        resources.ApplyResources(Me.Column12, "Column12")
-        Me.Column12.Name = "Column12"
-        Me.Column12.ReadOnly = True
-        Me.Column12.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        '
-        'Column14
-        '
-        Me.Column14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
-        Me.Column14.FillWeight = 30.0!
-        resources.ApplyResources(Me.Column14, "Column14")
-        Me.Column14.Name = "Column14"
-        Me.Column14.ReadOnly = True
-        Me.Column14.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        '
-        'Column15
-        '
-        Me.Column15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        resources.ApplyResources(Me.Column15, "Column15")
-        Me.Column15.Name = "Column15"
-        Me.Column15.ReadOnly = True
-        Me.Column15.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        '
-        'Column13
-        '
-        Me.Column13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle1.NullValue = CType(resources.GetObject("DataGridViewCellStyle1.NullValue"), Object)
-        Me.Column13.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Column13.FillWeight = 10.0!
-        resources.ApplyResources(Me.Column13, "Column13")
-        Me.Column13.Name = "Column13"
-        Me.Column13.ReadOnly = True
-        Me.Column13.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         '
         'FaTabStripItem6
         '
@@ -471,10 +434,10 @@ Partial Class FormOptions
         'DataGridViewImageColumn1
         '
         Me.DataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle2.NullValue = CType(resources.GetObject("DataGridViewCellStyle2.NullValue"), Object)
-        Me.DataGridViewImageColumn1.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle3.NullValue = CType(resources.GetObject("DataGridViewCellStyle3.NullValue"), Object)
+        Me.DataGridViewImageColumn1.DefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridViewImageColumn1.FillWeight = 10.0!
         resources.ApplyResources(Me.DataGridViewImageColumn1, "DataGridViewImageColumn1")
         Me.DataGridViewImageColumn1.Name = "DataGridViewImageColumn1"
@@ -743,6 +706,59 @@ Partial Class FormOptions
         Me.SuperToolTip1.ReshowDelay = 200
         Me.SuperToolTip1.ShowAlways = True
         '
+        'Column12
+        '
+        Me.Column12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Column12.FillWeight = 10.0!
+        resources.ApplyResources(Me.Column12, "Column12")
+        Me.Column12.Name = "Column12"
+        Me.Column12.ReadOnly = True
+        Me.Column12.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        '
+        'Column14
+        '
+        Me.Column14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.Column14.FillWeight = 30.0!
+        resources.ApplyResources(Me.Column14, "Column14")
+        Me.Column14.Name = "Column14"
+        Me.Column14.ReadOnly = True
+        Me.Column14.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        '
+        'Column15
+        '
+        Me.Column15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        resources.ApplyResources(Me.Column15, "Column15")
+        Me.Column15.Name = "Column15"
+        Me.Column15.ReadOnly = True
+        Me.Column15.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        '
+        'Column13
+        '
+        Me.Column13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle1.NullValue = CType(resources.GetObject("DataGridViewCellStyle1.NullValue"), Object)
+        Me.Column13.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Column13.FillWeight = 10.0!
+        resources.ApplyResources(Me.Column13, "Column13")
+        Me.Column13.Name = "Column13"
+        Me.Column13.ReadOnly = True
+        Me.Column13.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        '
+        'BtnEdit
+        '
+        Me.BtnEdit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle2.NullValue = CType(resources.GetObject("DataGridViewCellStyle2.NullValue"), Object)
+        Me.BtnEdit.DefaultCellStyle = DataGridViewCellStyle2
+        Me.BtnEdit.FillWeight = 10.0!
+        resources.ApplyResources(Me.BtnEdit, "BtnEdit")
+        Me.BtnEdit.Image = Global.DWSIM.My.Resources.Resources.cross
+        Me.BtnEdit.Name = "BtnEdit"
+        Me.BtnEdit.ReadOnly = True
+        Me.BtnEdit.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        '
         'FormOptions
         '
         resources.ApplyResources(Me, "$this")
@@ -846,12 +862,13 @@ Partial Class FormOptions
     Public WithEvents Button4 As System.Windows.Forms.Button
     Friend WithEvents GroupBox10 As System.Windows.Forms.GroupBox
     Public WithEvents dgvIPDB As System.Windows.Forms.DataGridView
-    Friend WithEvents Column12 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column14 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column15 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column13 As System.Windows.Forms.DataGridViewImageColumn
     Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewImageColumn1 As System.Windows.Forms.DataGridViewImageColumn
+    Friend WithEvents Column12 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column14 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column15 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column13 As System.Windows.Forms.DataGridViewImageColumn
+    Friend WithEvents BtnEdit As System.Windows.Forms.DataGridViewImageColumn
 End Class

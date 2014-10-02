@@ -3856,14 +3856,18 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
         NewMDIChild.Show()
         m_childcount += 1
     End Sub
-
+    Private Sub DatabaseManagerToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DatabaseManagerToolStripMenuItem.Click
+        If My.Settings.UserDatabases.Count > 0 Then
+            FormDBManager.DBPath = My.Settings.UserDatabases.Item(0)
+            FormDBManager.ShowDialog()
+        End If
+    End Sub
     Private Sub PreferênciasDoDWSIMToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PreferênciasDoDWSIMToolStripMenuItem.Click
         Me.FrmOptions = New FormOptions
         Me.FrmOptions.ShowDialog(Me)
     End Sub
 
     Private Sub FormMain_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
-
         'Load help - no special topic
         DWSIM.App.HelpRequested("frame.htm")
     End Sub
@@ -3943,4 +3947,5 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
 
 #End Region
 
+   
 End Class

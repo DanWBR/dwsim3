@@ -824,6 +824,7 @@ Namespace DWSIM.Databases
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Name", "")).InnerText = comp.Name
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "CAS_Number", "")).InnerText = comp.CAS_Number
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "ID", "")).InnerText = comp.ID
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "CompCreatorStudyFile", "")).InnerText = comp.CompCreatorStudyFile
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Formula", "")).InnerText = comp.Formula
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "SMILES", "")).InnerText = comp.SMILES
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "Molar_Weight", "")).InnerText = comp.Molar_Weight.ToString(cult)
@@ -990,6 +991,8 @@ Namespace DWSIM.Databases
                                 .Name = node2.InnerText
                             Case "CAS_Number"
                                 .CAS_Number = node2.InnerText
+                            Case "CompCreatorStudyFile"
+                                .CompCreatorStudyFile = node2.InnerText
                             Case "Formula"
                                 .Formula = node2.InnerText
                             Case "Molar_Weight"
