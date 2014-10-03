@@ -106,7 +106,7 @@ Public Class FormStSim
                 End If
             Next
 
-            Me.TextBox1.AutoCompleteCustomSource = ACSC1
+            'Me.TextBox1.AutoCompleteCustomSource = ACSC1
 
             'property packages
             Me.ListViewPP.Items.Clear()
@@ -898,13 +898,13 @@ Public Class FormStSim
     Private Sub TextBox1_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBox1.TextChanged
         For Each r As DataGridViewRow In ogc1.Rows
             If Not r.Cells(1).Value Is Nothing Then
-                If r.Cells(1).Value.ToString.Contains(Me.TextBox1.Text) Or
-                   r.Cells(2).Value.ToString.Contains(Me.TextBox1.Text) Or
-                   r.Cells(4).Value.ToString.Contains(Me.TextBox1.Text) Then
+                If r.Cells(1).Value.ToString.ToLower.Contains(Me.TextBox1.Text.ToLower) Or
+                   r.Cells(2).Value.ToString.ToLower.Contains(Me.TextBox1.Text.ToLower) Or
+                   r.Cells(4).Value.ToString.ToLower.Contains(Me.TextBox1.Text.ToLower) Then
                     r.Visible = True
-                    If r.Cells(1).Value.ToString.Equals(Me.TextBox1.Text) Or
-                                       r.Cells(2).Value.ToString.Equals(Me.TextBox1.Text) Or
-                                       r.Cells(4).Value.ToString.Equals(Me.TextBox1.Text) Then
+                    If r.Cells(1).Value.ToString.ToLower.Equals(Me.TextBox1.Text.ToLower) Or
+                                       r.Cells(2).Value.ToString.ToLower.Equals(Me.TextBox1.Text.ToLower) Or
+                                       r.Cells(4).Value.ToString.ToLower.Equals(Me.TextBox1.Text.ToLower) Then
                         r.Selected = True
                     End If
                 Else

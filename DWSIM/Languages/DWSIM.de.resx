@@ -2819,10 +2819,10 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>PT/PV Flash - Maximale interne Iterationen</value>
   </data>
   <data name="PP_RIG_BUB_DEW_FLASH_INIT" xml:space="preserve">
-    <value>Verwende rigorose Berechnung von Siede- und Taupunkten für die Initialisierung des TP Flash Dampfanteils</value>
+    <value>Verwende rigorose Berechnung von Siede- und Taupunkten für die Initialisierung des TP Flash Dampfanteils (0 = Deaktivieren, 1 = Aktivieren)</value>
   </data>
   <data name="PP_USE_EOS_LIQDENS" xml:space="preserve">
-    <value>Verwende Zustandsgleichung für Flüssigkeitsdichte</value>
+    <value>Verwende Zustandsgleichung für Flüssigkeitsdichte (0 = Deaktivieren, 1 = Aktivieren)</value>
   </data>
   <data name="PPmodificado" xml:space="preserve">
     <value>PP modifiziert</value>
@@ -4289,7 +4289,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Elementmatrix bearbeiten</value>
   </data>
   <data name="PP_IDEAL_MIXRULE_LIQDENS" xml:space="preserve">
-    <value>Verwende ideale Mischungsregel für die Dichte der Flüssigphase</value>
+    <value>Verwende ideale Mischungsregel für die Dichte der Flüssigphase (0 = Deaktivieren, 1 = Aktivieren)</value>
   </data>
   <data name="CalculandoFatordeAjuste" xml:space="preserve">
     <value>Berechne Korrekturfaktor</value>
@@ -4445,10 +4445,10 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Verschmutzungsfaktor</value>
   </data>
   <data name="PP_USEEXPLIQDENS" xml:space="preserve">
-    <value>Mit experimenteller Kurve zur Berechnung der Dichte (Flüssigkeit)</value>
+    <value>Mit experimenteller Kurve zur Berechnung der Dichte (Flüssigkeit) (0 = Deaktivieren, 1 = Aktivieren)</value>
   </data>
   <data name="PP_USEEXPLIQTHERMALCOND" xml:space="preserve">
-    <value>Mit experimenteller Kurve zur Berechnung der Wärmeleitfähigkeit (Flüssigkeit)</value>
+    <value>Mit experimenteller Kurve zur Berechnung der Wärmeleitfähigkeit (Flüssigkeit) (0 = Deaktivieren, 1 = Aktivieren)</value>
   </data>
   <data name="Cordofundo" xml:space="preserve">
     <value>Hintergrundfarbe</value>
@@ -4584,7 +4584,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Simulationsstatus erfolgreich gespeichert.</value>
   </data>
   <data name="PP_USE_EOS_VOLUME_SHIFT" xml:space="preserve">
-    <value>Verwende Peneloux Volume Translation Korrektur</value>
+    <value>Verwende Peneloux Volume Translation Korrektur (0 = Deaktivieren, 1 = Aktivieren)</value>
   </data>
   <data name="String" xml:space="preserve">
     <value>Gleichzeitige Einstellung</value>
@@ -4719,7 +4719,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>The Cake Filter model doesn't support a vapor phase in the inlet stream.</value>
   </data>
   <data name="PP_IDEAL_VAPOR_PHASE_FUG" xml:space="preserve">
-    <value>Use Ideal Vapor Phase Fugacity Model</value>
+    <value>Verwenden ideale Dampfphasen Fugazität Modell (0 = Deaktivieren, 1 = Aktivieren)</value>
   </data>
   <data name="LiquidDensity" xml:space="preserve">
     <value>Flüssigkeitsdichte</value>
@@ -4854,6 +4854,6 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Originaldaten</value>
   </data>
   <data name="PP_ENTH_CP_CALC_METHOD" xml:space="preserve">
-    <value>Enthalpy/Entropy/Cp calculation method (0 = Lee-Kesler, 1 = Ideal, 2 = Excess)</value>
+    <value>Enthalpy/Entropy/Cp berechnungsmethode (0 = Lee-Kesler, 1 = Ideal, 2 = Excess)</value>
   </data>
 </root>

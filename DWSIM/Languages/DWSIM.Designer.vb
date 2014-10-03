@@ -9770,7 +9770,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Usar Regra de Mistura Ideal para Densidade da Fase Líquida.
+        '''  Looks up a localized string similar to Usar Regra de Mistura Ideal para Densidade da Fase Líquida (0 = Desativar, 1 = Ativar).
         '''</summary>
         Friend Shared ReadOnly Property PP_IDEAL_MIXRULE_LIQDENS() As String
             Get
@@ -9779,7 +9779,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Usar Modelo Ideal para Fugacidade da Fase Vapor.
+        '''  Looks up a localized string similar to Usar Modelo Ideal para Fugacidade da Fase Vapor (0 = Desativar, 1 = Ativar).
         '''</summary>
         Friend Shared ReadOnly Property PP_IDEAL_VAPOR_PHASE_FUG() As String
             Get
@@ -9896,7 +9896,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Usar Cálculo Rigoroso de Pressões de Bolha e Orvalho para Inicializar o Flash PT.
+        '''  Looks up a localized string similar to Usar Cálculo Rigoroso de Pressões de Bolha e Orvalho para Inicializar o Flash PT (0 = Desativar, 1 = Ativar).
         '''</summary>
         Friend Shared ReadOnly Property PP_RIG_BUB_DEW_FLASH_INIT() As String
             Get
@@ -9905,7 +9905,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Usar EDE para o Cálculo da Massa Específica da Fase Líquida.
+        '''  Looks up a localized string similar to Usar EDE para o Cálculo da Massa Específica da Fase Líquida (0 = Desativar, 1 = Ativar).
         '''</summary>
         Friend Shared ReadOnly Property PP_USE_EOS_LIQDENS() As String
             Get
@@ -9914,7 +9914,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Usar correção de volume (Peneloux).
+        '''  Looks up a localized string similar to Usar correção de volume (Peneloux) (0 = Desativar, 1 = Ativar).
         '''</summary>
         Friend Shared ReadOnly Property PP_USE_EOS_VOLUME_SHIFT() As String
             Get
@@ -9923,7 +9923,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Usar Curva Experimental para Cálculo da Densidade (Líquido).
+        '''  Looks up a localized string similar to Usar Curva Experimental para Cálculo da Densidade (Líquido) (0 = Desativar, 1 = Ativar).
         '''</summary>
         Friend Shared ReadOnly Property PP_USEEXPLIQDENS() As String
             Get
@@ -9932,7 +9932,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Usar Curva Experimental para Cálculo da Condutividade Térmica (Líquido).
+        '''  Looks up a localized string similar to Usar Curva Experimental para Cálculo da Condutividade Térmica (Líquido) (0 = Desativar, 1 = Ativar).
         '''</summary>
         Friend Shared ReadOnly Property PP_USEEXPLIQTHERMALCOND() As String
             Get

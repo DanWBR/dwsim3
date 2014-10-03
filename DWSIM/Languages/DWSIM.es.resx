@@ -2503,7 +2503,7 @@
     <value>Suelo (seco) </value>
   </data>
   <data name="PP_USE_EOS_LIQDENS" xml:space="preserve">
-    <value>Utilizar EOS para calcular el peso específico de la Fase Líquida</value>
+    <value>Utilizar EOS para calcular el peso específico de la Fase Líquida (0 = Desactivar, 1 = Activar)</value>
   </data>
   <data name="RConvPGridItem1Help" xml:space="preserve">
     <value>Conjunto de reacciones utilizado por los reactores. </value>
@@ -3273,7 +3273,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Expansión rápida d / D = 3 / 4 </value>
   </data>
   <data name="PP_RIG_BUB_DEW_FLASH_INIT" xml:space="preserve">
-    <value>Utilice cálculo riguroso de presiones de burbuja  y Rocío para arrancar Flash TP</value>
+    <value>Utilice cálculo riguroso de presiones de burbuja  y Rocío para arrancar Flash TP (0 = Desactivar, 1 = Activar)</value>
   </data>
   <data name="LIQVazomssica" xml:space="preserve">
     <value>LIQ Flujo másico</value>
@@ -4296,7 +4296,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Editar Matriz de Elementos</value>
   </data>
   <data name="PP_IDEAL_MIXRULE_LIQDENS" xml:space="preserve">
-    <value>Usar Regla de Mezcla Ideal para Densidad de Fase Líquida</value>
+    <value>Usar Regla de Mezcla Ideal para Densidad de Fase Líquida (0 = Desactivar, 1 = Activar)</value>
   </data>
   <data name="CalculandoFatordeAjuste" xml:space="preserve">
     <value>Cálculo de Factor de Ajuste</value>
@@ -4455,10 +4455,10 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Factor de Ensuciamiento</value>
   </data>
   <data name="PP_USEEXPLIQDENS" xml:space="preserve">
-    <value>Utilizar la curva experimental para el cálculo de la densidad (líquidos)</value>
+    <value>Utilizar la curva experimental para el cálculo de la densidad (líquidos) (0 = Desactivar, 1 = Activar)</value>
   </data>
   <data name="PP_USEEXPLIQTHERMALCOND" xml:space="preserve">
-    <value>Utilizar la curva experimental para el cálculo de Conductividad Térmica (líquidos)</value>
+    <value>Utilizar la curva experimental para el cálculo de Conductividad Térmica (líquidos) (0 = Desactivar, 1 = Activar)</value>
   </data>
   <data name="Cordofundo" xml:space="preserve">
     <value>Color de fondo</value>
@@ -4585,7 +4585,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Estado de Simulación guardado con éxito</value>
   </data>
   <data name="PP_USE_EOS_VOLUME_SHIFT" xml:space="preserve">
-    <value>Usar correción de volumen (Peneloux)</value>
+    <value>Usar correción de volumen (Peneloux) (0 = Desactivar, 1 = Activar)</value>
   </data>
   <data name="SimultaneousAdjust" xml:space="preserve">
     <value>Ajuste Simultáneo</value>
@@ -4711,7 +4711,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>El filtro no es compatible con la entrada de corriente que contiene vapor.</value>
   </data>
   <data name="PP_IDEAL_VAPOR_PHASE_FUG" xml:space="preserve">
-    <value>Usar Modelo Ideal para Fugacidade da Fase Vapor</value>
+    <value>Usar Modelo Ideal para Fugacidade da Fase Vapor (0 = Desactivar, 1 = Activar)</value>
   </data>
   <data name="LiquidDensity" xml:space="preserve">
     <value>Massa Específica do Líquido</value>

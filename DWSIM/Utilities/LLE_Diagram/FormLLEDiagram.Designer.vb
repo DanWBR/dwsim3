@@ -181,7 +181,6 @@ Partial Class FormLLEDiagram
         'PanelMenu
         '
         resources.ApplyResources(Me.PanelMenu, "PanelMenu")
-        Me.PanelMenu.BackColor = System.Drawing.SystemColors.ControlLight
         Me.PanelMenu.Controls.Add(Me.Label8)
         Me.PanelMenu.Controls.Add(Me.Label7)
         Me.PanelMenu.Controls.Add(Me.Label6)

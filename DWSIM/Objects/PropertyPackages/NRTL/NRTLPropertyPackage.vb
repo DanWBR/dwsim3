@@ -41,7 +41,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             MyBase.New(comode)
             With Me.Parameters
                 .Add("PP_IDEAL_VAPOR_PHASE_FUG", 1)
-                .Add("PP_ENTH_CP_CALC_METHOD", 0)
+                .Add("PP_ENTH_CP_CALC_METHOD", 1)
+                .Item("PP_IDEAL_MIXRULE_LIQDENS") = 1
+                .Item("PP_USEEXPLIQDENS") = 1
             End With
         End Sub
 
@@ -51,7 +53,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             With Me.Parameters
                 .Add("PP_IDEAL_VAPOR_PHASE_FUG", 1)
-                .Add("PP_ENTH_CP_CALC_METHOD", 0)
+                .Add("PP_ENTH_CP_CALC_METHOD", 1)
+                .Item("PP_IDEAL_MIXRULE_LIQDENS") = 1
+                .Item("PP_USEEXPLIQDENS") = 1
             End With
 
             Me.IsConfigurable = True

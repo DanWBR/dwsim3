@@ -3932,7 +3932,7 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
     <value>Fração Volumétrica na Fase Vapor</value>
   </data>
   <data name="PP_USE_EOS_LIQDENS" xml:space="preserve">
-    <value>Usar EDE para o Cálculo da Massa Específica da Fase Líquida</value>
+    <value>Usar EDE para o Cálculo da Massa Específica da Fase Líquida (0 = Desativar, 1 = Ativar)</value>
   </data>
   <data name="DescMUPP" xml:space="preserve">
     <value>Pacote de Propriedades que utiliza o método de Contribuição de Grupos UNIFAC Modificado (Dortmund) para a modelagem da fase líquida. As Entalpias, Entropias e Capacidades Caloríficas residuais são calculadas a partir do modelo de Lee-Kesler. A fase vapor é modelada através da EDE Peng-Robinson.</value>
@@ -3989,7 +3989,7 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
     <value>Tipo</value>
   </data>
   <data name="PP_RIG_BUB_DEW_FLASH_INIT" xml:space="preserve">
-    <value>Usar Cálculo Rigoroso de Pressões de Bolha e Orvalho para Inicializar o Flash PT</value>
+    <value>Usar Cálculo Rigoroso de Pressões de Bolha e Orvalho para Inicializar o Flash PT (0 = Desativar, 1 = Ativar)</value>
   </data>
   <data name="Aqueous" xml:space="preserve">
     <value>Fase Aquosa</value>
@@ -4295,7 +4295,7 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
     <value>Editar Matriz de Elementos</value>
   </data>
   <data name="PP_IDEAL_MIXRULE_LIQDENS" xml:space="preserve">
-    <value>Usar Regra de Mistura Ideal para Densidade da Fase Líquida</value>
+    <value>Usar Regra de Mistura Ideal para Densidade da Fase Líquida (0 = Desativar, 1 = Ativar)</value>
   </data>
   <data name="CalculandoFatordeAjuste" xml:space="preserve">
     <value>Calculando Fator de Ajuste</value>
@@ -4454,10 +4454,10 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
     <value>Fator de Incrustação</value>
   </data>
   <data name="PP_USEEXPLIQDENS" xml:space="preserve">
-    <value>Usar Curva Experimental para Cálculo da Densidade (Líquido)</value>
+    <value>Usar Curva Experimental para Cálculo da Densidade (Líquido) (0 = Desativar, 1 = Ativar)</value>
   </data>
   <data name="PP_USEEXPLIQTHERMALCOND" xml:space="preserve">
-    <value>Usar Curva Experimental para Cálculo da Condutividade Térmica (Líquido)</value>
+    <value>Usar Curva Experimental para Cálculo da Condutividade Térmica (Líquido) (0 = Desativar, 1 = Ativar)</value>
   </data>
   <data name="Cordofundo" xml:space="preserve">
     <value>Cor do Fundo</value>
@@ -4595,7 +4595,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Estado da simulação salvo com sucesso.</value>
   </data>
   <data name="PP_USE_EOS_VOLUME_SHIFT" xml:space="preserve">
-    <value>Usar correção de volume (Peneloux)</value>
+    <value>Usar correção de volume (Peneloux) (0 = Desativar, 1 = Ativar)</value>
   </data>
   <data name="SimultaneousAdjust" xml:space="preserve">
     <value>Ajuste Simultâneo</value>
@@ -4745,7 +4745,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>O Filtro não é compatível com correntes de entrada contendo vapor.</value>
   </data>
   <data name="PP_IDEAL_VAPOR_PHASE_FUG" xml:space="preserve">
-    <value>Usar Modelo Ideal para Fugacidade da Fase Vapor</value>
+    <value>Usar Modelo Ideal para Fugacidade da Fase Vapor (0 = Desativar, 1 = Ativar)</value>
   </data>
   <data name="LiquidDensity" xml:space="preserve">
     <value>Massa Específica do Líquido</value>

@@ -2819,10 +2819,10 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>PT/PV Flash - Maximum Internal Iterations</value>
   </data>
   <data name="PP_RIG_BUB_DEW_FLASH_INIT" xml:space="preserve">
-    <value>Use Rigorous Bubble and Dew Points for TP Flash Vapor Fraction Initialization</value>
+    <value>Use Rigorous Bubble and Dew Points for TP Flash Vapor Fraction Initialization (0 = Disable, 1 = Enable)</value>
   </data>
   <data name="PP_USE_EOS_LIQDENS" xml:space="preserve">
-    <value>Use EOS for Liquid Density</value>
+    <value>Use EOS for Liquid Density (0 = Disable, 1 = Enable)</value>
   </data>
   <data name="PPmodificado" xml:space="preserve">
     <value>PP modified</value>
@@ -4289,7 +4289,7 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>Edit Element Matrix</value>
   </data>
   <data name="PP_IDEAL_MIXRULE_LIQDENS" xml:space="preserve">
-    <value>Use Ideal Mixing Rule for Liquid Phase Density</value>
+    <value>Use Ideal Mixing Rule for Liquid Phase Density (0 = Disable, 1 = Enable)</value>
   </data>
   <data name="CalculandoFatordeAjuste" xml:space="preserve">
     <value>Calculating Adjustment Factor</value>
@@ -4448,10 +4448,10 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>Fouling Factor</value>
   </data>
   <data name="PP_USEEXPLIQDENS" xml:space="preserve">
-    <value>Use Experimental Liquid Density Data</value>
+    <value>Use Experimental Liquid Density Data (0 = Disable, 1 = Enable)</value>
   </data>
   <data name="PP_USEEXPLIQTHERMALCOND" xml:space="preserve">
-    <value>Use Experimental Liquid Thermal Conductivity Data</value>
+    <value>Use Experimental Liquid Thermal Conductivity Data (0 = Disable, 1 = Enable)</value>
   </data>
   <data name="Cordofundo" xml:space="preserve">
     <value>Background color</value>
@@ -4589,7 +4589,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Simulation state saved succesfully.</value>
   </data>
   <data name="PP_USE_EOS_VOLUME_SHIFT" xml:space="preserve">
-    <value>Use Peneloux Volume Translation correction</value>
+    <value>Use Peneloux Volume Translation correction (0 = Disable, 1 = Enable)</value>
   </data>
   <data name="SimultaneousAdjust" xml:space="preserve">
     <value>Simultaneous Adjust</value>
@@ -4739,7 +4739,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>The Cake Filter model doesn't support a vapor phase in the inlet stream.</value>
   </data>
   <data name="PP_IDEAL_VAPOR_PHASE_FUG" xml:space="preserve">
-    <value>Use Ideal Vapor Phase Fugacity Model</value>
+    <value>Use Ideal Vapor Phase Fugacity Model (0 = Disable, 1 = Enable)</value>
   </data>
   <data name="LiquidDensity" xml:space="preserve">
     <value>Liquid Density</value>
