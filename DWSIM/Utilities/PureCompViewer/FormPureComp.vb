@@ -132,7 +132,7 @@ Public Class FormPureComp
         vxCp.Clear()
         vyCp.Clear()
 
-        If Not constprop.IsIon Or Not constprop.IsSalt Then
+        If Not constprop.IsIon And Not constprop.IsSalt And Not constprop.OriginalDB = "CoolProp" Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
                 VD = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_CPi(constprop.Name, T))
@@ -170,7 +170,7 @@ Public Class FormPureComp
         Row = 0
         vxVapVisc.Clear()
         vyVapVisc.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
+        If Not constprop.IsIon And Not constprop.IsSalt And Not constprop.OriginalDB = "CoolProp" Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
                 VD = cv.ConverterDoSI(su.spmp_viscosity, pp.AUX_VAPVISCi(constprop, T))
@@ -210,7 +210,7 @@ Public Class FormPureComp
         Row = 0
         vxVapThCond.Clear()
         vyVapThCond.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
+        If Not constprop.IsIon And Not constprop.IsSalt And Not constprop.OriginalDB = "CoolProp" Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
                 VD = cv.ConverterDoSI(su.spmp_thermalConductivity, pp.AUX_VAPTHERMCONDi(constprop, T, 101325))
@@ -254,7 +254,7 @@ Public Class FormPureComp
         vxLiqCp.Clear()
         vyLiqCp.Clear()
 
-        If Not constprop.IsIon Or Not constprop.IsSalt Then
+        If Not constprop.IsIon And Not constprop.IsSalt And Not constprop.OriginalDB = "CoolProp" Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
                 VD = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_LIQ_Cpi(constprop, T))
@@ -293,7 +293,7 @@ Public Class FormPureComp
         Row = 0
         vxDHvap.Clear()
         vyDHvap.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
+        If Not constprop.IsIon And Not constprop.IsSalt And Not constprop.OriginalDB = "CoolProp" Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
                 VD = cv.ConverterDoSI(su.spmp_enthalpy, pp.AUX_HVAPi(constprop.Name, T))
@@ -333,7 +333,7 @@ Public Class FormPureComp
         Row = 0
         vxPvap.Clear()
         vyPvap.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
+        If Not constprop.IsIon And Not constprop.IsSalt And Not constprop.OriginalDB = "CoolProp" Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
                 VD = cv.ConverterDoSI(su.spmp_pressure, pp.AUX_PVAPi(constprop.Name, T))
@@ -375,7 +375,7 @@ Public Class FormPureComp
         Row = 0
         vxSurfTens.Clear()
         vySurfTens.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
+        If Not constprop.IsIon And Not constprop.IsSalt And Not constprop.OriginalDB = "CoolProp" Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
                 VD = cv.ConverterDoSI(su.tpmp_surfaceTension, pp.AUX_SURFTi(constprop, T))
@@ -413,7 +413,7 @@ Public Class FormPureComp
         Row = 0
         vxVisc.Clear()
         vyVisc.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
+        If Not constprop.IsIon And Not constprop.IsSalt And Not constprop.OriginalDB = "CoolProp" Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
                 VD = cv.ConverterDoSI(su.spmp_viscosity, pp.AUX_LIQVISCi(constprop.Name, T))
@@ -454,7 +454,7 @@ Public Class FormPureComp
         Row = 0
         vxLD.Clear()
         vyLD.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
+        If Not constprop.IsIon And Not constprop.IsSalt And Not constprop.OriginalDB = "CoolProp" Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
                 VD = cv.ConverterDoSI(su.spmp_density, pp.AUX_LIQDENSi(constprop, T))
@@ -494,7 +494,7 @@ Public Class FormPureComp
         Row = 0
         vxLiqThCond.Clear()
         vyLiqThCond.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
+        If Not constprop.IsIon And Not constprop.IsSalt And Not constprop.OriginalDB = "CoolProp" Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
                 VD = cv.ConverterDoSI(su.spmp_thermalConductivity, pp.AUX_LIQTHERMCONDi(constprop, T))
@@ -536,7 +536,7 @@ Public Class FormPureComp
         Row = 0
         vxSD.Clear()
         vySD.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
+        If Not constprop.IsIon And Not constprop.IsSalt And Not constprop.OriginalDB = "CoolProp" Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
                 VD = cv.ConverterDoSI(su.spmp_density, pp.AUX_SOLIDDENSi(constprop, T))
@@ -580,7 +580,7 @@ Public Class FormPureComp
         Row = 0
         vxSCP.Clear()
         vySCP.Clear()
-        If Not constprop.IsIon And Not constprop.IsSalt Then
+        If Not constprop.IsIon And Not constprop.IsSalt And Not constprop.OriginalDB = "CoolProp" Then
             Do
                 TD = cv.ConverterDoSI(su.spmp_temperature, T)
                 VD = cv.ConverterDoSI(su.spmp_heatCapacityCp, pp.AUX_SolidHeatCapacity(constprop, T))
@@ -610,7 +610,7 @@ Public Class FormPureComp
         End With
         Me.GraphCpSolid.Invalidate()
 
-        '======== finished therm dependent properties ====================================================
+        '======== finished themperature dependent properties ====================================================
 
 
         'UNIFAC
