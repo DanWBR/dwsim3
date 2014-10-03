@@ -1222,6 +1222,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     r = Me.Reactions.Count - 1
                     c = Me.ComponentIDs.Count - 1
+                    comps = c
 
                     ReDim E(c, r)
 
@@ -1335,7 +1336,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                         i += 1
                     Next
 
-                    Dim DHr, Hid_r, Hid_p, Hp, DHfT As Double
+                    Dim DHr, Hid_r, Hid_p, Hp As Double
 
                     DHr = 0
 
@@ -1356,9 +1357,10 @@ Namespace DWSIM.SimulationObjects.Reactors
                         Next
 
                         'Heat released (or absorbed) (kJ/s = kW) (Ideal Gas)
+                        DHr += rx.ReactionHeat * Me.ReactionExtents(Me.Reactions(i)) * rx.Components(rx.BaseReactant).StoichCoeff / 1000
                         'DHr += rx.ReactionHeat * Me.ReactionExtents(Me.Reactions(i)) * rx.Components(rx.BaseReactant).StoichCoeff / 1000
-                        DHfT = pp.AUX_DELHig_RT(298.15, 298.15, id, stcoef, bcidx)
-                        DHr += DHfT * Me.ReactionExtents(Me.Reactions(i)) * rx.Components(rx.BaseReactant).StoichCoeff / 1000
+                        'DHfT = pp.AUX_DELHig_RT(298.15, 298.15, id, stcoef, bcidx)
+                        'DHr += DHfT * Me.ReactionExtents(Me.Reactions(i)) * rx.Components(rx.BaseReactant).StoichCoeff / 1000
                         i += 1
                     Loop Until i = Me.Reactions.Count
 
@@ -1805,23 +1807,28 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     Else
 
-                        'CustomPropertyCollection
-                        Dim m2 As New PropertyGridEx.CustomPropertyCollection()
-                        For Each dbl As KeyValuePair(Of String, Double) In Me.ReactionExtents
-                            valor = Format(dbl.Value, FlowSheet.Options.NumberFormat)
-                            m2.Add(FlowSheet.Options.Reactions(dbl.Key).Name, valor, False, DWSIM.App.GetLocalString("CoordenadasReacoes"), DWSIM.App.GetLocalString("REqPGridItem1Help"), True)
-                            m2.Item(m2.Count - 1).IsReadOnly = True
-                            m2.Item(m2.Count - 1).DefaultValue = Nothing
-                            m2.Item(m2.Count - 1).DefaultType = GetType(Nullable(Of Double))
-                        Next
+                        If Not Me.ReactionExtents Is Nothing Then
 
-                        .Item.Add(DWSIM.App.GetLocalString("CoordenadasReacoes"), m2, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("REqPGridItem2Help"), True)
-                        With .Item(.Item.Count - 1)
-                            .IsReadOnly = True
-                            .IsBrowsable = True
-                            .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                            .CustomEditor = New System.Drawing.Design.UITypeEditor
-                        End With
+                            'CustomPropertyCollection
+                            Dim m2 As New PropertyGridEx.CustomPropertyCollection()
+
+                            For Each dbl As KeyValuePair(Of String, Double) In Me.ReactionExtents
+                                valor = Format(dbl.Value, FlowSheet.Options.NumberFormat)
+                                m2.Add(FlowSheet.Options.Reactions(dbl.Key).Name, valor, False, DWSIM.App.GetLocalString("CoordenadasReacoes"), DWSIM.App.GetLocalString("REqPGridItem1Help"), True)
+                                m2.Item(m2.Count - 1).IsReadOnly = True
+                                m2.Item(m2.Count - 1).DefaultValue = Nothing
+                                m2.Item(m2.Count - 1).DefaultType = GetType(Nullable(Of Double))
+                            Next
+
+                            .Item.Add(DWSIM.App.GetLocalString("CoordenadasReacoes"), m2, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("REqPGridItem2Help"), True)
+                            With .Item(.Item.Count - 1)
+                                .IsReadOnly = True
+                                .IsBrowsable = True
+                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
+                                .CustomEditor = New System.Drawing.Design.UITypeEditor
+                            End With
+
+                        End If
 
                     End If
 
