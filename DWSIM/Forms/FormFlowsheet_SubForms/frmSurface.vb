@@ -333,12 +333,13 @@ Public Class frmSurface
                 PGEx2.Refresh()
                 PGEx1.Refresh()
             Else
-                ChildParent.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Nenhumselecionado")
-                ChildParent.FormProps.LblTipoObj.Text = "-"
-                ChildParent.FormProps.LblStatusObj.Text = "-"
-                ChildParent.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
-                ChildParent.FormObjList.TreeViewObj.CollapseAll()
-                ChildParent.FormObjList.TreeViewObj.SelectedNode = Nothing
+                Me.FlowsheetDesignSurface.SelectedObject = Nothing
+                'ChildParent.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Nenhumselecionado")
+                'ChildParent.FormProps.LblTipoObj.Text = "-"
+                'ChildParent.FormProps.LblStatusObj.Text = "-"
+                'ChildParent.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+                'ChildParent.FormObjList.TreeViewObj.CollapseAll()
+                'ChildParent.FormObjList.TreeViewObj.SelectedNode = Nothing
             End If
         Else
             PGEx2.SelectedObject = Nothing
