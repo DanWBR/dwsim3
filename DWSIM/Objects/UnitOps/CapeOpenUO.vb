@@ -442,6 +442,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             ip.value = _params(i - 1).value
                         Catch ex As Exception
                             Console.WriteLine(ex.ToString)
+                            Dim ecu As CapeOpen.ECapeUser = myuo
+                            Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": CAPE-OPEN Exception: " & ecu.code & " at " & ecu.interfaceName & ". Reason: " & ecu.description, Color.DarkGray, FormClasses.TipoAviso.Aviso)
                         End Try
                     Next
                 End If
@@ -1001,6 +1003,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 c.AttachedConnector.AttachedTo.Calculated = True
                             End If
                         Next
+                        Dim ur As CapeOpen.ICapeUnitReport = _couo
+                        If Not ur Is Nothing Then
+                            Dim reps As String() = ur.reports
+                            For Each r As String In reps
+                                ur.selectedReport = r
+                                Dim msg2 As String = ""
+                                ur.ProduceReport(msg2)
+                                Me.FlowSheet.FormCOReports.TextBox1.AppendText(Date.Now.ToString + ", " + Me.GraphicObject.Tag + " (" + r + "):" + vbCrLf + vbCrLf + msg2 + vbCrLf + vbCrLf)
+                            Next
+                        End If
                     Catch ex As Exception
                         With objargs
                             .Calculado = False
@@ -1015,17 +1027,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Next
                         Dim ecu As CapeOpen.ECapeUser = myuo
                         Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & ":" & ecu.scope & ". Reason: " & ecu.description, Color.Red, FormClasses.TipoAviso.Erro)
-                    Finally
-                        Dim ur As CapeOpen.ICapeUnitReport = _couo
-                        If Not ur Is Nothing Then
-                            Dim reps As String() = ur.reports
-                            For Each r As String In reps
-                                ur.selectedReport = r
-                                Dim msg2 As String = ""
-                                ur.ProduceReport(msg2)
-                                Me.FlowSheet.FormCOReports.TextBox1.AppendText(Date.Now.ToString + ", " + Me.GraphicObject.Tag + " (" + r + "):" + vbCrLf + vbCrLf + msg2 + vbCrLf + vbCrLf)
-                            Next
-                        End If
                     End Try
                 Else
                     Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag + ": CO Unit not validated. Reason: " + msg, Color.Red, FormClasses.TipoAviso.Erro)
