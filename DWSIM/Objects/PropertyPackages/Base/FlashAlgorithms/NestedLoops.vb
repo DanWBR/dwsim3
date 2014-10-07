@@ -130,6 +130,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             If Vmin < 0.0# Then Vmin = 0.0#
             If Vmin = 1.0# Then Vmin = 0.0#
+            If Vmax = 0.0# Then Vmax = 1.0#
             If Vmax > 1.0# Then Vmax = 1.0#
 
             V = (Vmin + Vmax) / 2
@@ -325,15 +326,17 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim Tsup, Tinf, VTf(n) As Double
 
             Tsup = 1000.0#
-            Tinf = 200.0#
+            Tinf = 50.0#
 
             Dim bo As New BrentOpt.Brent
             bo.DefineFuncDelegate(AddressOf Herror)
             Console.WriteLine("PH Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
 
-            Dim fx, fx2, dfdx, x1 As Double
+            Dim fx, fx2, dfdx, x1, dx, maxdx As Double
 
             Dim cnt As Integer = 0
+
+            maxdx = 15.0#
 
             If Tref = 0 Then Tref = 298.15
             x1 = Tref
@@ -348,7 +351,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                                                          fx = Herror(x1, {P, Vz, PP})
                                                      End Sub)
                         Dim task2 As Task = New Task(Sub()
-                                                         fx2 = Herror(x1 + 0.01, {P, Vz, PP})
+                                                         fx2 = Herror(x1 + 1, {P, Vz, PP})
                                                      End Sub)
                         task1.Start()
                         task2.Start()
@@ -366,16 +369,18 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
                     fx = Herror(x1, {P, Vz, PP})
-                    fx2 = Herror(x1 + 0.01, {P, Vz, PP})
+                    fx2 = Herror(x1 + 1, {P, Vz, PP})
                 End If
                 If Abs(fx) < tolEXT Then Exit Do
-                dfdx = (fx2 - fx) / 0.01
-                x1 = x1 - 0.7 * fx / dfdx
+                dfdx = (fx2 - fx)
+                dx = fx / dfdx
+                If Abs(dx) > maxdx Then dx = Sign(dx) * maxdx
+                x1 = x1 - dx
                 If x1 < 0 Then GoTo alt
                 cnt += 1
             Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
             If Double.IsNaN(x1) Or cnt > maxitEXT Then
-alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
+alt:            T = bo.BrentOpt(Tinf, Tsup, 25, tolEXT, maxitEXT, {P, Vz, PP})
             Else
                 T = x1
             End If
