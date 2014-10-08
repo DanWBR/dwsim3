@@ -367,13 +367,13 @@ out:
                     If StabSearchSeverity = 2 Then
                         gli = 0
                         For j = 0 To m
-                            For i = 0 To n
+                            For i = 0 To nc
                                 vx2est(i) = stresult(1)(j, i)
                             Next
                             fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
                             gl = 0.0#
-                            For i = 0 To n
-                                gl += Vz(i) * Log(fcl(i) * Vz(i))
+                            For i = 0 To nc
+                                gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                             Next
                             If gl <= gli Then
                                 gli = gl
@@ -394,7 +394,7 @@ out:
 
                     gv = 0.0#
                     gl = 0.0#
-                    For i = 0 To n
+                    For i = 0 To nc
                         gv += vx2est(i) * Log(fcv(i) * vx2est(i))
                         gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                     Next
@@ -1062,19 +1062,21 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
 
                 If stresult(0) = False Then
 
-                    Dim vx2est(UBound(Vz)) As Double
+                    Dim vx2est(n), fcl(n), fcv(n) As Double
                     Dim m As Double = UBound(stresult(1), 1)
-                    Dim gl, hl, sl, gv, hv, sv, gli As Double
+                    Dim gl, gv, gli As Double
 
                     If StabSearchSeverity = 2 Then
                         gli = 0
                         For j = 0 To m
-                            For i = 0 To UBound(Vz)
+                            For i = 0 To nc
                                 vx2est(i) = stresult(1)(j, i)
                             Next
-                            hl = PP.DW_CalcEnthalpy(vx2est, T, P, State.Liquid)
-                            sl = PP.DW_CalcEntropy(vx2est, T, P, State.Liquid)
-                            gl = hl - T * sl
+                            fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
+                            gl = 0.0#
+                            For i = 0 To nc
+                                gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                            Next
                             If gl <= gli Then
                                 gli = gl
                                 k = j
@@ -1089,13 +1091,15 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
                         Next
                     End If
 
-                    hl = PP.DW_CalcEnthalpy(vx2est, T, P, State.Liquid)
-                    sl = PP.DW_CalcEntropy(vx2est, T, P, State.Liquid)
-                    gl = hl - T * sl
+                    fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
+                    fcv = PP.DW_CalcFugCoeff(vx2est, T, P, State.Vapor)
 
-                    hv = PP.DW_CalcEnthalpy(vx2est, T, P, State.Vapor)
-                    sv = PP.DW_CalcEntropy(vx2est, T, P, State.Vapor)
-                    gv = hv - T * sv
+                    gv = 0.0#
+                    gl = 0.0#
+                    For i = 0 To nc
+                        gv += vx2est(i) * Log(fcv(i) * vx2est(i))
+                        gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                    Next
 
                     If gl < gv Then 'liquid-like
 
@@ -1176,19 +1180,21 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
 
                 If stresult(0) = False Then
 
-                    Dim vx2est(UBound(Vz)) As Double
+                    Dim vx2est(n), fcl(n), fcv(n) As Double
                     Dim m As Double = UBound(stresult(1), 1)
-                    Dim gl, hl, sl, gv, hv, sv, gli As Double
+                    Dim gl, gv, gli As Double
 
                     If StabSearchSeverity = 2 Then
                         gli = 0
                         For j = 0 To m
-                            For i = 0 To UBound(Vz)
+                            For i = 0 To nc
                                 vx2est(i) = stresult(1)(j, i)
                             Next
-                            hl = PP.DW_CalcEnthalpy(vx2est, T, P, State.Liquid)
-                            sl = PP.DW_CalcEntropy(vx2est, T, P, State.Liquid)
-                            gl = hl - T * sl
+                            fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
+                            gl = 0.0#
+                            For i = 0 To nc
+                                gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                            Next
                             If gl <= gli Then
                                 gli = gl
                                 k = j
@@ -1203,13 +1209,15 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
                         Next
                     End If
 
-                    hl = PP.DW_CalcEnthalpy(vx2est, T, P, State.Liquid)
-                    sl = PP.DW_CalcEntropy(vx2est, T, P, State.Liquid)
-                    gl = hl - T * sl
+                    fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
+                    fcv = PP.DW_CalcFugCoeff(vx2est, T, P, State.Vapor)
 
-                    hv = PP.DW_CalcEnthalpy(vx2est, T, P, State.Vapor)
-                    sv = PP.DW_CalcEntropy(vx2est, T, P, State.Vapor)
-                    gv = hv - T * sv
+                    gv = 0.0#
+                    gl = 0.0#
+                    For i = 0 To nc
+                        gv += vx2est(i) * Log(fcv(i) * vx2est(i))
+                        gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                    Next
 
                     If gl < gv Then 'liquid-like
 
