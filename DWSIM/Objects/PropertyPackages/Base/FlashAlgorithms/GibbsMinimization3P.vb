@@ -359,13 +359,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         If StabSearchSeverity = 2 Then
                             gli = 0
                             For j = 0 To m
-                                For i = 0 To n
+                                For i = 0 To nc
                                     vx2est(i) = stresult(1)(j, i)
                                 Next
                                 fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
                                 gl = 0.0#
-                                For i = 0 To n
-                                    gl += Vz(i) * Log(fcl(i) * Vz(i))
+                                For i = 0 To nc
+                                    gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                                 Next
                                 If gl <= gli Then
                                     gli = gl
@@ -386,7 +386,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                         gv = 0.0#
                         gl = 0.0#
-                        For i = 0 To n
+                        For i = 0 To nc
                             gv += vx2est(i) * Log(fcv(i) * vx2est(i))
                             gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                         Next
