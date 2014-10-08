@@ -3286,7 +3286,7 @@ Public Class frmSurface
         Dim g As Graphics = Graphics.FromImage(img)
 
         Try
-            g.SmoothingMode = SmoothingMode.AntiAlias
+            g.SmoothingMode = SmoothingMode.Default
             'get the dpi settings of the graphics context,
             'for example; 96dpi on screen, 600dpi for the printer
             'used to adjust grid and margin sizing.

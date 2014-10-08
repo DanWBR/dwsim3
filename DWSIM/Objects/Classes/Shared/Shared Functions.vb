@@ -304,7 +304,8 @@ Namespace DWSIM
                         Case 0, 1
                             My.MyApplication.gpumod = CudafyModule.TryDeserialize("cudacode.cdfy")
                         Case 2
-                            My.MyApplication.gpumod = CudafyModule.TryDeserialize("openclcode.cdfy")
+                            'OpenCL code is device-specific and must be compiled on each initialization
+                            'My.MyApplication.gpumod = CudafyModule.TryDeserialize("openclcode.cdfy")
                     End Select
                     If My.MyApplication.gpumod Is Nothing OrElse Not My.MyApplication.gpumod.TryVerifyChecksums() Then
                         Select Case My.Settings.CudafyTarget

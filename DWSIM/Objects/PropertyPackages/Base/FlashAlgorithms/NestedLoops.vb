@@ -1202,7 +1202,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 5, tolEXT, maxitEXT, {P, Vz, PP})
 
             Dim tmp As Object
             tmp = Me.Flash_PT(Vz, P, T, pp)
-            Dim L, V, Vx(), Vy() As Double
+            Dim L, V, Vx(), Vy(), _Hl, _Hv As Double
 
             Dim n = UBound(Vz)
 
@@ -1211,16 +1211,16 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 5, tolEXT, maxitEXT, {P, Vz, PP})
             Vx = tmp(2)
             Vy = tmp(3)
 
-            Hv = 0
-            Hl = 0
+            _Hv = 0
+            _Hl = 0
 
             Dim mmg, mml As Double
-            If V > 0 Then Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-            If L > 0 Then Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
+            If V > 0 Then _Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+            If L > 0 Then _Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
             mmg = pp.AUX_MMM(Vy)
             mml = pp.AUX_MMM(Vx)
 
-            Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L)) * Hv - (mml * L / (mmg * V + mml * L)) * Hl
+            Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L)) * _Hv - (mml * L / (mmg * V + mml * L)) * _Hl
             OBJ_FUNC_PH_FLASH = herr
 
             Console.WriteLine("PH Flash [NL]: Current T = " & T & ", Current H Error = " & herr)
@@ -1230,7 +1230,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 5, tolEXT, maxitEXT, {P, Vz, PP})
         Function OBJ_FUNC_PS_FLASH(ByVal T As Double, ByVal S As Double, ByVal P As Double, ByVal Vz As Object, ByVal pp As PropertyPackage) As Object
 
             Dim tmp = Me.Flash_PT(Vz, P, T, pp)
-            Dim L, V, Vx(), Vy() As Double
+            Dim L, V, Vx(), Vy(), _Sv, _Sl As Double
 
             Dim n = UBound(Vz)
 
@@ -1239,16 +1239,16 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 5, tolEXT, maxitEXT, {P, Vz, PP})
             Vx = tmp(2)
             Vy = tmp(3)
 
-            Sv = 0
-            Sl = 0
+            _Sv = 0
+            _Sl = 0
             Dim mmg, mml As Double
 
-            If V > 0 Then Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
-            If L > 0 Then Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
+            If V > 0 Then _Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
+            If L > 0 Then _Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
             mmg = pp.AUX_MMM(Vy)
             mml = pp.AUX_MMM(Vx)
             
-            Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L)) * Sv - (mml * L / (mmg * V + mml * L)) * Sl
+            Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L)) * _Sv - (mml * L / (mmg * V + mml * L)) * _Sl
             OBJ_FUNC_PS_FLASH = serr
 
             Console.WriteLine("PS Flash [NL]: Current T = " & T & ", Current S Error = " & serr)

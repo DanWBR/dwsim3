@@ -908,7 +908,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim tmp As Dictionary(Of String, Object) = Flash_PT(Vz, T, P)
 
-            Dim L, V, S, Vx(), Vy(), Vs(), sumN As Double
+            Dim L, V, S, Vx(), Vy(), Vs(), sumN, _Hv, _Hl, _Hs As Double
 
             Dim n = UBound(Vz)
 
@@ -921,19 +921,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Vs = tmp("SolidPhaseMolarComposition")
             'Vz = tmp("MixtureMoleFlows")
 
-            Hv = 0
-            Hl = 0
-            Hs = 0
+            _Hv = 0
+            _Hl = 0
+            _Hs = 0
 
             Dim mmg, mml, mms As Double
-            If V > 0 Then Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-            If L > 0 Then Hl = proppack.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-            If S > 0 Then Hs = proppack.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties)
+            If V > 0 Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+            If L > 0 Then _Hl = proppack.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
+            If S > 0 Then _Hs = proppack.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties)
             mmg = proppack.AUX_MMM(Vy)
             mml = proppack.AUX_MMM(Vx)
             mms = proppack.AUX_MMM(Vs)
 
-            Dim herr As Double = Hf - ((mmg * V / (mmg * V + mml * L + mms * S)) * Hv + (mml * L / (mmg * V + mml * L + mms * S)) * Hl + (mms * S / (mmg * V + mml * L + mms * S)) * Hs)
+            Dim herr As Double = Hf - ((mmg * V / (mmg * V + mml * L + mms * S)) * _Hv + (mml * L / (mmg * V + mml * L + mms * S)) * _Hl + (mms * S / (mmg * V + mml * L + mms * S)) * _Hs)
             OBJ_FUNC_PH_FLASH = herr
 
             Console.WriteLine("PH Flash [Electrolyte]: Current T = " & T & ", Current H Error = " & herr)

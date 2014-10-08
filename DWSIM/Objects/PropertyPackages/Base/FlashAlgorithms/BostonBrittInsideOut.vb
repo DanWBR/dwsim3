@@ -148,6 +148,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Next
 
             If Vmin < 0.0# Then Vmin = 0.0#
+            If Vmin = 1.0# Then Vmin = 0.0#
+            If Vmax = 0.0# Then Vmax = 1.0#
             If Vmax > 1.0# Then Vmax = 1.0#
 
             V = (Vmin + Vmax) / 2

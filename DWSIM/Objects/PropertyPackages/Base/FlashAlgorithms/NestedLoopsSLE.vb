@@ -594,7 +594,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             Dim tmp As Object
             tmp = Me.Flash_PT(Vz, P, T, pp)
-            Dim L, V, S, Vx(), Vy(), Vs() As Double
+            Dim L, V, S, Vx(), Vy(), Vs(), _Hv, _Hl, _Hs As Double
 
             Dim n = UBound(Vz)
 
@@ -605,22 +605,22 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Vy = tmp(3)
             Vs = tmp(8)
 
-            Hv = 0
-            Hl = 0
-            Hs = 0
+            _Hv = 0
+            _Hl = 0
+            _Hs = 0
 
             Dim mmg, mml, mms As Double
-            If V > 0 Then Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-            If L > 0 Then Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-            If S > 0 Then Hs = pp.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties)
+            If V > 0 Then _Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+            If L > 0 Then _Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
+            If S > 0 Then _Hs = pp.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties)
             mmg = pp.AUX_MMM(Vy)
             mml = pp.AUX_MMM(Vx)
             mms = pp.AUX_MMM(Vs)
 
-            Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L + mms * S)) * Hv - (mml * L / (mmg * V + mml * L + mms * S)) * Hl - (mms * S / (mmg * V + mml * L + mms * S)) * Hs
+            Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L + mms * S)) * _Hv - (mml * L / (mmg * V + mml * L + mms * S)) * _Hl - (mms * S / (mmg * V + mml * L + mms * S)) * _Hs
             OBJ_FUNC_PH_FLASH = herr
 
-            Console.WriteLine("PH Flash [NL]: Current T = " & T & ", Current H Error = " & herr)
+            Console.WriteLine("PH Flash [NL-SLE]: Current T = " & T & ", Current H Error = " & herr)
 
         End Function
 
@@ -628,7 +628,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             Dim tmp As Object
             tmp = Me.Flash_PT(Vz, P, T, pp)
-            Dim L, V, Ssf, Vx(), Vy(), Vs() As Double
+            Dim L, V, Ssf, Vx(), Vy(), Vs(), _Sv, _Sl, _Ss As Double
 
             Dim n = UBound(Vz)
 
@@ -639,19 +639,19 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Vy = tmp(3)
             Vs = tmp(8)
 
-            Sv = 0
-            Sl = 0
-            Ss = 0
+            _Sv = 0
+            _Sl = 0
+            _Ss = 0
             Dim mmg, mml, mms As Double
 
-            If V > 0 Then Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
-            If L > 0 Then Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
-            If Ssf > 0 Then Ss = pp.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties) / (T - 298.15)
+            If V > 0 Then _Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
+            If L > 0 Then _Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
+            If Ssf > 0 Then _Ss = pp.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties) / (T - 298.15)
             mmg = pp.AUX_MMM(Vy)
             mml = pp.AUX_MMM(Vx)
             mms = pp.AUX_MMM(Vs)
 
-            Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L + mms * Ssf)) * Sv - (mml * L / (mmg * V + mml * L + mms * Ssf)) * Sl - (mms * Ssf / (mmg * V + mml * L + mms * Ssf)) * Ss
+            Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L + mms * Ssf)) * _Sv - (mml * L / (mmg * V + mml * L + mms * Ssf)) * _Sl - (mms * Ssf / (mmg * V + mml * L + mms * Ssf)) * _Ss
             OBJ_FUNC_PS_FLASH = serr
 
             Console.WriteLine("PS Flash [NL-SLE]: Current T = " & T & ", Current S Error = " & serr)

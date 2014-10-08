@@ -174,6 +174,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             If Vmin < 0.0# Then Vmin = 0.0#
             If Vmin = 1.0# Then Vmin = 0.0#
+            If Vmax = 0.0# Then Vmax = 1.0#
             If Vmax > 1.0# Then Vmax = 1.0#
 
             V = (Vmin + Vmax) / 2
@@ -556,49 +557,38 @@ out:        Return result
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PHFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PHFELT"))
 
-            Dim Tsup, Tinf, Hsup, Hinf
+            Dim Tsup, Tinf, VTf(n) As Double
 
-            If Tref <> 0 Then
-                Tinf = Tref - 250
-                Tsup = Tref + 250
+            Tsup = 1000.0#
+            Tinf = 50.0#
+
+            Dim bo As New BrentOpt.Brent
+            bo.DefineFuncDelegate(AddressOf Herror)
+            Console.WriteLine("PH Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
+
+            Dim fx, fx2, dfdx, x1, dx, maxdx As Double
+
+            Dim cnt As Integer = 0
+
+            maxdx = 15.0#
+
+            If Tref = 0 Then Tref = 298.15
+            x1 = Tref
+            Do
+                fx = Herror(x1, {P, Vz, PP})
+                fx2 = Herror(x1 + 1, {P, Vz, PP})
+                If Abs(fx) < tolEXT Then Exit Do
+                dfdx = (fx2 - fx)
+                dx = fx / dfdx
+                If Abs(dx) > maxdx Then dx = Sign(dx) * maxdx
+                x1 = x1 - dx
+                If x1 < 0 Then GoTo alt
+                cnt += 1
+            Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+            If Double.IsNaN(x1) Or cnt > maxitEXT Then
+alt:            T = bo.BrentOpt(Tinf, Tsup, 25, tolEXT, maxitEXT, {P, Vz, PP})
             Else
-                Tinf = 100
-                Tsup = 2000
-            End If
-            If Tinf < 100 Then Tinf = 100
-
-            Hinf = PP.DW_CalcEnthalpy(Vz, Tinf, P, State.Liquid)
-            Hsup = PP.DW_CalcEnthalpy(Vz, Tsup, P, State.Vapor)
-
-            If H >= Hsup Then
-                Tf = Me.ESTIMAR_T_H(H, Tref, "V", P, Vz)
-            ElseIf H <= Hinf Then
-                Tf = Me.ESTIMAR_T_H(H, Tref, "L", P, Vz)
-            Else
-                Dim bo As New BrentOpt.Brent
-                bo.DefineFuncDelegate(AddressOf Herror)
-                Console.WriteLine("PH Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
-
-                Dim fx, dfdx, x1 As Double
-
-                Dim cnt As Integer = 0
-
-                If Tref = 0 Then Tref = 298.15
-                x1 = Tref
-                Do
-                    fx = Herror(x1, Nothing)
-                    If Abs(fx) < etol Then Exit Do
-                    dfdx = (Herror(x1 + 1, Nothing) - fx)
-                    x1 = x1 - fx / dfdx
-                    If x1 < 0 Then GoTo alt
-                    cnt += 1
-                Loop Until cnt > 20 Or Double.IsNaN(x1)
-                If Double.IsNaN(x1) Or cnt > 20 Then
-alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
-                Else
-                    Tf = x1
-                End If
-
+                T = x1
             End If
 
             Dim tmp As Object = Flash_PT(Vz, P, Tf, PP)
@@ -721,6 +711,8 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
 
             Dim n = UBound(Vz)
 
+            Dim L1, L2, V, Vx1(), Vx2(), Vy() As Double
+
             L1 = tmp(0)
             V = tmp(1)
             Vx1 = tmp(2)
@@ -728,20 +720,22 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
             L2 = tmp(5)
             Vx2 = tmp(6)
 
-            Hv = 0
-            Hl1 = 0
-            Hl2 = 0
+            Dim _Hv, _Hl1, _Hl2 As Double
 
-            If V > 0.00000001 Then Hv = proppack.DW_CalcEnthalpy(Vy, T, Pf, State.Vapor)
-            If L1 > 0.00000001 Then Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, Pf, State.Liquid)
-            If L2 > 0.00000001 Then Hl2 = proppack.DW_CalcEnthalpy(Vx2, T, Pf, State.Liquid)
+            _Hv = 0
+            _Hl1 = 0
+            _Hl2 = 0
+
+            If V > 0.00000001 Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, Pf, State.Vapor)
+            If L1 > 0.00000001 Then _Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, Pf, State.Liquid)
+            If L2 > 0.00000001 Then _Hl2 = proppack.DW_CalcEnthalpy(Vx2, T, Pf, State.Liquid)
 
             Dim mmg, mml, mml2
             mmg = proppack.AUX_MMM(Vy)
             mml = proppack.AUX_MMM(Vx1)
             mml2 = proppack.AUX_MMM(Vx2)
 
-            Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L1 + mml2 * L2)) * Hv - (mml * L1 / (mmg * V + mml * L1 + mml2 * L2)) * Hl1 - (mml2 * L2 / (mmg * V + mml * L1 + mml2 * L2)) * Hl2
+            Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L1 + mml2 * L2)) * _Hv - (mml * L1 / (mmg * V + mml * L1 + mml2 * L2)) * _Hl1 - (mml2 * L2 / (mmg * V + mml * L1 + mml2 * L2)) * _Hl2
             OBJ_FUNC_PH_FLASH = herr
 
             Console.WriteLine("PH Flash [GM]: Current T = " & T & ", Current H Error = " & herr)
@@ -754,6 +748,8 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
 
             Dim n = UBound(Vz)
 
+            Dim L1, L2, V, Vx1(), Vx2(), Vy() As Double
+
             L1 = tmp(0)
             V = tmp(1)
             Vx1 = tmp(2)
@@ -761,20 +757,22 @@ alt:                Tf = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, P
             L2 = tmp(5)
             Vx2 = tmp(6)
 
-            Sv = 0
-            Sl1 = 0
-            Sl2 = 0
+            Dim _Sv, _Sl1, _Sl2 As Double
 
-            If V > 0.00000001 Then Sv = proppack.DW_CalcEntropy(Vy, T, Pf, State.Vapor)
-            If L1 > 0.00000001 Then Sl1 = proppack.DW_CalcEntropy(Vx1, T, Pf, State.Liquid)
-            If L2 > 0.00000001 Then Sl2 = proppack.DW_CalcEntropy(Vx2, T, Pf, State.Liquid)
+            _Sv = 0
+            _Sl1 = 0
+            _Sl2 = 0
+
+            If V > 0.00000001 Then _Sv = proppack.DW_CalcEntropy(Vy, T, Pf, State.Vapor)
+            If L1 > 0.00000001 Then _Sl1 = proppack.DW_CalcEntropy(Vx1, T, Pf, State.Liquid)
+            If L2 > 0.00000001 Then _Sl2 = proppack.DW_CalcEntropy(Vx2, T, Pf, State.Liquid)
 
             Dim mmg, mml, mml2
             mmg = proppack.AUX_MMM(Vy)
             mml = proppack.AUX_MMM(Vx1)
             mml2 = proppack.AUX_MMM(Vx2)
 
-            Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L1 + mml2 * L2)) * Sv - (mml * L1 / (mmg * V + mml * L1 + mml2 * L2)) * Sl1 - (mml2 * L2 / (mmg * V + mml * L1 + mml2 * L2)) * Sl2
+            Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L1 + mml2 * L2)) * _Sv - (mml * L1 / (mmg * V + mml * L1 + mml2 * L2)) * _Sl1 - (mml2 * L2 / (mmg * V + mml * L1 + mml2 * L2)) * _Sl2
             OBJ_FUNC_PS_FLASH = serr
 
             Console.WriteLine("PS Flash [GM]: Current T = " & T & ", Current S Error = " & serr)

@@ -190,7 +190,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             'get component ids
 
-            Dim namesS, namesC As New ArrayList
+            Dim namesS, namesC, toremove As New ArrayList
 
             For Each sb As Substancia In instr.Fases(0).Componentes.Values
                 namesS.Add(sb.Nome)
@@ -216,26 +216,34 @@ Namespace DWSIM.SimulationObjects.UnitOps
             'separate components according to specifications
 
             For Each cs As ComponentSeparationSpec In Me.ComponentSepSpecs.Values
-                With specstr.Fases(0).Componentes(cs.ComponentID)
-                    Select Case cs.SepSpec
-                        Case SeparationSpec.MassFlow
-                            .MassFlow = cv.ConverterParaSI(su.spmp_massflow, cs.SpecValue)
-                            .MolarFlow = .MassFlow / .ConstantProperties.Molar_Weight * 1000
-                        Case SeparationSpec.MolarFlow
-                            .MolarFlow = cv.ConverterParaSI(su.spmp_molarflow, cs.SpecValue)
-                            .MassFlow = .MolarFlow * .ConstantProperties.Molar_Weight / 1000
-                        Case SeparationSpec.PercentInletMassFlow
-                            .MassFlow = cs.SpecValue / 100 * instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
-                            .MolarFlow = .MassFlow / .ConstantProperties.Molar_Weight * 1000
-                        Case SeparationSpec.PercentInletMolarFlow
-                            .MolarFlow = cs.SpecValue / 100 * instr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault
-                            .MassFlow = .MolarFlow * .ConstantProperties.Molar_Weight / 1000
-                    End Select
-                End With
-                With otherstr.Fases(0).Componentes(cs.ComponentID)
-                    .MassFlow = instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
-                    .MolarFlow = instr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault
-                End With
+                If specstr.Fases(0).Componentes.ContainsKey(cs.ComponentID) Then
+                    With specstr.Fases(0).Componentes(cs.ComponentID)
+                        Select Case cs.SepSpec
+                            Case SeparationSpec.MassFlow
+                                .MassFlow = cv.ConverterParaSI(su.spmp_massflow, cs.SpecValue)
+                                .MolarFlow = .MassFlow / .ConstantProperties.Molar_Weight * 1000
+                            Case SeparationSpec.MolarFlow
+                                .MolarFlow = cv.ConverterParaSI(su.spmp_molarflow, cs.SpecValue)
+                                .MassFlow = .MolarFlow * .ConstantProperties.Molar_Weight / 1000
+                            Case SeparationSpec.PercentInletMassFlow
+                                .MassFlow = cs.SpecValue / 100 * instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
+                                .MolarFlow = .MassFlow / .ConstantProperties.Molar_Weight * 1000
+                            Case SeparationSpec.PercentInletMolarFlow
+                                .MolarFlow = cs.SpecValue / 100 * instr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault
+                                .MassFlow = .MolarFlow * .ConstantProperties.Molar_Weight / 1000
+                        End Select
+                    End With
+                    With otherstr.Fases(0).Componentes(cs.ComponentID)
+                        .MassFlow = instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
+                        .MolarFlow = instr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault
+                    End With
+                Else
+                    toremove.Add(cs.ComponentID)
+                End If
+            Next
+
+            For Each cs As String In toremove
+                If Me.ComponentSepSpecs.ContainsKey(cs) Then Me.ComponentSepSpecs.Remove(cs)
             Next
 
             Dim summ, sumw As Double
