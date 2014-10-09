@@ -10571,10 +10571,11 @@ Final3:
             Next
 
             Select Case Me.ComponentName
+
                 Case "PC-SAFT"
 
                     Dim pp As PCSAFTPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
+                    'pp.m_pr.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.PCSIP() With {.compound1 = xel.@Compound1, .compound2 = xel.@Compound2, .casno1 = xel.@Compound1, .casno2 = xel.@Compound2, .kij = Double.Parse(xel.@Value, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.PCSIP)
@@ -10582,14 +10583,18 @@ Final3:
                         If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_pr.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_pr.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
                 Case "Peng-Robinson (PR)"
 
                     Dim pp As PengRobinsonPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
+                    'pp.m_pr.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
@@ -10597,14 +10602,18 @@ Final3:
                         If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_pr.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_pr.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
                 Case "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2)"
 
                     Dim pp As PRSV2PropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
+                    'pp.m_pr.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.PRSV2_IPData() With {.id1 = xel.@Compound1, .id2 = xel.@Compound2, .kij = Double.Parse(xel.@Value, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.PRSV2_IPData)
@@ -10612,14 +10621,18 @@ Final3:
                         If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_pr.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_pr.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
                 Case "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)"
 
                     Dim pp As PRSV2VLPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
+                    'pp.m_pr.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.PRSV2_IPData() With {.id1 = xel.@Compound1, .id2 = xel.@Compound2, .kij = Double.Parse(xel.@kij, ci), .kji = Double.Parse(xel.@kji, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.PRSV2_IPData)
@@ -10627,14 +10640,18 @@ Final3:
                         If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_pr.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_pr.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
                 Case "Soave-Redlich-Kwong (SRK)"
 
                     Dim pp As SRKPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
+                    'pp.m_pr.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
@@ -10642,14 +10659,18 @@ Final3:
                         If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_pr.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_pr.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
                 Case "Peng-Robinson / Lee-Kesler (PR/LK)"
 
                     Dim pp As PengRobinsonLKPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
+                    'pp.m_pr.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
@@ -10657,7 +10678,11 @@ Final3:
                         If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_pr.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_pr.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
@@ -10665,7 +10690,7 @@ Final3:
                 Case "UNIFAC"
 
                     Dim pp As UNIFACPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
+                    'pp.m_pr.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
@@ -10673,14 +10698,18 @@ Final3:
                         If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_pr.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_pr.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
                 Case "UNIFAC-LL"
 
                     Dim pp As UNIFACLLPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
+                    'pp.m_pr.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
@@ -10688,14 +10717,18 @@ Final3:
                         If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_pr.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_pr.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
                 Case "NRTL"
 
                     Dim pp As NRTLPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
+                    'pp.m_pr.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters_PR").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
@@ -10703,11 +10736,15 @@ Final3:
                         If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_pr.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_pr.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
-                    pp.m_uni.InteractionParameters.Clear()
+                    'pp.m_uni.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters_NRTL").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.NRTL_IPData() With {.ID1 = xel.@ID1, .ID2 = xel.@ID2, .A12 = Double.Parse(xel.@A12, ci), .A21 = Double.Parse(xel.@A21, ci),
                                                                     .B12 = Double.Parse(xel.@B12, ci), .B21 = Double.Parse(xel.@B21, ci),
@@ -10718,7 +10755,11 @@ Final3:
                         If Not pp.m_uni.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_uni.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_uni.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_uni.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_uni.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_uni.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
@@ -10726,7 +10767,7 @@ Final3:
 
                     Dim pp As UNIQUACPropertyPackage = Me
 
-                    pp.m_pr.InteractionParameters.Clear()
+                    'pp.m_pr.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters_PR").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
@@ -10734,11 +10775,15 @@ Final3:
                         If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_pr.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_pr.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
-                    pp.m_uni.InteractionParameters.Clear()
+                    'pp.m_uni.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters_UNIQUAC").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.UNIQUAC_IPData() With {.ID1 = xel.@ID1, .ID2 = xel.@ID2, .A12 = Double.Parse(xel.@A12, ci), .A21 = Double.Parse(xel.@A21, ci),
                                                                        .B12 = Double.Parse(xel.@B12, ci), .B21 = Double.Parse(xel.@B21, ci),
@@ -10748,15 +10793,18 @@ Final3:
                         If Not pp.m_uni.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_uni.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_uni.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_uni.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_uni.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_uni.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
-
 
                 Case "Modified UNIFAC (Dortmund)"
 
                     Dim pp As MODFACPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
+                    'pp.m_pr.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
@@ -10764,14 +10812,18 @@ Final3:
                         If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_pr.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_pr.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
                 Case "COSMO-SAC (JCOSMO)"
 
                     Dim pp As COSMOSACPropertyPackage = Me
-                    pp.m_pr.InteractionParameters.Clear()
+                    'pp.m_pr.InteractionParameters.Clear()
                     For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InteractionParameters").SingleOrDefault.Elements.ToList
                         Dim ip As New Auxiliary.PR_IPData() With {.kij = Double.Parse(xel.@Value, ci)}
                         Dim dic As New Dictionary(Of String, Auxiliary.PR_IPData)
@@ -10779,7 +10831,11 @@ Final3:
                         If Not pp.m_pr.InteractionParameters.ContainsKey(xel.@Compound1) Then
                             pp.m_pr.InteractionParameters.Add(xel.@Compound1, dic)
                         Else
-                            pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            If Not pp.m_pr.InteractionParameters(xel.@Compound1).ContainsKey(xel.@Compound2) Then
+                                pp.m_pr.InteractionParameters(xel.@Compound1).Add(xel.@Compound2, ip)
+                            Else
+                                pp.m_pr.InteractionParameters(xel.@Compound1)(xel.@Compound2) = ip
+                            End If
                         End If
                     Next
 
@@ -10816,9 +10872,13 @@ Final3:
                         .Add(New XElement("InteractionParameters"))
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PCSIP)) In pp.m_pr.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.PCSIP) In kvp.Value
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                       New XAttribute("Compound2", kvp2.Key),
-                                                                       New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                           New XAttribute("Compound2", kvp2.Key),
+                                                                           New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                    End If
+                                End If
                             Next
                         Next
 
@@ -10829,9 +10889,13 @@ Final3:
                         .Add(New XElement("InteractionParameters"))
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                    New XAttribute("Compound2", kvp2.Key),
-                                                                    New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                        New XAttribute("Compound2", kvp2.Key),
+                                                                        New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                    End If
+                                End If
                             Next
                         Next
 
@@ -10842,9 +10906,13 @@ Final3:
                         .Add(New XElement("InteractionParameters"))
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PRSV2_IPData)) In pp.m_pr.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.PRSV2_IPData) In kvp.Value
-                                     .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                     New XAttribute("Compound2", kvp2.Key),
-                                                                     New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                        New XAttribute("Compound2", kvp2.Key),
+                                                                        New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                    End If
+                                End If
                             Next
                         Next
 
@@ -10855,11 +10923,15 @@ Final3:
                         .Add(New XElement("InteractionParameters"))
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PRSV2_IPData)) In pp.m_pr.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.PRSV2_IPData) In kvp.Value
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                    New XAttribute("Compound2", kvp2.Key),
-                                                                    New XAttribute("kij", kvp2.Value.kij.ToString(ci)),
-                                                                    New XAttribute("kji", kvp2.Value.kji.ToString(ci))))
-                             Next
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                        New XAttribute("Compound2", kvp2.Key),
+                                                                        New XAttribute("kij", kvp2.Value.kij.ToString(ci)),
+                                                                        New XAttribute("kji", kvp2.Value.kji.ToString(ci))))
+                                    End If
+                                End If
+                            Next
                         Next
 
                     Case "Soave-Redlich-Kwong (SRK)"
@@ -10869,10 +10941,14 @@ Final3:
                         .Add(New XElement("InteractionParameters"))
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                  New XAttribute("Compound2", kvp2.Key),
-                                                                  New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                             Next
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                      New XAttribute("Compound2", kvp2.Key),
+                                                                      New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                    End If
+                                End If
+                            Next
                         Next
 
                     Case "Peng-Robinson / Lee-Kesler (PR/LK)"
@@ -10883,9 +10959,13 @@ Final3:
 
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                       New XAttribute("Compound2", kvp2.Key),
-                                                                       New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                           New XAttribute("Compound2", kvp2.Key),
+                                                                           New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                    End If
+                                End If
                             Next
                         Next
 
@@ -10897,9 +10977,13 @@ Final3:
 
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                    New XAttribute("Compound2", kvp2.Key),
-                                                                    New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                        New XAttribute("Compound2", kvp2.Key),
+                                                                        New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                    End If
+                                End If
                             Next
                         Next
 
@@ -10911,10 +10995,14 @@ Final3:
 
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                      New XAttribute("Compound2", kvp2.Key),
-                                                                      New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                             Next
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                          New XAttribute("Compound2", kvp2.Key),
+                                                                          New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                    End If
+                                End If
+                            Next
                         Next
 
                     Case "NRTL"
@@ -10925,9 +11013,13 @@ Final3:
 
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                    New XAttribute("Compound2", kvp2.Key),
-                                                                    New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                        New XAttribute("Compound2", kvp2.Key),
+                                                                        New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                    End If
+                                End If
                              Next
                         Next
 
@@ -10935,17 +11027,21 @@ Final3:
 
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.NRTL_IPData)) In pp.m_uni.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.NRTL_IPData) In kvp.Value
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                     New XAttribute("Compound2", kvp2.Key),
-                                                                     New XAttribute("ID1", kvp2.Value.ID1),
-                                                                     New XAttribute("ID2", kvp2.Value.ID2),
-                                                                     New XAttribute("A12", kvp2.Value.A12.ToString(ci)),
-                                                                     New XAttribute("A21", kvp2.Value.A21.ToString(ci)),
-                                                                     New XAttribute("B12", kvp2.Value.B12.ToString(ci)),
-                                                                     New XAttribute("B21", kvp2.Value.B21.ToString(ci)),
-                                                                     New XAttribute("C12", kvp2.Value.C12.ToString(ci)),
-                                                                     New XAttribute("C21", kvp2.Value.C21.ToString(ci)),
-                                                                     New XAttribute("alpha12", kvp2.Value.alpha12.ToString(ci))))
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                         New XAttribute("Compound2", kvp2.Key),
+                                                                         New XAttribute("ID1", kvp2.Value.ID1),
+                                                                         New XAttribute("ID2", kvp2.Value.ID2),
+                                                                         New XAttribute("A12", kvp2.Value.A12.ToString(ci)),
+                                                                         New XAttribute("A21", kvp2.Value.A21.ToString(ci)),
+                                                                         New XAttribute("B12", kvp2.Value.B12.ToString(ci)),
+                                                                         New XAttribute("B21", kvp2.Value.B21.ToString(ci)),
+                                                                         New XAttribute("C12", kvp2.Value.C12.ToString(ci)),
+                                                                         New XAttribute("C21", kvp2.Value.C21.ToString(ci)),
+                                                                         New XAttribute("alpha12", kvp2.Value.alpha12.ToString(ci))))
+                                    End If
+                                End If
                             Next
                         Next
 
@@ -10957,9 +11053,13 @@ Final3:
 
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                  New XAttribute("Compound2", kvp2.Key),
-                                                                  New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                      New XAttribute("Compound2", kvp2.Key),
+                                                                      New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                    End If
+                                End If
                             Next
                         Next
 
@@ -10967,16 +11067,20 @@ Final3:
 
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.UNIQUAC_IPData)) In pp.m_uni.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.UNIQUAC_IPData) In kvp.Value
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                  New XAttribute("Compound2", kvp2.Key),
-                                                                  New XAttribute("ID1", kvp2.Value.ID1),
-                                                                  New XAttribute("ID2", kvp2.Value.ID2),
-                                                                  New XAttribute("A12", kvp2.Value.A12.ToString(ci)),
-                                                                  New XAttribute("A21", kvp2.Value.A21.ToString(ci)),
-                                                                  New XAttribute("B12", kvp2.Value.B12.ToString(ci)),
-                                                                  New XAttribute("B21", kvp2.Value.B21.ToString(ci)),
-                                                                  New XAttribute("C12", kvp2.Value.C12.ToString(ci)),
-                                                                  New XAttribute("C21", kvp2.Value.C21.ToString(ci))))
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                      New XAttribute("Compound2", kvp2.Key),
+                                                                      New XAttribute("ID1", kvp2.Value.ID1),
+                                                                      New XAttribute("ID2", kvp2.Value.ID2),
+                                                                      New XAttribute("A12", kvp2.Value.A12.ToString(ci)),
+                                                                      New XAttribute("A21", kvp2.Value.A21.ToString(ci)),
+                                                                      New XAttribute("B12", kvp2.Value.B12.ToString(ci)),
+                                                                      New XAttribute("B21", kvp2.Value.B21.ToString(ci)),
+                                                                      New XAttribute("C12", kvp2.Value.C12.ToString(ci)),
+                                                                      New XAttribute("C21", kvp2.Value.C21.ToString(ci))))
+                                    End If
+                                End If
                             Next
                         Next
 
@@ -10988,9 +11092,13 @@ Final3:
 
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                     .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                  New XAttribute("Compound2", kvp2.Key),
-                                                                  New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                     New XAttribute("Compound2", kvp2.Key),
+                                                                     New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                    End If
+                                End If
                             Next
                         Next
 
@@ -11002,10 +11110,14 @@ Final3:
 
                         For Each kvp As KeyValuePair(Of String, Dictionary(Of String, Auxiliary.PR_IPData)) In pp.m_pr.InteractionParameters
                             For Each kvp2 As KeyValuePair(Of String, Auxiliary.PR_IPData) In kvp.Value
-                                    .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
-                                                                  New XAttribute("Compound2", kvp2.Key),
-                                                                  New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
-                             Next
+                                If Not Me.CurrentMaterialStream Is Nothing Then
+                                    If Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp.Key) And Me.CurrentMaterialStream.Fases(0).Componentes.ContainsKey(kvp2.Key) Then
+                                        .Item(.Count - 1).Add(New XElement("InteractionParameter", New XAttribute("Compound1", kvp.Key),
+                                                                      New XAttribute("Compound2", kvp2.Key),
+                                                                      New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
+                                    End If
+                                End If
+                            Next
                         Next
 
                     Case "Chao-Seader"

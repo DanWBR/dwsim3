@@ -373,7 +373,7 @@ out:
                             fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
                             gl = 0.0#
                             For i = 0 To nc
-                                gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                                If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                             Next
                             If gl <= gli Then
                                 gli = gl
@@ -395,8 +395,8 @@ out:
                     gv = 0.0#
                     gl = 0.0#
                     For i = 0 To nc
-                        gv += vx2est(i) * Log(fcv(i) * vx2est(i))
-                        gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gv += vx2est(i) * Log(fcv(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                     Next
                     
                     If gl < gv Then 'test phase is liquid-like.
@@ -1075,7 +1075,7 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
                             fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
                             gl = 0.0#
                             For i = 0 To nc
-                                gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                                If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                             Next
                             If gl <= gli Then
                                 gli = gl
@@ -1097,8 +1097,8 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
                     gv = 0.0#
                     gl = 0.0#
                     For i = 0 To nc
-                        gv += vx2est(i) * Log(fcv(i) * vx2est(i))
-                        gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gv += vx2est(i) * Log(fcv(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                     Next
 
                     If gl < gv Then 'liquid-like
@@ -1193,7 +1193,7 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
                             fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
                             gl = 0.0#
                             For i = 0 To nc
-                                gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                                If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                             Next
                             If gl <= gli Then
                                 gli = gl
@@ -1215,8 +1215,8 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
                     gv = 0.0#
                     gl = 0.0#
                     For i = 0 To nc
-                        gv += vx2est(i) * Log(fcv(i) * vx2est(i))
-                        gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gv += vx2est(i) * Log(fcv(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                     Next
 
                     If gl < gv Then 'liquid-like

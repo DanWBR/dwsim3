@@ -96,7 +96,12 @@ Namespace DWSIM.Flowsheet
                                         Catch ex As Exception
                                             form.UpdateStatusLabel(preLab)
                                             myUnitOp.ErrorMessage = ex.Message
-                                            form.WriteToLog(gobj.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                                            Dim st As New StackTrace(ex, True)
+                                            If st.FrameCount > 0 Then
+                                                form.WriteToLog(gobj.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                            Else
+                                                form.WriteToLog(gobj.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                            End If
                                             gobj = myUnitOp.GraphicObject
                                             gobj.Calculated = False
                                             myUnitOp.DeCalculate()
@@ -139,7 +144,12 @@ Namespace DWSIM.Flowsheet
                                         form.UpdateStatusLabel(preLab)
                                         myUnitOp.GraphicObject.Calculated = False
                                         myUnitOp.ErrorMessage = ex.Message
-                                        form.WriteToLog(gobj.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                                        Dim st As New StackTrace(ex, True)
+                                        If st.FrameCount > 0 Then
+                                            form.WriteToLog(gobj.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                        Else
+                                            form.WriteToLog(gobj.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                        End If
                                         gobj = myUnitOp.GraphicObject
                                         gobj.Calculated = False
                                         myUnitOp.DeCalculate()
@@ -169,7 +179,12 @@ Namespace DWSIM.Flowsheet
                                 form.FormProps.PGEx1.Refresh()
                                 myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                             Catch ex As Exception
-                                form.WriteToLog(myObj.GraphicObject.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                                Dim st As New StackTrace(ex, True)
+                                If st.FrameCount > 0 Then
+                                    form.WriteToLog(myObj.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                Else
+                                    form.WriteToLog(myObj.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                End If
                             Finally
                                 My.MyApplication.IsFlowsheetSolving = False
                             End Try
@@ -191,7 +206,12 @@ Namespace DWSIM.Flowsheet
                                             ms.Clear()
                                             ms.ClearAllProps()
                                             ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                                            form.WriteToLog(gobj.Tag & ": " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                                            Dim st As New StackTrace(ex, True)
+                                            If st.FrameCount > 0 Then
+                                                form.WriteToLog(gobj.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                            Else
+                                                form.WriteToLog(gobj.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                            End If
                                         Finally
                                             My.MyApplication.IsFlowsheetSolving = False
                                         End Try
@@ -266,7 +286,12 @@ Namespace DWSIM.Flowsheet
                         Try
                             .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                         Catch ex As Exception
-                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                            Dim st As New StackTrace(ex, True)
+                            If st.FrameCount > 0 Then
+                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                            Else
+                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                            End If
                         Finally
                             My.MyApplication.IsFlowsheetSolving = False
                         End Try
@@ -295,7 +320,12 @@ Namespace DWSIM.Flowsheet
                                             .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
                                     End Select
                                 Catch ex As Exception
-                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    Dim st As New StackTrace(ex, True)
+                                    If st.FrameCount > 0 Then
+                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                    Else
+                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    End If
                                 Finally
                                     My.MyApplication.IsFlowsheetSolving = False
                                 End Try
@@ -315,7 +345,12 @@ Namespace DWSIM.Flowsheet
                                         .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
                                 End Select
                             Catch ex As Exception
-                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                Dim st As New StackTrace(ex, True)
+                                If st.FrameCount > 0 Then
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                Else
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                End If
                             Finally
                                 My.MyApplication.IsFlowsheetSolving = False
                             End Try
@@ -484,7 +519,12 @@ Namespace DWSIM.Flowsheet
                         Try
                             .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                         Catch ex As Exception
-                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                            Dim st As New StackTrace(ex, True)
+                            If st.FrameCount > 0 Then
+                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                            Else
+                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                            End If
                         Finally
                             My.MyApplication.IsFlowsheetSolving = False
                         End Try
@@ -494,7 +534,12 @@ Namespace DWSIM.Flowsheet
                                 Try
                                     .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                                 Catch ex As Exception
-                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    Dim st As New StackTrace(ex, True)
+                                    If st.FrameCount > 0 Then
+                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                    Else
+                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    End If
                                 Finally
                                     My.MyApplication.IsFlowsheetSolving = False
                                 End Try
@@ -502,7 +547,12 @@ Namespace DWSIM.Flowsheet
                                 Try
                                     .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
                                 Catch ex As Exception
-                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    Dim st As New StackTrace(ex, True)
+                                    If st.FrameCount > 0 Then
+                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                    Else
+                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    End If
                                 Finally
                                     My.MyApplication.IsFlowsheetSolving = False
                                 End Try
@@ -522,7 +572,12 @@ Namespace DWSIM.Flowsheet
                                         .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
                                 End Select
                             Catch ex As Exception
-                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                Dim st As New StackTrace(ex, True)
+                                If st.FrameCount > 0 Then
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                Else
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                End If
                             Finally
                                 My.MyApplication.IsFlowsheetSolving = False
                             End Try
@@ -694,7 +749,12 @@ Namespace DWSIM.Flowsheet
                         Try
                             .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                         Catch ex As Exception
-                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                            Dim st As New StackTrace(ex, True)
+                            If st.FrameCount > 0 Then
+                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                            Else
+                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                            End If
                         Finally
                             My.MyApplication.IsFlowsheetSolving = False
                         End Try
@@ -712,7 +772,12 @@ Namespace DWSIM.Flowsheet
                                 Try
                                     .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
                                 Catch ex As Exception
-                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    Dim st As New StackTrace(ex, True)
+                                    If st.FrameCount > 0 Then
+                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                    Else
+                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    End If
                                 Finally
                                     My.MyApplication.IsFlowsheetSolving = False
                                 End Try
@@ -732,7 +797,12 @@ Namespace DWSIM.Flowsheet
                                         .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
                                 End Select
                             Catch ex As Exception
-                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                Dim st As New StackTrace(ex, True)
+                                If st.FrameCount > 0 Then
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                Else
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                End If
                             Finally
                                 My.MyApplication.IsFlowsheetSolving = False
                             End Try
@@ -830,7 +900,7 @@ Namespace DWSIM.Flowsheet
                             End Select
                         Catch ae As AggregateException
                             For Each ex As Exception In ae.InnerExceptions
-                                Throw
+                                Throw ex
                             Next
                         Finally
                             My.MyApplication.IsFlowsheetSolving = False
@@ -1134,7 +1204,12 @@ Namespace DWSIM.Flowsheet
                         End If
                     End If
                 Catch ex As Exception
-                    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                    Dim st As New StackTrace(ex, True)
+                    If st.FrameCount > 0 Then
+                        form.WriteToLog(myinfo.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                    Else
+                        form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                    End If
                 End Try
 
                 form.FormWatch.UpdateList()
@@ -1206,7 +1281,12 @@ Namespace DWSIM.Flowsheet
                         CalculateFlowsheet(form, myinfo, Nothing)
                     End If
                 Catch ex As Exception
-                    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                    Dim st As New StackTrace(ex, True)
+                    If st.FrameCount > 0 Then
+                        form.WriteToLog(myinfo.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                    Else
+                        form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                    End If
                 End Try
 
                 form.FormWatch.UpdateList()

@@ -119,3 +119,6 @@ obj
 /DWSIM/bin/x86/Release/chemsepdb/chemsep1.xml
 /DWSIM/bin/x86/Release/cudacode.cdfy
 /DWSIM/bin/x86/Release/help/Pictures/Thumbs.db
+/.gitattributes
+/DWSIM/System.pdb/712A1BFCA3C04308BE741B49494055D41/System.pd_
+/DWSIM/bin/x86/Release/derby.log

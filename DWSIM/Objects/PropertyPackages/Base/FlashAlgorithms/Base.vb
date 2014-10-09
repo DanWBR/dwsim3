@@ -212,8 +212,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             gv = 0.0#
             gl = 0.0#
             For i = 0 To n
-                gv += Vz(i) * Log(fcv(i) * Vz(i))
-                gl += Vz(i) * Log(fcl(i) * Vz(i))
+                If Vz(i) <> 0.0# Then gv += Vz(i) * Log(fcv(i) * Vz(i))
+                If Vz(i) <> 0.0# Then gl += Vz(i) * Log(fcl(i) * Vz(i))
             Next
 
             If gl <= gv Then
@@ -337,8 +337,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         gv = 0.0#
                         gl = 0.0#
                         For j = 0 To n
-                            gv += Vz(j) * Log(fcv(j) * Vz(j))
-                            gl += Vz(j) * Log(fcl(j) * Vz(j))
+                            If Vz(j) <> 0.0# Then gv += Vz(j) * Log(fcv(j) * Vz(j))
+                            If Vz(j) <> 0.0# Then gl += Vz(j) * Log(fcl(j) * Vz(j))
                         Next
 
                         If gl <= gv Then

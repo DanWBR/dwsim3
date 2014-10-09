@@ -117,7 +117,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
                             gl = 0.0#
                             For i = 0 To nc
-                                gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                                If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                             Next
                             If gl <= gli Then
                                 gli = gl
@@ -139,8 +139,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     gv = 0.0#
                     gl = 0.0#
                     For i = 0 To nc
-                        gv += vx2est(i) * Log(fcv(i) * vx2est(i))
-                        gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gv += vx2est(i) * Log(fcv(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                     Next
                     
                     If gl < gv Then 'test phase is liquid-like.
@@ -262,7 +262,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             fcl = PP.DW_CalcFugCoeff(vx2est, result(4), P, State.Liquid)
                             gl = 0.0#
                             For i = 0 To nc
-                                gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                                If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                             Next
                             If gl <= gli Then
                                 gli = gl
@@ -284,8 +284,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     gv = 0.0#
                     gl = 0.0#
                     For i = 0 To nc
-                        gv += vx2est(i) * Log(fcv(i) * vx2est(i))
-                        gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gv += vx2est(i) * Log(fcv(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                     Next
 
                     If Abs((gl - gv) / gl) > 0.05 Then 'liquid-like
@@ -398,7 +398,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             fcl = PP.DW_CalcFugCoeff(vx2est, result(4), P, State.Liquid)
                             gl = 0.0#
                             For i = 0 To nc
-                                gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                                If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                             Next
                             If gl <= gli Then
                                 gli = gl
@@ -420,8 +420,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     gv = 0.0#
                     gl = 0.0#
                     For i = 0 To nc
-                        gv += vx2est(i) * Log(fcv(i) * vx2est(i))
-                        gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gv += vx2est(i) * Log(fcv(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                     Next
 
                     If Abs((gl - gv) / gl) > 0.05 Then 'liquid-like
@@ -536,7 +536,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
                             gl = 0.0#
                             For i = 0 To nc
-                                gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                                If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                             Next
                             If gl <= gli Then
                                 gli = gl
@@ -558,8 +558,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     gv = 0.0#
                     gl = 0.0#
                     For i = 0 To nc
-                        gv += vx2est(i) * Log(fcv(i) * vx2est(i))
-                        gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gv += vx2est(i) * Log(fcv(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                     Next
 
                     If gl < gv Then 'liquid-like
@@ -654,7 +654,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
                             gl = 0.0#
                             For i = 0 To nc
-                                gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                                If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                             Next
                             If gl <= gli Then
                                 gli = gl
@@ -676,8 +676,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     gv = 0.0#
                     gl = 0.0#
                     For i = 0 To nc
-                        gv += vx2est(i) * Log(fcv(i) * vx2est(i))
-                        gl += vx2est(i) * Log(fcl(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gv += vx2est(i) * Log(fcv(i) * vx2est(i))
+                        If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                     Next
 
                     If gl < gv Then 'liquid-like
