@@ -247,7 +247,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Loop Until i = n + 1
                     i = 0
                     Do
-                        Y(nt + 1, i) = sum0(i) / UBound(VzArray, 1)
+                        If Vz(i) <> 0.0# Then
+                            Y(nt + 1, i) = sum0(i) / UBound(VzArray, 1)
+                        Else
+                            Y(n + 1, i) = 0.0#
+                        End If
                         i = i + 1
                     Loop Until i = n + 1
                 End If
@@ -265,15 +269,23 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Loop Until i = n + 1
                     i = 0
                     Do
-                        Y(nt + 1, i) = sum0(i) / UBound(VzArray, 1)
-                        Y(nt + 2, i) = Exp(h(i))
+                        If Vz(i) <> 0.0# Then
+                            Y(nt + 1, i) = sum0(i) / UBound(VzArray, 1)
+                            Y(nt + 2, i) = Exp(h(i))
+                        Else
+                            Y(n + 1, i) = 0.0#
+                        End If
                         i = i + 1
                     Loop Until i = n + 1
                 End If
             Else
                 i = 0
                 Do
-                    Y(n + 1, i) = Exp(h(i))
+                    If Vz(i) <> 0.0# Then
+                        Y(n + 1, i) = Exp(h(i))
+                    Else
+                        Y(n + 1, i) = 0.0#
+                    End If
                     i = i + 1
                 Loop Until i = n + 1
             End If
@@ -337,8 +349,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         gv = 0.0#
                         gl = 0.0#
                         For j = 0 To n
-                            If Vz(j) <> 0.0# Then gv += Vz(j) * Log(fcv(j) * Vz(j))
-                            If Vz(j) <> 0.0# Then gl += Vz(j) * Log(fcl(j) * Vz(j))
+                            If currcomp(j) <> 0.0# Then gv += currcomp(j) * Log(fcv(j) * currcomp(j))
+                            If currcomp(j) <> 0.0# Then gl += currcomp(j) * Log(fcl(j) * currcomp(j))
                         Next
 
                         If gl <= gv Then

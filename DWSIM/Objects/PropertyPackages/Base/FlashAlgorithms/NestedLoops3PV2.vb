@@ -388,7 +388,7 @@ out:
                             vx2est(i) = stresult(1)(m, i)
                         Next
                     End If
-                    
+
                     fcl = PP.DW_CalcFugCoeff(vx2est, T, P, State.Liquid)
                     fcv = PP.DW_CalcFugCoeff(vx2est, T, P, State.Vapor)
 
@@ -398,7 +398,7 @@ out:
                         If vx2est(i) <> 0.0# Then gv += vx2est(i) * Log(fcv(i) * vx2est(i))
                         If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                     Next
-                    
+
                     If gl < gv Then 'test phase is liquid-like.
 
                         Dim vx1e(UBound(Vz)), vx2e(UBound(Vz)) As Double
@@ -438,7 +438,7 @@ out:
                             vx1e(i) = Abs(vx1e(i)) / sumvx2
                         Next
 
-                        result = Flash_PT_3P(Vz, V, L1, L2, Vy, Vx, vx2est, P, T, PP)
+                        result = Flash_PT_3P(Vz, V, L1, L2, Vy, vx1e, vx2est, P, T, PP)
 
                     End If
 

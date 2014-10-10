@@ -182,7 +182,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             vx1e(i) = Abs(vx1e(i)) / sumvx2
                         Next
 
-                        result = Flash_PT_3P(Vz, V, L1, L2, result(3), result(2), vx2est, P, T, PP)
+                        result = Flash_PT_3P(Vz, V, L1, L2, result(3), vx1e, vx2est, P, T, PP)
 
                     End If
 

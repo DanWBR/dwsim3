@@ -591,7 +591,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 25, tolEXT, maxitEXT, {P, Vz, PP})
                 T = x1
             End If
 
-            Dim tmp As Object = Flash_PT(Vz, P, Tf, PP)
+            Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 
             L1 = tmp(0)
             V = tmp(1)
@@ -611,7 +611,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 25, tolEXT, maxitEXT, {P, Vz, PP})
 
             Console.WriteLine("PH Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
 
-            Return New Object() {L1, V, Vx1, Vy, Tf, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
+            Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
         End Function
 
