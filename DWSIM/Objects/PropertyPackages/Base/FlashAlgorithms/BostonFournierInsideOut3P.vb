@@ -28,7 +28,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Inherits FlashAlgorithm
 
-        Dim i, j, k, n, ecount As Integer
+        Dim n, ecount As Integer
         Dim etol As Double = 0.000001
         Dim itol As Double = 0.000001
         Dim maxit_i As Integer = 100
@@ -46,6 +46,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Overrides Function Flash_PT(ByVal Vz() As Double, ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
+            Dim i, j As Integer
 
             Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
             Dim nc As Integer = UBound(Vz)
@@ -203,11 +204,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Overrides Function Flash_PH(ByVal Vz() As Double, ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
+            Dim i, j As Integer
 
             d1 = Date.Now
 
             Dim _io As New BostonBrittInsideOut
-
 
             Dim result As Object = _io.Flash_PH(Vz, P, H, Tref, PP, ReuseKI, PrevKi)
 
@@ -340,6 +341,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Overrides Function Flash_PS(ByVal Vz() As Double, ByVal P As Double, ByVal S As Double, ByVal Tref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
+            Dim i, j As Integer
 
             d1 = Date.Now
 
@@ -476,6 +478,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Overrides Function Flash_TV(ByVal Vz() As Double, ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
+            Dim i, j As Integer
 
             d1 = Date.Now
 
@@ -594,6 +597,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Overrides Function Flash_PV(ByVal Vz() As Double, ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
+            Dim i, j As Integer
 
             d1 = Date.Now
 
@@ -745,6 +749,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim fr, dfr, S0, S1 As Double
             Dim icount As Integer = 0
+            Dim i As Integer
 
             S = 1 - R
             Do
@@ -793,8 +798,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             T = 1 / T_ + (Log(Kb) - A) / B
             T = 1 / T
-            If T < Tmin Then T = Tmin
-            If T > Tmax Then T = Tmax
+
+            'If T < Tmin Then T = Tmin
+            'If T > Tmax Then T = Tmax
 
             Dim Hv, Hl1, Hl2 As Double
 
@@ -809,10 +815,81 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
+        Private Function EnergyBalanceAbs(ByVal R As Double) As Double
+
+            Dim fr, dfr, S0, S1 As Double
+            Dim icount As Integer = 0
+            Dim i As Integer
+
+            S = 1 - R
+            Do
+                S0 = S
+                S1 = S + 0.0001
+                fr = Me.SErrorFunc(S0, R)
+                dfr = (fr - Me.SErrorFunc(S1, R)) / -0.0001
+                S += -0.3 * fr / dfr
+                icount += 1
+            Loop Until Abs(fr) < itol Or icount > maxit_i
+
+            If S <= -(1 - R) Then S = -(1 - R)
+            If S >= (1 - R) Then S = (1 - R)
+
+            For i = 0 To n
+                pi(i) = fi(i) / (R + (1 - R + S) / (2 * Kb0 * Exp(ui1(i))) + (1 - R - S) / (2 * Kb0 * Exp(ui2(i))))
+            Next
+
+            Dim sumpi As Double = 0
+            Dim sumeuipi1 As Double = 0
+            Dim sumeuipi2 As Double = 0
+            For i = 0 To n
+                sumpi += pi(i)
+                sumeuipi1 += pi(i) / Exp(ui1(i))
+                sumeuipi2 += pi(i) / Exp(ui2(i))
+            Next
+            For i = 0 To n
+                Vx1(i) = (pi(i) / Exp(ui1(i))) / sumeuipi1
+                Vx2(i) = (pi(i) / Exp(ui2(i))) / sumeuipi2
+                Vy(i) = pi(i) / sumpi
+            Next
+
+            If R <> 1.0# Then
+                Kb = ((1 - R + S) * sumeuipi1 + (1 - R - S) * sumeuipi2) / (2 * (1 - R) * sumpi)
+            Else
+                Kb = 1.0#
+            End If
+
+            V = R * sumpi
+            L1 = 0.5 * (S * V * (Kb / Kb0 - 1) + (1 + S) - V)
+            L2 = 1 - L1 - V
+            beta = L1 / (L1 + L2)
+            L = L1 + L2
+
+            Dim eberror As Double
+
+            T = 1 / T_ + (Log(Kb) - A) / B
+            T = 1 / T
+
+            'If T < Tmin Then T = Tmin
+            'If T > Tmax Then T = Tmax
+
+            Dim Hv, Hl1, Hl2 As Double
+
+            Hv = proppack.DW_CalcEnthalpy(Vy, T, Pf, State.Vapor) * proppack.AUX_MMM(Vy)
+            Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, Pf, State.Liquid) * proppack.AUX_MMM(Vx1)
+            Hl2 = proppack.DW_CalcEnthalpy(Vx2, T, Pf, State.Liquid) * proppack.AUX_MMM(Vx2)
+            eberror = Hf - V * Hv - L1 * Hl1 - L2 * Hl2
+
+            CheckCalculatorStatus()
+
+            Return Abs(eberror)
+
+        End Function
+
         Private Function EntropyBalance(ByVal R As Double) As Double
 
             Dim fr, dfr, S0, S1 As Double
             Dim icount As Integer = 0
+            Dim i As Integer
 
             S = (1 - R)
             Do
@@ -859,8 +936,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             T = 1 / T_ + (Log(Kb) - A) / B
             T = 1 / T
 
-            If T < Tmin Then T = Tmin
-            If T > Tmax Then T = Tmax
+            'If T < Tmin Then T = Tmin
+            'If T > Tmax Then T = Tmax
 
             Dim Sv, Sl1, Sl2 As Double
 
@@ -876,7 +953,77 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
+        Private Function EntropyBalanceAbs(ByVal R As Double) As Double
+
+            Dim fr, dfr, S0, S1 As Double
+            Dim icount As Integer = 0
+            Dim i As Integer
+
+            S = (1 - R)
+            Do
+                S0 = S
+                S1 = S + 0.001
+                fr = Me.SErrorFunc(S0, R)
+                dfr = (fr - Me.SErrorFunc(S1, R)) / -0.001
+                S += -fr / dfr
+                icount += 1
+            Loop Until Abs(fr) < itol Or icount > maxit_i
+
+            If S <= -(1 - R) Then S = -(1 - R)
+            If S >= (1 - R) Then S = (1 - R)
+
+            For i = 0 To n
+                pi(i) = fi(i) / (R + (1 - R + S) / (2 * Kb0 * Exp(ui1(i))) + (1 - R - S) / (2 * Kb0 * Exp(ui2(i))))
+            Next
+
+            Dim sumpi As Double = 0
+            Dim sumeuipi1 As Double = 0
+            Dim sumeuipi2 As Double = 0
+            For i = 0 To n
+                sumpi += pi(i)
+                sumeuipi1 += pi(i) / Exp(ui1(i))
+                sumeuipi2 += pi(i) / Exp(ui2(i))
+            Next
+            For i = 0 To n
+                Vx1(i) = (pi(i) / Exp(ui1(i))) / sumeuipi1
+                Vx2(i) = (pi(i) / Exp(ui2(i))) / sumeuipi2
+                Vy(i) = pi(i) / sumpi
+            Next
+
+            If R <> 1 Then
+                Kb = ((1 - R + S) * sumeuipi1 + (1 - R - S) * sumeuipi2) / (2 * (1 - R) * sumpi)
+            Else
+                Kb = 1.0#
+            End If
+
+            V = R * sumpi
+            L1 = 0.5 * (S * V * (Kb / Kb0 - 1) + (1 + S) - V)
+            L2 = 1 - L1 - V
+            beta = L1 / (L1 + L2)
+
+            T = 1 / T_ + (Log(Kb) - A) / B
+            T = 1 / T
+
+            'If T < Tmin Then T = Tmin
+            'If T > Tmax Then T = Tmax
+
+            Dim Sv, Sl1, Sl2 As Double
+
+            Sv = proppack.DW_CalcEntropy(Vy, T, Pf, State.Vapor) * proppack.AUX_MMM(Vy)
+            Sl1 = proppack.DW_CalcEntropy(Vx1, T, Pf, State.Liquid) * proppack.AUX_MMM(Vx1)
+            Sl2 = proppack.DW_CalcEntropy(Vx2, T, Pf, State.Liquid) * proppack.AUX_MMM(Vx2)
+
+            Dim eberror As Double = Sf - V * Sv - L1 * Sl1 - L2 * Sl2
+
+            CheckCalculatorStatus()
+
+            Return Abs(eberror)
+
+        End Function
+
         Public Function Flash_PH_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST() As Double, ByVal Vx1EST() As Double, ByVal Vx2EST() As Double, ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackage) As Object
+
+            Dim i, j As Integer
 
             maxit_i = CInt(PP.Parameters("PP_PHFMII"))
             maxit_e = CInt(PP.Parameters("PP_PHFMEI"))
@@ -955,6 +1102,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             R = Kb * V / (Kb * V + Kb0 * L)
 
+            Dim bo2 As New BrentOpt.BrentMinimize
+
 restart:    Do
 
                 '--------------------------------------------------------------
@@ -964,27 +1113,13 @@ restart:    Do
                 Rant = R
                 Tant = T
 
-                Dim dfr, R0, R1 As Double
-                Dim icount As Integer = 0
+                bo2.DefineFuncDelegate(AddressOf EnergyBalanceabs)
+                fr = bo2.brentoptimize(0.0#, 1.0#, 0.00000000001, R)
 
-                Do
-                    R0 = R
-                    If R > 0.99 Then
-                        R1 = R - 0.01
-                        fr = Me.EnergyBalance(R0)
-                        dfr = (fr - Me.EnergyBalance(R1)) / 0.01
-                    Else
-                        R1 = R + 0.01
-                        fr = Me.EnergyBalance(R0)
-                        dfr = (fr - Me.EnergyBalance(R1)) / -0.01
-                    End If
-                    R0 = R
-                    If Abs(fr) < itol Then Exit Do
-                    R += -fr / dfr
-                    If R < 0 Then R = 0.0#
-                    If R > 1 Then R = 1.0#
-                    icount += 1
-                Loop Until icount > maxit_i Or Abs(R - R0) < 0.000001
+                If ecount > 0 Then
+                    If Rant = 0.0# And R = 1.0# Then R = 0.0#
+                    If Rant = 1.0# And R = 0.0# Then R = 1.0#
+                End If
 
                 'At this point, we have converged T and R for the simplified model. Proceed to step 9.
 
@@ -1156,6 +1291,8 @@ restart:    Do
 
         Public Function Flash_PS_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST() As Double, ByVal Vx1EST() As Double, ByVal Vx2EST() As Double, ByVal P As Double, ByVal S As Double, ByVal Tref As Double, ByVal PP As PropertyPackage) As Object
 
+            Dim i, j As Integer
+
             maxit_i = CInt(PP.Parameters("PP_PSFMII"))
             maxit_e = CInt(PP.Parameters("PP_PSFMEI"))
             itol = CDbl(PP.Parameters("PP_PSFILT"))
@@ -1233,6 +1370,8 @@ restart:    Do
 
             R = Kb * V / (Kb * V + Kb0 * L)
 
+            Dim bo2 As New BrentOpt.BrentMinimize
+
 restart:    Do
 
                 '--------------------------------------------------------------
@@ -1242,27 +1381,8 @@ restart:    Do
                 Rant = R
                 Tant = T
 
-                Dim dfr, R0, R1 As Double
-                Dim icount As Integer = 0
-
-                Do
-                    R0 = R
-                    If R > 0.999 Then
-                        R1 = R - 0.0001
-                        fr = Me.EntropyBalance(R0)
-                        dfr = (fr - Me.EntropyBalance(R1)) / 0.0001
-                    Else
-                        R1 = R + 0.0001
-                        fr = Me.EntropyBalance(R0)
-                        dfr = (fr - Me.EntropyBalance(R1)) / -0.0001
-                    End If
-                    R0 = R
-                    If Abs(fr) < itol Then Exit Do
-                    R += -0.3 * fr / dfr
-                    If R < 0 Then R = 0.0#
-                    If R > 1 Then R = 1.0#
-                    icount += 1
-                Loop Until icount > maxit_i 'Or Abs(R - R0) < 0.000001
+                bo2.DefineFuncDelegate(AddressOf EntropyBalanceabs)
+                fr = bo2.brentoptimize(0.0#, 1.0#, 0.00000001, R)
 
                 'At this point, we have converged T and R for the simplified model. Proceed to step 9.
 
@@ -1440,6 +1560,8 @@ restart:    Do
 
         Public Function Flash_PT_3P(ByVal Vz As Double(), ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
 
+            Dim i, j As Integer
+
             etol = CDbl(PP.Parameters("PP_PTFELT"))
             maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
             itol = CDbl(PP.Parameters("PP_PTFILT"))
@@ -1548,34 +1670,8 @@ restart:    Do
                 Dim fr As Double
                 bo2.DefineFuncDelegate(AddressOf TPErrorFunc)
                 Rant = R
-                fr = bo2.brentoptimize(0.0#, 1.0#, 0.0001, R)
+                fr = bo2.brentoptimize(0.0#, 1.0#, 0.00000001, R)
 
-                'Dim fr, dfr, R0, R1 As Double
-                'Dim icount As Integer = 0
-
-                'Do
-                '    R0 = R
-                '    If R > 0.999 Then
-                '        R1 = R - 0.01
-                '        fr = Me.TPErrorFunc(R0)
-                '        dfr = (fr - Me.TPErrorFunc(R1)) / 0.01
-                '    Else
-                '        R1 = R + 0.01
-                '        fr = Me.TPErrorFunc(R0)
-                '        dfr = (fr - Me.TPErrorFunc(R1)) / (-0.01)
-                '    End If
-                '    R0 = R
-                '    If (R - fr / dfr) < 0.0# Or (R - fr / dfr) > 1.0# Then
-                '        If (R + 0.1) < 1.0# Then R += 0.1 Else R -= 0.1
-                '    Else
-                '        R = R - fr / dfr
-                '    End If
-                '    If R < 0.0# Then R = 0.0#
-                '    If R > 1.0# Then R = 1.0#
-                '    icount += 1
-                'Loop Until Abs(fr) < itol Or icount > maxit_i Or R = 0 Or R = 1
-
-                'If icount > maxit_i Then R = Rant
                 If Rant = 0.0# And R = 1.0# Then R = 0.0#
                 If Rant = 1.0# And R = 0.0# Then R = 1.0#
 
@@ -1690,6 +1786,8 @@ out:
 
         Private Function TPErrorFunc(ByVal Rtv As Double) As Double
 
+            Dim i As Integer
+
             'Dim fr, dfr, S0, S1 As Double
             Dim icount As Integer = 0
 
@@ -1753,6 +1851,8 @@ out:
 
         Private Function SErrorFuncAbs(ByVal S0 As Double) As Double
 
+            Dim i As Integer
+
             Dim errfunc As Double = 0
             For i = 0 To n
                 errfunc += fi(i) * (1 / Exp(ui1(i)) - 1 / Exp(ui2(i))) / (Rt + (1 - Rt + S0) / (2 * Kb0 * Exp(ui1(i))) + (1 - Rt - S0) / (2 * Kb0 * Exp(ui2(i))))
@@ -1763,6 +1863,8 @@ out:
 
         Private Function SErrorFunc(ByVal S0 As Double, ByVal Rt As Double) As Double
 
+            Dim i As Integer
+
             Dim errfunc As Double = 0
             For i = 0 To n
                 errfunc += fi(i) * (1 / Exp(ui1(i)) - 1 / Exp(ui2(i))) / (Rt + (1 - Rt + S0) / (2 * Kb0 * Exp(ui1(i))) + (1 - Rt - S0) / (2 * Kb0 * Exp(ui2(i))))
@@ -1772,6 +1874,8 @@ out:
         End Function
 
         Public Function Flash_PV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
+
+            Dim i, j As Integer
 
             etol = CDbl(PP.Parameters("PP_PTFELT"))
             maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
@@ -1994,6 +2098,8 @@ out:
 
         Public Function Flash_TV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackage) As Object
 
+            Dim i, j As Integer
+
             etol = CDbl(PP.Parameters("PP_PTFELT"))
             maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
 
@@ -2193,6 +2299,8 @@ out:
 
         Private Function LiquidFractionBalance(ByVal R As Double) As Double
 
+            Dim i As Integer
+
             Dim fr, dfr, S0, S1 As Double
             Dim icount As Integer = 0
 
@@ -2250,6 +2358,8 @@ out:
         End Function
 
         Private Function LiquidFractionBalanceP(ByVal R As Double) As Double
+
+            Dim i As Integer
 
             Dim fr, dfr, S0, S1 As Double
             Dim icount As Integer = 0

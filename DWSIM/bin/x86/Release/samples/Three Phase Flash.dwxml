@@ -1,22 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DWSIM_Simulation_Data>
+  <GeneralInfo>
+    <BuildVersion>3.2.5398.26407</BuildVersion>
+    <BuildDate>2014-10-12T14:40:14</BuildDate>
+    <OSInfo>Microsoft Windows 7 Home Premium , Version 6.1.7601.65536, Win32NT Platform</OSInfo>
+    <SavedOn>2014-10-12T15:28:57.7903716-04:00</SavedOn>
+  </GeneralInfo>
   <Settings>
     <Type>DWSIM.DWSIM.FormClasses.ClsFormOptions</Type>
     <SimulationMode></SimulationMode>
+    <SelectedUnitSystem>
+      <Type>DWSIM.DWSIM.SistemasDeUnidades.UnidadesSI</Type>
+      <nome>SI System</nome>
+      <area>m2</area>
+      <distance>m</distance>
+      <time>s</time>
+      <volume>m3</volume>
+      <molar_volume>m3/kmol</molar_volume>
+      <diameter>mm</diameter>
+      <thickness>mm</thickness>
+      <molar_conc>mol/m3</molar_conc>
+      <mass_conc>kg/m3</mass_conc>
+      <heat_transf_coeff>W/[m2.K]</heat_transf_coeff>
+      <force>N</force>
+      <accel>m2/s</accel>
+      <spec_vol>m3/kg</spec_vol>
+      <reac_rate>mol/[m3.s]</reac_rate>
+      <velocity>m/s</velocity>
+      <foulingfactor>K.m2/W</foulingfactor>
+      <cakeresistance>m/kg</cakeresistance>
+      <mediumresistance>m-1</mediumresistance>
+      <molar_enthalpy>kJ/kmol</molar_enthalpy>
+      <molar_entropy>kJ/[kmol.K]</molar_entropy>
+      <tdp_idealGasHeatCapacity>kJ/[kg.K]</tdp_idealGasHeatCapacity>
+      <tdp_surfaceTension>N/m</tdp_surfaceTension>
+      <tdp_thermalConductivityOfLiquid>W/[m.K]</tdp_thermalConductivityOfLiquid>
+      <tdp_thermalConductivityOfVapor>W/[m.K]</tdp_thermalConductivityOfVapor>
+      <tdp_vaporPressure>Pa</tdp_vaporPressure>
+      <tdp_viscosityOfLiquid>Pa.s</tdp_viscosityOfLiquid>
+      <tdp_viscosityOfVapor>Pa.s</tdp_viscosityOfVapor>
+      <pdp_boilingPointTemperature>K</pdp_boilingPointTemperature>
+      <pdp_meltingTemperature>K</pdp_meltingTemperature>
+      <spmp_activity>Pa</spmp_activity>
+      <spmp_activityCoefficient>-</spmp_activityCoefficient>
+      <spmp_compressibility>Pa-1</spmp_compressibility>
+      <spmp_compressibilityFactor>-</spmp_compressibilityFactor>
+      <spmp_density>kg/m3</spmp_density>
+      <spmp_enthalpy>kJ/kg</spmp_enthalpy>
+      <spmp_entropy>kJ/[kg.K]</spmp_entropy>
+      <spmp_excessEnthalpy>kJ/kg</spmp_excessEnthalpy>
+      <spmp_excessEntropy>kJ/[kg.K]</spmp_excessEntropy>
+      <spmp_molarflow>mol/s</spmp_molarflow>
+      <spmp_massflow>kg/s</spmp_massflow>
+      <spmp_molarfraction>-</spmp_molarfraction>
+      <spmp_massfraction>-</spmp_massfraction>
+      <spmp_fugacity>Pa</spmp_fugacity>
+      <spmp_fugacityCoefficient>-</spmp_fugacityCoefficient>
+      <spmp_heatCapacityCp>kJ/[kg.K]</spmp_heatCapacityCp>
+      <spmp_heatCapacityCv>kJ/[kg.K]</spmp_heatCapacityCv>
+      <spmp_jouleThomsonCoefficient>K/Pa</spmp_jouleThomsonCoefficient>
+      <spmp_logFugacityCoefficient>-</spmp_logFugacityCoefficient>
+      <spmp_molecularWeight>kg/kmol</spmp_molecularWeight>
+      <spmp_pressure>Pa</spmp_pressure>
+      <spmp_temperature>K</spmp_temperature>
+      <spmp_speedOfSound>m/s</spmp_speedOfSound>
+      <spmp_thermalConductivity>W/[m.K]</spmp_thermalConductivity>
+      <spmp_viscosity>Pa.s</spmp_viscosity>
+      <spmp_cinematic_viscosity>m2/s</spmp_cinematic_viscosity>
+      <spmp_volumetricFlow>m3/s</spmp_volumetricFlow>
+      <spmp_heatflow>kW</spmp_heatflow>
+      <spmp_head>m</spmp_head>
+      <spmp_deltaT>K</spmp_deltaT>
+      <spmp_deltaP>Pa</spmp_deltaP>
+      <tpmp_kvalue>-</tpmp_kvalue>
+      <tpmp_logKvalue>-</tpmp_logKvalue>
+      <tpmp_surfaceTension>N/m</tpmp_surfaceTension>
+    </SelectedUnitSystem>
     <NumberFormat>#0.0####</NumberFormat>
     <FractionNumberFormat>#0.0######</FractionNumberFormat>
     <SempreCalcularFlashPH>false</SempreCalcularFlashPH>
     <CalculateBubbleAndDewPoints>false</CalculateBubbleAndDewPoints>
     <ValidateEquilibriumCalc>false</ValidateEquilibriumCalc>
+    <UsePhaseIdentificationAlgorithm>true</UsePhaseIdentificationAlgorithm>
     <SimNome>simulation_title</SimNome>
     <SimAutor>PETROBRAS\ptc0</SimAutor>
     <SimComentario>simulation_details</SimComentario>
-    <FilePath>C:\Users\Daniel\Documents\Visual Studio 2010\Projects\DWSIM\DWSIM3\DWSIM\bin\x86\Release\samples\Three Phase Flash.dwsim</FilePath>
-    <BackupFileName>38375534.dwbcs</BackupFileName>
+    <FilePath>C:\Users\Daniel\Documents\Visual Studio 2010\Projects\DWSIM\DWSIM3\DWSIM\bin\x86\Release\samples\Three Phase Flash.dwxml</FilePath>
+    <BackupFileName>14668589.dwbcs</BackupFileName>
     <CalculatorActivated>true</CalculatorActivated>
-    <PropertyPackageFlashAlgorithm>InsideOut3P</PropertyPackageFlashAlgorithm>
+    <PropertyPackageFlashAlgorithm>GibbsMin3P</PropertyPackageFlashAlgorithm>
     <PropertyPackageIOFlashQuickMode>false</PropertyPackageIOFlashQuickMode>
-    <ThreePhaseFlashStabTestSeverity>1</ThreePhaseFlashStabTestSeverity>
+    <ThreePhaseFlashStabTestSeverity>0</ThreePhaseFlashStabTestSeverity>
+    <FlashValidationDGETolerancePct>0.01</FlashValidationDGETolerancePct>
+    <Password></Password>
     <UsePassword>false</UsePassword>
     <ThreePhaseFlashStabTestCompIds>Fenol,Agua</ThreePhaseFlashStabTestCompIds>
   </Settings>
@@ -25,6 +101,7 @@
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
       <SpecType>Temperature_and_Pressure</SpecType>
       <IsElectrolyteStream>false</IsElectrolyteStream>
+      <ReferenceSolvent>Phenol (C6H6O)</ReferenceSolvent>
       <AtEquilibrium>true</AtEquilibrium>
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-d4854866-3e55-4762-909c-d8b2dea3a0a1</ComponentDescription>
@@ -41,83 +118,83 @@
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems>
-        <NodeItem ID="557579024" Checked="true" Text="PROP_MS_0" />
-        <NodeItem ID="1145049691" Checked="true" Text="PROP_MS_7" />
+        <NodeItem ID="242148069" Checked="true" Text="PROP_MS_0" Value="300" Unit="K" />
+        <NodeItem ID="1226620018" Checked="true" Text="PROP_MS_7" Value="-2195.22858722685" Unit="kJ/kg" />
       </NodeItems>
-      <PropertyPackage>PP-9984c028-7743-4c05-9503-b7e50f6ae06f</PropertyPackage>
+      <PropertyPackage>PP-a7a882bc-70d6-4df4-8d91-80222698b696</PropertyPackage>
       <Phases>
         <Phase>
           <ID>0</ID>
           <Compounds>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-4.96609208759276</lnKvalue>
-              <Kvalue>0.0069703343353385</Kvalue>
+              <lnKvalue>-Infinity</lnKvalue>
+              <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.25</FracaoMolar>
-              <FracaoMassica>0.367013871286009</FracaoMassica>
-              <MolarFlow>3899.71493083856</MolarFlow>
-              <MassFlow>367.013871286009</MassFlow>
+              <FracaoMolar>0.05</FracaoMolar>
+              <FracaoMassica>0.215658641881952</FracaoMassica>
+              <MolarFlow>2291.48621212746</MolarFlow>
+              <MassFlow>215.658641881952</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.220046242177752</VolumetricFlow>
-              <VolumetricFraction>0.246034766137567</VolumetricFraction>
+              <VolumetricFlow>0.201758694868949</VolumetricFlow>
+              <VolumetricFraction>0.213081571908131</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Fenol</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>1.36312721498653</lnKvalue>
-              <Kvalue>3.90839660711347</Kvalue>
+              <lnKvalue>NaN</lnKvalue>
+              <Kvalue>NaN</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.25</FracaoMolar>
-              <FracaoMassica>0.171965729305188</FracaoMassica>
-              <MolarFlow>3899.71493083856</MolarFlow>
-              <MassFlow>171.965729305188</MassFlow>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.239370765657697</VolumetricFlow>
-              <VolumetricFraction>0.267641609172257</VolumetricFraction>
+              <VolumetricFlow>0</VolumetricFlow>
+              <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Propano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-3.00400199451209</lnKvalue>
-              <Kvalue>0.0495882189560074</Kvalue>
+              <lnKvalue>NaN</lnKvalue>
+              <Kvalue>NaN</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.25</FracaoMolar>
-              <FracaoMassica>0.390767034929747</FracaoMassica>
-              <MolarFlow>3899.71493083856</MolarFlow>
-              <MassFlow>390.767034929747</MassFlow>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.394464166177448</VolumetricFlow>
-              <VolumetricFraction>0.441052289348893</VolumetricFraction>
+              <VolumetricFlow>0</VolumetricFlow>
+              <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-3.35112690615272</lnKvalue>
-              <Kvalue>0.0350448395950961</Kvalue>
+              <lnKvalue>-Infinity</lnKvalue>
+              <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.25</FracaoMolar>
-              <FracaoMassica>0.0702533644790566</FracaoMassica>
-              <MolarFlow>3899.71493083856</MolarFlow>
-              <MassFlow>70.2533644790566</MassFlow>
+              <FracaoMolar>0.95</FracaoMolar>
+              <FracaoMassica>0.784341358118048</FracaoMassica>
+              <MolarFlow>43538.2380304218</MolarFlow>
+              <MassFlow>784.341358118048</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.04114648020863</VolumetricFlow>
-              <VolumetricFraction>0.0460060782466651</VolumetricFraction>
+              <VolumetricFlow>0.754253087727468</VolumetricFlow>
+              <VolumetricFraction>0.796582440493695</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -126,24 +203,24 @@
           <Nome>Mixture</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <density>1117.28391327728</density>
-            <enthalpy>-583.028623784691</enthalpy>
-            <entropy>-1.408232188692</entropy>
-            <molarflow>15598.8597233542</molarflow>
+            <density>1046.01221261533</density>
+            <enthalpy>-2195.22858722685</enthalpy>
+            <entropy>-5.80090776628456</entropy>
+            <molarflow>45829.7242425492</molarflow>
             <massflow>1000</massflow>
-            <heatCapacityCp>2.68579127606889</heatCapacityCp>
-            <heatCapacityCv>1.92080260583557</heatCapacityCv>
-            <molecularWeight>64.10725</molecularWeight>
+            <heatCapacityCp>4.71804026607818</heatCapacityCp>
+            <heatCapacityCv>2.65165346225408</heatCapacityCv>
+            <molecularWeight>21.8199</molecularWeight>
             <pressure>1013252</pressure>
             <temperature>300</temperature>
-            <thermalConductivity>0.115266675021816</thermalConductivity>
-            <volumetric_flow>0.89502765422152</volumetric_flow>
-            <molar_enthalpy>-37376.3617421211</molar_enthalpy>
-            <molar_entropy>-90.2778929785253</molar_entropy>
+            <thermalConductivity>0.301558653234255</thermalConductivity>
+            <volumetric_flow>0.956011782596417</volumetric_flow>
+            <molar_enthalpy>-47899.6682504312</molar_enthalpy>
+            <molar_entropy>-126.575227369552</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
-            <surfaceTension>0.0463326514017093</surfaceTension>
+            <surfaceTension>0.103182330364183</surfaceTension>
           </TPMProperties>
         </Phase>
         <Phase>
@@ -154,10 +231,10 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.249999999999997</FracaoMolar>
-              <FracaoMassica>0.367013871286001</FracaoMassica>
-              <MolarFlow>3899.71493083851</MolarFlow>
-              <MassFlow>367.013871286004</MassFlow>
+              <FracaoMolar>0.05</FracaoMolar>
+              <FracaoMassica>0.215658641881952</FracaoMassica>
+              <MolarFlow>2291.48621212746</MolarFlow>
+              <MassFlow>215.658641881952</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>8.80470909234198E-05</PartialVolume>
@@ -172,10 +249,10 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.250000000000006</FracaoMolar>
-              <FracaoMassica>0.17196572930519</FracaoMassica>
-              <MolarFlow>3899.71493083865</MolarFlow>
-              <MassFlow>171.965729305192</MassFlow>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>8.97517697545648E-05</PartialVolume>
@@ -190,10 +267,10 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.250000000000007</FracaoMolar>
-              <FracaoMassica>0.390767034929755</FracaoMassica>
-              <MolarFlow>3899.71493083867</MolarFlow>
-              <MassFlow>390.767034929758</MassFlow>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>0.000146119935275149</PartialVolume>
@@ -208,10 +285,10 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.24999999999999</FracaoMolar>
-              <FracaoMassica>0.0702533644790532</FracaoMassica>
-              <MolarFlow>3899.7149308384</MolarFlow>
-              <MassFlow>70.2533644790538</MassFlow>
+              <FracaoMolar>0.95</FracaoMolar>
+              <FracaoMassica>0.784341358118048</FracaoMassica>
+              <MolarFlow>43538.2380304218</MolarFlow>
+              <MassFlow>784.341358118048</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>1.73239231041101E-05</PartialVolume>
@@ -227,22 +304,22 @@
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <compressibilityFactor>0</compressibilityFactor>
-            <density>1117.28391327728</density>
-            <enthalpy>-583.028623784686</enthalpy>
-            <entropy>-1.40823218869199</entropy>
-            <molarflow>15598.8597233542</molarflow>
-            <massflow>1000.00000000001</massflow>
+            <density>1046.01221261533</density>
+            <enthalpy>-2195.22858722685</enthalpy>
+            <entropy>-5.80090776628456</entropy>
+            <molarflow>45829.7242425492</molarflow>
+            <massflow>1000</massflow>
             <molarfraction>1</molarfraction>
-            <massfraction>1.00000000000001</massfraction>
-            <heatCapacityCp>2.68579127606887</heatCapacityCp>
-            <heatCapacityCv>1.92080260583556</heatCapacityCv>
-            <molecularWeight>64.1072500000005</molecularWeight>
-            <thermalConductivity>0.115266675021816</thermalConductivity>
-            <viscosity>0.00054395570100295</viscosity>
-            <kinematic_viscosity>4.86855395069097E-07</kinematic_viscosity>
+            <massfraction>1</massfraction>
+            <heatCapacityCp>4.71804026607818</heatCapacityCp>
+            <heatCapacityCv>2.65165346225408</heatCapacityCv>
+            <molecularWeight>21.8199</molecularWeight>
+            <thermalConductivity>0.301558653234255</thermalConductivity>
+            <viscosity>0.000508299059914457</viscosity>
+            <kinematic_viscosity>4.85939890360903E-07</kinematic_viscosity>
             <volumetric_flow>0</volumetric_flow>
-            <molar_enthalpy>-37376.3617421211</molar_enthalpy>
-            <molar_entropy>-90.2778929785253</molar_entropy>
+            <molar_enthalpy>-47899.6682504312</molar_enthalpy>
+            <molar_entropy>-126.575227369552</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -256,11 +333,11 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.0017425835838346</FracaoMolar>
-              <FracaoMassica>0.00367290771010746</FracaoMassica>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.543430564773947</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -274,11 +351,11 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.97709915177839</FracaoMolar>
-              <FracaoMassica>0.96497144237394</FracaoMassica>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.840162383300449</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -292,11 +369,11 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.0123970547390022</FracaoMolar>
-              <FracaoMassica>0.0278208475936682</FracaoMassica>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.534623074884988</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -310,11 +387,11 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.00876120989877367</FracaoMolar>
-              <FracaoMassica>0.00353480232228408</FracaoMassica>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.87260717273651</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -348,16 +425,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.197133685988309</FracaoMolar>
-              <FracaoMassica>0.256199942177228</FracaoMassica>
-              <MolarFlow>2053.21383973024</MolarFlow>
-              <MassFlow>193.234114098532</MassFlow>
-              <FugacityCoeff>0.00207892713618731</FugacityCoeff>
-              <ActivityCoeff>1.96377451410209</ActivityCoeff>
+              <FracaoMolar>0.00680428251987351</FracaoMolar>
+              <FracaoMassica>0.0345534245855126</FracaoMassica>
+              <MolarFlow>210.140400033625</MolarFlow>
+              <MassFlow>19.7769434683645</MassFlow>
+              <FugacityCoeff>0.0504009546763846</FugacityCoeff>
+              <ActivityCoeff>47.6092252378879</ActivityCoeff>
               <PartialVolume>8.80470909234198E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.125345208023072</VolumetricFlow>
-              <VolumetricFraction>0.16719331158607</VolumetricFraction>
+              <VolumetricFlow>0.0185022509084444</VolumetricFlow>
+              <VolumetricFraction>0.0336474278383834</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Fenol</Nome>
             </Compound>
@@ -366,16 +443,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.342487436700273</FracaoMolar>
-              <FracaoMassica>0.208555792827568</FracaoMassica>
-              <MolarFlow>3567.12218635448</MolarFlow>
-              <MassFlow>157.299387051674</MassFlow>
-              <FugacityCoeff>1.03723493738944</FugacityCoeff>
-              <ActivityCoeff>1.05211441959442</ActivityCoeff>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
+              <FugacityCoeff>0.725644993661069</FugacityCoeff>
+              <ActivityCoeff>0.736054613874491</ActivityCoeff>
               <PartialVolume>8.97517697545648E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.221982913724228</VolumetricFlow>
-              <VolumetricFraction>0.296094753412888</VolumetricFraction>
+              <VolumetricFlow>0</VolumetricFlow>
+              <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Propano</Nome>
             </Compound>
@@ -384,16 +461,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.370685208055416</FracaoMolar>
-              <FracaoMassica>0.512930922849123</FracaoMassica>
-              <MolarFlow>3860.81148712351</MolarFlow>
-              <MassFlow>386.868754255724</MassFlow>
-              <FugacityCoeff>0.00773699001317544</FugacityCoeff>
-              <ActivityCoeff>1.1792491278047</ActivityCoeff>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
+              <FugacityCoeff>0.00482921467773328</FugacityCoeff>
+              <ActivityCoeff>0.736054613874491</ActivityCoeff>
               <PartialVolume>0.000146119935275149</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.391152949053919</VolumetricFlow>
-              <VolumetricFraction>0.521744372365191</VolumetricFraction>
+              <VolumetricFlow>0</VolumetricFlow>
+              <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
             </Compound>
@@ -402,16 +479,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.0896936692560009</FracaoMolar>
-              <FracaoMassica>0.0223133421460815</FracaoMassica>
-              <MolarFlow>934.189822147033</MolarFlow>
-              <MassFlow>16.8294296459788</MassFlow>
-              <FugacityCoeff>0.0368902198367021</FugacityCoeff>
-              <ActivityCoeff>10.5622124679074</ActivityCoeff>
+              <FracaoMolar>0.993195717480126</FracaoMolar>
+              <FracaoMassica>0.965446575414488</FracaoMassica>
+              <MolarFlow>30673.4096906424</MolarFlow>
+              <MassFlow>552.581475576923</MassFlow>
+              <FugacityCoeff>0.00349993886864142</FugacityCoeff>
+              <ActivityCoeff>1.00208397019363</ActivityCoeff>
               <PartialVolume>1.73239231041101E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0112212159349645</VolumetricFlow>
-              <VolumetricFraction>0.014967562635851</VolumetricFraction>
+              <VolumetricFlow>0.531383790821554</VolumetricFlow>
+              <VolumetricFraction>0.966352572161617</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -420,23 +497,23 @@
           <Nome>Liquid 1</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <compressibilityFactor>0.0295120798135394</compressibilityFactor>
-            <density>1006.04159597198</density>
-            <enthalpy>-444.782366269153</enthalpy>
-            <entropy>-1.09311944362695</entropy>
-            <molarflow>10415.3373353553</molarflow>
-            <massflow>754.231685051909</massflow>
-            <molarfraction>0.667698634391954</molarfraction>
-            <massfraction>0.754231685051909</massfraction>
-            <heatCapacityCp>2.51543421980358</heatCapacityCp>
-            <heatCapacityCv>1.813363037505</heatCapacityCv>
-            <molecularWeight>72.4154831252215</molecularWeight>
-            <thermalConductivity>0.115266675021816</thermalConductivity>
-            <viscosity>0.000720516742265565</viscosity>
-            <kinematic_viscosity>7.16189812777519E-07</kinematic_viscosity>
-            <volumetric_flow>0.749702286736183</volumetric_flow>
-            <molar_enthalpy>-32209.1299389599</molar_enthalpy>
-            <molar_entropy>-79.1587726238186</molar_entropy>
+            <compressibilityFactor>0.00852372835281201</compressibilityFactor>
+            <density>1040.86733542934</density>
+            <enthalpy>-2554.59574903758</enthalpy>
+            <entropy>-6.86701156369246</entropy>
+            <molarflow>30883.550090676</molarflow>
+            <massflow>572.358419045287</massflow>
+            <molarfraction>0.673875974623542</molarfraction>
+            <massfraction>0.572358419045287</massfraction>
+            <heatCapacityCp>5.2056101469568</heatCapacityCp>
+            <heatCapacityCv>2.75125177504647</heatCapacityCv>
+            <molecularWeight>18.5327922911973</molecularWeight>
+            <thermalConductivity>0.301558653234255</thermalConductivity>
+            <viscosity>0.000886704550970516</viscosity>
+            <kinematic_viscosity>8.5189007358442E-07</kinematic_viscosity>
+            <volumetric_flow>0.549886041729998</volumetric_flow>
+            <molar_enthalpy>-47343.7924048891</molar_enthalpy>
+            <molar_entropy>-127.264898971163</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -450,16 +527,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.356225159822467</FracaoMolar>
-              <FracaoMassica>0.707087718871208</FracaoMassica>
-              <MolarFlow>1846.50109110826</MolarFlow>
-              <MassFlow>173.779757187472</MassFlow>
-              <FugacityCoeff>0.00115033929427084</FugacityCoeff>
-              <ActivityCoeff>1.08662153152814</ActivityCoeff>
+              <FracaoMolar>0.139256092625749</FracaoMolar>
+              <FracaoMassica>0.458051104329658</FracaoMassica>
+              <MolarFlow>2081.34581209384</MolarFlow>
+              <MassFlow>195.881698413587</MassFlow>
+              <FugacityCoeff>0.00246267382855896</FugacityCoeff>
+              <ActivityCoeff>2.32626532064979</ActivityCoeff>
               <PartialVolume>8.80470909234198E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0947010341546805</VolumetricFlow>
-              <VolumetricFraction>0.651648337749643</VolumetricFraction>
+              <VolumetricFlow>0.183256443960505</VolumetricFlow>
+              <VolumetricFraction>0.451230802483856</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Fenol</Nome>
             </Compound>
@@ -468,16 +545,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.0641634625238991</FracaoMolar>
-              <FracaoMassica>0.0596754803670088</FracaoMassica>
-              <MolarFlow>332.592744484163</MolarFlow>
-              <MassFlow>14.6663422535181</MassFlow>
-              <FugacityCoeff>5.53587327226491</FugacityCoeff>
-              <ActivityCoeff>5.61528722649503</ActivityCoeff>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
+              <FugacityCoeff>0.379046755767242</FugacityCoeff>
+              <ActivityCoeff>0.384484308296558</ActivityCoeff>
               <PartialVolume>8.97517697545648E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0173878519334689</VolumetricFlow>
-              <VolumetricFraction>0.11964774102651</VolumetricFraction>
+              <VolumetricFlow>0</VolumetricFlow>
+              <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Propano</Nome>
             </Compound>
@@ -486,16 +563,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.00750521379153873</FracaoMolar>
-              <FracaoMassica>0.0158616080142677</FracaoMassica>
-              <MolarFlow>38.9034437151595</MolarFlow>
-              <MassFlow>3.89828067403384</MassFlow>
-              <FugacityCoeff>0.382004565942931</FugacityCoeff>
-              <ActivityCoeff>58.2240057746602</ActivityCoeff>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
+              <FugacityCoeff>0.00252258083841109</FugacityCoeff>
+              <ActivityCoeff>0.384484308296558</ActivityCoeff>
               <PartialVolume>0.000146119935275149</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.00331121712352929</VolumetricFlow>
-              <VolumetricFraction>0.0227848529188356</VolumetricFraction>
+              <VolumetricFlow>0</VolumetricFlow>
+              <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
             </Compound>
@@ -504,16 +581,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.572106163862095</FracaoMolar>
-              <FracaoMassica>0.217375192747515</FracaoMassica>
-              <MolarFlow>2965.52510869137</MolarFlow>
-              <MassFlow>53.423934833075</MassFlow>
-              <FugacityCoeff>0.00578306241878392</FugacityCoeff>
-              <ActivityCoeff>1.6557758195194</ActivityCoeff>
+              <FracaoMolar>0.860743907374251</FracaoMolar>
+              <FracaoMassica>0.541948895670342</FracaoMassica>
+              <MolarFlow>12864.8283397794</MolarFlow>
+              <MassFlow>231.759882541126</MassFlow>
+              <FugacityCoeff>0.00403851164792627</FugacityCoeff>
+              <ActivityCoeff>1.15628527746202</ActivityCoeff>
               <PartialVolume>1.73239231041101E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0299252642736654</VolumetricFlow>
-              <VolumetricFraction>0.205919068305011</VolumetricFraction>
+              <VolumetricFlow>0.222869296905914</VolumetricFlow>
+              <VolumetricFraction>0.548769197516144</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -522,23 +599,23 @@
           <Nome>Liquid 2</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <compressibilityFactor>0.0122328404040327</compressibilityFactor>
-            <density>1691.15908117614</density>
-            <enthalpy>-1007.28879654162</enthalpy>
-            <entropy>-2.37527310583353</entropy>
-            <molarflow>5183.52238799896</molarflow>
-            <massflow>245.768314948099</massflow>
-            <molarfraction>0.332301365608046</molarfraction>
-            <massfraction>0.245768314948099</massfraction>
-            <heatCapacityCp>3.20859540415424</heatCapacityCp>
-            <heatCapacityCv>2.25052096957304</heatCapacityCv>
-            <molecularWeight>47.4133796580312</molecularWeight>
-            <thermalConductivity>0.115266675021816</thermalConductivity>
-            <viscosity>0.000720516742265565</viscosity>
-            <kinematic_viscosity>4.26049063204907E-07</kinematic_viscosity>
-            <volumetric_flow>0.145325367485344</volumetric_flow>
-            <molar_enthalpy>-47758.9661357092</molar_enthalpy>
-            <molar_entropy>-112.619725558396</molar_entropy>
+            <compressibilityFactor>0.00943325453540618</compressibilityFactor>
+            <density>1052.97827230156</density>
+            <enthalpy>-1714.24911808454</enthalpy>
+            <entropy>-4.37402714663036</entropy>
+            <molarflow>14946.1741518732</molarflow>
+            <massflow>427.641580954713</massflow>
+            <molarfraction>0.326124025376458</molarfraction>
+            <massfraction>0.427641580954713</massfraction>
+            <heatCapacityCp>4.06547340022108</heatCapacityCp>
+            <heatCapacityCv>2.51835039868817</heatCapacityCv>
+            <molecularWeight>28.6121101366343</molecularWeight>
+            <thermalConductivity>0.301558653234255</thermalConductivity>
+            <viscosity>0.000886704550970516</viscosity>
+            <kinematic_viscosity>8.42091973115828E-07</kinematic_viscosity>
+            <volumetric_flow>0.406125740866419</volumetric_flow>
+            <molar_enthalpy>-49048.2845682629</molar_enthalpy>
+            <molar_entropy>-125.150146460016</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -710,7 +787,7 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>NaN</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -728,7 +805,7 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>NaN</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -746,7 +823,7 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>NaN</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -764,7 +841,7 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>NaN</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -789,7 +866,7 @@
       <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Valve</Type>
       <CalcMode>DeltaP</CalcMode>
       <DeltaP>500002</DeltaP>
-      <DeltaT>0.0973289117743548</DeltaT>
+      <DeltaT>0.0788818098189381</DeltaT>
       <DeltaQ>0</DeltaQ>
       <ScriptExt_FontName>Courier New</ScriptExt_FontName>
       <ScriptExt_FontSize>10</ScriptExt_FontSize>
@@ -801,6 +878,7 @@
       <ComponentName>VALV-b4babf93-55e1-4b7b-af7d-973b5c25fe4d</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
       <code>0</code>
+      <selectedReport></selectedReport>
       <IsAdjustAttached>false</IsAdjustAttached>
       <AttachedAdjustId></AttachedAdjustId>
       <AdjustVarType>Nenhum</AdjustVarType>
@@ -817,9 +895,10 @@
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
       <SpecType>Temperature_and_Pressure</SpecType>
-      <IsElectrolyteStream>false</IsElectrolyteStream>
-      <AtEquilibrium>true</AtEquilibrium>
       <CompositionBasis>Molar_Fractions</CompositionBasis>
+      <IsElectrolyteStream>false</IsElectrolyteStream>
+      <ReferenceSolvent></ReferenceSolvent>
+      <AtEquilibrium>true</AtEquilibrium>
       <ComponentDescription>MAT-161ba6b5-6f92-4562-a754-cee4b362387e</ComponentDescription>
       <ComponentName>2</ComponentName>
       <code>0</code>
@@ -834,83 +913,83 @@
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems>
-        <NodeItem ID="557579024" Checked="true" Text="PROP_MS_0" />
-        <NodeItem ID="1145049691" Checked="true" Text="PROP_MS_7" />
+        <NodeItem ID="242148069" Checked="true" Text="PROP_MS_0" Value="300.078881809819" Unit="K" />
+        <NodeItem ID="1226620018" Checked="true" Text="PROP_MS_7" Value="-2195.22858721351" Unit="kJ/kg" />
       </NodeItems>
-      <PropertyPackage></PropertyPackage>
+      <PropertyPackage>PP-a7a882bc-70d6-4df4-8d91-80222698b696</PropertyPackage>
       <Phases>
         <Phase>
           <ID>0</ID>
           <Compounds>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-5.1984049197569</lnKvalue>
-              <Kvalue>0.00552537080525594</Kvalue>
+              <lnKvalue>-Infinity</lnKvalue>
+              <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.25</FracaoMolar>
-              <FracaoMassica>0.367013871286009</FracaoMassica>
-              <MolarFlow>3899.71493083856</MolarFlow>
-              <MassFlow>367.013871286009</MassFlow>
+              <FracaoMolar>0.05</FracaoMolar>
+              <FracaoMassica>0.215658641881952</FracaoMassica>
+              <MolarFlow>2291.48621212746</MolarFlow>
+              <MassFlow>215.658641881952</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.219846537481268</VolumetricFlow>
-              <VolumetricFraction>0.245654680060882</VolumetricFraction>
+              <VolumetricFlow>0.201816375793592</VolumetricFlow>
+              <VolumetricFraction>0.213091891855271</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Fenol</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>1.36596206204183</lnKvalue>
-              <Kvalue>3.91949203321353</Kvalue>
+              <lnKvalue>NaN</lnKvalue>
+              <Kvalue>NaN</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.25</FracaoMolar>
-              <FracaoMassica>0.171965729305188</FracaoMassica>
-              <MolarFlow>3899.71493083856</MolarFlow>
-              <MassFlow>171.965729305188</MassFlow>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.239910170794603</VolumetricFlow>
-              <VolumetricFraction>0.268073615919111</VolumetricFraction>
+              <VolumetricFlow>0</VolumetricFlow>
+              <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Propano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-3.24379891098887</lnKvalue>
-              <Kvalue>0.0390153971912853</Kvalue>
+              <lnKvalue>NaN</lnKvalue>
+              <Kvalue>NaN</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.25</FracaoMolar>
-              <FracaoMassica>0.390767034929747</FracaoMassica>
-              <MolarFlow>3899.71493083856</MolarFlow>
-              <MassFlow>390.767034929747</MassFlow>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.394174345305449</VolumetricFlow>
-              <VolumetricFraction>0.440447112761411</VolumetricFraction>
+              <VolumetricFlow>0</VolumetricFlow>
+              <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-3.32514790059728</lnKvalue>
-              <Kvalue>0.0359671987898428</Kvalue>
+              <lnKvalue>-Infinity</lnKvalue>
+              <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.25</FracaoMolar>
-              <FracaoMassica>0.0702533644790566</FracaoMassica>
-              <MolarFlow>3899.71493083856</MolarFlow>
-              <MassFlow>70.2533644790566</MassFlow>
+              <FracaoMolar>0.95</FracaoMolar>
+              <FracaoMassica>0.784341358118048</FracaoMassica>
+              <MolarFlow>43538.2380304218</MolarFlow>
+              <MassFlow>784.341358118048</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0411173499837591</VolumetricFlow>
-              <VolumetricFraction>0.0459441825690445</VolumetricFraction>
+              <VolumetricFlow>0.754375884755087</VolumetricFlow>
+              <VolumetricFraction>0.796522996810048</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -919,26 +998,26 @@
           <Nome>Mixture</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <density>1117.25801198784</density>
-            <enthalpy>-583.112766946088</enthalpy>
-            <entropy>-1.4064640129687</entropy>
-            <molarflow>15598.8597233542</molarflow>
+            <density>1045.81478146056</density>
+            <enthalpy>-2195.22858721351</enthalpy>
+            <entropy>-5.79913970095154</entropy>
+            <molarflow>45829.7242425492</molarflow>
             <massflow>1000</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
-            <heatCapacityCp>2.6871019836833</heatCapacityCp>
-            <heatCapacityCv>1.92085483341612</heatCapacityCv>
-            <molecularWeight>64.10725</molecularWeight>
+            <heatCapacityCp>4.71892785013601</heatCapacityCp>
+            <heatCapacityCv>2.65137552683514</heatCapacityCv>
+            <molecularWeight>21.8199</molecularWeight>
             <pressure>513250</pressure>
-            <temperature>300.097328911774</temperature>
-            <thermalConductivity>0.115240121190031</thermalConductivity>
-            <volumetric_flow>0.895048403565072</volumetric_flow>
-            <molar_enthalpy>-37381.7559288046</molar_enthalpy>
-            <molar_entropy>-90.1645400953877</molar_entropy>
+            <temperature>300.078881809819</temperature>
+            <thermalConductivity>0.301511145366218</thermalConductivity>
+            <volumetric_flow>0.95619226054868</volumetric_flow>
+            <molar_enthalpy>-47899.66825014</molar_enthalpy>
+            <molar_entropy>-126.536648360792</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
-            <surfaceTension>0.0463143080397838</surfaceTension>
+            <surfaceTension>0.103153761921814</surfaceTension>
           </TPMProperties>
         </Phase>
         <Phase>
@@ -949,13 +1028,13 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.249999999999997</FracaoMolar>
-              <FracaoMassica>0.367013871286001</FracaoMassica>
-              <MolarFlow>3899.71493083851</MolarFlow>
-              <MassFlow>367.013871286004</MassFlow>
+              <FracaoMolar>0.05</FracaoMolar>
+              <FracaoMassica>0.215658641881952</FracaoMassica>
+              <MolarFlow>2291.48621212746</MolarFlow>
+              <MassFlow>215.658641881952</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>8.80735439929965E-05</PartialVolume>
+              <PartialVolume>8.80722627635722E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -967,13 +1046,13 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.250000000000006</FracaoMolar>
-              <FracaoMassica>0.17196572930519</FracaoMassica>
-              <MolarFlow>3899.71493083865</MolarFlow>
-              <MassFlow>171.965729305192</MassFlow>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>9.01041698239571E-05</PartialVolume>
+              <PartialVolume>9.00982924994572E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -985,13 +1064,13 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.250000000000007</FracaoMolar>
-              <FracaoMassica>0.390767034929755</FracaoMassica>
-              <MolarFlow>3899.71493083867</MolarFlow>
-              <MassFlow>390.767034929758</MassFlow>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>0.000146267855195318</PartialVolume>
+              <PartialVolume>0.000146264438607251</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -1003,13 +1082,13 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.24999999999999</FracaoMolar>
-              <FracaoMassica>0.0702533644790533</FracaoMassica>
-              <MolarFlow>3899.7149308384</MolarFlow>
-              <MassFlow>70.2533644790538</MassFlow>
+              <FracaoMolar>0.95</FracaoMolar>
+              <FracaoMassica>0.784341358118048</FracaoMassica>
+              <MolarFlow>43538.2380304218</MolarFlow>
+              <MassFlow>784.341358118048</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>1.73270605022573E-05</PartialVolume>
+              <PartialVolume>1.73267435450184E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -1022,22 +1101,22 @@
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <compressibilityFactor>0</compressibilityFactor>
-            <density>1117.25801198784</density>
-            <enthalpy>-583.112766946084</enthalpy>
-            <entropy>-1.40646401296869</entropy>
-            <molarflow>15598.8597233542</molarflow>
-            <massflow>1000.00000000001</massflow>
+            <density>1045.81478146056</density>
+            <enthalpy>-2195.22858721351</enthalpy>
+            <entropy>-5.79913970095154</entropy>
+            <molarflow>45829.7242425492</molarflow>
+            <massflow>1000</massflow>
             <molarfraction>1</molarfraction>
-            <massfraction>1.00000000000001</massfraction>
-            <heatCapacityCp>2.68710198368328</heatCapacityCp>
-            <heatCapacityCv>1.9208548334161</heatCapacityCv>
-            <molecularWeight>64.1072500000005</molecularWeight>
-            <thermalConductivity>0.115240121190031</thermalConductivity>
-            <viscosity>0.00054340055855287</viscosity>
-            <kinematic_viscosity>4.86369802429119E-07</kinematic_viscosity>
+            <massfraction>1</massfraction>
+            <heatCapacityCp>4.71892785013601</heatCapacityCp>
+            <heatCapacityCv>2.65137552683514</heatCapacityCv>
+            <molecularWeight>21.8199</molecularWeight>
+            <thermalConductivity>0.301511145366218</thermalConductivity>
+            <viscosity>0.000507546737584712</viscosity>
+            <kinematic_viscosity>4.85312262345233E-07</kinematic_viscosity>
             <volumetric_flow>0</volumetric_flow>
-            <molar_enthalpy>-37381.7559288046</molar_enthalpy>
-            <molar_entropy>-90.1645400953877</molar_entropy>
+            <molar_enthalpy>-47899.66825014</molar_enthalpy>
+            <molar_entropy>-126.536648360792</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -1051,11 +1130,11 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.00138134270131397</FracaoMolar>
-              <FracaoMassica>0.00292279095905925</FracaoMassica>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.75352802268996</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1069,11 +1148,11 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.979873008303404</FracaoMolar>
-              <FracaoMassica>0.971461379407162</FracaoMassica>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.918421436301327</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1087,11 +1166,11 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.00975384929782161</FracaoMolar>
-              <FracaoMassica>0.0219739332042845</FracaoMassica>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.746672081890457</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1105,11 +1184,11 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.00899179969746035</FracaoMolar>
-              <FracaoMassica>0.00364189642949452</FracaoMassica>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>0.93537914336688</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1143,16 +1222,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.197217596207467</FracaoMolar>
-              <FracaoMassica>0.256316898999733</FracaoMassica>
-              <MolarFlow>2054.5770973853</MolarFlow>
-              <MassFlow>193.362414366223</MassFlow>
-              <FugacityCoeff>0.00412301456679223</FugacityCoeff>
-              <ActivityCoeff>1.9627751269588</ActivityCoeff>
-              <PartialVolume>8.80735439929965E-05</PartialVolume>
+              <FracaoMolar>0.00681697642272196</FracaoMolar>
+              <FracaoMassica>0.0346160823219132</FracaoMassica>
+              <MolarFlow>210.562921113251</MolarFlow>
+              <MassFlow>19.8167081947314</MassFlow>
+              <FugacityCoeff>0.0997657281956109</FugacityCoeff>
+              <ActivityCoeff>47.5395915981437</ActivityCoeff>
+              <PartialVolume>8.80722627635722E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.125245747501406</VolumetricFlow>
-              <VolumetricFraction>0.167038957192168</VolumetricFraction>
+              <VolumetricFlow>0.0185447529165515</VolumetricFlow>
+              <VolumetricFraction>0.0337125085086672</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Fenol</Nome>
             </Compound>
@@ -1161,16 +1240,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.342423313752547</FracaoMolar>
-              <FracaoMassica>0.208523176504032</FracaoMassica>
-              <MolarFlow>3567.3038895914</MolarFlow>
-              <MassFlow>157.307399619312</MassFlow>
-              <FugacityCoeff>2.05288164932437</FugacityCoeff>
-              <ActivityCoeff>1.0522020437948</ActivityCoeff>
-              <PartialVolume>9.01041698239571E-05</PartialVolume>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
+              <FugacityCoeff>1.43506842639902</FugacityCoeff>
+              <ActivityCoeff>0.73588353729467</ActivityCoeff>
+              <PartialVolume>9.00982924994572E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.22247441381146</VolumetricFlow>
-              <VolumetricFraction>0.296711823166593</VolumetricFraction>
+              <VolumetricFlow>0</VolumetricFlow>
+              <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Propano</Nome>
             </Compound>
@@ -1179,16 +1258,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.370600692080674</FracaoMolar>
-              <FracaoMassica>0.512829790936488</FracaoMassica>
-              <MolarFlow>3860.8506992606</MolarFlow>
-              <MassFlow>386.872683468709</MassFlow>
-              <FugacityCoeff>0.0153499148524111</FugacityCoeff>
-              <ActivityCoeff>1.17943798390771</ActivityCoeff>
-              <PartialVolume>0.000146267855195318</PartialVolume>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
+              <FugacityCoeff>0.00956856086872108</FugacityCoeff>
+              <ActivityCoeff>0.73588353729467</ActivityCoeff>
+              <PartialVolume>0.000146264438607251</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.390865172434144</VolumetricFlow>
-              <VolumetricFraction>0.521292835155168</VolumetricFraction>
+              <VolumetricFlow>0</VolumetricFlow>
+              <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
             </Compound>
@@ -1197,16 +1276,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.0897583979593119</FracaoMolar>
-              <FracaoMassica>0.0223301335597473</FracaoMassica>
-              <MolarFlow>935.086687453577</MolarFlow>
-              <MassFlow>16.8455866744762</MassFlow>
-              <FugacityCoeff>0.0732061799143359</FugacityCoeff>
-              <ActivityCoeff>10.5564584547121</ActivityCoeff>
-              <PartialVolume>1.73270605022573E-05</PartialVolume>
+              <FracaoMolar>0.993183023577278</FracaoMolar>
+              <FracaoMassica>0.965383917678087</FracaoMassica>
+              <MolarFlow>30677.459576869</MolarFlow>
+              <MassFlow>552.654434277295</MassFlow>
+              <FugacityCoeff>0.00694168991649147</FugacityCoeff>
+              <ActivityCoeff>1.00208945142639</ActivityCoeff>
+              <PartialVolume>1.73267435450184E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0112142914824439</VolumetricFlow>
-              <VolumetricFraction>0.0149563844860713</VolumetricFraction>
+              <VolumetricFlow>0.531540474701079</VolumetricFlow>
+              <VolumetricFraction>0.966287491491333</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -1215,23 +1294,23 @@
           <Nome>Liquid 1</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <compressibilityFactor>0.0149499189245881</compressibilityFactor>
-            <density>1006.11958014498</density>
-            <enthalpy>-444.965086943711</enthalpy>
-            <entropy>-1.09138501282712</entropy>
-            <molarflow>10417.8183736909</molarflow>
-            <massflow>754.38808412872</massflow>
-            <molarfraction>0.667857686936794</molarfraction>
-            <massfraction>0.75438808412872</massfraction>
-            <heatCapacityCp>2.51694926224199</heatCapacityCp>
-            <heatCapacityCv>1.81347954391178</heatCapacityCv>
-            <molecularWeight>72.4132497869083</molecularWeight>
-            <thermalConductivity>0.115240121190031</thermalConductivity>
-            <viscosity>0.00071963316770018</viscosity>
-            <kinematic_viscosity>7.15256100667958E-07</kinematic_viscosity>
-            <volumetric_flow>0.749799625229454</volumetric_flow>
-            <molar_enthalpy>-32221.3679873083</molar_enthalpy>
-            <molar_entropy>-79.0307355475383</molar_entropy>
+            <compressibilityFactor>0.00431714243088465</compressibilityFactor>
+            <density>1040.69535724736</density>
+            <enthalpy>-2554.45994537686</enthalpy>
+            <entropy>-6.86469812751459</entropy>
+            <molarflow>30888.0224979823</molarflow>
+            <massflow>572.471142472026</massflow>
+            <molarfraction>0.673973562103723</molarfraction>
+            <massfraction>0.572471142472026</massfraction>
+            <heatCapacityCp>5.20634141861128</heatCapacityCp>
+            <heatCapacityCv>2.750820456505</heatCapacityCv>
+            <molecularWeight>18.5337582718163</molecularWeight>
+            <thermalConductivity>0.301511145366218</thermalConductivity>
+            <viscosity>0.000885220380322902</viscosity>
+            <kinematic_viscosity>8.50604717469201E-07</kinematic_viscosity>
+            <volumetric_flow>0.550085227617631</volumetric_flow>
+            <molar_enthalpy>-47343.7431426519</molar_enthalpy>
+            <molar_entropy>-127.228655704345</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -1245,16 +1324,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.356132620631004</FracaoMolar>
-              <FracaoMassica>0.707015603472524</FracaoMassica>
-              <MolarFlow>1845.1378334532</MolarFlow>
-              <MassFlow>173.651456919781</MassFlow>
-              <FugacityCoeff>0.0022829539831579</FugacityCoeff>
-              <ActivityCoeff>1.0868080191189</ActivityCoeff>
-              <PartialVolume>8.80735439929965E-05</PartialVolume>
+              <FracaoMolar>0.139269497316185</FracaoMolar>
+              <FracaoMassica>0.458078864710101</FracaoMassica>
+              <MolarFlow>2080.92329101421</MolarFlow>
+              <MassFlow>195.84193368722</MassFlow>
+              <FugacityCoeff>0.00488334222276669</FugacityCoeff>
+              <ActivityCoeff>2.32697238924692</ActivityCoeff>
+              <PartialVolume>8.80722627635722E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0946007899798617</VolumetricFlow>
-              <VolumetricFraction>0.651301794506446</VolumetricFraction>
+              <VolumetricFlow>0.183271622877041</VolumetricFlow>
+              <VolumetricFraction>0.4512889657544</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Fenol</Nome>
             </Compound>
@@ -1263,16 +1342,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.0641591176007209</FracaoMolar>
-              <FracaoMassica>0.0596808572331709</FracaoMassica>
-              <MolarFlow>332.411041247249</MolarFlow>
-              <MassFlow>14.6583296858799</MassFlow>
-              <FugacityCoeff>10.9551661962345</FugacityCoeff>
-              <ActivityCoeff>5.61505738315862</ActivityCoeff>
-              <PartialVolume>9.01041698239571E-05</PartialVolume>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
+              <FugacityCoeff>0.749820402894394</FugacityCoeff>
+              <ActivityCoeff>0.384497686847037</ActivityCoeff>
+              <PartialVolume>9.00982924994572E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0174357569831432</VolumetricFlow>
-              <VolumetricFraction>0.120040644630101</VolumetricFraction>
+              <VolumetricFlow>0</VolumetricFlow>
+              <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Propano</Nome>
             </Compound>
@@ -1281,16 +1360,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.00750123941407966</FracaoMolar>
-              <FracaoMassica>0.0158557106125497</FracaoMassica>
-              <MolarFlow>38.8642315780712</MolarFlow>
-              <MassFlow>3.89435146104905</MassFlow>
-              <FugacityCoeff>0.758101382782577</FugacityCoeff>
-              <ActivityCoeff>58.2500668638098</ActivityCoeff>
-              <PartialVolume>0.000146267855195318</PartialVolume>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
+              <MolarFlow>0</MolarFlow>
+              <MassFlow>0</MassFlow>
+              <FugacityCoeff>0.00499955405172369</FugacityCoeff>
+              <ActivityCoeff>0.384497686847037</ActivityCoeff>
+              <PartialVolume>0.000146264438607251</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.00330917287130511</VolumetricFlow>
-              <VolumetricFraction>0.0227827931444534</VolumetricFraction>
+              <VolumetricFlow>0</VolumetricFlow>
+              <VolumetricFraction>0</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>nHeptano</Nome>
             </Compound>
@@ -1299,16 +1378,16 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.572207022354195</FracaoMolar>
-              <FracaoMassica>0.217447828681756</FracaoMassica>
-              <MolarFlow>2964.62824338483</MolarFlow>
-              <MassFlow>53.4077778045776</MassFlow>
-              <FugacityCoeff>0.0114823191201515</FugacityCoeff>
-              <ActivityCoeff>1.65577038574429</ActivityCoeff>
-              <PartialVolume>1.73270605022573E-05</PartialVolume>
+              <FracaoMolar>0.860730502683815</FracaoMolar>
+              <FracaoMassica>0.541921135289899</FracaoMassica>
+              <MolarFlow>12860.7784535528</MolarFlow>
+              <MassFlow>231.686923840753</MassFlow>
+              <FugacityCoeff>0.0080099038625834</FugacityCoeff>
+              <ActivityCoeff>1.15629483082575</ActivityCoeff>
+              <PartialVolume>1.73267435450184E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.0299030585013152</VolumetricFlow>
-              <VolumetricFraction>0.205874767718999</VolumetricFraction>
+              <VolumetricFlow>0.222835410054008</VolumetricFlow>
+              <VolumetricFraction>0.5487110342456</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Agua</Nome>
             </Compound>
@@ -1317,23 +1396,23 @@
           <Nome>Liquid 2</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <compressibilityFactor>0.00619494898952285</compressibilityFactor>
-            <density>1690.97405627574</density>
-            <enthalpy>-1007.42835144904</enthalpy>
-            <entropy>-2.37421772484704</entropy>
-            <molarflow>5181.04134966335</molarflow>
-            <massflow>245.611915871288</massflow>
-            <molarfraction>0.332142313063206</molarfraction>
-            <massfraction>0.245611915871288</massfraction>
-            <heatCapacityCp>3.2097198912145</heatCapacityCp>
-            <heatCapacityCv>2.25065413751167</heatCapacityCv>
-            <molecularWeight>47.4058976362439</molecularWeight>
-            <thermalConductivity>0.115240121190031</thermalConductivity>
-            <viscosity>0.00071963316770018</viscosity>
-            <kinematic_viscosity>4.2557315709806E-07</kinematic_viscosity>
-            <volumetric_flow>0.145248778335625</volumetric_flow>
-            <molar_enthalpy>-47758.0453046433</molar_enthalpy>
-            <molar_entropy>-112.551922430255</molar_entropy>
+            <compressibilityFactor>0.00477782479594752</compressibilityFactor>
+            <density>1052.74920860719</density>
+            <enthalpy>-1714.20939424336</enthalpy>
+            <entropy>-4.37233203853465</entropy>
+            <molarflow>14941.701744567</molarflow>
+            <massflow>427.528857527974</massflow>
+            <molarfraction>0.326026437896277</molarfraction>
+            <massfraction>0.427528857527974</massfraction>
+            <heatCapacityCp>4.0662696786741</heatCapacityCp>
+            <heatCapacityCv>2.51821643944551</heatCapacityCv>
+            <molecularWeight>28.6131302067671</molecularWeight>
+            <thermalConductivity>0.301511145366218</thermalConductivity>
+            <viscosity>0.000885220380322902</viscosity>
+            <kinematic_viscosity>8.40865396131783E-07</kinematic_viscosity>
+            <volumetric_flow>0.406107032931049</volumetric_flow>
+            <molar_enthalpy>-49048.8965991487</molar_enthalpy>
+            <molar_entropy>-125.106105925811</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -1505,7 +1584,7 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>NaN</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1523,7 +1602,7 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>NaN</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1541,7 +1620,7 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>NaN</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1559,7 +1638,7 @@
               <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
-              <FugacityCoeff>NaN</FugacityCoeff>
+              <FugacityCoeff>1</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
@@ -1666,13 +1745,18 @@
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.MaterialStreamGraphic</Type>
-      <LineWidth>2</LineWidth>
       <GradientMode>true</GradientMode>
-      <LineColor>SteelBlue</LineColor>
-      <Fill>true</Fill>
-      <FillColor>WhiteSmoke</FillColor>
       <GradientColor1>LightGrey</GradientColor1>
       <GradientColor2>White</GradientColor2>
+      <FillColor>WhiteSmoke</FillColor>
+      <LineWidth>2</LineWidth>
+      <Width>20</Width>
+      <Height>20</Height>
+      <Rotation>0</Rotation>
+      <X>5328</X>
+      <Y>3586</Y>
+      <LineColor>SteelBlue</LineColor>
+      <Fill>true</Fill>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -1688,18 +1772,47 @@
       <Tag>2</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
-      <X>5328</X>
-      <Y>3586</Y>
       <Name>MAT-161ba6b5-6f92-4562-a754-cee4b362387e</Name>
-      <Height>20</Height>
-      <Width>20</Width>
-      <Rotation>0</Rotation>
       <InputConnectors>
         <Connector IsAttached="True" ConnType="ConIn" AttachedFromObjID="VALV-b4babf93-55e1-4b7b-af7d-973b5c25fe4d" AttachedFromConnIndex="0" AttachedFromEnergyConn="False" />
       </InputConnectors>
       <OutputConnectors>
         <Connector IsAttached="False" />
       </OutputConnectors>
+      <EnergyConnector>
+        <Connector IsAttached="False" />
+      </EnergyConnector>
+      <SpecialConnectors />
+    </GraphicObject>
+    <GraphicObject>
+      <Type>Microsoft.MSDN.Samples.GraphicObjects.TextGraphic</Type>
+      <Font>[Font: Name=Arial, Size=10, Units=2, GdiCharSet=1, GdiVerticalFont=False]</Font>
+      <Text>Just a test case to show the VLLE algorithm calculating isenthalpic flash of a liquid-liquid mixture on a valve.</Text>
+      <Color>Black</Color>
+      <TextRenderStyle>Default</TextRenderStyle>
+      <MixPoint>false</MixPoint>
+      <SplitPoint>false</SplitPoint>
+      <ShapeOverride>DefaultShape</ShapeOverride>
+      <Status>ErrorCalculating</Status>
+      <Description></Description>
+      <Shape>0</Shape>
+      <FlippedH>false</FlippedH>
+      <FlippedV>false</FlippedV>
+      <TipoObjeto>GO_Texto</TipoObjeto>
+      <IsEnergyStream>false</IsEnergyStream>
+      <Active>true</Active>
+      <Calculated>false</Calculated>
+      <Tag>LABEL-3114624d-c903-4e77-ad81-3e3d4616c360</Tag>
+      <AutoSize>true</AutoSize>
+      <IsConnector>false</IsConnector>
+      <X>5024</X>
+      <Y>3520</Y>
+      <Name></Name>
+      <Height>12</Height>
+      <Width>495</Width>
+      <Rotation>0</Rotation>
+      <InputConnectors />
+      <OutputConnectors />
       <EnergyConnector>
         <Connector IsAttached="False" />
       </EnergyConnector>
@@ -1732,7 +1845,7 @@
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
-      <Status>NotCalculated</Status>
+      <Status>ErrorCalculating</Status>
       <Description></Description>
       <Shape>0</Shape>
       <FlippedH>false</FlippedH>
@@ -1748,7 +1861,7 @@
       <Y>3653</Y>
       <Name>TAB-3c7a164a-70bc-43fe-b399-19ce26473978</Name>
       <Height>51</Height>
-      <Width>241</Width>
+      <Width>248</Width>
       <Rotation>0</Rotation>
       <InputConnectors />
       <OutputConnectors />
@@ -1785,7 +1898,7 @@
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
-      <Status>NotCalculated</Status>
+      <Status>ErrorCalculating</Status>
       <Description></Description>
       <Shape>0</Shape>
       <FlippedH>false</FlippedH>
@@ -1801,7 +1914,7 @@
       <Y>3713</Y>
       <Name>TAB-f9be589c-9d6a-4fec-8742-ac9dc4a62bcc</Name>
       <Height>51</Height>
-      <Width>241</Width>
+      <Width>248</Width>
       <Rotation>0</Rotation>
       <InputConnectors />
       <OutputConnectors />
@@ -1811,50 +1924,16 @@
       <SpecialConnectors />
       <Owner>MAT-161ba6b5-6f92-4562-a754-cee4b362387e</Owner>
     </GraphicObject>
-    <GraphicObject>
-      <Type>Microsoft.MSDN.Samples.GraphicObjects.TextGraphic</Type>
-      <Font>[Font: Name=Arial, Size=10, Units=2, GdiCharSet=1, GdiVerticalFont=False]</Font>
-      <Text>Just a test case to show the VLLE algorithm calculating isenthalpic flash of a liquid-liquid mixture on a valve.</Text>
-      <Color>Black</Color>
-      <TextRenderStyle>Default</TextRenderStyle>
-      <MixPoint>false</MixPoint>
-      <SplitPoint>false</SplitPoint>
-      <ShapeOverride>DefaultShape</ShapeOverride>
-      <Status>NotCalculated</Status>
-      <Description></Description>
-      <Shape>0</Shape>
-      <FlippedH>false</FlippedH>
-      <FlippedV>false</FlippedV>
-      <TipoObjeto>GO_Texto</TipoObjeto>
-      <IsEnergyStream>false</IsEnergyStream>
-      <Active>true</Active>
-      <Calculated>false</Calculated>
-      <Tag>LABEL-3114624d-c903-4e77-ad81-3e3d4616c360</Tag>
-      <AutoSize>true</AutoSize>
-      <IsConnector>false</IsConnector>
-      <X>5024</X>
-      <Y>3520</Y>
-      <Name></Name>
-      <Height>12</Height>
-      <Width>495</Width>
-      <Rotation>0</Rotation>
-      <InputConnectors />
-      <OutputConnectors />
-      <EnergyConnector>
-        <Connector IsAttached="False" />
-      </EnergyConnector>
-      <SpecialConnectors />
-    </GraphicObject>
   </GraphicObjects>
   <PropertyPackages>
     <PropertyPackage>
-      <ID>PP-9984c028-7743-4c05-9503-b7e50f6ae06f</ID>
-      <Type>DWSIM.DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage</Type>
-      <ComponentName>UNIQUAC</ComponentName>
-      <ComponentDescription>In this Property Package, the UNIQUAC model is used to calculate liquid-phase activity coefficients. Enthalpies are calculated by the Lee-Kesler model, while vapor-phase fugacities and other thermodynamic  properties (both phases) are calculated by the Peng-Robinson EOS.</ComponentDescription>
+      <ID>PP-a7a882bc-70d6-4df4-8d91-80222698b696</ID>
+      <Type>DWSIM.DWSIM.SimulationObjects.PropertyPackages.NRTLPropertyPackage</Type>
+      <ComponentName>NRTL</ComponentName>
+      <ComponentDescription>In this Property Package, the NRTL (Non-Random Two-Liquid) model is used to calculate liquid-phase activity coefficients. Enthalpies are calculated by the Lee-Kesler model, while vapor-phase fugacities and other thermodynamic  properties (both phases) are calculated by the Peng-Robinson EOS.</ComponentDescription>
       <Tag>PP_1</Tag>
       <IOQUick>false</IOQUick>
-      <TPSeverity>1</TPSeverity>
+      <TPSeverity>0</TPSeverity>
       <TPCompIDs>Fenol,Agua</TPCompIDs>
       <Parameters>
         <Parameter ID="PP_PHFILT" Value="0.001" />
@@ -1869,29 +1948,28 @@
         <Parameter ID="PP_PTFMII" Value="100" />
         <Parameter ID="PP_PTFILT" Value="0.001" />
         <Parameter ID="PP_PTFELT" Value="0.001" />
-        <Parameter ID="PP_RIG_BUB_DEW_FLASH_INIT" Value="0" />
-        <Parameter ID="PP_IDEAL_MIXRULE_LIQDENS" Value="0" />
         <Parameter ID="PP_FLASHALGORITHM" Value="2" />
+        <Parameter ID="PP_IDEAL_MIXRULE_LIQDENS" Value="1" />
         <Parameter ID="PP_USEEXPLIQDENS" Value="1" />
-        <Parameter ID="PP_USEEXPLIQTHERMALCOND" Value="1" />
-        <Parameter ID="PP_IDEAL_VAPOR_PHASE_FUG" Value="0" />
+        <Parameter ID="PP_IDEAL_VAPOR_PHASE_FUG" Value="1" />
+        <Parameter ID="PP_ENTH_CP_CALC_METHOD" Value="0" />
       </Parameters>
       <InteractionParameters_PR>
         <InteractionParameter Compound1="Propano" Compound2="nHeptano" Value="0.0056" />
-        <InteractionParameter Compound1="Fenol" Compound2="Propano" Value="0.000763577479580113" />
-        <InteractionParameter Compound1="Fenol" Compound2="nHeptano" Value="0.016135917455567" />
-        <InteractionParameter Compound1="Agua" Compound2="Fenol" Value="0.078824107843068" />
-        <InteractionParameter Compound1="Agua" Compound2="Propano" Value="0.0649963108727077" />
-        <InteractionParameter Compound1="Agua" Compound2="nHeptano" Value="0.155856017245222" />
+        <InteractionParameter Compound1="Fenol" Compound2="Propano" Value="0" />
+        <InteractionParameter Compound1="Fenol" Compound2="nHeptano" Value="0" />
+        <InteractionParameter Compound1="Agua" Compound2="Fenol" Value="0" />
+        <InteractionParameter Compound1="Agua" Compound2="Propano" Value="0" />
+        <InteractionParameter Compound1="Agua" Compound2="nHeptano" Value="0" />
       </InteractionParameters_PR>
-      <InteractionParameters_UNIQUAC>
-        <InteractionParameter Compound1="Agua" Compound2="Fenol" ID1="1921" ID2="1181" A12="934.8834" A21="-501.3763" B12="0" B21="0" C12="0" C21="0" />
-        <InteractionParameter Compound1="Propano" Compound2="Fenol" ID1="-1" ID2="-1" A12="149.795343267396" A21="176.701808215958" B12="0" B21="0" C12="0" C21="0" />
-        <InteractionParameter Compound1="Propano" Compound2="Agua" ID1="-1" ID2="-1" A12="1525.8819794671" A21="739.571542070061" B12="0" B21="0" C12="0" C21="0" />
-        <InteractionParameter Compound1="nHeptano" Compound2="Fenol" ID1="-1" ID2="-1" A12="130.123570457864" A21="217.448326844298" B12="0" B21="0" C12="0" C21="0" />
-        <InteractionParameter Compound1="nHeptano" Compound2="Propano" ID1="-1" ID2="-1" A12="0.0154392095579645" A21="0.010291834522433" B12="0" B21="0" C12="0" C21="0" />
-        <InteractionParameter Compound1="nHeptano" Compound2="Agua" ID1="-1" ID2="-1" A12="1251.94276591122" A21="44653.0943359255" B12="0" B21="0" C12="0" C21="0" />
-      </InteractionParameters_UNIQUAC>
+      <InteractionParameters_NRTL>
+        <InteractionParameter Compound1="Agua" Compound2="Fenol" ID1="1921" ID2="1181" A12="2419.3354" A21="1844.3794" B12="0" B21="0" C12="0" C21="0" alpha12="0.6308" />
+        <InteractionParameter Compound1="Propano" Compound2="Fenol" ID1="" ID2="" A12="0" A21="0" B12="0" B21="0" C12="0" C21="0" alpha12="0" />
+        <InteractionParameter Compound1="Propano" Compound2="Agua" ID1="" ID2="" A12="0" A21="0" B12="0" B21="0" C12="0" C21="0" alpha12="0" />
+        <InteractionParameter Compound1="nHeptano" Compound2="Fenol" ID1="" ID2="" A12="0" A21="0" B12="0" B21="0" C12="0" C21="0" alpha12="0" />
+        <InteractionParameter Compound1="nHeptano" Compound2="Propano" ID1="" ID2="" A12="0" A21="0" B12="0" B21="0" C12="0" C21="0" alpha12="0" />
+        <InteractionParameter Compound1="nHeptano" Compound2="Agua" ID1="" ID2="" A12="0" A21="0" B12="0" B21="0" C12="0" C21="0" alpha12="0" />
+      </InteractionParameters_NRTL>
     </PropertyPackage>
   </PropertyPackages>
   <Compounds>
@@ -1900,6 +1978,9 @@
       <Name>Fenol</Name>
       <CAS_Number>108-95-2</CAS_Number>
       <Formula>C6H5OH</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>94.113</Molar_Weight>
       <Critical_Temperature>694.2</Critical_Temperature>
       <Critical_Pressure>6130162.5</Critical_Pressure>
@@ -1954,6 +2035,20 @@
       <Liquid_Thermal_Conductivity_Const_E>0</Liquid_Thermal_Conductivity_Const_E>
       <Liquid_Thermal_Conductivity_Tmin>0</Liquid_Thermal_Conductivity_Tmin>
       <Liquid_Thermal_Conductivity_Tmax>0</Liquid_Thermal_Conductivity_Tmax>
+      <Vapor_Thermal_Conductivity_Const_A>0</Vapor_Thermal_Conductivity_Const_A>
+      <Vapor_Thermal_Conductivity_Const_B>0</Vapor_Thermal_Conductivity_Const_B>
+      <Vapor_Thermal_Conductivity_Const_C>0</Vapor_Thermal_Conductivity_Const_C>
+      <Vapor_Thermal_Conductivity_Const_D>0</Vapor_Thermal_Conductivity_Const_D>
+      <Vapor_Thermal_Conductivity_Const_E>0</Vapor_Thermal_Conductivity_Const_E>
+      <Vapor_Thermal_Conductivity_Tmin>0</Vapor_Thermal_Conductivity_Tmin>
+      <Vapor_Thermal_Conductivity_Tmax>0</Vapor_Thermal_Conductivity_Tmax>
+      <Vapor_Viscosity_Const_A>0</Vapor_Viscosity_Const_A>
+      <Vapor_Viscosity_Const_B>0</Vapor_Viscosity_Const_B>
+      <Vapor_Viscosity_Const_C>0</Vapor_Viscosity_Const_C>
+      <Vapor_Viscosity_Const_D>0</Vapor_Viscosity_Const_D>
+      <Vapor_Viscosity_Const_E>0</Vapor_Viscosity_Const_E>
+      <Vapor_Viscosity_Tmin>0</Vapor_Viscosity_Tmin>
+      <Vapor_Viscosity_Tmax>0</Vapor_Viscosity_Tmax>
       <Solid_Density_Const_A>0</Solid_Density_Const_A>
       <Solid_Density_Const_B>0</Solid_Density_Const_B>
       <Solid_Density_Const_C>0</Solid_Density_Const_C>
@@ -1961,6 +2056,13 @@
       <Solid_Density_Const_E>0</Solid_Density_Const_E>
       <Solid_Density_Tmin>0</Solid_Density_Tmin>
       <Solid_Density_Tmax>0</Solid_Density_Tmax>
+      <Surface_Tension_Const_A>0</Surface_Tension_Const_A>
+      <Surface_Tension_Const_B>0</Surface_Tension_Const_B>
+      <Surface_Tension_Const_C>0</Surface_Tension_Const_C>
+      <Surface_Tension_Const_D>0</Surface_Tension_Const_D>
+      <Surface_Tension_Const_E>0</Surface_Tension_Const_E>
+      <Surface_Tension_Tmin>0</Surface_Tension_Tmin>
+      <Surface_Tension_Tmax>0</Surface_Tension_Tmax>
       <Solid_Heat_Capacity_Const_A>0</Solid_Heat_Capacity_Const_A>
       <Solid_Heat_Capacity_Const_B>0</Solid_Heat_Capacity_Const_B>
       <Solid_Heat_Capacity_Const_C>0</Solid_Heat_Capacity_Const_C>
@@ -1980,24 +2082,35 @@
       <HVap_TMAX>694.2</HVap_TMAX>
       <UNIQUAC_R>3.5517</UNIQUAC_R>
       <UNIQUAC_Q>2.68</UNIQUAC_Q>
+      <IsFPROPSSupported>false</IsFPROPSSupported>
+      <IsCOOLPROPSupported>false</IsCOOLPROPSupported>
+      <IsModified>false</IsModified>
       <VaporPressureEquation></VaporPressureEquation>
       <IdealgasCpEquation></IdealgasCpEquation>
       <LiquidViscosityEquation></LiquidViscosityEquation>
+      <VaporViscosityEquation></VaporViscosityEquation>
       <VaporizationEnthalpyEquation></VaporizationEnthalpyEquation>
       <LiquidDensityEquation></LiquidDensityEquation>
       <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
       <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <VaporThermalConductivityEquation></VaporThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
+      <SurfaceTensionEquation></SurfaceTensionEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
       <OriginalDB>DWSIM</OriginalDB>
       <CurrentDB>DWSIM</CurrentDB>
+      <CompCreatorStudyFile></CompCreatorStudyFile>
       <COSMODBName>PHENOL</COSMODBName>
       <IsIon>false</IsIon>
       <IsSalt>false</IsSalt>
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -2036,6 +2149,9 @@
       <Name>Propano</Name>
       <CAS_Number>74-98-6</CAS_Number>
       <Formula>C3H8</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>44.097</Molar_Weight>
       <Critical_Temperature>369.83</Critical_Temperature>
       <Critical_Pressure>4250000</Critical_Pressure>
@@ -2090,6 +2206,20 @@
       <Liquid_Thermal_Conductivity_Const_E>0</Liquid_Thermal_Conductivity_Const_E>
       <Liquid_Thermal_Conductivity_Tmin>0</Liquid_Thermal_Conductivity_Tmin>
       <Liquid_Thermal_Conductivity_Tmax>0</Liquid_Thermal_Conductivity_Tmax>
+      <Vapor_Thermal_Conductivity_Const_A>0</Vapor_Thermal_Conductivity_Const_A>
+      <Vapor_Thermal_Conductivity_Const_B>0</Vapor_Thermal_Conductivity_Const_B>
+      <Vapor_Thermal_Conductivity_Const_C>0</Vapor_Thermal_Conductivity_Const_C>
+      <Vapor_Thermal_Conductivity_Const_D>0</Vapor_Thermal_Conductivity_Const_D>
+      <Vapor_Thermal_Conductivity_Const_E>0</Vapor_Thermal_Conductivity_Const_E>
+      <Vapor_Thermal_Conductivity_Tmin>0</Vapor_Thermal_Conductivity_Tmin>
+      <Vapor_Thermal_Conductivity_Tmax>0</Vapor_Thermal_Conductivity_Tmax>
+      <Vapor_Viscosity_Const_A>0</Vapor_Viscosity_Const_A>
+      <Vapor_Viscosity_Const_B>0</Vapor_Viscosity_Const_B>
+      <Vapor_Viscosity_Const_C>0</Vapor_Viscosity_Const_C>
+      <Vapor_Viscosity_Const_D>0</Vapor_Viscosity_Const_D>
+      <Vapor_Viscosity_Const_E>0</Vapor_Viscosity_Const_E>
+      <Vapor_Viscosity_Tmin>0</Vapor_Viscosity_Tmin>
+      <Vapor_Viscosity_Tmax>0</Vapor_Viscosity_Tmax>
       <Solid_Density_Const_A>0</Solid_Density_Const_A>
       <Solid_Density_Const_B>0</Solid_Density_Const_B>
       <Solid_Density_Const_C>0</Solid_Density_Const_C>
@@ -2097,6 +2227,13 @@
       <Solid_Density_Const_E>0</Solid_Density_Const_E>
       <Solid_Density_Tmin>0</Solid_Density_Tmin>
       <Solid_Density_Tmax>0</Solid_Density_Tmax>
+      <Surface_Tension_Const_A>0</Surface_Tension_Const_A>
+      <Surface_Tension_Const_B>0</Surface_Tension_Const_B>
+      <Surface_Tension_Const_C>0</Surface_Tension_Const_C>
+      <Surface_Tension_Const_D>0</Surface_Tension_Const_D>
+      <Surface_Tension_Const_E>0</Surface_Tension_Const_E>
+      <Surface_Tension_Tmin>0</Surface_Tension_Tmin>
+      <Surface_Tension_Tmax>0</Surface_Tension_Tmax>
       <Solid_Heat_Capacity_Const_A>0</Solid_Heat_Capacity_Const_A>
       <Solid_Heat_Capacity_Const_B>0</Solid_Heat_Capacity_Const_B>
       <Solid_Heat_Capacity_Const_C>0</Solid_Heat_Capacity_Const_C>
@@ -2116,24 +2253,35 @@
       <HVap_TMAX>370</HVap_TMAX>
       <UNIQUAC_R>2.4766</UNIQUAC_R>
       <UNIQUAC_Q>2.236</UNIQUAC_Q>
+      <IsFPROPSSupported>false</IsFPROPSSupported>
+      <IsCOOLPROPSupported>false</IsCOOLPROPSupported>
+      <IsModified>false</IsModified>
       <VaporPressureEquation></VaporPressureEquation>
       <IdealgasCpEquation></IdealgasCpEquation>
       <LiquidViscosityEquation></LiquidViscosityEquation>
+      <VaporViscosityEquation></VaporViscosityEquation>
       <VaporizationEnthalpyEquation></VaporizationEnthalpyEquation>
       <LiquidDensityEquation></LiquidDensityEquation>
       <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
       <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <VaporThermalConductivityEquation></VaporThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
+      <SurfaceTensionEquation></SurfaceTensionEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
       <OriginalDB>DWSIM</OriginalDB>
       <CurrentDB>DWSIM</CurrentDB>
+      <CompCreatorStudyFile></CompCreatorStudyFile>
       <COSMODBName>PROPANE</COSMODBName>
       <IsIon>false</IsIon>
       <IsSalt>false</IsSalt>
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -2171,6 +2319,9 @@
       <Name>nHeptano</Name>
       <CAS_Number>142-82-5</CAS_Number>
       <Formula>C7H16</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>100.204</Molar_Weight>
       <Critical_Temperature>540.2</Critical_Temperature>
       <Critical_Pressure>2740000</Critical_Pressure>
@@ -2225,6 +2376,20 @@
       <Liquid_Thermal_Conductivity_Const_E>0</Liquid_Thermal_Conductivity_Const_E>
       <Liquid_Thermal_Conductivity_Tmin>0</Liquid_Thermal_Conductivity_Tmin>
       <Liquid_Thermal_Conductivity_Tmax>0</Liquid_Thermal_Conductivity_Tmax>
+      <Vapor_Thermal_Conductivity_Const_A>0</Vapor_Thermal_Conductivity_Const_A>
+      <Vapor_Thermal_Conductivity_Const_B>0</Vapor_Thermal_Conductivity_Const_B>
+      <Vapor_Thermal_Conductivity_Const_C>0</Vapor_Thermal_Conductivity_Const_C>
+      <Vapor_Thermal_Conductivity_Const_D>0</Vapor_Thermal_Conductivity_Const_D>
+      <Vapor_Thermal_Conductivity_Const_E>0</Vapor_Thermal_Conductivity_Const_E>
+      <Vapor_Thermal_Conductivity_Tmin>0</Vapor_Thermal_Conductivity_Tmin>
+      <Vapor_Thermal_Conductivity_Tmax>0</Vapor_Thermal_Conductivity_Tmax>
+      <Vapor_Viscosity_Const_A>0</Vapor_Viscosity_Const_A>
+      <Vapor_Viscosity_Const_B>0</Vapor_Viscosity_Const_B>
+      <Vapor_Viscosity_Const_C>0</Vapor_Viscosity_Const_C>
+      <Vapor_Viscosity_Const_D>0</Vapor_Viscosity_Const_D>
+      <Vapor_Viscosity_Const_E>0</Vapor_Viscosity_Const_E>
+      <Vapor_Viscosity_Tmin>0</Vapor_Viscosity_Tmin>
+      <Vapor_Viscosity_Tmax>0</Vapor_Viscosity_Tmax>
       <Solid_Density_Const_A>0</Solid_Density_Const_A>
       <Solid_Density_Const_B>0</Solid_Density_Const_B>
       <Solid_Density_Const_C>0</Solid_Density_Const_C>
@@ -2232,6 +2397,13 @@
       <Solid_Density_Const_E>0</Solid_Density_Const_E>
       <Solid_Density_Tmin>0</Solid_Density_Tmin>
       <Solid_Density_Tmax>0</Solid_Density_Tmax>
+      <Surface_Tension_Const_A>0</Surface_Tension_Const_A>
+      <Surface_Tension_Const_B>0</Surface_Tension_Const_B>
+      <Surface_Tension_Const_C>0</Surface_Tension_Const_C>
+      <Surface_Tension_Const_D>0</Surface_Tension_Const_D>
+      <Surface_Tension_Const_E>0</Surface_Tension_Const_E>
+      <Surface_Tension_Tmin>0</Surface_Tension_Tmin>
+      <Surface_Tension_Tmax>0</Surface_Tension_Tmax>
       <Solid_Heat_Capacity_Const_A>0</Solid_Heat_Capacity_Const_A>
       <Solid_Heat_Capacity_Const_B>0</Solid_Heat_Capacity_Const_B>
       <Solid_Heat_Capacity_Const_C>0</Solid_Heat_Capacity_Const_C>
@@ -2251,24 +2423,35 @@
       <HVap_TMAX>540</HVap_TMAX>
       <UNIQUAC_R>5.1742</UNIQUAC_R>
       <UNIQUAC_Q>4.396</UNIQUAC_Q>
+      <IsFPROPSSupported>false</IsFPROPSSupported>
+      <IsCOOLPROPSupported>false</IsCOOLPROPSupported>
+      <IsModified>false</IsModified>
       <VaporPressureEquation></VaporPressureEquation>
       <IdealgasCpEquation></IdealgasCpEquation>
       <LiquidViscosityEquation></LiquidViscosityEquation>
+      <VaporViscosityEquation></VaporViscosityEquation>
       <VaporizationEnthalpyEquation></VaporizationEnthalpyEquation>
       <LiquidDensityEquation></LiquidDensityEquation>
       <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
       <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <VaporThermalConductivityEquation></VaporThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
+      <SurfaceTensionEquation></SurfaceTensionEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
       <OriginalDB>DWSIM</OriginalDB>
       <CurrentDB>DWSIM</CurrentDB>
+      <CompCreatorStudyFile></CompCreatorStudyFile>
       <COSMODBName>N-HEPTANE</COSMODBName>
       <IsIon>false</IsIon>
       <IsSalt>false</IsSalt>
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -2306,6 +2489,9 @@
       <Name>Agua</Name>
       <CAS_Number>7732-18-5</CAS_Number>
       <Formula>H2O</Formula>
+      <SMILES></SMILES>
+      <InChI></InChI>
+      <ChemicalStructure></ChemicalStructure>
       <Molar_Weight>18.015</Molar_Weight>
       <Critical_Temperature>647.13</Critical_Temperature>
       <Critical_Pressure>22055000</Critical_Pressure>
@@ -2360,6 +2546,20 @@
       <Liquid_Thermal_Conductivity_Const_E>0</Liquid_Thermal_Conductivity_Const_E>
       <Liquid_Thermal_Conductivity_Tmin>0</Liquid_Thermal_Conductivity_Tmin>
       <Liquid_Thermal_Conductivity_Tmax>0</Liquid_Thermal_Conductivity_Tmax>
+      <Vapor_Thermal_Conductivity_Const_A>0</Vapor_Thermal_Conductivity_Const_A>
+      <Vapor_Thermal_Conductivity_Const_B>0</Vapor_Thermal_Conductivity_Const_B>
+      <Vapor_Thermal_Conductivity_Const_C>0</Vapor_Thermal_Conductivity_Const_C>
+      <Vapor_Thermal_Conductivity_Const_D>0</Vapor_Thermal_Conductivity_Const_D>
+      <Vapor_Thermal_Conductivity_Const_E>0</Vapor_Thermal_Conductivity_Const_E>
+      <Vapor_Thermal_Conductivity_Tmin>0</Vapor_Thermal_Conductivity_Tmin>
+      <Vapor_Thermal_Conductivity_Tmax>0</Vapor_Thermal_Conductivity_Tmax>
+      <Vapor_Viscosity_Const_A>0</Vapor_Viscosity_Const_A>
+      <Vapor_Viscosity_Const_B>0</Vapor_Viscosity_Const_B>
+      <Vapor_Viscosity_Const_C>0</Vapor_Viscosity_Const_C>
+      <Vapor_Viscosity_Const_D>0</Vapor_Viscosity_Const_D>
+      <Vapor_Viscosity_Const_E>0</Vapor_Viscosity_Const_E>
+      <Vapor_Viscosity_Tmin>0</Vapor_Viscosity_Tmin>
+      <Vapor_Viscosity_Tmax>0</Vapor_Viscosity_Tmax>
       <Solid_Density_Const_A>0</Solid_Density_Const_A>
       <Solid_Density_Const_B>0</Solid_Density_Const_B>
       <Solid_Density_Const_C>0</Solid_Density_Const_C>
@@ -2367,6 +2567,13 @@
       <Solid_Density_Const_E>0</Solid_Density_Const_E>
       <Solid_Density_Tmin>0</Solid_Density_Tmin>
       <Solid_Density_Tmax>0</Solid_Density_Tmax>
+      <Surface_Tension_Const_A>0</Surface_Tension_Const_A>
+      <Surface_Tension_Const_B>0</Surface_Tension_Const_B>
+      <Surface_Tension_Const_C>0</Surface_Tension_Const_C>
+      <Surface_Tension_Const_D>0</Surface_Tension_Const_D>
+      <Surface_Tension_Const_E>0</Surface_Tension_Const_E>
+      <Surface_Tension_Tmin>0</Surface_Tension_Tmin>
+      <Surface_Tension_Tmax>0</Surface_Tension_Tmax>
       <Solid_Heat_Capacity_Const_A>0</Solid_Heat_Capacity_Const_A>
       <Solid_Heat_Capacity_Const_B>0</Solid_Heat_Capacity_Const_B>
       <Solid_Heat_Capacity_Const_C>0</Solid_Heat_Capacity_Const_C>
@@ -2386,24 +2593,35 @@
       <HVap_TMAX>647</HVap_TMAX>
       <UNIQUAC_R>0.92</UNIQUAC_R>
       <UNIQUAC_Q>1.4</UNIQUAC_Q>
+      <IsFPROPSSupported>false</IsFPROPSSupported>
+      <IsCOOLPROPSupported>false</IsCOOLPROPSupported>
+      <IsModified>false</IsModified>
       <VaporPressureEquation></VaporPressureEquation>
       <IdealgasCpEquation></IdealgasCpEquation>
       <LiquidViscosityEquation></LiquidViscosityEquation>
+      <VaporViscosityEquation></VaporViscosityEquation>
       <VaporizationEnthalpyEquation></VaporizationEnthalpyEquation>
       <LiquidDensityEquation></LiquidDensityEquation>
       <LiquidHeatCapacityEquation></LiquidHeatCapacityEquation>
       <LiquidThermalConductivityEquation></LiquidThermalConductivityEquation>
+      <VaporThermalConductivityEquation></VaporThermalConductivityEquation>
+      <SolidDensityEquation></SolidDensityEquation>
+      <SolidHeatCapacityEquation></SolidHeatCapacityEquation>
+      <SurfaceTensionEquation></SurfaceTensionEquation>
       <PC_SAFT_sigma>0</PC_SAFT_sigma>
       <PC_SAFT_epsilon_k>0</PC_SAFT_epsilon_k>
       <PC_SAFT_m>0</PC_SAFT_m>
       <OriginalDB>DWSIM</OriginalDB>
       <CurrentDB>DWSIM</CurrentDB>
+      <CompCreatorStudyFile></CompCreatorStudyFile>
       <COSMODBName>WATER</COSMODBName>
       <IsIon>false</IsIon>
       <IsSalt>false</IsSalt>
       <IsHydratedSalt>false</IsHydratedSalt>
       <HydrationNumber>0</HydrationNumber>
       <Charge>0</Charge>
+      <PositiveIon></PositiveIon>
+      <NegativeIon></NegativeIon>
       <PositiveIonStoichCoeff>0</PositiveIonStoichCoeff>
       <NegativeIonStoichCoeff>0</NegativeIonStoichCoeff>
       <StoichSum>0</StoichSum>
@@ -2447,6 +2665,7 @@
   <OptimizationCases />
   <SensitivityAnalysis />
   <PetroleumAssays />
+  <WatchItems />
   <Spreadsheet>
     <Data1></Data1>
     <Data2>&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;|&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;;&lt;dummy /&gt;</Data2>
@@ -2455,8 +2674,8 @@
   <PanelLayout>&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;!--DockPanel configuration file. Author: Weifen Luo, all rights reserved.--&gt;
 &lt;!--!!! AUTOMATICALLY GENERATED FILE. DO NOT MODIFY !!!--&gt;
-&lt;DockPanel FormatVersion="1.0" DockLeftPortion="0.28001579778831" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="3" ActivePane="3"&gt;
-  &lt;Contents Count="10"&gt;
+&lt;DockPanel FormatVersion="1.0" DockLeftPortion="0.28001579778831" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="3" ActivePane="2"&gt;
+  &lt;Contents Count="8"&gt;
     &lt;Content ID="0" PersistString="DWSIM.frmLog" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="1" PersistString="DWSIM.frmObjListView" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="2" PersistString="DWSIM.frmObjList" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
@@ -2465,10 +2684,8 @@
     &lt;Content ID="5" PersistString="DWSIM.SpreadsheetForm" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="6" PersistString="DWSIM.frmSurface" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="7" PersistString="DWSIM.frmWatch" AutoHidePortion="0.25" IsHidden="True" IsFloat="False" /&gt;
-    &lt;Content ID="8" PersistString="DWSIM.frmOutput" AutoHidePortion="0.25" IsHidden="True" IsFloat="False" /&gt;
-    &lt;Content ID="9" PersistString="DWSIM.frmQueue" AutoHidePortion="0.25" IsHidden="True" IsFloat="False" /&gt;
   &lt;/Contents&gt;
-  &lt;Panes Count="7"&gt;
+  &lt;Panes Count="5"&gt;
     &lt;Pane ID="0" DockState="DockBottom" ActiveContent="0"&gt;
       &lt;Contents Count="1"&gt;
         &lt;Content ID="0" RefID="0" /&gt;
@@ -2497,16 +2714,6 @@
         &lt;Content ID="0" RefID="7" /&gt;
       &lt;/Contents&gt;
     &lt;/Pane&gt;
-    &lt;Pane ID="5" DockState="DockBottom" ActiveContent="-1"&gt;
-      &lt;Contents Count="1"&gt;
-        &lt;Content ID="0" RefID="8" /&gt;
-      &lt;/Contents&gt;
-    &lt;/Pane&gt;
-    &lt;Pane ID="6" DockState="DockBottom" ActiveContent="-1"&gt;
-      &lt;Contents Count="1"&gt;
-        &lt;Content ID="0" RefID="9" /&gt;
-      &lt;/Contents&gt;
-    &lt;/Pane&gt;
   &lt;/Panes&gt;
   &lt;DockWindows&gt;
     &lt;DockWindow ID="0" DockState="Document" ZOrderIndex="1"&gt;
@@ -2528,11 +2735,9 @@
       &lt;NestedPanes Count="0" /&gt;
     &lt;/DockWindow&gt;
     &lt;DockWindow ID="4" DockState="DockBottom" ZOrderIndex="2"&gt;
-      &lt;NestedPanes Count="4"&gt;
+      &lt;NestedPanes Count="2"&gt;
         &lt;Pane ID="0" RefID="0" PrevPane="-1" Alignment="Right" Proportion="0.5" /&gt;
-        &lt;Pane ID="1" RefID="5" PrevPane="0" Alignment="Right" Proportion="0.5" /&gt;
-        &lt;Pane ID="2" RefID="6" PrevPane="5" Alignment="Right" Proportion="0.5" /&gt;
-        &lt;Pane ID="3" RefID="4" PrevPane="6" Alignment="Right" Proportion="0.5" /&gt;
+        &lt;Pane ID="1" RefID="4" PrevPane="0" Alignment="Right" Proportion="0.5" /&gt;
       &lt;/NestedPanes&gt;
     &lt;/DockWindow&gt;
   &lt;/DockWindows&gt;

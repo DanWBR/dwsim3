@@ -440,6 +440,7 @@ SS:             Tnew = Me.ConvergenceHistory.Temperatura
                         comp.FracaoMassica = ems.Fases(0).Componentes(comp.Nome).FracaoMassica
                         j += 1
                     Next
+                    ms.PropertyPackage.DW_CalcVazaoMolar()
                     j = 0
                     For Each comp In .Fases(1).Componentes.Values
                         comp.FracaoMolar = Vx(j)

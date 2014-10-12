@@ -538,6 +538,7 @@ out:        Return result
         Public Overrides Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
+            Dim i, j, n, ecount As Integer
 
             d1 = Date.Now
 
@@ -557,39 +558,65 @@ out:        Return result
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PHFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PHFELT"))
 
-            Dim Tsup, Tinf, VTf(n) As Double
+            Dim Tmin, Tmax, epsilon(4) As Double
 
-            Tsup = 1000.0#
-            Tinf = 50.0#
+            Tmax = 2000.0#
+            Tmin = 50.0#
 
-            Dim bo As New BrentOpt.Brent
-            bo.DefineFuncDelegate(AddressOf Herror)
-            Console.WriteLine("PH Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
+            epsilon(0) = 0.001
+            epsilon(1) = 0.01
+            epsilon(2) = 0.1
+            epsilon(3) = 1
+            epsilon(4) = 10
 
-            Dim fx, fx2, dfdx, x1, dx, maxdx As Double
+            Dim fx, fx2, dfdx, x1, dx As Double
 
-            Dim cnt As Integer = 0
-
-            maxdx = 15.0#
+            Dim cnt As Integer
 
             If Tref = 0 Then Tref = 298.15
-            x1 = Tref
-            Do
-                fx = Herror(x1, {P, Vz, PP})
-                fx2 = Herror(x1 + 1, {P, Vz, PP})
-                If Abs(fx) < tolEXT Then Exit Do
-                dfdx = (fx2 - fx)
-                dx = fx / dfdx
-                If Abs(dx) > maxdx Then dx = Sign(dx) * maxdx
-                x1 = x1 - dx
-                If x1 < 0 Then GoTo alt
-                cnt += 1
-            Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Or cnt > maxitEXT Then
-alt:            T = bo.BrentOpt(Tinf, Tsup, 25, tolEXT, maxitEXT, {P, Vz, PP})
-            Else
+
+            For j = 0 To 4
+
+                cnt = 0
+                x1 = Tref
+
+                Do
+
+                    fx = Herror(x1, {P, Vz, PP})
+                    fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
+                   
+                    If Abs(fx) < tolEXT Then Exit Do
+
+                    dfdx = (fx2 - fx) / epsilon(j)
+                    dx = fx / dfdx
+
+                    x1 = x1 - dx
+
+                    cnt += 1
+
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+
                 T = x1
+
+                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
+                    If T > Tmin And T < Tmax Then Exit For
+                End If
+
+            Next
+
+            If Double.IsNaN(T) Or cnt > maxitEXT Then
+
+alt:
+                Dim bo As New BrentOpt.Brent
+                bo.DefineFuncDelegate(AddressOf Herror)
+                Console.WriteLine("PH Flash [GM]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
+
+                T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
+
             End If
+
+            If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [GM]: Invalid result: Temperature did not converge.")
+
 
             Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 
@@ -618,6 +645,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 25, tolEXT, maxitEXT, {P, Vz, PP})
         Public Overrides Function Flash_PS(ByVal Vz As Double(), ByVal P As Double, ByVal S As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
+            Dim i, j, n, ecount As Integer
 
             d1 = Date.Now
 
@@ -637,51 +665,67 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 25, tolEXT, maxitEXT, {P, Vz, PP})
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PSFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PSFELT"))
 
-            Dim Tsup, Tinf, Ssup, Sinf
+            Dim Tmin, Tmax, epsilon(4) As Double
 
-            If Tref <> 0 Then
-                Tinf = Tref - 200
-                Tsup = Tref + 200
-            Else
-                Tinf = 100
-                Tsup = 2000
-            End If
-            If Tinf < 100 Then Tinf = 100
+            Tmax = 2000.0#
+            Tmin = 50.0#
 
-            Sinf = PP.DW_CalcEntropy(Vz, Tinf, P, State.Liquid)
-            Ssup = PP.DW_CalcEntropy(Vz, Tsup, P, State.Vapor)
+            epsilon(0) = 0.001
+            epsilon(1) = 0.01
+            epsilon(2) = 0.1
+            epsilon(3) = 1
+            epsilon(4) = 10
 
-            If S >= Ssup Then
-                Tf = Me.ESTIMAR_T_S(S, Tref, "V", P, Vz)
-            ElseIf S <= Sinf Then
-                Tf = Me.ESTIMAR_T_S(S, Tref, "L", P, Vz)
-            Else
-                Dim bo As New BrentOpt.Brent
-                bo.DefineFuncDelegate(AddressOf Serror)
-                Console.WriteLine("PS Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
+            Dim fx, fx2, dfdx, x1, dx As Double
 
-                Dim fx, dfdx, x1 As Double
+            Dim cnt As Integer
 
-                ecount = 0
+            If Tref = 0 Then Tref = 298.15
 
-                If Tref = 0 Then Tref = 298.15
+            For j = 0 To 4
+
+                cnt = 0
                 x1 = Tref
+
                 Do
-                    fx = Serror(x1, Nothing)
-                    If Abs(fx) < etol Then Exit Do
-                    dfdx = (Serror(x1 + 1, Nothing) - fx)
-                    x1 = x1 - fx / dfdx
-                    ecount += 1
-                Loop Until ecount > maxit_e Or Double.IsNaN(x1)
-                If Double.IsNaN(x1) Then
-                    Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
-                Else
-                    Tf = x1
+
+                    fx = Serror(x1, {P, Vz, PP})
+                    fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})
+                    
+                    If Abs(fx) < tolEXT Then Exit Do
+
+                    dfdx = (fx2 - fx) / epsilon(j)
+                    dx = fx / dfdx
+
+                    x1 = x1 - dx
+
+                    cnt += 1
+
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+
+                T = x1
+
+                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
+                    If T > Tmin And T < Tmax Then Exit For
                 End If
 
+            Next
+
+            If Double.IsNaN(T) Or cnt > maxitEXT Then
+
+alt:
+                Dim bo As New BrentOpt.Brent
+                bo.DefineFuncDelegate(AddressOf Serror)
+                Console.WriteLine("PS Flash [GM]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
+
+                T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
+
             End If
 
-            Dim tmp As Object = Flash_PT(Vz, P, Tf, PP)
+            If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [GM]: Invalid result: Temperature did not converge.")
+
+
+            Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 
             L1 = tmp(0)
             V = tmp(1)
@@ -701,7 +745,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 25, tolEXT, maxitEXT, {P, Vz, PP})
 
             Console.WriteLine("PS Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
 
-            Return New Object() {L, V, Vx1, Vy, Tf, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
+            Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
         End Function
 

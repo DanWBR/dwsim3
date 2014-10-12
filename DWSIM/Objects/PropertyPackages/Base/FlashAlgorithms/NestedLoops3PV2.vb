@@ -21,6 +21,7 @@ Imports DWSIM.DWSIM.SimulationObjects
 Imports DWSIM.DWSIM.MathEx
 Imports DWSIM.DWSIM.MathEx.Common
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
+Imports System.Threading.Tasks
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -32,7 +33,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Inherits FlashAlgorithm
 
-        Dim i, j, k, n, ecount As Integer
+        Dim n, ecount As Integer
         Dim etol As Double = 0.000001
         Dim itol As Double = 0.000001
         Dim maxit_i As Integer = 100
@@ -50,6 +51,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
+            Dim i, j As Integer
 
             d1 = Date.Now
 
@@ -485,6 +487,7 @@ out:
 
             ReDim Vn(n), Vx1(n), Vx2(n), Vy(n), Vp(n), ui1(n), ui2(n), uic1(n), uic2(n), pi(n), Ki1(n), Ki2(n), fi(n)
             Dim b1(n), b2(n), CFL1(n), CFL2(n), CFV(n), Kil(n), L1ant, L2ant As Double
+            Dim i As Integer
 
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
@@ -753,6 +756,7 @@ out:
         Public Overrides Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
+            Dim i, j, n, ecount As Integer
 
             d1 = Date.Now
 
@@ -772,48 +776,95 @@ out:
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PHFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PHFELT"))
 
-            Dim Tsup, Tinf ', Hsup, Hinf
+            Dim Tmin, Tmax, epsilon(4) As Double
 
-            If Tref <> 0 Then
-                Tinf = Tref - 250
-                Tsup = Tref + 250
-            Else
-                Tinf = 100
-                Tsup = 2000
-            End If
-            If Tinf < 100 Then Tinf = 100
+            Tmax = 2000.0#
+            Tmin = 50.0#
 
-            Dim bo As New BrentOpt.Brent
-            bo.DefineFuncDelegate(AddressOf Herror)
-            Console.WriteLine("PH Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
+            epsilon(0) = 0.001
+            epsilon(1) = 0.01
+            epsilon(2) = 0.1
+            epsilon(3) = 1
+            epsilon(4) = 10
 
-            Dim fx, dfdx, x1, dx, maxdx As Double
+            Dim fx, fx2, dfdx, x1, dx As Double
 
-            ecount = 0
-
-            maxdx = 15.0#
+            Dim cnt As Integer
 
             If Tref = 0 Then Tref = 298.15
-            x1 = Tref
-            Do
-                fx = Herror(x1, Nothing)
-                If Abs(fx) < etol Then Exit Do
-                dfdx = (Herror(x1 + 1, Nothing) - fx)
-                dx = fx / dfdx
-                If Abs(dx) > maxdx Then dx = Sign(dx) * maxdx
-                x1 = x1 - dx
-                If x1 < 0 Then GoTo alt
-                ecount += 1
-            Loop Until ecount > maxit_e Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Then
-alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
-            Else
-                Tf = x1
+
+            For j = 0 To 4
+
+                cnt = 0
+                x1 = Tref
+
+                Do
+
+                    If My.Settings.EnableParallelProcessing Then
+                        My.MyApplication.IsRunningParallelTasks = True
+                        If My.Settings.EnableGPUProcessing Then
+                            My.MyApplication.gpu.EnableMultithreading()
+                        End If
+                        Try
+                            Dim task1 As Task = New Task(Sub()
+                                                             fx = Herror(x1, {P, Vz, PP})
+                                                         End Sub)
+                            Dim task2 As Task = New Task(Sub()
+                                                             fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
+                                                         End Sub)
+                            task1.Start()
+                            task2.Start()
+                            Task.WaitAll(task1, task2)
+                        Catch ae As AggregateException
+                            For Each ex As Exception In ae.InnerExceptions
+                                Throw
+                            Next
+                        Finally
+                            If My.Settings.EnableGPUProcessing Then
+                                My.MyApplication.gpu.DisableMultithreading()
+                                My.MyApplication.gpu.FreeAll()
+                            End If
+                        End Try
+                        My.MyApplication.IsRunningParallelTasks = False
+                    Else
+                        fx = Herror(x1, {P, Vz, PP})
+                        fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
+                    End If
+
+                    If Abs(fx) < tolEXT Then Exit Do
+
+                    dfdx = (fx2 - fx) / epsilon(j)
+                    dx = fx / dfdx
+
+                    x1 = x1 - dx
+
+                    cnt += 1
+
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+
+                T = x1
+
+                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
+                    If T > Tmin And T < Tmax Then Exit For
+                End If
+
+            Next
+
+            If Double.IsNaN(T) Or cnt > maxitEXT Then
+
+alt:
+                Dim bo As New BrentOpt.Brent
+                bo.DefineFuncDelegate(AddressOf Herror)
+                Console.WriteLine("PH Flash [NL3PV2]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
+
+                T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
+
             End If
 
-            'End If
+            If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV2]: Invalid result: Temperature did not converge.")
 
-            Dim tmp As Object = Flash_PT(Vz, P, Tf, PP)
+
+            Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 
             L1 = tmp(0)
             V = tmp(1)
@@ -833,13 +884,14 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
 
             Console.WriteLine("PH Flash [NL3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
 
-            Return New Object() {L, V, Vx1, Vy, Tf, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
+            Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
         End Function
 
         Public Overrides Function Flash_PS(ByVal Vz As Double(), ByVal P As Double, ByVal S As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
+            Dim i, j, n, ecount As Integer
 
             d1 = Date.Now
 
@@ -859,52 +911,95 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PSFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PSFELT"))
 
-            Dim Tsup, Tinf ', Ssup, Sinf
+            Dim Tmin, Tmax, epsilon(4) As Double
 
-            If Tref <> 0 Then
-                Tinf = Tref - 200
-                Tsup = Tref + 200
-            Else
-                Tinf = 100
-                Tsup = 2000
-            End If
-            If Tinf < 100 Then Tinf = 100
+            Tmax = 2000.0#
+            Tmin = 50.0#
 
-            'Sinf = PP.DW_CalcEntropy(Vz, Tinf, P, State.Liquid)
-            'Ssup = PP.DW_CalcEntropy(Vz, Tsup, P, State.Vapor)
+            epsilon(0) = 0.001
+            epsilon(1) = 0.01
+            epsilon(2) = 0.1
+            epsilon(3) = 1
+            epsilon(4) = 10
 
-            'If S >= Ssup Then
-            '    Tf = Me.ESTIMAR_T_S(S, Tref, "V", P, Vz)
-            'ElseIf S <= Sinf Then
-            '    Tf = Me.ESTIMAR_T_S(S, Tref, "L", P, Vz)
-            'Else
-            Dim bo As New BrentOpt.Brent
-            bo.DefineFuncDelegate(AddressOf Serror)
-            Console.WriteLine("PS Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
+            Dim fx, fx2, dfdx, x1, dx As Double
 
-            Dim fx, dfdx, x1 As Double
-
-            ecount = 0
+            Dim cnt As Integer
 
             If Tref = 0 Then Tref = 298.15
-            x1 = Tref
-            Do
-                fx = Serror(x1, Nothing)
-                If Abs(fx) < etol Then Exit Do
-                dfdx = (Serror(x1 + 1, Nothing) - fx)
-                x1 = x1 - fx / dfdx
-                If x1 < 0 Then GoTo alt
-                ecount += 1
-            Loop Until ecount > maxit_e Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Then
-alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
-            Else
-                Tf = x1
+
+            For j = 0 To 4
+
+                cnt = 0
+                x1 = Tref
+
+                Do
+
+                    If My.Settings.EnableParallelProcessing Then
+                        My.MyApplication.IsRunningParallelTasks = True
+                        If My.Settings.EnableGPUProcessing Then
+                            My.MyApplication.gpu.EnableMultithreading()
+                        End If
+                        Try
+                            Dim task1 As Task = New Task(Sub()
+                                                             fx = Serror(x1, {P, Vz, PP})
+                                                         End Sub)
+                            Dim task2 As Task = New Task(Sub()
+                                                             fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})
+                                                         End Sub)
+                            task1.Start()
+                            task2.Start()
+                            Task.WaitAll(task1, task2)
+                        Catch ae As AggregateException
+                            For Each ex As Exception In ae.InnerExceptions
+                                Throw
+                            Next
+                        Finally
+                            If My.Settings.EnableGPUProcessing Then
+                                My.MyApplication.gpu.DisableMultithreading()
+                                My.MyApplication.gpu.FreeAll()
+                            End If
+                        End Try
+                        My.MyApplication.IsRunningParallelTasks = False
+                    Else
+                        fx = Serror(x1, {P, Vz, PP})
+                        fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})
+                    End If
+
+                    If Abs(fx) < tolEXT Then Exit Do
+
+                    dfdx = (fx2 - fx) / epsilon(j)
+                    dx = fx / dfdx
+
+                    x1 = x1 - dx
+
+                    cnt += 1
+
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+
+                T = x1
+
+                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
+                    If T > Tmin And T < Tmax Then Exit For
+                End If
+
+            Next
+
+            If Double.IsNaN(T) Or cnt > maxitEXT Then
+
+alt:
+                Dim bo As New BrentOpt.Brent
+                bo.DefineFuncDelegate(AddressOf Serror)
+                Console.WriteLine("PS Flash [NL3PV2]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
+
+                T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
+
             End If
 
-            'End If
+            If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL3PV2]: Invalid result: Temperature did not converge.")
 
-            Dim tmp As Object = Flash_PT(Vz, P, Tf, PP)
+
+            Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 
             L1 = tmp(0)
             V = tmp(1)
@@ -922,9 +1017,9 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
 
             dt = d2 - d1
 
-            Console.WriteLine("PS Flash [NL3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
+            Console.WriteLine("PS Flash [NL3PV2]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
 
-            Return New Object() {L, V, Vx1, Vy, Tf, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
+            Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
         End Function
 
@@ -1014,7 +1109,8 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
 
         Public Overrides Function Flash_TV(ByVal Vz As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-              Dim d1, d2 As Date, dt As TimeSpan
+            Dim d1, d2 As Date, dt As TimeSpan
+            Dim i, j As Integer
 
             d1 = Date.Now
 
@@ -1133,6 +1229,7 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
         Public Overrides Function Flash_PV(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
+            Dim i, j As Integer
 
             d1 = Date.Now
 
@@ -1249,6 +1346,8 @@ alt:            Tf = bo.BrentOpt(Tinf, Tsup, 4, tolEXT, maxitEXT, Nothing)
         End Function
 
         Public Function Flash_PV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
+
+            Dim i As Integer
 
             etol = CDbl(PP.Parameters("PP_PTFELT"))
             maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
@@ -1523,6 +1622,8 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
         End Function
 
         Public Function Flash_TV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackage) As Object
+
+            Dim i As Integer
 
             etol = CDbl(PP.Parameters("PP_PTFELT"))
             maxit_e = CInt(PP.Parameters("PP_PTFMEI"))

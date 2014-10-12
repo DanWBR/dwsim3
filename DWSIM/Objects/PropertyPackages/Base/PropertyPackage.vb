@@ -5254,6 +5254,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             For Each subst In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
                 subst.FracaoMolar = Nothing
                 subst.FracaoMassica = Nothing
+                subst.MolarFlow = Nothing
+                subst.MassFlow = Nothing
             Next
 
         End Sub

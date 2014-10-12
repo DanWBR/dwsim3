@@ -266,8 +266,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 End If
 
-                If V > Vmax Then V = Vmax
-                If V < Vmin Then V = Vmin
+                If V < 0.0# Then V = 0.0#
+                If V > 1.0# Then V = 1.0#
 
                 L = 1 - V
 
@@ -301,7 +301,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
             Dim Vn(1) As String, Vx(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1) As Double
-            Dim i, n, ecount As Integer
+            Dim i, j, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L, V, T, Pf As Double
 
@@ -323,69 +323,92 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PHFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PHFELT"))
 
-            Dim Tsup, Tinf, VTf(n) As Double
+            Dim Tmin, Tmax, epsilon(4) As Double
 
-            Tsup = 1000.0#
-            Tinf = 50.0#
+            Tmax = 2000.0#
+            Tmin = 50.0#
 
-            Dim bo As New BrentOpt.Brent
-            bo.DefineFuncDelegate(AddressOf Herror)
-            Console.WriteLine("PH Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
+            epsilon(0) = 0.001
+            epsilon(1) = 0.01
+            epsilon(2) = 0.1
+            epsilon(3) = 1
+            epsilon(4) = 10
 
-            Dim fx, fx2, dfdx, x1, dx, maxdx As Double
+            Dim fx, fx2, dfdx, x1, dx As Double
 
-            Dim cnt As Integer = 0
-
-            maxdx = 15.0#
+            Dim cnt As Integer
 
             If Tref = 0 Then Tref = 298.15
-            x1 = Tref
-            Do
-                If My.Settings.EnableParallelProcessing Then
-                    My.MyApplication.IsRunningParallelTasks = True
-                    If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.EnableMultithreading()
-                    End If
-                    Try
-                        Dim task1 As Task = New Task(Sub()
-                                                         fx = Herror(x1, {P, Vz, PP})
-                                                     End Sub)
-                        Dim task2 As Task = New Task(Sub()
-                                                         fx2 = Herror(x1 + 1, {P, Vz, PP})
-                                                     End Sub)
-                        task1.Start()
-                        task2.Start()
-                        Task.WaitAll(task1, task2)
-                    Catch ae As AggregateException
-                        For Each ex As Exception In ae.InnerExceptions
-                            Throw
-                        Next
-                    Finally
+
+            For j = 0 To 4
+
+                cnt = 0
+                x1 = Tref
+
+                Do
+
+                    If My.Settings.EnableParallelProcessing Then
+                        My.MyApplication.IsRunningParallelTasks = True
                         If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.DisableMultithreading()
-                            My.MyApplication.gpu.FreeAll()
+                            My.MyApplication.gpu.EnableMultithreading()
                         End If
-                    End Try
-                    My.MyApplication.IsRunningParallelTasks = False
-                Else
-                    fx = Herror(x1, {P, Vz, PP})
-                    fx2 = Herror(x1 + 1, {P, Vz, PP})
-                End If
-                If Abs(fx) < tolEXT Then Exit Do
-                dfdx = (fx2 - fx)
-                dx = fx / dfdx
-                If Abs(dx) > maxdx Then dx = Sign(dx) * maxdx
-                x1 = x1 - dx
-                If x1 < 0 Then GoTo alt
-                cnt += 1
-            Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Or cnt > maxitEXT Then
-alt:            T = bo.BrentOpt(Tinf, Tsup, 25, tolEXT, maxitEXT, {P, Vz, PP})
-            Else
+                        Try
+                            Dim task1 As Task = New Task(Sub()
+                                                             fx = Herror(x1, {P, Vz, PP})
+                                                         End Sub)
+                            Dim task2 As Task = New Task(Sub()
+                                                             fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
+                                                         End Sub)
+                            task1.Start()
+                            task2.Start()
+                            Task.WaitAll(task1, task2)
+                        Catch ae As AggregateException
+                            For Each ex As Exception In ae.InnerExceptions
+                                Throw
+                            Next
+                        Finally
+                            If My.Settings.EnableGPUProcessing Then
+                                My.MyApplication.gpu.DisableMultithreading()
+                                My.MyApplication.gpu.FreeAll()
+                            End If
+                        End Try
+                        My.MyApplication.IsRunningParallelTasks = False
+                    Else
+                        fx = Herror(x1, {P, Vz, PP})
+                        fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
+                    End If
+
+                    If Abs(fx) < tolEXT Then Exit Do
+
+                    dfdx = (fx2 - fx) / epsilon(j)
+                    dx = fx / dfdx
+
+                    x1 = x1 - dx
+
+                    cnt += 1
+
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+
                 T = x1
+
+                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
+                    If T > Tmin And T < Tmax Then Exit For
+                End If
+
+            Next
+
+            If Double.IsNaN(T) Or cnt > maxitEXT Then
+
+alt:
+                Dim bo As New BrentOpt.Brent
+                bo.DefineFuncDelegate(AddressOf Herror)
+                Console.WriteLine("PH Flash [NL]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
+
+                T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
+
             End If
 
-            'End If
+            If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL]: Invalid result: Temperature did not converge.")
 
             Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 
@@ -414,7 +437,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 25, tolEXT, maxitEXT, {P, Vz, PP})
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
             Dim Vn(1) As String, Vx(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1) As Double
-            Dim i, n, ecount As Integer
+            Dim i, j, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L, V, T, Pf As Double
 
@@ -436,65 +459,92 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 25, tolEXT, maxitEXT, {P, Vz, PP})
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PSFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PSFELT"))
 
-            Dim Tsup, Tinf, VTf(n) As Double
+            Dim Tmin, Tmax, epsilon(4) As Double
 
-            VTf = PP.RET_VTF
+            Tmax = 2000.0#
+            Tmin = 50.0#
 
-            Tsup = 1000.0#
-            Tinf = MathEx.Common.Max(VTf, Vz)
+            epsilon(0) = 0.001
+            epsilon(1) = 0.01
+            epsilon(2) = 0.1
+            epsilon(3) = 1
+            epsilon(4) = 10
 
-            Dim bo As New BrentOpt.Brent
-            bo.DefineFuncDelegate(AddressOf Serror)
-            Console.WriteLine("PS Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
+            Dim fx, fx2, dfdx, x1, dx As Double
 
-            Dim fx, fx2, dfdx, x1 As Double
-
-            Dim cnt As Integer = 0
+            Dim cnt As Integer
 
             If Tref = 0 Then Tref = 298.15
-            x1 = Tref
-            Do
-                If My.Settings.EnableParallelProcessing Then
-                    My.MyApplication.IsRunningParallelTasks = True
-                    If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.EnableMultithreading()
-                    End If
-                    Try
-                        Dim task1 As Task = New Task(Sub()
-                                                         fx = Serror(x1, {P, Vz, PP})
-                                                     End Sub)
-                        Dim task2 As Task = New Task(Sub()
-                                                         fx2 = Serror(x1 + 0.01, {P, Vz, PP})
-                                                     End Sub)
-                        task1.Start()
-                        task2.Start()
-                        Task.WaitAll(task1, task2)
-                    Catch ae As AggregateException
-                        For Each ex As Exception In ae.InnerExceptions
-                            Throw
-                        Next
-                    Finally
+
+            For j = 0 To 4
+
+                cnt = 0
+                x1 = Tref
+
+                Do
+
+                    If My.Settings.EnableParallelProcessing Then
+                        My.MyApplication.IsRunningParallelTasks = True
                         If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.DisableMultithreading()
-                            My.MyApplication.gpu.FreeAll()
+                            My.MyApplication.gpu.EnableMultithreading()
                         End If
-                    End Try
-                    My.MyApplication.IsRunningParallelTasks = False
-                Else
-                    fx = Serror(x1, {P, Vz, PP})
-                    fx2 = Serror(x1 + 0.01, {P, Vz, PP})
-                End If
-                If Abs(fx) < tolEXT Then Exit Do
-                dfdx = (fx2 - fx) / 0.01
-                x1 = x1 - 0.7 * fx / dfdx
-                If x1 < 0 Then GoTo alt
-                cnt += 1
-            Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Or cnt > maxitEXT Then
-alt:            T = bo.BrentOpt(Tinf, Tsup, 5, tolEXT, maxitEXT, {P, Vz, PP})
-            Else
+                        Try
+                            Dim task1 As Task = New Task(Sub()
+                                                             fx = Serror(x1, {P, Vz, PP})
+                                                         End Sub)
+                            Dim task2 As Task = New Task(Sub()
+                                                             fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})
+                                                         End Sub)
+                            task1.Start()
+                            task2.Start()
+                            Task.WaitAll(task1, task2)
+                        Catch ae As AggregateException
+                            For Each ex As Exception In ae.InnerExceptions
+                                Throw
+                            Next
+                        Finally
+                            If My.Settings.EnableGPUProcessing Then
+                                My.MyApplication.gpu.DisableMultithreading()
+                                My.MyApplication.gpu.FreeAll()
+                            End If
+                        End Try
+                        My.MyApplication.IsRunningParallelTasks = False
+                    Else
+                        fx = Serror(x1, {P, Vz, PP})
+                        fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})
+                    End If
+
+                    If Abs(fx) < tolEXT Then Exit Do
+
+                    dfdx = (fx2 - fx) / epsilon(j)
+                    dx = fx / dfdx
+
+                    x1 = x1 - dx
+
+                    cnt += 1
+
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+
                 T = x1
+
+                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
+                    If T > Tmin And T < Tmax Then Exit For
+                End If
+
+            Next
+
+            If Double.IsNaN(T) Or cnt > maxitEXT Then
+
+alt:
+                Dim bo As New BrentOpt.Brent
+                bo.DefineFuncDelegate(AddressOf Serror)
+                Console.WriteLine("PS Flash [NL]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
+
+                T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
+
             End If
+
+            If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL]: Invalid result: Temperature did not converge.")
 
             Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 
