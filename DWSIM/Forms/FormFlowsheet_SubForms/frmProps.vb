@@ -909,10 +909,51 @@ Public Class frmProps
                 End If
 
 
+            ElseIf sobj.TipoObjeto = TipoObjeto.ExcelUO Then
+
+                Dim bb As DWSIM.SimulationObjects.UnitOps.ExcelUO = ChildParent.Collections.CLCS_ExcelUOCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
+
+                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Calor")) Then
+
+                    bb.DeltaQ = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
+
+                    bb.OutletTemperature = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FraomolardafaseFaseV")) Then
+
+                    bb.OutletVaporFraction = Double.Parse(e.ChangedItem.Value)
+
+                End If
+
+                If ChildParent.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.ExcelUO
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then ChildParent.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    ChildParent.CalculationQueue.Enqueue(objargs)
+
+                End If
             End If
-
         End If
-
         Call ChildParent.FormSurface.UpdateSelectedObject()
         Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
 

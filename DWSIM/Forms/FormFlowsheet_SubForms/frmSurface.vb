@@ -509,6 +509,8 @@ Public Class frmSurface
                             tobj = TipoObjeto.OT_Especificacao
                         Case "TSMICUO"
                             tobj = TipoObjeto.CustomUO
+                        Case "TSMIExcelUO"
+                            tobj = TipoObjeto.ExcelUO
                         Case "TSMICOUO"
                             tobj = TipoObjeto.CapeOpenUO
                         Case "TSMISolidsSeparator"
@@ -3027,6 +3029,32 @@ Public Class frmSurface
                 ChildParent.Collections.ObjectCollection.Add(myCUO.Name, myCOCUO)
                 ChildParent.Collections.CLCS_CustomUOCollection.Add(myCUO.Name, myCOCUO)
 
+            Case TipoObjeto.ExcelUO
+                Dim myEUO As New ExcelUOGraphic(mpx, mpy, 25, 25, 0)
+                myEUO.LineWidth = 2
+                myEUO.Fill = True
+                myEUO.FillColor = fillclr
+                myEUO.LineColor = lineclr
+                If Not ChildParent.Collections.ObjectCounter.ContainsKey("CEOP") Then
+                    ChildParent.Collections.ObjectCounter.Add("CEOP", 0)
+                End If
+                myEUO.Tag = "EXL-" & Format(ChildParent.Collections.ObjectCounter("CEOP"), "00#")
+                ChildParent.Collections.UpdateCounter("CEOP")
+                If tag <> "" Then myEUO.Tag = tag
+                gObj = myEUO
+                gObj.Name = "EXL-" & Guid.NewGuid.ToString
+                ChildParent.Collections.ExcelUOCollection.Add(gObj.Name, myEUO)
+                Try
+                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeExcel").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeExcel").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Catch ex As Exception
+                End Try
+                'OBJETO DWSIM
+                Dim myCOEUO As DWSIM.SimulationObjects.UnitOps.ExcelUO = New DWSIM.SimulationObjects.UnitOps.ExcelUO(myEUO.Name, "ExcelUnitOp")
+                myCOEUO.GraphicObject = myEUO
+                ChildParent.Collections.ObjectCollection.Add(myEUO.Name, myCOEUO)
+                ChildParent.Collections.CLCS_ExcelUOCollection.Add(myEUO.Name, myCOEUO)
+
             Case TipoObjeto.CapeOpenUO
                 Dim myCUO As New CapeOpenUOGraphic(mpx, mpy, 40, 40, 0)
                 myCUO.LineWidth = 2
@@ -3170,6 +3198,8 @@ Public Class frmSurface
                     tobj = TipoObjeto.OrificePlate
                 Case "CustomUnitOp"
                     tobj = TipoObjeto.CustomUO
+                Case "ExcelUnitOp"
+                    tobj = TipoObjeto.ExcelUO
                 Case "CapeOpenUnitOperation"
                     tobj = TipoObjeto.CapeOpenUO
                 Case "SolidsSeparator"

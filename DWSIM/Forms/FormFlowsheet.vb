@@ -664,6 +664,8 @@ Imports DWSIM.DWSIM.GraphicObjects
         If Collections.ComponentSeparatorCollection Is Nothing Then Collections.ComponentSeparatorCollection = New Dictionary(Of String, ComponentSeparatorGraphic)
         If Collections.OrificePlateCollection Is Nothing Then Collections.OrificePlateCollection = New Dictionary(Of String, OrificePlateGraphic)
         If Collections.CustomUOCollection Is Nothing Then Collections.CustomUOCollection = New Dictionary(Of String, CustomUOGraphic)
+        If Collections.ExcelUOCollection Is Nothing Then Collections.ExcelUOCollection = New Dictionary(Of String, ExcelUOGraphic)
+
         If Collections.SolidsSeparatorCollection Is Nothing Then Collections.SolidsSeparatorCollection = New Dictionary(Of String, SolidSeparatorGraphic)
         If Collections.FilterCollection Is Nothing Then Collections.FilterCollection = New Dictionary(Of String, FilterGraphic)
 
@@ -702,6 +704,7 @@ Imports DWSIM.DWSIM.GraphicObjects
         If Collections.CLCS_ComponentSeparatorCollection Is Nothing Then Collections.CLCS_ComponentSeparatorCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.ComponentSeparator)
         If Collections.CLCS_OrificePlateCollection Is Nothing Then Collections.CLCS_OrificePlateCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.OrificePlate)
         If Collections.CLCS_CustomUOCollection Is Nothing Then Collections.CLCS_CustomUOCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.CustomUO)
+        If Collections.CLCS_ExcelUOCollection Is Nothing Then Collections.CLCS_ExcelUOCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.ExcelUO)
         If Collections.CLCS_SolidsSeparatorCollection Is Nothing Then Collections.CLCS_SolidsSeparatorCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.SolidsSeparator)
         If Collections.CLCS_FilterCollection Is Nothing Then Collections.CLCS_FilterCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.Filter)
 
@@ -791,7 +794,7 @@ Imports DWSIM.DWSIM.GraphicObjects
      TSMIPipe.Click, TSMIPump.Click, TSMIReactorConv.Click, TSMIReactorCSTR.Click, TSMIReactorEquilibrium.Click, _
      TSMIReactorGibbs.Click, TSMIReactorPFR.Click, TSMIRecycle.Click, TSMISeparator.Click, _
      TSMISpecification.Click, TSMISplitter.Click, TSMITank.Click, TSMIValve.Click, TSMICUO.Click, TSMICOUO.Click, _
-     TSMISolidsSeparator.Click, TSMIFilter.Click
+     TSMISolidsSeparator.Click, TSMIFilter.Click, TSMIExcelUO.Click
 
         Me.InsertingObjectToPFD = True
         Me.FormSurface.FlowsheetDesignSurface.Cursor = Cursors.Hand
@@ -1589,6 +1592,12 @@ Imports DWSIM.DWSIM.GraphicObjects
                                     If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.RemoveByKey(namesel)
                                     'DWSIM
                                     Me.Collections.CLCS_CustomUOCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.ExcelUO
+                                    Me.Collections.ExcelUOCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeExcel").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_ExcelUOCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.CapeOpenUO
                                     Me.Collections.CapeOpenUOCollection.Remove(namesel)

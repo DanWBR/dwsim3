@@ -41,6 +41,7 @@ Public Class frmObjListView
             .Rows.Add(New Object() {"Reciclo", Me.ImageList2.Images(12), DWSIM.App.GetLocalString("Reciclo")})
             .Rows.Add(New Object() {"EnergyRecycle", Me.ImageList2.Images(21), DWSIM.App.GetLocalString("EnergyRecycle")})
             .Rows.Add(New Object() {"CustomUnitOp", Me.ImageList2.Images(24), DWSIM.App.GetLocalString("CustomUnitOp")})
+            .Rows.Add(New Object() {"ExcelUnitOp", Me.ImageList2.Images(24), "Excel"})
             .Rows.Add(New Object() {"CapeOpenUnitOperation", Me.ImageList2.Images(25), DWSIM.App.GetLocalString("CapeOpenUnitOperation")})
             .Rows.Add(New Object() {"SolidsSeparator", Me.ImageList2.Images(22), DWSIM.App.GetLocalString("SolidsSeparator")})
             .Rows.Add(New Object() {"Filter", Me.ImageList2.Images(22), DWSIM.App.GetLocalString("Filter")})

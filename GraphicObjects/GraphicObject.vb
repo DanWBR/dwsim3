@@ -57,6 +57,7 @@ Namespace GraphicObjects
         ComponentSeparator
         OrificePlate
         CustomUO
+        ExcelUO
         CapeOpenUO
         GO_MasterTable
         SolidSeparator
