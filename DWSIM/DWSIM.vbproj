@@ -788,6 +788,7 @@
     <Compile Include="Objects\UnitOps\Cooler.vb" />
     <Compile Include="Objects\UnitOps\CustomUO.vb" />
     <Compile Include="Objects\UnitOps\Filter.vb" />
+    <Compile Include="Objects\UnitOps\ExcelUO.vb" />
     <Compile Include="Objects\UnitOps\OrificePlate.vb" />
     <Compile Include="Objects\UnitOps\RigorousColumn.vb" />
     <Compile Include="Objects\UnitOps\HeatExchanger.vb" />
@@ -1998,6 +1999,7 @@
     <None Include="Resources\DWSIM-branco.png" />
     <None Include="Resources\dwsim 3 bg.png" />
     <Content Include="Resources\es.png" />
+    <None Include="Resources\Excel.png" />
     <Content Include="Resources\fr.png" />
     <None Include="Resources\green_down.png" />
     <None Include="Resources\orifice.png" />
@@ -2147,9 +2149,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormFlowsheet_SubForms\frmObjListView.de.resx">
       <DependentUpon>frmObjListView.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormFlowsheet_SubForms\frmObjListView.es.resx">
       <DependentUpon>frmObjListView.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormFlowsheet_SubForms\frmOutput.de.resx">
       <DependentUpon>frmOutput.vb</DependentUpon>

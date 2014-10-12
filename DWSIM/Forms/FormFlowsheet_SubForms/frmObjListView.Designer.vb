@@ -22,13 +22,13 @@ Partial Class frmObjListView
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmObjListView))
         Me.ImageList2 = New System.Windows.Forms.ImageList(Me.components)
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView
-        Me.col0 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.col1 = New System.Windows.Forms.DataGridViewImageColumn
-        Me.col2 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.col0 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.col1 = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.col2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -114,9 +114,9 @@ Partial Class frmObjListView
         Me.CloseButton = False
         Me.Controls.Add(Me.DataGridView1)
         Me.DockAreas = CType(((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft) _
-                    Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight) _
-                    Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop) _
-                    Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom), WeifenLuo.WinFormsUI.Docking.DockAreas)
+            Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight) _
+            Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop) _
+            Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom), WeifenLuo.WinFormsUI.Docking.DockAreas)
         Me.DoubleBuffered = True
         Me.HideOnClose = True
         Me.Name = "frmObjListView"
