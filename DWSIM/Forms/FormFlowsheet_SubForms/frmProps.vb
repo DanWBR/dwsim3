@@ -909,29 +909,28 @@ Public Class frmProps
                 End If
 
 
+
             ElseIf sobj.TipoObjeto = TipoObjeto.ExcelUO Then
 
                 Dim bb As DWSIM.SimulationObjects.UnitOps.ExcelUO = ChildParent.Collections.CLCS_ExcelUOCollection.Item(sobj.Name)
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
-
                     If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Calor")) Then
+                ElseIf e.ChangedItem.Label.Contains("Filename") Then
+                    bb.Filename = e.ChangedItem.Value
 
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Calor")) Then
                     bb.DeltaQ = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
-
                     If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
-
                     bb.OutletTemperature = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FraomolardafaseFaseV")) Then
-
                     bb.OutletVaporFraction = Double.Parse(e.ChangedItem.Value)
 
                 End If

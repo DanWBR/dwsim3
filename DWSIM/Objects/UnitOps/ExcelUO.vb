@@ -51,6 +51,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected m_eta As Nullable(Of Double) = 100
 
         Protected m_FixOnHeat As Boolean = True
+        Protected m_FileName As String = "TestExcelUO.xlsx"
+
+        Public Property Filename() As String
+            Get
+                Return m_FileName
+            End Get
+            Set(ByVal value As String)
+                m_FileName = value
+            End Set
+        End Property
 
         Public Property FixOnHeat() As Boolean
             Get
@@ -137,15 +147,37 @@ Namespace DWSIM.SimulationObjects.UnitOps
             MyBase.New()
         End Sub
 
-        Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
-            Dim xcl As New Excel.Application()
-            Dim mybook As Excel.Workbook = xcl.Workbooks.Add()
-            Dim mysheet As Excel.Worksheet = mybook.Worksheets.Add()
+        Private Function ExctractFilepath(ByVal S As String) As String
+            Dim P1, P2 As Integer
+            P1 = InStr(1, S, "(") + 1
+            P2 = InStrRev(S, "\") + 1
 
-            xcl.Visible = True 'uncomment for debugging
-            '=====================================================================================================
+            Return Mid(S, P1, P2 - P1)
+        End Function
+
+        Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
             Dim form As Global.DWSIM.FormFlowsheet = Me.FlowSheet
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+
+            Dim xcl As New Excel.Application()
+            xcl.Visible = True 'uncomment for debugging
+
+            Dim EXFN As String = ExctractFilepath(form.Text) & Filename  '"TestExcelUO.xlsx"
+            Dim mybook As Excel.Workbook
+            Dim AppPath = Application.StartupPath
+
+            'Load Excel definition file
+            If My.Computer.FileSystem.FileExists(EXFN) Then
+                mybook = xcl.Workbooks.Open(EXFN)
+            Else
+                xcl.Quit()
+                xcl.Dispose()
+                Throw New Exception("Definition file '" & EXFN & "' :" & DWSIM.App.GetLocalString("Oarquivonoexisteoufo"))
+            End If
+
+            Dim mysheetIn As Excel.Worksheet = mybook.Sheets("Input")
+            Dim mysheetOut As Excel.Worksheet = mybook.Sheets("Output")
+            '=====================================================================================================
 
             If Not Me.GraphicObject.InputConnectors(1).IsAttached Then
                 'Call function to calculate flowsheet
@@ -189,20 +221,26 @@ Namespace DWSIM.SimulationObjects.UnitOps
             ein = ei
 
             '======= transfer data to Excel ===========================================================
-            mysheet.Cells(1, 1).Value = "Temperature in"
-            mysheet.Cells(1, 2).Value = Ti
-            mysheet.Cells(1, 3).Value = "Temperature out"
-            mysheet.Cells(1, 4).Formula = "=B1+5"
+            mysheetIn.Cells(6, 2).Value = Ti
+            mysheetIn.Cells(7, 2).Value = Pi
+            mysheetIn.Cells(8, 2).Value = Hi
 
-            mysheet.Cells(2, 1).Value = "Pressure in"
-            mysheet.Cells(2, 2).Value = Pi
-            mysheet.Cells(2, 3).Value = "Pressure out"
-            mysheet.Cells(2, 4).Formula = "=B2+5"
-
-
+            With Me.PropertyPackage.CurrentMaterialStream
+                Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                Dim i As Integer = 0
+                For Each comp In .Fases(0).Componentes.Values
+                    mysheetIn.Cells(12 + i, 1).Value = comp.ConstantProperties.Name
+                    mysheetIn.Cells(12 + i, 2).Value = comp.MolarFlow
+                    mysheetIn.Cells(12 + i, 3).Value = comp.MassFlow
+                    i += 1
+                Next
+            End With
             '======= read data from Excel =============================================================
-            T2 = mysheet.Cells(1, 4).Value
-            P2 = mysheet.Cells(2, 4).Value
+
+
+            T2 = mysheetOut.Cells(6, 2).Value
+            P2 = mysheetOut.Cells(7, 2).Value
+            H2 = mysheetOut.Cells(8, 2).Value
 
             '======= caclculate output stream data ====================================================
 
@@ -301,10 +339,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 .Calculado = True
                 .Nome = Me.Nome
                 .Tag = Me.GraphicObject.Tag
-                .Tipo = TipoObjeto.Heater
+                .Tipo = TipoObjeto.ExcelUO
             End With
 
-            
+
             '===========================================0
             form.CalculationQueue.Enqueue(objargs)
 
@@ -507,6 +545,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         .Item.Add(DWSIM.App.GetLocalString("FraomolardafaseFaseV"), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
 
                 End Select
+                .Item.Add("Filename X", Me, "Filename", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "Excel file of simulation object", True)
 
                 .Item.Add(DWSIM.App.GetLocalString("Eficincia0100"), Me, "Eficiencia", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Eficinciadoaquecedor"), True)
                 With .Item(.Item.Count - 1)

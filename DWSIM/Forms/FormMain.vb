@@ -2305,6 +2305,8 @@ Public Class FormMain
                                 .CLCS_OrificePlateCollection.Add(id, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CustomUO
                                 .CLCS_CustomUOCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ExcelUO
+                                .CLCS_ExcelUOCollection.Add(id, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                                 .CLCS_CapeOpenUOCollection.Add(id, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
