@@ -253,9 +253,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function DeCalculate() As Integer
 
-            If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac6"))
-
-            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
+            Dim form As Global.DWSIM.FormFlowsheet = Me.FlowSheet
 
             Dim i As Integer = 0
             Dim j As Integer = 0

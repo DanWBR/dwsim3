@@ -1,7 +1,7 @@
 ==================================================
 DWSIM - Open Source Process Simulator
-Version 3.2, Build 5349 - August 2014
-Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo LeÃ³n
+Version 3.2, Build 5398 - October 2014
+Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo León
 ==================================================
 
 DWSIM is a software for modeling, simulation and optimization of steady-state chemical processes.
@@ -100,6 +100,31 @@ VERSION HISTORY / CHANGELOG
 ==================================================
 
 The full changelog, including code changes and their authors can be viewed at https://github.com/DanWBR/dwsim3/commits/master
+
+Version 3.2 Build 5398
+
+- [CHG] Cleaned exception information in log window
+- [FIX] General fixes to Parallel CPU/GPU calculations
+- [FIX] General fixes and stability enhancements to Three-Phase Flash Algorithms
+- [FIX] Fixed Interaction Parameter XML restoring bug
+- [FIX] Fixed Recycle Op not updating mole flows
+- [FIX] Fixed a report display bug in CAPE-OPEN Unit Operation
+
+Version 3.2 Build 5390
+
+- [NEW] Triangular LLE Phase Envelope Utility
+- [NEW] User Compound Database Management Tool
+- [NEW] Material Stream data copy through the PFD context menu
+- [NEW] Added Enthalpy/Entropy/Cp calculation method selection to Activity Coefficient-based Property Packages.
+- [NEW] Added support for hydrate calculations in equilibrium with gas phase only
+- [NEW] New interpolation methods for distillation column initial estimates of temperature, vapor and liquid flows
+- [CHG] Pure Component Property Viewer improvements
+- [CHG] Updates to Help system
+- [CHG] Updates to stability tests on three-phase flash algorithms
+- [FIX] Implemented missing methods for XML saving/loading of Watch Items
+- [FIX] Fixed bugs in the Electrolytes subsystem
+- [FIX] Gibbs Reactor model fixes
+- [FIX] Minor bug fixes and UI tweaks
 
 Version 3.2 Build 5349
 
@@ -573,7 +598,7 @@ Version 1.8 Build 3908
 
 Version 1.7 Build 3875
 
-- [NEW] Added German translation by Rainer GÃ¶llnitz
+- [NEW] Added German translation by Rainer Göllnitz
 
 Version 1.7 Build 3868
 
@@ -583,7 +608,7 @@ Version 1.7 Build 3868
 
 Version 1.7 Build 3850
 
-- [NEW] Lee-Kesler-PlÃ¶cker Property Package
+- [NEW] Lee-Kesler-Plöcker Property Package
 - [FIX] Fixed K-value calculation call in the Sum Rates method for solving Absorption Columns
 - [FIX] Fixed IO Flash calculation in single phase region
 - [FIX] Fixed Critical Point calculation with PR and SRK Equations of State
@@ -643,7 +668,7 @@ Version 1.6 Build 3618
 
 Version 1.6 Build 3605
 
-- [NEW] Added Spanish GUI translation (many thanks to Abad Lira and Gustavo LeÃ³n!)
+- [NEW] Added Spanish GUI translation (many thanks to Abad Lira and Gustavo León!)
 - [NEW] Added a Multivariate, Constrained Optimization utility
 - [NEW] Added a Sensitivity Analysis utility supporting up to 2 independent variables
 - [NEW] Added "command-line run mode" (read the documentation for more details)
