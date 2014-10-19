@@ -317,7 +317,7 @@ Public Class frmSurface
                             Else
                                 ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, ChildParent.Options.SelectedUnitSystem)
                             End If
-                            ChildParent.FormProps.ResumeLayout()
+                            'ChildParent.FormProps.ResumeLayout()
                         Catch ex As Exception
                             PGEx1.SelectedObject = Nothing
                         Finally
@@ -594,8 +594,6 @@ Public Class frmSurface
             myCTool.Width = mousePT.X
             myCTool.Height = mousePT.Y
 
-            Me.FlowsheetDesignSurface.Invalidate()
-
         Else
 
             Dim gobj As GraphicObject = Me.FlowsheetDesignSurface.drawingObjects.FindObjectAtPoint(px)
@@ -640,7 +638,6 @@ Public Class frmSurface
                                         Me.m_qt.SetPosition(px2)
                                     End If
                                     Me.FlowsheetDesignSurface.drawingObjects.Add(tabela)
-                                    Me.FlowsheetDesignSurface.Invalidate()
                                     Me.ticks = 0
 
                                 End If
@@ -664,7 +661,6 @@ Public Class frmSurface
                                     obj.TabelaRapida.BaseOwner = obj
                                     Me.FlowsheetDesignSurface.drawingObjects.Add(obj.TabelaRapida)
                                 End If
-                                Me.FlowsheetDesignSurface.Invalidate()
 
                             End If
 
@@ -679,7 +675,6 @@ Public Class frmSurface
                     End If
                     Me.m_qt = Nothing
                     Me.ticks = 0
-                    Me.FlowsheetDesignSurface.Invalidate()
 
                 End If
 
@@ -691,7 +686,6 @@ Public Class frmSurface
                     End If
                     Me.m_qt = Nothing
                     Me.ticks = 0
-                    Me.FlowsheetDesignSurface.Invalidate()
                 Catch ex As Exception
                     Console.WriteLine(ex.Message)
                 End Try
@@ -701,7 +695,7 @@ Public Class frmSurface
         End If
 
         'If Not Me.m_qt Is Nothing Then Me.m_qt.SetPosition(px2)
-        Me.FlowsheetDesignSurface.Invalidate()
+        'Me.FlowsheetDesignSurface.Invalidate()
 
     End Sub
 

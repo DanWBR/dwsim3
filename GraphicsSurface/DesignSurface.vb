@@ -402,12 +402,25 @@ Imports System.Runtime.Serialization
     End Sub
 
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+
         'Try
         Dim g As Graphics = e.Graphics
-        g.SmoothingMode = SmoothingMode.Default
+
+        With g
+
+            .InterpolationMode = InterpolationMode.NearestNeighbor
+            .PixelOffsetMode = PixelOffsetMode.None
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .TextRenderingHint = Drawing.Text.TextRenderingHint.SingleBitPerPixel
+            .SmoothingMode = SmoothingMode.Default
+
+        End With
+
+
         'get the dpi settings of the graphics context,
         'for example; 96dpi on screen, 600dpi for the printer
         'used to adjust grid and margin sizing.
+
         Me.m_HorizRes = g.DpiX
         Me.m_VertRes = g.DpiY
 
@@ -449,11 +462,11 @@ Imports System.Runtime.Serialization
             'doesn't really draw the selected object, but instead the
             'selection indicator, a dotted outline around the selected object
             .DrawObjects(g, Me.Zoom)
-            If Not m_SelectedObject Is Nothing Then
-                If Not Me.SelectedObjects.ContainsKey(m_SelectedObject.Name) Then
-                    .DrawSelectedObject(g, m_SelectedObject, Me.Zoom)
-                End If
-            End If
+            'If Not m_SelectedObject Is Nothing Then
+            '    If Not Me.SelectedObjects.ContainsKey(m_SelectedObject.Name) Then
+            '        .DrawSelectedObject(g, m_SelectedObject, Me.Zoom)
+            '    End If
+            'End If
         End With
 
         'Draw dashed line margin indicators, over top of objects
@@ -575,7 +588,7 @@ Imports System.Runtime.Serialization
                 justselected = False
             End If
         End If
-        Me.Invalidate()
+        'Me.Invalidate()
 
         If Not m_SelectedObject Is Nothing Then
             If e.Button And Windows.Forms.MouseButtons.Right Then
@@ -673,15 +686,13 @@ Imports System.Runtime.Serialization
                 Me.VerticalScroll.Value += Me.VerticalScroll.Minimum
             End If
             dragStart = New Point(e.X, e.Y)
-            Me.Invalidate()
         Else
-            Cursor.Current = Cursors.Default
+            'Cursor.Current = Cursors.Default
             If Not Me.QuickConnect Or Not My.Computer.Keyboard.CtrlKeyDown Then
                 Dim dragPoint As Point = gscTogoc(e.X, e.Y)
 
                 Dim obj As GraphicObject = Me.drawingObjects.FindObjectAtPoint(dragPoint)
-                Me.Invalidate()
-
+                
                 If Not obj Is Nothing Then
                     If obj.TipoObjeto <> TipoObjeto.GO_TabelaRapida And obj.TipoObjeto <> TipoObjeto.GO_Texto _
                     And obj.TipoObjeto <> TipoObjeto.GO_Figura And obj.TipoObjeto <> TipoObjeto.GO_Tabela _
@@ -715,6 +726,9 @@ Imports System.Runtime.Serialization
                     If Not m_SelectedObject.IsConnector And SelectRectangle Then
 
                         If dragging Then
+
+                            Cursor.Current = Cursors.Hand
+
                             dragPoint.Offset(dragOffset.X, dragOffset.Y)
                             'm_SelectedObject.SetPosition(dragPoint)
 
@@ -731,8 +745,9 @@ Imports System.Runtime.Serialization
                                     Me.SelectedObject, _
                                     String.Format("Object Moved to {0}, {1}", dragPoint.X, dragPoint.Y), _
                                     dragPoint, 0))
-                            Me.Invalidate()
                         ElseIf rotating Then
+
+                            Cursor.Current = Cursors.SizeAll
 
                             Dim currentRotation As Single
 
@@ -749,21 +764,43 @@ Imports System.Runtime.Serialization
                                         String.Format("Object Rotated to {0} degrees", currentRotation), _
                                         Nothing, currentRotation))
 
-                            Me.Invalidate()
+
+                        Else
+
+                            Cursor.Current = Cursors.Default
+
                         End If
+
+                    Else
+
+                        Cursor.Current = Cursors.Default
 
                     End If
                 Else
+
                     If selectionDragging And SelectRectangle Then
+
                         selectionRect.Width = dragPoint.X * Me.Zoom - selectionRect.X
                         selectionRect.Height = dragPoint.Y * Me.Zoom - selectionRect.Y
-                        Me.Invalidate()
+                        
+                        Cursor.Current = Cursors.Default
+
+                    Else
+
+                        Cursor.Current = Cursors.Default
+
                     End If
                 End If
+
+            Else
+
+                Cursor.Current = Cursors.Default
 
             End If
 
         End If
+
+        Me.Invalidate()
 
     End Sub
 
@@ -807,9 +844,9 @@ Imports System.Runtime.Serialization
             Next
             selectionDragging = False
             justselected = True
-            Me.Invalidate()
         End If
 
+        Me.Invalidate()
 
     End Sub
 
