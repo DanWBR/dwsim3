@@ -1,8 +1,8 @@
 'Natural Gas Properties Plugin for DWSIM
-'Copyright 2010 Daniel Medeiros
+'Copyright 2010-2014 Daniel Medeiros
 
 Imports FileHelpers
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports DWSIM
 Imports System.Windows.Forms
 Imports System.Linq
@@ -20,6 +20,13 @@ Public Class Form1
 
     'collection of component volumetric heating values
     Public dvc As New Dictionary(Of String, datavol)
+
+    Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+        'remove SelectedObjectChanged event handler
+        RemoveHandler fsheet.FormSurface.FlowsheetDesignSurface.MouseUp, AddressOf SelectedObjectChanged
+
+    End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -163,9 +170,9 @@ Public Class Form1
                 '           After calculating Pisat (water partial vapor pressure), use the AUX_TSATi function 
                 '           to return the saturation temperature (dew point).
                 Dim wdp, hdp, iwdp, wc0, wc15, wc20, wcb, wdp1, iwdp1, hdp1 As Double
-                Dim fa As New DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P
+                Dim fa As New DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.NestedLoops3PV2
                 fa.StabSearchCompIDs = New String() {"Agua", "Water"}
-                fa.StabSearchSeverity = 1
+                fa.StabSearchSeverity = 0
                 Try
                     With tmpms.PropertyPackage
                         If iw <> -1 Then
