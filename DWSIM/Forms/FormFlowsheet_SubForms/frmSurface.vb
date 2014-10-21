@@ -695,7 +695,7 @@ Public Class frmSurface
         End If
 
         'If Not Me.m_qt Is Nothing Then Me.m_qt.SetPosition(px2)
-        'Me.FlowsheetDesignSurface.Invalidate()
+        Me.FlowsheetDesignSurface.Invalidate()
 
     End Sub
 

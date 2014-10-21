@@ -2869,14 +2869,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 End If
 
-                If Not Me.Annotation Is Nothing Then
-                    .Item.Add(DWSIM.App.GetLocalString("Anotaes"), Me, "Annotation", False, DWSIM.App.GetLocalString("Outros"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = False
-                        .CustomEditor = New DWSIM.Editors.Annotation.UIAnnotationEditor
-                    End With
-                End If
-
                 'Dim trig As Boolean = False
 
                 '.Item.Add("Trigger", trig, False, DWSIM.App.GetLocalString("Outros"), "", True)

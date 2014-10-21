@@ -19,6 +19,7 @@ Partial Class frmProps
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmProps))
         Me.LblStatusObj = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -78,10 +79,11 @@ Partial Class frmProps
         '
         'PGEx1
         '
+        Me.PGEx1.AutoSizeProperties = True
         '
         '
         '
-        Me.PGEx1.DocCommentDescription.AccessibleName = ""
+        Me.PGEx1.DocCommentDescription.AccessibleName = resources.GetString("PGEx1.DocCommentDescription.AccessibleName")
         Me.PGEx1.DocCommentDescription.AutoEllipsis = True
         Me.PGEx1.DocCommentDescription.BackColor = System.Drawing.Color.Transparent
         Me.PGEx1.DocCommentDescription.Cursor = System.Windows.Forms.Cursors.Default
@@ -150,7 +152,7 @@ Partial Class frmProps
         '
         '
         '
-        Me.PGEx2.DocCommentDescription.AccessibleName = ""
+        Me.PGEx2.DocCommentDescription.AccessibleName = resources.GetString("PGEx2.DocCommentDescription.AccessibleName")
         Me.PGEx2.DocCommentDescription.AutoEllipsis = True
         Me.PGEx2.DocCommentDescription.BackColor = System.Drawing.Color.Transparent
         Me.PGEx2.DocCommentDescription.Cursor = System.Windows.Forms.Cursors.Default

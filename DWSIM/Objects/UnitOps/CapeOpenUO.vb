@@ -1081,8 +1081,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             With pgrid
 
                 .PropertySort = PropertySort.Categorized
-                .Item.Clear()
                 .ShowCustomProperties = True
+                .Item.Clear()
 
                 MyBase.PopulatePropertyGrid(pgrid, su)
 
@@ -1176,14 +1176,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Item.Add(DWSIM.App.GetLocalString("Mensagemdeerro"), Me, "ErrorMessage", True, DWSIM.App.GetLocalString("Miscelnea5"), DWSIM.App.GetLocalString("Mensagemretornadaqua"), True)
                     With .Item(.Item.Count - 1)
                         .DefaultType = GetType(System.String)
-                    End With
-                End If
-
-                If Not Me.Annotation Is Nothing Then
-                    .Item.Add(DWSIM.App.GetLocalString("Anotaes"), Me, "Annotation", False, DWSIM.App.GetLocalString("Outros"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = False
-                        .CustomEditor = New DWSIM.Editors.Annotation.UIAnnotationEditor
                     End With
                 End If
 

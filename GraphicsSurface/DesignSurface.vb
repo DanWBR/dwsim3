@@ -412,7 +412,7 @@ Imports System.Runtime.Serialization
             .PixelOffsetMode = PixelOffsetMode.None
             .CompositingQuality = CompositingQuality.HighSpeed
             .TextRenderingHint = Drawing.Text.TextRenderingHint.SingleBitPerPixel
-            .SmoothingMode = SmoothingMode.Default
+            .SmoothingMode = SmoothingMode.None
 
         End With
 
@@ -800,7 +800,7 @@ Imports System.Runtime.Serialization
 
         End If
 
-        Me.Invalidate()
+        'Me.Invalidate()
 
     End Sub
 
