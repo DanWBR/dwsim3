@@ -51,7 +51,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected m_eta As Nullable(Of Double) = 100
 
         Protected m_FixOnHeat As Boolean = True
-        Protected m_FileName As String = "TestExcelUO.xlsx"
+        Protected m_FileName As String = ""
 
         Public Property Filename() As String
             Get
@@ -158,11 +158,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
             Dim form As Global.DWSIM.FormFlowsheet = Me.FlowSheet
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+            Dim k As Integer
 
             Dim xcl As New Excel.Application()
             xcl.Visible = True 'uncomment for debugging
 
-            Dim EXFN As String = ExctractFilepath(form.Text) & Filename  '"TestExcelUO.xlsx"
+            Dim EXFN As String = ExctractFilepath(form.Text) & Filename
             Dim mybook As Excel.Workbook
             Dim AppPath = Application.StartupPath
 
@@ -179,13 +180,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim mysheetOut As Excel.Worksheet = mybook.Sheets("Output")
             '=====================================================================================================
 
-            If Not Me.GraphicObject.InputConnectors(1).IsAttached Then
+            If Not Me.GraphicObject.InputConnectors(4).IsAttached Then
                 'Call function to calculate flowsheet
                 With objargs
                     .Calculado = False
                     .Nome = Me.Nome
                     .Tipo = TipoObjeto.ExcelUO
                 End With
+                mybook.Close(saveChanges:=False)
+                xcl.Quit()
+                xcl.Dispose()
                 CalculateFlowsheet(FlowSheet, objargs, Nothing)
                 Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedeenergia2"))
             ElseIf Not Me.GraphicObject.OutputConnectors(0).IsAttached Then
@@ -195,6 +199,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Nome = Me.Nome
                     .Tipo = TipoObjeto.ExcelUO
                 End With
+                mybook.Close(saveChanges:=False)
+                xcl.Quit()
+                xcl.Dispose()
                 CalculateFlowsheet(FlowSheet, objargs, Nothing)
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
             ElseIf Not Me.GraphicObject.InputConnectors(0).IsAttached Then
@@ -204,48 +211,105 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Nome = Me.Nome
                     .Tipo = TipoObjeto.ExcelUO
                 End With
+                mybook.Close(saveChanges:=False)
+                xcl.Quit()
+                xcl.Dispose()
                 CalculateFlowsheet(FlowSheet, objargs, Nothing)
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
             End If
 
             Dim Ti, Pi, Hi, Wi, ei, ein, T2, P2, H2 As Double
-            Dim es As DWSIM.SimulationObjects.Streams.EnergyStream = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name)
+            Dim es As DWSIM.SimulationObjects.Streams.EnergyStream = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(4).AttachedConnector.AttachedFrom.Name)
 
             '======= read input stream data ===========================================================
-            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
-            Ti = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.temperature.GetValueOrDefault.ToString
-            Pi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.pressure.GetValueOrDefault.ToString
-            Hi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.enthalpy.GetValueOrDefault.ToString
-            Wi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault.ToString
-            ei = Hi * Wi
-            ein = ei
+            mysheetIn.Range("B5:E8").Value = "" 'delete Name, T, P, H of streams
+            mysheetIn.Range("A12:E1000").Value = "" 'delete molar flows of streams
 
-            '======= transfer data to Excel ===========================================================
-            mysheetIn.Cells(6, 2).Value = Ti
-            mysheetIn.Cells(7, 2).Value = Pi
-            mysheetIn.Cells(8, 2).Value = Hi
+            Dim S As DWSIM.SimulationObjects.Streams.MaterialStream
+            For k = 0 To 3
+                If Me.GraphicObject.InputConnectors(k).IsAttached Then
+                    S = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(k).AttachedConnector.AttachedFrom.Name)
+                    Me.PropertyPackage.CurrentMaterialStream = S
+                    Ti = S.Fases(0).SPMProperties.temperature.GetValueOrDefault.ToString
+                    Pi = S.Fases(0).SPMProperties.pressure.GetValueOrDefault.ToString
+                    Hi = S.Fases(0).SPMProperties.enthalpy.GetValueOrDefault.ToString
+                    Wi = S.Fases(0).SPMProperties.massflow.GetValueOrDefault.ToString
+                    ei = Hi * Wi
+                    ein = ei
 
-            With Me.PropertyPackage.CurrentMaterialStream
-                Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-                Dim i As Integer = 0
-                For Each comp In .Fases(0).Componentes.Values
-                    mysheetIn.Cells(12 + i, 1).Value = comp.ConstantProperties.Name
-                    mysheetIn.Cells(12 + i, 2).Value = comp.MolarFlow
-                    mysheetIn.Cells(12 + i, 3).Value = comp.MassFlow
-                    i += 1
-                Next
-            End With
+                    '======= transfer data to Excel ===========================================================
+                    mysheetIn.Cells(5, 2 + k).Value = Me.GraphicObject.InputConnectors(k).AttachedConnector.AttachedFrom.Tag
+                    mysheetIn.Cells(6, 2 + k).Value = Ti
+                    mysheetIn.Cells(7, 2 + k).Value = Pi
+                    mysheetIn.Cells(8, 2 + k).Value = Hi
+
+                    Dim dy As Integer = 0
+                    For Each comp As DWSIM.ClassesBasicasTermodinamica.Substancia In S.Fases(0).Componentes.Values
+
+                        mysheetIn.Cells(12 + dy, 1).Value = comp.ConstantProperties.Name
+                        mysheetIn.Cells(12 + dy, 2 + k).Value = comp.MolarFlow
+                        dy += 1
+                    Next
+                Else
+                    mysheetIn.Cells(6, 2 + k * 2).Value = ""
+                    mysheetIn.Cells(7, 2 + k * 2).Value = ""
+                    mysheetIn.Cells(8, 2 + k * 2).Value = ""
+                    Dim dy As Integer = 0
+                    For Each comp As DWSIM.ClassesBasicasTermodinamica.Substancia In Me.PropertyPackage.CurrentMaterialStream.Fases(0).Componentes.Values
+                        mysheetIn.Cells(12 + dy, 1).Value = comp.ConstantProperties.Name
+                        mysheetIn.Cells(12 + dy, 2 + k * 2).Value = ""
+                        mysheetIn.Cells(12 + dy, 3 + k * 2).Value = ""
+                        dy += 1
+                    Next
+                End If
+            Next
+
+          
             '======= read data from Excel =============================================================
+            Dim Vmol As New Dictionary(Of String, Double)
+            Dim i As Integer
+            Dim v As Double
+            Dim SMass, SMole As Double
+            For k = 0 To 3 'run through all streams
+                If Me.GraphicObject.OutputConnectors(k).IsAttached Then
+                    Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(k).AttachedConnector.AttachedTo.Name)
 
+                    T2 = mysheetOut.Cells(6, 2 + k).Value
+                    P2 = mysheetOut.Cells(7, 2 + k).Value
 
-            T2 = mysheetOut.Cells(6, 2).Value
-            P2 = mysheetOut.Cells(7, 2).Value
-            H2 = mysheetOut.Cells(8, 2).Value
+                    'Atribuir valores à corrente de matéria conectada à jusante
+                    With Me.PropertyPackage.CurrentMaterialStream
+                        .Fases(0).SPMProperties.temperature = T2
+                        .Fases(0).SPMProperties.pressure = P2
+
+                        Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                        i = 0
+                        SMole = 0
+                        SMass = 0
+                        Vmol.Clear()
+                        For Each comp In .Fases(0).Componentes.Values
+                            v = mysheetOut.Cells(12 + i, 2 + k).Value
+                            Vmol.Add(comp.Nome, v)
+                            SMole += Vmol(comp.Nome)
+                            SMass += Vmol(comp.Nome) * comp.ConstantProperties.Molar_Weight / 1000
+                            i += 1
+                        Next
+                        For Each comp In .Fases(0).Componentes.Values
+                            comp.FracaoMolar = Vmol(comp.Nome) / SMole
+                            comp.FracaoMassica = Vmol(comp.Nome) * comp.ConstantProperties.Molar_Weight / SMass / 1000
+                        Next
+                        .Fases(0).SPMProperties.massflow = SMass
+
+                        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, T2, P2, 0)
+                        H2 = tmp(4)
+                        .Fases(0).SPMProperties.enthalpy = H2
+                    End With
+
+                End If
+            Next
 
             '======= caclculate output stream data ====================================================
 
-            Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, T2, P2, 0)
-            H2 = tmp(4)
             Me.DeltaT = T2 - Ti
             Me.DeltaQ = (H2 - Hi) / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
 
@@ -255,82 +319,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 .GraphicObject.Calculated = True
             End With
 
-
-            '======== old stuff from heater template ================
-
-            'P2 = Pi - Me.DeltaP.GetValueOrDefault
-
-            'Select Case Me.CalcMode
-
-            '    Case CalculationMode.HeatAdded
-
-            '        H2 = Me.DeltaQ.GetValueOrDefault * (Me.Eficiencia.GetValueOrDefault / 100) / Wi + Hi
-            '        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, 0)
-            '        T2 = tmp(2)
-            '        Me.DeltaT = T2 - Ti
-
-            '        'Corrente de energia - atualizar valor da potência (kJ/s)
-            '        With es
-            '            .Energia = Me.DeltaQ.GetValueOrDefault
-            '            .GraphicObject.Calculated = True
-            '        End With
-
-            '    Case CalculationMode.OutletTemperature
-
-            '        T2 = Me.OutletTemperature.GetValueOrDefault
-            '        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, T2, P2, 0)
-            '        H2 = tmp(4)
-            '        Me.DeltaT = T2 - Ti
-            '        Me.DeltaQ = (H2 - Hi) / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
-
-            '        'Corrente de energia - atualizar valor da potência (kJ/s)
-            '        With es
-            '            .Energia = Me.DeltaQ.GetValueOrDefault
-            '            .GraphicObject.Calculated = True
-            '        End With
-
-            '    Case CalculationMode.EnergyStream
-
-            '        Me.DeltaQ = es.Energia.GetValueOrDefault
-            '        H2 = Me.DeltaQ.GetValueOrDefault * (Me.Eficiencia.GetValueOrDefault / 100) / Wi + Hi
-
-            '        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
-            '        T2 = tmp(2)
-            '        Me.DeltaT = T2 - Ti
-
-            '    Case CalculationMode.OutletVaporFraction
-
-            '        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.VAP, P2, m_VFout.GetValueOrDefault, Ti)
-            '        H2 = tmp(4)
-            '        T2 = tmp(2)
-            '        Me.DeltaT = T2 - Ti
-            '        Me.DeltaQ = (H2 - Hi) / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
-
-            '        'Corrente de energia - atualizar valor da potência (kJ/s)
-            '        With es
-            '            .Energia = Me.DeltaQ.GetValueOrDefault
-            '            .GraphicObject.Calculated = True
-            '        End With
-
-            'End Select
-
-            'Atribuir valores à corrente de matéria conectada à jusante
-            With form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
-                .Fases(0).SPMProperties.temperature = T2
-                .Fases(0).SPMProperties.pressure = P2
-                .Fases(0).SPMProperties.enthalpy = H2
-                Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-                For Each comp In .Fases(0).Componentes.Values
-                    comp.FracaoMolar = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMolar
-                    comp.FracaoMassica = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMassica
-                Next
-                .Fases(0).SPMProperties.massflow = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
-            End With
-
+            
 
 
             '=============== clean up Excel stuff ================================================================
-            mybook.Close(saveChanges:=False)
+            mybook.Close(saveChanges:=True)
             xcl.Quit()
             xcl.Dispose()
 
@@ -349,31 +342,35 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Function
 
         Public Overrides Function DeCalculate() As Integer
-
+            Dim k As Integer
             Dim form As Global.DWSIM.FormFlowsheet = Me.FlowSheet
 
-            If Me.GraphicObject.OutputConnectors(0).IsAttached Then
+            For k = 0 To 3
+                If Me.GraphicObject.OutputConnectors(k).IsAttached Then
 
-                'Zerar valores da corrente de matéria conectada a jusante
-                With form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
-                    .Fases(0).SPMProperties.temperature = Nothing
-                    .Fases(0).SPMProperties.pressure = Nothing
-                    .Fases(0).SPMProperties.enthalpy = Nothing
-                    .Fases(0).SPMProperties.molarfraction = 1
-                    .Fases(0).SPMProperties.massfraction = 1
-                    Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-                    Dim i As Integer = 0
-                    For Each comp In .Fases(0).Componentes.Values
-                        comp.FracaoMolar = 0
-                        comp.FracaoMassica = 0
-                        i += 1
-                    Next
-                    .Fases(0).SPMProperties.massflow = Nothing
-                    .Fases(0).SPMProperties.molarflow = Nothing
-                    .GraphicObject.Calculated = False
-                End With
+                    'Zerar valores da corrente de matéria conectada a jusante
+                    With form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(k).AttachedConnector.AttachedTo.Name)
+                        .Fases(0).SPMProperties.temperature = Nothing
+                        .Fases(0).SPMProperties.pressure = Nothing
+                        .Fases(0).SPMProperties.enthalpy = Nothing
+                        .Fases(0).SPMProperties.molarfraction = 1
+                        .Fases(0).SPMProperties.massfraction = 1
+                        Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                        Dim i As Integer = 0
+                        For Each comp In .Fases(0).Componentes.Values
+                            comp.FracaoMolar = 0
+                            comp.FracaoMassica = 0
+                            i += 1
+                        Next
+                        .Fases(0).SPMProperties.massflow = Nothing
+                        .Fases(0).SPMProperties.molarflow = Nothing
+                        .GraphicObject.Calculated = False
+                    End With
 
-            End If
+                End If
+            Next
+
+           
 
             'Corrente de energia - atualizar valor da potência (kJ/s)
             If Me.GraphicObject.EnergyConnector.IsAttached Then
@@ -471,31 +468,95 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 MyBase.PopulatePropertyGrid(pgrid, su)
 
-                Dim ent, saida, energ As String
+                Dim ent1, ent2, ent3, ent4, saida1, saida2, saida3, saida4, energ As String
                 If Me.GraphicObject.InputConnectors(0).IsAttached = True Then
-                    ent = Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Tag
+                    ent1 = Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Tag
                 Else
-                    ent = ""
+                    ent1 = ""
                 End If
-                If Me.GraphicObject.OutputConnectors(0).IsAttached = True Then
-                    saida = Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Tag
+                If Me.GraphicObject.InputConnectors(1).IsAttached = True Then
+                    ent2 = Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Tag
                 Else
-                    saida = ""
+                    ent2 = ""
+                End If
+                If Me.GraphicObject.InputConnectors(2).IsAttached = True Then
+                    ent3 = Me.GraphicObject.InputConnectors(2).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent3 = ""
+                End If
+                If Me.GraphicObject.InputConnectors(3).IsAttached = True Then
+                    ent4 = Me.GraphicObject.InputConnectors(3).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent4 = ""
                 End If
 
-                If Me.GraphicObject.InputConnectors(1).IsAttached = True Then
-                    energ = Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Tag
+
+                If Me.GraphicObject.OutputConnectors(0).IsAttached = True Then
+                    saida1 = Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Tag
+                Else
+                    saida1 = ""
+                End If
+                If Me.GraphicObject.OutputConnectors(1).IsAttached = True Then
+                    saida2 = Me.GraphicObject.OutputConnectors(1).AttachedConnector.AttachedTo.Tag
+                Else
+                    saida2 = ""
+                End If
+                If Me.GraphicObject.OutputConnectors(2).IsAttached = True Then
+                    saida3 = Me.GraphicObject.OutputConnectors(2).AttachedConnector.AttachedTo.Tag
+                Else
+                    saida3 = ""
+                End If
+                If Me.GraphicObject.OutputConnectors(3).IsAttached = True Then
+                    saida4 = Me.GraphicObject.OutputConnectors(3).AttachedConnector.AttachedTo.Tag
+                Else
+                    saida4 = ""
+                End If
+
+                If Me.GraphicObject.InputConnectors(4).IsAttached = True Then
+                    energ = Me.GraphicObject.InputConnectors(4).AttachedConnector.AttachedFrom.Tag
                 Else
                     energ = ""
                 End If
 
-                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada"), ent, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                '==== Input streams ===
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada1"), ent1, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada2"), ent2, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada3"), ent3, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada4"), ent4, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                     .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
                 End With
 
-                .Item.Add(DWSIM.App.GetLocalString("Correntedesada"), saida, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                '==== Output streams ===
+                .Item.Add(DWSIM.App.GetLocalString("Correntedesaida1"), saida1, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedesaida2"), saida2, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedesaida3"), saida3, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedesaida4"), saida4, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
@@ -545,7 +606,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         .Item.Add(DWSIM.App.GetLocalString("FraomolardafaseFaseV"), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
 
                 End Select
-                .Item.Add("Filename X", Me, "Filename", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "Excel file of simulation object", True)
+                .Item.Add("ExcelUOEditor", Me, "Filename", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "Excel file definition", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.ExcelUO.UIExcelUOEditor
+                End With
 
                 .Item.Add(DWSIM.App.GetLocalString("Eficincia0100"), Me, "Eficiencia", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Eficinciadoaquecedor"), True)
                 With .Item(.Item.Count - 1)

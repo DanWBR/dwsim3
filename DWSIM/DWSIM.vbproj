@@ -400,6 +400,13 @@
     <Compile Include="Forms\PropPack_ConfigForms\FormConfigPRSV2.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\UITypeEditors\UIExcelUOEditor\ExcelUOEditorForm.Designer.vb">
+      <DependentUpon>ExcelUOEditorForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UITypeEditors\UIExcelUOEditor\ExcelUOEditorForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UITypeEditors\UIExcelUOEditor\UIExcelUOEditor.vb" />
     <Compile Include="Forms\UITypeEditors\UIGibbsInitialEstimates\GibbsInitialEstimatesEditorForm.Designer.vb">
       <DependentUpon>GibbsInitialEstimatesEditorForm.vb</DependentUpon>
     </Compile>
@@ -1249,6 +1256,9 @@
     <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigLIQUAC.resx">
       <DependentUpon>FormConfigLIQUAC.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UIExcelUOEditor\ExcelUOEditorForm.resx">
+      <DependentUpon>ExcelUOEditorForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIGibbsInitialEstimates\GibbsInitialEstimatesEditorForm.en.resx">
       <DependentUpon>GibbsInitialEstimatesEditorForm.vb</DependentUpon>
     </EmbeddedResource>
@@ -2000,6 +2010,7 @@
     <None Include="Resources\dwsim 3 bg.png" />
     <Content Include="Resources\es.png" />
     <None Include="Resources\Excel.png" />
+    <None Include="Resources\Excel_copy1.jpg" />
     <Content Include="Resources\fr.png" />
     <None Include="Resources\green_down.png" />
     <None Include="Resources\orifice.png" />

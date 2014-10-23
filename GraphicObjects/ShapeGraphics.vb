@@ -8973,33 +8973,68 @@ Namespace GraphicObjects
         Public Overrides Sub CreateConnectors(InCount As Integer, OutCount As Integer)
 
             Dim myIC1 As New ConnectionPoint
-            myIC1.Position = New Point(X, Y + 0.5 * Height)
+            myIC1.Position = New Point(X, Y + 0 * Height)
             myIC1.Type = ConType.ConIn
 
             Dim myIC2 As New ConnectionPoint
-            myIC2.Position = New Point(X + 0.5 * Width, Y + Height)
-            myIC2.Type = ConType.ConEn
+            myIC2.Position = New Point(X, Y + 0.33 * Height)
+            myIC2.Type = ConType.ConIn
+
+            Dim myIC3 As New ConnectionPoint
+            myIC3.Position = New Point(X, Y + 0.66 * Height)
+            myIC3.Type = ConType.ConIn
+
+            Dim myIC4 As New ConnectionPoint
+            myIC4.Position = New Point(X, Y + 1 * Height)
+            myIC4.Type = ConType.ConIn
+
+
+            Dim myEC1 As New ConnectionPoint
+            myEC1.Position = New Point(X + 0.5 * Width, Y + Height)
+            myEC1.Type = ConType.ConEn
+
 
             Dim myOC1 As New ConnectionPoint
-            myOC1.Position = New Point(X + Width, Y + 0.5 * Height)
+            myOC1.Position = New Point(X + Width, Y + 0 * Height)
             myOC1.Type = ConType.ConOut
+
+            Dim myOC2 As New ConnectionPoint
+            myOC2.Position = New Point(X + Width, Y + 0.33 * Height)
+            myOC2.Type = ConType.ConOut
+
+            Dim myOC3 As New ConnectionPoint
+            myOC3.Position = New Point(X + Width, Y + 0.66 * Height)
+            myOC3.Type = ConType.ConOut
+
+            Dim myOC4 As New ConnectionPoint
+            myOC4.Position = New Point(X + Width, Y + 1 * Height)
+            myOC4.Type = ConType.ConOut
 
             Me.EnergyConnector.Position = New Point(X + 0.5 * Width, Y + Height)
             Me.EnergyConnector.Type = ConType.ConEn
 
             With InputConnectors
 
-                If .Count = 2 Then
+                If .Count <> 0 Then
                     If Me.FlippedH Then
-                        .Item(0).Position = New Point(X + Width, Y + 0.5 * Height)
-                        .Item(1).Position = New Point(X + 0.5 * Width, Y + Height)
+                        .Item(0).Position = New Point(X + Width, Y + 0 * Height)
+                        .Item(1).Position = New Point(X + Width, Y + 0.33 * Height)
+                        .Item(2).Position = New Point(X + Width, Y + 0.66 * Height)
+                        .Item(3).Position = New Point(X + Width, Y + 1 * Height)
+                        .Item(4).Position = New Point(X + 0.5 * Width, Y + Height)
                     Else
-                        .Item(0).Position = New Point(X, Y + 0.5 * Height)
-                        .Item(1).Position = New Point(X + 0.5 * Width, Y + Height)
+                        .Item(0).Position = New Point(X, Y + 0 * Height)
+                        .Item(1).Position = New Point(X, Y + 0.33 * Height)
+                        .Item(2).Position = New Point(X, Y + 0.66 * Height)
+                        .Item(3).Position = New Point(X, Y + 1 * Height)
+                        .Item(4).Position = New Point(X + 0.5 * Width, Y + Height)
                     End If
                 Else
                     .Add(myIC1)
                     .Add(myIC2)
+                    .Add(myIC3)
+                    .Add(myIC4)
+                    .Add(myEC1)
                 End If
 
             End With
@@ -9008,12 +9043,21 @@ Namespace GraphicObjects
 
                 If .Count <> 0 Then
                     If Me.FlippedH Then
-                        .Item(0).Position = New Point(X, Y + 0.5 * Height)
+                        .Item(0).Position = New Point(X, Y + 0 * Height)
+                        .Item(1).Position = New Point(X, Y + 0.33 * Height)
+                        .Item(2).Position = New Point(X, Y + 0.66 * Height)
+                        .Item(3).Position = New Point(X, Y + 1 * Height)
                     Else
-                        .Item(0).Position = New Point(X + Width, Y + 0.5 * Height)
+                        .Item(0).Position = New Point(X + Width, Y + 0 * Height)
+                        .Item(1).Position = New Point(X + Width, Y + 0.33 * Height)
+                        .Item(2).Position = New Point(X + Width, Y + 0.66 * Height)
+                        .Item(3).Position = New Point(X + Width, Y + 1 * Height)
                     End If
                 Else
                     .Add(myOC1)
+                    .Add(myOC2)
+                    .Add(myOC3)
+                    .Add(myOC4)
                 End If
 
             End With
@@ -9068,7 +9112,8 @@ Namespace GraphicObjects
             Dim myPen2 As New Pen(Color.White, 0)
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            'g.DrawRectangle(myPen2, rect)
+            g.FillRectangle(Brushes.LightBlue, rect)
+            g.DrawRectangle(myPen, rect)
 
             Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
             gp.AddLine(CInt(X), CInt(Y + 0.5 * Height), CInt(X + 0.5 * Width), CInt(Y))

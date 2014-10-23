@@ -4833,4 +4833,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PP_ENTH_CP_CALC_METHOD" xml:space="preserve">
     <value>Método de Cálculo Entalpia/Entropia/Cp/Cv (0 = Lee-Kesler, 1 = Ideal, 2 = Excesso)</value>
   </data>
+  <data name="Correntedesaida4" xml:space="preserve">
+    <value>Salida de corriente (4)</value>
+  </data>
 </root>
