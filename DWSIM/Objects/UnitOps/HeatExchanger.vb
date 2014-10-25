@@ -319,20 +319,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.EnableMultithreading()
                             End If
-                            Dim pp As PropertyPackages.PropertyPackage = Me.PropertyPackage
-                            pp.CurrentMaterialStream = StInCold
-                            Dim Vzc As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
-                            pp.CurrentMaterialStream = StInHot
-                            Dim Vzh As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
+                            StInCold.PropertyPackage.CurrentMaterialStream = StInCold
+                            Dim Vzc As Double() = StInCold.PropertyPackage.RET_VMOL(PropertyPackages.Fase.Mixture)
+                            StInHot.PropertyPackage.CurrentMaterialStream = StInHot
+                            Dim Vzh As Double() = StInHot.PropertyPackage.RET_VMOL(PropertyPackages.Fase.Mixture)
                             Dim tasks(1) As Task
                             tasks(0) = Task.Factory.StartNew(Sub()
                                                                  Dim tmp As Object
-                                                                 tmp = pp.FlashBase.Flash_PH(Vzc, Pc2, Hc2, Tc1, pp)
+                                                                 tmp = StInCold.PropertyPackage.FlashBase.Flash_PH(Vzc, Pc2, Hc2, Tc1, StInCold.PropertyPackage)
                                                                  Tc2 = tmp(4)
                                                              End Sub)
                             tasks(1) = Task.Factory.StartNew(Sub()
                                                                  Dim tmp As Object
-                                                                 tmp = pp.FlashBase.Flash_PH(Vzh, Ph2, Hh2, Th1, pp)
+                                                                 tmp = StInHot.PropertyPackage.FlashBase.Flash_PH(Vzh, Ph2, Hh2, Th1, StInHot.PropertyPackage)
                                                                  Th2 = tmp(4)
                                                              End Sub)
                             Task.WaitAll(tasks)
@@ -348,12 +347,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             My.MyApplication.IsRunningParallelTasks = False
                         End Try
                     Else
-                        Me.PropertyPackage.CurrentMaterialStream = StInCold
-                        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc1)
+                        StInCold.PropertyPackage.CurrentMaterialStream = StInCold
+                        Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc1)
                         Tc2 = tmp(2)
                         Hh2 = Hh1 + DeltaHh
-                        Me.PropertyPackage.CurrentMaterialStream = StInHot
-                        tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th1)
+                        StInHot.PropertyPackage.CurrentMaterialStream = StInHot
+                        tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th1)
                         Th2 = tmp(2)
                     End If
                     Select Case Me.FlowDir
@@ -366,14 +365,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Case HeatExchangerCalcMode.CalcTempColdOut
                     A = Area
                     Th2 = TempHotOut
-                    Me.PropertyPackage.CurrentMaterialStream = StInHot
-                    Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Th2, Ph2, 0)
+                    StInHot.PropertyPackage.CurrentMaterialStream = StInHot
+                    Dim tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Th2, Ph2, 0)
                     Hh2 = tmp(4)
                     Q = -Wh * (Hh2 - Hh1)
                     DeltaHc = Q / Wc
                     Hc2 = Hc1 + DeltaHc
-                    Me.PropertyPackage.CurrentMaterialStream = StInCold
-                    tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc1)
+                    StInCold.PropertyPackage.CurrentMaterialStream = StInCold
+                    tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc1)
                     Tc2 = tmp(2)
                     Select Case Me.FlowDir
                         Case FlowDirection.CoCurrent
@@ -385,14 +384,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Case HeatExchangerCalcMode.CalcTempHotOut
                     A = Area
                     Tc2 = TempColdOut
-                    Me.PropertyPackage.CurrentMaterialStream = StInCold
-                    Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
+                    StInCold.PropertyPackage.CurrentMaterialStream = StInCold
+                    Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
                     Hc2 = tmp(4)
                     Q = Wc * (Hc2 - Hc1)
                     DeltaHh = -Q / Wh
                     Hh2 = Hh1 + DeltaHh
-                    Me.PropertyPackage.CurrentMaterialStream = StInHot
-                    tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th1)
+                    StInHot.PropertyPackage.CurrentMaterialStream = StInHot
+                    tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th1)
                     Th2 = tmp(2)
                     Select Case Me.FlowDir
                         Case FlowDirection.CoCurrent
@@ -405,25 +404,25 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Select Case Me.DefinedTemperature
                         Case SpecifiedTemperature.Cold_Fluid
                             Tc2 = TempColdOut
-                            Me.PropertyPackage.CurrentMaterialStream = StInCold
-                            Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
+                            StInCold.PropertyPackage.CurrentMaterialStream = StInCold
+                            Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
                             Hc2 = tmp(4)
                             Q = Wc * (Hc2 - Hc1)
                             DeltaHh = -Q / Wh
                             Hh2 = Hh1 + DeltaHh
-                            Me.PropertyPackage.CurrentMaterialStream = StInHot
-                            tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, 0)
+                            StInHot.PropertyPackage.CurrentMaterialStream = StInHot
+                            tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, 0)
                             Th2 = tmp(2)
                         Case SpecifiedTemperature.Hot_Fluid
                             Th2 = TempHotOut
-                            Me.PropertyPackage.CurrentMaterialStream = StInHot
-                            Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Th2, Ph2, 0)
+                            StInHot.PropertyPackage.CurrentMaterialStream = StInHot
+                            Dim tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Th2, Ph2, 0)
                             Hh2 = tmp(4)
                             Q = -Wh * (Hh2 - Hh1)
                             DeltaHc = Q / Wc
                             Hc2 = Hc1 + DeltaHc
-                            Me.PropertyPackage.CurrentMaterialStream = StInCold
-                            tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, 0)
+                            StInCold.PropertyPackage.CurrentMaterialStream = StInCold
+                            tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, 0)
                             Tc2 = tmp(2)
                     End Select
                     Select Case Me.FlowDir
@@ -457,6 +456,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Ph2 = Ph1
                     F = 1.0#
                     U = 500.0#
+                    Dim icnt As Integer = 0
                     Do
                         Select Case Me.FlowDir
                             Case FlowDirection.CoCurrent
@@ -492,22 +492,22 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Tcm = (Tc2 - Tc1) / 2 + Tc1
                         Thm = (Th1 - Th2) / 2 + Th1
                         '4, 5
-                        Me.PropertyPackage.CurrentMaterialStream = StInCold
-                        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
+                        StInCold.PropertyPackage.CurrentMaterialStream = StInCold
+                        Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
                         Hc2 = tmp(4)
                         Q = Wc * (Hc2 - Hc1)
                         Dim tms As MaterialStream = StInCold.Clone
                         tms.Fases(0).SPMProperties.temperature = Tcm
-                        Me.PropertyPackage.CurrentMaterialStream = tms
-                        Me.PropertyPackage.DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
+                        tms.PropertyPackage.CurrentMaterialStream = tms
+                        tms.PropertyPackage.DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
                         rhoc = tms.Fases(0).SPMProperties.density.GetValueOrDefault
                         cpc = tms.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
                         kc = tms.Fases(0).SPMProperties.thermalConductivity.GetValueOrDefault
                         muc = tms.Fases(1).SPMProperties.viscosity.GetValueOrDefault * tms.Fases(1).SPMProperties.molarfraction.GetValueOrDefault + tms.Fases(2).SPMProperties.viscosity.GetValueOrDefault * tms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
                         tms = StInHot.Clone
                         tms.Fases(0).SPMProperties.temperature = Thm
-                        Me.PropertyPackage.CurrentMaterialStream = tms
-                        Me.PropertyPackage.DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
+                        tms.PropertyPackage.CurrentMaterialStream = tms
+                        tms.PropertyPackage.DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
                         rhoh = tms.Fases(0).SPMProperties.density.GetValueOrDefault
                         cph = tms.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
                         kh = tms.Fases(0).SPMProperties.thermalConductivity.GetValueOrDefault
@@ -821,20 +821,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     If My.Settings.EnableGPUProcessing Then
                                         My.MyApplication.gpu.EnableMultithreading()
                                     End If
-                                    Dim pp As PropertyPackages.PropertyPackage = Me.PropertyPackage
-                                    pp.CurrentMaterialStream = StInCold
-                                    Dim Vzc As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
-                                    pp.CurrentMaterialStream = StInHot
-                                    Dim Vzh As Double() = pp.RET_VMOL(PropertyPackages.Fase.Mixture)
+                                    StInCold.PropertyPackage.CurrentMaterialStream = StInCold
+                                    Dim Vzc As Double() = StInCold.PropertyPackage.RET_VMOL(PropertyPackages.Fase.Mixture)
+                                    StInHot.PropertyPackage.CurrentMaterialStream = StInHot
+                                    Dim Vzh As Double() = StInHot.PropertyPackage.RET_VMOL(PropertyPackages.Fase.Mixture)
                                     Dim tasks(1) As Task
                                     tasks(0) = Task.Factory.StartNew(Sub()
-                                                                         tmp = pp.FlashBase.Flash_PH(Vzc, Pc2, Hc2, Tc2, pp)
+                                                                         tmp = StInCold.PropertyPackage.FlashBase.Flash_PH(Vzc, Pc2, Hc2, Tc2, StInCold.PropertyPackage)
                                                                          Tc2_ant = Tc2
                                                                          Tc2 = tmp(4)
                                                                          Tc2 = 0.6 * Tc2 + 0.4 * Tc2_ant
                                                                      End Sub)
                                     tasks(1) = Task.Factory.StartNew(Sub()
-                                                                         tmp = pp.FlashBase.Flash_PH(Vzh, Ph2, Hh2, Th2, pp)
+                                                                         tmp = StInHot.PropertyPackage.FlashBase.Flash_PH(Vzh, Ph2, Hh2, Th2, StInHot.PropertyPackage)
                                                                          Th2_ant = Th2
                                                                          Th2 = tmp(4)
                                                                          Th2 = 0.6 * Th2 + 0.4 * Th2_ant
@@ -852,13 +851,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     My.MyApplication.IsRunningParallelTasks = False
                                 End Try
                             Else
-                                Me.PropertyPackage.CurrentMaterialStream = StInCold
-                                tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc2)
+                                StInCold.PropertyPackage.CurrentMaterialStream = StInCold
+                                tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc2)
                                 Tc2_ant = Tc2
                                 Tc2 = tmp(2)
                                 Tc2 = 0.6 * Tc2 + 0.4 * Tc2_ant
-                                Me.PropertyPackage.CurrentMaterialStream = StInHot
-                                tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th2)
+                                StInHot.PropertyPackage.CurrentMaterialStream = StInHot
+                                tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th2)
                                 Th2_ant = Th2
                                 Th2 = tmp(2)
                                 Th2 = 0.6 * Th2 + 0.4 * Th2_ant
@@ -878,7 +877,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             fx = Math.Abs((U - U_ant)) ^ 2
                         End If
                         CheckCalculatorStatus()
-                    Loop Until fx < 0.01
+                        icnt += 1
+                    Loop Until fx < 0.01 Or icnt > 100
             End Select
 
             Me.ColdSideOutletTemperature = Tc2
@@ -900,8 +900,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Temperature Cross", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
             End If
 
-            CalculateMaterialStream(FlowSheet, StOutHot)
-            CalculateMaterialStream(FlowSheet, StOutCold)
+            'CalculateMaterialStream(FlowSheet, StOutHot)
+            'CalculateMaterialStream(FlowSheet, StOutCold)
 
             'Call the flowsheet calculation routine
             With objargs
