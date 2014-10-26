@@ -75,6 +75,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Return CoolProp.Props("P", "T", T, "Q", 0, sub1) * 1000
         End Function
 
+        Public Overrides Function AUX_TSATi(PVAP As Double, index As Integer) As Double
+            If Not IsCompoundSupported(RET_VNAMES()(index)) Then Return 0.0#
+            Return CoolProp.Props("T", "P", PVAP / 1000, "Q", 0, RET_VNAMES()(index))
+        End Function
+
+        Public Overrides Function AUX_TSATi(PVAP As Double, subst As String) As Double
+            If Not IsCompoundSupported(subst) Then Return 0.0#
+            Return CoolProp.Props("T", "P", PVAP / 1000, "Q", 0, subst)
+        End Function
+
         Public Overrides Function AUX_LIQDENSi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
             If Not IsCompoundSupported(cprop.Name) Then Return 0.0#
             Return CoolProp.Props("D", "T", T, "Q", 0, cprop.Name)

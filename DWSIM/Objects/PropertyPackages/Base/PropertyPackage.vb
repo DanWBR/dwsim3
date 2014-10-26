@@ -5707,7 +5707,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         End Function
 
-        Public Function AUX_TSATi(ByVal PVAP As Double, ByVal subst As String) As Double
+        Public Overridable Function AUX_TSATi(ByVal PVAP As Double, ByVal subst As String) As Double
 
             Dim i As Integer
 
@@ -5811,7 +5811,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_TSATi(ByVal PVAP As Double, ByVal index As Integer) As Double
+        Public Overridable Function AUX_TSATi(ByVal PVAP As Double, ByVal index As Integer) As Double
 
             Dim i As Integer
 
