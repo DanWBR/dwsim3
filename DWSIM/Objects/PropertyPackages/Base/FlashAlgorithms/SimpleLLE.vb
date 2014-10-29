@@ -47,7 +47,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim i, n, ecount As Integer
             n = UBound(Vz)
 
-            Dim Vx1(n), Vx2(n), Vn1(n), Vn2(n), Ki(n), fi1(n), fi2(n), gamma1(n), gamma2(n) As Double
+            Dim Vx1(n), Vx2(n), Vy(n), Vn1(n), Vn2(n), Ki(n), fi1(n), fi2(n), gamma1(n), gamma2(n) As Double
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L1, L2, V As Double
 

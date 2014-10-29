@@ -3338,21 +3338,32 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 Case "(T)x-y"
 
                     Dim px, py As New ArrayList
+                    Dim Test1 As Double
+                    Dim x, y As Double
+                    Dim tmp As Object = Nothing
 
                     If Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
-
                         i = 0
                         Do
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
-                            px.Add(i * dx)
                             Try
-                                py.Add(Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)(6)(0) * i * dx)
+                                If i = 0 Then
+                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)
+                                    calcT = tmp(4)
+                                    Test1 = calcT
+                                Else
+                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, Test1, Me)
+                                    calcT = tmp(4)
+                                    Test1 = calcT
+                                End If
+                                x = i * dx
+                                y = tmp(3)(0)
+                                px.Add(x)
+                                py.Add(y)
                             Catch ex As Exception
-                                py.Add(0.0#)
                             End Try
                             i = i + 1
                         Loop Until (i - 1) * dx >= 1
-
                     End If
 
                     Return New Object() {px, py}
@@ -3361,20 +3372,32 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                     Dim px, py As New ArrayList
 
-                    If Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
+                    Dim Pest1 As Double
+                    Dim x, y As Double
+                    Dim tmp As Object = Nothing
 
+                    If Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
                         i = 0
                         Do
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
-                            px.Add(i * dx)
                             Try
-                                py.Add(Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)(6)(0) * i * dx)
+                                If i = 0 Then
+                                    tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, 0, Me)
+                                    calcP = tmp(4)
+                                    Pest1 = calcP
+                                Else
+                                    tmp = Me.FlashBase.Flash_TV(New Double() {i * dx, 1 - i * dx}, T, 0, Pest1, Me)
+                                    calcP = tmp(4)
+                                    Pest1 = calcP
+                                End If
+                                x = i * dx
+                                y = tmp(3)(0)
+                                px.Add(x)
+                                py.Add(y)
                             Catch ex As Exception
-                                py.Add(0.0#)
                             End Try
                             i = i + 1
                         Loop Until (i - 1) * dx >= 1
-
                     End If
 
                     Return New Object() {px, py}

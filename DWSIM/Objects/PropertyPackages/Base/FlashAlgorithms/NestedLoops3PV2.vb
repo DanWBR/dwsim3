@@ -1126,6 +1126,7 @@ alt:
                 Dim nc As Integer = UBound(Vz)
 
                 If nt = -1 Then nt = nc
+                n = nc
 
                 Dim Vtrials(nt, nc) As Double
                 Dim idx(nt) As Integer
@@ -1245,6 +1246,7 @@ alt:
                 Dim nc As Integer = UBound(Vz)
 
                 If nt = -1 Then nt = nc
+                n = nc
 
                 Dim Vtrials(nt, nc) As Double
                 Dim idx(nt) As Integer
@@ -1277,7 +1279,7 @@ alt:
 
                 If stresult(0) = False Then
 
-                    Dim vx2est(n), fcl(n), fcv(n) As Double
+                    Dim vx2est(n), fcl(nc), fcv(n) As Double
                     Dim m As Double = UBound(stresult(1), 1)
                     Dim gl, gv, gli As Double
 
@@ -1597,10 +1599,10 @@ alt:
                         Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = Vx1EST, .InitialEstimatesForPhase2 = Vx2EST, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
                         Dim result As Object = slle.Flash_PT(Vz, P, T, PP)
                         L1 = result(0)
-                        V = result(1)
+                        'V = result(1)
                         L2 = result(5)
                         Vx1 = result(2)
-                        Vy = result(3)
+                        'Vy = result(3)
                         Vx2 = result(6)
                         Exit Do
                     End If
@@ -1868,6 +1870,19 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
                     If L2 > 1.0# - V Then L2 = 1.0# - V
 
                     L1 = 1 - V - L2
+
+                    If V = 0.0# Then
+                        'switch to simple LLE flash procedure.
+                        Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = Vx1EST, .InitialEstimatesForPhase2 = Vx2EST, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
+                        Dim result As Object = slle.Flash_PT(Vz, P, T, PP)
+                        L1 = result(0)
+                        'V = result(1)
+                        L2 = result(5)
+                        Vx1 = result(2)
+                        'Vy = result(3)
+                        Vx2 = result(6)
+                        Exit Do
+                    End If
 
                 End If
 
