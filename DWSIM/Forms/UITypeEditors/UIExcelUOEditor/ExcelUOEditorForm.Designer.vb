@@ -26,9 +26,9 @@ Partial Class ExcelUOEditorForm
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TbFileName = New System.Windows.Forms.TextBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.BtnNew = New System.Windows.Forms.Button()
         Me.BtnSearch = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.BtnEdit = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -41,33 +41,36 @@ Partial Class ExcelUOEditorForm
         resources.ApplyResources(Me.TbFileName, "TbFileName")
         Me.TbFileName.Name = "TbFileName"
         '
-        'Button1
+        'OpenFileDialog1
         '
-        Me.Button1.Image = Global.DWSIM.My.Resources.Resources.application_view_icons
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.Name = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.OpenFileDialog1.CheckFileExists = False
+        Me.OpenFileDialog1.CheckPathExists = False
+        Me.OpenFileDialog1.RestoreDirectory = True
+        '
+        'BtnNew
+        '
+        resources.ApplyResources(Me.BtnNew, "BtnNew")
+        Me.BtnNew.Name = "BtnNew"
+        Me.BtnNew.UseVisualStyleBackColor = True
         '
         'BtnSearch
         '
-        Me.BtnSearch.Image = Global.DWSIM.My.Resources.Resources.zoom
         resources.ApplyResources(Me.BtnSearch, "BtnSearch")
         Me.BtnSearch.Name = "BtnSearch"
         Me.BtnSearch.UseVisualStyleBackColor = True
         '
-        'Button2
+        'BtnEdit
         '
-        Me.Button2.Image = Global.DWSIM.My.Resources.Resources.application_form_edit
-        resources.ApplyResources(Me.Button2, "Button2")
-        Me.Button2.Name = "Button2"
-        Me.Button2.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.BtnEdit, "BtnEdit")
+        Me.BtnEdit.Name = "BtnEdit"
+        Me.BtnEdit.UseVisualStyleBackColor = True
         '
         'ExcelUOEditorForm
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.BtnEdit)
+        Me.Controls.Add(Me.BtnNew)
         Me.Controls.Add(Me.BtnSearch)
         Me.Controls.Add(Me.TbFileName)
         Me.Controls.Add(Me.Label1)
@@ -80,6 +83,6 @@ Partial Class ExcelUOEditorForm
     Friend WithEvents TbFileName As System.Windows.Forms.TextBox
     Friend WithEvents BtnSearch As System.Windows.Forms.Button
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents BtnNew As System.Windows.Forms.Button
+    Friend WithEvents BtnEdit As System.Windows.Forms.Button
 End Class

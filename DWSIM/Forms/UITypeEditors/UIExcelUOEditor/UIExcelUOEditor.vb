@@ -45,8 +45,6 @@ Namespace DWSIM.Editors.ExcelUO
 
                 Dim selectionControl As New ExcelUOEditorForm
 
-                'selectionControl.compspecs = form.Collections.CLCS_ComponentSeparatorCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).ComponentSepSpecs
-
                 selectionControl.Text = form.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & " - " & "ExcelUO Specification"
                 selectionControl.TbFileName.Text = value
 

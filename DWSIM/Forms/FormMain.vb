@@ -1102,6 +1102,9 @@ Public Class FormMain
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CustomUO
                                 .CLCS_CustomUOCollection(gObj.Name).GraphicObject = gObj
                                 .CustomUOCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ExcelUO
+                                .CLCS_ExcelUOCollection(gObj.Name).GraphicObject = gObj
+                                .ExcelUOCollection(gObj.Name) = gObj
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                                 .CLCS_CapeOpenUOCollection(gObj.Name).GraphicObject = gObj
                                 .CapeOpenUOCollection(gObj.Name) = gObj
@@ -1425,6 +1428,9 @@ Public Class FormMain
                         Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CustomUO
                             .CLCS_CustomUOCollection(gObj.Name).GraphicObject = gObj
                             .CustomUOCollection(gObj.Name) = gObj
+                        Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ExcelUO
+                            .CLCS_ExcelUOCollection(gObj.Name).GraphicObject = gObj
+                            .ExcelUOCollection(gObj.Name) = gObj
                         Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                             .CLCS_CapeOpenUOCollection(gObj.Name).GraphicObject = gObj
                             .CapeOpenUOCollection(gObj.Name) = gObj
@@ -1985,6 +1991,8 @@ Public Class FormMain
                                 .OrificePlateCollection.Add(obj.Name, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CustomUO
                                 .CustomUOCollection.Add(obj.Name, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ExcelUO
+                                .ExcelUOCollection.Add(obj.Name, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                                 obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
                                 .CapeOpenUOCollection.Add(obj.Name, obj)
@@ -2082,6 +2090,9 @@ Public Class FormMain
                                 Case TipoObjeto.CustomUO
                                     form.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
                                     form.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.ExcelUO
+                                    form.FormObjList.TreeViewObj.Nodes("NodeExcel").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeExcel").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
                                 Case TipoObjeto.CapeOpenUO
                                     form.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
                                     form.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1

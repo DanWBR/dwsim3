@@ -4836,4 +4836,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Correntedesaida4" xml:space="preserve">
     <value>Salida de corriente (4)</value>
   </data>
+  <data name="Nohcorrentedeenergia1" xml:space="preserve">
+    <value>No hay corriente de energía asociada a la ExcelUO.</value>
+  </data>
 </root>

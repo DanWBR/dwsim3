@@ -453,6 +453,7 @@ Partial Class FormFlowsheet
         Me.TSTable.IsDrawn = True
         Me.TSTable.Name = "TSTable"
         resources.ApplyResources(Me.TSTable, "TSTable")
+        Me.TSTable.Title = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'ToolStrip2
         '

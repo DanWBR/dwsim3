@@ -495,9 +495,6 @@
   <data name="TSTable.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="TSTable.Title" xml:space="preserve">
-    <value />
-  </data>
   <data name="&gt;&gt;TSTable.Name" xml:space="preserve">
     <value>TSTable</value>
   </data>

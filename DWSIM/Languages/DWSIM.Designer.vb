@@ -8555,6 +8555,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Sucht eine lokalisierte Zeichenfolge, die Não há corrente de energia associada ao ExcelUO. ähnelt.
+        '''</summary>
+        Friend Shared ReadOnly Property Nohcorrentedeenergia1() As String
+            Get
+                Return ResourceManager.GetString("Nohcorrentedeenergia1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Sucht eine lokalisierte Zeichenfolge, die Não há corrente de energia associada ao aquecedor. ähnelt.
         '''</summary>
         Friend Shared ReadOnly Property Nohcorrentedeenergia2() As String

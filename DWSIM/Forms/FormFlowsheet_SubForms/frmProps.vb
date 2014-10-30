@@ -909,30 +909,17 @@ Public Class frmProps
                 End If
 
 
-
             ElseIf sobj.TipoObjeto = TipoObjeto.ExcelUO Then
 
                 Dim eo As DWSIM.SimulationObjects.UnitOps.ExcelUO = ChildParent.Collections.CLCS_ExcelUOCollection.Item(sobj.Name)
-
-                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
-                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-
-                ElseIf e.ChangedItem.Label.Contains("Filename") Then
-                    eo.Filename = e.ChangedItem.Value
-
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Calor")) Then
-                    eo.DeltaQ = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
-
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    eo.DeltaP = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
-
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
-                    eo.OutletTemperature = Conversor.ConverterParaSI(ChildParent.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
-
-                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FraomolardafaseFaseV")) Then
-                    eo.OutletVaporFraction = Double.Parse(e.ChangedItem.Value)
-
+                Dim P1 As Integer
+                Dim L As String
+                P1 = InStr(1, e.ChangedItem.Label, "(") - 2
+                If P1 > 0 Then
+                    L = Strings.Left(e.ChangedItem.Label, P1)
+                    If eo.InputParams.ContainsKey(L) Then
+                        eo.InputParams(L).Value = e.ChangedItem.Value
+                    End If
                 End If
 
                 If ChildParent.Options.CalculatorActivated Then
@@ -951,7 +938,7 @@ Public Class frmProps
                     ChildParent.CalculationQueue.Enqueue(objargs)
 
                 End If
-            End If
+                End If
         End If
         Call ChildParent.FormSurface.UpdateSelectedObject()
         Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()

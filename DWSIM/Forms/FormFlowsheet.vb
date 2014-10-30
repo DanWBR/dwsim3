@@ -768,6 +768,8 @@ Imports DWSIM.DWSIM.GraphicObjects
                     DWSIM.App.HelpRequested("SO_OrificePlate.htm")
                 Case TipoObjeto.CustomUO
                     DWSIM.App.HelpRequested("SO_CustomUO.htm")
+                Case TipoObjeto.ExcelUO
+                    DWSIM.App.HelpRequested("SO_ExcelUO.htm")
                 Case TipoObjeto.SolidSeparator
                     DWSIM.App.HelpRequested("SO_SolidSeparator.htm")
                 Case TipoObjeto.Filter

@@ -1,9 +1,4 @@
-﻿'    ===========================================
-'    ==  Initial Version of Excel User Unit ====
-'    ==  Not ready for release !!! =============
-'    ===========================================
-
-'    Excel Unit Calculation Routines 
+﻿'    Excel Unit Calculation Routines 
 '    Copyright 2014 Gregor Reichert
 '
 '    This file is part of DWSIM.
@@ -29,29 +24,38 @@ Imports Microsoft.MSDN.Samples.GraphicObjects
 Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
 
 Namespace DWSIM.SimulationObjects.UnitOps
+    <System.Serializable()> Public Class ExcelParameter
+        Public Name As String
+        Public Value As Double
+        Public Unit As String
+        Public Annotation As String
+    End Class
 
     <System.Serializable()> Public Class ExcelUO
 
         Inherits SimulationObjects_UnitOpBaseClass
 
-        Public Enum CalculationMode
-            HeatAdded = 0
-            OutletTemperature = 1
-            EnergyStream = 2
-            OutletVaporFraction = 3
-        End Enum
-
-        Protected m_dp As Nullable(Of Double)
-        Protected m_dt As Nullable(Of Double)
         Protected m_DQ As Nullable(Of Double)
-        Protected m_Tout As Nullable(Of Double)
-        Protected m_VFout As Nullable(Of Double)
-        Protected m_cmode As CalculationMode = CalculationMode.HeatAdded
-
-        Protected m_eta As Nullable(Of Double) = 100
-
-        Protected m_FixOnHeat As Boolean = True
         Protected m_FileName As String = ""
+        Protected m_InputParams As New Dictionary(Of String, ExcelParameter)
+        Protected m_OutputParams As New Dictionary(Of String, ExcelParameter)
+
+        Public Property InputParams() As Dictionary(Of String, ExcelParameter)
+            Get
+                Return m_InputParams
+            End Get
+            Set(value As Dictionary(Of String, ExcelParameter))
+                m_InputParams = value
+            End Set
+        End Property
+        Public Property OutputParams() As Dictionary(Of String, ExcelParameter)
+            Get
+                Return m_OutputParams
+            End Get
+            Set(value As Dictionary(Of String, ExcelParameter))
+                m_OutputParams = value
+            End Set
+        End Property
 
         Public Property Filename() As String
             Get
@@ -62,15 +66,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End Set
         End Property
 
-        Public Property FixOnHeat() As Boolean
-            Get
-                Return m_FixOnHeat
-            End Get
-            Set(ByVal value As Boolean)
-                m_FixOnHeat = value
-            End Set
-        End Property
-
         Public Sub New(ByVal nome As String, ByVal descricao As String)
             MyBase.CreateNew()
             Me.m_ComponentName = nome
@@ -78,61 +73,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Me.FillNodeItems()
             Me.QTFillNodeItems()
         End Sub
-
-        Public Property Eficiencia() As Nullable(Of Double)
-            Get
-                Return m_eta
-            End Get
-            Set(ByVal value As Nullable(Of Double))
-                m_eta = value
-            End Set
-        End Property
-
-        Public Property OutletVaporFraction() As Nullable(Of Double)
-            Get
-                Return m_VFout
-            End Get
-            Set(ByVal value As Nullable(Of Double))
-                m_VFout = value
-            End Set
-        End Property
-
-        Public Property OutletTemperature() As Nullable(Of Double)
-            Get
-                Return m_Tout
-            End Get
-            Set(ByVal value As Nullable(Of Double))
-                m_Tout = value
-            End Set
-        End Property
-
-        Public Property CalcMode() As CalculationMode
-            Get
-                Return m_cmode
-            End Get
-            Set(ByVal value As CalculationMode)
-                m_cmode = value
-            End Set
-        End Property
-
-
-        Public Property DeltaP() As Nullable(Of Double)
-            Get
-                Return m_dp
-            End Get
-            Set(ByVal value As Nullable(Of Double))
-                m_dp = value
-            End Set
-        End Property
-
-        Public Property DeltaT() As Nullable(Of Double)
-            Get
-                Return m_dt
-            End Get
-            Set(ByVal value As Nullable(Of Double))
-                m_dt = value
-            End Set
-        End Property
 
         Public Property DeltaQ() As Nullable(Of Double)
             Get
@@ -158,29 +98,28 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
             Dim form As Global.DWSIM.FormFlowsheet = Me.FlowSheet
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-            Dim k As Integer
+            Dim k, ci, co As Integer
 
             Dim xcl As New Excel.Application()
-            xcl.Visible = True 'uncomment for debugging
+            'xcl.Visible = True 'uncomment for debugging
 
-            Dim EXFN As String = ExctractFilepath(form.Text) & Filename
             Dim mybook As Excel.Workbook
             Dim AppPath = Application.StartupPath
 
             'Load Excel definition file
-            If My.Computer.FileSystem.FileExists(EXFN) Then
-                mybook = xcl.Workbooks.Open(EXFN)
+            If My.Computer.FileSystem.FileExists(Filename) Then
+                mybook = xcl.Workbooks.Open(Filename)
             Else
                 xcl.Quit()
                 xcl.Dispose()
-                Throw New Exception("Definition file '" & EXFN & "' :" & DWSIM.App.GetLocalString("Oarquivonoexisteoufo"))
+                Throw New Exception("Definition file '" & Filename & "' :" & DWSIM.App.GetLocalString("Oarquivonoexisteoufo"))
             End If
 
             Dim mysheetIn As Excel.Worksheet = mybook.Sheets("Input")
             Dim mysheetOut As Excel.Worksheet = mybook.Sheets("Output")
             '=====================================================================================================
 
-            If Not Me.GraphicObject.InputConnectors(4).IsAttached Then
+            If Not Me.GraphicObject.InputConnectors(4).IsAttached Then 'Check if Energy stream existing
                 'Call function to calculate flowsheet
                 With objargs
                     .Calculado = False
@@ -191,20 +130,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 xcl.Quit()
                 xcl.Dispose()
                 CalculateFlowsheet(FlowSheet, objargs, Nothing)
-                Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedeenergia2"))
-            ElseIf Not Me.GraphicObject.OutputConnectors(0).IsAttached Then
-                'Call function to calculate flowsheet
-                With objargs
-                    .Calculado = False
-                    .Nome = Me.Nome
-                    .Tipo = TipoObjeto.ExcelUO
-                End With
-                mybook.Close(saveChanges:=False)
-                xcl.Quit()
-                xcl.Dispose()
-                CalculateFlowsheet(FlowSheet, objargs, Nothing)
-                Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
-            ElseIf Not Me.GraphicObject.InputConnectors(0).IsAttached Then
+                Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedeenergia1"))
+            End If
+
+            'check if at least one input and output connection is available
+            For k = 0 To 3
+                If GraphicObject.InputConnectors(k).IsAttached Then ci += 1
+                If GraphicObject.OutputConnectors(k).IsAttached Then co += 1
+            Next
+            If ci = 0 Or co = 0 Then
                 'Call function to calculate flowsheet
                 With objargs
                     .Calculado = False
@@ -218,13 +152,22 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
             End If
 
-            Dim Ti, Pi, Hi, Wi, ei, ein, T2, P2, H2 As Double
+            Dim Ti, Pi, Hi, Wi, T2, P2, H2, Hin, Hout, Win, Wout, MassBal As Double
             Dim es As DWSIM.SimulationObjects.Streams.EnergyStream = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(4).AttachedConnector.AttachedFrom.Name)
+            Dim ParName As String
+            Dim i As Integer
 
-            '======= read input stream data ===========================================================
+            '======= write data to Excel ==============================================================
             mysheetIn.Range("B5:E8").Value = "" 'delete Name, T, P, H of streams
             mysheetIn.Range("A12:E1000").Value = "" 'delete molar flows of streams
 
+            '======== input parameters ============
+            k = 0
+            For Each EP As ExcelParameter In InputParams.Values
+                mysheetIn.Cells(5 + k, 8).Formula = EP.Value
+                k += 1
+            Next
+            '======== Input streams to unit =======
             Dim S As DWSIM.SimulationObjects.Streams.MaterialStream
             For k = 0 To 3
                 If Me.GraphicObject.InputConnectors(k).IsAttached Then
@@ -234,19 +177,23 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Pi = S.Fases(0).SPMProperties.pressure.GetValueOrDefault.ToString
                     Hi = S.Fases(0).SPMProperties.enthalpy.GetValueOrDefault.ToString
                     Wi = S.Fases(0).SPMProperties.massflow.GetValueOrDefault.ToString
-                    ei = Hi * Wi
-                    ein = ei
+                    'ei = Hi * Wi
+                    'ein = ei
+                    Hin += Hi * Wi
+                    Win += Wi
 
                     '======= transfer data to Excel ===========================================================
                     mysheetIn.Cells(5, 2 + k).Value = Me.GraphicObject.InputConnectors(k).AttachedConnector.AttachedFrom.Tag
+                    mysheetOut.Cells(5, 2 + k).Value = Me.GraphicObject.InputConnectors(k).AttachedConnector.AttachedFrom.Tag
                     mysheetIn.Cells(6, 2 + k).Value = Ti
                     mysheetIn.Cells(7, 2 + k).Value = Pi
                     mysheetIn.Cells(8, 2 + k).Value = Hi
 
                     Dim dy As Integer = 0
                     For Each comp As DWSIM.ClassesBasicasTermodinamica.Substancia In S.Fases(0).Componentes.Values
-
                         mysheetIn.Cells(12 + dy, 1).Value = comp.ConstantProperties.Name
+                        mysheetOut.Cells(12 + dy, 1).Value = comp.ConstantProperties.Name
+
                         mysheetIn.Cells(12 + dy, 2 + k).Value = comp.MolarFlow
                         dy += 1
                     Next
@@ -257,6 +204,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim dy As Integer = 0
                     For Each comp As DWSIM.ClassesBasicasTermodinamica.Substancia In Me.PropertyPackage.CurrentMaterialStream.Fases(0).Componentes.Values
                         mysheetIn.Cells(12 + dy, 1).Value = comp.ConstantProperties.Name
+                        mysheetOut.Cells(12 + dy, 1).Value = comp.ConstantProperties.Name
                         mysheetIn.Cells(12 + dy, 2 + k * 2).Value = ""
                         mysheetIn.Cells(12 + dy, 3 + k * 2).Value = ""
                         dy += 1
@@ -264,13 +212,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End If
             Next
 
-          
-            '======= read data from Excel =============================================================
+
+            '======= read results from Excel =============================================================
             Dim Vmol As New Dictionary(Of String, Double)
-            Dim i As Integer
             Dim v As Double
             Dim SMass, SMole As Double
-            For k = 0 To 3 'run through all streams
+
+
+            For k = 0 To 3 'run through all streams to execute TP-flash
                 If Me.GraphicObject.OutputConnectors(k).IsAttached Then
                     Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(k).AttachedConnector.AttachedTo.Name)
 
@@ -303,6 +252,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, T2, P2, 0)
                         H2 = tmp(4)
                         .Fases(0).SPMProperties.enthalpy = H2
+                        Hout += H2 * SMass
+                        Wout += SMass
                     End With
 
                 End If
@@ -310,8 +261,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             '======= caclculate output stream data ====================================================
 
-            Me.DeltaT = T2 - Ti
-            Me.DeltaQ = (H2 - Hi) / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
+            Me.DeltaQ = Hout - Hin
 
             'Corrente de energia - atualizar valor da potência (kJ/s)
             With es
@@ -319,13 +269,34 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 .GraphicObject.Calculated = True
             End With
 
-            
+            '======== read output parameters from Excel table =========================================
+            k = 0
+            OutputParams.Clear()
+            Do
+                Dim ExlPar As New ExcelParameter
+
+                ParName = mysheetOut.Cells(5 + k, 7).Value
+                If ParName <> "" Then
+                    ExlPar.Name = ParName
+                    ExlPar.Value = mysheetOut.Cells(5 + k, 8).Value
+                    ExlPar.Unit = mysheetOut.Cells(5 + k, 9).Value
+                    ExlPar.Annotation = mysheetOut.Cells(5 + k, 10).Value
+                    OutputParams.Add(ExlPar.Name, ExlPar)
+
+                    k += 1
+                End If
+            Loop While ParName <> ""
 
 
             '=============== clean up Excel stuff ================================================================
             mybook.Close(saveChanges:=True)
             xcl.Quit()
             xcl.Dispose()
+
+            MassBal = 100 * (Wout - Win) / (Win)
+            If Math.Abs(MassBal) > 0.001 Then
+                Throw New Exception("Mass balance error: " & MassBal & "%")
+            End If
 
             'Call function to calculate flowsheet
             With objargs
@@ -336,7 +307,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End With
 
 
-            '===========================================0
+            '===========================================
             form.CalculationQueue.Enqueue(objargs)
 
         End Function
@@ -369,8 +340,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 End If
             Next
-
-           
 
             'Corrente de energia - atualizar valor da potência (kJ/s)
             If Me.GraphicObject.EnergyConnector.IsAttached Then
@@ -411,33 +380,78 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Me.QTFillNodeItems()
             End If
 
+            'read input and output parameters from associated Excel table if not existing yet (=during loading from file)
+            If Filename <> "" And InputParams.Count = 0 And OutputParams.Count = 0 Then
+                Dim xcl As New Excel.Application()
+                'xcl.Visible = True 'uncomment for debugging
+
+                Dim mybook As Excel.Workbook
+                Dim AppPath = Application.StartupPath
+                Dim ParName As String
+                Dim i As Integer
+
+                'Load Excel definition file
+                If My.Computer.FileSystem.FileExists(Filename) Then
+                    mybook = xcl.Workbooks.Open(Filename)
+                    Dim mysheetIn As Excel.Worksheet = mybook.Sheets("Input")
+                    Dim mysheetOut As Excel.Worksheet = mybook.Sheets("Output")
+
+                    InputParams.Clear()
+                    i = 0
+                    Do
+                        Dim ExlPar As New ExcelParameter
+
+                        ParName = mysheetIn.Cells(5 + i, 7).Value
+                        If ParName <> "" Then
+                            ExlPar.Name = ParName
+                            ExlPar.Value = mysheetIn.Cells(5 + i, 8).Value
+                            ExlPar.Unit = mysheetIn.Cells(5 + i, 9).Value
+                            ExlPar.Annotation = mysheetIn.Cells(5 + i, 10).Value
+                            InputParams.Add(ExlPar.Name, ExlPar)
+
+                            i += 1
+                        End If
+                    Loop While ParName <> ""
+
+                    OutputParams.Clear()
+                    i = 0
+                    Do
+                        Dim ExlPar As New ExcelParameter
+
+                        ParName = mysheetOut.Cells(5 + i, 7).Value
+                        If ParName <> "" Then
+                            ExlPar.Name = ParName
+                            ExlPar.Value = mysheetOut.Cells(5 + i, 8).Value
+                            ExlPar.Unit = mysheetOut.Cells(5 + i, 9).Value
+                            ExlPar.Annotation = mysheetOut.Cells(5 + i, 10).Value
+                            OutputParams.Add(ExlPar.Name, ExlPar)
+
+                            i += 1
+                        End If
+                    Loop While ParName <> ""
+
+
+                    xcl.Quit()
+                    xcl.Dispose()
+                Else
+                    xcl.Quit()
+                    xcl.Dispose()
+                End If
+
+
+            End If
+
             With Me.QTNodeTableItems
 
                 Dim valor As String
-
-                If Me.DeltaP.HasValue Then
-                    valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP), nf)
-                Else
-                    valor = DWSIM.App.GetLocalString("NC")
-                End If
-                .Item(0).Value = valor
-                .Item(0).Unit = su.spmp_deltaP
-
-                If Me.DeltaT.HasValue Then
-                    valor = Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT), nf)
-                Else
-                    valor = DWSIM.App.GetLocalString("NC")
-                End If
-                .Item(1).Value = valor
-                .Item(1).Unit = su.spmp_deltaT
 
                 If Me.DeltaQ.HasValue Then
                     valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ), nf)
                 Else
                     valor = DWSIM.App.GetLocalString("NC")
                 End If
-                .Item(2).Value = valor
-                .Item(2).Unit = su.spmp_heatflow
+                .Item(0).Value = valor
+                .Item(0).Unit = su.spmp_heatflow
 
             End With
 
@@ -445,19 +459,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Sub QTFillNodeItems()
 
-            With Me.QTNodeTableItems
+            With QTNodeTableItems
 
                 .Clear()
-
-                .Add(0, New DWSIM.Outros.NodeItem("DP", "", "", 0, 0, ""))
-                .Add(1, New DWSIM.Outros.NodeItem("DT", "", "", 1, 0, ""))
-                .Add(2, New DWSIM.Outros.NodeItem("Pot", "", "", 2, 0, ""))
+                .Add(0, New DWSIM.Outros.NodeItem("Q", "", "", 0, 0, ""))
 
             End With
         End Sub
 
         Public Overrides Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
-
             Dim Conversor As New DWSIM.SistemasDeUnidades.Conversor
 
             With pgrid
@@ -518,6 +528,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     energ = ""
                 End If
 
+                '==== Streams (1) =======================
                 '==== Input streams ===
                 .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada1"), ent1, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
                 With .Item(.Item.Count - 1)
@@ -562,81 +573,44 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
                 End With
 
+                '==== Energy stream ===
                 .Item.Add(DWSIM.App.GetLocalString("Correntedeenergia"), energ, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                     .CustomEditor = New DWSIM.Editors.Streams.UIInputESSelector
                 End With
 
-                Dim valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
-                .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Quedadepressoaplicad3"), True)
-                With .Item(.Item.Count - 1)
-                    .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_deltaP, "DP"}
-                    .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
-                End With
 
+                '==== Input Parameters (2) =======================
+                '======== Input parameters from Excel ============
+                For Each Prop As ExcelParameter In InputParams.Values
+                    .Item.Add(FT(Prop.Name, Prop.Unit), Prop.Value, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), Prop.Annotation, True)
+                Next
 
-                .Item.Add(DWSIM.App.GetLocalString("HeaterCoolerCalcMode"), Me, "CalcMode", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
-
-                Select Case Me.CalcMode
-
-                    Case CalculationMode.EnergyStream
-
-                    Case CalculationMode.HeatAdded
-
-                        valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault), FlowSheet.Options.NumberFormat)
-                        .Item.Add(FT(DWSIM.App.GetLocalString("CalorFornecido"), su.spmp_heatflow), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Quantidadedecalorced"), True)
-                        With .Item(.Item.Count - 1)
-                            .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_heatflow, "E"}
-                            .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
-                        End With
-
-                    Case CalculationMode.OutletTemperature
-
-                        valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature.GetValueOrDefault), FlowSheet.Options.NumberFormat)
-                        .Item.Add(FT(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature"), su.spmp_temperature), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
-                        With .Item(.Item.Count - 1)
-                            .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
-                            .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
-                        End With
-
-                    Case CalculationMode.OutletVaporFraction
-
-                        valor = Format(Me.OutletVaporFraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
-                        .Item.Add(DWSIM.App.GetLocalString("FraomolardafaseFaseV"), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
-
-                End Select
                 .Item.Add("ExcelUOEditor", Me, "Filename", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "Excel file definition", True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                     .CustomEditor = New DWSIM.Editors.ExcelUO.UIExcelUOEditor
                 End With
 
-                .Item.Add(DWSIM.App.GetLocalString("Eficincia0100"), Me, "Eficiencia", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Eficinciadoaquecedor"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultValue = Nothing
-                    .DefaultType = GetType(Nullable(Of Double))
-                End With
+                '==== Results (3) =================================
+                '======== Output parameters from Excel ============
+                For Each Prop As ExcelParameter In OutputParams.Values
+                    .Item.Add(FT(Prop.Name, Prop.Unit), Prop.Value, True, DWSIM.App.GetLocalString("Resultados3"), Prop.Annotation, True)
+                Next
 
-                If Me.GraphicObject.Calculated And Not Me.CalcMode = CalculationMode.HeatAdded Then
-                    valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault), FlowSheet.Options.NumberFormat)
-                    .Item.Add(FT(DWSIM.App.GetLocalString("CalorFornecido"), su.spmp_heatflow), valor, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Quantidadedecalorced"), True)
-                End If
+                '======== heat due to enthalpy balance ============
+                Dim valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+                .Item.Add(FT(DWSIM.App.GetLocalString("CalorFornecido"), su.spmp_heatflow), valor, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Quantidadedecalorced"), True)
+                .Item(.Item.Count - 1).Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_heatflow, "E"}
 
-                .Item.Add(FT(DWSIM.App.GetLocalString("DeltaT2"), su.spmp_deltaT), Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Diferenadetemperatur"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultValue = Nothing
-                    .DefaultType = GetType(Nullable(Of Double))
-                End With
-
+                '========== Error message =========================
                 If Me.GraphicObject.Calculated = False Then
                     .Item.Add(DWSIM.App.GetLocalString("Mensagemdeerro"), Me, "ErrorMessage", True, DWSIM.App.GetLocalString("Miscelnea4"), DWSIM.App.GetLocalString("Mensagemretornadaqua"), True)
                     With .Item(.Item.Count - 1)
                         .DefaultType = GetType(System.String)
                     End With
                 End If
-
-
 
             End With
 
@@ -647,53 +621,54 @@ Namespace DWSIM.SimulationObjects.UnitOps
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
             Dim value As Double = 0
-            Dim propidx As Integer = CInt(prop.Split("_")(2))
 
-            Select Case propidx
+            Dim propType As String = prop.Split("_")(0)
+            Dim propID As String = prop.Split("_")(1)
 
-                Case 0
-                    'PROP_HT_0	Pressure Drop
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
-                Case 1
-                    'PROP_HT_1(Efficiency)
-                    value = Me.Eficiencia.GetValueOrDefault
-                Case 2
-                    'PROP_HT_2	Outlet Temperature
-                    value = cv.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature.GetValueOrDefault)
-                Case 3
-                    'PROP_HT_3	Heat Added
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
-                Case 4
-                    'PROP_HT_4(Delta - T)
-                    value = cv.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
-
+            Select Case propType
+                Case "Calc"
+                    value = cv.ConverterDoSI(su.spmp_heatflow, DeltaQ.GetValueOrDefault)
+                Case "In"
+                    value = InputParams(propID).Value
+                Case "Out"
+                    value = OutputParams(propID).Value
             End Select
 
             Return value
-
         End Function
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
-            Dim i As Integer = 0
+
             Dim proplist As New ArrayList
+
             Select Case proptype
                 Case PropertyType.RO
-                    For i = 4 To 4
-                        proplist.Add("PROP_HT_" + CStr(i))
+                    proplist.Add("Calc_dQ")
+                    For Each P As ExcelParameter In OutputParams.Values
+                        proplist.Add("Out_" + P.Name)
                     Next
                 Case PropertyType.RW
-                    For i = 0 To 4
-                        proplist.Add("PROP_HT_" + CStr(i))
+                    proplist.Add("Calc_dQ")
+                    For Each P As ExcelParameter In OutputParams.Values
+                        proplist.Add("Out_" + P.Name)
+                    Next
+                    For Each P As ExcelParameter In InputParams.Values
+                        proplist.Add("In_" + P.Name)
                     Next
                 Case PropertyType.WR
-                    For i = 0 To 3
-                        proplist.Add("PROP_HT_" + CStr(i))
+                    For Each P As ExcelParameter In InputParams.Values
+                        proplist.Add("In_" + P.Name)
                     Next
                 Case PropertyType.ALL
-                    For i = 0 To 4
-                        proplist.Add("PROP_HT_" + CStr(i))
+                    proplist.Add("Calc_dQ")
+                    For Each P As ExcelParameter In InputParams.Values
+                        proplist.Add("In_" + P.Name)
+                    Next
+                    For Each P As ExcelParameter In OutputParams.Values
+                        proplist.Add("Out_" + P.Name)
                     Next
             End Select
+
             Return proplist.ToArray(GetType(System.String))
             proplist = Nothing
         End Function
@@ -701,24 +676,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Overrides Function SetPropertyValue(ByVal prop As String, ByVal propval As Object, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing) As Object
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-            Dim propidx As Integer = CInt(prop.Split("_")(2))
 
-            Select Case propidx
+            Dim propType As String = prop.Split("_")(0)
+            Dim propID As String = prop.Split("_")(1)
 
-                Case 0
-                    'PROP_HT_0	Pressure Drop
-                    Me.DeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
-                Case 1
-                    'PROP_HT_1(Efficiency)
-                    Me.Eficiencia = propval
-                Case 2
-                    'PROP_HT_2	Outlet Temperature
-                    Me.OutletTemperature = cv.ConverterParaSI(su.spmp_temperature, propval)
-                Case 3
-                    'PROP_HT_3	Heat Added
-                    Me.DeltaQ = cv.ConverterParaSI(su.spmp_heatflow, propval)
-
+            Select Case propType
+                Case "Calc"
+                    DeltaQ = cv.ConverterParaSI(su.spmp_heatflow, propval)
+                Case "In"
+                    InputParams(propID).Value = propval
+                Case "Out"
+                    OutputParams(propID).Value = propval
             End Select
+
             Return 1
         End Function
 
@@ -726,26 +696,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
             Dim value As String = ""
-            Dim propidx As Integer = CInt(prop.Split("_")(2))
 
-            Select Case propidx
+            Dim propType As String = prop.Split("_")(0)
+            Dim propID As String = prop.Split("_")(1)
 
-                Case 0
-                    'PROP_HT_0	Pressure Drop
-                    value = su.spmp_deltaP
-                Case 1
-                    'PROP_HT_1(Efficiency)
-                    value = ""
-                Case 2
-                    'PROP_HT_2	Outlet Temperature
-                    value = su.spmp_temperature
-                Case 3
-                    'PROP_HT_3	Heat Added
+            Select Case propType
+                Case "Calc"
                     value = su.spmp_heatflow
-                Case 4
-                    'PROP_HT_4(Delta - T)
-                    value = su.spmp_deltaT
-
+                Case "In"
+                    value = InputParams(propID).Unit
+                Case "Out"
+                    value = OutputParams(propID).Unit
             End Select
 
             Return value
