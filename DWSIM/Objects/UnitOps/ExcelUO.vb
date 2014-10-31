@@ -161,7 +161,20 @@ Namespace DWSIM.SimulationObjects.UnitOps
             mysheetIn.Range("B5:E8").Value = "" 'delete Name, T, P, H of streams
             mysheetIn.Range("A12:E1000").Value = "" 'delete molar flows of streams
 
-            '======== input parameters ============
+            '======= write stream names to Excel =========
+            For k = 0 To 3
+                If GraphicObject.InputConnectors(k).IsAttached Then
+                    mysheetIn.Cells(5, 2 + k).Value = Me.GraphicObject.InputConnectors(k).AttachedConnector.AttachedFrom.Tag
+                Else
+                    mysheetIn.Cells(5, 2 + k).Value = ""
+                End If
+                If GraphicObject.OutputConnectors(k).IsAttached Then
+                    mysheetOut.Cells(5, 2 + k).Value = Me.GraphicObject.OutputConnectors(k).AttachedConnector.AttachedTo.Tag
+                Else
+                    mysheetOut.Cells(5, 2 + k).Value = ""
+                End If
+            Next
+            '======== write input parameters ============
             k = 0
             For Each EP As ExcelParameter In InputParams.Values
                 mysheetIn.Cells(5 + k, 8).Formula = EP.Value
@@ -177,14 +190,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Pi = S.Fases(0).SPMProperties.pressure.GetValueOrDefault.ToString
                     Hi = S.Fases(0).SPMProperties.enthalpy.GetValueOrDefault.ToString
                     Wi = S.Fases(0).SPMProperties.massflow.GetValueOrDefault.ToString
-                    'ei = Hi * Wi
-                    'ein = ei
                     Hin += Hi * Wi
                     Win += Wi
 
                     '======= transfer data to Excel ===========================================================
-                    mysheetIn.Cells(5, 2 + k).Value = Me.GraphicObject.InputConnectors(k).AttachedConnector.AttachedFrom.Tag
-                    mysheetOut.Cells(5, 2 + k).Value = Me.GraphicObject.InputConnectors(k).AttachedConnector.AttachedFrom.Tag
                     mysheetIn.Cells(6, 2 + k).Value = Ti
                     mysheetIn.Cells(7, 2 + k).Value = Pi
                     mysheetIn.Cells(8, 2 + k).Value = Hi
@@ -193,31 +202,28 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     For Each comp As DWSIM.ClassesBasicasTermodinamica.Substancia In S.Fases(0).Componentes.Values
                         mysheetIn.Cells(12 + dy, 1).Value = comp.ConstantProperties.Name
                         mysheetOut.Cells(12 + dy, 1).Value = comp.ConstantProperties.Name
-
                         mysheetIn.Cells(12 + dy, 2 + k).Value = comp.MolarFlow
                         dy += 1
                     Next
                 Else
-                    mysheetIn.Cells(6, 2 + k * 2).Value = ""
-                    mysheetIn.Cells(7, 2 + k * 2).Value = ""
-                    mysheetIn.Cells(8, 2 + k * 2).Value = ""
+                    mysheetIn.Cells(6, 2 + k).Value = ""
+                    mysheetIn.Cells(7, 2 + k).Value = ""
+                    mysheetIn.Cells(8, 2 + k).Value = ""
                     Dim dy As Integer = 0
                     For Each comp As DWSIM.ClassesBasicasTermodinamica.Substancia In Me.PropertyPackage.CurrentMaterialStream.Fases(0).Componentes.Values
                         mysheetIn.Cells(12 + dy, 1).Value = comp.ConstantProperties.Name
                         mysheetOut.Cells(12 + dy, 1).Value = comp.ConstantProperties.Name
-                        mysheetIn.Cells(12 + dy, 2 + k * 2).Value = ""
-                        mysheetIn.Cells(12 + dy, 3 + k * 2).Value = ""
+                        mysheetIn.Cells(12 + dy, 2 + k).Value = ""
+                        mysheetIn.Cells(12 + dy, 3 + k).Value = ""
                         dy += 1
                     Next
                 End If
             Next
 
-
             '======= read results from Excel =============================================================
             Dim Vmol As New Dictionary(Of String, Double)
             Dim v As Double
             Dim SMass, SMole As Double
-
 
             For k = 0 To 3 'run through all streams to execute TP-flash
                 If Me.GraphicObject.OutputConnectors(k).IsAttached Then
@@ -249,9 +255,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Next
                         .Fases(0).SPMProperties.massflow = SMass
 
-                        Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, T2, P2, 0)
-                        H2 = tmp(4)
-                        .Fases(0).SPMProperties.enthalpy = H2
+                        Try
+                            Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, T2, P2, 0)
+                            H2 = tmp(4)
+                            .Fases(0).SPMProperties.enthalpy = H2
+                        Catch ex As Exception
+                            mybook.Close(saveChanges:=True)
+                            xcl.Quit()
+                            xcl.Dispose()
+                            Throw New Exception("Flash calculation error")
+                        End Try
+
                         Hout += H2 * SMass
                         Wout += SMass
                     End With
@@ -295,7 +309,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             MassBal = 100 * (Wout - Win) / (Win)
             If Math.Abs(MassBal) > 0.001 Then
-                Throw New Exception("Mass balance error: " & MassBal & "%")
+                form.WriteToLog(Me.GraphicObject.Tag & ": " & "Mass balance error: " & MassBal & "%", Color.Red, FormClasses.TipoAviso.Erro)
             End If
 
             'Call function to calculate flowsheet

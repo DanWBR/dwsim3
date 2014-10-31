@@ -118,50 +118,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="FileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 20</value>
-  </data>
-  <data name="FileToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Datei</value>
-  </data>
-  <data name="VerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 20</value>
-  </data>
-  <data name="VerToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Einstellungen</value>
-  </data>
-  <data name="WindowsMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 20</value>
-  </data>
-  <data name="WindowsMenu.Text" xml:space="preserve">
-    <value>&amp;Fenster</value>
-  </data>
-  <data name="HelpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
-  </data>
-  <data name="HelpToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Hilfe</value>
-  </data>
-  <data name="NovoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="NewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>264, 22</value>
   </data>
-  <data name="NovoToolStripMenuItem.Text" xml:space="preserve">
-    <value>Neu</value>
-  </data>
-  <data name="NewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 22</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="NewToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="NewToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Neue stationäre Simulation</value>
   </data>
   <data name="NovoEstudoDoCriadorDeComponentesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 22</value>
+    <value>264, 22</value>
+  </data>
+  <data name="NovoEstudoDoCriadorDeComponentesToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="NovoEstudoDoCriadorDeComponentesToolStripMenuItem.Text" xml:space="preserve">
     <value>Neue Komponente</value>
   </data>
   <data name="NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 22</value>
+    <value>264, 22</value>
+  </data>
+  <data name="NovoEstudoDeRegressãoDeDadosToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Text" xml:space="preserve">
     <value>Neue Datenregression (VLE/LLE)</value>
@@ -169,14 +149,23 @@
   <data name="OpenToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>264, 22</value>
   </data>
+  <data name="OpenToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="OpenToolStripMenuItem.Text" xml:space="preserve">
     <value>Simulation ö&amp;ffnen</value>
   </data>
   <data name="toolStripSeparator.Size" type="System.Drawing.Size, System.Drawing">
     <value>261, 6</value>
   </data>
+  <data name="toolStripSeparator.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="SaveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>264, 22</value>
+  </data>
+  <data name="SaveToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="SaveToolStripMenuItem.Text" xml:space="preserve">
     <value>Aktive Simulation &amp;speichern</value>
@@ -184,11 +173,17 @@
   <data name="SaveAllToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>264, 22</value>
   </data>
+  <data name="SaveAllToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="SaveAllToolStripMenuItem.Text" xml:space="preserve">
     <value>Alle speichern</value>
   </data>
   <data name="SaveAsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>264, 22</value>
+  </data>
+  <data name="SaveAsToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="SaveAsToolStripMenuItem.Text" xml:space="preserve">
     <value>Speichern &amp;unter...</value>
@@ -196,8 +191,14 @@
   <data name="ToolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
     <value>261, 6</value>
   </data>
+  <data name="ToolStripSeparator2.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="CloseAllToolstripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>264, 22</value>
+  </data>
+  <data name="CloseAllToolstripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="CloseAllToolstripMenuItem.Text" xml:space="preserve">
     <value>Alle offenen Simulationen schließen</value>
@@ -205,26 +206,68 @@
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>261, 6</value>
   </data>
+  <data name="toolStripSeparator1.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ExitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>264, 22</value>
+  </data>
+  <data name="ExitToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ExitToolStripMenuItem.Text" xml:space="preserve">
     <value>DWSIM &amp;beenden</value>
   </data>
+  <data name="FileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 20</value>
+  </data>
+  <data name="FileToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="FileToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Datei</value>
+  </data>
   <data name="PreferênciasDoDWSIMToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 22</value>
+  </data>
+  <data name="PreferênciasDoDWSIMToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="PreferênciasDoDWSIMToolStripMenuItem.Text" xml:space="preserve">
     <value>Allgemeine Einstellungen</value>
   </data>
+  <data name="DatabaseManagerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 22</value>
+  </data>
+  <data name="DatabaseManagerToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="DatabaseManagerToolStripMenuItem.Text" xml:space="preserve">
+    <value>Datenbank Manager</value>
+  </data>
   <data name="MostrarBarraDeFerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 22</value>
+  </data>
+  <data name="MostrarBarraDeFerramentasToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="MostrarBarraDeFerramentasToolStripMenuItem.Text" xml:space="preserve">
     <value>Zeige Tooltips</value>
   </data>
+  <data name="VerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 20</value>
+  </data>
+  <data name="VerToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="VerToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Einstellungen</value>
+  </data>
   <data name="CascadeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 22</value>
+  </data>
+  <data name="CascadeToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="CascadeToolStripMenuItem.Text" xml:space="preserve">
     <value>Über&amp;lappend</value>
@@ -232,17 +275,35 @@
   <data name="TileVerticalToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 22</value>
   </data>
+  <data name="TileVerticalToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TileVerticalToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Untereinander</value>
   </data>
   <data name="TileHorizontalToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 22</value>
   </data>
+  <data name="TileHorizontalToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TileHorizontalToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Nebeneinander</value>
   </data>
+  <data name="WindowsMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 20</value>
+  </data>
+  <data name="WindowsMenu.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="WindowsMenu.Text" xml:space="preserve">
+    <value>&amp;Fenster</value>
+  </data>
   <data name="ContentsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
+  </data>
+  <data name="ContentsToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ContentsToolStripMenuItem.Text" xml:space="preserve">
     <value>Hilfe &amp;anzeigen</value>
@@ -250,11 +311,8 @@
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
     <value>172, 6</value>
   </data>
-  <data name="DWSIMNaInternetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 22</value>
-  </data>
-  <data name="DWSIMNaInternetToolStripMenuItem.Text" xml:space="preserve">
-    <value>DWSIM im Netz</value>
+  <data name="toolStripSeparator5.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="BlogDeDesenvolvimentoToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -279,6 +337,9 @@
   </data>
   <data name="BlogDeDesenvolvimentoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>351, 22</value>
+  </data>
+  <data name="BlogDeDesenvolvimentoToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="BlogDeDesenvolvimentoToolStripMenuItem.Text" xml:space="preserve">
     <value>Entwickler-Blog</value>
@@ -307,6 +368,9 @@
   <data name="DownloadsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>351, 22</value>
   </data>
+  <data name="DownloadsToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="WikiToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -331,6 +395,9 @@
   <data name="WikiToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>351, 22</value>
   </data>
+  <data name="WikiToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="FórumToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -354,6 +421,9 @@
   </data>
   <data name="FórumToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>351, 22</value>
+  </data>
+  <data name="FórumToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="FórumToolStripMenuItem.Text" xml:space="preserve">
     <value>Forum</value>
@@ -382,17 +452,26 @@
   <data name="RastreamentoDeBugsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>351, 22</value>
   </data>
+  <data name="RastreamentoDeBugsToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="RastreamentoDeBugsToolStripMenuItem.Text" xml:space="preserve">
     <value>Bug Tracking / Feature und Unterstützung anfordern</value>
   </data>
-  <data name="RegistroToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="DWSIMNaInternetToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
   </data>
-  <data name="RegistroToolStripMenuItem.Text" xml:space="preserve">
-    <value>Registry</value>
+  <data name="DWSIMNaInternetToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="DWSIMNaInternetToolStripMenuItem.Text" xml:space="preserve">
+    <value>DWSIM im Netz</value>
   </data>
   <data name="RegistrarTiposCOMToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>237, 22</value>
+  </data>
+  <data name="RegistrarTiposCOMToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="RegistrarTiposCOMToolStripMenuItem.Text" xml:space="preserve">
     <value>Register types for COM Interop</value>
@@ -400,11 +479,26 @@
   <data name="DeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>237, 22</value>
   </data>
+  <data name="DeToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="DeToolStripMenuItem.Text" xml:space="preserve">
     <value>Unregister types</value>
   </data>
+  <data name="RegistroToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 22</value>
+  </data>
+  <data name="RegistroToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="RegistroToolStripMenuItem.Text" xml:space="preserve">
+    <value>Registry</value>
+  </data>
   <data name="DonateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
+  </data>
+  <data name="DonateToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="DonateToolStripMenuItem.Text" xml:space="preserve">
     <value>Spenden!</value>
@@ -412,41 +506,98 @@
   <data name="AboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 22</value>
   </data>
+  <data name="AboutToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="AboutToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Über DWSIM...</value>
+  </data>
+  <data name="HelpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
+  </data>
+  <data name="HelpToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="HelpToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Hilfe</value>
+  </data>
+  <data name="NewToolStripButton.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="NewToolStripButton.Text" xml:space="preserve">
     <value>Neue stationäre Simulation</value>
   </data>
+  <data name="OpenToolStripButton.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="OpenToolStripButton.Text" xml:space="preserve">
     <value>Simulation ö&amp;ffnen</value>
+  </data>
+  <data name="SaveToolStripButton.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="SaveToolStripButton.Text" xml:space="preserve">
     <value>Aktive Simulation &amp;speichern</value>
   </data>
+  <data name="ToolStripButton1.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton1.Text" xml:space="preserve">
     <value>Speichern unter...</value>
+  </data>
+  <data name="SaveAllToolStripButton.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="SaveAllToolStripButton.Text" xml:space="preserve">
     <value>Alle speichern</value>
   </data>
+  <data name="ToolStripSeparator3.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripButton2.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton2.Text" xml:space="preserve">
     <value>Allgemeine Einstellungen</value>
+  </data>
+  <data name="ToolStripSeparator4.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripButton3.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripButton3.Text" xml:space="preserve">
     <value>Fenster überlappen</value>
   </data>
+  <data name="ToolStripButton5.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton5.Text" xml:space="preserve">
     <value>Gruppiert Fenster untereinander</value>
+  </data>
+  <data name="ToolStripButton4.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripButton4.Text" xml:space="preserve">
     <value>Gruppiert Fenster übereinander</value>
   </data>
+  <data name="ToolStripSeparator6.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripButton6.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton6.Text" xml:space="preserve">
     <value>Show Context-Sensitive Help</value>
   </data>
+  <data name="ToolStripButton7.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton7.Text" xml:space="preserve">
     <value>Spenden</value>
+  </data>
+  <data name="ToolStripButton8.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripButton8.Text" xml:space="preserve">
     <value>Über DWSIM</value>
@@ -462,6 +613,12 @@
   </data>
   <data name="SaveFileDialog1.Title" xml:space="preserve">
     <value>Aktive Simularion speichern</value>
+  </data>
+  <data name="ToolStripStatusLabel1.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="tslupd.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

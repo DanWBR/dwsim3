@@ -47,12 +47,15 @@ Public Class ExcelUOEditorForm
     End Function
     Private Sub BtnEdit_Click(sender As System.Object, e As System.EventArgs) Handles BtnEdit.Click
         If TbFileName.Text <> "" Then
-            Dim xcl As New Excel.Application()
-            Dim mybook As Excel.Workbook
+            If My.Computer.FileSystem.FileExists(TbFileName.Text) Then
+                Dim xcl As New Excel.Application()
+                Dim mybook As Excel.Workbook
 
-            xcl.Visible = True
-            mybook = xcl.Workbooks.Open(TbFileName.Text)
-
+                xcl.Visible = True
+                mybook = xcl.Workbooks.Open(TbFileName.Text)
+            Else
+                MessageBox.Show(DWSIM.App.GetLocalString("Oarquivonoexisteoufo"), DWSIM.App.GetLocalString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
         End If
     End Sub
 
@@ -60,10 +63,8 @@ Public Class ExcelUOEditorForm
         Dim FileName As String = My.Application.ActiveSimulation.Text
         Dim AppPath = Application.StartupPath
 
-        'TemplateExcelUO.xlsx
-
-        OpenFileDialog1.Title = "Select Filename"
-        OpenFileDialog1.Filter = "Excel files|*.xls; *xlsx"
+        OpenFileDialog1.Title = "New Filename"
+        OpenFileDialog1.Filter = "Excel files|*.xlsx; *xls"
         OpenFileDialog1.ValidateNames = False
         OpenFileDialog1.CheckFileExists = False
         OpenFileDialog1.CheckPathExists = True
