@@ -4870,4 +4870,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Nohcorrentedeenergia1" xml:space="preserve">
     <value>No energy stream associated with the ExcelUO.</value>
   </data>
+  <data name="ExcelUOEditor" xml:space="preserve">
+    <value>Editor</value>
+  </data>
 </root>

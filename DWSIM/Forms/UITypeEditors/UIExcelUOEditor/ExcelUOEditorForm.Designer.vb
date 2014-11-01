@@ -45,6 +45,7 @@ Partial Class ExcelUOEditorForm
         '
         Me.OpenFileDialog1.CheckFileExists = False
         Me.OpenFileDialog1.CheckPathExists = False
+        resources.ApplyResources(Me.OpenFileDialog1, "OpenFileDialog1")
         Me.OpenFileDialog1.RestoreDirectory = True
         '
         'BtnNew
@@ -74,6 +75,7 @@ Partial Class ExcelUOEditorForm
         Me.Controls.Add(Me.BtnSearch)
         Me.Controls.Add(Me.TbFileName)
         Me.Controls.Add(Me.Label1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "ExcelUOEditorForm"
         Me.ResumeLayout(False)
         Me.PerformLayout()

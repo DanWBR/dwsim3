@@ -940,6 +940,7 @@ Public Class frmProps
                 End If
                 End If
         End If
+
         Call ChildParent.FormSurface.UpdateSelectedObject()
         Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
 
