@@ -109,7 +109,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             i = 0
             Px = 0
             Do
-                Px = Px + (Vz(i) / Vp(i))
+                If Vp(i) <> 0.0# Then Px = Px + (Vz(i) / Vp(i))
                 i = i + 1
             Loop Until i = n + 1
             Px = 1 / Px
@@ -417,7 +417,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, Vx, 0.0#, PP.RET_Nu
             i = 0
             Px = 0
             Do
-                Px = Px + (Vz(i) / Vp(i))
+                If Vp(i) <> 0.0# Then Px = Px + (Vz(i) / Vp(i))
                 i = i + 1
             Loop Until i = n + 1
             Px = 1 / Px
@@ -844,7 +844,7 @@ restart:    Do
             i = 0
             Px = 0
             Do
-                Px = Px + (Vz(i) / Vp(i))
+                If Vp(i) <> 0.0# Then Px = Px + (Vz(i) / Vp(i))
                 i = i + 1
             Loop Until i = n + 1
             Px = 1 / Px
