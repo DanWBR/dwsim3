@@ -35,6 +35,7 @@ Public Class FormSensAnalysis
     Public selectedindex As Integer = 0
     Public selectedsacase As SensitivityAnalysisCase
     Private selected As Boolean = False
+    Private EnableAutoSave As Boolean = True
 
     Public cbc2, cbc3, cbc0, cbc1 As DataGridViewComboBoxCell
 
@@ -158,11 +159,20 @@ Public Class FormSensAnalysis
 
     Private Sub cbPropIndVar1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbPropIndVar1.SelectedIndexChanged
         Dim props As String() = Me.ReturnProperties(Me.cbObjIndVar1.SelectedItem.ToString, False)
+        If Me.cbPropIndVar1.SelectedItem <> "" Then
+            btnRun.Enabled = True
+            chkIndVar2.Enabled = True
+        Else
+            btnRun.Enabled = False
+            chkIndVar2.Enabled = False
+        End If
         For Each prop As String In props
             If DWSIM.App.GetPropertyName(prop) = Me.cbPropIndVar1.SelectedItem.ToString Then
                 For Each obj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                     If Me.cbObjIndVar1.SelectedItem.ToString = obj.GraphicObject.Tag Then
                         Me.tbUnitIndVar1.Text = obj.GetPropertyUnit(prop, su)
+                        If EnableAutoSave Then SaveForm(selectedsacase)
+                        Exit Sub
                     End If
                 Next
             End If
@@ -176,6 +186,8 @@ Public Class FormSensAnalysis
                 For Each obj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                     If Me.cbObjIndVar2.SelectedItem.ToString = obj.GraphicObject.Tag Then
                         Me.tbUnitIndVar2.Text = obj.GetPropertyUnit(prop, su)
+                        If EnableAutoSave Then SaveForm(selectedsacase)
+                        Exit Sub
                     End If
                 Next
             End If
@@ -188,21 +200,28 @@ Public Class FormSensAnalysis
 
         sacase.name = "SACase" & form.Collections.OPT_SensAnalysisCollection.Count
 
+        form.Collections.OPT_SensAnalysisCollection.Add(sacase)
+
         Me.lbCases.Items.Add(sacase.name)
         Me.lbCases.SelectedItem = sacase.name
-
-        form.Collections.OPT_SensAnalysisCollection.Add(sacase)
 
     End Sub
 
     Private Sub PopulateForm(ByRef sacase As DWSIM.Optimization.SensitivityAnalysisCase)
-
+        EnableAutoSave = False 'disable automatic saving during populating on changing of fields
         With sacase
             Me.tbCaseName.Text = sacase.name
             Me.tbCaseDesc.Text = sacase.description
             With sacase.iv1
-                Me.cbObjIndVar1.SelectedItem = .objectTAG
-                Me.cbPropIndVar1.SelectedItem = DWSIM.App.GetPropertyName(.propID)
+                Me.cbObjIndVar1.SelectedIndex = Me.cbObjIndVar1.Items.IndexOf(.objectTAG)
+                Me.cbPropIndVar1.SelectedIndex = Me.cbPropIndVar1.Items.IndexOf(DWSIM.App.GetPropertyName(.propID))
+                If .propID <> "" Then
+                    btnRun.Enabled = True
+                    chkIndVar2.Enabled = True
+                Else
+                    btnRun.Enabled = False
+                    chkIndVar2.Enabled = False
+                End If
                 Me.tbLowerLimIndVar1.Text = .lowerlimit.GetValueOrDefault
                 Me.tbUpperLimIndVar1.Text = .upperlimit.GetValueOrDefault
                 Me.nuNumPointsIndVar1.Value = .points
@@ -247,7 +266,7 @@ Public Class FormSensAnalysis
                 End With
             Next
         End With
-
+        EnableAutoSave = True
     End Sub
 
     Private Sub lbCases_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lbCases.SelectedIndexChanged
@@ -259,8 +278,22 @@ Public Class FormSensAnalysis
                 If sacase.name = Me.lbCases.SelectedItem.ToString Then
                     Me.selectedsacase = sacase
                     Me.PopulateForm(sacase)
+                    Exit For
                 End If
             Next
+            gbIndVar1.Enabled = True
+            gbVar.Enabled = True
+            GroupBox8.Enabled = True
+            GroupBox9.Enabled = True
+            'gbExp.Enabled = True
+        Else
+            gbIndVar1.Enabled = False
+            chkIndVar2.Enabled = False
+            gbVar.Enabled = False
+            'gbExp.Enabled = False
+            GroupBox8.Enabled = False
+            GroupBox9.Enabled = False
+            btnRun.Enabled = False
         End If
 
         selected = True
@@ -314,7 +347,7 @@ Public Class FormSensAnalysis
                 .points = Me.nuNumPointsIndVar1.Value
                 .unit = Me.tbUnitIndVar1.Text
             End With
-            If Me.chkIndVar2.Checked Then
+            If Me.chkIndVar2.Checked And cbPropIndVar2.SelectedItem <> Nothing Then
                 With sacase.iv2
                     .objectTAG = Me.cbObjIndVar2.SelectedItem
                     .objectID = CType(FormFlowsheet.SearchSurfaceObjectsByTag(.objectTAG, form.FormSurface.FlowsheetDesignSurface), GraphicObjects.GraphicObject).Name
@@ -561,19 +594,21 @@ Public Class FormSensAnalysis
 
     Private Sub chkIndVar2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkIndVar2.CheckedChanged
         If Me.chkIndVar2.Checked Then
-            Me.pnIndvar2.Enabled = True
+            Me.gbIndVar2.Enabled = True
         Else
-            Me.pnIndvar2.Enabled = False
+            Me.gbIndVar2.Enabled = False
         End If
     End Sub
 
-    Private Sub RadioButton1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbVar.CheckedChanged, rbExp.CheckedChanged
+    Private Sub RadioButton1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rbVar.CheckedChanged
         If Me.rbVar.Checked Then
-            gbExp.Enabled = False
-            gbVar.Enabled = True
+            GroupBox8.Enabled = False
+            GroupBox9.Enabled = False
+            GroupBox10.Enabled = True
         Else
-            gbExp.Enabled = True
-            gbVar.Enabled = False
+            GroupBox8.Enabled = True
+            GroupBox9.Enabled = True
+            GroupBox10.Enabled = False
         End If
     End Sub
 
@@ -589,6 +624,7 @@ Public Class FormSensAnalysis
             Next
             Dim exbase As IGenericExpression(Of Double) = ExpressionFactory.CreateGeneric(Of Double)(Me.tbExpression.Text, econtext)
             Me.tbCurrentValue.Text = exbase.Evaluate
+            If EnableAutoSave Then SaveForm(selectedsacase)
         Catch ex As Exception
             Me.tbCurrentValue.Text = ex.Message
         End Try
@@ -635,11 +671,13 @@ Public Class FormSensAnalysis
                         For Each prop As String In props
                             If DWSIM.App.GetPropertyName(prop) = Me.dgVariables.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString Then
                                 Dim obj As SimulationObjects_BaseClass = ReturnObject(Me.dgVariables.Rows(e.RowIndex).Cells(2).Value)
-                                tbc0.Value = Format(obj.GetPropertyValue(prop, su), nf)
+                                tbc0.Value = Format(Val(obj.GetPropertyValue(prop, su)), nf)
                                 tbc1.Value = obj.GetPropertyUnit(prop, su)
+                                Exit For
                             End If
                         Next
                     End If
+                    If EnableAutoSave Then SaveForm(selectedsacase)
             End Select
         End If
     End Sub
@@ -668,9 +706,11 @@ Public Class FormSensAnalysis
                             If DWSIM.App.GetPropertyName(prop) = Me.dgDepVariables.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString Then
                                 Dim obj As SimulationObjects_BaseClass = ReturnObject(Me.dgDepVariables.Rows(e.RowIndex).Cells(1).Value)
                                 tbc0.Value = obj.GetPropertyUnit(prop, su)
+                                Exit For
                             End If
                         Next
                     End If
+                    If EnableAutoSave Then SaveForm(selectedsacase)
             End Select
         End If
     End Sub
@@ -750,4 +790,5 @@ Public Class FormSensAnalysis
 
     End Sub
 
+   
 End Class

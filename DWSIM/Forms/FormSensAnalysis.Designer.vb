@@ -48,7 +48,7 @@ Partial Class FormSensAnalysis
         Me.Label4 = New System.Windows.Forms.Label()
         Me.tbCaseName = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.gbIndVar1 = New System.Windows.Forms.GroupBox()
         Me.tbUpperLimIndVar1 = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.tbUnitIndVar1 = New System.Windows.Forms.TextBox()
@@ -59,25 +59,22 @@ Partial Class FormSensAnalysis
         Me.Label6 = New System.Windows.Forms.Label()
         Me.cbPropIndVar1 = New System.Windows.Forms.ComboBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
-        Me.pnIndvar2 = New System.Windows.Forms.Panel()
+        Me.gbIndVar2 = New System.Windows.Forms.GroupBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.cbObjIndVar2 = New System.Windows.Forms.ComboBox()
         Me.tbUpperLimIndVar2 = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.cbPropIndVar2 = New System.Windows.Forms.ComboBox()
-        Me.tbUnitIndVar2 = New System.Windows.Forms.TextBox()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.nuNumPointsIndVar2 = New System.Windows.Forms.NumericUpDown()
-        Me.tbLowerLimIndVar2 = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.tbLowerLimIndVar2 = New System.Windows.Forms.TextBox()
+        Me.cbPropIndVar2 = New System.Windows.Forms.ComboBox()
+        Me.nuNumPointsIndVar2 = New System.Windows.Forms.NumericUpDown()
+        Me.tbUnitIndVar2 = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
         Me.chkIndVar2 = New System.Windows.Forms.CheckBox()
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.rbExp = New System.Windows.Forms.RadioButton()
         Me.rbVar = New System.Windows.Forms.RadioButton()
-        Me.gbExp = New System.Windows.Forms.GroupBox()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.dgVariables = New System.Windows.Forms.DataGridView()
         Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -106,21 +103,22 @@ Partial Class FormSensAnalysis
         Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
-        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.btnRegressData = New System.Windows.Forms.Button()
         Me.btnAbort = New System.Windows.Forms.Button()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
         CType(Me.dgvResults, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
+        Me.gbIndVar1.SuspendLayout()
         CType(Me.nuNumPointsIndVar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox5.SuspendLayout()
-        Me.pnIndvar2.SuspendLayout()
+        Me.gbIndVar2.SuspendLayout()
         CType(Me.nuNumPointsIndVar2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox6.SuspendLayout()
-        Me.gbExp.SuspendLayout()
         Me.GroupBox9.SuspendLayout()
         CType(Me.dgVariables, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip1.SuspendLayout()
@@ -129,7 +127,11 @@ Partial Class FormSensAnalysis
         Me.GroupBox10.SuspendLayout()
         CType(Me.dgDepVariables, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip2.SuspendLayout()
-        Me.Panel1.SuspendLayout()
+        Me.TabControl1.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
+        Me.TabPage4.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnRun
@@ -282,23 +284,23 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.Label3, "Label3")
         Me.Label3.Name = "Label3"
         '
-        'GroupBox4
+        'gbIndVar1
         '
-        Me.GroupBox4.Controls.Add(Me.tbUpperLimIndVar1)
-        Me.GroupBox4.Controls.Add(Me.Label8)
-        Me.GroupBox4.Controls.Add(Me.tbUnitIndVar1)
-        Me.GroupBox4.Controls.Add(Me.Label2)
-        Me.GroupBox4.Controls.Add(Me.tbLowerLimIndVar1)
-        Me.GroupBox4.Controls.Add(Me.Label7)
-        Me.GroupBox4.Controls.Add(Me.nuNumPointsIndVar1)
-        Me.GroupBox4.Controls.Add(Me.Label6)
-        Me.GroupBox4.Controls.Add(Me.cbPropIndVar1)
-        Me.GroupBox4.Controls.Add(Me.Label5)
-        Me.GroupBox4.Controls.Add(Me.cbObjIndVar1)
-        Me.GroupBox4.Controls.Add(Me.Label3)
-        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.TabStop = False
+        Me.gbIndVar1.Controls.Add(Me.tbUpperLimIndVar1)
+        Me.gbIndVar1.Controls.Add(Me.Label8)
+        Me.gbIndVar1.Controls.Add(Me.tbUnitIndVar1)
+        Me.gbIndVar1.Controls.Add(Me.Label2)
+        Me.gbIndVar1.Controls.Add(Me.tbLowerLimIndVar1)
+        Me.gbIndVar1.Controls.Add(Me.Label7)
+        Me.gbIndVar1.Controls.Add(Me.nuNumPointsIndVar1)
+        Me.gbIndVar1.Controls.Add(Me.Label6)
+        Me.gbIndVar1.Controls.Add(Me.cbPropIndVar1)
+        Me.gbIndVar1.Controls.Add(Me.Label5)
+        Me.gbIndVar1.Controls.Add(Me.cbObjIndVar1)
+        Me.gbIndVar1.Controls.Add(Me.Label3)
+        resources.ApplyResources(Me.gbIndVar1, "gbIndVar1")
+        Me.gbIndVar1.Name = "gbIndVar1"
+        Me.gbIndVar1.TabStop = False
         '
         'tbUpperLimIndVar1
         '
@@ -357,30 +359,23 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.Label5, "Label5")
         Me.Label5.Name = "Label5"
         '
-        'GroupBox5
+        'gbIndVar2
         '
-        resources.ApplyResources(Me.GroupBox5, "GroupBox5")
-        Me.GroupBox5.Controls.Add(Me.pnIndvar2)
-        Me.GroupBox5.Controls.Add(Me.chkIndVar2)
-        Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.TabStop = False
-        '
-        'pnIndvar2
-        '
-        Me.pnIndvar2.Controls.Add(Me.Label14)
-        Me.pnIndvar2.Controls.Add(Me.cbObjIndVar2)
-        Me.pnIndvar2.Controls.Add(Me.tbUpperLimIndVar2)
-        Me.pnIndvar2.Controls.Add(Me.Label13)
-        Me.pnIndvar2.Controls.Add(Me.Label9)
-        Me.pnIndvar2.Controls.Add(Me.cbPropIndVar2)
-        Me.pnIndvar2.Controls.Add(Me.tbUnitIndVar2)
-        Me.pnIndvar2.Controls.Add(Me.Label12)
-        Me.pnIndvar2.Controls.Add(Me.Label10)
-        Me.pnIndvar2.Controls.Add(Me.nuNumPointsIndVar2)
-        Me.pnIndvar2.Controls.Add(Me.tbLowerLimIndVar2)
-        Me.pnIndvar2.Controls.Add(Me.Label11)
-        resources.ApplyResources(Me.pnIndvar2, "pnIndvar2")
-        Me.pnIndvar2.Name = "pnIndvar2"
+        resources.ApplyResources(Me.gbIndVar2, "gbIndVar2")
+        Me.gbIndVar2.Controls.Add(Me.Label14)
+        Me.gbIndVar2.Controls.Add(Me.cbObjIndVar2)
+        Me.gbIndVar2.Controls.Add(Me.tbUpperLimIndVar2)
+        Me.gbIndVar2.Controls.Add(Me.Label13)
+        Me.gbIndVar2.Controls.Add(Me.Label11)
+        Me.gbIndVar2.Controls.Add(Me.Label9)
+        Me.gbIndVar2.Controls.Add(Me.tbLowerLimIndVar2)
+        Me.gbIndVar2.Controls.Add(Me.cbPropIndVar2)
+        Me.gbIndVar2.Controls.Add(Me.nuNumPointsIndVar2)
+        Me.gbIndVar2.Controls.Add(Me.tbUnitIndVar2)
+        Me.gbIndVar2.Controls.Add(Me.Label10)
+        Me.gbIndVar2.Controls.Add(Me.Label12)
+        Me.gbIndVar2.Name = "gbIndVar2"
+        Me.gbIndVar2.TabStop = False
         '
         'Label14
         '
@@ -405,10 +400,20 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.Label13, "Label13")
         Me.Label13.Name = "Label13"
         '
+        'Label11
+        '
+        resources.ApplyResources(Me.Label11, "Label11")
+        Me.Label11.Name = "Label11"
+        '
         'Label9
         '
         resources.ApplyResources(Me.Label9, "Label9")
         Me.Label9.Name = "Label9"
+        '
+        'tbLowerLimIndVar2
+        '
+        resources.ApplyResources(Me.tbLowerLimIndVar2, "tbLowerLimIndVar2")
+        Me.tbLowerLimIndVar2.Name = "tbLowerLimIndVar2"
         '
         'cbPropIndVar2
         '
@@ -418,23 +423,6 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.cbPropIndVar2, "cbPropIndVar2")
         Me.cbPropIndVar2.Name = "cbPropIndVar2"
         '
-        'tbUnitIndVar2
-        '
-        resources.ApplyResources(Me.tbUnitIndVar2, "tbUnitIndVar2")
-        Me.tbUnitIndVar2.Name = "tbUnitIndVar2"
-        Me.tbUnitIndVar2.ReadOnly = True
-        Me.tbUnitIndVar2.TabStop = False
-        '
-        'Label12
-        '
-        resources.ApplyResources(Me.Label12, "Label12")
-        Me.Label12.Name = "Label12"
-        '
-        'Label10
-        '
-        resources.ApplyResources(Me.Label10, "Label10")
-        Me.Label10.Name = "Label10"
-        '
         'nuNumPointsIndVar2
         '
         resources.ApplyResources(Me.nuNumPointsIndVar2, "nuNumPointsIndVar2")
@@ -442,31 +430,28 @@ Partial Class FormSensAnalysis
         Me.nuNumPointsIndVar2.Name = "nuNumPointsIndVar2"
         Me.nuNumPointsIndVar2.Value = New Decimal(New Integer() {10, 0, 0, 0})
         '
-        'tbLowerLimIndVar2
+        'tbUnitIndVar2
         '
-        resources.ApplyResources(Me.tbLowerLimIndVar2, "tbLowerLimIndVar2")
-        Me.tbLowerLimIndVar2.Name = "tbLowerLimIndVar2"
+        resources.ApplyResources(Me.tbUnitIndVar2, "tbUnitIndVar2")
+        Me.tbUnitIndVar2.Name = "tbUnitIndVar2"
+        Me.tbUnitIndVar2.ReadOnly = True
+        Me.tbUnitIndVar2.TabStop = False
         '
-        'Label11
+        'Label10
         '
-        resources.ApplyResources(Me.Label11, "Label11")
-        Me.Label11.Name = "Label11"
+        resources.ApplyResources(Me.Label10, "Label10")
+        Me.Label10.Name = "Label10"
+        '
+        'Label12
+        '
+        resources.ApplyResources(Me.Label12, "Label12")
+        Me.Label12.Name = "Label12"
         '
         'chkIndVar2
         '
         resources.ApplyResources(Me.chkIndVar2, "chkIndVar2")
         Me.chkIndVar2.Name = "chkIndVar2"
         Me.chkIndVar2.UseVisualStyleBackColor = True
-        '
-        'GroupBox6
-        '
-        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
-        Me.GroupBox6.Controls.Add(Me.rbExp)
-        Me.GroupBox6.Controls.Add(Me.rbVar)
-        Me.GroupBox6.Controls.Add(Me.gbExp)
-        Me.GroupBox6.Controls.Add(Me.gbVar)
-        Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.TabStop = False
         '
         'rbExp
         '
@@ -481,14 +466,6 @@ Partial Class FormSensAnalysis
         Me.rbVar.Name = "rbVar"
         Me.rbVar.TabStop = True
         Me.rbVar.UseVisualStyleBackColor = True
-        '
-        'gbExp
-        '
-        resources.ApplyResources(Me.gbExp, "gbExp")
-        Me.gbExp.Controls.Add(Me.GroupBox9)
-        Me.gbExp.Controls.Add(Me.GroupBox8)
-        Me.gbExp.Name = "gbExp"
-        Me.gbExp.TabStop = False
         '
         'GroupBox9
         '
@@ -558,7 +535,7 @@ Partial Class FormSensAnalysis
         '
         'Column9
         '
-        Me.Column9.FillWeight = 10.0!
+        Me.Column9.FillWeight = 15.0!
         resources.ApplyResources(Me.Column9, "Column9")
         Me.Column9.Name = "Column9"
         Me.Column9.ReadOnly = True
@@ -587,13 +564,13 @@ Partial Class FormSensAnalysis
         '
         'GroupBox8
         '
-        resources.ApplyResources(Me.GroupBox8, "GroupBox8")
         Me.GroupBox8.Controls.Add(Me.btnClear)
         Me.GroupBox8.Controls.Add(Me.btnVerify)
         Me.GroupBox8.Controls.Add(Me.tbCurrentValue)
         Me.GroupBox8.Controls.Add(Me.Label15)
         Me.GroupBox8.Controls.Add(Me.tbExpression)
         Me.GroupBox8.Controls.Add(Me.Label17)
+        resources.ApplyResources(Me.GroupBox8, "GroupBox8")
         Me.GroupBox8.Name = "GroupBox8"
         Me.GroupBox8.TabStop = False
         '
@@ -634,7 +611,11 @@ Partial Class FormSensAnalysis
         '
         'gbVar
         '
+        Me.gbVar.Controls.Add(Me.rbExp)
+        Me.gbVar.Controls.Add(Me.rbVar)
+        Me.gbVar.Controls.Add(Me.GroupBox9)
         Me.gbVar.Controls.Add(Me.GroupBox10)
+        Me.gbVar.Controls.Add(Me.GroupBox8)
         resources.ApplyResources(Me.gbVar, "gbVar")
         Me.gbVar.Name = "gbVar"
         Me.gbVar.TabStop = False
@@ -671,12 +652,15 @@ Partial Class FormSensAnalysis
         '
         'DataGridViewTextBoxColumn2
         '
+        Me.DataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DataGridViewTextBoxColumn2.FillWeight = 5.0!
         resources.ApplyResources(Me.DataGridViewTextBoxColumn2, "DataGridViewTextBoxColumn2")
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'DataGridViewComboBoxColumn1
         '
+        Me.DataGridViewComboBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.DataGridViewComboBoxColumn1.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox
         Me.DataGridViewComboBoxColumn1.FillWeight = 30.0!
         resources.ApplyResources(Me.DataGridViewComboBoxColumn1, "DataGridViewComboBoxColumn1")
@@ -685,6 +669,7 @@ Partial Class FormSensAnalysis
         '
         'DataGridViewComboBoxColumn3
         '
+        Me.DataGridViewComboBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.DataGridViewComboBoxColumn3.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox
         Me.DataGridViewComboBoxColumn3.FillWeight = 60.0!
         resources.ApplyResources(Me.DataGridViewComboBoxColumn3, "DataGridViewComboBoxColumn3")
@@ -692,7 +677,8 @@ Partial Class FormSensAnalysis
         '
         'DataGridViewTextBoxColumn5
         '
-        Me.DataGridViewTextBoxColumn5.FillWeight = 10.0!
+        Me.DataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DataGridViewTextBoxColumn5.FillWeight = 15.0!
         resources.ApplyResources(Me.DataGridViewTextBoxColumn5, "DataGridViewTextBoxColumn5")
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
         Me.DataGridViewTextBoxColumn5.ReadOnly = True
@@ -719,21 +705,6 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
-        'Panel1
-        '
-        resources.ApplyResources(Me.Panel1, "Panel1")
-        Me.Panel1.BackColor = System.Drawing.SystemColors.Control
-        Me.Panel1.Controls.Add(Me.btnRegressData)
-        Me.Panel1.Controls.Add(Me.btnAbort)
-        Me.Panel1.Controls.Add(Me.GroupBox2)
-        Me.Panel1.Controls.Add(Me.GroupBox6)
-        Me.Panel1.Controls.Add(Me.btnRun)
-        Me.Panel1.Controls.Add(Me.GroupBox5)
-        Me.Panel1.Controls.Add(Me.GroupBox1)
-        Me.Panel1.Controls.Add(Me.GroupBox4)
-        Me.Panel1.Controls.Add(Me.GroupBox3)
-        Me.Panel1.Name = "Panel1"
-        '
         'btnRegressData
         '
         resources.ApplyResources(Me.btnRegressData, "btnRegressData")
@@ -746,51 +717,96 @@ Partial Class FormSensAnalysis
         Me.btnAbort.Name = "btnAbort"
         Me.btnAbort.UseVisualStyleBackColor = True
         '
+        'TabControl1
+        '
+        resources.ApplyResources(Me.TabControl1, "TabControl1")
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
+        Me.TabControl1.Controls.Add(Me.TabPage4)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        '
+        'TabPage1
+        '
+        Me.TabPage1.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage1.Controls.Add(Me.GroupBox2)
+        Me.TabPage1.Controls.Add(Me.GroupBox3)
+        resources.ApplyResources(Me.TabPage1, "TabPage1")
+        Me.TabPage1.Name = "TabPage1"
+        '
+        'TabPage2
+        '
+        Me.TabPage2.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage2.Controls.Add(Me.gbIndVar1)
+        Me.TabPage2.Controls.Add(Me.gbIndVar2)
+        Me.TabPage2.Controls.Add(Me.chkIndVar2)
+        resources.ApplyResources(Me.TabPage2, "TabPage2")
+        Me.TabPage2.Name = "TabPage2"
+        '
+        'TabPage3
+        '
+        Me.TabPage3.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage3.Controls.Add(Me.btnRegressData)
+        Me.TabPage3.Controls.Add(Me.gbVar)
+        Me.TabPage3.Controls.Add(Me.btnAbort)
+        Me.TabPage3.Controls.Add(Me.btnRun)
+        resources.ApplyResources(Me.TabPage3, "TabPage3")
+        Me.TabPage3.Name = "TabPage3"
+        '
+        'TabPage4
+        '
+        Me.TabPage4.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage4.Controls.Add(Me.GroupBox1)
+        resources.ApplyResources(Me.TabPage4, "TabPage4")
+        Me.TabPage4.Name = "TabPage4"
+        '
         'FormSensAnalysis
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
-        Me.Controls.Add(Me.Panel1)
+        Me.BackColor = System.Drawing.SystemColors.Control
+        Me.Controls.Add(Me.TabControl1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Name = "FormSensAnalysis"
-        Me.ShowIcon = False
-        Me.ShowInTaskbar = False
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox7.ResumeLayout(False)
-        Me.GroupBox7.PerformLayout()
-        CType(Me.dgvResults, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
-        Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
-        CType(Me.nuNumPointsIndVar1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox5.ResumeLayout(False)
-        Me.GroupBox5.PerformLayout()
-        Me.pnIndvar2.ResumeLayout(False)
-        Me.pnIndvar2.PerformLayout()
-        CType(Me.nuNumPointsIndVar2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox6.ResumeLayout(False)
-        Me.GroupBox6.PerformLayout()
-        Me.gbExp.ResumeLayout(False)
-        Me.GroupBox9.ResumeLayout(False)
-        Me.GroupBox9.PerformLayout()
-        CType(Me.dgVariables, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ToolStrip1.ResumeLayout(False)
-        Me.ToolStrip1.PerformLayout()
-        Me.GroupBox8.ResumeLayout(False)
-        Me.GroupBox8.PerformLayout()
-        Me.gbVar.ResumeLayout(False)
-        Me.GroupBox10.ResumeLayout(False)
-        Me.GroupBox10.PerformLayout()
-        CType(Me.dgDepVariables, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ToolStrip2.ResumeLayout(False)
-        Me.ToolStrip2.PerformLayout()
-        Me.Panel1.ResumeLayout(False)
-        Me.ResumeLayout(False)
+        Me.ShowIcon = false
+        Me.ShowInTaskbar = false
+        Me.GroupBox1.ResumeLayout(false)
+        Me.GroupBox7.ResumeLayout(false)
+        Me.GroupBox7.PerformLayout
+        CType(Me.dgvResults,System.ComponentModel.ISupportInitialize).EndInit
+        Me.GroupBox2.ResumeLayout(false)
+        Me.GroupBox3.ResumeLayout(false)
+        Me.GroupBox3.PerformLayout
+        Me.gbIndVar1.ResumeLayout(false)
+        Me.gbIndVar1.PerformLayout
+        CType(Me.nuNumPointsIndVar1,System.ComponentModel.ISupportInitialize).EndInit
+        Me.gbIndVar2.ResumeLayout(false)
+        Me.gbIndVar2.PerformLayout
+        CType(Me.nuNumPointsIndVar2,System.ComponentModel.ISupportInitialize).EndInit
+        Me.GroupBox9.ResumeLayout(false)
+        Me.GroupBox9.PerformLayout
+        CType(Me.dgVariables,System.ComponentModel.ISupportInitialize).EndInit
+        Me.ToolStrip1.ResumeLayout(false)
+        Me.ToolStrip1.PerformLayout
+        Me.GroupBox8.ResumeLayout(false)
+        Me.GroupBox8.PerformLayout
+        Me.gbVar.ResumeLayout(false)
+        Me.gbVar.PerformLayout
+        Me.GroupBox10.ResumeLayout(false)
+        Me.GroupBox10.PerformLayout
+        CType(Me.dgDepVariables,System.ComponentModel.ISupportInitialize).EndInit
+        Me.ToolStrip2.ResumeLayout(false)
+        Me.ToolStrip2.PerformLayout
+        Me.TabControl1.ResumeLayout(false)
+        Me.TabPage1.ResumeLayout(false)
+        Me.TabPage2.ResumeLayout(false)
+        Me.TabPage2.PerformLayout
+        Me.TabPage3.ResumeLayout(false)
+        Me.TabPage4.ResumeLayout(false)
+        Me.ResumeLayout(false)
 
-    End Sub
+End Sub
     Public WithEvents btnRun As System.Windows.Forms.Button
     Public WithEvents Label1 As System.Windows.Forms.Label
     Public WithEvents cbObjIndVar1 As System.Windows.Forms.ComboBox
@@ -807,7 +823,7 @@ Partial Class FormSensAnalysis
     Public WithEvents Label3 As System.Windows.Forms.Label
     Public WithEvents tbCaseDesc As System.Windows.Forms.TextBox
     Public WithEvents Label4 As System.Windows.Forms.Label
-    Public WithEvents GroupBox4 As System.Windows.Forms.GroupBox
+    Public WithEvents gbIndVar1 As System.Windows.Forms.GroupBox
     Public WithEvents cbPropIndVar1 As System.Windows.Forms.ComboBox
     Public WithEvents Label5 As System.Windows.Forms.Label
     Public WithEvents tbUpperLimIndVar1 As System.Windows.Forms.TextBox
@@ -818,7 +834,7 @@ Partial Class FormSensAnalysis
     Public WithEvents Label7 As System.Windows.Forms.Label
     Public WithEvents nuNumPointsIndVar1 As System.Windows.Forms.NumericUpDown
     Public WithEvents Label6 As System.Windows.Forms.Label
-    Public WithEvents GroupBox5 As System.Windows.Forms.GroupBox
+    Public WithEvents gbIndVar2 As System.Windows.Forms.GroupBox
     Public WithEvents tbUpperLimIndVar2 As System.Windows.Forms.TextBox
     Public WithEvents Label9 As System.Windows.Forms.Label
     Public WithEvents tbUnitIndVar2 As System.Windows.Forms.TextBox
@@ -831,13 +847,10 @@ Partial Class FormSensAnalysis
     Public WithEvents Label13 As System.Windows.Forms.Label
     Public WithEvents cbObjIndVar2 As System.Windows.Forms.ComboBox
     Public WithEvents Label14 As System.Windows.Forms.Label
-    Public WithEvents GroupBox6 As System.Windows.Forms.GroupBox
-    Public WithEvents Panel1 As System.Windows.Forms.Panel
     Public WithEvents GroupBox7 As System.Windows.Forms.GroupBox
     Public WithEvents tbStats As System.Windows.Forms.TextBox
     Public WithEvents btnAbort As System.Windows.Forms.Button
     Public WithEvents chkIndVar2 As System.Windows.Forms.CheckBox
-    Public WithEvents pnIndvar2 As System.Windows.Forms.Panel
     Public WithEvents GroupBox8 As System.Windows.Forms.GroupBox
     Public WithEvents btnClear As System.Windows.Forms.Button
     Public WithEvents btnVerify As System.Windows.Forms.Button
@@ -850,7 +863,6 @@ Partial Class FormSensAnalysis
     Public WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Public WithEvents tsbAddVar As System.Windows.Forms.ToolStripButton
     Public WithEvents tsbDelVar As System.Windows.Forms.ToolStripButton
-    Public WithEvents gbExp As System.Windows.Forms.GroupBox
     Public WithEvents gbVar As System.Windows.Forms.GroupBox
     Public WithEvents rbVar As System.Windows.Forms.RadioButton
     Public WithEvents rbExp As System.Windows.Forms.RadioButton
@@ -861,6 +873,12 @@ Partial Class FormSensAnalysis
     Public WithEvents ToolStripButton2 As System.Windows.Forms.ToolStripButton
     Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Public WithEvents btnRegressData As System.Windows.Forms.Button
+    Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
+    Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
+    Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
+    Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
+    Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
     Friend WithEvents Column8 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewComboBoxColumn2 As System.Windows.Forms.DataGridViewComboBoxColumn
@@ -871,5 +889,4 @@ Partial Class FormSensAnalysis
     Friend WithEvents DataGridViewComboBoxColumn1 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents DataGridViewComboBoxColumn3 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn5 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents btnRegressData As System.Windows.Forms.Button
 End Class
