@@ -150,6 +150,10 @@
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Fälle</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 13</value>
+  </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Beschr.</value>
   </data>
@@ -159,44 +163,77 @@
   <data name="Label3.Text" xml:space="preserve">
     <value>Objekt</value>
   </data>
+  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 13</value>
+  </data>
   <data name="Label8.Text" xml:space="preserve">
     <value>Obergrenze</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 13</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Einh.</value>
   </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 13</value>
+  </data>
   <data name="Label7.Text" xml:space="preserve">
     <value>Untergrenze</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 13</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Anzahl Punkte</value>
   </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 13</value>
+  </data>
   <data name="Label5.Text" xml:space="preserve">
     <value>Eigensch.</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Unabhängige Variable 1</value>
   </data>
   <data name="Label14.Text" xml:space="preserve">
     <value>Objekt</value>
   </data>
+  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 13</value>
+  </data>
   <data name="Label13.Text" xml:space="preserve">
     <value>Eigensch.</value>
   </data>
-  <data name="Label9.Text" xml:space="preserve">
-    <value>Obergrenze</value>
-  </data>
-  <data name="Label12.Text" xml:space="preserve">
-    <value>Anzahl Punkte</value>
-  </data>
-  <data name="Label10.Text" xml:space="preserve">
-    <value>Einh.</value>
+  <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 13</value>
   </data>
   <data name="Label11.Text" xml:space="preserve">
     <value>Untergrenze</value>
   </data>
+  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 13</value>
+  </data>
+  <data name="Label9.Text" xml:space="preserve">
+    <value>Obergrenze</value>
+  </data>
+  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 13</value>
+  </data>
+  <data name="Label10.Text" xml:space="preserve">
+    <value>Einh.</value>
+  </data>
+  <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 13</value>
+  </data>
+  <data name="Label12.Text" xml:space="preserve">
+    <value>Anzahl Punkte</value>
+  </data>
+  <data name="chkIndVar2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 17</value>
+  </data>
   <data name="chkIndVar2.Text" xml:space="preserve">
     <value>Unabhängige Variable 2</value>
+  </data>
+  <data name="rbExp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 17</value>
   </data>
   <data name="rbExp.Text" xml:space="preserve">
     <value>Ausdruck</value>
@@ -234,8 +271,14 @@
   <data name="btnVerify.Text" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 13</value>
+  </data>
   <data name="Label15.Text" xml:space="preserve">
     <value>Akt. Wert</value>
+  </data>
+  <data name="Label17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 13</value>
   </data>
   <data name="Label17.Text" xml:space="preserve">
     <value>Ausdruck</value>
@@ -252,17 +295,32 @@
   <data name="DataGridViewTextBoxColumn5.HeaderText" xml:space="preserve">
     <value>Einheit</value>
   </data>
+  <data name="ToolStripButton1.ToolTipText" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="ToolStripButton2.ToolTipText" xml:space="preserve">
+    <value>Entfernen</value>
+  </data>
   <data name="GroupBox10.Text" xml:space="preserve">
     <value>Variablen</value>
   </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Abhängige Variable</value>
+  <data name="btnRegressData.Text" xml:space="preserve">
+    <value>Daten zum Regressions-Plugin schicken</value>
   </data>
   <data name="btnAbort.Text" xml:space="preserve">
     <value>Abbruch</value>
   </data>
-  <data name="LinkLabel1.Text" xml:space="preserve">
-    <value>ZunZun.com ist ein großartiges, freies Onlinetool für 2D/3D-Datenkurven und Oberflächenanpassung. Testen Sie es jetzt!</value>
+  <data name="TabPage1.Text" xml:space="preserve">
+    <value>Sensitivitätsstudien</value>
+  </data>
+  <data name="TabPage2.Text" xml:space="preserve">
+    <value>Unabhängige Variablen</value>
+  </data>
+  <data name="TabPage3.Text" xml:space="preserve">
+    <value>Abhängige Variablen</value>
+  </data>
+  <data name="TabPage4.Text" xml:space="preserve">
+    <value>Ergebnisse</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Sensitivitätsanalyse</value>
