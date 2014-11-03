@@ -87,7 +87,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 End If
 
                 Dim results As Object
-                If MathEx.Common.Sum(fi) = 0.0# Then
+                If fi.Sum() = 0.0# Then
                     If PP.AUX_PVAPi(wid, T) / P > 1.0# Then
                         L = 0.0#
                         V = 1.0#

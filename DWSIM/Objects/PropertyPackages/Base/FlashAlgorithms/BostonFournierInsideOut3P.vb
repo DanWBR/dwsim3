@@ -21,6 +21,7 @@ Imports DWSIM.DWSIM.SimulationObjects
 Imports DWSIM.DWSIM.MathEx
 Imports DWSIM.DWSIM.MathEx.Common
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -35,7 +36,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim maxit_e As Integer = 100
         Dim Vn(n) As String
         Dim Vx1(n), Vx2(n), Vy(n), Vp(n), ui1(n), ui2(n), uic1(n), uic2(n), pi(n), Ki1(n), Ki2(n), fi(n), Vt(n), Vpc(n), VTc(n), Vw(n) As Double
-        Dim L, L1, L2, beta, Lf, V, Vf, R, Rant, Rt,S, Sant, Tant, Pant, T, T_, Tf, P, P_, Pf, T0, P0, A, B, C, D, E, F, Ac, Bc, Cc, Dc, Ec, Fc As Double
+        Dim L, L1, L2, beta, Lf, V, Vf, R, Rant, Rt, S, Sant, Tant, Pant, T, T_, Tf, P, P_, Pf, T0, P0, A, B, C, D, E, F, Ac, Bc, Cc, Dc, Ec, Fc As Double
         Dim Kb, Kb0, Kb_ As Double
         Dim DHv, DHl, DHv1, DHv2, DHl1, DHl2, Hv0, Hvid, Hlid, Hf, DHlsp, DHvsp As Double
         Dim DSv, DSl, DSv1, DSv2, DSl1, DSl2, Sv0, Svid, Slid, Sf, DSlsp, DSvsp As Double
@@ -143,7 +144,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         If vx2est(i) <> 0.0# Then gv += vx2est(i) * Log(fcv(i) * vx2est(i))
                         If vx2est(i) <> 0.0# Then gl += vx2est(i) * Log(fcl(i) * vx2est(i))
                     Next
-                    
+
                     If gl < gv Then 'test phase is liquid-like.
 
                         Dim vx1e(UBound(Vz)), vx2e(UBound(Vz)) As Double
@@ -249,7 +250,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Dim stresult As Object = StabTest(result(4), P, result(2), PP, Vtrials, Me.StabSearchSeverity)
 
                 If stresult(0) = False Then
-                    
+
                     Dim vx2est(nc), fcl(nc), fcv(nc) As Double
                     Dim m As Double = UBound(stresult(1), 1)
                     Dim gl, gv, gli As Double
@@ -1113,7 +1114,7 @@ restart:    Do
                 Rant = R
                 Tant = T
 
-                bo2.DefineFuncDelegate(AddressOf EnergyBalanceabs)
+                bo2.DefineFuncDelegate(AddressOf EnergyBalanceAbs)
                 fr = bo2.brentoptimize(0.0#, 1.0#, 0.00000000001, R)
 
                 If ecount > 0 Then
@@ -1381,7 +1382,7 @@ restart:    Do
                 Rant = R
                 Tant = T
 
-                bo2.DefineFuncDelegate(AddressOf EntropyBalanceabs)
+                bo2.DefineFuncDelegate(AddressOf EntropyBalanceAbs)
                 fr = bo2.brentoptimize(0.0#, 1.0#, 0.00000001, R)
 
                 'At this point, we have converged T and R for the simplified model. Proceed to step 9.
@@ -2018,7 +2019,7 @@ out:
                     uic1(i) = Log(Ki1(i) / Kb)
                     uic2(i) = Log(Ki2(i) / Kb)
                 Next
-                
+
                 Bc = Log(Kb_ / Kb) / (1 / T_ - 1 / T)
                 Ac = Log(Kb) - Bc * (1 / T - 1 / T0)
 
@@ -2423,7 +2424,7 @@ out:
                 errors(i) = (refx(i) - (currx(i) + alpha * tmpdx(i))) ^ 2
             Next
 
-            Return Common.Sum(errors)
+            Return errors.Sum()
 
         End Function
 

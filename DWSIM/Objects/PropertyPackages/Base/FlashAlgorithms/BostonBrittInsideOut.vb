@@ -22,6 +22,7 @@ Imports DWSIM.DWSIM.MathEx
 Imports DWSIM.DWSIM.MathEx.Common
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports System.Threading.Tasks
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -138,7 +139,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Vy = Vz
                     GoTo out
                 End If
-           End If
+            End If
 
             Dim Vmin, Vmax As Double
             Vmin = 1.0#
@@ -221,7 +222,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             ecount = 0
 
             R = Kb * V / (Kb * V + Kb0 * L)
-          
+
             Do
 
                 '--------------------------------------------------------------
@@ -2192,7 +2193,7 @@ final:      d2 = Date.Now
                 errors(i) = (refx(i) - (currx(i) + alpha * tmpdx(i))) ^ 2
             Next
 
-            Return Common.Sum(errors)
+            Return errors.Sum()
 
         End Function
 

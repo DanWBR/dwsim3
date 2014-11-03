@@ -15,7 +15,8 @@
 '
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
-Imports filehelpers
+Imports FileHelpers
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
@@ -59,8 +60,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim pathsep As Char = System.IO.Path.DirectorySeparatorChar
 
-            Dim prip As pr_IPData
-            Dim pripc() As pr_IPData
+            Dim prip As PR_IPData
+            Dim pripc() As PR_IPData
             Dim fh1 As New FileHelperEngine(Of PR_IPData)
             pripc = fh1.ReadFile(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "pr_ip.dat")
 
@@ -458,8 +459,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             ThermoPlugs.PR.pr_gpu_func(n, Vz, VKij, Tc, Pc, w, T, alpha, ai, bi, a, aml_temp, bml_temp, aml2_temp)
 
-            am = MathEx.Common.Sum(aml_temp)
-            bm = MathEx.Common.Sum(bml_temp)
+            am = aml_temp.Sum()
+            bm = bml_temp.Sum()
 
             Dim AG1 = am * P / (R * T) ^ 2
             Dim BG1 = bm * P / (R * T)

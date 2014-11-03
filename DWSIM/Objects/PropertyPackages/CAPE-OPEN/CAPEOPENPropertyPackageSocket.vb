@@ -1052,7 +1052,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
-        Public Overrides Function DW_CalcFugCoeff(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Object
+        Public Overrides Function DW_CalcFugCoeff(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double()
 
             Dim res As Double = 0.0#, phase As String = "", pid As Integer = 0
             Dim pstr As MaterialStream = Me.CurrentMaterialStream
