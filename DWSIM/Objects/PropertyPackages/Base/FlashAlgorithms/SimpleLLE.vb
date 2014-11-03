@@ -22,6 +22,7 @@ Imports DWSIM.DWSIM.MathEx
 Imports DWSIM.DWSIM.MathEx.Common
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports System.Threading.Tasks
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -88,8 +89,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
             End If
 
-            L1 = Sum(Vn1)
-            L2 = Sum(Vn2)
+            L1 = Vn1.Sum()
+            L2 = Vn2.Sum()
 
             Dim err As Double = 0.0#
             Dim err_ant As Double = 0.0#
@@ -124,7 +125,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 For i = 0 To n
                     Vn1(i) = Vz(i) / (1 + gamma1(i) * L2 / (gamma2(i) * L1))
                 Next
-                
+
                 L1 = 0
                 L2 = 0
                 For i = 0 To n
@@ -137,7 +138,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
 
                 ecount += 1
-                
+
                 If ecount > 10000 Then Throw New Exception(DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"))
 
             Loop
@@ -167,7 +168,7 @@ out:
                 Return New Object() {L2, V, Vx2, PP.RET_NullVector, ecount, L1, Vx1, 0.0#, PP.RET_NullVector, gamma1, gamma2}
             End If
 
-            
+
         End Function
 
         Public Overrides Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object

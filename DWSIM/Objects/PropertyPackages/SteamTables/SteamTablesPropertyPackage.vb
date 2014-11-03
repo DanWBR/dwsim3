@@ -1051,8 +1051,8 @@ FINAL:
             End Select
         End Function
 
-        Public Overrides Function DW_CalcFugCoeff(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Object
-            Return New Object() {1.0#}
+        Public Overrides Function DW_CalcFugCoeff(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double()
+            Return New Double() {1.0#}
         End Function
 
     End Class

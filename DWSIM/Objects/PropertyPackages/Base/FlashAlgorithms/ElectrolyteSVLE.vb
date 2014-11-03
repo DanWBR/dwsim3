@@ -147,7 +147,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     End If
 
                     For i = 0 To n
-                        Vxl(i) = Vf(i) / Sum(Vf)
+                        Vxl(i) = Vf(i) / Vf.Sum()
                     Next
 
                     'calculate activity coefficients.
@@ -208,9 +208,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     'liquid mole amounts
 
                     L_ant = L
-                    L = Sum(Vnl)
-                    S = Sum(Vns)
-                    V = Sum(Vnv)
+                    L = Vnl.Sum()
+                    S = Vns.Sum()
+                    V = Vnv.Sum()
 
                     For i = 0 To n
                         If Sum(Vnl) <> 0.0# Then Vxl(i) = Vnl(i) / Sum(Vnl) Else Vxl(i) = 0.0#

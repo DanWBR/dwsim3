@@ -15,6 +15,7 @@
 '
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
+Imports System.Linq
 
 Namespace DWSIM.MathEx
 
@@ -141,28 +142,18 @@ Namespace DWSIM.MathEx
 
         End Function
 
-        Shared Function Sum(ByVal vx As Array)
+        Shared Function Sum(ByVal vx() As Double) As Double
+            If vx.Length = 0 Then Return 0
 
-            Dim n = UBound(vx)
-            Dim i As Integer
-            Dim sumv As Double
-
-            sumv = 0
-            For i = 0 To n
-                sumv += vx(i)
-            Next
-
-            Return sumv
+            Return vx.Sum()
 
         End Function
 
-        Shared Function AbsSum(ByVal vx As Array)
-
+        Shared Function AbsSum(ByVal vx() As Double) As Double
             Dim n = UBound(vx)
             Dim i As Integer
-            Dim sumv As Double
+            Dim sumv As Double = 0
 
-            sumv = 0
             For i = 0 To n
                 sumv += Math.Abs(vx(i))
             Next
@@ -171,13 +162,11 @@ Namespace DWSIM.MathEx
 
         End Function
 
-        Shared Function SumSqr(ByVal vx As Array)
-
+        Shared Function SumSqr(ByVal vx() As Double) As Double
             Dim n = UBound(vx)
             Dim i As Integer
-            Dim sumv As Double
+            Dim sumv As Double = 0
 
-            sumv = 0
             For i = 0 To n
                 sumv += vx(i) ^ 2
             Next

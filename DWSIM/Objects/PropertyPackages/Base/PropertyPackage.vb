@@ -857,7 +857,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         ''' <param name="st">Mixture state (Liquid or Vapor)</param>
         ''' <returns>A vector of doubles containing fugacity coefficients for the components in the mixture.</returns>
         ''' <remarks>The composition vector must follow the same sequence as the components which were added in the material stream.</remarks>
-        Public MustOverride Function DW_CalcFugCoeff(ByVal Vx As Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Object
+        Public MustOverride Function DW_CalcFugCoeff(ByVal Vx As Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double()
 
         Public MustOverride Function SupportsComponent(ByVal comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties) As Boolean
 
@@ -6731,7 +6731,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_INT_CPDTi_L(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String)
+        Public Function AUX_INT_CPDTi_L(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String) As Double
 
             Dim deltaT As Double = (T2 - T1) / 10
             Dim Ti As Double
@@ -6749,7 +6749,7 @@ Final3:
         End Function
 
 
-        Public Function AUX_INT_CPDT_Ti(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String)
+        Public Function AUX_INT_CPDT_Ti(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String) As Double
 
             Dim A, B, C, D, E, result As Double
             A = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_A
@@ -6848,7 +6848,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_INT_CPDT_Tm(ByVal T1 As Double, ByVal T2 As Double, ByVal fase As Fase)
+        Public Function AUX_INT_CPDT_Tm(ByVal T1 As Double, ByVal T2 As Double, ByVal fase As Fase) As Double
 
             Dim val As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7137,7 +7137,7 @@ Final3:
 
         End Function
 
-        Public Function RET_VTF()
+        Public Function RET_VTF() As Double()
 
             Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7152,7 +7152,7 @@ Final3:
 
         End Function
 
-        Public Function RET_VTB()
+        Public Function RET_VTB() As Double()
 
             Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7167,12 +7167,11 @@ Final3:
 
         End Function
 
-        Public Function RET_VPC()
+        Public Function RET_VPC() As Double()
 
             Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim i As Integer = 0
-
 
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 val(i) = subst.ConstantProperties.Critical_Pressure
@@ -7180,10 +7179,9 @@ Final3:
             Next
 
             Return val
-
         End Function
 
-        Public Function RET_VZC()
+        Public Function RET_VZC() As Double()
 
             Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7198,7 +7196,7 @@ Final3:
 
         End Function
 
-        Public Function RET_VZRa()
+        Public Function RET_VZRa() As Double()
 
             Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7212,7 +7210,7 @@ Final3:
 
         End Function
 
-        Public Function RET_VVC()
+        Public Function RET_VVC() As Double()
 
             Dim vc, val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7231,7 +7229,7 @@ Final3:
 
         End Function
 
-        Public Function RET_VW()
+        Public Function RET_VW() As Double()
 
             Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7246,7 +7244,7 @@ Final3:
 
         End Function
 
-        Public Function RET_VCP(ByVal T As Double)
+        Public Function RET_VCP(ByVal T As Double) As Double()
 
             Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7261,7 +7259,7 @@ Final3:
 
         End Function
 
-        Public Function RET_VHVAP(ByVal T As Double) As Array
+        Public Function RET_VHVAP(ByVal T As Double) As Double()
 
             Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7512,7 +7510,7 @@ Final3:
 
         End Function
 
-        Public Function RET_NullVector()
+        Public Function RET_NullVector() As Double()
 
             Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7569,7 +7567,7 @@ Final3:
             End Select
         End Function
 
-        Public Function AUX_MMM(ByVal Vz As Object) As Double
+        Public Function AUX_MMM(ByVal Vz() As Double) As Double
 
             Dim val As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7585,7 +7583,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_NORMALIZE(ByVal Vx As Object) As Double()
+        Public Function AUX_NORMALIZE(ByVal Vx() As Double) As Double()
 
             Dim sum As Double = 0
             Dim i, n As Integer
