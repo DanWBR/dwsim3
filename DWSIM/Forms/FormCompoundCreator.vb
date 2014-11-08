@@ -272,7 +272,7 @@ Public Class FormCompoundCreator
             If File.Exists(.database) Then
                 Me.tbDBPath.Text = .database
             Else
-                Me.tbDBPath.Text = "<file not found>"
+                Me.tbDBPath.Text = ""
             End If
             Me.Text = .Filename
             If .su.spmp_temperature IsNot Nothing Then
@@ -297,7 +297,7 @@ Public Class FormCompoundCreator
 
             UpdateUnits()
 
-            tbDBPath.Text = .database
+            'tbDBPath.Text = .database
             TextBoxAF.Text = .cp.Acentric_Factor
             TextBoxCAS.Text = .cp.CAS_Number
             TextBoxCSAF.Text = .cp.Chao_Seader_Acentricity
@@ -470,6 +470,7 @@ Public Class FormCompoundCreator
 
             'check for updated elements when loading older files and create them if not existing
             If .JobackGroups Is Nothing Then .JobackGroups = New ArrayList()
+            If .AdditionalAtoms Is Nothing Then .AdditionalAtoms = New ArrayList
             If .DataRoS Is Nothing Then .DataRoS = New ArrayList
             If .DataCpS Is Nothing Then .DataCpS = New ArrayList
             If .DataCPLiquid Is Nothing Then .DataCPLiquid = New ArrayList
@@ -479,6 +480,12 @@ Public Class FormCompoundCreator
                 Me.GridJoback.Rows.Item(.JobackGroups.Item(i)(0)).Cells(3).Value = .JobackGroups.Item(i)(1)
                 If .JobackGroups.Item(i)(1) > 0 Then PureUNIFACCompound = False
             Next
+
+            'populating AtomGrid with additional Atoms
+            For i = 0 To .AdditionalAtoms.Count - 1
+                Me.AddAtomDataGrid.Rows(.AdditionalAtoms.Item(i)(0)).Cells(1).Value = .AdditionalAtoms.Item(i)(1)
+            Next
+
 
             populating = False
 
@@ -686,6 +693,13 @@ Public Class FormCompoundCreator
             For Each r As DataGridViewRow In Me.GridJoback.Rows
                 JC = r.Cells(3).Value
                 If JC > 0 Then .JobackGroups.Add(New Integer() {r.Index, JC})
+            Next
+
+            If mycase.AdditionalAtoms Is Nothing Then .AdditionalAtoms = New ArrayList
+            .AdditionalAtoms.Clear()
+            For Each r As DataGridViewRow In AddAtomDataGrid.Rows
+                JC = r.Cells(1).Value
+                If JC > 0 Then .AdditionalAtoms.Add(New Integer() {r.Index, JC})
             Next
 
             .cp.Elements.Collection.Clear()
@@ -2507,6 +2521,10 @@ Public Class FormCompoundCreator
     End Sub
 
     Private Sub btnSaveToDB_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSaveToDB.Click
+        If tbDBPath.Text = "" Then
+            MessageBox.Show(DWSIM.App.GetLocalString("NoDatabaseDefined"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End If
         Try
             StoreData()
 
@@ -2520,7 +2538,7 @@ Public Class FormCompoundCreator
             DWSIM.Databases.UserDB.AddCompounds(New DWSIM.ClassesBasicasTermodinamica.ConstantProperties() {mycase.cp}, tbDBPath.Text, chkReplaceComps.Checked)
             SetUserDBSaveStatus(True)
         Catch ex As Exception
-            MessageBox.Show("Error adding compound to the database: " & ex.Message.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(DWSIM.App.GetLocalString("ErroCompSaveDB") & ex.Message.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
     Private Sub chkReplaceComps_CheckStateChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkReplaceComps.CheckStateChanged
@@ -2768,6 +2786,7 @@ End Class
     Public DataLDENS As New ArrayList
     Public DataCpS As New ArrayList
     Public DataRoS As New ArrayList
+    Public AdditionalAtoms As ArrayList
 
     Protected Overrides Sub Finalize()
         MyBase.Finalize()

@@ -3546,6 +3546,7 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                             Dim x As New BinaryFormatter()
                             NewMDIChild.mycase = x.Deserialize(objStreamReader)
                             objStreamReader.Close()
+                            NewMDIChild.mycase.Filename = nome
                             NewMDIChild.WriteData()
                         Case ".dwrsd"
                             Dim NewMDIChild As New FormDataRegression()

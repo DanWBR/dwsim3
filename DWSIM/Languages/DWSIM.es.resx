@@ -4842,4 +4842,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ExcelUOEditor" xml:space="preserve">
     <value>Editor</value>
   </data>
+  <data name="NoDatabaseDefined" xml:space="preserve">
+    <value>Ninguna base de datos definida!</value>
+  </data>
+  <data name="ErroCompSaveDB" xml:space="preserve">
+    <value>Componente de base de datos de ahorro de Error.</value>
+  </data>
 </root>
