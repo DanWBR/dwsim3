@@ -328,6 +328,12 @@
   <data name="TabPage4.Text" xml:space="preserve">
     <value>Results</value>
   </data>
+  <data name="BtnDrawChart.Text" xml:space="preserve">
+    <value>Draw</value>
+  </data>
+  <data name="TabPage5.Text" xml:space="preserve">
+    <value>Chart</value>
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Sensitivity Analysis</value>
   </data>

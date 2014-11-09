@@ -23,11 +23,11 @@ Partial Class FormSensAnalysis
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormSensAnalysis))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.btnRun = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cbObjIndVar1 = New System.Windows.Forms.ComboBox()
@@ -110,6 +110,16 @@ Partial Class FormSensAnalysis
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.BtnDrawChart = New System.Windows.Forms.Button()
+        Me.CbCrtY = New System.Windows.Forms.ComboBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.CbCrtX = New System.Windows.Forms.ComboBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.graph = New ZedGraph.ZedGraphControl()
+        Me.LblParam = New System.Windows.Forms.Label()
+        Me.CbCrtPar = New System.Windows.Forms.ComboBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
         CType(Me.dgvResults, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -132,6 +142,8 @@ Partial Class FormSensAnalysis
         Me.TabPage2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.TabPage4.SuspendLayout()
+        Me.TabPage5.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'btnRun
@@ -181,14 +193,14 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.dgvResults, "dgvResults")
         Me.dgvResults.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvResults.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvResults.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvResults.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle11
         Me.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvResults.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2})
         Me.dgvResults.Name = "dgvResults"
@@ -199,16 +211,16 @@ Partial Class FormSensAnalysis
         '
         'Column1
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle12
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
         Me.Column1.ReadOnly = True
         '
         'Column2
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle13
         resources.ApplyResources(Me.Column2, "Column2")
         Me.Column2.Name = "Column2"
         Me.Column2.ReadOnly = True
@@ -484,13 +496,13 @@ Partial Class FormSensAnalysis
         Me.dgVariables.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells
         Me.dgVariables.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.dgVariables.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        Me.dgVariables.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        Me.dgVariables.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle14
         Me.dgVariables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgVariables.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column8, Me.DataGridViewTextBoxColumn1, Me.DataGridViewComboBoxColumn2, Me.Column4, Me.Column10, Me.Column9})
         resources.ApplyResources(Me.dgVariables, "dgVariables")
@@ -637,13 +649,13 @@ Partial Class FormSensAnalysis
         Me.dgDepVariables.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells
         Me.dgDepVariables.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.dgDepVariables.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        Me.dgDepVariables.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        Me.dgDepVariables.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle15
         Me.dgDepVariables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgDepVariables.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn2, Me.DataGridViewComboBoxColumn1, Me.DataGridViewComboBoxColumn3, Me.DataGridViewTextBoxColumn5})
         resources.ApplyResources(Me.dgDepVariables, "dgDepVariables")
@@ -724,6 +736,7 @@ Partial Class FormSensAnalysis
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Controls.Add(Me.TabPage4)
+        Me.TabControl1.Controls.Add(Me.TabPage5)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         '
@@ -761,6 +774,84 @@ Partial Class FormSensAnalysis
         resources.ApplyResources(Me.TabPage4, "TabPage4")
         Me.TabPage4.Name = "TabPage4"
         '
+        'TabPage5
+        '
+        Me.TabPage5.BackColor = System.Drawing.SystemColors.Control
+        Me.TabPage5.Controls.Add(Me.Panel1)
+        Me.TabPage5.Controls.Add(Me.graph)
+        resources.ApplyResources(Me.TabPage5, "TabPage5")
+        Me.TabPage5.Name = "TabPage5"
+        '
+        'Panel1
+        '
+        resources.ApplyResources(Me.Panel1, "Panel1")
+        Me.Panel1.Controls.Add(Me.CbCrtPar)
+        Me.Panel1.Controls.Add(Me.LblParam)
+        Me.Panel1.Controls.Add(Me.BtnDrawChart)
+        Me.Panel1.Controls.Add(Me.CbCrtY)
+        Me.Panel1.Controls.Add(Me.Label18)
+        Me.Panel1.Controls.Add(Me.CbCrtX)
+        Me.Panel1.Controls.Add(Me.Label16)
+        Me.Panel1.Name = "Panel1"
+        '
+        'BtnDrawChart
+        '
+        resources.ApplyResources(Me.BtnDrawChart, "BtnDrawChart")
+        Me.BtnDrawChart.Image = Global.DWSIM.My.Resources.Resources.chart_curve
+        Me.BtnDrawChart.Name = "BtnDrawChart"
+        Me.BtnDrawChart.UseVisualStyleBackColor = True
+        '
+        'CbCrtY
+        '
+        Me.CbCrtY.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CbCrtY.DropDownWidth = 250
+        Me.CbCrtY.FormattingEnabled = True
+        resources.ApplyResources(Me.CbCrtY, "CbCrtY")
+        Me.CbCrtY.Name = "CbCrtY"
+        '
+        'Label18
+        '
+        resources.ApplyResources(Me.Label18, "Label18")
+        Me.Label18.Name = "Label18"
+        '
+        'CbCrtX
+        '
+        Me.CbCrtX.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CbCrtX.DropDownWidth = 250
+        Me.CbCrtX.FormattingEnabled = True
+        resources.ApplyResources(Me.CbCrtX, "CbCrtX")
+        Me.CbCrtX.Name = "CbCrtX"
+        '
+        'Label16
+        '
+        resources.ApplyResources(Me.Label16, "Label16")
+        Me.Label16.Name = "Label16"
+        '
+        'graph
+        '
+        resources.ApplyResources(Me.graph, "graph")
+        Me.graph.Name = "graph"
+        Me.graph.ScrollGrace = 0.0R
+        Me.graph.ScrollMaxX = 0.0R
+        Me.graph.ScrollMaxY = 0.0R
+        Me.graph.ScrollMaxY2 = 0.0R
+        Me.graph.ScrollMinX = 0.0R
+        Me.graph.ScrollMinY = 0.0R
+        Me.graph.ScrollMinY2 = 0.0R
+        '
+        'LblParam
+        '
+        resources.ApplyResources(Me.LblParam, "LblParam")
+        Me.LblParam.Name = "LblParam"
+        '
+        'CbCrtPar
+        '
+        Me.CbCrtPar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.CbCrtPar.DropDownWidth = 250
+        Me.CbCrtPar.FormattingEnabled = True
+        resources.ApplyResources(Me.CbCrtPar, "CbCrtPar")
+        Me.CbCrtPar.Name = "CbCrtPar"
+        '
         'FormSensAnalysis
         '
         resources.ApplyResources(Me, "$this")
@@ -769,44 +860,47 @@ Partial Class FormSensAnalysis
         Me.Controls.Add(Me.TabControl1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Name = "FormSensAnalysis"
-        Me.ShowIcon = false
-        Me.ShowInTaskbar = false
-        Me.GroupBox1.ResumeLayout(false)
-        Me.GroupBox7.ResumeLayout(false)
-        Me.GroupBox7.PerformLayout
-        CType(Me.dgvResults,System.ComponentModel.ISupportInitialize).EndInit
-        Me.GroupBox2.ResumeLayout(false)
-        Me.GroupBox3.ResumeLayout(false)
-        Me.GroupBox3.PerformLayout
-        Me.gbIndVar1.ResumeLayout(false)
-        Me.gbIndVar1.PerformLayout
-        CType(Me.nuNumPointsIndVar1,System.ComponentModel.ISupportInitialize).EndInit
-        Me.gbIndVar2.ResumeLayout(false)
-        Me.gbIndVar2.PerformLayout
-        CType(Me.nuNumPointsIndVar2,System.ComponentModel.ISupportInitialize).EndInit
-        Me.GroupBox9.ResumeLayout(false)
-        Me.GroupBox9.PerformLayout
-        CType(Me.dgVariables,System.ComponentModel.ISupportInitialize).EndInit
-        Me.ToolStrip1.ResumeLayout(false)
-        Me.ToolStrip1.PerformLayout
-        Me.GroupBox8.ResumeLayout(false)
-        Me.GroupBox8.PerformLayout
-        Me.gbVar.ResumeLayout(false)
-        Me.gbVar.PerformLayout
-        Me.GroupBox10.ResumeLayout(false)
-        Me.GroupBox10.PerformLayout
-        CType(Me.dgDepVariables,System.ComponentModel.ISupportInitialize).EndInit
-        Me.ToolStrip2.ResumeLayout(false)
-        Me.ToolStrip2.PerformLayout
-        Me.TabControl1.ResumeLayout(false)
-        Me.TabPage1.ResumeLayout(false)
-        Me.TabPage2.ResumeLayout(false)
-        Me.TabPage2.PerformLayout
-        Me.TabPage3.ResumeLayout(false)
-        Me.TabPage4.ResumeLayout(false)
-        Me.ResumeLayout(false)
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox7.ResumeLayout(False)
+        Me.GroupBox7.PerformLayout()
+        CType(Me.dgvResults, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        Me.gbIndVar1.ResumeLayout(False)
+        Me.gbIndVar1.PerformLayout()
+        CType(Me.nuNumPointsIndVar1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.gbIndVar2.ResumeLayout(False)
+        Me.gbIndVar2.PerformLayout()
+        CType(Me.nuNumPointsIndVar2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox9.ResumeLayout(False)
+        Me.GroupBox9.PerformLayout()
+        CType(Me.dgVariables, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
+        Me.GroupBox8.ResumeLayout(False)
+        Me.GroupBox8.PerformLayout()
+        Me.gbVar.ResumeLayout(False)
+        Me.gbVar.PerformLayout()
+        Me.GroupBox10.ResumeLayout(False)
+        Me.GroupBox10.PerformLayout()
+        CType(Me.dgDepVariables, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ToolStrip2.ResumeLayout(False)
+        Me.ToolStrip2.PerformLayout()
+        Me.TabControl1.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage4.ResumeLayout(False)
+        Me.TabPage5.ResumeLayout(False)
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.ResumeLayout(False)
 
-End Sub
+    End Sub
     Public WithEvents btnRun As System.Windows.Forms.Button
     Public WithEvents Label1 As System.Windows.Forms.Label
     Public WithEvents cbObjIndVar1 As System.Windows.Forms.ComboBox
@@ -889,4 +983,14 @@ End Sub
     Friend WithEvents DataGridViewComboBoxColumn1 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents DataGridViewComboBoxColumn3 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn5 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents TabPage5 As System.Windows.Forms.TabPage
+    Friend WithEvents Panel1 As System.Windows.Forms.Panel
+    Friend WithEvents graph As ZedGraph.ZedGraphControl
+    Public WithEvents CbCrtY As System.Windows.Forms.ComboBox
+    Friend WithEvents Label18 As System.Windows.Forms.Label
+    Public WithEvents CbCrtX As System.Windows.Forms.ComboBox
+    Friend WithEvents Label16 As System.Windows.Forms.Label
+    Public WithEvents BtnDrawChart As System.Windows.Forms.Button
+    Public WithEvents CbCrtPar As System.Windows.Forms.ComboBox
+    Friend WithEvents LblParam As System.Windows.Forms.Label
 End Class

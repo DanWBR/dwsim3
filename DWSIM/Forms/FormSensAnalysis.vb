@@ -114,6 +114,8 @@ Public Class FormSensAnalysis
 
         If Me.lbCases.Items.Count > 0 Then Me.lbCases.SelectedIndex = Me.lbCases.Items.Count - 1
 
+
+
     End Sub
 
     Private Function ReturnProperties(ByVal objectTAG As String, ByVal dependent As Boolean) As String()
@@ -266,6 +268,8 @@ Public Class FormSensAnalysis
                 End With
             Next
         End With
+        graph.GraphPane.CurveList.Clear()
+        BtnDrawChart.Enabled = False
         EnableAutoSave = True
     End Sub
 
@@ -573,6 +577,7 @@ Public Class FormSensAnalysis
             Me.tbStats.SelectionStart = Me.tbStats.Text.Length - 1
             Me.tbStats.SelectionLength = 1
             Me.tbStats.ScrollToCaret()
+            Me.BtnDrawChart.Enabled = True
 
             If FormMain.UtilityPlugins.ContainsKey("DF7368D6-5A06-4856-9B7A-D7F09D81F71F") Then
 
@@ -580,10 +585,10 @@ Public Class FormSensAnalysis
 
             End If
 
+            FillChartData()
         End Try
 
     End Sub
-
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAbort.Click
         abortCalc = True
     End Sub
@@ -789,6 +794,107 @@ Public Class FormSensAnalysis
         pform.ShowDialog(Me)
 
     End Sub
+    Private Sub FillChartData()
+        Dim i As Integer
+        Dim s As String
+        
+        CbCrtX.Items.Clear()
+        CbCrtY.Items.Clear()
+        For i = 0 To dgvResults.ColumnCount - 1
+            If dgvResults.Columns(i).Visible Then
+                s = dgvResults.Columns(i).HeaderText
+                CbCrtX.Items.Add(s)
+                CbCrtY.Items.Add(s)
+            End If
+        Next
+        CbCrtX.SelectedIndex = 0
+        If dgvResults.Columns(1).Visible Then
+            CbCrtY.SelectedIndex = 2
+        Else
+            CbCrtY.SelectedIndex = 1
+        End If
 
+        CbCrtPar.Visible = chkIndVar2.Checked
+        LblParam.Visible = chkIndVar2.Checked
+        CbCrtPar.Items.Clear()
+        CbCrtPar.Items.Add(dgvResults.Columns(0).HeaderText)
+        CbCrtPar.Items.Add(dgvResults.Columns(1).HeaderText)
+        CbCrtPar.SelectedIndex = 1
+
+        graph.GraphPane.CurveList.Clear()
+    End Sub
    
+    Private Sub BtnDrawChart_Click(sender As System.Object, e As System.EventArgs) Handles BtnDrawChart.Click
+        Dim px, py, IV2 As New ArrayList
+        Dim k, j As Integer
+        Dim x, y As Integer
+        Dim v, vl As String
+        Dim rnd As New System.Random
+        
+
+        'find selected columns
+        For k = 0 To dgvResults.ColumnCount - 1
+            If CbCrtX.SelectedItem = dgvResults.Columns(k).HeaderText Then x = k
+            If CbCrtY.SelectedItem = dgvResults.Columns(k).HeaderText Then y = k
+        Next
+
+        If chkIndVar2.Checked Then
+            v = ""
+            vl = ""
+            For k = 0 To dgvResults.Rows.Count - 1
+                v = dgvResults.Rows(k).Cells(CbCrtPar.SelectedIndex).Value
+                If k = 0 Then
+                    IV2.Add(v)
+                    vl = v
+                Else
+                    If IV2.IndexOf(v) = -1 Then
+                        IV2.Add(v)
+                        vl = v
+                    End If
+                End If
+            Next
+        End If
+
+        
+        
+        With graph.GraphPane
+            .CurveList.Clear()
+            .Title.Text = selectedsacase.name
+            .XAxis.Title.Text = CbCrtX.SelectedItem
+            .YAxis.Title.Text = CbCrtY.SelectedItem
+
+            For j = 0 To IV2.Count - 1 'run through all curve parameter values
+                If IV2.Count > 0 Then
+                    vl = IV2(j)
+                Else
+                    vl = ""
+                End If
+
+                'collect data
+                px.Clear()
+                py.Clear()
+                For k = 0 To dgvResults.Rows.Count - 1 'run through all result points to find values
+                    v = dgvResults.Rows(k).Cells(CbCrtPar.SelectedIndex).Value 'if actual curve parameter found then add point to curve
+                    If v = IV2(j) Then
+                        v = dgvResults.Rows(k).Cells(x).Value
+                        px.Add(CType(dgvResults.Rows(k).Cells(x).Value, Double))
+
+                        v = dgvResults.Rows(k).Cells(y).Value
+                        py.Add(CType(dgvResults.Rows(k).Cells(y).Value, Double))
+                    End If
+                Next
+
+                With .AddCurve(vl, px.ToArray(GetType(Double)), py.ToArray(GetType(Double)), Color.Black)
+                    .Symbol.Fill.Color = Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))
+                    .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                    .Symbol.Size = 5
+                End With
+            Next
+          
+            .AxisChange()
+        End With
+
+
+        graph.Refresh()
+    End Sub
 End Class
