@@ -285,15 +285,15 @@ Public Class FormSensAnalysis
                     Exit For
                 End If
             Next
-            gbIndVar1.Enabled = True
-            gbVar.Enabled = True
+            'TabPage2.Enabled = True
+            'TabPage3.Enabled = True
             GroupBox8.Enabled = True
             GroupBox9.Enabled = True
+            btnRun.Enabled = True
             'gbExp.Enabled = True
         Else
-            gbIndVar1.Enabled = False
-            chkIndVar2.Enabled = False
-            gbVar.Enabled = False
+            'TabPage2.Enabled = False
+            'TabPage3.Enabled = False
             'gbExp.Enabled = False
             GroupBox8.Enabled = False
             GroupBox9.Enabled = False
