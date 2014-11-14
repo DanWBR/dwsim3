@@ -853,6 +853,8 @@ Public Class FormSensAnalysis
                     End If
                 End If
             Next
+        Else
+            IV2.Add("")
         End If
 
         
@@ -864,30 +866,27 @@ Public Class FormSensAnalysis
             .YAxis.Title.Text = CbCrtY.SelectedItem
 
             For j = 0 To IV2.Count - 1 'run through all curve parameter values
-                If IV2.Count > 0 Then
-                    vl = IV2(j)
-                Else
-                    vl = ""
-                End If
-
-                'collect data
+                'collect data to display
                 px.Clear()
                 py.Clear()
                 For k = 0 To dgvResults.Rows.Count - 1 'run through all result points to find values
-                    v = dgvResults.Rows(k).Cells(CbCrtPar.SelectedIndex).Value 'if actual curve parameter found then add point to curve
-                    If v = IV2(j) Then
-                        v = dgvResults.Rows(k).Cells(x).Value
+                    If Not chkIndVar2.Checked Or dgvResults.Rows(k).Cells(CbCrtPar.SelectedIndex).Value = IV2(j) Then
                         px.Add(CType(dgvResults.Rows(k).Cells(x).Value, Double))
-
-                        v = dgvResults.Rows(k).Cells(y).Value
                         py.Add(CType(dgvResults.Rows(k).Cells(y).Value, Double))
                     End If
                 Next
 
-                With .AddCurve(vl, px.ToArray(GetType(Double)), py.ToArray(GetType(Double)), Color.Black)
+                If chkIndVar2.Checked Then
+                    .Legend.IsVisible = True
+                Else
+                    .Legend.IsVisible = False
+                End If
+
+                With .AddCurve(IV2(j), px.ToArray(GetType(Double)), py.ToArray(GetType(Double)), Color.Black)
                     .Symbol.Fill.Color = Color.FromArgb(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255))
                     .Symbol.Fill.Type = ZedGraph.FillType.Solid
                     .Symbol.Size = 5
+
                 End With
             Next
           
