@@ -4398,9 +4398,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     'refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault / CDbl(Me.CurrentMaterialStream.Fases(0).SPMProperties.density.GetValueOrDefault)
                     'If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, refval), Flowsheet.Options.NumberFormat)
                     'pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("VazoTP"), su.spmp_volumetricFlow), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("Vazovolumtricanascon"), True)
-                    refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault
-                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
-                    pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
+                    'refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault
+                    'If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
+                    'pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
                     refval = Me.CurrentMaterialStream.Fases(0).SPMProperties.thermalConductivity.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_thermalConductivity, refval), Flowsheet.Options.NumberFormat)
                     pm.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Condutividadetrmica"), su.spmp_thermalConductivity), val, True, DWSIM.App.GetLocalString("Mistura"), DWSIM.App.GetLocalString("Condutividadetrmicad"), True)
@@ -4493,6 +4493,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.massflow.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
                     pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
+                    refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarflow.GetValueOrDefault
+                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molarflow, refval), Flowsheet.Options.NumberFormat)
+                    pv.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomolar"), su.spmp_molarflow), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Vazomolardacorrente"), True)
                     refval = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
                     pv.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Vapor"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
@@ -4562,6 +4565,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.massflow.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
+                    refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.molarflow.GetValueOrDefault
+                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molarflow, refval), Flowsheet.Options.NumberFormat)
+                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomolar"), su.spmp_molarflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomolardacorrente"), True)
                     refval = Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
                     pl.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
@@ -4671,6 +4677,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.massflow.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
+                    refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.molarflow.GetValueOrDefault
+                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molarflow, refval), Flowsheet.Options.NumberFormat)
+                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomolar"), su.spmp_molarflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomolardacorrente"), True)
                     refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
                     pl.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
@@ -4738,6 +4747,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.massflow.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
+                    refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.molarflow.GetValueOrDefault
+                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molarflow, refval), Flowsheet.Options.NumberFormat)
+                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomolar"), su.spmp_molarflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomolardacorrente"), True)
                     refval = Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
                     pl.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
@@ -4805,6 +4817,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.massflow.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
+                    refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.molarflow.GetValueOrDefault
+                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molarflow, refval), Flowsheet.Options.NumberFormat)
+                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomolar"), su.spmp_molarflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomolardacorrente"), True)
                     refval = Me.CurrentMaterialStream.Fases(5).SPMProperties.molarfraction.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
                     pl.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
@@ -4872,6 +4887,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.massflow.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
+                    refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.molarflow.GetValueOrDefault
+                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molarflow, refval), Flowsheet.Options.NumberFormat)
+                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomolar"), su.spmp_molarflow), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Vazomolardacorrente"), True)
                     refval = Me.CurrentMaterialStream.Fases(6).SPMProperties.molarfraction.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
                     pl.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
@@ -4939,6 +4957,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.massflow.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_massflow, refval), Flowsheet.Options.NumberFormat)
                     pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
+                    refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.molarflow.GetValueOrDefault
+                    If refval.HasValue = True Then val = Format(Conversor.ConverterDoSI(su.spmp_molarflow, refval), Flowsheet.Options.NumberFormat)
+                    pl.Add(Flowsheet.FT(DWSIM.App.GetLocalString("Vazomolar"), su.spmp_molarflow), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Vazomolardacorrente"), True)
                     refval = Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault
                     If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
                     pl.Add(DWSIM.App.GetLocalString("Fraomolardafase"), val, True, DWSIM.App.GetLocalString("Solid"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
