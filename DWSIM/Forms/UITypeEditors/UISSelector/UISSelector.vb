@@ -1,5 +1,5 @@
 '    UITypeEditors for Material/Energy Stream Selection
-'    Copyright 2008 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -76,8 +76,7 @@ Namespace DWSIM.Editors.Streams
                 'ColumnHeader3
                 '
                 Me.ColumnHeader3.Text = "Nome"
-                Me.ColumnHeader3.AutoResize(ColumnHeaderAutoResizeStyle.None)
-                Me.ColumnHeader3.Width = Me.ListView2.Width
+                'Me.ColumnHeader3.AutoResize(ColumnHeaderAutoResizeStyle.None)
 
                 form = My.Application.ActiveSimulation
 
@@ -95,6 +94,9 @@ Namespace DWSIM.Editors.Streams
                 Next
                 Me.ListView2.SelectedItems.Clear()
 
+                Me.ColumnHeader3.Width = Me.ListView2.DropDownWidth
+                Me.ListView2.Width = Me.ColumnHeader3.Width
+                Me.ListView2.Height = Me.ListView2.DropDownHeight + Me.ListView2.Items.Count * 4
                 'Me.ListView2.Items(selectedRSID).Selected = True
 
                 Me.loaded = True
@@ -180,8 +182,7 @@ Namespace DWSIM.Editors.Streams
                 'ColumnHeader3
                 '
                 Me.ColumnHeader3.Text = "Nome"
-                Me.ColumnHeader3.AutoResize(ColumnHeaderAutoResizeStyle.None)
-                Me.ColumnHeader3.Width = Me.ListView2.Width
+                'Me.ColumnHeader3.AutoResize(ColumnHeaderAutoResizeStyle.None)
 
                 form = My.Application.ActiveSimulation
 
@@ -198,7 +199,10 @@ Namespace DWSIM.Editors.Streams
                     End If
                 Next
                 Me.ListView2.SelectedItems.Clear()
-
+                
+                Me.ColumnHeader3.Width = Me.ListView2.DropDownWidth
+                Me.ListView2.Width = Me.ColumnHeader3.Width
+                Me.ListView2.Height = Me.ListView2.DropDownHeight + Me.ListView2.Items.Count * 4
                 'Me.ListView2.Items(selectedRSID).Selected = True
 
                 Me.loaded = True
@@ -285,8 +289,7 @@ Namespace DWSIM.Editors.Streams
                 'ColumnHeader3
                 '
                 Me.ColumnHeader3.Text = "Nome"
-                Me.ColumnHeader3.AutoResize(ColumnHeaderAutoResizeStyle.None)
-                Me.ColumnHeader3.Width = Me.ListView2.Width
+                'Me.ColumnHeader3.AutoResize(ColumnHeaderAutoResizeStyle.None)
 
                 form = My.Application.ActiveSimulation
 
@@ -303,7 +306,10 @@ Namespace DWSIM.Editors.Streams
                     End If
                 Next
                 Me.ListView2.SelectedItems.Clear()
-
+                
+                Me.ColumnHeader3.Width = Me.ListView2.DropDownWidth
+                Me.ListView2.Width = Me.ColumnHeader3.Width
+                Me.ListView2.Height = Me.ListView2.DropDownHeight + Me.ListView2.Items.Count * 4
                 'Me.ListView2.Items(selectedRSID).Selected = True
 
                 Me.loaded = True
@@ -390,8 +396,7 @@ Namespace DWSIM.Editors.Streams
                 'ColumnHeader3
                 '
                 Me.ColumnHeader3.Text = "Nome"
-                Me.ColumnHeader3.AutoResize(ColumnHeaderAutoResizeStyle.None)
-                Me.ColumnHeader3.Width = Me.ListView2.Width
+                'Me.ColumnHeader3.AutoResize(ColumnHeaderAutoResizeStyle.None)
 
                 form = My.Application.ActiveSimulation
 
@@ -408,7 +413,10 @@ Namespace DWSIM.Editors.Streams
                     End If
                 Next
                 Me.ListView2.SelectedItems.Clear()
-
+                
+                Me.ColumnHeader3.Width = Me.ListView2.DropDownWidth
+                Me.ListView2.Width = Me.ColumnHeader3.Width
+                Me.ListView2.Height = Me.ListView2.DropDownHeight + Me.ListView2.Items.Count * 4
                 'Me.ListView2.Items(selectedRSID).Selected = True
 
                 Me.loaded = True
@@ -442,5 +450,3 @@ Namespace DWSIM.Editors.Streams
     End Class
 
 End Namespace
-
-
