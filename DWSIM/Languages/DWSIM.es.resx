@@ -4848,4 +4848,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ErroCompSaveDB" xml:space="preserve">
     <value>Componente de base de datos de ahorro de Error.</value>
   </data>
+  <data name="AddUnitSystemFromSimulation" xml:space="preserve">
+    <value>Adicionar Sistema de Unidades da Simulação</value>
+  </data>
+  <data name="ConfirmAddUnitSystemFromSimulation" xml:space="preserve">
+    <value>A simulação carregada contém um sistema de unidades definido pelo usuário que não está presente na sua lista de sistemas. Deseja adicionar esse sistema à sua lista?</value>
+  </data>
 </root>

@@ -352,13 +352,14 @@ Imports DWSIM.DWSIM.GraphicObjects
                 Me.ToolStripComboBoxUnitSystem.SelectedItem = Me.Options.SelectedUnitSystem.nome
             Else
                 If Me.Options.SelectedUnitSystem.nome <> "" Then
-                    AddUnitSystem(Me.Options.SelectedUnitSystem)
+                    If MessageBox.Show(DWSIM.App.GetLocalString("ConfirmAddUnitSystemFromSimulation"), DWSIM.App.GetLocalString("AddUnitSystemFromSimulation"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+                        AddUnitSystem(Me.Options.SelectedUnitSystem)
+                    End If
                 Else
                     Me.ToolStripComboBoxUnitSystem.SelectedIndex = 0
                     Me.ToolStripComboBoxUnitSystem.SelectedItem = Me.Options.SelectedUnitSystem.nome
                 End If
             End If
-
             Me.ToolStripComboBoxNumberFormatting.SelectedItem = Me.Options.NumberFormat
             Me.ToolStripComboBoxNumberFractionFormatting.SelectedItem = Me.Options.FractionNumberFormat
         End If

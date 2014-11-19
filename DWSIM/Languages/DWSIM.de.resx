@@ -4871,4 +4871,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ErroCompSaveDB" xml:space="preserve">
     <value>Fehler beim Speichern der Kompente in die Datenbank.</value>
   </data>
+  <data name="AddUnitSystemFromSimulation" xml:space="preserve">
+    <value>Add User (Simulation) Units System</value>
+  </data>
+  <data name="ConfirmAddUnitSystemFromSimulation" xml:space="preserve">
+    <value>The loaded simulation contains an user unit system definition that is not present in your list of user-defined units systems. Do you want to add this units system to your list?</value>
+  </data>
 </root>
