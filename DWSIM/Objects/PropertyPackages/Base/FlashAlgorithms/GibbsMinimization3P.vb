@@ -32,7 +32,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Inherits FlashAlgorithm
 
-        Private _io As New BostonBrittInsideOut
+        Private _nl As New DWSIMDefault
+        Private _nl3p As New NestedLoops3PV2
 
         Public ForceTwoPhaseOnly As Boolean = False
         Public L1sat As Double = 0.0#
@@ -287,13 +288,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             'check if the algorithm converged to the trivial solution.
             If PP.AUX_CheckTrivial(Ki) Then
-                'rollback to inside-out PT flash.
-                Console.WriteLine("PT Flash [GM]: Converged to the trivial solution at specified conditions. Rolling back to Inside-Out PT-Flash...")
-                result = _io.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
+                'rollback to NL PT flash.
+                Console.WriteLine("PT Flash [GM]: Converged to the trivial solution at specified conditions. Rolling back to Nested-Loops PT-Flash...")
+                result = _nl.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
             ElseIf status = IpoptReturnCode.Maximum_Iterations_Exceeded Then
-                'retry with inside-out PT flash.
-                Console.WriteLine("PT Flash [GM]: Maximum iterations exceeded. Recalculating with Inside-Out PT-Flash...")
-                result = _io.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
+                'retry with NL PT flash.
+                Console.WriteLine("PT Flash [GM]: Maximum iterations exceeded. Recalculating with Nested-Loops PT-Flash...")
+                result = _nl.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
             Else
                 FunctionValue(initval)
                 result = New Object() {L, V, Vx1, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
@@ -403,8 +404,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             Dim imaxl As Integer = Array.IndexOf(vx2est, maxl)
 
                             F = 1000.0#
-                            V = result(1) * F
-                            L2 = F * fi(imaxl)
+                            V = result(1)
+                            L2 = F * result(3)(imaxl)
                             L1 = F - L2 - V
 
                             If L1 < 0.0# Then
@@ -428,6 +429,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                 uconstr2(i) = fi(i) * F
                                 glow(i) = 0.0#
                                 gup(i) = 1000.0#
+                                If initval2(i) > uconstr2(i) Then initval2(i) = uconstr2(i)
                             Next
                             For i = n + 1 To 2 * n + 1
                                 If Vz(i - n - 1) <> 0 Then
@@ -438,6 +440,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                 End If
                                 lconstr2(i) = 0.0#
                                 uconstr2(i) = fi(i - n - 1) * F
+                                If initval2(i) > uconstr2(i) Then initval2(i) = uconstr2(i)
                             Next
 
                             ecount = 0
@@ -487,6 +490,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                         problem.AddOption("tol", etol)
                                         problem.AddOption("max_iter", maxit_e)
                                         problem.AddOption("mu_strategy", "adaptive")
+                                        'problem.AddOption("mehrotra_algorithm", "yes")
                                         problem.AddOption("hessian_approximation", "limited-memory")
                                         'problem.SetIntermediateCallback(AddressOf intermediate)
                                         'solve the problem 
@@ -497,6 +501,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             For i = 0 To initval2.Length - 1
                                 If Double.IsNaN(initval2(i)) Then initval2(i) = 0.0#
                             Next
+
+                            'check if maximum iterations exceeded.
+                            If status = IpoptReturnCode.Maximum_Iterations_Exceeded Then
+                                'retry with NL PT flash.
+                                Console.WriteLine("PT Flash [GM]: Maximum iterations exceeded. Recalculating with Nested-Loops PT-Flash...")
+                                result = _nl3p.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
+                                Return result
+                            End If
 
                             FunctionValue(initval2)
 
@@ -515,7 +527,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             Else
                                 result = New Object() {L2 / F, V / F, Vx2, Vy, ecount, L1 / F, Vx1, 0.0#, PP.RET_NullVector}
                             End If
-
 
                         End If
 

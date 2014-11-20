@@ -1676,7 +1676,7 @@ restart:    Do
                 If Rant = 0.0# And R = 1.0# Then R = 0.0#
                 If Rant = 1.0# And R = 0.0# Then R = 1.0#
 
-                Me.TPErrorFunc(R)
+                fr = Me.TPErrorFunc(R)
 
                 'At this point, we have converged R for the simplified model. Proceed to step 9.
 
@@ -1798,20 +1798,8 @@ out:
             Rt = Rtv
             fr = bo2.brentoptimize(-(1 - Rt), (1 - Rt), 0.00000001, S)
 
-            'S = 1 - Rt
-            'Do
-            '    S0 = S
-            '    S1 = S + 0.01
-            '    fr = Me.SErrorFunc(S0, Rt)
-            '    dfr = (fr - Me.SErrorFunc(S1, Rt)) / -0.01
-            '    S += -fr / dfr
-            '    If S < -(1 - Rt) Then S = -(1 - Rt) + 0.01
-            '    If S > (1 - Rt) Then S = (1 - Rt) - 0.01
-            '    icount += 1
-            'Loop Until Abs(fr) < itol Or icount > maxit_i
-
-            'If S <= -(1 - Rt) Then S = -(1 - Rt)
-            'If S >= (1 - Rt) Then S = (1 - Rt)
+            If S <= -(1 - Rt) Then S = -(1 - Rt)
+            If S >= (1 - Rt) Then S = (1 - Rt)
 
             For i = 0 To n
                 pi(i) = fi(i) / (Rt + (1 - Rt + S) / (2 * Kb0 * Exp(ui1(i))) + (1 - Rt - S) / (2 * Kb0 * Exp(ui2(i))))
@@ -1831,11 +1819,11 @@ out:
                 Vy(i) = pi(i) / sumpi
             Next
 
-            If Rt <> 1 Then
-                Kb = ((1 - Rt + S) * sumeuipi1 + (1 - Rt - S) * sumeuipi2) / (2 * (1 - Rt) * sumpi)
-            Else
-                Kb = 1.0#
-            End If
+            'If Rt <> 1.0# Then
+            Kb = ((1 - Rt + S) * sumeuipi1 + (1 - Rt - S) * sumeuipi2) / (2 * (1 - Rt) * sumpi)
+            'Else
+            'Kb = 1.0#
+            'End If
 
             V = Rt * sumpi
             L1 = 0.5 * (S * V * (Kb / Kb0 - 1) + (1 + S) - V)
