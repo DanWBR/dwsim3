@@ -241,7 +241,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             End If
 
             For Each pi As PhaseInfo In Me.PhaseMappings.Values
-                If Not pi.PhaseLabel = "Disabled" Then Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molecularWeight = Me.AUX_MMM(pi.DWPhaseID)
+                If Not pi.PhaseLabel = "Disabled" Then
+                    Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+                    Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molecularWeight = Me.AUX_MMM(pi.DWPhaseID)
+                    For Each subst In Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).Componentes.Values
+                        subst.FracaoMassica = Me.AUX_CONVERT_MOL_TO_MASS(subst.Nome, pi.DWPhaseIndex)
+                    Next
+                End If
             Next
 
 
@@ -1020,6 +1026,131 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 
         End Sub
+
+        Public Overrides Function AUX_MMM(Vz() As Double) As Double
+
+            Dim complist As Object = Nothing
+            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
+            Dim mw = Me.CurrentMaterialStream.GetCompoundConstant(New String() {"molecularWeight"}, complist)
+            Dim val As Double = 0.0#
+            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+            Dim i As Integer = 0
+            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                val += Vz(i) * mw(i)
+                i += 1
+            Next
+
+            Return val
+
+        End Function
+
+        Public Overrides Function AUX_MMM(fase As Fase) As Double
+
+            Dim complist As Object = Nothing
+            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
+            Dim mw = Me.CurrentMaterialStream.GetCompoundConstant(New String() {"molecularWeight"}, complist)
+            Dim mwt As Double = 0.0#
+            Dim i As Integer = 0
+            For Each c As Substancia In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
+                mwt += c.FracaoMolar.GetValueOrDefault * mw(i)
+                i += 1
+            Next
+
+            Return mwt
+
+        End Function
+
+        Public Overrides Function AUX_CONVERT_MOL_TO_MASS(ByVal subst As String, ByVal phasenumber As Integer) As Double
+
+            Dim complist As Object = Nothing
+            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
+            Dim mw = Me.CurrentMaterialStream.GetCompoundConstant(New String() {"molecularWeight"}, complist)
+
+            Dim mol_x_mm As Double
+            Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
+            Dim i As Integer = 0
+            Dim j As Integer = 0
+            For Each sub1 In Me.CurrentMaterialStream.Fases(phasenumber).Componentes.Values
+                mol_x_mm += sub1.FracaoMolar.GetValueOrDefault * mw(i)
+                If subst = sub1.Nome Then j = i
+                i += 1
+            Next
+
+            sub1 = Me.CurrentMaterialStream.Fases(phasenumber).Componentes(subst)
+            If mol_x_mm <> 0.0# Then
+                Return sub1.FracaoMolar.GetValueOrDefault * mw(j) / mol_x_mm
+            Else
+                Return 0.0#
+            End If
+
+        End Function
+
+        Public Overrides Function AUX_CONVERT_MASS_TO_MOL(ByVal subst As String, ByVal phasenumber As Integer) As Double
+
+            Dim complist As Object = Nothing
+            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
+            Dim mw = Me.CurrentMaterialStream.GetCompoundConstant(New String() {"molecularWeight"}, complist)
+
+            Dim mass_div_mm As Double
+            Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
+            Dim i As Integer = 0
+            Dim j As Integer = 0
+            For Each sub1 In Me.CurrentMaterialStream.Fases(phasenumber).Componentes.Values
+                mass_div_mm += sub1.FracaoMassica.GetValueOrDefault / mw(i)
+                If subst = sub1.Nome Then j = i
+                i += 1
+            Next
+
+            sub1 = Me.CurrentMaterialStream.Fases(phasenumber).Componentes(subst)
+            Return sub1.FracaoMassica.GetValueOrDefault / mw(j) / mass_div_mm
+
+        End Function
+
+        Public Overrides Function AUX_CONVERT_MOL_TO_MASS(ByVal Vz As Object) As Double()
+
+            Dim complist As Object = Nothing
+            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
+            Dim mw = Me.CurrentMaterialStream.GetCompoundConstant(New String() {"molecularWeight"}, complist)
+
+            Dim Vwe(UBound(Vz)) As Double
+            Dim mol_x_mm As Double = 0
+            Dim i As Integer = 0
+            For i = 0 To UBound(Vz)
+                mol_x_mm += Vz(i) * mw(i)
+            Next
+
+            For i = 0 To UBound(Vz)
+                If mol_x_mm <> 0 Then
+                    Vwe(i) = Vz(i) * mw(i) / mol_x_mm
+                Else
+                    Vwe(i) = 0.0#
+                End If
+            Next
+
+            Return Vwe
+
+        End Function
+
+        Public Overrides Function AUX_CONVERT_MASS_TO_MOL(ByVal Vz As Object) As Double()
+
+            Dim complist As Object = Nothing
+            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
+            Dim mw = Me.CurrentMaterialStream.GetCompoundConstant(New String() {"molecularWeight"}, complist)
+
+            Dim Vw(UBound(Vz)) As Double
+            Dim mass_div_mm As Double
+            Dim i As Integer = 0
+           For i = 0 To UBound(Vz)
+                mass_div_mm += Vz(i) / mw(i)
+            Next
+
+            For i = 0 To UBound(Vz)
+                Vw(i) = Vz(i) / mw(i) / mass_div_mm
+            Next
+
+            Return Vw
+
+        End Function
 
         Public Overrides Function AUX_VAPDENS(ByVal T As Double, ByVal P As Double) As Double
 

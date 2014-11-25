@@ -5442,7 +5442,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         End Function
 
-        Public Function AUX_MMM(ByVal fase As Fase) As Double
+        Public Overridable Function AUX_MMM(ByVal fase As Fase) As Double
 
             Dim val As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7002,7 +7002,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_CONVERT_MOL_TO_MASS(ByVal subst As String, ByVal phasenumber As Integer) As Double
+        Public Overridable Function AUX_CONVERT_MOL_TO_MASS(ByVal subst As String, ByVal phasenumber As Integer) As Double
 
             Dim mol_x_mm As Double
             Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7019,7 +7019,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_CONVERT_MASS_TO_MOL(ByVal subst As String, ByVal phasenumber As Integer) As Double
+        Public Overridable Function AUX_CONVERT_MASS_TO_MOL(ByVal subst As String, ByVal phasenumber As Integer) As Double
 
             Dim mass_div_mm As Double
             Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7588,7 +7588,7 @@ Final3:
             End Select
         End Function
 
-        Public Function AUX_MMM(ByVal Vz() As Double) As Double
+        Public Overridable Function AUX_MMM(ByVal Vz() As Double) As Double
 
             Dim val As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7743,7 +7743,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_CONVERT_MOL_TO_MASS(ByVal Vz As Object) As Double()
+        Public Overridable Function AUX_CONVERT_MOL_TO_MASS(ByVal Vz As Object) As Double()
 
             Dim Vwe(UBound(Vz)) As Double
             Dim mol_x_mm As Double = 0
@@ -7768,7 +7768,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_CONVERT_MASS_TO_MOL(ByVal Vz As Object) As Double()
+        Public Overridable Function AUX_CONVERT_MASS_TO_MOL(ByVal Vz As Object) As Double()
 
             Dim Vw(UBound(Vz)) As Double
             Dim mass_div_mm As Double
