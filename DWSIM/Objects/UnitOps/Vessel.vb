@@ -180,7 +180,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Throw New Exception(DWSIM.App.GetLocalString("EnergyStreamRequired"))
                 End If
             Else
-                E0 = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(6).AttachedConnector.AttachedFrom.Name).Energia.GetValueOrDefault
+                If Me.GraphicObject.InputConnectors(6).IsAttached Then
+                    E0 = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(6).AttachedConnector.AttachedFrom.Name).Energia.GetValueOrDefault
+                End If
             End If
 
             Dim H, Hs, T, W, M, We, P, VF, Hf As Double
@@ -620,7 +622,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Me.DeltaQ = Hf - H
 
-            'Corrente de energia - atualizar valor da potência (kJ/s)
+            'Corrente de energia - atualizar valor da potÃªncia (kJ/s)
             If Me.GraphicObject.InputConnectors(6).IsAttached Then
                 With form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(6).AttachedConnector.AttachedFrom.Name)
                     .Energia = Me.DeltaQ.GetValueOrDefault
