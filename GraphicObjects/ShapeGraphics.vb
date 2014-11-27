@@ -970,7 +970,8 @@ Namespace GraphicObjects
                 If Me.AttachedTo.TipoObjeto = GraphicObjects.TipoObjeto.CustomUO Or _
                 Me.AttachedTo.TipoObjeto = GraphicObjects.TipoObjeto.ShortcutColumn Or _
                 Me.AttachedTo.TipoObjeto = GraphicObjects.TipoObjeto.OT_EnergyRecycle Or _
-                Me.AttachedTo.TipoObjeto = GraphicObjects.TipoObjeto.CapeOpenUO Then
+                Me.AttachedTo.TipoObjeto = GraphicObjects.TipoObjeto.CapeOpenUO Or _
+                Me.AttachedTo.TipoObjeto = GraphicObjects.TipoObjeto.Vessel Then
                     StartPos = Me.AttachedFrom.OutputConnectors(0).Position
                     EndPos = Me.AttachedTo.InputConnectors(Me.AttachedToConnectorIndex).Position
                 Else
@@ -1854,8 +1855,9 @@ Namespace GraphicObjects
             myOC3.Position = New Point(X + 0.5 * Width, Y + Height)
             myOC3.Type = ConType.ConOut
 
-            Me.EnergyConnector.Position = New Point(X + 0.827 * Width, Y + 0.5 * Height)
-            Me.EnergyConnector.Type = ConType.ConEn
+            Dim myIC7 As New ConnectionPoint
+            myIC7.Position = New Point(X + 0.25 * Width, Y + 0.8 * Height)
+            myIC7.Type = ConType.ConEn
 
             With InputConnectors
 
@@ -1866,6 +1868,10 @@ Namespace GraphicObjects
                         .Add(myIC4)
                         .Add(myIC5)
                         .Add(myIC6)
+                        .Add(myIC7)
+                    End If
+                    If .Count = 6 Then
+                        .Add(myIC7)
                     End If
                     If Not Me.FlippedH Then
                         .Item(0).Position = New Point(X + 0.25 * Width, Y + 0.2 * Height)
@@ -1874,6 +1880,7 @@ Namespace GraphicObjects
                         .Item(3).Position = New Point(X + 0.25 * Width, Y + 0.5 * Height)
                         .Item(4).Position = New Point(X + 0.25 * Width, Y + 0.6 * Height)
                         .Item(5).Position = New Point(X + 0.25 * Width, Y + 0.7 * Height)
+                        .Item(6).Position = New Point(X + 0.25 * Width, Y + 0.8 * Height)
                     Else
                         .Item(0).Position = New Point(X + (1 - 0.25) * Width, Y + 0.2 * Height)
                         .Item(1).Position = New Point(X + (1 - 0.25) * Width, Y + 0.3 * Height)
@@ -1881,6 +1888,7 @@ Namespace GraphicObjects
                         .Item(3).Position = New Point(X + (1 - 0.25) * Width, Y + 0.5 * Height)
                         .Item(4).Position = New Point(X + (1 - 0.25) * Width, Y + 0.6 * Height)
                         .Item(5).Position = New Point(X + (1 - 0.25) * Width, Y + 0.7 * Height)
+                        .Item(6).Position = New Point(X + (1 - 0.25) * Width, Y + 0.8 * Height)
                     End If
                 Else
                     .Add(myIC1)
@@ -1889,6 +1897,7 @@ Namespace GraphicObjects
                     .Add(myIC4)
                     .Add(myIC5)
                     .Add(myIC6)
+                    .Add(myIC7)
                 End If
 
             End With

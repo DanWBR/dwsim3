@@ -166,7 +166,24 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
             End If
 
-            Dim H, Hs, T, W, M, We, P, VF As Double
+            Dim E0 As Double = 0.0#
+
+            If Me.OverrideP Or Me.OverrideT Or Me.FlashSpecification = FlashSpec.PVF Then
+                If Not Me.GraphicObject.InputConnectors(6).IsAttached Then
+                    'Call function to calculate flowsheet
+                    With objargs
+                        .Calculado = False
+                        .Nome = Me.Nome
+                        .Tipo = TipoObjeto.Vessel
+                    End With
+                    CalculateFlowsheet(FlowSheet, objargs, Nothing)
+                    Throw New Exception(DWSIM.App.GetLocalString("EnergyStreamRequired"))
+                End If
+            Else
+                E0 = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(6).AttachedConnector.AttachedFrom.Name).Energia.GetValueOrDefault
+            End If
+
+            Dim H, Hs, T, W, M, We, P, VF, Hf As Double
             H = 0
             Hs = 0
             T = 0
@@ -184,7 +201,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim cp As ConnectionPoint
 
             For Each cp In Me.GraphicObject.InputConnectors
-                If cp.IsAttached Then
+                If cp.IsAttached And cp.Type = ConType.ConIn Then
                     nc += 1
                     If cp.AttachedConnector.AttachedFrom.Calculated = False Then Throw New Exception(DWSIM.App.GetLocalString("Umaoumaiscorrentesna"))
                     ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedFrom.Name)
@@ -214,7 +231,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             If M <> 0.0# Then VF /= M
 
-            If W <> 0.0# Then Hs = H / W Else Hs = 0.0#
+            If W <> 0.0# Then Hs = (H + E0) / W Else Hs = 0.0#
 
             If Me.PressureCalculation = PressureBehavior.Average Then P = P / (i - 1)
 
@@ -223,7 +240,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim n As Integer = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name).Fases(0).Componentes.Count
             Dim Vw As New Dictionary(Of String, Double)
             For Each cp In Me.GraphicObject.InputConnectors
-                If cp.IsAttached Then
+                If cp.IsAttached And cp.Type = ConType.ConIn Then
                     ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedFrom.Name)
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     For Each comp In ms.Fases(0).Componentes.Values
@@ -451,6 +468,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End With
                 End If
 
+                Hf = mix.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * W
+
             Else
 
                 Dim xl, xv, Hv, Hl, Tv, Tl, S, wtotalx, wtotaly As Double
@@ -500,6 +519,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 S = tmp(5)
                 Vx = tmp(8)
                 Vy = tmp(9)
+
+                Hf = H * W
 
                 Hv = Me.PropertyPackage.DW_CalcEnthalpy(Vy, T, P, PropertyPackages.State.Vapor)
                 Hl = Me.PropertyPackage.DW_CalcEnthalpy(Vx, T, P, PropertyPackages.State.Liquid)
@@ -597,6 +618,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             End If
 
+            Me.DeltaQ = Hf - H
+
+            'Corrente de energia - atualizar valor da potência (kJ/s)
+            If Me.GraphicObject.InputConnectors(6).IsAttached Then
+                With form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(6).AttachedConnector.AttachedFrom.Name)
+                    .Energia = Me.DeltaQ.GetValueOrDefault
+                    .GraphicObject.Calculated = True
+                End With
+            End If
 
             'Call function to calculate flowsheet
             With objargs
@@ -697,7 +727,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 MyBase.PopulatePropertyGrid(pgrid, su)
 
-                Dim ent1, ent2, ent3, ent4, ent5, ent6, saida1, saida2, saida3 As String
+                Dim ent1, ent2, ent3, ent4, ent5, ent6, saida1, saida2, saida3, energ As String
                 If Me.GraphicObject.InputConnectors(0).IsAttached = True Then
                     ent1 = Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Tag
                 Else
@@ -742,6 +772,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     saida3 = Me.GraphicObject.OutputConnectors(2).AttachedConnector.AttachedTo.Tag
                 Else
                     saida3 = ""
+                End If
+                If Me.GraphicObject.InputConnectors(6).IsAttached = True Then
+                    energ = Me.GraphicObject.InputConnectors(6).AttachedConnector.AttachedFrom.Tag
+                Else
+                    energ = ""
                 End If
 
                 .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada1"), ent1, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
@@ -793,6 +828,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
                 End With
 
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeenergia"), energ, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputESSelector
+                End With
+
                 .Item.Add(DWSIM.App.GetLocalString("Pressoajusante"), Me, "PressureCalculation", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Selecioneumaopoquein"), True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
@@ -819,6 +860,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                         .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                     End With
+                End If
+
+                If Me.GraphicObject.Calculated Then
+                    .Item.Add(FT(DWSIM.App.GetLocalString("RConvPGridItem3"), su.spmp_heatflow), Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), "", True)
                 End If
 
                 .ExpandAllGridItems()

@@ -4586,6 +4586,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to O modo de cálculo selecionado exige que uma Corrente de Energia esteja conectada à Operação Unitária..
+        '''</summary>
+        Friend Shared ReadOnly Property EnergyStreamRequired() As String
+            Get
+                Return ResourceManager.GetString("EnergyStreamRequired", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Entalpia de Formação do Gás Ideal a 25°C.
         '''</summary>
         Friend Shared ReadOnly Property EntalpiadeFormaodoGs() As String

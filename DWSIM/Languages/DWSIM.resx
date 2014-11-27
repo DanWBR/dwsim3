@@ -4888,4 +4888,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ConfirmAddUnitSystemFromSimulation" xml:space="preserve">
     <value>A simulação carregada contém um sistema de unidades definido pelo usuário que não está presente na sua lista de sistemas. Deseja adicionar esse sistema à sua lista?</value>
   </data>
+  <data name="EnergyStreamRequired" xml:space="preserve">
+    <value>O modo de cálculo selecionado exige que uma Corrente de Energia esteja conectada à Operação Unitária.</value>
+  </data>
 </root>

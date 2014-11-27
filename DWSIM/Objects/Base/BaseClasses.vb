@@ -636,15 +636,15 @@ Imports System.Text
                             MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                             Exit Sub
                         End If
-                        If Not sobj.InputConnectors(1).IsAttached Then
+                        If Not sobj.InputConnectors(6).IsAttached Then
                             ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj)
                         Else
-                            ChildParent.DisconnectObject(sobj.InputConnectors(1).AttachedConnector.AttachedFrom, sobj)
+                            ChildParent.DisconnectObject(sobj.InputConnectors(6).AttachedConnector.AttachedFrom, sobj)
                             ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj)
                         End If
                     Else
                         If e.OldValue.ToString <> "" Then
-                            ChildParent.DisconnectObject(sobj.InputConnectors(1).AttachedConnector.AttachedFrom, sobj)
+                            ChildParent.DisconnectObject(sobj.InputConnectors(6).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
                 End If
