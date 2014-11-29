@@ -185,7 +185,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End If
             End If
 
-            Dim H, Hs, T, W, M, We, P, VF, Hf As Double
+            Dim H, Hs, T, W, M, We, P, VF, Hf, H0 As Double
             H = 0
             Hs = 0
             T = 0
@@ -234,6 +234,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             If M <> 0.0# Then VF /= M
 
             If W <> 0.0# Then Hs = (H + E0) / W Else Hs = 0.0#
+
+            H0 = H
 
             If Me.PressureCalculation = PressureBehavior.Average Then P = P / (i - 1)
 
@@ -620,7 +622,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             End If
 
-            Me.DeltaQ = Hf - H
+            Me.DeltaQ = Hf - H0
 
             'Corrente de energia - atualizar valor da potência (kJ/s)
             If Me.GraphicObject.InputConnectors(6).IsAttached Then
