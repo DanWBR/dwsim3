@@ -51,7 +51,7 @@
         Me.sfd1 = New System.Windows.Forms.SaveFileDialog()
         Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
-        Me.listBoxAutoComplete = New Intellisense.GListBox()
+        Me.listBoxAutoComplete = New UserControls.GListBox()
         Me.imageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
@@ -415,6 +415,6 @@
     Public WithEvents imageList1 As System.Windows.Forms.ImageList
     Public WithEvents FaTabStripItem5 As FarsiLibrary.Win.FATabStripItem
     Public WithEvents treeViewItems As System.Windows.Forms.TreeView
-    Friend WithEvents listBoxAutoComplete As Intellisense.GListBox
+    Friend WithEvents listBoxAutoComplete As UserControls.GListBox
     Private WithEvents textBoxTooltip As System.Windows.Forms.TextBox
 End Class

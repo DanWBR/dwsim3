@@ -1,5 +1,5 @@
-﻿
-Namespace Intellisense
+﻿Namespace UserControls
+
     ' GListBoxItem class 
     Public Class GListBoxItem
         Private _myText As String

@@ -1,3 +1,6 @@
-﻿Public Class ScriptEditorControl
+﻿Namespace UserControls
+    Public Class ScriptEditorControl
 
-End Class
+    End Class
+
+End Namespace

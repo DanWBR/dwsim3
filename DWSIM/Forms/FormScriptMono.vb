@@ -5,7 +5,7 @@ Imports Microsoft.Scripting.Hosting
 Imports System.Drawing.Text
 Imports System.Reflection
 Imports System.ComponentModel
-Imports DWSIM.Intellisense
+Imports DWSIM.UserControls
 Imports System.Drawing.Printing
 Imports LuaInterface
 

@@ -27,7 +27,7 @@ Partial Class ScriptEditorForm
         Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
         Me.textBoxTooltip = New System.Windows.Forms.TextBox()
-        Me.listBoxAutoComplete = New Intellisense.GListBox()
+        Me.listBoxAutoComplete = New UserControls.GListBox()
         Me.imageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.txtScript = New Alsing.Windows.Forms.SyntaxBoxControl()
         Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
@@ -329,7 +329,7 @@ Partial Class ScriptEditorForm
     Public WithEvents ofd2 As System.Windows.Forms.OpenFileDialog
     Public WithEvents pd1 As System.Windows.Forms.PrintDialog
     Private WithEvents textBoxTooltip As System.Windows.Forms.TextBox
-    Friend WithEvents listBoxAutoComplete As Intellisense.GListBox
+    Friend WithEvents listBoxAutoComplete As UserControls.GListBox
     Public WithEvents treeViewItems As System.Windows.Forms.TreeView
     Public WithEvents imageList1 As System.Windows.Forms.ImageList
 End Class
