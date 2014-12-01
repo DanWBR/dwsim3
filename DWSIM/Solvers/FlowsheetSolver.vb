@@ -25,13 +25,12 @@ Imports System.Drawing
 Imports System.IO
 Imports DWSIM.DWSIM.SimulationObjects
 Imports System.Threading.Tasks
+Imports DWSIM.DWSIM.Outros
 
 Namespace DWSIM.Flowsheet
 
     <System.Serializable()> Public Class FlowsheetSolver
 
-        'custom event handler declaration
-        Public Delegate Sub CustomEventHandler(ByVal sender As Object, ByVal e As System.EventArgs, ByVal extrainfo As Object)
 
         'events for plugins
         Public Shared Event UnitOpCalculationStarted As CustomEventHandler

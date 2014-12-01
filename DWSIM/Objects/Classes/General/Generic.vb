@@ -274,6 +274,26 @@ Namespace DWSIM.Outros
 
     End Class
 
+    Public Class Script
+
+        Public Enum ObjectType
+            FlowsheetObject = 0
+            Flowsheet = 1
+            Solver = 2
+            Application = 3
+        End Enum
+
+        Public Property ScriptText As String = ""
+        Public Property LinkedObjectType As ObjectType = ObjectType.FlowsheetObject
+        Public Property LinkedObjectName As String = ""
+        Public Property LinkedEventName As String = ""
+        Public Property Linked As Boolean = False
+
+    End Class
+
+    'custom event handler declaration
+    Public Delegate Sub CustomEventHandler(ByVal sender As Object, ByVal e As System.EventArgs, ByVal extrainfo As Object)
+
 End Namespace
 
 Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
