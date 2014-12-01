@@ -323,6 +323,18 @@
     <Compile Include="Forms\AboutBoxMono.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Controls\GListBox.Designer.vb">
+      <DependentUpon>GListBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\GListBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\ScriptEditorControl.Designer.vb">
+      <DependentUpon>ScriptEditorControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\ScriptEditorControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Forms\FormConfigWizard.Designer.vb">
       <DependentUpon>FormConfigWizard.vb</DependentUpon>
     </Compile>
@@ -1171,6 +1183,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBoxMono.resx">
       <DependentUpon>AboutBoxMono.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\GListBox.resx">
+      <DependentUpon>GListBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\ScriptEditorControl.resx">
+      <DependentUpon>ScriptEditorControl.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormChart.de.resx">
       <DependentUpon>FormChart.vb</DependentUpon>

@@ -31,7 +31,6 @@ Namespace DWSIM.Flowsheet
 
     <System.Serializable()> Public Class FlowsheetSolver
 
-
         'events for plugins
         Public Shared Event UnitOpCalculationStarted As CustomEventHandler
         Public Shared Event UnitOpCalculationFinished As CustomEventHandler

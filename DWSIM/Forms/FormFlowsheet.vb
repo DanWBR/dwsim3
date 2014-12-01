@@ -31,6 +31,7 @@ Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports DWSIM.DWSIM.FormClasses
 Imports DWSIM.DWSIM.GraphicObjects
+Imports DWSIM.DWSIM.Outros
 
 <System.Serializable()> Public Class FormFlowsheet
 
@@ -85,6 +86,8 @@ Imports DWSIM.DWSIM.GraphicObjects
     Public CalculationQueue As Generic.Queue(Of DWSIM.Outros.StatusChangeEventArgs)
 
     Public FlowsheetStates As Dictionary(Of Date, FlowsheetState)
+
+    Public ScriptCollection As Dictionary(Of String, Script)
 
     Public CheckedToolstripButton As ToolStripButton
     Public ClickedToolStripMenuItem As ToolStripMenuItem
@@ -208,6 +211,8 @@ Imports DWSIM.DWSIM.GraphicObjects
         Me.Options.BackupFileName = str & ".dwbcs"
 
         Me.CalculationQueue = New Generic.Queue(Of DWSIM.Outros.StatusChangeEventArgs)
+
+        Me.ScriptCollection = New Dictionary(Of String, Script)
 
         Me.StatusBarTextProvider1.InstanceStatusBar = My.Forms.FormMain.ToolStripStatusLabel1
 
