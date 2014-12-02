@@ -76,6 +76,21 @@ Public Class ScriptEditorControl
                 e.Handled = True
                 e.SuppressKeyPress = True
             End If
+        ElseIf e.KeyCode = Keys.Prior Then
+            ' The up key moves up our member list, if
+            ' the list is visible
+
+            Me.textBoxTooltip.Hide()
+
+            If Me.listBoxAutoComplete.Visible Then
+                Me.wordMatched = True
+                If Me.listBoxAutoComplete.SelectedIndex > 0 Then
+                    If Me.listBoxAutoComplete.SelectedIndex - 10 > 0 Then Me.listBoxAutoComplete.SelectedIndex -= 10 Else Me.listBoxAutoComplete.SelectedIndex = 0
+                End If
+
+                e.Handled = True
+                e.SuppressKeyPress = True
+            End If
         ElseIf e.KeyCode = Keys.Down Then
             ' The up key moves down our member list, if
             ' the list is visible
@@ -86,6 +101,23 @@ Public Class ScriptEditorControl
                 Me.wordMatched = True
                 If Me.listBoxAutoComplete.SelectedIndex < Me.listBoxAutoComplete.Items.Count - 1 Then
                     Me.listBoxAutoComplete.SelectedIndex += 1
+                End If
+
+                e.Handled = True
+                e.SuppressKeyPress = True
+            End If
+        ElseIf e.KeyCode = Keys.Next Then
+            ' The up key moves down our member list, if
+            ' the list is visible
+
+            Me.textBoxTooltip.Hide()
+
+            If Me.listBoxAutoComplete.Visible Then
+                Me.wordMatched = True
+                If Me.listBoxAutoComplete.SelectedIndex < Me.listBoxAutoComplete.Items.Count - 10 Then
+                    Me.listBoxAutoComplete.SelectedIndex += 10
+                Else
+                    Me.listBoxAutoComplete.SelectedIndex = Me.listBoxAutoComplete.Items.Count - 1
                 End If
 
                 e.Handled = True
