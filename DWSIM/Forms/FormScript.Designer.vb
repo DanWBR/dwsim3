@@ -51,7 +51,7 @@
         Me.sfd1 = New System.Windows.Forms.SaveFileDialog()
         Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
-        Me.listBoxAutoComplete = New UserControls.GListBox()
+        Me.textBoxTooltip = New System.Windows.Forms.TextBox()
         Me.imageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
@@ -59,7 +59,7 @@
         Me.treeViewItems = New System.Windows.Forms.TreeView()
         Me.ofd2 = New System.Windows.Forms.OpenFileDialog()
         Me.pd1 = New System.Windows.Forms.PrintDialog()
-        Me.textBoxTooltip = New System.Windows.Forms.TextBox()
+        Me.listBoxAutoComplete = New GListBox()
         Me.ToolStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
         Me.FaTabStripItem2.SuspendLayout()
@@ -285,14 +285,13 @@
         Me.FaTabStripItem3.Selected = True
         resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         '
-        'listBoxAutoComplete
+        'textBoxTooltip
         '
-        Me.listBoxAutoComplete.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.listBoxAutoComplete.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.listBoxAutoComplete.FormattingEnabled = True
-        Me.listBoxAutoComplete.ImageList = Me.imageList1
-        resources.ApplyResources(Me.listBoxAutoComplete, "listBoxAutoComplete")
-        Me.listBoxAutoComplete.Name = "listBoxAutoComplete"
+        Me.textBoxTooltip.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(225, Byte), Integer))
+        Me.textBoxTooltip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        resources.ApplyResources(Me.textBoxTooltip, "textBoxTooltip")
+        Me.textBoxTooltip.Name = "textBoxTooltip"
+        Me.textBoxTooltip.ReadOnly = True
         '
         'imageList1
         '
@@ -344,13 +343,14 @@
         '
         Me.pd1.UseEXDialog = True
         '
-        'textBoxTooltip
+        'listBoxAutoComplete
         '
-        Me.textBoxTooltip.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(225, Byte), Integer))
-        Me.textBoxTooltip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        resources.ApplyResources(Me.textBoxTooltip, "textBoxTooltip")
-        Me.textBoxTooltip.Name = "textBoxTooltip"
-        Me.textBoxTooltip.ReadOnly = True
+        Me.listBoxAutoComplete.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.listBoxAutoComplete.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.listBoxAutoComplete.FormattingEnabled = True
+        Me.listBoxAutoComplete.ImageList = Me.imageList1
+        resources.ApplyResources(Me.listBoxAutoComplete, "listBoxAutoComplete")
+        Me.listBoxAutoComplete.Name = "listBoxAutoComplete"
         '
         'FormScript
         '
@@ -415,6 +415,6 @@
     Public WithEvents imageList1 As System.Windows.Forms.ImageList
     Public WithEvents FaTabStripItem5 As FarsiLibrary.Win.FATabStripItem
     Public WithEvents treeViewItems As System.Windows.Forms.TreeView
-    Friend WithEvents listBoxAutoComplete As UserControls.GListBox
+    Friend WithEvents listBoxAutoComplete As GListBox
     Private WithEvents textBoxTooltip As System.Windows.Forms.TextBox
 End Class

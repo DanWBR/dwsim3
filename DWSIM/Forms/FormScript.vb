@@ -6,8 +6,6 @@ Imports System.Drawing.Text
 Imports System.Reflection
 Imports System.ComponentModel
 Imports LuaInterface
-Imports Mono.CSharp
-Imports DWSIM.UserControls
 
 <System.Serializable()> Public Class FormScript
 
@@ -746,7 +744,7 @@ Imports DWSIM.UserControls
                             End If
                         End If
 
-                        Me.listBoxAutoComplete.Items.Add(New UserControls.GListBoxItem(items(n).DisplayText, imageindex))
+                        Me.listBoxAutoComplete.Items.Add(New GListBoxItem(items(n).DisplayText, imageindex))
                     Next
                 End If
             End If

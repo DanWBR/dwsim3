@@ -378,7 +378,7 @@
     Public WithEvents tscb1 As System.Windows.Forms.ToolStripComboBox
     Public WithEvents tscb2 As System.Windows.Forms.ToolStripComboBox
     Public WithEvents imageList1 As System.Windows.Forms.ImageList
-    Public WithEvents listBoxAutoComplete As UserControls.GListBox
+    Public WithEvents listBoxAutoComplete As GListBox
     Public WithEvents textBoxTooltip As System.Windows.Forms.TextBox
     Public WithEvents FaTabStripItem5 As FarsiLibrary.Win.FATabStripItem
     Public WithEvents treeViewItems As System.Windows.Forms.TreeView

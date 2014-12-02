@@ -27,90 +27,112 @@ Partial Class ScriptEditorControl
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.txtScript = New Alsing.Windows.Forms.SyntaxBoxControl()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
+        Me.cbLinkedEvent = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.cbLinkedObject = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.TableLayoutPanel1.SuspendLayout()
-        Me.Panel1.SuspendLayout()
-        Me.SuspendLayout()
+        Me.chkLink = New System.Windows.Forms.CheckBox()
+        Me.textBoxTooltip = New System.Windows.Forms.TextBox()
+        Me.treeViewItems = New System.Windows.Forms.TreeView()
+        Me.listBoxAutoComplete = New GListBox()
+        Me.TableLayoutPanel1.SuspendLayout
+        Me.Panel1.SuspendLayout
+        Me.SuspendLayout
         '
         'TableLayoutPanel1
         '
         resources.ApplyResources(Me.TableLayoutPanel1, "TableLayoutPanel1")
-        Me.TableLayoutPanel1.Controls.Add(Me.txtScript, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.Panel1, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.textBoxTooltip, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.txtScript, 0, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.listBoxAutoComplete, 0, 2)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         '
         'txtScript
         '
         Me.txtScript.ActiveView = Alsing.Windows.Forms.ActiveView.BottomRight
-        Me.txtScript.AllowBreakPoints = False
+        Me.txtScript.AllowBreakPoints = false
         Me.txtScript.AutoListPosition = Nothing
         Me.txtScript.AutoListSelectedText = "a123"
-        Me.txtScript.AutoListVisible = False
+        Me.txtScript.AutoListVisible = false
         Me.txtScript.BackColor = System.Drawing.Color.White
         Me.txtScript.BorderStyle = Alsing.Windows.Forms.BorderStyle.None
-        Me.txtScript.CopyAsRTF = True
+        Me.txtScript.CopyAsRTF = true
         resources.ApplyResources(Me.txtScript, "txtScript")
         Me.txtScript.FontName = "Courier new"
-        Me.txtScript.HighLightActiveLine = True
+        Me.txtScript.HighLightActiveLine = true
         Me.txtScript.InfoTipCount = 1
         Me.txtScript.InfoTipPosition = Nothing
         Me.txtScript.InfoTipSelectedIndex = 1
-        Me.txtScript.InfoTipVisible = False
-        Me.txtScript.LockCursorUpdate = False
+        Me.txtScript.InfoTipVisible = false
+        Me.txtScript.LockCursorUpdate = false
         Me.txtScript.Name = "txtScript"
-        Me.txtScript.ParseOnPaste = True
-        Me.txtScript.ShowGutterMargin = False
-        Me.txtScript.ShowScopeIndicator = False
-        Me.txtScript.ShowTabGuides = True
-        Me.txtScript.SmoothScroll = True
+        Me.txtScript.ParseOnPaste = true
+        Me.txtScript.ShowGutterMargin = false
+        Me.txtScript.ShowScopeIndicator = false
+        Me.txtScript.ShowTabGuides = true
+        Me.txtScript.SmoothScroll = true
         Me.txtScript.SplitviewH = -4
         Me.txtScript.SplitviewV = -4
-        Me.txtScript.TabGuideColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(234, Byte), Integer))
+        Me.txtScript.TabGuideColor = System.Drawing.Color.FromArgb(CType(CType(244,Byte),Integer), CType(CType(243,Byte),Integer), CType(CType(234,Byte),Integer))
         Me.txtScript.WhitespaceColor = System.Drawing.SystemColors.ControlDark
         '
         'Panel1
         '
-        Me.Panel1.Controls.Add(Me.ComboBox2)
+        Me.Panel1.Controls.Add(Me.cbLinkedEvent)
         Me.Panel1.Controls.Add(Me.Label2)
-        Me.Panel1.Controls.Add(Me.ComboBox1)
+        Me.Panel1.Controls.Add(Me.cbLinkedObject)
         Me.Panel1.Controls.Add(Me.Label1)
-        Me.Panel1.Controls.Add(Me.CheckBox1)
+        Me.Panel1.Controls.Add(Me.chkLink)
         resources.ApplyResources(Me.Panel1, "Panel1")
         Me.Panel1.Name = "Panel1"
         '
-        'ComboBox2
+        'cbLinkedEvent
         '
-        resources.ApplyResources(Me.ComboBox2, "ComboBox2")
-        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Name = "ComboBox2"
+        resources.ApplyResources(Me.cbLinkedEvent, "cbLinkedEvent")
+        Me.cbLinkedEvent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbLinkedEvent.FormattingEnabled = true
+        Me.cbLinkedEvent.Name = "cbLinkedEvent"
         '
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
         Me.Label2.Name = "Label2"
         '
-        'ComboBox1
+        'cbLinkedObject
         '
-        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
-        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Name = "ComboBox1"
+        resources.ApplyResources(Me.cbLinkedObject, "cbLinkedObject")
+        Me.cbLinkedObject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbLinkedObject.FormattingEnabled = true
+        Me.cbLinkedObject.Name = "cbLinkedObject"
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.Name = "Label1"
         '
-        'CheckBox1
+        'chkLink
         '
-        resources.ApplyResources(Me.CheckBox1, "CheckBox1")
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.chkLink, "chkLink")
+        Me.chkLink.Name = "chkLink"
+        Me.chkLink.UseVisualStyleBackColor = true
+        '
+        'textBoxTooltip
+        '
+        Me.textBoxTooltip.BackColor = System.Drawing.Color.FromArgb(CType(CType(255,Byte),Integer), CType(CType(255,Byte),Integer), CType(CType(225,Byte),Integer))
+        Me.textBoxTooltip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        resources.ApplyResources(Me.textBoxTooltip, "textBoxTooltip")
+        Me.textBoxTooltip.Name = "textBoxTooltip"
+        Me.textBoxTooltip.ReadOnly = true
+        '
+        'listBoxAutoComplete
+        '
+        Me.listBoxAutoComplete.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.listBoxAutoComplete.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.listBoxAutoComplete.FormattingEnabled = true
+        Me.listBoxAutoComplete.ImageList = Nothing
+        resources.ApplyResources(Me.listBoxAutoComplete, "listBoxAutoComplete")
+        Me.listBoxAutoComplete.Name = "listBoxAutoComplete"
         '
         'ScriptEditorControl
         '
@@ -118,19 +140,23 @@ Partial Class ScriptEditorControl
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Name = "ScriptEditorControl"
-        Me.TableLayoutPanel1.ResumeLayout(False)
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
-        Me.ResumeLayout(False)
+        Me.TableLayoutPanel1.ResumeLayout(false)
+        Me.TableLayoutPanel1.PerformLayout
+        Me.Panel1.ResumeLayout(false)
+        Me.Panel1.PerformLayout
+        Me.ResumeLayout(false)
 
-    End Sub
+End Sub
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
     Public WithEvents txtScript As Alsing.Windows.Forms.SyntaxBoxControl
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
-    Friend WithEvents ComboBox2 As System.Windows.Forms.ComboBox
+    Friend WithEvents cbLinkedEvent As System.Windows.Forms.ComboBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
+    Friend WithEvents cbLinkedObject As System.Windows.Forms.ComboBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
+    Friend WithEvents chkLink As System.Windows.Forms.CheckBox
+    Private WithEvents textBoxTooltip As System.Windows.Forms.TextBox
+    Public WithEvents treeViewItems As System.Windows.Forms.TreeView
+    Friend WithEvents listBoxAutoComplete As GListBox
 
 End Class

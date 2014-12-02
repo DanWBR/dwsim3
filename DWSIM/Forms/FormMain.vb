@@ -43,6 +43,7 @@ Imports System.Text
 Imports System.Xml.Linq
 Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports DWSIM.DWSIM.Outros
+Imports System.Net
 
 Public Class FormMain
 
@@ -3942,10 +3943,13 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
     Private Sub bgUpdater_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgUpdater.DoWork
 
         Dim myfile As String = My.Computer.FileSystem.SpecialDirectories.Temp & Path.DirectorySeparatorChar & "DWSIM" & Path.DirectorySeparatorChar & "dwsim.txt"
-        Dim webp As New System.Net.WebProxy
-        webp.UseDefaultCredentials = True
         Dim webcl As New System.Net.WebClient()
-        webcl.Proxy = webp
+
+        Dim proxyObj As New WebProxy(Net.WebRequest.GetSystemWebProxy.GetProxy(New Uri("http://dwsim.inforside.com.br")))
+        proxyObj.Credentials = CredentialCache.DefaultCredentials
+
+        webcl.Proxy = proxyObj
+
         webcl.DownloadFile("http://dwsim.inforside.com.br/dwsim.txt", myfile)
         dlok = True
 
@@ -3968,5 +3972,5 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
 
 #End Region
 
-   
+
 End Class

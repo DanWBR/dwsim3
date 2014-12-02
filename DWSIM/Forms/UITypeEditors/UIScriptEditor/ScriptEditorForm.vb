@@ -19,7 +19,6 @@
 Imports System.IO
 Imports System.Reflection
 Imports System.Drawing.Text
-Imports DWSIM.UserControls
 
 <System.Serializable()> Public Class ScriptEditorForm
 
@@ -669,7 +668,7 @@ Imports DWSIM.UserControls
                             End If
                         End If
 
-                        Me.listBoxAutoComplete.Items.Add(New UserControls.GListBoxItem(items(n).DisplayText, imageindex))
+                        Me.listBoxAutoComplete.Items.Add(New GListBoxItem(items(n).DisplayText, imageindex))
                     Next
                 End If
             End If
