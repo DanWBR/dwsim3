@@ -23,8 +23,6 @@
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormScript))
-        Me.txtOutput = New System.Windows.Forms.TextBox()
-        Me.txtScript = New Alsing.Windows.Forms.SyntaxBoxControl()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -43,73 +41,29 @@
         Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
-        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
-        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
-        Me.txtErrorList = New System.Windows.Forms.TextBox()
-        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
         Me.ofd1 = New System.Windows.Forms.OpenFileDialog()
         Me.sfd1 = New System.Windows.Forms.SaveFileDialog()
-        Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip()
-        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
-        Me.textBoxTooltip = New System.Windows.Forms.TextBox()
+        Me.TabStripScripts = New FarsiLibrary.Win.FATabStrip()
         Me.imageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
-        Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.FaTabStripItem5 = New FarsiLibrary.Win.FATabStripItem()
         Me.treeViewItems = New System.Windows.Forms.TreeView()
         Me.ofd2 = New System.Windows.Forms.OpenFileDialog()
         Me.pd1 = New System.Windows.Forms.PrintDialog()
-        Me.listBoxAutoComplete = New GListBox()
+        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
+        Me.NewToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.toolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
+        Me.HelpToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.ToolStrip1.SuspendLayout()
-        Me.FaTabStripItem1.SuspendLayout()
-        Me.FaTabStripItem2.SuspendLayout()
-        CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.FaTabStrip1.SuspendLayout()
-        CType(Me.FaTabStrip2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.FaTabStrip2.SuspendLayout()
-        Me.FaTabStripItem3.SuspendLayout()
-        Me.FaTabStripItem4.SuspendLayout()
+        CType(Me.TabStripScripts, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStripItem5.SuspendLayout()
+        Me.FaTabStripItem4.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'txtOutput
-        '
-        Me.txtOutput.BackColor = System.Drawing.SystemColors.Window
-        resources.ApplyResources(Me.txtOutput, "txtOutput")
-        Me.txtOutput.Name = "txtOutput"
-        Me.txtOutput.ReadOnly = True
-        '
-        'txtScript
-        '
-        Me.txtScript.ActiveView = Alsing.Windows.Forms.ActiveView.BottomRight
-        Me.txtScript.AllowBreakPoints = False
-        Me.txtScript.AutoListPosition = Nothing
-        Me.txtScript.AutoListSelectedText = "a123"
-        Me.txtScript.AutoListVisible = False
-        Me.txtScript.BackColor = System.Drawing.Color.White
-        Me.txtScript.BorderStyle = Alsing.Windows.Forms.BorderStyle.None
-        Me.txtScript.CopyAsRTF = False
-        resources.ApplyResources(Me.txtScript, "txtScript")
-        Me.txtScript.FontName = "Courier new"
-        Me.txtScript.HighLightActiveLine = True
-        Me.txtScript.InfoTipCount = 1
-        Me.txtScript.InfoTipPosition = Nothing
-        Me.txtScript.InfoTipSelectedIndex = 1
-        Me.txtScript.InfoTipVisible = False
-        Me.txtScript.LockCursorUpdate = False
-        Me.txtScript.Name = "txtScript"
-        Me.txtScript.ParseOnPaste = True
-        Me.txtScript.ShowGutterMargin = False
-        Me.txtScript.ShowScopeIndicator = False
-        Me.txtScript.SmoothScroll = True
-        Me.txtScript.SplitviewH = -4
-        Me.txtScript.SplitviewV = -4
-        Me.txtScript.TabGuideColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(234, Byte), Integer))
-        Me.txtScript.WhitespaceColor = System.Drawing.SystemColors.ControlDark
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripButton, Me.SaveToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CutToolStripButton, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator1, Me.tscb1, Me.tscb2, Me.ToolStripSeparator2, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripButton5, Me.ToolStripSeparator4, Me.ToolStripButton1})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CutToolStripButton, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator1, Me.tscb1, Me.tscb2, Me.ToolStripSeparator2, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripButton5, Me.ToolStripSeparator4, Me.ToolStripButton1, Me.toolStripSeparator5, Me.HelpToolStripButton})
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
         Me.ToolStrip1.Name = "ToolStrip1"
         '
@@ -220,39 +174,6 @@
         resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
-        'FaTabStripItem1
-        '
-        Me.FaTabStripItem1.CanClose = False
-        Me.FaTabStripItem1.Controls.Add(Me.txtOutput)
-        Me.FaTabStripItem1.IsDrawn = True
-        Me.FaTabStripItem1.Name = "FaTabStripItem1"
-        Me.FaTabStripItem1.Selected = True
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
-        '
-        'FaTabStripItem2
-        '
-        Me.FaTabStripItem2.CanClose = False
-        Me.FaTabStripItem2.Controls.Add(Me.txtErrorList)
-        Me.FaTabStripItem2.IsDrawn = True
-        Me.FaTabStripItem2.Name = "FaTabStripItem2"
-        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
-        '
-        'txtErrorList
-        '
-        Me.txtErrorList.BackColor = System.Drawing.SystemColors.Window
-        resources.ApplyResources(Me.txtErrorList, "txtErrorList")
-        Me.txtErrorList.Name = "txtErrorList"
-        Me.txtErrorList.ReadOnly = True
-        '
-        'FaTabStrip1
-        '
-        Me.FaTabStrip1.AlwaysShowClose = False
-        Me.FaTabStrip1.AlwaysShowMenuGlyph = False
-        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
-        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2})
-        Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
-        '
         'ofd1
         '
         Me.ofd1.FileName = "OpenFileDialog1"
@@ -265,33 +186,11 @@
         resources.ApplyResources(Me.sfd1, "sfd1")
         Me.sfd1.SupportMultiDottedExtensions = True
         '
-        'FaTabStrip2
+        'TabStripScripts
         '
-        Me.FaTabStrip2.AlwaysShowClose = False
-        Me.FaTabStrip2.AlwaysShowMenuGlyph = False
-        resources.ApplyResources(Me.FaTabStrip2, "FaTabStrip2")
-        Me.FaTabStrip2.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem3, Me.FaTabStripItem4})
-        Me.FaTabStrip2.Name = "FaTabStrip2"
-        Me.FaTabStrip2.SelectedItem = Me.FaTabStripItem3
-        '
-        'FaTabStripItem3
-        '
-        Me.FaTabStripItem3.CanClose = False
-        Me.FaTabStripItem3.Controls.Add(Me.textBoxTooltip)
-        Me.FaTabStripItem3.Controls.Add(Me.listBoxAutoComplete)
-        Me.FaTabStripItem3.Controls.Add(Me.txtScript)
-        Me.FaTabStripItem3.IsDrawn = True
-        Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        Me.FaTabStripItem3.Selected = True
-        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
-        '
-        'textBoxTooltip
-        '
-        Me.textBoxTooltip.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(225, Byte), Integer))
-        Me.textBoxTooltip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        resources.ApplyResources(Me.textBoxTooltip, "textBoxTooltip")
-        Me.textBoxTooltip.Name = "textBoxTooltip"
-        Me.textBoxTooltip.ReadOnly = True
+        resources.ApplyResources(Me.TabStripScripts, "TabStripScripts")
+        Me.TabStripScripts.Name = "TabStripScripts"
+        Me.TabStripScripts.SelectedItem = Me.FaTabStripItem3
         '
         'imageList1
         '
@@ -302,22 +201,6 @@
         Me.imageList1.Images.SetKeyName(2, "")
         Me.imageList1.Images.SetKeyName(3, "")
         Me.imageList1.Images.SetKeyName(4, "")
-        '
-        'FaTabStripItem4
-        '
-        Me.FaTabStripItem4.CanClose = False
-        Me.FaTabStripItem4.Controls.Add(Me.ListBox1)
-        Me.FaTabStripItem4.IsDrawn = True
-        Me.FaTabStripItem4.Name = "FaTabStripItem4"
-        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
-        '
-        'ListBox1
-        '
-        Me.ListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        resources.ApplyResources(Me.ListBox1, "ListBox1")
-        Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
         '
         'FaTabStripItem5
         '
@@ -343,50 +226,65 @@
         '
         Me.pd1.UseEXDialog = True
         '
-        'listBoxAutoComplete
+        'FaTabStripItem3
         '
-        Me.listBoxAutoComplete.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.listBoxAutoComplete.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.listBoxAutoComplete.FormattingEnabled = True
-        Me.listBoxAutoComplete.ImageList = Me.imageList1
-        resources.ApplyResources(Me.listBoxAutoComplete, "listBoxAutoComplete")
-        Me.listBoxAutoComplete.Name = "listBoxAutoComplete"
+        Me.FaTabStripItem3.CanClose = False
+        Me.FaTabStripItem3.IsDrawn = True
+        Me.FaTabStripItem3.Name = "FaTabStripItem3"
+        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
+        '
+        'ListBox1
+        '
+        Me.ListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        resources.ApplyResources(Me.ListBox1, "ListBox1")
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
+        '
+        'FaTabStripItem4
+        '
+        Me.FaTabStripItem4.CanClose = False
+        Me.FaTabStripItem4.Controls.Add(Me.ListBox1)
+        Me.FaTabStripItem4.IsDrawn = True
+        Me.FaTabStripItem4.Name = "FaTabStripItem4"
+        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
+        '
+        'NewToolStripButton
+        '
+        Me.NewToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        resources.ApplyResources(Me.NewToolStripButton, "NewToolStripButton")
+        Me.NewToolStripButton.Name = "NewToolStripButton"
+        '
+        'toolStripSeparator5
+        '
+        Me.toolStripSeparator5.Name = "toolStripSeparator5"
+        resources.ApplyResources(Me.toolStripSeparator5, "toolStripSeparator5")
+        '
+        'HelpToolStripButton
+        '
+        Me.HelpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        resources.ApplyResources(Me.HelpToolStripButton, "HelpToolStripButton")
+        Me.HelpToolStripButton.Name = "HelpToolStripButton"
         '
         'FormScript
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.FaTabStrip2)
-        Me.Controls.Add(Me.FaTabStrip1)
+        Me.Controls.Add(Me.TabStripScripts)
         Me.Controls.Add(Me.ToolStrip1)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Name = "FormScript"
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
-        Me.FaTabStripItem1.ResumeLayout(False)
-        Me.FaTabStripItem1.PerformLayout()
-        Me.FaTabStripItem2.ResumeLayout(False)
-        Me.FaTabStripItem2.PerformLayout()
-        CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.FaTabStrip1.ResumeLayout(False)
-        CType(Me.FaTabStrip2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.FaTabStrip2.ResumeLayout(False)
-        Me.FaTabStripItem3.ResumeLayout(False)
-        Me.FaTabStripItem3.PerformLayout()
-        Me.FaTabStripItem4.ResumeLayout(False)
+        CType(Me.TabStripScripts, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStripItem5.ResumeLayout(False)
+        Me.FaTabStripItem4.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Public WithEvents txtOutput As System.Windows.Forms.TextBox
-    Public WithEvents txtScript As Alsing.Windows.Forms.SyntaxBoxControl
     Public WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
-    Public WithEvents FaTabStripItem1 As FarsiLibrary.Win.FATabStripItem
-    Public WithEvents FaTabStripItem2 As FarsiLibrary.Win.FATabStripItem
-    Public WithEvents FaTabStrip1 As FarsiLibrary.Win.FATabStrip
-    Public WithEvents txtErrorList As System.Windows.Forms.TextBox
     Public WithEvents OpenToolStripButton As System.Windows.Forms.ToolStripButton
     Public WithEvents SaveToolStripButton As System.Windows.Forms.ToolStripButton
     Public WithEvents PrintToolStripButton As System.Windows.Forms.ToolStripButton
@@ -399,12 +297,9 @@
     Public WithEvents ToolStripButton1 As System.Windows.Forms.ToolStripButton
     Public WithEvents ofd1 As System.Windows.Forms.OpenFileDialog
     Public WithEvents sfd1 As System.Windows.Forms.SaveFileDialog
-    Public WithEvents FaTabStrip2 As FarsiLibrary.Win.FATabStrip
-    Public WithEvents FaTabStripItem3 As FarsiLibrary.Win.FATabStripItem
-    Public WithEvents FaTabStripItem4 As FarsiLibrary.Win.FATabStripItem
+    Public WithEvents TabStripScripts As FarsiLibrary.Win.FATabStrip
     Public WithEvents ToolStripButton2 As System.Windows.Forms.ToolStripButton
     Public WithEvents ToolStripButton3 As System.Windows.Forms.ToolStripButton
-    Public WithEvents ListBox1 As System.Windows.Forms.ListBox
     Public WithEvents ToolStripButton4 As System.Windows.Forms.ToolStripButton
     Public WithEvents ToolStripButton5 As System.Windows.Forms.ToolStripButton
     Public WithEvents ofd2 As System.Windows.Forms.OpenFileDialog
@@ -415,6 +310,10 @@
     Public WithEvents imageList1 As System.Windows.Forms.ImageList
     Public WithEvents FaTabStripItem5 As FarsiLibrary.Win.FATabStripItem
     Public WithEvents treeViewItems As System.Windows.Forms.TreeView
-    Friend WithEvents listBoxAutoComplete As GListBox
-    Private WithEvents textBoxTooltip As System.Windows.Forms.TextBox
+    Public WithEvents FaTabStripItem3 As FarsiLibrary.Win.FATabStripItem
+    Public WithEvents ListBox1 As System.Windows.Forms.ListBox
+    Public WithEvents FaTabStripItem4 As FarsiLibrary.Win.FATabStripItem
+    Friend WithEvents NewToolStripButton As System.Windows.Forms.ToolStripButton
+    Friend WithEvents toolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents HelpToolStripButton As System.Windows.Forms.ToolStripButton
 End Class

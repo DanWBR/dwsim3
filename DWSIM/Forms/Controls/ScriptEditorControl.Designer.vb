@@ -25,57 +25,36 @@ Partial Class ScriptEditorControl
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ScriptEditorControl))
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.txtScript = New Alsing.Windows.Forms.SyntaxBoxControl()
+        Me.textBoxTooltip = New System.Windows.Forms.TextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.cbLinkedEvent = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cbLinkedObject = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.chkLink = New System.Windows.Forms.CheckBox()
-        Me.textBoxTooltip = New System.Windows.Forms.TextBox()
-        Me.treeViewItems = New System.Windows.Forms.TreeView()
+        Me.txtScript = New Alsing.Windows.Forms.SyntaxBoxControl()
         Me.listBoxAutoComplete = New GListBox()
-        Me.TableLayoutPanel1.SuspendLayout
-        Me.Panel1.SuspendLayout
-        Me.SuspendLayout
+        Me.treeViewItems = New System.Windows.Forms.TreeView()
+        Me.TableLayoutPanel1.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        Me.SuspendLayout()
         '
         'TableLayoutPanel1
         '
         resources.ApplyResources(Me.TableLayoutPanel1, "TableLayoutPanel1")
+        Me.TableLayoutPanel1.Controls.Add(Me.textBoxTooltip, 0, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.Panel1, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.textBoxTooltip, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.txtScript, 0, 3)
-        Me.TableLayoutPanel1.Controls.Add(Me.listBoxAutoComplete, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.txtScript, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.listBoxAutoComplete, 0, 1)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         '
-        'txtScript
+        'textBoxTooltip
         '
-        Me.txtScript.ActiveView = Alsing.Windows.Forms.ActiveView.BottomRight
-        Me.txtScript.AllowBreakPoints = false
-        Me.txtScript.AutoListPosition = Nothing
-        Me.txtScript.AutoListSelectedText = "a123"
-        Me.txtScript.AutoListVisible = false
-        Me.txtScript.BackColor = System.Drawing.Color.White
-        Me.txtScript.BorderStyle = Alsing.Windows.Forms.BorderStyle.None
-        Me.txtScript.CopyAsRTF = true
-        resources.ApplyResources(Me.txtScript, "txtScript")
-        Me.txtScript.FontName = "Courier new"
-        Me.txtScript.HighLightActiveLine = true
-        Me.txtScript.InfoTipCount = 1
-        Me.txtScript.InfoTipPosition = Nothing
-        Me.txtScript.InfoTipSelectedIndex = 1
-        Me.txtScript.InfoTipVisible = false
-        Me.txtScript.LockCursorUpdate = false
-        Me.txtScript.Name = "txtScript"
-        Me.txtScript.ParseOnPaste = true
-        Me.txtScript.ShowGutterMargin = false
-        Me.txtScript.ShowScopeIndicator = false
-        Me.txtScript.ShowTabGuides = true
-        Me.txtScript.SmoothScroll = true
-        Me.txtScript.SplitviewH = -4
-        Me.txtScript.SplitviewV = -4
-        Me.txtScript.TabGuideColor = System.Drawing.Color.FromArgb(CType(CType(244,Byte),Integer), CType(CType(243,Byte),Integer), CType(CType(234,Byte),Integer))
-        Me.txtScript.WhitespaceColor = System.Drawing.SystemColors.ControlDark
+        Me.textBoxTooltip.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(225, Byte), Integer))
+        Me.textBoxTooltip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        resources.ApplyResources(Me.textBoxTooltip, "textBoxTooltip")
+        Me.textBoxTooltip.Name = "textBoxTooltip"
+        Me.textBoxTooltip.ReadOnly = True
         '
         'Panel1
         '
@@ -89,9 +68,9 @@ Partial Class ScriptEditorControl
         '
         'cbLinkedEvent
         '
-        resources.ApplyResources(Me.cbLinkedEvent, "cbLinkedEvent")
         Me.cbLinkedEvent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbLinkedEvent.FormattingEnabled = true
+        Me.cbLinkedEvent.FormattingEnabled = True
+        resources.ApplyResources(Me.cbLinkedEvent, "cbLinkedEvent")
         Me.cbLinkedEvent.Name = "cbLinkedEvent"
         '
         'Label2
@@ -101,9 +80,9 @@ Partial Class ScriptEditorControl
         '
         'cbLinkedObject
         '
-        resources.ApplyResources(Me.cbLinkedObject, "cbLinkedObject")
         Me.cbLinkedObject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbLinkedObject.FormattingEnabled = true
+        Me.cbLinkedObject.FormattingEnabled = True
+        resources.ApplyResources(Me.cbLinkedObject, "cbLinkedObject")
         Me.cbLinkedObject.Name = "cbLinkedObject"
         '
         'Label1
@@ -115,24 +94,51 @@ Partial Class ScriptEditorControl
         '
         resources.ApplyResources(Me.chkLink, "chkLink")
         Me.chkLink.Name = "chkLink"
-        Me.chkLink.UseVisualStyleBackColor = true
+        Me.chkLink.UseVisualStyleBackColor = True
         '
-        'textBoxTooltip
+        'txtScript
         '
-        Me.textBoxTooltip.BackColor = System.Drawing.Color.FromArgb(CType(CType(255,Byte),Integer), CType(CType(255,Byte),Integer), CType(CType(225,Byte),Integer))
-        Me.textBoxTooltip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        resources.ApplyResources(Me.textBoxTooltip, "textBoxTooltip")
-        Me.textBoxTooltip.Name = "textBoxTooltip"
-        Me.textBoxTooltip.ReadOnly = true
+        Me.txtScript.ActiveView = Alsing.Windows.Forms.ActiveView.BottomRight
+        Me.txtScript.AllowBreakPoints = False
+        Me.txtScript.AutoListPosition = Nothing
+        Me.txtScript.AutoListSelectedText = "a123"
+        Me.txtScript.AutoListVisible = False
+        Me.txtScript.BackColor = System.Drawing.Color.White
+        Me.txtScript.BorderStyle = Alsing.Windows.Forms.BorderStyle.None
+        Me.txtScript.CopyAsRTF = True
+        resources.ApplyResources(Me.txtScript, "txtScript")
+        Me.txtScript.FontName = "Courier new"
+        Me.txtScript.HighLightActiveLine = True
+        Me.txtScript.InfoTipCount = 1
+        Me.txtScript.InfoTipPosition = Nothing
+        Me.txtScript.InfoTipSelectedIndex = 1
+        Me.txtScript.InfoTipVisible = False
+        Me.txtScript.LockCursorUpdate = False
+        Me.txtScript.Name = "txtScript"
+        Me.txtScript.ParseOnPaste = True
+        Me.txtScript.ShowGutterMargin = False
+        Me.txtScript.ShowScopeIndicator = False
+        Me.txtScript.ShowTabGuides = True
+        Me.txtScript.SmoothScroll = True
+        Me.txtScript.SplitviewH = -4
+        Me.txtScript.SplitviewV = -4
+        Me.txtScript.TabGuideColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(234, Byte), Integer))
+        Me.txtScript.WhitespaceColor = System.Drawing.SystemColors.ControlDark
         '
         'listBoxAutoComplete
         '
         Me.listBoxAutoComplete.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.listBoxAutoComplete.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.listBoxAutoComplete.FormattingEnabled = true
+        Me.listBoxAutoComplete.FormattingEnabled = True
         Me.listBoxAutoComplete.ImageList = Nothing
         resources.ApplyResources(Me.listBoxAutoComplete, "listBoxAutoComplete")
         Me.listBoxAutoComplete.Name = "listBoxAutoComplete"
+        '
+        'treeViewItems
+        '
+        Me.treeViewItems.LineColor = System.Drawing.Color.Empty
+        resources.ApplyResources(Me.treeViewItems, "treeViewItems")
+        Me.treeViewItems.Name = "treeViewItems"
         '
         'ScriptEditorControl
         '
@@ -140,9 +146,9 @@ Partial Class ScriptEditorControl
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Name = "ScriptEditorControl"
-        Me.TableLayoutPanel1.ResumeLayout(false)
-        Me.TableLayoutPanel1.PerformLayout
-        Me.Panel1.ResumeLayout(false)
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout
         Me.ResumeLayout(false)
 
@@ -155,8 +161,8 @@ End Sub
     Friend WithEvents cbLinkedObject As System.Windows.Forms.ComboBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents chkLink As System.Windows.Forms.CheckBox
-    Private WithEvents textBoxTooltip As System.Windows.Forms.TextBox
     Public WithEvents treeViewItems As System.Windows.Forms.TreeView
     Friend WithEvents listBoxAutoComplete As GListBox
+    Private WithEvents textBoxTooltip As System.Windows.Forms.TextBox
 
 End Class

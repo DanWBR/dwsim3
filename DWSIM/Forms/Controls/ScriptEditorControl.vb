@@ -17,6 +17,8 @@ Public Class ScriptEditorControl
     Private currentPath As String
 #End Region
 
+#Region "Key/Mouse Handlers"
+
     Private Sub txtScript__KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtScript.KeyDown
         ' Keep track of the current character, used
         ' for tracking whether to hide the list of members,
@@ -238,11 +240,12 @@ Public Class ScriptEditorControl
         Me.txtScript.Focus()
     End Sub
 
-    Private Sub textBoxTooltip_Enter(ByVal sender As Object, ByVal e As System.EventArgs) Handles textBoxTooltip.Enter
+    Private Sub textBoxTooltip_Enter(ByVal sender As Object, ByVal e As System.EventArgs)
         ' Stop the fake tooltip's text being selected
         Me.txtScript.Focus()
     End Sub
 
+#End Region
 
 #Region "Util methods"
 
@@ -271,7 +274,7 @@ Public Class ScriptEditorControl
     ''' Takes an assembly filename, opens it and retrieves all types.
     ''' </summary>
     ''' <param name="assmb">assembly to load</param>
-    Private Sub readAssembly(ByVal assmb As Assembly)
+    Public Sub readAssembly(ByVal assmb As Assembly)
 
         'Me.treeViewItems.Nodes.Clear()
         namespaces = New Hashtable()
@@ -369,7 +372,7 @@ Public Class ScriptEditorControl
     ''' <param name="treeNode"></param>
     ''' <param name="type"></param>
     ''' 
-    Private Sub addMembers(ByVal treeNode As TreeNode, ByVal type As System.Type)
+    Public Sub addMembers(ByVal treeNode As TreeNode, ByVal type As System.Type)
         ' Get all members except methods
         Dim memberInfo As MemberInfo() = type.GetMembers()
         For j As Integer = 0 To memberInfo.Length - 1
@@ -407,7 +410,7 @@ Public Class ScriptEditorControl
     ''' <param name="treeNodes"></param>
     ''' <param name="path"></param>
     ''' <param name="continueUntilFind"></param>
-    Private Sub searchTree(ByVal treeNodes As TreeNodeCollection, ByVal path As String, ByVal continueUntilFind As Boolean)
+    Public Sub searchTree(ByVal treeNodes As TreeNodeCollection, ByVal path As String, ByVal continueUntilFind As Boolean)
         If Me.foundNode Then
             Return
         End If
@@ -452,7 +455,7 @@ Public Class ScriptEditorControl
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="treeNodes"></param>
-    Private Sub findNode(ByVal path As String, ByVal treeNodes As TreeNodeCollection)
+    Public Sub findNode(ByVal path As String, ByVal treeNodes As TreeNodeCollection)
         For i As Integer = 0 To treeNodes.Count - 1
             If treeNodes(i).FullPath.ToLower = path.ToLower Then
                 Me.findNodeResult = treeNodes(i)
@@ -469,7 +472,7 @@ Public Class ScriptEditorControl
     ''' populated with items from the tree, which are first sorted.
     ''' </summary>
     ''' <returns>Whether an items are found for the word</returns>
-    Private Function populateListBox() As Boolean
+    Public Function populateListBox() As Boolean
         Dim result As Boolean = False
         Dim word As String = Me.getLastWord()
 
@@ -538,7 +541,7 @@ Public Class ScriptEditorControl
     ''' taking everything before and after the "." in the richtextbox,
     ''' and appending the word in the middle.
     ''' </summary>
-    Private Sub selectItem()
+    Public Sub selectItem()
         If Me.wordMatched Then
             Dim selstart As Integer = Me.txtScript.Selection.LogicalSelStart
             Dim prefixend As Integer = Me.txtScript.Selection.LogicalSelStart - typed.Length
@@ -563,7 +566,7 @@ Public Class ScriptEditorControl
     ''' a space or newline is found.
     ''' </summary>
     ''' <returns>The previous word from the carret position</returns>
-    Private Function getLastWord() As String
+    Public Function getLastWord() As String
         Dim word As String = ""
 
         Dim pos As Integer = Me.txtScript.Selection.LogicalSelStart

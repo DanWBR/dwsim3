@@ -100,15 +100,17 @@ Namespace My
                 End If
             Next
 
-            If e.Cancel Then
-                ' Call the main routine for windowless operation.
-                Dim f1 As New FormMain
-            End If
-
             'direct console output to collection
             If My.Settings.RedirectOutput And Not CommandLineMode Then
                 Dim txtwriter As New ConsoleRedirection.TextBoxStreamWriter()
                 Console.SetOut(txtwriter)
+            Else
+                If Not DWSIM.App.IsRunningOnMono Then
+                    AttachConsole(ATTACH_PARENT_PROCESS)
+                End If
+                Dim standardOutput As New StreamWriter(Console.OpenStandardOutput())
+                standardOutput.AutoFlush = True
+                Console.SetOut(standardOutput)
             End If
 
             'set CUDA params
@@ -169,15 +171,34 @@ Namespace My
 
             End If
 
+            If e.Cancel Then
+                ' Call the main routine for windowless operation.
+                Dim f1 As New FormMain
+            End If
+
         End Sub
 
         Private Sub MyApplication_UnhandledException(ByVal sender As Object, ByVal e As Microsoft.VisualBasic.ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException
-            Dim frmEx As New FormUnhandledException
-            frmEx.TextBox1.Text = e.Exception.ToString
-            frmEx.ex = e.Exception
-            frmEx.ShowDialog()
-            e.ExitApplication = False
+            If Not CommandLineMode Then
+                Dim frmEx As New FormUnhandledException
+                frmEx.TextBox1.Text = e.Exception.ToString
+                frmEx.ex = e.Exception
+                frmEx.ShowDialog()
+                e.ExitApplication = False
+            Else
+                Console.Write(e.Exception.ToString)
+                e.ExitApplication = True
+            End If
         End Sub
+
+        <System.Runtime.InteropServices.DllImport("kernel32.dll")> _
+        Private Shared Function AttachConsole(dwProcessId As Integer) As Boolean
+        End Function
+        Private Const ATTACH_PARENT_PROCESS As Integer = -1
+
+        <System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError:=True)> _
+        Friend Shared Function FreeConsole() As Integer
+        End Function
 
     End Class
 
