@@ -117,19 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="TableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="textBoxTooltip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 406</value>
+    <value>9, 173</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="textBoxTooltip.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="textBoxTooltip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 1</value>
+    <value>177, 28</value>
   </data>
   <data name="textBoxTooltip.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -144,10 +141,10 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;textBoxTooltip.Parent" xml:space="preserve">
-    <value>TableLayoutPanel1</value>
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;textBoxTooltip.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="cbLinkedEvent.Location" type="System.Drawing.Point, System.Drawing">
     <value>424, 7</value>
@@ -277,7 +274,7 @@
     <value>4</value>
   </data>
   <data name="Panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+    <value>Top</value>
   </data>
   <data name="Panel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -286,7 +283,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 35</value>
+    <value>1019, 35</value>
   </data>
   <data name="Panel1.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -298,22 +295,22 @@
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Panel1.Parent" xml:space="preserve">
-    <value>TableLayoutPanel1</value>
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;Panel1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
-  <data name="txtScript.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="txtScript.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="txtScript.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="txtScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 38</value>
+    <value>2, 37</value>
   </data>
   <data name="txtScript.Size" type="System.Drawing.Size, System.Drawing">
-    <value>747, 362</value>
+    <value>1014, 552</value>
   </data>
   <data name="txtScript.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -328,16 +325,67 @@
     <value>Alsing.Windows.Forms.SyntaxBoxControl, Puzzle.SyntaxBox.NET2.0, Version=1.4.10.17492, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;txtScript.Parent" xml:space="preserve">
-    <value>TableLayoutPanel1</value>
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;txtScript.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
+  </data>
+  <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABs
+        CQAAAk1TRnQBSQFMAgEBBQEAAUwBAQFMAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
+        AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
+        AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
+        AWYDAAGZAwABzAIAATMDAAIzAgABMwFmAgABMwGZAgABMwHMAgABMwH/AgABZgMAAWYBMwIAAmYCAAFm
+        AZkCAAFmAcwCAAFmAf8CAAGZAwABmQEzAgABmQFmAgACmQIAAZkBzAIAAZkB/wIAAcwDAAHMATMCAAHM
+        AWYCAAHMAZkCAALMAgABzAH/AgAB/wFmAgAB/wGZAgAB/wHMAQABMwH/AgAB/wEAATMBAAEzAQABZgEA
+        ATMBAAGZAQABMwEAAcwBAAEzAQAB/wEAAf8BMwIAAzMBAAIzAWYBAAIzAZkBAAIzAcwBAAIzAf8BAAEz
+        AWYCAAEzAWYBMwEAATMCZgEAATMBZgGZAQABMwFmAcwBAAEzAWYB/wEAATMBmQIAATMBmQEzAQABMwGZ
+        AWYBAAEzApkBAAEzAZkBzAEAATMBmQH/AQABMwHMAgABMwHMATMBAAEzAcwBZgEAATMBzAGZAQABMwLM
+        AQABMwHMAf8BAAEzAf8BMwEAATMB/wFmAQABMwH/AZkBAAEzAf8BzAEAATMC/wEAAWYDAAFmAQABMwEA
+        AWYBAAFmAQABZgEAAZkBAAFmAQABzAEAAWYBAAH/AQABZgEzAgABZgIzAQABZgEzAWYBAAFmATMBmQEA
+        AWYBMwHMAQABZgEzAf8BAAJmAgACZgEzAQADZgEAAmYBmQEAAmYBzAEAAWYBmQIAAWYBmQEzAQABZgGZ
+        AWYBAAFmApkBAAFmAZkBzAEAAWYBmQH/AQABZgHMAgABZgHMATMBAAFmAcwBmQEAAWYCzAEAAWYBzAH/
+        AQABZgH/AgABZgH/ATMBAAFmAf8BmQEAAWYB/wHMAQABzAEAAf8BAAH/AQABzAEAApkCAAGZATMBmQEA
+        AZkBAAGZAQABmQEAAcwBAAGZAwABmQIzAQABmQEAAWYBAAGZATMBzAEAAZkBAAH/AQABmQFmAgABmQFm
+        ATMBAAGZATMBZgEAAZkBZgGZAQABmQFmAcwBAAGZATMB/wEAApkBMwEAApkBZgEAA5kBAAKZAcwBAAKZ
+        Af8BAAGZAcwCAAGZAcwBMwEAAWYBzAFmAQABmQHMAZkBAAGZAswBAAGZAcwB/wEAAZkB/wIAAZkB/wEz
+        AQABmQHMAWYBAAGZAf8BmQEAAZkB/wHMAQABmQL/AQABzAMAAZkBAAEzAQABzAEAAWYBAAHMAQABmQEA
+        AcwBAAHMAQABmQEzAgABzAIzAQABzAEzAWYBAAHMATMBmQEAAcwBMwHMAQABzAEzAf8BAAHMAWYCAAHM
+        AWYBMwEAAZkCZgEAAcwBZgGZAQABzAFmAcwBAAGZAWYB/wEAAcwBmQIAAcwBmQEzAQABzAGZAWYBAAHM
+        ApkBAAHMAZkBzAEAAcwBmQH/AQACzAIAAswBMwEAAswBZgEAAswBmQEAA8wBAALMAf8BAAHMAf8CAAHM
+        Af8BMwEAAZkB/wFmAQABzAH/AZkBAAHMAf8BzAEAAcwC/wEAAcwBAAEzAQAB/wEAAWYBAAH/AQABmQEA
+        AcwBMwIAAf8CMwEAAf8BMwFmAQAB/wEzAZkBAAH/ATMBzAEAAf8BMwH/AQAB/wFmAgAB/wFmATMBAAHM
+        AmYBAAH/AWYBmQEAAf8BZgHMAQABzAFmAf8BAAH/AZkCAAH/AZkBMwEAAf8BmQFmAQAB/wKZAQAB/wGZ
+        AcwBAAH/AZkB/wEAAf8BzAIAAf8BzAEzAQAB/wHMAWYBAAH/AcwBmQEAAf8CzAEAAf8BzAH/AQAC/wEz
+        AQABzAH/AWYBAAL/AZkBAAL/AcwBAAJmAf8BAAFmAf8BZgEAAWYC/wEAAf8CZgEAAf8BZgH/AQAC/wFm
+        AQABIQEAAaUBAANfAQADdwEAA4YBAAOWAQADywEAA7IBAAPXAQAD3QEAA+MBAAPqAQAD8QEAA/gBAAHw
+        AfsB/wEAAaQCoAEAA4ADAAH/AgAB/wMAAv8BAAH/AwAB/wEAAf8BAAL/AgAD/8YAAftAAAH7PwAC+z8A
+        Avs8AAHsAgAC+zwAA/s+AAL7PgAD+z4AA/v/AJEAAQY+AAH+AgY+AAH+AgYTAAr/HQAD7AEAAf4UAAH/
+        AgAB/wUAAf8dAAHsCgAB7AEHA+wDAAEFAQABBQMAB/8B7AL/HQAB7BEAAQUB/QEAAgUCAAH/AgAD/wEA
+        AQcBAAH/HQAB7AkAAQcB7AEHAuwCAAEFAf0BAAH9AQABBQIAAf8BAAEHAQAB/wEAAQcBAAEHAwACBBkA
+        AewDAAEBDAAB/QEAAf0BBQH9AwAC/wEAAQcBAAEHAQABBwEAAgcBAAIEFAABAwQAAewCAAH9AgEDAALs
+        AQAC7AQAAf0BBQH9AQUB/QYAAQcBAAEHAQAEBwIEEwAB+wIDAQAF7AEAAf0CAQoAAf0BBQH9AQUB/QgA
+        AQcBAAUHAgQSAAP7AgMHAAH9DAAB/QEFAf0KAAUHAQACBBMAA/sCAxQAAf0RAAIEFAAD+z4AAftrAAFC
+        AU0BPgcAAT4DAAEoAwABQAMAASADAAEBAQABAQYAAQEWAAP/AQAC/wYAAv8GAAHzAf8GAAHxAf8GAAH4
+        Af8GAAH4AX8GAAH8AT8GAAH4AR8GAAH4AR8GAAH8AT8GAAH8AR8GAAH+AQ8GAAH+AQ8GAAL/BgAC/wYA
+        Av8GAAP/Ae8H/wHHB/8BgwL/AQABDwHzAZ8B/wHBAf8B9wEAAQ8B5wHPAf8BAwH/AeMBAAEPAecBzwH/
+        AXcB4AHBAQABDwHnAc8B/wF/Af8BgAEAAQ8B5wHPAf8BdwHBAgABCQHPAecB7wFjAf8CAAEBAecBzwHH
+        AUEBkwIAAQEB5wHPAYABAAH/AQEB+AEBAecBzwEBAfEB/wGDAfwBAQHnAc8BgAH7Af8BxwH+AQkB8wGf
+        AcEC/wHvBP8B4wf/AfcF/ws=
+</value>
   </data>
   <data name="listBoxAutoComplete.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 38</value>
+    <value>171, 61</value>
   </data>
   <data name="listBoxAutoComplete.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 1</value>
+    <value>200, 171</value>
   </data>
   <data name="listBoxAutoComplete.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -349,43 +397,13 @@
     <value>listBoxAutoComplete</value>
   </data>
   <data name="&gt;&gt;listBoxAutoComplete.Type" xml:space="preserve">
-    <value>DWSIM.GListBox, DWSIM, Version=3.2.5450.18388, Culture=neutral, PublicKeyToken=null</value>
+    <value>DWSIM.GListBox, DWSIM, Version=3.2.5450.28525, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;listBoxAutoComplete.Parent" xml:space="preserve">
-    <value>TableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;listBoxAutoComplete.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="TableLayoutPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="TableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="TableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="TableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 403</value>
-  </data>
-  <data name="TableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;TableLayoutPanel1.Name" xml:space="preserve">
-    <value>TableLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;TableLayoutPanel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TableLayoutPanel1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;TableLayoutPanel1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="TableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="textBoxTooltip" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="Panel1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="txtScript" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="listBoxAutoComplete" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Absolute,35,Absolute,0,Percent,100,Absolute,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  <data name="&gt;&gt;listBoxAutoComplete.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="treeViewItems.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -409,7 +427,13 @@
     <value>6, 13</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 403</value>
+    <value>1019, 592</value>
+  </data>
+  <data name="&gt;&gt;imageList1.Name" xml:space="preserve">
+    <value>imageList1</value>
+  </data>
+  <data name="&gt;&gt;imageList1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ScriptEditorControl</value>

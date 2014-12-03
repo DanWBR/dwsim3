@@ -38,7 +38,7 @@ Public Class ScriptEditorControl
                 If populateListBox() Then
                     Me.listBoxAutoComplete.SelectedIndex = 0
                     ' Find the position of the caret
-                    Dim point As Point = New Point(Me.txtScript.Caret.Position.X * Me.txtScript.FontSize + 34, Me.txtScript.Caret.Position.Y)
+                    Dim point As Point = New Point(Me.txtScript.Caret.Position.X * Me.txtScript.FontSize + 34, Me.txtScript.Caret.Position.Y + 40)
                     point.Y += CInt(Math.Truncate(Me.txtScript.FontSize)) + 4
                     point.X += 2
                     ' for Courier, may need a better method
@@ -141,17 +141,17 @@ Public Class ScriptEditorControl
                 If TypeOf Me.nameSpaceNode.Tag Is String Then
                     Me.textBoxTooltip.Text = DirectCast(Me.nameSpaceNode.Tag, String)
                     ' Find the position of the caret
-                    Dim point As Point = New Point(Me.txtScript.Caret.Position.X * Me.txtScript.FontSize, Me.txtScript.Caret.Position.Y)
-                    point.Y += CInt(Math.Truncate(Me.txtScript.FontSize)) + 4
-                    Me.textBoxTooltip.Width = Me.textBoxTooltip.Text.Length * 6
-                    Me.textBoxTooltip.Size = New Size(Me.textBoxTooltip.Text.Length * 6, Me.textBoxTooltip.Height)
+                    Dim point As Point = New Point(Me.txtScript.Caret.Position.X * Me.txtScript.FontSize, Me.txtScript.Caret.Position.Y + 40)
+                    point.Y += CInt(Math.Truncate(Me.txtScript.FontSize)) + 8
+                    Dim mysize As SizeF = Me.CreateGraphics.MeasureString(Me.textBoxTooltip.Text, Me.textBoxTooltip.Font)
+                    Me.textBoxTooltip.Size = New Size(mysize.Width + 3, mysize.Height + 3)
                     ' Resize tooltip for long parameters
                     ' (doesn't wrap text nicely)
-                    If Me.textBoxTooltip.Width > 300 Then
-                        Me.textBoxTooltip.Width = 300
+                    If Me.textBoxTooltip.Width > 400 Then
                         Dim height As Integer = 0
-                        height = Me.textBoxTooltip.Text.Length \ 50
-                        Me.textBoxTooltip.Height = height * 15
+                        height = (mysize.Height + 3) * Math.Truncate(Me.textBoxTooltip.Width / 400 + 2)
+                        Me.textBoxTooltip.Height = height
+                        Me.textBoxTooltip.Width = 400
                     End If
                     Me.textBoxTooltip.Location = point
                     Me.textBoxTooltip.Show()
@@ -240,7 +240,7 @@ Public Class ScriptEditorControl
         Me.txtScript.Focus()
     End Sub
 
-    Private Sub textBoxTooltip_Enter(ByVal sender As Object, ByVal e As System.EventArgs)
+    Private Sub textBoxTooltip_Enter(ByVal sender As Object, ByVal e As System.EventArgs) Handles textBoxTooltip.Enter
         ' Stop the fake tooltip's text being selected
         Me.txtScript.Focus()
     End Sub
