@@ -1806,6 +1806,8 @@ End Class
     Private _fontsizeE As Integer = 10
     Protected m_errormessage As String = ""
 
+    Public Property Calculated As Boolean = False
+
     <System.NonSerialized()> Public scope As Microsoft.Scripting.Hosting.ScriptScope
     <System.NonSerialized()> Public engine As Microsoft.Scripting.Hosting.ScriptEngine
 
@@ -1932,16 +1934,53 @@ End Class
         Return Nothing
     End Function
 
-    Public Function Solve(Optional ByVal args As Object = Nothing) As Integer
-        If ScriptExt_ScriptTextB <> "" Then RunScript_Before()
-        Dim res As Integer = Calculate(args)
-        If ScriptExt_ScriptTextA <> "" Then RunScript_After()
-        Return res
-    End Function
+    Public Sub Solve(Optional ByVal args As Object = Nothing)
+
+        Calculated = False
+
+        Try
+            If ScriptExt_ScriptTextB <> "" Then RunScript_Before()
+            Calculate(args)
+            If ScriptExt_ScriptTextA <> "" Then RunScript_After()
+            Calculated = True
+        Catch ex As Exception
+            If Me.FlowSheet IsNot Nothing Then
+                Dim st As New StackTrace(ex, True)
+                If st.FrameCount > 0 Then
+                    Me.FlowSheet.WriteToLog("Error solving " & Me.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                Else
+                    Me.FlowSheet.WriteToLog("Error solving " & Me.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                End If
+            Else
+                Console.WriteLine(ex.ToString)
+            End If
+        End Try
+
+    End Sub
 
     Public Overridable Function DeCalculate() As Integer
         Return Nothing
     End Function
+
+    Public Sub Unsolve()
+
+        Try
+            DeCalculate()
+            Calculated = False
+        Catch ex As Exception
+            If Me.FlowSheet IsNot Nothing Then
+                Dim st As New StackTrace(ex, True)
+                If st.FrameCount > 0 Then
+                    Me.FlowSheet.WriteToLog("Error unsolving " & Me.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                Else
+                    Me.FlowSheet.WriteToLog("Error unsolving " & Me.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                End If
+            Else
+                Console.WriteLine(ex.ToString)
+            End If
+        End Try
+
+    End Sub
 
     Public Overridable Sub Validate()
 
@@ -2008,7 +2047,7 @@ End Class
                 Catch ex As Exception
                     Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
                     Me.ErrorMessage = ops.FormatException(ex).ToString
-                    Me.DeCalculate()
+                    Me.Unsolve()
                     engine = Nothing
                     scope = Nothing
                     source = Nothing
@@ -2057,7 +2096,7 @@ End Class
                 Catch ex As Exception
                     Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
                     Me.ErrorMessage = ops.FormatException(ex).ToString
-                    Me.DeCalculate()
+                    Me.Unsolve()
                     engine = Nothing
                     scope = Nothing
                     source = Nothing

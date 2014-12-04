@@ -1080,11 +1080,11 @@ Imports DWSIM.DWSIM.Outros
             Dim fs As New FormScript
             fs.fc = Me
             fs.language = 2
-            fs.Show(Me)
+            fs.Show(Me.dckPanel)
         End If
     End Sub
 
-    Private Sub LuaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LuaToolStripMenuItem.Click
+    Private Sub LuaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If DWSIM.App.IsRunningOnMono Then
             Dim fs As New FormScriptMono
             fs.fc = Me

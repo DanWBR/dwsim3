@@ -32,12 +32,12 @@ Namespace DWSIM.Flowsheet
     <System.Serializable()> Public Class FlowsheetSolver
 
         'events for plugins
-        Public Shared Event UnitOpCalculationStarted As CustomEventHandler
-        Public Shared Event UnitOpCalculationFinished As CustomEventHandler
-        Public Shared Event FlowsheetCalculationStarted As CustomEventHandler
-        Public Shared Event FlowsheetCalculationFinished As CustomEventHandler
-        Public Shared Event MaterialStreamCalculationStarted As CustomEventHandler
-        Public Shared Event MaterialStreamCalculationFinished As CustomEventHandler
+        Public Shared Event UnitOpCalculationStarted As CustomEvent
+        Public Shared Event UnitOpCalculationFinished As CustomEvent
+        Public Shared Event FlowsheetCalculationStarted As CustomEvent
+        Public Shared Event FlowsheetCalculationFinished As CustomEvent
+        Public Shared Event MaterialStreamCalculationStarted As CustomEvent
+        Public Shared Event MaterialStreamCalculationFinished As CustomEvent
 
         ''' <summary>
         ''' Flowsheet calculation routine 1. Calculates the object sent by the queue and updates the flowsheet.
@@ -102,7 +102,7 @@ Namespace DWSIM.Flowsheet
                                             End If
                                             gobj = myUnitOp.GraphicObject
                                             gobj.Calculated = False
-                                            myUnitOp.DeCalculate()
+                                            myUnitOp.Unsolve()
                                         Finally
                                             My.MyApplication.IsFlowsheetSolving = False
                                             form.FormSurface.FlowsheetDesignSurface.drawingObjects.Remove(gObjA)
@@ -110,7 +110,7 @@ Namespace DWSIM.Flowsheet
                                         End Try
                                     Else
                                         My.MyApplication.IsFlowsheetSolving = False
-                                        myUnitOp.DeCalculate()
+                                        myUnitOp.Unsolve()
                                         gobj = myUnitOp.GraphicObject
                                         gobj.Calculated = False
                                     End If
@@ -150,14 +150,14 @@ Namespace DWSIM.Flowsheet
                                         End If
                                         gobj = myUnitOp.GraphicObject
                                         gobj.Calculated = False
-                                        myUnitOp.DeCalculate()
+                                        myUnitOp.Unsolve()
                                         myUnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                                     Finally
                                         My.MyApplication.IsFlowsheetSolving = False
                                     End Try
                                 Else
                                     My.MyApplication.IsFlowsheetSolving = False
-                                    myUnitOp.DeCalculate()
+                                    myUnitOp.Unsolve()
                                     myUnitOp.GraphicObject.Calculated = False
                                 End If
                                 myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
@@ -240,6 +240,8 @@ Namespace DWSIM.Flowsheet
         ''' <param name="DoNotCalcFlash">Tells the calculator whether to do flash calculations or not.</param>
         ''' <remarks></remarks>
         Public Shared Sub CalculateMaterialStream(ByVal form As FormFlowsheet, ByVal ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False, Optional ByVal OnlyMe As Boolean = False)
+
+            ms.Calculated = False
 
             RaiseEvent MaterialStreamCalculationStarted(form, New System.EventArgs(), ms)
 
@@ -996,6 +998,8 @@ Namespace DWSIM.Flowsheet
             RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), ms)
 
             My.MyApplication.IsFlowsheetSolving = False
+
+            ms.Calculated = calculated
 
             If Not OnlyMe Then
                 Dim objargs As New DWSIM.Outros.StatusChangeEventArgs

@@ -292,7 +292,7 @@ Namespace DWSIM.Outros
     End Class
 
     'custom event handler declaration
-    Public Delegate Sub CustomEventHandler(ByVal sender As Object, ByVal e As System.EventArgs, ByVal extrainfo As Object)
+    Public Delegate Sub CustomEvent(ByVal sender As Object, ByVal e As System.EventArgs, ByVal extrainfo As Object)
 
 End Namespace
 

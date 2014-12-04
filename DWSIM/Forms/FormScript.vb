@@ -11,7 +11,7 @@ Imports FarsiLibrary.Win
 
 <System.Serializable()> Public Class FormScript
 
-    Inherits Windows.Forms.Form
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     Public scope As Microsoft.Scripting.Hosting.ScriptScope
     Public engine As Microsoft.Scripting.Hosting.ScriptEngine
@@ -182,6 +182,19 @@ Imports FarsiLibrary.Win
             .txtScript.Document.SyntaxFile = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "SyntaxFiles" & Path.DirectorySeparatorChar & "Python.syn"
             .txtScript.FontName = tscb1.SelectedItem.ToString
             .txtScript.FontSize = tscb2.SelectedItem
+
+            .cbLinkedObject.Items.AddRange(New String() {"Flowsheet", "Solver"})
+
+            For Each obj As SimulationObjects_BaseClass In fc.Collections.ObjectCollection.Values
+                .cbLinkedObject.Items.Add(obj.GraphicObject.Tag)
+            Next
+
+            .cbLinkedEvent.Items.AddRange(New String() {"FlowsheetOpened", "FlowsheetClosed", "FlowsheetCalculationStarted", "FlowsheetCalculationFinished",
+                                                       "UnitOperationCalculationStarted", "UnitOperationCalculationFinished",
+                                                      "MaterialStreamCalculationStarted", "MaterialStreamCalculationFinished"})
+
+            .cbLinkedObject.SelectedIndex = 0
+            .cbLinkedEvent.SelectedIndex = 0
 
             .readAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly)
             .readAssembly(GetType(System.String).Assembly)
