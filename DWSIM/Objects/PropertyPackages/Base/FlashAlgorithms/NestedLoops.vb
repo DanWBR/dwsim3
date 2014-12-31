@@ -296,6 +296,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
         End Function
+        Function ASinH(ByVal x As Double) As Double
+            Dim F As Double
+            F = Log(x + Sqrt(x * x + 1))
+            Return F
+        End Function
 
         Public Overrides Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
@@ -340,41 +345,61 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim cnt As Integer
 
             If Tref = 0 Then Tref = 298.15
+            ' ======== algorithm: Kantaris & Howden =================================================================================
+            Dim q, r As Double
+            Dim ls As Integer
+
+            xn = Tref
+            fx = Herror(xn, {P, Vz, PP})
+            ls = Sign(fx)
+            Do
+                cnt += 1
+                dx = 2 ^ (q / 3 - r - 1 / 3) * ASinH(fx)
+                xn = xn + dx
+                fx = Herror(xn, {P, Vz, PP})
+                If Sign(fx) <> ls Then
+                    r += 1
+                    ls = -ls
+                Else
+                    q += 1
+                End If
+            Loop While Abs(fx) > itol
+            T = xn
 
             ' ============== new algorithm: interpolation search ====================================================================
-            cnt = 1
-            dx = 10
-            x1 = Tref
-            x2 = x1
-            fx = Herror(x1, {P, Vz, PP})
-            fx2 = fx
-            If fx < 0 Then dx = -dx 'reverse direction of search. T already too large
+            'cnt = 1
+            'dx = 10
+            'x1 = Tref
+            'x2 = x1
+            'fx = Herror(x1, {P, Vz, PP})
+            'fx2 = fx
+            'If fx < 0 Then dx = -dx 'reverse direction of search. T already too large
 
-            'Search until root is between both sampling points
-            Do
-                cnt += 1
-                x1 = x2
-                fx = fx2
-                x2 = x1 + dx
-                fx2 = Herror(x2, {P, Vz, PP})
-            Loop Until fx / fx2 < 0
+            ''Search until root is between both sampling points
+            'Do
+            '    cnt += 1
+            '    x1 = x2
+            '    fx = fx2
+            '    x2 = x1 + dx
+            '    fx2 = Herror(x2, {P, Vz, PP})
+            'Loop Until fx / fx2 < 0
 
-            Do
-                cnt += 1
-                'xn = (x1 + x2) / 2
-                xn = x2 - fx2 / (fx2 - fx) * (x2 - x1)
-                fn = Herror(xn, {P, Vz, PP})
-                If (Abs(fn) < etol) Or (x2 - x1 < 0.0000001) Then Exit Do
+            'Do
+            '    cnt += 1
+            '    'xn = (x1 + x2) / 2
+            '    xn = x2 - fx2 / (fx2 - fx) * (x2 - x1)
+            '    fn = Herror(xn, {P, Vz, PP})
+            '    If (Abs(fn) < etol) Or (x2 - x1 < 0.0000001) Then Exit Do
 
-                If fn / fx < 0 Then
-                    x2 = xn
-                    fx2 = fn
-                Else
-                    x1 = xn
-                    fx = fn
-                End If
-            Loop
-            T = xn
+            '    If fn / fx < 0 Then
+            '        x2 = xn
+            '        fx2 = fn
+            '    Else
+            '        x1 = xn
+            '        fx = fn
+            '    End If
+            'Loop
+            'T = xn
 
             ' ============= old algorithm starts here ===============================================================================
             '            For j = 0 To 4
