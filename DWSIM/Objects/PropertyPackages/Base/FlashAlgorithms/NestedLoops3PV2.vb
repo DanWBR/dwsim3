@@ -1363,7 +1363,8 @@ alt:
                         Vx1 = resultL(2)
                         Vx2 = resultL(6)
 
-                        result = Flash_PV_3P(Vz, result(1), result(0) * L1, result(0) * L2, result(3), Vx1, Vx2, P, V, T, PP)
+                        result = MyFlash_PV_3P(Vz, result(1), result(0) * L1, result(0) * L2, result(3), Vx1, Vx2, P, V, T, PP)
+                        'result = Flash_PV_3P(Vz, result(1), result(0) * L1, result(0) * L2, result(3), Vx1, Vx2, P, V, T, PP)
 
                     End If
 
@@ -1380,7 +1381,153 @@ alt:
             Return result
 
         End Function
+        Function ASinH(ByVal x As Double) As Double
+            Dim F As Double
+            F = Log(x + Sqrt(x * x + 1))
+            Return F
+        End Function
+        Public Function MyFlash_PV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
+            Dim i As Integer
 
+            etol = CDbl(PP.Parameters("PP_PTFELT"))
+            maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
+            itol = CDbl(PP.Parameters("PP_PTFILT"))
+            maxit_i = CInt(PP.Parameters("PP_PTFMII"))
+
+            n = UBound(Vz)
+
+            proppack = PP
+
+            ReDim Vx1(n), Vx2(n), Vy(n), Ki1(n)
+            Dim Tant, L1ant, L2ant, gamma1(n), gamma2(n), VL(n) As Double
+            Dim Vx1ant(n), Vx2ant(n), Vyant(n), e1, e2, e3, e4 As Double
+
+            Tant = Tref
+            T = Tref
+            ecount = 0
+
+            If n = 0 Then
+                If Vp(0) <= P Then
+                    L = 1
+                    V = 0
+                    Vx1 = Vz
+                    GoTo out
+                Else
+                    L = 0
+                    V = 1
+                    Vy = Vz
+                    GoTo out
+                End If
+            End If
+
+            i = 0
+            Do
+                If Vz(i) <> 0 Then
+                    Vy(i) = VyEST(i)
+                    Vx1(i) = Vx1EST(i)
+                    Vx2(i) = Vx2EST(i)
+                Else
+                    Vy(i) = 0
+                    Vx1(i) = 0
+                    Vx2(i) = 0
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            Vant = 0.0#
+            L1ant = 0.0#
+            L2ant = 0.0#
+
+            ecount = 0
+
+            L1 = L1est / (1 - V)
+            L2 = L2est / (1 - V)
+
+            'VL: composition of total liquid -> VX for LLE flash
+            For i = 0 To n
+                VL(i) = Vz(i)
+            Next
+
+            Do
+                L1ant = L1
+                L2ant = L2
+                Tant = T
+                For i = 0 To n
+                    Vx1ant(i) = Vx1(i)
+                    Vx2ant(i) = Vx2(i)
+                    Vyant(i) = Vy(i)
+                    Vx1EST(i) = Vx1(i)
+                    Vx2EST(i) = Vx2(i)
+                Next
+
+                'estimate liquid composiiton
+                Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = Vx1EST, .InitialEstimatesForPhase2 = Vx2EST, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
+                Dim resultL As Object = slle.Flash_PT(VL, P, T, PP)
+                L1 = resultL(0) 'phase fraction liquid/liquid
+                L2 = resultL(5)
+                Vx1 = resultL(2)
+                Vx2 = resultL(6)
+                gamma1 = resultL(9)
+                gamma2 = resultL(10)
+
+
+                'estimate boiling temperature
+                Dim q, r, fx, dT As Double
+                Dim ls, cnt As Integer
+
+                fx = P
+                For i = 0 To n
+                    fx = fx - Vx1(i) * gamma1(i) * PP.AUX_PVAPi(i, T)
+                Next
+                ls = Sign(fx)
+                Do
+                    cnt += 1
+                    dT = 2 ^ (q / 3 - r - 1 / 3) * ASinH(fx)
+                    T = T + dT
+
+                    fx = P
+                    For i = 0 To n
+                        fx = fx - Vx1(i) * gamma1(i) * PP.AUX_PVAPi(i, T)
+                    Next
+                    If Sign(fx) <> ls Then
+                        r += 1
+                        ls = -ls
+                    Else
+                        q += 1
+                    End If
+                Loop Until Abs(fx) < 1
+
+                'calculate new Ki's and vapour composition
+                For i = 0 To n
+                    Ki1(i) = gamma1(i) * PP.AUX_PVAPi(i, T) / P
+                    Vy(i) = Ki1(i) * Vx1(i)
+                    VL(i) = Vz(i) / (1 + V * (Vy(i) / VL(i) - 1))
+                Next
+
+                e1 = 0
+                e2 = 0
+                e3 = 0
+                e4 = 0
+                i = 0
+                Do
+                    e1 = e1 + Math.Abs(Vx1(i) - Vx1ant(i))
+                    e4 = e4 + Math.Abs(Vx2(i) - Vx2ant(i))
+                    e2 = e2 + Math.Abs(Vy(i) - Vyant(i))
+                    i = i + 1
+                Loop Until i = n + 1
+                e3 = Math.Abs(T - Tant) + Math.Abs(L1 - L1ant) + Math.Abs(L2 - L2ant)
+
+                ecount += 1
+                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
+            Loop Until (e1 + e2 + e3 + e4) < etol
+
+out:        L1 = L1 * (1 - V) 'calculate global phase fractions
+            L2 = L2 * (1 - V)
+            
+            Console.WriteLine("PV Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
+
+            Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, PP.RET_NullVector}
+        End Function
         Public Function Flash_PV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
 
             Dim i As Integer
