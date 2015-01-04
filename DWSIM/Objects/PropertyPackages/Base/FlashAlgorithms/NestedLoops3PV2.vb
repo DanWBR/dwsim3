@@ -1523,7 +1523,7 @@ alt:
 
 out:        L1 = L1 * (1 - V) 'calculate global phase fractions
             L2 = L2 * (1 - V)
-            
+
             Console.WriteLine("PV Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
 
             Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, PP.RET_NullVector}

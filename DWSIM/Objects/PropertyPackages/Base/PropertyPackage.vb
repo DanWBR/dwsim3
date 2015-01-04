@@ -560,6 +560,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure
 
+            Dim phasemolarfrac As Double = Nothing
+            Dim overallmolarflow As Double = Nothing
+
+            overallmolarflow = Me.CurrentMaterialStream.Fases(0).SPMProperties.molarflow.GetValueOrDefault
+            phasemolarfrac = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarfraction.GetValueOrDefault
+            result = overallmolarflow * phasemolarfrac
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarflow = result
+            result = result * Me.AUX_MMM(Fase.Solid) / 1000
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massflow = result
+            result = phasemolarfrac * overallmolarflow * Me.AUX_MMM(Fase.Solid) / 1000 / Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault
+            Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massfraction = result
+
             result = Me.AUX_SOLIDDENS
             Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
             Dim constprops As New List(Of ConstantProperties)

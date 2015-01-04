@@ -289,6 +289,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massfraction = result
                 Me.DW_CalcCompVolFlow(phaseID)
                 Me.DW_CalcCompFugCoeff(fase)
+
             End If
 
             If Not Me.Parameters.ContainsKey("PP_USE_EOS_VOLUME_SHIFT") Then Me.Parameters.Add("PP_USE_EOS_VOLUME_SHIFT", 0)

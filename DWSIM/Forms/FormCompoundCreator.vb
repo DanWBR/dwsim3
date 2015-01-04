@@ -557,40 +557,38 @@ Public Class FormCompoundCreator
         Next
     End Sub
 
-    
-
     Sub StoreData()
 
         With mycase
             .su = Me.su
             .database = tbDBPath.Text
-            .cp.Acentric_Factor = TextBoxAF.Text
-            .cp.CAS_Number = TextBoxCAS.Text
+            .cp.Acentric_Factor = CheckEmptyTextBox(TextBoxAF)
+            .cp.CAS_Number = CheckEmptyTextBox(TextBoxCAS)
             .cp.CompCreatorStudyFile = .Filename
-            .cp.Chao_Seader_Acentricity = TextBoxCSAF.Text
-            .cp.Chao_Seader_Liquid_Molar_Volume = TextBoxCSLV.Text
-            .cp.Chao_Seader_Solubility_Parameter = TextBoxCSSP.Text
-            .cp.IG_Gibbs_Energy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, TextBoxDGF.Text)
-            .cp.IG_Enthalpy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, TextBoxDHF.Text)
+            .cp.Chao_Seader_Acentricity = CheckEmptyTextBox(TextBoxCSAF)
+            .cp.Chao_Seader_Liquid_Molar_Volume = CheckEmptyTextBox(TextBoxCSLV)
+            .cp.Chao_Seader_Solubility_Parameter = CheckEmptyTextBox(TextBoxCSSP)
+            .cp.IG_Gibbs_Energy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, CheckEmptyTextBox(TextBoxDGF))
+            .cp.IG_Enthalpy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, CheckEmptyTextBox(TextBoxDHF))
             .cp.Formula = TextBoxFormula.Text
             .cp.ID = TextBoxID.Text
-            .cp.Molar_Weight = TextBoxMW.Text
+            .cp.Molar_Weight = CheckEmptyTextBox(TextBoxMW)
             .cp.Name = TextBoxName.Text
-            .cp.Normal_Boiling_Point = cv.ConverterParaSI(su.spmp_temperature, TextBoxNBP.Text)
-            .cp.Critical_Pressure = cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text)
-            .cp.PC_SAFT_epsilon_k = TextBoxPCSAFTEpsilon.Text
-            .cp.PC_SAFT_m = TextBoxPCSAFTm.Text
-            .cp.PC_SAFT_sigma = TextBoxPCSAFTSigma.Text
-            .cp.UNIQUAC_Q = TextBoxUNIQUAC_Q.Text
-            .cp.UNIQUAC_R = TextBoxUNIQUAC_R.Text
-            .cp.Critical_Temperature = cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text)
-            .cp.PR_Volume_Translation_Coefficient = TextBoxVTCPR.Text
-            .cp.SRK_Volume_Translation_Coefficient = TextBoxVTCSRK.Text
-            .cp.Critical_Compressibility = TextBoxZc.Text
-            .cp.Z_Rackett = TextBoxZRa.Text
+            .cp.Normal_Boiling_Point = cv.ConverterParaSI(su.spmp_temperature, CheckEmptyTextBox(TextBoxNBP))
+            .cp.Critical_Pressure = cv.ConverterParaSI(su.spmp_pressure, CheckEmptyTextBox(TextBoxPc))
+            .cp.PC_SAFT_epsilon_k = CheckEmptyTextBox(TextBoxPCSAFTEpsilon)
+            .cp.PC_SAFT_m = CheckEmptyTextBox(TextBoxPCSAFTm)
+            .cp.PC_SAFT_sigma = CheckEmptyTextBox(TextBoxPCSAFTSigma)
+            .cp.UNIQUAC_Q = CheckEmptyTextBox(TextBoxUNIQUAC_Q)
+            .cp.UNIQUAC_R = CheckEmptyTextBox(TextBoxUNIQUAC_R)
+            .cp.Critical_Temperature = cv.ConverterParaSI(su.spmp_temperature, CheckEmptyTextBox(TextBoxTc))
+            .cp.PR_Volume_Translation_Coefficient = CheckEmptyTextBox(TextBoxVTCPR)
+            .cp.SRK_Volume_Translation_Coefficient = CheckEmptyTextBox(TextBoxVTCSRK)
+            .cp.Critical_Compressibility = CheckEmptyTextBox(TextBoxZc)
+            .cp.Z_Rackett = CheckEmptyTextBox(TextBoxZRa)
             .cp.SMILES = TextBoxSMILES.Text
-            .cp.TemperatureOfFusion = cv.ConverterParaSI(su.spmp_temperature, TextBoxMeltingTemp.Text)
-            .cp.EnthalpyOfFusionAtTf = cv.ConverterParaSI(su.spmp_enthalpy, TextBoxEnthOfFusion.Text)
+            .cp.TemperatureOfFusion = cv.ConverterParaSI(su.spmp_temperature, CheckEmptyTextBox(TextBoxMeltingTemp))
+            .cp.EnthalpyOfFusionAtTf = cv.ConverterParaSI(su.spmp_enthalpy, CheckEmptyTextBox(TextBoxEnthOfFusion))
 
             .RegressPVAP = rbRegressPVAP.Checked
             .RegressCPIG = rbRegressCPIG.Checked
@@ -664,7 +662,7 @@ Public Class FormCompoundCreator
             .cp.Liquid_Heat_Capacity_Const_C = CheckEmptyCell(tbCPLiquid_C.Text)
             .cp.Liquid_Heat_Capacity_Const_D = CheckEmptyCell(tbCPLiquid_D.Text)
             .cp.Liquid_Heat_Capacity_Const_E = CheckEmptyCell(tbCPLiquid_E.Text)
-       
+
             .cp.Liquid_Density_Const_A = CheckEmptyCell(tbLIQDENS_A.Text)
             .cp.Liquid_Density_Const_B = CheckEmptyCell(tbLIQDENS_B.Text)
             .cp.Liquid_Density_Const_C = CheckEmptyCell(tbLIQDENS_C.Text)
@@ -754,7 +752,13 @@ Public Class FormCompoundCreator
         Catch ex As Exception
             CheckEmptyCell = Nothing
         End Try
+
     End Function
+
+    Function CheckEmptyTextBox(tb As TextBox) As Double
+        If Double.TryParse(tb.Text, New Double) Then Return tb.Text Else Return 0.0#
+    End Function
+
     Function CheckValidDF(ByVal val As String) As Boolean
         Dim DN As Double
         Try
