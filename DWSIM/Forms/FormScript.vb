@@ -45,49 +45,48 @@ Imports FarsiLibrary.Win
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click
 
-        Dim opts As New Dictionary(Of String, Object)()
-        opts("Frames") = Microsoft.Scripting.Runtime.ScriptingRuntimeHelpers.True
-        engine = IronPython.Hosting.Python.CreateEngine(opts)
-        Dim paths(My.Settings.ScriptPaths.Count - 1) As String
-        My.Settings.ScriptPaths.CopyTo(paths, 0)
-        Try
-            engine.SetSearchPaths(paths)
-        Catch ex As Exception
-        End Try
-        engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
-        engine.Runtime.LoadAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.ConstantProperties).Assembly)
-        engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.GraphicObjects.GraphicObject).Assembly)
-        engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface).Assembly)
-        'engine.Runtime.IO.SetOutput(New TextBoxStream(txtOutput), UTF8Encoding.UTF8)
-        scope = engine.CreateScope()
-        scope.SetVariable("Flowsheet", fc)
-        Dim Solver As New DWSIM.Flowsheet.COMSolver
-        scope.SetVariable("Solver", Solver)
-        Dim txtcode As String = ""
-        For Each fname As String In Me.ListBox1.Items
-            txtcode += File.ReadAllText(fname) + vbCrLf
-        Next
-        'txtcode += Me.txtScript.Document.Text
-        Dim source As Microsoft.Scripting.Hosting.ScriptSource = Me.engine.CreateScriptSourceFromString(txtcode, Microsoft.Scripting.SourceCodeKind.Statements)
-        Try
-            source.Execute(Me.scope)
-        Catch ex As Exception
-            Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
+        If Not Me.TabStripScripts.SelectedItem Is Nothing Then
 
-        Finally
-            engine = Nothing
-            scope = Nothing
-            source = Nothing
-        End Try
+            Dim opts As New Dictionary(Of String, Object)()
+            opts("Frames") = Microsoft.Scripting.Runtime.ScriptingRuntimeHelpers.True
+            engine = IronPython.Hosting.Python.CreateEngine(opts)
+            Dim paths(My.Settings.ScriptPaths.Count - 1) As String
+            My.Settings.ScriptPaths.CopyTo(paths, 0)
+            Try
+                engine.SetSearchPaths(paths)
+            Catch ex As Exception
+            End Try
+            engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
+            engine.Runtime.LoadAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.ConstantProperties).Assembly)
+            engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.GraphicObjects.GraphicObject).Assembly)
+            engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface).Assembly)
+            engine.Runtime.IO.SetOutput(New DataGridViewTextStream(fc), UTF8Encoding.UTF8)
+            scope = engine.CreateScope()
+            scope.SetVariable("Flowsheet", fc)
+            Dim Solver As New DWSIM.Flowsheet.COMSolver
+            scope.SetVariable("Solver", Solver)
+            For Each obj As SimulationObjects_BaseClass In fc.Collections.ObjectCollection.Values
+                scope.SetVariable(obj.GraphicObject.Tag, obj)
+            Next
+            Dim txtcode As String = ""
+            For Each fname As String In Me.ListBox1.Items
+                txtcode += File.ReadAllText(fname) + vbCrLf
+            Next
+            txtcode += DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl).txtScript.Document.Text
+            Dim source As Microsoft.Scripting.Hosting.ScriptSource = Me.engine.CreateScriptSourceFromString(txtcode, Microsoft.Scripting.SourceCodeKind.Statements)
+            Try
+                source.Execute(Me.scope)
+            Catch ex As Exception
+                Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
+                fc.WriteToLog("Error running script '" & Me.TabStripScripts.SelectedItem.Title & "': " & ops.FormatException(ex).ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+            Finally
+                engine = Nothing
+                scope = Nothing
+                source = Nothing
+            End Try
 
-    End Sub
+        End If
 
-    Private Sub ToolStripButton4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton4.Click
-        If Me.Opacity < 1.0# Then Me.Opacity += 0.05
-    End Sub
-
-    Private Sub ToolStripButton5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton5.Click
-        If Me.Opacity > 0.0# Then Me.Opacity -= 0.05
     End Sub
 
     Private Sub CutToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CutToolStripButton.Click
@@ -183,19 +182,6 @@ Imports FarsiLibrary.Win
             .txtScript.FontName = tscb1.SelectedItem.ToString
             .txtScript.FontSize = tscb2.SelectedItem
 
-            .cbLinkedObject.Items.AddRange(New String() {"Flowsheet", "Solver"})
-
-            For Each obj As SimulationObjects_BaseClass In fc.Collections.ObjectCollection.Values
-                .cbLinkedObject.Items.Add(obj.GraphicObject.Tag)
-            Next
-
-            .cbLinkedEvent.Items.AddRange(New String() {"FlowsheetOpened", "FlowsheetClosed", "FlowsheetCalculationStarted", "FlowsheetCalculationFinished",
-                                                       "UnitOperationCalculationStarted", "UnitOperationCalculationFinished",
-                                                      "MaterialStreamCalculationStarted", "MaterialStreamCalculationFinished"})
-
-            .cbLinkedObject.SelectedIndex = 0
-            .cbLinkedEvent.SelectedIndex = 0
-
             .readAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly)
             .readAssembly(GetType(System.String).Assembly)
             .readAssembly(GetType(CapeOpen.BaseUnitEditor).Assembly)
@@ -204,9 +190,15 @@ Imports FarsiLibrary.Win
             .listBoxAutoComplete.Font = New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point)
             .listBoxAutoComplete.Height = 250
 
+            .form = fc
+
         End With
 
         p.Controls.Add(scontrol)
+
+        For Each obj As SimulationObjects_BaseClass In fc.Collections.ObjectCollection.Values
+            scontrol.cbLinkedObject.Items.Add(obj.GraphicObject.Tag)
+        Next
 
         Dim stab As New FATabStripItem()
         stab.Controls.Add(p)
@@ -222,6 +214,34 @@ Imports FarsiLibrary.Win
 
 End Class
 
+Public Class TextBoxStream
+    Inherits MemoryStream
+    Private target As TextBox
+
+    Public Sub New(ByVal target As TextBox)
+        Me.target = target
+    End Sub
+
+    Public Overrides Sub Write(ByVal buffer As Byte(), ByVal offset As Integer, ByVal count As Integer)
+        Dim output As String = Encoding.UTF8.GetString(buffer, offset, count)
+        target.AppendText(output)
+    End Sub
+End Class
+
+Public Class DataGridViewTextStream
+    Inherits MemoryStream
+    Private target As FormFlowsheet
+
+    Public Sub New(ByVal target As FormFlowsheet)
+        Me.target = target
+    End Sub
+
+    Public Overrides Sub Write(ByVal buffer As Byte(), ByVal offset As Integer, ByVal count As Integer)
+        Dim output As String = Encoding.UTF8.GetString(buffer, offset, count)
+        target.WriteToLog(output, Color.DarkGray, DWSIM.FormClasses.TipoAviso.Informacao)
+    End Sub
+
+End Class
 
 
 

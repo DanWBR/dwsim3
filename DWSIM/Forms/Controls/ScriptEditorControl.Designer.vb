@@ -32,9 +32,9 @@ Partial Class ScriptEditorControl
         Me.Label1 = New System.Windows.Forms.Label()
         Me.chkLink = New System.Windows.Forms.CheckBox()
         Me.txtScript = New Alsing.Windows.Forms.SyntaxBoxControl()
-        Me.listBoxAutoComplete = New GListBox()
-        Me.treeViewItems = New System.Windows.Forms.TreeView()
         Me.imageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.treeViewItems = New System.Windows.Forms.TreeView()
+        Me.listBoxAutoComplete = New Global.DWSIM.GListBox()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -59,8 +59,8 @@ Partial Class ScriptEditorControl
         'cbLinkedEvent
         '
         Me.cbLinkedEvent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbLinkedEvent.FormattingEnabled = True
         resources.ApplyResources(Me.cbLinkedEvent, "cbLinkedEvent")
+        Me.cbLinkedEvent.FormattingEnabled = True
         Me.cbLinkedEvent.Name = "cbLinkedEvent"
         '
         'Label2
@@ -71,8 +71,8 @@ Partial Class ScriptEditorControl
         'cbLinkedObject
         '
         Me.cbLinkedObject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbLinkedObject.FormattingEnabled = True
         resources.ApplyResources(Me.cbLinkedObject, "cbLinkedObject")
+        Me.cbLinkedObject.FormattingEnabled = True
         Me.cbLinkedObject.Name = "cbLinkedObject"
         '
         'Label1
@@ -115,22 +115,6 @@ Partial Class ScriptEditorControl
         Me.txtScript.TabGuideColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(234, Byte), Integer))
         Me.txtScript.WhitespaceColor = System.Drawing.SystemColors.ControlDark
         '
-        'listBoxAutoComplete
-        '
-        Me.listBoxAutoComplete.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.listBoxAutoComplete.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.listBoxAutoComplete.FormattingEnabled = True
-        Me.listBoxAutoComplete.ImageList = Me.imageList1
-        resources.ApplyResources(Me.listBoxAutoComplete, "listBoxAutoComplete")
-        Me.listBoxAutoComplete.Name = "listBoxAutoComplete"
-        '
-        'treeViewItems
-        '
-        Me.treeViewItems.LineColor = System.Drawing.Color.Empty
-        resources.ApplyResources(Me.treeViewItems, "treeViewItems")
-        Me.treeViewItems.Name = "treeViewItems"
-        Me.treeViewItems.PathSeparator = "."
-        '
         'imageList1
         '
         Me.imageList1.ImageStream = CType(resources.GetObject("imageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
@@ -140,6 +124,22 @@ Partial Class ScriptEditorControl
         Me.imageList1.Images.SetKeyName(2, "")
         Me.imageList1.Images.SetKeyName(3, "")
         Me.imageList1.Images.SetKeyName(4, "")
+        '
+        'treeViewItems
+        '
+        Me.treeViewItems.LineColor = System.Drawing.Color.Empty
+        resources.ApplyResources(Me.treeViewItems, "treeViewItems")
+        Me.treeViewItems.Name = "treeViewItems"
+        Me.treeViewItems.PathSeparator = "."
+        '
+        'listBoxAutoComplete
+        '
+        Me.listBoxAutoComplete.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.listBoxAutoComplete.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.listBoxAutoComplete.FormattingEnabled = True
+        Me.listBoxAutoComplete.ImageList = Me.imageList1
+        resources.ApplyResources(Me.listBoxAutoComplete, "listBoxAutoComplete")
+        Me.listBoxAutoComplete.Name = "listBoxAutoComplete"
         '
         'ScriptEditorControl
         '
@@ -155,7 +155,7 @@ Partial Class ScriptEditorControl
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
-End Sub
+    End Sub
     Public WithEvents txtScript As Alsing.Windows.Forms.SyntaxBoxControl
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents cbLinkedEvent As System.Windows.Forms.ComboBox

@@ -48,7 +48,7 @@ Public Class frmMatList
         Me.DataGridView1.Columns.Add(ms.Nome, ms.GraphicObject.Tag)
         Me.DataGridView1.Columns(ms.Nome).SortMode = DataGridViewColumnSortMode.NotSortable
 
-        Dim props As String() = ms.GetProperties(SimulationObjects_BaseClass.PropertyType.ALL)
+        Dim props As String() = ms.GetProperties(SimulationObjects_BaseClass.PropertyType.RW)
         Dim unit As String = ""
 
         If Not RowsCreated Then

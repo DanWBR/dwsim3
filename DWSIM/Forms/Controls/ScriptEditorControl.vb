@@ -6,6 +6,8 @@ Imports System.Reflection
 Imports System.ComponentModel
 Public Class ScriptEditorControl
 
+    Public form As FormFlowsheet
+
 #Region "Custom members"
     Private findNodeResult As TreeNode = Nothing
     Private typed As String = ""
@@ -250,21 +252,12 @@ Public Class ScriptEditorControl
 #Region "Util methods"
 
     Public Function ReplacePath(word As String) As String
+        Dim obj As SimulationObjects_BaseClass = form.GetFlowsheetSimulationObject(word.Split(".")(0))
+        If Not obj Is Nothing Then
+            Return word.Replace(word.Split(".")(0), obj.GetType.ToString.Replace("SimulationObjects.", ""))
+        End If
         word = word.ToLower
-        If word.Contains("ims1.propertypackage") Then Return word.Replace("ims1.propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
-        If word.Contains("ims2.propertypackage") Then Return word.Replace("ims2.propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
-        If word.Contains("ims3.propertypackage") Then Return word.Replace("ims3.propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
-        If word.Contains("oms1.propertypackage") Then Return word.Replace("oms1.propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
-        If word.Contains("oms2.propertypackage") Then Return word.Replace("oms2.propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
-        If word.Contains("oms3.propertypackage") Then Return word.Replace("oms3.propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
-        If word.Contains("ims1") Then Return word.Replace("ims1", "DWSIM.DWSIM.Streams.MaterialStream")
-        If word.Contains("ims2") Then Return word.Replace("ims2", "DWSIM.DWSIM.Streams.MaterialStream")
-        If word.Contains("ims3") Then Return word.Replace("ims3", "DWSIM.DWSIM.Streams.MaterialStream")
-        If word.Contains("ies1") Then Return word.Replace("ies1", "DWSIM.DWSIM.Streams.EnergyStream")
-        If word.Contains("oms1") Then Return word.Replace("oms1", "DWSIM.DWSIM.Streams.MaterialStream")
-        If word.Contains("oms2") Then Return word.Replace("oms2", "DWSIM.DWSIM.Streams.MaterialStream")
-        If word.Contains("oms3") Then Return word.Replace("oms3", "DWSIM.DWSIM.Streams.MaterialStream")
-        If word.Contains("oes1") Then Return word.Replace("oes1", "DWSIM.DWSIM.Streams.EnergyStream")
+        If word.Contains(".propertypackage") Then Return word.Replace(".propertypackage", "DWSIM.DWSIM.PropertyPackages.PropertyPackage")
         If word.Contains("flowsheet") Then Return word.Replace("flowsheet", "DWSIM.FormFlowsheet")
         If word.Contains("solver") Then Return word.Replace("solver", "DWSIM.DWSIM.Flowsheet.FlowsheetSolver")
         Return word
@@ -377,29 +370,31 @@ Public Class ScriptEditorControl
         Dim memberInfo As MemberInfo() = type.GetMembers()
         For j As Integer = 0 To memberInfo.Length - 1
             If memberInfo(j).ReflectedType.IsPublic And memberInfo(j).MemberType <> MemberTypes.Method Then
-                Dim node As TreeNode = treeNode.Nodes.Add(memberInfo(j).Name)
-                node.Tag = memberInfo(j).MemberType
+                If Not memberInfo(j).Name.Contains("add_") And Not memberInfo(j).Name.Contains("remove_") Then
+                    Dim node As TreeNode = treeNode.Nodes.Add(memberInfo(j).Name)
+                    node.Tag = memberInfo(j).MemberType
+                End If
             End If
         Next
 
         ' Get all methods
         Dim methodInfo As MethodInfo() = type.GetMethods()
         For j As Integer = 0 To methodInfo.Length - 1
-            Dim node As TreeNode = treeNode.Nodes.Add(methodInfo(j).Name)
-            Dim parms As String = ""
-
-            Dim parameterInfo As ParameterInfo() = methodInfo(j).GetParameters()
-            For f As Integer = 0 To parameterInfo.Length - 1
-                parms += parameterInfo(f).ParameterType.ToString() & " " & parameterInfo(f).Name & ", "
-            Next
-
-            ' Knock off remaining ", "
-            If parms.Length > 2 Then
-                parms = parms.Substring(0, parms.Length - 2)
+            If Not memberInfo(j).Name.Contains("get_") And Not memberInfo(j).Name.Contains("set_") Then
+                Dim node As TreeNode = treeNode.Nodes.Add(methodInfo(j).Name)
+                Dim parms As String = ""
+                Dim parameterInfo As ParameterInfo() = methodInfo(j).GetParameters()
+                For f As Integer = 0 To parameterInfo.Length - 1
+                    parms += parameterInfo(f).ParameterType.ToString() & " " & parameterInfo(f).Name & ", "
+                Next
+                ' Knock off remaining ", "
+                If parms.Length > 2 Then
+                    parms = parms.Substring(0, parms.Length - 2)
+                End If
+                node.Tag = parms
             End If
-
-            node.Tag = parms
         Next
+
     End Sub
 
     ''' <summary>
@@ -463,6 +458,7 @@ Public Class ScriptEditorControl
             ElseIf treeNodes(i).Nodes.Count > 0 Then
                 Me.findNode(path, treeNodes(i).Nodes)
             End If
+            'Console.WriteLine(treeNodes(i).FullPath)
         Next
     End Sub
 
@@ -591,5 +587,36 @@ Public Class ScriptEditorControl
     End Function
 
 #End Region
+
+    Private Sub chkLink_CheckedChanged(sender As Object, e As EventArgs) Handles chkLink.CheckedChanged
+        Label1.Enabled = chkLink.Checked
+        Label2.Enabled = chkLink.Checked
+        cbLinkedEvent.Enabled = chkLink.Checked
+        cbLinkedObject.Enabled = chkLink.Checked
+    End Sub
+
+    Private Sub ScriptEditorControl_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        cbLinkedObject.Items.AddRange(New String() {"Flowsheet", "Solver"})
+
+    End Sub
+
+    Private Sub cbLinkedObject_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbLinkedObject.SelectedIndexChanged
+
+        Select Case cbLinkedObject.SelectedIndex
+            Case 0
+                cbLinkedEvent.Items.Clear()
+                cbLinkedEvent.Items.AddRange(New String() {"Opened", "Closed"})
+            Case 1
+                cbLinkedEvent.Items.Clear()
+                cbLinkedEvent.Items.AddRange(New String() {"Object Calculation Started", "Object Calculation Finished", "Object Calculation Error"})
+            Case Else
+                cbLinkedEvent.Items.Clear()
+                cbLinkedEvent.Items.AddRange(New String() {"Calculation Started", "Calculation Finished", "Calculation Error"})
+        End Select
+
+        cbLinkedEvent.SelectedIndex = 0
+
+    End Sub
 
 End Class

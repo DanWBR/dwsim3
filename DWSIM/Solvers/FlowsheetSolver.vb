@@ -26,18 +26,18 @@ Imports System.IO
 Imports DWSIM.DWSIM.SimulationObjects
 Imports System.Threading.Tasks
 Imports DWSIM.DWSIM.Outros
+Imports Microsoft.Scripting.Hosting
 
 Namespace DWSIM.Flowsheet
 
     <System.Serializable()> Public Class FlowsheetSolver
 
         'events for plugins
-        Public Shared Event UnitOpCalculationStarted As CustomEvent
-        Public Shared Event UnitOpCalculationFinished As CustomEvent
         Public Shared Event FlowsheetCalculationStarted As CustomEvent
         Public Shared Event FlowsheetCalculationFinished As CustomEvent
-        Public Shared Event MaterialStreamCalculationStarted As CustomEvent
-        Public Shared Event MaterialStreamCalculationFinished As CustomEvent
+        Public Shared Event ObjectCalculationStarted As CustomEvent
+        Public Shared Event ObjectCalculationFinished As CustomEvent
+        Public Shared Event ObjectCalculationError As CustomEvent
 
         ''' <summary>
         ''' Flowsheet calculation routine 1. Calculates the object sent by the queue and updates the flowsheet.
@@ -52,7 +52,7 @@ Namespace DWSIM.Flowsheet
 
             If form.Options.CalculatorActivated Then
 
-                RaiseEvent UnitOpCalculationStarted(form, New System.EventArgs(), objArgs)
+                RaiseEvent ObjectCalculationStarted(form, New System.EventArgs(), objArgs)
 
                 My.MyApplication.IsFlowsheetSolving = True
 
@@ -220,7 +220,7 @@ Namespace DWSIM.Flowsheet
                         End If
                 End Select
 
-                RaiseEvent UnitOpCalculationFinished(form, New System.EventArgs(), objArgs)
+                RaiseEvent ObjectCalculationFinished(form, New System.EventArgs(), objArgs)
 
                 My.MyApplication.IsFlowsheetSolving = False
 
@@ -243,7 +243,7 @@ Namespace DWSIM.Flowsheet
 
             ms.Calculated = False
 
-            RaiseEvent MaterialStreamCalculationStarted(form, New System.EventArgs(), ms)
+            RaiseEvent ObjectCalculationStarted(form, New System.EventArgs(), ms)
 
             My.MyApplication.IsFlowsheetSolving = True
 
@@ -995,7 +995,7 @@ Namespace DWSIM.Flowsheet
                 calculated = False
             End If
 
-            RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), ms)
+            RaiseEvent ObjectCalculationFinished(form, New System.EventArgs(), ms)
 
             My.MyApplication.IsFlowsheetSolving = False
 
@@ -1590,7 +1590,6 @@ Namespace DWSIM.Flowsheet
         End Sub
 
         'Simultaneous Adjust Solver
-
         Private Shared Sub SolveSimultaneousAdjusts(ByVal form As FormFlowsheet)
 
             If form.m_simultadjustsolverenabled Then
@@ -1771,6 +1770,214 @@ Namespace DWSIM.Flowsheet
             End With
 
         End Function
+
+        'Scripting Manager
+
+        Sub RunScript(script As String, sender As Object, e As System.EventArgs, einfo As Object)
+
+            'scripting engine
+
+            Dim scope As Microsoft.Scripting.Hosting.ScriptScope
+            Dim engine As Microsoft.Scripting.Hosting.ScriptEngine
+
+            'runs script using the IronPython engine.
+
+            If My.Settings.ScriptPaths Is Nothing Then My.Settings.ScriptPaths = New Specialized.StringCollection()
+
+            engine = IronPython.Hosting.Python.CreateEngine()
+            Dim paths(My.Settings.ScriptPaths.Count - 1) As String
+            My.Settings.ScriptPaths.CopyTo(paths, 0)
+            Try
+                engine.SetSearchPaths(paths)
+            Catch ex As Exception
+            End Try
+            scope = engine.CreateScope()
+            scope.SetVariable("Aplicativo", My.Application)
+            Dim txtcode As String = script
+            Dim source As ScriptSource = engine.CreateScriptSourceFromString(txtcode, Microsoft.Scripting.SourceCodeKind.Statements)
+            Try
+                source.Execute(scope)
+            Catch ex As Exception
+                Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
+                'ShowBaloon(ops.FormatException(ex).ToString, "Erro ao interpretar script!", MessageBoxButtons.OK, ToolTipIcon.Error)
+                engine = Nothing
+                scope = Nothing
+                source = Nothing
+            Finally
+                engine = Nothing
+                scope = Nothing
+                source = Nothing
+            End Try
+
+        End Sub
+
+        Sub ScriptHandler(ByVal sender As Object, e As System.EventArgs, einfo As Object)
+
+            Dim eventname As String = ""
+
+            Select Case einfo.ToString
+                Case "FormPrincipal_UserTimer1_Tick"
+                    eventname = "FormPrincipalUserTimer1Tick"
+                Case "FormPrincipal_UserTimer2_Tick"
+                    eventname = "FormPrincipalUserTimer2Tick"
+                Case "FormPrincipal_ApplicationExit"
+                    eventname = "ApplicationExit"
+                Case "FormPrincipal_ApplicationLoaded"
+                    eventname = "ApplicationLoaded"
+                Case "FormPrincipal_LoadedGDPDAT"
+                    eventname = "LoadedGDPDAT"
+                Case "FormPrincipal_UpdatedGDPDAT"
+                    eventname = "UpdatedGDPDAT"
+                Case "FormMap_WindowOpened"
+                    eventname = "WindowOpened"
+                Case "FormMap_BeforeUpdate"
+                    eventname = "BeforeUpdate"
+                Case "FormMap_AfterUpdate"
+                    eventname = "AfterUpdate"
+                Case "FormMap_UserTimer1_Tick"
+                    eventname = "FormMapUserTimer1Tick"
+                Case "FormMap_UserTimer2_Tick"
+                    eventname = "FormMapUserTimer2Tick"
+            End Select
+
+            'verifica quais scripts estão associados ao evento disparado e os executa
+
+            'For Each s As ScriptingEvent In ScriptCol.Values
+            '    'só executa se o script estiver ativado, logicamente...
+            '    If s.AssociatedEvent IsNot Nothing Then
+            '        If s.Enabled And s.AssociatedEvent.Name = eventname Then RunScript(s.ScriptText)
+            '    End If
+            'Next
+
+        End Sub
+
+        'Private Sub GridScripts_CellValueChanged(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridScripts.CellValueChanged
+
+        '    If loaded Then
+
+        '        Dim prevobject As String, prevevent As EventInfo, newobject As String, newevent As EventInfo, neweventid As String
+        '        Dim sevent As ScriptingEvent = ScriptCol(Me.GridScripts.Rows(e.RowIndex).Cells(0).Value)
+        '        Dim value As String = Me.GridScripts.Rows(e.RowIndex).Cells(3).Value
+
+        '        If e.ColumnIndex = 1 Then
+
+        '            sevent.Enabled = value
+
+        '        ElseIf e.ColumnIndex = 2 Then
+
+        '            sevent.Name = value
+
+        '        ElseIf e.ColumnIndex = 3 Then
+
+        '            prevevent = sevent.AssociatedEvent
+        '            prevobject = sevent.AssociatedObject
+
+        '            RunScriptDelegate = New CustomEventHandler(AddressOf ScriptHandler)
+        '            Try
+        '                Select Case prevobject
+        '                    Case "Janela de Acompanhamento de Poços", "Timer 1 da Janela de Acompanhamento", "Timer 2 da Janela de Acompanhamento"
+        '                        Dim frmap As FormMap = (From f As Form In My.Application.OpenForms Select f Where TypeOf f Is FormMap).SingleOrDefault
+        '                        If frmap IsNot Nothing Then
+        '                            prevevent.RemoveEventHandler(frmap, RunScriptDelegate)
+        '                        End If
+        '                    Case "Janela Principal", "Timer 1 da Janela Principal", "Timer 2 da Janela Principal", "Aplicativo"
+        '                        prevevent.RemoveEventHandler(Me, RunScriptDelegate)
+        '                    Case Else
+        '                End Select
+        '            Catch ex As Exception
+
+        '            End Try
+
+        '            If value <> "" And value <> "Nenhum" Then
+
+        '                newobject = value.Split(",")(0)
+        '                neweventid = value.Split(",")(1).TrimStart(" ")
+
+        '                Dim eventlist As EventInfo(), neweventname As String = ""
+
+        '                Select Case newobject
+        '                    Case "Janela de Acompanhamento de Poços"
+        '                        eventlist = FormMap.GetType.GetEvents
+        '                        Select Case neweventid
+        '                            Case "Janela Aberta"
+        '                                neweventname = "WindowOpened"
+        '                            Case "Antes da Atualização"
+        '                                neweventname = "BeforeUpdate"
+        '                            Case "Depois da Atualização"
+        '                                neweventname = "AfterUpdate"
+        '                        End Select
+        '                        newevent = (From c As EventInfo In eventlist Select c Where c.Name = neweventname).SingleOrDefault
+        '                    Case "Timer 1 da Janela de Acompanhamento"
+        '                        eventlist = FormMap.GetType.GetEvents
+        '                        neweventname = "FormMapUserTimer1Tick"
+        '                        newevent = (From c As EventInfo In eventlist Select c Where c.Name = neweventname).SingleOrDefault
+        '                    Case "Timer 2 da Janela de Acompanhamento"
+        '                        eventlist = FormMap.GetType.GetEvents
+        '                        neweventname = "FormMapUserTimer2Tick"
+        '                        newevent = (From c As EventInfo In eventlist Select c Where c.Name = neweventname).SingleOrDefault
+        '                    Case "Janela Principal"
+        '                        eventlist = Me.GetType.GetEvents
+        '                        Select Case neweventid
+        '                            Case "Após Inicialização"
+        '                                neweventname = "ApplicationLoaded"
+        '                            Case "GDPDAT Carregado"
+        '                                neweventname = "LoadedGDPDAT"
+        '                            Case "GDPDAT Salvo"
+        '                                neweventname = "UpdatedGDPDAT"
+        '                        End Select
+        '                        newevent = (From c As EventInfo In eventlist Select c Where c.Name = neweventname).SingleOrDefault
+        '                    Case "Timer 1 da Janela Principal"
+        '                        eventlist = Me.GetType.GetEvents
+        '                        neweventname = "FormPrincipalUserTimer1Tick"
+        '                        newevent = (From c As EventInfo In eventlist Select c Where c.Name = neweventname).SingleOrDefault
+        '                    Case "Timer 2 da Janela Principal"
+        '                        eventlist = Me.GetType.GetEvents
+        '                        neweventname = "FormPrincipalUserTimer2Tick"
+        '                        newevent = (From c As EventInfo In eventlist Select c Where c.Name = neweventname).SingleOrDefault
+        '                    Case "Aplicativo"
+        '                        eventlist = Me.GetType.GetEvents
+        '                        Select Case neweventid
+        '                            Case "Término do Carregamento"
+        '                                neweventname = "ApplicationLoaded"
+        '                            Case "Saída"
+        '                                neweventname = "ApplicationExit"
+        '                        End Select
+        '                        newevent = (From c As EventInfo In eventlist Select c Where c.Name = neweventname).SingleOrDefault
+        '                    Case Else
+        '                        newevent = Nothing
+        '                End Select
+
+        '                RunScriptDelegate = New CustomEventHandler(AddressOf ScriptHandler)
+
+        '                Select Case newobject
+        '                    Case "Janela de Acompanhamento de Poços", "Timer 1 da Janela de Acompanhamento", "Timer 2 da Janela de Acompanhamento"
+        '                        Dim frmap As FormMap = (From f As Form In My.Application.OpenForms Select f Where TypeOf f Is FormMap).SingleOrDefault
+        '                        If frmap IsNot Nothing Then
+        '                            newevent.RemoveEventHandler(frmap, RunScriptDelegate)
+        '                            newevent.AddEventHandler(frmap, RunScriptDelegate)
+        '                        End If
+        '                    Case "Janela Principal", "Timer 1 da Janela Principal", "Timer 2 da Janela Principal"
+        '                        newevent.RemoveEventHandler(Me, RunScriptDelegate)
+        '                        newevent.AddEventHandler(Me, RunScriptDelegate)
+        '                    Case Else
+        '                        newevent = Nothing
+        '                End Select
+
+        '            Else
+
+        '                newobject = ""
+        '                newevent = Nothing
+
+        '            End If
+
+        '            sevent.AssociatedEvent = newevent
+        '            sevent.AssociatedObject = newobject
+
+        '        End If
+
+        '    End If
+
+        'End Sub
 
     End Class
 
