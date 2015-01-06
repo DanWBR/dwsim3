@@ -598,6 +598,7 @@ Public Class ScriptEditorControl
     Private Sub ScriptEditorControl_Load(sender As Object, e As EventArgs) Handles Me.Load
 
         cbLinkedObject.Items.AddRange(New String() {"Simulation", "Solver"})
+        cbLinkedEvent.Items.AddRange(New String() {"Simulation Opened", "Simulation Saved", "Simulation Closed"})
 
         For Each obj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
             cbLinkedObject.Items.Add(obj.GraphicObject.Tag)

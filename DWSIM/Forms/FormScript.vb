@@ -206,7 +206,20 @@ Imports DWSIM.DWSIM.Outros
 
             .chkLink.Checked = scriptdata.Linked
 
-            If scriptdata.LinkedObjectName <> "" Then .cbLinkedObject.SelectedItem = fc.Collections.ObjectCollection(scriptdata.LinkedObjectName).GraphicObject.Tag
+            p.Controls.Add(scontrol)
+
+            Dim stab As New FATabStripItem()
+            stab.Controls.Add(p)
+            stab.Tag = scriptdata.ID
+            If scriptdata.Title = "" Then stab.Title = "Script" & TabStripScripts.Items.Count + 1 Else stab.Title = scriptdata.Title
+
+            TabStripScripts.Items.Add(stab)
+
+            TabStripScripts.SelectedItem = stab
+
+            Me.tsTextBoxRename.Text = stab.Title
+
+            Me.Invalidate()
 
             Select Case scriptdata.LinkedEventType
                 Case Script.EventType.ObjectCalculationStarted
@@ -229,22 +242,13 @@ Imports DWSIM.DWSIM.Outros
                     .cbLinkedEvent.SelectedIndex = 2
             End Select
 
+            If scriptdata.LinkedObjectName <> "" Then
+                .cbLinkedObject.SelectedItem = fc.Collections.ObjectCollection(scriptdata.LinkedObjectName).GraphicObject.Tag
+            Else
+                .cbLinkedObject.SelectedIndex = 0
+            End If
+
         End With
-
-        p.Controls.Add(scontrol)
-
-        Dim stab As New FATabStripItem()
-        stab.Controls.Add(p)
-        stab.Tag = scriptdata.ID
-        If scriptdata.Title = "" Then stab.Title = "Script" & TabStripScripts.Items.Count + 1 Else stab.Title = scriptdata.Title
-
-        TabStripScripts.Items.Add(stab)
-
-        TabStripScripts.SelectedItem = stab
-
-        Me.tsTextBoxRename.Text = stab.Title
-
-        Me.Invalidate()
 
     End Sub
 
