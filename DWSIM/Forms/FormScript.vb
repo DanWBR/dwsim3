@@ -14,9 +14,6 @@ Imports DWSIM.DWSIM.Outros
 
     Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
-    Public scope As Microsoft.Scripting.Hosting.ScriptScope
-    Public engine As Microsoft.Scripting.Hosting.ScriptEngine
-
     Public fc As FormFlowsheet
     Public language As Integer
 
@@ -51,47 +48,52 @@ Imports DWSIM.DWSIM.Outros
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click
 
-        If Not Me.TabStripScripts.SelectedItem Is Nothing Then
+        If Not Me.TabStripScripts.SelectedItem Is Nothing Then RunScript(DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl).txtScript.Document.Text, fc)
 
-            Dim opts As New Dictionary(Of String, Object)()
-            opts("Frames") = Microsoft.Scripting.Runtime.ScriptingRuntimeHelpers.True
-            engine = IronPython.Hosting.Python.CreateEngine(opts)
-            Dim paths(My.Settings.ScriptPaths.Count - 1) As String
-            My.Settings.ScriptPaths.CopyTo(paths, 0)
-            Try
-                engine.SetSearchPaths(paths)
-            Catch ex As Exception
-            End Try
-            engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
-            engine.Runtime.LoadAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.ConstantProperties).Assembly)
-            engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.GraphicObjects.GraphicObject).Assembly)
-            engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface).Assembly)
-            engine.Runtime.IO.SetOutput(New DataGridViewTextStream(fc), UTF8Encoding.UTF8)
-            scope = engine.CreateScope()
-            scope.SetVariable("Flowsheet", fc)
-            Dim Solver As New DWSIM.Flowsheet.COMSolver
-            scope.SetVariable("Solver", Solver)
-            For Each obj As SimulationObjects_BaseClass In fc.Collections.ObjectCollection.Values
-                scope.SetVariable(obj.GraphicObject.Tag.Replace("-", "_"), obj)
-            Next
-            Dim txtcode As String = ""
-            For Each fname As String In Me.ListBox1.Items
-                txtcode += File.ReadAllText(fname) + vbCrLf
-            Next
-            txtcode += DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl).txtScript.Document.Text
-            Dim source As Microsoft.Scripting.Hosting.ScriptSource = Me.engine.CreateScriptSourceFromString(txtcode, Microsoft.Scripting.SourceCodeKind.Statements)
-            Try
-                source.Execute(Me.scope)
-            Catch ex As Exception
-                Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
-                fc.WriteToLog("Error running script '" & Me.TabStripScripts.SelectedItem.Title & "': " & ops.FormatException(ex).ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-            Finally
-                engine = Nothing
-                scope = Nothing
-                source = Nothing
-            End Try
+    End Sub
 
-        End If
+    Public Shared Sub RunScript(scripttext As String, fsheet As FormFlowsheet)
+
+        Dim scope As Microsoft.Scripting.Hosting.ScriptScope
+        Dim engine As Microsoft.Scripting.Hosting.ScriptEngine
+
+        Dim opts As New Dictionary(Of String, Object)()
+        opts("Frames") = Microsoft.Scripting.Runtime.ScriptingRuntimeHelpers.True
+        engine = IronPython.Hosting.Python.CreateEngine(opts)
+        Dim paths(My.Settings.ScriptPaths.Count - 1) As String
+        My.Settings.ScriptPaths.CopyTo(paths, 0)
+        Try
+            engine.SetSearchPaths(paths)
+        Catch ex As Exception
+        End Try
+        engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
+        engine.Runtime.LoadAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.ConstantProperties).Assembly)
+        engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.GraphicObjects.GraphicObject).Assembly)
+        engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface).Assembly)
+        engine.Runtime.IO.SetOutput(New DataGridViewTextStream(fsheet), UTF8Encoding.UTF8)
+        scope = engine.CreateScope()
+        scope.SetVariable("Flowsheet", fsheet)
+        Dim Solver As New DWSIM.Flowsheet.COMSolver
+        scope.SetVariable("Solver", Solver)
+        For Each obj As SimulationObjects_BaseClass In fsheet.Collections.ObjectCollection.Values
+            scope.SetVariable(obj.GraphicObject.Tag.Replace("-", "_"), obj)
+        Next
+        Dim txtcode As String = ""
+        'For Each fname As String In Me.ListBox1.Items
+        '    txtcode += File.ReadAllText(fname) + vbCrLf
+        'Next
+        txtcode += scripttext
+        Dim source As Microsoft.Scripting.Hosting.ScriptSource = engine.CreateScriptSourceFromString(txtcode, Microsoft.Scripting.SourceCodeKind.Statements)
+        Try
+            source.Execute(scope)
+        Catch ex As Exception
+            Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
+            fsheet.WriteToLog("Error running script: " & ops.FormatException(ex).ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+        Finally
+            engine = Nothing
+            scope = Nothing
+            source = Nothing
+        End Try
 
     End Sub
 
@@ -201,6 +203,31 @@ Imports DWSIM.DWSIM.Outros
             .listBoxAutoComplete.Height = 250
 
             .form = fc
+
+            .chkLink.Checked = scriptdata.Linked
+
+            If scriptdata.LinkedObjectName <> "" Then .cbLinkedObject.SelectedItem = fc.Collections.ObjectCollection(scriptdata.LinkedObjectName).GraphicObject.Tag
+
+            Select Case scriptdata.LinkedEventType
+                Case Script.EventType.ObjectCalculationStarted
+                    .cbLinkedEvent.SelectedIndex = 0
+                Case Script.EventType.ObjectCalculationFinished
+                    .cbLinkedEvent.SelectedIndex = 1
+                Case Script.EventType.ObjectCalculationError
+                    .cbLinkedEvent.SelectedIndex = 2
+                Case Script.EventType.SimulationOpened
+                    .cbLinkedEvent.SelectedIndex = 0
+                Case Script.EventType.SimulationSaved
+                    .cbLinkedEvent.SelectedIndex = 1
+                Case Script.EventType.SimulationClosed
+                    .cbLinkedEvent.SelectedIndex = 2
+                Case Script.EventType.SolverStarted
+                    .cbLinkedEvent.SelectedIndex = 0
+                Case Script.EventType.SolverFinished
+                    .cbLinkedEvent.SelectedIndex = 1
+                Case Script.EventType.SolverRecycleLoop
+                    .cbLinkedEvent.SelectedIndex = 2
+            End Select
 
         End With
 

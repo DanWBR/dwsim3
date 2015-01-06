@@ -597,7 +597,7 @@ Public Class ScriptEditorControl
 
     Private Sub ScriptEditorControl_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        cbLinkedObject.Items.AddRange(New String() {"Flowsheet", "Solver"})
+        cbLinkedObject.Items.AddRange(New String() {"Simulation", "Solver"})
 
         For Each obj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
             cbLinkedObject.Items.Add(obj.GraphicObject.Tag)
@@ -610,13 +610,13 @@ Public Class ScriptEditorControl
         Select Case cbLinkedObject.SelectedIndex
             Case 0
                 cbLinkedEvent.Items.Clear()
-                cbLinkedEvent.Items.AddRange(New String() {"Opened", "Closed"})
+                cbLinkedEvent.Items.AddRange(New String() {"Simulation Opened", "Simulation Saved", "Simulation Closed"})
             Case 1
                 cbLinkedEvent.Items.Clear()
-                cbLinkedEvent.Items.AddRange(New String() {"Object Calculation Started", "Object Calculation Finished", "Object Calculation Error"})
+                cbLinkedEvent.Items.AddRange(New String() {"Solver Started", "Solver Finished", "Recycle Loop"})
             Case Else
                 cbLinkedEvent.Items.Clear()
-                cbLinkedEvent.Items.AddRange(New String() {"Calculation Started", "Calculation Finished", "Calculation Error"})
+                cbLinkedEvent.Items.AddRange(New String() {"Object Calculation Started", "Object Calculation Finished", "Object Calculation Error"})
         End Select
 
         cbLinkedEvent.SelectedIndex = 0

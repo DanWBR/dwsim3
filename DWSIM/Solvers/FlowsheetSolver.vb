@@ -1,5 +1,5 @@
 '    DWSIM Flowsheet Solver & Auxiliary Functions
-'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2015 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -32,12 +32,6 @@ Namespace DWSIM.Flowsheet
 
     <System.Serializable()> Public Class FlowsheetSolver
 
-        'events for plugins
-        Public Shared Event FlowsheetCalculationStarted As CustomEvent
-        Public Shared Event FlowsheetCalculationFinished As CustomEvent
-        Public Shared Event ObjectCalculationStarted As CustomEvent
-        Public Shared Event ObjectCalculationFinished As CustomEvent
-        Public Shared Event ObjectCalculationError As CustomEvent
 
         ''' <summary>
         ''' Flowsheet calculation routine 1. Calculates the object sent by the queue and updates the flowsheet.
@@ -52,7 +46,7 @@ Namespace DWSIM.Flowsheet
 
             If form.Options.CalculatorActivated Then
 
-                RaiseEvent ObjectCalculationStarted(form, New System.EventArgs(), objArgs)
+                form.ProcessScripts(Script.EventType.ObjectCalculationStarted, Script.ObjectType.FlowsheetObject, objArgs.Nome)
 
                 My.MyApplication.IsFlowsheetSolving = True
 
@@ -220,7 +214,7 @@ Namespace DWSIM.Flowsheet
                         End If
                 End Select
 
-                RaiseEvent ObjectCalculationFinished(form, New System.EventArgs(), objArgs)
+                form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, objArgs.Nome)
 
                 My.MyApplication.IsFlowsheetSolving = False
 
@@ -243,7 +237,7 @@ Namespace DWSIM.Flowsheet
 
             ms.Calculated = False
 
-            RaiseEvent ObjectCalculationStarted(form, New System.EventArgs(), ms)
+            form.ProcessScripts(Script.EventType.ObjectCalculationStarted, Script.ObjectType.FlowsheetObject, ms.Name)
 
             My.MyApplication.IsFlowsheetSolving = True
 
@@ -995,7 +989,7 @@ Namespace DWSIM.Flowsheet
                 calculated = False
             End If
 
-            RaiseEvent ObjectCalculationFinished(form, New System.EventArgs(), ms)
+            form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, ms.Name)
 
             My.MyApplication.IsFlowsheetSolving = False
 
@@ -1362,7 +1356,7 @@ Namespace DWSIM.Flowsheet
 
             Dim obj As SimulationObjects_BaseClass
 
-            RaiseEvent FlowsheetCalculationStarted(form, New System.EventArgs(), Nothing)
+            form.ProcessScripts(Script.EventType.SolverStarted, Script.ObjectType.Solver)
 
             My.MyApplication.IsFlowsheetSolving = True
 
@@ -1484,7 +1478,7 @@ Namespace DWSIM.Flowsheet
 
             My.MyApplication.IsFlowsheetSolving = False
 
-            RaiseEvent FlowsheetCalculationFinished(form, New System.EventArgs(), Nothing)
+            form.ProcessScripts(Script.EventType.SolverFinished, Script.ObjectType.Solver)
 
         End Sub
 
@@ -1495,7 +1489,7 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Public Shared Sub CalculateAll(ByVal form As FormFlowsheet)
 
-            RaiseEvent FlowsheetCalculationStarted(form, New System.EventArgs(), Nothing)
+            form.ProcessScripts(Script.EventType.SolverStarted, Script.ObjectType.Solver)
 
             My.MyApplication.IsFlowsheetSolving = True
 
@@ -1522,7 +1516,7 @@ Namespace DWSIM.Flowsheet
 
             My.MyApplication.IsFlowsheetSolving = False
 
-            RaiseEvent FlowsheetCalculationFinished(form, New System.EventArgs(), Nothing)
+            form.ProcessScripts(Script.EventType.SolverFinished, Script.ObjectType.Solver)
 
         End Sub
 

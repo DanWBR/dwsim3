@@ -1,4 +1,4 @@
-﻿'    Copyright 2008-2011 Daniel Wagner O. de Medeiros
+﻿'    Copyright 2008-2015 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -390,44 +390,15 @@ Imports DWSIM.DWSIM.Outros
 
 #Region "    Functions "
 
-    Function RET_CN(ByVal index As Integer) As String
+    Public Sub ProcessScripts(ByVal sourceevent As DWSIM.Outros.Script.EventType, ByVal sourceobj As DWSIM.Outros.Script.ObjectType, Optional ByVal sourceobjname As String = "")
 
-        Dim i As Integer = 0
-        Dim sub1 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-        For Each sub1 In Me.Options.SelectedComponents.Values
-            If index = i Then Return sub1.Name
-            i += 1
+        For Each scr As Script In Me.ScriptCollection.Values
+            If scr.Linked And scr.LinkedEventType = sourceevent And scr.LinkedObjectType = sourceobj And scr.LinkedObjectName = sourceobjname Then
+                FormScript.RunScript(scr.ScriptText, Me)
+            End If
         Next
 
-        Return Nothing
-
-    End Function
-
-    Function RET_CI(ByVal name As String) As Integer
-
-        Dim i As Integer = 0
-        Dim sub1 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-        For Each sub1 In Me.Options.SelectedComponents.Values
-            If name = sub1.Name Then Return i
-            i += 1
-        Next
-
-        Return Nothing
-
-    End Function
-
-    Function RET_NAMES() As ArrayList
-
-        Dim vn As New ArrayList
-
-        Dim sub1 As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-        For Each sub1 In Me.Options.SelectedComponents.Values
-            vn.Add(sub1.Name)
-        Next
-
-        Return vn
-
-    End Function
+    End Sub
 
     Public Sub AddUnitSystem(ByVal su As DWSIM.SistemasDeUnidades.Unidades)
 
@@ -467,43 +438,7 @@ Imports DWSIM.DWSIM.Outros
         Tag
     End Enum
 
-    Public Shared Function ElementExists(ByVal tipo As ID_Type, ByVal Name As String, ByVal Collection As System.Collections.Generic.Dictionary(Of String, MaterialStreamGraphic)) As Boolean
-
-        Dim value As Boolean = False
-        Dim gObj As GraphicObject
-
-        For Each gObj In Collection.Values
-            If tipo = ID_Type.Name Then
-                If gObj.Name.ToString = Name Then value = True
-            Else
-                If gObj.Tag.ToString = Name Then value = True
-            End If
-        Next
-        gObj = Nothing
-
-        Return value
-
-    End Function
-
-    Public Shared Function ElementExists_ES(ByVal tipo As ID_Type, ByVal Name As String, ByVal Collection As System.Collections.Generic.Dictionary(Of String, EnergyStreamGraphic)) As Boolean
-
-        Dim value As Boolean = False
-        Dim gObj As GraphicObject
-
-        For Each gObj In Collection.Values
-            If tipo = ID_Type.Name Then
-                If gObj.Name.ToString = Name Then value = True
-            Else
-                If gObj.Tag.ToString = Name Then value = True
-            End If
-        Next
-        gObj = Nothing
-
-        Return value
-
-    End Function
-
-    Public Shared Function SearchSurfaceObjectsByName(ByVal Name As String, ByVal Surface As Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface) As GraphicObject
+    Public Shared Function SearchSurfaceObjectsByName(ByVal Name As String, ByVal Surface As Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface) As GraphicObject
 
         Dim gObj As GraphicObject = Nothing
         Dim gObj2 As GraphicObject = Nothing
@@ -517,7 +452,7 @@ Imports DWSIM.DWSIM.Outros
 
     End Function
 
-    Public Shared Function SearchSurfaceObjectsByTag(ByVal Name As String, ByVal Surface As Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface) As GraphicObject
+    Public Shared Function SearchSurfaceObjectsByTag(ByVal Name As String, ByVal Surface As Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface) As GraphicObject
 
         Dim gObj As GraphicObject = Nothing
         Dim gObj2 As GraphicObject = Nothing
@@ -557,10 +492,6 @@ Imports DWSIM.DWSIM.Outros
         Return Nothing
 
     End Function
-
-    Public Sub SetLabelText(ByVal labeltag As String, ByVal labeltext As String)
-        CType(GetFlowsheetGraphicObject(labeltag), TextGraphic).SetText(labeltext)
-    End Sub
 
     Public Function gscTogoc(ByVal X As Integer, ByVal Y As Integer) As Point
         Dim myNewPoint As Point
@@ -1045,15 +976,15 @@ Imports DWSIM.DWSIM.Outros
 
             Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
             Dim proplist As New ArrayList
-            For Each MS In Collections.CLCS_MaterialStreamCollection.Values
+            For Each ms In Collections.CLCS_MaterialStreamCollection.Values
                 proplist.Clear()
-                For Each pi As DWSIM.Outros.NodeItem In MS.NodeTableItems.Values
+                For Each pi As DWSIM.Outros.NodeItem In ms.NodeTableItems.Values
                     If pi.Checked Then
                         proplist.Add(pi.Text)
                     End If
                 Next
-                MS.FillNodeItems()
-                For Each pi As DWSIM.Outros.NodeItem In MS.NodeTableItems.Values
+                ms.FillNodeItems()
+                For Each pi As DWSIM.Outros.NodeItem In ms.NodeTableItems.Values
                     If proplist.Contains(pi.Text) Then
                         pi.Checked = True
                     End If

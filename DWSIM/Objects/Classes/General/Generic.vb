@@ -1,5 +1,5 @@
 ﻿'    Miscelaneous Classes
-'    Copyright 2008-2014 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2015 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -279,10 +279,21 @@ Namespace DWSIM.Outros
         Implements XMLSerializer.Interfaces.ICustomXMLSerialization
 
         Public Enum ObjectType
-            FlowsheetObject = 0
-            Flowsheet = 1
+            Simulation = 0
+            FlowsheetObject = 1
             Solver = 2
-            Application = 3
+        End Enum
+
+        Public Enum EventType
+            SimulationOpened = 0
+            SimulationSaved = 1
+            SimulationClosed = 2
+            ObjectCalculationStarted = 3
+            ObjectCalculationFinished = 4
+            ObjectCalculationError = 5
+            SolverStarted = 6
+            SolverFinished = 7
+            SolverRecycleLoop = 8
         End Enum
 
         Public Property ID As String = ""
@@ -290,7 +301,7 @@ Namespace DWSIM.Outros
         Public Property ScriptText As String = ""
         Public Property LinkedObjectType As ObjectType = ObjectType.FlowsheetObject
         Public Property LinkedObjectName As String = ""
-        Public Property LinkedEventName As String = ""
+        Public Property LinkedEventType As EventType = EventType.SimulationOpened
         Public Property Linked As Boolean = False
 
         Public Function LoadData(data As List(Of XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
