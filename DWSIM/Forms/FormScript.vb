@@ -8,6 +8,7 @@ Imports System.ComponentModel
 Imports LuaInterface
 
 Imports FarsiLibrary.Win
+Imports DWSIM.DWSIM.Outros
 
 <System.Serializable()> Public Class FormScript
 
@@ -40,6 +41,11 @@ Imports FarsiLibrary.Win
 
         tscb2.SelectedItem = 10
         tscb1.SelectedItem = "Courier New"
+
+        'load existing scripts
+        For Each s As Script In fc.ScriptCollection.Values
+            InsertScriptTab(s)
+        Next
 
     End Sub
 
@@ -90,22 +96,25 @@ Imports FarsiLibrary.Win
     End Sub
 
     Private Sub CutToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CutToolStripButton.Click
-        'If txtScript.Selection.Text <> "" Then
-        '    Clipboard.SetText(txtScript.Selection.Text)
-        '    txtScript.Selection.DeleteSelection()
-        'End If
+        Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
+        If scontrol.txtScript.Selection.Text <> "" Then
+            Clipboard.SetText(scontrol.txtScript.Selection.Text)
+            scontrol.txtScript.Selection.DeleteSelection()
+        End If
     End Sub
 
     Private Sub CopyToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CopyToolStripButton.Click
-        'If txtScript.Selection.Text <> "" Then Clipboard.SetText(txtScript.Selection.Text)
+        Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
+        If scontrol.txtScript.Selection.Text <> "" Then Clipboard.SetText(scontrol.txtScript.Selection.Text)
     End Sub
 
     Private Sub PasteToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PasteToolStripButton.Click
-        'If txtScript.Selection.SelLength <> 0 Then
-        '    txtScript.Selection.Text = Clipboard.GetText()
-        'Else
-        '    txtScript.Document.InsertText(Clipboard.GetText(), txtScript.Caret.Position.X, txtScript.Caret.Position.Y)
-        'End If
+        Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
+        If scontrol.txtScript.Selection.SelLength <> 0 Then
+            scontrol.txtScript.Selection.Text = Clipboard.GetText()
+        Else
+            scontrol.txtScript.Document.InsertText(Clipboard.GetText(), scontrol.txtScript.Caret.Position.X, scontrol.txtScript.Caret.Position.Y)
+        End If
     End Sub
 
     Private Sub ToolStripButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton2.Click
@@ -130,32 +139,25 @@ Imports FarsiLibrary.Win
     End Sub
 
     Private Sub SaveToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveToolStripButton.Click
-        'If Me.sfd1.ShowDialog = Windows.Forms.DialogResult.OK Then
-        '    My.Computer.FileSystem.WriteAllText(Me.sfd1.FileName, Me.txtScript.Document.Text, False)
-        'End If
-    End Sub
 
-    Private Sub OpenToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripButton.Click
-        'If Me.txtScript.Document.Text <> "" Then
-        '    If MessageBox.Show(DWSIM.App.GetLocalString("DesejaSalvaroScriptAtual"), DWSIM.App.GetLocalString("Ateno"), MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-        '        SaveToolStripButton_Click(sender, e)
-        '    End If
-        'End If
-        'If Me.ofd2.ShowDialog = Windows.Forms.DialogResult.OK Then
-        '    Me.txtScript.Document.Text = ""
-        '    For Each fname As String In Me.ofd2.FileNames
-        '        Me.txtScript.Document.Text += File.ReadAllText(fname) & vbCrLf
-        '    Next
-        'End If
+        fc.ScriptCollection.Clear()
+
+        For Each tab As FATabStripItem In TabStripScripts.Items
+            Dim scr As New Script() With {.ID = Guid.NewGuid().ToString, .Title = tab.Title, .ScriptText = DirectCast(tab.Controls(0).Controls(0), ScriptEditorControl).txtScript.Document.Text}
+            fc.ScriptCollection.Add(scr.ID, scr)
+        Next
+
+        fc.WriteToLog("Script Data updated sucessfully.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+
     End Sub
 
     Private Sub PrintToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PrintToolStripButton.Click
-        'Dim pd As Alsing.SourceCode.SourceCodePrintDocument
-        'pd = New Alsing.SourceCode.SourceCodePrintDocument(txtScript.Document)
-        'pd1.Document = pd
-        'If pd1.ShowDialog(Me) = DialogResult.OK Then
-        '    pd.Print()
-        'End If
+        Dim pd As Alsing.SourceCode.SourceCodePrintDocument
+        pd = New Alsing.SourceCode.SourceCodePrintDocument(DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl).txtScript.Document)
+        pd1.Document = pd
+        If pd1.ShowDialog(Me) = DialogResult.OK Then
+            pd.Print()
+        End If
     End Sub
 
     Private Sub tscb1_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tscb1.SelectedIndexChanged
@@ -172,6 +174,12 @@ Imports FarsiLibrary.Win
 
     Private Sub NewToolStripButton_Click(sender As Object, e As EventArgs) Handles NewToolStripButton.Click
 
+        InsertScriptTab(New Script())
+
+    End Sub
+
+    Private Sub InsertScriptTab(scriptdata As Script)
+
         Dim p As New Panel With {.Dock = DockStyle.Fill}
         Dim scontrol As New ScriptEditorControl With {.Dock = DockStyle.Fill}
 
@@ -181,6 +189,8 @@ Imports FarsiLibrary.Win
             .txtScript.Document.SyntaxFile = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "SyntaxFiles" & Path.DirectorySeparatorChar & "Python.syn"
             .txtScript.FontName = tscb1.SelectedItem.ToString
             .txtScript.FontSize = tscb2.SelectedItem
+
+            .txtScript.Document.Text = scriptdata.ScriptText
 
             .readAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly)
             .readAssembly(GetType(System.String).Assembly)
@@ -198,14 +208,33 @@ Imports FarsiLibrary.Win
 
         Dim stab As New FATabStripItem()
         stab.Controls.Add(p)
-        stab.Title = "Script" & TabStripScripts.Items.Count + 1
+        stab.Tag = scriptdata.ID
+        If scriptdata.Title = "" Then stab.Title = "Script" & TabStripScripts.Items.Count + 1 Else stab.Title = scriptdata.Title
 
         TabStripScripts.Items.Add(stab)
 
         TabStripScripts.SelectedItem = stab
 
+        Me.tsTextBoxRename.Text = stab.Title
+
         Me.Invalidate()
 
+    End Sub
+
+    Private Sub tsTextBoxRename_KeyDown(sender As Object, e As KeyEventArgs) Handles tsTextBoxRename.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            TabStripScripts.SelectedItem.Title = tsTextBoxRename.Text
+        End If
+    End Sub
+
+    Private Sub TabStripScripts_TabStripItemSelectionChanged(e As TabStripItemChangedEventArgs) Handles TabStripScripts.TabStripItemSelectionChanged
+        tsTextBoxRename.Text = TabStripScripts.SelectedItem.Title
+    End Sub
+
+    Private Sub TabStripScripts_TabStripItemClosing(e As TabStripItemClosingEventArgs) Handles TabStripScripts.TabStripItemClosing
+        If MessageBox.Show(DWSIM.App.GetLocalString("RemoveScriptQuestion"), "DWSIM", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
+            e.Cancel = True
+        End If
     End Sub
 
 End Class

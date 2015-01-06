@@ -4888,4 +4888,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="EnergyStreamRequired" xml:space="preserve">
     <value>The current calculation mode requires an Energy Stream to be connected to the Unit Operation.</value>
   </data>
+  <data name="RemoveScriptQuestion" xml:space="preserve">
+    <value>Are you sure that you want to remove this script from the list?</value>
+  </data>
 </root>

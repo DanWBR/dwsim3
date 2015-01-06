@@ -3759,7 +3759,7 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to The Perturbed Chain SAFT model is a state-of-the-art, engineering-like equation of state. It is designed for modelling mixtures of all types of substances: gases, solvents and polymers.
         '''
-        '''Perturbed-Chain SAFT is suitable for the calculation of phase equilibria and thermophysical properties of pure components and mixtures. It has been tested against experimental data for numerous systems and found to give excellent results. When compared to other equations of state, we find Perturbed-Chain SAFT to be more p [rest of string was truncated]&quot;;.
+        '''Perturbed-Chain SAFT is suitable for the calculation of phase equilibria and thermophysical properties of pure components and mixtures. It has been tested against experimental data for numerous systems and found to give excellent results. When compared to other equations of state, we find Perturbed-Chain SAFT to be more pre [rest of string was truncated]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property DescPCSAFTPP() As String
             Get
@@ -3812,7 +3812,7 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to PRSV2 EOS com três parâmetros por componente (k1, k2 e k3) e dois parâmetros de interação binária do tipo Margules (kij e kji).
         '''
-        '''A modificação para o termo atrativo na equação Peng-Robinson publicado por Stryjek e Vera em 1986 (PRSV) melhorou significativamente a precisão do modelo através da introdução de um parâmetro ajustável para o componente puro e modificando o ajuste polinomial do fator acêntrico. Uma modificação posterior, publicada em 1986 (PRSV2), melhorou a precisão dos modelos através da intro [rest of string was truncated]&quot;;.
+        '''A modificação para o termo atrativo na equação Peng-Robinson publicado por Stryjek e Vera em 1986 (PRSV) melhorou significativamente a precisão do modelo através da introdução de um parâmetro ajustável para o componente puro e modificando o ajuste polinomial do fator acêntrico. Uma modificação posterior, publicada em 1986 (PRSV2), melhorou a precisão dos modelos através da introdu [rest of string was truncated]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property DescPRSV2PP() As String
             Get
@@ -3823,7 +3823,7 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to PRSV2 EOS com três parâmetros por componente (k1, k2 e k3) e dois parâmetros de interação binária do tipo Margules (kij e kji).
         '''
-        '''A modificação para o termo atrativo na equação Peng-Robinson publicado por Stryjek e Vera em 1986 (PRSV) melhorou significativamente a precisão do modelo através da introdução de um parâmetro ajustável para o componente puro e modificando o ajuste polinomial do fator acêntrico. Uma modificação posterior, publicada em 1986 (PRSV2), melhorou a precisão dos modelos através da intro [rest of string was truncated]&quot;;.
+        '''A modificação para o termo atrativo na equação Peng-Robinson publicado por Stryjek e Vera em 1986 (PRSV) melhorou significativamente a precisão do modelo através da introdução de um parâmetro ajustável para o componente puro e modificando o ajuste polinomial do fator acêntrico. Uma modificação posterior, publicada em 1986 (PRSV2), melhorou a precisão dos modelos através da introdu [rest of string was truncated]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property DescPRSV2VLPP() As String
             Get
@@ -3866,7 +3866,7 @@ Namespace My.Resources
         '''Condutividade Térmica da Fase Líquida: Método de Latini et al
         '''Condutividade Térmica da Fase Vapor: Método de Ely e Hanley
         '''Viscosidade da Fase Vapor: Método Jossi-Stiel-Thodos
-        '''Tensão Superficial da Fase Líquida:  [rest of string was truncated]&quot;;.
+        '''Tensão Superficial da Fase Líquida: Método [rest of string was truncated]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property DescSoaveRedlichKwongSRK() As String
             Get
@@ -11116,6 +11116,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property RemoverReacaodoConjuntoPergunta() As String
             Get
                 Return ResourceManager.GetString("RemoverReacaodoConjuntoPergunta", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Tem certeza de que deseja remover esse script da lista?.
+        '''</summary>
+        Friend Shared ReadOnly Property RemoveScriptQuestion() As String
+            Get
+                Return ResourceManager.GetString("RemoveScriptQuestion", resourceCulture)
             End Get
         End Property
         

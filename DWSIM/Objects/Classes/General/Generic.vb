@@ -276,6 +276,8 @@ Namespace DWSIM.Outros
 
     Public Class Script
 
+        Implements XMLSerializer.Interfaces.ICustomXMLSerialization
+
         Public Enum ObjectType
             FlowsheetObject = 0
             Flowsheet = 1
@@ -283,11 +285,21 @@ Namespace DWSIM.Outros
             Application = 3
         End Enum
 
+        Public Property ID As String = ""
+        Public Property Title As String = ""
         Public Property ScriptText As String = ""
         Public Property LinkedObjectType As ObjectType = ObjectType.FlowsheetObject
         Public Property LinkedObjectName As String = ""
         Public Property LinkedEventName As String = ""
         Public Property Linked As Boolean = False
+
+        Public Function LoadData(data As List(Of XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
+            XMLSerializer.XMLSerializer.Deserialize(Me, data)
+        End Function
+
+        Public Function SaveData() As List(Of XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
+            Return XMLSerializer.XMLSerializer.Serialize(Me)
+        End Function
 
     End Class
 

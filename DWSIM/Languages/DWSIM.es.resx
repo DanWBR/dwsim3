@@ -4857,4 +4857,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="EnergyStreamRequired" xml:space="preserve">
     <value>O modo de cálculo selecionado exige que uma Corrente de Energia esteja conectada à Operação Unitária.</value>
   </data>
+  <data name="RemoveScriptQuestion" xml:space="preserve">
+    <value>Tem certeza de que deseja remover esse script da lista?</value>
+  </data>
 </root>

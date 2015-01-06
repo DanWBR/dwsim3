@@ -2514,6 +2514,29 @@ Public Class FormMain
         End If
 
         If Not forcommandline Then
+            fls.Label2.Text = "Loading Script Items..."
+            Application.DoEvents()
+        End If
+
+        If xdoc.Element("DWSIM_Simulation_Data").Element("ScriptItems") IsNot Nothing Then
+
+            data = xdoc.Element("DWSIM_Simulation_Data").Element("ScriptItems").Elements.ToList
+
+            Dim i As Integer = 0
+            For Each xel As XElement In data
+                Try
+                    Dim obj As New DWSIM.Outros.Script()
+                    obj.LoadData(xel.Elements.ToList)
+                    form.ScriptCollection.Add(obj.ID, obj)
+                Catch ex As Exception
+                    excs.Add(New Exception("Error Loading Script Item Information", ex))
+                End Try
+                i += 1
+            Next
+
+        End If
+
+        If Not forcommandline Then
             fls.Label2.Text = "Loading Spreadsheet Data..."
             Application.DoEvents()
         End If
@@ -2762,6 +2785,13 @@ Public Class FormMain
 
         For Each wi As WatchItem In form.FormWatch.items.Values
             xel.Add(New XElement("WatchItem", wi.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("ScriptItems"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("ScriptItems")
+
+        For Each scr As DWSIM.Outros.Script In form.ScriptCollection.Values
+            xel.Add(New XElement("ScriptItem", scr.SaveData().ToArray()))
         Next
 
         xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Spreadsheet"))
