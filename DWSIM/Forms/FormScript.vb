@@ -66,7 +66,7 @@ Imports FarsiLibrary.Win
             Dim Solver As New DWSIM.Flowsheet.COMSolver
             scope.SetVariable("Solver", Solver)
             For Each obj As SimulationObjects_BaseClass In fc.Collections.ObjectCollection.Values
-                scope.SetVariable(obj.GraphicObject.Tag, obj)
+                scope.SetVariable(obj.GraphicObject.Tag.Replace("-", "_"), obj)
             Next
             Dim txtcode As String = ""
             For Each fname As String In Me.ListBox1.Items
@@ -195,10 +195,6 @@ Imports FarsiLibrary.Win
         End With
 
         p.Controls.Add(scontrol)
-
-        For Each obj As SimulationObjects_BaseClass In fc.Collections.ObjectCollection.Values
-            scontrol.cbLinkedObject.Items.Add(obj.GraphicObject.Tag)
-        Next
 
         Dim stab As New FATabStripItem()
         stab.Controls.Add(p)

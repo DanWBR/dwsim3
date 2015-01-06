@@ -252,7 +252,7 @@ Public Class ScriptEditorControl
 #Region "Util methods"
 
     Public Function ReplacePath(word As String) As String
-        Dim obj As SimulationObjects_BaseClass = form.GetFlowsheetSimulationObject(word.Split(".")(0))
+        Dim obj As SimulationObjects_BaseClass = form.GetFlowsheetSimulationObject(word.Split(".")(0).Replace("_", "-"))
         If Not obj Is Nothing Then
             Return word.Replace(word.Split(".")(0), obj.GetType.ToString.Replace("SimulationObjects.", ""))
         End If
@@ -598,6 +598,10 @@ Public Class ScriptEditorControl
     Private Sub ScriptEditorControl_Load(sender As Object, e As EventArgs) Handles Me.Load
 
         cbLinkedObject.Items.AddRange(New String() {"Flowsheet", "Solver"})
+
+        For Each obj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+            cbLinkedObject.Items.Add(obj.GraphicObject.Tag)
+        Next
 
     End Sub
 
