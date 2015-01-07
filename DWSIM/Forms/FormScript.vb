@@ -145,7 +145,45 @@ Imports DWSIM.DWSIM.Outros
         fc.ScriptCollection.Clear()
 
         For Each tab As FATabStripItem In TabStripScripts.Items
-            Dim scr As New Script() With {.ID = Guid.NewGuid().ToString, .Title = tab.Title, .ScriptText = DirectCast(tab.Controls(0).Controls(0), ScriptEditorControl).txtScript.Document.Text}
+            Dim seditor As ScriptEditorControl = DirectCast(tab.Controls(0).Controls(0), ScriptEditorControl)
+            Dim scr As New Script() With
+                            {.ID = Guid.NewGuid().ToString,
+                             .Title = tab.Title,
+                             .Linked = seditor.chkLink.Checked,
+                            .ScriptText = seditor.txtScript.Document.Text}
+            Select Case seditor.cbLinkedObject.SelectedIndex
+                Case 0
+                    scr.LinkedObjectType = Script.ObjectType.Simulation
+                    scr.LinkedObjectName = ""
+                    If seditor.cbLinkedEvent.SelectedIndex = 0 Then
+                        scr.LinkedEventType = Script.EventType.SimulationOpened
+                    ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
+                        scr.LinkedEventType = Script.EventType.SimulationSaved
+                    Else
+                        scr.LinkedEventType = Script.EventType.SimulationClosed
+                    End If
+                Case 1
+                    scr.LinkedObjectType = Script.ObjectType.Solver
+                    scr.LinkedObjectName = ""
+                    If seditor.cbLinkedEvent.SelectedIndex = 0 Then
+                        scr.LinkedEventType = Script.EventType.SolverStarted
+                    ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
+                        scr.LinkedEventType = Script.EventType.SolverFinished
+                    Else
+                        scr.LinkedEventType = Script.EventType.SolverRecycleLoop
+                    End If
+                Case Else
+                    scr.LinkedObjectType = Script.ObjectType.FlowsheetObject
+                    scr.LinkedObjectName = fc.GetFlowsheetGraphicObject(seditor.cbLinkedObject.SelectedItem.ToString).Name
+                    If seditor.cbLinkedEvent.SelectedIndex = 0 Then
+                        scr.LinkedEventType = Script.EventType.ObjectCalculationStarted
+                    ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
+                        scr.LinkedEventType = Script.EventType.ObjectCalculationFinished
+                    Else
+                        scr.LinkedEventType = Script.EventType.ObjectCalculationError
+                    End If
+            End Select
+
             fc.ScriptCollection.Add(scr.ID, scr)
         Next
 
@@ -213,13 +251,24 @@ Imports DWSIM.DWSIM.Outros
             stab.Tag = scriptdata.ID
             If scriptdata.Title = "" Then stab.Title = "Script" & TabStripScripts.Items.Count + 1 Else stab.Title = scriptdata.Title
 
-            TabStripScripts.Items.Add(stab)
+            TabStripScripts.AddTab(stab, True)
 
             TabStripScripts.SelectedItem = stab
 
             Me.tsTextBoxRename.Text = stab.Title
 
             Me.Invalidate()
+
+            If scriptdata.LinkedObjectName <> "" Then
+                .cbLinkedObject.SelectedItem = fc.Collections.ObjectCollection(scriptdata.LinkedObjectName).GraphicObject.Tag
+            Else
+                Select Case scriptdata.LinkedObjectType
+                    Case Script.ObjectType.Simulation
+                        .cbLinkedObject.SelectedIndex = 0
+                    Case Script.ObjectType.Solver
+                        .cbLinkedObject.SelectedIndex = 1
+                End Select
+            End If
 
             Select Case scriptdata.LinkedEventType
                 Case Script.EventType.ObjectCalculationStarted
@@ -241,12 +290,6 @@ Imports DWSIM.DWSIM.Outros
                 Case Script.EventType.SolverRecycleLoop
                     .cbLinkedEvent.SelectedIndex = 2
             End Select
-
-            If scriptdata.LinkedObjectName <> "" Then
-                .cbLinkedObject.SelectedItem = fc.Collections.ObjectCollection(scriptdata.LinkedObjectName).GraphicObject.Tag
-            Else
-                .cbLinkedObject.SelectedIndex = 0
-            End If
 
         End With
 
