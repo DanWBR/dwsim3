@@ -40,26 +40,26 @@ Partial Class ScriptEditorControl
         '
         'textBoxTooltip
         '
+        resources.ApplyResources(Me.textBoxTooltip, "textBoxTooltip")
         Me.textBoxTooltip.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(225, Byte), Integer))
         Me.textBoxTooltip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        resources.ApplyResources(Me.textBoxTooltip, "textBoxTooltip")
         Me.textBoxTooltip.Name = "textBoxTooltip"
         Me.textBoxTooltip.ReadOnly = True
         '
         'Panel1
         '
+        resources.ApplyResources(Me.Panel1, "Panel1")
         Me.Panel1.Controls.Add(Me.cbLinkedEvent)
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Controls.Add(Me.cbLinkedObject)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.chkLink)
-        resources.ApplyResources(Me.Panel1, "Panel1")
         Me.Panel1.Name = "Panel1"
         '
         'cbLinkedEvent
         '
-        Me.cbLinkedEvent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         resources.ApplyResources(Me.cbLinkedEvent, "cbLinkedEvent")
+        Me.cbLinkedEvent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbLinkedEvent.FormattingEnabled = True
         Me.cbLinkedEvent.Name = "cbLinkedEvent"
         '
@@ -70,8 +70,8 @@ Partial Class ScriptEditorControl
         '
         'cbLinkedObject
         '
-        Me.cbLinkedObject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         resources.ApplyResources(Me.cbLinkedObject, "cbLinkedObject")
+        Me.cbLinkedObject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbLinkedObject.FormattingEnabled = True
         Me.cbLinkedObject.Name = "cbLinkedObject"
         '
@@ -88,9 +88,9 @@ Partial Class ScriptEditorControl
         '
         'txtScript
         '
+        resources.ApplyResources(Me.txtScript, "txtScript")
         Me.txtScript.ActiveView = Alsing.Windows.Forms.ActiveView.BottomRight
         Me.txtScript.AllowBreakPoints = False
-        resources.ApplyResources(Me.txtScript, "txtScript")
         Me.txtScript.AutoListPosition = Nothing
         Me.txtScript.AutoListSelectedText = "a123"
         Me.txtScript.AutoListVisible = False
@@ -127,18 +127,18 @@ Partial Class ScriptEditorControl
         '
         'treeViewItems
         '
-        Me.treeViewItems.LineColor = System.Drawing.Color.Empty
         resources.ApplyResources(Me.treeViewItems, "treeViewItems")
+        Me.treeViewItems.LineColor = System.Drawing.Color.Empty
         Me.treeViewItems.Name = "treeViewItems"
         Me.treeViewItems.PathSeparator = "."
         '
         'listBoxAutoComplete
         '
+        resources.ApplyResources(Me.listBoxAutoComplete, "listBoxAutoComplete")
         Me.listBoxAutoComplete.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.listBoxAutoComplete.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.listBoxAutoComplete.FormattingEnabled = True
         Me.listBoxAutoComplete.ImageList = Me.imageList1
-        resources.ApplyResources(Me.listBoxAutoComplete, "listBoxAutoComplete")
         Me.listBoxAutoComplete.Name = "listBoxAutoComplete"
         '
         'ScriptEditorControl

@@ -1187,6 +1187,9 @@
     <EmbeddedResource Include="Forms\Controls\GListBox.resx">
       <DependentUpon>GListBox.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\ScriptEditorControl.en.resx">
+      <DependentUpon>ScriptEditorControl.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Controls\ScriptEditorControl.resx">
       <DependentUpon>ScriptEditorControl.vb</DependentUpon>
     </EmbeddedResource>

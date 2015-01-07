@@ -35,9 +35,6 @@
         Me.tscb1 = New System.Windows.Forms.ToolStripComboBox()
         Me.tscb2 = New System.Windows.Forms.ToolStripComboBox()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.toolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.HelpToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -63,61 +60,61 @@
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.SaveToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CutToolStripButton, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator1, Me.tscb1, Me.tscb2, Me.ToolStripSeparator2, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripSeparator4, Me.ToolStripButton1, Me.toolStripSeparator5, Me.HelpToolStripButton, Me.ToolStripSeparator3, Me.ToolStripLabel1, Me.tsTextBoxRename})
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.SaveToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CutToolStripButton, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator1, Me.tscb1, Me.tscb2, Me.ToolStripSeparator2, Me.ToolStripButton1, Me.toolStripSeparator5, Me.HelpToolStripButton, Me.ToolStripSeparator3, Me.ToolStripLabel1, Me.tsTextBoxRename})
         Me.ToolStrip1.Name = "ToolStrip1"
         '
         'NewToolStripButton
         '
-        Me.NewToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         resources.ApplyResources(Me.NewToolStripButton, "NewToolStripButton")
+        Me.NewToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.NewToolStripButton.Name = "NewToolStripButton"
         '
         'SaveToolStripButton
         '
-        Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         resources.ApplyResources(Me.SaveToolStripButton, "SaveToolStripButton")
+        Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.SaveToolStripButton.Name = "SaveToolStripButton"
         '
         'PrintToolStripButton
         '
-        Me.PrintToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         resources.ApplyResources(Me.PrintToolStripButton, "PrintToolStripButton")
+        Me.PrintToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.PrintToolStripButton.Name = "PrintToolStripButton"
         '
         'toolStripSeparator
         '
-        Me.toolStripSeparator.Name = "toolStripSeparator"
         resources.ApplyResources(Me.toolStripSeparator, "toolStripSeparator")
+        Me.toolStripSeparator.Name = "toolStripSeparator"
         '
         'CutToolStripButton
         '
-        Me.CutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         resources.ApplyResources(Me.CutToolStripButton, "CutToolStripButton")
+        Me.CutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.CutToolStripButton.Name = "CutToolStripButton"
         '
         'CopyToolStripButton
         '
-        Me.CopyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         resources.ApplyResources(Me.CopyToolStripButton, "CopyToolStripButton")
+        Me.CopyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.CopyToolStripButton.Name = "CopyToolStripButton"
         '
         'PasteToolStripButton
         '
-        Me.PasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         resources.ApplyResources(Me.PasteToolStripButton, "PasteToolStripButton")
+        Me.PasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.PasteToolStripButton.Name = "PasteToolStripButton"
         '
         'toolStripSeparator1
         '
-        Me.toolStripSeparator1.Name = "toolStripSeparator1"
         resources.ApplyResources(Me.toolStripSeparator1, "toolStripSeparator1")
+        Me.toolStripSeparator1.Name = "toolStripSeparator1"
         '
         'tscb1
         '
+        resources.ApplyResources(Me.tscb1, "tscb1")
         Me.tscb1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.tscb1.Name = "tscb1"
-        resources.ApplyResources(Me.tscb1, "tscb1")
         Me.tscb1.Sorted = True
         '
         'tscb2
@@ -129,55 +126,36 @@
         '
         'ToolStripSeparator2
         '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
         resources.ApplyResources(Me.ToolStripSeparator2, "ToolStripSeparator2")
-        '
-        'ToolStripButton2
-        '
-        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.add
-        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
-        Me.ToolStripButton2.Name = "ToolStripButton2"
-        '
-        'ToolStripButton3
-        '
-        Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.delete
-        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
-        Me.ToolStripButton3.Name = "ToolStripButton3"
-        '
-        'ToolStripSeparator4
-        '
-        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        resources.ApplyResources(Me.ToolStripSeparator4, "ToolStripSeparator4")
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
         '
         'ToolStripButton1
         '
+        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.control_play
-        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'toolStripSeparator5
         '
-        Me.toolStripSeparator5.Name = "toolStripSeparator5"
         resources.ApplyResources(Me.toolStripSeparator5, "toolStripSeparator5")
+        Me.toolStripSeparator5.Name = "toolStripSeparator5"
         '
         'HelpToolStripButton
         '
-        Me.HelpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         resources.ApplyResources(Me.HelpToolStripButton, "HelpToolStripButton")
+        Me.HelpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.HelpToolStripButton.Name = "HelpToolStripButton"
         '
         'ToolStripSeparator3
         '
-        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
         resources.ApplyResources(Me.ToolStripSeparator3, "ToolStripSeparator3")
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
         '
         'ToolStripLabel1
         '
-        Me.ToolStripLabel1.Name = "ToolStripLabel1"
         resources.ApplyResources(Me.ToolStripLabel1, "ToolStripLabel1")
+        Me.ToolStripLabel1.Name = "ToolStripLabel1"
         '
         'tsTextBoxRename
         '
@@ -205,11 +183,11 @@
         '
         'FaTabStripItem3
         '
+        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         Me.FaTabStripItem3.CanClose = False
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
         Me.FaTabStripItem3.Selected = True
-        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         '
         'imageList1
         '
@@ -223,11 +201,11 @@
         '
         'FaTabStripItem5
         '
+        resources.ApplyResources(Me.FaTabStripItem5, "FaTabStripItem5")
         Me.FaTabStripItem5.Controls.Add(Me.treeViewItems)
         Me.FaTabStripItem5.IsDrawn = True
         Me.FaTabStripItem5.Name = "FaTabStripItem5"
         Me.FaTabStripItem5.Selected = True
-        resources.ApplyResources(Me.FaTabStripItem5, "FaTabStripItem5")
         '
         'treeViewItems
         '
@@ -248,19 +226,19 @@
         '
         'ListBox1
         '
-        Me.ListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
         resources.ApplyResources(Me.ListBox1, "ListBox1")
+        Me.ListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.ListBox1.FormattingEnabled = True
         Me.ListBox1.Name = "ListBox1"
         Me.ListBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
         '
         'FaTabStripItem4
         '
+        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
         Me.FaTabStripItem4.CanClose = False
         Me.FaTabStripItem4.Controls.Add(Me.ListBox1)
         Me.FaTabStripItem4.IsDrawn = True
         Me.FaTabStripItem4.Name = "FaTabStripItem4"
-        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
         '
         'FormScript
         '
@@ -294,11 +272,8 @@
     Public WithEvents ofd1 As System.Windows.Forms.OpenFileDialog
     Public WithEvents sfd1 As System.Windows.Forms.SaveFileDialog
     Public WithEvents TabStripScripts As FarsiLibrary.Win.FATabStrip
-    Public WithEvents ToolStripButton2 As System.Windows.Forms.ToolStripButton
-    Public WithEvents ToolStripButton3 As System.Windows.Forms.ToolStripButton
     Public WithEvents ofd2 As System.Windows.Forms.OpenFileDialog
     Public WithEvents pd1 As System.Windows.Forms.PrintDialog
-    Public WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
     Public WithEvents tscb1 As System.Windows.Forms.ToolStripComboBox
     Public WithEvents tscb2 As System.Windows.Forms.ToolStripComboBox
     Public WithEvents imageList1 As System.Windows.Forms.ImageList

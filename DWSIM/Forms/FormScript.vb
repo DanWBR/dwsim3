@@ -70,7 +70,11 @@ Imports DWSIM.DWSIM.Outros
         engine.Runtime.LoadAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.ConstantProperties).Assembly)
         engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.GraphicObjects.GraphicObject).Assembly)
         engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface).Assembly)
-        engine.Runtime.IO.SetOutput(New DataGridViewTextStream(fsheet), UTF8Encoding.UTF8)
+        If My.MyApplication.CommandLineMode Then
+            engine.Runtime.IO.SetOutput(Console.OpenStandardOutput, Console.OutputEncoding)
+        Else
+            engine.Runtime.IO.SetOutput(New DataGridViewTextStream(fsheet), UTF8Encoding.UTF8)
+        End If
         scope = engine.CreateScope()
         scope.SetVariable("Flowsheet", fsheet)
         Dim Solver As New DWSIM.Flowsheet.COMSolver
@@ -78,17 +82,19 @@ Imports DWSIM.DWSIM.Outros
         For Each obj As SimulationObjects_BaseClass In fsheet.Collections.ObjectCollection.Values
             scope.SetVariable(obj.GraphicObject.Tag.Replace("-", "_"), obj)
         Next
-        Dim txtcode As String = ""
-        'For Each fname As String In Me.ListBox1.Items
-        '    txtcode += File.ReadAllText(fname) + vbCrLf
-        'Next
-        txtcode += scripttext
+        Dim txtcode As String = scripttext
         Dim source As Microsoft.Scripting.Hosting.ScriptSource = engine.CreateScriptSourceFromString(txtcode, Microsoft.Scripting.SourceCodeKind.Statements)
         Try
             source.Execute(scope)
         Catch ex As Exception
             Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
-            fsheet.WriteToLog("Error running script: " & ops.FormatException(ex).ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+            If My.MyApplication.CommandLineMode Then
+                Console.WriteLine()
+                Console.WriteLine("Error running script: " & ops.FormatException(ex).ToString)
+                Console.WriteLine()
+            Else
+                fsheet.WriteToLog("Error running script: " & ops.FormatException(ex).ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+            End If
         Finally
             engine = Nothing
             scope = Nothing
@@ -119,7 +125,7 @@ Imports DWSIM.DWSIM.Outros
         End If
     End Sub
 
-    Private Sub ToolStripButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton2.Click
+    Private Sub ToolStripButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If Me.ofd1.ShowDialog = Windows.Forms.DialogResult.OK Then
             For Each fname As String In Me.ofd1.FileNames
                 Me.ListBox1.Items.Add(fname)
@@ -127,7 +133,7 @@ Imports DWSIM.DWSIM.Outros
         End If
     End Sub
 
-    Private Sub ToolStripButton3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton3.Click
+    Private Sub ToolStripButton3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If Me.ListBox1.SelectedItems.Count > 0 Then
             Dim names As New ArrayList
             For Each fname As Object In Me.ListBox1.SelectedItems

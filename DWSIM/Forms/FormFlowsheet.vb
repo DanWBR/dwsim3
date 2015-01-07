@@ -394,6 +394,13 @@ Imports DWSIM.DWSIM.Outros
 
         For Each scr As Script In Me.ScriptCollection.Values
             If scr.Linked And scr.LinkedEventType = sourceevent And scr.LinkedObjectType = sourceobj And scr.LinkedObjectName = sourceobjname Then
+                If My.MyApplication.CommandLineMode Then
+                    Console.WriteLine()
+                    Console.WriteLine("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "', linked to '" & scr.LinkedObjectName & "'...")
+                    Console.WriteLine()
+                Else
+                    Me.WriteToLog("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "', linked to '" & scr.LinkedObjectName & "'...", Color.Blue, TipoAviso.Informacao)
+                End If
                 FormScript.RunScript(scr.ScriptText, Me)
             End If
         Next

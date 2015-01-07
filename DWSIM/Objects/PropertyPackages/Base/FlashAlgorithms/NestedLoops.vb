@@ -239,7 +239,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                ElseIf Math.Abs(e3) < itol And e1 < itol And e2 < itol And ecount > 0 Then
+                ElseIf Math.Abs(e3) < itol And ecount > 0 Then
 
                     convergiu = 1
 
@@ -260,8 +260,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         i = i + 1
                     Loop Until i = n + 1
 
-                    'line removed, caused premature exit of loop! Criteria was not representing solution sufficiently.
-                    'If Abs(F) < etol Then Exit Do
+                    If Abs(F) < 0.0000000000000001 Then Exit Do
 
                     V = -F / dF + V
 

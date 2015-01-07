@@ -1311,6 +1311,13 @@ Public Class FormMain
                 End Using
             End If
 
+            If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\scripts.bin") Then
+                Dim fs12 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\scripts.bin", FileMode.Open)
+                Using fs12
+                    form.ScriptCollection = DirectCast(mySerializer.Deserialize(fs12), Dictionary(Of String, DWSIM.Outros.Script))
+                End Using
+            End If
+
             If File.Exists(My.Computer.FileSystem.SpecialDirectories.Temp & "\13.bin") Then
                 Dim fs13 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\13.bin", FileMode.Open)
                 Using fs13
@@ -2931,6 +2938,15 @@ Public Class FormMain
         Dim fs11 As New FileStream(rndfolder & "11.bin", FileMode.Create)
         Try
             mySerializer.Serialize(fs11, form.FormWatch.items)
+        Catch ex As System.Runtime.Serialization.SerializationException
+            Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
+            MessageBox.Show(ex.Message)
+        Finally
+            fs11.Close()
+        End Try
+        Dim fs12 As New FileStream(rndfolder & "scripts.bin", FileMode.Create)
+        Try
+            mySerializer.Serialize(fs12, form.ScriptCollection)
         Catch ex As System.Runtime.Serialization.SerializationException
             Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
             MessageBox.Show(ex.Message)
