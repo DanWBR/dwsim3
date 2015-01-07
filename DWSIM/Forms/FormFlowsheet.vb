@@ -117,84 +117,6 @@ Imports DWSIM.DWSIM.Outros
         My.Application.ActiveSimulation = Me
     End Sub
 
-    Private Sub FormChild2_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-
-        If My.Application.ActiveSimulation Is Me Then
-            My.Application.ActiveSimulation = Nothing
-        End If
-
-        'dispose objects
-        For Each obj As SimulationObjects_BaseClass In Me.Collections.ObjectCollection.Values
-            If obj.disposedValue = False Then obj.Dispose()
-        Next
-
-        Dim path As String = My.Settings.BackupFolder + System.IO.Path.DirectorySeparatorChar + Me.Options.BackupFileName
-
-        If My.Settings.BackupFiles.Contains(path) Then
-            My.Settings.BackupFiles.Remove(path)
-            My.Settings.Save()
-            Try
-                If File.Exists(path) Then File.Delete(path)
-            Catch ex As Exception
-                My.Application.Log.WriteException(ex)
-            End Try
-        End If
-
-        Dim cnt As Integer = FormMain.MdiChildren.Length
-
-        If cnt = 0 Then
-
-            FormMain.ToolStripButton1.Enabled = False
-            FormMain.SaveAllToolStripButton.Enabled = False
-            FormMain.SaveToolStripButton.Enabled = False
-            FormMain.SaveToolStripMenuItem.Enabled = False
-            FormMain.SaveAllToolStripMenuItem.Enabled = False
-            FormMain.SaveAsToolStripMenuItem.Enabled = False
-            FormMain.ToolStripButton1.Enabled = False
-
-        Else
-
-            FormMain.ToolStripButton1.Enabled = True
-            FormMain.SaveAllToolStripButton.Enabled = True
-            FormMain.SaveToolStripButton.Enabled = True
-            FormMain.SaveToolStripMenuItem.Enabled = True
-            FormMain.SaveAllToolStripMenuItem.Enabled = True
-            FormMain.SaveAsToolStripMenuItem.Enabled = True
-            FormMain.ToolStripButton1.Enabled = True
-
-        End If
-
-    End Sub
-
-    Private Sub FormChild2_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-
-        If FormMain.SairDiretoERRO Then Exit Sub
-
-        If Me.m_overrideCloseQuestion = False Then
-
-            Dim x = MessageBox.Show(DWSIM.App.GetLocalString("Desejasalvarasaltera"), DWSIM.App.GetLocalString("Fechando") & " " & Me.Options.SimNome & " (" & System.IO.Path.GetFileName(Me.Options.FilePath) & ") ...", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-
-            If x = MsgBoxResult.Yes Then
-
-                Call FormMain.SaveToolStripButton_Click(sender, e)
-                Me.m_overrideCloseQuestion = True
-                Me.Close()
-
-            ElseIf x = MsgBoxResult.Cancel Then
-
-                e.Cancel = True
-
-            Else
-
-                Me.m_overrideCloseQuestion = True
-                Me.Close()
-
-            End If
-
-        End If
-
-    End Sub
-
     Private Sub FormChild_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         If DWSIM.App.IsRunningOnMono Then
@@ -224,9 +146,9 @@ Imports DWSIM.DWSIM.Outros
             Me.tsbDesat.Checked = True
         End If
 
-        If Not Me.m_IsLoadedFromFile Then
+        If Me.ScriptCollection Is Nothing Then Me.ScriptCollection = New Dictionary(Of String, Script)
 
-            Me.ScriptCollection = New Dictionary(Of String, Script)
+        If Not Me.m_IsLoadedFromFile Then
 
             If Not DWSIM.App.IsRunningOnMono Then
                 Me.Options.SimAutor = My.User.Name
@@ -383,6 +305,84 @@ Imports DWSIM.DWSIM.Outros
         End If
 
         My.Application.ActiveSimulation = Me
+
+    End Sub
+
+    Private Sub FormChild2_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+
+        If My.Application.ActiveSimulation Is Me Then
+            My.Application.ActiveSimulation = Nothing
+        End If
+
+        'dispose objects
+        For Each obj As SimulationObjects_BaseClass In Me.Collections.ObjectCollection.Values
+            If obj.disposedValue = False Then obj.Dispose()
+        Next
+
+        Dim path As String = My.Settings.BackupFolder + System.IO.Path.DirectorySeparatorChar + Me.Options.BackupFileName
+
+        If My.Settings.BackupFiles.Contains(path) Then
+            My.Settings.BackupFiles.Remove(path)
+            My.Settings.Save()
+            Try
+                If File.Exists(path) Then File.Delete(path)
+            Catch ex As Exception
+                My.Application.Log.WriteException(ex)
+            End Try
+        End If
+
+        Dim cnt As Integer = FormMain.MdiChildren.Length
+
+        If cnt = 0 Then
+
+            FormMain.ToolStripButton1.Enabled = False
+            FormMain.SaveAllToolStripButton.Enabled = False
+            FormMain.SaveToolStripButton.Enabled = False
+            FormMain.SaveToolStripMenuItem.Enabled = False
+            FormMain.SaveAllToolStripMenuItem.Enabled = False
+            FormMain.SaveAsToolStripMenuItem.Enabled = False
+            FormMain.ToolStripButton1.Enabled = False
+
+        Else
+
+            FormMain.ToolStripButton1.Enabled = True
+            FormMain.SaveAllToolStripButton.Enabled = True
+            FormMain.SaveToolStripButton.Enabled = True
+            FormMain.SaveToolStripMenuItem.Enabled = True
+            FormMain.SaveAllToolStripMenuItem.Enabled = True
+            FormMain.SaveAsToolStripMenuItem.Enabled = True
+            FormMain.ToolStripButton1.Enabled = True
+
+        End If
+
+    End Sub
+
+    Private Sub FormChild2_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+
+        If FormMain.SairDiretoERRO Then Exit Sub
+
+        If Me.m_overrideCloseQuestion = False Then
+
+            Dim x = MessageBox.Show(DWSIM.App.GetLocalString("Desejasalvarasaltera"), DWSIM.App.GetLocalString("Fechando") & " " & Me.Options.SimNome & " (" & System.IO.Path.GetFileName(Me.Options.FilePath) & ") ...", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
+
+            If x = MsgBoxResult.Yes Then
+
+                Call FormMain.SaveToolStripButton_Click(sender, e)
+                Me.m_overrideCloseQuestion = True
+                Me.Close()
+
+            ElseIf x = MsgBoxResult.Cancel Then
+
+                e.Cancel = True
+
+            Else
+
+                Me.m_overrideCloseQuestion = True
+                Me.Close()
+
+            End If
+
+        End If
 
     End Sub
 
