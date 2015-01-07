@@ -1,5 +1,5 @@
 '    DWSIM Nested Loops Flash Algorithms
-'    Copyright 2010-2014 Daniel Wagner O. de Medeiros
+'    Copyright 2010-2015 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '

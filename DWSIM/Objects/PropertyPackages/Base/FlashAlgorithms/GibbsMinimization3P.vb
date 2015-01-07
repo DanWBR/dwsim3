@@ -1,5 +1,5 @@
 '    Michelsen's Three-Phase Gibbs Minimization w/ Nested Loops Flash Algorithms
-'    Copyright 2012-2014 Daniel Wagner O. de Medeiros
+'    Copyright 2012-2015 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
