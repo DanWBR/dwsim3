@@ -32,6 +32,13 @@ Namespace DWSIM.Flowsheet
 
     <System.Serializable()> Public Class FlowsheetSolver
 
+        'events for plugins
+        Public Shared Event UnitOpCalculationStarted As CustomEvent
+        Public Shared Event UnitOpCalculationFinished As CustomEvent
+        Public Shared Event FlowsheetCalculationStarted As CustomEvent
+        Public Shared Event FlowsheetCalculationFinished As CustomEvent
+        Public Shared Event MaterialStreamCalculationStarted As CustomEvent
+        Public Shared Event MaterialStreamCalculationFinished As CustomEvent
 
         ''' <summary>
         ''' Flowsheet calculation routine 1. Calculates the object sent by the queue and updates the flowsheet.
@@ -45,6 +52,8 @@ Namespace DWSIM.Flowsheet
             Dim preLab As String = form.FormSurface.LabelCalculator.Text
 
             If form.Options.CalculatorActivated Then
+
+                RaiseEvent UnitOpCalculationStarted(form, New System.EventArgs(), objArgs)
 
                 form.ProcessScripts(Script.EventType.ObjectCalculationStarted, Script.ObjectType.FlowsheetObject, objArgs.Nome)
 
@@ -220,6 +229,8 @@ Namespace DWSIM.Flowsheet
 
                 form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, objArgs.Nome)
 
+                RaiseEvent UnitOpCalculationFinished(form, New System.EventArgs(), objArgs)
+
                 My.MyApplication.IsFlowsheetSolving = False
 
             End If
@@ -240,6 +251,8 @@ Namespace DWSIM.Flowsheet
         Public Shared Sub CalculateMaterialStream(ByVal form As FormFlowsheet, ByVal ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False, Optional ByVal OnlyMe As Boolean = False)
 
             ms.Calculated = False
+
+            RaiseEvent MaterialStreamCalculationStarted(form, New System.EventArgs(), ms)
 
             form.ProcessScripts(Script.EventType.ObjectCalculationStarted, Script.ObjectType.FlowsheetObject, ms.Name)
 
@@ -1009,6 +1022,8 @@ Namespace DWSIM.Flowsheet
 
             form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, ms.Name)
 
+            RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), ms)
+
             My.MyApplication.IsFlowsheetSolving = False
 
             ms.Calculated = calculated
@@ -1376,6 +1391,8 @@ Namespace DWSIM.Flowsheet
 
             form.ProcessScripts(Script.EventType.SolverStarted, Script.ObjectType.Solver)
 
+            RaiseEvent FlowsheetCalculationStarted(form, New System.EventArgs(), Nothing)
+
             My.MyApplication.IsFlowsheetSolving = True
 
             'find recycles.
@@ -1501,6 +1518,8 @@ Namespace DWSIM.Flowsheet
 
             form.ProcessScripts(Script.EventType.SolverFinished, Script.ObjectType.Solver)
 
+            RaiseEvent FlowsheetCalculationFinished(form, New System.EventArgs(), Nothing)
+
         End Sub
 
         ''' <summary>
@@ -1509,6 +1528,8 @@ Namespace DWSIM.Flowsheet
         ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
         ''' <remarks></remarks>
         Public Shared Sub CalculateAll(ByVal form As FormFlowsheet)
+
+            RaiseEvent FlowsheetCalculationStarted(form, New System.EventArgs(), Nothing)
 
             form.ProcessScripts(Script.EventType.SolverStarted, Script.ObjectType.Solver)
 
@@ -1538,6 +1559,8 @@ Namespace DWSIM.Flowsheet
             My.MyApplication.IsFlowsheetSolving = False
 
             form.ProcessScripts(Script.EventType.SolverFinished, Script.ObjectType.Solver)
+
+            RaiseEvent FlowsheetCalculationFinished(form, New System.EventArgs(), Nothing)
 
         End Sub
 
