@@ -2525,6 +2525,8 @@ Public Class FormMain
             Application.DoEvents()
         End If
 
+        form.ScriptCollection = New Dictionary(Of String, Script)
+
         If xdoc.Element("DWSIM_Simulation_Data").Element("ScriptItems") IsNot Nothing Then
 
             data = xdoc.Element("DWSIM_Simulation_Data").Element("ScriptItems").Elements.ToList

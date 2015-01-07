@@ -212,8 +212,6 @@ Imports DWSIM.DWSIM.Outros
 
         Me.CalculationQueue = New Generic.Queue(Of DWSIM.Outros.StatusChangeEventArgs)
 
-        Me.ScriptCollection = New Dictionary(Of String, Script)
-
         Me.StatusBarTextProvider1.InstanceStatusBar = My.Forms.FormMain.ToolStripStatusLabel1
 
         Me.TSTBZoom.Text = Format(Me.FormSurface.FlowsheetDesignSurface.Zoom, "#%")
@@ -227,6 +225,8 @@ Imports DWSIM.DWSIM.Outros
         End If
 
         If Not Me.m_IsLoadedFromFile Then
+
+            Me.ScriptCollection = New Dictionary(Of String, Script)
 
             If Not DWSIM.App.IsRunningOnMono Then
                 Me.Options.SimAutor = My.User.Name

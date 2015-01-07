@@ -280,8 +280,8 @@ Namespace DWSIM.Outros
 
         Public Enum ObjectType
             Simulation = 0
-            FlowsheetObject = 1
-            Solver = 2
+            Solver = 1
+            FlowsheetObject = 2
         End Enum
 
         Public Enum EventType
