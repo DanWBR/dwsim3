@@ -39,7 +39,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim maxit_e As Integer = 100
         Dim Hv0, Hvid, Hlid, Hf, Hv, Hl As Double
         Dim Sv0, Svid, Slid, Sf, Sv, Sl As Double
-        
+
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim Vn(1) As String, Vx(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1) As Double
@@ -228,8 +228,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Dim e3 As Double = 0
                 i = 0
                 Do
-                    e1 = e1 + Math.Abs(Vx(i) - Vx_ant(i))
-                    e2 = e2 + Math.Abs(Vy(i) - Vy_ant(i))
+                    e1 = e1 + (Vx(i) - Vx_ant(i))
+                    e2 = e2 + (Vy(i) - Vy_ant(i))
                     i = i + 1
                 Loop Until i = n + 1
 
@@ -295,11 +295,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
         End Function
-        Function ASinH(ByVal x As Double) As Double
-            Dim F As Double
-            F = Log(x + Sqrt(x * x + 1))
-            Return F
-        End Function
 
         Public Overrides Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
@@ -339,135 +334,79 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             epsilon(3) = 1
             epsilon(4) = 10
 
-            Dim fx, fx2, fn, dfdx, x1, x2, xn, dx As Double
+            Dim fx, fx2, dfdx, x1, dx As Double
 
             Dim cnt As Integer
 
             If Tref = 0 Then Tref = 298.15
-            ' ======== algorithm: Kantaris & Howden =================================================================================
-            Dim q, r As Double
-            Dim ls As Integer
 
-            xn = Tref
-            fx = Herror(xn, {P, Vz, PP})
-            ls = Sign(fx)
-            Do
-                cnt += 1
-                dx = 2 ^ (q / 3 - r - 1 / 3) * ASinH(fx)
-                xn = xn + dx
-                fx = Herror(xn, {P, Vz, PP})
-                If Sign(fx) <> ls Then
-                    r += 1
-                    ls = -ls
-                Else
-                    q += 1
+            For j = 0 To 4
+
+                cnt = 0
+                x1 = Tref
+
+                Do
+
+                    If My.Settings.EnableParallelProcessing Then
+                        My.MyApplication.IsRunningParallelTasks = True
+                        If My.Settings.EnableGPUProcessing Then
+                            My.MyApplication.gpu.EnableMultithreading()
+                        End If
+                        Try
+                            Dim task1 As Task = New Task(Sub()
+                                                             fx = Herror(x1, {P, Vz, PP})
+                                                         End Sub)
+                            Dim task2 As Task = New Task(Sub()
+                                                             fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
+                                                         End Sub)
+                            task1.Start()
+                            task2.Start()
+                            Task.WaitAll(task1, task2)
+                        Catch ae As AggregateException
+                            For Each ex As Exception In ae.InnerExceptions
+                                Throw
+                            Next
+                        Finally
+                            If My.Settings.EnableGPUProcessing Then
+                                My.MyApplication.gpu.DisableMultithreading()
+                                My.MyApplication.gpu.FreeAll()
+                            End If
+                        End Try
+                        My.MyApplication.IsRunningParallelTasks = False
+                    Else
+                        fx = Herror(x1, {P, Vz, PP})
+                        fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
+                    End If
+
+                    If Abs(fx) < tolEXT Then Exit Do
+
+                    dfdx = (fx2 - fx) / epsilon(j)
+                    dx = fx / dfdx
+
+                    x1 = x1 - dx
+
+                    cnt += 1
+
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+
+                T = x1
+
+                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
+                    If T > Tmin And T < Tmax Then Exit For
                 End If
-            Loop While Abs(fx) > itol
-            T = xn
 
-            ' ============== new algorithm: interpolation search ====================================================================
-            'cnt = 1
-            'dx = 10
-            'x1 = Tref
-            'x2 = x1
-            'fx = Herror(x1, {P, Vz, PP})
-            'fx2 = fx
-            'If fx < 0 Then dx = -dx 'reverse direction of search. T already too large
+            Next
 
-            ''Search until root is between both sampling points
-            'Do
-            '    cnt += 1
-            '    x1 = x2
-            '    fx = fx2
-            '    x2 = x1 + dx
-            '    fx2 = Herror(x2, {P, Vz, PP})
-            'Loop Until fx / fx2 < 0
+            If Double.IsNaN(T) Or cnt > maxitEXT Then
 
-            'Do
-            '    cnt += 1
-            '    'xn = (x1 + x2) / 2
-            '    xn = x2 - fx2 / (fx2 - fx) * (x2 - x1)
-            '    fn = Herror(xn, {P, Vz, PP})
-            '    If (Abs(fn) < etol) Or (x2 - x1 < 0.0000001) Then Exit Do
+alt:
+                Dim bo As New BrentOpt.Brent
+                bo.DefineFuncDelegate(AddressOf Herror)
+                Console.WriteLine("PH Flash [NL]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
 
-            '    If fn / fx < 0 Then
-            '        x2 = xn
-            '        fx2 = fn
-            '    Else
-            '        x1 = xn
-            '        fx = fn
-            '    End If
-            'Loop
-            'T = xn
+                T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
 
-            ' ============= old algorithm starts here ===============================================================================
-            '            For j = 0 To 4
-
-            '                cnt = 0
-            '                x1 = Tref
-
-            '                Do
-
-            '                    If My.Settings.EnableParallelProcessing Then
-            '                        My.MyApplication.IsRunningParallelTasks = True
-            '                        If My.Settings.EnableGPUProcessing Then
-            '                            My.MyApplication.gpu.EnableMultithreading()
-            '                        End If
-            '                        Try
-            '                            Dim task1 As Task = New Task(Sub()
-            '                                                             fx = Herror(x1, {P, Vz, PP})
-            '                                                         End Sub)
-            '                            Dim task2 As Task = New Task(Sub()
-            '                                                             fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
-            '                                                         End Sub)
-            '                            task1.Start()
-            '                            task2.Start()
-            '                            Task.WaitAll(task1, task2)
-            '                        Catch ae As AggregateException
-            '                            For Each ex As Exception In ae.InnerExceptions
-            '                                Throw
-            '                            Next
-            '                        Finally
-            '                            If My.Settings.EnableGPUProcessing Then
-            '                                My.MyApplication.gpu.DisableMultithreading()
-            '                                My.MyApplication.gpu.FreeAll()
-            '                            End If
-            '                        End Try
-            '                        My.MyApplication.IsRunningParallelTasks = False
-            '                    Else
-            '                        fx = Herror(x1, {P, Vz, PP})
-            '                        fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
-            '                    End If
-
-            '                    If Abs(fx) < tolEXT Then Exit Do
-
-            '                    dfdx = (fx2 - fx) / epsilon(j)
-            '                    dx = fx / dfdx
-
-            '                    x1 = x1 - dx
-
-            '                    cnt += 1
-
-            '                Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
-
-            '                T = x1
-
-            '                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
-            '                    If T > Tmin And T < Tmax Then Exit For
-            '                End If
-
-            '            Next
-
-            '            If Double.IsNaN(T) Or cnt > maxitEXT Then
-
-            'alt:
-            '                Dim bo As New BrentOpt.Brent
-            '                bo.DefineFuncDelegate(AddressOf Herror)
-            '                Console.WriteLine("PH Flash [NL]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
-
-            '                T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
-
-            '            End If
+            End If
 
             If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL]: Invalid result: Temperature did not converge.")
 
@@ -1358,7 +1297,7 @@ alt:
             If L > 0 Then _Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
             mmg = pp.AUX_MMM(Vy)
             mml = pp.AUX_MMM(Vx)
-            
+
             Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L)) * _Sv - (mml * L / (mmg * V + mml * L)) * _Sl
             OBJ_FUNC_PS_FLASH = serr
 

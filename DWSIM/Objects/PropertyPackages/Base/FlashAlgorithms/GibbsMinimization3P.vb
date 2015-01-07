@@ -262,12 +262,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             objval = 0.0#
             objval0 = 0.0#
+
             Dim obj As Double
             Dim status As IpoptReturnCode
             Using problem As New Ipopt(initval.Length, lconstr, uconstr, 0, Nothing, Nothing, _
              0, 0, AddressOf eval_f, AddressOf eval_g, _
              AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
-                problem.AddOption("tol", 0.0001)
+                problem.AddOption("tol", etol)
                 problem.AddOption("max_iter", maxit_e)
                 problem.AddOption("mu_strategy", "adaptive")
                 problem.AddOption("hessian_approximation", "limited-memory")
@@ -351,7 +352,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     If stresult(0) = False Then
 
                         ' liquid phase NOT stable. proceed to three-phase flash.
-                        
+
                         Dim vx2est(n), fcl(n), fcv(n) As Double
                         Dim m As Double = LBound(stresult(1), 1)
                         Dim gl, gv, gli As Double
@@ -544,11 +545,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 out:        Return result
 
         End Function
-        Function ASinH(ByVal x As Double) As Double
-            Dim F As Double
-            F = Log(x + Sqrt(x * x + 1))
-            Return F
-        End Function
+
         Public Overrides Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
@@ -583,73 +580,51 @@ out:        Return result
             epsilon(3) = 1
             epsilon(4) = 10
 
-            Dim fx, fx2, dfdx, x1, dx, xn As Double
+            Dim fx, fx2, dfdx, x1, dx As Double
 
             Dim cnt As Integer
 
             If Tref = 0 Then Tref = 298.15
 
-            ' ======== algorithm: Kantaris & Howden =================================================================================
-            Dim q, r As Double
-            Dim ls As Integer
+            For j = 0 To 4
 
-            xn = Tref
-            fx = Herror(xn, {P, Vz, PP})
-            ls = Sign(fx)
-            Do
-                cnt += 1
-                dx = 2 ^ (q / 3 - r - 1 / 3) * ASinH(fx)
-                xn = xn + dx
-                fx = Herror(xn, {P, Vz, PP})
-                If Sign(fx) <> ls Then
-                    r += 1
-                    ls = -ls
-                Else
-                    q += 1
+                cnt = 0
+                x1 = Tref
+
+                Do
+
+                    fx = Herror(x1, {P, Vz, PP})
+                    fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
+
+                    If Abs(fx) < tolEXT Then Exit Do
+
+                    dfdx = (fx2 - fx) / epsilon(j)
+                    dx = fx / dfdx
+
+                    x1 = x1 - dx
+
+                    cnt += 1
+
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+
+                T = x1
+
+                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
+                    If T > Tmin And T < Tmax Then Exit For
                 End If
-                If cnt > maxitEXT Then Throw New Exception("PH Flash [GM]: Invalid result: Temperature did not converge.")
-            Loop While Abs(fx) > itol
-            T = xn
 
-            '            For j = 0 To 4
+            Next
 
-            '                cnt = 0
-            '                x1 = Tref
+            If Double.IsNaN(T) Or cnt > maxitEXT Then
 
-            '                Do
+alt:
+                Dim bo As New BrentOpt.Brent
+                bo.DefineFuncDelegate(AddressOf Herror)
+                Console.WriteLine("PH Flash [GM]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
 
-            '                    fx = Herror(x1, {P, Vz, PP})
-            '                    fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
+                T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
 
-            '                    If Abs(fx) < tolEXT Then Exit Do
-
-            '                    dfdx = (fx2 - fx) / epsilon(j)
-            '                    dx = fx / dfdx
-
-            '                    x1 = x1 - dx
-
-            '                    cnt += 1
-
-            '                Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
-
-            '                T = x1
-
-            '                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
-            '                    If T > Tmin And T < Tmax Then Exit For
-            '                End If
-
-            '            Next
-
-            '            If Double.IsNaN(T) Or cnt > maxitEXT Then
-
-            'alt:
-            '                Dim bo As New BrentOpt.Brent
-            '                bo.DefineFuncDelegate(AddressOf Herror)
-            '                Console.WriteLine("PH Flash [GM]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
-
-            '                T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
-
-            '            End If
+            End If
 
             If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [GM]: Invalid result: Temperature did not converge.")
 
@@ -727,7 +702,7 @@ out:        Return result
 
                     fx = Serror(x1, {P, Vz, PP})
                     fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})
-                    
+
                     If Abs(fx) < tolEXT Then Exit Do
 
                     dfdx = (fx2 - fx) / epsilon(j)
