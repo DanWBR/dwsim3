@@ -1589,6 +1589,7 @@ Public Class FormMain
             If File.Exists(filespath & "11.bin") Then File.Delete(filespath & "11.bin")
             If File.Exists(filespath & "12.bin") Then File.Delete(filespath & "12.bin")
             If File.Exists(filespath & "13.bin") Then File.Delete(filespath & "13.bin")
+            If File.Exists(filespath & "scripts.bin") Then File.Delete(filespath & "scripts.bin")
 
         Else
 
@@ -2953,7 +2954,7 @@ Public Class FormMain
             Console.WriteLine("Failed to serialize. Reason: " & ex.Message)
             MessageBox.Show(ex.Message)
         Finally
-            fs11.Close()
+            fs12.Close()
         End Try
 
         Dim flsconfig As New StringBuilder()
