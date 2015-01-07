@@ -870,4 +870,7 @@
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Configure Simulation</value>
   </data>
+  <data name="ComboBoxFlashAlg.Items9" xml:space="preserve">
+    <value>Nested Loops (VLLE - Immiscible Liquids V3)</value>
+  </data>
 </root>

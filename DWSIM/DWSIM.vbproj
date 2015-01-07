@@ -691,6 +691,7 @@
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoops.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoops3P.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoops3PV2.vb" />
+    <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoops3PV3.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoopsImmiscible.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoopsSLE.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\SimpleLLE.vb" />

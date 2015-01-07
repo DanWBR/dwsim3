@@ -212,6 +212,8 @@ Public Class FormStSim
                 ComboBoxFlashAlg.SelectedIndex = 7
             Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
                 ComboBoxFlashAlg.SelectedIndex = 8
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3PV3
+                ComboBoxFlashAlg.SelectedIndex = 9
             Case Else
                 ComboBoxFlashAlg.SelectedIndex = 0
         End Select
@@ -1174,6 +1176,10 @@ Public Class FormStSim
             Case 8
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
                 Me.chkIOmode.Enabled = True
+                Me.GroupBox11.Enabled = True
+            Case 9
+                Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3PV3
+                Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = True
         End Select
     End Sub

@@ -97,6 +97,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         SimpleLLE = 9
         NestedLoopsSLE_SS = 10
         NestedLoops3PV2 = 11
+        NestedLoops3PV3 = 12
     End Enum
 
 #End Region
@@ -151,6 +152,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public _gm3 As New Auxiliary.FlashAlgorithms.GibbsMinimization3P
         Public _nl3 As New Auxiliary.FlashAlgorithms.NestedLoops3P
         Public _nl3v2 As New Auxiliary.FlashAlgorithms.NestedLoops3PV2
+        Public _nl3v3 As New Auxiliary.FlashAlgorithms.NestedLoops3PV3
         Public _nlsle As New Auxiliary.FlashAlgorithms.NestedLoopsSLE
         Public _nli As New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
         Public _simplelle As New Auxiliary.FlashAlgorithms.SimpleLLE
@@ -399,6 +401,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Case FlashMethod.NestedLoops3PV2
                         If _nl3v2 Is Nothing Then _nl3v2 = New Auxiliary.FlashAlgorithms.NestedLoops3PV2
                         If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoops3P Else Return _nl3v2
+                    Case FlashMethod.NestedLoops3PV3
+                        If _nl3v3 Is Nothing Then _nl3v3 = New Auxiliary.FlashAlgorithms.NestedLoops3PV3
+                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoops3P Else Return _nl3v3
+
                     Case FlashMethod.NestedLoopsSLE
                         If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE
                         Dim constprops As New List(Of ConstantProperties)
@@ -1248,6 +1254,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 If Me._brio3 Is Nothing Then Me._brio3 = New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P
                 If Me._nl3 Is Nothing Then Me._nl3 = New Auxiliary.FlashAlgorithms.NestedLoops3P
                 If Me._nl3v2 Is Nothing Then Me._nl3v2 = New Auxiliary.FlashAlgorithms.NestedLoops3PV2
+                If Me._nl3v3 Is Nothing Then Me._nl3v3 = New Auxiliary.FlashAlgorithms.NestedLoops3PV3
                 If Me._nli Is Nothing Then Me._nli = New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
                 Me._brio3.StabSearchCompIDs = _tpcompids
                 Me._brio3.StabSearchSeverity = _tpseverity
