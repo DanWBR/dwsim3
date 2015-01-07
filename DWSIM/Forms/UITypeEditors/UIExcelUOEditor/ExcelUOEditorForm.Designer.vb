@@ -45,6 +45,7 @@ Partial Class ExcelUOEditorForm
         '
         Me.OpenFileDialog1.CheckFileExists = False
         Me.OpenFileDialog1.CheckPathExists = False
+        resources.ApplyResources(Me.OpenFileDialog1, "OpenFileDialog1")
         Me.OpenFileDialog1.RestoreDirectory = True
         '
         'BtnNew
