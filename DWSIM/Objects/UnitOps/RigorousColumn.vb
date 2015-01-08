@@ -2888,7 +2888,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCNumbStages")) Then
 
                 Dim ne As Integer = e.ChangedItem.Value
-                Dim nep As Integer = e.OldValue
+                Dim nep As Integer = _st.Count
                 Dim dif As Integer = ne - nep
                 If dif < 0 Then
                     Me.Stages.RemoveRange(nep + dif - 1 - 1, -dif)
@@ -2902,18 +2902,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 ElseIf dif > 0 Then
                     Dim i As Integer
                     For i = 1 To dif
-                        Me.Stages.Insert(Me.Stages.Count - 2, New Stage())
-                        Me.Stages(Me.Stages.Count - 3).Name = DWSIM.App.GetLocalString("DCStage") & "_" & _st.Count - 3
+                        Me.Stages.Insert(Me.Stages.Count - 1, New Stage())
+                        Me.Stages(Me.Stages.Count - 2).Name = DWSIM.App.GetLocalString("DCStage") & "_" & _st.Count - 2
                         With Me.InitialEstimates
                             Dim d As New Dictionary(Of String, Parameter)
                             For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In Me.FlowSheet.Options.SelectedComponents.Values
                                 d.Add(cp.Name, New Parameter)
                             Next
-                            .LiqCompositions.Insert(.LiqCompositions.Count - 2, d)
-                            .VapCompositions.Insert(.VapCompositions.Count - 2, d)
-                            .LiqMolarFlows.Insert(.LiqMolarFlows.Count - 2, New Parameter)
-                            .VapMolarFlows.Insert(.VapMolarFlows.Count - 2, New Parameter)
-                            .StageTemps.Insert(.StageTemps.Count - 2, New Parameter)
+                            .LiqCompositions.Insert(.LiqCompositions.Count - 1, d)
+                            .VapCompositions.Insert(.VapCompositions.Count - 1, d)
+                            .LiqMolarFlows.Insert(.LiqMolarFlows.Count - 1, New Parameter)
+                            .VapMolarFlows.Insert(.VapMolarFlows.Count - 1, New Parameter)
+                            .StageTemps.Insert(.StageTemps.Count - 1, New Parameter)
                         End With
                     Next
                 End If
