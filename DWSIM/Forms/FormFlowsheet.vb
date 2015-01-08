@@ -1009,31 +1009,9 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub IronRubyToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles IronRubyToolStripMenuItem.Click
-        If DWSIM.App.IsRunningOnMono Then
-            Dim fs As New FormScriptMono
-            fs.fc = Me
-            fs.language = 2
-            fs.Show(Me)
-        Else
-            Dim fs As New FormScript
-            fs.fc = Me
-            fs.language = 2
-            fs.Show(Me.dckPanel)
-        End If
-    End Sub
-
-    Private Sub LuaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        If DWSIM.App.IsRunningOnMono Then
-            Dim fs As New FormScriptMono
-            fs.fc = Me
-            fs.language = 4
-            fs.Show(Me)
-        Else
-            Dim fs As New FormScript
-            fs.fc = Me
-            fs.language = 4
-            fs.Show(Me)
-        End If
+        Dim fs As New FormScript
+        fs.fc = Me
+        fs.Show(Me.dckPanel)
     End Sub
 
     Private Sub ExibirSaídaDoConsoleToolStripMenuItem_CheckedChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles ExibirSaídaDoConsoleToolStripMenuItem.CheckedChanged

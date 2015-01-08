@@ -48,11 +48,18 @@ Public Class ExcelUOEditorForm
     Private Sub BtnEdit_Click(sender As System.Object, e As System.EventArgs) Handles BtnEdit.Click
         If TbFileName.Text <> "" Then
             If My.Computer.FileSystem.FileExists(TbFileName.Text) Then
-                Dim xcl As New Excel.Application()
-                Dim mybook As Excel.Workbook
-
-                xcl.Visible = True
-                mybook = xcl.Workbooks.Open(TbFileName.Text)
+                Dim excelType As Type = Type.GetTypeFromProgID("Excel.Application")
+                Dim excelProxy As Object = Activator.CreateInstance(excelType)
+                Using xcl As New Excel.Application(Nothing, excelProxy)
+                    For Each CurrAddin As Excel.AddIn In xcl.AddIns
+                        If CurrAddin.Installed Then
+                            CurrAddin.Installed = False
+                            CurrAddin.Installed = True
+                        End If
+                    Next
+                    xcl.Visible = True
+                    xcl.Workbooks.Open(TbFileName.Text, True, False)
+                End Using
             Else
                 MessageBox.Show(DWSIM.App.GetLocalString("Oarquivonoexisteoufo"), DWSIM.App.GetLocalString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
@@ -61,8 +68,6 @@ Public Class ExcelUOEditorForm
 
     Private Sub BtnNew_Click(sender As System.Object, e As System.EventArgs) Handles BtnNew.Click
         Dim FileName As String = My.Application.ActiveSimulation.Text
-        Dim AppPath = Application.StartupPath
-
         OpenFileDialog1.Title = "New Filename"
         OpenFileDialog1.Filter = "Excel files|*.xlsx; *xls"
         OpenFileDialog1.ValidateNames = False
@@ -72,7 +77,7 @@ Public Class ExcelUOEditorForm
 
         If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
             Dim s As String = OpenFileDialog1.FileName
-            FileCopy(AppPath & "\TemplateExcelUO.xlsx", s)
+            FileCopy(My.Application.Info.DirectoryPath & "\TemplateExcelUO.xlsx", s)
             TbFileName.Text = s
         End If
     End Sub

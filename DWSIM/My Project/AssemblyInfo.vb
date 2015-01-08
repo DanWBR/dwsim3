@@ -14,7 +14,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("DWSIM - Open Source Chemical Process Simulator")> 
 <Assembly: AssemblyCompany("DWSIM Project")> 
 <Assembly: AssemblyProduct("DWSIM")> 
-<Assembly: AssemblyCopyright("Copyright © 2007-2014 Daniel Wagner O. de Medeiros")> 
+<Assembly: AssemblyCopyright("Copyright © 2007-2015 Daniel Medeiros, Gregor Reichert, Gustavo León")> 
 <Assembly: AssemblyTrademark("DWSIM")> 
 
 <Assembly: ComVisible(True)> 

@@ -272,7 +272,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         i = i + 1
                     Loop Until i = n + 1
 
-                    If Abs(F) < 0.000001 Then Exit Do
+                    If Abs(F) < 0.0000000000000001 Then Exit Do
 
                     V = -F / dF + V
 
@@ -317,10 +317,10 @@ out:
 
             If L > 0 Then ' we have a liquid phase
 
-                If V > 0.0001 And n = 1 Then
-                    'the liquid phase cannot be unstable when there's also vapor and only two compounds in the system.
-                    Return result
-                End If
+                'If V > 0.0001 And n = 1 Then
+                '    'the liquid phase cannot be unstable when there's also vapor and only two compounds in the system.
+                '    Return result
+                'End If
 
                 Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
                 Dim nc As Integer = UBound(Vz)

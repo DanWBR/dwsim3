@@ -100,7 +100,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
             Dim k, ci, co As Integer
 
-            Using xcl As New Excel.Application()
+            Dim excelType As Type = Type.GetTypeFromProgID("Excel.Application")
+            Dim excelProxy As Object = Activator.CreateInstance(excelType)
+
+            Using xcl As New Excel.Application(Nothing, excelProxy)
+
+                For Each CurrAddin As Excel.AddIn In xcl.AddIns
+                    If CurrAddin.Installed Then
+                        CurrAddin.Installed = False
+                        CurrAddin.Installed = True
+                    End If
+                Next
 
                 'xcl.Visible = True 'uncomment for debugging
 
@@ -399,62 +409,74 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             'read input and output parameters from associated Excel table if not existing yet (=during loading from file)
             If Filename <> "" And InputParams.Count = 0 And OutputParams.Count = 0 Then
-                Dim xcl As New Excel.Application()
-                'xcl.Visible = True 'uncomment for debugging
 
-                Dim mybook As Excel.Workbook
-                Dim AppPath = Application.StartupPath
-                Dim ParName As String
-                Dim i As Integer
+                Dim excelType As Type = Type.GetTypeFromProgID("Excel.Application")
+                Dim excelProxy As Object = Activator.CreateInstance(excelType)
 
-                'Load Excel definition file
-                If My.Computer.FileSystem.FileExists(Filename) Then
-                    mybook = xcl.Workbooks.Open(Filename)
-                    Dim mysheetIn As Excel.Worksheet = mybook.Sheets("Input")
-                    Dim mysheetOut As Excel.Worksheet = mybook.Sheets("Output")
+                Using xcl As New Excel.Application(Nothing, excelProxy)
 
-                    InputParams.Clear()
-                    i = 0
-                    Do
-                        Dim ExlPar As New ExcelParameter
-
-                        ParName = mysheetIn.Cells(5 + i, 7).Value
-                        If ParName <> "" Then
-                            ExlPar.Name = ParName
-                            ExlPar.Value = mysheetIn.Cells(5 + i, 8).Value
-                            ExlPar.Unit = mysheetIn.Cells(5 + i, 9).Value
-                            ExlPar.Annotation = mysheetIn.Cells(5 + i, 10).Value
-                            InputParams.Add(ExlPar.Name, ExlPar)
-
-                            i += 1
+                    For Each CurrAddin As Excel.AddIn In xcl.AddIns
+                        If CurrAddin.Installed Then
+                            CurrAddin.Installed = False
+                            CurrAddin.Installed = True
                         End If
-                    Loop While ParName <> ""
+                    Next
 
-                    OutputParams.Clear()
-                    i = 0
-                    Do
-                        Dim ExlPar As New ExcelParameter
+                    'xcl.Visible = True 'uncomment for debugging
 
-                        ParName = mysheetOut.Cells(5 + i, 7).Value
-                        If ParName <> "" Then
-                            ExlPar.Name = ParName
-                            ExlPar.Value = mysheetOut.Cells(5 + i, 8).Value
-                            ExlPar.Unit = mysheetOut.Cells(5 + i, 9).Value
-                            ExlPar.Annotation = mysheetOut.Cells(5 + i, 10).Value
-                            OutputParams.Add(ExlPar.Name, ExlPar)
+                    Dim mybook As Excel.Workbook
+                    Dim AppPath = Application.StartupPath
+                    Dim ParName As String
+                    Dim i As Integer
 
-                            i += 1
-                        End If
-                    Loop While ParName <> ""
+                    'Load Excel definition file
+                    If My.Computer.FileSystem.FileExists(Filename) Then
+                        mybook = xcl.Workbooks.Open(Filename, True, True)
+                        Dim mysheetIn As Excel.Worksheet = mybook.Sheets("Input")
+                        Dim mysheetOut As Excel.Worksheet = mybook.Sheets("Output")
 
+                        InputParams.Clear()
+                        i = 0
+                        Do
+                            Dim ExlPar As New ExcelParameter
+
+                            ParName = mysheetIn.Cells(5 + i, 7).Value
+                            If ParName <> "" Then
+                                ExlPar.Name = ParName
+                                ExlPar.Value = mysheetIn.Cells(5 + i, 8).Value
+                                ExlPar.Unit = mysheetIn.Cells(5 + i, 9).Value
+                                ExlPar.Annotation = mysheetIn.Cells(5 + i, 10).Value
+                                InputParams.Add(ExlPar.Name, ExlPar)
+
+                                i += 1
+                            End If
+                        Loop While ParName <> ""
+
+                        OutputParams.Clear()
+                        i = 0
+                        Do
+                            Dim ExlPar As New ExcelParameter
+
+                            ParName = mysheetOut.Cells(5 + i, 7).Value
+                            If ParName <> "" Then
+                                ExlPar.Name = ParName
+                                ExlPar.Value = mysheetOut.Cells(5 + i, 8).Value
+                                ExlPar.Unit = mysheetOut.Cells(5 + i, 9).Value
+                                ExlPar.Annotation = mysheetOut.Cells(5 + i, 10).Value
+                                OutputParams.Add(ExlPar.Name, ExlPar)
+
+                                i += 1
+                            End If
+                        Loop While ParName <> ""
+
+                        mybook.Close(False)
+
+                    End If
 
                     xcl.Quit()
                     xcl.Dispose()
-                Else
-                    xcl.Quit()
-                    xcl.Dispose()
-                End If
 
+                End Using
 
             End If
 

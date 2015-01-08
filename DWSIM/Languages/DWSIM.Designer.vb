@@ -5306,6 +5306,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Operação Unitária Excel.
+        '''</summary>
+        Friend Shared ReadOnly Property ExcelUnitOp() As String
+            Get
+                Return ResourceManager.GetString("ExcelUnitOp", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Editor.
         '''</summary>
         Friend Shared ReadOnly Property ExcelUOEditor() As String

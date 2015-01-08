@@ -4883,4 +4883,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="RemoveScriptQuestion" xml:space="preserve">
     <value>Sind Sie sicher, dass Sie dieses Skript aus der Liste entfernen?</value>
   </data>
+  <data name="ExcelUnitOp" xml:space="preserve">
+    <value>Excel UO</value>
+  </data>
 </root>

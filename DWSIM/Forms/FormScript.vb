@@ -15,13 +15,6 @@ Imports DWSIM.DWSIM.Outros
     Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     Public fc As FormFlowsheet
-    Public language As Integer
-
-    '0 = VBScript
-    '1 = JScript
-    '2 = IronPython
-    '3 = IronRuby
-    '4 = Lua
 
     Private Sub FormVBScript_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Me.Load
 
@@ -48,7 +41,13 @@ Imports DWSIM.DWSIM.Outros
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click
 
-        If Not Me.TabStripScripts.SelectedItem Is Nothing Then RunScript(DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl).txtScript.Document.Text, fc)
+        If Not Me.TabStripScripts.SelectedItem Is Nothing Then
+            If DWSIM.App.IsRunningOnMono Then
+                RunScript(DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono).txtScript.Text, fc)
+            Else
+                RunScript(DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl).txtScript.Document.Text, fc)
+            End If
+        End If
 
     End Sub
 
@@ -104,24 +103,45 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub CutToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CutToolStripButton.Click
-        Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
-        If scontrol.txtScript.Selection.Text <> "" Then
-            Clipboard.SetText(scontrol.txtScript.Selection.Text)
-            scontrol.txtScript.Selection.DeleteSelection()
+        If Not DWSIM.App.IsRunningOnMono Then
+            Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
+            If scontrol.txtScript.Selection.Text <> "" Then
+                Clipboard.SetText(scontrol.txtScript.Selection.Text)
+                scontrol.txtScript.Selection.DeleteSelection()
+            End If
+        Else
+            Dim scontrol As ScriptEditorControlMono = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono)
+            If scontrol.txtScript.SelectedText <> "" Then
+                scontrol.txtScript.Cut()
+            End If
         End If
     End Sub
 
     Private Sub CopyToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CopyToolStripButton.Click
-        Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
-        If scontrol.txtScript.Selection.Text <> "" Then Clipboard.SetText(scontrol.txtScript.Selection.Text)
+        If Not DWSIM.App.IsRunningOnMono Then
+            Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
+            If scontrol.txtScript.Selection.Text <> "" Then Clipboard.SetText(scontrol.txtScript.Selection.Text)
+        Else
+            Dim scontrol As ScriptEditorControlMono = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono)
+            If scontrol.txtScript.SelectedText <> "" Then Clipboard.SetText(scontrol.txtScript.SelectedText)
+        End If
     End Sub
 
     Private Sub PasteToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PasteToolStripButton.Click
-        Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
-        If scontrol.txtScript.Selection.SelLength <> 0 Then
-            scontrol.txtScript.Selection.Text = Clipboard.GetText()
+        If Not DWSIM.App.IsRunningOnMono Then
+            Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
+            If scontrol.txtScript.Selection.SelLength <> 0 Then
+                scontrol.txtScript.Selection.Text = Clipboard.GetText()
+            Else
+                scontrol.txtScript.Document.InsertText(Clipboard.GetText(), scontrol.txtScript.Caret.Position.X, scontrol.txtScript.Caret.Position.Y)
+            End If
         Else
-            scontrol.txtScript.Document.InsertText(Clipboard.GetText(), scontrol.txtScript.Caret.Position.X, scontrol.txtScript.Caret.Position.Y)
+            Dim scontrol As ScriptEditorControlMono = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono)
+            If scontrol.txtScript.SelectionLength <> 0 Then
+                scontrol.txtScript.SelectedText = Clipboard.GetText()
+            Else
+                scontrol.txtScript.Paste()
+            End If
         End If
     End Sub
 
@@ -151,46 +171,87 @@ Imports DWSIM.DWSIM.Outros
         fc.ScriptCollection.Clear()
 
         For Each tab As FATabStripItem In TabStripScripts.Items
-            Dim seditor As ScriptEditorControl = DirectCast(tab.Controls(0).Controls(0), ScriptEditorControl)
-            Dim scr As New Script() With
-                            {.ID = Guid.NewGuid().ToString,
-                             .Title = tab.Title,
-                             .Linked = seditor.chkLink.Checked,
-                            .ScriptText = seditor.txtScript.Document.Text}
-            Select Case seditor.cbLinkedObject.SelectedIndex
-                Case 0
-                    scr.LinkedObjectType = Script.ObjectType.Simulation
-                    scr.LinkedObjectName = ""
-                    If seditor.cbLinkedEvent.SelectedIndex = 0 Then
-                        scr.LinkedEventType = Script.EventType.SimulationOpened
-                    ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
-                        scr.LinkedEventType = Script.EventType.SimulationSaved
-                    Else
-                        scr.LinkedEventType = Script.EventType.SimulationClosed
-                    End If
-                Case 1
-                    scr.LinkedObjectType = Script.ObjectType.Solver
-                    scr.LinkedObjectName = ""
-                    If seditor.cbLinkedEvent.SelectedIndex = 0 Then
-                        scr.LinkedEventType = Script.EventType.SolverStarted
-                    ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
-                        scr.LinkedEventType = Script.EventType.SolverFinished
-                    Else
-                        scr.LinkedEventType = Script.EventType.SolverRecycleLoop
-                    End If
-                Case Else
-                    scr.LinkedObjectType = Script.ObjectType.FlowsheetObject
-                    scr.LinkedObjectName = fc.GetFlowsheetGraphicObject(seditor.cbLinkedObject.SelectedItem.ToString).Name
-                    If seditor.cbLinkedEvent.SelectedIndex = 0 Then
-                        scr.LinkedEventType = Script.EventType.ObjectCalculationStarted
-                    ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
-                        scr.LinkedEventType = Script.EventType.ObjectCalculationFinished
-                    Else
-                        scr.LinkedEventType = Script.EventType.ObjectCalculationError
-                    End If
-            End Select
-
-            fc.ScriptCollection.Add(scr.ID, scr)
+            If Not DWSIM.App.IsRunningOnMono Then
+                Dim seditor As ScriptEditorControl = DirectCast(tab.Controls(0).Controls(0), ScriptEditorControl)
+                Dim scr As New Script() With
+                                {.ID = Guid.NewGuid().ToString,
+                                 .Title = tab.Title,
+                                 .Linked = seditor.chkLink.Checked,
+                                .ScriptText = seditor.txtScript.Document.Text}
+                Select Case seditor.cbLinkedObject.SelectedIndex
+                    Case 0
+                        scr.LinkedObjectType = Script.ObjectType.Simulation
+                        scr.LinkedObjectName = ""
+                        If seditor.cbLinkedEvent.SelectedIndex = 0 Then
+                            scr.LinkedEventType = Script.EventType.SimulationOpened
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
+                            scr.LinkedEventType = Script.EventType.SimulationSaved
+                        Else
+                            scr.LinkedEventType = Script.EventType.SimulationClosed
+                        End If
+                    Case 1
+                        scr.LinkedObjectType = Script.ObjectType.Solver
+                        scr.LinkedObjectName = ""
+                        If seditor.cbLinkedEvent.SelectedIndex = 0 Then
+                            scr.LinkedEventType = Script.EventType.SolverStarted
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
+                            scr.LinkedEventType = Script.EventType.SolverFinished
+                        Else
+                            scr.LinkedEventType = Script.EventType.SolverRecycleLoop
+                        End If
+                    Case Else
+                        scr.LinkedObjectType = Script.ObjectType.FlowsheetObject
+                        scr.LinkedObjectName = fc.GetFlowsheetGraphicObject(seditor.cbLinkedObject.SelectedItem.ToString).Name
+                        If seditor.cbLinkedEvent.SelectedIndex = 0 Then
+                            scr.LinkedEventType = Script.EventType.ObjectCalculationStarted
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
+                            scr.LinkedEventType = Script.EventType.ObjectCalculationFinished
+                        Else
+                            scr.LinkedEventType = Script.EventType.ObjectCalculationError
+                        End If
+                End Select
+                fc.ScriptCollection.Add(scr.ID, scr)
+            Else
+                Dim seditor As ScriptEditorControlMono = DirectCast(tab.Controls(0).Controls(0), ScriptEditorControlMono)
+                Dim scr As New Script() With
+                                {.ID = Guid.NewGuid().ToString,
+                                 .Title = tab.Title,
+                                 .Linked = seditor.chkLink.Checked,
+                                .ScriptText = seditor.txtScript.Text}
+                Select Case seditor.cbLinkedObject.SelectedIndex
+                    Case 0
+                        scr.LinkedObjectType = Script.ObjectType.Simulation
+                        scr.LinkedObjectName = ""
+                        If seditor.cbLinkedEvent.SelectedIndex = 0 Then
+                            scr.LinkedEventType = Script.EventType.SimulationOpened
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
+                            scr.LinkedEventType = Script.EventType.SimulationSaved
+                        Else
+                            scr.LinkedEventType = Script.EventType.SimulationClosed
+                        End If
+                    Case 1
+                        scr.LinkedObjectType = Script.ObjectType.Solver
+                        scr.LinkedObjectName = ""
+                        If seditor.cbLinkedEvent.SelectedIndex = 0 Then
+                            scr.LinkedEventType = Script.EventType.SolverStarted
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
+                            scr.LinkedEventType = Script.EventType.SolverFinished
+                        Else
+                            scr.LinkedEventType = Script.EventType.SolverRecycleLoop
+                        End If
+                    Case Else
+                        scr.LinkedObjectType = Script.ObjectType.FlowsheetObject
+                        scr.LinkedObjectName = fc.GetFlowsheetGraphicObject(seditor.cbLinkedObject.SelectedItem.ToString).Name
+                        If seditor.cbLinkedEvent.SelectedIndex = 0 Then
+                            scr.LinkedEventType = Script.EventType.ObjectCalculationStarted
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
+                            scr.LinkedEventType = Script.EventType.ObjectCalculationFinished
+                        Else
+                            scr.LinkedEventType = Script.EventType.ObjectCalculationError
+                        End If
+                End Select
+                fc.ScriptCollection.Add(scr.ID, scr)
+            End If
         Next
 
         fc.WriteToLog("Script Data updated sucessfully.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
@@ -198,23 +259,33 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub PrintToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PrintToolStripButton.Click
-        Dim pd As Alsing.SourceCode.SourceCodePrintDocument
-        pd = New Alsing.SourceCode.SourceCodePrintDocument(DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl).txtScript.Document)
-        pd1.Document = pd
-        If pd1.ShowDialog(Me) = DialogResult.OK Then
-            pd.Print()
+        If Not DWSIM.App.IsRunningOnMono Then
+            Dim pd As Alsing.SourceCode.SourceCodePrintDocument
+            pd = New Alsing.SourceCode.SourceCodePrintDocument(DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl).txtScript.Document)
+            pd1.Document = pd
+            If pd1.ShowDialog(Me) = DialogResult.OK Then
+                pd.Print()
+            End If
         End If
     End Sub
 
     Private Sub tscb1_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tscb1.SelectedIndexChanged
         For Each ft As FATabStripItem In TabStripScripts.Items
-            DirectCast(ft.Controls(0).Controls(0), ScriptEditorControl).txtScript.FontName = tscb1.SelectedItem.ToString
+            If Not DWSIM.App.IsRunningOnMono Then
+                DirectCast(ft.Controls(0).Controls(0), ScriptEditorControl).txtScript.FontName = tscb1.SelectedItem.ToString
+            Else
+                DirectCast(ft.Controls(0).Controls(0), ScriptEditorControlMono).txtScript.Font = New Font(tscb1.SelectedItem.ToString, 10)
+            End If
         Next
     End Sub
 
     Private Sub tscb2_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tscb2.SelectedIndexChanged
         For Each ft As FATabStripItem In TabStripScripts.Items
-            DirectCast(ft.Controls(0).Controls(0), ScriptEditorControl).txtScript.FontSize = tscb2.SelectedItem
+            If Not DWSIM.App.IsRunningOnMono Then
+                DirectCast(ft.Controls(0).Controls(0), ScriptEditorControl).txtScript.FontSize = tscb2.SelectedItem
+            Else
+                DirectCast(ft.Controls(0).Controls(0), ScriptEditorControlMono).txtScript.Font = New Font(DirectCast(ft.Controls(0).Controls(0), ScriptEditorControlMono).txtScript.Font.Name, tscb2.SelectedItem)
+            End If
         Next
     End Sub
 
@@ -226,78 +297,142 @@ Imports DWSIM.DWSIM.Outros
 
     Private Sub InsertScriptTab(scriptdata As Script)
 
-        Dim p As New Panel With {.Dock = DockStyle.Fill}
-        Dim scontrol As New ScriptEditorControl With {.Dock = DockStyle.Fill}
+        If Not DWSIM.App.IsRunningOnMono Then
 
-        With scontrol
+            Dim p As New Panel With {.Dock = DockStyle.Fill}
+            Dim scontrol As New ScriptEditorControl With {.Dock = DockStyle.Fill}
+            With scontrol
 
-            .txtScript.Document = New Alsing.SourceCode.SyntaxDocument()
-            .txtScript.Document.SyntaxFile = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "SyntaxFiles" & Path.DirectorySeparatorChar & "Python.syn"
-            .txtScript.FontName = tscb1.SelectedItem.ToString
-            .txtScript.FontSize = tscb2.SelectedItem
+                .txtScript.Document = New Alsing.SourceCode.SyntaxDocument()
+                .txtScript.Document.SyntaxFile = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "SyntaxFiles" & Path.DirectorySeparatorChar & "Python.syn"
+                .txtScript.FontName = tscb1.SelectedItem.ToString
+                .txtScript.FontSize = tscb2.SelectedItem
+                .txtScript.Document.Text = scriptdata.ScriptText
 
-            .txtScript.Document.Text = scriptdata.ScriptText
+                .readAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly)
+                .readAssembly(GetType(System.String).Assembly)
+                .readAssembly(GetType(CapeOpen.BaseUnitEditor).Assembly)
+                .readAssembly(GetType(CAPEOPEN110.ICapeThermoPhases).Assembly)
 
-            .readAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly)
-            .readAssembly(GetType(System.String).Assembly)
-            .readAssembly(GetType(CapeOpen.BaseUnitEditor).Assembly)
-            .readAssembly(GetType(CAPEOPEN110.ICapeThermoPhases).Assembly)
+                .listBoxAutoComplete.Font = New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point)
+                .listBoxAutoComplete.Height = 250
 
-            .listBoxAutoComplete.Font = New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point)
-            .listBoxAutoComplete.Height = 250
+                .form = fc
 
-            .form = fc
+                .chkLink.Checked = scriptdata.Linked
 
-            .chkLink.Checked = scriptdata.Linked
+                p.Controls.Add(scontrol)
 
-            p.Controls.Add(scontrol)
+                Dim stab As New FATabStripItem()
+                stab.Controls.Add(p)
+                stab.Tag = scriptdata.ID
+                If scriptdata.Title = "" Then stab.Title = "Script" & TabStripScripts.Items.Count + 1 Else stab.Title = scriptdata.Title
 
-            Dim stab As New FATabStripItem()
-            stab.Controls.Add(p)
-            stab.Tag = scriptdata.ID
-            If scriptdata.Title = "" Then stab.Title = "Script" & TabStripScripts.Items.Count + 1 Else stab.Title = scriptdata.Title
+                TabStripScripts.AddTab(stab, True)
 
-            TabStripScripts.AddTab(stab, True)
+                TabStripScripts.SelectedItem = stab
 
-            TabStripScripts.SelectedItem = stab
+                Me.tsTextBoxRename.Text = stab.Title
 
-            Me.tsTextBoxRename.Text = stab.Title
+                Me.Invalidate()
 
-            Me.Invalidate()
+                If scriptdata.LinkedObjectName <> "" Then
+                    .cbLinkedObject.SelectedItem = fc.Collections.ObjectCollection(scriptdata.LinkedObjectName).GraphicObject.Tag
+                Else
+                    Select Case scriptdata.LinkedObjectType
+                        Case Script.ObjectType.Simulation
+                            .cbLinkedObject.SelectedIndex = 0
+                        Case Script.ObjectType.Solver
+                            .cbLinkedObject.SelectedIndex = 1
+                    End Select
+                End If
 
-            If scriptdata.LinkedObjectName <> "" Then
-                .cbLinkedObject.SelectedItem = fc.Collections.ObjectCollection(scriptdata.LinkedObjectName).GraphicObject.Tag
-            Else
-                Select Case scriptdata.LinkedObjectType
-                    Case Script.ObjectType.Simulation
-                        .cbLinkedObject.SelectedIndex = 0
-                    Case Script.ObjectType.Solver
-                        .cbLinkedObject.SelectedIndex = 1
+                Select Case scriptdata.LinkedEventType
+                    Case Script.EventType.ObjectCalculationStarted
+                        .cbLinkedEvent.SelectedIndex = 0
+                    Case Script.EventType.ObjectCalculationFinished
+                        .cbLinkedEvent.SelectedIndex = 1
+                    Case Script.EventType.ObjectCalculationError
+                        .cbLinkedEvent.SelectedIndex = 2
+                    Case Script.EventType.SimulationOpened
+                        .cbLinkedEvent.SelectedIndex = 0
+                    Case Script.EventType.SimulationSaved
+                        .cbLinkedEvent.SelectedIndex = 1
+                    Case Script.EventType.SimulationClosed
+                        .cbLinkedEvent.SelectedIndex = 2
+                    Case Script.EventType.SolverStarted
+                        .cbLinkedEvent.SelectedIndex = 0
+                    Case Script.EventType.SolverFinished
+                        .cbLinkedEvent.SelectedIndex = 1
+                    Case Script.EventType.SolverRecycleLoop
+                        .cbLinkedEvent.SelectedIndex = 2
                 End Select
-            End If
 
-            Select Case scriptdata.LinkedEventType
-                Case Script.EventType.ObjectCalculationStarted
-                    .cbLinkedEvent.SelectedIndex = 0
-                Case Script.EventType.ObjectCalculationFinished
-                    .cbLinkedEvent.SelectedIndex = 1
-                Case Script.EventType.ObjectCalculationError
-                    .cbLinkedEvent.SelectedIndex = 2
-                Case Script.EventType.SimulationOpened
-                    .cbLinkedEvent.SelectedIndex = 0
-                Case Script.EventType.SimulationSaved
-                    .cbLinkedEvent.SelectedIndex = 1
-                Case Script.EventType.SimulationClosed
-                    .cbLinkedEvent.SelectedIndex = 2
-                Case Script.EventType.SolverStarted
-                    .cbLinkedEvent.SelectedIndex = 0
-                Case Script.EventType.SolverFinished
-                    .cbLinkedEvent.SelectedIndex = 1
-                Case Script.EventType.SolverRecycleLoop
-                    .cbLinkedEvent.SelectedIndex = 2
-            End Select
+            End With
 
-        End With
+        Else
+
+            Dim p As New Panel With {.Dock = DockStyle.Fill}
+            Dim scontrol As New ScriptEditorControlMono With {.Dock = DockStyle.Fill}
+            With scontrol
+
+                .txtScript.Font = New Font(tscb1.SelectedItem.ToString, tscb2.SelectedItem)
+                .txtScript.Text = scriptdata.ScriptText
+
+                .form = fc
+
+                .chkLink.Checked = scriptdata.Linked
+
+                p.Controls.Add(scontrol)
+
+                Dim stab As New FATabStripItem()
+                stab.Controls.Add(p)
+                stab.Tag = scriptdata.ID
+                If scriptdata.Title = "" Then stab.Title = "Script" & TabStripScripts.Items.Count + 1 Else stab.Title = scriptdata.Title
+
+                TabStripScripts.AddTab(stab, True)
+
+                TabStripScripts.SelectedItem = stab
+
+                Me.tsTextBoxRename.Text = stab.Title
+
+                Me.Invalidate()
+
+                If scriptdata.LinkedObjectName <> "" Then
+                    .cbLinkedObject.SelectedItem = fc.Collections.ObjectCollection(scriptdata.LinkedObjectName).GraphicObject.Tag
+                Else
+                    Select Case scriptdata.LinkedObjectType
+                        Case Script.ObjectType.Simulation
+                            .cbLinkedObject.SelectedIndex = 0
+                        Case Script.ObjectType.Solver
+                            .cbLinkedObject.SelectedIndex = 1
+                    End Select
+                End If
+
+                Select Case scriptdata.LinkedEventType
+                    Case Script.EventType.ObjectCalculationStarted
+                        .cbLinkedEvent.SelectedIndex = 0
+                    Case Script.EventType.ObjectCalculationFinished
+                        .cbLinkedEvent.SelectedIndex = 1
+                    Case Script.EventType.ObjectCalculationError
+                        .cbLinkedEvent.SelectedIndex = 2
+                    Case Script.EventType.SimulationOpened
+                        .cbLinkedEvent.SelectedIndex = 0
+                    Case Script.EventType.SimulationSaved
+                        .cbLinkedEvent.SelectedIndex = 1
+                    Case Script.EventType.SimulationClosed
+                        .cbLinkedEvent.SelectedIndex = 2
+                    Case Script.EventType.SolverStarted
+                        .cbLinkedEvent.SelectedIndex = 0
+                    Case Script.EventType.SolverFinished
+                        .cbLinkedEvent.SelectedIndex = 1
+                    Case Script.EventType.SolverRecycleLoop
+                        .cbLinkedEvent.SelectedIndex = 2
+                End Select
+
+            End With
+
+        End If
 
     End Sub
 
