@@ -916,6 +916,7 @@ alt:
             Dim d1, d2 As Date, dt As TimeSpan
             Dim soma_x, soma_y As Double
             Dim L, Lf, Vf, T, Tf As Double
+            Dim e1 As Double
 
             d1 = Date.Now
 
@@ -1228,11 +1229,18 @@ alt:
                     'If T < Tmin Then T = Tmin
                     'If T > Tmax Then T = Tmax
 
+                    e1 = 0
+                    For i = 0 To n
+                        e1 += Math.Abs(Vx(i) - Vx_ant(i))
+                        e1 += Math.Abs(Vy(i) - Vy_ant(i))
+                    Next
+                    e1 += Math.Abs(T - Tant)
+
                     Console.WriteLine("PV Flash [NL]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
 
                     CheckCalculatorStatus()
 
-                Loop Until Math.Abs(fval) < etol Or Double.IsNaN(T) = True Or ecount > maxit_e
+                Loop Until (Math.Abs(fval) < etol And e1 < etol) Or Double.IsNaN(T) = True Or ecount > maxit_e
 
             End If
 

@@ -1477,7 +1477,7 @@ alt:
                 For i = 0 To n
                     Ki1(i) = gamma1(i) * PP.AUX_PVAPi(i, T) / P
                     Vy(i) = Ki1(i) * Vx1(i)
-                    VL(i) = Vz(i) / (1 + V * (Vy(i) / VL(i) - 1))
+                    If VL(i) > 0 Then VL(i) = Vz(i) / (1 + V * (Vy(i) / VL(i) - 1))
                 Next
 
                 e1 = 0
