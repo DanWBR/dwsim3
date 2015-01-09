@@ -61,13 +61,25 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             'Calculate Ki`s
 
-            Dim minn As Double = Vz(0)
-            For i = 0 To n
-                If Vz(i) <> 0.0# And Vz(i) < minn Then minn = Vz(i)
-            Next
+            If UseInitialEstimatesForPhase1 And UseInitialEstimatesForPhase2 Then
+                L1 = 0
+                L2 = 0
+                For i = 0 To n
+                    L1 += (Vz(i) - InitialEstimatesForPhase2(i)) / (InitialEstimatesForPhase1(i) - InitialEstimatesForPhase2(i))
+                Next
+                L1 = L1 / (n + 1)
+                If L1 = 1 Then L1 = 0.99
+                If L1 = 0 Then L1 = 0.01
+                L2 = 1 - L1
+            Else
+                Dim minn As Double = Vz(0)
+                For i = 0 To n
+                    If Vz(i) <> 0.0# And Vz(i) < minn Then minn = Vz(i)
+                Next
 
-            L2 = minn / 2
-            L1 = 1 - L2
+                L2 = minn / 2
+                L1 = 1 - L2
+            End If
 
             If UseInitialEstimatesForPhase1 Then
                 For i = 0 To n
@@ -120,36 +132,30 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 If Double.IsNaN(err) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                If ecount > 0 And Abs(err) < 0.000001 Then Exit Do
+                If ecount > 0 And (Abs(err) < 0.000001 Or L1 < 0.001 Or L2 < 0.001) Then Exit Do
 
                 For i = 0 To n
                     Vn1(i) = Vz(i) / (1 + gamma1(i) * L2 / (gamma2(i) * L1))
+                    Vn2(i) = Vz(i) - Vn1(i)
                 Next
 
-                L1 = 0
-                L2 = 0
-                For i = 0 To n
-                    L1 += Vn1(i)
-                    L2 += Vn2(i)
-                Next
-
-                For i = 0 To n
-                    Vn2(i) = Vn1(i) * L2 * gamma1(i) / (L1 * gamma2(i))
-                Next
+                L1 = Vn1.Sum
+                L2 = Vn2.Sum
 
                 ecount += 1
 
-                If ecount > 10000 Then Throw New Exception(DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"))
+                If ecount > 10000 Then
+                    Throw New Exception(DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"))
+                End If
+
 
             Loop
 
-            d2 = Date.Now
+out:        d2 = Date.Now
 
             dt = d2 - d1
 
             Console.WriteLine("PT Flash [SimpleLLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & err)
-
-out:
 
             'order liquid phases by mixture NBP
 
