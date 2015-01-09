@@ -274,7 +274,7 @@ Namespace DWSIM.Outros
 
     End Class
 
-    Public Class Script
+    <System.Serializable()> Public Class Script
 
         Implements XMLSerializer.Interfaces.ICustomXMLSerialization
 

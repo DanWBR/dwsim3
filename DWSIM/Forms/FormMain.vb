@@ -2651,7 +2651,7 @@ Public Class FormMain
                 excs.Add(New Exception("Error Updating Spreadsheet Variables", ex))
             End Try
 
-            form.FormChild_Shown(Me, New EventArgs)
+            'form.FormChild_Shown(Me, New EventArgs)
 
             form.Invalidate()
 
@@ -2696,6 +2696,8 @@ Public Class FormMain
     End Sub
 
     Sub SaveXML(ByVal path As String, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "")
+
+        form.ProcessScripts(Script.EventType.SimulationSaved, Script.ObjectType.Simulation)
 
         Dim xdoc As New XDocument()
         Dim xel As XElement
@@ -2852,6 +2854,8 @@ Public Class FormMain
     End Sub
 
     Sub SaveF(ByVal caminho As String, ByVal form As FormFlowsheet)
+
+        form.ProcessScripts(Script.EventType.SimulationSaved, Script.ObjectType.Simulation)
 
         Dim rndfolder As String = My.Computer.FileSystem.SpecialDirectories.Temp & pathsep & RandomString(8, True) & pathsep
 

@@ -48,12 +48,13 @@ Public Class frmMatList
         Me.DataGridView1.Columns.Add(ms.Nome, ms.GraphicObject.Tag)
         Me.DataGridView1.Columns(ms.Nome).SortMode = DataGridViewColumnSortMode.NotSortable
 
-        Dim props As String() = ms.GetProperties(SimulationObjects_BaseClass.PropertyType.RW)
+        Dim props As String() = ms.GetProperties(SimulationObjects_BaseClass.PropertyType.ALL)
         Dim unit As String = ""
 
-        If Not RowsCreated Then
+        Me.SuspendLayout()
+        Me.DataGridView1.SuspendLayout()
 
-            Me.SuspendLayout()
+        If Not RowsCreated Then
 
             'create rows
             For Each prop As String In props
@@ -67,8 +68,6 @@ Public Class frmMatList
                     End If
                 End With
             Next
-
-            Me.ResumeLayout()
 
         End If
 
@@ -88,6 +87,12 @@ Public Class frmMatList
             End If
             i += 1
         Next
+
+        Me.DataGridView1.RowHeadersWidth = 300
+
+        Me.DataGridView1.ResumeLayout()
+        Me.ResumeLayout()
+
 
     End Sub
 

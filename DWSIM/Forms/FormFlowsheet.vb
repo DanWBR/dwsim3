@@ -306,9 +306,13 @@ Imports DWSIM.DWSIM.Outros
 
         My.Application.ActiveSimulation = Me
 
+        Me.ProcessScripts(Script.EventType.SimulationOpened, Script.ObjectType.Simulation)
+
     End Sub
 
     Private Sub FormChild2_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+
+        Me.ProcessScripts(Script.EventType.SimulationClosed, Script.ObjectType.Simulation)
 
         If My.Application.ActiveSimulation Is Me Then
             My.Application.ActiveSimulation = Nothing
@@ -399,7 +403,11 @@ Imports DWSIM.DWSIM.Outros
                     Console.WriteLine("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "', linked to '" & scr.LinkedObjectName & "'...")
                     Console.WriteLine()
                 Else
-                    Me.WriteToLog("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "', linked to '" & scr.LinkedObjectName & "'...", Color.Blue, TipoAviso.Informacao)
+                    If scr.LinkedObjectName <> "" Then
+                        Me.WriteToLog("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "', linked to '" & scr.LinkedObjectName & "'...", Color.Blue, TipoAviso.Informacao)
+                    Else
+                        Me.WriteToLog("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "'", Color.Blue, TipoAviso.Informacao)
+                    End If
                 End If
                 FormScript.RunScript(scr.ScriptText, Me)
             End If

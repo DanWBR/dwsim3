@@ -254,7 +254,7 @@ Namespace DWSIM.Flowsheet
 
             RaiseEvent MaterialStreamCalculationStarted(form, New System.EventArgs(), ms)
 
-            form.ProcessScripts(Script.EventType.ObjectCalculationStarted, Script.ObjectType.FlowsheetObject, ms.Name)
+            form.ProcessScripts(Script.EventType.ObjectCalculationStarted, Script.ObjectType.FlowsheetObject, ms.Nome)
 
             My.MyApplication.IsFlowsheetSolving = True
 
@@ -1020,7 +1020,7 @@ Namespace DWSIM.Flowsheet
                 calculated = False
             End If
 
-            form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, ms.Name)
+            form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, ms.Nome)
 
             RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), ms)
 
