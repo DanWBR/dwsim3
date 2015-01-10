@@ -404,7 +404,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Case FlashMethod.NestedLoops3PV3
                         If _nl3v3 Is Nothing Then _nl3v3 = New Auxiliary.FlashAlgorithms.NestedLoops3PV3
                         If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoops3P Else Return _nl3v3
-
                     Case FlashMethod.NestedLoopsSLE
                         If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE
                         Dim constprops As New List(Of ConstantProperties)
@@ -1262,6 +1261,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Me._nl3.StabSearchSeverity = _tpseverity
                 Me._nl3v2.StabSearchCompIDs = _tpcompids
                 Me._nl3v2.StabSearchSeverity = _tpseverity
+                Me._nl3v3.StabSearchCompIDs = _tpcompids
+                Me._nl3v3.StabSearchSeverity = _tpseverity
                 Me._nli.StabSearchCompIDs = _tpcompids
                 Me._nli.StabSearchSeverity = _tpseverity
             Catch ex As Exception
