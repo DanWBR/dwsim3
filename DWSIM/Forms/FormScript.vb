@@ -452,6 +452,9 @@ Imports DWSIM.DWSIM.Outros
         End If
     End Sub
 
+    Private Sub HelpToolStripButton_Click(sender As Object, e As EventArgs) Handles HelpToolStripButton.Click
+        Process.Start("http://dwsim.inforside.com.br/wiki/index.php?title=Using_the_IronPython_Script_Manager")
+    End Sub
 End Class
 
 Public Class TextBoxStream
