@@ -318,8 +318,14 @@ Public Class FormLLEDiagram
 
         Ko.X11 = mat.Fases(3).Componentes(cbComp1.Text).FracaoMolar.GetValueOrDefault
         Ko.X12 = mat.Fases(3).Componentes(cbComp2.Text).FracaoMolar.GetValueOrDefault
-        Ko.X21 = mat.Fases(4).Componentes(cbComp1.Text).FracaoMolar.GetValueOrDefault
-        Ko.X22 = mat.Fases(4).Componentes(cbComp2.Text).FracaoMolar.GetValueOrDefault
+
+        If mat.Fases(4).SPMProperties.molarfraction > 0 Then
+            Ko.X21 = mat.Fases(4).Componentes(cbComp1.Text).FracaoMolar.GetValueOrDefault
+            Ko.X22 = mat.Fases(4).Componentes(cbComp2.Text).FracaoMolar.GetValueOrDefault
+        Else
+            Ko.X21 = mat.Fases(3).Componentes(cbComp1.Text).FracaoMolar.GetValueOrDefault
+            Ko.X22 = mat.Fases(3).Componentes(cbComp2.Text).FracaoMolar.GetValueOrDefault
+        End If
 
         Return Ko
     End Function
@@ -392,6 +398,19 @@ Public Class FormLLEDiagram
         InitialPoints.Add(New PointF With {.X = 0, .Y = 0.75})
         InitialPoints.Add(New PointF With {.X = 0.25, .Y = 0.75})
         InitialPoints.Add(New PointF With {.X = 0.75, .Y = 0.25})
+
+        InitialPoints.Add(New PointF With {.X = 0.125, .Y = 0.0})
+        InitialPoints.Add(New PointF With {.X = 0.375, .Y = 0.0})
+        InitialPoints.Add(New PointF With {.X = 0.625, .Y = 0.0})
+        InitialPoints.Add(New PointF With {.X = 0.875, .Y = 0.0})
+        InitialPoints.Add(New PointF With {.X = 0, .Y = 0.125})
+        InitialPoints.Add(New PointF With {.X = 0, .Y = 0.375})
+        InitialPoints.Add(New PointF With {.X = 0, .Y = 0.625})
+        InitialPoints.Add(New PointF With {.X = 0, .Y = 0.875})
+        InitialPoints.Add(New PointF With {.X = 0.125, .Y = 0.875})
+        InitialPoints.Add(New PointF With {.X = 0.375, .Y = 0.625})
+        InitialPoints.Add(New PointF With {.X = 0.625, .Y = 0.375})
+        InitialPoints.Add(New PointF With {.X = 0.875, .Y = 0.125})
 
         Me.Cursor = Cursors.WaitCursor
 
