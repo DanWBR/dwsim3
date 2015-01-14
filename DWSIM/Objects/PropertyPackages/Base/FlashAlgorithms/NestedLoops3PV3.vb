@@ -252,7 +252,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                    'ElseIf Math.Abs(e3) < 0.0000000001 And ecount > 0 Then
                 ElseIf Math.Abs(e3) < itol And (e1 + e2) < itol And ecount > 0 Then
                     convergiu = 1
 
@@ -272,8 +271,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         End If
                         i = i + 1
                     Loop Until i = n + 1
-
-                    'If Abs(F) < 0.000001 Then Exit Do
 
                     V = -F / dF + V
 
@@ -304,7 +301,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If Double.IsNaN(V) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
                 If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
-                Console.WriteLine("PT Flash [NL]: Iteration #" & ecount & ", VF = " & V)
+                Console.WriteLine("PT Flash [NL-3PV3]: Iteration #" & ecount & ", VF = " & V)
 
                 CheckCalculatorStatus()
 
@@ -317,11 +314,6 @@ out:
             ' check if there is a liquid phase
 
             If L > 0 Then ' we have a liquid phase
-
-                'If V > 0.0001 And n = 1 Then
-                '    'the liquid phase cannot be unstable when there's also vapor and only two compounds in the system.
-                '    Return result
-                'End If
 
                 Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
                 Dim nc As Integer = UBound(Vz)
@@ -453,7 +445,7 @@ out:
 
             dt = d2 - d1
 
-            Console.WriteLine("PT Flash [NL3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
+            Console.WriteLine("PT Flash [NL-3PV3]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
 
             Return result
 
@@ -594,7 +586,7 @@ out:
             L1 = L1est
             L2 = L2est
 
-            Console.WriteLine("PT Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", L2 = " & L2)
+            Console.WriteLine("PT Flash [NL-3PV3]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", L2 = " & L2)
 
             Do
 
@@ -697,9 +689,6 @@ out:
                     dL1 = MX(0, 0)
                     dL2 = MX(1, 0)
 
-                    'dL1 = dL1 / (Math.Abs(dL1) + Math.Abs(dL2))
-                    'dL2 = dL2 / (Math.Abs(dL1) + Math.Abs(dL2))
-
                     L2ant = L2
                     L1ant = L1
                     Vant = V
@@ -730,7 +719,7 @@ out:
 
                 ecount += 1
 
-                Console.WriteLine("PT Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", L2 = " & L2)
+                Console.WriteLine("PT Flash [NL-3PV3]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", L2 = " & L2)
 
             Loop
 
@@ -758,9 +747,10 @@ out:
 
             Dim d1, d2 As Date, dt As TimeSpan
             Dim i, n, ls, ecount As Integer
-            Dim resultPV As Object
+            Dim resultFlash As Object
             Dim Tb, Td, Hb, Hd As Double
             Dim q, r, dV, Tn, fx As Double
+            Dim ErrRes As Object
 
             d1 = Date.Now
 
@@ -788,13 +778,13 @@ out:
             If Tref = 0 Then Tref = 298.15
 
             ' ============= Calculate Dew point and boiling point
-            resultPV = Flash_PV(Vz, P, 0, Tref, PP)
-            Tb = resultPV(4)
-            Hb = Herror("PV", 0, P, Vz, PP)
+            ErrRes = Herror("PV", 0, P, Vz, PP)
+            Hb = ErrRes(0)
+            Tb = ErrRes(1)
 
-            resultPV = Flash_PV(Vz, P, 1, Tref, PP)
-            Td = resultPV(4)
-            Hd = Herror("PV", 1, P, Vz, PP)
+            ErrRes = Herror("PV", 1, P, Vz, PP)
+            Hd = ErrRes(0)
+            Td = ErrRes(1)
 
             If Hb > 0 And Hd < 0 Then
                 'specified enthalpy requires partial evaporation 
@@ -804,7 +794,7 @@ out:
                 ecount = 0
                 V = 0.5
 
-                fx = Herror("PV", V, P, Vz, PP)
+                fx = Herror("PV", V, P, Vz, PP)(0)
 
                 ls = Sign(fx)
                 Do
@@ -814,7 +804,7 @@ out:
                     If V < 0 Then V = 0
                     If V > 1 Then V = 1
 
-                    fx = Herror("PV", V, P, Vz, PP)
+                    fx = Herror("PV", V, P, Vz, PP)(0)
 
                     If Sign(fx) <> ls Then
                         r += 1
@@ -824,17 +814,17 @@ out:
                     End If
                 Loop Until Abs(fx) < itol Or ecount > maxitEXT
 
-                resultPV = Flash_PV(Vz, P, V, Tb, PP)
+                resultFlash = Flash_PV(Vz, P, V, Tb, PP)
 
-                L1 = resultPV(0)
-                V = resultPV(1)
-                Vx1 = resultPV(2)
-                Vy = resultPV(3)
-                T = resultPV(4)
-                ecount = resultPV(5)
-                Ki = resultPV(6)
-                L2 = resultPV(7)
-                Vx2 = resultPV(8)
+                L1 = resultFlash(0)
+                V = resultFlash(1)
+                Vx1 = resultFlash(2)
+                Vy = resultFlash(3)
+                T = resultFlash(4)
+                ecount = resultFlash(5)
+                Ki = resultFlash(6)
+                L2 = resultFlash(7)
+                Vx2 = resultFlash(8)
             Else
                 'specified enthalpy requires pure liquid or gas phase
                 'calculate temperature
@@ -846,7 +836,7 @@ out:
                     T = Td + 10
                 End If
 
-                fx = Herror("PT", T, P, Vz, PP)
+                fx = Herror("PT", T, P, Vz, PP)(0)
 
                 ls = Sign(fx)
                 Do
@@ -854,7 +844,7 @@ out:
                     Tn = 2 ^ (q / 3 - r - 1 / 3) * ASinH(fx)
                     T = T + Tn
 
-                    fx = Herror("PT", T, P, Vz, PP)
+                    fx = Herror("PT", T, P, Vz, PP)(0)
                     If Sign(fx) <> ls Then
                         r += 1
                         ls = -ls
@@ -866,15 +856,15 @@ out:
                 If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV2]: Invalid result: Temperature did not converge.")
 
 
-                Dim tmp As Object = Flash_PT(Vz, P, T, PP)
+                resultFlash = Flash_PT(Vz, P, T, PP)
 
-                L1 = tmp(0)
-                V = tmp(1)
-                Vx1 = tmp(2)
-                Vy = tmp(3)
-                ecount = tmp(4)
-                L2 = tmp(5)
-                Vx2 = tmp(6)
+                L1 = resultFlash(0)
+                V = resultFlash(1)
+                Vx1 = resultFlash(2)
+                Vy = resultFlash(3)
+                ecount = resultFlash(4)
+                L2 = resultFlash(5)
+                Vx2 = resultFlash(6)
 
                 For i = 0 To n
                     Ki(i) = Vy(i) / Vx1(i)
@@ -885,7 +875,7 @@ out:
 
             dt = d2 - d1
 
-            Console.WriteLine("PH Flash [NL3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
+            Console.WriteLine("PH Flash [NL-3PV3]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
 
             Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
@@ -993,13 +983,13 @@ out:
 alt:
                 Dim bo As New BrentOpt.Brent
                 bo.DefineFuncDelegate(AddressOf Serror)
-                Console.WriteLine("PS Flash [NL3PV2]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
+                Console.WriteLine("PS Flash [NL-3PV3]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
 
                 T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
 
             End If
 
-            If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL3PV2]: Invalid result: Temperature did not converge.")
+            If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL-3PV3]: Invalid result: Temperature did not converge.")
 
 
             Dim tmp As Object = Flash_PT(Vz, P, T, PP)
@@ -1020,13 +1010,13 @@ alt:
 
             dt = d2 - d1
 
-            Console.WriteLine("PS Flash [NL3PV2]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
+            Console.WriteLine("PS Flash [NL-3PV3]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
 
             Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
         End Function
 
-        Function OBJ_FUNC_PH_FLASH(ByVal Type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Double
+        Function OBJ_FUNC_PH_FLASH(ByVal Type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
             Dim n = UBound(Vz)
             Dim L1, L2, V, Vx1(), Vx2(), Vy() As Double
 
@@ -1038,7 +1028,8 @@ alt:
                 Vy = tmp(3)
                 L2 = tmp(5)
                 Vx2 = tmp(6)
-            Else
+                T = X
+            ElseIf Type = "PV" Then
                 Dim tmp = Me.Flash_PV(Vz, P, X, 298.15, PP)
                 L1 = tmp(0)
                 V = tmp(1)
@@ -1065,9 +1056,9 @@ alt:
             mml2 = proppack.AUX_MMM(Vx2)
 
             Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L1 + mml2 * L2)) * _Hv - (mml * L1 / (mmg * V + mml * L1 + mml2 * L2)) * _Hl1 - (mml2 * L2 / (mmg * V + mml * L1 + mml2 * L2)) * _Hl2
-            OBJ_FUNC_PH_FLASH = herr
+            OBJ_FUNC_PH_FLASH = {herr, T, V}
 
-            Console.WriteLine("PH Flash [NL3P]: Current T = " & T & ", Current H Error = " & herr)
+            Console.WriteLine("PH Flash [NL-3PV3]: Current T = " & T & ", Current H Error = " & herr)
 
         End Function
 
@@ -1104,10 +1095,10 @@ alt:
             Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L1 + mml2 * L2)) * _Sv - (mml * L1 / (mmg * V + mml * L1 + mml2 * L2)) * _Sl1 - (mml2 * L2 / (mmg * V + mml * L1 + mml2 * L2)) * _Sl2
             OBJ_FUNC_PS_FLASH = serr
 
-            Console.WriteLine("PS Flash [NL3P]: Current T = " & T & ", Current S Error = " & serr)
+            Console.WriteLine("PS Flash [NL-3PV3]: Current T = " & T & ", Current S Error = " & serr)
 
         End Function
-        Function Herror(ByVal type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Double
+        Function Herror(ByVal type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
             CheckCalculatorStatus()
             Return OBJ_FUNC_PH_FLASH(type, X, P, Vz, PP)
         End Function
@@ -1231,7 +1222,7 @@ alt:
 
             dt = d2 - d1
 
-            Console.WriteLine("TV Flash [NL-3PV2]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            Console.WriteLine("TV Flash [NL-3PV3]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return result
 
@@ -1332,16 +1323,13 @@ alt:
 
                         'do a simple LLE calculation to get initial estimates.
                         Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = result(2), .InitialEstimatesForPhase2 = vx2est, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
-                        Dim resultL As Object = slle.Flash_PT(Vz, P, T * 0.9, PP)
+                        Dim resultL As Object = slle.Flash_PT(Vz, P, T - 10, PP)
 
                         L1 = resultL(0)
                         L2 = resultL(5)
                         Vx1 = resultL(2)
                         Vx2 = resultL(6)
-
-                        result = MyFlash_PV_3P(Vz, result(1), result(0) * L1, result(0) * L2, result(3), Vx1, Vx2, P, V, T, PP)
-                        'result = Flash_PV_3P(Vz, result(1), result(0) * L1, result(0) * L2, result(3), Vx1, Vx2, P, V, T, PP)
-
+                        result = Flash_PV_3P(Vz, result(1), result(0) * L1, result(0) * L2, result(3), Vx1, Vx2, P, V, T, PP)
                     End If
 
                 End If
@@ -1352,7 +1340,7 @@ alt:
 
             dt = d2 - d1
 
-            Console.WriteLine("PV Flash [NL-3PV2]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            Console.WriteLine("PV Flash [NL-3PV3]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return result
 
@@ -1362,7 +1350,7 @@ alt:
             F = Log(x + Sqrt(x * x + 1))
             Return F
         End Function
-        Public Function MyFlash_PV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
+        Public Function Flash_PV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
             Dim i As Integer
 
             etol = CDbl(PP.Parameters("PP_PTFELT"))
@@ -1500,286 +1488,11 @@ alt:
 out:        L1 = L1 * (1 - V) 'calculate global phase fractions
             L2 = L2 * (1 - V)
 
-            Console.WriteLine("PV Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
+            Console.WriteLine("PV Flash [NL-3PV3]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
 
             Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, PP.RET_NullVector}
         End Function
-        Public Function Flash_PV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
-
-            Dim i As Integer
-
-            etol = CDbl(PP.Parameters("PP_PTFELT"))
-            maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
-            itol = CDbl(PP.Parameters("PP_PTFILT"))
-            maxit_i = CInt(PP.Parameters("PP_PTFMII"))
-
-            n = UBound(Vz)
-
-            proppack = PP
-
-            ReDim Vn(n), Vx1(n), Vx2(n), Vy(n), Vp(n), ui1(n), ui2(n), uic1(n), uic2(n), pi(n), Ki1(n), Ki2(n), fi(n)
-            Dim b1(n), b2(n), CFL1(n), CFL2(n), CFV(n), db1dT(n), db2dT(n), Kil(n), Tant, L1ant, L2ant, Ki12(n), Ki22(n) As Double
-
-            Vn = PP.RET_VNAMES()
-            fi = Vz.Clone
-
-            'Calculate Ki`s
-
-            Tant = Tref
-            T = Tref
-
-            Ki1 = PP.DW_CalcKvalue(Vx1EST, VyEST, T, P)
-            Ki2 = PP.DW_CalcKvalue(Vx2EST, VyEST, T, P)
-
-            If n = 0 Then
-                If Vp(0) <= P Then
-                    L = 1
-                    V = 0
-                    Vx1 = Vz
-                    GoTo out
-                Else
-                    L = 0
-                    V = 1
-                    Vy = Vz
-                    GoTo out
-                End If
-            End If
-
-            i = 0
-            Do
-                If Vz(i) <> 0 Then
-                    Vy(i) = VyEST(i)
-                    Vx1(i) = Vx1EST(i)
-                    Vx2(i) = Vx2EST(i)
-                Else
-                    Vy(i) = 0
-                    Vx1(i) = 0
-                    Vx2(i) = 0
-                End If
-                i += 1
-            Loop Until i = n + 1
-
-            i = 0
-            soma_x1 = 0
-            soma_x2 = 0
-            soma_y = 0
-            Do
-                soma_x1 = soma_x1 + Vx1(i)
-                soma_x2 = soma_x2 + Vx2(i)
-                soma_y = soma_y + Vy(i)
-                i = i + 1
-            Loop Until i = n + 1
-            i = 0
-            Do
-                Vx1(i) = Vx1(i) / soma_x1
-                Vx2(i) = Vx2(i) / soma_x2
-                Vy(i) = Vy(i) / soma_y
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                b1(i) = 1 - Ki1(i) ^ -1
-                b2(i) = 1 - Ki2(i) ^ -1
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                If Vz(i) <> 0 Then
-                    Vy(i) = Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
-                    Vx1(i) = Vy(i) / Ki1(i)
-                    Vx2(i) = Vy(i) / Ki2(i)
-                Else
-                    Vy(i) = 0
-                    Vx1(i) = 0
-                    Vx2(i) = 0
-                End If
-                i += 1
-            Loop Until i = n + 1
-
-            i = 0
-            soma_x1 = 0
-            soma_x2 = 0
-            soma_y = 0
-            Do
-                soma_x1 = soma_x1 + Vx1(i)
-                soma_x2 = soma_x2 + Vx2(i)
-                soma_y = soma_y + Vy(i)
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                Vx1(i) = Vx1(i) / soma_x1
-                Vx2(i) = Vx2(i) / soma_x2
-                Vy(i) = Vy(i) / soma_y
-                i = i + 1
-            Loop Until i = n + 1
-
-            Vant = 0.0#
-            L1ant = 0.0#
-            L2ant = 0.0#
-
-            ecount = 0
-
-            L1 = L1est
-            L2 = L2est
-
-            Console.WriteLine("PV Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
-
-            Do
-
-                CFL1 = proppack.DW_CalcFugCoeff(Vx1, T, P, State.Liquid)
-                CFL2 = proppack.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                CFV = proppack.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-
-                i = 0
-                Do
-                    If Vz(i) <> 0 Then Ki1(i) = CFL1(i) / CFV(i)
-                    If Vz(i) <> 0 Then Ki2(i) = CFL2(i) / CFV(i)
-                    i = i + 1
-                Loop Until i = n + 1
-
-                i = 0
-                Dim Vx1ant(n), Vx2ant(n), Vyant(n)
-                Do
-                    Vx1ant(i) = Vx1(i)
-                    Vx2ant(i) = Vx2(i)
-                    Vyant(i) = Vy(i)
-                    b1(i) = 1 - Ki1(i) ^ -1
-                    b2(i) = 1 - Ki2(i) ^ -1
-                    Vy(i) = Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
-                    Vx1(i) = Vy(i) / Ki1(i)
-                    Vx2(i) = Vy(i) / Ki2(i)
-                    i = i + 1
-                Loop Until i = n + 1
-
-                i = 0
-                soma_x1 = 0
-                soma_x2 = 0
-                soma_y = 0
-                Do
-                    soma_x1 = soma_x1 + Vx1(i)
-                    soma_x2 = soma_x2 + Vx2(i)
-                    soma_y = soma_y + Vy(i)
-                    i = i + 1
-                Loop Until i = n + 1
-
-                i = 0
-                Do
-                    Vx1(i) = Vx1(i) / soma_x1
-                    Vx2(i) = Vx2(i) / soma_x2
-                    Vy(i) = Vy(i) / soma_y
-                    i = i + 1
-                Loop Until i = n + 1
-
-                Dim e1 = 0
-                Dim e2 = 0
-                Dim e3 = 0
-                Dim e4 = 0
-                i = 0
-                Do
-                    e1 = e1 + (Vx1(i) - Vx1ant(i))
-                    e4 = e4 + (Vx2(i) - Vx2ant(i))
-                    e2 = e2 + (Vy(i) - Vyant(i))
-                    i = i + 1
-                Loop Until i = n + 1
-                e3 = (T - Tant) + (L1 - L1ant) + (L2 - L2ant)
-
-                If (Math.Abs(e1) + Math.Abs(e4) + Math.Abs(e3) + Math.Abs(e2) + Math.Abs(L1ant - L1) + Math.Abs(L2ant - L2)) < etol Then
-
-                    Exit Do
-
-                ElseIf Double.IsNaN(Math.Abs(e1) + Math.Abs(e4) + Math.Abs(e2)) Then
-
-                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
-
-                Else
-
-                    Ki12 = PP.DW_CalcKvalue(Vx1, Vy, T + 2, P)
-                    Ki22 = PP.DW_CalcKvalue(Vx2, Vy, T + 2, P)
-
-                    For i = 0 To n
-                        db1dT(i) = ((1 - Ki12(i) ^ -1) - (1 - Ki1(i) ^ -1)) / 2
-                        db2dT(i) = ((1 - Ki22(i) ^ -1) - (1 - Ki2(i) ^ -1)) / 2
-                    Next
-
-                    Dim F1 = 0.0#, F2 = 0.0#
-                    Dim dF1dT = 0.0#, dF1dL2 = 0.0#, dF2dT = 0.0#, dF2dL2 = 0.0#, dF1db1(n), dF1db2(n), dF2db1(n), dF2db2(n) As Double
-                    Dim dT, dL2 As Double
-                    i = 0
-                    Do
-                        F1 = F1 + b1(i) * Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
-                        F2 = F2 + b2(i) * Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
-                        dF1db1(i) = -Vz(i) * (b2(i) * L2) / (b1(i) * L1 + b2(i) * L2 - 1) ^ 2
-                        dF1db2(i) = b1(i) * Vz(i) * L2 / (b1(i) * L1 + b2(i) * L2 - 1) ^ 2
-                        dF2db1(i) = b2(i) * Vz(i) * L1 / (b2(i) * L2 + b1(i) * L1 - 1) ^ 2
-                        dF2db2(i) = -Vz(i) * (b1(i) * L1) / (b2(i) * L2 + b1(i) * L1 - 1) ^ 2
-                        dF1dL2 = dF1dL2 + b1(i) * Vz(i) * (-b2(i)) / (1 - b1(i) * L1 - b2(i) * L2) ^ 2
-                        dF2dL2 = dF2dL2 + b2(i) * Vz(i) * (-b2(i)) / (1 - b1(i) * L1 - b2(i) * L2) ^ 2
-                        dF1dT = dF1dT + dF1db1(i) * db1dT(i) + dF1db2(i) * db2dT(i)
-                        dF2dT = dF2dT + dF2db1(i) * db1dT(i) + dF2db2(i) * db2dT(i)
-                        i = i + 1
-                    Loop Until i = n + 1
-
-                    If Abs(F1) + Abs(F2) < etol Then Exit Do
-
-                    Dim MA As Mapack.Matrix = New Mapack.Matrix(2, 2)
-                    Dim MB As Mapack.Matrix = New Mapack.Matrix(2, 1)
-                    Dim MX As Mapack.Matrix = New Mapack.Matrix(1, 2)
-
-                    MA(0, 0) = dF1dT
-                    MA(0, 1) = dF1dL2
-                    MA(1, 0) = dF2dT
-                    MA(1, 1) = dF2dL2
-                    MB(0, 0) = -F1
-                    MB(1, 0) = -F2
-
-                    MX = MA.Solve(MB)
-                    dT = MX(0, 0)
-                    dL2 = MX(1, 0)
-
-                    L2ant = L2
-                    L1ant = L1
-                    Tant = T
-
-                    L2 += -dL2 * 0.3
-
-                    If L2 < 0.0# Then L2 = 0.0#
-                    If L2 > 1.0# - V Then L2 = 1.0# - V
-
-                    L1 = 1 - V - L2
-
-                    If V = 0.0# Then
-                        'switch to simple LLE flash procedure.
-                        Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = Vx1EST, .InitialEstimatesForPhase2 = Vx2EST, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
-                        Dim result As Object = slle.Flash_PT(Vz, P, T, PP)
-                        L1 = result(0)
-                        'V = result(1)
-                        L2 = result(5)
-                        Vx1 = result(2)
-                        'Vy = result(3)
-                        Vx2 = result(6)
-                        Exit Do
-                    End If
-
-                    T += -dT * 0.3
-
-                End If
-
-                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
-
-                ecount += 1
-
-                Console.WriteLine("PV Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
-
-            Loop
-
-out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, PP.RET_NullVector}
-
-        End Function
-
+      
         Public Function Flash_TV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackage) As Object
 
             Dim i As Integer
@@ -1902,7 +1615,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
             L1 = L1est
             L2 = L2est
 
-            Console.WriteLine("TV Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
+            Console.WriteLine("TV Flash [NL-3PV3]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
 
             Do
 
@@ -2047,7 +1760,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
 
                 ecount += 1
 
-                Console.WriteLine("TV Flash [NL-3PV2]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
+                Console.WriteLine("TV Flash [NL-3PV3]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
 
             Loop
 

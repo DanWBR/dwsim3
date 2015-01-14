@@ -45,13 +45,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Dim i, n, ecount As Integer
+            Dim i, j, n, ecount As Integer
             n = UBound(Vz)
 
-            Dim Vx1(n), Vx2(n), Vy(n), Vn1(n), Vn2(n), Ki(n), fi1(n), fi2(n), gamma1(n), gamma2(n) As Double
+            Dim Vx1(n), Vx2(n), Vy(n), Vn1(n), Vn2(n), Ki(n), fi1(n), fi2(n), gamma1(n), gamma2(n), Vp(n) As Double
+            Dim Vx1_ant(n), Vx2_ant(n) As Double
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim L1, L2, V As Double
-
+            Dim L1, L2, V, S As Double
+            Dim e1, e2, e3 As Double
             d1 = Date.Now
 
             etol = CDbl(PP.Parameters("PP_PTFELT"))
@@ -59,45 +60,75 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             itol = CDbl(PP.Parameters("PP_PTFILT"))
             maxit_i = CInt(PP.Parameters("PP_PTFMII"))
 
-            'Calculate Ki`s
-
-            Dim minn As Double = Vz(0)
-            For i = 0 To n
-                If Vz(i) <> 0.0# And Vz(i) < minn Then minn = Vz(i)
-            Next
-
-            L2 = minn / 2
-            L1 = 1 - L2
+            If UseInitialEstimatesForPhase1 And UseInitialEstimatesForPhase2 Then
+                L1 = 0
+                L2 = 0
+                For i = 0 To n
+                    If Vz(i) > 0 Then
+                        j += 1
+                        L1 += (Vz(i) - InitialEstimatesForPhase2(i)) / (InitialEstimatesForPhase1(i) - InitialEstimatesForPhase2(i))
+                    End If
+                Next
+                L1 = L1 / j
+                If L1 = 1 Then L1 = 0.99
+                If L1 = 0 Then L1 = 0.01
+                L2 = 1 - L1
+            Else
+                Dim minn As Double = Vz(0)
+                j = 0
+                For i = 0 To n
+                    If Vz(i) > 0 And Vz(i) < minn Then
+                        j = i
+                        minn = Vz(i)
+                    End If
+                Next
+                For i = 0 To n
+                    If Vz(i) = minn Then
+                        Vn1(i) = Vz(i) * 0.05
+                        Vn2(i) = Vz(i) * 0.95
+                    Else
+                        Vn1(i) = Vz(i) * 0.95
+                        Vn2(i) = Vz(i) * 0.05
+                    End If
+                Next
+                L1 = Vn1.Sum
+                L2 = Vn2.Sum
+            End If
 
             If UseInitialEstimatesForPhase1 Then
                 For i = 0 To n
-                    Vn1(i) = L1 * InitialEstimatesForPhase1(i)
-                Next
-            Else
-                For i = 0 To n
-                    Vn1(i) = Vz(i) * (1 - L2)
+                    If Vz(i) > 0 Then Vn1(i) = L1 * InitialEstimatesForPhase1(i)
                 Next
             End If
 
             If UseInitialEstimatesForPhase2 Then
                 For i = 0 To n
-                    Vn2(i) = L2 * InitialEstimatesForPhase2(i)
-                Next
-            Else
-                For i = 0 To n
-                    Vn2(i) = Vz(i) * (1 - L1)
+                    If Vz(i) > 0 Then Vn2(i) = L2 * InitialEstimatesForPhase2(i)
                 Next
             End If
 
-            L1 = Vn1.Sum()
-            L2 = Vn2.Sum()
+            'renormalise Vn's
+            S = Vn1.Sum() + Vn2.Sum()
+            For i = 0 To n
+                Vn1(i) /= S
+                Vn2(i) /= S
+            Next
+
+            'calculate vapour pressures
+            For i = 0 To n
+                Vp(i) = PP.AUX_PVAPi(i, T)
+            Next
+
 
             Dim err As Double = 0.0#
             Dim err_ant As Double = 0.0#
 
             ecount = 0
 
+            Console.WriteLine("LLE flash start")
             Do
+                Vx1_ant = Vx1.Clone
+                Vx2_ant = Vx2.Clone
 
                 For i = 0 To n
                     Vx1(i) = Vn1(i) / L1
@@ -108,48 +139,44 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 fi2 = PP.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
 
                 For i = 0 To n
-                    gamma1(i) = P / PP.AUX_PVAPi(i, T) * fi1(i)
-                    gamma2(i) = P / PP.AUX_PVAPi(i, T) * fi2(i)
+                    gamma1(i) = P / Vp(i) * fi1(i)
+                    gamma2(i) = P / Vp(i) * fi2(i)
                 Next
 
                 err_ant = err
                 err = 0.0#
+                e1 = 0
+                e2 = 0
                 For i = 0 To n
                     err += Abs(Vx1(i) * gamma1(i) - Vx2(i) * gamma2(i))
+                    e1 += Abs(Vx1(i) - Vx1_ant(i))
+                    e2 += Abs(Vx2(i) - Vx2_ant(i))
                 Next
 
                 If Double.IsNaN(err) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                If ecount > 0 And Abs(err) < 0.000001 Then Exit Do
+                If ecount > 0 And (Abs(err) < 0.000001 Or L1 < 0.0001 Or L2 < 0.0001) Then Exit Do
 
                 For i = 0 To n
                     Vn1(i) = Vz(i) / (1 + gamma1(i) * L2 / (gamma2(i) * L1))
+                    Vn2(i) = Vz(i) - Vn1(i)
                 Next
 
-                L1 = 0
-                L2 = 0
-                For i = 0 To n
-                    L1 += Vn1(i)
-                    L2 += Vn2(i)
-                Next
-
-                For i = 0 To n
-                    Vn2(i) = Vn1(i) * L2 * gamma1(i) / (L1 * gamma2(i))
-                Next
+                L1 = Vn1.Sum
+                L2 = Vn2.Sum
 
                 ecount += 1
 
-                If ecount > 10000 Then Throw New Exception(DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"))
-
+                If ecount > 10000 Then
+                    Throw New Exception(DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"))
+                End If
             Loop
 
-            d2 = Date.Now
+out:        d2 = Date.Now
 
             dt = d2 - d1
 
             Console.WriteLine("PT Flash [SimpleLLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & err)
-
-out:
 
             'order liquid phases by mixture NBP
 
