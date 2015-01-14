@@ -46,6 +46,10 @@ Public Class FrmPsvSize
         Label14.Text = Frm.Options.SelectedUnitSystem.spmp_volumetricFlow
         Label11.Text = Frm.Options.SelectedUnitSystem.spmp_volumetricFlow
 
+        TextBox10.Text = Format(0.85#, "0.00")
+        TextBox9.Text = Format(1.0#, "0.00")
+        TextBox6.Text = Format(1.0#, "0.00")
+
     End Sub
 
     Private Sub KryptonButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton1.Click
@@ -75,11 +79,11 @@ Public Class FrmPsvSize
                 me_m = .Fases(0).SPMProperties.density.GetValueOrDefault
                 QT = .Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
                 WT = .Fases(0).SPMProperties.massflow.GetValueOrDefault
-                visc_l = .Fases(1).SPMProperties.viscosity.GetValueOrDefault
-                me_l = .Fases(1).SPMProperties.density.GetValueOrDefault
-                QL = .Fases(1).SPMProperties.volumetric_flow.GetValueOrDefault
-                WL = .Fases(1).SPMProperties.massflow.GetValueOrDefault
-                xv_l = .Fases(1).SPMProperties.volumetric_flow.GetValueOrDefault / .Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
+                visc_l = .Fases(3).SPMProperties.viscosity.GetValueOrDefault
+                me_l = .Fases(3).SPMProperties.density.GetValueOrDefault
+                QL = .Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault
+                WL = .Fases(3).SPMProperties.massflow.GetValueOrDefault
+                xv_l = .Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault / .Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
                 QV = .Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
                 WV = .Fases(2).SPMProperties.massflow.GetValueOrDefault
                 visc_v = .Fases(2).SPMProperties.viscosity.GetValueOrDefault
@@ -107,7 +111,7 @@ Public Class FrmPsvSize
         End If
 
         'Dimensionar para gás apenas
-        If Me.ComboBox1.SelectedItem = DWSIM.App.GetLocalString("Gs") And Me.ComboBox2.SelectedItem = "API RP 520" Then
+        If Me.ComboBox1.SelectedItem = DWSIM.App.GetLocalString("Vapor") And Me.ComboBox2.SelectedItem = "API RP 520" Then
 
             Ao = sz.PSV_G_D((P * 1.033 / 101325) * (1 + SPP / 100), (BP * 1.033 / 101325), T, WV * 3600, zg, mm_g, cpcv, Kd, Kb, Kc)
 
@@ -116,18 +120,34 @@ Public Class FrmPsvSize
         'Dimensionar para bifásico
         If Me.ComboBox1.SelectedItem = DWSIM.App.GetLocalString("GsLquidoBifsico") And Me.ComboBox2.SelectedItem = "API RP 520" Then
 
-            Frm.Options.SelectedPropertyPackage.CurrentMaterialStream = entmat
-            entmat.Fases(0).SPMProperties.pressure = entmat.Fases(0).SPMProperties.pressure.GetValueOrDefault * 0.9
-            Frm.Options.SelectedPropertyPackage.DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-            Frm.Options.SelectedPropertyPackage.DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
+            Dim mymat As DWSIM.SimulationObjects.Streams.MaterialStream = entmat.Clone
+            mymat.Fases(0).SPMProperties.pressure = entmat.Fases(0).SPMProperties.pressure.GetValueOrDefault * 0.9
 
-            Dim rho90 = entmat.Fases(0).SPMProperties.density
+            With mymat.PropertyPackage
+                .CurrentMaterialStream = mymat
+                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                If mymat.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                Else
+                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                End If
+                If mymat.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                Else
+                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                End If
+                If mymat.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And mymat.Fases(2).SPMProperties.molarfraction.GetValueOrDefault <= 1 Then
+                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                Else
+                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                End If
+                mymat.PropertyPackage.DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
+            End With
 
-            entmat.Fases(0).SPMProperties.pressure = entmat.Fases(0).SPMProperties.pressure.GetValueOrDefault / 0.9
-            Frm.Options.SelectedPropertyPackage.DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-            Frm.Options.SelectedPropertyPackage.DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
+            Dim rho90 = mymat.Fases(0).SPMProperties.density.GetValueOrDefault
 
-            Frm.Options.SelectedPropertyPackage.CurrentMaterialStream = Nothing
+            mymat.Clear()
+            mymat = Nothing
 
             Dim _tmp = sz.PSV_GL_D23_D(xm_g, me_v, me_m, rho90, (P * 1.033 / 101325) * (1 + SPP / 100) - 1.033, (BP * 1.033 / 101325) - 1.033, QT * 24 * 3600, Kd, Kb, Kc)
 
@@ -170,7 +190,7 @@ Public Class FrmPsvSize
             Me.TextBox4.Text = Format(cv.ConverterDoSI(su.spmp_pressure, saimat.Fases(0).SPMProperties.pressure), nf)
 
             Me.TextBox8.Text = Format(cv.ConverterDoSI(su.spmp_volumetricFlow, entmat.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault), nf)
-            Me.TextBox7.Text = Format(cv.ConverterDoSI(su.spmp_volumetricFlow, entmat.Fases(1).SPMProperties.volumetric_flow.GetValueOrDefault), nf)
+            Me.TextBox7.Text = Format(cv.ConverterDoSI(su.spmp_volumetricFlow, entmat.Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault), nf)
             Me.TextBox5.Text = Format(cv.ConverterDoSI(su.spmp_volumetricFlow, entmat.Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault), nf)
 
             'Gás
@@ -181,18 +201,18 @@ Public Class FrmPsvSize
                 ComboBox1.Items.Clear()
             Else
                 If entmat.Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault = 0 And _
-                        entmat.Fases(1).SPMProperties.volumetric_flow.GetValueOrDefault <> 0 Then
+                        entmat.Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault <> 0 Then
                     ComboBox1.Items.Clear()
                     ComboBox1.Items.Add(DWSIM.App.GetLocalString("Lquido"))
                     ComboBox1.SelectedIndex = 0
                 ElseIf entmat.Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault <> 0 And _
-                        entmat.Fases(1).SPMProperties.volumetric_flow.GetValueOrDefault = 0 Then
+                        entmat.Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault = 0 Then
                     ComboBox1.Items.Clear()
-                    ComboBox1.Items.Add(DWSIM.App.GetLocalString("Gs"))
+                    ComboBox1.Items.Add(DWSIM.App.GetLocalString("Vapor"))
                     ComboBox1.SelectedIndex = 0
                 Else
                     ComboBox1.Items.Clear()
-                    ComboBox1.Items.Add(DWSIM.App.GetLocalString("Gs"))
+                    ComboBox1.Items.Add(DWSIM.App.GetLocalString("Vapor"))
                     ComboBox1.Items.Add(DWSIM.App.GetLocalString("Lquido"))
                     ComboBox1.Items.Add(DWSIM.App.GetLocalString("GsLquidoBifsico"))
                     ComboBox1.SelectedIndex = 0

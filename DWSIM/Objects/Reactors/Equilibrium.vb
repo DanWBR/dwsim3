@@ -684,12 +684,12 @@ Namespace DWSIM.SimulationObjects.Reactors
                             If rxn.ExpContext Is Nothing Then
                                 rxn.ExpContext = New Ciloci.Flee.ExpressionContext
                                 With rxn.ExpContext
-                                    .Imports.ImportStaticMembers(GetType(System.Math))
+                                    .Imports.AddType(GetType(System.Math))
                                     .Variables.DefineVariable("T", GetType(Double))
                                 End With
                             End If
-                            rxn.ExpContext.Variables.SetVariableValue("T", T)
-                            rxn.Expr = ExpressionFactory.CreateGeneric(Of Double)(rxn.Expression, rxn.ExpContext)
+                            rxn.ExpContext.Variables.Add("T", T)
+                            rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
                             rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
                         Case Reaction.KOpt.Gibbs
                             Dim id(rxn.Components.Count - 1) As String

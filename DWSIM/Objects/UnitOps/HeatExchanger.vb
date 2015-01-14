@@ -463,8 +463,26 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Q = Wc * (Hc2 - Hc1)
                         Dim tms As MaterialStream = StInCold.Clone
                         tms.Fases(0).SPMProperties.temperature = Tcm
-                        tms.PropertyPackage.CurrentMaterialStream = tms
-                        tms.PropertyPackage.DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
+                        With tms.PropertyPackage
+                            .CurrentMaterialStream = tms
+                            .DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
+                            If tms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                            End If
+                            If tms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                            End If
+                            If tms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And tms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault <= 1 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                            End If
+                            tms.PropertyPackage.DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
+                        End With
                         rhoc = tms.Fases(0).SPMProperties.density.GetValueOrDefault
                         cpc = tms.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
                         kc = tms.Fases(0).SPMProperties.thermalConductivity.GetValueOrDefault
@@ -472,6 +490,26 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         tms = StInHot.Clone
                         tms.Fases(0).SPMProperties.temperature = Thm
                         tms.PropertyPackage.CurrentMaterialStream = tms
+                        With tms.PropertyPackage
+                            .CurrentMaterialStream = tms
+                            .DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
+                            If tms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                            End If
+                            If tms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                            End If
+                            If tms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And tms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault <= 1 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                            End If
+                            tms.PropertyPackage.DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
+                        End With
                         tms.PropertyPackage.DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
                         rhoh = tms.Fases(0).SPMProperties.density.GetValueOrDefault
                         cph = tms.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault

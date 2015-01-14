@@ -1255,12 +1255,11 @@ Namespace DWSIM.ClassesBasicasTermodinamica
                                         If .ExpContext Is Nothing Then
                                             .ExpContext = New Ciloci.Flee.ExpressionContext
                                             With .ExpContext
-                                                .Imports.ImportStaticMembers(GetType(System.Math))
-                                                .Variables.DefineVariable("T", GetType(Double))
+                                                .Imports.AddType(GetType(System.Math))
                                             End With
                                         End If
-                                        .ExpContext.Variables.SetVariableValue("T", T)
-                                        .Expr = ExpressionFactory.CreateGeneric(Of Double)(.Expression, .ExpContext)
+                                        .ExpContext.Variables.Add("T", T)
+                                        .Expr = .ExpContext.CompileGeneric(Of Double)(.Expression)
                                         .Kvalue = Math.Exp(.Expr.Evaluate)
                                     Case Reaction.KOpt.Gibbs
                                         Dim id(.Components.Count - 1) As String

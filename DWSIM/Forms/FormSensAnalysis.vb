@@ -518,14 +518,13 @@ Public Class FormSensAnalysis
                         Me.selectedsacase.econtext = New ExpressionContext
                         Me.selectedsacase.expression = Me.tbExpression.Text
                         With Me.selectedsacase.econtext
-                            .Imports.ImportStaticMembers(GetType(System.Math))
+                            .Imports.AddType(GetType(System.Math))
                             For Each var As SAVariable In selectedsacase.variables.Values
-                                .Variables.DefineVariable(var.name, GetType(Double))
-                                .Variables.SetVariableValue(var.name, cv.ConverterDoSI(var.unit, form.Collections.ObjectCollection(var.objectID).GetPropertyValue(var.propID)))
+                                .Variables.Add(var.name, cv.ConverterDoSI(var.unit, form.Collections.ObjectCollection(var.objectID).GetPropertyValue(var.propID)))
                             Next
+                            Me.selectedsacase.exbase = Me.selectedsacase.econtext.CompileGeneric(Of Double)(Me.selectedsacase.expression)
                         End With
-                        Me.selectedsacase.exbase = ExpressionFactory.CreateGeneric(Of Double)(Me.selectedsacase.expression, Me.selectedsacase.econtext)
-                        dvval = Me.selectedsacase.exbase.Evaluate
+                       dvval = Me.selectedsacase.exbase.Evaluate
                         'store results
                         res.Add(New Double() {iv1val, iv2val, dvval})
                     Else
@@ -620,14 +619,13 @@ Public Class FormSensAnalysis
     Private Sub btnVerify_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVerify.Click
         Try
             Dim econtext As New ExpressionContext
-            econtext.Imports.ImportStaticMembers(GetType(System.Math))
+            econtext.Imports.AddType(GetType(System.Math))
             For Each row As DataGridViewRow In Me.dgVariables.Rows
                 With econtext
-                    .Variables.DefineVariable(row.Cells(1).Value, GetType(Double))
-                    .Variables.SetVariableValue(row.Cells(1).Value, CDbl(row.Cells(4).Value))
+                    .Variables.Add(row.Cells(1).Value, CDbl(row.Cells(4).Value))
                 End With
             Next
-            Dim exbase As IGenericExpression(Of Double) = ExpressionFactory.CreateGeneric(Of Double)(Me.tbExpression.Text, econtext)
+            Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(Me.tbExpression.Text)
             Me.tbCurrentValue.Text = exbase.Evaluate
             If EnableAutoSave Then SaveForm(selectedsacase)
         Catch ex As Exception

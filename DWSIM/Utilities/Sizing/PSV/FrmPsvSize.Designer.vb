@@ -98,7 +98,6 @@ Partial Class FrmPsvSize
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label2.Name = "Label2"
         '
         'ComboBox1
@@ -111,7 +110,6 @@ Partial Class FrmPsvSize
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label1.Name = "Label1"
         '
         'GroupBox2
@@ -136,25 +134,21 @@ Partial Class FrmPsvSize
         'Label10
         '
         resources.ApplyResources(Me.Label10, "Label10")
-        Me.Label10.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label10.Name = "Label10"
         '
         'Label9
         '
         resources.ApplyResources(Me.Label9, "Label9")
-        Me.Label9.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label9.Name = "Label9"
         '
         'Label8
         '
         resources.ApplyResources(Me.Label8, "Label8")
-        Me.Label8.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label8.Name = "Label8"
         '
         'Label7
         '
         resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label7.Name = "Label7"
         '
         'TextBox4
@@ -183,25 +177,21 @@ Partial Class FrmPsvSize
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label6.Name = "Label6"
         '
         'Label5
         '
         resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label5.Name = "Label5"
         '
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label3.Name = "Label3"
         '
         'Label4
         '
         resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label4.Name = "Label4"
         '
         'GroupBox3
@@ -223,13 +213,11 @@ Partial Class FrmPsvSize
         'Label13
         '
         resources.ApplyResources(Me.Label13, "Label13")
-        Me.Label13.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label13.Name = "Label13"
         '
         'Label11
         '
         resources.ApplyResources(Me.Label11, "Label11")
-        Me.Label11.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label11.Name = "Label11"
         '
         'TextBox5
@@ -241,13 +229,11 @@ Partial Class FrmPsvSize
         'Label12
         '
         resources.ApplyResources(Me.Label12, "Label12")
-        Me.Label12.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label12.Name = "Label12"
         '
         'Label14
         '
         resources.ApplyResources(Me.Label14, "Label14")
-        Me.Label14.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label14.Name = "Label14"
         '
         'TextBox7
@@ -265,13 +251,11 @@ Partial Class FrmPsvSize
         'Label17
         '
         resources.ApplyResources(Me.Label17, "Label17")
-        Me.Label17.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label17.Name = "Label17"
         '
         'Label18
         '
         resources.ApplyResources(Me.Label18, "Label18")
-        Me.Label18.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label18.Name = "Label18"
         '
         'GroupBox4
@@ -295,7 +279,6 @@ Partial Class FrmPsvSize
         'Label19
         '
         resources.ApplyResources(Me.Label19, "Label19")
-        Me.Label19.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label19.Name = "Label19"
         '
         'TextBox9
@@ -311,13 +294,11 @@ Partial Class FrmPsvSize
         'Label21
         '
         resources.ApplyResources(Me.Label21, "Label21")
-        Me.Label21.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label21.Name = "Label21"
         '
         'Label22
         '
         resources.ApplyResources(Me.Label22, "Label22")
-        Me.Label22.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label22.Name = "Label22"
         '
         'GroupBox5
@@ -337,13 +318,11 @@ Partial Class FrmPsvSize
         'KryptonButton1
         '
         resources.ApplyResources(Me.KryptonButton1, "KryptonButton1")
-        Me.KryptonButton1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.KryptonButton1.Name = "KryptonButton1"
         '
         'Label24
         '
         resources.ApplyResources(Me.Label24, "Label24")
-        Me.Label24.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label24.Name = "Label24"
         '
         'TextBox12
@@ -356,13 +335,11 @@ Partial Class FrmPsvSize
         'Label20
         '
         resources.ApplyResources(Me.Label20, "Label20")
-        Me.Label20.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label20.Name = "Label20"
         '
         'Label16
         '
         resources.ApplyResources(Me.Label16, "Label16")
-        Me.Label16.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label16.Name = "Label16"
         '
         'TextBox11
@@ -375,7 +352,6 @@ Partial Class FrmPsvSize
         'Label15
         '
         resources.ApplyResources(Me.Label15, "Label15")
-        Me.Label15.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label15.Name = "Label15"
         '
         'GroupBox6
@@ -391,13 +367,11 @@ Partial Class FrmPsvSize
         'LblSelected
         '
         resources.ApplyResources(Me.LblSelected, "LblSelected")
-        Me.LblSelected.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.LblSelected.Name = "LblSelected"
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Button1.Name = "Button1"
         '
         'ComboBox3
@@ -410,7 +384,6 @@ Partial Class FrmPsvSize
         'Label23
         '
         resources.ApplyResources(Me.Label23, "Label23")
-        Me.Label23.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label23.Name = "Label23"
         '
         'FrmPsvSize

@@ -264,7 +264,7 @@ Public Class SpreadsheetForm
             For Each ce As DataGridViewCell In r.Cells
                 Dim val As Double = 0
                 Double.TryParse(ce.Value, val)
-                Me.ExpContext.Variables.SetVariableValue(Me.GetCellString(ce), val)
+                Me.ExpContext.Variables(Me.GetCellString(ce)) = val
             Next
         Next
     End Sub
@@ -443,7 +443,7 @@ Public Class SpreadsheetForm
             If Me.ExpContext Is Nothing Then
                 Me.ExpContext = New Ciloci.Flee.ExpressionContext
                 With Me.ExpContext
-                    .Imports.ImportStaticMembers(GetType(System.Math))
+                    .Imports.AddType(GetType(System.Math))
                 End With
             End If
 
@@ -464,7 +464,7 @@ Public Class SpreadsheetForm
                 End If
                 If expression <> "" Then
                     If expression.Substring(0, 1) = "=" Then
-                        Me.Expr = ExpressionFactory.CreateGeneric(Of Double)(expression.Substring(1), Me.ExpContext)
+                        Me.Expr = Me.ExpContext.CompileGeneric(Of Double)(expression.Substring(1))
                         cell.Value = Expr.Evaluate
                         If Not ccparams.CellType = VarType.Write Then cell.Style.BackColor = Color.LightYellow
                     ElseIf expression.Substring(0, 1) = ":" Then

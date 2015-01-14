@@ -199,14 +199,13 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         rxn.ExpContext = New Ciloci.Flee.ExpressionContext
                         With rxn.ExpContext
-                            .Imports.ImportStaticMembers(GetType(System.Math))
-                            .Variables.DefineVariable("T", GetType(Double))
+                            .Imports.AddType(GetType(System.Math))
                         End With
 
                     End If
 
-                    rxn.ExpContext.Variables.SetVariableValue("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
-                    rxn.Expr = ExpressionFactory.CreateGeneric(Of Double)(rxn.Expression, rxn.ExpContext)
+                    rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
+                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
                     X = rxn.Expr.Evaluate / 100
 
                     If X < 0 Or X > 1 Then

@@ -48,9 +48,7 @@ Public Class UI_SpecControlPanelForm
             'context.Imports.ImportStaticMembers(typeof(Math));
             mySPEC.ExpContext = New Ciloci.Flee.ExpressionContext
             With mySPEC.ExpContext
-                .Imports.ImportStaticMembers(GetType(System.Math))
-                .Variables.DefineVariable("X", GetType(Double))
-                .Variables.DefineVariable("Y", GetType(Double))
+                .Imports.AddType(GetType(System.Math))
             End With
         End If
 
@@ -59,15 +57,15 @@ Public Class UI_SpecControlPanelForm
             '// Define an int variable
             'context.Variables.DefineVariable(DWSIM.App.GetLocalString("a"), typeof(int));
             'context.Variables.SetVariableValue(DWSIM.App.GetLocalString("a"), 100);
-            .ExpContext.Variables.SetVariableValue("X", Double.Parse(.GetSourceVarValue))
-            .ExpContext.Variables.SetVariableValue("Y", Double.Parse(.GetTargetVarValue))
+            .ExpContext.Variables.Add("X", Double.Parse(.GetSourceVarValue))
+            .ExpContext.Variables.Add("Y", Double.Parse(.GetTargetVarValue))
 
             '// Create a dynamic expression that evaluates to an Object
             'IDynamicExpression eDynamic = ExpressionFactory.CreateDynamic("sqrt(a) + 1", context);
             '// Create a generic expression that evaluates to a double
             'IGenericExpression<double> eGeneric = ExpressionFactory.CreateGeneric<double>("sqrt(a) + 1", context);
             Try
-                .Expr = ExpressionFactory.CreateGeneric(Of Double)(Me.tbExp.Text, .ExpContext)
+                .Expr = .ExpContext.CompileGeneric(Of Double)(Me.tbExp.Text)
                 Me.lblExpRes.Text = DWSIM.App.GetLocalString("ExpressãoOKResultado") & Format(.Expr.Evaluate, nf)
                 .Expression = Me.tbExp.Text
             Catch ex As ExpressionCompileException

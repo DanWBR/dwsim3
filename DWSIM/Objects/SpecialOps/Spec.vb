@@ -242,9 +242,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
             m_eopt = New ExpressionContext
             With m_eopt
-                .Imports.ImportStaticMembers(GetType(System.Math))
-                .Variables.DefineVariable("X", GetType(Double))
-                .Variables.DefineVariable("Y", GetType(Double))
+                .Imports.AddType(GetType(System.Math))
             End With
 
             Me.m_ComponentName = nome
@@ -396,9 +394,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                     'context.Imports.ImportStaticMembers(typeof(Math));
                     Me.ExpContext = New Ciloci.Flee.ExpressionContext
                     With Me.ExpContext
-                        .Imports.ImportStaticMembers(GetType(System.Math))
-                        .Variables.DefineVariable("X", GetType(Double))
-                        .Variables.DefineVariable("Y", GetType(Double))
+                        .Imports.AddType(GetType(System.Math))
                     End With
                 End If
 
@@ -409,13 +405,13 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                         '// Define an int variable
                         'context.Variables.DefineVariable(DWSIM.App.GetLocalString("a"), typeof(int));
                         'context.Variables.SetVariableValue(DWSIM.App.GetLocalString("a"), 100);
-                        .ExpContext.Variables.SetVariableValue("X", Double.Parse(.GetSourceVarValue))
-                        .ExpContext.Variables.SetVariableValue("Y", Double.Parse(.GetTargetVarValue))
+                        .ExpContext.Variables.Add("X", Double.Parse(.GetSourceVarValue))
+                        .ExpContext.Variables.Add("Y", Double.Parse(.GetTargetVarValue))
                         '// Create a dynamic expression that evaluates to an Object
                         'IDynamicExpression eDynamic = ExpressionFactory.CreateDynamic("sqrt(a) + 1", context);
                         '// Create a generic expression that evaluates to a double
                         'IGenericExpression<double> eGeneric = ExpressionFactory.CreateGeneric<double>("sqrt(a) + 1", context);
-                        .Expr = ExpressionFactory.CreateGeneric(Of Double)(.Expression, .ExpContext)
+                        .Expr = .ExpContext.CompileGeneric(Of Double)(.Expression)
                         Dim val = .Expr.Evaluate
                         If Me.MaxVal.GetValueOrDefault = 0 And Me.MinVal.GetValueOrDefault = 0 Then
                             Me.SetTargetVarValue(val)

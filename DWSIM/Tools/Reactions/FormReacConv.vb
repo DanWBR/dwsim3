@@ -186,21 +186,20 @@ Public Class FormReacConv
             'context.Imports.ImportStaticMembers(typeof(Math));
             rc.ExpContext = New Ciloci.Flee.ExpressionContext
             With rc.ExpContext
-                .Imports.ImportStaticMembers(GetType(System.Math))
-                .Variables.DefineVariable("T", GetType(Double))
+                .Imports.AddType(GetType(System.Math))
             End With
             With rc
 
                 '// Define an int variable
                 'context.Variables.DefineVariable(DWSIM.App.GetLocalString("a"), typeof(int));
                 'context.Variables.SetVariableValue(DWSIM.App.GetLocalString("a"), 100);
-                '.ExpContext.Variables.SetVariableValue("T", CDbl(300))
+                '.ExpContext.Variables.Add("T", CDbl(300))
                 '// Create a dynamic expression that evaluates to an Object
                 'IDynamicExpression eDynamic = ExpressionFactory.CreateDynamic("sqrt(a) + 1", context);
                 '// Create a generic expression that evaluates to a double
                 'IGenericExpression<double> eGeneric = ExpressionFactory.CreateGeneric<double>("sqrt(a) + 1", context);
                 Try
-                    .Expr = ExpressionFactory.CreateGeneric(Of Double)(Me.tbExp.Text, .ExpContext)
+                    .Expr = .ExpContext.CompileGeneric(Of Double)(Me.tbExp.Text)
                     .Expression = Me.tbExp.Text
                 Catch ex As ExpressionCompileException
                     Select Case ex.Reason

@@ -220,8 +220,7 @@ Public Class FormReacEq
                 'context.Imports.ImportStaticMembers(typeof(Math));
                 rc.ExpContext = New Ciloci.Flee.ExpressionContext
                 With rc.ExpContext
-                    .Imports.ImportStaticMembers(GetType(System.Math))
-                    .Variables.DefineVariable("T", GetType(Double))
+                    .Imports.AddType(GetType(System.Math))
                 End With
                 With rc
 
@@ -234,7 +233,7 @@ Public Class FormReacEq
                     '// Create a generic expression that evaluates to a double
                     'IGenericExpression<double> eGeneric = ExpressionFactory.CreateGeneric<double>("sqrt(a) + 1", context);
                     Try
-                        .Expr = ExpressionFactory.CreateGeneric(Of Double)(Me.tbExp.Text, .ExpContext)
+                        .Expr = .ExpContext.CompileGeneric(Of Double)(Me.tbExp.Text)
                         .Expression = Me.tbExp.Text
                     Catch ex As ExpressionCompileException
                         Select Case ex.Reason

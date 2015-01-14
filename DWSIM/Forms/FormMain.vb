@@ -301,7 +301,7 @@ Public Class FormMain
                 For Each lex As Exception In ex.LoaderExceptions
                     errstr.AppendLine(lex.ToString)
                 Next
-                MessageBox.Show(errstr.ToString, "Error loading plugin", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Console.WriteLine("Error loading plugin '" & currentAssembly.FullName & "': " & errstr.ToString)
             End Try
         Next
 
@@ -328,7 +328,7 @@ Public Class FormMain
 
             If Not files Is Nothing Then
                 For Each fi As FileInfo In files
-                    pluginassemblylist.Add(Assembly.LoadFile(fi.FullName))
+                    pluginassemblylist.Add(Assembly.LoadFrom(fi.FullName))
                 Next
             End If
 

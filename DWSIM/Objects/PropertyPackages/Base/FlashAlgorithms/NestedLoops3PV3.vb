@@ -1038,7 +1038,7 @@ alt:
                 Vy = tmp(3)
                 L2 = tmp(5)
                 Vx2 = tmp(6)
-            ElseIf Type = "PV" Then
+            Else
                 Dim tmp = Me.Flash_PV(Vz, P, X, 298.15, PP)
                 L1 = tmp(0)
                 V = tmp(1)
