@@ -53,6 +53,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Property SimulationFile As String = ""
         <System.Xml.Serialization.XmlIgnore> Public Property Initialized As Boolean = False
         Public Property InitializeOnLoad As Boolean = False
+        Public Property MassTransferMode As FlowsheetUOMassTransferMode = FlowsheetUOMassTransferMode.CompoundMassFlows
         Public Property InputParams As Dictionary(Of String, FlowsheetUOParameter)
         Public Property OutputParams As Dictionary(Of String, FlowsheetUOParameter)
         <System.Xml.Serialization.XmlIgnore> Private Property fsheet As FormFlowsheet = Nothing
