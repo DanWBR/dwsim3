@@ -22,14 +22,20 @@ Imports NetOffice.ExcelApi.Enums
 
 Imports Microsoft.MSDN.Samples.GraphicObjects
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
+Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary
 
-Namespace DWSIM.SimulationObjects.UnitOps
+Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary
+
     <System.Serializable()> Public Class ExcelParameter
         Public Name As String
         Public Value As Double
         Public Unit As String
         Public Annotation As String
     End Class
+
+End Namespace
+
+Namespace DWSIM.SimulationObjects.UnitOps
 
     <System.Serializable()> Public Class ExcelUO
 

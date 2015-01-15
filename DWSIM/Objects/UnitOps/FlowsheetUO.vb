@@ -16,10 +16,11 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
+Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary
 
-Namespace DWSIM.SimulationObjects.UnitOps
+Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary
 
     <System.Serializable()> Public Class FlowsheetUOParameter
         Implements XMLSerializer.Interfaces.ICustomXMLSerialization
@@ -35,14 +36,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Function
     End Class
 
+End Namespace
+
+Namespace DWSIM.SimulationObjects.UnitOps
     <System.Serializable()> Public Class Flowsheet
 
         Inherits SimulationObjects_UnitOpBaseClass
 
         Public Property SimulationFile As String = ""
         <System.Xml.Serialization.XmlIgnore> Public Property Initialized As Boolean = False
-        Public Property InputParams As Dictionary(Of String, ExcelParameter)
-        Public Property OutputParams As Dictionary(Of String, ExcelParameter)
+        Public Property InputParams As Dictionary(Of String, FlowsheetUOParameter)
+        Public Property OutputParams As Dictionary(Of String, FlowsheetUOParameter)
         <System.Xml.Serialization.XmlIgnore> Private Property fsheet As FormFlowsheet = Nothing
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
@@ -53,8 +57,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Me.FillNodeItems()
             Me.QTFillNodeItems()
 
-            InputParams = New Dictionary(Of String, ExcelParameter)
-            OutputParams = New Dictionary(Of String, ExcelParameter)
+            InputParams = New Dictionary(Of String, FlowsheetUOParameter)
+            OutputParams = New Dictionary(Of String, FlowsheetUOParameter)
 
         End Sub
 
@@ -62,8 +66,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             MyBase.New()
 
-            InputParams = New Dictionary(Of String, ExcelParameter)
-            OutputParams = New Dictionary(Of String, ExcelParameter)
+            InputParams = New Dictionary(Of String, FlowsheetUOParameter)
+            OutputParams = New Dictionary(Of String, FlowsheetUOParameter)
 
         End Sub
 

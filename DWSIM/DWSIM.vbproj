@@ -427,6 +427,13 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\UITypeEditors\UIFlowsheetUOEditor\UIFlowsheetEditor.vb" />
+    <Compile Include="Forms\UITypeEditors\UIFlowsheetUOViewer\FlowsheetUOViewerForm.Designer.vb">
+      <DependentUpon>FlowsheetUOViewerForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UITypeEditors\UIFlowsheetUOViewer\FlowsheetUOViewerForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UITypeEditors\UIFlowsheetUOViewer\UIFlowsheetUOViewer.vb" />
     <Compile Include="Forms\UITypeEditors\UIGibbsInitialEstimates\GibbsInitialEstimatesEditorForm.Designer.vb">
       <DependentUpon>GibbsInitialEstimatesEditorForm.vb</DependentUpon>
     </Compile>
@@ -1296,8 +1303,14 @@
     <EmbeddedResource Include="Forms\UITypeEditors\UIExcelUOEditor\ExcelUOEditorForm.resx">
       <DependentUpon>ExcelUOEditorForm.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UIFlowsheetUOEditor\FlowsheetUOEditorForm.en.resx">
+      <DependentUpon>FlowsheetUOEditorForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIFlowsheetUOEditor\FlowsheetUOEditorForm.resx">
       <DependentUpon>FlowsheetUOEditorForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UIFlowsheetUOViewer\FlowsheetUOViewerForm.resx">
+      <DependentUpon>FlowsheetUOViewerForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIGibbsInitialEstimates\GibbsInitialEstimatesEditorForm.en.resx">
       <DependentUpon>GibbsInitialEstimatesEditorForm.vb</DependentUpon>
