@@ -509,9 +509,9 @@ Imports DWSIM.DWSIM.SimulationObjects
             simulation.WriteToLog("Saving changes to file...", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
             Application.DoEvents()
             If simulationfile.Contains(IO.Path.DirectorySeparatorChar) Then
-                fp.SaveF(simulationfile, simulation)
+                fp.SaveFileForCommandLine(simulationfile, simulation)
             Else
-                fp.SaveF(path1 + simulationfile, simulation)
+                fp.SaveFileForCommandLine(path1 + simulationfile, simulation)
             End If
        End If
 

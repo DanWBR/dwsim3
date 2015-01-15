@@ -21,13 +21,29 @@ Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 
 Namespace DWSIM.SimulationObjects.UnitOps
 
+    <System.Serializable()> Public Class FlowsheetUOParameter
+        Implements XMLSerializer.Interfaces.ICustomXMLSerialization
+        Public Property ObjectID As String = ""
+        Public Property ObjectProperty As String = ""
+        Public Property Value As Object = Nothing
+        Public Property Unit As String = ""
+        Public Function LoadData(data As List(Of XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
+            XMLSerializer.XMLSerializer.Deserialize(Me, data)
+        End Function
+        Public Function SaveData() As List(Of XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
+            Return XMLSerializer.XMLSerializer.Serialize(Me)
+        End Function
+    End Class
+
     <System.Serializable()> Public Class Flowsheet
 
         Inherits SimulationObjects_UnitOpBaseClass
 
-        Public Property FlowsheetFile As String = ""
-        Public Initialized As Boolean = False
-
+        Public Property SimulationFile As String = ""
+        <System.Xml.Serialization.XmlIgnore> Public Property Initialized As Boolean = False
+        Public Property InputParams As Dictionary(Of String, ExcelParameter)
+        Public Property OutputParams As Dictionary(Of String, ExcelParameter)
+        <System.Xml.Serialization.XmlIgnore> Private Property fsheet As FormFlowsheet = Nothing
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
 
@@ -36,10 +52,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Me.m_ComponentDescription = descricao
             Me.FillNodeItems()
             Me.QTFillNodeItems()
+
+            InputParams = New Dictionary(Of String, ExcelParameter)
+            OutputParams = New Dictionary(Of String, ExcelParameter)
+
         End Sub
 
         Public Sub New()
+
             MyBase.New()
+
+            InputParams = New Dictionary(Of String, ExcelParameter)
+            OutputParams = New Dictionary(Of String, ExcelParameter)
+
         End Sub
 
         Public Overrides Function GetPropertyValue(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
@@ -270,13 +295,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
                 End With
 
-                '========== Error message =========================
-                If Me.GraphicObject.Calculated = False Then
-                    .Item.Add(DWSIM.App.GetLocalString("Mensagemdeerro"), Me, "ErrorMessage", True, DWSIM.App.GetLocalString("Miscelnea4"), DWSIM.App.GetLocalString("Mensagemretornadaqua"), True)
-                    With .Item(.Item.Count - 1)
-                        .DefaultType = GetType(System.String)
-                    End With
-                End If
+                .Item.Add(DWSIM.App.GetLocalString("SimulationFile"), Me, "SimulationFile", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("SimulationFileDesc"), True)
+                .Item(.Item.Count - 1).CustomEditor = New PropertyGridEx.UIFilenameEditor
+
+                .Item.Add(DWSIM.App.GetLocalString("FlowsheetUOEditor"), "", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FlowsheetUOEditor"), True)
+                .Item(.Item.Count - 1).DefaultValue = Nothing
+                .Item(.Item.Count - 1).CustomEditor = New DWSIM.Editors.FlowsheetUO.UIFlowsheetUOEditor
 
             End With
 

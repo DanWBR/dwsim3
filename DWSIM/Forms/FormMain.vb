@@ -3037,6 +3037,23 @@ Public Class FormMain
 
     End Sub
 
+    Sub SaveFileForCommandLine(ByVal caminho As String, ByVal form As FormFlowsheet)
+
+        If System.IO.File.Exists(caminho) Then
+
+            If Path.GetExtension(caminho).ToLower = ".dwsim" Then
+
+                SaveF(caminho, form)
+
+            ElseIf Path.GetExtension(caminho).ToLower = ".dwxml" Then
+
+                SaveXML(caminho, form)
+
+            End If
+
+        End If
+
+    End Sub
     Private Function IsZipFilePasswordProtected(ByVal ZipFile As String) As Boolean
         Using fsIn As New FileStream(ZipFile, FileMode.Open, FileAccess.Read)
             Using zipInStream As New ZipInputStream(fsIn)
