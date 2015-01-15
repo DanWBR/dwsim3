@@ -4886,4 +4886,37 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ExcelUnitOp" xml:space="preserve">
     <value>Excel UO</value>
   </data>
+  <data name="Correntedeentrada10" xml:space="preserve">
+    <value>Eintrittsstrom 10</value>
+  </data>
+  <data name="Correntedeentrada7" xml:space="preserve">
+    <value>Eintrittsstrom 7</value>
+  </data>
+  <data name="Correntedeentrada8" xml:space="preserve">
+    <value>Eintrittsstrom 8</value>
+  </data>
+  <data name="Correntedeentrada9" xml:space="preserve">
+    <value>Eintrittsstrom 9</value>
+  </data>
+  <data name="Correntedesaida10" xml:space="preserve">
+    <value>Eintrittsstrom 10</value>
+  </data>
+  <data name="Correntedesaida5" xml:space="preserve">
+    <value>Austrittsstrom 5</value>
+  </data>
+  <data name="Correntedesaida6" xml:space="preserve">
+    <value>Austrittsstrom 6</value>
+  </data>
+  <data name="Correntedesaida7" xml:space="preserve">
+    <value>Austrittsstrom 7</value>
+  </data>
+  <data name="Correntedesaida8" xml:space="preserve">
+    <value>Austrittsstrom 8</value>
+  </data>
+  <data name="Correntedesaida9" xml:space="preserve">
+    <value>Austrittsstrom 9</value>
+  </data>
+  <data name="FlowsheetUnitOp" xml:space="preserve">
+    <value>Fließbild (UO)</value>
+  </data>
 </root>

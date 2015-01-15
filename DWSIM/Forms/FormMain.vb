@@ -1448,6 +1448,9 @@ Public Class FormMain
                         Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
                             .CLCS_FilterCollection(gObj.Name).GraphicObject = gObj
                             .FilterCollection(gObj.Name) = gObj
+                        Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.FlowsheetUO
+                            .CLCS_FlowsheetUOCollection(gObj.Name).GraphicObject = gObj
+                            .FlowsheetUOCollection(gObj.Name) = gObj
                     End Select
                 Next
             End With
@@ -2002,6 +2005,8 @@ Public Class FormMain
                                 .CustomUOCollection.Add(obj.Name, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ExcelUO
                                 .ExcelUOCollection.Add(obj.Name, obj)
+                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.FlowsheetUO
+                                .FlowsheetUOCollection.Add(obj.Name, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                                 obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
                                 .CapeOpenUOCollection.Add(obj.Name, obj)
@@ -2111,6 +2116,9 @@ Public Class FormMain
                                 Case TipoObjeto.Filter
                                     form.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
                                     form.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
+                                Case TipoObjeto.FlowsheetUO
+                                    form.FormObjList.TreeViewObj.Nodes("NodeFS").Nodes.Add(obj.Name, obj.Tag).Name = obj.Name
+                                    form.FormObjList.TreeViewObj.Nodes("NodeFS").Nodes(obj.Name).ContextMenuStrip = form.FormObjList.ContextMenuStrip1
                             End Select
                         End If
                     End With
@@ -2333,6 +2341,8 @@ Public Class FormMain
                                 .CLCS_SolidsSeparatorCollection.Add(id, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
                                 .CLCS_FilterCollection.Add(id, obj)
+                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.FlowsheetUO
+                                .CLCS_FlowsheetUOCollection.Add(id, obj)
                         End Select
                     End With
                     obj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)

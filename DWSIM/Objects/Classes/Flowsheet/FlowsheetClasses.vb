@@ -70,6 +70,7 @@ Namespace DWSIM.FormClasses
         Public CapeOpenUOCollection As Dictionary(Of String, CapeOpenUOGraphic)
         Public SolidsSeparatorCollection As Dictionary(Of String, SolidSeparatorGraphic)
         Public FilterCollection As Dictionary(Of String, FilterGraphic)
+        Public FlowsheetUOCollection As Dictionary(Of String, FlowsheetUOGraphic)
 
         Public ObjectCounter As Dictionary(Of String, Integer)
 
@@ -112,6 +113,7 @@ Namespace DWSIM.FormClasses
         Public CLCS_CapeOpenUOCollection As Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.CapeOpenUO)
         Public CLCS_SolidsSeparatorCollection As Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.SolidsSeparator)
         Public CLCS_FilterCollection As Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.Filter)
+        Public CLCS_FlowsheetUOCollection As Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.Flowsheet)
 
         Public OPT_SensAnalysisCollection As List(Of DWSIM.Optimization.SensitivityAnalysisCase)
         Public OPT_OptimizationCollection As List(Of DWSIM.Optimization.OptimizationCase)
@@ -157,6 +159,7 @@ Namespace DWSIM.FormClasses
             CapeOpenUOCollection = New Dictionary(Of String, CapeOpenUOGraphic)
             SolidsSeparatorCollection = New Dictionary(Of String, SolidSeparatorGraphic)
             FilterCollection = New Dictionary(Of String, FilterGraphic)
+            FlowsheetUOCollection = New Dictionary(Of String, FlowsheetUOGraphic)
 
             ObjectCollection = New Dictionary(Of String, SimulationObjects_BaseClass)
 
@@ -197,6 +200,7 @@ Namespace DWSIM.FormClasses
             CLCS_CapeOpenUOCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.CapeOpenUO)
             CLCS_SolidsSeparatorCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.SolidsSeparator)
             CLCS_FilterCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.Filter)
+            CLCS_FlowsheetUOCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.Flowsheet)
 
             OPT_SensAnalysisCollection = New List(Of DWSIM.Optimization.SensitivityAnalysisCase)
             OPT_OptimizationCollection = New List(Of DWSIM.Optimization.OptimizationCase)
@@ -245,6 +249,7 @@ Namespace DWSIM.FormClasses
                 .Add("COOP", Me.CapeOpenUOCollection.Count)
                 .Add("SOLS", Me.SolidsSeparatorCollection.Count)
                 .Add("FILT", Me.FilterCollection.Count)
+                .Add("FLST", Me.FlowsheetUOCollection.Count)
             End With
 
         End Sub

@@ -2477,6 +2477,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Corrente de entrada (10).
+        '''</summary>
+        Friend Shared ReadOnly Property Correntedeentrada10() As String
+            Get
+                Return ResourceManager.GetString("Correntedeentrada10", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Corrente de entrada (2).
         '''</summary>
         Friend Shared ReadOnly Property Correntedeentrada2() As String
@@ -2518,6 +2527,33 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Correntedeentrada6() As String
             Get
                 Return ResourceManager.GetString("Correntedeentrada6", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Corrente de entrada (7).
+        '''</summary>
+        Friend Shared ReadOnly Property Correntedeentrada7() As String
+            Get
+                Return ResourceManager.GetString("Correntedeentrada7", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Corrente de entrada (8).
+        '''</summary>
+        Friend Shared ReadOnly Property Correntedeentrada8() As String
+            Get
+                Return ResourceManager.GetString("Correntedeentrada8", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Corrente de entrada (9).
+        '''</summary>
+        Friend Shared ReadOnly Property Correntedeentrada9() As String
+            Get
+                Return ResourceManager.GetString("Correntedeentrada9", resourceCulture)
             End Get
         End Property
         
@@ -2585,6 +2621,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Corrente de saída (10).
+        '''</summary>
+        Friend Shared ReadOnly Property Correntedesaida10() As String
+            Get
+                Return ResourceManager.GetString("Correntedesaida10", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Corrente de saída (2).
         '''</summary>
         Friend Shared ReadOnly Property Correntedesaida2() As String
@@ -2608,6 +2653,51 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Correntedesaida4() As String
             Get
                 Return ResourceManager.GetString("Correntedesaida4", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Corrente de saída (5).
+        '''</summary>
+        Friend Shared ReadOnly Property Correntedesaida5() As String
+            Get
+                Return ResourceManager.GetString("Correntedesaida5", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Corrente de saída (6).
+        '''</summary>
+        Friend Shared ReadOnly Property Correntedesaida6() As String
+            Get
+                Return ResourceManager.GetString("Correntedesaida6", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Corrente de saída (7).
+        '''</summary>
+        Friend Shared ReadOnly Property Correntedesaida7() As String
+            Get
+                Return ResourceManager.GetString("Correntedesaida7", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Corrente de saída (8).
+        '''</summary>
+        Friend Shared ReadOnly Property Correntedesaida8() As String
+            Get
+                Return ResourceManager.GetString("Correntedesaida8", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Corrente de saída (9).
+        '''</summary>
+        Friend Shared ReadOnly Property Correntedesaida9() As String
+            Get
+                Return ResourceManager.GetString("Correntedesaida9", resourceCulture)
             End Get
         End Property
         
@@ -5824,6 +5914,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property FlashSpecificationDesc() As String
             Get
                 Return ResourceManager.GetString("FlashSpecificationDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Fluxograma (UO).
+        '''</summary>
+        Friend Shared ReadOnly Property FlowsheetUnitOp() As String
+            Get
+                Return ResourceManager.GetString("FlowsheetUnitOp", resourceCulture)
             End Get
         End Property
         

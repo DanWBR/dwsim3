@@ -9172,6 +9172,272 @@ Namespace GraphicObjects
 
     End Class
 
+    <Serializable()> Public Class FlowsheetUOGraphic
+
+        Inherits ShapeGraphic
+
+#Region "Constructors"
+        Public Sub New()
+            Me.TipoObjeto = GraphicObjects.TipoObjeto.FlowsheetUO
+            Me.Description = "FlowsheetUO"
+        End Sub
+
+        Public Sub New(ByVal graphicPosition As Point)
+            Me.New()
+            Me.SetPosition(graphicPosition)
+        End Sub
+
+        Public Sub New(ByVal posX As Integer, ByVal posY As Integer)
+            Me.New(New Point(posX, posY))
+        End Sub
+
+        Public Sub New(ByVal graphicPosition As Point, ByVal graphicSize As Size)
+            Me.New(graphicPosition)
+            Me.SetSize(graphicSize)
+            Me.AutoSize = False
+        End Sub
+
+        Public Sub New(ByVal posX As Integer, ByVal posY As Integer, ByVal graphicSize As Size)
+            Me.New(New Point(posX, posY), graphicSize)
+        End Sub
+
+        Public Sub New(ByVal posX As Integer, ByVal posY As Integer, ByVal width As Integer, ByVal height As Integer)
+            Me.New(New Point(posX, posY), New Size(width, height))
+        End Sub
+
+        Public Sub New(ByVal graphicPosition As Point, ByVal Rotation As Single)
+            Me.New()
+            Me.SetPosition(graphicPosition)
+            Me.Rotation = Rotation
+        End Sub
+
+        Public Sub New(ByVal posX As Integer, ByVal posY As Integer, ByVal Rotation As Single)
+            Me.New(New Point(posX, posY), Rotation)
+        End Sub
+
+        Public Sub New(ByVal graphicPosition As Point, ByVal graphicSize As Size, ByVal Rotation As Single)
+            Me.New(graphicPosition, Rotation)
+            Me.SetSize(graphicSize)
+            Me.AutoSize = False
+        End Sub
+
+        Public Sub New(ByVal posX As Integer, ByVal posY As Integer, ByVal graphicSize As Size, ByVal Rotation As Single)
+            Me.New(New Point(posX, posY), graphicSize, Rotation)
+        End Sub
+
+        Public Sub New(ByVal posX As Integer, ByVal posY As Integer, ByVal width As Integer, _
+                               ByVal height As Integer, ByVal Rotation As Single)
+            Me.New(New Point(posX, posY), New Size(width, height), Rotation)
+        End Sub
+
+#End Region
+
+        Public Overrides Sub CreateConnectors(InCount As Integer, OutCount As Integer)
+
+            Dim myIC1 As New ConnectionPoint With {.Position = New Point(X, Y + 0.1 * Height), .Type = ConType.ConIn}
+            Dim myIC2 As New ConnectionPoint With {.Position = New Point(X, Y + 0.2 * Height), .Type = ConType.ConIn}
+            Dim myIC3 As New ConnectionPoint With {.Position = New Point(X, Y + 0.3 * Height), .Type = ConType.ConIn}
+            Dim myIC4 As New ConnectionPoint With {.Position = New Point(X, Y + 0.4 * Height), .Type = ConType.ConIn}
+            Dim myIC5 As New ConnectionPoint With {.Position = New Point(X, Y + 0.5 * Height), .Type = ConType.ConIn}
+            Dim myIC6 As New ConnectionPoint With {.Position = New Point(X, Y + 0.6 * Height), .Type = ConType.ConIn}
+            Dim myIC7 As New ConnectionPoint With {.Position = New Point(X, Y + 0.7 * Height), .Type = ConType.ConIn}
+            Dim myIC8 As New ConnectionPoint With {.Position = New Point(X, Y + 0.8 * Height), .Type = ConType.ConIn}
+            Dim myIC9 As New ConnectionPoint With {.Position = New Point(X, Y + 0.9 * Height), .Type = ConType.ConIn}
+            Dim myIC10 As New ConnectionPoint With {.Position = New Point(X, Y + 1.0 * Height), .Type = ConType.ConIn}
+
+            Dim myOC1 As New ConnectionPoint With {.Position = New Point(X + Width, Y + 0.1 * Height), .Type = ConType.ConOut}
+            Dim myOC2 As New ConnectionPoint With {.Position = New Point(X + Width, Y + 0.2 * Height), .Type = ConType.ConOut}
+            Dim myOC3 As New ConnectionPoint With {.Position = New Point(X + Width, Y + 0.3 * Height), .Type = ConType.ConOut}
+            Dim myOC4 As New ConnectionPoint With {.Position = New Point(X + Width, Y + 0.4 * Height), .Type = ConType.ConOut}
+            Dim myOC5 As New ConnectionPoint With {.Position = New Point(X + Width, Y + 0.5 * Height), .Type = ConType.ConOut}
+            Dim myOC6 As New ConnectionPoint With {.Position = New Point(X + Width, Y + 0.6 * Height), .Type = ConType.ConOut}
+            Dim myOC7 As New ConnectionPoint With {.Position = New Point(X + Width, Y + 0.7 * Height), .Type = ConType.ConOut}
+            Dim myOC8 As New ConnectionPoint With {.Position = New Point(X + Width, Y + 0.8 * Height), .Type = ConType.ConOut}
+            Dim myOC9 As New ConnectionPoint With {.Position = New Point(X + Width, Y + 0.9 * Height), .Type = ConType.ConOut}
+            Dim myOC10 As New ConnectionPoint With {.Position = New Point(X + Width, Y + 1.0 * Height), .Type = ConType.ConOut}
+
+            With InputConnectors
+
+                If .Count <> 0 Then
+                    If Me.FlippedH Then
+                        .Item(0).Position = New Point(X + Width, Y + 0.1 * Height)
+                        .Item(1).Position = New Point(X + Width, Y + 0.2 * Height)
+                        .Item(2).Position = New Point(X + Width, Y + 0.3 * Height)
+                        .Item(3).Position = New Point(X + Width, Y + 0.4 * Height)
+                        .Item(4).Position = New Point(X + Width, Y + 0.5 * Height)
+                        .Item(5).Position = New Point(X + Width, Y + 0.6 * Height)
+                        .Item(6).Position = New Point(X + Width, Y + 0.7 * Height)
+                        .Item(7).Position = New Point(X + Width, Y + 0.8 * Height)
+                        .Item(8).Position = New Point(X + Width, Y + 0.9 * Height)
+                        .Item(9).Position = New Point(X + Width, Y + 1.0 * Height)
+                    Else
+                        .Item(0).Position = New Point(X, Y + 0.1 * Height)
+                        .Item(1).Position = New Point(X, Y + 0.2 * Height)
+                        .Item(2).Position = New Point(X, Y + 0.3 * Height)
+                        .Item(3).Position = New Point(X, Y + 0.4 * Height)
+                        .Item(4).Position = New Point(X, Y + 0.5 * Height)
+                        .Item(5).Position = New Point(X, Y + 0.6 * Height)
+                        .Item(6).Position = New Point(X, Y + 0.7 * Height)
+                        .Item(7).Position = New Point(X, Y + 0.8 * Height)
+                        .Item(8).Position = New Point(X, Y + 0.9 * Height)
+                        .Item(9).Position = New Point(X, Y + 1.0 * Height)
+                    End If
+                Else
+                    .Add(myIC1)
+                    .Add(myIC2)
+                    .Add(myIC3)
+                    .Add(myIC4)
+                    .Add(myIC5)
+                    .Add(myIC6)
+                    .Add(myIC7)
+                    .Add(myIC8)
+                    .Add(myIC9)
+                    .Add(myIC10)
+                End If
+
+            End With
+
+            With OutputConnectors
+
+                If .Count <> 0 Then
+                    If Me.FlippedH Then
+                        .Item(0).Position = New Point(X, Y + 0.1 * Height)
+                        .Item(1).Position = New Point(X, Y + 0.2 * Height)
+                        .Item(2).Position = New Point(X, Y + 0.3 * Height)
+                        .Item(3).Position = New Point(X, Y + 0.4 * Height)
+                        .Item(4).Position = New Point(X, Y + 0.5 * Height)
+                        .Item(5).Position = New Point(X, Y + 0.6 * Height)
+                        .Item(6).Position = New Point(X, Y + 0.7 * Height)
+                        .Item(7).Position = New Point(X, Y + 0.8 * Height)
+                        .Item(8).Position = New Point(X, Y + 0.9 * Height)
+                        .Item(9).Position = New Point(X, Y + 1.0 * Height)
+                    Else
+                        .Item(0).Position = New Point(X + Width, Y + 0.1 * Height)
+                        .Item(1).Position = New Point(X + Width, Y + 0.2 * Height)
+                        .Item(2).Position = New Point(X + Width, Y + 0.3 * Height)
+                        .Item(3).Position = New Point(X + Width, Y + 0.4 * Height)
+                        .Item(4).Position = New Point(X + Width, Y + 0.5 * Height)
+                        .Item(5).Position = New Point(X + Width, Y + 0.6 * Height)
+                        .Item(6).Position = New Point(X + Width, Y + 0.7 * Height)
+                        .Item(7).Position = New Point(X + Width, Y + 0.8 * Height)
+                        .Item(8).Position = New Point(X + Width, Y + 0.9 * Height)
+                        .Item(9).Position = New Point(X + Width, Y + 1.0 * Height)
+                    End If
+                Else
+                    .Add(myOC1)
+                    .Add(myOC2)
+                    .Add(myOC3)
+                    .Add(myOC4)
+                    .Add(myOC5)
+                    .Add(myOC6)
+                    .Add(myOC7)
+                    .Add(myOC8)
+                    .Add(myOC9)
+                    .Add(myOC10)
+                End If
+
+            End With
+
+        End Sub
+
+        Public Overrides Sub Draw(ByVal g As System.Drawing.Graphics)
+
+            CreateConnectors(0, 0)
+
+            UpdateStatus(Me)
+
+            Dim pt As Point
+            Dim raio, angulo As Double
+            Dim con As ConnectionPoint
+            For Each con In Me.InputConnectors
+                pt = con.Position
+                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
+                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
+                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                con.Position = pt
+            Next
+            For Each con In Me.OutputConnectors
+                pt = con.Position
+                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
+                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
+                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                con.Position = pt
+            Next
+            With Me.EnergyConnector
+                pt = .Position
+                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
+                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
+                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                .Position = pt
+            End With
+
+            Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
+            Dim myMatrix As Drawing2D.Matrix
+            gContainer = g.BeginContainer()
+            myMatrix = g.Transform()
+            If m_Rotation <> 0 Then
+                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                g.Transform = myMatrix
+            End If
+
+
+            Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
+            Dim myPen2 As New Pen(Color.White, 0)
+            Dim rect As New Rectangle(X, Y, Width, Height)
+
+            g.FillRectangle(Brushes.LightBlue, rect)
+            g.DrawRectangle(myPen, rect)
+
+            Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
+            gp.AddLine(CInt(X), CInt(Y + 0.5 * Height), CInt(X + 0.5 * Width), CInt(Y))
+            gp.AddLine(CInt(X + 0.5 * Width), CInt(Y), CInt(X + Width), CInt(Y + 0.5 * Height))
+            gp.AddLine(CInt(X + Width), CInt(Y + 0.5 * Height), CInt(X + 0.5 * Width), CInt(Y + Height))
+            gp.AddLine(CInt(X + 0.5 * Width), CInt(Y + Height), CInt(X), CInt(Y + 0.5 * Height))
+
+            gp.CloseFigure()
+
+            g.SmoothingMode = SmoothingMode.AntiAlias
+            g.DrawPath(myPen, gp)
+
+            Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
+            Dim strx As Single = (Me.Width - strdist.Width) / 2
+            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
+            Dim pgb1 As New PathGradientBrush(gp)
+            pgb1.CenterColor = Me.GradientColor2
+            'lgb1.SetBlendTriangularShape(0.5)
+            pgb1.SurroundColors = New Color() {Me.GradientColor1}
+
+            If Me.Fill Then
+                If Me.GradientMode = False Then
+                    g.FillPath(New SolidBrush(Me.FillColor), gp)
+                Else
+                    g.FillPath(pgb1, gp)
+                End If
+            End If
+
+            Dim size As SizeF
+            Dim fontA As New Font("Arial", 10, 3, GraphicsUnit.Pixel, 0, False)
+            size = g.MeasureString("F", fontA)
+
+            Dim ax, ay As Integer
+            ax = Me.X + (Me.Width - size.Width) / 2
+            ay = Me.Y + (Me.Height - size.Height) / 2
+
+            g.SmoothingMode = SmoothingMode.AntiAlias
+            g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+            g.DrawString("F", fontA, Brushes.DarkOrange, ax, ay)
+
+            gp.Dispose()
+            g.EndContainer(gContainer)
+
+        End Sub
+
+    End Class
 
 
     <Serializable()> Public Class CapeOpenUOGraphic

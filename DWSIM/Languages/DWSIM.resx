@@ -4897,4 +4897,37 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ExcelUnitOp" xml:space="preserve">
     <value>Operação Unitária Excel</value>
   </data>
+  <data name="Correntedeentrada10" xml:space="preserve">
+    <value>Corrente de entrada (10)</value>
+  </data>
+  <data name="Correntedeentrada7" xml:space="preserve">
+    <value>Corrente de entrada (7)</value>
+  </data>
+  <data name="Correntedeentrada8" xml:space="preserve">
+    <value>Corrente de entrada (8)</value>
+  </data>
+  <data name="Correntedeentrada9" xml:space="preserve">
+    <value>Corrente de entrada (9)</value>
+  </data>
+  <data name="Correntedesaida10" xml:space="preserve">
+    <value>Corrente de saída (10)</value>
+  </data>
+  <data name="Correntedesaida5" xml:space="preserve">
+    <value>Corrente de saída (5)</value>
+  </data>
+  <data name="Correntedesaida6" xml:space="preserve">
+    <value>Corrente de saída (6)</value>
+  </data>
+  <data name="Correntedesaida7" xml:space="preserve">
+    <value>Corrente de saída (7)</value>
+  </data>
+  <data name="Correntedesaida8" xml:space="preserve">
+    <value>Corrente de saída (8)</value>
+  </data>
+  <data name="Correntedesaida9" xml:space="preserve">
+    <value>Corrente de saída (9)</value>
+  </data>
+  <data name="FlowsheetUnitOp" xml:space="preserve">
+    <value>Fluxograma (UO)</value>
+  </data>
 </root>

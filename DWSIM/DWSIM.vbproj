@@ -810,6 +810,7 @@
     <Compile Include="Objects\UnitOps\CustomUO.vb" />
     <Compile Include="Objects\UnitOps\Filter.vb" />
     <Compile Include="Objects\UnitOps\ExcelUO.vb" />
+    <Compile Include="Objects\UnitOps\Flowsheet.vb" />
     <Compile Include="Objects\UnitOps\OrificePlate.vb" />
     <Compile Include="Objects\UnitOps\RigorousColumn.vb" />
     <Compile Include="Objects\UnitOps\HeatExchanger.vb" />

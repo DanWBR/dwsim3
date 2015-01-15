@@ -21,7 +21,7 @@ Imports Excel = NetOffice.ExcelApi
 Imports NetOffice.ExcelApi.Enums
 
 Imports Microsoft.MSDN.Samples.GraphicObjects
-Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 
 Namespace DWSIM.SimulationObjects.UnitOps
     <System.Serializable()> Public Class ExcelParameter

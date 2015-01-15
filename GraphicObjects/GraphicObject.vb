@@ -59,6 +59,7 @@ Namespace GraphicObjects
         CustomUO
         ExcelUO
         CapeOpenUO
+        FlowsheetUO
         GO_MasterTable
         SolidSeparator
         Filter

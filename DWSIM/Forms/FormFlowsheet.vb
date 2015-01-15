@@ -617,7 +617,7 @@ Imports DWSIM.DWSIM.Outros
         If Collections.OrificePlateCollection Is Nothing Then Collections.OrificePlateCollection = New Dictionary(Of String, OrificePlateGraphic)
         If Collections.CustomUOCollection Is Nothing Then Collections.CustomUOCollection = New Dictionary(Of String, CustomUOGraphic)
         If Collections.ExcelUOCollection Is Nothing Then Collections.ExcelUOCollection = New Dictionary(Of String, ExcelUOGraphic)
-
+        If Collections.FlowsheetUOCollection Is Nothing Then Collections.FlowsheetUOCollection = New Dictionary(Of String, FlowsheetUOGraphic)
         If Collections.SolidsSeparatorCollection Is Nothing Then Collections.SolidsSeparatorCollection = New Dictionary(Of String, SolidSeparatorGraphic)
         If Collections.FilterCollection Is Nothing Then Collections.FilterCollection = New Dictionary(Of String, FilterGraphic)
 
@@ -659,6 +659,7 @@ Imports DWSIM.DWSIM.Outros
         If Collections.CLCS_ExcelUOCollection Is Nothing Then Collections.CLCS_ExcelUOCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.ExcelUO)
         If Collections.CLCS_SolidsSeparatorCollection Is Nothing Then Collections.CLCS_SolidsSeparatorCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.SolidsSeparator)
         If Collections.CLCS_FilterCollection Is Nothing Then Collections.CLCS_FilterCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.Filter)
+        If Collections.CLCS_FlowsheetUOCollection Is Nothing Then Collections.CLCS_FlowsheetUOCollection = New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.Flowsheet)
 
         If Collections.OPT_SensAnalysisCollection Is Nothing Then Collections.OPT_SensAnalysisCollection = New List(Of DWSIM.Optimization.SensitivityAnalysisCase)
         If Collections.OPT_OptimizationCollection Is Nothing Then Collections.OPT_OptimizationCollection = New List(Of DWSIM.Optimization.OptimizationCase)
@@ -748,7 +749,7 @@ Imports DWSIM.DWSIM.Outros
      TSMIPipe.Click, TSMIPump.Click, TSMIReactorConv.Click, TSMIReactorCSTR.Click, TSMIReactorEquilibrium.Click, _
      TSMIReactorGibbs.Click, TSMIReactorPFR.Click, TSMIRecycle.Click, TSMISeparator.Click, _
      TSMISpecification.Click, TSMISplitter.Click, TSMITank.Click, TSMIValve.Click, TSMICUO.Click, TSMICOUO.Click, _
-     TSMISolidsSeparator.Click, TSMIFilter.Click, TSMIExcelUO.Click
+     TSMISolidsSeparator.Click, TSMIFilter.Click, TSMIExcelUO.Click, TSMIFlowsheet.Click
 
         Me.InsertingObjectToPFD = True
         Me.FormSurface.FlowsheetDesignSurface.Cursor = Cursors.Hand
@@ -1531,6 +1532,13 @@ Imports DWSIM.DWSIM.Outros
                                     'DWSIM
                                     Me.Collections.CLCS_ExcelUOCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.FlowsheetUO
+                                    Me.Collections.FlowsheetUOCollection.Remove(namesel)
+                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeFS").Nodes.RemoveByKey(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_FlowsheetUOCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.CapeOpenUO
                                     Me.Collections.CapeOpenUOCollection.Remove(namesel)
                                     If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes.RemoveByKey(namesel)
@@ -1800,33 +1808,9 @@ Imports DWSIM.DWSIM.Outros
                         End If
                     Else
                         Select Case gObjFrom.TipoObjeto
-                            Case TipoObjeto.Cooler
-                                GoTo 100
-                            Case TipoObjeto.Pipe
-                                GoTo 100
-                            Case TipoObjeto.Expander
-                                GoTo 100
-                            Case TipoObjeto.ShortcutColumn
-                                GoTo 100
-                            Case TipoObjeto.DistillationColumn
-                                GoTo 100
-                            Case TipoObjeto.AbsorptionColumn
-                                GoTo 100
-                            Case TipoObjeto.ReboiledAbsorber
-                                GoTo 100
-                            Case TipoObjeto.RefluxedAbsorber
-                                GoTo 100
-                            Case TipoObjeto.OT_EnergyRecycle
-                                GoTo 100
-                            Case TipoObjeto.ComponentSeparator
-                                GoTo 100
-                            Case TipoObjeto.SolidSeparator
-                                GoTo 100
-                            Case TipoObjeto.Filter
-                                GoTo 100
-                            Case TipoObjeto.CustomUO
-                                GoTo 100
-                            Case TipoObjeto.CapeOpenUO
+                            Case TipoObjeto.Cooler, TipoObjeto.Pipe, TipoObjeto.Expander, TipoObjeto.ShortcutColumn, TipoObjeto.DistillationColumn, TipoObjeto.AbsorptionColumn,
+                                TipoObjeto.ReboiledAbsorber, TipoObjeto.RefluxedAbsorber, TipoObjeto.OT_EnergyRecycle, TipoObjeto.ComponentSeparator, TipoObjeto.SolidSeparator,
+                                TipoObjeto.Filter, TipoObjeto.CustomUO, TipoObjeto.CapeOpenUO, TipoObjeto.FlowsheetUO
                                 GoTo 100
                             Case Else
                                 MessageBox.Show(DWSIM.App.GetLocalString("Correntesdeenergiasp2") & vbCrLf & DWSIM.App.GetLocalString("TubulaesTurbinaseRes"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)

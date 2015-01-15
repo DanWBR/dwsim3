@@ -517,6 +517,8 @@ Public Class frmSurface
                             tobj = TipoObjeto.SolidSeparator
                         Case "TSMIFilter"
                             tobj = TipoObjeto.Filter
+                        Case "TSMIFlowsheetUO"
+                            tobj = TipoObjeto.FlowsheetUO
                     End Select
 
                     AddObjectToSurface(tobj, mpx, mpy)
@@ -2086,8 +2088,8 @@ Public Class frmSurface
                 ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 ChildParent.Collections.CLCS_CustomUOCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
-            Case TipoObjeto.CapeOpenUO
-                MessageBox.Show("Cloning is not supported by CAPE-OPEN Unit Operations.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Case TipoObjeto.CapeOpenUO, TipoObjeto.FlowsheetUO
+                MessageBox.Show("Cloning is not supported by CAPE-OPEN/Flowsheet Unit Operations.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Select
         Me.FlowsheetDesignSurface.Invalidate()
 
@@ -3049,6 +3051,32 @@ Public Class frmSurface
                 ChildParent.Collections.ObjectCollection.Add(myEUO.Name, myCOEUO)
                 ChildParent.Collections.CLCS_ExcelUOCollection.Add(myEUO.Name, myCOEUO)
 
+            Case TipoObjeto.FlowsheetUO
+                Dim myEUO As New FlowsheetUOGraphic(mpx, mpy, 25, 25, 0)
+                myEUO.LineWidth = 2
+                myEUO.Fill = True
+                myEUO.FillColor = fillclr
+                myEUO.LineColor = lineclr
+                If Not ChildParent.Collections.ObjectCounter.ContainsKey("FLST") Then
+                    ChildParent.Collections.ObjectCounter.Add("FLST", 0)
+                End If
+                myEUO.Tag = "FS-" & Format(ChildParent.Collections.ObjectCounter("FLST"), "00#")
+                ChildParent.Collections.UpdateCounter("FLST")
+                If tag <> "" Then myEUO.Tag = tag
+                gObj = myEUO
+                gObj.Name = "FS-" & Guid.NewGuid.ToString
+                ChildParent.Collections.FlowsheetUOCollection.Add(gObj.Name, myEUO)
+                Try
+                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeFS").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeFS").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Catch ex As Exception
+                End Try
+                'OBJETO DWSIM
+                Dim myCOEUO As DWSIM.SimulationObjects.UnitOps.Flowsheet = New DWSIM.SimulationObjects.UnitOps.Flowsheet(myEUO.Name, "FlowsheetUnitOp")
+                myCOEUO.GraphicObject = myEUO
+                ChildParent.Collections.ObjectCollection.Add(myEUO.Name, myCOEUO)
+                ChildParent.Collections.CLCS_FlowsheetUOCollection.Add(myEUO.Name, myCOEUO)
+
             Case TipoObjeto.CapeOpenUO
                 Dim myCUO As New CapeOpenUOGraphic(mpx, mpy, 40, 40, 0)
                 myCUO.LineWidth = 2
@@ -3200,6 +3228,8 @@ Public Class frmSurface
                     tobj = TipoObjeto.SolidSeparator
                 Case "Filter"
                     tobj = TipoObjeto.Filter
+                Case "FlowsheetUnitOp"
+                    tobj = TipoObjeto.FlowsheetUO
             End Select
 
             AddObjectToSurface(tobj, mpx, mpy)

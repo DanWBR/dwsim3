@@ -63,7 +63,7 @@ Partial Class frmObjList
         Me.TreeViewObj.HideSelection = False
         Me.TreeViewObj.ImageList = Me.ImageList1
         Me.TreeViewObj.Name = "TreeViewObj"
-        Me.TreeViewObj.Nodes.AddRange(New System.Windows.Forms.TreeNode() {CType(resources.GetObject("TreeViewObj.Nodes"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes1"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes2"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes3"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes4"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes5"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes6"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes7"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes8"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes9"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes10"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes11"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes12"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes13"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes14"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes15"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes16"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes17"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes18"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes19"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes20"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes21"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes22"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes23"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes24"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes25"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes26"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes27"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes28"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes29"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes30"), System.Windows.Forms.TreeNode)})
+        Me.TreeViewObj.Nodes.AddRange(New System.Windows.Forms.TreeNode() {CType(resources.GetObject("TreeViewObj.Nodes"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes1"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes2"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes3"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes4"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes5"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes6"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes7"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes8"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes9"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes10"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes11"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes12"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes13"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes14"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes15"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes16"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes17"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes18"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes19"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes20"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes21"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes22"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes23"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes24"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes25"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes26"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes27"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes28"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes29"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes30"), System.Windows.Forms.TreeNode), CType(resources.GetObject("TreeViewObj.Nodes31"), System.Windows.Forms.TreeNode)})
         '
         'TableLayoutPanel4
         '
@@ -93,21 +93,21 @@ Partial Class frmObjList
         '
         'ContextMenuStrip1
         '
+        resources.ApplyResources(Me.ContextMenuStrip1, "ContextMenuStrip1")
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripMenuItem2})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        resources.ApplyResources(Me.ContextMenuStrip1, "ContextMenuStrip1")
         '
         'ToolStripMenuItem1
         '
+        resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
         Me.ToolStripMenuItem1.Image = Global.DWSIM.My.Resources.Resources.shading
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
         '
         'ToolStripMenuItem2
         '
+        resources.ApplyResources(Me.ToolStripMenuItem2, "ToolStripMenuItem2")
         Me.ToolStripMenuItem2.Image = Global.DWSIM.My.Resources.Resources.shape_move_front
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        resources.ApplyResources(Me.ToolStripMenuItem2, "ToolStripMenuItem2")
         '
         'frmObjList
         '

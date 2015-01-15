@@ -1570,7 +1570,7 @@
     <value>Error P</value>
   </data>
   <data name="Correntedesaida1" xml:space="preserve">
-    <value>Salida de corriente (1) </value>
+    <value>Corriente de salida (1)</value>
   </data>
   <data name="Objetosnafiladeclcul" xml:space="preserve">
     <value>Objetos en la cola para el cálculo de</value>
@@ -2182,7 +2182,7 @@
     <value>Flash PS: Se alcanzo el máximo de iteraciones del bucle interior. </value>
   </data>
   <data name="Correntedesaida2" xml:space="preserve">
-    <value>Salida de corriente (2) </value>
+    <value>Corriente de salida (2)</value>
   </data>
   <data name="Excluiracaixadetexto" xml:space="preserve">
     <value>¿Eliminar el cuadro de texto seleccionado? </value>
@@ -2422,7 +2422,7 @@
     <value>Presión de vapor</value>
   </data>
   <data name="Correntedesaida3" xml:space="preserve">
-    <value>Salida de corriente (3)</value>
+    <value>Corriente de salida (3)</value>
   </data>
   <data name="Noexistemsimulaesati" xml:space="preserve">
     <value>No hay Simulaciones activas. </value>
@@ -4834,7 +4834,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Método de Cálculo Entalpia/Entropia/Cp/Cv (0 = Lee-Kesler, 1 = Ideal, 2 = Excesso)</value>
   </data>
   <data name="Correntedesaida4" xml:space="preserve">
-    <value>Salida de corriente (4)</value>
+    <value>Corriente de salida (4)</value>
   </data>
   <data name="Nohcorrentedeenergia1" xml:space="preserve">
     <value>No hay corriente de energía asociada a la ExcelUO.</value>
@@ -4862,5 +4862,38 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   </data>
   <data name="ExcelUnitOp" xml:space="preserve">
     <value>Operação Unitária Excel</value>
+  </data>
+  <data name="Correntedeentrada10" xml:space="preserve">
+    <value>Corriente de entrada (10)</value>
+  </data>
+  <data name="Correntedeentrada7" xml:space="preserve">
+    <value>Corriente de entrada (7)</value>
+  </data>
+  <data name="Correntedeentrada8" xml:space="preserve">
+    <value>Corriente de entrada (8)</value>
+  </data>
+  <data name="Correntedeentrada9" xml:space="preserve">
+    <value>Corriente de entrada (9)</value>
+  </data>
+  <data name="Correntedesaida10" xml:space="preserve">
+    <value>Corriente de salida (10)</value>
+  </data>
+  <data name="Correntedesaida5" xml:space="preserve">
+    <value>Corriente de salida (5)</value>
+  </data>
+  <data name="Correntedesaida6" xml:space="preserve">
+    <value>Corriente de salida (6)</value>
+  </data>
+  <data name="Correntedesaida7" xml:space="preserve">
+    <value>Corriente de salida (7)</value>
+  </data>
+  <data name="Correntedesaida8" xml:space="preserve">
+    <value>Corriente de salida (8)</value>
+  </data>
+  <data name="Correntedesaida9" xml:space="preserve">
+    <value>Corriente de salida (9)</value>
+  </data>
+  <data name="FlowsheetUnitOp" xml:space="preserve">
+    <value>Fluxograma (UO)</value>
   </data>
 </root>
