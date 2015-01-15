@@ -1059,6 +1059,9 @@
   <data name="TSMIFlowsheet.Size" type="System.Drawing.Size, System.Drawing">
     <value>237, 22</value>
   </data>
+  <data name="TSMIFlowsheet.Text" xml:space="preserve">
+    <value>Fluxograma (UO)</value>
+  </data>
   <data name="OperaçõesUnitáriasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 22</value>
   </data>

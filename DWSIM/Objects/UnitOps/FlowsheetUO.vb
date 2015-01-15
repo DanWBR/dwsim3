@@ -36,6 +36,13 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary
         End Function
     End Class
 
+    Public Enum FlowsheetUOMassTransferMode
+        CompoundMassFlows = 0
+        CompoundMoleFlows = 1
+        CompoundMassFractions = 2
+        CompoundMoleFractions = 3
+    End Enum
+
 End Namespace
 
 Namespace DWSIM.SimulationObjects.UnitOps
@@ -45,6 +52,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Property SimulationFile As String = ""
         <System.Xml.Serialization.XmlIgnore> Public Property Initialized As Boolean = False
+        Public Property InitializeOnLoad As Boolean = False
         Public Property InputParams As Dictionary(Of String, FlowsheetUOParameter)
         Public Property OutputParams As Dictionary(Of String, FlowsheetUOParameter)
         <System.Xml.Serialization.XmlIgnore> Private Property fsheet As FormFlowsheet = Nothing
@@ -305,6 +313,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 .Item.Add(DWSIM.App.GetLocalString("FlowsheetUOEditor"), "", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FlowsheetUOEditor"), True)
                 .Item(.Item.Count - 1).DefaultValue = Nothing
                 .Item(.Item.Count - 1).CustomEditor = New DWSIM.Editors.FlowsheetUO.UIFlowsheetUOEditor
+
+                .Item.Add(DWSIM.App.GetLocalString("InitializeOnLoad"), Me, "InitializeOnLoad", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("InitializeOnLoadDesc"), True)
 
             End With
 

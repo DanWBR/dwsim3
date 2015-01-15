@@ -517,7 +517,7 @@ Public Class frmSurface
                             tobj = TipoObjeto.SolidSeparator
                         Case "TSMIFilter"
                             tobj = TipoObjeto.Filter
-                        Case "TSMIFlowsheetUO"
+                        Case "TSMIFlowsheet"
                             tobj = TipoObjeto.FlowsheetUO
                     End Select
 

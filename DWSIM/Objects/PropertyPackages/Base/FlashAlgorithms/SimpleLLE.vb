@@ -52,7 +52,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim Vx1_ant(n), Vx2_ant(n) As Double
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L1, L2, V, S As Double
-            Dim e1, e2, e3 As Double
+            Dim e1, e2 As Double
             d1 = Date.Now
 
             etol = CDbl(PP.Parameters("PP_PTFELT"))
