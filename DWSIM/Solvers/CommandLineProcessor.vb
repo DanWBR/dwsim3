@@ -500,7 +500,7 @@ Imports DWSIM.DWSIM.SimulationObjects
             If vlevel = 1 Then simulation.FormCL.LblRunNumber.Text = i & "/" & runs
             Console.WriteLine("Running simulation... (run " & i & " of " & runs & ")")
             Console.WriteLine()
-            CalculateAll(simulation)
+            CalculateAll2(simulation)
         Next
 
         If savechanges Then

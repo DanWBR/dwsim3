@@ -1805,6 +1805,12 @@ Public Class FormMain
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
                                 .CLCS_FilterCollection(gObj.Name).GraphicObject = gObj
                                 .FilterCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ExcelUO
+                                .CLCS_ExcelUOCollection(gObj.Name).GraphicObject = gObj
+                                .ExcelUOCollection(gObj.Name) = gObj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.FlowsheetUO
+                                .CLCS_FlowsheetUOCollection(gObj.Name).GraphicObject = gObj
+                                .FlowsheetUOCollection(gObj.Name) = gObj
                         End Select
                     Next
                 End With
