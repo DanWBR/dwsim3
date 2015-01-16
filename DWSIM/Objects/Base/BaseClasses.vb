@@ -1775,30 +1775,40 @@ Imports System.Text
         Return prop & " (" & unit & ")"
     End Function
 
+    Public Sub SetFlowsheet(ByVal flowsheet As FormFlowsheet)
+        m_flowsheet = flowsheet
+    End Sub
+
     Public Overridable ReadOnly Property FlowSheet() As Global.DWSIM.FormFlowsheet
         Get
-            Dim frm As FormFlowsheet = My.Application.ActiveSimulation
-            If Not frm Is Nothing Then Return frm Else Return Nothing
-            If Not My.Application.CAPEOPENMode Then
-                If Not FormMain.ActiveMdiChild Is Nothing Then
-                    If TypeOf FormMain.ActiveMdiChild Is FormFlowsheet Then
-                        If frm Is Nothing Then frm = FormMain.ActiveMdiChild Else m_flowsheet = frm
+            If Not m_flowsheet Is Nothing Then
+                Return m_flowsheet
+            Else
+                Dim frm As FormFlowsheet = My.Application.ActiveSimulation
+                If Not frm Is Nothing Then Return frm Else Return Nothing
+                If Not My.Application.CAPEOPENMode Then
+                    If Not FormMain.ActiveMdiChild Is Nothing Then
+                        If TypeOf FormMain.ActiveMdiChild Is FormFlowsheet Then
+                            If frm Is Nothing Then frm = FormMain.ActiveMdiChild Else m_flowsheet = frm
+                            If frm Is Nothing Then frm = m_flowsheet
+                            If Not frm Is Nothing Then Return frm Else Return Nothing
+                        Else
+                            If FormMain.ActiveMdiChild IsNot Nothing Then
+                                If TypeOf FormMain.ActiveMdiChild Is FormFlowsheet Then Return FormMain.ActiveMdiChild Else Return Nothing
+                            Else
+                                Return Nothing
+                            End If
+                        End If
+                    Else
                         If frm Is Nothing Then frm = m_flowsheet
                         If Not frm Is Nothing Then Return frm Else Return Nothing
-                    Else
-                        If FormMain.ActiveMdiChild IsNot Nothing Then
-                            If TypeOf FormMain.ActiveMdiChild Is FormFlowsheet Then Return FormMain.ActiveMdiChild Else Return Nothing
-                        Else
-                            Return Nothing
-                        End If
                     End If
                 Else
-                    If frm Is Nothing Then frm = m_flowsheet
-                    If Not frm Is Nothing Then Return frm Else Return Nothing
+                    Return Nothing
                 End If
-            Else
-                Return Nothing
+            
             End If
+
         End Get
     End Property
 

@@ -14,7 +14,7 @@ Public Class frmSurface
     Private m_connecting As Boolean = False
     Private m_stPoint As New Point
 
-    Private ChildParent As FormFlowsheet
+    Public ChildParent As FormFlowsheet
     Public PGEx2 As PropertyGridEx.PropertyGridEx
     Public PGEx1 As PropertyGridEx.PropertyGridEx
 
@@ -67,7 +67,9 @@ Public Class frmSurface
 
     Private Sub frmSurface_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        ChildParent = Me.ParentForm
+        If TypeOf Me.ParentForm Is FormFlowsheet Then
+            ChildParent = Me.ParentForm
+        End If
         PGEx1 = Me.ChildParent.FormProps.PGEx1
         PGEx2 = Me.ChildParent.FormProps.PGEx2
 
@@ -3478,4 +3480,14 @@ Public Class frmSurface
 
     End Sub
 
+    Private Sub ExibirTudoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExibirTudoToolStripMenuItem.Click
+        Me.FlowsheetDesignSurface.ZoomAll()
+        Me.FlowsheetDesignSurface.ZoomAll()
+        Me.Invalidate()
+    End Sub
+
+    Private Sub ZoomPadrão100ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ZoomPadrão100ToolStripMenuItem.Click
+        Me.FlowsheetDesignSurface.Zoom = 1
+        Me.Invalidate()
+    End Sub
 End Class

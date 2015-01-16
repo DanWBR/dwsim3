@@ -1,5 +1,5 @@
 ﻿'    UITypeEditor for Flowsheet Unit Operation
-'    Copyright 2015 by Daniel Wagner O. de  Medeiros
+'    Copyright 2015 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -22,7 +22,6 @@ Imports System.Drawing.Design
 Imports System.ComponentModel
 
 Namespace DWSIM.Editors.FlowsheetUO
-
     <System.Serializable()> Public Class UIFlowsheetUOEditor
 
         Inherits System.Drawing.Design.UITypeEditor
@@ -48,7 +47,11 @@ Namespace DWSIM.Editors.FlowsheetUO
 
                 selectionControl.Text = form.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
 
+                selectionControl.fsuo = form.Collections.CLCS_FlowsheetUOCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+
                 editorService.ShowDialog(selectionControl)
+
+                value = ""
 
             End If
 

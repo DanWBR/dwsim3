@@ -4930,4 +4930,40 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="FlowsheetUnitOp" xml:space="preserve">
     <value>Fluxograma (UO)</value>
   </data>
+  <data name="FlowsheetInitializationError" xml:space="preserve">
+    <value>Houve um erro ao inicializar o fluxograma. Verifique a mensagem de erro para detalhes.</value>
+  </data>
+  <data name="FlowsheetInitializationSuccess" xml:space="preserve">
+    <value>O fluxograma foi inicializado com sucesso.</value>
+  </data>
+  <data name="FlowsheetInitialized" xml:space="preserve">
+    <value>Fluxograma já inicializado.</value>
+  </data>
+  <data name="FlowsheetNotInitialized" xml:space="preserve">
+    <value>Fluxograma não inicializado, clique no botão à esquerda para fazê-lo.</value>
+  </data>
+  <data name="FlowsheetUOEditor" xml:space="preserve">
+    <value>Painel de controle</value>
+  </data>
+  <data name="FlowsheetUOEditorDesc" xml:space="preserve">
+    <value>Inicialize o fluxograma, defina as conexões entre correntes, parâmetros a expor e modo de transferência de massa.</value>
+  </data>
+  <data name="FlowsheetUOViewer" xml:space="preserve">
+    <value>Visualizar fluxograma</value>
+  </data>
+  <data name="FlowsheetUOViewerDesc" xml:space="preserve">
+    <value>Visualize as propriedades dos objetos no fluxograma.</value>
+  </data>
+  <data name="InitializeOnLoad" xml:space="preserve">
+    <value>Inicializar no carregamento</value>
+  </data>
+  <data name="InitializeOnLoadDesc" xml:space="preserve">
+    <value>Selecione 'True' para inicializar o sub-fluxograma logo durante a abertura da simulação principal.</value>
+  </data>
+  <data name="SimulationFile" xml:space="preserve">
+    <value>Arquivo de simulação</value>
+  </data>
+  <data name="SimulationFileDesc" xml:space="preserve">
+    <value>Selecione o arquivo de simulação para executar como um sub-fluxograma.</value>
+  </data>
 </root>

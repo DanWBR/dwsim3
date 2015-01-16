@@ -5918,11 +5918,83 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Houve um erro ao inicializar o fluxograma. Verifique a mensagem de erro para detalhes..
+        '''</summary>
+        Friend Shared ReadOnly Property FlowsheetInitializationError() As String
+            Get
+                Return ResourceManager.GetString("FlowsheetInitializationError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to O fluxograma foi inicializado com sucesso..
+        '''</summary>
+        Friend Shared ReadOnly Property FlowsheetInitializationSuccess() As String
+            Get
+                Return ResourceManager.GetString("FlowsheetInitializationSuccess", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Fluxograma já inicializado..
+        '''</summary>
+        Friend Shared ReadOnly Property FlowsheetInitialized() As String
+            Get
+                Return ResourceManager.GetString("FlowsheetInitialized", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Fluxograma não inicializado, clique no botão à esquerda para fazê-lo..
+        '''</summary>
+        Friend Shared ReadOnly Property FlowsheetNotInitialized() As String
+            Get
+                Return ResourceManager.GetString("FlowsheetNotInitialized", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Fluxograma (UO).
         '''</summary>
         Friend Shared ReadOnly Property FlowsheetUnitOp() As String
             Get
                 Return ResourceManager.GetString("FlowsheetUnitOp", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Painel de controle.
+        '''</summary>
+        Friend Shared ReadOnly Property FlowsheetUOEditor() As String
+            Get
+                Return ResourceManager.GetString("FlowsheetUOEditor", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Inicialize o fluxograma, defina as conexões entre correntes, parâmetros a expor e modo de transferência de massa..
+        '''</summary>
+        Friend Shared ReadOnly Property FlowsheetUOEditorDesc() As String
+            Get
+                Return ResourceManager.GetString("FlowsheetUOEditorDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Visualizar fluxograma.
+        '''</summary>
+        Friend Shared ReadOnly Property FlowsheetUOViewer() As String
+            Get
+                Return ResourceManager.GetString("FlowsheetUOViewer", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Visualize as propriedades dos objetos no fluxograma..
+        '''</summary>
+        Friend Shared ReadOnly Property FlowsheetUOViewerDesc() As String
+            Get
+                Return ResourceManager.GetString("FlowsheetUOViewerDesc", resourceCulture)
             End Get
         End Property
         
@@ -7183,6 +7255,24 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Informao() As String
             Get
                 Return ResourceManager.GetString("Informao", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Inicializar no carregamento.
+        '''</summary>
+        Friend Shared ReadOnly Property InitializeOnLoad() As String
+            Get
+                Return ResourceManager.GetString("InitializeOnLoad", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Selecione &apos;True&apos; para inicializar o sub-fluxograma logo durante a abertura da simulação principal..
+        '''</summary>
+        Friend Shared ReadOnly Property InitializeOnLoadDesc() As String
+            Get
+                Return ResourceManager.GetString("InitializeOnLoadDesc", resourceCulture)
             End Get
         End Property
         
@@ -12223,6 +12313,24 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Simulao() As String
             Get
                 Return ResourceManager.GetString("Simulao", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Arquivo de simulação.
+        '''</summary>
+        Friend Shared ReadOnly Property SimulationFile() As String
+            Get
+                Return ResourceManager.GetString("SimulationFile", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Selecione o arquivo de simulação para executar como um sub-fluxograma..
+        '''</summary>
+        Friend Shared ReadOnly Property SimulationFileDesc() As String
+            Get
+                Return ResourceManager.GetString("SimulationFileDesc", resourceCulture)
             End Get
         End Property
         

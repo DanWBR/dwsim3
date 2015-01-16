@@ -126,36 +126,26 @@ Namespace DWSIM.SimulationObjects.Streams
             End Set
         End Property
 
-        Public Overrides ReadOnly Property Flowsheet() As FormFlowsheet
-            Get
-                If MyBase.FlowSheet Is Nothing Then Return _flowsheet Else Return MyBase.FlowSheet
-            End Get
-        End Property
-
-        Public Sub SetFlowsheet(ByRef flowsheet As FormFlowsheet)
-            _flowsheet = flowsheet
-        End Sub
-
         <Xml.Serialization.XmlIgnore()> Public Property PropertyPackage() As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
             Get
                 If _ppid Is Nothing Then _ppid = ""
-                If Not Flowsheet Is Nothing Then
-                    If Flowsheet.Options.PropertyPackages.ContainsKey(_ppid) Then
-                        Return Flowsheet.Options.PropertyPackages(_ppid)
+                If Not FlowSheet Is Nothing Then
+                    If FlowSheet.Options.PropertyPackages.ContainsKey(_ppid) Then
+                        Return FlowSheet.Options.PropertyPackages(_ppid)
                     Else
                         Try
-                            For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In Flowsheet.Options.PropertyPackages.Values
+                            For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In FlowSheet.Options.PropertyPackages.Values
                                 _ppid = pp.UniqueID
                                 Return pp
                                 Exit For
                             Next
                         Catch ex As Exception
-                            For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In Flowsheet.Options.PropertyPackages.Values
+                            For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In FlowSheet.Options.PropertyPackages.Values
                                 _ppid = pp.UniqueID
                                 Return pp
                                 Exit For
                             Next
-                            Flowsheet.WriteToLog(ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                            FlowSheet.WriteToLog(ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
                         End Try
                     End If
                 Else

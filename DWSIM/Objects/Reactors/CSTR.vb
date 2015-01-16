@@ -181,7 +181,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             If Me.Conversions Is Nothing Then Me.m_conversions = New Dictionary(Of String, Double)
             If Me.ComponentConversions Is Nothing Then Me.m_componentconversions = New Dictionary(Of String, Double)
 
-            form = My.Application.ActiveSimulation
+            form = Me.FlowSheet
 
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
 

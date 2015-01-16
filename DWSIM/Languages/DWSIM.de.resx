@@ -4919,4 +4919,40 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="FlowsheetUnitOp" xml:space="preserve">
     <value>Fließbild (UO)</value>
   </data>
+  <data name="FlowsheetInitializationError" xml:space="preserve">
+    <value>An error occurred during flowsheet initialization, please check the error message for details.</value>
+  </data>
+  <data name="FlowsheetInitializationSuccess" xml:space="preserve">
+    <value>Flowsheet successfully initialized.</value>
+  </data>
+  <data name="FlowsheetInitialized" xml:space="preserve">
+    <value>Flowsheet already initialized.</value>
+  </data>
+  <data name="FlowsheetNotInitialized" xml:space="preserve">
+    <value>Flowsheet not initialized, click on the button on the left to initialize it.</value>
+  </data>
+  <data name="FlowsheetUOEditor" xml:space="preserve">
+    <value>Control panel</value>
+  </data>
+  <data name="FlowsheetUOEditorDesc" xml:space="preserve">
+    <value>Initialize the flowsheet, define material stream links, expose object properties and select the mass transfer mode between streams.</value>
+  </data>
+  <data name="FlowsheetUOViewer" xml:space="preserve">
+    <value>View flowsheet</value>
+  </data>
+  <data name="FlowsheetUOViewerDesc" xml:space="preserve">
+    <value>View PFD and object properties.</value>
+  </data>
+  <data name="InitializeOnLoad" xml:space="preserve">
+    <value>Initialize on load</value>
+  </data>
+  <data name="InitializeOnLoadDesc" xml:space="preserve">
+    <value>Select 'True' to initialize the subflowsheet during loading of the main simulation file.</value>
+  </data>
+  <data name="SimulationFile" xml:space="preserve">
+    <value>Simulation file</value>
+  </data>
+  <data name="SimulationFileDesc" xml:space="preserve">
+    <value>Select the simulation file to use as a subflowsheet.</value>
+  </data>
 </root>
