@@ -52,6 +52,7 @@
         Me.pd1 = New System.Windows.Forms.PrintDialog()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStrip1.SuspendLayout()
         CType(Me.TabStripScripts, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStripItem5.SuspendLayout()
@@ -61,7 +62,7 @@
         'ToolStrip1
         '
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.SaveToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CutToolStripButton, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator1, Me.tscb1, Me.tscb2, Me.ToolStripSeparator2, Me.ToolStripButton1, Me.toolStripSeparator5, Me.HelpToolStripButton, Me.ToolStripSeparator3, Me.ToolStripLabel1, Me.tsTextBoxRename})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.SaveToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CutToolStripButton, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator1, Me.tscb1, Me.tscb2, Me.ToolStripSeparator2, Me.ToolStripButton1, Me.ToolStripButton2, Me.toolStripSeparator5, Me.HelpToolStripButton, Me.ToolStripSeparator3, Me.ToolStripLabel1, Me.tsTextBoxRename})
         Me.ToolStrip1.Name = "ToolStrip1"
         '
         'NewToolStripButton
@@ -241,6 +242,13 @@
         Me.FaTabStripItem4.IsDrawn = True
         Me.FaTabStripItem4.Name = "FaTabStripItem4"
         '
+        'ToolStripButton2
+        '
+        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.control_play_blue
+        Me.ToolStripButton2.Name = "ToolStripButton2"
+        '
         'FormScript
         '
         resources.ApplyResources(Me, "$this")
@@ -289,4 +297,5 @@
     Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripLabel1 As System.Windows.Forms.ToolStripLabel
     Friend WithEvents tsTextBoxRename As System.Windows.Forms.ToolStripTextBox
+    Public WithEvents ToolStripButton2 As System.Windows.Forms.ToolStripButton
 End Class

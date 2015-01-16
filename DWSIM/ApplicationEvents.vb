@@ -31,6 +31,8 @@ Namespace My
         Public Shared gpumod As CudafyModule
         Public Shared prevlang As Integer = 0 '0 = CUDA, 1 = OpenCL
 
+        Public Shared DebugEngine As Microsoft.Scripting.Hosting.ScriptEngine
+
         Public Shared UserUnitSystems As Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
@@ -61,6 +63,12 @@ Namespace My
         End Sub
 
         Private Sub MyApplication_Startup(ByVal sender As Object, ByVal e As Microsoft.VisualBasic.ApplicationServices.StartupEventArgs) Handles Me.Startup
+
+
+            Dim opts As New Dictionary(Of String, Object)()
+            opts("Frames") = Microsoft.Scripting.Runtime.ScriptingRuntimeHelpers.True
+            opts("Debug") = True
+            DebugEngine = IronPython.Hosting.Python.CreateEngine(opts)
 
             'upgrade settings from previous build, if applicable.
             If My.Settings.UpgradeRequired Then
