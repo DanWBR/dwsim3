@@ -102,70 +102,6 @@ Imports DWSIM.DWSIM.Outros
 
     End Sub
 
-    Public Shared Sub DebugScript(scripttext As ScriptEditorControl, fsheet As FormFlowsheet)
-
-        Dim engine As Microsoft.Scripting.Hosting.ScriptEngine = My.MyApplication.DebugEngine
-
-        Dim scope As Microsoft.Scripting.Hosting.ScriptScope
-
-        Dim paths(My.Settings.ScriptPaths.Count - 1) As String
-        My.Settings.ScriptPaths.CopyTo(paths, 0)
-
-        Try
-            engine.SetSearchPaths(paths)
-        Catch ex As Exception
-
-        End Try
-
-        engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
-        engine.Runtime.LoadAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.ConstantProperties).Assembly)
-        engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.GraphicObjects.GraphicObject).Assembly)
-        engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface).Assembly)
-
-        If My.MyApplication.CommandLineMode Then
-            engine.Runtime.IO.SetOutput(Console.OpenStandardOutput, Console.OutputEncoding)
-        Else
-            engine.Runtime.IO.SetOutput(New DataGridViewTextStream(fsheet), UTF8Encoding.UTF8)
-        End If
-
-        scope = engine.CreateScope()
-        scope.SetVariable("Flowsheet", fsheet)
-
-        Dim Solver As New DWSIM.Flowsheet.COMSolver
-        scope.SetVariable("Solver", Solver)
-
-        For Each obj As SimulationObjects_BaseClass In fsheet.Collections.ObjectCollection.Values
-            scope.SetVariable(obj.GraphicObject.Tag.Replace("-", "_"), obj)
-        Next
-
-        Dim txtcode As String = scripttext.txtScript.Document.Text
-        Dim txtfile As String = My.Computer.FileSystem.GetTempFileName
-        Dim newtxtfile As String = Path.GetFileName(txtfile).Replace(".tmp", ".py")
-        My.Computer.FileSystem.RenameFile(txtfile, newtxtfile)
-        newtxtfile = Path.GetDirectoryName(txtfile) + "\" + newtxtfile
-        File.WriteAllText(newtxtfile, txtcode, Encoding.UTF8)
-
-        Dim script As Microsoft.Scripting.Hosting.ScriptSource = engine.CreateScriptSourceFromFile(newtxtfile, Encoding.UTF8)
-
-        Try
-            script.Execute(scope)
-        Catch ex As Exception
-            Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
-            If My.MyApplication.CommandLineMode Then
-                Console.WriteLine()
-                Console.WriteLine("Error running script: " & ops.FormatException(ex).ToString)
-                Console.WriteLine()
-            Else
-                fsheet.WriteToLog("Error running script: " & ops.FormatException(ex).ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-            End If
-        Finally
-            File.Delete(newtxtfile)
-            scope = Nothing
-            script = Nothing
-        End Try
-
-    End Sub
-
     Private Sub CutToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CutToolStripButton.Click
         If Not DWSIM.App.IsRunningOnMono Then
             Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
@@ -365,7 +301,10 @@ Imports DWSIM.DWSIM.Outros
 
             Dim p As New Panel With {.Dock = DockStyle.Fill}
             Dim scontrol As New ScriptEditorControl With {.Dock = DockStyle.Fill}
+
             With scontrol
+
+                AddHandler scontrol.txtScript.KeyDown, AddressOf scriptcontrol_KeyDown
 
                 .txtScript.Document = New Alsing.SourceCode.SyntaxDocument()
                 .txtScript.Document.SyntaxFile = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "SyntaxFiles" & Path.DirectorySeparatorChar & "Python.syn"
@@ -438,7 +377,10 @@ Imports DWSIM.DWSIM.Outros
 
             Dim p As New Panel With {.Dock = DockStyle.Fill}
             Dim scontrol As New ScriptEditorControlMono With {.Dock = DockStyle.Fill}
+
             With scontrol
+
+                AddHandler scontrol.txtScript.KeyDown, AddressOf scriptcontrol_KeyDown
 
                 .txtScript.Font = New Font(tscb1.SelectedItem.ToString, tscb2.SelectedItem)
                 .txtScript.Text = scriptdata.ScriptText
@@ -520,13 +462,12 @@ Imports DWSIM.DWSIM.Outros
         Process.Start("http://dwsim.inforside.com.br/wiki/index.php?title=Using_the_IronPython_Script_Manager")
     End Sub
 
-    Private Sub ToolStripButton2_Click_1(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
-        If Not Me.TabStripScripts.SelectedItem Is Nothing Then
-            If Not DWSIM.App.IsRunningOnMono Then
-                DebugScript(DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl), fc)
-            End If
-        End If
+    Private Sub scriptcontrol_KeyDown(sender As Object, e As KeyEventArgs)
+
+        If e.KeyCode = Keys.F5 Then Button1_Click(sender, e)
+
     End Sub
+
 End Class
 
 Public Class TextBoxStream

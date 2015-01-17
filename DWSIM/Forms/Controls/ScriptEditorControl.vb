@@ -570,7 +570,7 @@ Public Class ScriptEditorControl
 
             Dim tmp As String = ""
             Dim f As New Char()
-            While f <> " " And pos > 0
+            While f <> " " And pos > 0 And f <> vbCrLf And f <> vbLf
                 pos -= 1
                 tmp = Me.txtScript.Document.Text.Substring(pos, 1)
                 f = CChar(tmp(0))
