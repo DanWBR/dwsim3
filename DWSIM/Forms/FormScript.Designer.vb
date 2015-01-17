@@ -36,7 +36,6 @@
         Me.tscb2 = New System.Windows.Forms.ToolStripComboBox()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.toolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.HelpToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
@@ -140,12 +139,6 @@
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.control_play
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
-        'ToolStripButton2
-        '
-        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
-        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.control_play_blue
-        Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'toolStripSeparator5
         '
