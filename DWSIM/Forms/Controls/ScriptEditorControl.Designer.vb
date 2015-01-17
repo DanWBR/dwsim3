@@ -90,14 +90,13 @@ Partial Class ScriptEditorControl
         '
         Me.txtScript.ActiveView = Alsing.Windows.Forms.ActiveView.BottomRight
         Me.txtScript.AllowBreakPoints = False
-        Me.txtScript.AllowDrop = True
         resources.ApplyResources(Me.txtScript, "txtScript")
         Me.txtScript.AutoListPosition = Nothing
         Me.txtScript.AutoListSelectedText = "a123"
         Me.txtScript.AutoListVisible = False
         Me.txtScript.BackColor = System.Drawing.Color.White
         Me.txtScript.BorderStyle = Alsing.Windows.Forms.BorderStyle.None
-        Me.txtScript.CopyAsRTF = False
+        Me.txtScript.CopyAsRTF = True
         Me.txtScript.FontName = "Courier new"
         Me.txtScript.HighLightActiveLine = True
         Me.txtScript.InfoTipCount = 1
@@ -106,7 +105,8 @@ Partial Class ScriptEditorControl
         Me.txtScript.InfoTipVisible = False
         Me.txtScript.LockCursorUpdate = False
         Me.txtScript.Name = "txtScript"
-        Me.txtScript.ShowGutterMargin = False
+        Me.txtScript.ParseOnPaste = True
+        Me.txtScript.ShowScopeIndicator = False
         Me.txtScript.ShowTabGuides = True
         Me.txtScript.SmoothScroll = True
         Me.txtScript.SplitviewH = -4

@@ -430,7 +430,7 @@
     <value>listBoxAutoComplete</value>
   </data>
   <data name="&gt;&gt;listBoxAutoComplete.Type" xml:space="preserve">
-    <value>DWSIM.GListBox, DWSIM, Version=3.3.5495.26243, Culture=neutral, PublicKeyToken=null</value>
+    <value>DWSIM.GListBox, DWSIM, Version=3.3.5495.26952, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;listBoxAutoComplete.Parent" xml:space="preserve">
     <value>$this</value>
