@@ -36,6 +36,7 @@
         Me.tscb2 = New System.Windows.Forms.ToolStripComboBox()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.toolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.HelpToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
@@ -117,6 +118,7 @@
         Me.tscb1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.tscb1.Name = "tscb1"
         Me.tscb1.Sorted = True
+        Me.tscb1.Text = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'tscb2
         '
@@ -124,6 +126,7 @@
         Me.tscb2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.tscb2.DropDownWidth = 35
         Me.tscb2.Name = "tscb2"
+        Me.tscb2.Text = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'ToolStripSeparator2
         '
@@ -136,6 +139,13 @@
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.control_play
         Me.ToolStripButton1.Name = "ToolStripButton1"
+        '
+        'ToolStripButton2
+        '
+        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.control_play_blue
+        Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'toolStripSeparator5
         '
@@ -163,6 +173,7 @@
         resources.ApplyResources(Me.tsTextBoxRename, "tsTextBoxRename")
         Me.tsTextBoxRename.Margin = New System.Windows.Forms.Padding(1, 2, 1, 0)
         Me.tsTextBoxRename.Name = "tsTextBoxRename"
+        Me.tsTextBoxRename.Text = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'ofd1
         '
@@ -211,9 +222,11 @@
         'treeViewItems
         '
         resources.ApplyResources(Me.treeViewItems, "treeViewItems")
+        Me.treeViewItems.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.treeViewItems.LineColor = System.Drawing.Color.Empty
         Me.treeViewItems.Name = "treeViewItems"
         Me.treeViewItems.PathSeparator = "."
+        Me.treeViewItems.SelectedImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'ofd2
         '

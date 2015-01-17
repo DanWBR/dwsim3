@@ -632,7 +632,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Item.Add(FT(Prop.Name, Prop.Unit), Prop.Value, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), Prop.Annotation, True)
                 Next
 
-                .Item.Add(DWSIM.App.GetLocalString("ExcelUOEditor"), Me, "Filename", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "Excel file definition", True)
+                .Item.Add(DWSIM.App.GetLocalString("ExcelUOEditor"), Me, "Filename", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("ExcelFile"), True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                     .CustomEditor = New DWSIM.Editors.ExcelUO.UIExcelUOEditor
@@ -646,7 +646,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 '======== heat due to enthalpy balance ============
                 Dim valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault), FlowSheet.Options.NumberFormat)
-                .Item.Add(FT(DWSIM.App.GetLocalString("CalorFornecido"), su.spmp_heatflow), valor, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Quantidadedecalorced"), True)
+                .Item.Add(FT(DWSIM.App.GetLocalString("CalorFornecido"), su.spmp_heatflow), valor, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Quantidadedecalortro"), True)
                 .Item(.Item.Count - 1).Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_heatflow, "E"}
 
                 '========== Error message =========================

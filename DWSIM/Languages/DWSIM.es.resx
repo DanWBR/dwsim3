@@ -4932,4 +4932,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SimulationFileDesc" xml:space="preserve">
     <value>Selecione o arquivo de simulação para executar como um sub-fluxograma.</value>
   </data>
+  <data name="ExcelFile" xml:space="preserve">
+    <value>Archivo de definición de Excel</value>
+  </data>
 </root>
