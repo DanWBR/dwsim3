@@ -138,7 +138,7 @@ Imports DWSIM.DWSIM.Outros
             scope.SetVariable(obj.GraphicObject.Tag.Replace("-", "_"), obj)
         Next
 
-        Dim txtcode As String = "import System.Diagnostics; System.Diagnostics.Debugger.Break();" & vbCrLf & scripttext.txtScript.Document.Text
+        Dim txtcode As String = scripttext.txtScript.Document.Text
         Dim txtfile As String = My.Computer.FileSystem.GetTempFileName
         Dim newtxtfile As String = Path.GetFileName(txtfile).Replace(".tmp", ".py")
         My.Computer.FileSystem.RenameFile(txtfile, newtxtfile)
@@ -148,8 +148,7 @@ Imports DWSIM.DWSIM.Outros
         Dim script As Microsoft.Scripting.Hosting.ScriptSource = engine.CreateScriptSourceFromFile(newtxtfile, Encoding.UTF8)
 
         Try
-            Dim code As CompiledCode = script.Compile()
-            code.Execute()
+            script.Execute(scope)
         Catch ex As Exception
             Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
             If My.MyApplication.CommandLineMode Then

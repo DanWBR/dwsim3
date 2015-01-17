@@ -67,7 +67,7 @@ Namespace My
 
             Dim opts As New Dictionary(Of String, Object)()
             opts("Frames") = Microsoft.Scripting.Runtime.ScriptingRuntimeHelpers.True
-            opts("Debug") = True
+            opts("Debug") = Microsoft.Scripting.Runtime.ScriptingRuntimeHelpers.True
             DebugEngine = IronPython.Hosting.Python.CreateEngine(opts)
 
             'upgrade settings from previous build, if applicable.

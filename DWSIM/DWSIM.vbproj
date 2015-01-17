@@ -226,15 +226,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\Mapack.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Dynamic">
       <HintPath>References\Microsoft.Dynamic.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.Scripting">
       <HintPath>References\Microsoft.Scripting.dll</HintPath>
-      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Debugging">
+      <HintPath>References\Microsoft.Scripting.Debugging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="Mono.CSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
