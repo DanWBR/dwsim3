@@ -847,6 +847,8 @@ Public Class FormStSim
 
     Public Function AddCompToGrid(ByRef comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties) As Integer
 
+
+
         'If Not initialized Then
         '    Me.Visible = False
         '    Me.Show()
@@ -875,6 +877,7 @@ Public Class FormStSim
                 Console.WriteLine(ex.ToString)
                 Return -1
             Finally
+                If ACSC1 Is Nothing Then ACSC1 = New AutoCompleteStringCollection
                 ACSC1.Add(translatedname)
                 ACSC1.Add(comp.CAS_Number)
                 ACSC1.Add(comp.Formula)

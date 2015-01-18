@@ -422,13 +422,13 @@ Public Class DCCharacterizationWizard
                 If Me.ComboBoxMW.Enabled Then
                     Select Case Me.ComboBoxMW.SelectedItem.ToString
                         Case "Winn (1956)"
-                            .PF_MM = PropertyMethods.MW_Winn(.NBP, .PF_SG)
+                            .PF_MM = PropertyMethods.MW_Winn(.NBP.GetValueOrDefault, .PF_SG.GetValueOrDefault)
                         Case "Riazi (1986)"
-                            .PF_MM = PropertyMethods.MW_Riazi(.NBP, .PF_SG)
+                            .PF_MM = PropertyMethods.MW_Riazi(.NBP.GetValueOrDefault, .PF_SG.GetValueOrDefault)
                         Case "Lee-Kesler (1974)"
-                            .PF_MM = PropertyMethods.MW_LeeKesler(.NBP, .PF_SG)
+                            .PF_MM = PropertyMethods.MW_LeeKesler(.NBP.GetValueOrDefault, .PF_SG.GetValueOrDefault)
                         Case "Farah (2006)"
-                            .PF_MM = PropertyMethods.MW_Farah(.PF_vA, .PF_vB, .PF_SG, .NBP)
+                            .PF_MM = PropertyMethods.MW_Farah(.PF_vA.GetValueOrDefault, .PF_vB.GetValueOrDefault, .PF_SG.GetValueOrDefault, .NBP.GetValueOrDefault)
                     End Select
                 Else
                     Dim w As Double() = Nothing
@@ -470,7 +470,7 @@ Public Class DCCharacterizationWizard
         If Me.TextBoxBulkD.Text <> "" Then
             Dim mixtD As Double = 0
             For Each c As Substancia In ccol.Values
-                mixtD += c.FracaoMassica * c.ConstantProperties.PF_SG
+                mixtD += c.FracaoMassica * c.ConstantProperties.PF_SG.GetValueOrDefault
             Next
             Dim facd As Double = 141.5 / (131.5 + CDbl(Me.TextBoxBulkD.Text)) / mixtD
             For Each c As Substancia In ccol.Values

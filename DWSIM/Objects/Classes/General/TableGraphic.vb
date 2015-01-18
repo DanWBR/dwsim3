@@ -21,6 +21,7 @@ Imports Microsoft.MSDN.Samples.GraphicObjects
 Imports System.Drawing.Drawing2D
 Imports DWSIM.DWSIM.SimulationObjects
 Imports DWSIM.DWSIM.Outros
+Imports System.Linq
 
 Namespace DWSIM.GraphicObjects
 
@@ -61,6 +62,22 @@ Namespace DWSIM.GraphicObjects
 
         Protected m_items As Dictionary(Of String, List(Of DWSIM.Outros.NodeItem))
 
+        Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
+
+            XMLSerializer.XMLSerializer.Deserialize(Me, data)
+
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "Objects").Elements.ToList
+                m_objectlist.Add(XmlConvert.DecodeName(xel.Name.LocalName), xel.Value)
+            Next
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "Properties").Elements.ToList
+                m_propertylist.Add(XmlConvert.DecodeName(xel.Name.LocalName), xel.Value)
+            Next
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "SortableItems").Elements.ToList
+                m_sortableitems.Add(xel.Value)
+            Next
+
+        End Function
+
         Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
 
 
@@ -71,13 +88,13 @@ Namespace DWSIM.GraphicObjects
                 .Add(New XElement("Objects"))
 
                 For Each kvp As KeyValuePair(Of String, Boolean) In m_objectlist
-                    elements(elements.Count - 1).Add(New XElement(kvp.Key, kvp.Value))
+                    elements(elements.Count - 1).Add(New XElement(XmlConvert.EncodeName(kvp.Key), kvp.Value))
                 Next
                 
                 .Add(New XElement("Properties"))
 
                 For Each kvp As KeyValuePair(Of String, Boolean) In m_propertylist
-                    elements(elements.Count - 1).Add(New XElement(kvp.Key, kvp.Value))
+                    elements(elements.Count - 1).Add(New XElement(XmlConvert.EncodeName(kvp.Key), kvp.Value))
                 Next
 
                 .Add(New XElement("SortableItems"))
@@ -97,6 +114,8 @@ Namespace DWSIM.GraphicObjects
             Return elements
 
         End Function
+
+
 
 #Region "Constructors"
 
