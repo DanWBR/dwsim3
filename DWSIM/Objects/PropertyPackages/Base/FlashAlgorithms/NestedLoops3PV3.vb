@@ -825,17 +825,46 @@ out:
                 Ki = resultFlash(6)
                 L2 = resultFlash(7)
                 Vx2 = resultFlash(8)
-            Else
-                'specified enthalpy requires pure liquid or gas phase
+
+            ElseIf Hd > 0 Then 'only gas phase
                 'calculate temperature
 
+                T = Td
+                fx = Hf - proppack.DW_CalcEnthalpy(Vz, T, P, State.Vapor)
+                ls = Sign(fx)
+                Do
+                    ecount += 1
+                    Tn = 2 ^ (q / 3 - r - 1 / 3) * ASinH(fx)
+                    T = T + Tn
+                    fx = Hf - proppack.DW_CalcEnthalpy(Vz, T, P, State.Vapor)
+
+                    If Sign(fx) <> ls Then
+                        r += 1
+                        ls = -ls
+                    Else
+                        q += 1
+                    End If
+                Loop Until Abs(fx) < itol Or ecount > maxitEXT
+
+                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge.")
+                L1 = 0
+                V = 1
+                Vy = Vz.Clone
+                Vx1 = Vz.Clone
+                Vx2 = Vz.Clone
+                L2 = 0
+                For i = 0 To n
+                    Ki(i) = 1
+                Next
+            Else
+                'specified enthalpy requires pure liquid 
+                'calculate temperature
                 ecount = 0
                 If H < Hb Then
                     T = Tb - 10
                 Else
                     T = Td + 10
                 End If
-
                 fx = Herror("PT", T, P, Vz, PP)(0)
 
                 ls = Sign(fx)
