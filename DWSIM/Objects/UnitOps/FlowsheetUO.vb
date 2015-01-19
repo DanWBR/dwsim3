@@ -33,8 +33,8 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary
         Implements XMLSerializer.Interfaces.ICustomXMLSerialization
         Public Property ObjectID As String = ""
         Public Property ObjectProperty As String = ""
-        Public Property Value As Object = Nothing
-        Public Property Unit As String = ""
+        'Public Property Value As Object = Nothing
+        'Public Property Unit As String = ""
         Public Function LoadData(data As List(Of XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
             XMLSerializer.XMLSerializer.Deserialize(Me, data)
         End Function
@@ -64,6 +64,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Property InputParams As Dictionary(Of String, FlowsheetUOParameter)
         Public Property OutputParams As Dictionary(Of String, FlowsheetUOParameter)
         <System.Xml.Serialization.XmlIgnore> Public Property Fsheet As FormFlowsheet = Nothing
+        Public Property InputConnections As List(Of String)
+        Public Property OutputConnections As List(Of String)
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
 
@@ -76,6 +78,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
             InputParams = New Dictionary(Of String, FlowsheetUOParameter)
             OutputParams = New Dictionary(Of String, FlowsheetUOParameter)
 
+            InputConnections = New List(Of String) From {"", "", "", "", "", "", "", "", "", ""}
+            OutputConnections = New List(Of String) From {"", "", "", "", "", "", "", "", "", ""}
+
         End Sub
 
         Public Sub New()
@@ -84,6 +89,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             InputParams = New Dictionary(Of String, FlowsheetUOParameter)
             OutputParams = New Dictionary(Of String, FlowsheetUOParameter)
+
+            InputConnections = New List(Of String) From {"", "", "", "", "", "", "", "", "", ""}
+            OutputConnections = New List(Of String) From {"", "", "", "", "", "", "", "", "", ""}
 
         End Sub
 

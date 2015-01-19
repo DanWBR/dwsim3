@@ -71,36 +71,36 @@ Partial Class FlowsheetUOEditorForm
         '
         'TabControl1
         '
+        resources.ApplyResources(Me.TabControl1, "TabControl1")
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
-        resources.ApplyResources(Me.TabControl1, "TabControl1")
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         '
         'TabPage1
         '
+        resources.ApplyResources(Me.TabPage1, "TabPage1")
         Me.TabPage1.Controls.Add(Me.GroupBox2)
         Me.TabPage1.Controls.Add(Me.GroupBox1)
-        resources.ApplyResources(Me.TabPage1, "TabPage1")
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'GroupBox2
         '
-        Me.GroupBox2.Controls.Add(Me.dgvOutputLinks)
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
+        Me.GroupBox2.Controls.Add(Me.dgvOutputLinks)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
         'dgvOutputLinks
         '
+        resources.ApplyResources(Me.dgvOutputLinks, "dgvOutputLinks")
         Me.dgvOutputLinks.AllowUserToAddRows = False
         Me.dgvOutputLinks.AllowUserToDeleteRows = False
         Me.dgvOutputLinks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvOutputLinks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvOutputLinks.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewComboBoxColumn1})
-        resources.ApplyResources(Me.dgvOutputLinks, "dgvOutputLinks")
         Me.dgvOutputLinks.Name = "dgvOutputLinks"
         Me.dgvOutputLinks.RowHeadersVisible = False
         '
@@ -117,19 +117,19 @@ Partial Class FlowsheetUOEditorForm
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.dgvInputLinks)
         resources.ApplyResources(Me.GroupBox1, "GroupBox1")
+        Me.GroupBox1.Controls.Add(Me.dgvInputLinks)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
         'dgvInputLinks
         '
+        resources.ApplyResources(Me.dgvInputLinks, "dgvInputLinks")
         Me.dgvInputLinks.AllowUserToAddRows = False
         Me.dgvInputLinks.AllowUserToDeleteRows = False
         Me.dgvInputLinks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvInputLinks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvInputLinks.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2})
-        resources.ApplyResources(Me.dgvInputLinks, "dgvInputLinks")
         Me.dgvInputLinks.Name = "dgvInputLinks"
         Me.dgvInputLinks.RowHeadersVisible = False
         '
@@ -146,28 +146,28 @@ Partial Class FlowsheetUOEditorForm
         '
         'TabPage2
         '
+        resources.ApplyResources(Me.TabPage2, "TabPage2")
         Me.TabPage2.Controls.Add(Me.GroupBox3)
         Me.TabPage2.Controls.Add(Me.GroupBox4)
-        resources.ApplyResources(Me.TabPage2, "TabPage2")
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'GroupBox3
         '
+        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
         Me.GroupBox3.Controls.Add(Me.dgvOutputPars)
         Me.GroupBox3.Controls.Add(Me.ToolStrip1)
-        resources.ApplyResources(Me.GroupBox3, "GroupBox3")
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.TabStop = False
         '
         'dgvOutputPars
         '
+        resources.ApplyResources(Me.dgvOutputPars, "dgvOutputPars")
         Me.dgvOutputPars.AllowUserToAddRows = False
         Me.dgvOutputPars.AllowUserToDeleteRows = False
         Me.dgvOutputPars.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvOutputPars.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvOutputPars.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewComboBoxColumn2, Me.DataGridViewComboBoxColumn4})
-        resources.ApplyResources(Me.dgvOutputPars, "dgvOutputPars")
         Me.dgvOutputPars.Name = "dgvOutputPars"
         '
         'DataGridViewComboBoxColumn2
@@ -186,40 +186,40 @@ Partial Class FlowsheetUOEditorForm
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton3, Me.ToolStripButton4})
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton3, Me.ToolStripButton4})
         Me.ToolStrip1.Name = "ToolStrip1"
         '
         'ToolStripButton3
         '
+        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.add
-        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'ToolStripButton4
         '
+        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton4.Image = Global.DWSIM.My.Resources.Resources.delete1
-        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         Me.ToolStripButton4.Name = "ToolStripButton4"
         '
         'GroupBox4
         '
+        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
         Me.GroupBox4.Controls.Add(Me.dgvInputPars)
         Me.GroupBox4.Controls.Add(Me.ToolStrip2)
-        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.TabStop = False
         '
         'dgvInputPars
         '
+        resources.ApplyResources(Me.dgvInputPars, "dgvInputPars")
         Me.dgvInputPars.AllowUserToAddRows = False
         Me.dgvInputPars.AllowUserToDeleteRows = False
         Me.dgvInputPars.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvInputPars.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvInputPars.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn3, Me.DataGridViewComboBoxColumn3})
-        resources.ApplyResources(Me.dgvInputPars, "dgvInputPars")
         Me.dgvInputPars.Name = "dgvInputPars"
         '
         'DataGridViewTextBoxColumn3
@@ -238,38 +238,38 @@ Partial Class FlowsheetUOEditorForm
         '
         'ToolStrip2
         '
-        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2})
         resources.ApplyResources(Me.ToolStrip2, "ToolStrip2")
+        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2})
         Me.ToolStrip2.Name = "ToolStrip2"
         '
         'ToolStripButton1
         '
+        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.add
-        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'ToolStripButton2
         '
+        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.delete1
-        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'TabPage3
         '
+        resources.ApplyResources(Me.TabPage3, "TabPage3")
         Me.TabPage3.Controls.Add(Me.cbMassTransferMode)
         Me.TabPage3.Controls.Add(Me.Label1)
-        resources.ApplyResources(Me.TabPage3, "TabPage3")
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
         'cbMassTransferMode
         '
+        resources.ApplyResources(Me.cbMassTransferMode, "cbMassTransferMode")
         Me.cbMassTransferMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbMassTransferMode.FormattingEnabled = True
         Me.cbMassTransferMode.Items.AddRange(New Object() {resources.GetString("cbMassTransferMode.Items"), resources.GetString("cbMassTransferMode.Items1"), resources.GetString("cbMassTransferMode.Items2"), resources.GetString("cbMassTransferMode.Items3")})
-        resources.ApplyResources(Me.cbMassTransferMode, "cbMassTransferMode")
         Me.cbMassTransferMode.Name = "cbMassTransferMode"
         '
         'Label1
