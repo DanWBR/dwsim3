@@ -816,14 +816,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Case FlowsheetUOMassTransferMode.CompoundMassFlows
 
                             wt = 0.0#
-                            For Each s In msfrom.Fases(0).Componentes.Values
-                                wt += s.MassFlow.GetValueOrDefault
+                            For Each s In msto.Fases(0).Componentes.Values
+                                wt += msfrom.Fases(0).Componentes(s.Nome).MassFlow.GetValueOrDefault
                             Next
 
                             msto.Fases(0).SPMProperties.massflow = wt
 
-                            For Each s In msfrom.Fases(0).Componentes.Values
-                                msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.MassFlow.GetValueOrDefault / wt
+                            For Each s In msto.Fases(0).Componentes.Values
+                                msto.Fases(0).Componentes(s.Nome).FracaoMassica = msfrom.Fases(0).Componentes(s.Nome).MassFlow.GetValueOrDefault / wt
                             Next
 
                             msto.CalcOverallCompMoleFractions()
@@ -832,8 +832,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             msto.Fases(0).SPMProperties.massflow = msfrom.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
-                            For Each s In msfrom.Fases(0).Componentes.Values
-                                msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.FracaoMassica.GetValueOrDefault
+                            For Each s In msto.Fases(0).Componentes.Values
+                                msto.Fases(0).Componentes(s.Nome).FracaoMassica = msfrom.Fases(0).Componentes(s.Nome).FracaoMassica.GetValueOrDefault
                             Next
 
                             msto.NormalizeOverallMassComposition()
@@ -843,14 +843,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Case FlowsheetUOMassTransferMode.CompoundMoleFlows
 
                             mt = 0.0#
-                            For Each s In msfrom.Fases(0).Componentes.Values
-                                mt += s.MolarFlow.GetValueOrDefault
+                            For Each s In msto.Fases(0).Componentes.Values
+                                mt += msfrom.Fases(0).Componentes(s.Nome).MolarFlow.GetValueOrDefault
                             Next
 
                             msto.Fases(0).SPMProperties.molarflow = mt
 
-                            For Each s In msfrom.Fases(0).Componentes.Values
-                                msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.MolarFlow.GetValueOrDefault / mt
+                            For Each s In msto.Fases(0).Componentes.Values
+                                msto.Fases(0).Componentes(s.Nome).FracaoMolar = msfrom.Fases(0).Componentes(s.Nome).MolarFlow.GetValueOrDefault / mt
                             Next
 
                             msto.CalcOverallCompMassFractions()
@@ -859,8 +859,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             msto.Fases(0).SPMProperties.molarflow = msfrom.Fases(0).SPMProperties.molarflow.GetValueOrDefault
 
-                            For Each s In msfrom.Fases(0).Componentes.Values
-                                msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.FracaoMolar.GetValueOrDefault
+                            For Each s In msto.Fases(0).Componentes.Values
+                                msto.Fases(0).Componentes(s.Nome).FracaoMolar = msfrom.Fases(0).Componentes(s.Nome).FracaoMolar.GetValueOrDefault
                             Next
 
                             msto.NormalizeOverallMoleComposition()
@@ -916,14 +916,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-            Dim value As Double = 0
-            Dim propidx As Integer = CInt(prop.Split("_")(2))
+            Dim pkey As String = prop.Split("][")(1).TrimStart("[").TrimEnd("]")
 
-            Select Case propidx
-
-            End Select
-
-            Return value
+            Try
+                If prop.Contains("[I]") Then
+                    Return Fsheet.Collections.ObjectCollection(InputParams(pkey).ObjectID).GetPropertyValue(InputParams(pkey).ObjectProperty, su)
+                Else
+                    Return Fsheet.Collections.ObjectCollection(OutputParams(pkey).ObjectID).GetPropertyValue(OutputParams(pkey).ObjectProperty, su)
+                End If
+            Catch ex As Exception
+                Return ex.ToString
+            End Try
 
         End Function
 
@@ -932,18 +935,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Select Case proptype
                 Case PropertyType.ALL
                     For Each p In InputParams.Values
-                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " & DWSIM.App.GetPropertyName(p.ObjectProperty) & "[I][" & p.ObjectID & "]")
+                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [I][" & p.ID & "]")
                     Next
                     For Each p In OutputParams.Values
-                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " & DWSIM.App.GetPropertyName(p.ObjectProperty) & "[O][" & p.ObjectID & "]")
+                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [O][" & p.ID & "]")
                     Next
                 Case PropertyType.WR
                     For Each p In InputParams.Values
-                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " & DWSIM.App.GetPropertyName(p.ObjectProperty) & "[I][" & p.ObjectID & "]")
+                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [I][" & p.ID & "]")
                     Next
                 Case PropertyType.RO
                     For Each p In OutputParams.Values
-                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " & DWSIM.App.GetPropertyName(p.ObjectProperty) & "[O][" & p.ObjectID & "]")
+                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [O][" & p.ID & "]")
                     Next
             End Select
             Return proplist.ToArray(GetType(System.String))
@@ -963,28 +966,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Function
 
         Public Overrides Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
-            If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
-            Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-            Dim value As String = ""
-            Dim propidx As Integer = CInt(prop.Split("_")(2))
+           
+            Dim pkey As String = prop.Split("][")(1).TrimStart("[").TrimEnd("]")
 
-            Select Case propidx
+            Try
+                If prop.Contains("[I]") Then
+                    Return Fsheet.Collections.ObjectCollection(InputParams(pkey).ObjectID).GetPropertyUnit(InputParams(pkey).ObjectProperty, su)
+                Else
+                    Return Fsheet.Collections.ObjectCollection(OutputParams(pkey).ObjectID).GetPropertyUnit(OutputParams(pkey).ObjectProperty, su)
+                End If
+            Catch ex As Exception
+                Return ex.ToString
+            End Try
 
-                Case 0
-                    'PROP_TK_0	Pressure Drop
-                    value = su.spmp_deltaP
-
-                Case 1
-                    'PROP_TK_1	Volume
-                    value = su.volume
-
-                Case 2
-                    'PROP_TK_2	Residence Time
-                    value = su.time
-
-            End Select
-
-            Return value
         End Function
 
         Public Overrides Sub QTFillNodeItems()

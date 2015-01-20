@@ -2254,11 +2254,11 @@ Public Class FormMain
                 Dim gobj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
                                     form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
                 obj.GraphicObject = gobj
-                obj.FillNodeItems(True)
-                obj.QTFillNodeItems()
                 If Not gobj Is Nothing Then
                     form.Collections.ObjectCollection.Add(id, obj)
                     obj.LoadData(xel.Elements.ToList)
+                    obj.FillNodeItems()
+                    obj.QTFillNodeItems()
                     If TypeOf obj Is Streams.MaterialStream Then
                         For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
                             For Each c As ConstantProperties In form.Options.SelectedComponents.Values
