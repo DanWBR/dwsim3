@@ -1131,8 +1131,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             MyBase.new(nome, descricao)
             Me.ColumnType = ColType.DistillationColumn
             MyBase.AddStages()
-            For k = 0 To Me.Stages.Count - 1
-                Me.Stages(k).P = 101325
+            For k2 = 0 To Me.Stages.Count - 1
+                Me.Stages(k2).P = 101325
             Next
         End Sub
 
@@ -1385,8 +1385,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             MyBase.new(nome, descricao)
             Me.ColumnType = ColType.AbsorptionColumn
             MyBase.AddStages()
-            For k = 0 To Me.Stages.Count - 1
-                Me.Stages(k).P = 101325
+            For k2 = 0 To Me.Stages.Count - 1
+                Me.Stages(k2).P = 101325
             Next
         End Sub
 
@@ -1503,8 +1503,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             MyBase.new(nome, descricao)
             Me.ColumnType = ColType.ReboiledAbsorber
             MyBase.AddStages()
-            For k = 0 To Me.Stages.Count - 1
-                Me.Stages(k).P = 101325
+            For k2 = 0 To Me.Stages.Count - 1
+                Me.Stages(k2).P = 101325
             Next
         End Sub
 
@@ -1630,8 +1630,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             MyBase.new(nome, descricao)
             Me.ColumnType = ColType.RefluxedAbsorber
             MyBase.AddStages()
-            For k = 0 To Me.Stages.Count - 1
-                Me.Stages(k).P = 101325
+            For k2 = 0 To Me.Stages.Count - 1
+                Me.Stages(k2).P = 101325
             Next
         End Sub
 

@@ -225,8 +225,8 @@ Public Class FormMain
 
         Dim keys As String() = My.Computer.Registry.ClassesRoot.OpenSubKey("CLSID", False).GetSubKeyNames()
 
-        For Each k In keys
-            Dim mykey As RegistryKey = My.Computer.Registry.ClassesRoot.OpenSubKey("CLSID", False).OpenSubKey(k, False)
+        For Each k2 In keys
+            Dim mykey As RegistryKey = My.Computer.Registry.ClassesRoot.OpenSubKey("CLSID", False).OpenSubKey(k2, False)
             Dim mykeys As String() = mykey.GetSubKeyNames()
             For Each s As String In mykeys
                 If s = "Implemented Categories" Then

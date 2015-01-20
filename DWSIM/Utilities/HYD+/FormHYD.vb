@@ -49,8 +49,8 @@ Public Class FormHYD
         Me.nf = Frm.Options.NumberFormat
 
         Me.ComboBox3.Items.Clear()
-        For Each mat In Me.Frm.Collections.CLCS_MaterialStreamCollection.Values
-            If mat.GraphicObject.Calculated Then Me.ComboBox3.Items.Add(mat.GraphicObject.Tag.ToString)
+        For Each mat2 In Me.Frm.Collections.CLCS_MaterialStreamCollection.Values
+            If mat2.GraphicObject.Calculated Then Me.ComboBox3.Items.Add(mat2.GraphicObject.Tag.ToString)
         Next
 
         If Me.ComboBox3.Items.Count > 0 Then Me.ComboBox3.SelectedIndex = 0

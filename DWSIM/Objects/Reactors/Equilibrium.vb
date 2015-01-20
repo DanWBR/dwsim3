@@ -46,7 +46,7 @@ Namespace DWSIM.SimulationObjects.Reactors
         Dim DN As New Dictionary(Of String, Double)
         Dim N As New Dictionary(Of String, Double)
         Dim T, P, P0, Ninerts, Winerts, E(,) As Double
-        Dim r, c, els, comps, i, j As Integer
+        Dim r, c, els, comps As Integer
 
 #Region "Properties"
 
@@ -149,6 +149,8 @@ Namespace DWSIM.SimulationObjects.Reactors
         End Function
 
         Private Function FunctionValue(ByVal x() As Double) As Double
+
+            Dim i, j As Integer
 
             Dim pp As SimulationObjects.PropertyPackages.PropertyPackage = Me.PropertyPackage
 
@@ -267,6 +269,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
         Private Function FunctionValue2N(ByVal x() As Double) As Double()
 
+            Dim i, j As Integer
+
             Dim pp As SimulationObjects.PropertyPackages.PropertyPackage = Me.PropertyPackage
 
             i = 0
@@ -378,6 +382,8 @@ Namespace DWSIM.SimulationObjects.Reactors
         End Function
 
         Private Function FunctionValue2G(ByVal x() As Double) As Double
+
+            Dim i As Integer
 
             Dim pp As SimulationObjects.PropertyPackages.PropertyPackage = Me.PropertyPackage
 
@@ -629,6 +635,8 @@ Namespace DWSIM.SimulationObjects.Reactors
         End Sub
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
+
+            Dim i, j As Integer
 
             If Me.Conversions Is Nothing Then Me.m_conversions = New Dictionary(Of String, Double)
             If Me.ReactionExtents Is Nothing Then Me.m_reactionextents = New Dictionary(Of String, Double)
@@ -1116,6 +1124,8 @@ Namespace DWSIM.SimulationObjects.Reactors
         End Function
 
         Public Overrides Function DeCalculate() As Integer
+
+            Dim j As Integer
 
             'If Not Me.GraphicObject.InputConnectors(0).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac10"))
             'If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac11"))

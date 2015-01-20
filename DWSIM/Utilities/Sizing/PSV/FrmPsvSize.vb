@@ -28,8 +28,8 @@ Public Class FrmPsvSize
         Me.nf = Frm.Options.NumberFormat
 
         Me.ComboBox3.Items.Clear()
-        For Each valve In Me.Frm.Collections.CLCS_ValveCollection.Values
-            Me.ComboBox3.Items.Add(valve.GraphicObject.Tag.ToString)
+        For Each valve2 In Me.Frm.Collections.CLCS_ValveCollection.Values
+            Me.ComboBox3.Items.Add(valve2.GraphicObject.Tag.ToString)
         Next
 
         If Me.ComboBox3.Items.Count > 0 Then Me.ComboBox3.SelectedIndex = 0

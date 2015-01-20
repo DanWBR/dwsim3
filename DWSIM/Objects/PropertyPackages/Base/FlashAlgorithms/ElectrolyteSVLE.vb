@@ -38,7 +38,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim DN As New Dictionary(Of String, Double)
         Dim N As New Dictionary(Of String, Double)
         Dim Hf, Hl, Hv, Hs, T, P, P0, Ninerts, Winerts, E(,) As Double
-        Dim r, c, els, comps, i, j As Integer
+        Dim r, c, els, comps As Integer
 
         Public Property ReactionSet As String = "DefaultSet"
         Public Property Reactions As List(Of String)
@@ -267,6 +267,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         End Function
 
         Private Function SolveChemicalEquilibria(ByVal Vx As Array, ByVal T As Double, ByVal P As Double, ByVal ids As List(Of String), Optional ByVal prevx As Double() = Nothing) As Array
+
+            Dim i, j As Integer
 
             'solves the chemical equilibria for the liquid phase.
 

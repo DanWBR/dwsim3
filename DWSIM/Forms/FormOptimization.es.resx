@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnDeleteCase.Text" xml:space="preserve">
     <value>Eliminar</value>
@@ -129,10 +129,7 @@
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Administrador de casos</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Nombre y descripción</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 13</value>
   </data>
@@ -145,8 +142,8 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Nombre</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Variables</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Nombre y descripción</value>
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Nombre</value>
@@ -175,14 +172,8 @@
   <data name="tsbDelVar.ToolTipText" xml:space="preserve">
     <value>Quitar</value>
   </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Configuración</value>
-  </data>
-  <data name="chkConstraints.Size" type="System.Drawing.Size, System.Drawing">
-    <value>206, 17</value>
-  </data>
-  <data name="chkConstraints.Text" xml:space="preserve">
-    <value>Variables Independientes Restringidas</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Variables</value>
   </data>
   <data name="rbVariable.Text" xml:space="preserve">
     <value>Variable</value>
@@ -229,8 +220,8 @@
   <data name="Label2.Text" xml:space="preserve">
     <value>Tipo de optimización</value>
   </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Expresión</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Configuración</value>
   </data>
   <data name="btnClear.Location" type="System.Drawing.Point, System.Drawing">
     <value>309, 54</value>
@@ -256,14 +247,8 @@
   <data name="Label7.Text" xml:space="preserve">
     <value>Expresión</value>
   </data>
-  <data name="GroupBox8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 482</value>
-  </data>
-  <data name="GroupBox8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>395, 128</value>
-  </data>
-  <data name="GroupBox8.Text" xml:space="preserve">
-    <value>Controlo de la Optimización</value>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Expresión</value>
   </data>
   <data name="tbBarrierMultiplier.Location" type="System.Drawing.Point, System.Drawing">
     <value>149, 69</value>
@@ -282,9 +267,6 @@
   </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>Derivadas Numericas</value>
-  </data>
-  <data name="ComboBox1.Items5" xml:space="preserve">
-    <value>Nelder-Mead Simplex Downhill (Unconstrained)</value>
   </data>
   <data name="ComboBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>149, 19</value>
@@ -306,6 +288,12 @@
   </data>
   <data name="btnRestore.Text" xml:space="preserve">
     <value>Restaurar simulación</value>
+  </data>
+  <data name="GroupBox8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 482</value>
+  </data>
+  <data name="GroupBox8.Text" xml:space="preserve">
+    <value>Controlo de la Optimización</value>
   </data>
   <data name="GroupBox7.Text" xml:space="preserve">
     <value>Progreso de la optimización</value>

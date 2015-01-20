@@ -200,8 +200,8 @@ Public Class FormCompoundCreator
 
         Me.cbUnits.Items.Clear()
 
-        For Each su In CType(Me.MdiParent, FormMain).AvailableUnitSystems.Values
-            Me.cbUnits.Items.Add(su.nome)
+        For Each su2 In CType(Me.MdiParent, FormMain).AvailableUnitSystems.Values
+            Me.cbUnits.Items.Add(su2.nome)
         Next
 
         Me.cbUnits.SelectedIndex = 0
@@ -1625,8 +1625,8 @@ Public Class FormCompoundCreator
         End If
 
         'Add calculated Lee-Kesler Data
-        For k = 0 To px.Count - 1
-            T = cv.ConverterParaSI(su.spmp_temperature, px(k))
+        For k2 = 0 To px.Count - 1
+            T = cv.ConverterParaSI(su.spmp_temperature, px(k2))
             y = cv.ConverterDoSI(su.spmp_pressure, methods2.Pvp_leekesler(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text))
             Select Case CurveCount
                 Case 0
@@ -1648,8 +1648,8 @@ Public Class FormCompoundCreator
 
         'Add regressed/user curve
         If Not Eq = "0" Then
-            For k = 0 To px.Count - 1
-                T = cv.ConverterParaSI(su.spmp_temperature, px(k))
+            For k2 = 0 To px.Count - 1
+                T = cv.ConverterParaSI(su.spmp_temperature, px(k2))
                 y = cv.ConverterDoSI(su.spmp_pressure, pp.CalcCSTDepProp(Eq, tbPVAP_A.Text, tbPVAP_B.Text, tbPVAP_C.Text, tbPVAP_D.Text, tbPVAP_E.Text, T, 0))
 
                 Select Case CurveCount
@@ -1674,10 +1674,10 @@ Public Class FormCompoundCreator
         'fill data log box
         mytext.AppendLine(Heading1)
         mytext.AppendLine(Heading2)
-        For k = 0 To px.Count - 1
-            If CurveCount = 1 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 2))
-            If CurveCount = 2 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 2) & vbTab & vbTab & FormatNumber(py2(k), 2))
-            If CurveCount = 3 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 2) & vbTab & vbTab & FormatNumber(py2(k), 2) & vbTab & vbTab & FormatNumber(py3(k), 2))
+        For k2 = 0 To px.Count - 1
+            If CurveCount = 1 Then mytext.AppendLine(FormatNumber(px(k2), 2) & vbTab & FormatNumber(py1(k2), 2))
+            If CurveCount = 2 Then mytext.AppendLine(FormatNumber(px(k2), 2) & vbTab & FormatNumber(py1(k2), 2) & vbTab & vbTab & FormatNumber(py2(k2), 2))
+            If CurveCount = 3 Then mytext.AppendLine(FormatNumber(px(k2), 2) & vbTab & FormatNumber(py1(k2), 2) & vbTab & vbTab & FormatNumber(py2(k2), 2) & vbTab & vbTab & FormatNumber(py3(k2), 2))
         Next
 
         With frc
@@ -1800,8 +1800,8 @@ Public Class FormCompoundCreator
         End If
 
         'Add calculated Rackett Data
-        For k = 0 To px.Count - 1
-            T = cv.ConverterParaSI(su.spmp_temperature, px(k))
+        For k2 = 0 To px.Count - 1
+            T = cv.ConverterParaSI(su.spmp_temperature, px(k2))
             PV = methods2.Pvp_leekesler(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text)
             y = cv.ConverterDoSI(su.spmp_density, methods2.liq_dens_rackett(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text, TextBoxMW.Text, TextBoxZRa.Text, 101325, PV))
 
@@ -1825,8 +1825,8 @@ Public Class FormCompoundCreator
 
         'Add regressed/user curve
         If Not Eq = "0" Then
-            For k = 0 To px.Count - 1
-                T = cv.ConverterParaSI(su.spmp_temperature, px(k))
+            For k2 = 0 To px.Count - 1
+                T = cv.ConverterParaSI(su.spmp_temperature, px(k2))
                 y = cv.ConverterDoSI(su.spmp_density, pp.CalcCSTDepProp(Eq, tbLIQDENS_A.Text, tbLIQDENS_B.Text, tbLIQDENS_C.Text, tbLIQDENS_D.Text, tbLIQDENS_E.Text, T, 0))
 
                 Select Case CurveCount
@@ -1851,10 +1851,10 @@ Public Class FormCompoundCreator
         'fill data log box
         mytext.AppendLine(Heading1)
         mytext.AppendLine(Heading2)
-        For k = 0 To px.Count - 1
-            If CurveCount = 1 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 2))
-            If CurveCount = 2 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 2) & vbTab & FormatNumber(py2(k), 2))
-            If CurveCount = 3 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 2) & vbTab & FormatNumber(py2(k), 2) & vbTab & vbTab & FormatNumber(py3(k), 2))
+        For k2 = 0 To px.Count - 1
+            If CurveCount = 1 Then mytext.AppendLine(FormatNumber(px(k2), 2) & vbTab & FormatNumber(py1(k2), 2))
+            If CurveCount = 2 Then mytext.AppendLine(FormatNumber(px(k2), 2) & vbTab & FormatNumber(py1(k2), 2) & vbTab & FormatNumber(py2(k2), 2))
+            If CurveCount = 3 Then mytext.AppendLine(FormatNumber(px(k2), 2) & vbTab & FormatNumber(py1(k2), 2) & vbTab & FormatNumber(py2(k2), 2) & vbTab & vbTab & FormatNumber(py3(k2), 2))
         Next
 
         With frc
@@ -2053,8 +2053,8 @@ Public Class FormCompoundCreator
         End If
 
         'Add calculated Letsou-Stiel Data
-        For k = 0 To px.Count - 1
-            T = cv.ConverterParaSI(su.spmp_temperature, px(k))
+        For k2 = 0 To px.Count - 1
+            T = cv.ConverterParaSI(su.spmp_temperature, px(k2))
             y = cv.ConverterDoSI(su.spmp_viscosity, methods2.viscl_letsti(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text, TextBoxMW.Text))
             Select Case CurveCount
                 Case 0
@@ -2076,8 +2076,8 @@ Public Class FormCompoundCreator
 
         'Add regressed/user curve
         If Not Eq = "0" Then
-            For k = 0 To px.Count - 1
-                T = cv.ConverterParaSI(su.spmp_temperature, px(k))
+            For k2 = 0 To px.Count - 1
+                T = cv.ConverterParaSI(su.spmp_temperature, px(k2))
                 y = cv.ConverterDoSI(su.spmp_viscosity, pp.CalcCSTDepProp(Eq, tbLIQVISC_A.Text, tbLIQVISC_B.Text, tbLIQVISC_C.Text, tbLIQVISC_D.Text, tbLIQVISC_E.Text, T, 0))
 
                 Select Case CurveCount
@@ -2102,10 +2102,10 @@ Public Class FormCompoundCreator
         'fill data log box
         mytext.AppendLine(Heading1)
         mytext.AppendLine(Heading2)
-        For k = 0 To px.Count - 1
-            If CurveCount = 1 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 5))
-            If CurveCount = 2 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 5) & vbTab & FormatNumber(py2(k), 5))
-            If CurveCount = 3 Then mytext.AppendLine(FormatNumber(px(k), 2) & vbTab & FormatNumber(py1(k), 5) & vbTab & FormatNumber(py2(k), 5) & vbTab & vbTab & FormatNumber(py3(k), 5))
+        For k2 = 0 To px.Count - 1
+            If CurveCount = 1 Then mytext.AppendLine(FormatNumber(px(k2), 2) & vbTab & FormatNumber(py1(k2), 5))
+            If CurveCount = 2 Then mytext.AppendLine(FormatNumber(px(k2), 2) & vbTab & FormatNumber(py1(k2), 5) & vbTab & FormatNumber(py2(k2), 5))
+            If CurveCount = 3 Then mytext.AppendLine(FormatNumber(px(k2), 2) & vbTab & FormatNumber(py1(k2), 5) & vbTab & FormatNumber(py2(k2), 5) & vbTab & vbTab & FormatNumber(py3(k2), 5))
         Next
 
         With frc

@@ -56,7 +56,7 @@ Namespace DWSIM.SimulationObjects.Reactors
         Dim DN As New Dictionary(Of String, Double)
         Dim N As New Dictionary(Of String, Double)
         Dim T, P, P0, Ninerts, Winerts, E(,) As Double
-        Dim r, c, els, comps, i, j As Integer
+        Dim r, c, els, comps As Integer
 
         Public Sub New()
             MyBase.New()
@@ -304,6 +304,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
         Private Function FunctionValue(ByVal x() As Double) As Double
 
+            Dim i As Integer
+
             Dim pp As SimulationObjects.PropertyPackages.PropertyPackage = Me.PropertyPackage
 
             i = 0
@@ -398,6 +400,8 @@ Namespace DWSIM.SimulationObjects.Reactors
         End Function
 
         Private Function FunctionValue2N(ByVal x() As Double) As Double()
+
+            Dim i As Integer
 
             Dim pp As SimulationObjects.PropertyPackages.PropertyPackage = Me.PropertyPackage
 
@@ -533,6 +537,8 @@ Namespace DWSIM.SimulationObjects.Reactors
         End Function
 
         Private Function FunctionValue2G(ByVal x() As Double) As Double
+
+            Dim i As Integer
 
             Dim pp As SimulationObjects.PropertyPackages.PropertyPackage = Me.PropertyPackage
 
@@ -816,6 +822,8 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim form As FormFlowsheet = Me.FlowSheet
 
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+
+            Dim i, j As Integer
 
             Me.Reactions.Clear()
             Me.ReactionExtents.Clear()
@@ -1585,6 +1593,8 @@ Namespace DWSIM.SimulationObjects.Reactors
         End Function
 
         Public Overrides Function DeCalculate() As Integer
+
+            Dim j As Integer
 
             'If Not Me.GraphicObject.InputConnectors(0).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac10"))
             'If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac11"))

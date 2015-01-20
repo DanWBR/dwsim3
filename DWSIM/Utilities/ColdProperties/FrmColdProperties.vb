@@ -34,8 +34,8 @@ Public Class FrmColdProperties
         frm = My.Application.ActiveSimulation
 
         Me.ComboBox3.Items.Clear()
-        For Each mat In Me.frm.Collections.CLCS_MaterialStreamCollection.Values
-            If mat.GraphicObject.Calculated Then Me.ComboBox3.Items.Add(mat.GraphicObject.Tag.ToString)
+        For Each mat2 In Me.frm.Collections.CLCS_MaterialStreamCollection.Values
+            If mat2.GraphicObject.Calculated Then Me.ComboBox3.Items.Add(mat2.GraphicObject.Tag.ToString)
         Next
 
         Me.ComboBox3.SelectedIndex = 0

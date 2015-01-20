@@ -184,8 +184,8 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
         Dim keys As String() = My.Computer.Registry.ClassesRoot.OpenSubKey("CLSID", False).GetSubKeyNames()
 
-        For Each k In keys
-            Dim mykey As RegistryKey = My.Computer.Registry.ClassesRoot.OpenSubKey("CLSID", False).OpenSubKey(k, False)
+        For Each k2 In keys
+            Dim mykey As RegistryKey = My.Computer.Registry.ClassesRoot.OpenSubKey("CLSID", False).OpenSubKey(k2, False)
             For Each s As String In mykey.GetSubKeyNames()
                 If s = "Implemented Categories" Then
                     Dim arr As Array = mykey.OpenSubKey("Implemented Categories").GetSubKeyNames()

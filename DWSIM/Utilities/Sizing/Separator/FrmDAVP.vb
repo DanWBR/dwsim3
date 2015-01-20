@@ -19,8 +19,8 @@
 
         Me.ComboBox1.Items.Clear()
 
-        For Each vessel In Me.Frm.Collections.CLCS_VesselCollection.Values
-            Me.ComboBox1.Items.Add(vessel.GraphicObject.Tag.ToString)
+        For Each vessel2 In Me.Frm.Collections.CLCS_VesselCollection.Values
+            Me.ComboBox1.Items.Add(vessel2.GraphicObject.Tag.ToString)
         Next
 
         If Me.ComboBox1.Items.Count > 0 Then Me.ComboBox1.SelectedIndex = 0

@@ -49,13 +49,15 @@ Public Class FormPCBulk
     Dim MW, SG, TB, V1, V2, T1, T2 As Double
     Dim w As Double()
 
-    Dim i, n As Integer
+    Dim n As Integer
 
     Public m_comps As New System.Collections.Generic.Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.Substancia)
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KButton1.Click
 
         n = Me.ComboBox1.SelectedItem
+
+        Dim i As Integer
 
         If tb_mw.Text <> "" Then MW = tb_mw.Text
         If tb_sg.Text <> "" Then SG = tb_sg.Text

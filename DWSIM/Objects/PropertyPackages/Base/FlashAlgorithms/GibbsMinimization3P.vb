@@ -38,7 +38,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public ForceTwoPhaseOnly As Boolean = False
         Public L1sat As Double = 0.0#
         Dim ThreePhase As Boolean = False
-        Dim i, j, k, n, ecount As Integer
+        Dim n, ecount As Integer
         Dim etol As Double = 0.01
         Dim itol As Double = 0.01
         Dim maxit_i As Integer = 1000
@@ -79,6 +79,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim objfunc As ObjFuncType = ObjFuncType.MinGibbs
 
         Public Overrides Function Flash_PT(ByVal Vz() As Double, ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
+
+            Dim i, j As Integer
 
             Dim d1, d2 As Date, dt As TimeSpan
 
@@ -922,6 +924,8 @@ alt:
 
         Public Overrides Function Flash_TV(ByVal Vz As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
+            Dim i, j As Integer
+
             Dim d1, d2 As Date, dt As TimeSpan
 
             d1 = Date.Now
@@ -1041,6 +1045,8 @@ alt:
 
         Public Overrides Function Flash_PV(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
+            Dim i, j As Integer
+
             Dim d1, d2 As Date, dt As TimeSpan
 
             d1 = Date.Now
@@ -1159,6 +1165,8 @@ alt:
         End Function
 
         Public Function Flash_PV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
+
+            Dim i As Integer
 
             etol = CDbl(PP.Parameters("PP_PTFELT"))
             maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
@@ -1434,6 +1442,8 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
         End Function
 
         Public Function Flash_TV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackage) As Object
+
+            Dim i As Integer
 
             etol = CDbl(PP.Parameters("PP_PTFELT"))
             maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
@@ -2254,8 +2264,8 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
                     f2 = FunctionGradient(x2)
                     f3 = FunctionGradient(x3)
                 End If
-                For k = 0 To x.Length - 1
-                    h(m) = (f2(k) - f3(k)) / (x2(i) - x3(i))
+                For k2 = 0 To x.Length - 1
+                    h(m) = (f2(k2) - f3(k)) / (x2(i) - x3(i))
                     If Double.IsNaN(h(m)) Then h(m) = 0.0#
                     m += 1
                 Next
