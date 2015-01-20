@@ -4935,4 +4935,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ExcelFile" xml:space="preserve">
     <value>Archivo de definición de Excel</value>
   </data>
+  <data name="LinkedInputParms" xml:space="preserve">
+    <value>3. Parâmetros de entrada</value>
+  </data>
+  <data name="LinkedOutputParms" xml:space="preserve">
+    <value>4. Parâmetros de saída</value>
+  </data>
+  <data name="MassBalanceError" xml:space="preserve">
+    <value>Erro no balanço de massa (%)</value>
+  </data>
 </root>

@@ -67,6 +67,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         <System.Xml.Serialization.XmlIgnore> <System.NonSerialized> Public Fsheet As FormFlowsheet = Nothing
         Public Property InputConnections As List(Of String)
         Public Property OutputConnections As List(Of String)
+        Public Property MassBalanceError As Double = 0.0#
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
 
@@ -686,6 +687,219 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Sub
 
+        Public Overrides Function Calculate(Optional args As Object = Nothing) As Integer
+
+            Validate()
+
+            Calculated = False
+
+            MassBalanceError = 0.0#
+
+            Dim msfrom, msto As Streams.MaterialStream
+
+            Dim win, wout As Double
+
+            win = 0.0#
+            For Each c In Me.GraphicObject.InputConnectors
+
+                If c.IsAttached Then
+
+                    msfrom = FlowSheet.Collections.ObjectCollection(c.AttachedConnector.AttachedFrom.Name)
+                    msto = Fsheet.GetFlowsheetSimulationObject(InputConnections(Me.GraphicObject.InputConnectors.IndexOf(c)))
+
+                    win += msfrom.Fases(0).SPMProperties.massflow.GetValueOrDefault
+
+                    msto.Clear()
+
+                    msto.Fases(0).SPMProperties.temperature = msfrom.Fases(0).SPMProperties.temperature.GetValueOrDefault
+                    msto.Fases(0).SPMProperties.pressure = msfrom.Fases(0).SPMProperties.pressure.GetValueOrDefault
+                    msto.SpecType = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
+
+                    Dim wt, mt As Double
+
+                    Select Case MassTransferMode
+
+                        Case FlowsheetUOMassTransferMode.CompoundMassFlows
+
+                            wt = 0.0#
+                            For Each s In msfrom.Fases(0).Componentes.Values
+                                wt += s.MassFlow.GetValueOrDefault
+                            Next
+
+                            msto.Fases(0).SPMProperties.massflow = wt
+
+                            For Each s In msfrom.Fases(0).Componentes.Values
+                                msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.MassFlow.GetValueOrDefault / wt
+                            Next
+
+                            msto.CalcOverallCompMoleFractions()
+
+                        Case FlowsheetUOMassTransferMode.CompoundMassFractions
+
+                            msto.Fases(0).SPMProperties.massflow = msfrom.Fases(0).SPMProperties.massflow.GetValueOrDefault
+
+                            For Each s In msfrom.Fases(0).Componentes.Values
+                                msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.FracaoMassica.GetValueOrDefault
+                            Next
+
+                            msto.NormalizeOverallMassComposition()
+
+                            msto.CalcOverallCompMoleFractions()
+
+                        Case FlowsheetUOMassTransferMode.CompoundMoleFlows
+
+                            mt = 0.0#
+                            For Each s In msfrom.Fases(0).Componentes.Values
+                                mt += s.MolarFlow.GetValueOrDefault
+                            Next
+
+                            msto.Fases(0).SPMProperties.molarflow = mt
+
+                            For Each s In msfrom.Fases(0).Componentes.Values
+                                msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.MolarFlow.GetValueOrDefault / mt
+                            Next
+
+                            msto.CalcOverallCompMassFractions()
+
+                        Case FlowsheetUOMassTransferMode.CompoundMoleFractions
+
+                            msto.Fases(0).SPMProperties.molarflow = msfrom.Fases(0).SPMProperties.molarflow.GetValueOrDefault
+
+                            For Each s In msfrom.Fases(0).Componentes.Values
+                                msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.FracaoMolar.GetValueOrDefault
+                            Next
+
+                            msto.NormalizeOverallMoleComposition()
+
+                            msto.CalcOverallCompMassFractions()
+
+                    End Select
+
+                End If
+
+            Next
+
+            DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(Fsheet)
+
+            wout = 0.0#
+            For Each c In Me.GraphicObject.OutputConnectors
+
+                If c.IsAttached Then
+
+                    msfrom = Fsheet.Collections.ObjectCollection(c.AttachedConnector.AttachedTo.Name)
+                    msto = FlowSheet.GetFlowsheetSimulationObject(OutputConnections(Me.GraphicObject.OutputConnectors.IndexOf(c)))
+
+                    wout += msfrom.Fases(0).SPMProperties.massflow.GetValueOrDefault
+
+                    msto.Clear()
+
+                    msto.Fases(0).SPMProperties.temperature = msfrom.Fases(0).SPMProperties.temperature.GetValueOrDefault
+                    msto.Fases(0).SPMProperties.pressure = msfrom.Fases(0).SPMProperties.pressure.GetValueOrDefault
+                    msto.SpecType = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
+
+                    Dim wt, mt As Double
+
+                    Select Case MassTransferMode
+
+                        Case FlowsheetUOMassTransferMode.CompoundMassFlows
+
+                            wt = 0.0#
+                            For Each s In msfrom.Fases(0).Componentes.Values
+                                wt += s.MassFlow.GetValueOrDefault
+                            Next
+
+                            msto.Fases(0).SPMProperties.massflow = wt
+
+                            For Each s In msfrom.Fases(0).Componentes.Values
+                                msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.MassFlow.GetValueOrDefault / wt
+                            Next
+
+                            msto.CalcOverallCompMoleFractions()
+
+                        Case FlowsheetUOMassTransferMode.CompoundMassFractions
+
+                            msto.Fases(0).SPMProperties.massflow = msfrom.Fases(0).SPMProperties.massflow.GetValueOrDefault
+
+                            For Each s In msfrom.Fases(0).Componentes.Values
+                                msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.FracaoMassica.GetValueOrDefault
+                            Next
+
+                            msto.NormalizeOverallMassComposition()
+
+                            msto.CalcOverallCompMoleFractions()
+
+                        Case FlowsheetUOMassTransferMode.CompoundMoleFlows
+
+                            mt = 0.0#
+                            For Each s In msfrom.Fases(0).Componentes.Values
+                                mt += s.MolarFlow.GetValueOrDefault
+                            Next
+
+                            msto.Fases(0).SPMProperties.molarflow = mt
+
+                            For Each s In msfrom.Fases(0).Componentes.Values
+                                msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.MolarFlow.GetValueOrDefault / mt
+                            Next
+
+                            msto.CalcOverallCompMassFractions()
+
+                        Case FlowsheetUOMassTransferMode.CompoundMoleFractions
+
+                            msto.Fases(0).SPMProperties.molarflow = msfrom.Fases(0).SPMProperties.molarflow.GetValueOrDefault
+
+                            For Each s In msfrom.Fases(0).Componentes.Values
+                                msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.FracaoMolar.GetValueOrDefault
+                            Next
+
+                            msto.NormalizeOverallMoleComposition()
+
+                            msto.CalcOverallCompMassFractions()
+
+                    End Select
+
+                End If
+
+            Next
+
+            MassBalanceError = (wout - win) / win * 100
+
+            Calculated = True
+
+            Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+
+            'Call function to calculate flowsheet
+            With objargs
+                .Calculado = True
+                .Nome = Me.Nome
+                .Tag = Me.GraphicObject.Tag
+                .Tipo = TipoObjeto.FlowsheetUO
+            End With
+
+            FlowSheet.CalculationQueue.Enqueue(objargs)
+
+        End Function
+
+        Public Overrides Sub Validate()
+
+            For Each c In Me.GraphicObject.InputConnectors
+                If c.IsAttached Then
+                    Dim mstr = FlowSheet.Collections.ObjectCollection(c.AttachedConnector.AttachedFrom.Name)
+                    If Not mstr.GraphicObject.Calculated Then
+                        Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                        'Call function to calculate flowsheet
+                        With objargs
+                            .Calculado = False
+                            .Nome = Me.Nome
+                            .Tipo = TipoObjeto.FlowsheetUO
+                        End With
+                        CalculateFlowsheet(FlowSheet, objargs, Nothing)
+                        Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
+                    End If
+                End If
+            Next
+
+        End Sub
+
         Public Overrides Function GetPropertyValue(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
 
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
@@ -702,24 +916,22 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Function
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
-            Dim i As Integer = 0
             Dim proplist As New ArrayList
             Select Case proptype
-                Case PropertyType.RW
-                    For i = 2 To 2
-                        proplist.Add("PROP_TK_" + CStr(i))
+                Case PropertyType.ALL
+                    For Each p In InputParams.Values
+                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " & DWSIM.App.GetPropertyName(p.ObjectProperty) & "[I][" & p.ObjectID & "]")
                     Next
-                Case PropertyType.RW
-                    For i = 0 To 2
-                        proplist.Add("PROP_TK_" + CStr(i))
+                    For Each p In OutputParams.Values
+                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " & DWSIM.App.GetPropertyName(p.ObjectProperty) & "[O][" & p.ObjectID & "]")
                     Next
                 Case PropertyType.WR
-                    For i = 0 To 1
-                        proplist.Add("PROP_TK_" + CStr(i))
+                    For Each p In InputParams.Values
+                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " & DWSIM.App.GetPropertyName(p.ObjectProperty) & "[I][" & p.ObjectID & "]")
                     Next
-                Case PropertyType.ALL
-                    For i = 0 To 2
-                        proplist.Add("PROP_TK_" + CStr(i))
+                Case PropertyType.RO
+                    For Each p In OutputParams.Values
+                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " & DWSIM.App.GetPropertyName(p.ObjectProperty) & "[O][" & p.ObjectID & "]")
                     Next
             End Select
             Return proplist.ToArray(GetType(System.String))
@@ -727,17 +939,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Function
 
         Public Overrides Function SetPropertyValue(ByVal prop As String, ByVal propval As Object, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing) As Object
+
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-            Dim propidx As Integer = CInt(prop.Split("_")(2))
+            Dim pkey As String = prop.Split("][")(1).TrimEnd("]")
 
-            Select Case propidx
-                Case 0
-                    'PROP_TK_0	Pressure Drop
-                Case 1
-                    'PROP_TK_1	Volume
-            End Select
+            Fsheet.Collections.ObjectCollection(InputParams(pkey).ObjectID).SetPropertyValue(InputParams(pkey).ObjectProperty, propval, su)
+
             Return 1
+
         End Function
 
         Public Overrides Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
@@ -914,22 +1124,48 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
                 End With
 
-                .Item.Add(DWSIM.App.GetLocalString("SimulationFile"), Me, "SimulationFile", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("SimulationFileDesc"), True)
+                .Item.Add(DWSIM.App.GetLocalString("SimulationFile"), Me, "SimulationFile", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("SimulationFileDesc"), True)
                 .Item(.Item.Count - 1).CustomEditor = New PropertyGridEx.UIFilenameEditor
 
                 If IO.File.Exists(SimulationFile) Then
-                    .Item.Add(DWSIM.App.GetLocalString("FlowsheetUOEditor"), "", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FlowsheetUOEditorDesc"), True)
+                    .Item.Add(DWSIM.App.GetLocalString("FlowsheetUOEditor"), New DummyClass, False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("FlowsheetUOEditorDesc"), True)
                     .Item(.Item.Count - 1).DefaultValue = Nothing
                     .Item(.Item.Count - 1).CustomEditor = New DWSIM.Editors.FlowsheetUO.UIFlowsheetUOEditor
                 End If
 
+                .Item.Add(DWSIM.App.GetLocalString("InitializeOnLoad"), Me, "InitializeOnLoad", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("InitializeOnLoadDesc"), True)
+
                 If Initialized Then
-                    .Item.Add(DWSIM.App.GetLocalString("FlowsheetUOViewer"), "", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FlowsheetUOViewerDesc"), True)
+
+                    .Item.Add(DWSIM.App.GetLocalString("FlowsheetUOViewer"), New DummyClass, False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("FlowsheetUOViewerDesc"), True)
                     .Item(.Item.Count - 1).DefaultValue = Nothing
                     .Item(.Item.Count - 1).CustomEditor = New DWSIM.Editors.FlowsheetUO.UIFlowsheetUOViewer
+
+                    For Each p In InputParams.Values
+                        .Item.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " &
+                                  DWSIM.App.GetPropertyName(p.ObjectProperty) &
+                                  " (" & Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyUnit(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem) & ")",
+                                  Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyValue(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem), False,
+                                  DWSIM.App.GetLocalString("LinkedInputParms"), DWSIM.App.GetLocalString(""), True)
+                        .Item(.Item.Count - 1).Tag = p.ID
+                    Next
+
+                    For Each p In OutputParams.Values
+                        .Item.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " &
+                                  DWSIM.App.GetPropertyName(p.ObjectProperty) &
+                                  " (" & Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyUnit(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem) & ")",
+                                  Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyValue(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem), True,
+                                  DWSIM.App.GetLocalString("LinkedOutputParms"), DWSIM.App.GetLocalString(""), True)
+                        .Item(.Item.Count - 1).Tag = p.ID
+                    Next
+
                 End If
 
-                .Item.Add(DWSIM.App.GetLocalString("InitializeOnLoad"), Me, "InitializeOnLoad", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("InitializeOnLoadDesc"), True)
+                If Calculated Then
+
+                    .Item.Add(DWSIM.App.GetLocalString("MassBalanceError"), Me, "MassBalanceError", False, "5. " & DWSIM.App.GetLocalString("Resultados"), DWSIM.App.GetLocalString(""), True)
+
+                End If
 
             End With
 

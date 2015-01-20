@@ -63,7 +63,39 @@ Public Class frmProps
 
         If Not sobj Is Nothing Then
 
-            If sobj.TipoObjeto = TipoObjeto.GO_MasterTable Then
+            If sobj.TipoObjeto = TipoObjeto.FlowsheetUO Then
+
+                Dim fs As DWSIM.SimulationObjects.UnitOps.Flowsheet = ChildParent.Collections.CLCS_FlowsheetUOCollection.Item(sobj.Name)
+
+                If e.ChangedItem.PropertyDescriptor.Category.Equals(DWSIM.App.GetLocalString("LinkedInputParms")) Then
+
+                    Dim pkey As String = CType(e.ChangedItem.PropertyDescriptor, CustomProperty.CustomPropertyDescriptor).CustomProperty.Tag
+
+                    fs.Fsheet.Collections.ObjectCollection(fs.InputParams(pkey).ObjectID).SetPropertyValue(fs.InputParams(pkey).ObjectProperty, e.ChangedItem.Value, ChildParent.Options.SelectedUnitSystem)
+
+                    If ChildParent.Options.CalculatorActivated Then
+
+                        sobj.Calculated = True
+                        RaiseEvent ObjectStatusChanged(sobj)
+
+                        'Call function to calculate flowsheet
+                        Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                        With objargs
+                            .Calculado = True
+                            .Nome = sobj.Name
+                            .Tag = sobj.Tag
+                            .Tipo = TipoObjeto.FlowsheetUO
+                            .Emissor = "PropertyGrid"
+                        End With
+
+                        If fs.IsSpecAttached = True And fs.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then ChildParent.Collections.CLCS_SpecCollection(fs.AttachedSpecId).Calculate()
+                        ChildParent.CalculationQueue.Enqueue(objargs)
+
+                    End If
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.GO_MasterTable Then
 
                 Dim mt As DWSIM.GraphicObjects.MasterTableGraphic = sobj
 
@@ -938,7 +970,7 @@ Public Class frmProps
                     ChildParent.CalculationQueue.Enqueue(objargs)
 
                 End If
-                End If
+            End If
         End If
 
         Call ChildParent.FormSurface.UpdateSelectedObject()

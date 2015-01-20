@@ -942,20 +942,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
-        Public Sub DW_CalcOverallCompMassFractions()
-
-            Dim mol_x_mm As Double
-            Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
-            For Each sub1 In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                mol_x_mm += sub1.FracaoMolar.GetValueOrDefault * sub1.ConstantProperties.Molar_Weight
-            Next
-            For Each sub1 In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                sub1.FracaoMassica = sub1.FracaoMolar.GetValueOrDefault * sub1.ConstantProperties.Molar_Weight / mol_x_mm
-            Next
-
-        End Sub
-
-
         Public Overridable Sub DW_CalcOverallProps()
 
             Dim HL, HV, HS, SL, SV, SS, DL, DV, DS, CPL, CPV, CPS, KL, KV, KS, CVL, CVV, CSV As Nullable(Of Double)

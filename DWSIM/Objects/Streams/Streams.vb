@@ -487,6 +487,59 @@ Namespace DWSIM.SimulationObjects.Streams
 
         End Sub
 
+        Public Sub NormalizeOverallMoleComposition()
+
+            Dim mt As Double = 0.0#
+            For Each s In Fases(0).Componentes.Values
+                mt += s.FracaoMolar.GetValueOrDefault
+            Next
+
+            For Each s In Fases(0).Componentes.Values
+                s.FracaoMolar /= mt
+            Next
+
+        End Sub
+
+        Public Sub NormalizeOverallMassComposition()
+
+            Dim mt As Double = 0.0#
+            For Each s In Fases(0).Componentes.Values
+                mt += s.FracaoMassica.GetValueOrDefault
+            Next
+
+            For Each s In Fases(0).Componentes.Values
+                s.FracaoMassica /= mt
+            Next
+
+        End Sub
+
+        Public Sub CalcOverallCompMassFractions()
+
+            Dim mol_x_mm As Double
+            Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
+            For Each sub1 In Fases(0).Componentes.Values
+                mol_x_mm += sub1.FracaoMolar.GetValueOrDefault * sub1.ConstantProperties.Molar_Weight
+            Next
+            For Each sub1 In Fases(0).Componentes.Values
+                sub1.FracaoMassica = sub1.FracaoMolar.GetValueOrDefault * sub1.ConstantProperties.Molar_Weight / mol_x_mm
+            Next
+
+        End Sub
+
+        Public Sub CalcOverallCompMoleFractions()
+
+            Dim mol_x_mm As Double
+            Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
+            For Each sub1 In Fases(0).Componentes.Values
+                mol_x_mm += sub1.FracaoMassica.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight
+            Next
+            For Each sub1 In Fases(0).Componentes.Values
+                sub1.FracaoMolar = sub1.FracaoMassica.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight / mol_x_mm
+            Next
+
+        End Sub
+
+
         Public Sub SetPhaseComposition(ByVal Vx As Array, ByVal phase As PropertyPackages.Fase)
 
             Dim i As Integer = 0, idx As Integer = 0
