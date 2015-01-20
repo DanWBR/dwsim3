@@ -43,6 +43,9 @@ Namespace DWSIM.Editors.Results
 
                 Dim selectionControl As New FormGraphPFR
 
+                Dim form As FormFlowsheet = DirectCast(editorService, Control).FindForm.FindForm.ParentForm
+                selectionControl.form = form
+
                 selectionControl.Points = value
 
                 editorService.ShowDialog(selectionControl)

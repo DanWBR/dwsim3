@@ -22,7 +22,7 @@ Imports DWSIM.DWSIM.SimulationObjects
 Public Class UIResultsForm
 
     Dim dc As Column
-    Dim form As FormFlowsheet
+    Public form As FormFlowsheet
 
     Dim loaded As Boolean = False
     Dim cv As DWSIM.SistemasDeUnidades.Conversor
@@ -33,7 +33,6 @@ Public Class UIResultsForm
     Private Sub UIResultsForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         cv = New DWSIM.SistemasDeUnidades.Conversor()
-        form = My.Application.ActiveSimulation
         dc = form.Collections.ObjectCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
         nf = form.Options.NumberFormat
         su = form.Options.SelectedUnitSystem

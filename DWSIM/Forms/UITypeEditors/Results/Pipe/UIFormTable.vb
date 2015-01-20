@@ -42,6 +42,8 @@ Namespace DWSIM.Editors.Results
             If (editorService IsNot Nothing) Then
                 Dim selectionControl As New FormTable
 
+                Dim form As FormFlowsheet = DirectCast(editorService, Control).FindForm.FindForm.ParentForm
+                selectionControl.m_form = form
                 selectionControl.Profile = value
 
                 editorService.ShowDialog(selectionControl)

@@ -43,6 +43,10 @@ Namespace DWSIM.Editors.Distillation
 
                 Dim selectionControl As New UIResultsForm
 
+                Dim form As FormFlowsheet = DirectCast(editorService, Control).FindForm.FindForm.ParentForm
+
+                selectionControl.form = form
+
                 editorService.ShowDialog(selectionControl)
 
             End If

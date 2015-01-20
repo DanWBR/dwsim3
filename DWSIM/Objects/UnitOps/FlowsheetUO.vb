@@ -31,6 +31,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary
 
     <System.Serializable()> Public Class FlowsheetUOParameter
         Implements XMLSerializer.Interfaces.ICustomXMLSerialization
+        Public Property ID As String = ""
         Public Property ObjectID As String = ""
         Public Property ObjectProperty As String = ""
         'Public Property Value As Object = Nothing
@@ -63,7 +64,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Property MassTransferMode As FlowsheetUOMassTransferMode = FlowsheetUOMassTransferMode.CompoundMassFlows
         Public Property InputParams As Dictionary(Of String, FlowsheetUOParameter)
         Public Property OutputParams As Dictionary(Of String, FlowsheetUOParameter)
-        <System.Xml.Serialization.XmlIgnore> Public Property Fsheet As FormFlowsheet = Nothing
+        <System.Xml.Serialization.XmlIgnore> <System.NonSerialized> Public Fsheet As FormFlowsheet = Nothing
         Public Property InputConnections As List(Of String)
         Public Property OutputConnections As List(Of String)
 
@@ -934,7 +935,69 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Sub
 
+        Public Overrides Function LoadData(data As List(Of XElement)) As Boolean
 
+            XMLSerializer.XMLSerializer.Deserialize(Me, data)
+
+            Dim i As Integer
+
+            i = 0
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InputConnections").Elements.ToList
+                Me.InputConnections(i) = xel.Value
+                i += 1
+            Next
+
+            i = 0
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "OutputConnections").Elements.ToList
+                Me.OutputConnections(i) = xel.Value
+                i += 1
+            Next
+
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InputParameters").Elements.ToList
+                Dim fp As New FlowsheetUOParameter()
+                fp.LoadData(xel.Elements.ToList)
+                Me.InputParams.Add(fp.ID, fp)
+            Next
+
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "OutputParameters").Elements.ToList
+                Dim fp As New FlowsheetUOParameter()
+                fp.LoadData(xel.Elements.ToList)
+                Me.OutputParams.Add(fp.ID, fp)
+            Next
+
+            If InitializeOnLoad Then
+                If IO.File.Exists(SimulationFile) Then InitializeFlowsheet(SimulationFile)
+            End If
+
+        End Function
+
+        Public Overrides Function SaveData() As List(Of XElement)
+
+            Dim elements As List(Of System.Xml.Linq.XElement) = MyBase.SaveData()
+            Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
+
+            With elements
+                .Add(New XElement("InputConnections"))
+                For Each s In InputConnections
+                    .Item(.Count - 1).Add(New XElement("InputConnection", s))
+                Next
+                .Add(New XElement("OutputConnections"))
+                For Each s In OutputConnections
+                    .Item(.Count - 1).Add(New XElement("OutputConnection", s))
+                Next
+                .Add(New XElement("InputParameters"))
+                For Each p In InputParams.Values
+                    .Item(.Count - 1).Add(New XElement("FlowsheetUOParameter", p.SaveData.ToArray))
+                Next
+                .Add(New XElement("OutputParameters"))
+                For Each p In OutputParams.Values
+                    .Item(.Count - 1).Add(New XElement("FlowsheetUOParameter", p.SaveData.ToArray))
+                Next
+            End With
+
+            Return elements
+
+        End Function
 
     End Class
 

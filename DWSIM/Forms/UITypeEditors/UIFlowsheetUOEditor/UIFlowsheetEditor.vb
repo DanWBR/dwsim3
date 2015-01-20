@@ -39,9 +39,9 @@ Namespace DWSIM.Editors.FlowsheetUO
                 IWindowsFormsEditorService)
             End If
 
-            Dim form As FormFlowsheet = My.Application.ActiveSimulation
-
             If (editorService IsNot Nothing) Then
+
+                Dim form As FormFlowsheet = DirectCast(editorService, Control).FindForm.FindForm.ParentForm
 
                 Dim selectionControl As New FlowsheetUOEditorForm
 

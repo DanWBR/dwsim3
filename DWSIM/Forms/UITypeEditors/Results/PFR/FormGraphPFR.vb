@@ -10,7 +10,7 @@
     Protected vya As ArrayList
     Protected m_ytitle As String
     Protected m_xtitle As String
-    Protected form As FormFlowsheet
+    Public form As FormFlowsheet
 
     Public Property Points() As ArrayList
         Get
@@ -23,7 +23,6 @@
 
     Private Sub FormGraph_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        form = My.Application.ActiveSimulation
         m_conv = New Dictionary(Of String, Double)
         vya = New ArrayList
         ReDim vx(Me.Points.Count - 1)

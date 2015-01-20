@@ -2,6 +2,7 @@ Public Class FormTable
     Inherits System.Windows.Forms.Form
 
     Protected m_results As PipeProfile
+    Public m_form As FormFlowsheet
 
     Public Property Profile() As PipeProfile
         Get
@@ -13,8 +14,6 @@ Public Class FormTable
     End Property
 
     Private Sub FormTable_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-        Dim m_form As FormFlowsheet = My.Application.ActiveSimulation
 
         Dim cv As New DWSIM.SistemasDeUnidades.Conversor
         Dim su As DWSIM.SistemasDeUnidades.Unidades = m_form.Options.SelectedUnitSystem

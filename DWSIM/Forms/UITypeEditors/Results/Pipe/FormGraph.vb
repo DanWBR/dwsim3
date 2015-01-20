@@ -7,7 +7,7 @@ Public Class FormGraph
     Protected m_vy As Double()
     Protected m_ytitle As String
     Protected m_xtitle As String
-    Protected m_form As FormFlowsheet
+    Public m_form As FormFlowsheet
 
     Public Property Profile() As PipeProfile
         Get
@@ -19,8 +19,6 @@ Public Class FormGraph
     End Property
 
     Private Sub FormGraph_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-        m_form = My.Application.ActiveSimulation
 
         Me.ComboBox1.SelectedIndex = 0
         Me.ComboBox2.SelectedIndex = 1
