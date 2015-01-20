@@ -729,6 +729,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             msto.Fases(0).SPMProperties.massflow = wt
 
                             For Each s In msfrom.Fases(0).Componentes.Values
+                                If Not msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    Throw New Exception("Error transfering data to sub-flowsheet: compound '" & DWSIM.App.GetComponentName(s.Nome) & "' not found.")
+                                End If
                                 msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.MassFlow.GetValueOrDefault / wt
                             Next
 
@@ -739,6 +742,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             msto.Fases(0).SPMProperties.massflow = msfrom.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
                             For Each s In msfrom.Fases(0).Componentes.Values
+                                If Not msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    Throw New Exception("Error transfering data to sub-flowsheet: compound '" & DWSIM.App.GetComponentName(s.Nome) & "' not found.")
+                                End If
                                 msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.FracaoMassica.GetValueOrDefault
                             Next
 
@@ -756,6 +762,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             msto.Fases(0).SPMProperties.molarflow = mt
 
                             For Each s In msfrom.Fases(0).Componentes.Values
+                                If Not msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    Throw New Exception("Error transfering data to sub-flowsheet: compound '" & DWSIM.App.GetComponentName(s.Nome) & "' not found.")
+                                End If
                                 msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.MolarFlow.GetValueOrDefault / mt
                             Next
 
@@ -766,6 +775,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             msto.Fases(0).SPMProperties.molarflow = msfrom.Fases(0).SPMProperties.molarflow.GetValueOrDefault
 
                             For Each s In msfrom.Fases(0).Componentes.Values
+                                If Not msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    Throw New Exception("Error transfering data to sub-flowsheet: compound '" & DWSIM.App.GetComponentName(s.Nome) & "' not found.")
+                                End If
                                 msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.FracaoMolar.GetValueOrDefault
                             Next
 
