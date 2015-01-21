@@ -712,7 +712,7 @@ Public Class frmSurface
         Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
         'obj.FillNodeItems()
         Dim ni As DWSIM.Outros.NodeItem
-        If obj.NodeTableItems.Count > 0 Then
+        If obj.NodeTableItems.Count >= 0 Then
             For Each nti As DWSIM.Outros.NodeItem In obj.NodeTableItems.Values
                 If DWSIM.App.GetPropertyName(nti.Text) = nti.Text Then
                     obj.NodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
