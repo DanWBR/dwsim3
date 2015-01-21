@@ -65,7 +65,7 @@ Imports System.Text
 
     End Sub
 
-    Public Sub FillNodeItems(Optional ByVal NoPropVals As Boolean = False)
+    Public Overridable Sub FillNodeItems(Optional ByVal NoPropVals As Boolean = False)
 
         If Me.NodeTableItems Is Nothing Then Me.NodeTableItems = New Dictionary(Of Integer, DWSIM.Outros.NodeItem)
 

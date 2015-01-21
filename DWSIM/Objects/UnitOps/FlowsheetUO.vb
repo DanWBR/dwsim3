@@ -953,7 +953,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End Select
             End If
             Return proplist.ToArray(GetType(System.String))
-            proplist = Nothing
         End Function
 
         Public Overrides Function SetPropertyValue(ByVal prop As String, ByVal propval As Object, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing) As Object
@@ -993,6 +992,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Sub
 
         Public Overrides Sub UpdatePropertyNodes(su As SistemasDeUnidades.Unidades, nf As String)
+
+            Dim Conversor As New DWSIM.SistemasDeUnidades.Conversor
+            If Me.NodeTableItems Is Nothing Then
+                Me.NodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
+                Me.FillNodeItems()
+            End If
+
+            For Each nti As Outros.NodeItem In Me.NodeTableItems.Values
+                nti.Value = GetPropertyValue(nti.Text, FlowSheet.Options.SelectedUnitSystem)
+                nti.Unit = GetPropertyUnit(nti.Text, FlowSheet.Options.SelectedUnitSystem)
+            Next
 
             If Me.QTNodeTableItems Is Nothing Then
                 Me.QTNodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
@@ -1200,6 +1210,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             XMLSerializer.XMLSerializer.Deserialize(Me, data)
 
+            Me.Annotation.annotation = New Object() {"", (From xel As XElement In data Select xel Where xel.Name = "Annotation").SingleOrDefault.Value}
+
+            If InitializeOnLoad Then
+                If IO.File.Exists(SimulationFile) Then InitializeFlowsheet(SimulationFile)
+            End If
+
             Dim i As Integer
 
             i = 0
@@ -1226,9 +1242,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Me.OutputParams.Add(fp.ID, fp)
             Next
 
-            If InitializeOnLoad Then
-                If IO.File.Exists(SimulationFile) Then InitializeFlowsheet(SimulationFile)
-            End If
+            m_nodeitems = Nothing
+            FillNodeItems(True)
+            QTFillNodeItems()
+
+            For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "NodeItems").Elements
+                Dim text As String = xel2.@Text
+                Dim ni2 As DWSIM.Outros.NodeItem = (From ni As DWSIM.Outros.NodeItem In m_nodeitems.Values Select ni Where ni.Text = text).SingleOrDefault
+                If Not ni2 Is Nothing Then
+                    ni2.Checked = True
+                End If
+            Next
 
         End Function
 

@@ -2254,12 +2254,13 @@ Public Class FormMain
                 Dim gobj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
                                     form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
                 obj.GraphicObject = gobj
-                obj.FillNodeItems(True)
-                obj.QTFillNodeItems()
+                If Not obj.GraphicObject.TipoObjeto = TipoObjeto.FlowsheetUO Then
+                    obj.FillNodeItems(True)
+                    obj.QTFillNodeItems()
+                End If
                 If Not gobj Is Nothing Then
                     form.Collections.ObjectCollection.Add(id, obj)
                     obj.LoadData(xel.Elements.ToList)
-                    If obj.GraphicObject.TipoObjeto = TipoObjeto.FlowsheetUO Then obj.FillNodeItems(False)
                     If TypeOf obj Is Streams.MaterialStream Then
                         For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
                             For Each c As ConstantProperties In form.Options.SelectedComponents.Values
@@ -2348,7 +2349,7 @@ Public Class FormMain
                                 .CLCS_SolidsSeparatorCollection.Add(id, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
                                 .CLCS_FilterCollection.Add(id, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.FlowsheetUO
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.FlowsheetUO
                                 .CLCS_FlowsheetUOCollection.Add(id, obj)
                         End Select
                     End With

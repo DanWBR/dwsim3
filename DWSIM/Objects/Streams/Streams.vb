@@ -723,7 +723,7 @@ Namespace DWSIM.SimulationObjects.Streams
 
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-            Dim value As String = ""
+            Dim value As Object = ""
             Dim sname As String = ""
 
             If prop <> "" Then
