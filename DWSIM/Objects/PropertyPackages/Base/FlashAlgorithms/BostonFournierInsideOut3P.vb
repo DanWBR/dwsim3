@@ -175,7 +175,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             End If
                         Next
 
-                        Dim sumvx2 = 0
+                        Dim sumvx2 = 0.0#
                         For i = 0 To nc
                             sumvx2 += Abs(vx1e(i))
                         Next
@@ -312,7 +312,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             vx1e(i) = (result(2)(i) * L1 - vx2est(i) * L2) / (L1 - L2)
                         Next
 
-                        Dim sumvx2 = 0
+                        Dim sumvx2 = 0.0#
                         For i = 0 To nc
                             sumvx2 += Abs(vx1e(i))
                         Next
@@ -449,7 +449,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             vx1e(i) = (result(2)(i) * L1 - vx2est(i) * L2) / (L1 - L2)
                         Next
 
-                        Dim sumvx2 = 0
+                        Dim sumvx2 = 0.0#
                         For i = 0 To nc
                             sumvx2 += Abs(vx1e(i))
                         Next
@@ -1311,11 +1311,11 @@ restart:    Do
             VTc = PP.RET_VTC
             fi = Vz.Clone
 
-            Tmin = 0
-            Tmax = 0
-            If Tref = 0 Or Double.IsNaN(Tref) Then
+            Tmin = 0.0#
+            Tmax = 0.0#
+            If Tref = 0.0# Or Double.IsNaN(Tref) Then
                 i = 0
-                Tref = 0
+                Tref = 0.0#
                 Do
                     Tref += 0.8 * Vz(i) * VTc(i)
                     Tmin += 0.1 * Vz(i) * VTc(i)
@@ -2310,9 +2310,9 @@ out:
                 pi(i) = fi(i) / (R + (1 - R + S) / (2 * Kb0 * Exp(ui1(i))) + (1 - R - S) / (2 * Kb0 * Exp(ui2(i))))
             Next
 
-            Dim sumpi As Double = 0
-            Dim sumeuipi1 As Double = 0
-            Dim sumeuipi2 As Double = 0
+            Dim sumpi As Double = 0.0#
+            Dim sumeuipi1 As Double = 0.0#
+            Dim sumeuipi2 As Double = 0.0#
             For i = 0 To n
                 sumpi += pi(i)
                 sumeuipi1 += pi(i) / Exp(ui1(i))

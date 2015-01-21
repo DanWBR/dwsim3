@@ -36,7 +36,7 @@ Namespace DWSIM.FlowPackages
                 Dim vlo = ql / (Math.PI * D ^ 2 / 4)
                 mul = 0.001 * mul
                 Dim Re_fit = NRe(rhol, vlo, D, mul)
-                Dim fric = 0
+                Dim fric = 0.0#
                 If Re_fit > 3250 Then
                     Dim a1 = Math.Log(((k / D) ^ 1.1096) / 2.8257 + (7.149 / Re_fit) ^ 0.8961) / Math.Log(10.0#)
                     Dim b1 = -2 * Math.Log((k / D) / 3.7065 - 5.0452 * a1 / Re_fit) / Math.Log(10.0#)
@@ -62,7 +62,7 @@ Namespace DWSIM.FlowPackages
                 Dim vgo = qv / (Math.PI * D ^ 2 / 4)
                 muv = 0.001 * muv
                 Dim Re_fit = NRe(rhov, vgo, D, muv)
-                Dim fric = 0
+                Dim fric = 0.0#
                 If Re_fit > 3250 Then
                     Dim a1 = Math.Log(((k / D) ^ 1.1096) / 2.8257 + (7.149 / Re_fit) ^ 0.8961) / Math.Log(10.0#)
                     Dim b1 = -2 * Math.Log((k / D) / 3.7065 - 5.0452 * a1 / Re_fit) / Math.Log(10.0#)

@@ -1068,7 +1068,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Function k_terreno(ByVal terreno As Integer) As Double
 
-            Dim kt = 0
+            Dim kt = 0.0#
 
             If terreno = 2 Then kt = 1.1
             If terreno = 3 Then kt = 1.95
@@ -1106,7 +1106,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Dim Re_int = NRe(rho, vel, Dint, mu)
 
                 Dim epsilon = Me.rugosidade(materialparede)
-                Dim ffint = 0
+                Dim ffint = 0.0#
                 If Re_int > 3250 Then
                     Dim a1 = Math.Log(((epsilon / Dint) ^ 1.1096) / 2.8257 + (7.149 / Re_int) ^ 0.8961) / Math.Log(10.0#)
                     Dim b1 = -2 * Math.Log((epsilon / Dint) / 3.7065 - 5.0452 * a1 / Re_int) / Math.Log(10.0#)
@@ -1127,7 +1127,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End If
 
             'Calcular contribuição da parede da tubulação
-            Dim U_parede = 0
+            Dim U_parede = 0.0#
 
             If parede = True Then
 
@@ -1137,9 +1137,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End If
 
             'Calcular contribuição do isolamento
-            Dim U_isol = 0
+            Dim U_isol = 0.0#
 
-            Dim esp_isol = 0
+            Dim esp_isol = 0.0#
             If isolamento = True Then
 
                 esp_isol = Me.m_thermalprofile.Espessura / 1000
@@ -1148,7 +1148,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End If
 
             'Calcular coeficiente de transf. externo
-            Dim U_ext = 0
+            Dim U_ext = 0.0#
 
             If hexterno = True Then
 

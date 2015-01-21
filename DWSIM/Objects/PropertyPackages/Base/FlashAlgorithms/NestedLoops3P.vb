@@ -256,8 +256,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     Vant = V
 
-                    Dim F = 0
-                    Dim dF = 0
+                    Dim F = 0.0#
+                    Dim dF = 0.0#
                     i = 0
                     Do
                         If Vz(i) > 0 Then
@@ -736,9 +736,9 @@ out:
                 pi(i) = fi(i) / (Rt + (1 - Rt + S) / (2 * Kb0 * Exp(ui1(i))) + (1 - Rt - S) / (2 * Kb0 * Exp(ui2(i))))
             Next
 
-            Dim sumpi As Double = 0
-            Dim sumeuipi1 As Double = 0
-            Dim sumeuipi2 As Double = 0
+            Dim sumpi As Double = 0.0#
+            Dim sumeuipi1 As Double = 0.0#
+            Dim sumeuipi2 As Double = 0.0#
             For i = 0 To n
                 sumpi += pi(i)
                 sumeuipi1 += pi(i) / Exp(ui1(i))
@@ -828,7 +828,7 @@ out:
 
             ecount = 0
 
-            If Tref = 0 Then Tref = 298.15
+            If Tref = 0.0# Then Tref = 298.15
             x1 = Tref
             Do
                 fx = Herror(x1, Nothing)

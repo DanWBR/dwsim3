@@ -833,7 +833,7 @@ Final2:
             Loop Until i = n + 1
 
             i = 0
-            Dim aml = 0
+            Dim aml = 0.0#
             Do
                 j = 0
                 Do
@@ -844,7 +844,7 @@ Final2:
             Loop Until i = n + 1
 
             i = 0
-            Dim bml = 0
+            Dim bml = 0.0#
             Do
                 bml = bml + Vx(i) * bi(i)
                 i = i + 1
@@ -1849,7 +1849,7 @@ Final2:
             Loop Until i = n + 1
 
             i = 0
-            Dim aml = 0
+            Dim aml = 0.0#
             Do
                 j = 0
                 Do
@@ -1860,7 +1860,7 @@ Final2:
             Loop Until i = n + 1
 
             i = 0
-            Dim bml = 0
+            Dim bml = 0.0#
             Do
                 bml = bml + Vx(i) * bi(i)
                 i = i + 1

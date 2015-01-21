@@ -389,7 +389,7 @@ Namespace DWSIM.Utilities.HYD
             Loop Until i = n + 1
 
             i = 0
-            Dim amv = 0
+            Dim amv = 0.0#
             Do
                 j = 0
                 Do
@@ -401,7 +401,7 @@ Namespace DWSIM.Utilities.HYD
             Loop Until i = n + 1
 
             i = 0
-            Dim bmv = 0
+            Dim bmv = 0.0#
             Do
                 bmv = bmv + Vy(i) * bi(i)
                 i = i + 1
@@ -496,7 +496,7 @@ Namespace DWSIM.Utilities.HYD
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim sum_vxaq = 0
+                Dim sum_vxaq = 0.0#
                 i = 0
                 Do
                     If i <> pos Then sum_vxaq += Vxaq(i)
@@ -541,7 +541,7 @@ Namespace DWSIM.Utilities.HYD
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim soma_CML11 = 0, soma_CML21 = 0
+                Dim soma_CML11 = 0.0#, soma_CML21 = 0.0#
                 i = 0
                 Do
                     If i <> pos Then
@@ -588,7 +588,7 @@ Namespace DWSIM.Utilities.HYD
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim schsI = 0
+                Dim schsI = 0.0#
                 i = 0
                 Do
                     If i <> pos Then schsI += (vm(0, 0) * TETA1(0, i) + vm(0, 1) * TETA1(1, i))
@@ -645,7 +645,7 @@ Namespace DWSIM.Utilities.HYD
                     End If
                     i = i + 1
                 Loop Until i = n + 1
-                Dim soma_CML12 = 0, soma_CML22 = 0
+                Dim soma_CML12 = 0.0#, soma_CML22 = 0.0#
                 i = 0
                 Do
                     If i <> pos Then
@@ -690,7 +690,7 @@ Namespace DWSIM.Utilities.HYD
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim schsII = 0
+                Dim schsII = 0.0#
                 i = 0
                 Do
                     If i <> pos Then schsII += (vm(1, 0) * TETA2(0, i) + vm(1, 1) * TETA2(1, i))
@@ -1165,7 +1165,7 @@ STEP2:
             Loop Until i = n + 1
 
             i = 0
-            Dim amv = 0
+            Dim amv = 0.0#
             Do
                 j = 0
                 Do
@@ -1177,7 +1177,7 @@ STEP2:
             Loop Until i = n + 1
 
             i = 0
-            Dim bmv = 0
+            Dim bmv = 0.0#
             Do
                 bmv = bmv + Vy(i) * bi(i)
                 i = i + 1
@@ -1287,8 +1287,8 @@ STEP2:
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim sum_vxaq = 0
-                Dim sum_vxhc = 0
+                Dim sum_vxaq = 0.0#
+                Dim sum_vxhc = 0.0#
                 i = 0
                 Do
                     If i <> pos Then sum_vxaq += Vxaq(i)
@@ -1340,7 +1340,7 @@ STEP2:
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim soma_CML11 = 0, soma_CML21 = 0
+                Dim soma_CML11 = 0.0#, soma_CML21 = 0.0#
                 i = 0
                 Do
                     If i <> pos Then
@@ -1387,7 +1387,7 @@ STEP2:
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim schsI = 0
+                Dim schsI = 0.0#
                 i = 0
                 Do
                     If i <> pos Then schsI += (vm(0, 0) * TETA1(0, i) + vm(0, 1) * TETA1(1, i))
@@ -1446,7 +1446,7 @@ STEP2:
                     End If
                     i = i + 1
                 Loop Until i = n + 1
-                Dim soma_CML12 = 0, soma_CML22 = 0
+                Dim soma_CML12 = 0.0#, soma_CML22 = 0.0#
                 i = 0
                 Do
                     If i <> pos Then
@@ -1491,7 +1491,7 @@ STEP2:
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim schsII = 0
+                Dim schsII = 0.0#
                 i = 0
                 Do
                     If i <> pos Then schsII += (vm(1, 0) * TETA2(0, i) + vm(1, 1) * TETA2(1, i))

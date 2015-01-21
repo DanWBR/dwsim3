@@ -187,7 +187,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             ecount = 0
             Dim convergiu = 0
-            Dim F = 0
+            Dim F = 0.0#
 
             Do
 
@@ -250,7 +250,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Vant = V
 
                     F = 0.0#
-                    Dim dF = 0
+                    Dim dF = 0.0#
                     i = 0
                     Do
                         If Vz(i) > 0 Then
@@ -599,7 +599,7 @@ alt:
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
 
-            If Pref = 0 Then
+            If Pref = 0.0# Then
 
                 i = 0
                 Do
@@ -1269,8 +1269,8 @@ alt:
             Vx = tmp(2)
             Vy = tmp(3)
 
-            _Hv = 0
-            _Hl = 0
+            _Hv = 0.0#
+            _Hl = 0.0#
 
             Dim mmg, mml As Double
             If V > 0 Then _Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
@@ -1297,8 +1297,8 @@ alt:
             Vx = tmp(2)
             Vy = tmp(3)
 
-            _Sv = 0
-            _Sl = 0
+            _Sv = 0.0#
+            _Sl = 0.0#
             Dim mmg, mml As Double
 
             If V > 0 Then _Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)

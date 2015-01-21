@@ -1334,10 +1334,10 @@ alt:
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim e1 = 0
-                Dim e2 = 0
-                Dim e3 = 0
-                Dim e4 = 0
+                Dim e1 = 0.0#
+                Dim e2 = 0.0#
+                Dim e3 = 0.0#
+                Dim e4 = 0.0#
                 i = 0
                 Do
                     e1 = e1 + (Vx1(i) - Vx1ant(i))
@@ -1611,10 +1611,10 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim e1 = 0
-                Dim e2 = 0
-                Dim e3 = 0
-                Dim e4 = 0
+                Dim e1 = 0.0#
+                Dim e2 = 0.0#
+                Dim e3 = 0.0#
+                Dim e4 = 0.0#
                 i = 0
                 Do
                     e1 = e1 + (Vx1(i) - Vx1ant(i))

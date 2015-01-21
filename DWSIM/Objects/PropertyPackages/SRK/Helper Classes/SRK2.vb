@@ -103,7 +103,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
             i = 0
-            Dim aux2 = 0
+            Dim aux2 = 0.0#
             Do
                 j = 0
                 Do
@@ -166,7 +166,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim am = 0
+            Dim am = 0.0#
             Do
                 j = 0
                 Do
@@ -177,7 +177,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim bm = 0
+            Dim bm = 0.0#
             Do
                 bm = bm + Vz(i) * bi(i)
                 i = i + 1
@@ -195,7 +195,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
                 Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
                 i = 0
-                Dim aux2 = 0
+                Dim aux2 = 0.0#
                 Do
                     j = 0
                     Do
@@ -396,7 +396,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim aml = 0
+            Dim aml = 0.0#
             Do
                 j = 0
                 Do
@@ -408,7 +408,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim bml = 0
+            Dim bml = 0.0#
             Do
                 bml = bml + Vx(i) * bi(i)
                 i = i + 1
@@ -423,7 +423,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
-            Dim tv = 0
+            Dim tv = 0.0#
             Dim ZV, tv2
 
             Dim result As New ArrayList
@@ -620,7 +620,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim am = 0
+            Dim am = 0.0#
             Do
                 j = 0
                 Do
@@ -631,7 +631,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim bm = 0
+            Dim bm = 0.0#
             Do
                 bm = bm + Vz(i) * bi(i)
                 i = i + 1
@@ -724,7 +724,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim aux1 = -R / 2 * (0.42748 / T) ^ 0.5
             i = 0
-            Dim aux2 = 0
+            Dim aux2 = 0.0#
             Do
                 j = 0
                 Do
@@ -791,7 +791,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim am = 0
+            Dim am = 0.0#
             Do
                 j = 0
                 Do
@@ -802,7 +802,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim bm = 0
+            Dim bm = 0.0#
             Do
                 bm = bm + Vz(i) * bi(i)
                 i = i + 1
@@ -895,7 +895,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim aux1 = -R / 2 * (0.42748 / T) ^ 0.5
             i = 0
-            Dim aux2 = 0
+            Dim aux2 = 0.0#
             Do
                 j = 0
                 Do
@@ -962,7 +962,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim am = 0
+            Dim am = 0.0#
             Do
                 j = 0
                 Do
@@ -973,7 +973,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim bm = 0
+            Dim bm = 0.0#
             Do
                 bm = bm + Vz(i) * bi(i)
                 i = i + 1
@@ -1066,7 +1066,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim aux1 = -R / 2 * (0.42748 / T) ^ 0.5
             i = 0
-            Dim aux2 = 0
+            Dim aux2 = 0.0#
             Do
                 j = 0
                 Do
@@ -1133,7 +1133,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim am = 0
+            Dim am = 0.0#
             Do
                 j = 0
                 Do
@@ -1144,7 +1144,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim bm = 0
+            Dim bm = 0.0#
             Do
                 bm = bm + Vz(i) * bi(i)
                 i = i + 1
@@ -1236,7 +1236,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Dim V = (Z * R * T / P) ' m3/mol
             Dim aux1 = -R / 2 * (0.42748 / T) ^ 0.5
             i = 0
-            Dim aux2 = 0
+            Dim aux2 = 0.0#
             Do
                 j = 0
                 Do
@@ -1302,7 +1302,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim aml = 0
+            Dim aml = 0.0#
             Do
                 j = 0
                 Do
@@ -1313,7 +1313,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             i = 0
-            Dim bml = 0
+            Dim bml = 0.0#
             Do
                 bml = bml + Vx(i) * bi(i)
                 i = i + 1

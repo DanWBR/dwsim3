@@ -542,7 +542,6 @@ Public Class FormSensAnalysis
                         Me.dgvResults.Rows.Add(New Object() {Format(cv.ConverterDoSI(sacase.iv1.unit, iv1val), nf), Format(cv.ConverterDoSI(sacase.iv2.unit, iv2val), nf), Format(dvval, nf)})
                     Else
                         Dim formattedvalues As New ArrayList
-                        Dim k = 0
                         formattedvalues.Add(Format(cv.ConverterDoSI(sacase.iv1.unit, iv1val), nf))
                         formattedvalues.Add(Format(cv.ConverterDoSI(sacase.iv2.unit, iv2val), nf))
                         For Each var As SAVariable In selectedsacase.depvariables.Values

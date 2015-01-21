@@ -587,8 +587,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim Vpbb2(n), L2, V2, Kb2 As Double
 
             i = 0
-            Dim sum_pi2 = 0
-            Dim sum_eui_pi2 = 0
+            Dim sum_pi2 = 0.0#
+            Dim sum_eui_pi2 = 0.0#
             Do
                 Vpbb2(i) = Vz(i) / (1 - Rbb + Kb0 * Rbb * Exp(Vu(i)))
                 sum_pi2 += Vpbb2(i)
@@ -612,8 +612,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim Vpbb2(n), L, V As Double
 
             i = 0
-            Dim sum_pi2 = 0
-            Dim sum_eui_pi2 = 0
+            Dim sum_pi2 = 0.0#
+            Dim sum_eui_pi2 = 0.0#
             Do
                 Vpbb2(i) = Vz(i) / (1 - Rbb + Kb0 * Rbb * Exp(Vu(i)))
                 sum_pi2 += Vpbb2(i)

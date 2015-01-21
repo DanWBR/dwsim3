@@ -144,7 +144,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim MMm = 0
+            Dim MMm = 0.0#
             Do
                 MMm += Vz(i) * VMM(i)
                 i += 1
@@ -170,7 +170,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim am = 0
+            Dim am = 0.0#
             Do
                 j = 0
                 Do
@@ -181,7 +181,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim bm = 0
+            Dim bm = 0.0#
             Do
                 bm = bm + Vz(i) * bi(i)
                 i = i + 1
@@ -270,7 +270,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
             i = 0
-            Dim aux2 = 0
+            Dim aux2 = 0.0#
             Do
                 j = 0
                 Do
@@ -296,7 +296,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim Int_d2P_dT2_V_dV = -d2adt2 * Math.Log((-(2 ^ 0.5) * bm + bm + V) / ((2 ^ 0.5) * bm + bm + V)) / (8 ^ 0.5 * bm)
 
-            Dim Cpm_ig = 0
+            Dim Cpm_ig = 0.0#
             i = 0
             Do
                 Cpm_ig += Vzmass(i) * VCpig(i) * MMm
@@ -409,7 +409,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim bml = 0
+            Dim bml = 0.0#
             Do
                 bml = bml + Vx(i) * bi(i)
                 i = i + 1
@@ -424,7 +424,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
-            Dim tv = 0
+            Dim tv = 0.0#
             Dim ZV, tv2
 
             If Not IsNumeric(temp1) Then
@@ -511,7 +511,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim MMm = 0
+            Dim MMm = 0.0#
             Do
                 MMm += Vz(i) * VMM(i)
                 i += 1
@@ -537,7 +537,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim am = 0
+            Dim am = 0.0#
             Do
                 j = 0
                 Do
@@ -548,7 +548,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim bm = 0
+            Dim bm = 0.0#
             Do
                 bm = bm + Vz(i) * bi(i)
                 i = i + 1
@@ -635,7 +635,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
             i = 0
-            Dim aux2 = 0
+            Dim aux2 = 0.0#
             Do
                 j = 0
                 Do
@@ -684,7 +684,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim MMm = 0
+            Dim MMm = 0.0#
             Do
                 MMm += Vz(i) * VMM(i)
                 i += 1
@@ -710,7 +710,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim am = 0
+            Dim am = 0.0#
             Do
                 j = 0
                 Do
@@ -721,7 +721,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim bm = 0
+            Dim bm = 0.0#
             Do
                 bm = bm + Vz(i) * bi(i)
                 i = i + 1
@@ -740,8 +740,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
-            Dim tv = 0
-            Dim tv2 = 0
+            Dim tv = 0.0#
+            Dim tv2 = 0.0#
             If Not IsNumeric(temp1) Then
 
                 If temp1(0, 0) > temp1(1, 0) Then
@@ -807,7 +807,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
             i = 0
-            Dim aux2 = 0
+            Dim aux2 = 0.0#
             Do
                 j = 0
                 Do
@@ -1076,8 +1076,8 @@ Final3:
                 coeff(3) = 1
 
                 Dim temp1 = Poly_Roots(coeff)
-                Dim tv = 0
-                Dim tv2
+                Dim tv = 0.0#
+                Dim tv2 = 0.0#
 
                 If Not IsNumeric(temp1) Then
 
@@ -1290,8 +1290,8 @@ Final3:
             coeff(3) = 1
 
             Dim temp1 = Poly_Roots(coeff)
-            Dim tv = 0
-            Dim tv2
+            Dim tv = 0.0#
+            Dim tv2 = 0.0#
 
             If Not IsNumeric(temp1) Then
 

@@ -132,7 +132,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim e1 = (7.425 - 13.39 * Tr + 5.933 * Tr ^ 2) * 0.001
 
-
             Dim e = 0.176 * (Tc / (MM ^ 3 * Pc ^ 4)) ^ (1 / 6)
 
             viscl_letsti = (e0 + e1) / e / 1000 'Pa.s
@@ -159,7 +158,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             'Cálculo da densidade do líquido utilizando o método de Rackett
 
-            If Double.IsNaN(Pvp) Then Pvp = 0
+            If Double.IsNaN(Pvp) Then Pvp = 0.0#
 
             Dim R, Tr
 
@@ -241,7 +240,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function condl_latini(ByVal T As Double, ByVal Tb As Double, ByVal Tc As Double, ByVal M As Double, ByVal Tipo As String) As Double
 
-            Dim Tr, A, A_, alpha, beta, lambda, gamma
+            Dim Tr, A, A_, alpha, beta, lambda, gamma As Double
 
             Tr = T / Tc
 
@@ -289,7 +288,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             A = A_ * Tb ^ alpha / (M ^ beta * Tc ^ gamma)
             lambda = A * (1 - Tr) ^ 0.38 / Tr ^ (1 / 6)
 
-            If T / Tc > 0.98 Then lambda = 0
+            If T / Tc > 0.98 Then lambda = 0.0#
 
             condl_latini = lambda   'W/(m.K)
 
@@ -335,7 +334,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim i = 0
 
-            eta0 = 0
+            eta0 = 0.0#
 
             Do
 
@@ -367,7 +366,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             i = 0
 
-            Tcm = 0
+            Tcm = 0.0#
 
             Do
 
@@ -387,7 +386,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             i = 0
 
-            Pcm = 0
+            Pcm = 0.0#
 
             Do
 
@@ -406,7 +405,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             n = UBound(Vz)
 
             i = 0
-            Vcm = 0
+            Vcm = 0.0#
             Do
                 j = 0
                 Do
@@ -426,7 +425,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             i = 0
 
-            Zcm = 0
+            Zcm = 0.0#
 
             Do
 
@@ -446,7 +445,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             i = 0
 
-            wm = 0
+            wm = 0.0#
 
             Do
 
@@ -466,7 +465,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             i = 0
 
-            MMm = 0
+            MMm = 0.0#
 
             Do
 
@@ -523,7 +522,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim phi(n) As Double, somaz, i, j
 
-            somaz = 0
+            somaz = 0.0#
             i = 0
             Do
                 If Vz(i) <> 0 And Not Double.IsNaN(VVl(i)) Then somaz = somaz + Vz(i) * VVl(i)
@@ -537,7 +536,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim condlm = 0
+            Dim condlm = 0.0#
             Do
                 j = 0
                 Do
@@ -574,7 +573,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             'v = m2/s, T = K
 
-            Dim Z, Z1, Z2, B, vk1, vk2
+            Dim Z, Z1, Z2, B, vk1, vk2 As Double
 
             vk1 = v1 * 1000000.0
             vk2 = v2 * 1000000.0
@@ -622,7 +621,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim MMm = 0
+            Dim MMm = 0.0#
             Do
                 MMm += Vz(i) * VMM(i)
                 i += 1
@@ -648,7 +647,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim am = 0
+            Dim am = 0.0#
             Do
                 j = 0
                 Do
@@ -659,7 +658,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim bm = 0
+            Dim bm = 0.0#
             Do
                 bm = bm + Vz(i) * bi(i)
                 i = i + 1
@@ -748,7 +747,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
             i = 0
-            Dim aux2 = 0
+            Dim aux2 = 0.0#
             Do
                 j = 0
                 Do
@@ -774,7 +773,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim Int_d2P_dT2_V_dV = -d2adt2 * Math.Log((-(2 ^ 0.5) * bm + bm + V) / ((2 ^ 0.5) * bm + bm + V)) / (8 ^ 0.5 * bm)
 
-            Dim Cpm_ig = 0
+            Dim Cpm_ig = 0.0#
             i = 0
             Do
                 Cpm_ig += Vzmass(i) * VCpig(i) * MMm
@@ -823,11 +822,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim Vcm = 0
-            Dim wm = 0
-            Dim Zcm = 0
-            Dim MMm = 0
-            Dim ZRam = 0
+            Dim Vcm = 0.0#
+            Dim wm = 0.0#
+            Dim Zcm = 0.0#
+            Dim MMm = 0.0#
+            Dim ZRam = 0.0#
             Do
                 If Vz(i) <> 0 Then
                     Vcm += Vz(i) * Vc(i)
@@ -840,7 +839,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             i = 0
-            Dim Tcm = 0
+            Dim Tcm = 0.0#
             Do
                 j = 0
                 Do
@@ -852,7 +851,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim Pcm = Zcm * R * Tcm / (Vcm)
 
-            Dim V = 0
+            Dim V = 0.0#
             If TIPO = "L" Then
 
                 'V = (Z_PR(T, P, Vz, VTc, VPc, Vw, "L") * R * T / P) * 1000 ' m3/kgmol
@@ -876,7 +875,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim dP_dV_T = -R * T / (V - b) ^ 2 + (2 * b + 2 * V) * (a * (1 + c) ^ 2 + 2 * a * (1 + c) * c * Tcm ^ -0.5 * T ^ 0.5 + a * c ^ 2 * Tcm ^ -1 * T) / (V ^ 2 + 2 * b * V - b ^ 2) ^ 2
 
-            Cpm_ig = 0
+            Cpm_ig = 0.0#
             i = 0
             Do
                 Cpm_ig += Vzmass(i) * VCpig(i)
@@ -891,7 +890,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function Pvp_leekesler(ByVal T, ByVal Tc, ByVal Pc, ByVal w)
 
-            Dim tmp, f0, f1
+            Dim tmp, f0, f1 As Double
 
             Dim Tr = T / Tc
 
@@ -906,7 +905,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function mu_ml(ByVal mu_aq, ByVal mu_ol, ByVal xv_ol)
 
-            mu_ml = 0
+            mu_ml = 0.0#
 
             If xv_ol >= 0.5 Then
 

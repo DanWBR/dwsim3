@@ -261,8 +261,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     Vant = V
 
-                    Dim F = 0
-                    Dim dF = 0
+                    Dim F = 0.0#
+                    Dim dF = 0.0#
                     i = 0
                     Do
                         If Vz(i) > 0 Then
@@ -641,10 +641,10 @@ out:
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim e1 = 0
-                Dim e2 = 0
-                Dim e3 = 0
-                Dim e4 = 0
+                Dim e1 = 0.0#
+                Dim e2 = 0.0#
+                Dim e3 = 0.0#
+                Dim e4 = 0.0#
                 i = 0
                 Do
                     e1 = e1 + (Vx1(i) - Vx1ant(i))
@@ -665,8 +665,8 @@ out:
                 Else
 
                     Vant = V
-                    Dim F1 = 0, F2 = 0
-                    Dim dF1dL1 = 0, dF1dL2 = 0, dF2dL1 = 0, dF2dL2 = 0
+                    Dim F1 = 0.0#, F2 = 0.0#
+                    Dim dF1dL1 = 0.0#, dF1dL2 = 0.0#, dF2dL1 = 0.0#, dF2dL2 = 0.0#
                     Dim dL1, dL2 As Double
                     i = 0
                     Do
@@ -737,8 +737,8 @@ out:
             'order liquid phases by mixture NBP
 
             Dim VNBP = PP.RET_VTB()
-            Dim nbp1 As Double = 0
-            Dim nbp2 As Double = 0
+            Dim nbp1 As Double = 0.0#
+            Dim nbp2 As Double = 0.0#
 
             For i = 0 To n
                 nbp1 += Vx1(i) * VNBP(i)
@@ -1040,9 +1040,9 @@ alt:
 
             Dim _Hv, _Hl1, _Hl2 As Double
 
-            _Hv = 0
-            _Hl1 = 0
-            _Hl2 = 0
+            _Hv = 0.0#
+            _Hl1 = 0.0#
+            _Hl2 = 0.0#
 
             If V > 0 Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, Pf, State.Vapor)
             If L1 > 0 Then _Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, Pf, State.Liquid)
@@ -1077,9 +1077,9 @@ alt:
 
             Dim _Sv, _Sl1, _Sl2 As Double
 
-            _Sv = 0
-            _Sl1 = 0
-            _Sl2 = 0
+            _Sv = 0.0#
+            _Sl1 = 0.0#
+            _Sl2 = 0.0#
 
             If V > 0 Then _Sv = proppack.DW_CalcEntropy(Vy, T, Pf, State.Vapor)
             If L1 > 0 Then _Sl1 = proppack.DW_CalcEntropy(Vx1, T, Pf, State.Liquid)
@@ -1517,10 +1517,10 @@ alt:
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim e1 = 0
-                Dim e2 = 0
-                Dim e3 = 0
-                Dim e4 = 0
+                Dim e1 = 0.0#
+                Dim e2 = 0.0#
+                Dim e3 = 0.0#
+                Dim e4 = 0.0#
                 i = 0
                 Do
                     e1 = e1 + (Vx1(i) - Vx1ant(i))
@@ -1793,10 +1793,10 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
                     i = i + 1
                 Loop Until i = n + 1
 
-                Dim e1 = 0
-                Dim e2 = 0
-                Dim e3 = 0
-                Dim e4 = 0
+                Dim e1 = 0.0#
+                Dim e2 = 0.0#
+                Dim e3 = 0.0#
+                Dim e4 = 0.0#
                 i = 0
                 Do
                     e1 = e1 + (Vx1(i) - Vx1ant(i))

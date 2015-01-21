@@ -242,7 +242,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             PHIEOS(phi, h_res, s_res, g_res, zges, Vx, T, P, parame, kij, ncomp + 1, densta, dense)
 
             i = 0
-            Dim MMm = 0
+            Dim MMm = 0.0#
             Do
                 MMm += Vx(i) * VMM(i)
                 i += 1
@@ -284,7 +284,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             PHIEOS(phi, h_res, s_res, g_res, zges, Vx, T, P, parame, kij, ncomp + 1, densta, dense)
 
             i = 0
-            Dim MMm = 0
+            Dim MMm = 0.0#
             Do
                 MMm += Vx(i) * VMM(i)
                 i += 1
@@ -354,7 +354,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             PHIEOS(phi, h_res2, s_res, g_res, zges, Vx, t2, P, parame, kij, ncomp + 1, densta, dense)
 
             i = 0
-            Dim MMm = 0
+            Dim MMm = 0.0#
             Do
                 MMm += Vx(i) * VMM(i)
                 i += 1
@@ -400,7 +400,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             PHIEOS(phi, h_res2, s_res, g_res, zges, Vx, t2, P, parame, kij, ncomp + 1, densta, dense)
 
             i = 0
-            Dim MMm = 0
+            Dim MMm = 0.0#
             Do
                 MMm += Vx(i) * VMM(i)
                 i += 1

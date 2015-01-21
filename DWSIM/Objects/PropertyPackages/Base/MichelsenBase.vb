@@ -836,8 +836,8 @@ out2:               Dim order(m) As Integer, hasvp As Boolean = False
 
                 'update vapor fraction by newton's method
                 vant = v
-                Dim F = 0
-                Dim dF = 0
+                Dim F = 0.0#
+                Dim dF = 0.0#
                 i = 0
                 Do
                     If Vz(i) > 0 Then
@@ -1250,8 +1250,8 @@ out2:               Dim order(m) As Integer, hasvp As Boolean = False
 
             'update vapor fraction by newton's method
             vant = v
-            Dim F = 0
-            Dim dF = 0
+            Dim F = 0.0#
+            Dim dF = 0.0#
             i = 0
             Do
                 If Vz(i) > 0 Then

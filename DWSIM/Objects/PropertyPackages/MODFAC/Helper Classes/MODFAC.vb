@@ -89,7 +89,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 i = i + 1
             Loop Until i = n + 1
 
-            Dim soma_xq = 0
+            Dim soma_xq = 0.0#
             i = 0
             Do
                 Q(i) = VQ(i)
@@ -118,8 +118,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 k = k + 1
             Loop Until k = n2 + 1
 
-            Dim soma_xr = 0
-            Dim soma_xr_ = 0
+            Dim soma_xr = 0.0#
+            Dim soma_xr_ = 0.0#
             i = 0
             Do
                 R(i) = VR(i)
@@ -135,7 +135,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 L(i) = Q(i) / soma_xq
                 Vgammac(i) = 1 - j_(i) + Math.Log(j_(i)) - 5 * Q(i) * (1 - j(i) / L(i) + Math.Log(j(i) / L(i)))
                 k = 0
-                Dim tmpsum = 0
+                Dim tmpsum = 0.0#
                 Do
                     tmpsum = tmpsum + teta(k) * beta(i, k) / s(k) - VEKI(i, k) * Math.Log(beta(i, k) / s(k))
                     k = k + 1

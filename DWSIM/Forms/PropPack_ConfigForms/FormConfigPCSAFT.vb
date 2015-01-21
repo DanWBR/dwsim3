@@ -23,7 +23,7 @@ Public Class FormConfigPCSAFT
 
     Inherits FormConfigBase
 
-    Public Loaded = False
+    Public Loaded As Boolean = False
     Public param As System.Collections.Specialized.StringDictionary
 
     Private Sub ConfigFormUNIQUAC_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load

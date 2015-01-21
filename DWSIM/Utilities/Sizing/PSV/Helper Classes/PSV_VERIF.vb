@@ -3,11 +3,11 @@
     <System.Serializable()> Public Class Evaluation
 
         Function VERIF_PSV(ByVal TIPO As Object, ByVal L As Object, ByVal P As Object, ByVal BP As Object, ByVal G As Object, ByVal visc As Object, ByVal Kd As Object, ByVal Kc As Object, ByVal OP_P As Object, ByVal T As Object, ByVal Z As Object, ByVal M As Object, ByVal k As Object, ByVal Kb As Object, ByVal x As Object, ByVal xo As Object, ByVal rhog As Object, ByVal rhom As Object, ByVal rhom90 As Object) As Object
-            Dim Ql As Object = 0
-            Dim Qa As Object = 0
-            Dim Qo As Object = 0
-            Dim Qg As Object = 0
-            Dim A As Object = 0
+            Dim Ql As Object = 0.0#
+            Dim Qa As Object = 0.0#
+            Dim Qo As Object = 0.0#
+            Dim Qg As Object = 0.0#
+            Dim A As Object = 0.0#
 
             Dim tmp As Object
 

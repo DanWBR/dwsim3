@@ -67,10 +67,11 @@ Public Class FormPhEnv
 
         Me.Text = DWSIM.App.GetLocalString("DWSIMUtilitriosDiagr1")
 
-        If Not mat.PropertyPackage Is Nothing Then
-            mat.PropertyPackage.CurrentMaterialStream = mat
-            Me.chkhyd.Enabled = mat.PropertyPackage.RET_VCAS().Contains("7732-18-5")
-        End If
+        Try
+            Me.chkhyd.Enabled = Frm.Options.SelectedPropertyPackage.RET_VCAS().Contains("7732-18-5")
+        Catch ex As Exception
+
+        End Try
 
         If Frm.Options.SelectedPropertyPackage.ComponentName.Contains("(PR)") Or _
            Frm.Options.SelectedPropertyPackage.ComponentName.Contains("(SRK)") Then
@@ -86,6 +87,8 @@ Public Class FormPhEnv
         End If
 
         ComboBox2.Enabled = chkhyd.Checked
+
+        Me.loaded = True
 
     End Sub
 

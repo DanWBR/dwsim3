@@ -565,7 +565,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                     ecount += 1
 
                     i = 0
-                    dFdP = 0
+                    dFdP = 0.0#
                     Do
                         If V = 0 Then
                             dFdP = dFdP + Vx(i) * dKdP(i)

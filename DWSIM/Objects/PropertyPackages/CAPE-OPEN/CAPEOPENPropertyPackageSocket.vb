@@ -222,7 +222,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Me.CurrentMaterialStream.AtEquilibrium = True
 
-            Dim summf As Double = 0, sumwf As Double = 0
+            Dim summf As Double = 0.0#, sumwf As Double = 0.0#
             For Each pi As PhaseInfo In Me.PhaseMappings.Values
                 If Not pi.PhaseLabel = "Disabled" Then
                     summf += Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction.GetValueOrDefault
@@ -328,7 +328,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Me.CurrentMaterialStream.AtEquilibrium = True
 
-            Dim summf As Double = 0, sumwf As Double = 0
+            Dim summf As Double = 0.0#, sumwf As Double = 0.0#
             For Each pi As PhaseInfo In Me.PhaseMappings.Values
                 If Not pi.PhaseLabel = "Disabled" Then
                     summf += Me.CurrentMaterialStream.Fases(pi.DWPhaseIndex).SPMProperties.molarfraction.GetValueOrDefault
@@ -1113,7 +1113,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim mw = Me.CurrentMaterialStream.GetCompoundConstant(New String() {"molecularWeight"}, complist)
 
             Dim Vwe(UBound(Vz)) As Double
-            Dim mol_x_mm As Double = 0
+            Dim mol_x_mm As Double = 0.0#
             Dim i As Integer = 0
             For i = 0 To UBound(Vz)
                 mol_x_mm += Vz(i) * mw(i)

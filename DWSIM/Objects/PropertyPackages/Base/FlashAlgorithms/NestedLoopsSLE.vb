@@ -129,7 +129,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             ecount = 0
             Dim convergiu = 0
-            Dim F = 0
+            Dim F = 0.0#
 
             Do
 
@@ -202,7 +202,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Lant = L
 
                     F = 0.0#
-                    Dim dF = 0
+                    Dim dF = 0.0#
                     i = 0
                     Do
                         If Vz(i) > 0 Then
