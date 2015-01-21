@@ -106,7 +106,6 @@ Imports System.Text
     End Enum
 
     Public MustOverride Function GetProperties(ByVal proptype As PropertyType) As String()
-
     Public MustOverride Function GetPropertyValue(ByVal prop As String, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing)
     Public MustOverride Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing)
     Public MustOverride Function SetPropertyValue(ByVal prop As String, ByVal propval As Object, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing)

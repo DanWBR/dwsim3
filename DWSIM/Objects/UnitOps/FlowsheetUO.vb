@@ -74,14 +74,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
             MyBase.CreateNew()
             Me.m_ComponentName = nome
             Me.m_ComponentDescription = descricao
-            Me.FillNodeItems()
-            Me.QTFillNodeItems()
 
             InputParams = New Dictionary(Of String, FlowsheetUOParameter)
             OutputParams = New Dictionary(Of String, FlowsheetUOParameter)
 
             InputConnections = New List(Of String) From {"", "", "", "", "", "", "", "", "", ""}
             OutputConnections = New List(Of String) From {"", "", "", "", "", "", "", "", "", ""}
+
+            Me.FillNodeItems()
+            Me.QTFillNodeItems()
 
         End Sub
 
@@ -705,7 +706,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 If c.IsAttached Then
 
                     msfrom = FlowSheet.Collections.ObjectCollection(c.AttachedConnector.AttachedFrom.Name)
-                    msto = Fsheet.GetFlowsheetSimulationObject(InputConnections(Me.GraphicObject.InputConnectors.IndexOf(c)))
+                    msto = Fsheet.Collections.ObjectCollection(InputConnections(Me.GraphicObject.InputConnectors.IndexOf(c)))
 
                     win += msfrom.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
@@ -798,8 +799,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 If c.IsAttached Then
 
-                    msfrom = Fsheet.Collections.ObjectCollection(c.AttachedConnector.AttachedTo.Name)
-                    msto = FlowSheet.GetFlowsheetSimulationObject(OutputConnections(Me.GraphicObject.OutputConnectors.IndexOf(c)))
+                    msto = FlowSheet.Collections.ObjectCollection(c.AttachedConnector.AttachedTo.Name)
+                    msfrom = Fsheet.Collections.ObjectCollection(OutputConnections(Me.GraphicObject.OutputConnectors.IndexOf(c)))
 
                     wout += msfrom.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
@@ -932,23 +933,25 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
             Dim proplist As New ArrayList
-            Select Case proptype
-                Case PropertyType.ALL
-                    For Each p In InputParams.Values
-                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [I][" & p.ID & "]")
-                    Next
-                    For Each p In OutputParams.Values
-                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [O][" & p.ID & "]")
-                    Next
-                Case PropertyType.WR
-                    For Each p In InputParams.Values
-                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [I][" & p.ID & "]")
-                    Next
-                Case PropertyType.RO
-                    For Each p In OutputParams.Values
-                        proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [O][" & p.ID & "]")
-                    Next
-            End Select
+            If Initialized Then
+                Select Case proptype
+                    Case PropertyType.ALL
+                        For Each p In InputParams.Values
+                            proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [I][" & p.ID & "]")
+                        Next
+                        For Each p In OutputParams.Values
+                            proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [O][" & p.ID & "]")
+                        Next
+                    Case PropertyType.WR
+                        For Each p In InputParams.Values
+                            proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [I][" & p.ID & "]")
+                        Next
+                    Case PropertyType.RO
+                        For Each p In OutputParams.Values
+                            proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [O][" & p.ID & "]")
+                        Next
+                End Select
+            End If
             Return proplist.ToArray(GetType(System.String))
             proplist = Nothing
         End Function
@@ -982,10 +985,26 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Function
 
         Public Overrides Sub QTFillNodeItems()
-
+            If Me.QTNodeTableItems Is Nothing Then Me.QTNodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
+            With Me.QTNodeTableItems
+                .Clear()
+                .Add(0, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("MassBalanceError"), "", "%", 0, 0, ""))
+            End With
         End Sub
 
         Public Overrides Sub UpdatePropertyNodes(su As SistemasDeUnidades.Unidades, nf As String)
+
+            If Me.QTNodeTableItems Is Nothing Then
+                Me.QTNodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
+                Me.QTFillNodeItems()
+            End If
+
+            With Me.QTNodeTableItems
+
+                .Item(0).Value = Me.MassBalanceError
+                .Item(0).Unit = "%"
+
+            End With
 
         End Sub
 
@@ -1169,7 +1188,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 If Calculated Then
 
-                    .Item.Add(DWSIM.App.GetLocalString("MassBalanceError"), Me, "MassBalanceError", False, "5. " & DWSIM.App.GetLocalString("Resultados"), DWSIM.App.GetLocalString(""), True)
+                    .Item.Add(DWSIM.App.GetLocalString("MassBalanceError"), Format(Me.MassBalanceError, Me.FlowSheet.Options.NumberFormat), True, "5. " & DWSIM.App.GetLocalString("Resultados"), DWSIM.App.GetLocalString(""), True)
 
                 End If
 

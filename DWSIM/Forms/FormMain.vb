@@ -2259,6 +2259,7 @@ Public Class FormMain
                 If Not gobj Is Nothing Then
                     form.Collections.ObjectCollection.Add(id, obj)
                     obj.LoadData(xel.Elements.ToList)
+                    If obj.GraphicObject.TipoObjeto = TipoObjeto.FlowsheetUO Then obj.FillNodeItems(False)
                     If TypeOf obj Is Streams.MaterialStream Then
                         For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
                             For Each c As ConstantProperties In form.Options.SelectedComponents.Values
