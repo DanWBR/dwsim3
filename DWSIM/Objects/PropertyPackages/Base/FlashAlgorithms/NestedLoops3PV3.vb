@@ -424,7 +424,7 @@ out:
                             End If
                         Next
 
-                        Dim sumvx2 = 0
+                        Dim sumvx2 As Double
                         For i = 0 To n
                             sumvx2 += Abs(vx1e(i))
                         Next
@@ -602,7 +602,7 @@ out:
                 Loop Until i = n + 1
 
                 i = 0
-                Dim Vx1ant(n), Vx2ant(n), Vyant(n)
+                Dim Vx1ant(n), Vx2ant(n), Vyant(n) As Double
                 Do
                     Vx1ant(i) = Vx1(i)
                     Vx2ant(i) = Vx2(i)
@@ -1660,7 +1660,7 @@ out:        L1 = L1 * (1 - V) 'calculate global phase fractions
                 Loop Until i = n + 1
 
                 i = 0
-                Dim Vx1ant(n), Vx2ant(n), Vyant(n)
+                Dim Vx1ant(n), Vx2ant(n), Vyant(n) As Double
                 Do
                     Vx1ant(i) = Vx1(i)
                     Vx2ant(i) = Vx2(i)
