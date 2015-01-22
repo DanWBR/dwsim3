@@ -650,13 +650,40 @@ Imports System.Runtime.Serialization
         Dim zoomx As Double = 1.0#
         Dim zoomy As Double = 1.0#
 
-        zoomx = (fswidth-fsx) / (maxx - newx)
-        zoomy = (fsheight - fsy) / (maxy - newy)
+        zoomx = windowwidth / (maxx - newx)
+        zoomy = windowheight / (maxy - newy)
 
         If zoomx > zoomy Then Me.Zoom = zoomy Else Me.Zoom = zoomx
 
-        If newx * Me.Zoom < Me.HorizontalScroll.Maximum Then Me.HorizontalScroll.Value = CInt(newx * Me.Zoom)
-        If newy * Me.Zoom < Me.VerticalScroll.Maximum Then Me.VerticalScroll.Value = CInt(newy * Me.Zoom)
+        Me.HorizontalScroll.Value = newx * Me.Zoom
+        Me.VerticalScroll.Value = newy * Me.Zoom
+
+        Me.Invalidate()
+
+    End Sub
+
+    Public Sub Center()
+
+        Dim minx As Integer = 10000
+        Dim miny As Integer = 10000
+        Dim maxx As Integer = 0
+        Dim maxy As Integer = 0
+        Dim middlex, middley As Integer
+
+        For Each gobj As GraphicObject In Me.drawingObjects
+            If gobj.TipoObjeto <> TipoObjeto.Nenhum Then
+                If gobj.X <= minx Then minx = gobj.X
+                If gobj.X + gobj.Width >= maxx Then maxx = gobj.X + gobj.Width + 60
+                If gobj.Y <= miny Then miny = gobj.Y
+                If gobj.Y + gobj.Height >= maxy Then maxy = gobj.Y + gobj.Height + 60
+            End If
+        Next
+
+        middlex = (minx + maxx) / 2
+        middley = (miny + maxy) / 2
+
+        Me.HorizontalScroll.Value = middlex - Me.Width / 2
+        Me.VerticalScroll.Value = middley - Me.Height / 2
 
         Me.Invalidate()
 

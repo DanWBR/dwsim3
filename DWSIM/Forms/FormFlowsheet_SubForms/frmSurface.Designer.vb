@@ -45,6 +45,7 @@ Partial Class frmSurface
         Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExibirTudoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ZoomPadrão100ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CentralizarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CMS_Sel = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.TSMI_Label = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
@@ -190,7 +191,7 @@ Partial Class frmSurface
         'CMS_NoSel
         '
         resources.ApplyResources(Me.CMS_NoSel, "CMS_NoSel")
-        Me.CMS_NoSel.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem3, Me.ToolStripSeparator1, Me.ToolStripMenuItem2, Me.ToolStripMenuItem5, Me.CopiarParaAÁreaDeTransferênciaToolStripMenuItem, Me.ExibirTudoToolStripMenuItem, Me.ZoomPadrão100ToolStripMenuItem})
+        Me.CMS_NoSel.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem3, Me.ToolStripSeparator1, Me.ToolStripMenuItem2, Me.ToolStripMenuItem5, Me.CopiarParaAÁreaDeTransferênciaToolStripMenuItem, Me.ExibirTudoToolStripMenuItem, Me.ZoomPadrão100ToolStripMenuItem, Me.CentralizarToolStripMenuItem})
         Me.CMS_NoSel.Name = "ContextMenuStrip1"
         '
         'ToolStripMenuItem3
@@ -257,6 +258,12 @@ Partial Class frmSurface
         resources.ApplyResources(Me.ZoomPadrão100ToolStripMenuItem, "ZoomPadrão100ToolStripMenuItem")
         Me.ZoomPadrão100ToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.zoom_refresh
         Me.ZoomPadrão100ToolStripMenuItem.Name = "ZoomPadrão100ToolStripMenuItem"
+        '
+        'CentralizarToolStripMenuItem
+        '
+        resources.ApplyResources(Me.CentralizarToolStripMenuItem, "CentralizarToolStripMenuItem")
+        Me.CentralizarToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.zoom
+        Me.CentralizarToolStripMenuItem.Name = "CentralizarToolStripMenuItem"
         '
         'CMS_Sel
         '
@@ -523,4 +530,5 @@ Partial Class frmSurface
     Friend WithEvents CopyFromTSMI As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ExibirTudoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ZoomPadrão100ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CentralizarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class

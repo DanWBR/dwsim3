@@ -3490,4 +3490,9 @@ Public Class frmSurface
         Me.FlowsheetDesignSurface.Zoom = 1
         Me.Invalidate()
     End Sub
+
+    Private Sub CentralizarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CentralizarToolStripMenuItem.Click
+        Me.FlowsheetDesignSurface.Center()
+        Me.Invalidate()
+    End Sub
 End Class
