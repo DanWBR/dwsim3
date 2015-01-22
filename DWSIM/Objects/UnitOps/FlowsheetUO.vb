@@ -98,6 +98,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Sub
 
+        Public Sub ParseFilePath()
+
+            If Not IO.File.Exists(SimulationFile) Then
+                'look at the current simulation location to see if the file is there.
+                Dim fname As String = IO.Path.GetFileName(SimulationFile)
+                Dim currpath As String = IO.Path.GetDirectoryName(FlowSheet.Options.FilePath)
+                Dim newpath As String = IO.Path.Combine(currpath, fname)
+                If IO.File.Exists(newpath) Then SimulationFile = newpath
+            End If
+
+        End Sub
+
         Public Sub InitializeFlowsheet(path As String)
 
             If Not fsheet Is Nothing Then fsheet.Dispose()
@@ -1211,6 +1223,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             XMLSerializer.XMLSerializer.Deserialize(Me, data)
 
             Me.Annotation.annotation = New Object() {"", (From xel As XElement In data Select xel Where xel.Name = "Annotation").SingleOrDefault.Value}
+
+            ParseFilePath()
 
             If InitializeOnLoad Then
                 If IO.File.Exists(SimulationFile) Then InitializeFlowsheet(SimulationFile)

@@ -4978,4 +4978,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="MassBalanceError" xml:space="preserve">
     <value>Erro no balanço de massa (%)</value>
   </data>
+  <data name="FlowsheetUO" xml:space="preserve">
+    <value>Fluxograma (UO)</value>
+  </data>
 </root>
