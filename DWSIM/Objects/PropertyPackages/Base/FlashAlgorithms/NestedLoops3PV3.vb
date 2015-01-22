@@ -804,7 +804,8 @@ out:
                     If V < 0 Then V = 0
                     If V > 1 Then V = 1
 
-                    fx = Herror("PV", V, P, Vz, PP)(0)
+                    resultFlash = Herror("PV", V, P, Vz, PP)
+                    fx = resultFlash(0)
 
                     If Sign(fx) <> ls Then
                         r += 1
@@ -814,39 +815,29 @@ out:
                     End If
                 Loop Until Abs(fx) < itol Or ecount > maxitEXT
 
-                resultFlash = Flash_PV(Vz, P, V, Tb, PP)
-
-                L1 = resultFlash(0)
-                V = resultFlash(1)
-                Vx1 = resultFlash(2)
-                Vy = resultFlash(3)
-                T = resultFlash(4)
-                ecount = resultFlash(5)
-                Ki = resultFlash(6)
-                L2 = resultFlash(7)
-                Vx2 = resultFlash(8)
+                T = resultFlash(1)
+                L1 = resultFlash(3)
+                L2 = resultFlash(4)
+                Vy = resultFlash(5)
+                Vx1 = resultFlash(6)
+                Vx2 = resultFlash(7)
 
             ElseIf Hd > 0 Then 'only gas phase
                 'calculate temperature
 
+                Dim H1, H2, T1, T2 As Double
+                ecount = 0
                 T = Td
-                fx = Hf - proppack.DW_CalcEnthalpy(Vz, T, P, State.Vapor)
-                ls = Sign(fx)
+                H1 = Hd
                 Do
-                    ecount += 1
-                    Tn = 2 ^ (q / 3 - r - 1 / 3) * ASinH(fx)
-                    T = T + Tn
-                    fx = Hf - proppack.DW_CalcEnthalpy(Vz, T, P, State.Vapor)
+                    ecount += 2
+                    T1 = T
+                    T2 = T1 + 1
+                    H2 = Hf - proppack.DW_CalcEnthalpy(Vz, T2, P, State.Vapor)
+                    T = T1 + (T2 - T1) * (0 - H1) / (H2 - H1)
+                    H1 = Hf - proppack.DW_CalcEnthalpy(Vz, T, P, State.Vapor)
+                Loop Until Abs(H1) < itol Or ecount > maxitEXT
 
-                    If Sign(fx) <> ls Then
-                        r += 1
-                        ls = -ls
-                    Else
-                        q += 1
-                    End If
-                Loop Until Abs(fx) < itol Or ecount > maxitEXT
-
-                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge.")
                 L1 = 0
                 V = 1
                 Vy = Vz.Clone
@@ -856,48 +847,38 @@ out:
                 For i = 0 To n
                     Ki(i) = 1
                 Next
+
+                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge.")
             Else
                 'specified enthalpy requires pure liquid 
                 'calculate temperature
-                ecount = 0
-                If H < Hb Then
-                    T = Tb - 10
-                Else
-                    T = Td + 10
-                End If
-                fx = Herror("PT", T, P, Vz, PP)(0)
 
-                ls = Sign(fx)
+                Dim H1, H2, T1, T2 As Double
+                ecount = 0
+                T = Tb
+                H1 = Hb
                 Do
                     ecount += 1
-                    Tn = 2 ^ (q / 3 - r - 1 / 3) * ASinH(fx)
-                    T = T + Tn
+                    T1 = T
+                    T2 = T1 - 1
+                    H2 = Herror("PT", T2, P, Vz, PP)(0)
+                    T = T1 + (T2 - T1) * (0 - H1) / (H2 - H1)
+                    resultFlash = Herror("PT", T, P, Vz, PP)
+                    H1 = resultFlash(0)
+                Loop Until Abs(H1) < itol Or ecount > maxitEXT
 
-                    fx = Herror("PT", T, P, Vz, PP)(0)
-                    If Sign(fx) <> ls Then
-                        r += 1
-                        ls = -ls
-                    Else
-                        q += 1
-                    End If
-                Loop Until Abs(fx) < itol Or ecount > maxitEXT
-
-                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV2]: Invalid result: Temperature did not converge.")
-
-
-                resultFlash = Flash_PT(Vz, P, T, PP)
-
-                L1 = resultFlash(0)
-                V = resultFlash(1)
-                Vx1 = resultFlash(2)
-                Vy = resultFlash(3)
-                ecount = resultFlash(4)
-                L2 = resultFlash(5)
-                Vx2 = resultFlash(6)
+                V = 0
+                L1 = resultFlash(3)
+                L2 = resultFlash(4)
+                Vy = resultFlash(5)
+                Vx1 = resultFlash(6)
+                Vx2 = resultFlash(7)
 
                 For i = 0 To n
                     Ki(i) = Vy(i) / Vx1(i)
                 Next
+
+                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV2]: Invalid result: Temperature did not converge.")
             End If
 
             d2 = Date.Now
@@ -1085,7 +1066,7 @@ alt:
             mml2 = proppack.AUX_MMM(Vx2)
 
             Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L1 + mml2 * L2)) * _Hv - (mml * L1 / (mmg * V + mml * L1 + mml2 * L2)) * _Hl1 - (mml2 * L2 / (mmg * V + mml * L1 + mml2 * L2)) * _Hl2
-            OBJ_FUNC_PH_FLASH = {herr, T, V}
+            OBJ_FUNC_PH_FLASH = {herr, T, V, L1, L2, Vy, Vx1, Vx2}
 
             Console.WriteLine("PH Flash [NL-3PV3]: Current T = " & T & ", Current H Error = " & herr)
 
@@ -1463,32 +1444,33 @@ alt:
                 gamma1 = resultL(9)
                 gamma2 = resultL(10)
 
+                'adjust boiling point by logarithmic interpolation
+                Dim cnt As Integer
+                Dim Pn, P1, P2, lnP, lnP1, lnP2, T1, T2 As Double
 
-                'estimate boiling temperature
-                Dim q, r, fx, dT As Double
-                Dim ls, cnt As Integer
-
-                fx = P
+                lnP = Log(P)
+                cnt = 0
                 For i = 0 To n
-                    fx = fx - Vx1(i) * gamma1(i) * PP.AUX_PVAPi(i, T)
+                    P1 = P1 + Vx1(i) * gamma1(i) * PP.AUX_PVAPi(i, T)
                 Next
-                ls = Sign(fx)
+                lnP1 = Log(P1)
                 Do
                     cnt += 1
-                    dT = 2 ^ (q / 3 - r - 1 / 3) * ASinH(fx)
-                    T = T + dT
-
-                    fx = P
+                    T1 = T
+                    T2 = T1 + 1
+                    P2 = 0
                     For i = 0 To n
-                        fx = fx - Vx1(i) * gamma1(i) * PP.AUX_PVAPi(i, T)
+                        P2 = P2 + Vx1(i) * gamma1(i) * PP.AUX_PVAPi(i, T2)
                     Next
-                    If Sign(fx) <> ls Then
-                        r += 1
-                        ls = -ls
-                    Else
-                        q += 1
-                    End If
-                Loop Until Abs(fx) < 1
+                    lnP2 = Log(P2)
+                    T = T1 + (T2 - T1) * (lnP - lnP1) / (lnP2 - lnP1)
+                    Pn = 0
+                    For i = 0 To n
+                        Pn = Pn + Vx1(i) * gamma1(i) * PP.AUX_PVAPi(i, T)
+                    Next
+                    lnP1 = Log(Pn)
+                    F = P - Pn
+                Loop While Abs(P - Pn) > 1
 
                 'calculate new Ki's and vapour composition
                 For i = 0 To n
