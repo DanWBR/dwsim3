@@ -655,8 +655,8 @@ Imports System.Runtime.Serialization
 
         If zoomx > zoomy Then Me.Zoom = zoomy Else Me.Zoom = zoomx
 
-        Me.HorizontalScroll.Value = newx * Me.Zoom
-        Me.VerticalScroll.Value = newy * Me.Zoom
+        If newx * Me.Zoom < Me.HorizontalScroll.Maximum Then Me.HorizontalScroll.Value = CInt(newx * Me.Zoom)
+        If newy * Me.Zoom < Me.VerticalScroll.Maximum Then Me.VerticalScroll.Value = CInt(newy * Me.Zoom)
 
         Me.Invalidate()
 
