@@ -1308,6 +1308,9 @@
     <EmbeddedResource Include="Forms\UITypeEditors\UIExcelUOEditor\ExcelUOEditorForm.resx">
       <DependentUpon>ExcelUOEditorForm.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UIFlowsheetUOEditor\FlowsheetUOEditorForm.de.resx">
+      <DependentUpon>FlowsheetUOEditorForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIFlowsheetUOEditor\FlowsheetUOEditorForm.en.resx">
       <DependentUpon>FlowsheetUOEditorForm.vb</DependentUpon>
     </EmbeddedResource>

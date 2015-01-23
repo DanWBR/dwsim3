@@ -736,16 +736,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             wt = 0.0#
                             For Each s In msfrom.Fases(0).Componentes.Values
-                                wt += s.MassFlow.GetValueOrDefault
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    wt += s.MassFlow.GetValueOrDefault
+                                End If
                             Next
 
                             msto.Fases(0).SPMProperties.massflow = wt
 
                             For Each s In msfrom.Fases(0).Componentes.Values
-                                If Not msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
-                                    Throw New Exception("Error transfering data to sub-flowsheet: compound '" & DWSIM.App.GetComponentName(s.Nome) & "' not found.")
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.MassFlow.GetValueOrDefault / wt
                                 End If
-                                msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.MassFlow.GetValueOrDefault / wt
                             Next
 
                             msto.CalcOverallCompMoleFractions()
@@ -755,10 +756,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             msto.Fases(0).SPMProperties.massflow = msfrom.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
                             For Each s In msfrom.Fases(0).Componentes.Values
-                                If Not msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
-                                    Throw New Exception("Error transfering data to sub-flowsheet: compound '" & DWSIM.App.GetComponentName(s.Nome) & "' not found.")
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.FracaoMassica.GetValueOrDefault
                                 End If
-                                msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.FracaoMassica.GetValueOrDefault
                             Next
 
                             msto.NormalizeOverallMassComposition()
@@ -769,16 +769,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             mt = 0.0#
                             For Each s In msfrom.Fases(0).Componentes.Values
-                                mt += s.MolarFlow.GetValueOrDefault
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    mt += s.MolarFlow.GetValueOrDefault
+                                End If
                             Next
 
                             msto.Fases(0).SPMProperties.molarflow = mt
 
                             For Each s In msfrom.Fases(0).Componentes.Values
-                                If Not msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
-                                    Throw New Exception("Error transfering data to sub-flowsheet: compound '" & DWSIM.App.GetComponentName(s.Nome) & "' not found.")
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.MolarFlow.GetValueOrDefault / mt
                                 End If
-                                msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.MolarFlow.GetValueOrDefault / mt
                             Next
 
                             msto.CalcOverallCompMassFractions()
@@ -788,10 +789,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             msto.Fases(0).SPMProperties.molarflow = msfrom.Fases(0).SPMProperties.molarflow.GetValueOrDefault
 
                             For Each s In msfrom.Fases(0).Componentes.Values
-                                If Not msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
-                                    Throw New Exception("Error transfering data to sub-flowsheet: compound '" & DWSIM.App.GetComponentName(s.Nome) & "' not found.")
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.FracaoMolar.GetValueOrDefault
                                 End If
-                                msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.FracaoMolar.GetValueOrDefault
                             Next
 
                             msto.NormalizeOverallMoleComposition()
@@ -830,13 +830,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             wt = 0.0#
                             For Each s In msto.Fases(0).Componentes.Values
-                                wt += msfrom.Fases(0).Componentes(s.Nome).MassFlow.GetValueOrDefault
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    wt += msfrom.Fases(0).Componentes(s.Nome).MassFlow.GetValueOrDefault
+                                End If
                             Next
 
                             msto.Fases(0).SPMProperties.massflow = wt
 
                             For Each s In msto.Fases(0).Componentes.Values
-                                msto.Fases(0).Componentes(s.Nome).FracaoMassica = msfrom.Fases(0).Componentes(s.Nome).MassFlow.GetValueOrDefault / wt
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    msto.Fases(0).Componentes(s.Nome).FracaoMassica = msfrom.Fases(0).Componentes(s.Nome).MassFlow.GetValueOrDefault / wt
+                                End If
                             Next
 
                             msto.CalcOverallCompMoleFractions()
@@ -846,7 +850,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             msto.Fases(0).SPMProperties.massflow = msfrom.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
                             For Each s In msto.Fases(0).Componentes.Values
-                                msto.Fases(0).Componentes(s.Nome).FracaoMassica = msfrom.Fases(0).Componentes(s.Nome).FracaoMassica.GetValueOrDefault
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    msto.Fases(0).Componentes(s.Nome).FracaoMassica = msfrom.Fases(0).Componentes(s.Nome).FracaoMassica.GetValueOrDefault
+                                End If
                             Next
 
                             msto.NormalizeOverallMassComposition()
@@ -857,13 +863,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             mt = 0.0#
                             For Each s In msto.Fases(0).Componentes.Values
-                                mt += msfrom.Fases(0).Componentes(s.Nome).MolarFlow.GetValueOrDefault
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    mt += msfrom.Fases(0).Componentes(s.Nome).MolarFlow.GetValueOrDefault
+                                End If
                             Next
 
                             msto.Fases(0).SPMProperties.molarflow = mt
 
                             For Each s In msto.Fases(0).Componentes.Values
-                                msto.Fases(0).Componentes(s.Nome).FracaoMolar = msfrom.Fases(0).Componentes(s.Nome).MolarFlow.GetValueOrDefault / mt
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    msto.Fases(0).Componentes(s.Nome).FracaoMolar = msfrom.Fases(0).Componentes(s.Nome).MolarFlow.GetValueOrDefault / mt
+                                End If
                             Next
 
                             msto.CalcOverallCompMassFractions()
@@ -873,7 +883,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             msto.Fases(0).SPMProperties.molarflow = msfrom.Fases(0).SPMProperties.molarflow.GetValueOrDefault
 
                             For Each s In msto.Fases(0).Componentes.Values
-                                msto.Fases(0).Componentes(s.Nome).FracaoMolar = msfrom.Fases(0).Componentes(s.Nome).FracaoMolar.GetValueOrDefault
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
+                                    msto.Fases(0).Componentes(s.Nome).FracaoMolar = msfrom.Fases(0).Componentes(s.Nome).FracaoMolar.GetValueOrDefault
+                                End If
                             Next
 
                             msto.NormalizeOverallMoleComposition()

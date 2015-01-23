@@ -415,7 +415,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         For Each p As UnitPort In _ports
                             If id.ComponentName = p.ComponentName Then
                                 If p.connectedObject IsNot Nothing Then
-                                    If Not My.Application.ActiveSimulation Is Nothing Then
+                                    If Not Me.FlowSheet Is Nothing Then
                                         Dim mystr As SimulationObjects_BaseClass = Me.FlowSheet.Collections.ObjectCollection(CType(p.connectedObject, ICapeIdentification).ComponentDescription)
                                         If Not myport.connectedObject Is Nothing Then myport.Disconnect()
                                         myport.Connect(mystr)
@@ -969,7 +969,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim ecu As CapeOpen.ECapeUser = myuo
                     Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & ":" & ecu.scope & ". Reason: " & ecu.description, Color.Red, FormClasses.TipoAviso.Erro)
                 End Try
-                My.Application.ActiveSimulation = Me.FlowSheet
+                'My.Application.ActiveSimulation = Me.FlowSheet
                 myuo.Validate(msg)
                 If myuo.ValStatus = CapeValidationStatus.CAPE_VALID Then
                     Try
