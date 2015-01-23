@@ -3753,47 +3753,10 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
             Dim sinf As StreamInformation
 
             For Each sinf In Me.MaterialStreams.Values
-                Select Case sinf.StreamBehavior
-                    Case StreamInformation.Behavior.Distillate
-                        msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
-                        With msm
-                            .Fases(0).SPMProperties.massflow = 0
-                            .Fases(0).SPMProperties.temperature = 0
-                            .Fases(0).SPMProperties.pressure = 0
-                            i = 0
-                            For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(0).Componentes.Values
-                                subst.FracaoMolar = 0
-                                i += 1
-                            Next
-                        End With
-                    Case StreamInformation.Behavior.OverheadVapor
-                        msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
-                        With msm
-                            .Fases(0).SPMProperties.massflow = 0
-                            .Fases(0).SPMProperties.temperature = 0
-                            .Fases(0).SPMProperties.pressure = 0
-                            i = 0
-                            For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(0).Componentes.Values
-                                subst.FracaoMolar = 0
-                                i += 1
-                            Next
-                        End With
-                    Case StreamInformation.Behavior.BottomsLiquid
-                        msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
-                        With msm
-                            .Fases(0).SPMProperties.massflow = 0
-                            .Fases(0).SPMProperties.temperature = 0
-                            .Fases(0).SPMProperties.pressure = 0
-                            i = 0
-                            For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(0).Componentes.Values
-                                subst.FracaoMolar = 0
-                                i += 1
-                            Next
-                        End With
-                    Case StreamInformation.Behavior.Sidedraw
-                        Dim sidx As Integer = StageIndex(sinf.AssociatedStage)
-                        msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
-                        If sinf.StreamPhase = StreamInformation.Phase.L Then
+                If FlowSheet.Collections.ObjectCollection.ContainsKey(sinf.Name) Then
+                    Select Case sinf.StreamBehavior
+                        Case StreamInformation.Behavior.Distillate
+                            msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
                             With msm
                                 .Fases(0).SPMProperties.massflow = 0
                                 .Fases(0).SPMProperties.temperature = 0
@@ -3804,7 +3767,8 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                                     i += 1
                                 Next
                             End With
-                        ElseIf sinf.StreamPhase = StreamInformation.Phase.V Then
+                        Case StreamInformation.Behavior.OverheadVapor
+                            msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
                             With msm
                                 .Fases(0).SPMProperties.massflow = 0
                                 .Fases(0).SPMProperties.temperature = 0
@@ -3815,8 +3779,46 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                                     i += 1
                                 Next
                             End With
-                        End If
-                End Select
+                        Case StreamInformation.Behavior.BottomsLiquid
+                            msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
+                            With msm
+                                .Fases(0).SPMProperties.massflow = 0
+                                .Fases(0).SPMProperties.temperature = 0
+                                .Fases(0).SPMProperties.pressure = 0
+                                i = 0
+                                For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(0).Componentes.Values
+                                    subst.FracaoMolar = 0
+                                    i += 1
+                                Next
+                            End With
+                        Case StreamInformation.Behavior.Sidedraw
+                            Dim sidx As Integer = StageIndex(sinf.AssociatedStage)
+                            msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
+                            If sinf.StreamPhase = StreamInformation.Phase.L Then
+                                With msm
+                                    .Fases(0).SPMProperties.massflow = 0
+                                    .Fases(0).SPMProperties.temperature = 0
+                                    .Fases(0).SPMProperties.pressure = 0
+                                    i = 0
+                                    For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(0).Componentes.Values
+                                        subst.FracaoMolar = 0
+                                        i += 1
+                                    Next
+                                End With
+                            ElseIf sinf.StreamPhase = StreamInformation.Phase.V Then
+                                With msm
+                                    .Fases(0).SPMProperties.massflow = 0
+                                    .Fases(0).SPMProperties.temperature = 0
+                                    .Fases(0).SPMProperties.pressure = 0
+                                    i = 0
+                                    For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In .Fases(0).Componentes.Values
+                                        subst.FracaoMolar = 0
+                                        i += 1
+                                    Next
+                                End With
+                            End If
+                    End Select
+                End If
             Next
 
             'condenser/reboiler duties
@@ -3824,16 +3826,18 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
             Dim esm As New Streams.EnergyStream("", "")
 
             For Each sinf In Me.EnergyStreams.Values
-                If sinf.StreamBehavior = StreamInformation.Behavior.Distillate Then
-                    'condenser
-                    esm = FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.Name)
-                    esm.Energia = 0
-                    esm.GraphicObject.Calculated = False
-                ElseIf sinf.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                    'reboiler
-                    esm = FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.Name)
-                    esm.Energia = 0
-                    esm.GraphicObject.Calculated = False
+                If FlowSheet.Collections.ObjectCollection.ContainsKey(sinf.Name) Then
+                    If sinf.StreamBehavior = StreamInformation.Behavior.Distillate Then
+                        'condenser
+                        esm = FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.Name)
+                        esm.Energia = 0
+                        esm.GraphicObject.Calculated = False
+                    ElseIf sinf.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
+                        'reboiler
+                        esm = FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.Name)
+                        esm.Energia = 0
+                        esm.GraphicObject.Calculated = False
+                    End If
                 End If
             Next
 
