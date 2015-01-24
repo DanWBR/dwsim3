@@ -70,8 +70,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     End If
                 Next
                 L1 = L1 / j
-                If L1 = 1 Then L1 = 0.99
-                If L1 = 0 Then L1 = 0.01
+                If L1 > 0.99 Then L1 = 0.99
+                If L1 < 0.01 Then L1 = 0.01
                 L2 = 1 - L1
             Else
                 Dim minn As Double = Vz(0)

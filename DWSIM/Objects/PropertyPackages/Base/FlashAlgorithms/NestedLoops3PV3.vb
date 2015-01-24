@@ -749,7 +749,7 @@ out:
             Dim i, n, ls, ecount As Integer
             Dim resultFlash As Object
             Dim Tb, Td, Hb, Hd As Double
-            Dim q, r, dV, Tn, fx As Double
+            Dim q, r, dV, fx As Double
             Dim ErrRes As Object
 
             d1 = Date.Now

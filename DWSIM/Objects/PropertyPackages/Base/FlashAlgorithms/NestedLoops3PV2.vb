@@ -431,7 +431,7 @@ out:
                             End If
                         Next
 
-                        Dim sumvx2 = 0
+                        Dim sumvx2 As Double = 0
                         For i = 0 To n
                             sumvx2 += Abs(vx1e(i))
                         Next
@@ -609,7 +609,7 @@ out:
                 Loop Until i = n + 1
 
                 i = 0
-                Dim Vx1ant(n), Vx2ant(n), Vyant(n)
+                Dim Vx1ant(n), Vx2ant(n), Vyant(n) As Double
                 Do
                     Vx1ant(i) = Vx1(i)
                     Vx2ant(i) = Vx2(i)
@@ -1485,7 +1485,7 @@ alt:
                 Loop Until i = n + 1
 
                 i = 0
-                Dim Vx1ant(n), Vx2ant(n), Vyant(n)
+                Dim Vx1ant(n), Vx2ant(n), Vyant(n) As Double
                 Do
                     Vx1ant(i) = Vx1(i)
                     Vx2ant(i) = Vx2(i)
@@ -1761,7 +1761,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
                 Loop Until i = n + 1
 
                 i = 0
-                Dim Vx1ant(n), Vx2ant(n), Vyant(n)
+                Dim Vx1ant(n), Vx2ant(n), Vyant(n) As Double
                 Do
                     Vx1ant(i) = Vx1(i)
                     Vx2ant(i) = Vx2(i)

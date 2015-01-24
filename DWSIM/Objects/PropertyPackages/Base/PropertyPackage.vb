@@ -3098,7 +3098,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     Dim unstable As Boolean = False
                     Dim ui, ut As New ArrayList
                     Dim x, y1, y2, Test1, Test2 As Double
-                    Dim tmp As Object = Nothing
+                    Dim tmp1 As Object = Nothing, tmp2 As Object = Nothing
 
                     If VLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
                         i = 0
@@ -3106,18 +3106,18 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
                             Try
                                 If i = 0 Then
-                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)
-                                    calcT = tmp(4)
+                                    tmp1 = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)
+                                    calcT = tmp1(4)
                                     Test1 = calcT
-                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, 0, Me)
-                                    y2 = tmp(4)
+                                    tmp2 = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, 0, Me)
+                                    y2 = tmp2(4)
                                     Test2 = y2
                                 Else
-                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, Test1, Me)
-                                    calcT = tmp(4)
+                                    tmp1 = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, Test1, Me)
+                                    calcT = tmp1(4)
                                     Test1 = calcT
-                                    tmp = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, Test2, Me)
-                                    y2 = tmp(4)
+                                    tmp2 = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 1, Test2, Me)
+                                    y2 = tmp2(4)
                                     Test2 = y2
                                 End If
                                 x = i * dx
@@ -3125,17 +3125,26 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 px.Add(x)
                                 py1.Add(y1)
                                 py2.Add(y2)
+
+                                'check if liquid phase is stable.
+                                If tmp1(7) > 0 Then 'L2>0 => second liquid phase
+                                    unstable = True
+                                    ui.Add(px.Count - 1)
+                                    ut.Add(tmp1(4)) 'boiling temperature
+                                End If
+
+
                                 'check if liquid phase is stable.
                                 'Test2 = x * Me.RET_VTF()(0) + (1 - x) * Me.RET_VTF()(1)
-                                result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, P, Test1 * 0.8, Me)
-                                If result(5) > 0.0# Then
-                                    If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
-                                        unstable = True
-                                        ui.Add(px.Count - 1)
-                                        ut.Add(Me.FlashBase.BubbleTemperature_LLE(New Double() {i * dx, 1 - i * dx}, result(2), result(6), P, y1 - 50, y2 + 20, Me))
-                                        py1(py1.Count - 1) = ut(ut.Count - 1)
-                                    End If
-                                End If
+                                'result = Me.FlashBase.Flash_PT(New Double() {i * dx, 1 - i * dx}, P, Test1 * 0.8, Me)
+                                'If result(5) > 0.0# Then
+                                '    If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
+                                '        unstable = True
+                                '        ui.Add(px.Count - 1)
+                                '        ut.Add(Me.FlashBase.BubbleTemperature_LLE(New Double() {i * dx, 1 - i * dx}, result(2), result(6), P, y1 - 50, y2 + 20, Me))
+                                '        py1(py1.Count - 1) = ut(ut.Count - 1)
+                                '    End If
+                                'End If
                             Catch ex As Exception
                             End Try
                             i = i + 1
@@ -3196,8 +3205,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         Do
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 1 (" & i + 1 & "/42)")
                             Try
-                                tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, L1, 0, Me)
-                                y1 = tmp(4)
+                                tmp1 = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, L1, 0, Me)
+                                y1 = tmp1(4)
                                 x = i * dx
                                 pxs1.Add(x)
                                 pys1.Add(y1)
@@ -3210,8 +3219,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         Do
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 2 (" & i + 1 & "/42)")
                             Try
-                                tmp = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, L2, 0, Me)
-                                y2 = tmp(4)
+                                tmp1 = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, L2, 0, Me)
+                                y2 = tmp1(4)
                                 Test2 = y2
                                 x = i * dx
                                 pxs2.Add(x)
