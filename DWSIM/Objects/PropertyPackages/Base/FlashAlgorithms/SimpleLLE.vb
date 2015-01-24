@@ -147,11 +147,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 err = 0.0#
                 e1 = 0
                 e2 = 0
+                S = 0
                 For i = 0 To n
                     err += Abs(Vx1(i) * gamma1(i) - Vx2(i) * gamma2(i))
                     e1 += Abs(Vx1(i) - Vx1_ant(i))
                     e2 += Abs(Vx2(i) - Vx2_ant(i))
+                    S += Abs(Vx1(i) - Vx2(i))
                 Next
+
 
                 If Double.IsNaN(err) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
@@ -178,22 +181,29 @@ out:        d2 = Date.Now
 
             Console.WriteLine("PT Flash [SimpleLLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & err)
 
-            'order liquid phases by mixture NBP
+            If S > itol Then
+                'order liquid phases by mixture NBP
+                Dim VNBP = PP.RET_VTB()
+                Dim nbp1 As Double = 0
+                Dim nbp2 As Double = 0
 
-            Dim VNBP = PP.RET_VTB()
-            Dim nbp1 As Double = 0
-            Dim nbp2 As Double = 0
+                For i = 0 To n
+                    nbp1 += Vx1(i) * VNBP(i)
+                    nbp2 += Vx2(i) * VNBP(i)
+                Next
 
-            For i = 0 To n
-                nbp1 += Vx1(i) * VNBP(i)
-                nbp2 += Vx2(i) * VNBP(i)
-            Next
-
-            If nbp1 >= nbp2 Then
-                Return New Object() {L1, V, Vx1, PP.RET_NullVector, ecount, L2, Vx2, 0.0#, PP.RET_NullVector, gamma1, gamma2}
+                If nbp1 >= nbp2 Then
+                    Return New Object() {L1, V, Vx1, PP.RET_NullVector, ecount, L2, Vx2, 0.0#, PP.RET_NullVector, gamma1, gamma2}
+                Else
+                    Return New Object() {L2, V, Vx2, PP.RET_NullVector, ecount, L1, Vx1, 0.0#, PP.RET_NullVector, gamma1, gamma2}
+                End If
             Else
-                Return New Object() {L2, V, Vx2, PP.RET_NullVector, ecount, L1, Vx1, 0.0#, PP.RET_NullVector, gamma1, gamma2}
+                'merge phases - both phases are identical
+                Return New Object() {1, V, Vz, PP.RET_NullVector, ecount, 0, Vx2, 0.0#, PP.RET_NullVector, gamma1, gamma2}
             End If
+
+
+           
 
 
         End Function

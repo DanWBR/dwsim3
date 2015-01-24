@@ -3103,7 +3103,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     If VLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
                         i = 0
                         Do
-                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/42)")
+                            If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/41)")
                             Try
                                 If i = 0 Then
                                     tmp1 = Me.FlashBase.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, 0, 0, Me)
@@ -3127,12 +3127,11 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 py2.Add(y2)
 
                                 'check if liquid phase is stable.
-                                If tmp1(7) > 0 Then 'L2>0 => second liquid phase
+                                If tmp1(7) > 0 Then
                                     unstable = True
                                     ui.Add(px.Count - 1)
-                                    ut.Add(tmp1(4)) 'boiling temperature
+                                    ut.Add(tmp1(4))
                                 End If
-
 
                                 'check if liquid phase is stable.
                                 'Test2 = x * Me.RET_VTF()(0) + (1 - x) * Me.RET_VTF()(1)
@@ -3159,14 +3158,15 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         End Select
 
                         If unstable Then
-                            Dim ti, tf, uim As Double, tit As Integer
+                            Dim ti, tf, uim, tit As Double
                             ti = (ut(0) + ut(ut.Count - 1)) / 2
                             uim = (ui(0) + ui(ui.Count - 1)) / 2
                             tf = MathEx.Common.Max(Me.RET_VTF())
                             If tf = 0.0# Then tf = ti * 0.7
-                            i = 0
-                            For tit = tf To ti Step (ti - tf) / 25
-                                If bw IsNot Nothing Then If bw.CancellationPending Then Exit For Else bw.ReportProgress(0, "LLE (" & i + 1 & "/28)")
+
+                            For i = 0 To 25
+                                tit = tf + (ti - tf) / 25 * i
+                                If bw IsNot Nothing Then If bw.CancellationPending Then Exit For Else bw.ReportProgress(0, "LLE (" & i + 1 & "/26)")
                                 result = Me.FlashBase.Flash_PT(New Double() {uim * dx, 1 - uim * dx}, P, tit, Me)
                                 If result(5) > 0.0# Then
                                     If Abs(result(2)(0) - result(6)(0)) > 0.01 Then
@@ -3175,7 +3175,6 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                         py3.Add(tit)
                                     End If
                                 End If
-                                i += 1
                             Next
                         End If
                     End If

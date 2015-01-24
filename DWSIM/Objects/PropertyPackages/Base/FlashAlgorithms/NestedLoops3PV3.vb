@@ -789,31 +789,27 @@ out:
             If Hb > 0 And Hd < 0 Then
                 'specified enthalpy requires partial evaporation 
                 'calculate vapour fraction
-                q = 0
-                r = 6
+
+                Dim H1, H2, V1, V2 As Double
                 ecount = 0
-                V = 0.5
-
-                fx = Herror("PV", V, P, Vz, PP)(0)
-
-                ls = Sign(fx)
+                V = 0
+                H1 = Hb
                 Do
                     ecount += 1
-                    dV = 2 ^ (q / 3 - r - 1 / 3) * ASinH(fx)
-                    V = V + dV
+                    V1 = V
+                    If V1 < 1 Then
+                        V2 = V1 + 0.01
+                    Else
+                        V2 = V1 - 0.01
+                    End If
+
+                    H2 = Herror("PV", V2, P, Vz, PP)(0)
+                    V = V1 + (V2 - V1) * (0 - H1) / (H2 - H1)
                     If V < 0 Then V = 0
                     If V > 1 Then V = 1
-
                     resultFlash = Herror("PV", V, P, Vz, PP)
-                    fx = resultFlash(0)
-
-                    If Sign(fx) <> ls Then
-                        r += 1
-                        ls = -ls
-                    Else
-                        q += 1
-                    End If
-                Loop Until Abs(fx) < itol Or ecount > maxitEXT
+                    H1 = resultFlash(0)
+                Loop Until Abs(H1) < itol Or ecount > maxitEXT
 
                 T = resultFlash(1)
                 L1 = resultFlash(3)
@@ -821,6 +817,9 @@ out:
                 Vy = resultFlash(5)
                 Vx1 = resultFlash(6)
                 Vx2 = resultFlash(7)
+                For i = 0 To n
+                    Ki(i) = Vy(i) / Vx1(i)
+                Next
 
             ElseIf Hd > 0 Then 'only gas phase
                 'calculate temperature
@@ -830,7 +829,7 @@ out:
                 T = Td
                 H1 = Hd
                 Do
-                    ecount += 2
+                    ecount += 1
                     T1 = T
                     T2 = T1 + 1
                     H2 = Hf - proppack.DW_CalcEnthalpy(Vz, T2, P, State.Vapor)
