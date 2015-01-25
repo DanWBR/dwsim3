@@ -1220,7 +1220,6 @@ alt:
                         Vx2 = resultL(6)
 
                         result = Flash_TV_3P(Vz, result(1), result(0) * L1, result(0) * L2, result(3), Vx1, Vx2, T, V, result(4), PP)
-
                     End If
 
                 End If
@@ -1502,7 +1501,6 @@ out:        L1 = L1 * (1 - V) 'calculate global phase fractions
 
             Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, PP.RET_NullVector}
         End Function
-      
         Public Function Flash_TV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackage) As Object
 
             Dim i As Integer
@@ -1514,38 +1512,13 @@ out:        L1 = L1 * (1 - V) 'calculate global phase fractions
 
             n = UBound(Vz)
 
-            proppack = PP
+            ReDim Vx1(n), Vx2(n), Vy(n), Ki1(n)
+            Dim Pant, L1ant, L2ant, gamma1(n), gamma2(n), VL(n), VP(n) As Double
+            Dim Vx1ant(n), Vx2ant(n), Vyant(n), e1, e2, e3, e4 As Double
 
-            ReDim Vn(n), Vx1(n), Vx2(n), Vy(n), Vp(n), ui1(n), ui2(n), uic1(n), uic2(n), pi(n), Ki1(n), Ki2(n), fi(n)
-            Dim b1(n), b2(n), CFL1(n), CFL2(n), CFV(n), db1dP(n), db2dP(n), Kil(n), Pant, L1ant, L2ant, Ki12(n), Ki22(n) As Double
+            For i = 0 To n
+                VP(i) = PP.AUX_PVAPi(i, T)
 
-            Vn = PP.RET_VNAMES()
-            fi = Vz.Clone
-
-            'Calculate Ki`s
-
-            Pant = Pref
-            P = Pref
-
-            Ki1 = PP.DW_CalcKvalue(Vx1EST, VyEST, T, P)
-            Ki2 = PP.DW_CalcKvalue(Vx2EST, VyEST, T, P)
-
-            If n = 0 Then
-                If Vp(0) <= P Then
-                    L = 1
-                    V = 0
-                    Vx1 = Vz
-                    GoTo out
-                Else
-                    L = 0
-                    V = 1
-                    Vy = Vz
-                    GoTo out
-                End If
-            End If
-
-            i = 0
-            Do
                 If Vz(i) <> 0 Then
                     Vy(i) = VyEST(i)
                     Vx1(i) = Vx1EST(i)
@@ -1555,66 +1528,7 @@ out:        L1 = L1 * (1 - V) 'calculate global phase fractions
                     Vx1(i) = 0
                     Vx2(i) = 0
                 End If
-                i += 1
-            Loop Until i = n + 1
-
-            i = 0
-            soma_x1 = 0
-            soma_x2 = 0
-            soma_y = 0
-            Do
-                soma_x1 = soma_x1 + Vx1(i)
-                soma_x2 = soma_x2 + Vx2(i)
-                soma_y = soma_y + Vy(i)
-                i = i + 1
-            Loop Until i = n + 1
-            i = 0
-            Do
-                Vx1(i) = Vx1(i) / soma_x1
-                Vx2(i) = Vx2(i) / soma_x2
-                Vy(i) = Vy(i) / soma_y
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                b1(i) = 1 - Ki1(i) ^ -1
-                b2(i) = 1 - Ki2(i) ^ -1
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                If Vz(i) <> 0 Then
-                    Vy(i) = Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
-                    Vx1(i) = Vy(i) / Ki1(i)
-                    Vx2(i) = Vy(i) / Ki2(i)
-                Else
-                    Vy(i) = 0
-                    Vx1(i) = 0
-                    Vx2(i) = 0
-                End If
-                i += 1
-            Loop Until i = n + 1
-
-            i = 0
-            soma_x1 = 0.0#
-            soma_x2 = 0.0#
-            soma_y = 0.0#
-            Do
-                soma_x1 = soma_x1 + Vx1(i)
-                soma_x2 = soma_x2 + Vx2(i)
-                soma_y = soma_y + Vy(i)
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                Vx1(i) = Vx1(i) / soma_x1
-                Vx2(i) = Vx2(i) / soma_x2
-                Vy(i) = Vy(i) / soma_y
-                i = i + 1
-            Loop Until i = n + 1
+            Next
 
             Vant = 0.0#
             L1ant = 0.0#
@@ -1622,159 +1536,71 @@ out:        L1 = L1 * (1 - V) 'calculate global phase fractions
 
             ecount = 0
 
-            L1 = L1est
-            L2 = L2est
+            L1 = L1est / (1 - V)
+            L2 = L2est / (1 - V)
 
-            Console.WriteLine("TV Flash [NL-3PV3]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
+            VL = Vz.Clone 'VL: composition of total liquid -> VX for LLE flash
 
             Do
-
-                CFL1 = proppack.DW_CalcFugCoeff(Vx1, T, P, State.Liquid)
-                CFL2 = proppack.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                CFV = proppack.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-
-                i = 0
-                Do
-                    If Vz(i) <> 0 Then Ki1(i) = CFL1(i) / CFV(i)
-                    If Vz(i) <> 0 Then Ki2(i) = CFL2(i) / CFV(i)
-                    i = i + 1
-                Loop Until i = n + 1
-
-                i = 0
-                Dim Vx1ant(n), Vx2ant(n), Vyant(n) As Double
-                Do
+                L1ant = L1
+                L2ant = L2
+                Pant = P
+                For i = 0 To n
                     Vx1ant(i) = Vx1(i)
                     Vx2ant(i) = Vx2(i)
                     Vyant(i) = Vy(i)
-                    b1(i) = 1 - Ki1(i) ^ -1
-                    b2(i) = 1 - Ki2(i) ^ -1
-                    Vy(i) = Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
-                    Vx1(i) = Vy(i) / Ki1(i)
-                    Vx2(i) = Vy(i) / Ki2(i)
-                    i = i + 1
-                Loop Until i = n + 1
+                    Vx1EST(i) = Vx1(i)
+                    Vx2EST(i) = Vx2(i)
+                Next
 
-                i = 0
-                soma_x1 = 0
-                soma_x2 = 0
-                soma_y = 0
-                Do
-                    soma_x1 = soma_x1 + Vx1(i)
-                    soma_x2 = soma_x2 + Vx2(i)
-                    soma_y = soma_y + Vy(i)
-                    i = i + 1
-                Loop Until i = n + 1
+                'estimate liquid composiiton
+                Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = Vx1EST, .InitialEstimatesForPhase2 = Vx2EST, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
+                Dim resultL As Object = slle.Flash_PT(VL, P, T, PP)
+                L1 = resultL(0) 'phase fraction liquid/liquid
+                L2 = resultL(5)
+                Vx1 = resultL(2)
+                Vx2 = resultL(6)
+                gamma1 = resultL(9)
+                gamma2 = resultL(10)
 
-                i = 0
-                Do
-                    Vx1(i) = Vx1(i) / soma_x1
-                    Vx2(i) = Vx2(i) / soma_x2
-                    Vy(i) = Vy(i) / soma_y
-                    i = i + 1
-                Loop Until i = n + 1
+                'calculate new Ki's and vapour composition
+                S = 0
+                P = 0
+                For i = 0 To n
+                    Ki1(i) = gamma1(i) * VP(i) / Pant
+                    Vy(i) = Ki1(i) * Vx1(i)
+                    If VL(i) > 0 Then VL(i) = Vz(i) / (1 + V * (Vy(i) / VL(i) - 1))
+                    P += Vx1(i) * gamma1(i) * VP(i)
+                    S += VL(i)
+                Next
 
-                Dim e1 = 0.0#
-                Dim e2 = 0.0#
-                Dim e3 = 0.0#
-                Dim e4 = 0.0#
-                i = 0
-                Do
-                    e1 = e1 + (Vx1(i) - Vx1ant(i))
-                    e4 = e4 + (Vx2(i) - Vx2ant(i))
-                    e2 = e2 + (Vy(i) - Vyant(i))
-                    i = i + 1
-                Loop Until i = n + 1
-                e3 = (T - Tant) + (L1 - L1ant) + (L2 - L2ant)
+                'adjust total liquid composition
+                For i = 0 To n
+                    VL(i) /= S
+                Next
 
-                If (Math.Abs(e1) + Math.Abs(e4) + Math.Abs(e3) + Math.Abs(e2) + Math.Abs(L1ant - L1) + Math.Abs(L2ant - L2)) < etol Then
-
-                    Exit Do
-
-                ElseIf Double.IsNaN(Math.Abs(e1) + Math.Abs(e4) + Math.Abs(e2)) Then
-
-                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
-
-                Else
-
-                    Ki12 = PP.DW_CalcKvalue(Vx1, Vy, T, P + 100)
-                    Ki22 = PP.DW_CalcKvalue(Vx2, Vy, T, P + 100)
-
-                    For i = 0 To n
-                        db1dP(i) = ((1 - Ki12(i) ^ -1) - (1 - Ki1(i) ^ -1)) / 100
-                        db2dP(i) = ((1 - Ki22(i) ^ -1) - (1 - Ki2(i) ^ -1)) / 100
-                    Next
-
-                    Dim F1 = 0.0#, F2 = 0.0#
-                    Dim dF1dP = 0.0#, dF1dL2 = 0.0#, dF2dP = 0.0#, dF2dL2 = 0.0#, dF1db1(n), dF1db2(n), dF2db1(n), dF2db2(n) As Double
-                    Dim dP, dL2 As Double
-                    i = 0
-                    Do
-                        F1 = F1 + b1(i) * Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
-                        F2 = F2 + b2(i) * Vz(i) / (1 - b1(i) * L1 - b2(i) * L2)
-                        dF1db1(i) = -Vz(i) * (b2(i) * L2) / (b1(i) * L1 + b2(i) * L2 - 1) ^ 2
-                        dF1db2(i) = b1(i) * Vz(i) * L2 / (b1(i) * L1 + b2(i) * L2 - 1) ^ 2
-                        dF2db1(i) = b2(i) * Vz(i) * L1 / (b2(i) * L2 + b1(i) * L1 - 1) ^ 2
-                        dF2db2(i) = -Vz(i) * (b1(i) * L1) / (b2(i) * L2 + b1(i) * L1 - 1) ^ 2
-                        dF1dL2 = dF1dL2 + b1(i) * Vz(i) * (-b2(i)) / (1 - b1(i) * L1 - b2(i) * L2) ^ 2
-                        dF2dL2 = dF2dL2 + b2(i) * Vz(i) * (-b2(i)) / (1 - b1(i) * L1 - b2(i) * L2) ^ 2
-                        dF1dP = dF1dP + dF1db1(i) * db1dP(i) + dF1db2(i) * db2dP(i)
-                        dF2dP = dF2dP + dF2db1(i) * db1dP(i) + dF2db2(i) * db2dP(i)
-                        i = i + 1
-                    Loop Until i = n + 1
-
-                    If Abs(F1) + Abs(F2) < etol Then Exit Do
-
-                    Dim MA As Mapack.Matrix = New Mapack.Matrix(2, 2)
-                    Dim MB As Mapack.Matrix = New Mapack.Matrix(2, 1)
-                    Dim MX As Mapack.Matrix = New Mapack.Matrix(1, 2)
-
-                    MA(0, 0) = dF1dP
-                    MA(0, 1) = dF1dL2
-                    MA(1, 0) = dF2dP
-                    MA(1, 1) = dF2dL2
-                    MB(0, 0) = -F1
-                    MB(1, 0) = -F2
-
-                    MX = MA.Solve(MB)
-                    dP = MX(0, 0)
-                    dL2 = MX(1, 0)
-
-                    L2ant = L2
-                    L1ant = L1
-                    Pant = P
-
-                    P += -dP * 0.3
-                    L2 += -dL2 * 0.3
-
-                    If L2 < 0.0# Then L2 = 0.0#
-                    If L2 > 1.0# - V Then L2 = 1.0# - V
-
-                    L1 = 1 - V - L2
-
-                    If V = 0.0# Then
-                        'switch to simple LLE flash procedure.
-                        Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = Vx1EST, .InitialEstimatesForPhase2 = Vx2EST, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
-                        Dim result As Object = slle.Flash_PT(Vz, P, T, PP)
-                        L1 = result(0)
-                        'V = result(1)
-                        L2 = result(5)
-                        Vx1 = result(2)
-                        'Vy = result(3)
-                        Vx2 = result(6)
-                        Exit Do
-                    End If
-
-                End If
-
-                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
+                'calculate error
+                e1 = 0.0#
+                e2 = 0.0#
+                e3 = 0.0#
+                e4 = 0.0#
+                For i = 0 To n
+                    e1 += Math.Abs(Vx1(i) - Vx1ant(i))
+                    e2 += Math.Abs(Vx2(i) - Vx2ant(i))
+                    e3 += Math.Abs(Vy(i) - Vyant(i))
+                Next
+                e4 = Math.Abs(L1 - L1ant) + Math.Abs(L2 - L2ant)
 
                 ecount += 1
+                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
+            Loop Until (e1 + e2 + e3 + e4) < etol And Math.Abs(P - Pant) < 1
 
-                Console.WriteLine("TV Flash [NL-3PV3]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
+out:        L1 = L1 * (1 - V) 'calculate global phase fractions
+            L2 = L2 * (1 - V)
 
-            Loop
+            Console.WriteLine("TV Flash [NL-3PV3]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
 
-out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, PP.RET_NullVector}
+            Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, PP.RET_NullVector}
 
         End Function
 
