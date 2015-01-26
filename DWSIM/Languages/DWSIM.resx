@@ -4931,10 +4931,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Fluxograma (UO)</value>
   </data>
   <data name="FlowsheetInitializationError" xml:space="preserve">
-    <value>Houve um erro ao inicializar o fluxograma. Verifique a mensagem de erro para detalhes.</value>
+    <value>Houve um erro ao inicializar/recarregar o fluxograma. Verifique a mensagem de erro para detalhes.</value>
   </data>
   <data name="FlowsheetInitializationSuccess" xml:space="preserve">
-    <value>O fluxograma foi inicializado com sucesso.</value>
+    <value>O fluxograma foi inicializado/recarregado com sucesso.</value>
   </data>
   <data name="FlowsheetInitialized" xml:space="preserve">
     <value>Fluxograma já inicializado.</value>

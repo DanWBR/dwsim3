@@ -5927,7 +5927,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Houve um erro ao inicializar o fluxograma. Verifique a mensagem de erro para detalhes..
+        '''  Looks up a localized string similar to Houve um erro ao inicializar/recarregar o fluxograma. Verifique a mensagem de erro para detalhes..
         '''</summary>
         Friend Shared ReadOnly Property FlowsheetInitializationError() As String
             Get
@@ -5936,7 +5936,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to O fluxograma foi inicializado com sucesso..
+        '''  Looks up a localized string similar to O fluxograma foi inicializado/recarregado com sucesso..
         '''</summary>
         Friend Shared ReadOnly Property FlowsheetInitializationSuccess() As String
             Get

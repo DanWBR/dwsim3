@@ -4928,10 +4928,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Flowsheet Unit Operation</value>
   </data>
   <data name="FlowsheetInitializationError" xml:space="preserve">
-    <value>An error occurred during flowsheet initialization, please check the error message for details.</value>
+    <value>An error occurred during flowsheet initialization/reload, please check the error message for details.</value>
   </data>
   <data name="FlowsheetInitializationSuccess" xml:space="preserve">
-    <value>Flowsheet successfully initialized.</value>
+    <value>Flowsheet successfully initialized/reloaded.</value>
   </data>
   <data name="FlowsheetInitialized" xml:space="preserve">
     <value>Flowsheet already initialized.</value>

@@ -112,7 +112,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Sub InitializeFlowsheet(path As String)
 
-            If Not fsheet Is Nothing Then fsheet.Dispose()
+            If Not Fsheet Is Nothing Then
+                Fsheet.Dispose()
+                Fsheet = Nothing
+            End If
 
             Dim ci As CultureInfo = CultureInfo.InvariantCulture
 

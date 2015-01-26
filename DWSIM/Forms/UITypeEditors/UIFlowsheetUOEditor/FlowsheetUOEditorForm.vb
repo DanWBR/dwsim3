@@ -10,7 +10,7 @@ Public Class FlowsheetUOEditorForm
     Private Sub FlowsheetUOEditorForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         If fsuo.Initialized Then
-            btnInitialize.Enabled = False
+            btnInitialize.Enabled = True
             lblInit.Text = DWSIM.App.GetLocalString("FlowsheetInitialized")
             UpdateLinks()
             UpdateProps()
@@ -29,7 +29,7 @@ Public Class FlowsheetUOEditorForm
         fsuo.InitializeFlowsheet(fsuo.SimulationFile)
 
         If fsuo.Initialized Then
-            btnInitialize.Enabled = False
+            btnInitialize.Enabled = True
             lblInit.Text = DWSIM.App.GetLocalString("FlowsheetInitializationSuccess")
         Else
             btnInitialize.Enabled = True
