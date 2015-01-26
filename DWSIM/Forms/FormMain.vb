@@ -4011,7 +4011,7 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
         For Each form0 As Form In Me.MdiChildren
             If TypeOf form0 Is FormFlowsheet Then
                 path = folder + "\" + CType(form0, FormFlowsheet).Options.BackupFileName
-                Me.SaveF(path, form0)
+                Me.SaveXML(path, form0)
                 If Not My.Settings.BackupFiles.Contains(path) Then
                     My.Settings.BackupFiles.Add(path)
                     My.Settings.Save()
