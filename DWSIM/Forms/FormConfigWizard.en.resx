@@ -216,6 +216,9 @@ Click "Next" to continue.</value>
   <data name="ListBoxPP.Items8" xml:space="preserve">
     <value>Nested Loops (VLLE - Immiscible Liquids)</value>
   </data>
+  <data name="ListBoxPP.Items9" xml:space="preserve">
+    <value>Nested Loops (VLLE, Alternate)</value>
+  </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Flash Algorithm</value>
   </data>

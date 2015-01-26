@@ -2096,9 +2096,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                                          End Sub))
                     task1.Wait()
                 Catch ae As AggregateException
-                    For Each ex As Exception In ae.InnerExceptions
-                        Throw ex
-                    Next
+                    Throw ae.Flatten()
                 Finally
                     If My.Settings.EnableGPUProcessing Then
                         My.MyApplication.gpu.DisableMultithreading()
@@ -2229,9 +2227,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                  End Sub))
                         t1.Wait()
                     Catch ae As AggregateException
-                        For Each ex As Exception In ae.InnerExceptions
-                            Throw ex
-                        Next
+                        Throw ae.Flatten()
                     Finally
                         If My.Settings.EnableGPUProcessing Then
                             My.MyApplication.gpu.DisableMultithreading()
@@ -2291,9 +2287,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                  End Sub))
                         t1.Wait()
                     Catch ae As AggregateException
-                        For Each ex As Exception In ae.InnerExceptions
-                            Throw ex
-                        Next
+                        Throw ae.Flatten()
                     Finally
                         If My.Settings.EnableGPUProcessing Then
                             My.MyApplication.gpu.DisableMultithreading()
@@ -2356,9 +2350,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                                      End Sub))
                         t1.Wait()
                     Catch ae As AggregateException
-                        For Each ex As Exception In ae.InnerExceptions
-                            Throw ex
-                        Next
+                        Throw ae.Flatten()
                     Finally
                         If My.Settings.EnableGPUProcessing Then
                             My.MyApplication.gpu.DisableMultithreading()

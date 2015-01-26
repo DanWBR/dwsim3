@@ -531,9 +531,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, Vx, 0.0#, PP.RET_Nu
                     task2.Start()
                     Task.WaitAll(task1, task2)
                 Catch ae As AggregateException
-                    For Each ex As Exception In ae.InnerExceptions
-                        Throw
-                    Next
+                    Throw ae.Flatten()
                 End Try
                 My.MyApplication.IsRunningParallelTasks = False
             Else
@@ -622,9 +620,7 @@ restart:    Do
                         task2.Start()
                         Task.WaitAll(task1, task2)
                     Catch ae As AggregateException
-                        For Each ex As Exception In ae.InnerExceptions
-                            Throw
-                        Next
+                        Throw ae.Flatten()
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
@@ -959,9 +955,7 @@ restart:    Do
                     task2.Start()
                     Task.WaitAll(task1, task2)
                 Catch ae As AggregateException
-                    For Each ex As Exception In ae.InnerExceptions
-                        Throw
-                    Next
+                    Throw ae.Flatten()
                 End Try
                 My.MyApplication.IsRunningParallelTasks = False
             Else
@@ -1043,9 +1037,7 @@ restart:    Do
                         task2.Start()
                         Task.WaitAll(task1, task2)
                     Catch ae As AggregateException
-                        For Each ex As Exception In ae.InnerExceptions
-                            Throw
-                        Next
+                        Throw ae.Flatten()
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else

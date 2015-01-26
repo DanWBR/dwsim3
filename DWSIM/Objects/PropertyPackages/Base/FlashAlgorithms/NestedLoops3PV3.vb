@@ -451,22 +451,6 @@ out:
 
         End Function
 
-        Private Function CalcKbjw(ByVal K1() As Double, ByVal K2() As Double, ByVal L1 As Double, ByVal L2 As Double, Vx1() As Double, Vx2() As Double) As Double
-
-            Dim i As Integer
-            Dim n As Integer = UBound(K1) - 1
-
-            Dim Kbj1 As Object
-
-            Kbj1 = Vx1(0) * L1 * K1(0) + Vx2(0) * L2 * K2(0)
-            For i = 1 To n
-                If Abs(K1(i) - 1) < Abs(Kbj1 - 1) Then Kbj1 = Vx1(i) * L1 * K1(i) + Vx2(i) * L2 * K2(i)
-            Next
-
-            Return Kbj1
-
-        End Function
-
         Public Function Flash_PT_3P(ByVal Vz As Double(), ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
 
             etol = CDbl(PP.Parameters("PP_PTFELT"))
@@ -487,8 +471,42 @@ out:
 
             'Calculate Ki`s
 
-            Ki1 = PP.DW_CalcKvalue(Vx1EST, VyEST, T, P)
-            Ki2 = PP.DW_CalcKvalue(Vx2EST, VyEST, T, P)
+            Dim alreadymt As Boolean = False
+
+            If My.Settings.EnableParallelProcessing Then
+                My.MyApplication.IsRunningParallelTasks = True
+                If My.Settings.EnableGPUProcessing Then
+                    If Not My.MyApplication.gpu.IsMultithreadingEnabled Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    Else
+                        alreadymt = True
+                    End If
+                End If
+                Try
+                    Dim task1 As Task = New Task(Sub()
+                                                     Ki1 = PP.DW_CalcKvalue(Vx1EST, VyEST, T, P)
+                                                 End Sub)
+                    Dim task2 As Task = New Task(Sub()
+                                                     Ki2 = PP.DW_CalcKvalue(Vx2EST, VyEST, T, P)
+                                                 End Sub)
+                    task1.Start()
+                    task2.Start()
+                    Task.WaitAll(task1, task2)
+                Catch ae As AggregateException
+                    Throw ae.Flatten()                   
+                Finally
+                    If My.Settings.EnableGPUProcessing Then
+                        If Not alreadymt Then
+                            My.MyApplication.gpu.DisableMultithreading()
+                            My.MyApplication.gpu.FreeAll()
+                        End If
+                    End If
+                End Try
+                My.MyApplication.IsRunningParallelTasks = False
+            Else
+                Ki1 = PP.DW_CalcKvalue(Vx1EST, VyEST, T, P)
+                Ki2 = PP.DW_CalcKvalue(Vx2EST, VyEST, T, P)
+            End If
 
             If n = 0 Then
                 If Vp(0) <= P Then
@@ -590,10 +608,46 @@ out:
 
             Do
 
-                CFL1 = proppack.DW_CalcFugCoeff(Vx1, T, P, State.Liquid)
-                CFL2 = proppack.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                CFV = proppack.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-
+                If My.Settings.EnableParallelProcessing Then
+                    My.MyApplication.IsRunningParallelTasks = True
+                    If My.Settings.EnableGPUProcessing Then
+                        If Not My.MyApplication.gpu.IsMultithreadingEnabled Then
+                            My.MyApplication.gpu.EnableMultithreading()
+                        Else
+                            alreadymt = True
+                        End If
+                    End If
+                    Try
+                        Dim task1 As Task = New Task(Sub()
+                                                         CFL1 = proppack.DW_CalcFugCoeff(Vx1, T, P, State.Liquid)
+                                                     End Sub)
+                        Dim task2 As Task = New Task(Sub()
+                                                         CFL2 = proppack.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
+                                                    End Sub)
+                        Dim task3 As Task = New Task(Sub()
+                                                         CFV = proppack.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
+                                                     End Sub)
+                        task1.Start()
+                        task2.Start()
+                        task3.Start()
+                        Task.WaitAll(task1, task2, task3)
+                    Catch ae As AggregateException
+                        Throw ae.Flatten()
+                    Finally
+                        If My.Settings.EnableGPUProcessing Then
+                            If Not alreadymt Then
+                                My.MyApplication.gpu.DisableMultithreading()
+                                My.MyApplication.gpu.FreeAll()
+                            End If
+                        End If
+                    End Try
+                    My.MyApplication.IsRunningParallelTasks = False
+                Else
+                    CFL1 = proppack.DW_CalcFugCoeff(Vx1, T, P, State.Liquid)
+                    CFL2 = proppack.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
+                    CFV = proppack.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
+                End If
+       
                 i = 0
                 Do
                     If Vz(i) <> 0 Then Ki1(i) = CFL1(i) / CFV(i)
@@ -746,10 +800,10 @@ out:
         Public Overrides Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim i, n, ls, ecount As Integer
+            Dim i, n, ecount As Integer
             Dim resultFlash As Object
             Dim Tb, Td, Hb, Hd As Double
-            Dim q, r, dV, fx As Double
+            'Dim q, r, dV, fx As Double
             Dim ErrRes As Object
 
             d1 = Date.Now
@@ -778,13 +832,51 @@ out:
             If Tref = 0.0# Then Tref = 298.15
 
             ' ============= Calculate Dew point and boiling point
-            ErrRes = Herror("PV", 0, P, Vz, PP)
-            Hb = ErrRes(0)
-            Tb = ErrRes(1)
 
-            ErrRes = Herror("PV", 1, P, Vz, PP)
-            Hd = ErrRes(0)
-            Td = ErrRes(1)
+            Dim alreadymt As Boolean = False
+
+            If My.Settings.EnableParallelProcessing Then
+                My.MyApplication.IsRunningParallelTasks = True
+                If My.Settings.EnableGPUProcessing Then
+                    If Not My.MyApplication.gpu.IsMultithreadingEnabled Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    Else
+                        alreadymt = True
+                    End If
+                End If
+                Try
+                    Dim task1 As Task = New Task(Sub()
+                                                     Dim ErrRes1 = Herror("PV", 0, P, Vz, PP)
+                                                     Hb = ErrRes1(0)
+                                                     Tb = ErrRes1(1)
+                                                 End Sub)
+                    Dim task2 As Task = New Task(Sub()
+                                                     Dim ErrRes2 = Herror("PV", 1, P, Vz, PP)
+                                                     Hd = ErrRes2(0)
+                                                     Td = ErrRes2(1)
+                                                 End Sub)
+                    task1.Start()
+                    task2.Start()
+                    Task.WaitAll(task1, task2)
+                Catch ae As AggregateException
+                    Throw ae.Flatten()
+                Finally
+                    If My.Settings.EnableGPUProcessing Then
+                        If Not alreadymt Then
+                            My.MyApplication.gpu.DisableMultithreading()
+                            My.MyApplication.gpu.FreeAll()
+                        End If
+                    End If
+                End Try
+                My.MyApplication.IsRunningParallelTasks = False
+            Else
+                ErrRes = Herror("PV", 0, P, Vz, PP)
+                Hb = ErrRes(0)
+                Tb = ErrRes(1)
+                ErrRes = Herror("PV", 1, P, Vz, PP)
+                Hd = ErrRes(0)
+                Td = ErrRes(1)
+            End If
 
             If Hb > 0 And Hd < 0 Then
                 'specified enthalpy requires partial evaporation 
@@ -953,9 +1045,7 @@ out:
                             task2.Start()
                             Task.WaitAll(task1, task2)
                         Catch ae As AggregateException
-                            For Each ex As Exception In ae.InnerExceptions
-                                Throw
-                            Next
+                            Throw ae.Flatten()
                         Finally
                             If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.DisableMultithreading()
@@ -1055,9 +1145,47 @@ alt:
             _Hl1 = 0.0#
             _Hl2 = 0.0#
 
-            If V > 0 Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-            If L1 > 0 Then _Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, P, State.Liquid)
-            If L2 > 0 Then _Hl2 = proppack.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
+            Dim alreadymt As Boolean = False
+
+            If My.Settings.EnableParallelProcessing Then
+                My.MyApplication.IsRunningParallelTasks = True
+                If My.Settings.EnableGPUProcessing Then
+                    If Not My.MyApplication.gpu.IsMultithreadingEnabled Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    Else
+                        alreadymt = True
+                    End If
+                End If
+                Try
+                    Dim task1 As Task = New Task(Sub()
+                                                     If V > 0 Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+                                                 End Sub)
+                    Dim task2 As Task = New Task(Sub()
+                                                     If L1 > 0 Then _Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, P, State.Liquid)
+                                                 End Sub)
+                    Dim task3 As Task = New Task(Sub()
+                                                     If L2 > 0 Then _Hl2 = proppack.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
+                                                 End Sub)
+                    task1.Start()
+                    task2.Start()
+                    task3.Start()
+                    Task.WaitAll(task1, task2, task3)
+                Catch ae As AggregateException
+                    Throw ae.Flatten()
+                Finally
+                    If My.Settings.EnableGPUProcessing Then
+                        If Not alreadymt Then
+                            My.MyApplication.gpu.DisableMultithreading()
+                            My.MyApplication.gpu.FreeAll()
+                        End If
+                    End If
+                End Try
+                My.MyApplication.IsRunningParallelTasks = False
+            Else
+                If V > 0 Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+                If L1 > 0 Then _Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, P, State.Liquid)
+                If L2 > 0 Then _Hl2 = proppack.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
+            End If
 
             Dim mmg, mml, mml2 As Double
             mmg = proppack.AUX_MMM(Vy)

@@ -363,9 +363,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                             task2.Start()
                             Task.WaitAll(task1, task2)
                         Catch ae As AggregateException
-                            For Each ex As Exception In ae.InnerExceptions
-                                Throw
-                            Next
+                            Throw ae.Flatten()
                         Finally
                             If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.DisableMultithreading()
@@ -499,9 +497,7 @@ alt:
                             task2.Start()
                             Task.WaitAll(task1, task2)
                         Catch ae As AggregateException
-                            For Each ex As Exception In ae.InnerExceptions
-                                Throw
-                            Next
+                            Throw ae.Flatten()
                         Finally
                             If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.DisableMultithreading()

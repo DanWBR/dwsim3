@@ -240,6 +240,9 @@ Klicken Sie "Weiter" um fortzufahren.</value>
   <data name="ListBoxPP.Items8" xml:space="preserve">
     <value>Nested Loops (VLLE - Immiscible Liquids)</value>
   </data>
+  <data name="ListBoxPP.Items9" xml:space="preserve">
+    <value>Nested Loops (VLLE, Alternate)</value>
+  </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 15</value>
   </data>

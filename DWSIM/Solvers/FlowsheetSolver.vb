@@ -462,9 +462,7 @@ Namespace DWSIM.Flowsheet
                             End Select
                         Catch ae As AggregateException
                             form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                            For Each ex As Exception In ae.InnerExceptions
-                                Throw ex
-                            Next
+                            Throw ae.Flatten()
                         Finally
                             My.MyApplication.IsFlowsheetSolving = False
                             If My.Settings.EnableGPUProcessing Then
@@ -694,9 +692,7 @@ Namespace DWSIM.Flowsheet
                             End Select
                         Catch ae As AggregateException
                             form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                            For Each ex As Exception In ae.InnerExceptions
-                                Throw ex
-                            Next
+                            Throw ae.Flatten()
                         Finally
                             My.MyApplication.IsFlowsheetSolving = False
                             If My.Settings.EnableGPUProcessing Then
@@ -924,9 +920,7 @@ Namespace DWSIM.Flowsheet
                             End Select
                         Catch ae As AggregateException
                             form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                            For Each ex As Exception In ae.InnerExceptions
-                                Throw ex
-                            Next
+                            Throw ae.Flatten()
                         Finally
                             My.MyApplication.IsFlowsheetSolving = False
                             If My.Settings.EnableGPUProcessing Then

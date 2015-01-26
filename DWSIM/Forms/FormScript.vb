@@ -200,8 +200,10 @@ Imports DWSIM.DWSIM.Outros
                             scr.LinkedEventType = Script.EventType.SolverRecycleLoop
                         End If
                     Case Else
-                        scr.LinkedObjectType = Script.ObjectType.FlowsheetObject
-                        scr.LinkedObjectName = fc.GetFlowsheetGraphicObject(seditor.cbLinkedObject.SelectedItem.ToString).Name
+                        If seditor.chkLink.Checked Then
+                            scr.LinkedObjectType = Script.ObjectType.FlowsheetObject
+                            scr.LinkedObjectName = fc.GetFlowsheetGraphicObject(seditor.cbLinkedObject.SelectedItem.ToString).Name
+                        End If
                         If seditor.cbLinkedEvent.SelectedIndex = 0 Then
                             scr.LinkedEventType = Script.EventType.ObjectCalculationStarted
                         ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
@@ -240,8 +242,10 @@ Imports DWSIM.DWSIM.Outros
                             scr.LinkedEventType = Script.EventType.SolverRecycleLoop
                         End If
                     Case Else
-                        scr.LinkedObjectType = Script.ObjectType.FlowsheetObject
-                        scr.LinkedObjectName = fc.GetFlowsheetGraphicObject(seditor.cbLinkedObject.SelectedItem.ToString).Name
+                        If seditor.chkLink.Checked Then
+                            scr.LinkedObjectType = Script.ObjectType.FlowsheetObject
+                            scr.LinkedObjectName = fc.GetFlowsheetGraphicObject(seditor.cbLinkedObject.SelectedItem.ToString).Name
+                        End If
                         If seditor.cbLinkedEvent.SelectedIndex = 0 Then
                             scr.LinkedEventType = Script.EventType.ObjectCalculationStarted
                         ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then

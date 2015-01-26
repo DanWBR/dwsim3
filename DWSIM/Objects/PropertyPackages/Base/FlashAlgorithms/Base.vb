@@ -194,9 +194,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     task2.Start()
                     Task.WaitAll(task1, task2)
                 Catch ae As AggregateException
-                    For Each ex As Exception In ae.InnerExceptions
-                        Throw ex
-                    Next
+                    Throw ae.Flatten()
                 Finally
                     If My.Settings.EnableGPUProcessing Then
                         My.MyApplication.gpu.DisableMultithreading()
@@ -331,9 +329,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                 task2.Start()
                                 Task.WaitAll(task1, task2)
                             Catch ae As AggregateException
-                                For Each ex As Exception In ae.InnerExceptions
-                                    Throw ex
-                                Next
+                                Throw ae.Flatten()
                             Finally
                                 If My.Settings.EnableGPUProcessing Then
                                     My.MyApplication.gpu.DisableMultithreading()
