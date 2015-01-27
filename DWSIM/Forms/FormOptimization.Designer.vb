@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormOptimization
-    Inherits System.Windows.Forms.Form
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -103,12 +103,12 @@ Partial Class FormOptimization
         '
         'GroupBox2
         '
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Controls.Add(Me.btnDeleteCase)
         Me.GroupBox2.Controls.Add(Me.btnSaveCase)
         Me.GroupBox2.Controls.Add(Me.btnCopyCase)
         Me.GroupBox2.Controls.Add(Me.btnNewCase)
         Me.GroupBox2.Controls.Add(Me.lbCases)
-        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
@@ -182,6 +182,7 @@ Partial Class FormOptimization
         '
         'dgVariables
         '
+        resources.ApplyResources(Me.dgVariables, "dgVariables")
         Me.dgVariables.AllowUserToAddRows = False
         Me.dgVariables.AllowUserToDeleteRows = False
         Me.dgVariables.AllowUserToResizeRows = False
@@ -191,14 +192,13 @@ Partial Class FormOptimization
         Me.dgVariables.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
         DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         Me.dgVariables.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.dgVariables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgVariables.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column8, Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column6, Me.Column7, Me.Column10, Me.Column5, Me.Column9})
-        resources.ApplyResources(Me.dgVariables, "dgVariables")
         Me.dgVariables.Name = "dgVariables"
         Me.dgVariables.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         '
@@ -267,23 +267,23 @@ Partial Class FormOptimization
         '
         'ToolStrip1
         '
+        resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbAddVar, Me.tsbDelVar})
-        resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
         Me.ToolStrip1.Name = "ToolStrip1"
         '
         'tsbAddVar
         '
+        resources.ApplyResources(Me.tsbAddVar, "tsbAddVar")
         Me.tsbAddVar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbAddVar.Image = Global.DWSIM.My.Resources.Resources.add
-        resources.ApplyResources(Me.tsbAddVar, "tsbAddVar")
         Me.tsbAddVar.Name = "tsbAddVar"
         '
         'tsbDelVar
         '
+        resources.ApplyResources(Me.tsbDelVar, "tsbDelVar")
         Me.tsbDelVar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbDelVar.Image = Global.DWSIM.My.Resources.Resources.delete1
-        resources.ApplyResources(Me.tsbDelVar, "tsbDelVar")
         Me.tsbDelVar.Name = "tsbDelVar"
         '
         'GroupBox4
@@ -491,10 +491,10 @@ Partial Class FormOptimization
         '
         'ComboBox1
         '
+        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Items.AddRange(New Object() {resources.GetString("ComboBox1.Items"), resources.GetString("ComboBox1.Items1"), resources.GetString("ComboBox1.Items2"), resources.GetString("ComboBox1.Items3"), resources.GetString("ComboBox1.Items4"), resources.GetString("ComboBox1.Items5"), resources.GetString("ComboBox1.Items6"), resources.GetString("ComboBox1.Items7"), resources.GetString("ComboBox1.Items8"), resources.GetString("ComboBox1.Items9"), resources.GetString("ComboBox1.Items10")})
-        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
         Me.ComboBox1.Name = "ComboBox1"
         '
         'Label9
@@ -547,7 +547,9 @@ Partial Class FormOptimization
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+        Me.HideOnClose = True
         Me.Name = "FormOptimization"
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.GroupBox2.ResumeLayout(False)

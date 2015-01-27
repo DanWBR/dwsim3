@@ -30,6 +30,8 @@ Imports Cureos.Numerics
 
 Public Class FormOptimization
 
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+
     Public nf As String
     Public su As DWSIM.SistemasDeUnidades.Unidades
     Public cv As DWSIM.SistemasDeUnidades.Conversor

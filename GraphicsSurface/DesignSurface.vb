@@ -682,9 +682,12 @@ Imports System.Runtime.Serialization
         middlex = (minx + maxx) / 2
         middley = (miny + maxy) / 2
 
-        Me.HorizontalScroll.Value = middlex - Me.Width / 2
-        Me.VerticalScroll.Value = middley - Me.Height / 2
 
+
+        Me.HorizontalScroll.Value = middlex * Me.Zoom - Me.Width / 2
+        Me.VerticalScroll.Value = middley * Me.Zoom - Me.Height / 2
+
+        Me.Invalidate()
         Me.Invalidate()
 
     End Sub

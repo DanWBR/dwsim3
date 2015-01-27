@@ -2715,7 +2715,9 @@ Public Class FormMain
 
     Sub SaveXML(ByVal path As String, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "")
 
-        form.ProcessScripts(Script.EventType.SimulationSaved, Script.ObjectType.Simulation)
+        If Not IO.Path.GetExtension(path).ToLower.Contains("dwbcs") Then
+            form.ProcessScripts(Script.EventType.SimulationSaved, Script.ObjectType.Simulation)
+        End If
 
         Dim xdoc As New XDocument()
         Dim xel As XElement
@@ -2853,19 +2855,21 @@ Public Class FormMain
 
         xdoc.Save(path)
 
-        Me.UIThread(New Action(Sub()
-                                   Dim mypath As String = simulationfilename
-                                   If mypath = "" Then mypath = [path]
-                                   'process recent files list
-                                   If Not My.Settings.MostRecentFiles.Contains(mypath) Then
-                                       My.Settings.MostRecentFiles.Add(mypath)
-                                       If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
-                                   End If
-                                   form.Options.FilePath = Me.filename
-                                   form.Text = form.Options.SimNome + " (" + form.Options.FilePath + ")"
-                                   form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
-                                   Me.ToolStripStatusLabel1.Text = ""
-                               End Sub))
+        If Not IO.Path.GetExtension(path).ToLower.Contains("dwbcs") Then
+            Me.UIThread(New Action(Sub()
+                                       Dim mypath As String = simulationfilename
+                                       If mypath = "" Then mypath = [path]
+                                       'process recent files list
+                                       If Not My.Settings.MostRecentFiles.Contains(mypath) Then
+                                           My.Settings.MostRecentFiles.Add(mypath)
+                                           If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
+                                       End If
+                                       form.Options.FilePath = Me.filename
+                                       form.Text = form.Options.SimNome + " (" + form.Options.FilePath + ")"
+                                       form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                                       Me.ToolStripStatusLabel1.Text = ""
+                                   End Sub))
+        End If
 
         Application.DoEvents()
 
@@ -4023,8 +4027,7 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
     Private Sub bgSaveBackup_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgSaveBackup.RunWorkerCompleted
         If Not (e.Error Is Nothing) Then
             ' There was an error during the operation.
-            MessageBox.Show("Erro ao salvar cópias de segurança: " & e.Error.Message & vbCrLf & DWSIM.App.GetLocalString("Paranovermaisesseavi"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-            My.Application.Log.WriteException(e.Error)
+            MessageBox.Show("Error saving backup file: " & e.Error.Message & vbCrLf & DWSIM.App.GetLocalString("Paranovermaisesseavi"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
 

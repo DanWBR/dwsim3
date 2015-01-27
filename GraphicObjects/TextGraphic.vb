@@ -18,7 +18,7 @@ Namespace GraphicObjects
     Public Class TextGraphic
         Inherits GraphicObject
 
-        Protected m_Font As Font = New Font("Verdana", 10, FontStyle.Regular, GraphicsUnit.Pixel, 0, False)
+        Protected m_Font As Font = System.Drawing.SystemFonts.DefaultFont
         Protected m_Text As String = ""
         Protected m_Color As Color = Drawing.Color.Black
         Protected m_TextRenderStyle As Drawing2D.SmoothingMode = Drawing2D.SmoothingMode.Default

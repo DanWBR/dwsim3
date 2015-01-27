@@ -796,14 +796,15 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub TSBTexto_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TSBTexto.Click
-        Dim myTextObject As New TextGraphic(-Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.X + 30, _
-            -Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.Y + 30, _
+        Dim myTextObject As New TextGraphic(-Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.X / Me.FormSurface.FlowsheetDesignSurface.Zoom + 30, _
+            -Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.Y / Me.FormSurface.FlowsheetDesignSurface.Zoom + 30, _
             DWSIM.App.GetLocalString("caixa_de_texto"), _
-            New Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel, 0, False), _
+            System.Drawing.SystemFonts.DefaultFont, _
             Color.Black)
         Dim gObj As GraphicObject = Nothing
         gObj = myTextObject
-        gObj.Tag = "LABEL-" & Guid.NewGuid.ToString
+        gObj.Name = "TEXT-" & Guid.NewGuid.ToString
+        gObj.Tag = "TEXT" & ((From t As GraphicObject In Me.FormSurface.FlowsheetDesignSurface.drawingObjects Select t Where t.TipoObjeto = TipoObjeto.GO_Texto).Count + 1).ToString
         gObj.AutoSize = True
         gObj.TipoObjeto = TipoObjeto.GO_Texto
         Me.FormSurface.FlowsheetDesignSurface.drawingObjects.Add(gObj)
@@ -812,8 +813,8 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub ToolStripButton19_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton19.Click
-        Dim myMasterTable As New DWSIM.GraphicObjects.MasterTableGraphic(-Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.X + 30, _
-           -Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.Y + 30)
+        Dim myMasterTable As New DWSIM.GraphicObjects.MasterTableGraphic(-Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.X / Me.FormSurface.FlowsheetDesignSurface.Zoom + 30, _
+           -Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.Y / Me.FormSurface.FlowsheetDesignSurface.Zoom + 30)
         Dim gObj As GraphicObject = Nothing
         gObj = myMasterTable
         gObj.Tag = "MASTERTABLE-" & Guid.NewGuid.ToString
@@ -837,8 +838,8 @@ Imports DWSIM.DWSIM.Outros
                 Dim img = System.Drawing.Image.FromFile(.FileName)
                 Dim gObj As GraphicObject = Nothing
                 If Not img Is Nothing Then
-                    Dim myEmbeddedImage As New EmbeddedImageGraphic(-Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.X, _
-                                    -Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.Y, img)
+                    Dim myEmbeddedImage As New EmbeddedImageGraphic(-Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.X / Me.FormSurface.FlowsheetDesignSurface.Zoom, _
+                                    -Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.Y / Me.FormSurface.FlowsheetDesignSurface.Zoom, img)
                     gObj = myEmbeddedImage
                     gObj.Tag = DWSIM.App.GetLocalString("FIGURA") & Guid.NewGuid.ToString
                     gObj.AutoSize = True
@@ -956,7 +957,7 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub MultivariateOptimizerToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MultivariateOptimizerToolStripMenuItem.Click
-        Me.FormOptimization0.ShowDialog(Me)
+        Me.FormOptimization0.Show(Me.dckPanel)
     End Sub
 
     Private Sub GerenciadorDeReaçõesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GerenciadorDeReaçõesToolStripMenuItem.Click
