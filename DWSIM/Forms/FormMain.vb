@@ -4027,7 +4027,7 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
     Private Sub bgSaveBackup_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgSaveBackup.RunWorkerCompleted
         If Not (e.Error Is Nothing) Then
             ' There was an error during the operation.
-            MessageBox.Show("Error saving backup file: " & e.Error.Message & vbCrLf & DWSIM.App.GetLocalString("Paranovermaisesseavi"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Console.WriteLine("Error saving backup file: " & e.Error.Message)
         End If
     End Sub
 
