@@ -1,5 +1,5 @@
 ﻿'    DWSIM Interface definitions
-'    Copyright 2010 Daniel Wagner O. de Medeiros
+'    Copyright 2010-2015 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -43,6 +43,14 @@ Namespace Interfaces
             Normal = 1
             Dockable = 2
         End Enum
+
+    End Interface
+
+    Public Interface IUtilityPlugin2
+
+        Inherits IUtilityPlugin
+
+        Function Run(args As Object) As Object
 
     End Interface
 
