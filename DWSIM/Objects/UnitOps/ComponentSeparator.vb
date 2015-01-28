@@ -226,10 +226,20 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 .MolarFlow = cv.ConverterParaSI(su.spmp_molarflow, cs.SpecValue)
                                 .MassFlow = .MolarFlow * .ConstantProperties.Molar_Weight / 1000
                             Case SeparationSpec.PercentInletMassFlow
-                                .MassFlow = cs.SpecValue / 100 * instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
+                                Dim mf As Double = instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
+                                If mf <> 0.0# Then
+                                    .MassFlow = cs.SpecValue / 100 * mf
+                                Else
+                                    .MassFlow = 0.0#
+                                End If
                                 .MolarFlow = .MassFlow / .ConstantProperties.Molar_Weight * 1000
                             Case SeparationSpec.PercentInletMolarFlow
-                                .MolarFlow = cs.SpecValue / 100 * instr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault
+                                Dim mf As Double = instr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault
+                                If mf <> 0.0# Then
+                                    .MassFlow = cs.SpecValue / 100 * mf
+                                Else
+                                    .MassFlow = 0.0#
+                                End If
                                 .MassFlow = .MolarFlow * .ConstantProperties.Molar_Weight / 1000
                         End Select
                     End With
@@ -257,8 +267,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             specstr.Fases(0).SPMProperties.molarflow = summ
             specstr.Fases(0).SPMProperties.massflow = sumw
             For Each sb As Substancia In specstr.Fases(0).Componentes.Values
-                sb.FracaoMolar = sb.MolarFlow.GetValueOrDefault / summ
-                sb.FracaoMassica = sb.MassFlow.GetValueOrDefault / sumw
+                If summ <> 0.0# Then sb.FracaoMolar = sb.MolarFlow.GetValueOrDefault / summ Else sb.FracaoMolar = 0.0#
+                If sumw <> 0.0# Then sb.FracaoMassica = sb.MassFlow.GetValueOrDefault / sumw Else sb.FracaoMassica = 0.0#
             Next
             summ = 0
             sumw = 0
@@ -269,8 +279,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             otherstr.Fases(0).SPMProperties.molarflow = summ
             otherstr.Fases(0).SPMProperties.massflow = sumw
             For Each sb As Substancia In otherstr.Fases(0).Componentes.Values
-                sb.FracaoMolar = sb.MolarFlow.GetValueOrDefault / summ
-                sb.FracaoMassica = sb.MassFlow.GetValueOrDefault / sumw
+                If summ <> 0.0# Then sb.FracaoMolar = sb.MolarFlow.GetValueOrDefault / summ Else sb.FracaoMolar = 0.0#
+                If sumw <> 0.0# Then sb.FracaoMassica = sb.MassFlow.GetValueOrDefault / sumw Else sb.FracaoMassica = 0.0#
             Next
 
             'pass conditions
@@ -280,21 +290,27 @@ Namespace DWSIM.SimulationObjects.UnitOps
             outstr2.Fases(0).SPMProperties.temperature = instr.Fases(0).SPMProperties.temperature.GetValueOrDefault
             outstr2.Fases(0).SPMProperties.pressure = instr.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
-            'do a flash calculation on streams to calculate energy imbalance
-
-            outstr1.PropertyPackage.CurrentMaterialStream = outstr1
-            outstr1.PropertyPackage.DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
-            outstr2.PropertyPackage.CurrentMaterialStream = outstr2
-            outstr2.PropertyPackage.DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
-
             Dim Hi, Ho1, Ho2, Wi, Wo1, Wo2 As Double
 
             Hi = instr.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
             Wi = instr.Fases(0).SPMProperties.massflow.GetValueOrDefault
-            Ho1 = outstr1.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+
             Wo1 = outstr1.Fases(0).SPMProperties.massflow.GetValueOrDefault
-            Ho2 = outstr2.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
             Wo2 = outstr2.Fases(0).SPMProperties.massflow.GetValueOrDefault
+
+            'do a flash calculation on streams to calculate energy imbalance
+
+            If Wo1 <> 0.0# Then
+                outstr1.PropertyPackage.CurrentMaterialStream = outstr1
+                outstr1.PropertyPackage.DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
+                Ho1 = outstr1.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+            End If
+
+            If Wo2 <> 0.0# Then
+                outstr2.PropertyPackage.CurrentMaterialStream = outstr2
+                outstr2.PropertyPackage.DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
+                Ho2 = outstr2.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+            End If
 
             'calculate imbalance
 

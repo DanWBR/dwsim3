@@ -28,14 +28,16 @@
 
         For Each kvp As KeyValuePair(Of Integer, WatchItem) In items
             Dim newitem As WatchItem = kvp.Value
-            Dim myobjname As String = My.Application.ActiveSimulation.Collections.ObjectCollection(newitem.ObjID).GraphicObject.Tag
-            Dim propname As String = DWSIM.App.GetPropertyName(newitem.PropID)
-            Dim propvalue As Object = My.Application.ActiveSimulation.Collections.ObjectCollection(newitem.ObjID).GetPropertyValue(newitem.PropID, My.Application.ActiveSimulation.Options.SelectedUnitSystem)
-            Dim propunit As String = My.Application.ActiveSimulation.Collections.ObjectCollection(newitem.ObjID).GetPropertyUnit(newitem.PropID, My.Application.ActiveSimulation.Options.SelectedUnitSystem)
-            Me.dgv.Rows.Add(New Object() {kvp.Key, newitem.ObjID, newitem.PropID, newitem.ROnly, myobjname, propname & " (" & propunit & ")", propvalue})
-            If kvp.Value.ROnly Then
-                Me.dgv.Rows(Me.dgv.Rows.Count - 1).ReadOnly = True
-                Me.dgv.Rows(Me.dgv.Rows.Count - 1).Cells(6).Style.BackColor = Color.LightGray
+            If My.Application.ActiveSimulation.Collections.ObjectCollection.ContainsKey(newitem.ObjID) Then
+                Dim myobjname As String = My.Application.ActiveSimulation.Collections.ObjectCollection(newitem.ObjID).GraphicObject.Tag
+                Dim propname As String = DWSIM.App.GetPropertyName(newitem.PropID)
+                Dim propvalue As Object = My.Application.ActiveSimulation.Collections.ObjectCollection(newitem.ObjID).GetPropertyValue(newitem.PropID, My.Application.ActiveSimulation.Options.SelectedUnitSystem)
+                Dim propunit As String = My.Application.ActiveSimulation.Collections.ObjectCollection(newitem.ObjID).GetPropertyUnit(newitem.PropID, My.Application.ActiveSimulation.Options.SelectedUnitSystem)
+                Me.dgv.Rows.Add(New Object() {kvp.Key, newitem.ObjID, newitem.PropID, newitem.ROnly, myobjname, propname & " (" & propunit & ")", propvalue})
+                If kvp.Value.ROnly Then
+                    Me.dgv.Rows(Me.dgv.Rows.Count - 1).ReadOnly = True
+                    Me.dgv.Rows(Me.dgv.Rows.Count - 1).Cells(6).Style.BackColor = Color.LightGray
+                End If
             End If
         Next
 
