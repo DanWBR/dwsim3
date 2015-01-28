@@ -43,6 +43,9 @@ Imports DWSIM.DWSIM.Outros
 
 #Region "    Variable Declarations "
 
+    Public Property MasterFlowsheet As FormFlowsheet = Nothing
+    Public Property RedirectMessages As Boolean = False
+
     Public FrmStSim1 As New FormStSim
     Public FrmPCBulk As New FormPCBulk
     Public FrmReport As New FormReportConfig
@@ -519,6 +522,13 @@ Imports DWSIM.DWSIM.Outros
 
         If Not My.MyApplication.CommandLineMode Then
 
+            Dim frlog As frmLog
+            If Not Me.MasterFlowsheet Is Nothing And Me.RedirectMessages Then
+                frlog = Me.MasterFlowsheet.FormLog
+            Else
+                frlog = Me.FormLog
+            End If
+
             Dim img As Bitmap
             Dim strtipo As String
             Select Case tipo
@@ -533,32 +543,32 @@ Imports DWSIM.DWSIM.Outros
                     strtipo = DWSIM.App.GetLocalString("Mensagem")
             End Select
 
-            If Me.FormLog.GridDT.Columns.Count < 4 Then
-                Me.FormLog.GridDT.Columns.Add("Imagem", GetType(Bitmap))
-                Me.FormLog.GridDT.Columns.Add("Data")
-                Me.FormLog.GridDT.Columns.Add("Tipo")
-                Me.FormLog.GridDT.Columns.Add("Mensagem")
-                Me.FormLog.GridDT.Columns.Add("Cor", GetType(Color))
-                Me.FormLog.GridDT.Columns.Add("Indice")
-            ElseIf Me.FormLog.GridDT.Columns.Count = 4 Then
-                Me.FormLog.GridDT.Columns.Add("Cor", GetType(Color))
-                Me.FormLog.GridDT.Columns.Add("Indice")
-            ElseIf Me.FormLog.GridDT.Columns.Count = 5 Then
-                Me.FormLog.GridDT.Columns.Add("Indice")
+            If frlog.GridDT.Columns.Count < 4 Then
+                frlog.GridDT.Columns.Add("Imagem", GetType(Bitmap))
+                frlog.GridDT.Columns.Add("Data")
+                frlog.GridDT.Columns.Add("Tipo")
+                frlog.GridDT.Columns.Add("Mensagem")
+                frlog.GridDT.Columns.Add("Cor", GetType(Color))
+                frlog.GridDT.Columns.Add("Indice")
+            ElseIf frlog.GridDT.Columns.Count = 4 Then
+                frlog.GridDT.Columns.Add("Cor", GetType(Color))
+                frlog.GridDT.Columns.Add("Indice")
+            ElseIf frlog.GridDT.Columns.Count = 5 Then
+                frlog.GridDT.Columns.Add("Indice")
             End If
-            Me.FormLog.GridDT.PrimaryKey = New DataColumn() {Me.FormLog.GridDT.Columns("Indice")}
-            With Me.FormLog.GridDT.Columns("Indice")
+            frlog.GridDT.PrimaryKey = New DataColumn() {frlog.GridDT.Columns("Indice")}
+            With frlog.GridDT.Columns("Indice")
                 .AutoIncrement = True
                 .AutoIncrementSeed = 1
                 .AutoIncrementStep = 1
                 .Unique = True
             End With
 
-            Me.FormLog.GridDT.Rows.Add(New Object() {img, Date.Now, strtipo, texto, cor, Me.FormLog.GridDT.Rows.Count})
+            frlog.GridDT.Rows.Add(New Object() {img, Date.Now, strtipo, texto, cor, frlog.GridDT.Rows.Count})
 
             If DWSIM.App.IsRunningOnMono Then
-                Me.FormLog.Grid1.Rows.Add(New Object() {img, Me.FormLog.GridDT.Rows.Count, Date.Now, strtipo, texto})
-                Me.FormLog.Grid1.Sort(Me.FormLog.Grid1.Columns(1), ListSortDirection.Descending)
+                frlog.Grid1.Rows.Add(New Object() {img, frlog.GridDT.Rows.Count, Date.Now, strtipo, texto})
+                frlog.Grid1.Sort(frlog.Grid1.Columns(1), ListSortDirection.Descending)
             End If
 
         Else

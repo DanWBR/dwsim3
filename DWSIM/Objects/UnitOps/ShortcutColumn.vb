@@ -402,7 +402,7 @@ restart:    B = F - D
             With distillate.Fases(0)
                 .SPMProperties.temperature = TD
             End With
-            CalculateMaterialStream(FlowSheet, distillate)
+            CalculateMaterialStream(FlowSheet, distillate, , True)
 
             HD = distillate.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * distillate.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
 
@@ -417,7 +417,7 @@ restart:    B = F - D
             With bottoms.Fases(0)
                 .SPMProperties.temperature = TB
             End With
-            CalculateMaterialStream(FlowSheet, bottoms)
+            CalculateMaterialStream(FlowSheet, bottoms, , True)
 
             HB = bottoms.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * bottoms.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
 

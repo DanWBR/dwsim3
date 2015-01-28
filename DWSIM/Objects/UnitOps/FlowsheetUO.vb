@@ -68,6 +68,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Property InputConnections As List(Of String)
         Public Property OutputConnections As List(Of String)
         Public Property MassBalanceError As Double = 0.0#
+        Public Property RedirectOutput As Boolean = False
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
 
@@ -808,6 +809,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Next
 
+            If Me.RedirectOutput Then
+                Fsheet.MasterFlowsheet = Me.FlowSheet
+                Fsheet.RedirectMessages = Me.RedirectOutput
+            Else
+                Fsheet.MasterFlowsheet = Nothing
+                Fsheet.RedirectMessages = Me.RedirectOutput
+            End If
+
+            Fsheet.Options.CalculatorActivated = True
+
             DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(Fsheet)
 
             wout = 0.0#
@@ -988,7 +999,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-            Dim pkey As String = prop.Split("][")(1).TrimEnd("]")
+            Dim pkey As String = prop.Split("][")(1).TrimStart("[").TrimEnd("]")
 
             Fsheet.Collections.ObjectCollection(InputParams(pkey).ObjectID).SetPropertyValue(InputParams(pkey).ObjectProperty, propval, su)
 
@@ -1198,6 +1209,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End If
 
                 .Item.Add(DWSIM.App.GetLocalString("InitializeOnLoad"), Me, "InitializeOnLoad", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("InitializeOnLoadDesc"), True)
+                .Item.Add(DWSIM.App.GetLocalString("RedirectOutput"), Me, "RedirectOutput", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("RedirectOutputDesc"), True)
 
                 If Initialized Then
 

@@ -11237,6 +11237,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Redirecionar mensagens.
+        '''</summary>
+        Friend Shared ReadOnly Property RedirectOutput() As String
+            Get
+                Return ResourceManager.GetString("RedirectOutput", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Redireciona as mensagens do sub-fluxograma para a janela de avisos do fluxograma principal..
+        '''</summary>
+        Friend Shared ReadOnly Property RedirectOutputDesc() As String
+            Get
+                Return ResourceManager.GetString("RedirectOutputDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Redução Normal 2:1.
         '''</summary>
         Friend Shared ReadOnly Property ReduoNormal21() As String

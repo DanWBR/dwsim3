@@ -4978,4 +4978,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="FlowsheetUO" xml:space="preserve">
     <value>Flowsheet Unit Operation</value>
   </data>
+  <data name="RedirectOutput" xml:space="preserve">
+    <value>Redirect calculator messages</value>
+  </data>
+  <data name="RedirectOutputDesc" xml:space="preserve">
+    <value>Redirect messages from subflowsheet calculations to the main flowsheet's log window.</value>
+  </data>
 </root>

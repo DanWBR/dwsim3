@@ -195,34 +195,36 @@ Namespace DWSIM.Flowsheet
                         Else
                             Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
                             Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
-                            For Each cp As ConnectionPoint In gobj.OutputConnectors
-                                If cp.IsAttached And cp.Type = ConType.ConOut Then
-                                    Dim obj As SimulationObjects_BaseClass = form.Collections.ObjectCollection(cp.AttachedConnector.AttachedTo.Name)
-                                    If TypeOf obj Is Streams.MaterialStream Then
-                                        Dim ms As Streams.MaterialStream = CType(obj, Streams.MaterialStream)
-                                        Try
-                                            ms.GraphicObject.Calculated = False
-                                            form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
-                                            CalculateMaterialStream(form, ms)
-                                            ms.GraphicObject.Calculated = True
-                                        Catch ex As Exception
-                                            form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                                            ms.GraphicObject.Calculated = False
-                                            ms.Clear()
-                                            ms.ClearAllProps()
-                                            ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                                            Dim st As New StackTrace(ex, True)
-                                            If st.FrameCount > 0 Then
-                                                form.WriteToLog(gobj.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                                            Else
-                                                form.WriteToLog(gobj.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                            End If
-                                        Finally
-                                            My.MyApplication.IsFlowsheetSolving = False
-                                        End Try
+                            If Not OnlyMe Then
+                                For Each cp As ConnectionPoint In gobj.OutputConnectors
+                                    If cp.IsAttached And cp.Type = ConType.ConOut Then
+                                        Dim obj As SimulationObjects_BaseClass = form.Collections.ObjectCollection(cp.AttachedConnector.AttachedTo.Name)
+                                        If TypeOf obj Is Streams.MaterialStream Then
+                                            Dim ms As Streams.MaterialStream = CType(obj, Streams.MaterialStream)
+                                            Try
+                                                ms.GraphicObject.Calculated = False
+                                                form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
+                                                CalculateMaterialStream(form, ms)
+                                                ms.GraphicObject.Calculated = True
+                                            Catch ex As Exception
+                                                form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
+                                                ms.GraphicObject.Calculated = False
+                                                ms.Clear()
+                                                ms.ClearAllProps()
+                                                ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                                Dim st As New StackTrace(ex, True)
+                                                If st.FrameCount > 0 Then
+                                                    form.WriteToLog(gobj.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                                Else
+                                                    form.WriteToLog(gobj.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                                End If
+                                            Finally
+                                                My.MyApplication.IsFlowsheetSolving = False
+                                            End Try
+                                        End If
                                     End If
-                                End If
-                            Next
+                                Next
+                            End If
                             myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                         End If
                 End Select

@@ -4947,4 +4947,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="FlowsheetUO" xml:space="preserve">
     <value>Fluxograma (UO)</value>
   </data>
+  <data name="RedirectOutput" xml:space="preserve">
+    <value>Redirecionar mensagens</value>
+  </data>
+  <data name="RedirectOutputDesc" xml:space="preserve">
+    <value>Redireciona as mensagens do sub-fluxograma para a janela de avisos do fluxograma principal.</value>
+  </data>
 </root>

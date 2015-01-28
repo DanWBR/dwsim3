@@ -4970,4 +4970,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="FlowsheetUO" xml:space="preserve">
     <value>Flowsheet Unit Operation</value>
   </data>
+  <data name="RedirectOutput" xml:space="preserve">
+    <value>Redirect rechner nachrichten</value>
+  </data>
+  <data name="RedirectOutputDesc" xml:space="preserve">
+    <value>Leiten Sie Nachrichten von Teilfließbild Berechnungen Log-Fenster des Hauptfließbild ist.</value>
+  </data>
 </root>
