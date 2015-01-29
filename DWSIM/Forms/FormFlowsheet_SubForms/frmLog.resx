@@ -132,18 +132,52 @@
   <metadata name="Imagem.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="Imagem.HeaderText" xml:space="preserve">
+    <value> </value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Imagem.Width" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
   <metadata name="Indice.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="Indice.HeaderText" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="Indice.Width" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
   <metadata name="Data.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="Data.HeaderText" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Data.Width" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
   <metadata name="Tipo.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="Tipo.HeaderText" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="Tipo.MinimumWidth" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="Tipo.Width" type="System.Int32, mscorlib">
+    <value>53</value>
+  </data>
   <metadata name="Mensagem.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="Mensagem.HeaderText" xml:space="preserve">
+    <value>Mensagem</value>
+  </data>
+  <data name="Mensagem.MinimumWidth" type="System.Int32, mscorlib">
+    <value>100</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Grid1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -155,7 +189,6 @@
   <data name="Grid1.Size" type="System.Drawing.Size, System.Drawing">
     <value>669, 134</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Grid1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
@@ -281,54 +314,6 @@
   </data>
   <data name="&gt;&gt;ToolStripContainer1.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <metadata name="Imagem.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="Imagem.HeaderText" xml:space="preserve">
-    <value> </value>
-  </data>
-  <data name="Imagem.Width" type="System.Int32, mscorlib">
-    <value>35</value>
-  </data>
-  <metadata name="Indice.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="Indice.HeaderText" xml:space="preserve">
-    <value> </value>
-  </data>
-  <data name="Indice.Width" type="System.Int32, mscorlib">
-    <value>35</value>
-  </data>
-  <metadata name="Data.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="Data.HeaderText" xml:space="preserve">
-    <value>Data</value>
-  </data>
-  <data name="Data.Width" type="System.Int32, mscorlib">
-    <value>55</value>
-  </data>
-  <metadata name="Tipo.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="Tipo.HeaderText" xml:space="preserve">
-    <value>Tipo</value>
-  </data>
-  <data name="Tipo.MinimumWidth" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="Tipo.Width" type="System.Int32, mscorlib">
-    <value>53</value>
-  </data>
-  <metadata name="Mensagem.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="Mensagem.HeaderText" xml:space="preserve">
-    <value>Mensagem</value>
-  </data>
-  <data name="Mensagem.MinimumWidth" type="System.Int32, mscorlib">
-    <value>100</value>
   </data>
   <data name="ToolStripButton5.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>

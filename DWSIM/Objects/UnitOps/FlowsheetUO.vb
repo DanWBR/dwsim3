@@ -728,13 +728,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     xel.Add(New XElement("SimulationObject", {so.SaveData().ToArray()}))
                 Next
 
-                xel = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects")
-                xel.RemoveAll()
-
-                For Each go As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject In Me.Fsheet.FormSurface.FlowsheetDesignSurface.drawingObjects
-                    If Not go.IsConnector Then xel.Add(New XElement("GraphicObject", go.SaveData().ToArray()))
-                Next
-
                 xdoc.Save(path)
 
                 FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": " & DWSIM.App.GetLocalString("SubFSUpdateSuccess"), Color.Blue, FormClasses.TipoAviso.Informacao)
