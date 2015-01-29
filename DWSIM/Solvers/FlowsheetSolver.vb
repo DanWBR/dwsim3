@@ -57,8 +57,6 @@ Namespace DWSIM.Flowsheet
 
                 form.ProcessScripts(Script.EventType.ObjectCalculationStarted, Script.ObjectType.FlowsheetObject, objArgs.Nome)
 
-                My.MyApplication.IsFlowsheetSolving = True
-
                 Select Case objArgs.Tipo
                     Case TipoObjeto.MaterialStream
                         Dim myObj As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(objArgs.Nome)
@@ -108,12 +106,10 @@ Namespace DWSIM.Flowsheet
                                             gobj.Calculated = False
                                             myUnitOp.Unsolve()
                                         Finally
-                                            My.MyApplication.IsFlowsheetSolving = False
                                             form.FormSurface.FlowsheetDesignSurface.drawingObjects.Remove(gObjA)
                                             form.FormSurface.FlowsheetDesignSurface.Invalidate()
                                         End Try
                                     Else
-                                        My.MyApplication.IsFlowsheetSolving = False
                                         myUnitOp.Unsolve()
                                         gobj = myUnitOp.GraphicObject
                                         gobj.Calculated = False
@@ -158,10 +154,8 @@ Namespace DWSIM.Flowsheet
                                         myUnitOp.Unsolve()
                                         myUnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                                     Finally
-                                        My.MyApplication.IsFlowsheetSolving = False
                                     End Try
                                 Else
-                                    My.MyApplication.IsFlowsheetSolving = False
                                     myUnitOp.Unsolve()
                                     myUnitOp.GraphicObject.Calculated = False
                                 End If
@@ -189,9 +183,7 @@ Namespace DWSIM.Flowsheet
                                 Else
                                     form.WriteToLog(myObj.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                 End If
-                            Finally
-                                My.MyApplication.IsFlowsheetSolving = False
-                            End Try
+                           End Try
                         Else
                             Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
                             Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
@@ -218,8 +210,6 @@ Namespace DWSIM.Flowsheet
                                                 Else
                                                     form.WriteToLog(gobj.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                                 End If
-                                            Finally
-                                                My.MyApplication.IsFlowsheetSolving = False
                                             End Try
                                         End If
                                     End If
@@ -232,8 +222,6 @@ Namespace DWSIM.Flowsheet
                 form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, objArgs.Nome)
 
                 RaiseEvent UnitOpCalculationFinished(form, New System.EventArgs(), objArgs)
-
-                My.MyApplication.IsFlowsheetSolving = False
 
             End If
 
@@ -257,8 +245,6 @@ Namespace DWSIM.Flowsheet
             RaiseEvent MaterialStreamCalculationStarted(form, New System.EventArgs(), ms)
 
             form.ProcessScripts(Script.EventType.ObjectCalculationStarted, Script.ObjectType.FlowsheetObject, ms.Nome)
-
-            My.MyApplication.IsFlowsheetSolving = True
 
             If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
@@ -305,9 +291,7 @@ Namespace DWSIM.Flowsheet
                             Else
                                 form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                             End If
-                        Finally
-                            My.MyApplication.IsFlowsheetSolving = False
-                        End Try
+                       End Try
                     Else
                         If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
                             If ms.GraphicObject.InputConnectors(0).IsAttached Then
@@ -316,8 +300,6 @@ Namespace DWSIM.Flowsheet
                                 Catch ex As Exception
                                     form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
                                     form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                Finally
-                                    My.MyApplication.IsFlowsheetSolving = False
                                 End Try
                             Else
                                 Try
@@ -341,8 +323,6 @@ Namespace DWSIM.Flowsheet
                                     Else
                                         form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                     End If
-                                Finally
-                                    My.MyApplication.IsFlowsheetSolving = False
                                 End Try
                             End If
                         Else
@@ -367,8 +347,6 @@ Namespace DWSIM.Flowsheet
                                 Else
                                     form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                 End If
-                            Finally
-                                My.MyApplication.IsFlowsheetSolving = False
                             End Try
                         End If
                     End If
@@ -466,8 +444,7 @@ Namespace DWSIM.Flowsheet
                             form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
                             Throw ae.Flatten()
                         Finally
-                            My.MyApplication.IsFlowsheetSolving = False
-                            If My.Settings.EnableGPUProcessing Then
+                           If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.DisableMultithreading()
                                 My.MyApplication.gpu.FreeAll()
                             End If
@@ -541,8 +518,6 @@ Namespace DWSIM.Flowsheet
                             Else
                                 form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                             End If
-                        Finally
-                            My.MyApplication.IsFlowsheetSolving = False
                         End Try
                     Else
                         If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
@@ -557,8 +532,6 @@ Namespace DWSIM.Flowsheet
                                     Else
                                         form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                     End If
-                                Finally
-                                    My.MyApplication.IsFlowsheetSolving = False
                                 End Try
                             Else
                                 Try
@@ -571,8 +544,6 @@ Namespace DWSIM.Flowsheet
                                     Else
                                         form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                     End If
-                                Finally
-                                    My.MyApplication.IsFlowsheetSolving = False
                                 End Try
                             End If
                         Else
@@ -597,8 +568,6 @@ Namespace DWSIM.Flowsheet
                                 Else
                                     form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                 End If
-                            Finally
-                                My.MyApplication.IsFlowsheetSolving = False
                             End Try
                         End If
                     End If
@@ -696,8 +665,7 @@ Namespace DWSIM.Flowsheet
                             form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
                             Throw ae.Flatten()
                         Finally
-                            My.MyApplication.IsFlowsheetSolving = False
-                            If My.Settings.EnableGPUProcessing Then
+                           If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.DisableMultithreading()
                                 My.MyApplication.gpu.FreeAll()
                             End If
@@ -774,9 +742,7 @@ Namespace DWSIM.Flowsheet
                             Else
                                 form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                             End If
-                        Finally
-                            My.MyApplication.IsFlowsheetSolving = False
-                        End Try
+                      End Try
                     Else
                         If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
                             If ms.GraphicObject.InputConnectors(0).IsAttached Then
@@ -785,8 +751,6 @@ Namespace DWSIM.Flowsheet
                                 Catch ex As Exception
                                     form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
                                     form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                Finally
-                                    My.MyApplication.IsFlowsheetSolving = False
                                 End Try
                             Else
                                 Try
@@ -799,8 +763,6 @@ Namespace DWSIM.Flowsheet
                                     Else
                                         form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                     End If
-                                Finally
-                                    My.MyApplication.IsFlowsheetSolving = False
                                 End Try
                             End If
                         Else
@@ -825,8 +787,6 @@ Namespace DWSIM.Flowsheet
                                 Else
                                     form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                 End If
-                            Finally
-                                My.MyApplication.IsFlowsheetSolving = False
                             End Try
                         End If
                     End If
@@ -924,7 +884,6 @@ Namespace DWSIM.Flowsheet
                             form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
                             Throw ae.Flatten()
                         Finally
-                            My.MyApplication.IsFlowsheetSolving = False
                             If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.DisableMultithreading()
                                 My.MyApplication.gpu.FreeAll()
@@ -1019,8 +978,6 @@ Namespace DWSIM.Flowsheet
             form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, ms.Nome)
 
             RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), ms)
-
-            My.MyApplication.IsFlowsheetSolving = False
 
             ms.Calculated = calculated
 
@@ -1358,6 +1315,8 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Public Shared Sub CheckCalculatorStatus()
 
+            Application.DoEvents()
+
             If Not My.MyApplication.IsRunningParallelTasks Then
                 If Not My.Application.CAPEOPENMode Then
                     If My.MyApplication.CalculatorStopRequested = True Then
@@ -1388,8 +1347,6 @@ Namespace DWSIM.Flowsheet
             form.ProcessScripts(Script.EventType.SolverStarted, Script.ObjectType.Solver)
 
             RaiseEvent FlowsheetCalculationStarted(form, New System.EventArgs(), Nothing)
-
-            My.MyApplication.IsFlowsheetSolving = True
 
             'find recycles.
 
@@ -1510,8 +1467,6 @@ Namespace DWSIM.Flowsheet
             lists.Clear()
             recycles.Clear()
 
-            My.MyApplication.IsFlowsheetSolving = False
-
             form.ProcessScripts(Script.EventType.SolverFinished, Script.ObjectType.Solver)
 
             RaiseEvent FlowsheetCalculationFinished(form, New System.EventArgs(), Nothing)
@@ -1528,8 +1483,6 @@ Namespace DWSIM.Flowsheet
             RaiseEvent FlowsheetCalculationStarted(form, New System.EventArgs(), Nothing)
 
             form.ProcessScripts(Script.EventType.SolverStarted, Script.ObjectType.Solver)
-
-            My.MyApplication.IsFlowsheetSolving = True
 
             For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                 If baseobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream And baseobj.GraphicObject.Calculated Then
@@ -1551,8 +1504,6 @@ Namespace DWSIM.Flowsheet
                 End If
             Next
             ProcessCalculationQueue(form)
-
-            My.MyApplication.IsFlowsheetSolving = False
 
             form.ProcessScripts(Script.EventType.SolverFinished, Script.ObjectType.Solver)
 

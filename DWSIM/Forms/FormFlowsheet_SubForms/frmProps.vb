@@ -40,12 +40,6 @@ Public Class frmProps
 
         Dim sobj As Microsoft.MSDN.Samples.GraphicObjects.GraphicObject = ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject
 
-        If My.MyApplication.IsFlowsheetSolving Then
-            ChildParent.WriteToLog("Please wait to change variables again, flowsheet is solving...", Color.Blue, FormClasses.TipoAviso.Aviso)
-            Application.DoEvents()
-            Exit Sub
-        End If
-
         'handle changes internally
         If Not sobj Is Nothing Then
 
@@ -158,7 +152,7 @@ Public Class frmProps
 
                     If ChildParent.Options.CalculatorActivated Then
 
-                        If Not My.MyApplication.IsFlowsheetSolving Then CalculateObject(ChildParent, sobj.Name)
+                        CalculateObject(ChildParent, sobj.Name)
 
                     End If
 
@@ -976,7 +970,7 @@ Public Class frmProps
         Call ChildParent.FormSurface.UpdateSelectedObject()
         Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
 
-        If ChildParent.Options.CalculatorActivated And Not My.MyApplication.IsFlowsheetSolving Then ProcessCalculationQueue(ChildParent)
+        If ChildParent.Options.CalculatorActivated Then ProcessCalculationQueue(ChildParent)
 
     End Sub
 

@@ -949,12 +949,10 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub ToolStripButton13_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton13.Click
-        If Not My.MyApplication.IsFlowsheetSolving Then
-            If My.Computer.Keyboard.ShiftKeyDown Then
-                CalculateAll(Me)
-            Else
-                CalculateAll2(Me)
-            End If
+        If My.Computer.Keyboard.ShiftKeyDown Then
+            CalculateAll(Me)
+        Else
+            CalculateAll2(Me)
         End If
     End Sub
 
