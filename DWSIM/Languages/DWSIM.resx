@@ -4987,4 +4987,16 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="RedirectOutputDesc" xml:space="preserve">
     <value>Redireciona as mensagens do sub-fluxograma para a janela de avisos do fluxograma principal.</value>
   </data>
+  <data name="SubFSUpdateFailed" xml:space="preserve">
+    <value>Erro ao atualizar as informações de processo do sub-fluxograma:</value>
+  </data>
+  <data name="SubFSUpdateSuccess" xml:space="preserve">
+    <value>Informações de processo do sub-fluxograma atualizadas com sucesso.</value>
+  </data>
+  <data name="UpdateOnSave" xml:space="preserve">
+    <value>Atualizar ao salvar</value>
+  </data>
+  <data name="UpdateOnSaveDesc" xml:space="preserve">
+    <value>Atualiza as informações de processo do sub-fluxograma no arquivo ao salvar o fluxograma principal.</value>
+  </data>
 </root>

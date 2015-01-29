@@ -61,6 +61,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Property SimulationFile As String = ""
         <System.Xml.Serialization.XmlIgnore> Public Property Initialized As Boolean = False
         Public Property InitializeOnLoad As Boolean = False
+        Public Property UpdateOnSave As Boolean = False
         Public Property MassTransferMode As FlowsheetUOMassTransferMode = FlowsheetUOMassTransferMode.CompoundMassFlows
         Public Property InputParams As Dictionary(Of String, FlowsheetUOParameter)
         Public Property OutputParams As Dictionary(Of String, FlowsheetUOParameter)
@@ -704,6 +705,49 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Sub
 
+        Public Sub UpdateProcessData(path As String)
+
+            Try
+
+                Dim xdoc As XDocument = XDocument.Load(path)
+
+                Dim xel As XElement
+
+                Dim ci As CultureInfo = CultureInfo.InvariantCulture
+
+                xel = xdoc.Element("DWSIM_Simulation_Data").Element("GeneralInfo")
+
+                xel.RemoveAll()
+                xel.Add(New XElement("BuildVersion", My.Application.Info.Version.ToString))
+                xel.Add(New XElement("BuildDate", CType("01/01/2000", DateTime).AddDays(My.Application.Info.Version.Build).AddSeconds(My.Application.Info.Version.Revision * 2)))
+                xel.Add(New XElement("OSInfo", My.Computer.Info.OSFullName & ", Version " & My.Computer.Info.OSVersion & ", " & My.Computer.Info.OSPlatform & " Platform"))
+                xel.Add(New XElement("SavedOn", Date.Now))
+
+                xel = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects")
+
+                For Each so As SimulationObjects_BaseClass In Me.Fsheet.Collections.ObjectCollection.Values
+                    xel.Add(New XElement("SimulationObject", {so.SaveData().ToArray()}))
+                Next
+
+                xel = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects")
+
+                For Each go As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject In Me.Fsheet.FormSurface.FlowsheetDesignSurface.drawingObjects
+                    If Not go.IsConnector Then xel.Add(New XElement("GraphicObject", go.SaveData().ToArray()))
+                Next
+
+                xdoc.Save(path)
+
+                FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": " & DWSIM.App.GetLocalString("SubFSUpdateSuccess"), Color.Blue, FormClasses.TipoAviso.Informacao)
+
+            Catch ex As Exception
+
+                FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": " & DWSIM.App.GetLocalString("SubFSUpdateFailed") & " " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+
+            End Try
+       
+
+        End Sub
+
         Public Overrides Function Calculate(Optional args As Object = Nothing) As Integer
 
             Validate()
@@ -1209,6 +1253,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End If
 
                 .Item.Add(DWSIM.App.GetLocalString("InitializeOnLoad"), Me, "InitializeOnLoad", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("InitializeOnLoadDesc"), True)
+                .Item.Add(DWSIM.App.GetLocalString("UpdateOnSave"), Me, "UpdateOnSave", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("UpdateOnSaveDesc"), True)
                 .Item.Add(DWSIM.App.GetLocalString("RedirectOutput"), Me, "RedirectOutput", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("RedirectOutputDesc"), True)
 
                 If Initialized Then
@@ -1322,6 +1367,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Item(.Count - 1).Add(New XElement("FlowsheetUOParameter", p.SaveData.ToArray))
                 Next
             End With
+
+            If Me.UpdateOnSave Then
+                ParseFilePath()
+                UpdateProcessData(SimulationFile)
+            End If
 
             Return elements
 

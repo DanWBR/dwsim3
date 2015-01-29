@@ -4984,4 +4984,16 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="RedirectOutputDesc" xml:space="preserve">
     <value>Redirect messages from subflowsheet calculations to the main flowsheet's log window.</value>
   </data>
+  <data name="SubFSUpdateFailed" xml:space="preserve">
+    <value>Error updating subflowsheet process data:</value>
+  </data>
+  <data name="SubFSUpdateSuccess" xml:space="preserve">
+    <value>Subflowsheet process data updated successfully.</value>
+  </data>
+  <data name="UpdateOnSave" xml:space="preserve">
+    <value>Update process data on saving</value>
+  </data>
+  <data name="UpdateOnSaveDesc" xml:space="preserve">
+    <value>Updates the sub-flowsheet file with process data from the last calculation run when saving the main flowsheet file (XML only).</value>
+  </data>
 </root>

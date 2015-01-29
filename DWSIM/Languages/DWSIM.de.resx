@@ -4976,4 +4976,16 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="RedirectOutputDesc" xml:space="preserve">
     <value>Leiten Sie Nachrichten von Teilfließbild Berechnungen Log-Fenster des Hauptfließbild ist.</value>
   </data>
+  <data name="SubFSUpdateFailed" xml:space="preserve">
+    <value>Fehler beim aktualisieren der subflowsheet prozessdaten:</value>
+  </data>
+  <data name="SubFSUpdateSuccess" xml:space="preserve">
+    <value>Subflowsheet prozessdaten erfolgreich aktualisiert.</value>
+  </data>
+  <data name="UpdateOnSave" xml:space="preserve">
+    <value>Update-prozessdaten über das speichern</value>
+  </data>
+  <data name="UpdateOnSaveDesc" xml:space="preserve">
+    <value>Aktualisiert die unterflowsheet-Datei mit prozessdaten aus der letzten berechnung lauf beim speichern des hauptfließbild-datei (XML-only).</value>
+  </data>
 </root>
