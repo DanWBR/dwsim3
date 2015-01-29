@@ -45,7 +45,7 @@ Public Class FormRecoverFiles
                 If row.Cells(0).Value = 1 Then
                     FormMain.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " (" + row.Cells(1).Value + ")"
                     Application.DoEvents()
-                    FormMain.LoadXML(row.Cells(1).Value)
+                    FormMain.LoadF(row.Cells(1).Value)
                 End If
             Next
         Catch ex As Exception

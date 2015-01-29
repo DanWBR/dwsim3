@@ -713,8 +713,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Dim xel As XElement
 
-                Dim ci As CultureInfo = CultureInfo.InvariantCulture
-
                 xel = xdoc.Element("DWSIM_Simulation_Data").Element("GeneralInfo")
 
                 xel.RemoveAll()
@@ -724,12 +722,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 xel.Add(New XElement("SavedOn", Date.Now))
 
                 xel = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects")
+                xel.RemoveAll()
 
                 For Each so As SimulationObjects_BaseClass In Me.Fsheet.Collections.ObjectCollection.Values
                     xel.Add(New XElement("SimulationObject", {so.SaveData().ToArray()}))
                 Next
 
                 xel = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects")
+                xel.RemoveAll()
 
                 For Each go As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject In Me.Fsheet.FormSurface.FlowsheetDesignSurface.drawingObjects
                     If Not go.IsConnector Then xel.Add(New XElement("GraphicObject", go.SaveData().ToArray()))

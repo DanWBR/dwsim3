@@ -187,8 +187,18 @@ Imports DWSIM.DWSIM.Outros
                             scr.LinkedEventType = Script.EventType.SimulationOpened
                         ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
                             scr.LinkedEventType = Script.EventType.SimulationSaved
-                        Else
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 2 Then
                             scr.LinkedEventType = Script.EventType.SimulationClosed
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 3 Then
+                            scr.LinkedEventType = Script.EventType.SimulationTimer1
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 4 Then
+                            scr.LinkedEventType = Script.EventType.SimulationTimer5
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 5 Then
+                            scr.LinkedEventType = Script.EventType.SimulationTimer15
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 6 Then
+                            scr.LinkedEventType = Script.EventType.SimulationTimer30
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 7 Then
+                            scr.LinkedEventType = Script.EventType.SimulationTimer60
                         End If
                     Case 1
                         scr.LinkedObjectType = Script.ObjectType.Solver
@@ -229,8 +239,18 @@ Imports DWSIM.DWSIM.Outros
                             scr.LinkedEventType = Script.EventType.SimulationOpened
                         ElseIf seditor.cbLinkedEvent.SelectedIndex = 1 Then
                             scr.LinkedEventType = Script.EventType.SimulationSaved
-                        Else
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 2 Then
                             scr.LinkedEventType = Script.EventType.SimulationClosed
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 3 Then
+                            scr.LinkedEventType = Script.EventType.SimulationTimer1
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 4 Then
+                            scr.LinkedEventType = Script.EventType.SimulationTimer5
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 5 Then
+                            scr.LinkedEventType = Script.EventType.SimulationTimer15
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 6 Then
+                            scr.LinkedEventType = Script.EventType.SimulationTimer30
+                        ElseIf seditor.cbLinkedEvent.SelectedIndex = 7 Then
+                            scr.LinkedEventType = Script.EventType.SimulationTimer60
                         End If
                     Case 1
                         scr.LinkedObjectType = Script.ObjectType.Solver
@@ -374,6 +394,16 @@ Imports DWSIM.DWSIM.Outros
                         .cbLinkedEvent.SelectedIndex = 1
                     Case Script.EventType.SolverRecycleLoop
                         .cbLinkedEvent.SelectedIndex = 2
+                    Case Script.EventType.SimulationTimer1
+                        .cbLinkedEvent.SelectedIndex = 3
+                    Case Script.EventType.SimulationTimer5
+                        .cbLinkedEvent.SelectedIndex = 4
+                    Case Script.EventType.SimulationTimer15
+                        .cbLinkedEvent.SelectedIndex = 5
+                    Case Script.EventType.SimulationTimer30
+                        .cbLinkedEvent.SelectedIndex = 6
+                    Case Script.EventType.SimulationTimer60
+                        .cbLinkedEvent.SelectedIndex = 7
                 End Select
 
             End With
@@ -439,6 +469,16 @@ Imports DWSIM.DWSIM.Outros
                         .cbLinkedEvent.SelectedIndex = 1
                     Case Script.EventType.SolverRecycleLoop
                         .cbLinkedEvent.SelectedIndex = 2
+                    Case Script.EventType.SimulationTimer1
+                        .cbLinkedEvent.SelectedIndex = 3
+                    Case Script.EventType.SimulationTimer5
+                        .cbLinkedEvent.SelectedIndex = 4
+                    Case Script.EventType.SimulationTimer15
+                        .cbLinkedEvent.SelectedIndex = 5
+                    Case Script.EventType.SimulationTimer30
+                        .cbLinkedEvent.SelectedIndex = 6
+                    Case Script.EventType.SimulationTimer60
+                        .cbLinkedEvent.SelectedIndex = 7
                 End Select
 
             End With

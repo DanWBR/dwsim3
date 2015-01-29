@@ -178,6 +178,11 @@ Partial Class FormFlowsheet
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.OpenFileName = New System.Windows.Forms.OpenFileDialog()
+        Me.TimerScripts1 = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerScripts5 = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerScripts15 = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerScripts30 = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerScripts60 = New System.Windows.Forms.Timer(Me.components)
         Me.ToolStrip4.SuspendLayout()
         Me.ToolStrip7.SuspendLayout()
         Me.ToolStrip6.SuspendLayout()
@@ -1148,6 +1153,31 @@ Partial Class FormFlowsheet
         Me.SaveFileDialog1.DefaultExt = "png"
         resources.ApplyResources(Me.SaveFileDialog1, "SaveFileDialog1")
         '
+        'TimerScripts1
+        '
+        Me.TimerScripts1.Enabled = True
+        Me.TimerScripts1.Interval = 60000
+        '
+        'TimerScripts5
+        '
+        Me.TimerScripts5.Enabled = True
+        Me.TimerScripts5.Interval = 300000
+        '
+        'TimerScripts15
+        '
+        Me.TimerScripts15.Enabled = True
+        Me.TimerScripts15.Interval = 900000
+        '
+        'TimerScripts30
+        '
+        Me.TimerScripts30.Enabled = True
+        Me.TimerScripts30.Interval = 1800000
+        '
+        'TimerScripts60
+        '
+        Me.TimerScripts60.Enabled = True
+        Me.TimerScripts60.Interval = 3600000
+        '
         'FormFlowsheet
         '
         resources.ApplyResources(Me, "$this")
@@ -1316,4 +1346,9 @@ Partial Class FormFlowsheet
     Friend WithEvents LLEDiagramToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents TSMIExcelUO As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents TSMIFlowsheet As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents TimerScripts1 As System.Windows.Forms.Timer
+    Friend WithEvents TimerScripts5 As System.Windows.Forms.Timer
+    Friend WithEvents TimerScripts15 As System.Windows.Forms.Timer
+    Friend WithEvents TimerScripts30 As System.Windows.Forms.Timer
+    Friend WithEvents TimerScripts60 As System.Windows.Forms.Timer
 End Class

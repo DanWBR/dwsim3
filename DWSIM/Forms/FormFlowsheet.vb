@@ -2415,5 +2415,28 @@ Imports DWSIM.DWSIM.Outros
 
 #End Region
 
+#Region "    Script Timers"
+
+    Private Sub TimerScripts1_Tick(sender As Object, e As EventArgs) Handles TimerScripts1.Tick
+        Me.ProcessScripts(Script.EventType.SimulationTimer1, Script.ObjectType.Simulation)
+    End Sub
+
+    Private Sub TimerScripts5_Tick(sender As Object, e As EventArgs) Handles TimerScripts5.Tick
+        Me.ProcessScripts(Script.EventType.SimulationTimer5, Script.ObjectType.Simulation)
+    End Sub
+
+    Private Sub TimerScripts15_Tick(sender As Object, e As EventArgs) Handles TimerScripts15.Tick
+        Me.ProcessScripts(Script.EventType.SimulationTimer15, Script.ObjectType.Simulation)
+    End Sub
+
+    Private Sub TimerScripts30_Tick(sender As Object, e As EventArgs) Handles TimerScripts30.Tick
+        Me.ProcessScripts(Script.EventType.SimulationTimer30, Script.ObjectType.Simulation)
+    End Sub
+
+    Private Sub TimerScripts60_Tick(sender As Object, e As EventArgs) Handles TimerScripts60.Tick
+        Me.ProcessScripts(Script.EventType.SimulationTimer60, Script.ObjectType.Simulation)
+    End Sub
+
+#End Region
 
 End Class

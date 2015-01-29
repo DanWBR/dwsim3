@@ -18,7 +18,7 @@ Public Class ScriptEditorControlMono
     Private Sub ScriptEditorControl_Load(sender As Object, e As EventArgs) Handles Me.Load
 
         cbLinkedObject.Items.AddRange(New String() {"Simulation", "Solver"})
-        cbLinkedEvent.Items.AddRange(New String() {"Simulation Opened", "Simulation Saved", "Simulation Closed"})
+        cbLinkedEvent.Items.AddRange(New String() {"Simulation Opened", "Simulation Saved", "Simulation Closed", "1 min. Timer", "5 min. Timer", "15 min. Timer", "30 min. Timer", "60 min. Timer"})
 
         For Each obj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
             cbLinkedObject.Items.Add(obj.GraphicObject.Tag)
@@ -31,7 +31,7 @@ Public Class ScriptEditorControlMono
         Select Case cbLinkedObject.SelectedIndex
             Case 0
                 cbLinkedEvent.Items.Clear()
-                cbLinkedEvent.Items.AddRange(New String() {"Simulation Opened", "Simulation Saved", "Simulation Closed"})
+                cbLinkedEvent.Items.AddRange(New String() {"Simulation Opened", "Simulation Saved", "Simulation Closed", "1 min. Timer", "5 min. Timer", "15 min. Timer", "30 min. Timer", "60 min. Timer"})
             Case 1
                 cbLinkedEvent.Items.Clear()
                 cbLinkedEvent.Items.AddRange(New String() {"Solver Started", "Solver Finished", "Recycle Loop"})

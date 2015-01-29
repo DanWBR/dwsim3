@@ -294,6 +294,11 @@ Namespace DWSIM.Outros
             SolverStarted = 6
             SolverFinished = 7
             SolverRecycleLoop = 8
+            SimulationTimer1 = 9
+            SimulationTimer5 = 10
+            SimulationTimer15 = 11
+            SimulationTimer30 = 12
+            SimulationTimer60 = 13
         End Enum
 
         Public Property ID As String = ""
