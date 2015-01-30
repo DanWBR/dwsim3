@@ -1314,13 +1314,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InputParameters").Elements.ToList
                 Dim fp As New FlowsheetUOParameter()
                 fp.LoadData(xel.Elements.ToList)
-                Me.InputParams.Add(fp.ID, fp)
+                If Fsheet.Collections.ObjectCollection.ContainsKey(fp.ObjectID) Then Me.InputParams.Add(fp.ID, fp)
             Next
 
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "OutputParameters").Elements.ToList
                 Dim fp As New FlowsheetUOParameter()
                 fp.LoadData(xel.Elements.ToList)
-                Me.OutputParams.Add(fp.ID, fp)
+                If Fsheet.Collections.ObjectCollection.ContainsKey(fp.ObjectID) Then Me.OutputParams.Add(fp.ID, fp)
             Next
 
             m_nodeitems = Nothing

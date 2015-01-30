@@ -1236,7 +1236,7 @@ Namespace DWSIM.GraphicObjects
                         g.Transform = myMatrix
                     End If
 
-                    
+
                     'If Not Me.TextRenderStyle = -1 Then g.TextRenderingHint = Me.TextRenderStyle
 
                     Dim maxL1, maxL2, maxL3, count As Integer

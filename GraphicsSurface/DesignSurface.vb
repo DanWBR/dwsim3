@@ -812,7 +812,7 @@ Imports System.Runtime.Serialization
 
                         selectionRect.Width = dragPoint.X * Me.Zoom - selectionRect.X
                         selectionRect.Height = dragPoint.Y * Me.Zoom - selectionRect.Y
-                        
+
                         Cursor.Current = Cursors.Default
 
                     Else
