@@ -125,7 +125,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             ecount = 0
 
-            Console.WriteLine("LLE flash start")
             Do
                 Vx1_ant = Vx1.Clone
                 Vx2_ant = Vx2.Clone

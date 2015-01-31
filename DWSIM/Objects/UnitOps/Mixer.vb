@@ -164,7 +164,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     T = tmp(2)
                 End If
                 .Fases(0).SPMProperties.temperature = T
-
+                .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
             End With
 
             'Call function to calculate flowsheet
