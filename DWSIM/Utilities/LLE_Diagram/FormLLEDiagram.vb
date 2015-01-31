@@ -27,6 +27,7 @@ Public Class FormLLEDiagram
     Public su As New DWSIM.SistemasDeUnidades.Unidades
     Public cv As New DWSIM.SistemasDeUnidades.Conversor
     Public nf As String
+    Public Names() As String
 
     Public DiagMargins As New Rec
 
@@ -36,11 +37,13 @@ Public Class FormLLEDiagram
     Dim P, T As Double
 
     Private Sub FormLLEDiagram_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        Dim i As Integer
 
         Frm = My.Application.ActiveSimulation
         mat = New MaterialStream("", "")
 
         If Me.Frm.Options.SelectedComponents.Count > 2 Then
+            ReDim Names(Me.Frm.Options.SelectedComponents.Count - 1)
 
             su = Frm.Options.SelectedUnitSystem
             nf = Frm.Options.NumberFormat
@@ -53,6 +56,8 @@ Public Class FormLLEDiagram
                 cbComp1.Items.Add(DWSIM.App.GetComponentName(co.Name))
                 cbComp2.Items.Add(DWSIM.App.GetComponentName(co.Name))
                 cbComp3.Items.Add(DWSIM.App.GetComponentName(co.Name))
+                Names(i) = co.Name
+                i += 1
             Next
 
             cbComp1.SelectedIndex = 0
@@ -308,23 +313,23 @@ Public Class FormLLEDiagram
         Dim Ko As New Konode
 
         'calculate compositions
-        mat.Fases(0).Componentes(cbComp1.Text).FracaoMolar = Pt.X
-        mat.Fases(0).Componentes(cbComp2.Text).FracaoMolar = Pt.Y
-        mat.Fases(0).Componentes(cbComp3.Text).FracaoMolar = 1 - Pt.X - Pt.Y
+        mat.Fases(0).Componentes(Names(cbComp1.SelectedIndex)).FracaoMolar = Pt.X
+        mat.Fases(0).Componentes(Names(cbComp2.SelectedIndex)).FracaoMolar = Pt.Y
+        mat.Fases(0).Componentes(Names(cbComp3.SelectedIndex)).FracaoMolar = 1 - Pt.X - Pt.Y
 
         mat.CalcEquilibrium("tp", Nothing)
 
         'added .GetValueOrDefault to avoid null object errors
 
-        Ko.X11 = mat.Fases(3).Componentes(cbComp1.Text).FracaoMolar.GetValueOrDefault
-        Ko.X12 = mat.Fases(3).Componentes(cbComp2.Text).FracaoMolar.GetValueOrDefault
+        Ko.X11 = mat.Fases(3).Componentes(Names(cbComp1.SelectedIndex)).FracaoMolar.GetValueOrDefault
+        Ko.X12 = mat.Fases(3).Componentes(Names(cbComp2.SelectedIndex)).FracaoMolar.GetValueOrDefault
 
         If mat.Fases(4).SPMProperties.molarfraction > 0 Then
-            Ko.X21 = mat.Fases(4).Componentes(cbComp1.Text).FracaoMolar.GetValueOrDefault
-            Ko.X22 = mat.Fases(4).Componentes(cbComp2.Text).FracaoMolar.GetValueOrDefault
+            Ko.X21 = mat.Fases(4).Componentes(Names(cbComp1.SelectedIndex)).FracaoMolar.GetValueOrDefault
+            Ko.X22 = mat.Fases(4).Componentes(Names(cbComp2.SelectedIndex)).FracaoMolar.GetValueOrDefault
         Else
-            Ko.X21 = mat.Fases(3).Componentes(cbComp1.Text).FracaoMolar.GetValueOrDefault
-            Ko.X22 = mat.Fases(3).Componentes(cbComp2.Text).FracaoMolar.GetValueOrDefault
+            Ko.X21 = mat.Fases(3).Componentes(Names(cbComp1.SelectedIndex)).FracaoMolar.GetValueOrDefault
+            Ko.X22 = mat.Fases(3).Componentes(Names(cbComp2.SelectedIndex)).FracaoMolar.GetValueOrDefault
         End If
 
         Return Ko
@@ -370,17 +375,17 @@ Public Class FormLLEDiagram
         Next
 
         Dim N As String
-        N = cbComp1.SelectedItem
+        N = Names(cbComp1.SelectedIndex)
         For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
             phase.Componentes.Add(N, New DWSIM.ClassesBasicasTermodinamica.Substancia(N, ""))
             phase.Componentes(N).ConstantProperties = Frm.Options.SelectedComponents(N)
         Next
-        N = cbComp2.SelectedItem
+        N = Names(cbComp2.SelectedIndex)
         For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
             phase.Componentes.Add(N, New DWSIM.ClassesBasicasTermodinamica.Substancia(N, ""))
             phase.Componentes(N).ConstantProperties = Frm.Options.SelectedComponents(N)
         Next
-        N = cbComp3.SelectedItem
+        N = Names(cbComp3.SelectedIndex)
         For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
             phase.Componentes.Add(N, New DWSIM.ClassesBasicasTermodinamica.Substancia(N, ""))
             phase.Componentes(N).ConstantProperties = Frm.Options.SelectedComponents(N)
@@ -548,6 +553,15 @@ Public Class FormLLEDiagram
     End Sub
     Private Sub FormLLEDiagram_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
         DWSIM.App.HelpRequested("UT_Triangular_LLE.htm")
+    End Sub
+
+    Public Sub New()
+
+        ' Dieser Aufruf ist für den Designer erforderlich.
+        InitializeComponent()
+
+        ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
+
     End Sub
 End Class
 Public Class Rec

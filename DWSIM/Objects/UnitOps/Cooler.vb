@@ -210,6 +210,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             'Atribuir valores à corrente de matéria conectada à jusante
             With form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
+                .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
                 .Fases(0).SPMProperties.temperature = T2
                 .Fases(0).SPMProperties.pressure = P2
                 .Fases(0).SPMProperties.enthalpy = H2
