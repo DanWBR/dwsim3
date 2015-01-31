@@ -1918,6 +1918,8 @@ Public Class FormMain
 
         If simulationfilename <> "" Then Me.filename = simulationfilename Else Me.filename = path
 
+        form.Options.FilePath = Me.filename
+
         If Not forcommandline Then
             fls.Label2.Text = "Loading Flowsheet Graphic Objects..."
             Application.DoEvents()
@@ -2693,8 +2695,6 @@ Public Class FormMain
 
         fls.Close()
         fls = Nothing
-
-        form.Options.FilePath = Me.filename
 
         If excs.Count > 0 Then
             form.WriteToLog("Some errors where found while parsing the XML file. The simulation might not work as expected. Please read the subsequent messages for more details.", Color.DarkRed, TipoAviso.Erro)

@@ -260,7 +260,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         i = i + 1
                     Loop Until i = n + 1
 
-                    If Abs(F) < 0.0000000000000001 Then Exit Do
+                    If Abs(F) < etol / 100 Then Exit Do
 
                     V = -F / dF + V
 
@@ -402,7 +402,7 @@ alt:
                 bo.DefineFuncDelegate(AddressOf Herror)
                 Console.WriteLine("PH Flash [NL]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
 
-                T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
+                T = bo.BrentOpt(Tmin, Tmax, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             End If
 
@@ -536,7 +536,7 @@ alt:
                 bo.DefineFuncDelegate(AddressOf Serror)
                 Console.WriteLine("PS Flash [NL]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
 
-                T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
+                T = bo.BrentOpt(Tmin, Tmax, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             End If
 
