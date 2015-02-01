@@ -2604,25 +2604,25 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             result = Me.FlashBase.Flash_PV(RET_VMOL(Fase.Mixture), P, xv, 0, Me)
 
                             T = result(4)
-
                             Vx = result(2)
+                            Vx2 = result(8)
                             Vy = result(3)
 
-                            xl = 1 - xv
+                            Dim HM, HV, HL1, HL2 As Double
+                            xl = result(0)
+                            xl2 = result(7)
 
-                            Dim HM, HV, HL As Double
-
-                            If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            HM = (xl * HL + xv * HV) / Me.AUX_MMM(Fase.Mixture)
-
+                            If xl > 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
+                            If xl2 > 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
+                            If xv > 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
+                            HM = (xl * HL1 + xl2 * HL2 + xv * HV) / Me.AUX_MMM(Fase.Mixture)
                             H = HM
 
-                            Dim SM, SV, SL As Double
-
-                            If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            SM = (xl * SL + xv * SV) / Me.AUX_MMM(Fase.Mixture)
+                            Dim SM, SV, SL1, SL2 As Double
+                            If xl > 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
+                            If xl2 > 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
+                            If xv > 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
+                            SM = (xl * SL1 + xl2 * SL2 + xv * SV) / Me.AUX_MMM(Fase.Mixture)
 
                             S = SM
 

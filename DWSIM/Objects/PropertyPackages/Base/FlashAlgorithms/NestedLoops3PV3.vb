@@ -315,27 +315,31 @@ out:
 
             If L > 0 Then ' we have a liquid phase
 
-                Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
+                Dim nt As Integer
                 Dim nc As Integer = UBound(Vz)
+                Dim ff As Integer
 
+                nt = -1
+                i = 0
+                For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In PP.CurrentMaterialStream.Fases(0).Componentes.Values
+                    ff = Array.IndexOf(StabSearchCompIDs, subst.Nome)
+                    If ff >= 0 And Vz(i) > 0 Then nt += 1
+                    i += 1
+                Next
                 If nt = -1 Then nt = nc
 
                 Dim Vtrials(nt, nc) As Double
                 Dim idx(nt) As Integer
 
-                For i = 0 To nt
-                    If Me.StabSearchCompIDs.Length = 0 Then
-                        idx(i) = i
-                    Else
-                        j = 0
-                        For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In PP.CurrentMaterialStream.Fases(0).Componentes.Values
-                            If subst.Nome = Me.StabSearchCompIDs(i) Then
-                                idx(i) = j
-                                Exit For
-                            End If
-                            j += 1
-                        Next
+                i = 0
+                j = 0
+                For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In PP.CurrentMaterialStream.Fases(0).Componentes.Values
+                    ff = Array.IndexOf(StabSearchCompIDs, subst.Nome)
+                    If ff >= 0 And Vz(i) > 0 Then
+                        idx(j) = i
+                        j += 1
                     End If
+                    i += 1
                 Next
 
                 For i = 0 To nt
@@ -493,7 +497,7 @@ out:
                     task2.Start()
                     Task.WaitAll(task1, task2)
                 Catch ae As AggregateException
-                    Throw ae.Flatten()                   
+                    Throw ae.Flatten()
                 Finally
                     If My.Settings.EnableGPUProcessing Then
                         If Not alreadymt Then
@@ -623,7 +627,7 @@ out:
                                                      End Sub)
                         Dim task2 As Task = New Task(Sub()
                                                          CFL2 = proppack.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
-                                                    End Sub)
+                                                     End Sub)
                         Dim task3 As Task = New Task(Sub()
                                                          CFV = proppack.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
                                                      End Sub)
@@ -647,7 +651,7 @@ out:
                     CFL2 = proppack.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
                     CFV = proppack.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
                 End If
-       
+
                 i = 0
                 Do
                     If Vz(i) <> 0 Then Ki1(i) = CFL1(i) / CFV(i)

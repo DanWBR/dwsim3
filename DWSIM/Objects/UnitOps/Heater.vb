@@ -132,6 +132,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+            Dim FlashSpec As Integer = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
 
             If Not Me.GraphicObject.InputConnectors(1).IsAttached Then
                 'Call function to calculate flowsheet
@@ -179,7 +180,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Select Case Me.CalcMode
 
                 Case CalculationMode.HeatAdded
-
+                    FlashSpec = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
                     H2 = Me.DeltaQ.GetValueOrDefault * (Me.Eficiencia.GetValueOrDefault / 100) / Wi + Hi
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, 0)
                     T2 = tmp(2)
@@ -192,7 +193,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End With
 
                 Case CalculationMode.OutletTemperature
-
+                    FlashSpec = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
                     T2 = Me.OutletTemperature.GetValueOrDefault
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, T2, P2, 0)
                     H2 = tmp(4)
@@ -206,7 +207,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End With
 
                 Case CalculationMode.EnergyStream
-
+                    FlashSpec = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
                     Me.DeltaQ = es.Energia.GetValueOrDefault
                     H2 = Me.DeltaQ.GetValueOrDefault * (Me.Eficiencia.GetValueOrDefault / 100) / Wi + Hi
 
@@ -215,7 +216,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Me.DeltaT = T2 - Ti
 
                 Case CalculationMode.OutletVaporFraction
-
+                    FlashSpec = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.VAP, P2, m_VFout.GetValueOrDefault, Ti)
                     H2 = tmp(4)
                     T2 = tmp(2)
@@ -232,7 +233,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             'Atribuir valores à corrente de matéria conectada à jusante
             With form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
-                .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
+                .SpecType = FlashSpec
                 .Fases(0).SPMProperties.temperature = T2
                 .Fases(0).SPMProperties.pressure = P2
                 .Fases(0).SPMProperties.enthalpy = H2
