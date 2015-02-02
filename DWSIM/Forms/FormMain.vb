@@ -2715,6 +2715,11 @@ Public Class FormMain
 
     Sub SaveXML(ByVal path As String, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "")
 
+        If (From f As DockContent In form.dckPanel.Documents Select f Where f.Name = "FormScript").Count > 0 Then
+            Dim f As FormScript = (From fs As DockContent In form.dckPanel.Documents Select fs Where fs.Name = "FormScript").First
+            f.UpdateScripts()
+        End If
+
         If Not IO.Path.GetExtension(path).ToLower.Contains("dwbcs") Then
             form.ProcessScripts(Script.EventType.SimulationSaved, Script.ObjectType.Simulation)
         End If

@@ -169,6 +169,12 @@ Imports DWSIM.DWSIM.Outros
 
     Private Sub SaveToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveToolStripButton.Click
 
+        UpdateScripts()
+
+    End Sub
+
+    Public Sub UpdateScripts()
+
         fc.ScriptCollection.Clear()
 
         For Each tab As FATabStripItem In TabStripScripts.Items
@@ -282,6 +288,8 @@ Imports DWSIM.DWSIM.Outros
         fc.WriteToLog("Script Data updated sucessfully.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
 
     End Sub
+
+
 
     Private Sub PrintToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PrintToolStripButton.Click
         If Not DWSIM.App.IsRunningOnMono Then
