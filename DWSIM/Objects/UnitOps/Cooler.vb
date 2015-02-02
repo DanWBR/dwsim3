@@ -150,7 +150,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
             End If
 
-            Dim Ti, Pi, Hi, Wi, ei, ein, T2, P2, H2 As Double
+            Dim Ti, Pi, Hi, Wi, ei, ein, T2, P2, H2, V2 As Double
 
             Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
             Ti = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.temperature.GetValueOrDefault.ToString
@@ -196,8 +196,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End With
 
                 Case CalculationMode.OutletVaporFraction
-                    FlashSpec = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
-
+                    FlashSpec = Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
+                    V2 = m_VFout.GetValueOrDefault
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.VAP, P2, m_VFout.GetValueOrDefault, Ti)
                     H2 = tmp(4)
                     T2 = tmp(2)
@@ -218,6 +218,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 .Fases(0).SPMProperties.temperature = T2
                 .Fases(0).SPMProperties.pressure = P2
                 .Fases(0).SPMProperties.enthalpy = H2
+                .Fases(2).SPMProperties.molarfraction = V2
                 Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                 For Each comp In .Fases(0).Componentes.Values
                     comp.FracaoMolar = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMolar

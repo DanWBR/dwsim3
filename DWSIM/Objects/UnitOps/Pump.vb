@@ -698,6 +698,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     i += 1
                 Next
                 .Fases(0).SPMProperties.massflow = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
+                .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
             End With
 
             'Call function to calculate flowsheet

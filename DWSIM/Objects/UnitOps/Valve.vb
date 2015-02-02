@@ -164,6 +164,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     comp.FracaoMassica = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMassica
                     i += 1
                 Next
+                .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
                 .Fases(0).SPMProperties.massflow = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
             End With
 
