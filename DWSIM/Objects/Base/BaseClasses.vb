@@ -2332,9 +2332,9 @@ End Class
         Calculated = False
 
         Try
-            If ScriptExt_ScriptTextB <> "" Then RunScript_Before()
+            'If ScriptExt_ScriptTextB <> "" Then RunScript_Before()
             Calculate(args)
-            If ScriptExt_ScriptTextA <> "" Then RunScript_After()
+            'If ScriptExt_ScriptTextA <> "" Then RunScript_After()
             Calculated = True
         Catch ex As Exception
             If Me.FlowSheet IsNot Nothing Then
@@ -2514,17 +2514,17 @@ End Class
 
     Public Overrides Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As DWSIM.SistemasDeUnidades.Unidades)
         With pgrid
-            .Item.Add(DWSIM.App.GetLocalString("UO_ScriptLanguage"), Me, "ScriptExt_Language", False, DWSIM.App.GetLocalString("UO_ScriptExtension"), "", True)
-            .Item.Add(DWSIM.App.GetLocalString("UO_ScriptText_Before"), Me, "ScriptExt_ScriptTextB", False, DWSIM.App.GetLocalString("UO_ScriptExtension"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
-            With .Item(.Item.Count - 1)
-                .CustomEditor = New DWSIM.Editors.CustomUO.UIScriptEditor
-                .Tag = "B"
-            End With
-            .Item.Add(DWSIM.App.GetLocalString("UO_ScriptText_After"), Me, "ScriptExt_ScriptTextA", False, DWSIM.App.GetLocalString("UO_ScriptExtension"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
-            With .Item(.Item.Count - 1)
-                .CustomEditor = New DWSIM.Editors.CustomUO.UIScriptEditor
-                .Tag = "A"
-            End With
+            '.Item.Add(DWSIM.App.GetLocalString("UO_ScriptLanguage"), Me, "ScriptExt_Language", False, DWSIM.App.GetLocalString("UO_ScriptExtension"), "", True)
+            '.Item.Add(DWSIM.App.GetLocalString("UO_ScriptText_Before"), Me, "ScriptExt_ScriptTextB", False, DWSIM.App.GetLocalString("UO_ScriptExtension"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
+            'With .Item(.Item.Count - 1)
+            '    .CustomEditor = New DWSIM.Editors.CustomUO.UIScriptEditor
+            '    .Tag = "B"
+            'End With
+            '.Item.Add(DWSIM.App.GetLocalString("UO_ScriptText_After"), Me, "ScriptExt_ScriptTextA", False, DWSIM.App.GetLocalString("UO_ScriptExtension"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
+            'With .Item(.Item.Count - 1)
+            '    .CustomEditor = New DWSIM.Editors.CustomUO.UIScriptEditor
+            '    .Tag = "A"
+            'End With
             .Item.Add(DWSIM.App.GetLocalString("UOPropertyPackage"), Me.PropertyPackage.Tag, False, DWSIM.App.GetLocalString("UOPropertyPackage0"), "", True)
             With .Item(.Item.Count - 1)
                 .CustomEditor = New DWSIM.Editors.PropertyPackages.UIPPSelector

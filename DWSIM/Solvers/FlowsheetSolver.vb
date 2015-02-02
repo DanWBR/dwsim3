@@ -1205,7 +1205,7 @@ Namespace DWSIM.Flowsheet
                 If form.CalculationQueue.Count = 1 Then form.FormSpreadsheet.InternalCounter = 0
                 If form.CalculationQueue.Count > 0 Then form.CalculationQueue.Dequeue()
 
-                Application.DoEvents()
+                CheckCalculatorStatus()
 
             End While
 
