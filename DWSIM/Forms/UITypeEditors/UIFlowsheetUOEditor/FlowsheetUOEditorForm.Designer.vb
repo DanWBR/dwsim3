@@ -42,6 +42,7 @@ Partial Class FlowsheetUOEditorForm
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.dgvInputPars = New System.Windows.Forms.DataGridView()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -50,6 +51,7 @@ Partial Class FlowsheetUOEditorForm
         Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cbMassTransferMode = New System.Windows.Forms.ComboBox()
@@ -198,7 +200,7 @@ Partial Class FlowsheetUOEditorForm
         'ToolStrip1
         '
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton3, Me.ToolStripButton4})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripButton6})
         Me.ToolStrip1.Name = "ToolStrip1"
         '
         'ToolStripButton3
@@ -214,6 +216,13 @@ Partial Class FlowsheetUOEditorForm
         Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton4.Image = Global.DWSIM.My.Resources.Resources.delete1
         Me.ToolStripButton4.Name = "ToolStripButton4"
+        '
+        'ToolStripButton6
+        '
+        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
+        Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.tag_blue
+        Me.ToolStripButton6.Name = "ToolStripButton6"
         '
         'GroupBox4
         '
@@ -256,7 +265,7 @@ Partial Class FlowsheetUOEditorForm
         'ToolStrip2
         '
         resources.ApplyResources(Me.ToolStrip2, "ToolStrip2")
-        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2})
+        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton5})
         Me.ToolStrip2.Name = "ToolStrip2"
         '
         'ToolStripButton1
@@ -272,6 +281,13 @@ Partial Class FlowsheetUOEditorForm
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.delete1
         Me.ToolStripButton2.Name = "ToolStripButton2"
+        '
+        'ToolStripButton5
+        '
+        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
+        Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton5.Image = Global.DWSIM.My.Resources.Resources.tag_blue
+        Me.ToolStripButton5.Name = "ToolStripButton5"
         '
         'TabPage3
         '
@@ -376,4 +392,6 @@ Partial Class FlowsheetUOEditorForm
     Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents DataGridViewComboBoxColumn3 As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents ToolStripButton6 As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ToolStripButton5 As System.Windows.Forms.ToolStripButton
 End Class

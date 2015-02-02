@@ -159,6 +159,9 @@
   <data name="ToolStripButton4.ToolTipText" xml:space="preserve">
     <value>Remove</value>
   </data>
+  <data name="ToolStripButton6.Text" xml:space="preserve">
+    <value>Copy ID to Clipboard</value>
+  </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Input Parameters</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="ToolStripButton2.ToolTipText" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="ToolStripButton5.Text" xml:space="preserve">
+    <value>Copy ID to Clipboard</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Regardless of the mass transfer mode chosen, only matching compounds in both flowsheets will have their information transferred in and out. Compounds present in only one of the flowsheets will be ignored during data transfer.</value>

@@ -323,4 +323,15 @@ Public Class FlowsheetUOEditorForm
         If fsuo.OutputParams.ContainsKey(id) Then fsuo.OutputParams.Remove(id)
         dgvOutputPars.Rows.Remove(dgvOutputPars.SelectedRows(0))
     End Sub
+
+    Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles ToolStripButton5.Click
+        Dim id As String = dgvInputPars.SelectedRows(0).Cells(0).Value
+        Clipboard.SetText("[I][" & id & "]")
+    End Sub
+
+    Private Sub ToolStripButton6_Click(sender As Object, e As EventArgs) Handles ToolStripButton6.Click
+        Dim id As String = dgvOutputPars.SelectedRows(0).Cells(0).Value
+        Clipboard.SetText("[O][" & id & "]")
+    End Sub
+
 End Class
