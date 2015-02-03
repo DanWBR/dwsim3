@@ -28,8 +28,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
     ''' <remarks></remarks>
     <System.Serializable()> Public MustInherit Class FlashAlgorithm
 
-        Public StabSearchSeverity As Integer = 0
-        Public StabSearchCompIDs As String() = New String() {}
+        Public Property StabSearchSeverity As Integer = 0
+        Public Property StabSearchCompIDs As String() = New String() {}
 
         Private _P As Double, _Vz, _Vx1est, _Vx2est As Double(), _pp As PropertyPackage
 

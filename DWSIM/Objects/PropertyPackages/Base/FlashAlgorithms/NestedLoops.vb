@@ -1,5 +1,5 @@
 '    DWSIM Nested Loops Flash Algorithms
-'    Copyright 2010-2015 Daniel Wagner O. de Medeiros
+'    Copyright 2010-2015 Daniel Wagner O. de Medeiros, Gregor Reichert
 '
 '    This file is part of DWSIM.
 '
@@ -297,6 +297,22 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
         End Function
 
         Public Overrides Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+            If PP._ioquick Then
+                Return Flash_PH_1(Vz, P, H, Tref, PP, ReuseKI, PrevKi)
+            Else
+                Return Flash_PH_2(Vz, P, H, Tref, PP, ReuseKI, PrevKi)
+            End If
+        End Function
+
+        Public Overrides Function Flash_PS(ByVal Vz As Double(), ByVal P As Double, ByVal S As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+            If PP._ioquick Then
+                Return Flash_PS_1(Vz, P, S, Tref, PP, ReuseKI, PrevKi)
+            Else
+                Return Flash_PS_2(Vz, P, S, Tref, PP, ReuseKI, PrevKi)
+            End If
+        End Function
+
+        Public Function Flash_PH_1(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
@@ -309,7 +325,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             n = UBound(Vz)
 
-            pp = PP
+            PP = PP
             Hf = H
             Pf = P
 
@@ -354,10 +370,10 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                         End If
                         Try
                             Dim task1 As Task = New Task(Sub()
-                                                             fx = Herror(x1, {P, Vz, PP})
+                                                             fx = Herror("PT", x1, P, Vz, PP)(0)
                                                          End Sub)
                             Dim task2 As Task = New Task(Sub()
-                                                             fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
+                                                             fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
                                                          End Sub)
                             task1.Start()
                             task2.Start()
@@ -372,8 +388,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                         End Try
                         My.MyApplication.IsRunningParallelTasks = False
                     Else
-                        fx = Herror(x1, {P, Vz, PP})
-                        fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
+                        fx = Herror("PT", x1, P, Vz, PP)(0)
+                        fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
                     End If
 
                     If Abs(fx) < tolEXT Then Exit Do
@@ -395,18 +411,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             Next
 
-            If Double.IsNaN(T) Or cnt > maxitEXT Then
-
-alt:
-                Dim bo As New BrentOpt.Brent
-                bo.DefineFuncDelegate(AddressOf Herror)
-                Console.WriteLine("PH Flash [NL]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
-
-                T = bo.BrentOpt(Tmin, Tmax, 10, tolEXT, maxitEXT, {P, Vz, PP})
-
-            End If
-
-            If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL]: Invalid result: Temperature did not converge.")
+            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL]: Invalid result: Temperature did not converge.")
 
             Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 
@@ -430,7 +435,197 @@ alt:
 
         End Function
 
-        Public Overrides Function Flash_PS(ByVal Vz As Double(), ByVal P As Double, ByVal S As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+        Public Function Flash_PH_2(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+
+            Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+
+            Dim Vn(1) As String, Vx(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1) As Double
+            Dim i, n, ecount As Integer
+            Dim d1, d2 As Date, dt As TimeSpan
+            Dim L, V, T, Pf As Double
+
+            Dim resultFlash As Object
+            Dim Tb, Td, Hb, Hd As Double
+            Dim ErrRes As Object
+
+            d1 = Date.Now
+
+            n = UBound(Vz)
+
+            Hf = H
+            Pf = P
+
+            ReDim Vn(n), Vy(n), Vp(n), Ki(n), fi(n)
+
+            Vn = PP.RET_VNAMES()
+            fi = Vz.Clone
+
+            Dim maxitINT As Integer = CInt(PP.Parameters("PP_PHFMII"))
+            Dim maxitEXT As Integer = CInt(PP.Parameters("PP_PHFMEI"))
+            Dim tolINT As Double = CDbl(PP.Parameters("PP_PHFILT"))
+            Dim tolEXT As Double = CDbl(PP.Parameters("PP_PHFELT"))
+
+            Dim Tmin, Tmax As Double
+
+            Tmax = 2000.0#
+            Tmin = 50.0#
+
+            If Tref = 0.0# Then Tref = 298.15
+
+            'calculate dew point and boiling point
+
+            Dim alreadymt As Boolean = False
+
+            If My.Settings.EnableParallelProcessing Then
+                My.MyApplication.IsRunningParallelTasks = True
+                If My.Settings.EnableGPUProcessing Then
+                    If Not My.MyApplication.gpu.IsMultithreadingEnabled Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    Else
+                        alreadymt = True
+                    End If
+                End If
+                Try
+                    Dim task1 As Task = New Task(Sub()
+                                                     Dim ErrRes1 = Herror("PV", 0, P, Vz, PP)
+                                                     Hb = ErrRes1(0)
+                                                     Tb = ErrRes1(1)
+                                                 End Sub)
+                    Dim task2 As Task = New Task(Sub()
+                                                     Dim ErrRes2 = Herror("PV", 1, P, Vz, PP)
+                                                     Hd = ErrRes2(0)
+                                                     Td = ErrRes2(1)
+                                                 End Sub)
+                    task1.Start()
+                    task2.Start()
+                    Task.WaitAll(task1, task2)
+                Catch ae As AggregateException
+                    Throw ae.Flatten()
+                Finally
+                    If My.Settings.EnableGPUProcessing Then
+                        If Not alreadymt Then
+                            My.MyApplication.gpu.DisableMultithreading()
+                            My.MyApplication.gpu.FreeAll()
+                        End If
+                    End If
+                End Try
+                My.MyApplication.IsRunningParallelTasks = False
+            Else
+                ErrRes = Herror("PV", 0, P, Vz, PP)
+                Hb = ErrRes(0)
+                Tb = ErrRes(1)
+                ErrRes = Herror("PV", 1, P, Vz, PP)
+                Hd = ErrRes(0)
+                Td = ErrRes(1)
+            End If
+
+            If Hb > 0 And Hd < 0 Then
+
+                'specified enthalpy requires partial evaporation 
+                'calculate vapour fraction
+
+                Dim H1, H2, V1, V2 As Double
+                ecount = 0
+                V = 0
+                H1 = Hb
+                Do
+
+                    ecount += 1
+                    V1 = V
+                    If V1 < 1 Then
+                        V2 = V1 + 0.01
+                    Else
+                        V2 = V1 - 0.01
+                    End If
+
+                    H2 = Herror("PV", V2, P, Vz, PP)(0)
+                    V = V1 + (V2 - V1) * (0 - H1) / (H2 - H1)
+                    If V < 0 Then V = 0.0#
+                    If V > 1 Then V = 1.0#
+                    resultFlash = Herror("PV", V, P, Vz, PP)
+                    H1 = resultFlash(0)
+
+                Loop Until Abs(H1) < itol Or ecount > maxitEXT
+
+                T = resultFlash(1)
+                L = resultFlash(3)
+                Vy = resultFlash(4)
+                Vx = resultFlash(5)
+
+                For i = 0 To n
+                    Ki(i) = Vy(i) / Vx(i)
+                Next
+
+            ElseIf Hd > 0 Then
+
+                'only gas phase
+                'calculate temperature
+
+                Dim H1, H2, T1, T2 As Double
+                ecount = 0
+                T = Td
+                H1 = Hd
+                Do
+                    ecount += 1
+                    T1 = T
+                    T2 = T1 + 1
+                    H2 = Hf - PP.DW_CalcEnthalpy(Vz, T2, P, State.Vapor)
+                    T = T1 + (T2 - T1) * (0 - H1) / (H2 - H1)
+                    H1 = Hf - PP.DW_CalcEnthalpy(Vz, T, P, State.Vapor)
+                Loop Until Abs(H1) < itol Or ecount > maxitEXT
+
+                L = 0
+                V = 1
+                Vy = Vz.Clone
+                Vx = Vz.Clone
+                L = 0
+                For i = 0 To n
+                    Ki(i) = 1
+                Next
+
+                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge.")
+            Else
+
+                'specified enthalpy requires pure liquid 
+                'calculate temperature
+
+                Dim H1, H2, T1, T2 As Double
+                ecount = 0
+                T = Tb
+                H1 = Hb
+                Do
+                    ecount += 1
+                    T1 = T
+                    T2 = T1 - 1
+                    H2 = Herror("PT", T2, P, Vz, PP)(0)
+                    T = T1 + (T2 - T1) * (0 - H1) / (H2 - H1)
+                    resultFlash = Herror("PT", T, P, Vz, PP)
+                    H1 = resultFlash(0)
+                Loop Until Abs(H1) < itol Or ecount > maxitEXT
+
+                V = 0
+                L = resultFlash(3)
+                Vy = resultFlash(4)
+                Vx = resultFlash(5)
+
+                For i = 0 To n
+                    Ki(i) = Vy(i) / Vx(i)
+                Next
+
+                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL]: Invalid result: Temperature did not converge.")
+            End If
+
+            d2 = Date.Now
+
+            dt = d2 - d1
+
+            Console.WriteLine("PH Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
+
+            Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+
+        End Function
+
+        Public Function Flash_PS_1(ByVal Vz As Double(), ByVal P As Double, ByVal S As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
@@ -443,7 +638,7 @@ alt:
 
             n = UBound(Vz)
 
-            pp = PP
+            PP = PP
             Sf = S
             Pf = P
 
@@ -488,10 +683,10 @@ alt:
                         End If
                         Try
                             Dim task1 As Task = New Task(Sub()
-                                                             fx = Serror(x1, {P, Vz, PP})
+                                                             fx = Serror("PT", x1, P, Vz, PP)(0)
                                                          End Sub)
                             Dim task2 As Task = New Task(Sub()
-                                                             fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})
+                                                             fx2 = Serror("PT", x1 + epsilon(j), P, Vz, PP)(0)
                                                          End Sub)
                             task1.Start()
                             task2.Start()
@@ -506,8 +701,8 @@ alt:
                         End Try
                         My.MyApplication.IsRunningParallelTasks = False
                     Else
-                        fx = Serror(x1, {P, Vz, PP})
-                        fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})
+                        fx = Serror("PT", x1, P, Vz, PP)(0)
+                        fx2 = Serror("PT", x1 + epsilon(j), P, Vz, PP)(0)
                     End If
 
                     If Abs(fx) < tolEXT Then Exit Do
@@ -529,18 +724,7 @@ alt:
 
             Next
 
-            If Double.IsNaN(T) Or cnt > maxitEXT Then
-
-alt:
-                Dim bo As New BrentOpt.Brent
-                bo.DefineFuncDelegate(AddressOf Serror)
-                Console.WriteLine("PS Flash [NL]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
-
-                T = bo.BrentOpt(Tmin, Tmax, 10, tolEXT, maxitEXT, {P, Vz, PP})
-
-            End If
-
-            If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL]: Invalid result: Temperature did not converge.")
+            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL]: Invalid result: Temperature did not converge.")
 
             Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 
@@ -553,6 +737,194 @@ alt:
             For i = 0 To n
                 Ki(i) = Vy(i) / Vx(i)
             Next
+
+            d2 = Date.Now
+
+            dt = d2 - d1
+
+            Console.WriteLine("PS Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+
+            Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+
+        End Function
+
+
+        Public Function Flash_PS_2(ByVal Vz As Double(), ByVal P As Double, ByVal S As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+
+            Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+
+            Dim Vn(1) As String, Vx(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1) As Double
+            Dim i, n, ecount As Integer
+            Dim d1, d2 As Date, dt As TimeSpan
+            Dim L, V, T, Pf As Double
+
+            Dim resultFlash As Object
+            Dim Tb, Td, Sb, Sd As Double
+            Dim ErrRes As Object
+
+            d1 = Date.Now
+
+            n = UBound(Vz)
+
+            Sf = S
+            Pf = P
+
+            ReDim Vn(n), Vy(n), Vp(n), Ki(n), fi(n)
+
+            Vn = PP.RET_VNAMES()
+            fi = Vz.Clone
+
+            Dim maxitINT As Integer = CInt(PP.Parameters("PP_PSFMII"))
+            Dim maxitEXT As Integer = CInt(PP.Parameters("PP_PSFMEI"))
+            Dim tolINT As Double = CDbl(PP.Parameters("PP_PSFILT"))
+            Dim tolEXT As Double = CDbl(PP.Parameters("PP_PSFELT"))
+
+            Dim Tmin, Tmax As Double
+
+            Tmax = 2000.0#
+            Tmin = 50.0#
+
+            If Tref = 0.0# Then Tref = 298.15
+
+            'calculate dew point and boiling point
+
+            Dim alreadymt As Boolean = False
+
+            If My.Settings.EnableParallelProcessing Then
+                My.MyApplication.IsRunningParallelTasks = True
+                If My.Settings.EnableGPUProcessing Then
+                    If Not My.MyApplication.gpu.IsMultithreadingEnabled Then
+                        My.MyApplication.gpu.EnableMultithreading()
+                    Else
+                        alreadymt = True
+                    End If
+                End If
+                Try
+                    Dim task1 As Task = New Task(Sub()
+                                                     Dim ErrRes1 = Serror("PV", 0, P, Vz, PP)
+                                                     Sb = ErrRes1(0)
+                                                     Tb = ErrRes1(1)
+                                                 End Sub)
+                    Dim task2 As Task = New Task(Sub()
+                                                     Dim ErrRes2 = Serror("PV", 1, P, Vz, PP)
+                                                     Sd = ErrRes2(0)
+                                                     Td = ErrRes2(1)
+                                                 End Sub)
+                    task1.Start()
+                    task2.Start()
+                    Task.WaitAll(task1, task2)
+                Catch ae As AggregateException
+                    Throw ae.Flatten()
+                Finally
+                    If My.Settings.EnableGPUProcessing Then
+                        If Not alreadymt Then
+                            My.MyApplication.gpu.DisableMultithreading()
+                            My.MyApplication.gpu.FreeAll()
+                        End If
+                    End If
+                End Try
+                My.MyApplication.IsRunningParallelTasks = False
+            Else
+                ErrRes = Serror("PV", 0, P, Vz, PP)
+                Sb = ErrRes(0)
+                Tb = ErrRes(1)
+                ErrRes = Serror("PV", 1, P, Vz, PP)
+                Sd = ErrRes(0)
+                Td = ErrRes(1)
+            End If
+
+            Dim S1, S2, T1, T2, V1, V2 As Double
+
+            If Sb > 0 And Sd < 0 Then
+
+                'specified entropy requires partial evaporation 
+                'calculate vapour fraction
+
+                ecount = 0
+                V = 0
+                S1 = Sb
+                Do
+                    ecount += 1
+                    V1 = V
+                    If V1 < 1 Then
+                        V2 = V1 + 0.01
+                    Else
+                        V2 = V1 - 0.01
+                    End If
+
+                    S2 = Serror("PV", V2, P, Vz, PP)(0)
+                    V = V1 + (V2 - V1) * (0 - S1) / (S2 - S1)
+                    If V < 0 Then V = 0
+                    If V > 1 Then V = 1
+                    resultFlash = Serror("PV", V, P, Vz, PP)
+                    S1 = resultFlash(0)
+                Loop Until Abs(S1) < itol Or ecount > maxitEXT
+
+                T = resultFlash(1)
+                L = resultFlash(3)
+                Vy = resultFlash(4)
+                Vx = resultFlash(5)
+                For i = 0 To n
+                    Ki(i) = Vy(i) / Vx(i)
+                Next
+
+            ElseIf Sd > 0 Then
+
+                'only gas phase
+                'calculate temperature
+
+                ecount = 0
+                T = Td
+                S1 = Sd
+                Do
+                    ecount += 1
+                    T1 = T
+                    T2 = T1 + 1
+                    S2 = Sf - PP.DW_CalcEntropy(Vz, T2, P, State.Vapor)
+                    T = T1 + (T2 - T1) * (0 - S1) / (S2 - S1)
+                    S1 = Sf - PP.DW_CalcEntropy(Vz, T, P, State.Vapor)
+                Loop Until Abs(S1) < itol Or ecount > maxitEXT
+
+                L = 0
+                V = 1
+                Vy = Vz.Clone
+                Vx = Vz.Clone
+                L = 0
+                For i = 0 To n
+                    Ki(i) = 1
+                Next
+
+                If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL]: Invalid result: Temperature did not converge.")
+
+            Else
+
+                'specified enthalpy requires pure liquid 
+                'calculate temperature
+
+                ecount = 0
+                T = Tb
+                S1 = Sb
+                Do
+                    ecount += 1
+                    T1 = T
+                    T2 = T1 - 1
+                    S2 = Serror("PT", T2, P, Vz, PP)(0)
+                    T = T1 + (T2 - T1) * (0 - S1) / (S2 - S1)
+                    resultFlash = Serror("PT", T, P, Vz, PP)
+                    S1 = resultFlash(0)
+                Loop Until Abs(S1) < itol Or ecount > maxitEXT
+
+                V = 0
+                L = resultFlash(3)
+                Vy = resultFlash(4)
+                Vx = resultFlash(5)
+
+                For i = 0 To n
+                    Ki(i) = Vy(i) / Vx(i)
+                Next
+
+                If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL]: Invalid result: Temperature did not converge.")
+            End If
 
             d2 = Date.Now
 
@@ -581,7 +953,7 @@ alt:
 
             n = UBound(Vz)
 
-            pp = PP
+            PP = PP
             Vf = V
             L = 1 - V
             Lf = 1 - Vf
@@ -923,7 +1295,7 @@ alt:
 
             n = UBound(Vz)
 
-            pp = PP
+            PP = PP
             Vf = V
             L = 1 - V
             Lf = 1 - Vf
@@ -1202,10 +1574,10 @@ alt:
                         Dim K1(n), K2(n), dKdT(n) As Double
 
                         K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
-                        K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.1, P)
+                        K2 = PP.DW_CalcKvalue(Vx, Vy, T + 1, P)
 
                         For i = 0 To n
-                            dKdT(i) = (K2(i) - K1(i)) / (0.1)
+                            dKdT(i) = (K2(i) - K1(i)) / (1)
                         Next
 
                         i = 0
@@ -1214,6 +1586,7 @@ alt:
                             dFdT = dFdT - Vy(i) / (Ki(i) ^ 2) * dKdT(i)
                             i = i + 1
                         Loop Until i = n + 1
+
                     End If
 
                     ecount += 1
@@ -1252,69 +1625,86 @@ alt:
 
         End Function
 
-        Function OBJ_FUNC_PH_FLASH(ByVal T As Double, ByVal H As Double, ByVal P As Double, ByVal Vz As Object, ByVal pp As PropertyPackage) As Object
-
-            Dim tmp As Object
-            tmp = Me.Flash_PT(Vz, P, T, pp)
-            Dim L, V, Vx(), Vy(), _Hl, _Hv As Double
+        Function OBJ_FUNC_PH_FLASH(ByVal Type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
 
             Dim n = UBound(Vz)
+            Dim L, V, Vx(), Vy(), _Hl, _Hv, T As Double
 
-            L = tmp(0)
-            V = tmp(1)
-            Vx = tmp(2)
-            Vy = tmp(3)
+            If Type = "PT" Then
+                Dim tmp = Me.Flash_PT(Vz, P, X, PP)
+                L = tmp(0)
+                V = tmp(1)
+                Vx = tmp(2)
+                Vy = tmp(3)
+                T = X
+            Else
+                Dim tmp = Me.Flash_PV(Vz, P, X, 0.0#, PP)
+                L = tmp(0)
+                V = tmp(1)
+                Vx = tmp(2)
+                Vy = tmp(3)
+                T = tmp(4)
+            End If
 
             _Hv = 0.0#
             _Hl = 0.0#
 
             Dim mmg, mml As Double
-            If V > 0 Then _Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-            If L > 0 Then _Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-            mmg = pp.AUX_MMM(Vy)
-            mml = pp.AUX_MMM(Vx)
+            If V > 0 Then _Hv = PP.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+            If L > 0 Then _Hl = PP.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
+            mmg = PP.AUX_MMM(Vy)
+            mml = PP.AUX_MMM(Vx)
 
             Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L)) * _Hv - (mml * L / (mmg * V + mml * L)) * _Hl
-            OBJ_FUNC_PH_FLASH = herr
+            OBJ_FUNC_PH_FLASH = {herr, T, V, L, Vy, Vx}
 
             Console.WriteLine("PH Flash [NL]: Current T = " & T & ", Current H Error = " & herr)
 
         End Function
 
-        Function OBJ_FUNC_PS_FLASH(ByVal T As Double, ByVal S As Double, ByVal P As Double, ByVal Vz As Object, ByVal pp As PropertyPackage) As Object
-
-            Dim tmp = Me.Flash_PT(Vz, P, T, pp)
-            Dim L, V, Vx(), Vy(), _Sv, _Sl As Double
+        Function OBJ_FUNC_PS_FLASH(ByVal Type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
 
             Dim n = UBound(Vz)
+            Dim L, V, Vx(), Vy(), _Sl, _Sv, T As Double
 
-            L = tmp(0)
-            V = tmp(1)
-            Vx = tmp(2)
-            Vy = tmp(3)
+            If Type = "PT" Then
+                Dim tmp = Me.Flash_PT(Vz, P, X, PP)
+                L = tmp(0)
+                V = tmp(1)
+                Vx = tmp(2)
+                Vy = tmp(3)
+                T = X
+            Else
+                Dim tmp = Me.Flash_PV(Vz, P, X, 0.0#, PP)
+                L = tmp(0)
+                V = tmp(1)
+                Vx = tmp(2)
+                Vy = tmp(3)
+                T = tmp(4)
+            End If
 
             _Sv = 0.0#
             _Sl = 0.0#
             Dim mmg, mml As Double
 
-            If V > 0 Then _Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
-            If L > 0 Then _Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
-            mmg = pp.AUX_MMM(Vy)
-            mml = pp.AUX_MMM(Vx)
+            If V > 0 Then _Sv = PP.DW_CalcEntropy(Vy, T, P, State.Vapor)
+            If L > 0 Then _Sl = PP.DW_CalcEntropy(Vx, T, P, State.Liquid)
+            mmg = PP.AUX_MMM(Vy)
+            mml = PP.AUX_MMM(Vx)
 
             Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L)) * _Sv - (mml * L / (mmg * V + mml * L)) * _Sl
-            OBJ_FUNC_PS_FLASH = serr
+            OBJ_FUNC_PS_FLASH = {serr, T, V, L, Vy, Vx}
 
             Console.WriteLine("PS Flash [NL]: Current T = " & T & ", Current S Error = " & serr)
 
         End Function
 
-        Function Herror(ByVal Tt As Double, ByVal otherargs As Object) As Double
-            Return OBJ_FUNC_PH_FLASH(Tt, Sf, otherargs(0), otherargs(1), otherargs(2))
+        Function Herror(ByVal type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
+            Return OBJ_FUNC_PH_FLASH(type, X, P, Vz, PP)
         End Function
 
-        Function Serror(ByVal Tt As Double, ByVal otherargs As Object) As Double
-            Return OBJ_FUNC_PS_FLASH(Tt, Sf, otherargs(0), otherargs(1), otherargs(2))
+        Function Serror(ByVal type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
+            Return OBJ_FUNC_PS_FLASH(type, X, P, Vz, PP)
         End Function
 
     End Class

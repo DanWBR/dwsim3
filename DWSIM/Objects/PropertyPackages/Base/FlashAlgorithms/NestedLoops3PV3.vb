@@ -1120,6 +1120,7 @@ alt:
         End Function
 
         Function OBJ_FUNC_PH_FLASH(ByVal Type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
+
             Dim n = UBound(Vz)
             Dim L1, L2, V, Vx1(), Vx2(), Vy() As Double
 
@@ -1633,6 +1634,7 @@ out:        L1 = L1 * (1 - V) 'calculate global phase fractions
 
             Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, PP.RET_NullVector}
         End Function
+
         Public Function Flash_TV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackage) As Object
 
             Dim i As Integer

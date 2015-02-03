@@ -120,21 +120,24 @@
   <data name="Button9.Text" xml:space="preserve">
     <value>Start Distillation Curves Petroleum Characterization Utility</value>
   </data>
+  <data name="Button9.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Button2.Text" xml:space="preserve">
     <value>Start Bulk C7+ Petroleum Characterization Utility</value>
   </data>
+  <data name="Button2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>760, 96</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Misc</value>
-  </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>242, 13</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>Format compositions (fractions) using this scheme:</value>
+  </data>
+  <data name="Label1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ComboBox3.ItemHeight" type="System.Int32, mscorlib">
@@ -143,8 +146,14 @@
   <data name="ComboBox3.Size" type="System.Drawing.Size, System.Drawing">
     <value>228, 21</value>
   </data>
+  <data name="ComboBox3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="ComboBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>228, 21</value>
+  </data>
+  <data name="ComboBox1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>241, 13</value>
@@ -152,14 +161,35 @@
   <data name="Label5.Text" xml:space="preserve">
     <value>Apply the following formatting to numerical values:</value>
   </data>
+  <data name="Label5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>760, 96</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Misc</value>
+  </data>
+  <data name="GroupBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="TBdesc.Text" xml:space="preserve">
     <value>description</value>
+  </data>
+  <data name="TBdesc.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="TBaut.Text" xml:space="preserve">
     <value>author</value>
   </data>
+  <data name="TBaut.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="TBtit.Text" xml:space="preserve">
     <value>title</value>
+  </data>
+  <data name="TBtit.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label30.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 13</value>
@@ -167,11 +197,17 @@
   <data name="Label30.Text" xml:space="preserve">
     <value>Description:</value>
   </data>
+  <data name="Label30.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Label28.Size" type="System.Drawing.Size, System.Drawing">
     <value>41, 13</value>
   </data>
   <data name="Label28.Text" xml:space="preserve">
     <value>Author:</value>
+  </data>
+  <data name="Label28.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label27.Size" type="System.Drawing.Size, System.Drawing">
     <value>30, 13</value>
@@ -179,8 +215,32 @@
   <data name="Label27.Text" xml:space="preserve">
     <value>Title:</value>
   </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>Units</value>
+  <data name="Label27.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="KryptonButton23.Text" xml:space="preserve">
+    <value>Save to File</value>
+  </data>
+  <data name="KryptonButton23.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="KryptonButton22.Text" xml:space="preserve">
+    <value>Load from File</value>
+  </data>
+  <data name="KryptonButton22.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="KryptonButton18.Text" xml:space="preserve">
+    <value>Remove Selected</value>
+  </data>
+  <data name="KryptonButton18.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="KryptonButton15.Text" xml:space="preserve">
+    <value>Create New...</value>
+  </data>
+  <data name="KryptonButton15.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="GroupBox18.Size" type="System.Drawing.Size, System.Drawing">
     <value>749, 47</value>
@@ -188,17 +248,8 @@
   <data name="GroupBox18.Text" xml:space="preserve">
     <value>Tasks</value>
   </data>
-  <data name="KryptonButton23.Text" xml:space="preserve">
-    <value>Save to File</value>
-  </data>
-  <data name="KryptonButton22.Text" xml:space="preserve">
-    <value>Load from File</value>
-  </data>
-  <data name="KryptonButton18.Text" xml:space="preserve">
-    <value>Remove Selected</value>
-  </data>
-  <data name="KryptonButton15.Text" xml:space="preserve">
-    <value>Create New...</value>
+  <data name="GroupBox18.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Property</value>
@@ -212,51 +263,69 @@
   <data name="Column4.HeaderText" xml:space="preserve">
     <value>Unit</value>
   </data>
+  <data name="DataGridView1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ComboBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 13</value>
   </data>
   <data name="Label7.Text" xml:space="preserve">
     <value>System of Units</value>
   </data>
+  <data name="Label7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>Units</value>
+  </data>
+  <data name="GroupBox5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Back to simulation</value>
+  </data>
+  <data name="Button1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="ImageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACo
-        MQAAAk1TRnQBSQFMAgEBCgEAAeQBAQHkAQEBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
-        AwABMAMAAQEBAAEgBgABMDEAAQEDOwFkAWUCRgH0AbICgQH/Aa8CgQH/AWICSAH2AUICQQFzIAADLQFG
-        AVkCVgG+AVsCWQHEATECMAFNAWACVwHrAQABgQEbAf8DAwEEpAADKAE9AWQCVgHnAbICgQH/AcsBqwGJ
-        Af8B0QG0AZUB/wG7AY4BgQH/AbUBhwGBAf8BqwKBAf8BYAJXAesDLQFGEAADHgErAVECTwGlA38B/gGP
-        Ac0B6wH/AYEBtwHiAf8BgQGOAcgB/wFcAlYB+AGBAaEBgQH/AVwCWQHMAwQBBpgAAw8BFAMGAQgCfwFf
+        MQAAAk1TRnQBSQFMAgEBCgEAAewBAQHsAQEBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        AwABMAMAAQEBAAEgBgABMDEAAQEDOwFkAWUCSAH0AbICgQH/Aa8CgQH/AWICSAH2AUICQQFzIAADLQFG
+        AVkCVgG+AVsCWQHEATECMAFNAWACWAHrAQABgQEaAf8DAwEEpAADKAE9AWQCWAHnAbICgQH/AcsBqwGJ
+        Af8B0QG0AZUB/wG7AY4BgQH/AbUBhwGBAf8BqwKBAf8BYAJYAesDLQFGEAADHgErAVECTwGlA38B/gGP
+        Ac0B6wH/AYEBtwHiAf8BgQGOAcgB/wFcAlcB+AGBAaEBgQH/AVwCWQHMAwQBBpgAAw8BFAMGAQgCfwFf
         Af4B1QG7AZ8B/wHWAbsBngH/AdMBuAGcAf8B0QGzAZQB/wG3AYkBgQH/AboBjgGBAf8BuAGNAYEB/wGy
-        AoEB/wF/AX4BVgH+CAADEAEWA0gBhQFYAk4B7wGCAcQB5QH/AR8BmAGBAf8BGQGSAYEB/wETAZABgQH/
-        AQ0BjAGBAf8BgQGfAYEB/wGBAcEBlgH/AYEBowGBAf8BYAJbAdYDBQEHiwABAQM7AWMBZQJGAfQBgQGi
+        AoEB/wF/AX4BVgH+CAADEAEWA0gBhQFYAk8B7wGCAcQB5QH/AR4BmAGBAf8BGAGSAYEB/wESAZABgQH/
+        AQwBjAGBAf8BgQGfAYEB/wGBAcEBlgH/AYEBowGBAf8BYAJbAdYDBQEHiwABAQM7AWMBZQJIAfQBgQGi
         AYEB/wGBAaEBgQH/AbECgQH/AeEBzQG4Af8B2AHAAaUB/wHYAcABpwH/AdQBugGdAf8BuAGMAYEB/wG3
         AYoBgQH/AbgBjQGBAf8BugGOAYEB/wGxAoEB/wMEAQYDOwFlAV8CWgHbAYEBwAHgAf8BxwHuAfwB/wHM
-        AfIC/wEmAZsBgQH/AZABygGpAf8BjQHIAaUB/wGKAcYBoQH/AYgBxQGeAf8BgQG2AYUB/wGCAcIBlwH/
-        AYEBpQGBAf8BXwJXAegDDgETgAADKAE9AWQCVgHnAYEBowGBAf8BkwHAAZkB/wGeAccBpAH/AYEBrAGB
+        AfIC/wElAZsBgQH/AZABygGpAf8BjQHIAaUB/wGKAcYBoQH/AYgBxQGeAf8BgQG2AYUB/wGCAcIBlwH/
+        AYEBpQGBAf8BXwJXAegDDgETgAADKAE9AWQCWAHnAYEBowGBAf8BkwHAAZkB/wGeAccBpAH/AYEBrAGB
         Af8BrwKBAf8B4wHQAbwB/wHaAcMBqwH/AdMBuAGeAf8BxwGjAYEB/wHBAZgBgQH/AbYBiQGBAf8BtwGK
-        AYEB/wG6AY4BgQH/AbECgQH/AVgCVgG7AYEBvQHcAf8BvwHlAfYB/wHbAfYC/wHBAe4C/wGlAeUC/wEu
+        AYEB/wG6AY4BgQH/AbECgQH/AVgCVgG7AYEBvQHcAf8BvwHlAfYB/wHbAfYC/wHBAe4C/wGlAeUC/wEt
         AZ8BgQH/AZQBzQGtAf8BgQG6AY4B/wGBAbgBiQH/AYEBtgGFAf8BgQGzAYEB/wGBAbUBggH/AYMBwgGY
         Af8BgQGgAYEB/wJ/AUoB/oAAAn8BdAH+AakBzQGvAf8BpgHMAawB/wGiAckBqQH/AZkBxQGfAf8BgQGp
         AYEB/wGuAoEB/wHcAcgBsAH/Ab8BnwGBAf8BuAGNAYEB/wHRAbMBjwH/AdEBswGPAf8BuwGQAYEB/wG8
         AZEBgQH/AbcBigGBAf8BsQKBAf8BagJBAfkB5wH7Af4B/wHdAfYC/wHBAe8C/wG3AesC/wGrAegC/wGB
         AaMBgQH/AZYBzgGwAf8BlAHNAa0B/wGRAcsBqgH/AZABywGoAf8BgQG8AZAB/wGKAccBoQH/AYEBpQGB
-        Af8BBgGIAYEB/wFcAlYB+IAAAYEBoQGBAf8BwAHaAcUB/wGtAdABswH/AasBzgGxAf8BngHIAaYB/wGB
+        Af8BBQGIAYEB/wFcAlcB+IAAAYEBoQGBAf8BwAHaAcUB/wGtAdABswH/AasBzgGxAf8BngHIAaYB/wGB
         AaoBgQH/AZUCgQH/AoEByAH/AoEB4wH/AoEB4AH/AoEByAH/AZABgQGEAf8BuwGQAYEB/wHRAbMBjwH/
         AcYBogGBAf8CfwFYAf4BXQJOAfAB4gH2AfwB/wHUAfMC/wHJAfAC/wG+Ae0C/wGzAeoC/wGBAaUBgQH/
-        AYEBpAGBAf8BMAGiAYEB/wEsAZ4BgQH/AYEBrwGBAf8BkQHLAaoB/wGBAasBgQH/ARUBjwGBAf8BgwHF
+        AYEBpAGBAf8BLwGiAYEB/wErAZ4BgQH/AYEBrwGBAf8BkQHLAaoB/wGBAasBgQH/ARQBjwGBAf8BgwHF
         AesB/wFdAk4B8IAAAYEBoAGBAf8BxQHeAckB/wG0AdQBuQH/AaQByQGqAf8BgQGrAZoB/wKBAcMB/wKB
         AeAB/wKBAesB/wKTAfQB/wKBAeoB/wKBAeQB/wKBAdwB/wKBAb4B/wGmAYkBgQH/AcEBmgGBAf8DWwHI
         AV0CTgHwAeIB9gH8Af8B1wH0Av8BzgHyAv8ByAHvAv8BugHrAv8BkgHbAfsB/wGBAcEB8QH/AYEBwgH5
-        Af8BgQG9AfAB/wEwAaIBgQH/AYEBswGBAf8BJQGYAYEB/wGBAbEB5gH/AYgBygHuAf8BXQJOAfCAAAGB
+        Af8BgQG9AfAB/wEvAaIBgQH/AYEBswGBAf8BJAGYAYEB/wGBAbEB5gH/AYgBygHuAf8BXQJOAfCAAAGB
         AZ8BgQH/AbkB1gG+Af8BhwG6AY8B/wGBAawBgQH/AoEB3AH/AoEB6wH/AZgBlgH0Af8CkQHzAf8BiQGK
         AfAB/wKBAecB/wKBAekB/wKBAegB/wKBAeQB/wF/AV0BfwH+ASwCKwFDAwcBCgFdAk4B8AHiAfYB/QH/
         AdoB9AL/AdUB8wL/Ab0B6wL/AYkB1QH3Af8BgQHJAfUB/wGBAbQB6QH/AY0B2gH7Af8BjAHcAv8BgQGm
-        AYEB/wEuAZ8BgQH/AYEBvwHoAf8BgQG7AegB/wGMAdAB8AH/AV0CTgHwgAACfwF0Af4BhgG6AY8B/wGZ
+        AYEB/wEtAZ8BgQH/AYEBvwHoAf8BgQG7AegB/wGMAdAB8AH/AV0CTgHwgAACfwF0Af4BhgG6AY8B/wGZ
         AcYBogH/AYEBrQGBAf8CgQHiAf8BtAGxAfkB/wGXAZYB9AH/ApMB9AH/AYwBjQHwAf8CgQHoAf8CgQHn
         Af8CgQHoAf8CgQHpAf8CgQHiAf8DIQEwBAABXQJOAfAB4gH4Af0B/wHUAfMC/wGwAeQB+gH/AYYBzwHx
         Af8BgQHQAfUB/wGBAdAB9QH/AYEBsQHkAf8BsAHkAfoB/wG2AekC/wGbAeEC/wGBAdYB/gH/AYEBvQH1
@@ -272,42 +341,42 @@
         AeAB/wHRAe4B9wH/AfYD/wHwAf4C/wHLAe0B+wH/AYEBrQHaAf8BiwHXAfcB/wGqAeEB+QH/AZUB1gHy
         Af8BgQGyAdsB/wNbAcgBMQIwAU2UAANbAcgCgQHsAf8CgQHrAf8CgQHpAf8CgQHwAf8CgQHwAf8CgQHp
         Af8CgQHrAf8CgQHsAf8DWwHIEAADBAEFAzsBZQFfAloB2wGSAc8B5QH/AeYB+AH8Af8B4wH2Af4B/wGv
-        Ad0B8gH/AbIB5AH3Af8BgQHAAeEB/wFfAlsB4AE/Aj4BbAMHAQmYAAMHAQoDJwE7AzcBWwKBAeMB/wKB
-        AeIB/wKBAeIB/wKBAeMB/wM4AV4DJwE7AwcBChgAAxABFgNIAYQBWAJOAe8BnAHVAeoB/wGIAcwB5wH/
+        Ad0B8gH/AbIB5AH3Af8BgQHAAeEB/wFfAlwB4AE/Aj4BbAMHAQmYAAMHAQoDJwE7AzcBWwKBAeMB/wKB
+        AeIB/wKBAeIB/wKBAeMB/wM4AV4DJwE7AwcBChgAAxABFgNIAYQBWAJPAe8BnAHVAeoB/wGIAcwB5wH/
         AV8CTAHzA0oBjAMTARroAAMeASsDVAGvAVgCVgG8ASICIQExsAADEwEaAzMBUgM5AV8DJgE5AwEBAiwA
         Ay0BRgFZAlYBvgFbAlkBxAExAjABTRwAAxUBHQMjATQDJAE2AyQBNgMkATYDJAE2AyQBNgMkATYDJAE2
-        AyQBNgMkATYDJAE2AyMBMwMVAR0QAAMlATdAAAM2AVkBgQEtARkB/wHCAZYBhwH/AeQB0wHNAf8B5wHb
+        AyQBNgMkATYDJAE2AyMBMwMVAR0QAAMlATdAAAM2AVkBgQEsARgB/wHCAZYBhwH/AeQB0wHNAf8B5wHb
         AdcB/wHZAb4BtQH/AZoCgQH/A1kBxwMEAQUcAAMeASsBUQJPAaUDfwH+AY8BzQHrAf8BgQG3AeIB/wGB
         AY4ByAH/AVQCUwGsASICIQExFAADIwE0AVkCQwH1AagCQAH9A/wB/wP8Af8D/AH/A/wB/wP8Af8D/AH/
-        A/wB/wP8Af8BqAJAAf0BXwJMAfMDIwEzEAABXgJaAdUBYgJUAekDCQEMNAADWQHHAdQBsAGjAf8B7AHw
-        AfIB/wPqAf8D6wH/A+oB/wPqAf8B6QLqAf8B7gHxAfIB/wGGAYEBLgH/AxwBKBAAAxABFgNIAYUBWAJO
+        A/wB/wP8Af8BqAJAAf0BXwJMAfMDIwEzEAABXgJaAdUBYgJWAekDCQEMNAADWQHHAdQBsAGjAf8B7AHw
+        AfIB/wPqAf8D6wH/A+oB/wPqAf8B6QLqAf8B7gHxAfIB/wGGAYEBLQH/AxwBKBAAAxABFgNIAYUBWAJP
         Ae8BggHEAeUB/wHMAfQC/wHEAe8C/wGLAdIB8QH/AYoBzgHwAf8BgQGkAdcB/wFfAkwB8wNKAY0DFAEb
         CwABAQMkATYDfwH+A/wB/wP8Af8D/AH/A/wB/wP8Af8D/AH/A/wB/wP8Af8D/AH/A/wB/wGoAkAB/QMk
         ATYQAAMJAQwBgQGuAd8B/wGBAasB3gH/A0oBiiwAA1UBtQHkAdMBzQH/A+kB/wPsAf8D7QH/A+4B/wPu
         Af8D7gH/A+0B/wPqAf8B7AHyAfQB/wGSAoEB/wMJAQwEAAMEAQYDOwFlAV8CWgHbAYEBwAHgAf8BxwHu
         AfwB/wHMAfIC/wGoAegC/wGUAeAB/gH/AYEBugHnAf8BgQGxAeQB/wGKAcoB7wH/AYIBwQHrAf8BgQGX
-        AdAB/wFfAlsB4AM/AW0DBwEKAwABAQMkATYD/AH/A/wB/wPdAf8D2wH/A9kB/wPXAf8D1QH/A9QB/wPU
-        Af8D1AH/A/sB/wP8Af8DJAE2AwABARAAAVwCWQHPAYEBvAHnAf8BgQG6AeYB/wFdAlMB7QMRARcgAAMZ
+        AdAB/wFfAlwB4AM/AW0DBwEKAwABAQMkATYD/AH/A/wB/wPdAf8D2wH/A9kB/wPXAf8D1QH/A9QB/wPU
+        Af8D1AH/A/sB/wP8Af8DJAE2AwABARAAAVwCWQHPAYEBvAHnAf8BgQG6AeYB/wFdAlQB7QMRARcgAAMZ
         ASMBwQGJAYEB/wPpAf8D7AH/A+4B/wPxAf8D8gH/A/IB/wPyAf8D8AH/A+4B/wPrAf8B7gHzAfUB/wFg
-        AlcB6wQAAVgCVgG7AYEBvQHcAf8BvwHlAfYB/wHbAfYC/wHBAe4C/wGlAeUC/wGfAeMC/wGUAeEB/gH/
+        AlgB6wQAAVgCVgG7AYEBvQHcAf8BvwHlAfYB/wHbAfYC/wHBAe4C/wGlAeUC/wGfAeMC/wGUAeEB/gH/
         AYEBwQHqAf8BgQG1AeYB/wGBAaoB4gH/AYEBrwHlAf8BhwHGAe0B/wGBAbMB5AH/AYEBkAHKAf8BWAJW
         AcEDAAEBAyQBNgP8Af8D/AH/A/wB/wP8Af8D+wH/A/sB/wP6Af8D+gH/A/oB/wP6Af8D+gH/A/wB/wMk
-        ATYDAAEBFAABgQGvAd8B/wGEAdMB8gH/AYEBvQHnAf8BgQGqAd4B/wFMAksBkBwAAV4CWwHaAe0B8gH0
+        ATYDAAEBFAABgQGvAd8B/wGEAdMB8gH/AYEBvQHnAf8BgQGqAd4B/wFMAksBkBwAAV4CXAHaAe0B8gH0
         Af8D6wH/A+4B/wPxAf8D9AH/A/YB/wP2Af8D9QH/A/MB/wPwAf8D7QH/A+oB/wHCAYkBgQH/Aw0BEgFq
         AkEB+QHnAfsB/gH/Ad0B9gL/AcEB7wL/AbcB6wL/AasB6AL/AaQB5AL/AZYB4QH+Af8BgQHGAesB/wGB
-        Ab0B6QH/AYEBtAHmAf8BgQGpAeIB/wGBAZ8B3gH/AYEBtgHmAf8BgwHEAe4B/wFcAlYB+AMAAQEDJAE2
+        Ab0B6QH/AYEBtAHmAf8BgQGpAeIB/wGBAZ8B3gH/AYEBtgHmAf8BgwHEAe4B/wFcAlcB+AMAAQEDJAE2
         A/wB/wP8Af8D1gH/A9MB/wPPAf8DzQH/A8sB/wPIAf8DyAH/A8YB/wP4Af8D/AH/AyQBNgMAAQEUAAFa
         AlgBwAGBAcwB7gH/AYMB0gHyAf8BgQHOAfEB/wGBAbYB5AH/AWQCUwHxAxEBFxQAAZ8CgQH/AeoB7AHt
         Af8D7AH/A/AB/wP0Af8D9wH/A/kB/wP6Af8D+AH/A/UB/wPyAf8D7gH/A+sB/wHmAd4B2gH/AUUCRAF8
         AV0CTgHwAeIB9gH8Af8B1AHzAv8ByQHwAv8BvgHtAv8BswHqAv8BrQHnAv8BgQHZAf4B/wGBAccB7wH/
         AYEBxAHqAf8BgQG+AegB/wGBAbUB5gH/AYEBqwHjAf8BgQGnAeEB/wGDAcUB7AH/AV0CTgHwAwABAQMk
         ATYD/AH/A/wB/wP8Af8D/AH/A/wB/wP8Af8D/AH/A/sB/wP5Af8D+QH/A/gB/wP8Af8DJAE2AwABAQFd
-        Ak4B8AFcAlYB+AFcAlYB+AFcAlYB+AFcAlYB+AFcAlYB+AGGAdcB8wH/AYEBtgHrAf8BgQG8AewB/wGB
+        Ak4B8AFcAlcB+AFcAlcB+AFcAlcB+AFcAlcB+AFcAlcB+AGGAdcB8wH/AYEBtgHrAf8BgQG8AewB/wGB
         Ac4B8QH/AYEBuQHmAf8BgQGoAd0B/wNQAZ0QAAHFAoEB/wPwAf8B8gH0AfcB/wHzAfUB9wH/A/QB/wP4
         Af8B/QH+Bv8D+gH/A/cB/wHzAvQB/wHxAfUB9wH/A+wB/wHrAe4B7wH/AVcCVgG4AV0CTgHwAeIB9gH8
         Af8B1wH0Av8BzgHyAv8ByAHvAv8BugHrAv8BkgHbAfsB/wGBAcEB8QH/AYEBwgH5Af8BgQG9AfAB/wGB
         AcUB7AH/AYEBvQHpAf8BgQG1AeYB/wGBAbEB5gH/AYgBygHuAf8BXQJOAfADAAEBAyQBNgP8Af8D/AH/
-        A84B/wPKAf8DxgH/A8MB/wPAAf8DvQH/A7wB/wO6Af8D9gH/A/wB/wMkATYDAAEBAWICVAHpAYEB2gHy
+        A84B/wPKAf8DxgH/A8MB/wPAAf8DvQH/A7wB/wO6Af8D9gH/A/wB/wMkATYDAAEBAWICVgHpAYEB2gHy
         Af8BkwHmAfgB/wGRAeMB9wH/AY0B4AH2Af8BigHcAfUB/wGKAdsB9QH/AYgB1wH0Af8BhAHTAfIB/wGB
         Ac8B8QH/AYEBzAHwAf8BgQHJAe8B/wGBAbQB4wH/AVkCQwH1AxkBIwgAAcsCgQH/Ae4B5QHcAf8B1gGI
         AYEB/wHaAZkBgQH/AfgB+QHzAf8B/AH9AfwB/wHkAa0BgQH/AdsBigGBAf8B7wHbAckB/wH5AfwB/gH/
@@ -315,14 +384,14 @@
         Av8BvQHrAv8BiQHVAfcB/wGBAckB9QH/AYEBtAHpAf8BjQHaAfsB/wGMAdwC/wGBAcQB+QH/AYEBtgHs
         Af8BgQG/AegB/wGBAbsB6AH/AYwB0AHwAf8BXQJOAfADAAEBAyQBNgP8Af8D/AH/A/wB/wP8Af8D/AH/
         A/wB/wP7Af8D+AH/A/YB/wPzAf8D8gH/A/wB/wMkATYDAAEBAyUBNwGBAc0B7AH/AZgB6QH5Af8BgQHV
-        AfMB/wGBAc8B8QH/AYEBygHwAf8BgQHCAe4B/wGJAdkB9AH/A38B/gFcAlYB+AFcAlYB+AFcAlYB+AFc
-        AlYB+AFcAlYB+AFiAlQB6QgAAboCgQH/Ac8CgQH/AdUBiAGBAf8B2QGXAYEB/wHZAZkBgQH/AeIBsAGB
+        AfMB/wGBAc8B8QH/AYEBygHwAf8BgQHCAe4B/wGJAdkB9AH/A38B/gFcAlcB+AFcAlcB+AFcAlcB+AFc
+        AlcB+AFcAlcB+AFiAlYB6QgAAboCgQH/Ac8CgQH/AdUBiAGBAf8B2QGXAYEB/wHZAZkBgQH/AeIBsAGB
         Af8B4wGuAYEB/wHpAcUBgQH/AeABqgGBAf8B4gG6AZEB/wHBAoEB/wG7AoEB/wG1AoEB/wHVAbUBqAH/
         A0IBdgFdAk4B8AHiAfgB/QH/AdQB8wL/AbAB5AH6Af8BhgHPAfEB/wGBAdAB9QH/AYEB0AH1Af8BgQGx
         AeQB/wGwAeQB+gH/AbYB6QL/AZsB4QL/AYEB1gH+Af8BgQG9AfUB/wGBAbUB6QH/AZAB1QHxAf8BXQJO
         AfADAAEBAyQBNgP8Af8D/AH/A8cB/wPCAf8DvgH/A7gB/wO0Af8DsQH/A64B/wOsAf8D7QH/A/wB/wMk
-        ATYDAAEBBAABZQJGAfQBgQHhAfUB/wGOAeYB+AH/AYEB0gHzAf8BgQHNAfEB/wGBAccB7wH/AYwB3AH1
-        Af8BgQHGAeoB/wNCAXQcAAFhAlsB2gHTAoEB/wHUAYIBgQH/AdcBjwGBAf8B2wGbAYEB/wHZAZgBgQH/
+        ATYDAAEBBAABZQJIAfQBgQHhAfUB/wGOAeYB+AH/AYEB0gHzAf8BgQHNAfEB/wGBAccB7wH/AYwB3AH1
+        Af8BgQHGAeoB/wNCAXQcAAFhAlwB2gHTAoEB/wHUAYIBgQH/AdcBjwGBAf8B2wGbAYEB/wHZAZgBgQH/
         Af0D/wH5AvoB/wHsAdEBqwH/AdwBoQGBAf8B2gGYAYEB/wHVAYcBgQH/Ab4CgQH/AbICgQH/AwcBCgFf
         AiIB+wHhAfgB/gH/Ac0B6wH5Af8BkgHSAe0B/wGEAcwB6wH/AYEBvwHlAf8BgQGxAdsB/wGBAZQByAH/
         Ac4B7AH6Af8B2QH1Av8BuQHqAv8BlQHfAf4B/wGBAdUC/wGlAeQC/wGEAdwB+wH/AV8CIgH7AwABAQMk
@@ -341,94 +410,94 @@
         A/QB/wFNAkwBkQMXASAMAAFIAkcBgwGBAdkB8QH/AZoB6wH6Af8BgQHYAfQB/wGBAdMB8wH/AYEBzgHx
         Af8BgQHIAfAB/wGMAdwB9QH/AYEBywHtAf8DKwH8HAABVwJWAbgB1wKBAf8B0AKBAf8B0gKBAf8B2QGW
         AYEB/wHzAfYB9wH/AdECgQH/AdECgQH/Ac8CgQH/AcsCgQH/Aw4BExAAAwQBBQM7AWUBXwJaAdsBkgHP
-        AeUB/wHmAfgB/AH/AeMB9gH+Af8BrwHdAfIB/wGyAeQB9wH/AYEBwAHhAf8BXwJbAeABPwI+AWwDBwEJ
+        AeUB/wHmAfgB/AH/AeMB9gH+Af8BrwHdAfIB/wGyAeQB9wH/AYEBwAHhAf8BXwJcAeABPwI+AWwDBwEJ
         DAADJAE2AagCQAH9A/QB/wP1Af8D9QH/A/UB/wPxAf8D7wH/A+kB/wP8Af8D5wH/AU0CTAGRAxcBIAMB
         AQIQAANAAf0BmgHtAfoB/wGZAesB+QH/AZcB6AH5Af8BlAHlAfgB/wGRAeIB9wH/AY4B3wH2Af8BiwHb
         AfUB/wGBAccB6wH/AV8CTAHzHAADKAE8AbYCgQH/AdoCgQH/AdQCgQH/AdkBiQGBAf8B1wKBAf8B1AKB
-        Af8BWAJWAbkgAAMQARYDSAGEAVgCTgHvAZwB1QHqAf8BiAHMAecB/wFfAkwB8wNKAYwDEwEaFAADIwEz
+        Af8BWAJWAbkgAAMQARYDSAGEAVgCTwHvAZwB1QHqAf8BiAHMAecB/wFfAkwB8wNKAYwDEwEaFAADIwEz
         AV0CTgHwAagCQAH9A/wB/wP8Af8D/AH/A/wB/wP8Af8D/AH/A/gB/wFNAkwBkQMXASADAQECFAADUQGi
         AYEBzAHrAf8BgQHLAeoB/wGBAckB6QH/AYEBxwHpAf8BgQHEAegB/wGBAcIB5wH/AYEBwAHmAf8BgQG9
-        AeUB/wGBAbsB5AH/AWECWgHhIwABAQMjATQBLAIrAUMDFAEcMAADHgErA1QBrwFYAlYBvAEiAiEBMRwA
+        AeUB/wGBAbsB5AH/AWECWwHhIwABAQMjATQBLAIrAUMDFAEcMAADHgErA1QBrwFYAlYBvAEiAiEBMRwA
         AxQBHAMjATMDJAE2AyQBNgMkATYDJAE2AyQBNgMkATYDJAE2AyQBNgMXASADAQECXAABbQJRAfcBXwIi
         AfsBXwIiAfsBWAJWAcEDGAEiIwABAQMFAQcDDwEUAxkBIwMfAS0DIQEwAyEBMAMhATADIQEwAx8BLQMZ
         ASMDDwEUAwUBBwMAAQEcAAMQARYDMAFMAzcBWwMjATQDAAEBZAABXwIiAfsBlAHHAfkB/wGRAckB+QH/
         AYEBhQHJAf8BXwJMAfMDIAEvHAADCQEMAyABLgM1AVcDQgF2AUoCSQGJAUwCSwGPAUwCSwGPAUwCSwGP
-        AUwCSwGPAUoCSQGJA0IBdgM1AVYDHwEtAwgBCxQAAzMBUgF/AWYBSgH+ASkBnwGBAf8BLAGvAYEB/wEr
-        AbABgQH/ASoBqAGBAf8BIwGFAYEB/wFbAlkBwwMDAQQcAAMZASMDRQF9AV8CWgHbAV8CTAHzAV8CTAHz
-        AV8CWgHbA0UBfQMZASMgAAGBAYkBqgH/AeAB8gL/AYEBmgHYAf8BIQGBAb4B/wGBAZgBxQH/AWUCWAHl
-        Ax8BLBgAAyABLwFUAlMBrAFkAlYB5wGjAYEBKgH/AboBgQEYAf8BxAGBARMB/wHOAYoBFAH/AdMBlAEr
-        Af8B1gGdAYEB/wFhAlMB7gFgAlwB1AFRAk8BpQM9AWkDFwEgEAABWgJXAcUBKwGpAYEB/wEvAasBgQH/
-        AYEBrgGBAf8BgQGwAYEB/wGBAbEBgQH/AYEBsAGBAf8BMAGtAYEB/wEtAa8BgQH/AR8CgQH/AxoBJBQA
+        AUwCSwGPAUoCSQGJA0IBdgM1AVYDHwEtAwgBCxQAAzMBUgF/AWYBSgH+ASgBnwGBAf8BKwGvAYEB/wEq
+        AbABgQH/ASkBqAGBAf8BIgGFAYEB/wFbAlkBwwMDAQQcAAMZASMDRQF9AV8CWgHbAV8CTAHzAV8CTAHz
+        AV8CWgHbA0UBfQMZASMgAAGBAYkBqgH/AeAB8gL/AYEBmgHYAf8BIAGBAb4B/wGBAZgBxQH/AWUCWQHl
+        Ax8BLBgAAyABLwFUAlMBrAFkAlgB5wGjAYEBKQH/AboBgQEXAf8BxAGBARIB/wHOAYoBEwH/AdMBlAEq
+        Af8B1gGdAYEB/wFhAlQB7gFgAlwB1AFRAk8BpQM9AWkDFwEgEAABWgJXAcUBKgGpAYEB/wEuAasBgQH/
+        AYEBrgGBAf8BgQGwAYEB/wGBAbEBgQH/AYEBsAGBAf8BLwGtAYEB/wEsAa8BgQH/AR4CgQH/AxoBJBQA
         AzMBUwFhAlgB5gGyAoEB/wHVAbcBkwH/AdsBwwGmAf8B2gHDAaYB/wHSAbQBkAH/AasCgQH/AWECWAHm
-        AzMBUxwAAzsBYwGBAbYB1QH/AZABtwHRAf8BgQHJAeQB/wGBAd8B9QH/AYEB0AHtAf8BYgJUAekDGAEi
-        FAABZQJYAeUBmwKBAf8BqwGBAR4B/wGvAYEBGgH/AbYBgQEQAf8BvwGBAQcB/wHJAYUBCAH/AdQBkwEM
-        Af8B5AGyAYEB/wHzAc8BgQH/AfsB6wG/Af8BZwJOAfIBSQJIAYgDHwEsDAADVQGyASwBsQGBAf8BKwGs
-        AYEB/wEpAakBgQH/ASkBqQGBAf8BKQGpAYEB/wEpAakBgQH/ASkBqQGBAf8BKQGpAYEB/wElAawBgQH/
-        AS0BqwGBAf8BIgGIAYEB/wMIAQsMAAMzAVMBZQJGAfQBywGnAYEB/wHYAbsBnwH/AcMBnAGBAf8BtgGK
-        AYEB/wG0AYYBgQH/Ab4BlgGBAf8B0QGzAZcB/wHFAaMBgQH/AWUCRgH0AzMBUxwAAzMBUwFqAkEB+QHC
+        AzMBUxwAAzsBYwGBAbYB1QH/AZABtwHRAf8BgQHJAeQB/wGBAd8B9QH/AYEB0AHtAf8BYgJWAekDGAEi
+        FAABZQJZAeUBmwKBAf8BqwGBAR0B/wGvAYEBGQH/AbYBgQEPAf8BvwGBAQYB/wHJAYUBBwH/AdQBkwEL
+        Af8B5AGyAYEB/wHzAc8BgQH/AfsB6wG/Af8BZwJPAfIBSQJIAYgDHwEsDAADVQGyASsBsQGBAf8BKgGs
+        AYEB/wEoAakBgQH/ASgBqQGBAf8BKAGpAYEB/wEoAakBgQH/ASgBqQGBAf8BKAGpAYEB/wEkAawBgQH/
+        ASwBqwGBAf8BIQGIAYEB/wMIAQsMAAMzAVMBZQJIAfQBywGnAYEB/wHYAbsBnwH/AcMBnAGBAf8BtgGK
+        AYEB/wG0AYYBgQH/Ab4BlgGBAf8B0QGzAZcB/wHFAaMBgQH/AWUCSAH0AzMBUxwAAzMBUwFqAkEB+QHC
         AfYB/QH/AYEB3wH3Af8BgQHiAfgB/wGBAdMB8AH/AWICSAH2AxcBIBAAAZYCgQH/AfIC5gH/AcIBiAGB
-        Af8BsAGBARkB/wG4AYEBCwH/AcEBgQEHAf8BzAGIAQkB/wHXAZYBCwH/AesBxQGBAf8B+QHoAa8B/wH8
-        Ae8BxAH/AfAByAGBAf8DQwF3AxoBJAgAAxcBIAEpAaYBgQH/AS4BqwGBAf8BIQGsAYEB/wH3AewB9QH/
-        AeYB6QHnAf8B5wHrAeoB/wHyAe0B7gH/AfgB6wH1Af8B8AHoAesB/wEpAakBgQH/AYEBsQGBAf8BLQGs
-        AYEB/wFgAlcB6wgAAxgBIgFlAlgB5QHPAaoBgQH/AdoBvAGiAf8BvgGRAYEB/wG6AYwBgQH/AbcBiQGB
-        Af8BswGEAYEB/wGxAYMBgQH/AbABgwGBAf8BzQGqAY0B/wHGAaUBgQH/AWUCWAHlAxgBIgwAAwQBBgFS
-        AlEBpwFeAloB1QFhAlsB2gNUAa8BgQHLAecB/wHHAfcB/QH/AYEB3AH1Af8BgQHhAfcB/wGBAdQB8QH/
-        AVkCTgHyAyMBNAwAAVsCWQHDAfoB9QHwAf8B5QHLAa4B/wHLAY0BgQH/AdcBnAElAf8B2gGdAQoB/wHZ
-        AZoBCQH/AdcBlwEKAf8B6AHFAYEB/wH2AeABnwH/AfgB3QGEAf8BZwJOAfIDMQFOAwwBEAgAAV4CWgHY
-        AS4BrAGBAf8BgQGxAYEB/wEjAbMBgQH/AfkB8gH3Af8D7wH/A/EB/wH5AfMB+AH/AfEB8AH0Af8B9gHq
-        Ae4B/wEpAakBgQH/AYEBtgGBAf8BMAGtAYEB/wEpAacBgQH/Aw0BEQQAAUYCRQF+Ab8BkQGBAf8B4AHC
+        Af8BsAGBARgB/wG4AYEBCgH/AcEBgQEGAf8BzAGIAQgB/wHXAZYBCgH/AesBxQGBAf8B+QHoAa8B/wH8
+        Ae8BxAH/AfAByAGBAf8DQwF3AxoBJAgAAxcBIAEoAaYBgQH/AS0BqwGBAf8BIAGsAYEB/wH3AewB9QH/
+        AeYB6QHnAf8B5wHrAeoB/wHyAe0B7gH/AfgB6wH1Af8B8AHoAesB/wEoAakBgQH/AYEBsQGBAf8BLAGs
+        AYEB/wFgAlgB6wgAAxgBIgFlAlkB5QHPAaoBgQH/AdoBvAGiAf8BvgGRAYEB/wG6AYwBgQH/AbcBiQGB
+        Af8BswGEAYEB/wGxAYMBgQH/AbABgwGBAf8BzQGqAY0B/wHGAaUBgQH/AWUCWQHlAxgBIgwAAwQBBgFS
+        AlEBpwFeAloB1QFhAlwB2gNUAa8BgQHLAecB/wHHAfcB/QH/AYEB3AH1Af8BgQHhAfcB/wGBAdQB8QH/
+        AVkCTwHyAyMBNAwAAVsCWQHDAfoB9QHwAf8B5QHLAa4B/wHLAY0BgQH/AdcBnAEkAf8B2gGdAQkB/wHZ
+        AZoBCAH/AdcBlwEJAf8B6AHFAYEB/wH2AeABnwH/AfgB3QGEAf8BZwJPAfIDMQFOAwwBEAgAAV4CWgHY
+        AS0BrAGBAf8BgQGxAYEB/wEiAbMBgQH/AfkB8gH3Af8D7wH/A/EB/wH5AfMB+AH/AfEB8AH0Af8B9gHq
+        Ae4B/wEoAakBgQH/AYEBtgGBAf8BLwGtAYEB/wEoAacBgQH/Aw0BEQQAAUYCRQF+Ab8BkQGBAf8B4AHC
         AagB/wHFAZYBgQH/AcIBkQGBAf8B4QHLAbgB/wH+Af0B/AP/Af4B/wHqAdwB0AH/AbQBhQGBAf8BswGF
         AYEB/wHUAbUBmQH/Aa4CgQH/AUYCRQF+DAADAQECAzIBUAFZAlYBvgHdAYwBgQH/A0EBcgMvAUkBgQHT
         Ae4B/wHHAfcB/QH/AYEB3AH1Af8BgQHiAfcB/wGBAdYB8gH/AV8CVwHoAyEBMAgAAysBQgHMAZ4BmQL/
-        Af0B+AH/AfYB0wGBAf8B8wHFAYEB/wHwAboBDAH/AeMBqAEHAf8B1AGTAQsB/wHtAdgBsAH/AeYBywGg
-        Af8BtgGBAScB/wNOAZQDHAEnAwIBAwgAASUBkgGBAf8BLgGrAYEB/wGBAbQBgQH/ASMBtwGBAf8B/gH0
-        AfsB/wP0Af8D9wH/AeoB9AHwAf8C8wH0Af8B8wHxAfMB/wEpAakBgQH/AYEBuQGBAf8BgQGxAYEB/wEs
+        Af0B+AH/AfYB0wGBAf8B8wHFAYEB/wHwAboBCwH/AeMBqAEGAf8B1AGTAQoB/wHtAdgBsAH/AeYBywGg
+        Af8BtgGBASYB/wNOAZQDHAEnAwIBAwgAASQBkgGBAf8BLQGrAYEB/wGBAbQBgQH/ASIBtwGBAf8B/gH0
+        AfsB/wP0Af8D9wH/AeoB9AHwAf8C8wH0Af8B8wHxAfMB/wEoAakBgQH/AYEBuQGBAf8BgQGxAYEB/wEr
         Aa0BgQH/A0QBeQQAAV8CWgLbAbwBnAH/AdUBrQGJAf8BxwGYAYEB/wHDAZUBgQH/AcEBkwGBAf8B7QHf
         AdMB/wH6AfcB9AH/AbsBiwGBAf8BuQGKAYEB/wG4AYoBgQH/AcUBnQGBAf8B0gG4AZMB/wFfAloB2xQA
-        Ax8BLAFhAloB3AFUAlMBrAMfASwDNwFaA38B/gHEAfYB/QH/AYEB3QH2Af8BgQHKAe0B/wGBAaMB1wH/
-        AWQCVwHsAxsBJggAAVsCWQHDAfgC8wH/AfkB4AGeAf8B8wHEAYEB/wHvAbkBCgH/AeEBpgEHAf8B1gGY
-        ARkB/wHtAdYBrgH/AeMBxwGjAf8BXAJXAd8DKwFCAwsBDwwAAS8BtQGBAf8BgQHHAY8B/wGBAcUBjAH/
-        ASgBugGBAf8B/gH0AfsB/wH7AfYB9wL/Af0B/gH/Af4B+AH9Af8B4gHwAeoB/wH8AfQB+wH/ASkBqQGB
-        Af8BgQG8AYEB/wGBAbIBgQH/AS0BqwGBAf8DVQG1BAABYgJIAfYB4wHHAa8B/wHQAaIBgQH/AcUBmQGB
+        Ax8BLAFhAlsB3AFUAlMBrAMfASwDNwFaA38B/gHEAfYB/QH/AYEB3QH2Af8BgQHKAe0B/wGBAaMB1wH/
+        AWQCWQHsAxsBJggAAVsCWQHDAfgC8wH/AfkB4AGeAf8B8wHEAYEB/wHvAbkBCQH/AeEBpgEGAf8B1gGY
+        ARgB/wHtAdYBrgH/AeMBxwGjAf8BXAJXAd8DKwFCAwsBDwwAAS4BtQGBAf8BgQHHAY8B/wGBAcUBjAH/
+        AScBugGBAf8B/gH0AfsB/wH7AfYB9wL/Af0B/gH/Af4B+AH9Af8B4gHwAeoB/wH8AfQB+wH/ASgBqQGB
+        Af8BgQG8AYEB/wGBAbIBgQH/ASwBqwGBAf8DVQG1BAABYgJIAfYB4wHHAa8B/wHQAaIBgQH/AcUBmQGB
         Af8BxAGXAYEB/wHEAZYBgQH/Ae4B4AHUAf8B+wH3AfQB/wG/AZABgQH/Ab4BjwGBAf8BvgGPAYEB/wG+
-        AZIBgQH/Ad8BxgGqAf8BYgJIAfYEAAMCAQMHAAEBBAADAgEDAzsBYwFqAkEB+QFhAlsB2gFdAloBygFd
-        Ak4B8AGBAdMB6gH/AbIB4wH5Af8BiwHAAecB/wGuAdMB9gH/AcQB4AH8Af8BbQJRAfcIAAMrAUIBYgJO
-        Ae8BZQJGAfQBXAJZAc8BXQJaAdMBXgJbAdABXAJYAdEBZAJXAewBXwJaAdsDSAGFAxYBHwMCAQMMAAGB
+        AZIBgQH/Ad8BxgGqAf8BYgJIAfYEAAMCAQMHAAEBBAADAgEDAzsBYwFqAkEB+QFhAlwB2gFdAloBygFd
+        Ak4B8AGBAdMB6gH/AbIB4wH5Af8BiwHAAecB/wGuAdMB9gH/AcQB4AH8Af8BbQJRAfcIAAMrAUIBYgJP
+        Ae8BZQJIAfQBXAJZAc8BXQJaAdMBXgJbAdABXAJYAdEBZAJZAewBXwJaAdsDSAGFAxYBHwMCAQMMAAGB
         AbwBgQH/AYEBzgGYAf8BgQHTAaMB/wGBAdQBqQH/Af4B9AH7Af8BgQHlAbwB/wGBAeMBuQH/AYcB5QG0
-        Af8B2gHuAeQB/wGBAdIBmwH/ASkBqQGBAf8BgQG8AYEB/wGBAbIBgQH/AS0BqgGBAf8DVgG2BAABYgJI
+        Af8B2gHuAeQB/wGBAdIBmwH/ASgBqQGBAf8BgQG8AYEB/wGBAbIBgQH/ASwBqgGBAf8DVgG2BAABYgJI
         AfYB5AHJAbAB/wHQAaMBgQH/AcwBnQGBAf8BxwGaAYEB/wHFAZgBgQf/Af4B/wHDAZYBgQH/AcEBlAGB
         Af8BwgGUAYEB/wHDAZgBgQH/Ad8BxQGrAf8BYgJIAfYEAAFWAlUBtAFeAloB2ANKAYsDAQECAy0BRgFY
-        AlYBwQJ/AXYB/gFdAk4B8AMzAVMDQgF0AVwCVgH4AYEBvgHnAf8BtAHSAfAB/wHlAfMC/wGsAdIB7wH/
-        AV8CVwHoDAABVwJVAboBXAJWAfgBWQJXAb8BWAJWAbwDVAGuAVwCWgHNAV8CWgHbAVwCWgHNAycBOgMI
-        AQsQAAEtAa8BgQH/AYEBzQGXAf8BgQHSAaEB/wGBAdUBpAH/Af4B9AH7Af8BgQHgAbcB/wGBAeMBugH/
-        AYEB4wG4Af8B0QHvAeoB/wErAc4BjgH/ASkBqQGBAf8BgQG4AYEB/wGBAbEBgQH/ASwBqQGBAf8BQgJB
+        AlYBwQJ/AXYB/gFdAk4B8AMzAVMDQgF0AVwCVwH4AYEBvgHnAf8BtAHSAfAB/wHlAfMC/wGsAdIB7wH/
+        AV8CVwHoDAABVwJVAboBXAJXAfgBWQJXAb8BWAJWAbwDVAGuAVwCWgHNAV8CWgHbAVwCWgHNAycBOgMI
+        AQsQAAEsAa8BgQH/AYEBzQGXAf8BgQHSAaEB/wGBAdUBpAH/Af4B9AH7Af8BgQHgAbcB/wGBAeMBugH/
+        AYEB4wG4Af8B0QHvAeoB/wEqAc4BjgH/ASgBqQGBAf8BgQG4AYEB/wGBAbEBgQH/ASsBqQGBAf8BQgJB
         AXMEAAFfAloB2wHgAbwBnwH/AdsBswGTAf8BzwGgAYEB/wHNAZ4BgQH/AcsBnAGBAf8B3QG/AaMB/wHd
         Ab8BogH/AcUBmQGBAf8BxQGZAYEB/wHEAZgBgQH/AdEBqwGFAf8B2AG6AZcB/wFfAloB2wQAAy8BSQFh
-        AlMB7gFOAk0BlgMPBBQBGwFVAlMBsAFhAloB4QFfAlsB4AFNAkwBkQM1AVYBYQJYAeYBRgJFAX4BgQGl
-        AdgB/wGFAbEB2wH/AYEBnQHQAf8DOAFeDAADKwFCAWICTgHvAV8CWwHgAV4CWgHYAV4CWwHOAV4CWgHV
-        AWICVAHpAz4BawMYASIDAAEBEAABXQJZAdIBgQHNAZUB/wGBAdABnQH/AYEB0gGhAf8BgQHeAbUB/wGB
+        AlQB7gFOAk0BlgMPBBQBGwFVAlMBsAFhAlsB4QFfAlwB4AFNAkwBkQM1AVYBYQJYAeYBRgJFAX4BgQGl
+        AdgB/wGFAbEB2wH/AYEBnQHQAf8DOAFeDAADKwFCAWICTwHvAV8CXAHgAV4CWgHYAV4CXAHOAV4CWgHV
+        AWICVgHpAz4BawMYASIDAAEBEAABXQJZAdIBgQHNAZUB/wGBAdABnQH/AYEB0gGhAf8BgQHeAbUB/wGB
         AdwBtQH/AYEB3gG3Af8BgQHfAbYB/wGBAd8BtgH/AYEB1QGsAf8BgQHaAbgB/wGBAdMBpAH/AYEBuQGB
-        Af8BKwGsAYEB/wMHAQkEAAFGAkUBfgHNAZwBgQH/AecBywG0Af8B1AGlAYEB/wHQAaABgQH/Ac8BngGB
+        Af8BKgGsAYEB/wMHAQkEAAFGAkUBfgHNAZwBgQH/AecBywG0Af8B1AGlAYEB/wHQAaABgQH/Ac8BngGB
         Af8B+wH4AfUB/wH7AfgB9QH/AcsBngGBAf8BywGdAYEB/wHNAaEBgQH/Ad8BwAGlAf8BuQGKAYEB/wFG
-        AkUBfggAAUACPwFvAWQCVwHsAVgCVgG5AVUCUwGwAWQCVwHsA1YBswE/Aj4BbAFkAlMB8QFaAlcBxQFf
-        AloB2wEiAiEBMSAAAVYCVQG0CP8BYgJUAekBWgJXAb0BWwJYAcYDLQFGAxIBGRQAAw4BEwGBAc4BjwH/
+        AkUBfggAAUACPwFvAWQCWQHsAVgCVgG5AVUCUwGwAWQCWQHsA1YBswE/Aj4BbAFkAlMB8QFaAlcBxQFf
+        AloB2wEiAiEBMSAAAVYCVQG0CP8BYgJWAekBWgJXAb0BWwJYAcYDLQFGAxIBGRQAAw4BEwGBAc4BjwH/
         AYEBzQGVAf8B/gH0AfsB/wH+AfQB+wH/Af4B9AH7Af8B/gH0AfsB/wH+AfQB+wH/Af4B9AH7Af8B/gH0
-        AfsB/wH+AfQB+wH/AYEB0AGcAf8BgQHNAZUB/wFkAlYB5wgAAxgBIgFlAlgB5QHZAbIBjAH/AeYBygGz
+        AfsB/wH+AfQB+wH/AYEB0AGcAf8BgQHNAZUB/wFkAlgB5wgAAxgBIgFlAlkB5QHZAbIBjAH/AeYBygGz
         Af8B1gGpAYEB/wHRAaUBgQH/AeIBxAGoAf8B4QHDAagB/wHQAaIBgQH/AdEBpAGBAf8B3QG9AaIB/wHQ
-        AawBhQH/AWUCWAHlAxgBIggAAwgBCwFXAlUBugFgAlcB6wM0AVQBWAJWAcEBVgJVAbQBNQI0AVUBYQJa
+        AawBhQH/AWUCWQHlAxgBIggAAwgBCwFXAlUBugFgAlgB6wM0AVQBWAJWAcEBVgJVAbQBNQI0AVUBYQJb
         AeEB5wGuAYEB/wFdAk4B8ANKAYscAAMBAQIBWAJWAbkI/wFZAkMB9QFaAlcBxQFYAlYBvAMxAU8DFAEb
         GAADUQGiAYEBzgGVAf8BgQHOAZgB/wGBAdABnAH/AYEB0wGgAf8BgQHTAaMB/wGBAdQBpQH/AYEB1AGg
-        Af8BgQHSAZ8B/wGBAc8BmgH/AYEBzAGVAf8BgQHGAYcB/xAAAzMBUwFlAkYB9AHZAbIBjAH/AeYBzQG4
-        Af8B4AG6AZ0B/wHXAasBhQH/AdYBqQGCAf8B2QGzAZEB/wHhAcIBqwH/AdQBrgGGAf8BZQJGAfQDMwFT
+        Af8BgQHSAZ8B/wGBAc8BmgH/AYEBzAGVAf8BgQHGAYcB/xAAAzMBUwFlAkgB9AHZAbIBjAH/AeYBzQG4
+        Af8B4AG6AZ0B/wHXAasBhQH/AdYBqQGCAf8B2QGzAZEB/wHhAcIBqwH/AdQBrgGGAf8BZQJIAfQDMwFT
         EAADJgE4AVwCWAHRAUICQQFzAVICUAGjAVICUAGjAysBQgNHAYIBSgJJAYkBSgJJAYkDSAGFHAADBQEH
-        AVwCWgHNCP8BZwJOAfIBWwJYAcYBXAJZAckDPQFpAxgBIhwAA1YBswGBAdMBmwH/AYEBzAGVAf8BgQHP
+        AVwCWgHNCP8BZwJPAfIBWwJYAcYBXAJZAckDPQFpAxgBIhwAA1YBswGBAdMBmwH/AYEBzAGVAf8BgQHP
         AZkB/wGBAdABnAH/AYEB0AGcAf8BgQHPAZsB/wGBAc0BmAH/AYEBzAGTAf8BgQHGAYkB/wMNARIUAAMz
         AVMBYQJYAeYB0AGgAYEB/wHgAb8BoAH/AeMBxQGuAf8B4wHFAa4B/wHfAbwBnwH/AcgBlwGBAf8BYQJY
-        AeYDMwFTGAADQwF4AWQCUwHxAVwCUwHqA1ABngMHAQksAAMlATcBZQJYAeUBwQGEAYEB/wGuAYEBGQH/
-        Aa4BgQEZAf8BZQJGAfQBYQJaAdwDNgFZAxYBHiAAAyYBOANAAf0BgQHXAaAB/wGBAdIBmgH/AYEB0QGZ
+        AeYDMwFTGAADQwF4AWQCUwHxAVwCVAHqA1ABngMHAQksAAMlATcBZQJZAeUBwQGEAYEB/wGuAYEBGAH/
+        Aa4BgQEYAf8BZQJIAfQBYQJbAdwDNgFZAxYBHiAAAyYBOANAAf0BgQHXAaAB/wGBAdIBmgH/AYEB0QGZ
         Af8BgQHVAZ0B/wGBAdABmQH/A1UBtSAAAxkBIwNFAX0BXwJaAdsBXwJMAfMBXwJMAfMBXwJaAdsDRQF9
-        AxkBIxgAAwYBCANKAY0BYAJXAesBZwJOAfIBXQJaAdMDPAFmLAADKwFCAWQCVgHnAVgCVgG8AVECTwGc
-        A04BmQFcAlkBzAFhAlYB5AMWAR4DBwEKLAADIQEwAykBPwMSARlYAAFCAU0BPgcAAT4DAAEoAwABQAMA
+        AxkBIxgAAwYBCANKAY0BYAJYAesBZwJPAfIBXQJaAdMDPAFmLAADKwFCAWQCWAHnAVgCVgG8AVECTwGc
+        A04BmQFcAlkBzAFhAlgB5AMWAR4DBwEKLAADIQEwAykBPwMSARlYAAFCAU0BPgcAAT4DAAEoAwABQAMA
         ATADAAEBAQABAQUAAYABARYAA/8BAAH+AQMB/AEHBAAB/AEAAfABAwQAAfABAAHAAQEEAAGAMAABAQcA
         AQEHAAEBBgAB8AEBAYABAQQAAfABAwHAAQMEAAHwAQMB8AEPBAAC/wH8AT8EAAH8AR8B/AE/AYABAQHv
         Af8B8AEHAfABDwGAAQEB4wH/AeABAwHAAQMBAAEBAeEB/wHAAQEEAAHwAX8BgAEBBAAB+AE/AYAFAAH4
@@ -460,8 +529,14 @@
         AAAABgUAAAAFTm9kZTAA/////wYGAAAADWxpZ2h0bmluZy5wbmf/////CQYAAAAAAAAACw==
 </value>
   </data>
+  <data name="TreeView2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="NavigationPanePage1.Text" xml:space="preserve">
     <value>Components</value>
+  </data>
+  <data name="NavigationPanePage1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="TreeView5.Nodes" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
@@ -493,8 +568,14 @@
         Tm9kZTEA/////wYGAAAADnN0eWxlX2VkaXQucG5n/////wkGAAAAAAAAAAs=
 </value>
   </data>
+  <data name="TreeView5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="NavigationPanePage5.Text" xml:space="preserve">
     <value>Thermodynamics</value>
+  </data>
+  <data name="NavigationPanePage5.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="TreeView1.Nodes" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
@@ -518,8 +599,14 @@
         Cw==
 </value>
   </data>
+  <data name="TreeView1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="NavigationPanePage3.Text" xml:space="preserve">
     <value>Options</value>
+  </data>
+  <data name="NavigationPanePage3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="TreeView4.Nodes" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
@@ -531,26 +618,41 @@
         /////wYGAAAADnN0eWxlX2VkaXQucG5n/////wYHAAAADnN0eWxlX2VkaXQucG5nAAAAAAs=
 </value>
   </data>
+  <data name="TreeView4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="NavigationPanePage4.Text" xml:space="preserve">
     <value>Description</value>
+  </data>
+  <data name="NavigationPanePage4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NavigationPane1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Button3.Text" xml:space="preserve">
     <value>Open Assay Manager</value>
   </data>
-  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+  <data name="Button3.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>768, 309</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Components / Compounds</value>
+  <data name="PanelCarPet.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Button6.Location" type="System.Drawing.Point, System.Drawing">
     <value>474, 130</value>
   </data>
   <data name="Button6.Text" xml:space="preserve">
     <value>Ungroup</value>
+  </data>
+  <data name="Button6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ListViewA.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 274</value>
+  </data>
+  <data name="ListViewA.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="GroupBox4.Location" type="System.Drawing.Point, System.Drawing">
     <value>557, 10</value>
@@ -561,8 +663,8 @@
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Added</value>
   </data>
-  <data name="ListViewA.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 274</value>
+  <data name="GroupBox4.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Button11.Location" type="System.Drawing.Point, System.Drawing">
     <value>474, 101</value>
@@ -570,11 +672,17 @@
   <data name="Button11.Text" xml:space="preserve">
     <value>Clear List</value>
   </data>
+  <data name="Button11.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Button10.Location" type="System.Drawing.Point, System.Drawing">
     <value>474, 72</value>
   </data>
   <data name="Button10.Text" xml:space="preserve">
     <value>&lt; Remove</value>
+  </data>
+  <data name="Button10.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Button7.Location" type="System.Drawing.Point, System.Drawing">
     <value>474, 43</value>
@@ -582,11 +690,17 @@
   <data name="Button7.Text" xml:space="preserve">
     <value>Add &gt;</value>
   </data>
+  <data name="Button7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>50, 17</value>
   </data>
   <data name="TextBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>416, 20</value>
+  </data>
+  <data name="TextBox1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 20</value>
@@ -596,6 +710,9 @@
   </data>
   <data name="Label3.Text" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="Label3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Column6.HeaderText" xml:space="preserve">
     <value>Name</value>
@@ -618,38 +735,98 @@
   <data name="ogc1.Size" type="System.Drawing.Size, System.Drawing">
     <value>463, 260</value>
   </data>
+  <data name="ogc1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>768, 309</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Components / Compounds</value>
+  </data>
+  <data name="GroupBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PanelComps.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Label8.Text" xml:space="preserve">
     <value>Press ENTER to add.</value>
+  </data>
+  <data name="Label8.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TextBox2.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label9.Text" xml:space="preserve">
     <value>Search:</value>
   </data>
+  <data name="Label9.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ListBox3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBox7.Text" xml:space="preserve">
     <value>Components Selected</value>
   </data>
-  <data name="GroupBox8.Text" xml:space="preserve">
-    <value>Options</value>
+  <data name="GroupBox7.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
     <value>Sort list&gt;</value>
   </data>
+  <data name="KryptonButton2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="KryptonButton3.Text" xml:space="preserve">
     <value>Clear List&gt;</value>
+  </data>
+  <data name="KryptonButton3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="KryptonButton4.Text" xml:space="preserve">
     <value>&lt;Background</value>
   </data>
+  <data name="KryptonButton4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="KryptonButton5.Text" xml:space="preserve">
     <value>&lt;Remove</value>
+  </data>
+  <data name="KryptonButton5.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="KryptonButton6.Text" xml:space="preserve">
     <value>Add&gt;</value>
   </data>
+  <data name="KryptonButton6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GroupBox8.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="GroupBox8.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ListBox4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBox9.Text" xml:space="preserve">
     <value>Components</value>
   </data>
+  <data name="GroupBox9.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Label11.Text" xml:space="preserve">
     <value>Select the components you want to add to the simulation.</value>
+  </data>
+  <data name="Label11.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>56, 13</value>
@@ -657,11 +834,23 @@
   <data name="Label10.Text" xml:space="preserve">
     <value>Password:</value>
   </data>
+  <data name="Label10.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbPassword.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkUsePassword.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 17</value>
   </data>
   <data name="chkUsePassword.Text" xml:space="preserve">
     <value>Protect with Password</value>
+  </data>
+  <data name="chkUsePassword.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PanelDescricao.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="LinkLabelPropertyMethods.Size" type="System.Drawing.Size, System.Drawing">
     <value>531, 13</value>
@@ -669,17 +858,26 @@
   <data name="LinkLabelPropertyMethods.Text" xml:space="preserve">
     <value>Click here to learn which methods and correlations are being used by the packages to calculate fluid properties.</value>
   </data>
-  <data name="GroupBox12.Text" xml:space="preserve">
-    <value>Selected Property Packages</value>
+  <data name="LinkLabelPropertyMethods.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="btnDeletePP.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="btnDeletePP.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnConfigPP.Text" xml:space="preserve">
     <value>Configure</value>
   </data>
+  <data name="btnConfigPP.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnCopyPP.Text" xml:space="preserve">
     <value>Copy</value>
+  </data>
+  <data name="btnCopyPP.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Column16.HeaderText" xml:space="preserve">
     <value>Name (click to edit)</value>
@@ -687,14 +885,32 @@
   <data name="Column17.HeaderText" xml:space="preserve">
     <value>Type</value>
   </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Available Property Packages</value>
+  <data name="dgvpp.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GroupBox12.Text" xml:space="preserve">
+    <value>Selected Property Packages</value>
+  </data>
+  <data name="GroupBox12.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Button8.Text" xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="gb1.Text" xml:space="preserve">
-    <value>Global Settings (except for CAPE-OPEN and Electrolyte Property Packages)</value>
+  <data name="Button8.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ListViewPP.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Available Property Packages</value>
+  </data>
+  <data name="GroupBox6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PanelPP.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="chkDoPhaseId.Size" type="System.Drawing.Size, System.Drawing">
     <value>338, 17</value>
@@ -702,11 +918,20 @@
   <data name="chkDoPhaseId.Text" xml:space="preserve">
     <value>Apply a Phase Identification Algorithm after equilibrium calculations</value>
   </data>
+  <data name="chkDoPhaseId.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
     <value>510, 95</value>
   </data>
+  <data name="Label13.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="tbFlashValidationTolerance.Location" type="System.Drawing.Point, System.Drawing">
     <value>456, 92</value>
+  </data>
+  <data name="tbFlashValidationTolerance.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
     <value>263, 95</value>
@@ -717,11 +942,17 @@
   <data name="Label12.Text" xml:space="preserve">
     <value>Gibbs Free Energy variation tolerance:</value>
   </data>
+  <data name="Label12.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkValidateEqCalc.Size" type="System.Drawing.Size, System.Drawing">
     <value>228, 17</value>
   </data>
   <data name="chkValidateEqCalc.Text" xml:space="preserve">
     <value>Validate equilibrium flash calculation results</value>
+  </data>
+  <data name="chkValidateEqCalc.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="chkIOmode.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 17</value>
@@ -729,11 +960,17 @@
   <data name="chkIOmode.Text" xml:space="preserve">
     <value>Fast Mode</value>
   </data>
+  <data name="chkIOmode.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>395, 17</value>
   </data>
   <data name="CheckBox1.Text" xml:space="preserve">
     <value>Calculate Bubble and Dew Points for all Material Streams at current conditions </value>
+  </data>
+  <data name="CheckBox1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="ComboBoxFlashAlg.Items" xml:space="preserve">
     <value>Nested Loops (VLE)</value>
@@ -762,23 +999,41 @@
   <data name="ComboBoxFlashAlg.Items8" xml:space="preserve">
     <value>Nested Loops (VLLE - Immiscible Liquids)</value>
   </data>
-  <data name="ComboBoxFlashAlg.Items9" xml:space="preserve">
-    <value>Nested Loops (VLLE, Alternate)</value>
-  </data>
   <data name="ComboBoxFlashAlg.Location" type="System.Drawing.Point, System.Drawing">
     <value>266, 18</value>
   </data>
   <data name="ComboBoxFlashAlg.Size" type="System.Drawing.Size, System.Drawing">
     <value>382, 21</value>
   </data>
+  <data name="ComboBoxFlashAlg.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Flash Algorithm</value>
+  </data>
+  <data name="Label2.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="CheckBox3.Size" type="System.Drawing.Size, System.Drawing">
     <value>477, 17</value>
   </data>
   <data name="CheckBox3.Text" xml:space="preserve">
     <value>Force Pressure-Enthalpy (PH) flash calculations (recommended for single-compound simulations)</value>
+  </data>
+  <data name="CheckBox3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="gb1.Text" xml:space="preserve">
+    <value>Global Settings (except for CAPE-OPEN and Electrolyte Property Packages)</value>
+  </data>
+  <data name="gb1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PanelOptions.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PanelUnits.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="OpenFileDialog1.Filter" xml:space="preserve">
     <value>XML File|*.xml|All files|*.*</value>
@@ -801,11 +1056,11 @@
   <data name="KryptonButton7.Text" xml:space="preserve">
     <value>Open Chemical Reactions Manager</value>
   </data>
-  <data name="GroupBox11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>762, 149</value>
+  <data name="KryptonButton7.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="GroupBox11.Text" xml:space="preserve">
-    <value>Stability Test (Three-Phase Flash)</value>
+  <data name="PanelReactions.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="RadioButton3.Location" type="System.Drawing.Point, System.Drawing">
     <value>383, 126</value>
@@ -816,6 +1071,9 @@
   <data name="RadioButton3.Text" xml:space="preserve">
     <value>High</value>
   </data>
+  <data name="RadioButton3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="RadioButton2.Location" type="System.Drawing.Point, System.Drawing">
     <value>315, 126</value>
   </data>
@@ -824,6 +1082,9 @@
   </data>
   <data name="RadioButton2.Text" xml:space="preserve">
     <value>Medium</value>
+  </data>
+  <data name="RadioButton2.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="RadioButton1.Location" type="System.Drawing.Point, System.Drawing">
     <value>264, 126</value>
@@ -834,6 +1095,9 @@
   <data name="RadioButton1.Text" xml:space="preserve">
     <value>Low</value>
   </data>
+  <data name="RadioButton1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Label4.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 128</value>
   </data>
@@ -842,6 +1106,9 @@
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Search severity:</value>
+  </data>
+  <data name="Label4.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 24</value>
@@ -852,11 +1119,29 @@
   <data name="Label6.Text" xml:space="preserve">
     <value>Key components for the second liquid phase search:</value>
   </data>
+  <data name="Label6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="ListView2.Location" type="System.Drawing.Point, System.Drawing">
     <value>266, 23</value>
   </data>
   <data name="ListView2.Size" type="System.Drawing.Size, System.Drawing">
     <value>489, 94</value>
+  </data>
+  <data name="ListView2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GroupBox11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>762, 149</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>Stability Test (Three-Phase Flash)</value>
+  </data>
+  <data name="GroupBox11.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PanelPPAdv.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="ofdcs.Filter" xml:space="preserve">
     <value>XML File|*.xml</value>
@@ -872,5 +1157,8 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Configure Simulation</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>
