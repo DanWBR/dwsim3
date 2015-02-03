@@ -942,7 +942,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim i, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
             Dim Pmin, Pmax, soma_x, soma_y As Double
-            Dim L, Lf, Vf, P, Pf As Double
+            Dim L, Lf, Vf, P, Pf, deltaP As Double
 
             d1 = Date.Now
 
@@ -1147,17 +1147,28 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Loop Until i = n + 1
 
                     If (P - fval / dFdP) < 0 Then
+
                         P = (P + Pant) / 2
+
                     Else
+
                         Pant = P
-                        P = P - fval / dFdP
+
+                        deltaP = -fval / dFdP
+
+                        If Abs(deltaP) > 0.1 * P Then
+                            P = P + Sign(deltaP) * 0.1 * P
+                        Else
+                            P = P + deltaP
+                        End If
+
                     End If
 
                     Console.WriteLine("TV Flash [NL]: Iteration #" & ecount & ", P = " & P & ", VF = " & V)
 
                     CheckCalculatorStatus()
-
-                Loop Until Math.Abs(P - Pant) < 1 Or Double.IsNaN(P) = True Or ecount > maxit_e Or Double.IsNaN(P) Or Double.IsInfinity(P)
+                    
+                Loop Until Math.Abs(fval) < etol Or Double.IsNaN(P) = True Or ecount > maxit_e
 
             Else
 
@@ -1251,10 +1262,21 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     fval = stmp4 - 1
 
                     If (P - fval / dFdP) < 0 Then
+
                         P = (P + Pant) / 2
+
                     Else
+
                         Pant = P
-                        P = P - fval / dFdP
+
+                        deltaP = -fval / dFdP
+
+                        If Abs(deltaP) > 0.1 * P Then
+                            P = P + Sign(deltaP) * 0.1 * P
+                        Else
+                            P = P + deltaP
+                        End If
+
                     End If
 
                     Console.WriteLine("TV Flash [NL]: Iteration #" & ecount & ", P = " & P & ", VF = " & V)
@@ -1283,7 +1305,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim i, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
             Dim soma_x, soma_y As Double
-            Dim L, Lf, Vf, T, Tf As Double
+            Dim L, Lf, Vf, T, Tf, deltaT As Double
             Dim e1 As Double
 
             d1 = Date.Now
@@ -1491,15 +1513,19 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Loop Until i = n + 1
 
                     Tant = T
-                    T = T - fval / dFdT
-                    'If T < Tmin Then T = Tmin
-                    'If T > Tmax Then T = Tmax
+                    deltaT = -fval / dFdT
+
+                    If Abs(deltaT) > 0.1 * T Then
+                        T = T + Sign(deltaT) * 0.1 * T
+                    Else
+                        T = T + deltaT
+                    End If
 
                     Console.WriteLine("PV Flash [NL]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
 
                     CheckCalculatorStatus()
-
-                Loop Until Math.Abs(T - Tant) < 0.01 Or Double.IsNaN(T) = True Or ecount > maxit_e Or Double.IsNaN(T) Or Double.IsInfinity(T)
+                    
+                Loop Until Math.Abs(fval) < etol Or Double.IsNaN(T) = True Or ecount > maxit_e
 
             Else
 
@@ -1592,11 +1618,15 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     ecount += 1
 
                     fval = stmp4 - 1
-
+                    
                     Tant = T
-                    T = T - fval / dFdT
-                    'If T < Tmin Then T = Tmin
-                    'If T > Tmax Then T = Tmax
+                    deltaT = -fval / dFdT
+
+                    If Abs(deltaT) > 0.1 * T Then
+                        T = T + Sign(deltaT) * 0.1 * T
+                    Else
+                        T = T + deltaT
+                    End If
 
                     e1 = 0
                     For i = 0 To n
