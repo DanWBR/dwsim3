@@ -21,7 +21,7 @@ Imports System.Math
 Imports DWSIM.DWSIM.MathEx
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports System.Runtime.InteropServices
-Imports CoolPropInterface
+Imports CoolProp
 Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.PropertyPackages
@@ -62,37 +62,37 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function AUX_CPi(sub1 As String, T As Double) As Object
             If Not IsCompoundSupported(sub1) Then Return 0.0#
-            Return CoolProp.Props("C0", "T", T, "Q", 1, sub1)
+            Return CoolProp.PropsSI("C0", "T", T, "Q", 1, sub1) / 1000
         End Function
 
         Public Overrides Function AUX_PVAPi(index As Integer, T As Double) As Object
             If Not IsCompoundSupported(RET_VNAMES()(index)) Then Return 0.0#
-            Return CoolProp.Props("P", "T", T, "Q", 0, RET_VNAMES()(index)) * 1000
+            Return CoolProp.PropsSI("P", "T", T, "Q", 0, RET_VNAMES()(index))
         End Function
 
         Public Overrides Function AUX_PVAPi(sub1 As String, T As Double) As Object
             If Not IsCompoundSupported(sub1) Then Return 0.0#
-            Return CoolProp.Props("P", "T", T, "Q", 0, sub1) * 1000
+            Return CoolProp.PropsSI("P", "T", T, "Q", 0, sub1)
         End Function
 
         Public Overrides Function AUX_TSATi(PVAP As Double, index As Integer) As Double
             If Not IsCompoundSupported(RET_VNAMES()(index)) Then Return 0.0#
-            Return CoolProp.Props("T", "P", PVAP / 1000, "Q", 0, RET_VNAMES()(index))
+            Return CoolProp.PropsSI("T", "P", PVAP, "Q", 0, RET_VNAMES()(index))
         End Function
 
         Public Overrides Function AUX_TSATi(PVAP As Double, subst As String) As Double
             If Not IsCompoundSupported(subst) Then Return 0.0#
-            Return CoolProp.Props("T", "P", PVAP / 1000, "Q", 0, subst)
+            Return CoolProp.PropsSI("T", "P", PVAP, "Q", 0, subst)
         End Function
 
         Public Overrides Function AUX_LIQDENSi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
             If Not IsCompoundSupported(cprop.Name) Then Return 0.0#
-            Return CoolProp.Props("D", "T", T, "Q", 0, cprop.Name)
+            Return CoolProp.PropsSI("D", "T", T, "Q", 0, cprop.Name)
         End Function
 
         Public Overrides Function AUX_LIQ_Cpi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
             If Not IsCompoundSupported(cprop.Name) Then Return 0.0#
-            Return CoolProp.Props("C", "T", T, "Q", 0, cprop.Name)
+            Return CoolProp.PropsSI("C", "T", T, "Q", 0, cprop.Name) / 1000
         End Function
 
         Public Overrides Function AUX_CONDTG(T As Double, P As Double) As Double
@@ -104,9 +104,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
                 If subst.FracaoMolar.GetValueOrDefault > 0.0# Then CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                 If xv = 1.0# Then
-                    vk(i) = CoolProp.Props("L", "T", T, "P", P / 1000, subst.ConstantProperties.Name) * 1000
+                    vk(i) = CoolProp.PropsSI("L", "T", T, "P", P, subst.ConstantProperties.Name) * 1000
                 Else
-                    vk(i) = CoolProp.Props("L", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
+                    vk(i) = CoolProp.PropsSI("L", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
                 End If
                 If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
                 vk(i) = subst.FracaoMassica * vk(i)
@@ -125,7 +125,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             i = 0
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
                 If subst.FracaoMolar.GetValueOrDefault > 0.0# Then CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
-                vk(i) = CoolProp.Props("L", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
+                vk(i) = CoolProp.PropsSI("L", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
                 If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
                 vk(i) = subst.FracaoMassica * vk(i)
                 i = i + 1
@@ -145,9 +145,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             For i = 0 To n
                 If Vx(i) > 0.0# Then CheckIfCompoundIsSupported(vn(i))
                 If xv = 0.0# Then
-                    vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, vn(i))
+                    vk(i) = CoolProp.PropsSI("D", "T", T, "P", P, vn(i))
                 Else
-                    vk(i) = CoolProp.Props("D", "T", T, "Q", 0, vn(i))
+                    vk(i) = CoolProp.PropsSI("D", "T", T, "Q", 0, vn(i))
                 End If
                 If vn(i) <> 0.0# Then vk(i) = vn(i) / vk(i)
                 If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -158,22 +158,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function AUX_LIQDENSi(subst As ClassesBasicasTermodinamica.Substancia, T As Double) As Double
             If Not IsCompoundSupported(subst.ConstantProperties.Name) Then Return 0.0#
-            Return CoolProp.Props("L", "T", T, "Q", 0, subst.ConstantProperties.Name)
+            Return CoolProp.PropsSI("L", "T", T, "Q", 0, subst.ConstantProperties.Name)
         End Function
 
         Public Overrides Function AUX_LIQTHERMCONDi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
             If Not IsCompoundSupported(cprop.Name) Then Return 0.0#
-            Return CoolProp.Props("L", "T", T, "Q", 0, cprop.Name) * 1000
+            Return CoolProp.PropsSI("L", "T", T, "Q", 0, cprop.Name) * 1000
         End Function
 
         Public Overrides Function AUX_LIQVISCi(sub1 As String, T As Double) As Object
             If Not IsCompoundSupported(sub1) Then Return 0.0#
-            Return CoolProp.Props("V", "T", T, "Q", 0, sub1)
+            Return CoolProp.PropsSI("V", "T", T, "Q", 0, sub1)
         End Function
 
         Public Overrides Function AUX_SURFTi(constprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
             If Not IsCompoundSupported(constprop.Name) Then Return 0.0#
-            Return CoolProp.Props("I", "T", T, "Q", 0, constprop.Name)
+            Return CoolProp.PropsSI("I", "T", T, "Q", 0, constprop.Name)
         End Function
 
         Public Overrides Function AUX_SURFTM(T As Double) As Double
@@ -190,17 +190,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Function AUX_VAPTHERMCONDi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double, P As Double) As Double
             If Not IsCompoundSupported(cprop.Name) Then Return 0.0#
             Dim val As Double
-            If CoolProp.Props("P", "T", T, "Q", 1, cprop.Name) * 1000 > P Then
-                val = CoolProp.Props("L", "T", T, "P", P / 1000, cprop.Name) * 1000
+            If CoolProp.PropsSI("P", "T", T, "Q", 1, cprop.Name) * 1000 > P Then
+                val = CoolProp.PropsSI("L", "T", T, "P", P, cprop.Name) * 1000
             Else
-                val = CoolProp.Props("L", "T", T, "Q", 1, cprop.Name) * 1000
+                val = CoolProp.PropsSI("L", "T", T, "Q", 1, cprop.Name) * 1000
             End If
             Return val
         End Function
 
         Public Overrides Function AUX_VAPVISCi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
             If Not IsCompoundSupported(cprop.Name) Then Return 0.0#
-            Return CoolProp.Props("V", "T", T, "Q", 1, cprop.Name)
+            Return CoolProp.PropsSI("V", "T", T, "Q", 1, cprop.Name)
         End Function
 
         Public Function AUX_VAPVISCMIX(T As Double, P As Double, MM As Double) As Double
@@ -209,9 +209,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 If subst.FracaoMolar.GetValueOrDefault > 0.0# Then CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                 Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
                 If xv = 1.0# Then
-                    val = subst.FracaoMolar.GetValueOrDefault * CoolProp.Props("V", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                    val = subst.FracaoMolar.GetValueOrDefault * CoolProp.PropsSI("V", "T", T, "P", P, subst.ConstantProperties.Name)
                 Else
-                    val = subst.FracaoMolar.GetValueOrDefault * CoolProp.Props("V", "T", T, "Q", 1, subst.ConstantProperties.Name)
+                    val = subst.FracaoMolar.GetValueOrDefault * CoolProp.PropsSI("V", "T", T, "Q", 1, subst.ConstantProperties.Name)
                 End If
             Next
             Return val
@@ -227,9 +227,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
                 If subst.FracaoMolar.GetValueOrDefault > 0.0# Then CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                 If xv = 0.0# Then
-                    vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                    vk(i) = CoolProp.PropsSI("D", "T", T, "P", P, subst.ConstantProperties.Name)
                 Else
-                    vk(i) = CoolProp.Props("D", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                    vk(i) = CoolProp.PropsSI("D", "T", T, "Q", 0, subst.ConstantProperties.Name)
                 End If
                 vk(i) = subst.FracaoMassica / vk(i)
                 If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -251,9 +251,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
                 If subst.FracaoMolar.GetValueOrDefault > 0.0# Then CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
                 If xv = 1.0# Then
-                    vk(i) = CoolProp.Props("D", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                    vk(i) = CoolProp.PropsSI("D", "T", T, "P", P, subst.ConstantProperties.Name)
                 Else
-                    vk(i) = CoolProp.Props("D", "T", T, "Q", 1, subst.ConstantProperties.Name)
+                    vk(i) = CoolProp.PropsSI("D", "T", T, "Q", 1, subst.ConstantProperties.Name)
                 End If
                 vk(i) = subst.FracaoMassica / vk(i)
                 If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -304,13 +304,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     i = 0
                     For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
                         If xv = 0.0# Then
-                            vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                            vk(i) = CoolProp.PropsSI("C", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                         Else
-                            Dim Psat As Double = CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
+                            Dim Psat As Double = CoolProp.PropsSI("P", "T", T, "Q", 0, subst.ConstantProperties.Name)
                             If P > Psat Then
-                                vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                                vk(i) = CoolProp.PropsSI("C", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                             Else
-                                vk(i) = CoolProp.Props("C", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                                vk(i) = CoolProp.PropsSI("C", "T", T, "Q", 0, subst.ConstantProperties.Name) / 1000
                             End If
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -321,13 +321,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     i = 0
                     For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
                         If xv = 1.0# Then
-                            vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                            vk(i) = CoolProp.PropsSI("C", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                         Else
-                            Dim Psat As Double = CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
+                            Dim Psat As Double = CoolProp.PropsSI("P", "T", T, "Q", 0, subst.ConstantProperties.Name)
                             If P < Psat Then
-                                vk(i) = CoolProp.Props("C", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                                vk(i) = CoolProp.PropsSI("C", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                             Else
-                                vk(i) = CoolProp.Props("C", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                                vk(i) = CoolProp.PropsSI("C", "T", T, "Q", 0, subst.ConstantProperties.Name) / 1000
                             End If
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -373,13 +373,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     i = 0
                     For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
                         If xv = 0.0# Then
-                            vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                            vk(i) = CoolProp.PropsSI("O", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                         Else
-                            Dim Psat As Double = CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
+                            Dim Psat As Double = CoolProp.PropsSI("P", "T", T, "Q", 0, subst.ConstantProperties.Name)
                             If P > Psat Then
-                                vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                                vk(i) = CoolProp.PropsSI("O", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                             Else
-                                vk(i) = CoolProp.Props("O", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                                vk(i) = CoolProp.PropsSI("O", "T", T, "Q", 0, subst.ConstantProperties.Name) / 1000
                             End If
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -390,13 +390,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     i = 0
                     For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseID).Componentes.Values
                         If xv = 1.0# Then
-                            vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                            vk(i) = CoolProp.PropsSI("O", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                         Else
-                            Dim Psat As Double = CoolProp.Props("P", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
+                            Dim Psat As Double = CoolProp.PropsSI("P", "T", T, "Q", 0, subst.ConstantProperties.Name)
                             If P < Psat Then
-                                vk(i) = CoolProp.Props("O", "T", T, "P", P / 1000, subst.ConstantProperties.Name)
+                                vk(i) = CoolProp.PropsSI("O", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                             Else
-                                vk(i) = CoolProp.Props("O", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                                vk(i) = CoolProp.PropsSI("O", "T", T, "Q", 0, subst.ConstantProperties.Name) / 1000
                             End If
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -426,12 +426,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If Vx(i) > 0.0# Then CheckIfCompoundIsSupported(vn(i))
                         Dim Psat As Double = AUX_PVAPi(i, T)
                         If Abs(P - Psat) < 100 Then
-                            vk(i) = CoolProp.Props("H", "T", T, "Q", 0, vn(i))
+                            vk(i) = CoolProp.PropsSI("H", "T", T, "Q", 0, vn(i)) / 1000
                         Else
                             If P > Psat Then
-                                vk(i) = CoolProp.Props("H", "T", T, "P", P / 1000, vn(i))
+                                vk(i) = CoolProp.PropsSI("H", "T", T, "P", P, vn(i)) / 1000
                             Else
-                                vk(i) = CoolProp.Props("H", "T", T, "Q", 0, vn(i))
+                                vk(i) = CoolProp.PropsSI("H", "T", T, "Q", 0, vn(i)) / 1000
                             End If
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -442,12 +442,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If Vx(i) > 0.0# Then CheckIfCompoundIsSupported(vn(i))
                         Dim Psat As Double = AUX_PVAPi(i, T)
                         If Abs(P - AUX_PVAPi(i, T)) < 100 Then
-                            vk(i) = CoolProp.Props("H", "T", T, "Q", 1, vn(i))
+                            vk(i) = CoolProp.PropsSI("H", "T", T, "Q", 1, vn(i))
                         Else
                             If P < Psat Then
-                                vk(i) = CoolProp.Props("H", "T", T, "P", P / 1000, vn(i))
+                                vk(i) = CoolProp.PropsSI("H", "T", T, "P", P, vn(i)) / 1000
                             Else
-                                vk(i) = CoolProp.Props("H", "T", T, "Q", 1, vn(i))
+                                vk(i) = CoolProp.PropsSI("H", "T", T, "Q", 1, vn(i)) / 1000
                             End If
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -482,12 +482,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If Vx(i) > 0.0# Then CheckIfCompoundIsSupported(vn(i))
                         Dim Psat As Double = AUX_PVAPi(i, T)
                         If Abs(P - Psat) < 100 Then
-                            vk(i) = CoolProp.Props("S", "T", T, "Q", 0, vn(i))
+                            vk(i) = CoolProp.PropsSI("S", "T", T, "Q", 0, vn(i)) / 1000
                         Else
                             If P > Psat Then
-                                vk(i) = CoolProp.Props("S", "T", T, "P", P / 1000, vn(i))
+                                vk(i) = CoolProp.PropsSI("S", "T", T, "P", P, vn(i)) / 1000
                             Else
-                                vk(i) = CoolProp.Props("S", "T", T, "Q", 0, vn(i))
+                                vk(i) = CoolProp.PropsSI("S", "T", T, "Q", 0, vn(i)) / 1000
                             End If
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -498,12 +498,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If Vx(i) > 0.0# Then CheckIfCompoundIsSupported(vn(i))
                         Dim Psat As Double = AUX_PVAPi(i, T)
                         If Abs(P - Psat) < 100 Then
-                            vk(i) = CoolProp.Props("S", "T", T, "Q", 1, vn(i))
+                            vk(i) = CoolProp.PropsSI("S", "T", T, "Q", 1, vn(i)) / 1000
                         Else
                             If P < Psat Then
-                                vk(i) = CoolProp.Props("S", "T", T, "P", P / 1000, vn(i))
+                                vk(i) = CoolProp.PropsSI("S", "T", T, "P", P, vn(i)) / 1000
                             Else
-                                vk(i) = CoolProp.Props("S", "T", T, "Q", 1, vn(i))
+                                vk(i) = CoolProp.PropsSI("S", "T", T, "Q", 1, vn(i)) / 1000
                             End If
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -891,7 +891,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Sub CheckIfCompoundIsSupported(compname As String)
 
-            Dim comps() As String = CoolPropInterface.CoolProp.get_global_param_string("FluidsList").Split(",")
+            Dim comps() As String = CoolProp.get_global_param_string("FluidsList").Split(",")
 
             If Not comps.Contains(compname) Then
                 Throw New ArgumentOutOfRangeException(compname, "Error: compound '" & compname & "' is not supported by this version of CoolProp.")
@@ -901,59 +901,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Function IsCompoundSupported(compname As String) As Boolean
 
-            Dim comps() As String = CoolPropInterface.CoolProp.get_global_param_string("FluidsList").Split(",")
+            Dim comps() As String = CoolProp.get_global_param_string("FluidsList").Split(",")
 
             If Not comps.Contains(compname) Then Return False Else Return True
-
-        End Function
-
-        Private Function CalcRho(ByVal T As Double, ByVal P As Double, ByVal compname As String, ByVal fluidstate As State) As Double
-
-            Dim f1, f2, x1, dfdx As Double, cnt As Integer
-            Dim satt, satp1, satp2, rhof, rhog As Double
-
-            If fluidstate = State.Liquid Then
-                x1 = CoolProp.Props("D", "T", T, "Q", 0, compname)
-            Else
-                x1 = CoolProp.Props("D", "T", T, "Q", 1, compname)
-            End If
-
-            cnt = 0
-
-            f1 = 1000
-
-            While Abs(f1) >= 0.00001
-
-                satp1 = CoolProp.Props("P", "T", T, "D", x1, compname) * 1000
-                satp2 = CoolProp.Props("P", "T", T, "D", x1 * 0.98, compname) * 1000
-                f1 = P - satp1
-                f2 = P - satp2
-                dfdx = (f2 - f1) / (-0.02 * x1)
-
-                If Abs(dfdx) < 0.0000000001 Or Double.IsNaN(f1) Or Double.IsInfinity(f1) Then
-                    Console.WriteLine("CoolProp warning: compound: " & compname & ", state: " & fluidstate.ToString)
-                    Console.WriteLine("CoolProp warning: unable to calculate density at P = " & P & " Pa and T = " & T & " K")
-                    If fluidstate = State.Liquid Then
-                        satt = CoolProp.Props("T", "P", P / 1000, "Q", 0, compname)
-                        rhof = CoolProp.Props("D", "P", P / 1000, "Q", 0, compname)
-                        Console.WriteLine("CoolProp warning: returning calculated density @ saturation temperature (" & satt & " K => " & rhof & " kg/m3")
-                        Return rhof
-                    Else
-                        satt = CoolProp.Props("T", "P", P / 1000, "Q", 1, compname)
-                        rhog = CoolProp.Props("D", "P", P / 1000, "Q", 1, compname)
-                        Console.WriteLine("CoolProp warning: returning calculated density @ saturation temperature (" & satt & " K => " & rhog & " kg/m3")
-                        Return rhog
-                    End If
-                End If
-
-                x1 = x1 - f1 / dfdx
-                cnt += 1
-
-                If cnt > 500 Then Exit While
-
-            End While
-
-            Return x1
 
         End Function
 

@@ -21,6 +21,7 @@ Imports FileHelpers
 Imports System.Xml
 Imports System.IO
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary
+Imports CProp = CoolProp
 
 Namespace DWSIM.Databases
 
@@ -1523,12 +1524,12 @@ Namespace DWSIM.Databases
                     .OriginalDB = "CoolProp"
                     .Name = s
                     .Formula = ""
-                    .CAS_Number = CoolPropInterface.CoolProp.get_fluid_param_string(s, "CAS")
-                    .Molar_Weight = CoolPropInterface.CoolProp.Props1(s, "molemass")
-                    .Critical_Pressure = CoolPropInterface.CoolProp.Props1(s, "pcrit") * 1000
-                    .Critical_Temperature = CoolPropInterface.CoolProp.Props1(s, "Tcrit")
-                    .Critical_Volume = 1 / CoolPropInterface.CoolProp.Props1(s, "rhocrit") * .Molar_Weight
-                    .Acentric_Factor = CoolPropInterface.CoolProp.Props1(s, "accentric")
+                    .CAS_Number = CProp.get_fluid_param_string(s, "CAS")
+                    .Molar_Weight = CProp.Props1SI(s, "molemass") * 1000
+                    .Critical_Pressure = CProp.Props1SI(s, "pcrit")
+                    .Critical_Temperature = CProp.Props1SI(s, "Tcrit")
+                    .Critical_Volume = 1 / CProp.Props1SI(s, "rhocrit") * .Molar_Weight
+                    '.Acentric_Factor = CProp.Props1SI(s, "accentric")
                     .Critical_Compressibility = .Critical_Pressure * .Critical_Volume / (8314 * .Critical_Temperature)
                     .ID = i
                     .IsHYPO = False
