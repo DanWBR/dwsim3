@@ -1756,7 +1756,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
                                 task2.Start()
                                 Task.WaitAll(task1, task2)
                             Catch ae As AggregateException
-                                Throw ae.Flatten()
+                                Throw ae.Flatten().InnerException
                             Finally
                                 If My.Settings.EnableGPUProcessing Then
                                     My.MyApplication.gpu.DisableMultithreading()
@@ -1833,7 +1833,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
                                 task3.Start()
                                 Task.WaitAll(task1, task2, task3)
                             Catch ae As AggregateException
-                                Throw ae.Flatten()
+                                Throw ae.Flatten().InnerException
                             Finally
                                 If My.Settings.EnableGPUProcessing Then
                                     My.MyApplication.gpu.DisableMultithreading()
@@ -1932,7 +1932,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
                             task3.Start()
                             Task.WaitAll(task1, task2, task3)
                         Catch ae As AggregateException
-                            Throw ae.Flatten()
+                            Throw ae.Flatten().InnerException
                         Finally
                             If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.DisableMultithreading()
@@ -2005,7 +2005,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
                                 task2.Start()
                                 Task.WaitAll(task1, task2)
                             Catch ae As AggregateException
-                                Throw ae.Flatten()
+                                Throw ae.Flatten().InnerException
                             Finally
                                 If My.Settings.EnableGPUProcessing Then
                                     My.MyApplication.gpu.DisableMultithreading()
@@ -2074,7 +2074,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
                                 task3.Start()
                                 Task.WaitAll(task1, task2, task3)
                             Catch ae As AggregateException
-                                Throw ae.Flatten()
+                                Throw ae.Flatten().InnerException
                             Finally
                                 If My.Settings.EnableGPUProcessing Then
                                     My.MyApplication.gpu.DisableMultithreading()
@@ -2165,7 +2165,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
                             task3.Start()
                             Task.WaitAll(task1, task2, task3)
                         Catch ae As AggregateException
-                            Throw ae.Flatten()
+                            Throw ae.Flatten().InnerException
                         Finally
                             If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.DisableMultithreading()
@@ -2238,7 +2238,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
                         task2.Start()
                         Task.WaitAll(task1, task2)
                     Catch ae As AggregateException
-                        Throw ae.Flatten()
+                        Throw ae.Flatten().InnerException
                     Finally
                         If My.Settings.EnableGPUProcessing Then
                             My.MyApplication.gpu.DisableMultithreading()

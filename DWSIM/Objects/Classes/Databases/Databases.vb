@@ -1529,7 +1529,7 @@ Namespace DWSIM.Databases
                     .Critical_Pressure = CProp.Props1SI(s, "pcrit")
                     .Critical_Temperature = CProp.Props1SI(s, "Tcrit")
                     .Critical_Volume = 1 / CProp.Props1SI(s, "rhocrit") * .Molar_Weight
-                    '.Acentric_Factor = CProp.Props1SI(s, "accentric")
+                    .Acentric_Factor = CProp.Props1SI(s, "acentric")
                     .Critical_Compressibility = .Critical_Pressure * .Critical_Volume / (8314 * .Critical_Temperature)
                     .ID = i
                     .IsHYPO = False

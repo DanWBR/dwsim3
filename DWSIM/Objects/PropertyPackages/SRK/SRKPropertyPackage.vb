@@ -1500,7 +1500,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Try
                 Task.WaitAll(New Task() {tasks(1), tasks(2), tasks(3), tasks(4), tasks(5), tasks(6)})
             Catch ae As AggregateException
-                Throw ae.Flatten()
+                Throw ae.Flatten().InnerException
             End Try
 
             If TVB.Count > 1 Then TVB.RemoveAt(TVB.Count - 1)

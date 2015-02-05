@@ -2096,7 +2096,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                                          End Sub))
                     task1.Wait()
                 Catch ae As AggregateException
-                    Throw ae.Flatten()
+                    Throw ae.Flatten().InnerException
                 Finally
                     If My.Settings.EnableGPUProcessing Then
                         My.MyApplication.gpu.DisableMultithreading()
@@ -2227,7 +2227,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                  End Sub))
                         t1.Wait()
                     Catch ae As AggregateException
-                        Throw ae.Flatten()
+                        Throw ae.Flatten().InnerException
                     Finally
                         If My.Settings.EnableGPUProcessing Then
                             My.MyApplication.gpu.DisableMultithreading()
@@ -2287,7 +2287,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                  End Sub))
                         t1.Wait()
                     Catch ae As AggregateException
-                        Throw ae.Flatten()
+                        Throw ae.Flatten().InnerException
                     Finally
                         If My.Settings.EnableGPUProcessing Then
                             My.MyApplication.gpu.DisableMultithreading()
@@ -2350,7 +2350,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                                      End Sub))
                         t1.Wait()
                     Catch ae As AggregateException
-                        Throw ae.Flatten()
+                        Throw ae.Flatten().InnerException
                     Finally
                         If My.Settings.EnableGPUProcessing Then
                             My.MyApplication.gpu.DisableMultithreading()

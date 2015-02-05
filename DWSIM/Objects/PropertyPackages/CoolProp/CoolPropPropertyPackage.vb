@@ -98,15 +98,31 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Function AUX_CONDTG(T As Double, P As Double) As Double
             Dim val As Double
             Dim i As Integer
+            Dim Tlim As Double
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             i = 0
             Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
-                If subst.FracaoMolar.GetValueOrDefault > 0.0# Then CheckIfCompoundIsSupported(subst.ConstantProperties.Name)
-                If xv = 1.0# Then
-                    vk(i) = CoolProp.PropsSI("L", "T", T, "P", P, subst.ConstantProperties.Name) * 1000
+                If IsCompoundSupported(subst.Nome) Then
+                    Tlim = CoolProp.PropsSI("T", "P", P, "Q", 0, subst.ConstantProperties.Name)
+                    If T > Tlim Then
+                        vk(i) = CoolProp.PropsSI("L", "T", T, "P", P, subst.ConstantProperties.Name) * 1000
+                    Else
+                        Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
+                        x1 = Tlim * 0.95
+                        x2 = Tlim * 0.9
+                        x3 = Tlim * 0.85
+                        x4 = Tlim * 0.8
+                        x5 = Tlim * 0.75
+                        p1 = CoolProp.PropsSI("L", "T", x1, "P", P, subst.ConstantProperties.Name) * 1000
+                        p2 = CoolProp.PropsSI("L", "T", x2, "P", P, subst.ConstantProperties.Name) * 1000
+                        p3 = CoolProp.PropsSI("L", "T", x3, "P", P, subst.ConstantProperties.Name) * 1000
+                        p4 = CoolProp.PropsSI("L", "T", x4, "P", P, subst.ConstantProperties.Name) * 1000
+                        p5 = CoolProp.PropsSI("L", "T", x5, "P", P, subst.ConstantProperties.Name) * 1000
+                        vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
+                    End If
                 Else
-                    vk(i) = CoolProp.PropsSI("L", "T", T, "Q", 1, subst.ConstantProperties.Name) * 1000
+                    vk(i) = 0.0#
                 End If
                 If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
                 vk(i) = subst.FracaoMassica * vk(i)

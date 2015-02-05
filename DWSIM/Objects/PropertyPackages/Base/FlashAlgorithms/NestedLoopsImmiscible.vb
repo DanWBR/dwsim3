@@ -216,7 +216,7 @@ out:        Return New Object() {xl1, V, Vx1, Vy, ecount, xl2, Vx2, 0.0#, PP.RET
                         task2.Start()
                         Task.WaitAll(task1, task2)
                     Catch ae As AggregateException
-                        Throw ae.Flatten()
+                        Throw ae.Flatten().InnerException
                     Finally
                         If My.Settings.EnableGPUProcessing Then
                             My.MyApplication.gpu.DisableMultithreading()
@@ -327,7 +327,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                         task2.Start()
                         Task.WaitAll(task1, task2)
                     Catch ae As AggregateException
-                        Throw ae.Flatten()
+                        Throw ae.Flatten().InnerException
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else

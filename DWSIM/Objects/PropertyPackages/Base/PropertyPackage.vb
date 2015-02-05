@@ -679,7 +679,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     task2.Start()
                     Task.WaitAll(task1, task2)
                 Catch ae As AggregateException
-                    Throw ae.Flatten()
+                    Throw ae.Flatten().InnerException
                 Finally
                     If My.Settings.EnableGPUProcessing Then
                         If Not alreadymt Then
@@ -893,7 +893,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     task2.Start()
                     Task.WaitAll(task1, task2)
                 Catch ae As AggregateException
-                    Throw ae.Flatten()
+                    Throw ae.Flatten().InnerException
                 Finally
                     If My.Settings.EnableGPUProcessing Then
                         My.MyApplication.gpu.DisableMultithreading()

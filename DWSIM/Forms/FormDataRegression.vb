@@ -455,7 +455,7 @@ Public Class FormDataRegression
                                                                                  End Sub))
                                         task1.Wait()
                                     Catch ae As AggregateException
-                                        Throw ae.Flatten()
+                                        Throw ae.Flatten().InnerException
                                     End Try
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
@@ -481,7 +481,7 @@ Public Class FormDataRegression
                                                                                  End Sub))
                                         task1.Wait()
                                     Catch ae As AggregateException
-                                        Throw ae.Flatten()
+                                        Throw ae.Flatten().InnerException
                                     End Try
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
@@ -513,7 +513,7 @@ Public Class FormDataRegression
                                                                                  End Sub))
                                         task1.Wait()
                                     Catch ae As AggregateException
-                                        Throw ae.Flatten()
+                                        Throw ae.Flatten().InnerException
                                     End Try
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
@@ -539,7 +539,7 @@ Public Class FormDataRegression
                                                                              End Sub))
                                         task1.Wait()
                                     Catch ae As AggregateException
-                                        Throw ae.Flatten()
+                                        Throw ae.Flatten().InnerException
                                     End Try
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
@@ -573,7 +573,7 @@ Public Class FormDataRegression
                                                                                  End Sub))
                                         task1.Wait()
                                     Catch ae As AggregateException
-                                        Throw ae.Flatten()
+                                        Throw ae.Flatten().InnerException
                                     End Try
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
@@ -599,7 +599,7 @@ Public Class FormDataRegression
                                                                                  End Sub))
                                         task1.Wait()
                                     Catch ae As AggregateException
-                                        Throw ae.Flatten()
+                                        Throw ae.Flatten().InnerException
                                     End Try
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
@@ -633,7 +633,7 @@ Public Class FormDataRegression
                                                                                             End Sub))
                                         task1.Wait()
                                     Catch ae As AggregateException
-                                        Throw ae.Flatten()
+                                        Throw ae.Flatten().InnerException
                                     End Try
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
@@ -659,7 +659,7 @@ Public Class FormDataRegression
                                                                                  End Sub))
                                         task1.Wait()
                                     Catch ae As AggregateException
-                                        Throw ae.Flatten()
+                                        Throw ae.Flatten().InnerException
                                     End Try
                                     My.MyApplication.IsRunningParallelTasks = False
                                 Else
@@ -1044,7 +1044,7 @@ Public Class FormDataRegression
                                                                                 End Sub))
                                     task1.Wait()
                                 Catch ae As AggregateException
-                                    Throw ae.Flatten()
+                                    Throw ae.Flatten().InnerException
                                 End Try
                                 My.MyApplication.IsRunningParallelTasks = False
                             Else
@@ -1091,7 +1091,7 @@ Public Class FormDataRegression
                                                                          End Sub))
                                     task1.Wait()
                                 Catch ae As AggregateException
-                                    Throw ae.Flatten()
+                                    Throw ae.Flatten().InnerException
                                 End Try
                                 My.MyApplication.IsRunningParallelTasks = False
                             Else
@@ -1140,7 +1140,7 @@ Public Class FormDataRegression
                                                                              End Sub))
                                     task1.Wait()
                                 Catch ae As AggregateException
-                                    Throw ae.Flatten()
+                                    Throw ae.Flatten().InnerException
                                 End Try
                                 My.MyApplication.IsRunningParallelTasks = False
                             Else
@@ -1189,7 +1189,7 @@ Public Class FormDataRegression
                                                                              End Sub))
                                     task1.Wait()
                                 Catch ae As AggregateException
-                                    Throw ae.Flatten()
+                                    Throw ae.Flatten().InnerException
                                 End Try
                                 My.MyApplication.IsRunningParallelTasks = False
                             Else
@@ -2707,7 +2707,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 task3.Start()
                 Task.WaitAll(task1, task2, task3)
             Catch ae As AggregateException
-                Throw ae.Flatten()
+                Throw ae.Flatten().InnerException
             End Try
             My.MyApplication.IsRunningParallelTasks = False
         Else
@@ -2759,7 +2759,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 task3.Start()
                 Task.WaitAll(task1, task2, task3)
             Catch ae As AggregateException
-                Throw ae.Flatten()
+                Throw ae.Flatten().InnerException
             End Try
             My.MyApplication.IsRunningParallelTasks = False
         Else
@@ -2851,7 +2851,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 task3.Start()
                 Task.WaitAll(task1, task2, task3)
             Catch ae As AggregateException
-                Throw ae.Flatten()
+                Throw ae.Flatten().InnerException
             Finally
                 If My.Settings.EnableGPUProcessing Then
                     My.MyApplication.gpu.DisableMultithreading()
@@ -2970,7 +2970,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 task3.Start()
                 Task.WaitAll(task1, task2, task3)
             Catch ae As AggregateException
-                Throw ae.Flatten()
+                Throw ae.Flatten().InnerException
             Finally
                 If My.Settings.EnableGPUProcessing Then
                     My.MyApplication.gpu.DisableMultithreading()

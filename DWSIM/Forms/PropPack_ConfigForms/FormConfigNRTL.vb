@@ -294,7 +294,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                 task3.Start()
                 Task.WaitAll(task1, task2, task3)
             Catch ae As AggregateException
-                Throw ae.Flatten()
+                Throw ae.Flatten().InnerException
             End Try
             My.MyApplication.IsRunningParallelTasks = False
         Else
@@ -391,7 +391,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                         task3.Start()
                         Task.WaitAll(task1, task2, task3)
                     Catch ae As AggregateException
-                        Throw ae.Flatten()
+                        Throw ae.Flatten().InnerException
                     Finally
                         If My.Settings.EnableGPUProcessing Then
                             My.MyApplication.gpu.DisableMultithreading()
@@ -511,7 +511,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                     task3.Start()
                     Task.WaitAll(task1, task2, task3)
                 Catch ae As AggregateException
-                    Throw ae.Flatten()
+                    Throw ae.Flatten().InnerException
                 Finally
                     If My.Settings.EnableGPUProcessing Then
                         My.MyApplication.gpu.DisableMultithreading()
