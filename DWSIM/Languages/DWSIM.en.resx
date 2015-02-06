@@ -4996,4 +4996,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="UpdateOnSaveDesc" xml:space="preserve">
     <value>Updates the sub-flowsheet file with process data from the last calculation run when saving the main flowsheet file (XML only).</value>
   </data>
+  <data name="DCOperationMode" xml:space="preserve">
+    <value>Column operation mode</value>
+  </data>
 </root>

@@ -4965,4 +4965,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="UpdateOnSaveDesc" xml:space="preserve">
     <value>Atualiza as informações de processo do sub-fluxograma no arquivo ao salvar o fluxograma principal.</value>
   </data>
+  <data name="DCOperationMode" xml:space="preserve">
+    <value>Modo de operação da coluna</value>
+  </data>
 </root>

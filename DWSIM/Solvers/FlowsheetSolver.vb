@@ -442,7 +442,7 @@ Namespace DWSIM.Flowsheet
                             End Select
                         Catch ae As AggregateException
                             form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                            Throw ae.Flatten().InnerException.InnerException
+                            Throw ae.Flatten().InnerException
                         Finally
                             If My.Settings.EnableGPUProcessing Then
                                 My.MyApplication.gpu.DisableMultithreading()

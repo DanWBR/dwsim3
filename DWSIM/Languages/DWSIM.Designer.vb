@@ -3332,6 +3332,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Modo de operação da coluna.
+        '''</summary>
+        Friend Shared ReadOnly Property DCOperationMode() As String
+            Get
+                Return ResourceManager.GetString("DCOperationMode", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Produto de topo.
         '''</summary>
         Friend Shared ReadOnly Property DCOvrhdProd() As String
