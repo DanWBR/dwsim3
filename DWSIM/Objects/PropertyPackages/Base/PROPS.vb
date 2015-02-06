@@ -66,38 +66,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        'Function Cpig_lk(ByVal WK As Double, ByVal SG As Double, ByVal T As Double) As Double
-
-        '    'Estimativa do CPig de vapores de frações de petróleo pelo método de Lee e Kesler
-
-        '    Dim A1, A2, A3, A4
-
-        '    T = 1.8 * T
-
-        '    If WK > 10 And WK < 12.8 And SG > 0.7 And SG < 0.885 Then
-
-        '        A4 = ((12.8 / WK - 1) * (1 - 10 / WK) * (SG - 0.885) * (SG - 0.7) * 10000) ^ 2
-
-        '    Else
-
-        '        A4 = 0
-
-        '    End If
-
-        '    A3 = -(0.0000001 * (1.6946 + 0.0844 * A4))
-
-        '    A2 = -(0.0001 * (2.9247 - (1.5524 - 0.05543 * WK) * WK + A4 * (6.0283 - 5.0694 / SG)))
-
-        '    A1 = -0.35644 + 0.02972 * WK + A4 * (0.29502 - 0.24846 / SG)
-
-        '    Dim tmp = A1 + A2 * T + A3 * T ^ 2
-
-        '    tmp = 4.1868 * tmp
-
-        '    Cpig_lk = tmp   'kJ/kg.K
-
-        'End Function
-
         Function sigma_bb(ByVal T As Double, ByVal Tb As Double, ByVal Tc As Double, ByVal Pc As Double) As Double
 
             'Estimativa da tensão interfacial pelo método de Brock e Bird
@@ -202,9 +170,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 liq_dens_rackett = 0.001 * MM / (tmp * 0.000001) 'kg/m3 ''''m3/mol
 
             End If
-
-
-
 
         End Function
 

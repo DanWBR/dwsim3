@@ -417,15 +417,11 @@ Public Class FormMain
         FPP.ComponentDescription = DWSIM.App.GetLocalString("DescFPP")
         PropertyPackages.Add(FPP.ComponentName.ToString, FPP)
 
-        If Not DWSIM.App.IsRunningOnMono Then
+        Dim CPPP As CoolPropPropertyPackage = New CoolPropPropertyPackage()
+        CPPP.ComponentName = "CoolProp"
+        CPPP.ComponentDescription = DWSIM.App.GetLocalString("DescCPPP")
 
-            Dim CPPP As CoolPropPropertyPackage = New CoolPropPropertyPackage()
-            CPPP.ComponentName = "CoolProp"
-            CPPP.ComponentDescription = DWSIM.App.GetLocalString("DescCPPP")
-
-            PropertyPackages.Add(CPPP.ComponentName.ToString, CPPP)
-
-        End If
+        PropertyPackages.Add(CPPP.ComponentName.ToString, CPPP)
 
         Dim STPP As SteamTablesPropertyPackage = New SteamTablesPropertyPackage()
         STPP.ComponentName = DWSIM.App.GetLocalString("TabelasdeVaporSteamT")

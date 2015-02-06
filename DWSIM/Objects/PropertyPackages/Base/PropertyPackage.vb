@@ -5684,7 +5684,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'kPa
                     Return result * 1000
                 Else
-                    Return 0
+                    With Me.CurrentMaterialStream.Fases(0).Componentes(sub1)
+                        Return Me.m_props.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
+                    End With
                 End If
 
             End If
@@ -5753,7 +5755,9 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'kPa
                     Return result * 1000
                 Else
-                    Return 0
+                    With Me.CurrentMaterialStream.Fases(0).Componentes(nome)
+                        Return Me.m_props.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
+                    End With
                 End If
             End If
 
