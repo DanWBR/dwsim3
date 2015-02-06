@@ -65,7 +65,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Private Sub WriteErrorMessage(message As String)
             If Not Me.CurrentMaterialStream Is Nothing Then
                 If Not Me.CurrentMaterialStream.FlowSheet Is Nothing Then
-                    Me.CurrentMaterialStream.FlowSheet.WriteToLog(message, Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                    Me.CurrentMaterialStream.FlowSheet.WriteToLog(message, Color.Red, FormClasses.TipoAviso.Aviso)
                 End If
             Else
                 Console.WriteLine(message)
