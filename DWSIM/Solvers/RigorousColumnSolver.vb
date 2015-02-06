@@ -2726,13 +2726,13 @@ restart:            fx = Me.FunctionValue(xvar)
                 Else
                     For i = 0 To ns
                         Hl(i) = pp.DW_CalcEnthalpy(xc(i), Tj(i), P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(i)) / 1000
-                        dHl(i) = pp.DW_CalcEnthalpy(xc(i), Tj(i) - 0.01, P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(i)) / 1000
+                        dHl(i) = pp.DW_CalcEnthalpy(xc(i), Tj(i) - 1, P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(i)) / 1000
                         If llextr Then
                             Hv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i), P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(yc(i)) / 1000
-                            dHv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i) - 0.01, P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(yc(i)) / 1000
+                            dHv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i) - 1, P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(yc(i)) / 1000
                         Else
                             Hv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i), P(i), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(i)) / 1000
-                            dHv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i) - 0.01, P(i), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(i)) / 1000
+                            dHv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i) - 1, P(i), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(i)) / 1000
                         End If
                         CheckCalculatorStatus()
                     Next
@@ -2746,8 +2746,8 @@ restart:            fx = Me.FunctionValue(xvar)
                     Else
                         H(i) = Lj(i - 1) * Hl(i - 1) + Vj(i + 1) * Hv(i + 1) + Fj(i) * Hfj(i) - (Lj(i) + LSSj(i)) * Hl(i) - (Vj(i) + VSSj(i)) * Hv(i) - Q(i)
                     End If
-                    dHldT(i) = (Hl(i) - dHl(i)) / 0.01
-                    dHvdT(i) = (Hv(i) - dHv(i)) / 0.01
+                    dHldT(i) = (Hl(i) - dHl(i)) / 1
+                    dHvdT(i) = (Hv(i) - dHv(i)) / 1
                 Next
 
                 For i = 0 To ns
@@ -2775,9 +2775,17 @@ restart:            fx = Me.FunctionValue(xvar)
                 t_error = 0
                 For i = 0 To ns
                     Tj_ant(i) = Tj(i)
-                    Tj(i) = Tj(i) + xth(i)
-                    If Tj(i) < 0 Then Tj(i) = Tj_ant(i)
-                    tmp = pp.DW_CalcKvalue(xc(i), yc(i), Tj(i), P(i), "LL")
+                    If Abs(xth(i)) > 0.1 * Tj(i) Then
+                        Tj(i) = Tj(i) + Sign(xth(i)) * 0.1 * Tj(i)
+                    Else
+                        Tj(i) = Tj(i) + xth(i)
+                    End If
+                    'If Tj(i) < 0 Then Tj(i) = Tj_ant(i)
+                    If llextr Then
+                        tmp = pp.DW_CalcKvalue(xc(i), yc(i), Tj(i), P(i), "LL")
+                    Else
+                        tmp = pp.DW_CalcKvalue(xc(i), yc(i), Tj(i), P(i))
+                    End If
                     sumy(i) = 0
                     For j = 0 To nc - 1
                         K(i)(j) = tmp(j)

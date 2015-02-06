@@ -3275,13 +3275,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Select Case Me.ColumnType
                 Case ColType.AbsorptionColumn
-                    T1 = MathEx.Common.Max(FT)
+                    T1 = MathEx.Common.WgtAvg(F, FT)
                     T2 = T1
                 Case ColType.ReboiledAbsorber
-                    T1 = MathEx.Common.Max(FT)
+                    T1 = MathEx.Common.WgtAvg(F, FT)
                     T2 = T1
                 Case ColType.RefluxedAbsorber
-                    T1 = MathEx.Common.Max(FT)
+                    T1 = MathEx.Common.WgtAvg(F, FT)
                     T2 = T1
                 Case ColType.DistillationColumn
                     Try

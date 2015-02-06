@@ -162,6 +162,23 @@ Namespace DWSIM.MathEx
 
         End Function
 
+        Shared Function WgtAvg(ByVal vw() As Double, ByVal vx() As Double) As Double
+
+            Dim n = UBound(vx)
+            Dim i As Integer
+            Dim sumv As Double = 0
+            Dim total As Double = 0.0#
+            For i = 0 To n
+                total += vw(i)
+            Next
+            For i = 0 To n
+                sumv += vw(i) * vx(i) / total
+            Next
+
+            Return sumv
+
+        End Function
+
         Shared Function SumSqr(ByVal vx() As Double) As Double
             Dim n = UBound(vx)
             Dim i As Integer

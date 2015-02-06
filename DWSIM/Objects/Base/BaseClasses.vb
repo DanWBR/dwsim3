@@ -2331,23 +2331,9 @@ End Class
 
         Calculated = False
 
-        Try
-            'If ScriptExt_ScriptTextB <> "" Then RunScript_Before()
-            Calculate(args)
-            'If ScriptExt_ScriptTextA <> "" Then RunScript_After()
-            Calculated = True
-        Catch ex As Exception
-            If Me.FlowSheet IsNot Nothing Then
-                Dim st As New StackTrace(ex, True)
-                If st.FrameCount > 0 Then
-                    Me.FlowSheet.WriteToLog("Error solving " & Me.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-                Else
-                    Me.FlowSheet.WriteToLog("Error solving " & Me.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-                End If
-            Else
-                Console.WriteLine(ex.ToString)
-            End If
-        End Try
+        Calculate(args)
+
+        Calculated = True
 
     End Sub
 
@@ -2357,21 +2343,9 @@ End Class
 
     Public Sub Unsolve()
 
-        Try
-            DeCalculate()
-            Calculated = False
-        Catch ex As Exception
-            If Me.FlowSheet IsNot Nothing Then
-                Dim st As New StackTrace(ex, True)
-                If st.FrameCount > 0 Then
-                    Me.FlowSheet.WriteToLog("Error unsolving " & Me.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-                Else
-                    Me.FlowSheet.WriteToLog("Error unsolving " & Me.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-                End If
-            Else
-                Console.WriteLine(ex.ToString)
-            End If
-        End Try
+        DeCalculate()
+
+        Calculated = False
 
     End Sub
 
