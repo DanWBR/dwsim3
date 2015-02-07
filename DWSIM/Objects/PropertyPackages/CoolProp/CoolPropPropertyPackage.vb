@@ -62,10 +62,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "    DWSIM Functions"
 
-        Private Sub WriteErrorMessage(message As String)
+        Private Sub WriteWarningMessage(message As String)
             If Not Me.CurrentMaterialStream Is Nothing Then
                 If Not Me.CurrentMaterialStream.FlowSheet Is Nothing Then
-                    Me.CurrentMaterialStream.FlowSheet.WriteToLog(message, Color.Red, FormClasses.TipoAviso.Aviso)
+                    If Not Me.CurrentMaterialStream.GraphicObject Is Nothing Then
+                        Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & ": [CoolProp] " & message, Color.DarkSlateBlue, FormClasses.TipoAviso.Aviso)
+                    Else
+                        Me.CurrentMaterialStream.FlowSheet.WriteToLog("[CoolProp] " & message, Color.DarkSlateBlue, FormClasses.TipoAviso.Aviso)
+                    End If
                 End If
             Else
                 Console.WriteLine(message)
@@ -73,23 +77,28 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Sub
 
         Public Overrides Function AUX_CPi(sub1 As String, T As Double) As Object
-            Dim Tmin, Tmax, val As Double
+            Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(sub1, "TMIN")
                 Tmax = CoolProp.Props1SI(sub1, "TMAX")
-                If T > Tmin And T < Tmax Then
+                Tc = CoolProp.Props1SI(sub1, "TCRIT")
+                If T > Tmin And T <= Tmax Then
                     Try
-                        val = CoolProp.PropsSI("CP0MASS", "T", T, "Q", 1, sub1) / 1000
+                        If T <= Tc Then
+                            val = CoolProp.PropsSI("CP0MASS", "T", T, "Q", 1, sub1) / 1000
+                        Else
+                            val = CoolProp.PropsSI("CP0MASS", "T", T, "P", 101325, sub1) / 1000
+                        End If
                     Catch ex As Exception
-                        WriteErrorMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
+                        WriteWarningMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
                         val = MyBase.AUX_CPi(sub1, T)
                     End Try
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Ideal Gas Heat Capacity for " & sub1 & " at T = " & T & " K. Estimating value...")
+                    WriteWarningMessage("CoolProp Warning: unable to calculate Ideal Gas Heat Capacity for " & sub1 & " at T = " & T & " K. Estimating value...")
                     val = MyBase.AUX_CPi(sub1, T)
                 End If
             Else
-                    WriteErrorMessage("CoolProp Warning: compound " & sub1 & " Not supported. Estimating Ideal Gas Heat Capacity value...")
+                WriteWarningMessage("CoolProp Warning: compound " & sub1 & " not supported. Estimating Ideal Gas Heat Capacity value...")
                 val = MyBase.AUX_CPi(sub1, T)
             End If
             Return val
@@ -97,46 +106,45 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function AUX_PVAPi(index As Integer, T As Double) As Object
             Dim sub1 As String = RET_VNAMES()(index)
-            Dim Tmin, Tmax, val As Double
+            Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(sub1, "TMIN")
                 Tmax = CoolProp.Props1SI(sub1, "TMAX")
-                If T > Tmin And T < Tmax Then
+                Tc = CoolProp.Props1SI(sub1, "TCRIT")
+                If T > Tmin And T <= Tmax And T <= Tc Then
                     Try
                         val = CoolProp.PropsSI("P", "T", T, "Q", 0, sub1)
                     Catch ex As Exception
-                        WriteErrorMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
+                        WriteWarningMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
                         val = MyBase.AUX_PVAPi(index, T)
                     End Try
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Vapor Pressure for " & sub1 & " at T = " & T & " K. Estimating value...")
                     val = MyBase.AUX_PVAPi(index, T)
                 End If
             Else
-                WriteErrorMessage("CoolProp Warning: compound " & sub1 & " Not supported. Estimating Vapor Pressure value...")
+                WriteWarningMessage("CoolProp Warning: compound " & sub1 & " not supported. Estimating Vapor Pressure value...")
                 val = MyBase.AUX_PVAPi(index, T)
             End If
             Return val
         End Function
 
         Public Overrides Function AUX_PVAPi(sub1 As String, T As Double) As Object
-            Dim Tmin, Tmax, val As Double
+            Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(sub1, "TMIN")
-                Tmax = CoolProp.Props1SI(sub1, "TMAX")
-                If T > Tmin And T < Tmax Then
+                Tc = CoolProp.Props1SI(sub1, "TCRIT")
+                If T > Tmin And T <= Tmax And T <= Tc Then
                     Try
                         val = CoolProp.PropsSI("P", "T", T, "Q", 0, sub1)
                     Catch ex As Exception
-                        WriteErrorMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
+                        WriteWarningMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
                         val = MyBase.AUX_PVAPi(sub1, T)
                     End Try
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Vapor Pressure for " & sub1 & " at T = " & T & " K. Estimating value...")
                     val = MyBase.AUX_PVAPi(sub1, T)
                 End If
             Else
-                WriteErrorMessage("CoolProp Warning: compound " & sub1 & " Not supported. Estimating Vapor Pressure value...")
+                WriteWarningMessage("CoolProp Warning: compound " & sub1 & " not supported. Estimating Vapor Pressure value...")
                 val = MyBase.AUX_PVAPi(sub1, T)
             End If
             Return val
@@ -152,15 +160,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Try
                         val = CoolProp.PropsSI("T", "P", PVAP, "Q", 0, sub1)
                     Catch ex As Exception
-                        WriteErrorMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
+                        WriteWarningMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
                         val = MyBase.AUX_TSATi(PVAP, index)
                     End Try
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Saturation Temperature for " & sub1 & " at P = " & PVAP & " Pa. Estimating value...")
+                    WriteWarningMessage("CoolProp Warning: unable to calculate Saturation Temperature for " & sub1 & " at P = " & PVAP & " Pa. Estimating value...")
                     val = MyBase.AUX_TSATi(PVAP, index)
                 End If
             Else
-                WriteErrorMessage("CoolProp Warning: compound " & sub1 & " Not supported. Estimating Saturation Temperature value...")
+                WriteWarningMessage("CoolProp Warning: compound " & sub1 & " not supported. Estimating Saturation Temperature value...")
                 val = MyBase.AUX_TSATi(PVAP, index)
             End If
             Return val
@@ -175,15 +183,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Try
                         val = CoolProp.PropsSI("T", "P", PVAP, "Q", 0, subst)
                     Catch ex As Exception
-                        WriteErrorMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & subst & "]")
+                        WriteWarningMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & subst & "]")
                         val = MyBase.AUX_TSATi(PVAP, subst)
                     End Try
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Saturation Temperature for " & subst & " at P = " & PVAP & " Pa. Estimating value...")
+                    WriteWarningMessage("CoolProp Warning: unable to calculate Saturation Temperature for " & subst & " at P = " & PVAP & " Pa. Estimating value...")
                     val = MyBase.AUX_TSATi(PVAP, subst)
                 End If
             Else
-                WriteErrorMessage("CoolProp Warning: compound " & subst & " Not supported. Estimating Saturation Temperature value...")
+                WriteWarningMessage("CoolProp Warning: compound " & subst & " not supported. Estimating Saturation Temperature value...")
                 val = MyBase.AUX_TSATi(PVAP, subst)
             End If
             Return val
@@ -191,23 +199,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function AUX_LIQDENSi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
             Dim sub1 = cprop.Name
-            Dim Tmin, Tmax, val As Double
+            Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(sub1, "TMIN")
                 Tmax = CoolProp.Props1SI(sub1, "TMAX")
-                If T > Tmin And T < Tmax Then
+                Tc = CoolProp.Props1SI(sub1, "TCRIT")
+                If T > Tmin And T <= Tmax And T <= Tc Then
                     Try
                         val = CoolProp.PropsSI("D", "T", T, "Q", 0, cprop.Name)
                     Catch ex As Exception
-                        WriteErrorMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
+                        WriteWarningMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
                         val = MyBase.AUX_LIQDENSi(cprop, T)
                     End Try
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Liquid Density for " & sub1 & " at T = " & T & " K. Estimating value...")
+                    WriteWarningMessage("CoolProp Warning: unable to calculate Liquid Density for " & sub1 & " at T = " & T & " K. Estimating value...")
                     val = MyBase.AUX_LIQDENSi(cprop, T)
                 End If
             Else
-                WriteErrorMessage("CoolProp Warning: compound " & sub1 & " Not supported. Estimating Liquid Density value...")
+                WriteWarningMessage("CoolProp Warning: compound " & sub1 & " not supported. Estimating Liquid Density value...")
                 val = MyBase.AUX_LIQDENSi(cprop, T)
             End If
             Return val
@@ -215,23 +224,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function AUX_LIQ_Cpi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
             Dim sub1 = cprop.Name
-            Dim Tmin, Tmax, val As Double
+            Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(sub1, "TMIN")
                 Tmax = CoolProp.Props1SI(sub1, "TMAX")
-                If T > Tmin And T < Tmax Then
+                Tc = CoolProp.Props1SI(sub1, "TCRIT")
+                If T > Tmin And T <= Tmax And T <= Tc Then
                     Try
                         val = CoolProp.PropsSI("C", "T", T, "Q", 0, cprop.Name) / 1000
                     Catch ex As Exception
-                        WriteErrorMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
+                        WriteWarningMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
                         val = MyBase.AUX_LIQ_Cpi(cprop, T)
                     End Try
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Liquid Heat Capacity for " & sub1 & " at T = " & T & " K. Estimating value...")
+                    WriteWarningMessage("CoolProp Warning: unable to calculate Liquid Heat Capacity for " & sub1 & " at T = " & T & " K. Estimating value...")
                     val = MyBase.AUX_LIQ_Cpi(cprop, T)
                 End If
             Else
-                WriteErrorMessage("CoolProp Warning: compound " & sub1 & " Not supported. Estimating Liquid Heat Capacity value...")
+                WriteWarningMessage("CoolProp Warning: compound " & sub1 & " not supported. Estimating Liquid Heat Capacity value...")
                 val = MyBase.AUX_LIQ_Cpi(cprop, T)
             End If
             Return val
@@ -240,23 +250,23 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Function AUX_CONDTG(T As Double, P As Double) As Double
             Dim val As Double
             Dim i As Integer
-            Dim Tmin, Tmax, Pmin, Pmax, Tb As Double
+            Dim Tmin, Tmax, Pmin, Pmax, Tb, Tc As Double
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             i = 0
-            Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
                 If IsCompoundSupported(subst.Nome) Then
                     Tmin = CoolProp.Props1SI(subst.ConstantProperties.Name, "TMIN")
                     Tmax = CoolProp.Props1SI(subst.ConstantProperties.Name, "TMAX")
                     Pmin = CoolProp.Props1SI(subst.ConstantProperties.Name, "PMIN")
                     Pmax = CoolProp.Props1SI(subst.ConstantProperties.Name, "PMAX")
+                    Tc = CoolProp.Props1SI(subst.ConstantProperties.Name, "TCRIT")
                     If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
-                        Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, subst.ConstantProperties.Name)
+                        If T < Tc Then Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, subst.ConstantProperties.Name) Else Tb = Tc
                         If T >= Tb Then
                             Try
-                                vk(i) = CoolProp.PropsSI("L", "T", T, "P", P, subst.ConstantProperties.Name) * 1000
+                                vk(i) = CoolProp.PropsSI("L", "T", T, "P", P, subst.ConstantProperties.Name)
                             Catch ex As Exception
-                                WriteErrorMessage(ex.Message.ToString & ". Estimating value using Ely-Hanley [Fluid: " & subst.ConstantProperties.Name & "]")
+                                WriteWarningMessage(ex.Message.ToString & ". Estimating value using Ely-Hanley [Fluid: " & subst.ConstantProperties.Name & "]")
                                 vk(i) = props.condtg_elyhanley(T, subst.ConstantProperties.Critical_Temperature,
                                                                subst.ConstantProperties.Critical_Volume / 1000, subst.ConstantProperties.Critical_Compressibility,
                                                                subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight,
@@ -264,20 +274,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             End Try
                         Else
                             Try
+                                WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Thermal Conductivity, compound " &
+                                                    subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
                                 Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
-                                x1 = Tb * 0.95
-                                x2 = Tb * 0.9
-                                x3 = Tb * 0.85
-                                x4 = Tb * 0.8
-                                x5 = Tb * 0.75
-                                p1 = CoolProp.PropsSI("L", "T", x1, "P", P, subst.ConstantProperties.Name) * 1000
-                                p2 = CoolProp.PropsSI("L", "T", x2, "P", P, subst.ConstantProperties.Name) * 1000
-                                p3 = CoolProp.PropsSI("L", "T", x3, "P", P, subst.ConstantProperties.Name) * 1000
-                                p4 = CoolProp.PropsSI("L", "T", x4, "P", P, subst.ConstantProperties.Name) * 1000
-                                p5 = CoolProp.PropsSI("L", "T", x5, "P", P, subst.ConstantProperties.Name) * 1000
+                                x1 = Tb + (Tmax - Tb) * 0.2
+                                x2 = Tb + (Tmax - Tb) * 0.4
+                                x3 = Tb + (Tmax - Tb) * 0.6
+                                x4 = Tb + (Tmax - Tb) * 0.8
+                                x5 = Tb + (Tmax - Tb) * 0.9
+                                p1 = CoolProp.PropsSI("L", "T", x1, "P", P, subst.ConstantProperties.Name)
+                                p2 = CoolProp.PropsSI("L", "T", x2, "P", P, subst.ConstantProperties.Name)
+                                p3 = CoolProp.PropsSI("L", "T", x3, "P", P, subst.ConstantProperties.Name)
+                                p4 = CoolProp.PropsSI("L", "T", x4, "P", P, subst.ConstantProperties.Name)
+                                p5 = CoolProp.PropsSI("L", "T", x5, "P", P, subst.ConstantProperties.Name)
                                 vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                             Catch ex As Exception
-                                WriteErrorMessage(ex.Message.ToString & ". Estimating value using Ely-Hanley [Fluid: " & subst.ConstantProperties.Name & "]")
+                                WriteWarningMessage(ex.Message.ToString & ". Estimating value using Ely-Hanley [Fluid: " & subst.ConstantProperties.Name & "]")
                                 vk(i) = props.condtg_elyhanley(T, subst.ConstantProperties.Critical_Temperature,
                                                                subst.ConstantProperties.Critical_Volume / 1000, subst.ConstantProperties.Critical_Compressibility,
                                                                subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight,
@@ -285,7 +297,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             End Try
                         End If
                     Else
-                        WriteErrorMessage("CoolProp Warning: unable to calculate Vapor Phase Thermal Conductivity for " &
+                        WriteWarningMessage("CoolProp Warning: unable to calculate Vapor Phase Thermal Conductivity for " &
                                                                               subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P &
                                                                               " Pa. Estimating value using Ely-Hanley...")
                         vk(i) = props.condtg_elyhanley(T, subst.ConstantProperties.Critical_Temperature,
@@ -294,7 +306,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                        Me.AUX_CPi(subst.ConstantProperties.Name, T) * subst.ConstantProperties.Molar_Weight - 8.314)
                     End If
                 Else
-                    WriteErrorMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " Not supported. Estimating Vapor Thermal Conductivity with Ely-Hanley method...")
+                    WriteWarningMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported. Estimating Vapor Thermal Conductivity with Ely-Hanley method...")
                     vk(i) = props.condtg_elyhanley(T, subst.ConstantProperties.Critical_Temperature,
                                                    subst.ConstantProperties.Critical_Volume / 1000, subst.ConstantProperties.Critical_Compressibility,
                                                    subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight,
@@ -311,30 +323,49 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Function AUX_CONDTL(T As Double, Optional phaseid As Integer = 3) As Double
             Dim val As Double
             Dim i As Integer
-            Dim Tmin, Tmax As Double
+            Dim Tmin, Tmax, Tb, Tc As Double
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             i = 0
-            Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
-            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+            Dim P As Double = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
                 If IsCompoundSupported(subst.Nome) Then
                     Tmin = CoolProp.Props1SI(subst.ConstantProperties.Name, "TMIN")
                     Tmax = CoolProp.Props1SI(subst.ConstantProperties.Name, "TMAX")
-                    If T > Tmin And T < Tmax Then
+                    Tc = CoolProp.Props1SI(subst.ConstantProperties.Name, "TCRIT")
+                    If T > Tmin And T <= Tmax And T <= Tc Then
                         Try
-                            vk(i) = CoolProp.PropsSI("L", "T", T, "Q", 0, subst.ConstantProperties.Name) * 1000
+                            Tb = Me.AUX_TSATi(P, i)
+                            If T < Tb Then
+                                vk(i) = CoolProp.PropsSI("L", "T", T, "Q", 0, subst.ConstantProperties.Name)
+                            Else
+                                WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Liquid Thermal Conductivity, compound " &
+                          subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
+                                Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
+                                x1 = Tb * 0.98
+                                x2 = Tb * 0.94
+                                x3 = Tb * 0.92
+                                x4 = Tb * 0.86
+                                x5 = Tb * 0.8
+                                p1 = CoolProp.PropsSI("L", "T", x1, "P", P, subst.ConstantProperties.Name)
+                                p2 = CoolProp.PropsSI("L", "T", x2, "P", P, subst.ConstantProperties.Name)
+                                p3 = CoolProp.PropsSI("L", "T", x3, "P", P, subst.ConstantProperties.Name)
+                                p4 = CoolProp.PropsSI("L", "T", x4, "P", P, subst.ConstantProperties.Name)
+                                p5 = CoolProp.PropsSI("L", "T", x5, "P", P, subst.ConstantProperties.Name)
+                                vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
+                            End If
                         Catch ex As Exception
-                            WriteErrorMessage(ex.Message.ToString & ". Estimating value using Latini [Fluid: " & subst.ConstantProperties.Name & "]")
+                            WriteWarningMessage(ex.Message.ToString & ". Estimating value using Latini [Fluid: " & subst.ConstantProperties.Name & "]")
                             vk(i) = props.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature,
                                                        subst.ConstantProperties.Molar_Weight, "X")
                         End Try
                     Else
-                        WriteErrorMessage("CoolProp Warning: unable to calculate Liquid Phase Thermal Conductivity for " &
+                        WriteWarningMessage("CoolProp Warning: unable to calculate Liquid Phase Thermal Conductivity for " &
                                                                               subst.ConstantProperties.Name & " at T = " & T & " K. Estimating value using Latini...")
                         vk(i) = props.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature,
                                                    subst.ConstantProperties.Molar_Weight, "X")
                     End If
                 Else
-                    WriteErrorMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " Not supported. Estimating Liquid Thermal Conductivity with Latini method...")
+                    WriteWarningMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported. Estimating Liquid Thermal Conductivity with Latini method...")
                     vk(i) = props.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature,
                                                subst.ConstantProperties.Molar_Weight, "X")
                 End If
@@ -349,31 +380,31 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Function AUX_LIQDENS(T As Double, Vx As System.Array, Optional P As Double = 0.0, Optional Pvp As Double = 0.0, Optional FORCE_EOS As Boolean = False) As Double
             Dim val As Double
             Dim i As Integer
-            Dim Tmin, Tmax As Double
+            Dim Tmin, Tmax, Tc As Double
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             i = 0
-            Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
-            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
+            For Each subst As Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
                 If IsCompoundSupported(subst.Nome) Then
                     Tmin = CoolProp.Props1SI(subst.ConstantProperties.Name, "TMIN")
                     Tmax = CoolProp.Props1SI(subst.ConstantProperties.Name, "TMAX")
-                    If T > Tmin And T < Tmax Then
+                    Tc = CoolProp.Props1SI(subst.ConstantProperties.Name, "TCRIT")
+                    If T > Tmin And T <= Tmax And T <= Tc Then
                         Try
                             vk(i) = CoolProp.PropsSI("D", "T", T, "Q", 0, subst.ConstantProperties.Name)
                         Catch ex As Exception
-                            WriteErrorMessage(ex.Message.ToString & ". Estimating value using Rackett [Fluid: " & subst.ConstantProperties.Name & "]")
+                            WriteWarningMessage(ex.Message.ToString & ". Estimating value using Rackett [Fluid: " & subst.ConstantProperties.Name & "]")
                             vk(i) = props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure,
                                                            subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight)
                         End Try
                     Else
-                        WriteErrorMessage("CoolProp Warning: unable to calculate Liquid Phase Density for " &
+                        WriteWarningMessage("CoolProp Warning: unable to calculate Liquid Phase Density for " &
                                                                               subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P &
                                                                               " Pa. Estimating value using Rackett...")
                         vk(i) = props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure,
                                                        subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight)
                     End If
                 Else
-                    WriteErrorMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " Not supported. Estimating Liquid Phase Density with Rackett method...")
+                    WriteWarningMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported. Estimating Liquid Phase Density with Rackett method...")
                     vk(i) = props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure,
                                                    subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight)
                 End If
@@ -387,23 +418,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function AUX_LIQDENSi(subst As ClassesBasicasTermodinamica.Substancia, T As Double) As Double
             Dim sub1 = subst.ConstantProperties.Name
-            Dim Tmin, Tmax, val As Double
+            Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(sub1, "TMIN")
                 Tmax = CoolProp.Props1SI(sub1, "TMAX")
-                If T > Tmin And T < Tmax Then
+                Tc = CoolProp.Props1SI(subst.ConstantProperties.Name, "TCRIT")
+                If T > Tmin And T <= Tmax And T <= Tc Then
                     Try
                         val = CoolProp.PropsSI("D", "T", T, "Q", 0, sub1) / 1000
                     Catch ex As Exception
-                        WriteErrorMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
+                        WriteWarningMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
                         val = MyBase.AUX_LIQDENSi(subst, T)
                     End Try
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Liquid Density for " & sub1 & " at T = " & T & " K. Estimating value...")
+                    WriteWarningMessage("CoolProp Warning: unable to calculate Liquid Density for " & sub1 & " at T = " & T & " K. Estimating value...")
                     val = MyBase.AUX_LIQDENSi(subst, T)
                 End If
             Else
-                WriteErrorMessage("CoolProp Warning: compound " & sub1 & " Not supported. Estimating Liquid Density value...")
+                WriteWarningMessage("CoolProp Warning: compound " & sub1 & " not supported. Estimating Liquid Density value...")
                 val = MyBase.AUX_LIQDENSi(subst, T)
             End If
             Return val
@@ -411,46 +443,48 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function AUX_LIQTHERMCONDi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
             Dim sub1 = cprop.Name
-            Dim Tmin, Tmax, val As Double
+            Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(sub1, "TMIN")
                 Tmax = CoolProp.Props1SI(sub1, "TMAX")
-                If T > Tmin And T < Tmax Then
+                Tc = CoolProp.Props1SI(sub1, "TCRIT")
+                If T > Tmin And T <= Tmax And T <= Tc Then
                     Try
                         val = CoolProp.PropsSI("L", "T", T, "Q", 0, cprop.Name) * 1000
                     Catch ex As Exception
-                        WriteErrorMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
+                        WriteWarningMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
                         val = MyBase.AUX_LIQTHERMCONDi(cprop, T)
                     End Try
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Liquid Thermal Conductivity for " & sub1 & " at T = " & T & " K. Estimating value...")
+                    WriteWarningMessage("CoolProp Warning: unable to calculate Liquid Thermal Conductivity for " & sub1 & " at T = " & T & " K. Estimating value...")
                     val = MyBase.AUX_LIQTHERMCONDi(cprop, T)
                 End If
             Else
-                WriteErrorMessage("CoolProp Warning: compound " & sub1 & " Not supported. Estimating Liquid Thermal Conductivity value...")
+                WriteWarningMessage("CoolProp Warning: compound " & sub1 & " not supported. Estimating Liquid Thermal Conductivity value...")
                 val = MyBase.AUX_LIQTHERMCONDi(cprop, T)
             End If
             Return val
         End Function
 
         Public Overrides Function AUX_LIQVISCi(sub1 As String, T As Double) As Object
-            Dim Tmin, Tmax, val As Double
+            Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(sub1, "TMIN")
                 Tmax = CoolProp.Props1SI(sub1, "TMAX")
-                If T > Tmin And T < Tmax Then
+                Tc = CoolProp.Props1SI(sub1, "TCRIT")
+                If T > Tmin And T <= Tmax And T <= Tc Then
                     Try
                         val = CoolProp.PropsSI("V", "T", T, "Q", 0, sub1)
                     Catch ex As Exception
-                        WriteErrorMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
+                        WriteWarningMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
                         val = MyBase.AUX_LIQVISCi(sub1, T)
                     End Try
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Liquid Viscosity for " & sub1 & " at T = " & T & " K. Estimating value...")
+                    WriteWarningMessage("CoolProp Warning: unable to calculate Liquid Viscosity for " & sub1 & " at T = " & T & " K. Estimating value...")
                     val = MyBase.AUX_LIQVISCi(sub1, T)
                 End If
             Else
-                WriteErrorMessage("CoolProp Warning: compound " & sub1 & " Not supported. Estimating Liquid Viscosity value...")
+                WriteWarningMessage("CoolProp Warning: compound " & sub1 & " not supported. Estimating Liquid Viscosity value...")
                 val = MyBase.AUX_LIQVISCi(sub1, T)
             End If
             Return val
@@ -458,23 +492,28 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function AUX_SURFTi(constprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
             Dim sub1 = constprop.Name
-            Dim Tmin, Tmax, val As Double
+            Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(sub1, "TMIN")
                 Tmax = CoolProp.Props1SI(sub1, "TMAX")
-                If T > Tmin And T < Tmax Then
+                Tc = CoolProp.Props1SI(sub1, "TCRIT")
+                If T > Tmin And T <= Tmax Then
                     Try
-                        val = CoolProp.PropsSI("I", "T", T, "Q", 0, sub1)
+                        If T <= Tc Then
+                            val = CoolProp.PropsSI("I", "T", T, "Q", 0, sub1)
+                        Else
+                            val = CoolProp.PropsSI("I", "T", T, "P", 101325, sub1)
+                        End If
                     Catch ex As Exception
-                        WriteErrorMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
+                        WriteWarningMessage(ex.Message.ToString & ". Estimating value... [Fluid: " & sub1 & "]")
                         val = MyBase.AUX_LIQTHERMCONDi(constprop, T)
                     End Try
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Liquid Surface Tension for " & sub1 & " at T = " & T & " K. Estimating value...")
+                    WriteWarningMessage("CoolProp Warning: unable to calculate Liquid Surface Tension for " & sub1 & " at T = " & T & " K. Estimating value...")
                     val = MyBase.AUX_LIQTHERMCONDi(constprop, T)
                 End If
             Else
-                WriteErrorMessage("CoolProp Warning: compound " & sub1 & " Not supported. Estimating Liquid Thermal Surface Tension value...")
+                WriteWarningMessage("CoolProp Warning: compound " & sub1 & " not supported. Estimating Liquid Thermal Surface Tension value...")
                 val = MyBase.AUX_LIQTHERMCONDi(constprop, T)
             End If
             Return val
@@ -493,19 +532,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function AUX_VAPTHERMCONDi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double, P As Double) As Double
             Dim sub1 = cprop.Name
-            Dim Tmin, Tmax, Pmin, Pmax, Tb, val As Double
+            Dim Tmin, Tmax, Pmin, Pmax, Tb, Tc, val As Double
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(cprop.Name, "TMIN")
                 Tmax = CoolProp.Props1SI(cprop.Name, "TMAX")
                 Pmin = CoolProp.Props1SI(cprop.Name, "PMIN")
                 Pmax = CoolProp.Props1SI(cprop.Name, "PMAX")
                 If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
-                    Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, cprop.Name)
+                    Tc = CoolProp.Props1SI(cprop.Name, "TCRIT")
+                    If T < Tc Then Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, cprop.Name) Else Tb = Tc
                     If T >= Tb Then
                         Try
                             val = CoolProp.PropsSI("L", "T", T, "P", P, cprop.Name) * 1000
                         Catch ex As Exception
-                            WriteErrorMessage(ex.Message.ToString & ". Estimating value using Ely-Hanley [Fluid: " & cprop.Name & "]")
+                            WriteWarningMessage(ex.Message.ToString & ". Estimating value using Ely-Hanley [Fluid: " & cprop.Name & "]")
                             val = props.condtg_elyhanley(T, cprop.Critical_Temperature,
                                                            cprop.Critical_Volume / 1000, cprop.Critical_Compressibility,
                                                            cprop.Acentric_Factor, cprop.Molar_Weight,
@@ -513,12 +553,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         End Try
                     Else
                         Try
+                            WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Thermal Conductivity, compound " &
+                             cprop.Name & ". Interpolating to obtain a value...")
                             Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
-                            x1 = Tb * 0.95
-                            x2 = Tb * 0.9
-                            x3 = Tb * 0.85
-                            x4 = Tb * 0.8
-                            x5 = Tb * 0.75
+                            x1 = Tb + (Tmax - Tb) * 0.2
+                            x2 = Tb + (Tmax - Tb) * 0.4
+                            x3 = Tb + (Tmax - Tb) * 0.6
+                            x4 = Tb + (Tmax - Tb) * 0.8
+                            x5 = Tb + (Tmax - Tb) * 0.9
                             p1 = CoolProp.PropsSI("L", "T", x1, "P", P, cprop.Name) * 1000
                             p2 = CoolProp.PropsSI("L", "T", x2, "P", P, cprop.Name) * 1000
                             p3 = CoolProp.PropsSI("L", "T", x3, "P", P, cprop.Name) * 1000
@@ -526,16 +568,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             p5 = CoolProp.PropsSI("L", "T", x5, "P", P, cprop.Name) * 1000
                             val = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                         Catch ex As Exception
-                            WriteErrorMessage(ex.Message.ToString & ". Estimating value using Ely-Hanley [Fluid: " & cprop.Name & "]")
+                            WriteWarningMessage(ex.Message.ToString & ". Estimating value using Ely-Hanley [Fluid: " & cprop.Name & "]")
                             val = MyBase.AUX_VAPTHERMCONDi(cprop, T, P)
                         End Try
                     End If
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Vapor Thermal Conductivity for " & sub1 & " at T = " & T & " K. Estimating value...")
+                    WriteWarningMessage("CoolProp Warning: unable to calculate Vapor Thermal Conductivity for " & sub1 & " at T = " & T & " K. Estimating value...")
                     val = MyBase.AUX_VAPTHERMCONDi(cprop, T, P)
                 End If
             Else
-                WriteErrorMessage("CoolProp Warning: compound " & sub1 & " Not supported. Estimating Vapor Thermal Conductivity value...")
+                WriteWarningMessage("CoolProp Warning: compound " & sub1 & " not supported. Estimating Vapor Thermal Conductivity value...")
                 val = MyBase.AUX_VAPTHERMCONDi(cprop, T, P)
             End If
             Return val
@@ -544,22 +586,23 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Function AUX_VAPVISCi(cprop As ClassesBasicasTermodinamica.ConstantProperties, T As Double) As Double
             Dim sub1 = cprop.Name
             Dim Tmin, Tmax, val As Double
+            Dim P = Me.CurrentMaterialStream.Fases(2).SPMProperties.pressure.GetValueOrDefault
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(cprop.Name, "TMIN")
                 Tmax = CoolProp.Props1SI(cprop.Name, "TMAX")
                 If T > Tmin And T < Tmax Then
                     Try
-                        val = CoolProp.PropsSI("V", "T", T, "Q", 1, cprop.Name)
+                        val = CoolProp.PropsSI("V", "T", T, "P", P, cprop.Name)
                     Catch ex As Exception
-                        WriteErrorMessage(ex.Message.ToString & ". Estimating value [Fluid: " & cprop.Name & "]")
+                        WriteWarningMessage(ex.Message.ToString & ". Estimating value [Fluid: " & cprop.Name & "]")
                         val = MyBase.AUX_VAPVISCi(cprop, T)
                     End Try
                 Else
-                    WriteErrorMessage("CoolProp Warning: unable to calculate Vapor Viscosity for " & sub1 & " at T = " & T & " K. Estimating value...")
+                    WriteWarningMessage("CoolProp Warning: unable to calculate Vapor Viscosity for " & sub1 & " at T = " & T & " K. Estimating value...")
                     val = MyBase.AUX_VAPVISCi(cprop, T)
                 End If
             Else
-                WriteErrorMessage("CoolProp Warning: compound " & sub1 & " Not supported. Estimating Vapor Viscosity value...")
+                WriteWarningMessage("CoolProp Warning: compound " & sub1 & " not supported. Estimating Vapor Viscosity value...")
                 val = MyBase.AUX_VAPVISCi(cprop, T)
             End If
             Return val
@@ -568,7 +611,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Function AUX_VAPVISCMIX(T As Double, P As Double, MM As Double) As Double
             Dim val As Double
             Dim i As Integer
-            Dim Tmin, Tmax, Pmin, Pmax, Tb As Double
+            Dim Tmin, Tmax, Pmin, Pmax, Tb, Tc As Double
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             i = 0
             Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
@@ -579,16 +622,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Pmin = CoolProp.Props1SI(subst.ConstantProperties.Name, "PMIN")
                     Pmax = CoolProp.Props1SI(subst.ConstantProperties.Name, "PMAX")
                     If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
-                        Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, subst.ConstantProperties.Name)
+                        Tc = CoolProp.Props1SI(subst.ConstantProperties.Name, "TCRIT")
+                        If T < Tc Then Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, subst.ConstantProperties.Name) Else Tb = Tc
                         If T >= Tb Then
                             Try
                                 vk(i) = CoolProp.PropsSI("V", "T", T, "P", P, subst.ConstantProperties.Name)
                             Catch ex As Exception
-                                WriteErrorMessage(ex.Message.ToString & ". Estimating value [Fluid: " & subst.ConstantProperties.Name & "]")
+                                WriteWarningMessage(ex.Message.ToString & ". Estimating value [Fluid: " & subst.ConstantProperties.Name & "]")
                                 vk(i) = MyBase.AUX_VAPVISCi(subst.ConstantProperties, T)
                             End Try
                         Else
                             Try
+                                WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Viscosity, compound " &
+                                                       subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
                                 Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                 x1 = Tb + (Tmax - Tb) * 0.2
                                 x2 = Tb + (Tmax - Tb) * 0.4
@@ -602,19 +648,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 p5 = CoolProp.PropsSI("V", "T", x5, "P", P, subst.ConstantProperties.Name)
                                 vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                             Catch ex As Exception
-                                WriteErrorMessage(ex.Message.ToString & ". Estimating value [Fluid: " & subst.ConstantProperties.Name & "]")
+                                WriteWarningMessage(ex.Message.ToString & ". Estimating value [Fluid: " & subst.ConstantProperties.Name & "]")
                                 vk(i) = MyBase.AUX_VAPVISCi(subst.ConstantProperties, T)
                             End Try
                         End If
                     Else
-                        WriteErrorMessage("CoolProp Warning: unable to calculate Vapor Phase Viscosity for " &
+                        WriteWarningMessage("CoolProp Warning: unable to calculate Vapor Phase Viscosity for " &
                                                                               subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P &
                                                                               " Pa. Estimating value...")
                         vk(i) = MyBase.AUX_VAPVISCi(subst.ConstantProperties, T)
                     End If
                 Else
-                    WriteErrorMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " Not supported. Estimating Vapor Viscosity...")
-                                vk(i) = MyBase.AUX_VAPVISCi(subst.ConstantProperties, T)
+                    WriteWarningMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported. Estimating Vapor Viscosity...")
+                    vk(i) = MyBase.AUX_VAPVISCi(subst.ConstantProperties, T)
                 End If
                 If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
                 vk(i) = subst.FracaoMolar * vk(i)
@@ -629,10 +675,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim val As Double
             Dim i As Integer
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim xv As Double = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
             i = 0
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
                 vk(i) = subst.FracaoMassica / Me.AUX_LIQDENSi(subst.ConstantProperties, T)
+                If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
                 i = i + 1
             Next
             val = 1 / MathEx.Common.Sum(vk)
@@ -645,7 +691,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim val As Double
             Dim i As Integer
-            Dim Tmin, Tmax, Pmin, Pmax, Tb As Double
+            Dim Tmin, Tmax, Pmin, Pmax, Tb, Tc As Double
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             i = 0
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
@@ -655,16 +701,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Pmin = CoolProp.Props1SI(subst.ConstantProperties.Name, "PMIN")
                     Pmax = CoolProp.Props1SI(subst.ConstantProperties.Name, "PMAX")
                     If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
-                        Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, subst.ConstantProperties.Name)
+                        Tc = CoolProp.Props1SI(subst.ConstantProperties.Name, "TCRIT")
+                        If T < Tc Then Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, subst.ConstantProperties.Name) Else Tb = Tc
                         If T >= Tb Then
                             Try
                                 vk(i) = CoolProp.PropsSI("D", "T", T, "P", P, subst.ConstantProperties.Name)
                             Catch ex As Exception
-                                WriteErrorMessage(ex.Message.ToString & ". Estimating value [Fluid: " & subst.ConstantProperties.Name & "]")
+                                WriteWarningMessage(ex.Message.ToString & ". Estimating value [Fluid: " & subst.ConstantProperties.Name & "]")
                                 vk(i) = 1 / (8.314 * val * T / P) * Me.AUX_MMM(Fase.Vapor) / 1000
                             End Try
                         Else
                             Try
+                                WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Density, compound " &
+                                          subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
                                 Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                 x1 = Tb + (Tmax - Tb) * 0.2
                                 x2 = Tb + (Tmax - Tb) * 0.4
@@ -678,18 +727,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 p5 = CoolProp.PropsSI("D", "T", x5, "P", P, subst.ConstantProperties.Name)
                                 vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                             Catch ex As Exception
-                                WriteErrorMessage(ex.Message.ToString & ". Estimating value [Fluid: " & subst.ConstantProperties.Name & "]")
+                                WriteWarningMessage(ex.Message.ToString & ". Estimating value [Fluid: " & subst.ConstantProperties.Name & "]")
                                 vk(i) = 1 / (8.314 * val * T / P) * Me.AUX_MMM(Fase.Vapor) / 1000
                             End Try
                         End If
                     Else
-                        WriteErrorMessage("CoolProp Warning: unable to calculate Vapor Phase Density for " &
+                        WriteWarningMessage("CoolProp Warning: unable to calculate Vapor Phase Density for " &
                                                                               subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P &
                                                                               " Pa. Estimating value...")
                         vk(i) = 1 / (8.314 * val * T / P) * Me.AUX_MMM(Fase.Vapor) / 1000
                     End If
                 Else
-                    WriteErrorMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " Not supported. Estimating Vapor Density...")
+                    WriteWarningMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported. Estimating Vapor Density...")
                     vk(i) = 1 / (8.314 * val * T / P) * Me.AUX_MMM(Fase.Vapor) / 1000
                 End If
                 If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -733,7 +782,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim val As Double
             Dim i As Integer
-            Dim Tmin, Tmax, Pmin, Pmax, Tb As Double
+            Dim Tmin, Tmax, Pmin, Pmax, Tb, Tc As Double
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Select Case fase1
                 Case Fase.Aqueous, Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3
@@ -744,17 +793,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Tmax = CoolProp.Props1SI(subst.ConstantProperties.Name, "TMAX")
                             Pmin = CoolProp.Props1SI(subst.ConstantProperties.Name, "PMIN")
                             Pmax = CoolProp.Props1SI(subst.ConstantProperties.Name, "PMAX")
-                            If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
+                            Tc = CoolProp.Props1SI(subst.ConstantProperties.Name, "TCRIT")
+                            If T > Tmin And T < Tmax And P > Pmin And P < Pmax And T <= Tc Then
                                 Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, subst.ConstantProperties.Name)
                                 If T < Tb Then
                                     vk(i) = CoolProp.PropsSI("C", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                                 Else
+                                    WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Liquid Cp, compound " &
+                                                           subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
-                                    x1 = Tmin + (Tb - Tmin) * 0.2
-                                    x2 = Tmin + (Tb - Tmin) * 0.4
-                                    x3 = Tmin + (Tb - Tmin) * 0.6
-                                    x4 = Tmin + (Tb - Tmin) * 0.8
-                                    x5 = Tmin + (Tb - Tmin) * 0.9
+                                    x1 = Tb * 0.98
+                                    x2 = Tb * 0.94
+                                    x3 = Tb * 0.92
+                                    x4 = Tb * 0.86
+                                    x5 = Tb * 0.8
                                     p1 = CoolProp.PropsSI("C", "T", x1, "P", P, subst.ConstantProperties.Name) / 1000
                                     p2 = CoolProp.PropsSI("C", "T", x2, "P", P, subst.ConstantProperties.Name) / 1000
                                     p3 = CoolProp.PropsSI("C", "T", x3, "P", P, subst.ConstantProperties.Name) / 1000
@@ -763,11 +815,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                                 End If
                             Else
-                                WriteErrorMessage("CoolProp Warning: unable to calculate Cp for " & subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P & " Pa.")
+                                WriteWarningMessage("CoolProp Warning: unable to calculate Cp for " & subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P & " Pa.")
                                 vk(i) = 0.0#
                             End If
                         Else
-                            WriteErrorMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported.")
+                            WriteWarningMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported.")
                             vk(i) = 0.0#
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -787,6 +839,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 If T >= Tb Then
                                     vk(i) = CoolProp.PropsSI("C", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                                 Else
+                                    WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Cp, compound " &
+                                                        subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                     x1 = Tb + (Tmax - Tb) * 0.2
                                     x2 = Tb + (Tmax - Tb) * 0.4
@@ -801,11 +855,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                                 End If
                             Else
-                                WriteErrorMessage("CoolProp Warning: unable to calculate Cp for " & subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P & " Pa.")
+                                WriteWarningMessage("CoolProp Warning: unable to calculate Cp for " & subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P & " Pa.")
                                 vk(i) = 0.0#
                             End If
                         Else
-                            WriteErrorMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported.")
+                            WriteWarningMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported.")
                             vk(i) = 0.0#
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -844,7 +898,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim val As Double
             Dim i As Integer
-            Dim Tmin, Tmax, Pmin, Pmax, Tb As Double
+            Dim Tmin, Tmax, Pmin, Pmax, Tb, Tc As Double
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Select Case fase1
                 Case Fase.Aqueous, Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3
@@ -855,17 +909,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Tmax = CoolProp.Props1SI(subst.ConstantProperties.Name, "TMAX")
                             Pmin = CoolProp.Props1SI(subst.ConstantProperties.Name, "PMIN")
                             Pmax = CoolProp.Props1SI(subst.ConstantProperties.Name, "PMAX")
-                            If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
-                                Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, subst.ConstantProperties.Name)
+                            Tc = CoolProp.Props1SI(subst.ConstantProperties.Name, "TCRIT")
+                            If T > Tmin And T < Tmax And P > Pmin And P < Pmax And T <= Tc Then
+                                Tb = Me.AUX_TSATi(P, i)
                                 If T < Tb Then
                                     vk(i) = CoolProp.PropsSI("O", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                                 Else
+                                    WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Liquid Cv, compound " &
+                                                         subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
-                                    x1 = Tmin + (Tb - Tmin) * 0.2
-                                    x2 = Tmin + (Tb - Tmin) * 0.4
-                                    x3 = Tmin + (Tb - Tmin) * 0.6
-                                    x4 = Tmin + (Tb - Tmin) * 0.8
-                                    x5 = Tmin + (Tb - Tmin) * 0.9
+                                    x1 = Tb * 0.98
+                                    x2 = Tb * 0.94
+                                    x3 = Tb * 0.92
+                                    x4 = Tb * 0.86
+                                    x5 = Tb * 0.8
                                     p1 = CoolProp.PropsSI("O", "T", x1, "P", P, subst.ConstantProperties.Name) / 1000
                                     p2 = CoolProp.PropsSI("O", "T", x2, "P", P, subst.ConstantProperties.Name) / 1000
                                     p3 = CoolProp.PropsSI("O", "T", x3, "P", P, subst.ConstantProperties.Name) / 1000
@@ -874,11 +931,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                                 End If
                             Else
-                                WriteErrorMessage("CoolProp Warning: unable to calculate Cv for " & subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P & " Pa.")
+                                WriteWarningMessage("CoolProp Warning: unable to calculate Cv for " & subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P & " Pa.")
                                 vk(i) = 0.0#
                             End If
                         Else
-                            WriteErrorMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported.")
+                            WriteWarningMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported.")
                             vk(i) = 0.0#
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -894,10 +951,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Pmin = CoolProp.Props1SI(subst.ConstantProperties.Name, "PMIN")
                             Pmax = CoolProp.Props1SI(subst.ConstantProperties.Name, "PMAX")
                             If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
-                                Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, subst.ConstantProperties.Name)
+                                Tb = Me.AUX_TSATi(P, i)
                                 If T >= Tb Then
                                     vk(i) = CoolProp.PropsSI("O", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                                 Else
+                                    WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Cv, compound " &
+                                                         subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                     x1 = Tb + (Tmax - Tb) * 0.2
                                     x2 = Tb + (Tmax - Tb) * 0.4
@@ -912,11 +971,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                                 End If
                             Else
-                                WriteErrorMessage("CoolProp Warning: unable to calculate Cv for " & subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P & " Pa.")
+                                WriteWarningMessage("CoolProp Warning: unable to calculate Cv for " & subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P & " Pa.")
                                 vk(i) = 0.0#
                             End If
                         Else
-                            WriteErrorMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported.")
+                            WriteWarningMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported.")
                             vk(i) = 0.0#
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -950,16 +1009,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Pmin = CoolProp.Props1SI(vn(i), "PMIN")
                             Pmax = CoolProp.Props1SI(vn(i), "PMAX")
                             If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
-                                Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, vn(i))
+                                Tb = Me.AUX_TSATi(P, i)
                                 If T < Tb Then
                                     vk(i) = CoolProp.PropsSI("H", "T", T, "P", P, vn(i)) / 1000
                                 Else
+                                    WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Liquid Enthalpy, compound " &
+                                                         vn(i) & ". Interpolating to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
-                                    x1 = Tmin + (Tb - Tmin) * 0.2
-                                    x2 = Tmin + (Tb - Tmin) * 0.4
-                                    x3 = Tmin + (Tb - Tmin) * 0.6
-                                    x4 = Tmin + (Tb - Tmin) * 0.8
-                                    x5 = Tmin + (Tb - Tmin) * 0.9
+                                    x1 = Tb * 0.98
+                                    x2 = Tb * 0.94
+                                    x3 = Tb * 0.92
+                                    x4 = Tb * 0.86
+                                    x5 = Tb * 0.8
                                     p1 = CoolProp.PropsSI("H", "T", x1, "P", P, vn(i)) / 1000
                                     p2 = CoolProp.PropsSI("H", "T", x2, "P", P, vn(i)) / 1000
                                     p3 = CoolProp.PropsSI("H", "T", x3, "P", P, vn(i)) / 1000
@@ -968,11 +1029,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                                 End If
                             Else
-                                WriteErrorMessage("CoolProp Warning: unable to calculate Enthalpy for " & vn(i) & " at T = " & T & " K and P = " & P & " Pa.")
+                                WriteWarningMessage("CoolProp Warning: unable to calculate Enthalpy for " & vn(i) & " at T = " & T & " K and P = " & P & " Pa.")
                                 vk(i) = 0.0#
                             End If
                         Else
-                            WriteErrorMessage("CoolProp Warning: compound " & vn(i) & " not supported.")
+                            WriteWarningMessage("CoolProp Warning: compound " & vn(i) & " not supported.")
                             vk(i) = 0.0#
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -987,10 +1048,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Pmin = CoolProp.Props1SI(vn(i), "PMIN")
                             Pmax = CoolProp.Props1SI(vn(i), "PMAX")
                             If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
-                                Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, vn(i))
-                                If T >= Tb Then
+                                Tb = Me.AUX_TSATi(P, i)
+                                If T > Tb Then
                                     vk(i) = CoolProp.PropsSI("H", "T", T, "P", P, vn(i)) / 1000
                                 Else
+                                    WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Enthalpy, compound " &
+                                                         vn(i) & ". Interpolating to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                     x1 = Tb + (Tmax - Tb) * 0.2
                                     x2 = Tb + (Tmax - Tb) * 0.4
@@ -1005,11 +1068,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                                 End If
                             Else
-                                WriteErrorMessage("CoolProp Warning: unable to calculate Enthalpy for " & vn(i) & " at T = " & T & " K and P = " & P & " Pa.")
+                                WriteWarningMessage("CoolProp Warning: unable to calculate Enthalpy for " & vn(i) & " at T = " & T & " K and P = " & P & " Pa.")
                                 vk(i) = 0.0#
                             End If
                         Else
-                            WriteErrorMessage("CoolProp Warning: compound " & vn(i) & " not supported.")
+                            WriteWarningMessage("CoolProp Warning: compound " & vn(i) & " not supported.")
                             vk(i) = 0.0#
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -1049,16 +1112,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Pmin = CoolProp.Props1SI(vn(i), "PMIN")
                             Pmax = CoolProp.Props1SI(vn(i), "PMAX")
                             If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
-                                Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, vn(i))
+                                Tb = Me.AUX_TSATi(P, i)
                                 If T < Tb Then
                                     vk(i) = CoolProp.PropsSI("S", "T", T, "P", P, vn(i)) / 1000
                                 Else
+                                    WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Liquid Entropy, compound " &
+                                                         vn(i) & ". Interpolating to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
-                                    x1 = Tmin + (Tb - Tmin) * 0.2
-                                    x2 = Tmin + (Tb - Tmin) * 0.4
-                                    x3 = Tmin + (Tb - Tmin) * 0.6
-                                    x4 = Tmin + (Tb - Tmin) * 0.8
-                                    x5 = Tmin + (Tb - Tmin) * 0.9
+                                    x1 = Tb * 0.98
+                                    x2 = Tb * 0.94
+                                    x3 = Tb * 0.92
+                                    x4 = Tb * 0.86
+                                    x5 = Tb * 0.8
                                     p1 = CoolProp.PropsSI("S", "T", x1, "P", P, vn(i)) / 1000
                                     p2 = CoolProp.PropsSI("S", "T", x2, "P", P, vn(i)) / 1000
                                     p3 = CoolProp.PropsSI("S", "T", x3, "P", P, vn(i)) / 1000
@@ -1067,11 +1132,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                                 End If
                             Else
-                                WriteErrorMessage("CoolProp Warning: unable to calculate Enthalpy for " & vn(i) & " at T = " & T & " K and P = " & P & " Pa.")
+                                WriteWarningMessage("CoolProp Warning: unable to calculate Enthalpy for " & vn(i) & " at T = " & T & " K and P = " & P & " Pa.")
                                 vk(i) = 0.0#
                             End If
                         Else
-                            WriteErrorMessage("CoolProp Warning: compound " & vn(i) & " not supported.")
+                            WriteWarningMessage("CoolProp Warning: compound " & vn(i) & " not supported.")
                             vk(i) = 0.0#
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -1086,10 +1151,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Pmin = CoolProp.Props1SI(vn(i), "PMIN")
                             Pmax = CoolProp.Props1SI(vn(i), "PMAX")
                             If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
-                                Tb = CoolProp.PropsSI("T", "P", P, "Q", 1, vn(i))
-                                If T >= Tb Then
+                                Tb = Me.AUX_TSATi(P, i)
+                                If T > Tb Then
                                     vk(i) = CoolProp.PropsSI("S", "T", T, "P", P, vn(i)) / 1000
                                 Else
+                                    WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Entropy, compound " &
+                                                         vn(i) & ". Interpolating to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                     x1 = Tb + (Tmax - Tb) * 0.2
                                     x2 = Tb + (Tmax - Tb) * 0.4
@@ -1104,11 +1171,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                                 End If
                             Else
-                                WriteErrorMessage("CoolProp Warning: unable to calculate Enthalpy for " & vn(i) & " at T = " & T & " K and P = " & P & " Pa.")
+                                WriteWarningMessage("CoolProp Warning: unable to calculate Enthalpy for " & vn(i) & " at T = " & T & " K and P = " & P & " Pa.")
                                 vk(i) = 0.0#
                             End If
                         Else
-                            WriteErrorMessage("CoolProp Warning: compound " & vn(i) & " not supported.")
+                            WriteWarningMessage("CoolProp Warning: compound " & vn(i) & " not supported.")
                             vk(i) = 0.0#
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
