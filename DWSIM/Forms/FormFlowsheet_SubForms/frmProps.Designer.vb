@@ -79,7 +79,6 @@ Partial Class frmProps
         '
         'PGEx1
         '
-        Me.PGEx1.AutoSizeProperties = True
         '
         '
         '

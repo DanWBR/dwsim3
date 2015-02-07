@@ -2710,13 +2710,13 @@ restart:            fx = Me.FunctionValue(xvar)
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
-                                                                 dHl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar) - 0.01, P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
+                                                                 dHl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar) - 1, P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
                                                                  If llextr Then
                                                                      Hv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(yc(ipar)) / 1000
-                                                                     dHv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar) - 0.01, P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(yc(ipar)) / 1000
+                                                                     dHv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar) - 1, P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(yc(ipar)) / 1000
                                                                  Else
                                                                      Hv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
-                                                                     dHv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar) - 0.01, P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
+                                                                     dHv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar) - 1, P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
                                                                  End If
                                                              End Sub))
                     While Not task1.IsCompleted

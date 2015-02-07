@@ -275,7 +275,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Else
                             Try
                                 WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Thermal Conductivity, compound " &
-                                                    subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
+                                                    subst.ConstantProperties.Name & ". Extrapolating curve to obtain a value...")
                                 Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                 x1 = Tb + (Tmax - Tb) * 0.2
                                 x2 = Tb + (Tmax - Tb) * 0.4
@@ -339,7 +339,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 vk(i) = CoolProp.PropsSI("L", "T", T, "Q", 0, subst.ConstantProperties.Name)
                             Else
                                 WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Liquid Thermal Conductivity, compound " &
-                          subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
+                          subst.ConstantProperties.Name & ". Extrapolating curve to obtain a value...")
                                 Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                 x1 = Tb * 0.98
                                 x2 = Tb * 0.94
@@ -554,7 +554,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Else
                         Try
                             WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Thermal Conductivity, compound " &
-                             cprop.Name & ". Interpolating to obtain a value...")
+                             cprop.Name & ". Extrapolating curve to obtain a value...")
                             Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                             x1 = Tb + (Tmax - Tb) * 0.2
                             x2 = Tb + (Tmax - Tb) * 0.4
@@ -634,7 +634,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Else
                             Try
                                 WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Viscosity, compound " &
-                                                       subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
+                                                       subst.ConstantProperties.Name & ". Extrapolating curve to obtain a value...")
                                 Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                 x1 = Tb + (Tmax - Tb) * 0.2
                                 x2 = Tb + (Tmax - Tb) * 0.4
@@ -713,7 +713,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Else
                             Try
                                 WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Density, compound " &
-                                          subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
+                                          subst.ConstantProperties.Name & ". Extrapolating curve to obtain a value...")
                                 Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                 x1 = Tb + (Tmax - Tb) * 0.2
                                 x2 = Tb + (Tmax - Tb) * 0.4
@@ -800,7 +800,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = CoolProp.PropsSI("C", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                                 Else
                                     WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Liquid Cp, compound " &
-                                                           subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
+                                                           subst.ConstantProperties.Name & ". Extrapolating curve to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                     x1 = Tb * 0.98
                                     x2 = Tb * 0.94
@@ -840,7 +840,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = CoolProp.PropsSI("C", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                                 Else
                                     WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Cp, compound " &
-                                                        subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
+                                                        subst.ConstantProperties.Name & ". Extrapolating curve to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                     x1 = Tb + (Tmax - Tb) * 0.2
                                     x2 = Tb + (Tmax - Tb) * 0.4
@@ -916,7 +916,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = CoolProp.PropsSI("O", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                                 Else
                                     WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Liquid Cv, compound " &
-                                                         subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
+                                                         subst.ConstantProperties.Name & ". Extrapolating curve to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                     x1 = Tb * 0.98
                                     x2 = Tb * 0.94
@@ -956,7 +956,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = CoolProp.PropsSI("O", "T", T, "P", P, subst.ConstantProperties.Name) / 1000
                                 Else
                                     WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Cv, compound " &
-                                                         subst.ConstantProperties.Name & ". Interpolating to obtain a value...")
+                                                         subst.ConstantProperties.Name & ". Extrapolating curve to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                     x1 = Tb + (Tmax - Tb) * 0.2
                                     x2 = Tb + (Tmax - Tb) * 0.4
@@ -1014,7 +1014,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = CoolProp.PropsSI("H", "T", T, "P", P, vn(i)) / 1000
                                 Else
                                     WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Liquid Enthalpy, compound " &
-                                                         vn(i) & ". Interpolating to obtain a value...")
+                                                         vn(i) & ". Extrapolating curve to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                     x1 = Tb * 0.98
                                     x2 = Tb * 0.94
@@ -1053,7 +1053,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = CoolProp.PropsSI("H", "T", T, "P", P, vn(i)) / 1000
                                 Else
                                     WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Enthalpy, compound " &
-                                                         vn(i) & ". Interpolating to obtain a value...")
+                                                         vn(i) & ". Extrapolating curve to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                     x1 = Tb + (Tmax - Tb) * 0.2
                                     x2 = Tb + (Tmax - Tb) * 0.4
@@ -1117,7 +1117,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = CoolProp.PropsSI("S", "T", T, "P", P, vn(i)) / 1000
                                 Else
                                     WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Liquid Entropy, compound " &
-                                                         vn(i) & ". Interpolating to obtain a value...")
+                                                         vn(i) & ". Extrapolating curve to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                     x1 = Tb * 0.98
                                     x2 = Tb * 0.94
@@ -1156,7 +1156,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                     vk(i) = CoolProp.PropsSI("S", "T", T, "P", P, vn(i)) / 1000
                                 Else
                                     WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Vapor Entropy, compound " &
-                                                         vn(i) & ". Interpolating to obtain a value...")
+                                                         vn(i) & ". Extrapolating curve to obtain a value...")
                                     Dim x1, x2, x3, x4, x5, p1, p2, p3, p4, p5 As Double
                                     x1 = Tb + (Tmax - Tb) * 0.2
                                     x2 = Tb + (Tmax - Tb) * 0.4

@@ -382,7 +382,7 @@
     <value>3, 19</value>
   </data>
   <data name="PGEx2.DocCommentDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 52</value>
+    <value>354, 36</value>
   </data>
   <data name="PGEx2.DocCommentDescription.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -397,7 +397,7 @@
     <value>3, 3</value>
   </data>
   <data name="PGEx2.DocCommentTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
+    <value>354, 16</value>
   </data>
   <data name="PGEx2.DocCommentTitle.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -418,7 +418,7 @@
 </value>
   </data>
   <data name="PGEx2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>282, 207</value>
+    <value>360, 450</value>
   </data>
   <data name="PGEx2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -466,7 +466,7 @@
     <value>0</value>
   </data>
   <data name="TSObj.Size" type="System.Drawing.Size, System.Drawing">
-    <value>282, 207</value>
+    <value>360, 450</value>
   </data>
   <data name="TSObj.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
