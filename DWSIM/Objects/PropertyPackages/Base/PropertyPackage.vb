@@ -5989,11 +5989,12 @@ Final3:
 
         Public Function AUX_HVAPi(ByVal sub1 As String, ByVal T As Double)
 
-            Dim A, B, C, D, Tr, result As Double
+            Dim A, B, C, D, E, Tr, result As Double
             A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A
             B = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_B
             C = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_C
             D = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_D
+            E = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_E
 
             Tr = T / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature
 
@@ -6021,7 +6022,7 @@ Final3:
                 Return result 'kJ/kg
                 ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "ChemSep" Then
                     Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.VaporizationEnthalpyEquation
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, 0, T, T / Tr) / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight / 1000 'kJ/kg
+                result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, T / Tr) / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight / 1000 'kJ/kg
                     Return result
                 Else
                     Return 0

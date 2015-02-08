@@ -219,6 +219,8 @@ Namespace DWSIM.Databases
                                         cp.HVap_C = Double.Parse(node3.Attributes("value").Value, nf)
                                     Case "D"
                                         cp.HVap_D = Double.Parse(node3.Attributes("value").Value, nf)
+                                    Case "E"
+                                        cp.HVap_E = Double.Parse(node3.Attributes("value").Value, nf)
                                     Case "Tmin"
                                         cp.HVap_TMIN = Double.Parse(node3.Attributes("value").Value, nf)
                                     Case "Tmax"

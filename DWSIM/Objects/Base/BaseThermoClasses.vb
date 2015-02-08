@@ -2149,6 +2149,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public HVap_B As Double
         Public HVap_C As Double
         Public HVap_D As Double
+        Public HVap_E As Double
         Public HVap_TMIN As Double
         Public HVap_TMAX As Double
         Public UNIQUAC_R As Double
