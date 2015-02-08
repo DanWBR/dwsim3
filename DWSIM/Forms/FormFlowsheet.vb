@@ -736,6 +736,8 @@ Imports DWSIM.DWSIM.Outros
                     DWSIM.App.HelpRequested("SO_CustomUO.htm")
                 Case TipoObjeto.ExcelUO
                     DWSIM.App.HelpRequested("SO_ExcelUO.htm")
+                Case TipoObjeto.FlowsheetUO
+                    DWSIM.App.HelpRequested("SO_FlowsheetUO.htm")
                 Case TipoObjeto.SolidSeparator
                     DWSIM.App.HelpRequested("SO_SolidSeparator.htm")
                 Case TipoObjeto.Filter
