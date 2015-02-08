@@ -405,24 +405,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 result = Me.AUX_LIQDENS(T, P, 0.0#, phaseID, False)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
-                Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
-                    Case 0 'LK
-                        result = Me.m_lk.H_LK_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, dwpl))
-                    Case 1 'Ideal
-                        result = Me.RET_Hid_L(298.15, T, RET_VMOL(dwpl)) - Me.RET_HVAPM(RET_VMAS(dwpl), T)
-                    Case 2 'Excess
-                        result = Me.RET_Hid_L(298.15, T, RET_VMOL(dwpl)) + Me.m_uni.HEX_MIX(T, RET_VMOL(dwpl), Me.RET_VNAMES) / Me.AUX_MMM(dwpl) - Me.RET_HVAPM(RET_VMAS(dwpl), T)
-                End Select
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
-                Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
-                    Case 0 'LK
-                        result = Me.m_lk.S_LK_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, dwpl))
-                    Case 1 'Ideal
-                        result = Me.RET_Hid_L(298.15, T, RET_VMOL(dwpl)) / T - Me.RET_HVAPM(RET_VMAS(dwpl), T) / T
-                    Case 2 'Excess
-                        result = (Me.RET_Hid_L(298.15, T, RET_VMOL(dwpl)) + Me.m_uni.HEX_MIX(T, RET_VMOL(dwpl), Me.RET_VNAMES)) / Me.AUX_MMM(dwpl) / T - Me.RET_HVAPM(RET_VMAS(dwpl), T) / T
-                End Select
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = Me.DW_CalcEnthalpy(RET_VMOL(dwpl), T, P, State.Liquid)
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = Me.DW_CalcEntropy(RET_VMOL(dwpl), T, P, State.Liquid)
                 result = Me.m_lk.Z_LK("L", T / Me.AUX_TCM(dwpl), P / Me.AUX_PCM(dwpl), Me.AUX_WM(dwpl))(0)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
                 Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
@@ -459,8 +443,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
                 result = Me.m_lk.S_LK_MIX("V", T, P, RET_VMOL(fase.Vapor), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, fase.Vapor))
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
-                'result = Me.m_pr.Z_PR(T, P, RET_VMOL(fase.Vapor), RET_VKij, RET_VTC, RET_VPC, RET_VW, "V")
-                result = Me.m_lk.Z_LK("V", T / Me.AUX_TCM(PropertyPackages.Fase.Vapor), P / Me.AUX_PCM(PropertyPackages.Fase.Vapor), Me.AUX_WM(PropertyPackages.Fase.Vapor))(0)
+               result = Me.m_lk.Z_LK("V", T / Me.AUX_TCM(PropertyPackages.Fase.Vapor), P / Me.AUX_PCM(PropertyPackages.Fase.Vapor), Me.AUX_WM(PropertyPackages.Fase.Vapor))(0)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
                 result = Me.AUX_CPm(PropertyPackages.Fase.Vapor, T)
                 resultObj = Me.m_lk.CpCvR_LK("V", T, P, RET_VMOL(PropertyPackages.Fase.Vapor), RET_VKij(), RET_VMAS(PropertyPackages.Fase.Vapor), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
@@ -820,9 +803,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Case 0 'LK
                         H = Me.m_lk.H_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
                     Case 1 'Ideal
-                        H = 0.0#
+                        H = -Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
                     Case 2 'Excess
-                        H = Me.m_uni.HEX_MIX(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx)
+                        H = Me.m_uni.HEX_MIX(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx) - Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
                 End Select
             Else
                 H = Me.m_lk.H_LK_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
@@ -919,9 +902,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Case 0 'LK
                         S = Me.m_lk.S_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
                     Case 1 'Ideal
-                        S = 0
+                        S = -Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T) / T
                     Case 2 'Excess
-                        S = (Me.m_uni.HEX_MIX(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx)) / T
+                        S = (Me.m_uni.HEX_MIX(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx)) / T - Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T) / T
                 End Select
             Else
                 S = Me.m_lk.S_LK_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
