@@ -113,6 +113,12 @@ Public Class FormOptions
             Me.KryptonLabel3.Text = TrackBar1.Value & " " & DWSIM.App.GetLocalString("minutos")
         End If
 
+        'solver
+        cbSolverMode.SelectedIndex = My.Settings.SolverMode
+        tbServiceBusNamespace.Text = My.Settings.ServiceBusNamespace
+        tbServiceBusOwner.Text = My.Settings.ServiceBusOwner
+        tbServiceBusKey.Text = My.Settings.ServiceBusKey
+
         'databases
         Me.PopulateDBGrid()
 
@@ -550,6 +556,23 @@ Public Class FormOptions
         Me.cbGPU.Enabled = chkEnableGPUProcessing.Checked
         Me.tbGPUCaps.Enabled = chkEnableGPUProcessing.Checked
         My.Settings.EnableGPUProcessing = chkEnableGPUProcessing.Checked
+    End Sub
+
+    Private Sub cbSolverMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbSolverMode.SelectedIndexChanged
+        My.Settings.SolverMode = cbSolverMode.SelectedIndex
+        If cbSolverMode.SelectedIndex = 2 Then GroupBox6.Enabled = True Else GroupBox6.Enabled = False
+    End Sub
+
+    Private Sub tbServiceBusNamespace_TextChanged(sender As Object, e As EventArgs) Handles tbServiceBusNamespace.TextChanged
+        My.Settings.ServiceBusNamespace = tbServiceBusNamespace.Text
+    End Sub
+
+    Private Sub tbServiceBusOwner_TextChanged(sender As Object, e As EventArgs) Handles tbServiceBusOwner.TextChanged
+        My.Settings.ServiceBusOwner = tbServiceBusOwner.Text
+    End Sub
+
+    Private Sub tbServiceBusKey_TextChanged(sender As Object, e As EventArgs) Handles tbServiceBusKey.TextChanged
+        My.Settings.ServiceBusKey = tbServiceBusKey.Text
     End Sub
 
 End Class

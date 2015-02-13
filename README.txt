@@ -1,6 +1,6 @@
 ==================================================
 DWSIM - Open Source Process Simulator
-Version 3.2, Build 5398 - October 2014
+Version 3.3, Build 5517 - February 2015
 Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo León
 ==================================================
 
@@ -100,6 +100,37 @@ VERSION HISTORY / CHANGELOG
 ==================================================
 
 The full changelog, including code changes and their authors can be viewed at https://github.com/DanWBR/dwsim3/commits/master
+
+Version 3.3 Build 5517
+
+- [NEW] Flowsheet Unit Operation
+- [NEW] Redesigned Nested Loops VLLE flash algorithm
+- [NEW] Fast/Rigorous option mode for Nested Loops VLE flash algorithm
+- [NEW] Timed simulation script events
+- [NEW] Updated Plugin Interface (IUtilityPlugin2), includes new generic function which can be called by scripts
+- [CHG] Updated/Redesigned CoolProp interface
+- [CHG] Autosave scripts when saving flowsheet
+- [FIX] Fixed Heat of Vaporization calculation for ChemSep compounds
+- [FIX] Fixed bugs in the PSV sizing utility
+- [FIX] General bug fixes and code optimizations
+
+Version 3.3 Build 5488
+
+- [NEW] Excel Unit Operation
+- [NEW] IronPython Script Manager
+- [CHG] Flowsheet drawing optimizations
+- [CHG] Added Energy Stream requirement to Vessel UO to maintain energy balance consistency
+- [CHG] Added a confirmation message to add units systems from simulation files
+- [CHG] Sensitivity Analysis Utility GUI adjustments
+- [CHG] CAPE-OPEN Property Package adjustments
+- [CHG] Added Material Stream's phase mole flow information to property grid
+- [FIX] (T)xy, (P)xy binary diagram fixes
+- [FIX] Fixed Command Line mode issues
+- [FIX] Fixed bugs in the Compound Creator utility
+- [FIX] Fixed Rigorous Column stage naming
+- [FIX] Fixed proxy settings for new version check
+- [FIX] Fixed isolated Material Stream not calculating with "Calculate All" command
+- [FIX] Minor bug fixes
 
 Version 3.2 Build 5398
 
