@@ -196,7 +196,7 @@ Public Class frmSurface
             If My.Computer.Keyboard.ShiftKeyDown Then
                 CalculateAll(Me.ChildParent)
             Else
-                CalculateAll2(Me.ChildParent)
+                CalculateAll2(Me.ChildParent, My.Settings.SolverMode)
             End If
         End If
 

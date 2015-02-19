@@ -957,7 +957,7 @@ Imports DWSIM.DWSIM.Outros
         If My.Computer.Keyboard.ShiftKeyDown Then
             CalculateAll(Me)
         Else
-            CalculateAll2(Me)
+            CalculateAll2(Me, My.Settings.SolverMode)
         End If
     End Sub
 

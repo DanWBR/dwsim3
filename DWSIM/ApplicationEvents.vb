@@ -2,6 +2,7 @@ Imports Cudafy
 Imports System.Linq
 Imports System.IO
 Imports System.Runtime.Serialization.Formatters.Binary
+Imports System.Threading
 
 Namespace My
 
@@ -23,6 +24,7 @@ Namespace My
         Public Shared CommandLineMode As Boolean = False
 
         Public Shared IsRunningParallelTasks As Boolean = False
+        Public Shared SolverCancellationToken As CancellationToken
 
         Public ActiveSimulation As FormFlowsheet
         Public CAPEOPENMode As Boolean = False
