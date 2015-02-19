@@ -73,7 +73,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             If PP._ioquick Then
 
                 For i = 0 To n
-                    If CompoundProperties(i).Name = Me.StabSearchCompIDs(0) Then
+                    If CompoundProperties(i).Name = PP._tpcompids(0) Then
                         wid = i
                         nwm = fi(i)
                         fi(i) = 0

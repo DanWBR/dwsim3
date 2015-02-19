@@ -429,6 +429,7 @@ SS:             Tnew = Me.ConvergenceHistory.Temperatura
             If cp.IsAttached Then
                 ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
                 With ms
+                    .PropertyPackage.CurrentMaterialStream = ms
                     .Fases(0).SPMProperties.temperature = Tnew
                     .Fases(0).SPMProperties.pressure = Pnew
                     .Fases(0).SPMProperties.massflow = Wnew

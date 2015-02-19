@@ -3170,7 +3170,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             i = 0
 
-            Dim stream As New SimulationObjects.Streams.MaterialStream("", "")
+            Dim stream As SimulationObjects.Streams.MaterialStream = Nothing
 
             For Each ms As StreamInformation In Me.MaterialStreams.Values
                 Select Case ms.StreamBehavior
@@ -3306,13 +3306,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             T(0) = T1
             T(ns) = T2
 
-            'Dim pv(nc - 1) As Double
-            'For i = 0 To nc - 1
-            '    pv(i) = pp.AUX_PVAPi(i, (T1 + T2) / 2)
-            'Next
-
-            'Dim vapfrac As Double = Me.CalcIdealVapFrac(zm, pv, (P(0) + P(ns)) / 2)
-
             i = 0
             For Each st As Stage In Me.Stages
                 P(i) = st.P
@@ -3415,35 +3408,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         z(i)(j) = zm(j)
                     Next
                 Else
-                    x(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), PropertyPackage)(2)
-                    y(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), PropertyPackage)(3)
+                    x(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), pp)(2)
+                    y(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), pp)(3)
                     z(i) = zm
                     For j = 0 To nc - 1
                         Kval(i)(j) = y(i)(j) / x(i)(j)
                     Next
-                    'Dim tmp As Object = pp.DW_CalcKvalue(zm, (T1 + T2) / 2, (P(0) + P(ns)) / 2)
-                    'For j = 0 To nc - 1
-                    '    fracv(i) = Me.CalcIdealVapFrac(zm, Pvap(i), P(i))
-                    '    If fracv(i) < 0 Then fracv(i) = 0.000001
-                    '    If fracv(i) > 1 Then fracv(i) = 0.999999
-                    '    y(i)(j) = zm(j) * idealK(i)(j) / ((idealK(i)(j) - 1) * fracv(i) + 1)
-                    '    x(i)(j) = y(i)(j) / idealK(i)(j)
-                    '    z(i)(j) = zm(j)
-                    'Next
-                    'Dim sumx, sumy As Double
-                    'sumx = 0
-                    'sumy = 0
-                    'For j = 0 To nc - 1
-                    '    sumx += x(i)(j)
-                    '    sumy += y(i)(j)
-                    'Next
-                    'For j = 0 To nc - 1
-                    '    x(i)(j) = x(i)(j) / sumx
-                    '    y(i)(j) = y(i)(j) / sumy
-                    'Next
-                    'For j = 0 To nc - 1
-                    '    Kval(i)(j) = idealK(i)(j)
-                    'Next
                 End If
                 i = i + 1
             Next
@@ -3582,7 +3552,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             'product flows
 
-            Dim msm As New Streams.MaterialStream("", "")
+            Dim msm As Streams.MaterialStream
             Dim sinf As StreamInformation
 
             For Each sinf In Me.MaterialStreams.Values
@@ -3680,7 +3650,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             'condenser/reboiler duties
 
-            Dim esm As New Streams.EnergyStream("", "")
+            Dim esm As Streams.EnergyStream
 
             For Each sinf In Me.EnergyStreams.Values
                 If sinf.StreamBehavior = StreamInformation.Behavior.Distillate Then

@@ -140,7 +140,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Private _tag As String = ""
         Private _uniqueID As String = ""
 
-        Private m_ip As DataTable
+        <NonSerialized> Private m_ip As DataTable
 
         Private _flashalgorithm As FlashMethod
 
@@ -164,6 +164,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Friend IsElectrolytePP As Boolean = False
 
         Private LoopVarF, LoopVarX As Double, LoopVarState As State
+
+        Public Property ForceNewFlashAlgorithmInstance As Boolean = False
 
         <System.NonSerialized()> Private _como As Object 'CAPE-OPEN Material Object
 
@@ -378,24 +380,27 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Select Case FlashAlgorithm
                     Case FlashMethod.DWSIMDefault
                         If _dwdf Is Nothing Then _dwdf = New Auxiliary.FlashAlgorithms.DWSIMDefault
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.DWSIMDefault Else Return _dwdf
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.DWSIMDefault Else Return _dwdf
                     Case FlashMethod.InsideOut
                         If _bbio Is Nothing Then _bbio = New Auxiliary.FlashAlgorithms.BostonBrittInsideOut
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.BostonBrittInsideOut Else Return _bbio
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.BostonBrittInsideOut Else Return _bbio
                     Case FlashMethod.InsideOut3P
                         If _brio3 Is Nothing Then _brio3 = New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P Else Return _brio3
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P Else Return _brio3
                     Case FlashMethod.GibbsMin2P
                         If _gm3 Is Nothing Then _gm3 = New Auxiliary.FlashAlgorithms.GibbsMinimization3P
                         _gm3.ForceTwoPhaseOnly = True
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.GibbsMinimization3P With {.ForceTwoPhaseOnly = True} Else Return _gm3
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.GibbsMinimization3P With
+                            {.ForceTwoPhaseOnly = True} Else Return _gm3
                     Case FlashMethod.GibbsMin3P
                         If _gm3 Is Nothing Then _gm3 = New Auxiliary.FlashAlgorithms.GibbsMinimization3P
                         _gm3.ForceTwoPhaseOnly = False
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.GibbsMinimization3P With {.ForceTwoPhaseOnly = False} Else Return _gm3
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.GibbsMinimization3P With
+                            {.ForceTwoPhaseOnly = False, .StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity} Else Return _gm3
                     Case FlashMethod.NestedLoops3P, FlashMethod.NestedLoops3PV2, FlashMethod.NestedLoops3PV3
                         If _nl3 Is Nothing Then _nl3 = New Auxiliary.FlashAlgorithms.NestedLoops3PV3
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoops3P Else Return _nl3
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.NestedLoops3P With
+                            {.StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity} Else Return _nl3
                     Case FlashMethod.NestedLoopsSLE
                         If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE
                         Dim constprops As New List(Of ConstantProperties)
@@ -403,7 +408,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             constprops.Add(su.ConstantProperties)
                         Next
                         _nlsle.CompoundProperties = constprops
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops} Else Return _nlsle
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With
+                            {.CompoundProperties = constprops} Else Return _nlsle
                     Case FlashMethod.NestedLoopsSLE_SS
                         If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.SolidSolution = True}
                         Dim constprops As New List(Of ConstantProperties)
@@ -411,7 +417,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             constprops.Add(su.ConstantProperties)
                         Next
                         _nlsle.CompoundProperties = constprops
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops, .SolidSolution = True} Else Return _nlsle
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With
+                            {.CompoundProperties = constprops, .SolidSolution = True} Else Return _nlsle
                     Case FlashMethod.NestedLoopsImmiscible
                         If _nli Is Nothing Then _nli = New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
                         Dim constprops As New List(Of ConstantProperties)
@@ -419,13 +426,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             constprops.Add(su.ConstantProperties)
                         Next
                         _nli.CompoundProperties = constprops
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible With {.CompoundProperties = constprops} Else Return _nli
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible With
+                            {.CompoundProperties = constprops, .StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity} Else Return _nli
                     Case FlashMethod.SimpleLLE
                         If _simplelle Is Nothing Then _simplelle = New Auxiliary.FlashAlgorithms.SimpleLLE
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.SimpleLLE Else Return _simplelle
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.SimpleLLE Else Return _simplelle
                     Case Else
                         If _dwdf Is Nothing Then _dwdf = New Auxiliary.FlashAlgorithms.DWSIMDefault
-                        If My.MyApplication.IsRunningParallelTasks Then Return New Auxiliary.FlashAlgorithms.DWSIMDefault Else Return _dwdf
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.DWSIMDefault Else Return _dwdf
                         Return _dwdf
                 End Select
             End Get
@@ -512,7 +520,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Function ObjectCopy(ByVal obj As Object) As Object
 
-            Dim objMemStream As New MemoryStream(50000)
+            Dim objMemStream As New MemoryStream()
             Dim objBinaryFormatter As New BinaryFormatter(Nothing, New StreamingContext(StreamingContextStates.Clone))
 
             objBinaryFormatter.Serialize(objMemStream, obj)

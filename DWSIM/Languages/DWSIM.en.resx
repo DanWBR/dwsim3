@@ -4999,4 +4999,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="DCOperationMode" xml:space="preserve">
     <value>Column operation mode</value>
   </data>
+  <data name="FSfinishedsolvingerror" xml:space="preserve">
+    <value>Errors occured during the calculation of the flowsheet, please read the following messages for more details.</value>
+  </data>
+  <data name="FSfinishedsolvingok" xml:space="preserve">
+    <value>The flowsheet was calculated succesfully.</value>
+  </data>
+  <data name="FSstartedsolving" xml:space="preserve">
+    <value>The flowsheet is being calculated, please wait...</value>
+  </data>
 </root>

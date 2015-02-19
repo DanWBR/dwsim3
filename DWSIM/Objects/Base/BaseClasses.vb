@@ -30,6 +30,7 @@ Imports System.Runtime.InteropServices.Marshal
 Imports System.Runtime.InteropServices
 Imports DWSIM.DWSIM.SimulationObjects
 Imports System.Text
+Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
 <System.Serializable()> <ComVisible(True)> Public MustInherit Class SimulationObjects_BaseClass
 
@@ -2301,25 +2302,28 @@ End Class
         End Set
     End Property
 
-    <Xml.Serialization.XmlIgnore()> Property PropertyPackage() As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
+    <Xml.Serialization.XmlIgnore()> Property PropertyPackage() As PropertyPackage
         Get
+            If Not _pp Is Nothing Then Return _pp
             If _ppid Is Nothing Then _ppid = ""
             If FlowSheet.Options.PropertyPackages.ContainsKey(_ppid) Then
                 Return FlowSheet.Options.PropertyPackages(_ppid)
             Else
-                Try
-                    For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In Me.FlowSheet.Options.PropertyPackages.Values
-                        Return pp
-                        Exit For
-                    Next
-                Catch ex As Exception
-                    FlowSheet.WriteToLog(ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-                End Try
+                For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In Me.FlowSheet.Options.PropertyPackages.Values
+                    _ppid = pp.UniqueID
+                    Return pp
+                    Exit For
+                Next
             End If
             Return Nothing
         End Get
-        Set(ByVal value As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage)
-            If value IsNot Nothing Then _ppid = value.UniqueID
+        Set(ByVal value As PropertyPackage)
+            If value IsNot Nothing Then
+                _ppid = value.UniqueID
+                _pp = value
+            Else
+                _pp = Nothing
+            End If
         End Set
     End Property
 
@@ -2519,6 +2523,7 @@ End Class
                     .CustomEditor = New DWSIM.Editors.Annotation.UIAnnotationEditor
                 End With
             End If
+            .Item.Add("ID", Me.Nome, True, DWSIM.App.GetLocalString("Outros"), "", True)
         End With
     End Sub
 

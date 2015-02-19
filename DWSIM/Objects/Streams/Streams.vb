@@ -128,25 +128,17 @@ Namespace DWSIM.SimulationObjects.Streams
 
         <Xml.Serialization.XmlIgnore()> Public Property PropertyPackage() As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
             Get
+                If Not _pp Is Nothing Then Return _pp
                 If _ppid Is Nothing Then _ppid = ""
                 If Not FlowSheet Is Nothing Then
                     If FlowSheet.Options.PropertyPackages.ContainsKey(_ppid) Then
                         Return FlowSheet.Options.PropertyPackages(_ppid)
                     Else
-                        Try
-                            For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In FlowSheet.Options.PropertyPackages.Values
-                                _ppid = pp.UniqueID
-                                Return pp
-                                Exit For
-                            Next
-                        Catch ex As Exception
-                            For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In FlowSheet.Options.PropertyPackages.Values
-                                _ppid = pp.UniqueID
-                                Return pp
-                                Exit For
-                            Next
-                            FlowSheet.WriteToLog(ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-                        End Try
+                        For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In FlowSheet.Options.PropertyPackages.Values
+                            _ppid = pp.UniqueID
+                            Return pp
+                            Exit For
+                        Next
                     End If
                 Else
                     _ppid = _pp.UniqueID
@@ -155,7 +147,13 @@ Namespace DWSIM.SimulationObjects.Streams
                 Return Nothing
             End Get
             Set(ByVal value As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage)
-                If value IsNot Nothing Then _ppid = value.UniqueID
+                If value IsNot Nothing Then
+                    _ppid = value.UniqueID
+                    _pp = value
+                Else
+                    _pp = Nothing
+                End If
+
             End Set
         End Property
 
@@ -711,6 +709,8 @@ Namespace DWSIM.SimulationObjects.Streams
 
                 Me.PropertyPackage.CurrentMaterialStream = Me
                 Me.PropertyPackage.PopulatePropertyGrid(pgrid, Flowsheet, su)
+
+                .Item.Add("ID", Me.Nome, True, DWSIM.App.GetLocalString("Outros"), "", True)
 
                 .PropertySort = PropertySort.Categorized
                 .ShowCustomProperties = True
@@ -5084,6 +5084,7 @@ Namespace DWSIM.SimulationObjects.Streams
                             .Item.Add(DWSIM.App.GetLocalString("Utilizadocomo"), DWSIM.App.GetLocalString("SpecSource"), True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
                     End Select
                 End If
+                .Item.Add("ID", Me.Nome, True, DWSIM.App.GetLocalString("Outros"), "", True)
             End With
 
         End Sub
