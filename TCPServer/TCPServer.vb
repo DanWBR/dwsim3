@@ -50,16 +50,24 @@ Module TCPServer
 
         If dataChannel < 251 Then
 
-            Task.Factory.StartNew(Sub()
-                                      Using bytestream As New MemoryStream(bytes)
-                                          Dim form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
-                                          DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 1)
-                                          Dim retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
-                                          lat.SendArray(retbytes.ToArray, dataChannel, sessionID)
-                                      End Using
-                                  End Sub).ContinueWith(Sub()
-                                                            server.GetSession(sessionID).Close()
-                                                        End Sub)
+            Console.WriteLine("Data received from " & server.GetSession(sessionID).machineId & ", flowsheet solving started!")
+
+            Try
+                'Task.Factory.StartNew(Sub()
+                Using bytestream As New MemoryStream(bytes)
+                    Dim errmsg As String = ""
+                    Dim form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
+                    DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 1)
+                    Dim retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
+                    lat.SendArray(retbytes.ToArray, dataChannel, sessionID, errmsg)
+                End Using
+                'End Sub)
+            Catch ex As Exception
+                Console.WriteLine("Error solving flowsheet: " & ex.ToString)
+            Finally
+                Console.WriteLine("Closing current session with " & server.GetSession(sessionID).machineId & ".")
+                server.GetSession(sessionID).Close()
+            End Try
 
         ElseIf dataChannel = 255 Then
 

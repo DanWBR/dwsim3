@@ -50,8 +50,13 @@ Namespace DWSIM.Flowsheet
 
                 File.Delete(tmpfile)
 
-                While results.Length = 0
-                    Thread.Sleep(1000)
+                Dim time As Integer = 0
+                Dim sleeptime As Integer = 1
+                While results Is Nothing
+                    Thread.Sleep(sleeptime * 1000)
+                    Application.DoEvents()
+                    time += sleeptime
+                    If time >= My.Settings.SolverTimeoutSeconds Then Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
                 End While
 
                 Using ms As New MemoryStream(results)

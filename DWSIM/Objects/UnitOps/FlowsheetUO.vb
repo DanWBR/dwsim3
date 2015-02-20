@@ -445,12 +445,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim gobj As GraphicObject = (From go As GraphicObject In
                                         form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
                     obj.GraphicObject = gobj
+                    obj.SetFlowsheet(form)
                     obj.FillNodeItems(True)
                     obj.QTFillNodeItems()
                     If Not gobj Is Nothing Then
                         form.Collections.ObjectCollection.Add(id, obj)
                         obj.LoadData(xel.Elements.ToList)
-                        obj.SetFlowsheet(form)
+                        'obj.SetFlowsheet(form)
                         If TypeOf obj Is Streams.MaterialStream Then
                             For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
                                 For Each c As ConstantProperties In form.Options.SelectedComponents.Values

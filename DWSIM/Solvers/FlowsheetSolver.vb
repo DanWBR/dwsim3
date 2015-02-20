@@ -1804,6 +1804,8 @@ Namespace DWSIM.Flowsheet
                         tcpclient.SolveFlowsheet(form)
                     Catch ex As Exception
                         age = New AggregateException(ex.Message.ToString, ex)
+                    Finally
+                        tcpclient.client.Close()
                     End Try
 
             End Select
