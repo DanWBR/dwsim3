@@ -135,10 +135,61 @@
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Solver-Optionen</value>
   </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Azure Service Bus</value>
+  <data name="GroupBoxNetworkComputerConfig.Text" xml:space="preserve">
+    <value>Einstellungen für die Verbindung mit dem Computer über das Netzwerk</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 13</value>
+  </data>
+  <data name="Label15.Text" xml:space="preserve">
+    <value>TCP-Port</value>
+  </data>
+  <data name="Label16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 13</value>
+  </data>
+  <data name="Label16.Text" xml:space="preserve">
+    <value>IP-Adresse</value>
+  </data>
+  <data name="cbDebugLevel.Items" xml:space="preserve">
+    <value>Keine</value>
+  </data>
+  <data name="cbDebugLevel.Items1" xml:space="preserve">
+    <value>Niedrig</value>
+  </data>
+  <data name="cbDebugLevel.Items2" xml:space="preserve">
+    <value>Durchschnitt</value>
+  </data>
+  <data name="cbDebugLevel.Items3" xml:space="preserve">
+    <value>Hoch</value>
+  </data>
+  <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>682, 24</value>
+  </data>
+  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 13</value>
+  </data>
+  <data name="Label13.Text" xml:space="preserve">
+    <value>Debuglevel</value>
+  </data>
+  <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>504, 24</value>
+  </data>
+  <data name="Label12.Text" xml:space="preserve">
+    <value>sekunden</value>
+  </data>
+  <data name="tbSolverTimeout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>447, 20</value>
+  </data>
+  <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 13</value>
+  </data>
+  <data name="Label11.Text" xml:space="preserve">
+    <value>Vorlaufzeit</value>
+  </data>
+  <data name="GroupBoxAzureConfig.Text" xml:space="preserve">
+    <value>Einstellungen Azure Service Bus (Azure Service Bus)</value>
+  </data>
   <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>25, 13</value>
   </data>
@@ -165,6 +216,9 @@
   </data>
   <data name="cbSolverMode.Items2" xml:space="preserve">
     <value>Azure Virtual Machine</value>
+  </data>
+  <data name="cbSolverMode.Items3" xml:space="preserve">
+    <value>Netzwerkcomputer</value>
   </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 13</value>
@@ -370,7 +424,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABo
-        KgAAAk1TRnQBSQFMAgEBCgEAAWwBAwFsAQMBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAXwBAwF8AQMBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKfAd4CnAHe
         ApwB3AKaAdoCmAHaApgB2gKYAdoCmAHkAqIB4gKgAeECnwHeApwB3AGcAZoB2gKYAdoCmAHZApcB1wKV
         AdYClAHTApEB0wKRAdECjwHPAo0BzwKNAc8CjWAABvYD9APzAfIB8wHyA/ED8APuA+0D6wPpA+gB5wLm

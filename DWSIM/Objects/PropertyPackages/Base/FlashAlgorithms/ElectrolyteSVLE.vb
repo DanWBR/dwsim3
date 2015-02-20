@@ -56,6 +56,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Private LoopVarF, LoopVarX As Double, LoopVarVz As Double(), LoopVarState As State
 
+        Public Sub WriteDebugInfo(text As String)
+
+            Select Case My.Settings.DebugLevel
+                Case 0
+                    'do nothing
+                Case 1
+                    Console.WriteLine(text)
+                Case 2
+            End Select
+
+        End Sub
+
         Public Function Flash_PT(Vx As Array, T As Double, P As Double) As Dictionary(Of String, Object)
 
             'This flash algorithm is for Electrolye/Salt systems with Water as the single solvent.
@@ -884,7 +896,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("PH Flash [Electrolyte]: Converged successfully. Time taken: " & dt.TotalMilliseconds & " ms.")
+            WriteDebugInfo("PH Flash [Electrolyte]: Converged successfully. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             'return flash calculation results.
 
@@ -937,7 +949,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim herr As Double = Hf - ((mmg * V / (mmg * V + mml * L + mms * S)) * _Hv + (mml * L / (mmg * V + mml * L + mms * S)) * _Hl + (mms * S / (mmg * V + mml * L + mms * S)) * _Hs)
             OBJ_FUNC_PH_FLASH = herr
 
-            Console.WriteLine("PH Flash [Electrolyte]: Current T = " & T & ", Current H Error = " & herr)
+            WriteDebugInfo("PH Flash [Electrolyte]: Current T = " & T & ", Current H Error = " & herr)
 
         End Function
 
@@ -1060,7 +1072,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("PH Flash [Electrolyte]: Converged successfully. Time taken: " & dt.TotalMilliseconds & " ms.")
+            WriteDebugInfo("PH Flash [Electrolyte]: Converged successfully. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             'return flash calculation results.
 

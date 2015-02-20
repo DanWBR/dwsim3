@@ -324,7 +324,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If Double.IsNaN(V) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
                 If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
-                Console.WriteLine("PT Flash [IO]: Iteration #" & ecount & ", VF = " & V)
+                WriteDebugInfo("PT Flash [IO]: Iteration #" & ecount & ", VF = " & V)
 
                 CheckCalculatorStatus()
 
@@ -334,7 +334,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("PT Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
+            WriteDebugInfo("PT Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
 
 out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, Vx, 0.0#, PP.RET_NullVector}
 
@@ -710,10 +710,10 @@ restart:    Do
                     Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
                 End If
 
-                Console.WriteLine("PH Flash [IO]: Iteration #" & ecount & ", T = " & T)
-                Console.WriteLine("PH Flash [IO]: Iteration #" & ecount & ", VF = " & V)
-                Console.WriteLine("PH Flash [IO]: Iteration #" & ecount & ", H error = " & fr)
-                Console.WriteLine("PH Flash [IO]: Iteration #" & ecount & ", Damping Factor = " & alpha)
+                WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", T = " & T)
+                WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", VF = " & V)
+                WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", H error = " & fr)
+                WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", Damping Factor = " & alpha)
 
                 CheckCalculatorStatus()
 
@@ -763,7 +763,7 @@ restart:    Do
 
             dt = d2 - d1
 
-            Console.WriteLine("PH Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
+            WriteDebugInfo("PH Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
 
             Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
@@ -1125,10 +1125,10 @@ restart:    Do
                 If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
                 If Double.IsNaN(AbsSum(fx)) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                Console.WriteLine("PS Flash [IO]: Iteration #" & ecount & ", T = " & T)
-                Console.WriteLine("PS Flash [IO]: Iteration #" & ecount & ", VF = " & V)
-                Console.WriteLine("PS Flash [IO]: Iteration #" & ecount & ", H error = " & fr)
-                Console.WriteLine("PS Flash [IO]: Iteration #" & ecount & ", Damping Factor = " & alpha)
+                WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", T = " & T)
+                WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", VF = " & V)
+                WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", H error = " & fr)
+                WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", Damping Factor = " & alpha)
 
                 CheckCalculatorStatus()
 
@@ -1178,7 +1178,7 @@ restart:    Do
 
             dt = d2 - d1
 
-            Console.WriteLine("PS Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
+            WriteDebugInfo("PS Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
 
             Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
@@ -1457,8 +1457,8 @@ restart:    Do
                     Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
                 End If
 
-                Console.WriteLine("PV Flash [IO]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
-                Console.WriteLine("PV Flash [IO]: Iteration #" & ecount & ", Damping Factor = " & alpha)
+                WriteDebugInfo("PV Flash [IO]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
+                WriteDebugInfo("PV Flash [IO]: Iteration #" & ecount & ", Damping Factor = " & alpha)
 
                 CheckCalculatorStatus()
 
@@ -1470,7 +1470,7 @@ final:      d2 = Date.Now
 
             If PP.AUX_CheckTrivial(Ki) Then Throw New Exception("PV Flash [IO]: Invalid result: converged to the trivial solution (T = " & T & " ).")
 
-            Console.WriteLine("PV Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
+            WriteDebugInfo("PV Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
 
             Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
@@ -1735,8 +1735,8 @@ final:      d2 = Date.Now
                 If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
                 If Double.IsNaN(AbsSum(fx)) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                Console.WriteLine("TV Flash [IO]: Iteration #" & ecount & ", P = " & P & ", VF = " & V)
-                Console.WriteLine("TV Flash [IO]: Iteration #" & ecount & ", Damping Factor = " & alpha)
+                WriteDebugInfo("TV Flash [IO]: Iteration #" & ecount & ", P = " & P & ", VF = " & V)
+                WriteDebugInfo("TV Flash [IO]: Iteration #" & ecount & ", Damping Factor = " & alpha)
 
                 CheckCalculatorStatus()
 
@@ -1748,7 +1748,7 @@ final:      d2 = Date.Now
 
             If PP.AUX_CheckTrivial(Ki) Then Throw New Exception("TV Flash [IO]: Invalid result: converged to the trivial solution (P = " & P & " ).")
 
-            Console.WriteLine("TV Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
+            WriteDebugInfo("TV Flash [IO]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & AbsSum(fx))
 
             Return New Object() {L, V, Vx, Vy, P, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
@@ -1937,9 +1937,9 @@ final:      d2 = Date.Now
 
             balerror = Hf - HL
 
-            Console.WriteLine("PH Flash [IO]: Iteration #" & ecount & ", T = " & T)
-            Console.WriteLine("PH Flash [IO]: Iteration #" & ecount & ", VF = 0 (SP)")
-            Console.WriteLine("PH Flash [IO]: Iteration #" & ecount & ", H error = " & balerror)
+            WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", T = " & T)
+            WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", VF = 0 (SP)")
+            WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", H error = " & balerror)
 
             Return balerror
 
@@ -1956,9 +1956,9 @@ final:      d2 = Date.Now
 
             balerror = Hf - HV
 
-            Console.WriteLine("PH Flash [IO]: Iteration #" & ecount & ", T = " & T)
-            Console.WriteLine("PH Flash [IO]: Iteration #" & ecount & ", VF = 1 (SP)")
-            Console.WriteLine("PH Flash [IO]: Iteration #" & ecount & ", H error = " & balerror)
+            WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", T = " & T)
+            WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", VF = 1 (SP)")
+            WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", H error = " & balerror)
 
             Return balerror
 
@@ -2065,9 +2065,9 @@ final:      d2 = Date.Now
 
             balerror = Sf - SL
 
-            Console.WriteLine("PS Flash [IO]: Iteration #" & ecount & ", T = " & T)
-            Console.WriteLine("PS Flash [IO]: Iteration #" & ecount & ", VF = 0 (SP)")
-            Console.WriteLine("PS Flash [IO]: Iteration #" & ecount & ", S error = " & balerror)
+            WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", T = " & T)
+            WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", VF = 0 (SP)")
+            WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", S error = " & balerror)
 
             Return balerror
 
@@ -2084,9 +2084,9 @@ final:      d2 = Date.Now
 
             balerror = Sf - SV
 
-            Console.WriteLine("PS Flash [IO]: Iteration #" & ecount & ", T = " & T)
-            Console.WriteLine("PS Flash [IO]: Iteration #" & ecount & ", VF = 1 (SP)")
-            Console.WriteLine("PS Flash [IO]: Iteration #" & ecount & ", S error = " & balerror)
+            WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", T = " & T)
+            WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", VF = 1 (SP)")
+            WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", S error = " & balerror)
 
             Return balerror
 

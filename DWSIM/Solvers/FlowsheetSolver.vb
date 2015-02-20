@@ -313,7 +313,7 @@ Namespace DWSIM.Flowsheet
                             Else
                                 form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                             End If
-                       End Try
+                        End Try
                     Else
                         If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
                             If ms.GraphicObject.InputConnectors(0).IsAttached Then
@@ -1481,6 +1481,8 @@ Namespace DWSIM.Flowsheet
 
                 CheckCalculatorStatus()
 
+                Application.DoEvents()
+
             End While
 
             form.FormQueue.TextBox1.Clear()
@@ -1595,7 +1597,7 @@ Namespace DWSIM.Flowsheet
                         Throw New Exception(DWSIM.App.GetLocalString("CalculationAborted"))
                     End If
                 End If
-                Application.DoEvents()
+                'Application.DoEvents()
             End If
 
         End Sub
@@ -1702,7 +1704,7 @@ Namespace DWSIM.Flowsheet
 
             My.MyApplication.MasterCalculatorStopRequested = False
 
-            Dim d1, d2 As Date, dt As TimeSpan
+            Dim d1 As Date
 
             d1 = Date.Now
 
@@ -1748,13 +1750,22 @@ Namespace DWSIM.Flowsheet
                     Next
                     Try
                         Dim t As New Task(Sub()
-                                              'ProcessCalculationQueue(form, True, True, 1)
-                                              ProcessCalculationQueue(form, True, True, 1, filteredlist2)
+                                              If My.Settings.EnableParallelProcessing Then
+                                                  ProcessCalculationQueue(form, True, True, 1, filteredlist2)
+                                              Else
+                                                  ProcessCalculationQueue(form, True, True, 1)
+                                              End If
                                           End Sub)
                         t.Start()
-                        t.Wait(My.MyApplication.SolverCancellationToken)
+                        If Not t.Wait(My.Settings.SolverTimeoutSeconds * 1000, My.MyApplication.SolverCancellationToken) Then
+                            Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
+                        End If
                     Catch agex As AggregateException
                         age = agex
+                        Exit While
+                    Catch ex As TimeoutException
+                        age = New AggregateException(ex.Message.ToString, ex)
+                        Exit While
                     End Try
                 End If
 
@@ -1773,8 +1784,10 @@ Namespace DWSIM.Flowsheet
             If mode = 1 Then
                 If age Is Nothing Then
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
+                    form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & Format((Date.Now - d1).TotalSeconds, "0.##") & "s", Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
                 Else
-                    form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Blue, FormClasses.TipoAviso.Informacao)
+                    age = age.Flatten()
+                    form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Red, FormClasses.TipoAviso.Erro)
                     For Each ex In age.InnerExceptions
                         Dim st As New StackTrace(ex, True)
                         If st.FrameCount > 0 Then
@@ -1787,12 +1800,7 @@ Namespace DWSIM.Flowsheet
                 End If
             End If
 
-            d2 = Date.Now
-
-            dt = d2 - d1
-
-            form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & Format(dt.TotalSeconds, "0.##") & "s", Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
-
+         
             objstack.Clear()
             lists.Clear()
             recycles.Clear()

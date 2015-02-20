@@ -63,17 +63,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 #Region "    DWSIM Functions"
 
         Private Sub WriteWarningMessage(message As String)
-            If Not Me.CurrentMaterialStream Is Nothing Then
-                If Not Me.CurrentMaterialStream.FlowSheet Is Nothing Then
-                    If Not Me.CurrentMaterialStream.GraphicObject Is Nothing Then
-                        Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & ": [CoolProp] " & message, Color.DarkSlateBlue, FormClasses.TipoAviso.Aviso)
-                    Else
-                        Me.CurrentMaterialStream.FlowSheet.WriteToLog("[CoolProp] " & message, Color.DarkSlateBlue, FormClasses.TipoAviso.Aviso)
+            Select Case My.Settings.DebugLevel
+                Case 0
+                    'do nothing
+                Case 1
+                    Console.WriteLine(message)
+                Case 2
+                    If Not Me.CurrentMaterialStream Is Nothing Then
+                        If Not Me.CurrentMaterialStream.FlowSheet Is Nothing Then
+                            If Not Me.CurrentMaterialStream.GraphicObject Is Nothing Then
+                                Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.CurrentMaterialStream.GraphicObject.Tag & ": [CoolProp] " & message, Color.DarkSlateBlue, FormClasses.TipoAviso.Aviso)
+                            Else
+                                Me.CurrentMaterialStream.FlowSheet.WriteToLog("[CoolProp] " & message, Color.DarkSlateBlue, FormClasses.TipoAviso.Aviso)
+                            End If
+                        End If
                     End If
-                End If
-            Else
-                Console.WriteLine(message)
-            End If
+            End Select
         End Sub
 
         Public Overrides Function AUX_CPi(sub1 As String, T As Double) As Object

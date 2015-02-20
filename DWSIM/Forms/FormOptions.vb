@@ -118,6 +118,10 @@ Public Class FormOptions
         tbServiceBusNamespace.Text = My.Settings.ServiceBusNamespace
         tbServiceBusOwner.Text = My.Settings.ServiceBusOwner
         tbServiceBusKey.Text = My.Settings.ServiceBusKey
+        tbSolverTimeout.Text = My.Settings.SolverTimeoutSeconds
+        cbDebugLevel.SelectedIndex = My.Settings.DebugLevel
+        tbServerIP.Text = My.Settings.ServerIPAddress
+        tbServerPort.Text = My.Settings.ServerPort
 
         'databases
         Me.PopulateDBGrid()
@@ -560,7 +564,24 @@ Public Class FormOptions
 
     Private Sub cbSolverMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbSolverMode.SelectedIndexChanged
         My.Settings.SolverMode = cbSolverMode.SelectedIndex
-        If cbSolverMode.SelectedIndex = 2 Then GroupBox6.Enabled = True Else GroupBox6.Enabled = False
+        Select Case cbSolverMode.SelectedIndex
+            Case 0
+                GroupBoxAzureConfig.Visible = False
+                GroupBoxNetworkComputerConfig.Visible = False
+                tbSolverTimeout.Enabled = False
+            Case 1
+                GroupBoxAzureConfig.Visible = False
+                GroupBoxNetworkComputerConfig.Visible = False
+                tbSolverTimeout.Enabled = True
+            Case 2
+                GroupBoxAzureConfig.Visible = True
+                GroupBoxNetworkComputerConfig.Visible = False
+                tbSolverTimeout.Enabled = True
+            Case 3
+                GroupBoxAzureConfig.Visible = False
+                GroupBoxNetworkComputerConfig.Visible = True
+                tbSolverTimeout.Enabled = True
+        End Select
     End Sub
 
     Private Sub tbServiceBusNamespace_TextChanged(sender As Object, e As EventArgs) Handles tbServiceBusNamespace.TextChanged
@@ -573,6 +594,24 @@ Public Class FormOptions
 
     Private Sub tbServiceBusKey_TextChanged(sender As Object, e As EventArgs) Handles tbServiceBusKey.TextChanged
         My.Settings.ServiceBusKey = tbServiceBusKey.Text
+    End Sub
+
+    Private Sub cbDebugLevel_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDebugLevel.SelectedIndexChanged
+        My.Settings.DebugLevel = cbDebugLevel.SelectedIndex
+    End Sub
+
+    Private Sub tbSolverTimeout_TextChanged(sender As Object, e As EventArgs) Handles tbSolverTimeout.TextChanged
+        If Integer.TryParse(tbSolverTimeout.Text, New Integer) Then
+            My.Settings.SolverTimeoutSeconds = Integer.Parse(tbSolverTimeout.Text)
+        End If
+    End Sub
+
+    Private Sub tbServerIP_TextChanged(sender As Object, e As EventArgs) Handles tbServerIP.TextChanged
+        My.Settings.ServerIPAddress = tbServerIP.Text
+    End Sub
+
+    Private Sub tbServerPort_TextChanged(sender As Object, e As EventArgs) Handles tbServerPort.TextChanged
+        My.Settings.ServerPort = tbServerPort.Text
     End Sub
 
 End Class

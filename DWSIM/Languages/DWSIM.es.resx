@@ -4977,4 +4977,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="FSstartedsolving" xml:space="preserve">
     <value>O fluxograma está sendo calculado, por favor aguarde...</value>
   </data>
+  <data name="SolverTimeout" xml:space="preserve">
+    <value>O calculador não conseguiu resolver o fluxograma dentro do tempo de espera máximo definido.</value>
+  </data>
 </root>

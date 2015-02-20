@@ -90,7 +90,6 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
         End With
 
-
     End Sub
 
     Public MustOverride Sub QTFillNodeItems()
@@ -1806,7 +1805,7 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                 Else
                     Return Nothing
                 End If
-            
+
             End If
 
         End Get

@@ -37,6 +37,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Sub
 
+        Public Sub WriteDebugInfo(text As String)
+
+            Select Case My.Settings.DebugLevel
+                Case 0
+                    'do nothing
+                Case 1
+                    Console.WriteLine(text)
+                Case 2
+            End Select
+
+        End Sub
+
+
         Public MustOverride Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
         Public MustOverride Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
@@ -135,7 +148,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Function StabTest(ByVal T As Double, ByVal P As Double, ByVal Vz As Array, ByVal pp As PropertyPackage, Optional ByVal VzArray(,) As Double = Nothing, Optional ByVal searchseverity As Integer = 0)
 
-            Console.WriteLine("Starting Liquid Phase Stability Test @ T = " & T & " K & P = " & P & " Pa for the following trial phases:")
+            WriteDebugInfo("Starting Liquid Phase Stability Test @ T = " & T & " K & P = " & P & " Pa for the following trial phases:")
 
             Dim i, j, c, n, o, l, nt, maxits As Integer
             n = UBound(Vz)
@@ -167,7 +180,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
                 text.TrimEnd(New Char() {vbTab})
                 text += "}"
-                Console.WriteLine(text)
+                WriteDebugInfo(text)
             Next
 
             ReDim K(0, n)
@@ -509,7 +522,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 'normalize initial estimates
 
-                Console.WriteLine("Liquid Phase Stability Test finished. Phase is NOT stable. Initial estimates for incipient liquid phase composition:")
+                WriteDebugInfo("Liquid Phase Stability Test finished. Phase is NOT stable. Initial estimates for incipient liquid phase composition:")
 
                 For i = 0 To nt
                     For j = 0 To n
@@ -537,7 +550,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Loop Until j = n + 1
                         text.TrimEnd(New Char() {vbTab})
                         text += "}"
-                        Console.WriteLine(text)
+                        WriteDebugInfo(text)
                         l = l + 1
                     End If
                     i = i + 1
@@ -547,7 +560,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 'the phase is stable
 
-                Console.WriteLine("Liquid Phase Stability Test finished. Phase is stable.")
+                WriteDebugInfo("Liquid Phase Stability Test finished. Phase is stable.")
 
                 isStable = True
                 Return New Object() {isStable, Nothing}

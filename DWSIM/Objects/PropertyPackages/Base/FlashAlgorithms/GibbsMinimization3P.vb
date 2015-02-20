@@ -291,11 +291,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'check if the algorithm converged to the trivial solution.
             If PP.AUX_CheckTrivial(Ki) Then
                 'rollback to NL PT flash.
-                Console.WriteLine("PT Flash [GM]: Converged to the trivial solution at specified conditions. Rolling back to Nested-Loops PT-Flash...")
+                WriteDebugInfo("PT Flash [GM]: Converged to the trivial solution at specified conditions. Rolling back to Nested-Loops PT-Flash...")
                 result = _nl.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
             ElseIf status = IpoptReturnCode.Maximum_Iterations_Exceeded Then
                 'retry with NL PT flash.
-                Console.WriteLine("PT Flash [GM]: Maximum iterations exceeded. Recalculating with Nested-Loops PT-Flash...")
+                WriteDebugInfo("PT Flash [GM]: Maximum iterations exceeded. Recalculating with Nested-Loops PT-Flash...")
                 result = _nl.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
             Else
                 FunctionValue(initval)
@@ -507,7 +507,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             'check if maximum iterations exceeded.
                             If status = IpoptReturnCode.Maximum_Iterations_Exceeded Then
                                 'retry with NL PT flash.
-                                Console.WriteLine("PT Flash [GM]: Maximum iterations exceeded. Recalculating with Nested-Loops PT-Flash...")
+                                WriteDebugInfo("PT Flash [GM]: Maximum iterations exceeded. Recalculating with Nested-Loops PT-Flash...")
                                 result = _nl3p.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
                                 Return result
                             End If
@@ -542,7 +542,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            Console.WriteLine("PT Flash [GM]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
+            WriteDebugInfo("PT Flash [GM]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
 
 out:        Return result
 
@@ -622,7 +622,7 @@ out:        Return result
 alt:
                 Dim bo As New BrentOpt.Brent
                 bo.DefineFuncDelegate(AddressOf Herror)
-                Console.WriteLine("PH Flash [GM]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
+                WriteDebugInfo("PH Flash [GM]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
 
                 T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
 
@@ -649,7 +649,7 @@ alt:
 
             dt = d2 - d1
 
-            Console.WriteLine("PH Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
+            WriteDebugInfo("PH Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
 
             Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
@@ -729,7 +729,7 @@ alt:
 alt:
                 Dim bo As New BrentOpt.Brent
                 bo.DefineFuncDelegate(AddressOf Serror)
-                Console.WriteLine("PS Flash [GM]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
+                WriteDebugInfo("PS Flash [GM]: Newton's method failed. Starting fallback Brent's method calculation for " & Tmin & " <= T <= " & Tmax)
 
                 T = bo.BrentOpt(Tmin, Tmax, 25, tolEXT, maxitEXT, {P, Vz, PP})
 
@@ -756,7 +756,7 @@ alt:
 
             dt = d2 - d1
 
-            Console.WriteLine("PS Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
+            WriteDebugInfo("PS Flash [GM]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
 
             Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki, L2, Vx2, 0.0#, PP.RET_NullVector}
 
@@ -795,7 +795,7 @@ alt:
             Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L1 + mml2 * L2)) * _Hv - (mml * L1 / (mmg * V + mml * L1 + mml2 * L2)) * _Hl1 - (mml2 * L2 / (mmg * V + mml * L1 + mml2 * L2)) * _Hl2
             OBJ_FUNC_PH_FLASH = herr
 
-            Console.WriteLine("PH Flash [GM]: Current T = " & T & ", Current H Error = " & herr)
+            WriteDebugInfo("PH Flash [GM]: Current T = " & T & ", Current H Error = " & herr)
 
         End Function
 
@@ -832,7 +832,7 @@ alt:
             Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L1 + mml2 * L2)) * _Sv - (mml * L1 / (mmg * V + mml * L1 + mml2 * L2)) * _Sl1 - (mml2 * L2 / (mmg * V + mml * L1 + mml2 * L2)) * _Sl2
             OBJ_FUNC_PS_FLASH = serr
 
-            Console.WriteLine("PS Flash [GM]: Current T = " & T & ", Current S Error = " & serr)
+            WriteDebugInfo("PS Flash [GM]: Current T = " & T & ", Current S Error = " & serr)
 
         End Function
 
@@ -1037,7 +1037,7 @@ alt:
 
             dt = d2 - d1
 
-            Console.WriteLine("TV Flash [GM-3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            WriteDebugInfo("TV Flash [GM-3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return result
 
@@ -1158,7 +1158,7 @@ alt:
 
             dt = d2 - d1
 
-            Console.WriteLine("PV Flash [GM-3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            WriteDebugInfo("PV Flash [GM-3P]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return result
 
@@ -1286,7 +1286,7 @@ alt:
             L1 = L1est
             L2 = L2est
 
-            Console.WriteLine("PV Flash [GM-3P]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
+            WriteDebugInfo("PV Flash [GM-3P]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
 
             Do
 
@@ -1433,7 +1433,7 @@ alt:
 
                 ecount += 1
 
-                Console.WriteLine("PV Flash [GM-3P]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
+                WriteDebugInfo("PV Flash [GM-3P]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", T = " & T)
 
             Loop
 
@@ -1563,7 +1563,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
             L1 = L1est
             L2 = L2est
 
-            Console.WriteLine("TV Flash [GM-3P]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
+            WriteDebugInfo("TV Flash [GM-3P]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
 
             Do
 
@@ -1708,7 +1708,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
 
                 ecount += 1
 
-                Console.WriteLine("TV Flash [GM-3P]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
+                WriteDebugInfo("TV Flash [GM-3P]: Iteration #" & ecount & ", VF = " & V & ", L1 = " & L1 & ", P = " & P)
 
             Loop
 
@@ -1778,7 +1778,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
 
                         Gm = Gv + Gl1
 
-                        Console.WriteLine("[GM] V = " & Format(V, "N4") & ", L = " & Format(L, "N4") & " / GE = " & Format(Gm * 8.314 * Tf, "N2") & " kJ/kmol")
+                        WriteDebugInfo("[GM] V = " & Format(V, "N4") & ", L = " & Format(L, "N4") & " / GE = " & Format(Gm * 8.314 * Tf, "N2") & " kJ/kmol")
 
                     Else
 
@@ -1858,7 +1858,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
 
                         Gm = Gv + Gl1 + Gl2 + pval
 
-                        Console.WriteLine("[GM] V = " & Format(V / 1000, "N4") & ", L1 = " & Format(L1 / 1000, "N4") & ", L2 = " & Format(L2 / 1000, "N4") & " / GE = " & Format(Gm * 8.314 * Tf / 1000, "N2") & " kJ/kmol")
+                        WriteDebugInfo("[GM] V = " & Format(V / 1000, "N4") & ", L1 = " & Format(L1 / 1000, "N4") & ", L2 = " & Format(L2 / 1000, "N4") & " / GE = " & Format(Gm * 8.314 * Tf / 1000, "N2") & " kJ/kmol")
 
                     End If
 

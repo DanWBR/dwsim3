@@ -566,13 +566,6 @@ restart:        i = 0
                 ci = ci + 1
                 cit = cit + 1
 
-                Console.WriteLine("--------------------------")
-                Console.Write(fV.ToString)
-                Console.WriteLine("--------------------------")
-                Console.Write(dV.ToString)
-                Console.WriteLine("--------------------------")
-                Console.Write(V.ToString)
-
                 CheckCalculatorStatus()
 
                 If ci >= m_miti Then
@@ -1075,9 +1068,9 @@ out2:               Dim order(m) As Integer, hasvp As Boolean = False
                 Loop Until i = n + 1
 
                 Try
-                    'Console.WriteLine(df.ToString)
+                    'WriteDebugInfo(df.ToString)
                     dl = df.Solve(f)
-                    'Console.WriteLine(dl.ToString())
+                    'WriteDebugInfo(dl.ToString())
                     'Console.ReadKey()
 
                 Catch ex As Exception

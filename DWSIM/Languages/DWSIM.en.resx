@@ -5008,4 +5008,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="FSstartedsolving" xml:space="preserve">
     <value>The flowsheet is being calculated, please wait...</value>
   </data>
+  <data name="SolverTimeout" xml:space="preserve">
+    <value>The solver was unable to calculate the flowsheet within the specified timeout limit.</value>
+  </data>
 </root>

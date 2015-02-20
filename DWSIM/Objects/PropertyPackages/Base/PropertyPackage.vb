@@ -213,7 +213,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     End If
                     cspath += Path.DirectorySeparatorChar + "pcd" + pathsep + "chemsep1.xml"
                 Catch ex As Exception
-                    Console.WriteLine(ex.ToString)
+                    WriteDebugInfo(ex.ToString)
                 Finally
                     If Not File.Exists(cspath) Then
                         cspath = My.Application.Info.DirectoryPath & pathsep & "chemsepdb" & pathsep & "chemsep1.xml"
@@ -228,7 +228,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Try
                     If File.Exists(My.Settings.ChemSepDatabasePath) Then Me.LoadCSDB(My.Settings.ChemSepDatabasePath)
                 Catch ex As Exception
-                    Console.WriteLine(ex.ToString)
+                    WriteDebugInfo(ex.ToString)
                 End Try
 
                 'load DWSIM XML database
@@ -236,7 +236,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Try
                     Me.LoadDWSIMDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "dwsim.xml")
                 Catch ex As Exception
-                    Console.WriteLine(ex.ToString)
+                    WriteDebugInfo(ex.ToString)
                 End Try
 
                 'load user databases
@@ -272,7 +272,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             End If
 
-                Initialize()
+            Initialize()
 
         End Sub
 
@@ -5022,6 +5022,18 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 #End Region
 
 #Region "   Commmon Functions"
+
+        Public Sub WriteDebugInfo(text As String)
+
+            Select Case My.Settings.DebugLevel
+                Case 0
+                    'do nothing
+                Case 1
+                    Console.WriteLine(text)
+                Case 2
+            End Select
+
+        End Sub
 
         Public Overloads Sub DW_CalcKvalue()
 

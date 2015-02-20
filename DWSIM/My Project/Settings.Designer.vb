@@ -457,6 +457,54 @@ Namespace My
                 Me("ServiceBusKey") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property DebugLevel() As Integer
+            Get
+                Return CType(Me("DebugLevel"),Integer)
+            End Get
+            Set
+                Me("DebugLevel") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property ServerIPAddress() As String
+            Get
+                Return CType(Me("ServerIPAddress"),String)
+            End Get
+            Set
+                Me("ServerIPAddress") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property ServerPort() As String
+            Get
+                Return CType(Me("ServerPort"),String)
+            End Get
+            Set
+                Me("ServerPort") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("360")>  _
+        Public Property SolverTimeoutSeconds() As Integer
+            Get
+                Return CType(Me("SolverTimeoutSeconds"),Integer)
+            End Get
+            Set
+                Me("SolverTimeoutSeconds") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
