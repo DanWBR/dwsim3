@@ -2847,6 +2847,7 @@ restart:            fx = Me.FunctionValue(xvar)
         Dim _condtype As DistillationColumn.condtype
         Dim llextr As Boolean = False
         Dim _Kval()() As Double
+        Dim _maxT, _maxvc, _maxlc As Double
 
         Public Function FunctionValue(ByVal x() As Double) As Double()
 
@@ -2895,11 +2896,12 @@ restart:            fx = Me.FunctionValue(xvar)
                 Array.Resize(Kval(i), nc)
             Next
 
+
             For i = 0 To ns
-                Tj(i) = x(i * (2 * nc + 1))
+                Tj(i) = x(i * (2 * nc + 1)) * _maxT
                 For j = 0 To nc - 1
-                    vc(i)(j) = x(i * (2 * nc + 1) + j + 1)
-                    lc(i)(j) = x(i * (2 * nc + 1) + j + 1 + nc)
+                    vc(i)(j) = x(i * (2 * nc + 1) + j + 1) * _maxvc
+                    lc(i)(j) = x(i * (2 * nc + 1) + j + 1 + nc) * _maxlc
                 Next
             Next
 
@@ -3749,17 +3751,25 @@ restart:            fx = Me.FunctionValue(xvar)
             _specs = specs
             _condtype = condt
 
+            _maxT = MathEx.Common.Max(Tj)
+            _maxvc = 0.0#
+            _maxlc = 0.0#
             For i = 0 To ns
-                xvar(i * (2 * nc + 1)) = Tj(i)
+                If MathEx.Common.Max(vc(i)) > _maxvc Then _maxvc = MathEx.Common.Max(vc(i))
+                If MathEx.Common.Max(lc(i)) > _maxlc Then _maxlc = MathEx.Common.Max(lc(i))
+            Next
+
+            For i = 0 To ns
+                xvar(i * (2 * nc + 1)) = Tj(i) / _maxT
                 For j = 0 To nc - 1
-                    xvar(i * (2 * nc + 1) + j + 1) = vc(i)(j)
-                    xvar(i * (2 * nc + 1) + j + 1 + nc) = lc(i)(j)
+                    xvar(i * (2 * nc + 1) + j + 1) = vc(i)(j) / _maxvc
+                    xvar(i * (2 * nc + 1) + j + 1 + nc) = lc(i)(j) / _maxlc
                 Next
             Next
 
             'first run (to initialize variables)
 
-            fxvar = Me.FunctionValue(xvar)
+            'fxvar = Me.FunctionValue(xvar)
 
             Dim jac As New Mapack.Matrix(xvar.Length, xvar.Length), hesm As New Mapack.Matrix(xvar.Length, xvar.Length)
 
@@ -3777,8 +3787,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If UseNewtonUpdate Then
                     dFdXvar = Me.FunctionGradient(xvar)
-                    Dim success As Boolean
-                    success = MathEx.SysLin.rsolve.rmatrixsolve(dFdXvar, fxvar, xvar.Length, dxvar)
+                    Dim success = MathEx.SysLin.rsolve.rmatrixsolve(dFdXvar, fxvar, xvar.Length, dxvar)
                     For i = 0 To xvar.Length - 1
                         dxvar(i) = -dxvar(i)
                     Next
@@ -3821,13 +3830,12 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 For i = 0 To xvar.Length - 1
                     If i = i * (2 * nc + 1) Then
-                        If Abs(dxvar(i) * df) > maxtc Then
+                        If Abs(dxvar(i) * df) > maxtc / _maxT Then
                             dampenT = True
+                            If tmultpl > maxtc / _maxT / Abs(dxvar(i) * df) Then tmultpl = maxtc / _maxT / Abs(dxvar(i) * df)
                         End If
                     End If
                 Next
-
-                If dampenT Then tmultpl = maxtc / MathEx.Common.Min(Tj)
 
                 For i = 0 To xvar.Length - 1
                     If xvar(i) + dxvar(i) * df < 0 Then
@@ -3836,7 +3844,6 @@ restart:            fx = Me.FunctionValue(xvar)
                         xvar(i) += dxvar(i) * df * tmultpl
                     End If
                 Next
-
 
                 ic += 1
 
@@ -3855,10 +3862,10 @@ restart:            fx = Me.FunctionValue(xvar)
             End If
 
             For i = 0 To ns
-                Tj(i) = xvar(i * (2 * nc + 1))
+                Tj(i) = xvar(i * (2 * nc + 1)) * _maxT
                 For j = 0 To nc - 1
-                    vc(i)(j) = xvar(i * (2 * nc + 1) + j + 1)
-                    lc(i)(j) = xvar(i * (2 * nc + 1) + j + 1 + nc)
+                    vc(i)(j) = xvar(i * (2 * nc + 1) + j + 1) * _maxvc
+                    lc(i)(j) = xvar(i * (2 * nc + 1) + j + 1 + nc) * _maxlc
                 Next
             Next
 

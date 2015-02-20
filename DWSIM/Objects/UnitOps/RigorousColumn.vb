@@ -3408,8 +3408,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         z(i)(j) = zm(j)
                     Next
                 Else
-                    x(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), pp)(2)
-                    y(i) = pp.FlashBase.Flash_PT(zm, P(i), T(i), pp)(3)
+                    Dim flashresult = pp.FlashBase.Flash_PT(zm, P(i), T(i), pp)
+                    If llextractor Then
+                        x(i) = flashresult(2)
+                        y(i) = flashresult(6)
+                    Else
+                        x(i) = flashresult(2)
+                        y(i) = flashresult(3)
+                    End If
                     z(i) = zm
                     For j = 0 To nc - 1
                         Kval(i)(j) = y(i)(j) / x(i)(j)
