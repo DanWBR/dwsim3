@@ -1408,11 +1408,12 @@ Namespace DWSIM.Flowsheet
                 ProcessQueueInternal(form, Isolated, FlowsheetSolverMode)
                 SolveSimultaneousAdjusts(form)
             ElseIf mode = 1 Then
-                'ProcessQueueInternalAsync(form, Isolated)
-                ProcessQueueInternalAsyncParallel(form, orderedlist)
+                If orderedlist Is Nothing Then
+                    ProcessQueueInternalAsync(form, Isolated)
+                Else
+                    ProcessQueueInternalAsyncParallel(form, orderedlist)
+                End If
                 SolveSimultaneousAdjustsAsync(form)
-            Else
-
             End If
 
         End Sub
@@ -1714,6 +1715,8 @@ Namespace DWSIM.Flowsheet
 
             Dim objargs As DWSIM.Outros.StatusChangeEventArgs = Nothing
 
+            Dim preLab As String = form.FormSurface.LabelCalculator.Text
+
             While Not converged
 
                 If My.MyApplication.MasterCalculatorStopRequested Then Exit While
@@ -1749,6 +1752,7 @@ Namespace DWSIM.Flowsheet
                         filteredlist2.Add(li.Key, objcalclist)
                     Next
                     Try
+                        form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
                         Dim t As New Task(Sub()
                                               If My.Settings.EnableParallelProcessing Then
                                                   ProcessCalculationQueue(form, True, True, 1, filteredlist2)
@@ -1782,6 +1786,7 @@ Namespace DWSIM.Flowsheet
             End While
 
             If mode = 1 Then
+                form.UpdateStatusLabel(prelab)
                 If age Is Nothing Then
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
                     form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & Format((Date.Now - d1).TotalSeconds, "0.##") & "s", Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
@@ -1789,7 +1794,7 @@ Namespace DWSIM.Flowsheet
                     age = age.Flatten()
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Red, FormClasses.TipoAviso.Erro)
                     For Each ex In age.InnerExceptions
-                        Dim st As New StackTrace(ex, True)
+                        Dim st As New StackTrace(ex.InnerException, True)
                         If st.FrameCount > 0 Then
                             form.WriteToLog(ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
                         Else
@@ -1800,7 +1805,6 @@ Namespace DWSIM.Flowsheet
                 End If
             End If
 
-         
             objstack.Clear()
             lists.Clear()
             recycles.Clear()
