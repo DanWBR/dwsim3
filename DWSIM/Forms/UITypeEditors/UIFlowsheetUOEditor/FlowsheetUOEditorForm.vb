@@ -26,7 +26,16 @@ Public Class FlowsheetUOEditorForm
 
     Private Sub btnInitialize_Click(sender As Object, e As EventArgs) Handles btnInitialize.Click
 
-        fsuo.InitializeFlowsheet(fsuo.SimulationFile)
+        Try
+            fsuo.Fsheet = DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(fsuo.SimulationFile)
+            fsuo.Initialized = True
+        Catch ex As AggregateException
+            fsuo.FlowSheet.WriteToLog("Some errors where found while parsing the XML file. The simulation might not work as expected. Please read the subsequent messages for more details.", Color.DarkRed, DWSIM.FormClasses.TipoAviso.Erro)
+            fsuo.FlowSheet.WriteToLog(ex.Message.ToString & ": " & ex.InnerException.ToString, Color.DarkRed, DWSIM.FormClasses.TipoAviso.Erro)
+            fsuo.Fsheet.Dispose()
+            fsuo.Fsheet = Nothing
+            fsuo.Initialized = False
+        End Try
 
         If fsuo.Initialized Then
             btnInitialize.Enabled = True

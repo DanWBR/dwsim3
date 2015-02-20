@@ -112,18 +112,21 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Sub
 
-        Public Sub InitializeFlowsheet(path As String)
+        Public Shared Function InitializeFlowsheet(path As String) As FormFlowsheet
+            Return InitializeFlowsheetInternal(XDocument.Load(path))
+        End Function
 
-            If Not Fsheet Is Nothing Then
-                Fsheet.Dispose()
-                Fsheet = Nothing
-            End If
+        Public Shared Function InitializeFlowsheet(stream As IO.Stream) As FormFlowsheet
+            Using stream
+                Return InitializeFlowsheetInternal(XDocument.Load(stream))
+            End Using
+        End Function
+
+        Private Shared Function InitializeFlowsheetInternal(xdoc As XDocument) As FormFlowsheet
 
             Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
             Dim excs As New List(Of Exception)
-
-            Dim xdoc As XDocument = XDocument.Load(path)
 
             Dim form As FormFlowsheet = New FormFlowsheet()
 
@@ -691,19 +694,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 excs.Add(New Exception("Error Restoring Window Layout", ex))
             End Try
 
-            If excs.Count > 0 Then
-                Me.FlowSheet.WriteToLog("Some errors where found while parsing the XML file. The simulation might not work as expected. Please read the subsequent messages for more details.", Color.DarkRed, FormClasses.TipoAviso.Erro)
-                For Each ex As Exception In excs
-                    Me.FlowSheet.WriteToLog(ex.Message.ToString & ": " & ex.InnerException.ToString, Color.DarkRed, FormClasses.TipoAviso.Erro)
-                Next
-                form.Dispose()
-                Initialized = False
-            Else
-                fsheet = form
-                Initialized = True
-            End If
+            If excs.Count > 0 Then Throw New AggregateException(excs).Flatten Else Return form
 
-        End Sub
+        End Function
 
         Public Sub UpdateProcessData(path As String)
 
@@ -1294,7 +1287,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             ParseFilePath()
 
             If InitializeOnLoad Then
-                If IO.File.Exists(SimulationFile) Then InitializeFlowsheet(SimulationFile)
+                If IO.File.Exists(SimulationFile) Then Me.Fsheet = InitializeFlowsheet(SimulationFile)
             End If
 
             Dim i As Integer
