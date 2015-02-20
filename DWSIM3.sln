@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DWSIM", "DWSIM\DWSIM.vbproj", "{34BE2D2D-9B3C-4C12-8C90-732E21CD7CB1}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -19,6 +19,10 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CustomXMLSerializer", "CustomXMLSerializer\CustomXMLSerializer.vbproj", "{6C232866-A87B-409A-8A02-39F2FF218561}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolPropInterface", "CoolPropInterface\CoolPropInterface.csproj", "{A5F6E7CC-0710-4129-9FAA-9FBE9BC4FFCF}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AzureServer", "AzureServer\AzureServer.vbproj", "{A7FB4DBF-4EBF-4004-9819-F26E791AAA60}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TCPServer", "TCPServer\TCPServer.vbproj", "{DBB0E704-7E7B-4DDA-AAC2-A00F7168FDC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -110,6 +114,26 @@ Global
 		{A5F6E7CC-0710-4129-9FAA-9FBE9BC4FFCF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A5F6E7CC-0710-4129-9FAA-9FBE9BC4FFCF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A5F6E7CC-0710-4129-9FAA-9FBE9BC4FFCF}.Release|x86.ActiveCfg = Release|Any CPU
+		{A7FB4DBF-4EBF-4004-9819-F26E791AAA60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7FB4DBF-4EBF-4004-9819-F26E791AAA60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7FB4DBF-4EBF-4004-9819-F26E791AAA60}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A7FB4DBF-4EBF-4004-9819-F26E791AAA60}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A7FB4DBF-4EBF-4004-9819-F26E791AAA60}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A7FB4DBF-4EBF-4004-9819-F26E791AAA60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7FB4DBF-4EBF-4004-9819-F26E791AAA60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7FB4DBF-4EBF-4004-9819-F26E791AAA60}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A7FB4DBF-4EBF-4004-9819-F26E791AAA60}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A7FB4DBF-4EBF-4004-9819-F26E791AAA60}.Release|x86.ActiveCfg = Release|Any CPU
+		{DBB0E704-7E7B-4DDA-AAC2-A00F7168FDC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBB0E704-7E7B-4DDA-AAC2-A00F7168FDC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBB0E704-7E7B-4DDA-AAC2-A00F7168FDC3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DBB0E704-7E7B-4DDA-AAC2-A00F7168FDC3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DBB0E704-7E7B-4DDA-AAC2-A00F7168FDC3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DBB0E704-7E7B-4DDA-AAC2-A00F7168FDC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBB0E704-7E7B-4DDA-AAC2-A00F7168FDC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBB0E704-7E7B-4DDA-AAC2-A00F7168FDC3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DBB0E704-7E7B-4DDA-AAC2-A00F7168FDC3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DBB0E704-7E7B-4DDA-AAC2-A00F7168FDC3}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
