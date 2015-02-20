@@ -147,7 +147,7 @@
       <HintPath>References\CapeOpen.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Ciloci.Flee, Version=0.9.14.0, Culture=neutral, PublicKeyToken=c8526a021ef298ed, processorArchitecture=MSIL">
+    <Reference Include="Ciloci.Flee, Version=0.9.26.0, Culture=neutral, PublicKeyToken=c8526a021ef298ed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\Ciloci.Flee.dll</HintPath>
     </Reference>
@@ -294,6 +294,11 @@
     <Reference Include="TabStrip, Version=2.0.2773.39305, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\TabStrip.dll</HintPath>
+    </Reference>
+    <Reference Include="TcpComm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\TCPServer\References\TcpComm.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="VBIDEApi">
       <HintPath>References\VBIDEApi.dll</HintPath>

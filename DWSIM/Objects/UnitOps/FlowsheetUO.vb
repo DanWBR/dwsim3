@@ -696,6 +696,53 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Function
 
+        Public Shared Function UpdateProcessData(form As FormFlowsheet, xdoc As XDocument)
+
+            Dim ci As CultureInfo = CultureInfo.InvariantCulture
+            Dim excs As New List(Of Exception)
+
+            Dim data As List(Of XElement)
+
+            data = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
+
+            'For Each xel As XElement In data
+            '    Try
+            '        Dim obj As GraphicObject = Nothing
+            '        Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
+            '        If Not t Is Nothing Then obj = Activator.CreateInstance(t)
+            '        If obj Is Nothing Then
+            '            obj = GraphicObject.ReturnInstance(xel.Element("Type").Value)
+            '        End If
+            '        obj.LoadData(xel.Elements.ToList)
+            '        If Not TypeOf obj Is DWSIM.GraphicObjects.TableGraphic Then
+            '            form.FormSurface.FlowsheetDesignSurface.drawingObjects.Add(obj)
+            '            obj.CreateConnectors(0, 0)
+            '            With form.Collections
+            '            End With
+            '        End If
+            '    Catch ex As Exception
+            '        excs.Add(New Exception("Error Loading Flowsheet Graphic Objects", ex))
+            '    End Try
+            'Next
+
+
+            data = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects").Elements.ToList
+
+            For Each xel As XElement In data
+                Try
+                    Dim id As String = xel.<Nome>.Value
+                    Dim obj = form.Collections.ObjectCollection(id)
+                    obj.LoadData(xel.Elements.ToList)
+                    obj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                 Catch ex As Exception
+                    excs.Add(New Exception("Error Loading Unit Operation Information", ex))
+                End Try
+            Next
+
+            If excs.Count > 0 Then Throw New AggregateException(excs).Flatten Else Return form
+
+        End Function
+
         Public Shared Function ReturnProcessData(Form As FormFlowsheet) As IO.MemoryStream
 
             Dim xdoc As New XDocument()
