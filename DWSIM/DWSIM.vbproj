@@ -928,10 +928,12 @@
     <Compile Include="Objects\PropertyPackages\SRK\SRKPropertyPackage.vb" />
     <Compile Include="Objects\Classes\Shared\Shared Functions.vb" />
     <Compile Include="Objects\Classes\Optimization\SensitivityAnalysis.vb" />
+    <Compile Include="Solvers\AzureSolverClient.vb" />
     <Compile Include="Solvers\CommandLineProcessor.vb" />
     <Compile Include="Solvers\FlowsheetSolver.vb" />
     <Compile Include="Solvers\RigorousColumnSolver.vb" />
     <Compile Include="Objects\Classes\PetroleumAssay\AssayClass.vb" />
+    <Compile Include="Solvers\TCPSolverClient.vb" />
     <Compile Include="Tools\AssayManager\FormAssayManager.Designer.vb">
       <DependentUpon>FormAssayManager.vb</DependentUpon>
     </Compile>

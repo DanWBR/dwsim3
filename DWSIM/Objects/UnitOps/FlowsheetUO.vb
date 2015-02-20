@@ -117,9 +117,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Function
 
         Public Shared Function InitializeFlowsheet(stream As IO.Stream) As FormFlowsheet
-            Using stream
-                Return InitializeFlowsheetInternal(XDocument.Load(stream))
-            End Using
+            Return InitializeFlowsheetInternal(XDocument.Load(stream))
         End Function
 
         Private Shared Function InitializeFlowsheetInternal(xdoc As XDocument) As FormFlowsheet
@@ -698,6 +696,36 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Function
 
+        Public Shared Function ReturnProcessData(Form As FormFlowsheet) As IO.MemoryStream
+
+            Dim xdoc As New XDocument()
+            Dim xel As XElement
+
+            Dim ci As CultureInfo = CultureInfo.InvariantCulture
+
+            xdoc.Add(New XElement("DWSIM_Simulation_Data"))
+
+            xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("SimulationObjects"))
+            xel = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects")
+
+            For Each so As SimulationObjects_BaseClass In Form.Collections.ObjectCollection.Values
+                xel.Add(New XElement("SimulationObject", {so.SaveData().ToArray()}))
+            Next
+
+            xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GraphicObjects"))
+            xel = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects")
+
+            For Each go As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject In Form.FormSurface.FlowsheetDesignSurface.drawingObjects
+                If Not go.IsConnector Then xel.Add(New XElement("GraphicObject", go.SaveData().ToArray()))
+            Next
+
+            Dim bytestream As New IO.MemoryStream()
+            xdoc.Save(bytestream)
+
+            Return bytestream
+
+        End Function
+
         Public Sub UpdateProcessData(path As String)
 
             Try
@@ -730,7 +758,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": " & DWSIM.App.GetLocalString("SubFSUpdateFailed") & " " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
 
             End Try
-       
+
 
         End Sub
 
@@ -1038,7 +1066,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Function
 
         Public Overrides Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
-           
+
             Dim pkey As String = prop.Split("][")(1).TrimStart("[").TrimEnd("]")
 
             Try
