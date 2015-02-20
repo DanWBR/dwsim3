@@ -5003,4 +5003,40 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SolverTimeout" xml:space="preserve">
     <value>Der solver konnte die fließbild innerhalb des festgelegten zeitlimits zu berechnen.</value>
   </data>
+  <data name="RecycleMaxItsReached" xml:space="preserve">
+    <value>Maximale Anzahl an Iterationen erreicht, ohne zu konvergieren.</value>
+  </data>
+  <data name="ClientConnected" xml:space="preserve">
+    <value>Connected to the network server.</value>
+  </data>
+  <data name="ClientConnectingError" xml:space="preserve">
+    <value>Error connecting to the server</value>
+  </data>
+  <data name="ClientDataProcessingError" xml:space="preserve">
+    <value>Error processing incoming data from server</value>
+  </data>
+  <data name="ClientMessageFromServer" xml:space="preserve">
+    <value>Server message</value>
+  </data>
+  <data name="ClientSavingTempFile" xml:space="preserve">
+    <value>Saving temporary file to send to server...</value>
+  </data>
+  <data name="ClientSendDataError" xml:space="preserve">
+    <value>Error sending data to server</value>
+  </data>
+  <data name="ClientSendingData" xml:space="preserve">
+    <value>Sending data to server...</value>
+  </data>
+  <data name="ClientSentDataOK" xml:space="preserve">
+    <value>Data successfully sent to server.</value>
+  </data>
+  <data name="ClientUpdatedDataOK" xml:space="preserve">
+    <value>Update finished.</value>
+  </data>
+  <data name="ClientUpdatingData" xml:space="preserve">
+    <value>Updating flowsheet data...</value>
+  </data>
+  <data name="ClientWaitingForResults" xml:space="preserve">
+    <value>Waiting for results from server run....</value>
+  </data>
 </root>

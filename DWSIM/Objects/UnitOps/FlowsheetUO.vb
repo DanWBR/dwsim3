@@ -706,26 +706,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             data = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
 
-            'For Each xel As XElement In data
-            '    Try
-            '        Dim obj As GraphicObject = Nothing
-            '        Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
-            '        If Not t Is Nothing Then obj = Activator.CreateInstance(t)
-            '        If obj Is Nothing Then
-            '            obj = GraphicObject.ReturnInstance(xel.Element("Type").Value)
-            '        End If
-            '        obj.LoadData(xel.Elements.ToList)
-            '        If Not TypeOf obj Is DWSIM.GraphicObjects.TableGraphic Then
-            '            form.FormSurface.FlowsheetDesignSurface.drawingObjects.Add(obj)
-            '            obj.CreateConnectors(0, 0)
-            '            With form.Collections
-            '            End With
-            '        End If
-            '    Catch ex As Exception
-            '        excs.Add(New Exception("Error Loading Flowsheet Graphic Objects", ex))
-            '    End Try
-            'Next
-
+            For Each xel As XElement In data
+                Try
+                    Dim id As String = xel.<Name>.Value
+                    If form.Collections.ObjectCollection.ContainsKey(id) Then
+                        Dim obj = form.Collections.ObjectCollection(id).GraphicObject
+                        obj.LoadData(xel.Elements.ToList)
+                    End If
+                Catch ex As Exception
+                    excs.Add(New Exception("Error Loading Flowsheet Graphic Objects", ex))
+                End Try
+            Next
 
             data = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects").Elements.ToList
 

@@ -1810,7 +1810,7 @@ Namespace DWSIM.Flowsheet
 
             End Select
 
-            If mode = 1 Then
+            If mode > 0 Then
                 form.UpdateStatusLabel(preLab)
                 If age Is Nothing Then
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)

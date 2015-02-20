@@ -28,48 +28,66 @@ Namespace DWSIM.Flowsheet
         Public client As TcpComm.Client
         Public lat As TcpComm.Utilities.LargeArrayTransferHelper
 
+        Dim fsheet As FormFlowsheet
+
         Dim results As Byte()
 
         Public Sub SolveFlowsheet(fs As FormFlowsheet)
 
+            fsheet = fs
+
             Dim errMsg As String = ""
 
-            client = New TcpComm.Client(AddressOf Update, True, 15)
+            client = New TcpComm.Client(AddressOf Update, True, 30)
 
             If client.Connect(My.Settings.ServerIPAddress, My.Settings.ServerPort, My.User.Name & "@" & My.Computer.Name, errMsg) Then
 
+                fs.WriteToLog(DWSIM.App.GetLocalString("ClientConnected"), Color.Brown, FormClasses.TipoAviso.Informacao)
+
                 Dim tmpfile As String = My.Computer.FileSystem.GetTempFileName
 
-                FormMain.SaveXML(tmpfile, fs)
+                fs.WriteToLog(DWSIM.App.GetLocalString("ClientSavingTempFile"), Color.Brown, FormClasses.TipoAviso.Informacao)
+
+                FormMain.SaveXML(tmpfile, fs, tmpfile)
 
                 results = Nothing
 
                 lat = New TcpComm.Utilities.LargeArrayTransferHelper(client)
 
-                lat.SendArray(IO.File.ReadAllBytes(tmpfile), 1)
+                fs.WriteToLog(DWSIM.App.GetLocalString("ClientSendingData"), Color.Brown, FormClasses.TipoAviso.Informacao)
+
+                If Not lat.SendArray(IO.File.ReadAllBytes(tmpfile), 100, errMsg) Then
+                    If errMsg.Trim <> "" Then fs.WriteToLog(DWSIM.App.GetLocalString("ClientSendDataError") & ": " & errMsg, Color.Red, FormClasses.TipoAviso.Erro)
+                End If
+
+                fs.WriteToLog(DWSIM.App.GetLocalString("ClientSentDataOK"), Color.Brown, FormClasses.TipoAviso.Informacao)
 
                 File.Delete(tmpfile)
 
                 Dim time As Integer = 0
                 Dim sleeptime As Integer = 1
                 While results Is Nothing
-                    Thread.Sleep(sleeptime * 1000)
+                    Thread.Sleep(sleeptime * 2000)
                     Application.DoEvents()
-                    time += sleeptime
+                    time += sleeptime * 2
                     If time >= My.Settings.SolverTimeoutSeconds Then Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
+                    fs.WriteToLog(DWSIM.App.GetLocalString("ClientWaitingForResults"), Color.Brown, FormClasses.TipoAviso.Informacao)
                 End While
 
-                Using ms As New MemoryStream(results)
-
-                    Dim xdoc As XDocument = XDocument.Load(ms)
-
-                    DWSIM.SimulationObjects.UnitOps.Flowsheet.UpdateProcessData(fs, xdoc)
-
-                End Using
+                Try
+                    Using ms As New MemoryStream(results)
+                        Dim xdoc As XDocument = XDocument.Load(ms)
+                        fs.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatingData"), Color.Brown, FormClasses.TipoAviso.Informacao)
+                        DWSIM.SimulationObjects.UnitOps.Flowsheet.UpdateProcessData(fs, xdoc)
+                        fs.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatedDataOK"), Color.Brown, FormClasses.TipoAviso.Informacao)
+                    End Using
+                Catch ex As Exception
+                    fs.WriteToLog(DWSIM.App.GetLocalString("ClientDataProcessingError") & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                End Try
 
             Else
 
-                If errMsg.Trim <> "" Then MsgBox(errMsg)
+                If errMsg.Trim <> "" Then fs.WriteToLog(DWSIM.App.GetLocalString("ClientConnectingError") & ": " & errMsg, Color.Red, FormClasses.TipoAviso.Erro)
 
             End If
 
@@ -83,37 +101,25 @@ Namespace DWSIM.Flowsheet
             ' on any channel we choose to evaluate, and pass it back to this callback
             ' when it is complete. Returns True if it has handled this incomming packet,
             ' so we exit the callback when it returns true.
-            If Not lat Is Nothing AndAlso lat.HandleIncomingBytes(bytes, dataChannel, , {100, 100}) Then Return
+            If Not lat Is Nothing AndAlso lat.HandleIncomingBytes(bytes, 100) Then Return
 
-            ' We're on the main UI thread now.
-            Dim dontReport As Boolean = False
-
-            If dataChannel < 251 Then
+            If dataChannel = 100 Then
 
                 ' This is a large array delivered by LAT. Display it in the 
                 ' large transfer viewer form.
                 results = bytes
 
+                If client.isClientRunning Then client.Close()
+
             ElseIf dataChannel = 255 Then
 
                 Dim msg As String = TcpComm.Utilities.BytesToString(bytes)
-                Dim tmp As String = ""
+                If Not fsheet Is Nothing Then fsheet.WriteToLog(DWSIM.App.GetLocalString("ClientMessageFromServer") & ": " & msg, Color.Brown, FormClasses.TipoAviso.Informacao)
 
-                ' _Client as finished sending the bytes you put into sendBytes()
-                If msg.Length > 4 Then tmp = msg.Substring(0, 4)
-                If tmp = "UBS:" Then ' User Bytes Sent on channel:???.
-                End If
+            ElseIf dataChannel = 2 Then
 
-                ' We have an error message. Could be local, or from the server.
-                If msg.Length > 4 Then tmp = msg.Substring(0, 5)
-                If tmp = "ERR: " Then
-                    Dim msgParts() As String
-                    msgParts = Split(msg, ": ")
-                    MsgBox("" & msgParts(1), MsgBoxStyle.Critical, "Test Tcp Communications App")
-                    dontReport = True
-                End If
-
-                'If msg.Equals("Disconnected.") Then Me.Button2.Text = "Connect"
+                Dim msg As String = TcpComm.Utilities.BytesToString(bytes)
+                If Not fsheet Is Nothing Then fsheet.WriteToLog(DWSIM.App.GetLocalString("ClientMessageFromServer") & ": " & msg, Color.Brown, FormClasses.TipoAviso.Informacao)
 
             End If
 

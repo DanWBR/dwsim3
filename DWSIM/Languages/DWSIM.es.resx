@@ -4980,4 +4980,40 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SolverTimeout" xml:space="preserve">
     <value>O calculador não conseguiu resolver o fluxograma dentro do tempo de espera máximo definido.</value>
   </data>
+  <data name="RecycleMaxItsReached" xml:space="preserve">
+    <value>Se alcanzó el número máximo de iteraciones, sin converger.</value>
+  </data>
+  <data name="ClientConnected" xml:space="preserve">
+    <value>Conectado ao servidor na rede.</value>
+  </data>
+  <data name="ClientConnectingError" xml:space="preserve">
+    <value>Erro na conexão com o servidor</value>
+  </data>
+  <data name="ClientDataProcessingError" xml:space="preserve">
+    <value>Erro processando dados enviados pelo servidor</value>
+  </data>
+  <data name="ClientMessageFromServer" xml:space="preserve">
+    <value>Mensagem do servidor</value>
+  </data>
+  <data name="ClientSavingTempFile" xml:space="preserve">
+    <value>Salvando arquivo temporário para envio ao servidor...</value>
+  </data>
+  <data name="ClientSendDataError" xml:space="preserve">
+    <value>Erro ao enviar dados para o servidor</value>
+  </data>
+  <data name="ClientSendingData" xml:space="preserve">
+    <value>Enviando dados para o servidor...</value>
+  </data>
+  <data name="ClientSentDataOK" xml:space="preserve">
+    <value>Dados enviados com sucesso ao servidor.</value>
+  </data>
+  <data name="ClientUpdatedDataOK" xml:space="preserve">
+    <value>Atualização concluída.</value>
+  </data>
+  <data name="ClientUpdatingData" xml:space="preserve">
+    <value>Atualizando dados do fluxograma...</value>
+  </data>
+  <data name="ClientWaitingForResults" xml:space="preserve">
+    <value>Aguardando resultados do servidor...</value>
+  </data>
 </root>

@@ -24,7 +24,7 @@ Module TCPServer
 
     Private server As TcpComm.Server
     Private lat As TcpComm.Utilities.LargeArrayTransferHelper
-
+  
     Sub Main(args As String())
 
         server = New TcpComm.Server(AddressOf Process)
@@ -46,28 +46,22 @@ Module TCPServer
         ' on any channel or from any sessionId, and pass them back to this callback
         ' when they are complete. Returns True if it has handled this incomming packet,
         ' so we exit the callback when it returns true.
-        If lat.HandleIncomingBytes(bytes, dataChannel, sessionID) Then Return
+        If lat.HandleIncomingBytes(bytes, 100, sessionID) Then Return
 
-        If dataChannel < 251 Then
+        If dataChannel = 100 Then
+
+            Dim errmsg As String = ""
 
             Console.WriteLine("Data received from " & server.GetSession(sessionID).machineId & ", flowsheet solving started!")
+            If Not server.SendText("Data received from " & server.GetSession(sessionID).machineId & ", flowsheet solving started!", 2, sessionID, errmsg) Then
+                Console.WriteLine(errmsg)
+            End If
 
-            Try
-                'Task.Factory.StartNew(Sub()
-                Using bytestream As New MemoryStream(bytes)
-                    Dim errmsg As String = ""
-                    Dim form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
-                    DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 1)
-                    Dim retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
-                    lat.SendArray(retbytes.ToArray, dataChannel, sessionID, errmsg)
-                End Using
-                'End Sub)
-            Catch ex As Exception
-                Console.WriteLine("Error solving flowsheet: " & ex.ToString)
-            Finally
-                Console.WriteLine("Closing current session with " & server.GetSession(sessionID).machineId & ".")
-                server.GetSession(sessionID).Close()
-            End Try
+            Task.Factory.StartNew(Sub()
+                                      ProcessData(bytes, sessionID, dataChannel)
+                                  End Sub).ContinueWith(Sub()
+                                                            server.GetSession(sessionID).Close()
+                                                        End Sub)
 
         ElseIf dataChannel = 255 Then
 
@@ -83,18 +77,31 @@ Module TCPServer
 
     End Sub
 
-    Private Sub UpdateClientsList()
-
-        Dim sessionList As List(Of TcpComm.Server.SessionCommunications) = server.GetSessionCollection()
-
-        For Each session As TcpComm.Server.SessionCommunications In sessionList
-            If session.IsRunning Then
-                'lvi = New ListViewItem(" Connected", 0, lvClients.Groups.Item(0))
-            Else
-                ' lvi = New ListViewItem(" Disconnected", 1, lvClients.Groups.Item(1))
+    Sub ProcessData(bytes As Byte(), sessionid As Integer, datachannel As Byte)
+        Dim errmsg As String = ""
+        Try
+            Using bytestream As New MemoryStream(bytes)
+                Dim form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
+                DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 1)
+                Dim retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
+                lat.SendArray(retbytes.ToArray, 100, sessionid, errmsg)
+                Console.WriteLine("Byte array length: " & retbytes.Length)
+            End Using
+        Catch ex As Exception
+            Console.WriteLine("Error solving flowsheet: " & ex.ToString)
+            errmsg = ""
+            If Not server.SendText("Error solving flowsheet: " & ex.ToString, 2, sessionid, errmsg) Then
+                Console.WriteLine(errmsg)
             End If
-        Next
+        Finally
+            Console.WriteLine("Closing current session with " & server.GetSession(sessionid).machineId & ".")
+            errmsg = ""
+            If Not server.SendText("Closing current session with " & server.GetSession(sessionid).machineId & ".", 2, sessionid, errmsg) Then
+                Console.WriteLine(errmsg)
+            End If
+        End Try
 
     End Sub
+
 
 End Module

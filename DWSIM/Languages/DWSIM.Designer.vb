@@ -1469,6 +1469,105 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Conectado ao servidor na rede..
+        '''</summary>
+        Friend Shared ReadOnly Property ClientConnected() As String
+            Get
+                Return ResourceManager.GetString("ClientConnected", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Erro na conexão com o servidor.
+        '''</summary>
+        Friend Shared ReadOnly Property ClientConnectingError() As String
+            Get
+                Return ResourceManager.GetString("ClientConnectingError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Erro processando dados enviados pelo servidor.
+        '''</summary>
+        Friend Shared ReadOnly Property ClientDataProcessingError() As String
+            Get
+                Return ResourceManager.GetString("ClientDataProcessingError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Mensagem do servidor.
+        '''</summary>
+        Friend Shared ReadOnly Property ClientMessageFromServer() As String
+            Get
+                Return ResourceManager.GetString("ClientMessageFromServer", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Salvando arquivo temporário para envio ao servidor....
+        '''</summary>
+        Friend Shared ReadOnly Property ClientSavingTempFile() As String
+            Get
+                Return ResourceManager.GetString("ClientSavingTempFile", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Erro ao enviar dados para o servidor.
+        '''</summary>
+        Friend Shared ReadOnly Property ClientSendDataError() As String
+            Get
+                Return ResourceManager.GetString("ClientSendDataError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Enviando dados para o servidor....
+        '''</summary>
+        Friend Shared ReadOnly Property ClientSendingData() As String
+            Get
+                Return ResourceManager.GetString("ClientSendingData", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Dados enviados com sucesso ao servidor..
+        '''</summary>
+        Friend Shared ReadOnly Property ClientSentDataOK() As String
+            Get
+                Return ResourceManager.GetString("ClientSentDataOK", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Atualização concluída..
+        '''</summary>
+        Friend Shared ReadOnly Property ClientUpdatedDataOK() As String
+            Get
+                Return ResourceManager.GetString("ClientUpdatedDataOK", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Atualizando dados do fluxograma....
+        '''</summary>
+        Friend Shared ReadOnly Property ClientUpdatingData() As String
+            Get
+                Return ResourceManager.GetString("ClientUpdatingData", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Aguardando resultados do servidor....
+        '''</summary>
+        Friend Shared ReadOnly Property ClientWaitingForResults() As String
+            Get
+                Return ResourceManager.GetString("ClientWaitingForResults", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Clique em OK para limpar a malha.
         '''</summary>
         Friend Shared ReadOnly Property CliqueemOKparalimparamalha() As String
@@ -11269,6 +11368,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Recomendadoparausoco2() As String
             Get
                 Return ResourceManager.GetString("Recomendadoparausoco2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to O Reciclo atingiu o número máximo de iterações sem convergir..
+        '''</summary>
+        Friend Shared ReadOnly Property RecycleMaxItsReached() As String
+            Get
+                Return ResourceManager.GetString("RecycleMaxItsReached", resourceCulture)
             End Get
         End Property
         

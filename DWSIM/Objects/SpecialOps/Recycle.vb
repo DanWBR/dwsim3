@@ -464,14 +464,7 @@ SS:             Tnew = Me.ConvergenceHistory.Temperatura
             End If
 
             If Me.IterationCount >= Me.MaximumIterations Then
-                Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Onmeromximodeiteraes"), _
-                                Me.GraphicObject.Tag & " - " & DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"), _
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                If msgres = MsgBoxResult.No Then
-                    GoTo final
-                Else
-                    Me.IterationCount = 0
-                End If
+                Throw New TimeoutException(DWSIM.App.GetLocalString("RecycleMaxItsReached"))
             End If
 
             Me.IterationCount += 1
