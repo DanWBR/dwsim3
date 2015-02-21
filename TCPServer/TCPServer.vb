@@ -84,13 +84,22 @@ Module TCPServer
                 Dim form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
                 DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 1)
                 Dim retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
-                lat.SendArray(retbytes.ToArray, 100, sessionid, errmsg)
-                Console.WriteLine("Byte array length: " & retbytes.Length)
+                Using retbytes
+                    Dim uncompressedbytes As Byte() = retbytes.ToArray
+                    Using compressedstream As New MemoryStream()
+                        Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
+                            gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
+                            gzs.Close()
+                            lat.SendArray(compressedstream.ToArray, 100, sessionid, errmsg)
+                            Console.WriteLine("Byte array length: " & compressedstream.Length)
+                        End Using
+                    End Using
+                End Using
             End Using
         Catch ex As Exception
             Console.WriteLine("Error solving flowsheet: " & ex.ToString)
             errmsg = ""
-            If Not server.SendText("Error solving flowsheet: " & ex.ToString, 2, sessionid, errmsg) Then
+            If Not server.SendText("Error solving flowsheet: " & ex.ToString, 3, sessionid, errmsg) Then
                 Console.WriteLine(errmsg)
             End If
         Finally

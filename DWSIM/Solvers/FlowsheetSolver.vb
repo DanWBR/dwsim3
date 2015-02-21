@@ -1820,10 +1820,9 @@ Namespace DWSIM.Flowsheet
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
                     form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & Format((Date.Now - d1).TotalSeconds, "0.##") & "s", Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
                 Else
-                    age = age.Flatten()
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Red, FormClasses.TipoAviso.Erro)
                     For Each ex In age.InnerExceptions
-                        Dim st As New StackTrace(ex.InnerException, True)
+                        Dim st As New StackTrace(ex, True)
                         If st.FrameCount > 0 Then
                             form.WriteToLog(ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
                         Else

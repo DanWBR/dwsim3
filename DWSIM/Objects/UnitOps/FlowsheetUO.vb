@@ -26,6 +26,7 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 Imports Microsoft.Msdn.Samples
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.Outros
+Imports System.IO
 
 Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary
 
@@ -116,8 +117,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Return InitializeFlowsheetInternal(XDocument.Load(path))
         End Function
 
-        Public Shared Function InitializeFlowsheet(stream As IO.Stream) As FormFlowsheet
-            Return InitializeFlowsheetInternal(XDocument.Load(stream))
+        Public Shared Function InitializeFlowsheet(compressedstream As MemoryStream) As FormFlowsheet
+            Using decompressedstream As New IO.MemoryStream
+                compressedstream.Position = 0
+                Using gzs As New IO.BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Decompress, True), 64 * 1024)
+                    gzs.CopyTo(decompressedstream)
+                    gzs.Close()
+                    decompressedstream.Position = 0
+                    Return InitializeFlowsheetInternal(XDocument.Load(decompressedstream))
+                End Using
+            End Using
         End Function
 
         Private Shared Function InitializeFlowsheetInternal(xdoc As XDocument) As FormFlowsheet

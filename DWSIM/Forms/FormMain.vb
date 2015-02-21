@@ -2856,7 +2856,7 @@ Public Class FormMain
 
         xdoc.Save(path)
 
-        If Not IO.Path.GetExtension(path).ToLower.Contains("dwbcs") Then
+        If IO.Path.GetExtension(path).ToLower.Contains("dwxml") Or IO.Path.GetExtension(path).ToLower.Contains("dwxmz") Then
             Me.UIThread(New Action(Sub()
                                        Dim mypath As String = simulationfilename
                                        If mypath = "" Then mypath = [path]
