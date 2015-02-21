@@ -48,7 +48,7 @@ Namespace DWSIM.Flowsheet
 
                 fs.WriteToLog(DWSIM.App.GetLocalString("ClientSavingTempFile"), Color.Brown, FormClasses.TipoAviso.Informacao)
 
-                FormMain.SaveXML(tmpfile, fs, tmpfile)
+                FormMain.SaveXML(tmpfile, fs)
 
                 results = Nothing
 

@@ -725,6 +725,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim id As String = xel.<Nome>.Value
                     Dim obj = form.Collections.ObjectCollection(id)
                     obj.LoadData(xel.Elements.ToList)
+                    If TypeOf obj Is Streams.MaterialStream Then
+                        For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
+                            For Each c As ConstantProperties In form.Options.SelectedComponents.Values
+                                phase.Componentes(c.Name).ConstantProperties = c
+                            Next
+                        Next
+                    End If
                     obj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                  Catch ex As Exception
                     excs.Add(New Exception("Error Loading Unit Operation Information", ex))

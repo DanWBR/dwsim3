@@ -1524,7 +1524,9 @@ Namespace DWSIM.Flowsheet
                     Else
                         CalculateFlowsheetAsync(form, myinfo, Nothing, Isolated)
                     End If
+                    form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
                 Catch ex As Exception
+                    form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = False
                     allex.Add(New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex))
                 End Try
 
@@ -1564,7 +1566,9 @@ Namespace DWSIM.Flowsheet
                                                    Else
                                                        CalculateFlowsheetAsync(form, myinfo, Nothing, True)
                                                    End If
+                                                   form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
                                                Catch ex As Exception
+                                                   form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = False
                                                    allex.Add(New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex))
                                                End Try
                                            End Sub)

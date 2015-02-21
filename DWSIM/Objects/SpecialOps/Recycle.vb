@@ -45,11 +45,10 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
         Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
 
-            MyBase.LoadData(data)
-
             Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
 
             MyBase.LoadData(data)
+
             Dim xel As XElement
 
             xel = (From xel2 As XElement In data Select xel2 Where xel2.Name = "WegPars").SingleOrDefault
@@ -869,29 +868,13 @@ Namespace DWSIM.SimulationObjects.SpecialOps.Helpers.Recycle
 
         Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
 
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
+
         End Function
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
 
-            Dim elements As New List(Of System.Xml.Linq.XElement)
-            Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
-
-            With elements
-
-                Dim fields As Reflection.FieldInfo() = Me.GetType.GetFields()
-                For Each fi As Reflection.FieldInfo In fields
-                    If TypeOf Me.GetType.GetField(fi.Name).FieldType Is IList Then
-                        .Add(New XElement(fi.Name, XMLSerializer.XMLSerializer.ArrayToString(Me.GetType.GetField(fi.Name).GetValue(Me), ci)))
-                    ElseIf TypeOf Me.GetType.GetField(fi.Name).GetValue(Me) Is Double Then
-                        .Add(New XElement(fi.Name, Double.Parse(Me.GetType.GetField(fi.Name).GetValue(Me)).ToString(ci)))
-                    Else
-                        .Add(New XElement(fi.Name, Me.GetType.GetField(fi.Name).GetValue(Me)))
-                    End If
-                Next
-
-            End With
-
-            Return elements
+            Return XMLSerializer.XMLSerializer.Serialize(Me, True)
 
         End Function
 
