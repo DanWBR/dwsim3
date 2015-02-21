@@ -27,7 +27,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="CultureInfo" Type="System.String" Scope="User">
-      <Value Profile="(Default)">en-US</Value>
+      <Value Profile="(Default)">en</Value>
     </Setting>
     <Setting Name="ShowLangForm" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

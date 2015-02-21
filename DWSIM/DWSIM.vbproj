@@ -790,12 +790,6 @@
     <Compile Include="Forms\FormFlowsheet_SubForms\frmMatList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormLanguageSelection.Designer.vb">
-      <DependentUpon>FormLanguageSelection.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FormLanguageSelection.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\FormOptions.Designer.vb">
       <DependentUpon>FormOptions.vb</DependentUpon>
     </Compile>
@@ -1502,10 +1496,6 @@
     <EmbeddedResource Include="Forms\FormConfigureTable.en.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormConfigureTable.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormLanguageSelection.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormLanguageSelection.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormLoadSave.en.resx">
       <SubType>Designer</SubType>

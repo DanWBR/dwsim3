@@ -151,7 +151,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("en-US")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("en")>  _
         Public Property CultureInfo() As String
             Get
                 Return CType(Me("CultureInfo"),String)

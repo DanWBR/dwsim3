@@ -654,16 +654,6 @@ Partial Class FormMain
         'Check if DWSIM is running in Mono mode, then load settings from file.
         If DWSIM.App.IsRunningOnMono Then DWSIM.App.LoadSettings()
 
-        If Not My.Application.CommandLineArgs.Contains("-locale") Then
-            If My.Settings.ShowLangForm = True Then
-                Dim lf As New FormLanguageSelection
-                lf.ShowDialog()
-                lf = Nothing
-                CultureManager.ApplicationUICulture = New CultureInfo(My.Settings.CultureInfo)
-                Me.CultureManager1.UICulture = New CultureInfo(My.Settings.CultureInfo)
-            End If
-        End If
-
         If Not My.Application.CAPEOPENMode Then
             AddPropPacks()
             GetComponents()
