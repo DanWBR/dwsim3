@@ -1797,6 +1797,14 @@ Namespace DWSIM.Flowsheet
                 Case 2
 
                     'Azure VM
+                    Dim azureclient As New Flowsheet.AzureSolverClient()
+
+                    Try
+                        form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
+                        azureclient.SolveFlowsheet(form)
+                    Catch ex As Exception
+                        age = New AggregateException(ex.Message.ToString, ex)
+                    End Try
 
                 Case 3
 
@@ -1805,6 +1813,7 @@ Namespace DWSIM.Flowsheet
                     Dim tcpclient As New Flowsheet.TCPSolverClient()
 
                     Try
+                        form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
                         tcpclient.SolveFlowsheet(form)
                     Catch ex As Exception
                         age = New AggregateException(ex.Message.ToString, ex)

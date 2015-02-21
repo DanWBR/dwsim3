@@ -241,6 +241,9 @@
     <Reference Include="Microsoft.Scripting">
       <HintPath>References\Microsoft.Scripting.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ServiceBus">
+      <HintPath>..\AzureServer\References\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="Mono.CSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

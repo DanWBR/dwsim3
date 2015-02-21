@@ -96,13 +96,7 @@
     <Setting Name="SolverMode" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="ServiceBusNamespace" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="ServiceBusOwner" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="ServiceBusKey" Type="System.String" Scope="User">
+    <Setting Name="ServiceBusConnectionString" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DebugLevel" Type="System.Int32" Scope="User">

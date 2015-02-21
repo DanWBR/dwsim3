@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DWSIM_Simulation_Data>
   <GeneralInfo>
-    <BuildVersion>3.3.5517.20256</BuildVersion>
-    <BuildDate>2015-02-08T11:15:12</BuildDate>
+    <BuildVersion>3.3.5530.24883</BuildVersion>
+    <BuildDate>2015-02-21T13:49:26</BuildDate>
     <OSInfo>Microsoft Windows 7 Home Premium , Version 6.1.7601.65536, Win32NT Platform</OSInfo>
-    <SavedOn>2015-02-08T21:59:26.6784502-04:00</SavedOn>
+    <SavedOn>2015-02-21T15:42:07.1497555-04:00</SavedOn>
   </GeneralInfo>
   <Settings>
     <Type>DWSIM.DWSIM.FormClasses.ClsFormOptions</Type>
@@ -92,7 +92,7 @@ Description taken from COCO file download: Methanol and acetone form a minimum t
 
 This simulation uses 'Methanol' and 'Acetone' components from the ChemSep database. NRTL interaction parameters were taken from the ChemSep IPD file. More information on how to load a ChemSep database in DWSIM can be found at http://apps.sourceforge.net/mediawiki/dwsim/index.php?title=Loading_a_ChemSep%28TM%29_database.</SimComentario>
     <FilePath>C:\Users\Daniel\Documents\Visual Studio 2013\Projects\DWSIM3\DWSIM\bin\x86\Release\samples\Extractive Distillation.dwxml</FilePath>
-    <BackupFileName>80850760.dwbcs</BackupFileName>
+    <BackupFileName>61215725.dwbcs</BackupFileName>
     <CalculatorActivated>true</CalculatorActivated>
     <PropertyPackageFlashAlgorithm>DWSIMDefault</PropertyPackageFlashAlgorithm>
     <PropertyPackageIOFlashQuickMode>true</PropertyPackageIOFlashQuickMode>
@@ -104,12 +104,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
   <SimulationObjects>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
-      <SpecType>Temperature_and_Pressure</SpecType>
-      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <Calculated>true</Calculated>
+      <SpecType>Temperature_and_Pressure</SpecType>
       <IsElectrolyteStream>false</IsElectrolyteStream>
       <ReferenceSolvent>Acetone</ReferenceSolvent>
       <AtEquilibrium>true</AtEquilibrium>
+      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-1316f091-758c-41fa-964b-d69f3e3d8e42</ComponentDescription>
       <ComponentName>Equimolar Feed</ComponentName>
       <code>0</code>
@@ -435,6 +435,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -451,6 +453,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -480,6 +484,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -496,6 +502,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -597,8 +605,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <ReboilerPressure>101325</ReboilerPressure>
       <CondenserPressure>101325</CondenserPressure>
       <CondenserDeltaP>0</CondenserDeltaP>
-      <ReboilerDuty>-2503.92175356432</ReboilerDuty>
-      <CondenserDuty>2520.25658546887</CondenserDuty>
+      <ReboilerDuty>-2501.15841003535</ReboilerDuty>
+      <CondenserDuty>2517.47796176705</CondenserDuty>
       <RefluxRatio>-1839424672.974</RefluxRatio>
       <NumberOfStages>40</NumberOfStages>
       <StoreAndReuseJacobian>false</StoreAndReuseJacobian>
@@ -2762,13 +2770,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems />
-      <PropertyPackage></PropertyPackage>
+      <PropertyPackage>PP-e7677239-b401-44a5-80b5-8eae63bcc298</PropertyPackage>
       <Stages>
         <Stage>
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Condensador</Name>
           <P>101325</P>
-          <T>328.087848761349</T>
+          <T>328.086307631787</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -2831,7 +2839,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_1</Name>
           <P>101325</P>
-          <T>328.327911265577</T>
+          <T>328.324646120639</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -2894,7 +2902,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_2</Name>
           <P>101325</P>
-          <T>328.847296600172</T>
+          <T>328.840414052007</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -2957,7 +2965,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_3</Name>
           <P>101325</P>
-          <T>329.902287670212</T>
+          <T>329.888893060008</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3020,7 +3028,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_4</Name>
           <P>101325</P>
-          <T>331.681311220149</T>
+          <T>331.661278549776</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3083,7 +3091,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_5</Name>
           <P>101325</P>
-          <T>333.834098303295</T>
+          <T>333.813942760357</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3146,7 +3154,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_6</Name>
           <P>101325</P>
-          <T>335.605285404828</T>
+          <T>335.59137673006</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3209,7 +3217,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_7</Name>
           <P>101325</P>
-          <T>336.671872621097</T>
+          <T>336.664361194522</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3272,7 +3280,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_8</Name>
           <P>101325</P>
-          <T>337.203160458933</T>
+          <T>337.199555552173</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3335,7 +3343,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_9</Name>
           <P>101325</P>
-          <T>337.443595826659</T>
+          <T>337.441916362352</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3398,7 +3406,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_10</Name>
           <P>101325</P>
-          <T>337.547735392323</T>
+          <T>337.54692142312</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3461,7 +3469,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_11</Name>
           <P>101325</P>
-          <T>337.591984203799</T>
+          <T>337.591544206148</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3524,7 +3532,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_12</Name>
           <P>101325</P>
-          <T>337.610628304924</T>
+          <T>337.610347094856</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3587,7 +3595,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_13</Name>
           <P>101325</P>
-          <T>337.618451979902</T>
+          <T>337.618237567426</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3650,7 +3658,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_14</Name>
           <P>101325</P>
-          <T>337.621725284296</T>
+          <T>337.621538733726</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3713,7 +3721,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_15</Name>
           <P>101325</P>
-          <T>337.62308896992</T>
+          <T>337.622913871155</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3776,7 +3784,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_16</Name>
           <P>101325</P>
-          <T>337.727780703286</T>
+          <T>337.727705774509</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3839,7 +3847,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_17</Name>
           <P>101325</P>
-          <T>337.771925557023</T>
+          <T>337.77189388915</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3902,7 +3910,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_18</Name>
           <P>101325</P>
-          <T>337.790390948391</T>
+          <T>337.790377634114</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -3965,7 +3973,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_19</Name>
           <P>101325</P>
-          <T>337.798088916511</T>
+          <T>337.798083331083</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4028,7 +4036,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_20</Name>
           <P>101325</P>
-          <T>337.801293594982</T>
+          <T>337.801291254079</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4091,7 +4099,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_21</Name>
           <P>101325</P>
-          <T>337.802626929586</T>
+          <T>337.802625948908</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4154,7 +4162,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_22</Name>
           <P>101325</P>
-          <T>337.803181540346</T>
+          <T>337.803181129593</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4217,7 +4225,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_23</Name>
           <P>101325</P>
-          <T>337.803412211627</T>
+          <T>337.803412039604</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4280,7 +4288,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_24</Name>
           <P>101325</P>
-          <T>337.803508147383</T>
+          <T>337.803508075345</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4343,7 +4351,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_25</Name>
           <P>101325</P>
-          <T>337.803548046187</T>
+          <T>337.803548016022</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4406,7 +4414,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_26</Name>
           <P>101325</P>
-          <T>337.803564639615</T>
+          <T>337.803564626984</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4469,7 +4477,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_27</Name>
           <P>101325</P>
-          <T>337.803571540599</T>
+          <T>337.803571535311</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4532,7 +4540,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_28</Name>
           <P>101325</P>
-          <T>337.803574410622</T>
+          <T>337.803574408408</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4595,7 +4603,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_29</Name>
           <P>101325</P>
-          <T>337.803575604224</T>
+          <T>337.803575603297</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4658,7 +4666,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_30</Name>
           <P>101325</P>
-          <T>337.803576100626</T>
+          <T>337.803576100238</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4721,7 +4729,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_31</Name>
           <P>101325</P>
-          <T>337.803576307073</T>
+          <T>337.80357630691</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4784,7 +4792,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_32</Name>
           <P>101325</P>
-          <T>337.803576392931</T>
+          <T>337.803576392862</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4847,7 +4855,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_33</Name>
           <P>101325</P>
-          <T>337.803576428638</T>
+          <T>337.80357642861</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4910,7 +4918,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_34</Name>
           <P>101325</P>
-          <T>337.803576443488</T>
+          <T>337.803576443476</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -4973,7 +4981,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_35</Name>
           <P>101325</P>
-          <T>337.803576449664</T>
+          <T>337.803576449659</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -5036,7 +5044,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_36</Name>
           <P>101325</P>
-          <T>337.803576452232</T>
+          <T>337.80357645223</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -5099,7 +5107,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_37</Name>
           <P>101325</P>
-          <T>337.803576453301</T>
+          <T>337.8035764533</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -5225,7 +5233,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Refervedor</Name>
           <P>101325</P>
-          <T>337.80357645393</T>
+          <T>337.803576453929</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -5424,12 +5432,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
-      <SpecType>Temperature_and_Pressure</SpecType>
-      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <Calculated>true</Calculated>
+      <SpecType>Temperature_and_Pressure</SpecType>
       <IsElectrolyteStream>false</IsElectrolyteStream>
       <ReferenceSolvent></ReferenceSolvent>
       <AtEquilibrium>true</AtEquilibrium>
+      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-02e827bf-bf5c-429d-8c3b-7a8071516e1f</ComponentDescription>
       <ComponentName>LP Azeotrope</ComponentName>
       <code>0</code>
@@ -5451,37 +5459,37 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Compounds>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>0.0675868521695267</lnKvalue>
-              <Kvalue>1.06992318071212</Kvalue>
+              <lnKvalue>0.0673126117659152</lnKvalue>
+              <Kvalue>1.06962980477681</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.642645817605751</FracaoMolar>
-              <FracaoMassica>0.765242583476513</FracaoMassica>
-              <MolarFlow>1.53331360591125</MolarFlow>
-              <MassFlow>0.0890548542313255</MassFlow>
+              <FracaoMolar>0.643146912598794</FracaoMolar>
+              <FracaoMassica>0.765634462303766</FracaoMassica>
+              <MolarFlow>1.53296563531912</MolarFlow>
+              <MassFlow>0.0890346440993347</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000233612444451395</VolumetricFlow>
-              <VolumetricFraction>0.733645180351329</VolumetricFraction>
+              <VolumetricFlow>0.000235460102700363</VolumetricFlow>
+              <VolumetricFraction>0.738126706350816</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Acetone</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-0.134309619697363</lnKvalue>
-              <Kvalue>0.874319316208895</Kvalue>
+              <lnKvalue>-0.134018251360009</lnKvalue>
+              <Kvalue>0.874574102290872</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.357354182394249</FracaoMolar>
-              <FracaoMassica>0.234757416523487</FracaoMassica>
-              <MolarFlow>0.852625217473274</MolarFlow>
-              <MassFlow>0.0273198172182786</MassFlow>
+              <FracaoMolar>0.356853087401206</FracaoMolar>
+              <FracaoMassica>0.234365537696234</FracaoMassica>
+              <MolarFlow>0.850573188065407</MolarFlow>
+              <MassFlow>0.0272540660919918</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>8.53844171908899E-05</VolumetricFlow>
-              <VolumetricFraction>0.26814438886725</VolumetricFraction>
+              <VolumetricFlow>8.60828905002531E-05</VolumetricFlow>
+              <VolumetricFraction>0.269854976318295</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Methanol</Nome>
             </Compound>
@@ -5490,24 +5498,24 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Nome>Mistura</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <density>364.814471558548</density>
-            <enthalpy>-574.267576549576</enthalpy>
-            <entropy>-1.74995764630351</entropy>
-            <molarflow>2.38593882338453</molarflow>
-            <massflow>0.116374671449604</massflow>
-            <heatCapacityCp>2.38505016070896</heatCapacityCp>
-            <heatCapacityCv>2.38451295400757</heatCapacityCv>
-            <molecularWeight>48.7752117988185</molecularWeight>
+            <density>361.658355837216</density>
+            <enthalpy>-574.017778932406</enthalpy>
+            <entropy>-1.74919796140756</entropy>
+            <molarflow>2.38353882338453</molarflow>
+            <massflow>0.116288710191326</massflow>
+            <heatCapacityCp>2.38481429560013</heatCapacityCp>
+            <heatCapacityCv>2.38426799301403</heatCapacityCv>
+            <molecularWeight>48.7882593102474</molecularWeight>
             <pressure>101325</pressure>
-            <temperature>328.087848761349</temperature>
-            <thermalConductivity>0.157617740122302</thermalConductivity>
-            <volumetric_flow>0.000318996861479842</volumetric_flow>
-            <molar_enthalpy>-28010.0226753998</molar_enthalpy>
-            <molar_entropy>-85.3545548374158</molar_entropy>
+            <temperature>328.086307631787</temperature>
+            <thermalConductivity>0.157594978985435</thermalConductivity>
+            <volumetric_flow>0.000321542993033094</volumetric_flow>
+            <molar_enthalpy>-28005.3282472465</molar_enthalpy>
+            <molar_entropy>-85.3403237261082</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
-            <surfaceTension>0.0194961127493794</surfaceTension>
+            <surfaceTension>0.0194961078317497</surfaceTension>
           </TPMProperties>
         </Phase>
         <Phase>
@@ -5518,13 +5526,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.642526588676042</FracaoMolar>
-              <FracaoMassica>0.765149310210405</FracaoMassica>
-              <MolarFlow>1.5289607367</MolarFlow>
-              <MassFlow>0.088802039587536</MassFlow>
+              <FracaoMolar>0.643026049023973</FracaoMolar>
+              <FracaoMassica>0.765539960733053</FracaoMassica>
+              <MolarFlow>1.52854016672317</MolarFlow>
+              <MassFlow>0.0887776128832818</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>8.79375327601667E-05</PartialVolume>
+              <PartialVolume>8.79373188076086E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -5536,13 +5544,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.357473411323958</FracaoMolar>
-              <FracaoMassica>0.234850689789595</FracaoMassica>
-              <MolarFlow>0.850646214431002</MolarFlow>
-              <MassFlow>0.0272564060027982</MassFlow>
+              <FracaoMolar>0.356973950976027</FracaoMolar>
+              <FracaoMassica>0.234460039266947</FracaoMassica>
+              <MolarFlow>0.848564414099471</MolarFlow>
+              <MassFlow>0.0271897009565753</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>4.38239835447854E-05</PartialVolume>
+              <PartialVolume>4.38238723339716E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -5557,27 +5565,27 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
             <activity>0</activity>
             <activityCoefficient>0</activityCoefficient>
             <compressibilityFactor>0</compressibilityFactor>
-            <density>753.850149678872</density>
-            <enthalpy>-575.924728079893</enthalpy>
-            <entropy>-1.75539792239858</entropy>
-            <molarflow>2.379606951131</molarflow>
-            <massflow>0.116058445590334</massflow>
-            <molarfraction>0.997346171581825</molarfraction>
-            <massfraction>0.997282691711771</massfraction>
+            <density>753.848804551308</density>
+            <enthalpy>-575.702651100772</enthalpy>
+            <entropy>-1.75472928223169</entropy>
+            <molarflow>2.37710458082264</molarflow>
+            <massflow>0.115967313839857</massflow>
+            <molarfraction>0.997300550551658</molarfraction>
+            <massfraction>0.997236220515813</massfraction>
             <fugacity>0</fugacity>
             <fugacityCoefficient>0</fugacityCoefficient>
-            <heatCapacityCp>2.3876149501517</heatCapacityCp>
-            <heatCapacityCv>2.3876149501517</heatCapacityCv>
+            <heatCapacityCp>2.38742250578274</heatCapacityCp>
+            <heatCapacityCv>2.38742250578274</heatCapacityCv>
             <logFugacityCoefficient>0</logFugacityCoefficient>
-            <molecularWeight>48.7721073159468</molecularWeight>
+            <molecularWeight>48.7851122644862</molecularWeight>
             <pressure>0</pressure>
             <temperature>0</temperature>
-            <thermalConductivity>0.15799735035763</thermalConductivity>
-            <viscosity>0.000288579941924004</viscosity>
-            <kinematic_viscosity>3.81767890314266E-07</kinematic_viscosity>
+            <thermalConductivity>0.15798107578716</thermalConductivity>
+            <viscosity>0.000288512985454787</viscosity>
+            <kinematic_viscosity>3.81662207922335E-07</kinematic_viscosity>
             <volumetric_flow>0</volumetric_flow>
-            <molar_enthalpy>-28089.06264382</molar_enthalpy>
-            <molar_entropy>-85.6144558534136</molar_entropy>
+            <molar_enthalpy>-28085.7184649135</molar_enthalpy>
+            <molar_entropy>-85.6046650274545</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -5591,16 +5599,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.687454091448376</FracaoMolar>
-              <FracaoMassica>0.799475188976935</FracaoMassica>
-              <MolarFlow>0.0043528714872139</MolarFlow>
-              <MassFlow>0.000252814775977383</MassFlow>
+              <FracaoMolar>0.687799827283915</FracaoMolar>
+              <FracaoMassica>0.799733107009275</FracaoMassica>
+              <MolarFlow>0.00442547092276913</MolarFlow>
+              <MassFlow>0.000257031351194431</MassFlow>
               <FugacityCoeff>1</FugacityCoeff>
-              <ActivityCoeff>1.02887013218469</ActivityCoeff>
-              <PartialVolume>0.0261153940017052</PartialVolume>
+              <ActivityCoeff>1.02892450498961</ActivityCoeff>
+              <PartialVolume>0.0261152713296651</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000113077835826789</VolumetricFlow>
-              <VolumetricFraction>0.685143338840729</VolumetricFraction>
+              <VolumetricFlow>0.00011496308805466</VolumetricFlow>
+              <VolumetricFraction>0.685490065645191</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Acetone</Nome>
             </Compound>
@@ -5609,16 +5617,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.312545908551624</FracaoMolar>
-              <FracaoMassica>0.200524811023064</FracaoMassica>
-              <MolarFlow>0.00197900076631065</MolarFlow>
-              <MassFlow>6.34111425541258E-05</MassFlow>
+              <FracaoMolar>0.312200172716085</FracaoMolar>
+              <FracaoMassica>0.200266892990725</FracaoMassica>
+              <MolarFlow>0.0020087716391185</MolarFlow>
+              <MassFlow>6.4365060860635E-05</MassFlow>
               <FugacityCoeff>1</FugacityCoeff>
-              <ActivityCoeff>1.49600669591943</ActivityCoeff>
-              <PartialVolume>0.0263972029482069</PartialVolume>
+              <ActivityCoeff>1.49610578596085</ActivityCoeff>
+              <PartialVolume>0.0263971274062788</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>5.19647609794764E-05</VolumetricFlow>
-              <VolumetricFraction>0.31485666115927</VolumetricFraction>
+              <VolumetricFlow>5.27462542338465E-05</VolumetricFlow>
+              <VolumetricFraction>0.314509934354809</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Methanol</Nome>
             </Compound>
@@ -5629,28 +5637,28 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <activity>0</activity>
             <activityCoefficient>0</activityCoefficient>
-            <compressibilityFactor>0.968234047371106</compressibilityFactor>
-            <density>1.91602607236427</density>
-            <enthalpy>33.9256596065167</enthalpy>
-            <entropy>0.24668479784883</entropy>
-            <molarflow>0.00633187225352454</molarflow>
-            <massflow>0.000316225918531509</massflow>
-            <molarfraction>0.00265382841817486</molarfraction>
-            <massfraction>0.00271730879745985</massfraction>
+            <compressibilityFactor>0.968229505243752</compressibilityFactor>
+            <density>1.91638943704266</density>
+            <enthalpy>33.9234642717946</enthalpy>
+            <entropy>0.246631798594771</entropy>
+            <molarflow>0.00643424256188763</molarflow>
+            <massflow>0.000321396412055066</massflow>
+            <molarfraction>0.00269944944834222</molarfraction>
+            <massfraction>0.00276378000518091</massfraction>
             <fugacity>0</fugacity>
             <fugacityCoefficient>0</fugacityCoefficient>
-            <heatCapacityCp>1.44374332945696</heatCapacityCp>
-            <heatCapacityCv>1.24604526073238</heatCapacityCv>
+            <heatCapacityCp>1.44371084220812</heatCapacityCp>
+            <heatCapacityCv>1.24604583809245</heatCapacityCv>
             <logFugacityCoefficient>0</logFugacityCoefficient>
-            <molecularWeight>49.9419296331328</molecularWeight>
+            <molecularWeight>49.9509319028186</molecularWeight>
             <pressure>0</pressure>
             <temperature>0</temperature>
-            <thermalConductivity>0.0149548564539479</thermalConductivity>
-            <viscosity>9.40603035515568E-06</viscosity>
-            <kinematic_viscosity>4.90913484467837E-06</kinematic_viscosity>
-            <volumetric_flow>0.000165042596806265</volumetric_flow>
-            <molar_enthalpy>1694.31290482627</molar_enthalpy>
-            <molar_entropy>12.3199148157298</molar_entropy>
+            <thermalConductivity>0.0149530957809707</thermalConductivity>
+            <viscosity>9.40514559277748E-06</viscosity>
+            <kinematic_viscosity>4.90774234661372E-06</kinematic_viscosity>
+            <volumetric_flow>0.000167709342288507</volumetric_flow>
+            <molar_enthalpy>1694.50865374811</molar_enthalpy>
+            <molar_entropy>12.3194881766771</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -5664,16 +5672,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.642526588676042</FracaoMolar>
-              <FracaoMassica>0.765149310210405</FracaoMassica>
-              <MolarFlow>1.5289607367</MolarFlow>
-              <MassFlow>0.088802039587536</MassFlow>
-              <FugacityCoeff>1.06988221234513</FugacityCoeff>
-              <ActivityCoeff>1.10076985323758</ActivityCoeff>
-              <PartialVolume>8.79375327601667E-05</PartialVolume>
+              <FracaoMolar>0.643026049023973</FracaoMolar>
+              <FracaoMassica>0.765539960733053</FracaoMassica>
+              <MolarFlow>1.52854016672317</MolarFlow>
+              <MassFlow>0.0887776128832818</MassFlow>
+              <FugacityCoeff>1.0695889178217</FugacityCoeff>
+              <ActivityCoeff>1.10052624781207</ActivityCoeff>
+              <PartialVolume>8.79373188076086E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000120534608624606</VolumetricFlow>
-              <VolumetricFraction>0.782924778037103</VolumetricFraction>
+              <VolumetricFlow>0.000120497014645703</VolumetricFlow>
+              <VolumetricFraction>0.783294252793539</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Acetone</Nome>
             </Compound>
@@ -5682,16 +5690,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.357473411323958</FracaoMolar>
-              <FracaoMassica>0.234850689789595</FracaoMassica>
-              <MolarFlow>0.850646214431002</MolarFlow>
-              <MassFlow>0.0272564060027982</MassFlow>
-              <FugacityCoeff>0.874354774496177</FugacityCoeff>
-              <ActivityCoeff>1.3080405972554</ActivityCoeff>
-              <PartialVolume>4.38239835447854E-05</PartialVolume>
+              <FracaoMolar>0.356973950976027</FracaoMolar>
+              <FracaoMassica>0.234460039266947</FracaoMassica>
+              <MolarFlow>0.848564414099471</MolarFlow>
+              <MassFlow>0.0271897009565753</MassFlow>
+              <FugacityCoeff>0.874609377875488</FugacityCoeff>
+              <ActivityCoeff>1.30850815069514</ActivityCoeff>
+              <PartialVolume>4.38238723339716E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>3.34196562114135E-05</VolumetricFlow>
-              <VolumetricFraction>0.217075221962897</VolumetricFraction>
+              <VolumetricFlow>3.33366362664066E-05</VolumetricFlow>
+              <VolumetricFraction>0.216705747206461</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Methanol</Nome>
             </Compound>
@@ -5700,23 +5708,23 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Nome>Líquido 1</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <compressibilityFactor>0.00253067511135524</compressibilityFactor>
-            <density>753.850149678872</density>
-            <enthalpy>-575.924728079893</enthalpy>
-            <entropy>-1.75539792239858</entropy>
-            <molarflow>2.379606951131</molarflow>
-            <massflow>0.116058445590334</massflow>
-            <molarfraction>0.997346171581825</molarfraction>
-            <massfraction>0.997282691711771</massfraction>
-            <heatCapacityCp>2.3876149501517</heatCapacityCp>
-            <heatCapacityCv>2.3876149501517</heatCapacityCv>
-            <molecularWeight>48.7721073159468</molecularWeight>
-            <thermalConductivity>0.15799735035763</thermalConductivity>
-            <viscosity>0.000288579941924004</viscosity>
-            <kinematic_viscosity>3.82808097931577E-07</kinematic_viscosity>
-            <volumetric_flow>0.00015395426483602</volumetric_flow>
-            <molar_enthalpy>-28089.06264382</molar_enthalpy>
-            <molar_entropy>-85.6144558534136</molar_entropy>
+            <compressibilityFactor>0.00253157551903054</compressibilityFactor>
+            <density>753.848804551308</density>
+            <enthalpy>-575.702651100772</enthalpy>
+            <entropy>-1.75472928223169</entropy>
+            <molarflow>2.37710458082264</molarflow>
+            <massflow>0.115967313839857</massflow>
+            <molarfraction>0.997300550551658</molarfraction>
+            <massfraction>0.997236220515813</massfraction>
+            <heatCapacityCp>2.38742250578274</heatCapacityCp>
+            <heatCapacityCv>2.38742250578274</heatCapacityCv>
+            <molecularWeight>48.7851122644862</molecularWeight>
+            <thermalConductivity>0.15798107578716</thermalConductivity>
+            <viscosity>0.000288512985454787</viscosity>
+            <kinematic_viscosity>3.82719961500118E-07</kinematic_viscosity>
+            <volumetric_flow>0.00015383365091211</volumetric_flow>
+            <molar_enthalpy>-28085.7184649135</molar_enthalpy>
+            <molar_entropy>-85.6046650274545</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -5914,12 +5922,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
-      <SpecType>Temperature_and_Pressure</SpecType>
-      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <Calculated>true</Calculated>
+      <SpecType>Temperature_and_Pressure</SpecType>
       <IsElectrolyteStream>false</IsElectrolyteStream>
       <ReferenceSolvent></ReferenceSolvent>
       <AtEquilibrium>true</AtEquilibrium>
+      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-a3577b59-ff83-4d28-814c-3a901d5acfda</ComponentDescription>
       <ComponentName>Methanol</ComponentName>
       <code>0</code>
@@ -5944,16 +5952,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>-Infinity</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>3.44192994490513E-12</FracaoMolar>
-              <FracaoMassica>6.2389142749994E-12</FracaoMassica>
-              <MolarFlow>1.72096497245256E-12</MolarFlow>
-              <MassFlow>9.99536456000449E-14</MassFlow>
+              <FracaoMolar>3.44589638594119E-12</FracaoMolar>
+              <FracaoMassica>6.24610392905886E-12</FracaoMassica>
+              <MolarFlow>1.7229481929706E-12</MolarFlow>
+              <MassFlow>1.00068831047732E-13</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.47403648684621E-16</VolumetricFlow>
-              <VolumetricFraction>6.9020706931616E-12</VolumetricFraction>
+              <VolumetricFlow>1.47573514977766E-16</VolumetricFlow>
+              <VolumetricFraction>6.91002456118203E-12</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Acetone</Nome>
             </Compound>
@@ -5962,16 +5970,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>-Infinity</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.999999999996558</FracaoMolar>
-              <FracaoMassica>0.999999999993761</FracaoMassica>
-              <MolarFlow>0.499999999998279</MolarFlow>
-              <MassFlow>0.0160209999999449</MassFlow>
+              <FracaoMolar>0.999999999996554</FracaoMolar>
+              <FracaoMassica>0.999999999993754</FracaoMassica>
+              <MolarFlow>0.499999999998277</MolarFlow>
+              <MassFlow>0.0160209999999448</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>2.13564385582305E-05</VolumetricFlow>
-              <VolumetricFraction>0.999999999989473</VolumetricFraction>
+              <VolumetricFlow>2.13564385582303E-05</VolumetricFlow>
+              <VolumetricFraction>0.999999999993091</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Methanol</Nome>
             </Compound>
@@ -5981,23 +5989,23 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <density>750.171895761149</density>
-            <enthalpy>-999.152755059645</enthalpy>
-            <entropy>-2.95779211560808</entropy>
+            <enthalpy>-999.152755059642</enthalpy>
+            <entropy>-2.95779211560807</entropy>
             <molarflow>0.5</molarflow>
-            <massflow>0.0160210000000448</massflow>
-            <heatCapacityCp>2.82399563306476</heatCapacityCp>
-            <heatCapacityCv>2.82399563306476</heatCapacityCv>
-            <molecularWeight>32.0420000000896</molecularWeight>
+            <massflow>0.0160210000000449</massflow>
+            <heatCapacityCp>2.82399563306475</heatCapacityCp>
+            <heatCapacityCv>2.82399563306475</heatCapacityCv>
+            <molecularWeight>32.0420000000897</molecularWeight>
             <pressure>101325</pressure>
-            <temperature>337.80357645393</temperature>
-            <thermalConductivity>0.191369403200841</thermalConductivity>
+            <temperature>337.803576453929</temperature>
+            <thermalConductivity>0.19136940320084</thermalConductivity>
             <volumetric_flow>2.13564385583779E-05</volumetric_flow>
             <molar_enthalpy>-32014.8525777107</molar_enthalpy>
-            <molar_entropy>-94.7735749685792</molar_entropy>
+            <molar_entropy>-94.7735749685793</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
-            <surfaceTension>0.0188684697360101</surfaceTension>
+            <surfaceTension>0.0188684697360102</surfaceTension>
           </TPMProperties>
         </Phase>
         <Phase>
@@ -6008,10 +6016,10 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>3.44192994490513E-12</FracaoMolar>
-              <FracaoMassica>6.2389142749994E-12</FracaoMassica>
-              <MolarFlow>1.72096497245256E-12</MolarFlow>
-              <MassFlow>9.99536456000449E-14</MassFlow>
+              <FracaoMolar>3.44589638594119E-12</FracaoMolar>
+              <FracaoMassica>6.24610392905886E-12</FracaoMassica>
+              <MolarFlow>1.7229481929706E-12</MolarFlow>
+              <MassFlow>1.00068831047732E-13</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>8.93250875774691E-05</PartialVolume>
@@ -6026,10 +6034,10 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.999999999996558</FracaoMolar>
-              <FracaoMassica>0.999999999993761</FracaoMassica>
-              <MolarFlow>0.499999999998279</MolarFlow>
-              <MassFlow>0.0160209999999449</MassFlow>
+              <FracaoMolar>0.999999999996554</FracaoMolar>
+              <FracaoMassica>0.999999999993754</FracaoMassica>
+              <MolarFlow>0.499999999998277</MolarFlow>
+              <MassFlow>0.0160209999999448</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
               <PartialVolume>4.45447036737251E-05</PartialVolume>
@@ -6046,21 +6054,21 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <compressibilityFactor>0</compressibilityFactor>
             <density>750.171895761149</density>
-            <enthalpy>-999.152755059645</enthalpy>
-            <entropy>-2.95779211560808</entropy>
+            <enthalpy>-999.152755059642</enthalpy>
+            <entropy>-2.95779211560807</entropy>
             <molarflow>0.5</molarflow>
-            <massflow>0.0160210000000448</massflow>
+            <massflow>0.0160210000000449</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
-            <heatCapacityCp>2.82399563306476</heatCapacityCp>
-            <heatCapacityCv>2.82399563306476</heatCapacityCv>
-            <molecularWeight>32.0420000000896</molecularWeight>
-            <thermalConductivity>0.191369403200841</thermalConductivity>
+            <heatCapacityCp>2.82399563306475</heatCapacityCp>
+            <heatCapacityCv>2.82399563306475</heatCapacityCv>
+            <molecularWeight>32.0420000000897</molecularWeight>
+            <thermalConductivity>0.19136940320084</thermalConductivity>
             <viscosity>0.00034347614499933</viscosity>
-            <kinematic_viscosity>4.57863253662453E-07</kinematic_viscosity>
+            <kinematic_viscosity>4.57863253662452E-07</kinematic_viscosity>
             <volumetric_flow>0</volumetric_flow>
             <molar_enthalpy>-32014.8525777107</molar_enthalpy>
-            <molar_entropy>-94.7735749685792</molar_entropy>
+            <molar_entropy>-94.7735749685793</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -6130,16 +6138,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>3.44192994490513E-12</FracaoMolar>
-              <FracaoMassica>6.2389142749994E-12</FracaoMassica>
-              <MolarFlow>1.72096497245256E-12</MolarFlow>
-              <MassFlow>9.99536456000449E-14</MassFlow>
-              <FugacityCoeff>2.42063868165884</FugacityCoeff>
-              <ActivityCoeff>1.80441034978709</ActivityCoeff>
+              <FracaoMolar>3.44589638594119E-12</FracaoMolar>
+              <FracaoMassica>6.24610392905886E-12</FracaoMassica>
+              <MolarFlow>1.7229481929706E-12</MolarFlow>
+              <MassFlow>1.00068831047732E-13</MassFlow>
+              <FugacityCoeff>2.42063868165881</FugacityCoeff>
+              <ActivityCoeff>1.80441034978708</ActivityCoeff>
               <PartialVolume>8.93250875774691E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.47403648684621E-16</VolumetricFlow>
-              <VolumetricFraction>6.90207069318662E-12</VolumetricFraction>
+              <VolumetricFlow>1.47573514977766E-16</VolumetricFlow>
+              <VolumetricFraction>6.91002456118202E-12</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Acetone</Nome>
             </Compound>
@@ -6148,16 +6156,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.999999999996558</FracaoMolar>
-              <FracaoMassica>0.999999999993761</FracaoMassica>
-              <MolarFlow>0.499999999998279</MolarFlow>
-              <MassFlow>0.0160209999999449</MassFlow>
-              <FugacityCoeff>0.999999999995122</FugacityCoeff>
+              <FracaoMolar>0.999999999996554</FracaoMolar>
+              <FracaoMassica>0.999999999993754</FracaoMassica>
+              <MolarFlow>0.499999999998277</MolarFlow>
+              <MassFlow>0.0160209999999448</MassFlow>
+              <FugacityCoeff>0.999999999995105</FugacityCoeff>
               <ActivityCoeff>1.00000000000035</ActivityCoeff>
               <PartialVolume>4.45447036737251E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>2.13564385582305E-05</VolumetricFlow>
-              <VolumetricFraction>0.999999999993098</VolumetricFraction>
+              <VolumetricFlow>2.13564385582303E-05</VolumetricFlow>
+              <VolumetricFraction>0.99999999999309</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Methanol</Nome>
             </Compound>
@@ -6168,21 +6176,21 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <compressibilityFactor>0.00166828502325711</compressibilityFactor>
             <density>750.171895761149</density>
-            <enthalpy>-999.152755059645</enthalpy>
-            <entropy>-2.95779211560808</entropy>
+            <enthalpy>-999.152755059642</enthalpy>
+            <entropy>-2.95779211560807</entropy>
             <molarflow>0.5</molarflow>
-            <massflow>0.0160210000000448</massflow>
+            <massflow>0.0160210000000449</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
-            <heatCapacityCp>2.82399563306476</heatCapacityCp>
-            <heatCapacityCv>2.82399563306476</heatCapacityCv>
-            <molecularWeight>32.0420000000896</molecularWeight>
-            <thermalConductivity>0.191369403200841</thermalConductivity>
+            <heatCapacityCp>2.82399563306475</heatCapacityCp>
+            <heatCapacityCv>2.82399563306475</heatCapacityCv>
+            <molecularWeight>32.0420000000897</molecularWeight>
+            <thermalConductivity>0.19136940320084</thermalConductivity>
             <viscosity>0.00034347614499933</viscosity>
-            <kinematic_viscosity>4.57863253662453E-07</kinematic_viscosity>
+            <kinematic_viscosity>4.57863253662452E-07</kinematic_viscosity>
             <volumetric_flow>2.13564385583779E-05</volumetric_flow>
             <molar_enthalpy>-32014.8525777107</molar_enthalpy>
-            <molar_entropy>-94.7735749685792</molar_entropy>
+            <molar_entropy>-94.7735749685793</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -6380,7 +6388,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.EnergyStream</Type>
-      <Energia>2520.25658546887</Energia>
+      <Energia>2517.47796176705</Energia>
       <ComponentDescription>EN-ba02ef69-1a52-44ed-aa29-624c2eee7ea5</ComponentDescription>
       <ComponentName>Condenser Duty</ComponentName>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -6397,7 +6405,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.EnergyStream</Type>
-      <Energia>-2503.92175356432</Energia>
+      <Energia>-2501.15841003535</Energia>
       <ComponentDescription>EN-724fea90-1c4b-4f92-a23b-5f9ce8bd8489</ComponentDescription>
       <ComponentName>Reboiler Duty</ComponentName>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -6414,12 +6422,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
-      <SpecType>Temperature_and_Pressure</SpecType>
-      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <Calculated>true</Calculated>
+      <SpecType>Temperature_and_Pressure</SpecType>
       <IsElectrolyteStream>false</IsElectrolyteStream>
       <ReferenceSolvent></ReferenceSolvent>
       <AtEquilibrium>true</AtEquilibrium>
+      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-11467055-6808-43b2-a84e-b3cbd5974a8c</ComponentDescription>
       <ComponentName>Recycled HP Azeotrope</ComponentName>
       <code>0</code>
@@ -6444,8 +6452,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>-0.0323648675609013</lnKvalue>
               <Kvalue>0.968153269904873</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.547628151773566</FracaoMolar>
-              <FracaoMassica>0.686942952324774</FracaoMassica>
+              <FracaoMolar>0.54814477876417</FracaoMolar>
+              <FracaoMassica>0.687391298795387</FracaoMassica>
               <MolarFlow>1.03292409801595</MolarFlow>
               <MassFlow>0.0599922316127666</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -6462,8 +6470,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0.0377568291029866</lnKvalue>
               <Kvalue>1.03847867438153</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.452371848226434</FracaoMolar>
-              <FracaoMassica>0.313057047675226</FracaoMassica>
+              <FracaoMolar>0.45185522123583</FracaoMolar>
+              <FracaoMassica>0.312608701204613</FracaoMassica>
               <MolarFlow>0.854914725368572</MolarFlow>
               <MassFlow>0.0273931776302598</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -6481,17 +6489,17 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <density>667.084882371684</density>
-            <enthalpy>-376.707345190222</enthalpy>
+            <enthalpy>-376.483086823491</enthalpy>
             <entropy>-0.975408177916363</entropy>
-            <molarflow>1.88783882338453</molarflow>
-            <massflow>0.087297970346693</massflow>
+            <molarflow>1.88303882338453</molarflow>
+            <massflow>0.0872121781195184</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
             <heatCapacityCp>2.83933761105937</heatCapacityCp>
             <heatCapacityCv>2.83923520076582</heatCapacityCv>
             <molecularWeight>46.288596335974</molecularWeight>
             <pressure>607950</pressure>
-            <temperature>386.434895855707</temperature>
+            <temperature>386.436150472279</temperature>
             <thermalConductivity>0.141358014575193</thermalConductivity>
             <volumetric_flow>0.000130995937027302</volumetric_flow>
             <molar_enthalpy>-17446.9377542075</molar_enthalpy>
@@ -6510,8 +6518,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.547633623702959</FracaoMolar>
-              <FracaoMassica>0.686947702416214</FracaoMassica>
+              <FracaoMolar>0.548150219515509</FracaoMolar>
+              <FracaoMassica>0.687396019078581</FracaoMassica>
               <MolarFlow>1.03260836716721</MolarFlow>
               <MassFlow>0.0599738939650718</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
@@ -6528,8 +6536,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.452366376297041</FracaoMolar>
-              <FracaoMassica>0.313052297583786</FracaoMassica>
+              <FracaoMolar>0.451849780484491</FracaoMolar>
+              <FracaoMassica>0.312603980921419</FracaoMassica>
               <MolarFlow>0.854634430414072</MolarFlow>
               <MassFlow>0.0273841964193277</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
@@ -6552,8 +6560,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
             <entropy>-0.975756729630122</entropy>
             <molarflow>1.88724279758129</molarflow>
             <massflow>0.0873580903843995</massflow>
-            <molarfraction>0.999688120609491</molarfraction>
-            <massfraction>46.3012842939777</massfraction>
+            <molarfraction>0.999692154045616</molarfraction>
+            <massfraction>46.3147354157448</massfraction>
             <heatCapacityCp>2.83966663992444</heatCapacityCp>
             <heatCapacityCv>2.83966663992444</heatCapacityCv>
             <molecularWeight>46.2887395815518</molecularWeight>
@@ -6576,8 +6584,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.530088636440865</FracaoMolar>
-              <FracaoMassica>0.67156546548742</FracaoMassica>
+              <FracaoMolar>0.530476633948191</FracaoMolar>
+              <FracaoMassica>0.671908949059533</FracaoMassica>
               <MolarFlow>0.000315730866486039</MolarFlow>
               <MassFlow>1.83376487255091E-05</MassFlow>
               <FugacityCoeff>1</FugacityCoeff>
@@ -6594,8 +6602,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.469911363559135</FracaoMolar>
-              <FracaoMassica>0.32843453451258</FracaoMassica>
+              <FracaoMolar>0.469523366051809</FracaoMolar>
+              <FracaoMassica>0.328091050940467</FracaoMassica>
               <MolarFlow>0.000280294936753393</MolarFlow>
               <MassFlow>8.98121036345223E-06</MassFlow>
               <FugacityCoeff>1</FugacityCoeff>
@@ -6620,8 +6628,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
             <entropy>0.139162985752697</entropy>
             <molarflow>0.000596025803239432</molarflow>
             <massflow>2.73188590889613E-05</massflow>
-            <molarfraction>0.000311879390509051</molarfraction>
-            <massfraction>45.8444479156472</massfraction>
+            <molarfraction>0.000307845954384283</molarfraction>
+            <massfraction>45.854550594743</massfraction>
             <fugacity>0</fugacity>
             <fugacityCoefficient>0</fugacityCoefficient>
             <heatCapacityCp>1.78719503978288</heatCapacityCp>
@@ -6771,6 +6779,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -6787,6 +6797,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -6816,6 +6828,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -6832,6 +6846,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
+              <FracaoMolar>0</FracaoMolar>
+              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -6916,11 +6932,11 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <CalcMode>Delta_P</CalcMode>
       <FixOnDeltaP>true</FixOnDeltaP>
       <IgnorePhase>true</IgnorePhase>
-      <NPSH>5.14705850981309E-06</NPSH>
+      <NPSH>2.97897985889672E-06</NPSH>
       <Eficiencia>75</Eficiencia>
       <DeltaP>506625.057</DeltaP>
-      <DeltaT>0.942681485274079</DeltaT>
-      <DeltaQ>0.215482404173395</DeltaQ>
+      <DeltaT>0.954595704740541</DeltaT>
+      <DeltaQ>0.217202316231122</DeltaQ>
       <Calculated>true</Calculated>
       <ScriptExt_FontName>Courier New</ScriptExt_FontName>
       <ScriptExt_FontSize>0</ScriptExt_FontSize>
@@ -6944,17 +6960,17 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems />
-      <PropertyPackage></PropertyPackage>
+      <PropertyPackage>PP-e7677239-b401-44a5-80b5-8eae63bcc298</PropertyPackage>
       <Curves />
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
-      <SpecType>Pressure_and_Enthalpy</SpecType>
-      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <Calculated>true</Calculated>
+      <SpecType>Pressure_and_Enthalpy</SpecType>
       <IsElectrolyteStream>false</IsElectrolyteStream>
       <ReferenceSolvent></ReferenceSolvent>
       <AtEquilibrium>true</AtEquilibrium>
+      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-df21fa52-ddbf-4e61-a6bb-9fb208f76a2d</ComponentDescription>
       <ComponentName>HP Feed</ComponentName>
       <code>0</code>
@@ -6976,37 +6992,37 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Compounds>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>0.0650872485124551</lnKvalue>
-              <Kvalue>1.06725213648351</Kvalue>
+              <lnKvalue>0.0647851025305813</lnKvalue>
+              <Kvalue>1.06692971924981</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.642645817605751</FracaoMolar>
-              <FracaoMassica>0.765242583476513</FracaoMassica>
-              <MolarFlow>1.53331360591125</MolarFlow>
-              <MassFlow>0.0890548542313255</MassFlow>
+              <FracaoMolar>0.643146912598794</FracaoMolar>
+              <FracaoMassica>0.765634462303766</FracaoMassica>
+              <MolarFlow>1.53296563531912</MolarFlow>
+              <MassFlow>0.0890346440993347</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000121035519814277</VolumetricFlow>
-              <VolumetricFraction>0.782318422460321</VolumetricFraction>
+              <VolumetricFlow>0.000121005829512064</VolumetricFlow>
+              <VolumetricFraction>0.782709547463973</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Acetone</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-0.128904955560211</lnKvalue>
-              <Kvalue>0.879057511103935</Kvalue>
+              <lnKvalue>-0.128544611544011</lnKvalue>
+              <Kvalue>0.87937433129666</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.357354182394249</FracaoMolar>
-              <FracaoMassica>0.234757416523487</FracaoMassica>
-              <MolarFlow>0.852625217473274</MolarFlow>
-              <MassFlow>0.0273198172182786</MassFlow>
+              <FracaoMolar>0.356853087401206</FracaoMolar>
+              <FracaoMassica>0.234365537696234</FracaoMassica>
+              <MolarFlow>0.850573188065407</MolarFlow>
+              <MassFlow>0.0272540660919918</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>3.35631175782661E-05</VolumetricFlow>
-              <VolumetricFraction>0.216936691286735</VolumetricFraction>
+              <VolumetricFlow>3.34817510576657E-05</VolumetricFlow>
+              <VolumetricFraction>0.216572096768562</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Methanol</Nome>
             </Compound>
@@ -7015,26 +7031,26 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Nome>Mistura</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <density>752.753539179753</density>
-            <enthalpy>-572.415950208843</enthalpy>
-            <entropy>-1.73970467050517</entropy>
-            <molarflow>2.38593882338453</molarflow>
-            <massflow>0.116374671449604</massflow>
+            <density>752.738244475504</density>
+            <enthalpy>-572.149993835972</enthalpy>
+            <entropy>-1.73884154837371</entropy>
+            <molarflow>2.38353882338453</molarflow>
+            <massflow>0.116288710191326</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
-            <heatCapacityCp>2.39248033167602</heatCapacityCp>
-            <heatCapacityCv>2.39248033167602</heatCapacityCv>
-            <molecularWeight>48.7752117988185</molecularWeight>
+            <heatCapacityCp>2.39234254703512</heatCapacityCp>
+            <heatCapacityCv>2.39234254703512</heatCapacityCv>
+            <molecularWeight>48.7882593102474</molecularWeight>
             <pressure>607950.057</pressure>
-            <temperature>329.030530246623</temperature>
-            <thermalConductivity>0.15764174843409</thermalConductivity>
-            <volumetric_flow>0.000154598637392543</volumetric_flow>
-            <molar_enthalpy>-27919.7092084583</molar_enthalpy>
-            <molar_entropy>-84.8544637712835</molar_entropy>
+            <temperature>329.040903336528</temperature>
+            <thermalConductivity>0.157620942252324</thermalConductivity>
+            <volumetric_flow>0.00015448758056973</volumetric_flow>
+            <molar_enthalpy>-27914.2022636258</molar_enthalpy>
+            <molar_entropy>-84.8350523614886</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
-            <surfaceTension>0.0193937041962993</surfaceTension>
+            <surfaceTension>0.0193923883522129</surfaceTension>
           </TPMProperties>
         </Phase>
         <Phase>
@@ -7045,13 +7061,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.642645817605751</FracaoMolar>
-              <FracaoMassica>0.765242583476513</FracaoMassica>
-              <MolarFlow>1.53331360591125</MolarFlow>
-              <MassFlow>0.0890548542313255</MassFlow>
+              <FracaoMolar>0.643146912598794</FracaoMolar>
+              <FracaoMassica>0.765634462303766</FracaoMassica>
+              <MolarFlow>1.53296563531912</MolarFlow>
+              <MassFlow>0.0890346440993347</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>8.79949357141916E-05</PartialVolume>
+              <PartialVolume>8.79963757559961E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -7063,13 +7079,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.357354182394249</FracaoMolar>
-              <FracaoMassica>0.234757416523487</FracaoMassica>
-              <MolarFlow>0.852625217473274</MolarFlow>
-              <MassFlow>0.0273198172182787</MassFlow>
+              <FracaoMolar>0.356853087401206</FracaoMolar>
+              <FracaoMassica>0.234365537696234</FracaoMassica>
+              <MolarFlow>0.850573188065407</MolarFlow>
+              <MassFlow>0.0272540660919918</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>4.38813468703255E-05</PartialVolume>
+              <PartialVolume>4.38820983103794E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -7082,22 +7098,22 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <compressibilityFactor>0</compressibilityFactor>
-            <density>752.753539179753</density>
-            <enthalpy>-572.415950208843</enthalpy>
-            <entropy>-1.73970467050517</entropy>
-            <molarflow>2.38593882338453</molarflow>
-            <massflow>0.116374671449604</massflow>
+            <density>752.738244475504</density>
+            <enthalpy>-572.149993835972</enthalpy>
+            <entropy>-1.73884154837371</entropy>
+            <molarflow>2.38353882338453</molarflow>
+            <massflow>0.116288710191326</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
-            <heatCapacityCp>2.39248033167602</heatCapacityCp>
-            <heatCapacityCv>2.39248033167602</heatCapacityCv>
-            <molecularWeight>48.7752117988185</molecularWeight>
-            <thermalConductivity>0.15764174843409</thermalConductivity>
-            <viscosity>0.0002861069575253</viscosity>
-            <kinematic_viscosity>3.80080521224862E-07</kinematic_viscosity>
+            <heatCapacityCp>2.39234254703512</heatCapacityCp>
+            <heatCapacityCv>2.39234254703512</heatCapacityCv>
+            <molecularWeight>48.7882593102474</molecularWeight>
+            <thermalConductivity>0.157620942252324</thermalConductivity>
+            <viscosity>0.000286009971896329</viscosity>
+            <kinematic_viscosity>3.79959400223668E-07</kinematic_viscosity>
             <volumetric_flow>0</volumetric_flow>
-            <molar_enthalpy>-27919.7092084583</molar_enthalpy>
-            <molar_entropy>-84.8544637712835</molar_entropy>
+            <molar_enthalpy>-27914.2022636258</molar_enthalpy>
+            <molar_entropy>-84.8350523614886</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -7111,8 +7127,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.68586512184193</FracaoMolar>
-              <FracaoMassica>0.798288625133474</FracaoMassica>
+              <FracaoMolar>0.686192554895416</FracaoMolar>
+              <FracaoMassica>0.798533296854816</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>1</FugacityCoeff>
@@ -7129,8 +7145,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.31413487815807</FracaoMolar>
-              <FracaoMassica>0.201711374866526</FracaoMassica>
+              <FracaoMolar>0.313807445104584</FracaoMolar>
+              <FracaoMassica>0.201466703145184</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>1</FugacityCoeff>
@@ -7167,16 +7183,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.642645817605751</FracaoMolar>
-              <FracaoMassica>0.765242583476513</FracaoMassica>
-              <MolarFlow>1.53331360591125</MolarFlow>
-              <MassFlow>0.0890548542313255</MassFlow>
-              <FugacityCoeff>0.184095885182701</FugacityCoeff>
-              <ActivityCoeff>1.1004326376388</ActivityCoeff>
-              <PartialVolume>8.79949357141916E-05</PartialVolume>
+              <FracaoMolar>0.643146912598794</FracaoMolar>
+              <FracaoMassica>0.765634462303766</FracaoMassica>
+              <MolarFlow>1.53296563531912</MolarFlow>
+              <MassFlow>0.0890346440993347</MassFlow>
+              <FugacityCoeff>0.184119591252822</FugacityCoeff>
+              <ActivityCoeff>1.10018551288431</ActivityCoeff>
+              <PartialVolume>8.79963757559961E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>0.000121035519814277</VolumetricFlow>
-              <VolumetricFraction>0.782901595095916</VolumetricFraction>
+              <VolumetricFlow>0.000121005829512064</VolumetricFlow>
+              <VolumetricFraction>0.783272215577528</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Acetone</Nome>
             </Compound>
@@ -7185,16 +7201,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.357354182394249</FracaoMolar>
-              <FracaoMassica>0.234757416523487</FracaoMassica>
-              <MolarFlow>0.852625217473274</MolarFlow>
-              <MassFlow>0.0273198172182787</MassFlow>
-              <FugacityCoeff>0.151633213090954</FugacityCoeff>
-              <ActivityCoeff>1.30721332098213</ActivityCoeff>
-              <PartialVolume>4.38813468703255E-05</PartialVolume>
+              <FracaoMolar>0.356853087401206</FracaoMolar>
+              <FracaoMassica>0.234365537696234</FracaoMassica>
+              <MolarFlow>0.850573188065407</MolarFlow>
+              <MassFlow>0.0272540660919918</MassFlow>
+              <FugacityCoeff>0.151753240644949</FugacityCoeff>
+              <ActivityCoeff>1.30766911167981</ActivityCoeff>
+              <PartialVolume>4.38820983103794E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>3.35631175782661E-05</VolumetricFlow>
-              <VolumetricFraction>0.217098404904084</VolumetricFraction>
+              <VolumetricFlow>3.34817510576657E-05</VolumetricFlow>
+              <VolumetricFraction>0.216727784422472</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Methanol</Nome>
             </Compound>
@@ -7205,28 +7221,28 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <activity>0</activity>
             <activityCoefficient>0</activityCoefficient>
-            <compressibilityFactor>0.0151572396931471</compressibilityFactor>
-            <density>752.753539179753</density>
-            <enthalpy>-572.415950208843</enthalpy>
-            <entropy>-1.73970467050517</entropy>
-            <molarflow>2.38593882338453</molarflow>
-            <massflow>0.116374671449604</massflow>
+            <compressibilityFactor>0.0151623949952761</compressibilityFactor>
+            <density>752.738244475504</density>
+            <enthalpy>-572.149993835972</enthalpy>
+            <entropy>-1.73884154837371</entropy>
+            <molarflow>2.38353882338453</molarflow>
+            <massflow>0.116288710191326</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
             <fugacity>0</fugacity>
             <fugacityCoefficient>0</fugacityCoefficient>
-            <heatCapacityCp>2.39248033167602</heatCapacityCp>
-            <heatCapacityCv>2.39248033167602</heatCapacityCv>
+            <heatCapacityCp>2.39234254703512</heatCapacityCp>
+            <heatCapacityCv>2.39234254703512</heatCapacityCv>
             <logFugacityCoefficient>0</logFugacityCoefficient>
-            <molecularWeight>48.7752117988185</molecularWeight>
+            <molecularWeight>48.7882593102474</molecularWeight>
             <pressure>0</pressure>
             <temperature>0</temperature>
-            <thermalConductivity>0.15764174843409</thermalConductivity>
-            <viscosity>0.0002861069575253</viscosity>
-            <kinematic_viscosity>3.80080521224862E-07</kinematic_viscosity>
-            <volumetric_flow>0.000154598637392543</volumetric_flow>
-            <molar_enthalpy>-27919.7092084583</molar_enthalpy>
-            <molar_entropy>-84.8544637712835</molar_entropy>
+            <thermalConductivity>0.157620942252324</thermalConductivity>
+            <viscosity>0.000286009971896329</viscosity>
+            <kinematic_viscosity>3.79959400223668E-07</kinematic_viscosity>
+            <volumetric_flow>0.00015448758056973</volumetric_flow>
+            <molar_enthalpy>-27914.2022636258</molar_enthalpy>
+            <molar_entropy>-84.8350523614886</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -7424,7 +7440,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.EnergyStream</Type>
-      <Energia>0.215482404173395</Energia>
+      <Energia>0.217202316231122</Energia>
       <ComponentDescription>EN-5de080e2-48d5-4d63-98fd-b02fa7fd619b</ComponentDescription>
       <ComponentName>PE-1</ComponentName>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -7441,17 +7457,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.DistillationColumn</Type>
-      <CondenserType>Total_Condenser</CondenserType>
-      <UseTemperatureEstimates>false</UseTemperatureEstimates>
-      <UseVaporFlowEstimates>false</UseVaporFlowEstimates>
-      <UseLiquidFlowEstimates>false</UseLiquidFlowEstimates>
-      <UseCompositionEstimates>false</UseCompositionEstimates>
-      <AutoUpdateInitialEstimates>false</AutoUpdateInitialEstimates>
-      <ExternalLoopTolerance>0.00109</ExternalLoopTolerance>
-      <MaxIterations>1000</MaxIterations>
-      <StopAtIterationNumber>-1</StopAtIterationNumber>
-      <NumberOfStages>20</NumberOfStages>
       <SolvingMethod>1</SolvingMethod>
+      <CondenserType>Total_Condenser</CondenserType>
       <ColumnType>DistillationColumn</ColumnType>
       <IO_ExtLoop_DeltaT>0.165</IO_ExtLoop_DeltaT>
       <IO_DampingFactorMax>2</IO_DampingFactorMax>
@@ -7465,19 +7472,28 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <UseNewtonUpdate>false</UseNewtonUpdate>
       <UseDampingFactor>true</UseDampingFactor>
       <UseIdentityAsJacobianInverse>false</UseIdentityAsJacobianInverse>
+      <StopAtIterationNumber>-1</StopAtIterationNumber>
       <KbjWeightedAverage>false</KbjWeightedAverage>
       <AdjustSb>false</AdjustSb>
+      <MaxIterations>1000</MaxIterations>
       <InternalLoopTolerance>0.001</InternalLoopTolerance>
+      <ExternalLoopTolerance>0.00109</ExternalLoopTolerance>
       <VaporFlowRateUnit>mol/s</VaporFlowRateUnit>
       <VaporFlowRate>0</VaporFlowRate>
       <DistillateFlowRate>2.643</DistillateFlowRate>
       <ReboilerPressure>607950</ReboilerPressure>
       <CondenserPressure>607950</CondenserPressure>
       <CondenserDeltaP>0</CondenserDeltaP>
-      <ReboilerDuty>-2146.2990294617</ReboilerDuty>
-      <CondenserDuty>2118.48703499523</CondenserDuty>
+      <ReboilerDuty>-2143.20561453199</ReboilerDuty>
+      <CondenserDuty>2115.42163968495</CondenserDuty>
       <RefluxRatio>50</RefluxRatio>
+      <NumberOfStages>20</NumberOfStages>
       <StoreAndReuseJacobian>false</StoreAndReuseJacobian>
+      <AutoUpdateInitialEstimates>false</AutoUpdateInitialEstimates>
+      <UseTemperatureEstimates>false</UseTemperatureEstimates>
+      <UseVaporFlowEstimates>false</UseVaporFlowEstimates>
+      <UseLiquidFlowEstimates>false</UseLiquidFlowEstimates>
+      <UseCompositionEstimates>false</UseCompositionEstimates>
       <InitialEstimates>
         <LiquidCompositions>
           <LiquidComposition>
@@ -8573,13 +8589,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems />
-      <PropertyPackage></PropertyPackage>
+      <PropertyPackage>PP-e7677239-b401-44a5-80b5-8eae63bcc298</PropertyPackage>
       <Stages>
         <Stage>
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Condensador</Name>
           <P>607950</P>
-          <T>386.434895855707</T>
+          <T>386.436150472279</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -8642,7 +8658,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_1</Name>
           <P>607950</P>
-          <T>386.500697280759</T>
+          <T>386.502946152555</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -8705,7 +8721,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_2</Name>
           <P>607950</P>
-          <T>386.614838702604</T>
+          <T>386.618761137247</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -8768,7 +8784,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_3</Name>
           <P>607950</P>
-          <T>386.807496514472</T>
+          <T>386.814091914087</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -8831,7 +8847,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_4</Name>
           <P>607950</P>
-          <T>387.119349401485</T>
+          <T>387.129857034464</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -8894,7 +8910,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_5</Name>
           <P>607950</P>
-          <T>387.59278159593</T>
+          <T>387.608245574477</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -8957,7 +8973,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_6</Name>
           <P>607950</P>
-          <T>388.248024644122</T>
+          <T>388.268430581222</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9020,7 +9036,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_7</Name>
           <P>607950</P>
-          <T>389.051723313017</T>
+          <T>389.075259703769</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9083,7 +9099,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_8</Name>
           <P>607950</P>
-          <T>389.909023004066</T>
+          <T>389.932493441421</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9146,7 +9162,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_9</Name>
           <P>607950</P>
-          <T>390.702678221992</T>
+          <T>390.723084236393</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9209,7 +9225,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_10</Name>
           <P>607950</P>
-          <T>391.349975307151</T>
+          <T>391.365814605123</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9272,7 +9288,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_11</Name>
           <P>607950</P>
-          <T>391.952550625733</T>
+          <T>391.963967115616</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9335,7 +9351,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_12</Name>
           <P>607950</P>
-          <T>392.370915270047</T>
+          <T>392.378532765911</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9398,7 +9414,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_13</Name>
           <P>607950</P>
-          <T>392.643292713607</T>
+          <T>392.648121919414</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9461,7 +9477,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_14</Name>
           <P>607950</P>
-          <T>392.813355613116</T>
+          <T>392.816319664122</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9524,7 +9540,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_15</Name>
           <P>607950</P>
-          <T>392.916795757283</T>
+          <T>392.918579174239</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9587,7 +9603,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_16</Name>
           <P>607950</P>
-          <T>392.978718965568</T>
+          <T>392.979779124476</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9650,7 +9666,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_17</Name>
           <P>607950</P>
-          <T>393.015436645988</T>
+          <T>393.016062221961</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9713,7 +9729,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Estágio_10</Name>
           <P>607950</P>
-          <T>393.03708573129</T>
+          <T>393.037453134743</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9776,7 +9792,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Stage</Type>
           <Name>Refervedor</Name>
           <P>607950</P>
-          <T>393.049807705034</T>
+          <T>393.050022757204</T>
           <Efficiency>1</Efficiency>
           <Q>
             <Type>DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.Parameter</Type>
@@ -9957,12 +9973,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
-      <SpecType>Temperature_and_Pressure</SpecType>
-      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <Calculated>true</Calculated>
+      <SpecType>Temperature_and_Pressure</SpecType>
       <IsElectrolyteStream>false</IsElectrolyteStream>
       <ReferenceSolvent></ReferenceSolvent>
       <AtEquilibrium>true</AtEquilibrium>
+      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-2bfc6fd0-cbc8-4b85-84f4-c990c3990d85</ComponentDescription>
       <ComponentName>HP Azeotrope</ComponentName>
       <code>0</code>
@@ -9984,37 +10000,37 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Compounds>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-0.0325622623393686</lnKvalue>
-              <Kvalue>0.967962180365297</Kvalue>
+              <lnKvalue>-0.0327734608405853</lnKvalue>
+              <Kvalue>0.967757769789932</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.547628151773566</FracaoMolar>
-              <FracaoMassica>0.686942952324774</FracaoMassica>
-              <MolarFlow>1.03251937813219</MolarFlow>
-              <MassFlow>0.0599687254819178</MassFlow>
+              <FracaoMolar>0.54814477876417</FracaoMolar>
+              <FracaoMassica>0.687391298795387</FracaoMassica>
+              <MolarFlow>1.03217789924846</MolarFlow>
+              <MassFlow>0.0599488923883504</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>9.20275072500501E-05</VolumetricFlow>
-              <VolumetricFraction>0.702521844100171</VolumetricFraction>
+              <VolumetricFlow>9.19761213443786E-05</VolumetricFlow>
+              <VolumetricFraction>0.703008040434193</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Acetone</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>0.0380516702180263</lnKvalue>
-              <Kvalue>1.0387849057344</Kvalue>
+              <lnKvalue>0.0383682848255656</lnKvalue>
+              <Kvalue>1.03911385228154</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.452371848226434</FracaoMolar>
-              <FracaoMassica>0.313057047675226</FracaoMassica>
-              <MolarFlow>0.852919445252331</MolarFlow>
-              <MassFlow>0.0273292448647752</MassFlow>
+              <FracaoMolar>0.45185522123583</FracaoMolar>
+              <FracaoMassica>0.312608701204613</FracaoMassica>
+              <MolarFlow>0.850860924136073</MolarFlow>
+              <MassFlow>0.0272632857311681</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>3.88047393497046E-05</VolumetricFlow>
-              <VolumetricFraction>0.296228571895455</VolumetricFraction>
+              <VolumetricFlow>3.86933655388285E-05</VolumetricFlow>
+              <VolumetricFraction>0.295747925523044</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Methanol</Nome>
             </Compound>
@@ -10023,24 +10039,24 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Nome>Mistura</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <density>667.251175577697</density>
-            <enthalpy>-376.707345190223</enthalpy>
-            <entropy>-0.974863424541214</entropy>
-            <molarflow>1.88543882338453</molarflow>
-            <massflow>0.087297970346693</massflow>
-            <heatCapacityCp>2.8390548565621</heatCapacityCp>
-            <heatCapacityCv>2.83895371289396</heatCapacityCv>
-            <molecularWeight>46.3011418158801</molecularWeight>
+            <density>667.425733430299</density>
+            <enthalpy>-376.483086823491</enthalpy>
+            <entropy>-0.974279444774481</entropy>
+            <molarflow>1.88303882338453</molarflow>
+            <massflow>0.0872121781195184</massflow>
+            <heatCapacityCp>2.83876540360336</heatCapacityCp>
+            <heatCapacityCv>2.83866559052821</heatCapacityCv>
+            <molecularWeight>46.3145937494615</molecularWeight>
             <pressure>607950</pressure>
-            <temperature>386.434895855707</temperature>
-            <thermalConductivity>0.14133778018097</thermalConductivity>
-            <volumetric_flow>0.000130832246599059</volumetric_flow>
-            <molar_enthalpy>-17441.9802127362</molar_enthalpy>
-            <molar_entropy>-45.1372896707973</molar_entropy>
+            <temperature>386.436150472279</temperature>
+            <thermalConductivity>0.141316085690622</thermalConductivity>
+            <volumetric_flow>0.000130669486882508</volumetric_flow>
+            <molar_enthalpy>-17436.6612197732</molar_enthalpy>
+            <molar_entropy>-45.123356683181</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
-            <surfaceTension>0.0132987247515194</surfaceTension>
+            <surfaceTension>0.0132976744445937</surfaceTension>
           </TPMProperties>
         </Phase>
         <Phase>
@@ -10051,13 +10067,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.547633623702959</FracaoMolar>
-              <FracaoMassica>0.686947702416214</FracaoMassica>
-              <MolarFlow>1.03220767038831</MolarFlow>
-              <MassFlow>0.0599506214961533</MassFlow>
+              <FracaoMolar>0.548150219515509</FracaoMolar>
+              <FracaoMassica>0.687396019078581</FracaoMassica>
+              <MolarFlow>1.03187038945004</MolarFlow>
+              <MassFlow>0.0599310322192584</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>9.76439607942053E-05</PartialVolume>
+              <PartialVolume>9.76442199064276E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -10069,13 +10085,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.452366376297041</FracaoMolar>
-              <FracaoMassica>0.313052297583786</FracaoMassica>
-              <MolarFlow>0.852643123485131</MolarFlow>
-              <MassFlow>0.0273203909627106</MassFlow>
+              <FracaoMolar>0.451849780484491</FracaoMolar>
+              <FracaoMassica>0.312603980921419</FracaoMassica>
+              <MolarFlow>0.850588748050762</MolarFlow>
+              <MassFlow>0.0272545646650425</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>4.88856457187632E-05</PartialVolume>
+              <PartialVolume>4.88857788457194E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -10090,27 +10106,27 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
             <activity>0</activity>
             <activityCoefficient>0</activityCoefficient>
             <compressibilityFactor>0</compressibilityFactor>
-            <density>681.506735110433</density>
-            <enthalpy>-376.854235417734</enthalpy>
-            <entropy>-0.975207569138502</entropy>
-            <molarflow>1.88485079387345</molarflow>
-            <massflow>0.0872710124588639</massflow>
-            <molarfraction>0.999688120609491</molarfraction>
-            <massfraction>0.999691196854611</massfraction>
+            <density>681.496061047352</density>
+            <enthalpy>-376.627999171204</enthalpy>
+            <entropy>-0.974618960236799</entropy>
+            <molarflow>1.8824591375008</molarflow>
+            <massflow>0.0871855968843009</massflow>
+            <molarfraction>0.999692154045616</molarfraction>
+            <massfraction>0.999695211886795</massfraction>
             <fugacity>0</fugacity>
             <fugacityCoefficient>0</fugacityCoefficient>
-            <heatCapacityCp>2.83937978578561</heatCapacityCp>
-            <heatCapacityCv>2.83937978578561</heatCapacityCv>
+            <heatCapacityCp>2.83908603052238</heatCapacityCp>
+            <heatCapacityCv>2.83908603052238</heatCapacityCv>
             <logFugacityCoefficient>0</logFugacityCoefficient>
-            <molecularWeight>46.3012842939777</molecularWeight>
+            <molecularWeight>46.3147354157448</molecularWeight>
             <pressure>0</pressure>
             <temperature>0</temperature>
-            <thermalConductivity>0.141375281635881</thermalConductivity>
-            <viscosity>0.000191677221076368</viscosity>
-            <kinematic_viscosity>2.81168212543857E-07</kinematic_viscosity>
+            <thermalConductivity>0.141353095964527</thermalConductivity>
+            <viscosity>0.000191644348492444</viscosity>
+            <kinematic_viscosity>2.81125524450755E-07</kinematic_viscosity>
             <volumetric_flow>0</volumetric_flow>
-            <molar_enthalpy>-17448.8350914661</molar_enthalpy>
-            <molar_entropy>-45.1533629043207</molar_entropy>
+            <molar_enthalpy>-17443.4261317757</molar_enthalpy>
+            <molar_entropy>-45.1392192745357</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -10124,16 +10140,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.530088636440865</FracaoMolar>
-              <FracaoMassica>0.67156546548742</FracaoMassica>
-              <MolarFlow>0.000311707761714998</MolarFlow>
-              <MassFlow>1.81039868004071E-05</MassFlow>
+              <FracaoMolar>0.530476633948191</FracaoMolar>
+              <FracaoMassica>0.671908949059533</FracaoMassica>
+              <MolarFlow>0.000307509816347029</MolarFlow>
+              <MassFlow>1.78601701334355E-05</MassFlow>
               <FugacityCoeff>1</FugacityCoeff>
-              <ActivityCoeff>1.16775046632419</ActivityCoeff>
-              <PartialVolume>0.00464444960980733</PartialVolume>
+              <ActivityCoeff>1.16771558215796</ActivityCoeff>
+              <PartialVolume>0.00464452176001043</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.43624698793151E-06</VolumetricFlow>
-              <VolumetricFraction>0.517330251299748</VolumetricFraction>
+              <VolumetricFlow>1.41691354654983E-06</VolumetricFlow>
+              <VolumetricFraction>0.517719351877035</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Acetone</Nome>
             </Compound>
@@ -10142,16 +10158,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.469911363559135</FracaoMolar>
-              <FracaoMassica>0.32843453451258</FracaoMassica>
-              <MolarFlow>0.000276321749364271</MolarFlow>
-              <MassFlow>8.85390149312996E-06</MassFlow>
+              <FracaoMolar>0.469523366051809</FracaoMolar>
+              <FracaoMassica>0.328091050940467</FracaoMassica>
+              <MolarFlow>0.000272176067380438</MolarFlow>
+              <MassFlow>8.721065551004E-06</MassFlow>
               <FugacityCoeff>1</FugacityCoeff>
-              <ActivityCoeff>1.14745267957544</ActivityCoeff>
-              <PartialVolume>0.004888200461165</PartialVolume>
+              <ActivityCoeff>1.14741094975049</ActivityCoeff>
+              <PartialVolume>0.00488827340274036</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.34002017279041E-06</VolumetricFlow>
-              <VolumetricFraction>0.482669748700252</VolumetricFraction>
+              <VolumetricFlow>1.31992358617988E-06</VolumetricFlow>
+              <VolumetricFraction>0.482280648122965</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Methanol</Nome>
             </Compound>
@@ -10162,28 +10178,28 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <activity>0</activity>
             <activityCoefficient>0</activityCoefficient>
-            <compressibilityFactor>0.893395250188517</compressibilityFactor>
-            <density>9.71012036411044</density>
-            <enthalpy>98.8217062921568</enthalpy>
-            <entropy>0.139238969654761</entropy>
-            <molarflow>0.000588029511079269</molarflow>
-            <massflow>2.69578882935371E-05</massflow>
-            <molarfraction>0.000311879390509051</molarfraction>
-            <massfraction>0.000308803150708741</massfraction>
+            <compressibilityFactor>0.893380202784799</compressibilityFactor>
+            <density>9.71239222332805</density>
+            <enthalpy>98.8247527752666</enthalpy>
+            <entropy>0.139320353216599</entropy>
+            <molarflow>0.000579685883727467</molarflow>
+            <massflow>2.65812356844395E-05</massflow>
+            <molarfraction>0.000307845954384283</molarfraction>
+            <massfraction>0.00030478811855853</massfraction>
             <fugacity>0</fugacity>
             <fugacityCoefficient>0</fugacityCoefficient>
-            <heatCapacityCp>1.78715853132291</heatCapacityCp>
-            <heatCapacityCv>1.45962408774425</heatCapacityCv>
+            <heatCapacityCp>1.78711938649448</heatCapacityCp>
+            <heatCapacityCv>1.45963590180249</heatCapacityCv>
             <logFugacityCoefficient>0</logFugacityCoefficient>
-            <molecularWeight>45.8444479156472</molecularWeight>
+            <molecularWeight>45.854550594743</molecularWeight>
             <pressure>0</pressure>
             <temperature>0</temperature>
-            <thermalConductivity>0.0211318283905009</thermalConductivity>
-            <viscosity>1.16724514374083E-05</viscosity>
-            <kinematic_viscosity>1.20209132324979E-06</kinematic_viscosity>
-            <volumetric_flow>2.77626716072193E-06</volumetric_flow>
-            <molar_enthalpy>4530.42656704617</molar_enthalpy>
-            <molar_entropy>6.38333369216606</molar_entropy>
+            <thermalConductivity>0.0211297395188311</thermalConductivity>
+            <viscosity>1.16713896899653E-05</viscosity>
+            <kinematic_viscosity>1.20170081907648E-06</kinematic_viscosity>
+            <volumetric_flow>2.73683713272971E-06</volumetric_flow>
+            <molar_enthalpy>4531.56462614643</molar_enthalpy>
+            <molar_entropy>6.388472185448</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -10197,16 +10213,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.547633623702959</FracaoMolar>
-              <FracaoMassica>0.686947702416214</FracaoMassica>
-              <MolarFlow>1.03220767038831</MolarFlow>
-              <MassFlow>0.0599506214961533</MassFlow>
-              <FugacityCoeff>0.96808164041613</FugacityCoeff>
-              <ActivityCoeff>1.13047778703582</ActivityCoeff>
-              <PartialVolume>9.76439607942053E-05</PartialVolume>
+              <FracaoMolar>0.548150219515509</FracaoMolar>
+              <FracaoMassica>0.687396019078581</FracaoMassica>
+              <MolarFlow>1.03187038945004</MolarFlow>
+              <MassFlow>0.0599310322192584</MassFlow>
+              <FugacityCoeff>0.967877741529669</FugacityCoeff>
+              <ActivityCoeff>1.13020592040805</ActivityCoeff>
+              <PartialVolume>9.76442199064276E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>9.05912602621186E-05</VolumetricFlow>
-              <VolumetricFraction>0.707434831696</VolumetricFraction>
+              <VolumetricFlow>9.05592077978288E-05</VolumetricFlow>
+              <VolumetricFraction>0.707866271623838</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Acetone</Nome>
             </Compound>
@@ -10215,16 +10231,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.452366376297041</FracaoMolar>
-              <FracaoMassica>0.313052297583786</FracaoMassica>
-              <MolarFlow>0.852643123485131</MolarFlow>
-              <MassFlow>0.0273203909627106</MassFlow>
-              <FugacityCoeff>1.03863943263148</FugacityCoeff>
-              <ActivityCoeff>1.1917896000857</ActivityCoeff>
-              <PartialVolume>4.88856457187632E-05</PartialVolume>
+              <FracaoMolar>0.451849780484491</FracaoMolar>
+              <FracaoMassica>0.312603980921419</FracaoMassica>
+              <MolarFlow>0.850588748050762</MolarFlow>
+              <MassFlow>0.0272545646650425</MassFlow>
+              <FugacityCoeff>1.03896745374917</FugacityCoeff>
+              <ActivityCoeff>1.19212263286618</ActivityCoeff>
+              <PartialVolume>4.88857788457194E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>3.74647191769142E-05</VolumetricFlow>
-              <VolumetricFraction>0.292565168304</VolumetricFraction>
+              <VolumetricFlow>3.73734419526486E-05</VolumetricFlow>
+              <VolumetricFraction>0.292133728376162</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Methanol</Nome>
             </Compound>
@@ -10233,23 +10249,23 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Nome>Líquido 1</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <compressibilityFactor>0.0134353095256348</compressibilityFactor>
-            <density>681.506735110433</density>
-            <enthalpy>-376.854235417734</enthalpy>
-            <entropy>-0.975207569138502</entropy>
-            <molarflow>1.88485079387345</molarflow>
-            <massflow>0.0872710124588639</massflow>
-            <molarfraction>0.999688120609491</molarfraction>
-            <massfraction>0.999691196854611</massfraction>
-            <heatCapacityCp>2.83937978578561</heatCapacityCp>
-            <heatCapacityCv>2.83937978578561</heatCapacityCv>
-            <molecularWeight>46.3012842939777</molecularWeight>
-            <thermalConductivity>0.141375281635881</thermalConductivity>
-            <viscosity>0.000191677221076368</viscosity>
-            <kinematic_viscosity>2.81255064992584E-07</kinematic_viscosity>
-            <volumetric_flow>0.000128055979439033</volumetric_flow>
-            <molar_enthalpy>-17448.8350914661</molar_enthalpy>
-            <molar_entropy>-45.1533629043207</molar_entropy>
+            <compressibilityFactor>0.0134399941365695</compressibilityFactor>
+            <density>681.496061047352</density>
+            <enthalpy>-376.627999171204</enthalpy>
+            <entropy>-0.974618960236799</entropy>
+            <molarflow>1.8824591375008</molarflow>
+            <massflow>0.0871855968843009</massflow>
+            <molarfraction>0.999692154045616</molarfraction>
+            <massfraction>0.999695211886795</massfraction>
+            <heatCapacityCp>2.83908603052238</heatCapacityCp>
+            <heatCapacityCv>2.83908603052238</heatCapacityCv>
+            <molecularWeight>46.3147354157448</molecularWeight>
+            <thermalConductivity>0.141353095964527</thermalConductivity>
+            <viscosity>0.000191644348492444</viscosity>
+            <kinematic_viscosity>2.81211234292267E-07</kinematic_viscosity>
+            <volumetric_flow>0.000127932649750477</volumetric_flow>
+            <molar_enthalpy>-17443.4261317757</molar_enthalpy>
+            <molar_entropy>-45.1392192745357</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -10447,12 +10463,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.MaterialStream</Type>
-      <SpecType>Temperature_and_Pressure</SpecType>
-      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <Calculated>true</Calculated>
+      <SpecType>Temperature_and_Pressure</SpecType>
       <IsElectrolyteStream>false</IsElectrolyteStream>
       <ReferenceSolvent></ReferenceSolvent>
       <AtEquilibrium>true</AtEquilibrium>
+      <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-4c626b03-8509-409c-a65d-9d3346c1fff6</ComponentDescription>
       <ComponentName>Acetone Rich Product</ComponentName>
       <code>0</code>
@@ -10474,37 +10490,37 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Compounds>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>-0.000368258004516432</lnKvalue>
-              <Kvalue>0.99963180979414</Kvalue>
+              <lnKvalue>-0.000363833145184777</lnKvalue>
+              <Kvalue>0.999636233034068</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.99948570209602</FracaoMolar>
-              <FracaoMassica>0.999716202929617</FracaoMassica>
-              <MolarFlow>0.49974285104801</MolarFlow>
-              <MassFlow>0.0290250647888684</MassFlow>
+              <FracaoMolar>0.999491890378703</FracaoMolar>
+              <FracaoMassica>0.999719618492126</FracaoMassica>
+              <MolarFlow>0.499745945189351</MolarFlow>
+              <MassFlow>0.0290252444965975</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>4.36047625847068E-05</VolumetricFlow>
-              <VolumetricFraction>0.999745558492912</VolumetricFraction>
+              <VolumetricFlow>4.36050443604096E-05</VolumetricFlow>
+              <VolumetricFraction>0.999748821563981</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Acetone</Nome>
             </Compound>
             <Compound>
               <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.Substancia</Type>
-              <lnKvalue>0.539728040625103</lnKvalue>
-              <Kvalue>1.71554024148511</Kvalue>
+              <lnKvalue>0.539738653737163</lnKvalue>
+              <Kvalue>1.71555844880256</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.000514297903979817</FracaoMolar>
-              <FracaoMassica>0.000283797070383233</FracaoMassica>
-              <MolarFlow>0.000257148951989909</MolarFlow>
-              <MassFlow>8.23956671966065E-06</MassFlow>
+              <FracaoMolar>0.000508109621297047</FracaoMolar>
+              <FracaoMassica>0.000280381507874294</FracaoMassica>
+              <MolarFlow>0.000254054810648524</MolarFlow>
+              <MassFlow>8.14042424279999E-06</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
               <PartialVolume>0</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.12371743076354E-08</VolumetricFlow>
-              <VolumetricFraction>0.000257639634712959</VolumetricFraction>
+              <VolumetricFlow>1.11019662756805E-08</VolumetricFlow>
+              <VolumetricFraction>0.000254538846685178</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Methanol</Nome>
             </Compound>
@@ -10513,24 +10529,24 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Nome>Mistura</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <density>665.657201852573</density>
-            <enthalpy>-203.42759506367</enthalpy>
-            <entropy>-0.517561874031836</entropy>
+            <density>665.656812121366</density>
+            <enthalpy>-203.425311309218</enthalpy>
+            <entropy>-0.517555780514173</entropy>
             <molarflow>0.5</molarflow>
-            <massflow>0.0290333043555881</massflow>
-            <heatCapacityCp>2.67841336339695</heatCapacityCp>
-            <heatCapacityCv>2.67841336339695</heatCapacityCv>
-            <molecularWeight>58.0666087111762</molecularWeight>
+            <massflow>0.0290333849208403</massflow>
+            <heatCapacityCp>2.67841768729008</heatCapacityCp>
+            <heatCapacityCv>2.67841768729008</heatCapacityCv>
+            <molecularWeight>58.0667698416807</molecularWeight>
             <pressure>607950</pressure>
-            <temperature>393.049807705034</temperature>
-            <thermalConductivity>0.124765344530406</thermalConductivity>
-            <volumetric_flow>4.36159997590145E-05</volumetric_flow>
-            <molar_enthalpy>-11812.3505636177</molar_enthalpy>
-            <molar_entropy>-30.0530628232297</molar_entropy>
+            <temperature>393.050022757204</temperature>
+            <thermalConductivity>0.12476512498803</thermalConductivity>
+            <volumetric_flow>4.36161463266853E-05</volumetric_flow>
+            <molar_enthalpy>-11812.2507317646</molar_enthalpy>
+            <molar_entropy>-30.0527923873479</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
-            <surfaceTension>0.0117447947280392</surfaceTension>
+            <surfaceTension>0.0117447588455006</surfaceTension>
           </TPMProperties>
         </Phase>
         <Phase>
@@ -10541,13 +10557,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.99948570209602</FracaoMolar>
-              <FracaoMassica>0.999716202929617</FracaoMassica>
-              <MolarFlow>0.49974285104801</MolarFlow>
-              <MassFlow>0.0290250647888684</MassFlow>
+              <FracaoMolar>0.999491890378703</FracaoMolar>
+              <FracaoMassica>0.999719618492126</FracaoMassica>
+              <MolarFlow>0.499745945189351</MolarFlow>
+              <MassFlow>0.0290252444965975</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>9.90507086725389E-05</PartialVolume>
+              <PartialVolume>9.90507557817051E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -10559,13 +10575,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.000514297903979817</FracaoMolar>
-              <FracaoMassica>0.000283797070383233</FracaoMassica>
-              <MolarFlow>0.000257148951989909</MolarFlow>
-              <MassFlow>8.23956671966065E-06</MassFlow>
+              <FracaoMolar>0.000508109621297047</FracaoMolar>
+              <FracaoMassica>0.000280381507874294</FracaoMassica>
+              <MolarFlow>0.000254054810648524</MolarFlow>
+              <MassFlow>8.14042424279999E-06</MassFlow>
               <FugacityCoeff>NaN</FugacityCoeff>
               <ActivityCoeff>NaN</ActivityCoeff>
-              <PartialVolume>4.96069595831105E-05</PartialVolume>
+              <PartialVolume>4.96069836878213E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
               <VolumetricFlow>0</VolumetricFlow>
               <VolumetricFraction>0</VolumetricFraction>
@@ -10578,22 +10594,22 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <compressibilityFactor>0</compressibilityFactor>
-            <density>665.657201852573</density>
-            <enthalpy>-203.42759506367</enthalpy>
-            <entropy>-0.517561874031836</entropy>
+            <density>665.656812121366</density>
+            <enthalpy>-203.425311309218</enthalpy>
+            <entropy>-0.517555780514173</entropy>
             <molarflow>0.5</molarflow>
-            <massflow>0.0290333043555881</massflow>
+            <massflow>0.0290333849208403</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
-            <heatCapacityCp>2.67841336339695</heatCapacityCp>
-            <heatCapacityCv>2.67841336339695</heatCapacityCv>
-            <molecularWeight>58.0666087111762</molecularWeight>
-            <thermalConductivity>0.124765344530406</thermalConductivity>
-            <viscosity>0.000158816982355699</viscosity>
-            <kinematic_viscosity>2.38586740913641E-07</kinematic_viscosity>
+            <heatCapacityCp>2.67841768729008</heatCapacityCp>
+            <heatCapacityCv>2.67841768729008</heatCapacityCv>
+            <molecularWeight>58.0667698416807</molecularWeight>
+            <thermalConductivity>0.12476512498803</thermalConductivity>
+            <viscosity>0.000158816469171319</viscosity>
+            <kinematic_viscosity>2.38586109657903E-07</kinematic_viscosity>
             <volumetric_flow>0</volumetric_flow>
-            <molar_enthalpy>-11812.3505636177</molar_enthalpy>
-            <molar_entropy>-30.0530628232297</molar_entropy>
+            <molar_enthalpy>-11812.2507317646</molar_enthalpy>
+            <molar_entropy>-30.0527923873479</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -10607,8 +10623,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.999117701249611</FracaoMolar>
-              <FracaoMassica>0.999513054350793</FracaoMassica>
+              <FracaoMolar>0.999128308246266</FracaoMolar>
+              <FracaoMassica>0.999518910700588</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>1</FugacityCoeff>
@@ -10625,8 +10641,8 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.000882298750388823</FracaoMolar>
-              <FracaoMassica>0.000486945649206955</FracaoMassica>
+              <FracaoMolar>0.000871691753734017</FracaoMolar>
+              <FracaoMassica>0.000481089299411811</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>1</FugacityCoeff>
@@ -10663,16 +10679,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.99948570209602</FracaoMolar>
-              <FracaoMassica>0.999716202929617</FracaoMassica>
-              <MolarFlow>0.49974285104801</MolarFlow>
-              <MassFlow>0.0290250647888684</MassFlow>
-              <FugacityCoeff>0.999631833223534</FugacityCoeff>
-              <ActivityCoeff>1.00004258429261</ActivityCoeff>
-              <PartialVolume>9.90507086725389E-05</PartialVolume>
+              <FracaoMolar>0.999491890378703</FracaoMolar>
+              <FracaoMassica>0.999719618492126</FracaoMassica>
+              <MolarFlow>0.499745945189351</MolarFlow>
+              <MassFlow>0.0290252444965975</MassFlow>
+              <FugacityCoeff>0.999636255915898</FugacityCoeff>
+              <ActivityCoeff>1.00004207062557</ActivityCoeff>
+              <PartialVolume>9.90507557817051E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>4.36047625847068E-05</VolumetricFlow>
-              <VolumetricFraction>0.999742361189249</VolumetricFraction>
+              <VolumetricFlow>4.36050443604096E-05</VolumetricFlow>
+              <VolumetricFraction>0.999745462008667</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Acetone</Nome>
             </Compound>
@@ -10681,16 +10697,16 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0.000514297903979817</FracaoMolar>
-              <FracaoMassica>0.000283797070383233</FracaoMassica>
-              <MolarFlow>0.000257148951989909</MolarFlow>
-              <MassFlow>8.23956671966065E-06</MassFlow>
-              <FugacityCoeff>1.71547173228273</FugacityCoeff>
-              <ActivityCoeff>1.63098019089174</ActivityCoeff>
-              <PartialVolume>4.96069595831105E-05</PartialVolume>
+              <FracaoMolar>0.000508109621297047</FracaoMolar>
+              <FracaoMassica>0.000280381507874294</FracaoMassica>
+              <MolarFlow>0.000254054810648524</MolarFlow>
+              <MassFlow>8.14042424279999E-06</MassFlow>
+              <FugacityCoeff>1.71549076120108</FugacityCoeff>
+              <ActivityCoeff>1.63098850300501</ActivityCoeff>
+              <PartialVolume>4.96069836878213E-05</PartialVolume>
               <PartialPressure>0</PartialPressure>
-              <VolumetricFlow>1.12371743076354E-08</VolumetricFlow>
-              <VolumetricFraction>0.000257638810751161</VolumetricFraction>
+              <VolumetricFlow>1.11019662756805E-08</VolumetricFlow>
+              <VolumetricFraction>0.000254537991332997</VolumetricFraction>
               <Descricao></Descricao>
               <Nome>Methanol</Nome>
             </Compound>
@@ -10699,23 +10715,23 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
           <Nome>Líquido 1</Nome>
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
-            <compressibilityFactor>0.0188159759801559</compressibilityFactor>
-            <density>665.657201852573</density>
-            <enthalpy>-203.42759506367</enthalpy>
-            <entropy>-0.517561874031836</entropy>
+            <compressibilityFactor>0.0188160727447085</compressibilityFactor>
+            <density>665.656812121366</density>
+            <enthalpy>-203.425311309218</enthalpy>
+            <entropy>-0.517555780514173</entropy>
             <molarflow>0.5</molarflow>
-            <massflow>0.0290333043555881</massflow>
+            <massflow>0.0290333849208403</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
-            <heatCapacityCp>2.67841336339695</heatCapacityCp>
-            <heatCapacityCv>2.67841336339695</heatCapacityCv>
-            <molecularWeight>58.0666087111762</molecularWeight>
-            <thermalConductivity>0.124765344530406</thermalConductivity>
-            <viscosity>0.000158816982355699</viscosity>
-            <kinematic_viscosity>2.38586740913641E-07</kinematic_viscosity>
-            <volumetric_flow>4.36159997590145E-05</volumetric_flow>
-            <molar_enthalpy>-11812.3505636177</molar_enthalpy>
-            <molar_entropy>-30.0530628232297</molar_entropy>
+            <heatCapacityCp>2.67841768729008</heatCapacityCp>
+            <heatCapacityCv>2.67841768729008</heatCapacityCv>
+            <molecularWeight>58.0667698416807</molecularWeight>
+            <thermalConductivity>0.12476512498803</thermalConductivity>
+            <viscosity>0.000158816469171319</viscosity>
+            <kinematic_viscosity>2.38586109657903E-07</kinematic_viscosity>
+            <volumetric_flow>4.36161463266853E-05</volumetric_flow>
+            <molar_enthalpy>-11812.2507317646</molar_enthalpy>
+            <molar_entropy>-30.0527923873479</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -10913,7 +10929,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.EnergyStream</Type>
-      <Energia>2118.48703499523</Energia>
+      <Energia>2115.42163968495</Energia>
       <ComponentDescription>EN-b696460e-1663-400d-a21c-87d50b8de316</ComponentDescription>
       <ComponentName>Condenser Duty (2)</ComponentName>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -10930,7 +10946,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.EnergyStream</Type>
-      <Energia>-2146.2990294617</Energia>
+      <Energia>-2143.20561453199</Energia>
       <ComponentDescription>EN-4883c9b1-2698-4122-8d02-6b279638b979</ComponentDescription>
       <ComponentName>Reboiler Duty (2)</ComponentName>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -10948,7 +10964,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.SpecialOps.Recycle</Type>
       <Converged>true</Converged>
-      <IterationsTaken>2</IterationsTaken>
+      <IterationsTaken>1</IterationsTaken>
       <IterationCount>0</IterationCount>
       <FlashType>FlashTP</FlashType>
       <AccelerationMethod>None</AccelerationMethod>
@@ -10962,24 +10978,25 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
         <Composicao>0.001</Composicao>
       </ConvergenceParameters>
       <ConvergenceHistory>
-        <Temperatura>386.434895855707</Temperatura>
+        <Type>DWSIM.DWSIM.SimulationObjects.SpecialOps.Helpers.Recycle.ConvergenceHistory</Type>
+        <Temperatura>386.436150472279</Temperatura>
         <Pressao>607950</Pressao>
-        <VazaoMassica>0.087297970346693</VazaoMassica>
+        <VazaoMassica>0.0872121781195184</VazaoMassica>
         <Entalpia>0</Entalpia>
         <Entropia>0</Entropia>
-        <Temperatura0>386.433734709354</Temperatura0>
+        <Temperatura0>386.434895855707</Temperatura0>
         <Pressao0>607950</Pressao0>
-        <VazaoMassica0>0.0873854092430263</VazaoMassica0>
+        <VazaoMassica0>0.0872979703466929</VazaoMassica0>
         <Entalpia0>0</Entalpia0>
         <Entropia0>0</Entropia0>
-        <TemperaturaE>0.00116114635250142</TemperaturaE>
+        <TemperaturaE>0.00125461657222559</TemperaturaE>
         <PressaoE>0</PressaoE>
-        <VazaoMassicaE>-8.74388963333084E-05</VazaoMassicaE>
+        <VazaoMassicaE>-8.57922271744888E-05</VazaoMassicaE>
         <EntalpiaE>0</EntalpiaE>
         <EntropiaE>0</EntropiaE>
-        <TemperaturaE0>3.25735341147032</TemperaturaE0>
+        <TemperaturaE0>1.70530256582424E-13</TemperaturaE0>
         <PressaoE0>0</PressaoE0>
-        <VazaoMassicaE0>-0.00154298604446995</VazaoMassicaE0>
+        <VazaoMassicaE0>-8.32667268468867E-17</VazaoMassicaE0>
         <EntalpiaE0>0</EntalpiaE0>
         <EntropiaE0>0</EntropiaE0>
       </ConvergenceHistory>
@@ -11007,7 +11024,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems />
-      <PropertyPackage></PropertyPackage>
+      <PropertyPackage>PP-e7677239-b401-44a5-80b5-8eae63bcc298</PropertyPackage>
       <WegPars AccelDelay="2" AccelFreq="4" Qmax="0" Qmin="-20" />
     </SimulationObject>
     <SimulationObject>
@@ -11047,18 +11064,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
   <GraphicObjects>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.MaterialStreamGraphic</Type>
-      <GradientMode>true</GradientMode>
-      <GradientColor1>LightGrey</GradientColor1>
-      <GradientColor2>White</GradientColor2>
-      <FillColor>WhiteSmoke</FillColor>
       <LineWidth>2</LineWidth>
-      <Width>20</Width>
-      <Height>20</Height>
-      <Rotation>0</Rotation>
-      <X>5120</X>
-      <Y>3672</Y>
+      <GradientMode>true</GradientMode>
       <LineColor>SteelBlue</LineColor>
       <Fill>true</Fill>
+      <FillColor>WhiteSmoke</FillColor>
+      <GradientColor1>LightGrey</GradientColor1>
+      <GradientColor2>White</GradientColor2>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -11074,7 +11086,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <Tag>Equimolar Feed</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
+      <X>5120</X>
+      <Y>3672</Y>
       <Name>MAT-1316f091-758c-41fa-964b-d69f3e3d8e42</Name>
+      <Height>20</Height>
+      <Width>20</Width>
+      <Rotation>0</Rotation>
       <InputConnectors>
         <Connector IsAttached="False" />
       </InputConnectors>
@@ -11111,7 +11128,7 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
       <X>5201</X>
-      <Y>3591</Y>
+      <Y>3577</Y>
       <Name>DC-81065c8e-9af4-4e4e-80d6-5c6eeaf6f49d</Name>
       <Height>180</Height>
       <Width>144</Width>
@@ -11139,18 +11156,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.MaterialStreamGraphic</Type>
-      <GradientMode>true</GradientMode>
-      <GradientColor1>LightGrey</GradientColor1>
-      <GradientColor2>White</GradientColor2>
-      <FillColor>WhiteSmoke</FillColor>
       <LineWidth>2</LineWidth>
-      <Width>20</Width>
-      <Height>20</Height>
-      <Rotation>0</Rotation>
-      <X>5413</X>
-      <Y>3577</Y>
+      <GradientMode>true</GradientMode>
       <LineColor>SteelBlue</LineColor>
       <Fill>true</Fill>
+      <FillColor>WhiteSmoke</FillColor>
+      <GradientColor1>LightGrey</GradientColor1>
+      <GradientColor2>White</GradientColor2>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -11166,7 +11178,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <Tag>LP Azeotrope</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
+      <X>5413</X>
+      <Y>3577</Y>
       <Name>MAT-02e827bf-bf5c-429d-8c3b-7a8071516e1f</Name>
+      <Height>20</Height>
+      <Width>20</Width>
+      <Rotation>0</Rotation>
       <InputConnectors>
         <Connector IsAttached="True" ConnType="ConIn" AttachedFromObjID="DC-81065c8e-9af4-4e4e-80d6-5c6eeaf6f49d" AttachedFromConnIndex="0" AttachedFromEnergyConn="False" />
       </InputConnectors>
@@ -11180,18 +11197,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.MaterialStreamGraphic</Type>
-      <GradientMode>true</GradientMode>
-      <GradientColor1>LightGrey</GradientColor1>
-      <GradientColor2>White</GradientColor2>
-      <FillColor>WhiteSmoke</FillColor>
       <LineWidth>2</LineWidth>
-      <Width>20</Width>
-      <Height>20</Height>
-      <Rotation>0</Rotation>
-      <X>5430</X>
-      <Y>3765</Y>
+      <GradientMode>true</GradientMode>
       <LineColor>SteelBlue</LineColor>
       <Fill>true</Fill>
+      <FillColor>WhiteSmoke</FillColor>
+      <GradientColor1>LightGrey</GradientColor1>
+      <GradientColor2>White</GradientColor2>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -11207,7 +11219,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <Tag>Methanol</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
+      <X>5430</X>
+      <Y>3765</Y>
       <Name>MAT-a3577b59-ff83-4d28-814c-3a901d5acfda</Name>
+      <Height>20</Height>
+      <Width>20</Width>
+      <Rotation>0</Rotation>
       <InputConnectors>
         <Connector IsAttached="True" ConnType="ConIn" AttachedFromObjID="DC-81065c8e-9af4-4e4e-80d6-5c6eeaf6f49d" AttachedFromConnIndex="1" AttachedFromEnergyConn="False" />
       </InputConnectors>
@@ -11303,18 +11320,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.MaterialStreamGraphic</Type>
-      <GradientMode>true</GradientMode>
-      <GradientColor1>LightGrey</GradientColor1>
-      <GradientColor2>White</GradientColor2>
-      <FillColor>WhiteSmoke</FillColor>
       <LineWidth>2</LineWidth>
-      <Width>20</Width>
-      <Height>20</Height>
-      <Rotation>0</Rotation>
-      <X>5123</X>
-      <Y>3590</Y>
+      <GradientMode>true</GradientMode>
       <LineColor>SteelBlue</LineColor>
       <Fill>true</Fill>
+      <FillColor>WhiteSmoke</FillColor>
+      <GradientColor1>LightGrey</GradientColor1>
+      <GradientColor2>White</GradientColor2>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -11330,7 +11342,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <Tag>Recycled HP Azeotrope</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
+      <X>5123</X>
+      <Y>3590</Y>
       <Name>MAT-11467055-6808-43b2-a84e-b3cbd5974a8c</Name>
+      <Height>20</Height>
+      <Width>20</Width>
+      <Rotation>0</Rotation>
       <InputConnectors>
         <Connector IsAttached="True" ConnType="ConIn" AttachedFromObjID="REC-dbca834d-696b-435c-9254-f85250dd6aad" AttachedFromConnIndex="0" AttachedFromEnergyConn="False" />
       </InputConnectors>
@@ -11386,18 +11403,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.MaterialStreamGraphic</Type>
-      <GradientMode>true</GradientMode>
-      <GradientColor1>LightGrey</GradientColor1>
-      <GradientColor2>White</GradientColor2>
-      <FillColor>WhiteSmoke</FillColor>
       <LineWidth>2</LineWidth>
-      <Width>20</Width>
-      <Height>20</Height>
-      <Rotation>0</Rotation>
-      <X>5554</X>
-      <Y>3573</Y>
+      <GradientMode>true</GradientMode>
       <LineColor>SteelBlue</LineColor>
       <Fill>true</Fill>
+      <FillColor>WhiteSmoke</FillColor>
+      <GradientColor1>LightGrey</GradientColor1>
+      <GradientColor2>White</GradientColor2>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -11413,7 +11425,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <Tag>HP Feed</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
+      <X>5554</X>
+      <Y>3573</Y>
       <Name>MAT-df21fa52-ddbf-4e61-a6bb-9fb208f76a2d</Name>
+      <Height>20</Height>
+      <Width>20</Width>
+      <Rotation>0</Rotation>
       <InputConnectors>
         <Connector IsAttached="True" ConnType="ConIn" AttachedFromObjID="BB-bd6f57b0-31ff-46ba-8468-b712aa1e2bb9" AttachedFromConnIndex="0" AttachedFromEnergyConn="False" />
       </InputConnectors>
@@ -11468,18 +11485,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.DistillationColumnGraphic</Type>
-      <GradientMode>true</GradientMode>
-      <GradientColor1>LightGrey</GradientColor1>
-      <GradientColor2>White</GradientColor2>
-      <FillColor>WhiteSmoke</FillColor>
       <LineWidth>2</LineWidth>
-      <Width>144</Width>
-      <Height>180</Height>
-      <Rotation>0</Rotation>
-      <X>5616</X>
-      <Y>3531</Y>
+      <GradientMode>true</GradientMode>
       <LineColor>SteelBlue</LineColor>
       <Fill>true</Fill>
+      <FillColor>WhiteSmoke</FillColor>
+      <GradientColor1>LightGrey</GradientColor1>
+      <GradientColor2>White</GradientColor2>
       <MixPoint>true</MixPoint>
       <SplitPoint>true</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -11495,7 +11507,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <Tag>Acetone Column (6 atm)</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
+      <X>5616</X>
+      <Y>3531</Y>
       <Name>DC-d8d17391-93e8-4990-b225-e42f4f7b0b33</Name>
+      <Height>180</Height>
+      <Width>144</Width>
+      <Rotation>0</Rotation>
       <AdditionalInfo>
         <Info>0,0</Info>
         <Info>90,0</Info>
@@ -11518,18 +11535,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.MaterialStreamGraphic</Type>
-      <GradientMode>true</GradientMode>
-      <GradientColor1>LightGrey</GradientColor1>
-      <GradientColor2>White</GradientColor2>
-      <FillColor>WhiteSmoke</FillColor>
       <LineWidth>2</LineWidth>
-      <Width>20</Width>
-      <Height>20</Height>
-      <Rotation>0</Rotation>
-      <X>5796</X>
-      <Y>3506</Y>
+      <GradientMode>true</GradientMode>
       <LineColor>SteelBlue</LineColor>
       <Fill>true</Fill>
+      <FillColor>WhiteSmoke</FillColor>
+      <GradientColor1>LightGrey</GradientColor1>
+      <GradientColor2>White</GradientColor2>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -11545,7 +11557,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <Tag>HP Azeotrope</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
+      <X>5796</X>
+      <Y>3506</Y>
       <Name>MAT-2bfc6fd0-cbc8-4b85-84f4-c990c3990d85</Name>
+      <Height>20</Height>
+      <Width>20</Width>
+      <Rotation>0</Rotation>
       <InputConnectors>
         <Connector IsAttached="True" ConnType="ConIn" AttachedFromObjID="DC-d8d17391-93e8-4990-b225-e42f4f7b0b33" AttachedFromConnIndex="0" AttachedFromEnergyConn="False" />
       </InputConnectors>
@@ -11559,18 +11576,13 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.MaterialStreamGraphic</Type>
-      <GradientMode>true</GradientMode>
-      <GradientColor1>LightGrey</GradientColor1>
-      <GradientColor2>White</GradientColor2>
-      <FillColor>WhiteSmoke</FillColor>
       <LineWidth>2</LineWidth>
-      <Width>20</Width>
-      <Height>20</Height>
-      <Rotation>0</Rotation>
-      <X>5818</X>
-      <Y>3742</Y>
+      <GradientMode>true</GradientMode>
       <LineColor>SteelBlue</LineColor>
       <Fill>true</Fill>
+      <FillColor>WhiteSmoke</FillColor>
+      <GradientColor1>LightGrey</GradientColor1>
+      <GradientColor2>White</GradientColor2>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -11586,7 +11598,12 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
       <Tag>Acetone Rich Product</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
+      <X>5818</X>
+      <Y>3742</Y>
       <Name>MAT-4c626b03-8509-409c-a65d-9d3346c1fff6</Name>
+      <Height>20</Height>
+      <Width>20</Width>
+      <Rotation>0</Rotation>
       <InputConnectors>
         <Connector IsAttached="True" ConnType="ConIn" AttachedFromObjID="DC-d8d17391-93e8-4990-b225-e42f4f7b0b33" AttachedFromConnIndex="1" AttachedFromEnergyConn="False" />
       </InputConnectors>
@@ -11723,15 +11740,15 @@ This simulation uses 'Methanol' and 'Acetone' components from the ChemSep databa
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.TextGraphic</Type>
+      <Font>[Font: Name=Microsoft Sans Serif, Size=8.25, Units=3, GdiCharSet=1, GdiVerticalFont=False]</Font>
       <Text>This is an example of Pressure Swing Azeotropic Distillation.
 Test case from COCO Simulator: http://www.cocosimulator.org/down.php?dl=CScasebook_MA.fsd (original author: Harry Kooijman - www.chemsep.org)
 Methanol and acetone form a minimum temperature azeotrope but the composition of this azeotrope is sensitive to the pressure.
 We can make use of this to separate the two components into pure products by operating two columns at different pressures. 
 This simulation uses 'Methanol' and 'Acetone' components from the ChemSep database. NRTL interaction parameters were taken from the ChemSep IPD file.
 More information on how to load a ChemSep database in DWSIM can be found at http://apps.sourceforge.net/mediawiki/dwsim/index.php?title=Loading_a_ChemSep%28TM%29_database.</Text>
-      <TextRenderStyle>Default</TextRenderStyle>
       <Color>Black</Color>
-      <Font>[Font: Name=Microsoft Sans Serif, Size=8.25, Units=3, GdiCharSet=1, GdiVerticalFont=False]</Font>
+      <TextRenderStyle>Default</TextRenderStyle>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -12201,7 +12218,7 @@ More information on how to load a ChemSep database in DWSIM can be found at http
   <PanelLayout>&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;!--DockPanel configuration file. Author: Weifen Luo, all rights reserved.--&gt;
 &lt;!--!!! AUTOMATICALLY GENERATED FILE. DO NOT MODIFY !!!--&gt;
-&lt;DockPanel FormatVersion="1.0" DockLeftPortion="0.25" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="2" ActivePane="1"&gt;
+&lt;DockPanel FormatVersion="1.0" DockLeftPortion="0.25" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="2" ActivePane="2"&gt;
   &lt;Contents Count="8"&gt;
     &lt;Content ID="0" PersistString="DWSIM.frmLog" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="1" PersistString="DWSIM.frmObjList" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;

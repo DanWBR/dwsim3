@@ -115,9 +115,7 @@ Public Class FormOptions
 
         'solver
         cbSolverMode.SelectedIndex = My.Settings.SolverMode
-        tbServiceBusNamespace.Text = My.Settings.ServiceBusNamespace
-        tbServiceBusOwner.Text = My.Settings.ServiceBusOwner
-        tbServiceBusKey.Text = My.Settings.ServiceBusKey
+        tbServiceBusNamespace.Text = My.Settings.ServiceBusConnectionString
         tbSolverTimeout.Text = My.Settings.SolverTimeoutSeconds
         cbDebugLevel.SelectedIndex = My.Settings.DebugLevel
         tbServerIP.Text = My.Settings.ServerIPAddress
@@ -387,7 +385,7 @@ Public Class FormOptions
             Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(3).ReadOnly = True
             Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Selado")
         End If
-        
+
         'user databases
         If Not My.Settings.UserInteractionsDatabases Is Nothing Then
             For Each str As String In My.Settings.UserInteractionsDatabases
@@ -444,7 +442,7 @@ Public Class FormOptions
             End If
 
         End If
-        
+
     End Sub
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         If Me.ListView1.SelectedIndices.Count > 0 Then
@@ -585,15 +583,7 @@ Public Class FormOptions
     End Sub
 
     Private Sub tbServiceBusNamespace_TextChanged(sender As Object, e As EventArgs) Handles tbServiceBusNamespace.TextChanged
-        My.Settings.ServiceBusNamespace = tbServiceBusNamespace.Text
-    End Sub
-
-    Private Sub tbServiceBusOwner_TextChanged(sender As Object, e As EventArgs) Handles tbServiceBusOwner.TextChanged
-        My.Settings.ServiceBusOwner = tbServiceBusOwner.Text
-    End Sub
-
-    Private Sub tbServiceBusKey_TextChanged(sender As Object, e As EventArgs) Handles tbServiceBusKey.TextChanged
-        My.Settings.ServiceBusKey = tbServiceBusKey.Text
+        My.Settings.ServiceBusConnectionString = tbServiceBusNamespace.Text
     End Sub
 
     Private Sub cbDebugLevel_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDebugLevel.SelectedIndexChanged

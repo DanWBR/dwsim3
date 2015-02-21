@@ -420,7 +420,6 @@ Public Class FormMain
         Dim CPPP As CoolPropPropertyPackage = New CoolPropPropertyPackage()
         CPPP.ComponentName = "CoolProp"
         CPPP.ComponentDescription = DWSIM.App.GetLocalString("DescCPPP")
-
         PropertyPackages.Add(CPPP.ComponentName.ToString, CPPP)
 
         Dim STPP As SteamTablesPropertyPackage = New SteamTablesPropertyPackage()
@@ -776,14 +775,18 @@ Public Class FormMain
             Dim cpdb As New DWSIM.Databases.CoolProp
             Dim cpa() As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
             cpdb.Load(filename)
-            cpa = cpdb.Transfer()
-            For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
-                If Not Me.AvailableComponents.ContainsKey(cp.Name) Then
-                    Me.AvailableComponents.Add(cp.Name, cp)
-                Else
-                    Me.AvailableComponents(cp.Name).IsCOOLPROPSupported = True
-                End If
-            Next
+            Try
+                cpa = cpdb.Transfer()
+                For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
+                    If Not Me.AvailableComponents.ContainsKey(cp.Name) Then
+                        Me.AvailableComponents.Add(cp.Name, cp)
+                    Else
+                        Me.AvailableComponents(cp.Name).IsCOOLPROPSupported = True
+                    End If
+                Next
+            Catch ex As Exception
+                Console.WriteLine("Error loading CoolProp database: " & ex.Message.ToString)
+            End Try
         End If
     End Sub
 

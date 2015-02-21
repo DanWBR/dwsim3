@@ -30,25 +30,21 @@ Partial Class FormOptions
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.GroupBoxNetworkComputerConfig = New System.Windows.Forms.GroupBox()
-        Me.tbServerPort = New System.Windows.Forms.TextBox()
-        Me.tbServerIP = New System.Windows.Forms.TextBox()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.Label16 = New System.Windows.Forms.Label()
         Me.cbDebugLevel = New System.Windows.Forms.ComboBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.tbSolverTimeout = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.GroupBoxAzureConfig = New System.Windows.Forms.GroupBox()
-        Me.tbServiceBusKey = New System.Windows.Forms.TextBox()
-        Me.tbServiceBusOwner = New System.Windows.Forms.TextBox()
         Me.tbServiceBusNamespace = New System.Windows.Forms.TextBox()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.cbSolverMode = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.GroupBoxNetworkComputerConfig = New System.Windows.Forms.GroupBox()
+        Me.tbServerPort = New System.Windows.Forms.TextBox()
+        Me.tbServerIP = New System.Windows.Forms.TextBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
         Me.tbGPUCaps = New System.Windows.Forms.TextBox()
@@ -116,8 +112,8 @@ Partial Class FormOptions
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
-        Me.GroupBoxNetworkComputerConfig.SuspendLayout()
         Me.GroupBoxAzureConfig.SuspendLayout()
+        Me.GroupBoxNetworkComputerConfig.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
         Me.FaTabStripItem3.SuspendLayout()
@@ -166,7 +162,6 @@ Partial Class FormOptions
         'GroupBox2
         '
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.Controls.Add(Me.GroupBoxNetworkComputerConfig)
         Me.GroupBox2.Controls.Add(Me.cbDebugLevel)
         Me.GroupBox2.Controls.Add(Me.Label13)
         Me.GroupBox2.Controls.Add(Me.Label12)
@@ -175,56 +170,12 @@ Partial Class FormOptions
         Me.GroupBox2.Controls.Add(Me.GroupBoxAzureConfig)
         Me.GroupBox2.Controls.Add(Me.cbSolverMode)
         Me.GroupBox2.Controls.Add(Me.Label2)
+        Me.GroupBox2.Controls.Add(Me.GroupBoxNetworkComputerConfig)
         Me.GroupBox2.Name = "GroupBox2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox2, System.Drawing.Color.Empty)
         Me.GroupBox2.TabStop = False
         Me.SuperToolTip1.SetToolTip(Me.GroupBox2, resources.GetString("GroupBox2.ToolTip"))
-        '
-        'GroupBoxNetworkComputerConfig
-        '
-        resources.ApplyResources(Me.GroupBoxNetworkComputerConfig, "GroupBoxNetworkComputerConfig")
-        Me.GroupBoxNetworkComputerConfig.Controls.Add(Me.tbServerPort)
-        Me.GroupBoxNetworkComputerConfig.Controls.Add(Me.tbServerIP)
-        Me.GroupBoxNetworkComputerConfig.Controls.Add(Me.Label15)
-        Me.GroupBoxNetworkComputerConfig.Controls.Add(Me.Label16)
-        Me.GroupBoxNetworkComputerConfig.Name = "GroupBoxNetworkComputerConfig"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBoxNetworkComputerConfig, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBoxNetworkComputerConfig, System.Drawing.Color.Empty)
-        Me.GroupBoxNetworkComputerConfig.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBoxNetworkComputerConfig, resources.GetString("GroupBoxNetworkComputerConfig.ToolTip"))
-        '
-        'tbServerPort
-        '
-        resources.ApplyResources(Me.tbServerPort, "tbServerPort")
-        Me.tbServerPort.Name = "tbServerPort"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbServerPort, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbServerPort, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.tbServerPort, resources.GetString("tbServerPort.ToolTip"))
-        '
-        'tbServerIP
-        '
-        resources.ApplyResources(Me.tbServerIP, "tbServerIP")
-        Me.tbServerIP.Name = "tbServerIP"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbServerIP, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbServerIP, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.tbServerIP, resources.GetString("tbServerIP.ToolTip"))
-        '
-        'Label15
-        '
-        resources.ApplyResources(Me.Label15, "Label15")
-        Me.Label15.Name = "Label15"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label15, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label15, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label15, resources.GetString("Label15.ToolTip"))
-        '
-        'Label16
-        '
-        resources.ApplyResources(Me.Label16, "Label16")
-        Me.Label16.Name = "Label16"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label16, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label16, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label16, resources.GetString("Label16.ToolTip"))
         '
         'cbDebugLevel
         '
@@ -272,33 +223,13 @@ Partial Class FormOptions
         'GroupBoxAzureConfig
         '
         resources.ApplyResources(Me.GroupBoxAzureConfig, "GroupBoxAzureConfig")
-        Me.GroupBoxAzureConfig.Controls.Add(Me.tbServiceBusKey)
-        Me.GroupBoxAzureConfig.Controls.Add(Me.tbServiceBusOwner)
         Me.GroupBoxAzureConfig.Controls.Add(Me.tbServiceBusNamespace)
-        Me.GroupBoxAzureConfig.Controls.Add(Me.Label10)
-        Me.GroupBoxAzureConfig.Controls.Add(Me.Label9)
         Me.GroupBoxAzureConfig.Controls.Add(Me.Label8)
         Me.GroupBoxAzureConfig.Name = "GroupBoxAzureConfig"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBoxAzureConfig, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBoxAzureConfig, System.Drawing.Color.Empty)
         Me.GroupBoxAzureConfig.TabStop = False
         Me.SuperToolTip1.SetToolTip(Me.GroupBoxAzureConfig, resources.GetString("GroupBoxAzureConfig.ToolTip"))
-        '
-        'tbServiceBusKey
-        '
-        resources.ApplyResources(Me.tbServiceBusKey, "tbServiceBusKey")
-        Me.tbServiceBusKey.Name = "tbServiceBusKey"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbServiceBusKey, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbServiceBusKey, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.tbServiceBusKey, resources.GetString("tbServiceBusKey.ToolTip"))
-        '
-        'tbServiceBusOwner
-        '
-        resources.ApplyResources(Me.tbServiceBusOwner, "tbServiceBusOwner")
-        Me.tbServiceBusOwner.Name = "tbServiceBusOwner"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbServiceBusOwner, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbServiceBusOwner, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.tbServiceBusOwner, resources.GetString("tbServiceBusOwner.ToolTip"))
         '
         'tbServiceBusNamespace
         '
@@ -307,22 +238,6 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbServiceBusNamespace, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbServiceBusNamespace, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetToolTip(Me.tbServiceBusNamespace, resources.GetString("tbServiceBusNamespace.ToolTip"))
-        '
-        'Label10
-        '
-        resources.ApplyResources(Me.Label10, "Label10")
-        Me.Label10.Name = "Label10"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label10, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label10, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip"))
-        '
-        'Label9
-        '
-        resources.ApplyResources(Me.Label9, "Label9")
-        Me.Label9.Name = "Label9"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label9, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label9, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label9, resources.GetString("Label9.ToolTip"))
         '
         'Label8
         '
@@ -350,6 +265,51 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetToolTip(Me.Label2, resources.GetString("Label2.ToolTip"))
+        '
+        'GroupBoxNetworkComputerConfig
+        '
+        resources.ApplyResources(Me.GroupBoxNetworkComputerConfig, "GroupBoxNetworkComputerConfig")
+        Me.GroupBoxNetworkComputerConfig.Controls.Add(Me.tbServerPort)
+        Me.GroupBoxNetworkComputerConfig.Controls.Add(Me.tbServerIP)
+        Me.GroupBoxNetworkComputerConfig.Controls.Add(Me.Label15)
+        Me.GroupBoxNetworkComputerConfig.Controls.Add(Me.Label16)
+        Me.GroupBoxNetworkComputerConfig.Name = "GroupBoxNetworkComputerConfig"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBoxNetworkComputerConfig, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBoxNetworkComputerConfig, System.Drawing.Color.Empty)
+        Me.GroupBoxNetworkComputerConfig.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBoxNetworkComputerConfig, resources.GetString("GroupBoxNetworkComputerConfig.ToolTip"))
+        '
+        'tbServerPort
+        '
+        resources.ApplyResources(Me.tbServerPort, "tbServerPort")
+        Me.tbServerPort.Name = "tbServerPort"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbServerPort, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbServerPort, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.tbServerPort, resources.GetString("tbServerPort.ToolTip"))
+        '
+        'tbServerIP
+        '
+        resources.ApplyResources(Me.tbServerIP, "tbServerIP")
+        Me.tbServerIP.Name = "tbServerIP"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbServerIP, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbServerIP, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.tbServerIP, resources.GetString("tbServerIP.ToolTip"))
+        '
+        'Label15
+        '
+        resources.ApplyResources(Me.Label15, "Label15")
+        Me.Label15.Name = "Label15"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label15, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label15, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label15, resources.GetString("Label15.ToolTip"))
+        '
+        'Label16
+        '
+        resources.ApplyResources(Me.Label16, "Label16")
+        Me.Label16.Name = "Label16"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label16, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label16, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label16, resources.GetString("Label16.ToolTip"))
         '
         'GroupBox7
         '
@@ -1015,10 +975,10 @@ Partial Class FormOptions
         Me.FaTabStripItem1.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
-        Me.GroupBoxNetworkComputerConfig.ResumeLayout(False)
-        Me.GroupBoxNetworkComputerConfig.PerformLayout()
         Me.GroupBoxAzureConfig.ResumeLayout(False)
         Me.GroupBoxAzureConfig.PerformLayout()
+        Me.GroupBoxNetworkComputerConfig.ResumeLayout(False)
+        Me.GroupBoxNetworkComputerConfig.PerformLayout()
         Me.GroupBox7.ResumeLayout(False)
         Me.GroupBox7.PerformLayout()
         Me.GroupBox8.ResumeLayout(False)
@@ -1114,11 +1074,7 @@ Partial Class FormOptions
     Friend WithEvents FaTabStripItem7 As FarsiLibrary.Win.FATabStripItem
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents GroupBoxAzureConfig As System.Windows.Forms.GroupBox
-    Friend WithEvents tbServiceBusKey As System.Windows.Forms.TextBox
-    Friend WithEvents tbServiceBusOwner As System.Windows.Forms.TextBox
     Friend WithEvents tbServiceBusNamespace As System.Windows.Forms.TextBox
-    Friend WithEvents Label10 As System.Windows.Forms.Label
-    Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents cbSolverMode As System.Windows.Forms.ComboBox
     Friend WithEvents Label2 As System.Windows.Forms.Label

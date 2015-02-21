@@ -425,36 +425,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property ServiceBusNamespace() As String
+        Public Property ServiceBusConnectionString() As String
             Get
-                Return CType(Me("ServiceBusNamespace"),String)
+                Return CType(Me("ServiceBusConnectionString"),String)
             End Get
             Set
-                Me("ServiceBusNamespace") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property ServiceBusOwner() As String
-            Get
-                Return CType(Me("ServiceBusOwner"),String)
-            End Get
-            Set
-                Me("ServiceBusOwner") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property ServiceBusKey() As String
-            Get
-                Return CType(Me("ServiceBusKey"),String)
-            End Get
-            Set
-                Me("ServiceBusKey") = value
+                Me("ServiceBusConnectionString") = value
             End Set
         End Property
         

@@ -1818,48 +1818,58 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             MyBase.LoadData(data)
 
+            If Not Stages Is Nothing Then Stages.Clear()
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "Stages").SingleOrDefault.Elements.ToList
                 Dim var As New Stage()
                 var.LoadData(xel.Elements.ToList)
                 Stages.Add(var)
             Next
 
-            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "MaterialStreams").SingleOrDefault.Elements.ToList
-                Dim var As New StreamInformation
-                var.LoadData(xel.Elements.ToList)
-                _conn_ms.Add(xel.@ID, var)
-            Next
+            If _conn_ms.Count = 0 Then
+                For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "MaterialStreams").SingleOrDefault.Elements.ToList
+                    Dim var As New StreamInformation
+                    var.LoadData(xel.Elements.ToList)
+                    _conn_ms.Add(xel.@ID, var)
+                Next
+            End If
 
-            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "EnergyStreams").SingleOrDefault.Elements.ToList
-                Dim var As New StreamInformation
-                var.LoadData(xel.Elements.ToList)
-                _conn_es.Add(xel.@ID, var)
-            Next
+            If _conn_es.Count = 0 Then
+                For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "EnergyStreams").SingleOrDefault.Elements.ToList
+                    Dim var As New StreamInformation
+                    var.LoadData(xel.Elements.ToList)
+                    _conn_es.Add(xel.@ID, var)
+                Next
+            End If
 
+            If Not m_specs Is Nothing Then m_specs.Clear()
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "Specs").SingleOrDefault.Elements.ToList
                 Dim var As New ColumnSpec
                 var.LoadData(xel.Elements.ToList)
                 m_specs.Add(xel.@ID, var)
             Next
 
+            If Not _src.Collection Is Nothing Then _src.Collection.Clear()
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "SideRectifiers").SingleOrDefault.Elements.ToList
                 Dim var As New SideRectifier
                 var.LoadData(xel.Elements.ToList)
                 _src.Collection.Add(xel.@ID, var)
             Next
 
+            If Not _sss.Collection Is Nothing Then _sss.Collection.Clear()
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "SteamedSideStrippers").SingleOrDefault.Elements.ToList
                 Dim var As New SteamedSideStripper
                 var.LoadData(xel.Elements.ToList)
                 _sss.Collection.Add(xel.@ID, var)
             Next
 
+            If Not _par.Collection Is Nothing Then _par.Collection.Clear()
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "PumpArounds").SingleOrDefault.Elements.ToList
                 Dim var As New PumpAround
                 var.LoadData(xel.Elements.ToList)
                 _par.Collection.Add(xel.@ID, var)
             Next
 
+            If Not _rss.Collection Is Nothing Then _rss.Collection.Clear()
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "ReboiledSideStrippers").SingleOrDefault.Elements.ToList
                 Dim var As New ReboiledSideStripper
                 var.LoadData(xel.Elements.ToList)
