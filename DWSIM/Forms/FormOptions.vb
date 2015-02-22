@@ -567,15 +567,15 @@ Public Class FormOptions
                 GroupBoxAzureConfig.Visible = False
                 GroupBoxNetworkComputerConfig.Visible = False
                 tbSolverTimeout.Enabled = False
-            Case 1
+            Case 1, 2
                 GroupBoxAzureConfig.Visible = False
                 GroupBoxNetworkComputerConfig.Visible = False
                 tbSolverTimeout.Enabled = True
-            Case 2
+            Case 3
                 GroupBoxAzureConfig.Visible = True
                 GroupBoxNetworkComputerConfig.Visible = False
                 tbSolverTimeout.Enabled = True
-            Case 3
+            Case 4
                 GroupBoxAzureConfig.Visible = False
                 GroupBoxNetworkComputerConfig.Visible = True
                 tbSolverTimeout.Enabled = True
