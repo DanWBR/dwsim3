@@ -252,7 +252,7 @@ Partial Class FormOptions
         resources.ApplyResources(Me.cbSolverMode, "cbSolverMode")
         Me.cbSolverMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbSolverMode.FormattingEnabled = True
-        Me.cbSolverMode.Items.AddRange(New Object() {resources.GetString("cbSolverMode.Items"), resources.GetString("cbSolverMode.Items1"), resources.GetString("cbSolverMode.Items2"), resources.GetString("cbSolverMode.Items3")})
+        Me.cbSolverMode.Items.AddRange(New Object() {resources.GetString("cbSolverMode.Items"), resources.GetString("cbSolverMode.Items1"), resources.GetString("cbSolverMode.Items2"), resources.GetString("cbSolverMode.Items3"), resources.GetString("cbSolverMode.Items4")})
         Me.cbSolverMode.Name = "cbSolverMode"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.cbSolverMode, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.cbSolverMode, System.Drawing.Color.Empty)

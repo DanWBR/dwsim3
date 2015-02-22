@@ -1405,16 +1405,16 @@ Namespace DWSIM.Flowsheet
         Public Shared Sub ProcessCalculationQueue(ByVal form As FormFlowsheet, Optional ByVal Isolated As Boolean = False, Optional ByVal FlowsheetSolverMode As Boolean = False, Optional ByVal mode As Integer = 0, Optional orderedlist As Object = Nothing)
 
             If mode = 0 Then
+                'UI thread
                 ProcessQueueInternal(form, Isolated, FlowsheetSolverMode)
-                SolveSimultaneousAdjusts(form)
             ElseIf mode = 1 Then
-                If orderedlist Is Nothing Then
-                    ProcessQueueInternalAsync(form, Isolated)
-                Else
-                    ProcessQueueInternalAsyncParallel(form, orderedlist)
-                End If
-                SolveSimultaneousAdjustsAsync(form)
+                'bg thread
+                ProcessQueueInternalAsync(form, Isolated)
+            ElseIf mode = 2 Then
+                'bg parallel thread
+                ProcessQueueInternalAsyncParallel(form, orderedlist)
             End If
+            SolveSimultaneousAdjustsAsync(form)
 
         End Sub
 
@@ -1558,20 +1558,22 @@ Namespace DWSIM.Flowsheet
                 End If
             Next
 
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
+
             For Each li In orderedlist
-                Parallel.ForEach(li.Value, Sub(myinfo)
-                                               Try
-                                                   If myinfo.Tipo = TipoObjeto.MaterialStream Then
-                                                       CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), , True)
-                                                   Else
-                                                       CalculateFlowsheetAsync(form, myinfo, Nothing, True)
-                                                   End If
-                                                   form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
-                                               Catch ex As Exception
-                                                   form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = False
-                                                   allex.Add(New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex))
-                                               End Try
-                                           End Sub)
+                Parallel.ForEach(li.Value, poptions, Sub(myinfo)
+                                                         Try
+                                                             If myinfo.Tipo = TipoObjeto.MaterialStream Then
+                                                                 CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), , True)
+                                                             Else
+                                                                 CalculateFlowsheetAsync(form, myinfo, Nothing, True)
+                                                             End If
+                                                             form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
+                                                         Catch ex As Exception
+                                                             form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = False
+                                                             allex.Add(New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex))
+                                                         End Try
+                                                     End Sub)
             Next
 
             For Each obj In form.Collections.ObjectCollection.Values
@@ -1619,8 +1621,9 @@ Namespace DWSIM.Flowsheet
                 'mode:
                 '0 = Synchronous (main thread)
                 '1 = Asynchronous (background thread)
-                '2 = Azure Service Bus
-                '3 = Network Computer
+                '2 = Asynchronous Parallel (background thread)
+                '3 = Azure Service Bus
+                '4 = Network Computer
 
                 Dim lists As New Dictionary(Of Integer, List(Of String))
                 Dim filteredlist As New Dictionary(Of Integer, List(Of String))
@@ -1642,7 +1645,7 @@ Namespace DWSIM.Flowsheet
 
                 Select Case mode
 
-                    Case 0, 1
+                    Case 0, 1, 2
 
                         'find recycles.
 
@@ -1748,7 +1751,7 @@ Namespace DWSIM.Flowsheet
                             If mode = 0 Then
                                 ProcessCalculationQueue(form, True, True, 0)
                                 CheckCalculatorStatus()
-                            ElseIf mode = 1 Then
+                            ElseIf mode = 1 Or mode = 2 Then
                                 filteredlist2.Clear()
                                 For Each li In filteredlist
                                     Dim objcalclist As New List(Of StatusChangeEventArgs)
@@ -1796,9 +1799,9 @@ Namespace DWSIM.Flowsheet
                         lists.Clear()
                         recycles.Clear()
 
-                    Case 2
+                    Case 3
 
-                        'Azure VM
+                        'Azure Service Bus
                         Dim azureclient As New Flowsheet.AzureSolverClient()
 
                         Try
@@ -1808,7 +1811,7 @@ Namespace DWSIM.Flowsheet
                             age = New AggregateException(ex.Message.ToString, ex)
                         End Try
 
-                    Case 3
+                    Case 4
 
                         'Network Computer
 

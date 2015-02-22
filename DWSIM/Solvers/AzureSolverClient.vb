@@ -47,6 +47,15 @@ Namespace DWSIM.Flowsheet
                 qcs = QueueClient.CreateFromConnectionString(connectionString, queueNameS)
                 qcc = QueueClient.CreateFromConnectionString(connectionString, queueNameC)
 
+                While (qcc.Peek() IsNot Nothing)
+                    Dim brokeredMessage = qcc.Receive(New TimeSpan(0, 0, 0))
+                    brokeredMessage.Complete()
+                End While
+                While (qcs.Peek() IsNot Nothing)
+                    Dim brokeredMessage = qcs.Receive(New TimeSpan(0, 0, 0))
+                    brokeredMessage.Complete()
+                End While
+
                 Dim message As BrokeredMessage
 
                 Dim requestID As String = Guid.NewGuid().ToString()
