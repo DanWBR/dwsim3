@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("AzureServer")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("AzureServer")> 
-<Assembly: AssemblyCopyright("Copyright ©  2015")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTitle("DWSIM Azure Service Bus Solver Server")> 
+<Assembly: AssemblyDescription("DWSIM - Open Source Chemical Process Simulator")> 
+<Assembly: AssemblyCompany("DWSIM Project")> 
+<Assembly: AssemblyProduct("DWSIM")> 
+<Assembly: AssemblyCopyright("Copyright © 2007-2015 Daniel Medeiros")> 
+<Assembly: AssemblyTrademark("DWSIM")> 
 
 <Assembly: ComVisible(False)>
 
@@ -31,5 +31,4 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("3.4.*")> 

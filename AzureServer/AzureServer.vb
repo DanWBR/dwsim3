@@ -26,38 +26,57 @@ Imports Microsoft.ServiceBus.Messaging
 Module AzureServer
 
     Private nm As NamespaceManager
-    Private qc As QueueClient
-    Private queueName As String = "DWSIM"
+    Private qcc, qcs As QueueClient
+    Private queueNameS As String = "DWSIMserver"
+    Private queueNameC As String = "DWSIMclient"
 
-    Sub Main(args() As String)
+    Sub Main()
 
-        Dim connectionString As String = args(0)
+        Console.WriteLine("DWSIM - Open Source Process Simulator")
+        Console.WriteLine("Microsoft Azure (TM) Service Bus Solver Server")
+        Console.WriteLine(My.Application.Info.Copyright)
+        Dim dt As DateTime = CType("01/01/2000", DateTime).AddDays(My.Application.Info.Version.Build).AddSeconds(My.Application.Info.Version.Revision * 2)
+        Console.WriteLine("Version " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & _
+        ", Build " & My.Application.Info.Version.Build & " (" & Format(dt, "dd/MM/yyyy HH:mm") & ")")
+        Console.WriteLine("Microsoft .NET Framework Runtime Version " & System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString())
+        Console.WriteLine()
+
+        Dim connectionString As String
+
+        If My.Application.CommandLineArgs.Count > 0 Then
+            connectionString = My.Application.CommandLineArgs(0)
+        Else
+            Console.Write("Please enter the Service Bus connection string: ")
+            connectionString = Console.ReadLine()
+        End If
 
         Try
 
             nm = NamespaceManager.CreateFromConnectionString(connectionString)
-            If Not nm.QueueExists(queueName) Then nm.CreateQueue(queueName)
+            If Not nm.QueueExists(queueNameC) Then nm.CreateQueue(queueNameC)
+            If Not nm.QueueExists(queueNameS) Then nm.CreateQueue(queueNameS)
 
-            qc = QueueClient.CreateFromConnectionString(connectionString, queueName)
+            qcc = QueueClient.CreateFromConnectionString(connectionString, queueNameC)
+            qcs = QueueClient.CreateFromConnectionString(connectionString, queueNameS)
 
-            Console.WriteLine("Server is clearing messages on queue '" & queueName & "'...")
+            Console.WriteLine("[" & Date.Now.ToString & "] " & "Server is clearing messages on queue '" & queueNameS & "'...")
 
-            While (qc.Peek() IsNot Nothing)
-                Dim brokeredMessage = qc.Receive(New TimeSpan(0, 0, 0))
+            While (qcc.Peek() IsNot Nothing)
+                Dim brokeredMessage = qcc.Receive(New TimeSpan(0, 0, 0))
                 brokeredMessage.Complete()
             End While
 
-            Console.WriteLine("Cleared ok")
+            Console.WriteLine("[" & Date.Now.ToString & "] " & "Cleared ok")
+
+            Console.WriteLine("[" & Date.Now.ToString & "] " & "Server is running and listening to incoming data on queue '" & queueNameC & "'...")
 
             While True
-
-                Console.WriteLine("Server is running and listening to incoming data on queue '" & queueName & "'...")
 
                 Thread.Sleep(1000)
 
                 Dim message As BrokeredMessage
 
-                message = qc.Receive(New TimeSpan(0, 0, 0))
+                message = qcc.Receive(New TimeSpan(0, 0, 0))
 
                 If Not message Is Nothing Then
 
@@ -74,12 +93,12 @@ Module AzureServer
                                 message.Complete()
 
                                 If message.Properties("multipart") = False Then
-                                    Console.WriteLine("Data received, flowsheet solving started!")
+                                    Console.WriteLine("[" & Date.Now.ToString & "] Data received with Request ID = " & requestID & ", flowsheet solving started!")
                                     Dim msg As New BrokeredMessage("Data received, flowsheet solving started!")
                                     msg.Properties.Add("requestID", requestID)
                                     msg.Properties.Add("type", "text")
                                     msg.Properties.Add("origin", "server")
-                                    qc.Send(msg)
+                                    qcs.Send(msg)
                                     Task.Factory.StartNew(Sub()
                                                               ProcessData(bytes, requestID)
                                                           End Sub)
@@ -93,7 +112,7 @@ Module AzureServer
                             msg.Properties.Add("requestID", requestID)
                             msg.Properties.Add("type", "exception")
                             msg.Properties.Add("origin", "server")
-                            qc.Send(msg)
+                            qcs.Send(msg)
 
                         End Try
 
@@ -103,9 +122,12 @@ Module AzureServer
 
             End While
 
+            qcc.Close()
+            qcs.Close()
+
         Catch ex As Exception
 
-            Console.WriteLine(ex.ToString)
+            Console.WriteLine("[" & Date.Now.ToString & "] " & ex.ToString)
 
         End Try
 
@@ -129,21 +151,22 @@ Module AzureServer
                                 msg.Properties.Add("requestID", requestID)
                                 msg.Properties.Add("origin", "server")
                                 msg.Properties.Add("type", "data")
-                                qc.Send(msg)
-                                Console.WriteLine("Byte array length: " & compressedstream.Length)
+                                qcs.Send(msg)
+                                Console.WriteLine("[" & Date.Now.ToString & "] " & "Sent data to the queue: " & compressedstream.Length & " B, Request ID = " & requestID)
                             Else
                                 Dim i, n As Integer
                                 Dim bytearray As ArrayList = Split(compressedstream.ToArray, 220)
                                 n = bytearray.Count
                                 For Each b As Byte() In bytearray
-                                    Dim msg As New BrokeredMessage(compressedstream.ToArray)
+                                    Dim msg As New BrokeredMessage(b)
                                     msg.Properties.Add("multipart", True)
                                     msg.Properties.Add("partnumber", i)
                                     msg.Properties.Add("totalparts", n)
                                     msg.Properties.Add("type", "data")
                                     msg.Properties.Add("requestID", requestID)
                                     msg.Properties.Add("origin", "server")
-                                    qc.Send(msg)
+                                    qcs.Send(msg)
+                                    Console.WriteLine("[" & Date.Now.ToString & "] " & "Sent data to the queue: " & b.Length & " B, Request ID = " & requestID)
                                 Next
                             End If
                         End Using
@@ -151,12 +174,12 @@ Module AzureServer
                 End Using
             End Using
         Catch ex As Exception
-            Console.WriteLine(ex.ToString)
+            Console.WriteLine("[" & Date.Now.ToString & "] " & ex.ToString)
             Dim msg As New BrokeredMessage(ex.ToString)
             msg.Properties.Add("requestID", requestID)
             msg.Properties.Add("type", "exception")
             msg.Properties.Add("origin", "server")
-            qc.Send(msg)
+            qcs.Send(msg)
         End Try
 
     End Sub

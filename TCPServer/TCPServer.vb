@@ -25,15 +25,35 @@ Module TCPServer
     Private server As TcpComm.Server
     Private lat As TcpComm.Utilities.LargeArrayTransferHelper
   
-    Sub Main(args As String())
+    Sub Main()
+
+        Console.WriteLine("DWSIM - Open Source Process Simulator")
+        Console.WriteLine("Network TCP/IP Solver Server")
+        Console.WriteLine(My.Application.Info.Copyright)
+        Dim dt As DateTime = CType("01/01/2000", DateTime).AddDays(My.Application.Info.Version.Build).AddSeconds(My.Application.Info.Version.Revision * 2)
+        Console.WriteLine("Version " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & _
+        ", Build " & My.Application.Info.Version.Build & " (" & Format(dt, "dd/MM/yyyy HH:mm") & ")")
+        Console.WriteLine("Microsoft .NET Framework Runtime Version " & System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString())
+        Console.WriteLine()
 
         server = New TcpComm.Server(AddressOf Process)
         lat = New TcpComm.Utilities.LargeArrayTransferHelper(server)
-        server.Start(args(0)) 'port
+
+        Dim port As Integer
+
+        If My.Application.CommandLineArgs.Count > 0 Then
+            port = My.Application.CommandLineArgs(0)
+        Else
+            Console.Write("Please enter the TCP Port Number to listen to: ")
+            port = Console.ReadLine()
+        End If
+
+        server.Start(port)
+
+        Console.WriteLine("[" & Date.Now.ToString & "] " & "Server is running and listening to incoming data on port " & port & "...")
 
         While server.IsRunning
-            Console.WriteLine("Server is running and listening to incoming data on port " & args(0) & "...")
-            Threading.Thread.Sleep(5000)
+            Threading.Thread.Sleep(1000)
         End While
 
     End Sub
@@ -52,7 +72,7 @@ Module TCPServer
 
             Dim errmsg As String = ""
 
-            Console.WriteLine("Data received from " & server.GetSession(sessionID).machineId & ", flowsheet solving started!")
+            Console.WriteLine("[" & Date.Now.ToString & "] " & "Data received from " & server.GetSession(sessionID).machineId & ", flowsheet solving started!")
             If Not server.SendText("Data received from " & server.GetSession(sessionID).machineId & ", flowsheet solving started!", 2, sessionID, errmsg) Then
                 Console.WriteLine(errmsg)
             End If
@@ -91,19 +111,19 @@ Module TCPServer
                             gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
                             gzs.Close()
                             lat.SendArray(compressedstream.ToArray, 100, sessionid, errmsg)
-                            Console.WriteLine("Byte array length: " & compressedstream.Length)
+                            Console.WriteLine("[" & Date.Now.ToString & "] " & "Byte array length: " & compressedstream.Length)
                         End Using
                     End Using
                 End Using
             End Using
         Catch ex As Exception
-            Console.WriteLine("Error solving flowsheet: " & ex.ToString)
+            Console.WriteLine("[" & Date.Now.ToString & "] " & "Error solving flowsheet: " & ex.ToString)
             errmsg = ""
             If Not server.SendText("Error solving flowsheet: " & ex.ToString, 3, sessionid, errmsg) Then
                 Console.WriteLine(errmsg)
             End If
         Finally
-            Console.WriteLine("Closing current session with " & server.GetSession(sessionid).machineId & ".")
+            Console.WriteLine("[" & Date.Now.ToString & "] " & "Closing current session with " & server.GetSession(sessionid).machineId & ".")
             errmsg = ""
             If Not server.SendText("Closing current session with " & server.GetSession(sessionid).machineId & ".", 2, sessionid, errmsg) Then
                 Console.WriteLine(errmsg)

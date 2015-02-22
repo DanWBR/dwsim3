@@ -27,8 +27,9 @@ Namespace DWSIM.Flowsheet
     Public Class AzureSolverClient
 
         Private nm As NamespaceManager
-        Private qc As QueueClient
-        Private queueName As String = "DWSIM"
+        Private qcc, qcs As QueueClient
+        Private queueNameS As String = "DWSIMserver"
+        Private queueNameC As String = "DWSIMclient"
 
         Public Sub SolveFlowsheet(fs As FormFlowsheet)
 
@@ -37,9 +38,11 @@ Namespace DWSIM.Flowsheet
             Try
 
                 nm = NamespaceManager.CreateFromConnectionString(connectionString)
-                If Not nm.QueueExists(queueName) Then nm.CreateQueue(queueName)
+                If Not nm.QueueExists(queueNameS) Then nm.CreateQueue(queueNameS)
+                If Not nm.QueueExists(queueNameC) Then nm.CreateQueue(queueNameC)
 
-                qc = QueueClient.CreateFromConnectionString(connectionString, queueName)
+                qcs = QueueClient.CreateFromConnectionString(connectionString, queueNameS)
+                qcc = QueueClient.CreateFromConnectionString(connectionString, queueNameC)
 
                 fs.WriteToLog(DWSIM.App.GetLocalString("ClientConnected"), Color.Brown, FormClasses.TipoAviso.Informacao)
                 Dim tmpfile As String = My.Computer.FileSystem.GetTempFileName
@@ -57,27 +60,28 @@ Namespace DWSIM.Flowsheet
                         compressedstream.Position = 0
                         gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
                         gzs.Close()
-                        fs.WriteToLog(DWSIM.App.GetLocalString("ClientSendingData") & " " & Math.Round(compressedstream.Length / 1024).ToString & " KB", Color.Brown, FormClasses.TipoAviso.Informacao)
+                        fs.WriteToLog(DWSIM.App.GetLocalString("ClientSendingData") & " " & Math.Round(compressedstream.Length / 1024).ToString & " KB, request ID = " & requestID, Color.Brown, FormClasses.TipoAviso.Informacao)
                         If compressedstream.Length < 220 * 1024 Then
                             Dim msg As New BrokeredMessage(compressedstream.ToArray)
                             msg.Properties.Add("multipart", False)
                             msg.Properties.Add("requestID", requestID)
                             msg.Properties.Add("origin", "client")
                             msg.Properties.Add("type", "data")
-                            qc.Send(msg)
+                            qcc.Send(msg)
                         Else
                             Dim i, n As Integer
                             Dim bytearray As ArrayList = Split(compressedstream.ToArray, 220)
                             n = bytearray.Count
                             For Each b As Byte() In bytearray
-                                Dim msg As New BrokeredMessage(compressedstream.ToArray)
+                                fs.WriteToLog(DWSIM.App.GetLocalString("ClientSendingData") & " " & Math.Round(b.Length / 1024).ToString & " KB, request ID = " & requestID, Color.Brown, FormClasses.TipoAviso.Informacao)
+                                Dim msg As New BrokeredMessage(b)
                                 msg.Properties.Add("multipart", True)
                                 msg.Properties.Add("partnumber", i)
                                 msg.Properties.Add("totalparts", n)
                                 msg.Properties.Add("requestID", requestID)
                                 msg.Properties.Add("origin", "client")
                                 msg.Properties.Add("type", "data")
-                                qc.Send(msg)
+                                qcc.Send(msg)
                             Next
                         End If
                     End Using
@@ -86,15 +90,16 @@ Namespace DWSIM.Flowsheet
                 Dim time As Integer = 0
                 Dim sleeptime As Integer = 1
 
+                fs.WriteToLog(DWSIM.App.GetLocalString("ClientWaitingForResults"), Color.Brown, FormClasses.TipoAviso.Informacao)
+
                 While (True)
 
                     Application.DoEvents()
                     Thread.Sleep(1000)
                     time += sleeptime
                     If time >= My.Settings.SolverTimeoutSeconds Then Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
-                    fs.WriteToLog(DWSIM.App.GetLocalString("ClientWaitingForResults"), Color.Brown, FormClasses.TipoAviso.Informacao)
-
-                    message = qc.Receive(New TimeSpan(0, 0, 0))
+                   
+                    message = qcs.Receive(New TimeSpan(0, 0, 0))
 
                     If Not message Is Nothing Then
 
@@ -156,7 +161,8 @@ Namespace DWSIM.Flowsheet
             Catch ex As Exception
                 Throw ex
             Finally
-                qc.Close()
+                qcs.Close()
+                qcc.Close()
             End Try
 
         End Sub
