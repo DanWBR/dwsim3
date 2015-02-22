@@ -242,6 +242,8 @@ Namespace DWSIM.Flowsheet
                         CalculateMaterialStreamAsync(form, myObj, , OnlyMe)
                         RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), myObj)
                     Case TipoObjeto.EnergyStream
+                        Dim myObj As DWSIM.SimulationObjects.Streams.EnergyStream = form.Collections.CLCS_EnergyStreamCollection(objArgs.Nome)
+                        myObj.Calculated = True
                     Case Else
                         RaiseEvent UnitOpCalculationStarted(form, New System.EventArgs(), objArgs)
                         Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
