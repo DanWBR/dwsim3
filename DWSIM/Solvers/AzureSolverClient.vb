@@ -99,11 +99,17 @@ Namespace DWSIM.Flowsheet
 
                 While (True)
 
+                    If My.MyApplication.CalculatorStopRequested = True Then
+                        My.MyApplication.CalculatorStopRequested = False
+                        Throw New TimeoutException(DWSIM.App.GetLocalString("CalculationAborted"))
+                    End If
+
                     Application.DoEvents()
+
                     Thread.Sleep(1000)
                     time += sleeptime
                     If time >= My.Settings.SolverTimeoutSeconds Then Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
-                   
+
                     message = qcs.Receive(New TimeSpan(0, 0, 0))
 
                     If Not message Is Nothing Then

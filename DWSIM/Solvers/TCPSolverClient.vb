@@ -76,9 +76,13 @@ Namespace DWSIM.Flowsheet
                 Dim time As Integer = 0
                 Dim sleeptime As Integer = 1
                 While results Is Nothing
-                    Thread.Sleep(sleeptime * 2000)
+                    Thread.Sleep(sleeptime * 1000)
                     Application.DoEvents()
-                    time += sleeptime * 2
+                    time += sleeptime
+                    If My.MyApplication.CalculatorStopRequested = True Then
+                        My.MyApplication.CalculatorStopRequested = False
+                        Throw New TimeoutException(DWSIM.App.GetLocalString("CalculationAborted"))
+                    End If
                     If Abort Then Throw New Exception(ErrorMsg)
                     If time >= My.Settings.SolverTimeoutSeconds Then Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
                     fs.WriteToLog(DWSIM.App.GetLocalString("ClientWaitingForResults"), Color.Brown, FormClasses.TipoAviso.Informacao)
