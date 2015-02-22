@@ -27,6 +27,7 @@ Module TCPServer
   
     Sub Main()
 
+        Console.WriteLine()
         Console.WriteLine("DWSIM - Open Source Process Simulator")
         Console.WriteLine("Network TCP/IP Solver Server")
         Console.WriteLine(My.Application.Info.Copyright)

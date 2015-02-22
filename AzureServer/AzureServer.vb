@@ -1,4 +1,4 @@
-﻿'    DWSIM Flowsheet Solver Server for Microsoft Azure (TM) Virtual Machine
+﻿'    DWSIM Flowsheet Solver Server for Microsoft Azure (TM) Service Bus
 '    Copyright 2015 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -22,6 +22,7 @@ Imports System.Threading
 Imports System.Threading.Tasks
 Imports Microsoft.ServiceBus
 Imports Microsoft.ServiceBus.Messaging
+Imports System.Linq
 
 Module AzureServer
 
@@ -32,6 +33,7 @@ Module AzureServer
 
     Sub Main()
 
+        Console.WriteLine()
         Console.WriteLine("DWSIM - Open Source Process Simulator")
         Console.WriteLine("Microsoft Azure (TM) Service Bus Solver Server")
         Console.WriteLine(My.Application.Info.Copyright)
@@ -59,16 +61,22 @@ Module AzureServer
             qcc = QueueClient.CreateFromConnectionString(connectionString, queueNameC)
             qcs = QueueClient.CreateFromConnectionString(connectionString, queueNameS)
 
-            Console.WriteLine("[" & Date.Now.ToString & "] " & "Server is clearing messages on queue '" & queueNameS & "'...")
+            Console.WriteLine("[" & Date.Now.ToString & "] " & "Server is clearing messages on queues...")
 
             While (qcc.Peek() IsNot Nothing)
                 Dim brokeredMessage = qcc.Receive(New TimeSpan(0, 0, 0))
+                brokeredMessage.Complete()
+            End While
+            While (qcs.Peek() IsNot Nothing)
+                Dim brokeredMessage = qcs.Receive(New TimeSpan(0, 0, 0))
                 brokeredMessage.Complete()
             End While
 
             Console.WriteLine("[" & Date.Now.ToString & "] " & "Cleared ok")
 
             Console.WriteLine("[" & Date.Now.ToString & "] " & "Server is running and listening to incoming data on queue '" & queueNameC & "'...")
+
+            Dim bytearr As New List(Of Byte())
 
             While True
 
@@ -88,11 +96,36 @@ Module AzureServer
 
                             If message.Properties("type") = "data" Then
 
+                                Dim i, n As Integer
+
                                 Dim bytes As Byte() = message.GetBody(Of Byte())()
 
                                 message.Complete()
 
                                 If message.Properties("multipart") = False Then
+
+                                    i = 0
+                                    n = 0
+                            
+                                Else
+
+                                    i = message.Properties("partnumber")
+                                    n = message.Properties("totalparts")
+
+                                    If i = 1 Then
+                                        bytearr.Clear()
+                                        bytearr.Add(bytes)
+                                    ElseIf i > 1 And i < n Then
+                                        bytearr.Add(bytes)
+                                    Else
+                                        bytearr.Add(bytes)
+                                        bytes = Combine(bytearr.ToArray)
+                                    End If
+
+                                End If
+
+                                If i = n Then
+
                                     Console.WriteLine("[" & Date.Now.ToString & "] Data received with Request ID = " & requestID & ", flowsheet solving started!")
                                     Dim msg As New BrokeredMessage("Data received, flowsheet solving started!")
                                     msg.Properties.Add("requestID", requestID)
@@ -102,6 +135,7 @@ Module AzureServer
                                     Task.Factory.StartNew(Sub()
                                                               ProcessData(bytes, requestID)
                                                           End Sub)
+
                                 End If
 
                             End If
@@ -157,6 +191,7 @@ Module AzureServer
                                 Dim i, n As Integer
                                 Dim bytearray As ArrayList = Split(compressedstream.ToArray, 220)
                                 n = bytearray.Count
+                                i = 1
                                 For Each b As Byte() In bytearray
                                     Dim msg As New BrokeredMessage(b)
                                     msg.Properties.Add("multipart", True)
@@ -193,6 +228,8 @@ Module AzureServer
 
         Dim result As New ArrayList()
 
+        remaining = filebytes.Length - pos
+
         While remaining > 0
 
             Dim block As Byte() = New Byte(Math.Min(remaining, partsizeKB) - 1) {}
@@ -206,6 +243,19 @@ Module AzureServer
         End While
 
         Return result
+
+    End Function
+
+    Private Function Combine(ParamArray arrays As Byte()()) As Byte()
+
+        Dim rv As Byte() = New Byte(arrays.Sum(Function(a) a.Length) - 1) {}
+        Dim offset As Integer = 0
+        For Each array As Byte() In arrays
+            System.Buffer.BlockCopy(array, 0, rv, offset, array.Length)
+            offset += array.Length
+        Next
+
+        Return rv
 
     End Function
 

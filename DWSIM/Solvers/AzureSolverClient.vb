@@ -1,4 +1,4 @@
-﻿'    DWSIM Flowsheet Solver Client for Microsoft Azure (TM) Virtual Machine
+﻿'    DWSIM Flowsheet Solver Client for Microsoft Azure (TM) Service Bus
 '    Copyright 2015 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -22,6 +22,7 @@ Imports System.Threading
 Imports System.Threading.Tasks
 Imports Microsoft.ServiceBus
 Imports Microsoft.ServiceBus.Messaging
+Imports System.Linq
 
 Namespace DWSIM.Flowsheet
     Public Class AzureSolverClient
@@ -60,8 +61,8 @@ Namespace DWSIM.Flowsheet
                         compressedstream.Position = 0
                         gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
                         gzs.Close()
-                        fs.WriteToLog(DWSIM.App.GetLocalString("ClientSendingData") & " " & Math.Round(compressedstream.Length / 1024).ToString & " KB, request ID = " & requestID, Color.Brown, FormClasses.TipoAviso.Informacao)
                         If compressedstream.Length < 220 * 1024 Then
+                            fs.WriteToLog(DWSIM.App.GetLocalString("ClientSendingData") & " " & Math.Round(compressedstream.Length / 1024).ToString & " KB, request ID = " & requestID, Color.Brown, FormClasses.TipoAviso.Informacao)
                             Dim msg As New BrokeredMessage(compressedstream.ToArray)
                             msg.Properties.Add("multipart", False)
                             msg.Properties.Add("requestID", requestID)
@@ -72,6 +73,7 @@ Namespace DWSIM.Flowsheet
                             Dim i, n As Integer
                             Dim bytearray As ArrayList = Split(compressedstream.ToArray, 220)
                             n = bytearray.Count
+                            i = 1
                             For Each b As Byte() In bytearray
                                 fs.WriteToLog(DWSIM.App.GetLocalString("ClientSendingData") & " " & Math.Round(b.Length / 1024).ToString & " KB, request ID = " & requestID, Color.Brown, FormClasses.TipoAviso.Informacao)
                                 Dim msg As New BrokeredMessage(b)
@@ -82,6 +84,7 @@ Namespace DWSIM.Flowsheet
                                 msg.Properties.Add("origin", "client")
                                 msg.Properties.Add("type", "data")
                                 qcc.Send(msg)
+                                i += 1
                             Next
                         End If
                     End Using
@@ -91,6 +94,8 @@ Namespace DWSIM.Flowsheet
                 Dim sleeptime As Integer = 1
 
                 fs.WriteToLog(DWSIM.App.GetLocalString("ClientWaitingForResults"), Color.Brown, FormClasses.TipoAviso.Informacao)
+
+                Dim bytearr As New List(Of Byte())
 
                 While (True)
 
@@ -110,33 +115,49 @@ Namespace DWSIM.Flowsheet
                                 Dim bytes As Byte() = message.GetBody(Of Byte())()
                                 message.Complete()
 
+                                Dim i, n As Integer
+
                                 If message.Properties("multipart") = False Then
 
-                                    fs.WriteToLog(DWSIM.App.GetLocalString("ClientSentDataOK"), Color.Brown, FormClasses.TipoAviso.Informacao)
-
-                                    Try
-                                        Using ms As New MemoryStream(bytes)
-                                            Using decompressedstream As New IO.MemoryStream
-                                                Using gzs As New IO.BufferedStream(New Compression.GZipStream(ms, Compression.CompressionMode.Decompress, True), 64 * 1024)
-                                                    gzs.CopyTo(decompressedstream)
-                                                    gzs.Close()
-                                                    fs.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatingData") & " " & Math.Round(decompressedstream.Length / 1024).ToString & " KB", Color.Brown, FormClasses.TipoAviso.Informacao)
-                                                    decompressedstream.Position = 0
-                                                    Dim xdoc As XDocument = XDocument.Load(decompressedstream)
-                                                    DWSIM.SimulationObjects.UnitOps.Flowsheet.UpdateProcessData(fs, xdoc)
-                                                    fs.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatedDataOK"), Color.Brown, FormClasses.TipoAviso.Informacao)
-                                                End Using
-                                            End Using
-                                        End Using
-                                    Catch ex As Exception
-                                        fs.WriteToLog(DWSIM.App.GetLocalString("ClientDataProcessingError") & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                    End Try
-
-                                    Exit While
+                                    i = 0
+                                    n = 0
 
                                 Else
 
+                                    i = message.Properties("partnumber")
+                                    n = message.Properties("totalparts")
+
+                                    If i = 1 Then
+                                        bytearr.Clear()
+                                        bytearr.Add(bytes)
+                                    ElseIf i > 1 And i < n Then
+                                        bytearr.Add(bytes)
+                                    Else
+                                        bytearr.Add(bytes)
+                                        bytes = Combine(bytearr.ToArray)
+                                    End If
+
                                 End If
+
+                                Try
+                                    Using ms As New MemoryStream(bytes)
+                                        Using decompressedstream As New IO.MemoryStream
+                                            Using gzs As New IO.BufferedStream(New Compression.GZipStream(ms, Compression.CompressionMode.Decompress, True), 64 * 1024)
+                                                gzs.CopyTo(decompressedstream)
+                                                gzs.Close()
+                                                fs.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatingData") & " " & Math.Round(decompressedstream.Length / 1024).ToString & " KB", Color.Brown, FormClasses.TipoAviso.Informacao)
+                                                decompressedstream.Position = 0
+                                                Dim xdoc As XDocument = XDocument.Load(decompressedstream)
+                                                DWSIM.SimulationObjects.UnitOps.Flowsheet.UpdateProcessData(fs, xdoc)
+                                                fs.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatedDataOK"), Color.Brown, FormClasses.TipoAviso.Informacao)
+                                            End Using
+                                        End Using
+                                    End Using
+                                Catch ex As Exception
+                                    fs.WriteToLog(DWSIM.App.GetLocalString("ClientDataProcessingError") & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                End Try
+
+                                Exit While
 
                             ElseIf message.Properties("type") = "text" Then
 
@@ -176,6 +197,8 @@ Namespace DWSIM.Flowsheet
 
             Dim result As New ArrayList()
 
+            remaining = filebytes.Length - pos
+
             While remaining > 0
 
                 Dim block As Byte() = New Byte(Math.Min(remaining, partsizeKB) - 1) {}
@@ -189,6 +212,18 @@ Namespace DWSIM.Flowsheet
             End While
 
             Return result
+
+        End Function
+
+        Private Function Combine(ParamArray arrays As Byte()()) As Byte()
+
+            Dim rv As Byte() = New Byte(arrays.Sum(Function(a) a.Length) - 1) {}
+            Dim offset As Integer = 0
+            For Each array As Byte() In arrays
+                System.Buffer.BlockCopy(array, 0, rv, offset, array.Length)
+                offset += array.Length
+            Next
+            Return rv
 
         End Function
 
