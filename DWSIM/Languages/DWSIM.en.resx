@@ -5047,4 +5047,16 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ClientWaitingForResults" xml:space="preserve">
     <value>Waiting for results from server run....</value>
   </data>
+  <data name="AzureClientCheckingForServerOnEndpoint" xml:space="preserve">
+    <value>Checking for an active server on the Service Bus Endpoint...</value>
+  </data>
+  <data name="AzureClientConnectingtoSB" xml:space="preserve">
+    <value>Connecting to Azure Service Bus...</value>
+  </data>
+  <data name="AzureClientNoServerOnEndpoint" xml:space="preserve">
+    <value>There are no servers connected to the Service Bus at the moment. Try again later or start a server somewhere.</value>
+  </data>
+  <data name="AzureClientServerFoundOnEndpoint" xml:space="preserve">
+    <value>Active server found on Service Bus Endpoint. Preparing data for uploading...</value>
+  </data>
 </root>

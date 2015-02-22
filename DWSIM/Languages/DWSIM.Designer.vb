@@ -947,6 +947,42 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Verificando a existência de um servidor conectado ao Service Bus....
+        '''</summary>
+        Friend Shared ReadOnly Property AzureClientCheckingForServerOnEndpoint() As String
+            Get
+                Return ResourceManager.GetString("AzureClientCheckingForServerOnEndpoint", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Conectando-se ao Service Bus do Azure....
+        '''</summary>
+        Friend Shared ReadOnly Property AzureClientConnectingtoSB() As String
+            Get
+                Return ResourceManager.GetString("AzureClientConnectingtoSB", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Não existe um servidor ativo e conectado ao Service Bus no momento..
+        '''</summary>
+        Friend Shared ReadOnly Property AzureClientNoServerOnEndpoint() As String
+            Get
+                Return ResourceManager.GetString("AzureClientNoServerOnEndpoint", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Encontrado um servidor ativo conectado ao Service Bus. Continuando....
+        '''</summary>
+        Friend Shared ReadOnly Property AzureClientServerFoundOnEndpoint() As String
+            Get
+                Return ResourceManager.GetString("AzureClientServerFoundOnEndpoint", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Banco de Dados.
         '''</summary>
         Friend Shared ReadOnly Property BancodeDados() As String

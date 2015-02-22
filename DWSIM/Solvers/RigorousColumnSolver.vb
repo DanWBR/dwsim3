@@ -2531,9 +2531,9 @@ restart:            fx = Me.FunctionValue(xvar)
             Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
 
             Dim ic As Integer
-            Dim t_error As Double
+            Dim t_error, comperror As Double
             Dim Tj(ns), Tj_ant(ns) As Double
-            Dim Fj(ns), Lj(ns), Vj(ns), Vj_ant(ns), xc(ns)(), fcj(ns)(), yc(ns)(), lc(ns)(), vc(ns)(), zc(ns)(), K(ns)() As Double
+            Dim Fj(ns), Lj(ns), Vj(ns), Vj_ant(ns), xc(ns)(), fcj(ns)(), yc(ns)(), yc_ant(ns)(), lc(ns)(), vc(ns)(), zc(ns)(), K(ns)() As Double
             Dim Hfj(ns), Hv(ns), Hl(ns) As Double
             Dim VSSj(ns), LSSj(ns) As Double
             Dim sum1(ns), sum2(ns), sum3(ns) As Double
@@ -2548,6 +2548,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 Array.Resize(fcj(i), nc)
                 Array.Resize(xc(i), nc)
                 Array.Resize(yc(i), nc)
+                Array.Resize(yc_ant(i), nc)
                 Array.Resize(lc(i), nc)
                 Array.Resize(vc(i), nc)
                 Array.Resize(zc(i), nc)
@@ -2772,7 +2773,8 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 Dim tmp As Object
 
-                t_error = 0
+                t_error = 0.0#
+                comperror = 0.0#
                 For i = 0 To ns
                     Tj_ant(i) = Tj(i)
                     If Abs(xth(i)) > 0.1 * Tj(i) Then
@@ -2796,8 +2798,10 @@ restart:            fx = Me.FunctionValue(xvar)
                                 K(i)(j) = pp.AUX_PVAPi(j, Tj(i)) / P(i)
                             End If
                         End If
+                        yc_ant(i)(j) = yc(i)(j)
                         yc(i)(j) = K(i)(j) * xc(i)(j)
                         sumy(i) += yc(i)(j)
+                        comperror += Abs(yc(i)(j) - yc_ant(i)(j)) ^ 2
                     Next
                     t_error += Abs(Tj(i) - Tj_ant(i)) ^ 2
                     CheckCalculatorStatus()
@@ -2813,10 +2817,11 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If ic >= maxits Then Throw New Exception(DWSIM.App.GetLocalString("DCMaxIterationsReached"))
                 If Double.IsNaN(t_error) Then Throw New Exception(DWSIM.App.GetLocalString("DCGeneralError"))
+                If Double.IsNaN(comperror) Then Throw New Exception(DWSIM.App.GetLocalString("DCGeneralError"))
 
                 CheckCalculatorStatus()
 
-            Loop Until t_error <= tol(1)
+            Loop Until t_error <= tol(1) And comperror <= tol(1)
 
             ' finished, return arrays
 

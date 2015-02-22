@@ -35,8 +35,10 @@ Namespace DWSIM.Flowsheet
         Public Sub SolveFlowsheet(fs As FormFlowsheet)
 
             Dim connectionString As String = My.Settings.ServiceBusConnectionString
-
+          
             Try
+
+                fs.WriteToLog(DWSIM.App.GetLocalString("AzureClientConnectingtoSB"), Color.Brown, FormClasses.TipoAviso.Informacao)
 
                 nm = NamespaceManager.CreateFromConnectionString(connectionString)
                 If Not nm.QueueExists(queueNameS) Then nm.CreateQueue(queueNameS)
@@ -45,16 +47,38 @@ Namespace DWSIM.Flowsheet
                 qcs = QueueClient.CreateFromConnectionString(connectionString, queueNameS)
                 qcc = QueueClient.CreateFromConnectionString(connectionString, queueNameC)
 
-                fs.WriteToLog(DWSIM.App.GetLocalString("ClientConnected"), Color.Brown, FormClasses.TipoAviso.Informacao)
+                Dim message As BrokeredMessage
+
+                Dim requestID As String = Guid.NewGuid().ToString()
+
+                Dim msg As New BrokeredMessage("")
+                msg.Properties.Add("requestID", requestID)
+                msg.Properties.Add("type", "connectioncheck")
+                msg.Properties.Add("origin", "client")
+                qcc.Send(msg)
+
+                fs.WriteToLog(DWSIM.App.GetLocalString("AzureClientCheckingForServerOnEndpoint"), Color.Brown, FormClasses.TipoAviso.Informacao)
+
+                message = qcs.Receive(New TimeSpan(0, 0, 20))
+                If message Is Nothing Then
+                    Throw New TimeoutException(DWSIM.App.GetLocalString("AzureClientNoServerOnEndpoint"))
+                Else
+                    fs.WriteToLog(DWSIM.App.GetLocalString("AzureClientServerFoundOnEndpoint"), Color.Brown, FormClasses.TipoAviso.Informacao)
+                    message.Complete()
+                End If
+
+                If message.Properties("requestID") = requestID And message.Properties("origin") = "server" And message.Properties("type") = "connectioncheck" Then
+                    fs.WriteToLog(DWSIM.App.GetLocalString("ClientMessageFromServer") & ": " & message.GetBody(Of String)(), Color.Brown, FormClasses.TipoAviso.Informacao)
+                Else
+                    Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
+                End If
+
+            
                 Dim tmpfile As String = My.Computer.FileSystem.GetTempFileName
                 fs.WriteToLog(DWSIM.App.GetLocalString("ClientSavingTempFile"), Color.Brown, FormClasses.TipoAviso.Informacao)
                 FormMain.SaveXML(tmpfile, fs)
                 Dim uncompressedbytes As Byte() = IO.File.ReadAllBytes(tmpfile)
                 File.Delete(tmpfile)
-
-                Dim message As BrokeredMessage
-
-                Dim requestID As String = Guid.NewGuid().ToString()
 
                 Using compressedstream As New MemoryStream()
                     Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
@@ -63,7 +87,7 @@ Namespace DWSIM.Flowsheet
                         gzs.Close()
                         If compressedstream.Length < 220 * 1024 Then
                             fs.WriteToLog(DWSIM.App.GetLocalString("ClientSendingData") & " " & Math.Round(compressedstream.Length / 1024).ToString & " KB, request ID = " & requestID, Color.Brown, FormClasses.TipoAviso.Informacao)
-                            Dim msg As New BrokeredMessage(compressedstream.ToArray)
+                            msg = New BrokeredMessage(compressedstream.ToArray)
                             msg.Properties.Add("multipart", False)
                             msg.Properties.Add("requestID", requestID)
                             msg.Properties.Add("origin", "client")
@@ -76,7 +100,7 @@ Namespace DWSIM.Flowsheet
                             i = 1
                             For Each b As Byte() In bytearray
                                 fs.WriteToLog(DWSIM.App.GetLocalString("ClientSendingData") & " " & Math.Round(b.Length / 1024).ToString & " KB, request ID = " & requestID, Color.Brown, FormClasses.TipoAviso.Informacao)
-                                Dim msg As New BrokeredMessage(b)
+                                msg = New BrokeredMessage(b)
                                 msg.Properties.Add("multipart", True)
                                 msg.Properties.Add("partnumber", i)
                                 msg.Properties.Add("totalparts", n)

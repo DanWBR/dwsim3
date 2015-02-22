@@ -138,6 +138,16 @@ Module AzureServer
 
                                 End If
 
+                            ElseIf message.Properties("type") = "connectioncheck" Then
+
+                                message.Complete()
+
+                                Dim msg As New BrokeredMessage("Server endpoint '" & My.User.Name & "@" & My.Computer.Name & "' is listening to requests")
+                                msg.Properties.Add("requestID", requestID)
+                                msg.Properties.Add("type", "connectioncheck")
+                                msg.Properties.Add("origin", "server")
+                                qcs.Send(msg)
+
                             End If
 
                         Catch ex As Exception
