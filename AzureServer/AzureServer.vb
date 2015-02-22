@@ -201,6 +201,7 @@ Module AzureServer
                                     msg.Properties.Add("requestID", requestID)
                                     msg.Properties.Add("origin", "server")
                                     qcs.Send(msg)
+                                    i += 1
                                     Console.WriteLine("[" & Date.Now.ToString & "] " & "Sent data to the queue: " & b.Length & " B, Request ID = " & requestID)
                                 Next
                             End If

@@ -139,25 +139,29 @@ Namespace DWSIM.Flowsheet
 
                                 End If
 
-                                Try
-                                    Using ms As New MemoryStream(bytes)
-                                        Using decompressedstream As New IO.MemoryStream
-                                            Using gzs As New IO.BufferedStream(New Compression.GZipStream(ms, Compression.CompressionMode.Decompress, True), 64 * 1024)
-                                                gzs.CopyTo(decompressedstream)
-                                                gzs.Close()
-                                                fs.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatingData") & " " & Math.Round(decompressedstream.Length / 1024).ToString & " KB", Color.Brown, FormClasses.TipoAviso.Informacao)
-                                                decompressedstream.Position = 0
-                                                Dim xdoc As XDocument = XDocument.Load(decompressedstream)
-                                                DWSIM.SimulationObjects.UnitOps.Flowsheet.UpdateProcessData(fs, xdoc)
-                                                fs.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatedDataOK"), Color.Brown, FormClasses.TipoAviso.Informacao)
+                                If i = n Then
+
+                                    Try
+                                        Using ms As New MemoryStream(bytes)
+                                            Using decompressedstream As New IO.MemoryStream
+                                                Using gzs As New IO.BufferedStream(New Compression.GZipStream(ms, Compression.CompressionMode.Decompress, True), 64 * 1024)
+                                                    gzs.CopyTo(decompressedstream)
+                                                    gzs.Close()
+                                                    fs.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatingData") & " " & Math.Round(decompressedstream.Length / 1024).ToString & " KB", Color.Brown, FormClasses.TipoAviso.Informacao)
+                                                    decompressedstream.Position = 0
+                                                    Dim xdoc As XDocument = XDocument.Load(decompressedstream)
+                                                    DWSIM.SimulationObjects.UnitOps.Flowsheet.UpdateProcessData(fs, xdoc)
+                                                    fs.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatedDataOK"), Color.Brown, FormClasses.TipoAviso.Informacao)
+                                                End Using
                                             End Using
                                         End Using
-                                    End Using
-                                Catch ex As Exception
-                                    fs.WriteToLog(DWSIM.App.GetLocalString("ClientDataProcessingError") & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                End Try
+                                    Catch ex As Exception
+                                        fs.WriteToLog(DWSIM.App.GetLocalString("ClientDataProcessingError") & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    End Try
 
-                                Exit While
+                                    Exit While
+
+                                End If
 
                             ElseIf message.Properties("type") = "text" Then
 

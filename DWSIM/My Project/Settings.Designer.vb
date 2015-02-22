@@ -302,15 +302,15 @@ Namespace My
             End Set
         End Property
         
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
         Public Property EnableParallelProcessing() As Boolean
             Get
-                Return CType(Me("EnableParallelProcessing"),Boolean)
+                Return CType(Me("EnableParallelProcessing"), Boolean)
             End Get
-            Set
-                Me("EnableParallelProcessing") = value
+            Set(value As Boolean)
+                Me("EnableParallelProcessing") = Value
             End Set
         End Property
         
