@@ -1764,11 +1764,7 @@ Namespace DWSIM.Flowsheet
                                 Try
                                     form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
                                     Dim t As New Task(Sub()
-                                                          If My.Settings.EnableParallelProcessing Then
-                                                              ProcessCalculationQueue(form, True, True, 1, filteredlist2)
-                                                          Else
-                                                              ProcessCalculationQueue(form, True, True, 1)
-                                                          End If
+                                                          ProcessCalculationQueue(form, True, True, mode, filteredlist2)
                                                       End Sub)
                                     t.Start()
                                     If Not t.Wait(My.Settings.SolverTimeoutSeconds * 1000, My.MyApplication.SolverCancellationToken) Then
