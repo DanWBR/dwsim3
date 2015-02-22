@@ -713,19 +713,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Dim data As List(Of XElement)
 
-            data = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
+            'data = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
 
-            For Each xel As XElement In data
-                Try
-                    Dim id As String = xel.<Name>.Value
-                    If form.Collections.ObjectCollection.ContainsKey(id) Then
-                        Dim obj = form.Collections.ObjectCollection(id).GraphicObject
-                        obj.LoadData(xel.Elements.ToList)
-                    End If
-                Catch ex As Exception
-                    excs.Add(New Exception("Error Loading Flowsheet Graphic Objects", ex))
-                End Try
-            Next
+            'For Each xel As XElement In data
+            '    Try
+            '        Dim id As String = xel.<Name>.Value
+            '        If form.Collections.ObjectCollection.ContainsKey(id) Then
+            '            Dim obj = form.Collections.ObjectCollection(id).GraphicObject
+            '            obj.LoadData(xel.Elements.ToList)
+            '        End If
+            '    Catch ex As Exception
+            '        excs.Add(New Exception("Error Loading Flowsheet Graphic Objects", ex))
+            '    End Try
+            'Next
 
             data = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects").Elements.ToList
 
@@ -767,12 +767,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 xel.Add(New XElement("SimulationObject", {so.SaveData().ToArray()}))
             Next
 
-            xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GraphicObjects"))
-            xel = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects")
+            'xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GraphicObjects"))
+            'xel = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects")
 
-            For Each go As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject In Form.FormSurface.FlowsheetDesignSurface.drawingObjects
-                If Not go.IsConnector Then xel.Add(New XElement("GraphicObject", go.SaveData().ToArray()))
-            Next
+            'For Each go As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject In Form.FormSurface.FlowsheetDesignSurface.drawingObjects
+            '    If Not go.IsConnector Then xel.Add(New XElement("GraphicObject", go.SaveData().ToArray()))
+            'Next
 
             Dim bytestream As New IO.MemoryStream()
             xdoc.Save(bytestream)

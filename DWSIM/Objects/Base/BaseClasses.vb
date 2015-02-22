@@ -58,6 +58,8 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
     Protected m_showqtable As Boolean = True
 
+    Public Property Calculated As Boolean = False
+
     Public MustOverride Sub UpdatePropertyNodes(ByVal su As DWSIM.SistemasDeUnidades.Unidades, ByVal nf As String)
 
     Public MustOverride Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As DWSIM.SistemasDeUnidades.Unidades)
@@ -2198,8 +2200,6 @@ End Class
     Private _fontnameE As String = "Courier New"
     Private _fontsizeE As Integer = 10
     Protected m_errormessage As String = ""
-
-    Public Property Calculated As Boolean = False
 
     <System.NonSerialized()> Public scope As Microsoft.Scripting.Hosting.ScriptScope
     <System.NonSerialized()> Public engine As Microsoft.Scripting.Hosting.ScriptEngine

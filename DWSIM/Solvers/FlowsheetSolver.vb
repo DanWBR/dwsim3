@@ -1643,6 +1643,11 @@ Namespace DWSIM.Flowsheet
 
                 form.WriteToLog(DWSIM.App.GetLocalString("FSstartedsolving"), Color.Blue, FormClasses.TipoAviso.Informacao)
 
+                For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+                    baseobj.Calculated = False
+                    If Not baseobj.GraphicObject Is Nothing Then baseobj.GraphicObject.Calculated = baseobj.Calculated
+                Next
+
                 Select Case mode
 
                     Case 0, 1, 2
@@ -1824,6 +1829,12 @@ Namespace DWSIM.Flowsheet
 
                 End Select
 
+                For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+                    If Not baseobj.GraphicObject Is Nothing Then
+                       baseobj.GraphicObject.Calculated = baseobj.Calculated
+                    End If
+                Next
+
                 If mode > 0 Then
                     form.UpdateStatusLabel(preLab)
                     If age Is Nothing Then
@@ -1831,7 +1842,7 @@ Namespace DWSIM.Flowsheet
                         form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & Format((Date.Now - d1).TotalSeconds, "0.##") & "s", Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
                     Else
                         form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Red, FormClasses.TipoAviso.Erro)
-                        For Each ex In age.InnerExceptions
+                        For Each ex In age.Flatten().InnerExceptions
                             Dim st As New StackTrace(ex, True)
                             If st.FrameCount > 0 Then
                                 form.WriteToLog(ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
@@ -1839,7 +1850,7 @@ Namespace DWSIM.Flowsheet
                                 form.WriteToLog(ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                             End If
                         Next
-                        age = Nothing
+                        If Not form.Visible Then Throw age Else age = Nothing
                     End If
                 End If
 
@@ -1850,7 +1861,7 @@ Namespace DWSIM.Flowsheet
             Else
 
                 form.WriteToLog(DWSIM.App.GetLocalString("Calculadordesativado"), Color.DarkGray, FormClasses.TipoAviso.Informacao)
-               
+
             End If
 
         End Sub

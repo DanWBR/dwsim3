@@ -48,8 +48,6 @@ Namespace DWSIM.SimulationObjects.Streams
 
         <System.NonSerialized()> Private _flowsheet As FormFlowsheet
 
-        Public Property Calculated As Boolean = False
-
         Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
 
             MyBase.LoadData(data)

@@ -134,7 +134,14 @@ Module AzureServer
                                     qcs.Send(msg)
                                     Task.Factory.StartNew(Sub()
                                                               ProcessData(bytes, requestID)
-                                                          End Sub)
+                                                          End Sub).ContinueWith(Sub(t)
+                                                                                    Console.WriteLine("[" & Date.Now.ToString & "] " & t.Exception.Flatten().ToString)
+                                                                                    msg = New BrokeredMessage(t.Exception.Flatten().ToString)
+                                                                                    msg.Properties.Add("requestID", requestID)
+                                                                                    msg.Properties.Add("type", "exception")
+                                                                                    msg.Properties.Add("origin", "server")
+                                                                                    qcs.Send(msg)
+                                                                                End Sub, TaskContinuationOptions.OnlyOnFaulted)
 
                                 End If
 
@@ -178,7 +185,6 @@ Module AzureServer
     End Sub
 
     Sub ProcessData(bytes As Byte(), requestID As String)
-       Try
             Using bytestream As New MemoryStream(bytes)
                 Dim form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
                 DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 2)
@@ -219,15 +225,6 @@ Module AzureServer
                     End Using
                 End Using
             End Using
-        Catch ex As Exception
-            Console.WriteLine("[" & Date.Now.ToString & "] " & ex.ToString)
-            Dim msg As New BrokeredMessage(ex.ToString)
-            msg.Properties.Add("requestID", requestID)
-            msg.Properties.Add("type", "exception")
-            msg.Properties.Add("origin", "server")
-            qcs.Send(msg)
-        End Try
-
     End Sub
 
     Private Function Split(filebytes As Byte(), partsizeKB As Integer) As ArrayList
