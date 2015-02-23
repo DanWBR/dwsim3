@@ -120,6 +120,7 @@ Namespace DWSIM.Flowsheet
                         End If
                     Case TipoObjeto.EnergyStream
                         Dim myObj As DWSIM.SimulationObjects.Streams.EnergyStream = form.Collections.CLCS_EnergyStreamCollection(objArgs.Nome)
+                        myObj.Calculated = True
                         Dim gobj As GraphicObject = myObj.GraphicObject
                         If Not gobj Is Nothing Then
                             If gobj.OutputConnectors(0).IsAttached = True And Not OnlyMe Then
