@@ -303,12 +303,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         L1 = L1 * (1 - result(2)(imaxl))
                         L2 = F - L1 - V
 
-                        If L2 < 0 Then
+                        If L2 < 0.0# Then
                             L2 = Abs(L2)
                             L1 = F - L2 - V
                         End If
 
-                        For i = 0 To n
+                        For i = 0 To nc
                             vx1e(i) = (result(2)(i) * L1 - vx2est(i) * L2) / (L1 - L2)
                         Next
 

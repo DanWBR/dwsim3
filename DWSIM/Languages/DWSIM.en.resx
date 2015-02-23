@@ -5059,4 +5059,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="AzureClientServerFoundOnEndpoint" xml:space="preserve">
     <value>Active server found on Service Bus Endpoint. Preparing data for uploading...</value>
   </data>
+  <data name="LastUpdatedOn" xml:space="preserve">
+    <value>Data updated on</value>
+  </data>
 </root>

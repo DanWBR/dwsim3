@@ -1004,6 +1004,7 @@ Namespace DWSIM.Flowsheet
 
             RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), ms)
 
+            If calculated Then ms.LastUpdated = Date.Now
             ms.Calculated = calculated
 
             If Not OnlyMe Then
@@ -1258,6 +1259,7 @@ Namespace DWSIM.Flowsheet
 
             End With
 
+            ms.LastUpdated = Date.Now
             ms.Calculated = True
 
         End Sub

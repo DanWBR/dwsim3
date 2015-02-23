@@ -131,7 +131,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Private m_props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
-        Private m_ms As DWSIM.SimulationObjects.Streams.MaterialStream = Nothing
+        <System.NonSerialized()> Private m_ms As DWSIM.SimulationObjects.Streams.MaterialStream = Nothing
         Private m_ss As New System.Collections.Generic.List(Of String)
         Private m_configurable As Boolean = False
 
@@ -146,14 +146,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public _packagetype As PackageType
 
-        Public _brio3 As New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P
-        Public _bbio As New Auxiliary.FlashAlgorithms.BostonBrittInsideOut
-        Public _dwdf As New Auxiliary.FlashAlgorithms.DWSIMDefault
-        Public _gm3 As New Auxiliary.FlashAlgorithms.GibbsMinimization3P
-        Public _nl3 As New Auxiliary.FlashAlgorithms.NestedLoops3PV3
-        Public _nlsle As New Auxiliary.FlashAlgorithms.NestedLoopsSLE
-        Public _nli As New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
-        Public _simplelle As New Auxiliary.FlashAlgorithms.SimpleLLE
+        <System.NonSerialized()> Public _brio3 As New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P
+        <System.NonSerialized()> Public _bbio As New Auxiliary.FlashAlgorithms.BostonBrittInsideOut
+        <System.NonSerialized()> Public _dwdf As New Auxiliary.FlashAlgorithms.DWSIMDefault
+        <System.NonSerialized()> Public _gm3 As New Auxiliary.FlashAlgorithms.GibbsMinimization3P
+        <System.NonSerialized()> Public _nl3 As New Auxiliary.FlashAlgorithms.NestedLoops3PV3
+        <System.NonSerialized()> Public _nlsle As New Auxiliary.FlashAlgorithms.NestedLoopsSLE
+        <System.NonSerialized()> Public _nli As New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
+        <System.NonSerialized()> Public _simplelle As New Auxiliary.FlashAlgorithms.SimpleLLE
 
         Public _ioquick As Boolean = True
         Public _tpseverity As Integer = 0
@@ -386,7 +386,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.BostonBrittInsideOut Else Return _bbio
                     Case FlashMethod.InsideOut3P
                         If _brio3 Is Nothing Then _brio3 = New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P
-                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P Else Return _brio3
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then Return New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P With
+                            {.StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity} Else Return _brio3
                     Case FlashMethod.GibbsMin2P
                         If _gm3 Is Nothing Then _gm3 = New Auxiliary.FlashAlgorithms.GibbsMinimization3P
                         _gm3.ForceTwoPhaseOnly = True

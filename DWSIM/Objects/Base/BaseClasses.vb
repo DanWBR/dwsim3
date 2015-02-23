@@ -59,6 +59,7 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
     Protected m_showqtable As Boolean = True
 
     Public Property Calculated As Boolean = False
+    Public Property LastUpdated As Date
 
     Public MustOverride Sub UpdatePropertyNodes(ByVal su As DWSIM.SistemasDeUnidades.Unidades, ByVal nf As String)
 
@@ -2337,6 +2338,7 @@ End Class
         Calculate(args)
 
         Calculated = True
+        LastUpdated = Date.Now
 
     End Sub
 
@@ -2523,6 +2525,7 @@ End Class
                 End With
             End If
             .Item.Add("ID", Me.Nome, True, DWSIM.App.GetLocalString("Outros"), "", True)
+            .Item.Add(DWSIM.App.GetLocalString("LastUpdatedOn"), Me.LastUpdated.ToString("O"), True, DWSIM.App.GetLocalString("Outros"), "", True)
         End With
     End Sub
 

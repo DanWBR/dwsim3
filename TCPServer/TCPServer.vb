@@ -61,6 +61,11 @@ Module TCPServer
 
         server.Start(port)
 
+        Console.WriteLine("[" & Date.Now.ToString & "] " & "Server IP Addresses:")
+        For Each adr In System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName()).AddressList()
+            Console.WriteLine(adr.ToString)
+        Next
+        Console.WriteLine()
         Console.WriteLine("[" & Date.Now.ToString & "] " & "Server is running and listening to incoming data on port " & port & "...")
 
         While server.IsRunning

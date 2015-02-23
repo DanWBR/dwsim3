@@ -709,6 +709,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 Me.PropertyPackage.PopulatePropertyGrid(pgrid, Flowsheet, su)
 
                 .Item.Add("ID", Me.Nome, True, DWSIM.App.GetLocalString("Outros"), "", True)
+                .Item.Add(DWSIM.App.GetLocalString("LastUpdatedOn"), Me.LastUpdated.ToString("O"), True, DWSIM.App.GetLocalString("Outros"), "", True)
 
                 .PropertySort = PropertySort.Categorized
                 .ShowCustomProperties = True
@@ -5083,6 +5084,7 @@ Namespace DWSIM.SimulationObjects.Streams
                     End Select
                 End If
                 .Item.Add("ID", Me.Nome, True, DWSIM.App.GetLocalString("Outros"), "", True)
+                .Item.Add(DWSIM.App.GetLocalString("LastUpdatedOn"), Me.LastUpdated.ToString("O"), True, DWSIM.App.GetLocalString("Outros"), "", True)
             End With
 
         End Sub
