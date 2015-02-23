@@ -19,12 +19,13 @@
 Imports System.IO
 Imports System.Threading.Tasks
 Imports DWSIM
+Imports System.Reflection
 
 Module TCPServer
 
     Private server As TcpComm.Server
     Private lat As TcpComm.Utilities.LargeArrayTransferHelper
-  
+
     Sub Main()
 
         Console.WriteLine()
@@ -34,7 +35,16 @@ Module TCPServer
         Dim dt As DateTime = CType("01/01/2000", DateTime).AddDays(My.Application.Info.Version.Build).AddSeconds(My.Application.Info.Version.Revision * 2)
         Console.WriteLine("Version " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & _
         ", Build " & My.Application.Info.Version.Build & " (" & Format(dt, "dd/MM/yyyy HH:mm") & ")")
-        Console.WriteLine("Microsoft .NET Framework Runtime Version " & System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString())
+        If Type.GetType("Mono.Runtime") Is Nothing Then
+            Console.WriteLine("Microsoft .NET Framework Runtime Version " & System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString())
+        Else
+            Dim displayName As MethodInfo = Type.GetType("Mono.Runtime").GetMethod("GetDisplayName", BindingFlags.NonPublic Or BindingFlags.[Static])
+            If displayName IsNot Nothing Then
+                Console.WriteLine("Mono " + displayName.Invoke(Nothing, Nothing) + " / " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString())
+            Else
+                Console.WriteLine(System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString())
+            End If
+        End If
         Console.WriteLine()
 
         server = New TcpComm.Server(AddressOf Process)
@@ -103,8 +113,10 @@ Module TCPServer
         Try
             Using bytestream As New MemoryStream(bytes)
                 Dim form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
-                DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 2)
+                DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 1)
                 Dim retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
+                form.Dispose()
+                form = Nothing
                 Using retbytes
                     Dim uncompressedbytes As Byte() = retbytes.ToArray
                     Using compressedstream As New MemoryStream()

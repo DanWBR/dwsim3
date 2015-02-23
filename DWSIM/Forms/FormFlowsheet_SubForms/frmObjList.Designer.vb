@@ -67,14 +67,22 @@ Partial Class frmObjList
         '
         'TableLayoutPanel4
         '
-        resources.ApplyResources(Me.TableLayoutPanel4, "TableLayoutPanel4")
+        Try
+            resources.ApplyResources(Me.TableLayoutPanel4, "TableLayoutPanel4")
+        Catch ex As Exception
+
+        End Try
         Me.TableLayoutPanel4.Controls.Add(Me.TreeViewObj, 0, 1)
         Me.TableLayoutPanel4.Controls.Add(Me.TableLayoutPanel3, 0, 0)
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         '
         'TableLayoutPanel3
         '
-        resources.ApplyResources(Me.TableLayoutPanel3, "TableLayoutPanel3")
+        Try
+            resources.ApplyResources(Me.TableLayoutPanel3, "TableLayoutPanel3")
+        Catch ex As Exception
+
+        End Try
         Me.TableLayoutPanel3.Controls.Add(Me.Label2, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.TBSearch, 1, 0)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"

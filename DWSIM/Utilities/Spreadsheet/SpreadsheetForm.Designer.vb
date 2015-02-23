@@ -85,7 +85,11 @@ Partial Class SpreadsheetForm
         '
         'TableLayoutPanel1
         '
-        resources.ApplyResources(Me.TableLayoutPanel1, "TableLayoutPanel1")
+        Try
+            resources.ApplyResources(Me.TableLayoutPanel1, "TableLayoutPanel1")
+        Catch ex As Exception
+
+        End Try
         Me.TableLayoutPanel1.Controls.Add(Me.DataGridView1, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel2, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel3, 0, 2)
@@ -334,7 +338,11 @@ Partial Class SpreadsheetForm
         '
         'TableLayoutPanel2
         '
-        resources.ApplyResources(Me.TableLayoutPanel2, "TableLayoutPanel2")
+        Try
+            resources.ApplyResources(Me.TableLayoutPanel2, "TableLayoutPanel2")
+        Catch ex As Exception
+
+        End Try
         Me.TableLayoutPanel2.Controls.Add(Me.tbCell, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Label1, 2, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.tbValue, 3, 0)
@@ -382,7 +390,11 @@ Partial Class SpreadsheetForm
         '
         'TableLayoutPanel3
         '
-        resources.ApplyResources(Me.TableLayoutPanel3, "TableLayoutPanel3")
+        Try
+            resources.ApplyResources(Me.TableLayoutPanel3, "TableLayoutPanel3")
+        Catch ex As Exception
+
+        End Try
         Me.TableLayoutPanel3.Controls.Add(Me.Label2, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.chkWriteMode, 0, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.chkUpdate, 0, 0)

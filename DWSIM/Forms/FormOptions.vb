@@ -35,35 +35,6 @@ Public Class FormOptions
 
     Private Sub FormOptions_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        Me.cbGPU.Items.Clear()
-
-        Try
-            CudafyModes.Target = eGPUType.Emulator
-            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
-                Me.cbGPU.Items.Add("Emulator | " & prop.Name & " (" & prop.DeviceId & ")")
-            Next
-        Catch ex As Exception
-
-        End Try
-        Try
-            CudafyModes.Target = eGPUType.Cuda
-            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
-                Me.cbGPU.Items.Add("CUDA | " & prop.Name & " (" & prop.DeviceId & ")")
-            Next
-        Catch ex As Exception
-
-        End Try
-        Try
-            CudafyModes.Target = eGPUType.OpenCL
-            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
-                Me.cbGPU.Items.Add("OpenCL | " & prop.Name & " (" & prop.DeviceId & ")")
-            Next
-        Catch ex As Exception
-
-        End Try
-
-        CudafyModes.Target = My.Settings.CudafyTarget
-
         Dim i As Integer = 0
         Me.cbParallelism.Items.Clear()
         Me.cbParallelism.Items.Add("Default")
@@ -83,17 +54,6 @@ Public Class FormOptions
         Me.cbGPU.Enabled = Me.chkEnableGPUProcessing.Checked
         Me.tbGPUCaps.Enabled = Me.chkEnableGPUProcessing.Checked
         Me.cbParallelism.Enabled = Me.chkEnableParallelCalcs.Checked
-
-        If My.Settings.SelectedGPU <> "" Then
-            For Each s As String In Me.cbGPU.Items
-                If s = My.Settings.SelectedGPU Then
-                    Me.cbGPU.SelectedItem = s
-                    Exit For
-                End If
-            Next
-        Else
-            If Me.cbGPU.Items.Count > 0 Then Me.cbGPU.SelectedIndex = 0
-        End If
 
         Me.KryptonCheckBox1.Checked = My.Settings.ShowTips
 
@@ -128,6 +88,46 @@ Public Class FormOptions
         For Each s As String In My.Settings.ScriptPaths
             Me.lbpaths.Items.Add(s)
         Next
+
+        Me.cbGPU.Items.Clear()
+
+        Try
+            CudafyModes.Target = eGPUType.Emulator
+            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+                Me.cbGPU.Items.Add("Emulator | " & prop.Name & " (" & prop.DeviceId & ")")
+            Next
+        Catch ex As Exception
+
+        End Try
+        Try
+            CudafyModes.Target = eGPUType.Cuda
+            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+                Me.cbGPU.Items.Add("CUDA | " & prop.Name & " (" & prop.DeviceId & ")")
+            Next
+        Catch ex As Exception
+
+        End Try
+        Try
+            CudafyModes.Target = eGPUType.OpenCL
+            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+                Me.cbGPU.Items.Add("OpenCL | " & prop.Name & " (" & prop.DeviceId & ")")
+            Next
+        Catch ex As Exception
+
+        End Try
+
+        CudafyModes.Target = My.Settings.CudafyTarget
+
+        If My.Settings.SelectedGPU <> "" Then
+            For Each s As String In Me.cbGPU.Items
+                If s = My.Settings.SelectedGPU Then
+                    Me.cbGPU.SelectedItem = s
+                    Exit For
+                End If
+            Next
+        Else
+            If Me.cbGPU.Items.Count > 0 Then Me.cbGPU.SelectedIndex = 0
+        End If
 
         loaded = True
 

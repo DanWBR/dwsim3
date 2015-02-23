@@ -23,6 +23,7 @@ Imports System.Threading.Tasks
 Imports Microsoft.ServiceBus
 Imports Microsoft.ServiceBus.Messaging
 Imports System.Linq
+Imports System.Reflection
 
 Module AzureServer
 
@@ -40,7 +41,16 @@ Module AzureServer
         Dim dt As DateTime = CType("01/01/2000", DateTime).AddDays(My.Application.Info.Version.Build).AddSeconds(My.Application.Info.Version.Revision * 2)
         Console.WriteLine("Version " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & _
         ", Build " & My.Application.Info.Version.Build & " (" & Format(dt, "dd/MM/yyyy HH:mm") & ")")
-        Console.WriteLine("Microsoft .NET Framework Runtime Version " & System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString())
+        If Type.GetType("Mono.Runtime") Is Nothing Then
+            Console.WriteLine("Microsoft .NET Framework Runtime Version " & System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString())
+        Else
+            Dim displayName As MethodInfo = Type.GetType("Mono.Runtime").GetMethod("GetDisplayName", BindingFlags.NonPublic Or BindingFlags.[Static])
+            If displayName IsNot Nothing Then
+                Console.WriteLine("Mono " + displayName.Invoke(Nothing, Nothing) + " / " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString())
+            Else
+                Console.WriteLine(System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString())
+            End If
+        End If
         Console.WriteLine()
 
         Dim connectionString As String
@@ -106,7 +116,7 @@ Module AzureServer
 
                                     i = 0
                                     n = 0
-                            
+
                                 Else
 
                                     i = message.Properties("partnumber")
@@ -185,46 +195,49 @@ Module AzureServer
     End Sub
 
     Sub ProcessData(bytes As Byte(), requestID As String)
-            Using bytestream As New MemoryStream(bytes)
-                Dim form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
-                DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 2)
-                Dim retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
-                Using retbytes
-                    Dim uncompressedbytes As Byte() = retbytes.ToArray
-                    Using compressedstream As New MemoryStream()
-                        Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
-                            gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
-                            gzs.Close()
-                            If compressedstream.Length < 220 * 1024 Then
-                                Dim msg As New BrokeredMessage(compressedstream.ToArray)
-                                msg.Properties.Add("multipart", False)
+        Using bytestream As New MemoryStream(bytes)
+            Dim form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
+            DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 1)
+            Dim retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
+            form.Dispose()
+            form = Nothing
+
+            Using retbytes
+                Dim uncompressedbytes As Byte() = retbytes.ToArray
+                Using compressedstream As New MemoryStream()
+                    Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
+                        gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
+                        gzs.Close()
+                        If compressedstream.Length < 220 * 1024 Then
+                            Dim msg As New BrokeredMessage(compressedstream.ToArray)
+                            msg.Properties.Add("multipart", False)
+                            msg.Properties.Add("requestID", requestID)
+                            msg.Properties.Add("origin", "server")
+                            msg.Properties.Add("type", "data")
+                            qcs.Send(msg)
+                            Console.WriteLine("[" & Date.Now.ToString & "] " & "Sent data to the queue: " & compressedstream.Length & " B, Request ID = " & requestID)
+                        Else
+                            Dim i, n As Integer
+                            Dim bytearray As ArrayList = Split(compressedstream.ToArray, 220)
+                            n = bytearray.Count
+                            i = 1
+                            For Each b As Byte() In bytearray
+                                Dim msg As New BrokeredMessage(b)
+                                msg.Properties.Add("multipart", True)
+                                msg.Properties.Add("partnumber", i)
+                                msg.Properties.Add("totalparts", n)
+                                msg.Properties.Add("type", "data")
                                 msg.Properties.Add("requestID", requestID)
                                 msg.Properties.Add("origin", "server")
-                                msg.Properties.Add("type", "data")
                                 qcs.Send(msg)
-                                Console.WriteLine("[" & Date.Now.ToString & "] " & "Sent data to the queue: " & compressedstream.Length & " B, Request ID = " & requestID)
-                            Else
-                                Dim i, n As Integer
-                                Dim bytearray As ArrayList = Split(compressedstream.ToArray, 220)
-                                n = bytearray.Count
-                                i = 1
-                                For Each b As Byte() In bytearray
-                                    Dim msg As New BrokeredMessage(b)
-                                    msg.Properties.Add("multipart", True)
-                                    msg.Properties.Add("partnumber", i)
-                                    msg.Properties.Add("totalparts", n)
-                                    msg.Properties.Add("type", "data")
-                                    msg.Properties.Add("requestID", requestID)
-                                    msg.Properties.Add("origin", "server")
-                                    qcs.Send(msg)
-                                    i += 1
-                                    Console.WriteLine("[" & Date.Now.ToString & "] " & "Sent data to the queue: " & b.Length & " B, Request ID = " & requestID)
-                                Next
-                            End If
-                        End Using
+                                i += 1
+                                Console.WriteLine("[" & Date.Now.ToString & "] " & "Sent data to the queue: " & b.Length & " B, Request ID = " & requestID)
+                            Next
+                        End If
                     End Using
                 End Using
             End Using
+        End Using
     End Sub
 
     Private Function Split(filebytes As Byte(), partsizeKB As Integer) As ArrayList

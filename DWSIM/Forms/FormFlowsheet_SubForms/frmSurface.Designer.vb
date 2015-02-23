@@ -92,7 +92,11 @@ Partial Class frmSurface
         '
         'TableLayoutPanel1
         '
-        resources.ApplyResources(Me.TableLayoutPanel1, "TableLayoutPanel1")
+        Try
+            resources.ApplyResources(Me.TableLayoutPanel1, "TableLayoutPanel1")
+        Catch ex As Exception
+
+        End Try
         Me.TableLayoutPanel1.Controls.Add(Me.FlowsheetDesignSurface, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel2, 0, 1)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
@@ -121,7 +125,11 @@ Partial Class frmSurface
         '
         'TableLayoutPanel2
         '
-        resources.ApplyResources(Me.TableLayoutPanel2, "TableLayoutPanel2")
+        Try
+            resources.ApplyResources(Me.TableLayoutPanel2, "TableLayoutPanel2")
+        Catch ex As Exception
+
+        End Try
         Me.TableLayoutPanel2.Controls.Add(Me.Panel2, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.PanelSimultAdjust, 1, 0)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
