@@ -24,7 +24,7 @@ Namespace My
         Public Shared CommandLineMode As Boolean = False
 
         Public Shared IsRunningParallelTasks As Boolean = False
-        Public Shared SolverCancellationToken As CancellationToken
+        Public Shared TaskCancellationTokenSource As Threading.CancellationTokenSource
 
         Public ActiveSimulation As FormFlowsheet
         Public CAPEOPENMode As Boolean = False
