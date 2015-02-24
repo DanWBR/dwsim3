@@ -17,6 +17,7 @@
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports System.IO
+Imports System.Threading
 Imports System.Threading.Tasks
 Imports DWSIM
 Imports System.Reflection
@@ -25,6 +26,8 @@ Module TCPServer
 
     Private server As TcpComm.Server
     Private lat As TcpComm.Utilities.LargeArrayTransferHelper
+
+    Dim ts As CancellationTokenSource
 
     Sub Main()
 
@@ -84,7 +87,11 @@ Module TCPServer
         ' so we exit the callback when it returns true.
         If lat.HandleIncomingBytes(bytes, 100, sessionID) Then Return
 
+        If ts Is Nothing Then ts = New CancellationTokenSource
+
         If dataChannel = 100 Then
+
+            Dim ct As CancellationToken = ts.Token
 
             Dim errmsg As String = ""
 
@@ -95,21 +102,27 @@ Module TCPServer
 
             Task.Factory.StartNew(Sub()
                                       ProcessData(bytes, sessionID, dataChannel)
-                                  End Sub).ContinueWith(Sub(t)
-                                                            Console.WriteLine("[" & Date.Now.ToString & "] " & "Error solving flowsheet: " & t.Exception.ToString)
-                                                            errmsg = ""
-                                                            If Not server.SendText("Error solving flowsheet: " & t.Exception.ToString, 3, sessionID, errmsg) Then
-                                                                Console.WriteLine(errmsg)
-                                                            End If
-                                                        End Sub,
+                                  End Sub, ct, TaskCreationOptions.LongRunning).ContinueWith(Sub(t)
+                                                                                                 Console.WriteLine("[" & Date.Now.ToString & "] " & "Error solving flowsheet: " & t.Exception.ToString)
+                                                                                                 errmsg = ""
+                                                                                                 If Not server.SendText("Error solving flowsheet: " & t.Exception.ToString, 3, sessionID, errmsg) Then
+                                                                                                     Console.WriteLine(errmsg)
+                                                                                                 End If
+                                                                                             End Sub,
                                                         TaskContinuationOptions.OnlyOnFaulted).ContinueWith(Sub()
                                                                                                                 Console.WriteLine("[" & Date.Now.ToString & "] " & "Closing current session with " & server.GetSession(sessionID).machineId & ".")
                                                                                                                 errmsg = ""
                                                                                                                 If Not server.SendText("Closing current session with " & server.GetSession(sessionID).machineId & ".", 2, sessionID, errmsg) Then
                                                                                                                     Console.WriteLine(errmsg)
                                                                                                                 End If
+                                                                                                                ts.Dispose()
+                                                                                                                ts = Nothing
                                                                                                                 server.GetSession(sessionID).Close()
                                                                                                             End Sub)
+
+        ElseIf dataChannel = 3 Then
+
+            If Not ts Is Nothing Then ts.Cancel()
 
         ElseIf dataChannel = 255 Then
 
@@ -128,19 +141,18 @@ Module TCPServer
     Sub ProcessData(bytes As Byte(), sessionid As Integer, datachannel As Byte)
         Dim errmsg As String = ""
         Using bytestream As New MemoryStream(bytes)
-            Dim form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
-            DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 1)
-            Dim retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
-            form.Dispose()
-            form = Nothing
-            Using retbytes
-                Dim uncompressedbytes As Byte() = retbytes.ToArray
-                Using compressedstream As New MemoryStream()
-                    Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
-                        gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
-                        gzs.Close()
-                        lat.SendArray(compressedstream.ToArray, 100, sessionid, errmsg)
-                        Console.WriteLine("[" & Date.Now.ToString & "] " & "Byte array length: " & compressedstream.Length)
+            Using form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
+                DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 1, ts)
+                Dim retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
+                Using retbytes
+                    Dim uncompressedbytes As Byte() = retbytes.ToArray
+                    Using compressedstream As New MemoryStream()
+                        Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
+                            gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
+                            gzs.Close()
+                            lat.SendArray(compressedstream.ToArray, 100, sessionid, errmsg)
+                            Console.WriteLine("[" & Date.Now.ToString & "] " & "Byte array length: " & compressedstream.Length)
+                        End Using
                     End Using
                 End Using
             End Using

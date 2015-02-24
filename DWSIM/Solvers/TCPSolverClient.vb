@@ -81,7 +81,7 @@ Namespace DWSIM.Flowsheet
                     time += sleeptime
                     If My.MyApplication.CalculatorStopRequested = True Then
                         My.MyApplication.CalculatorStopRequested = False
-                        Throw New TimeoutException(DWSIM.App.GetLocalString("CalculationAborted"))
+                        client.SendText("abort", 3)
                     End If
                     If Abort Then Throw New Exception(ErrorMsg)
                     If time >= My.Settings.SolverTimeoutSeconds Then Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))

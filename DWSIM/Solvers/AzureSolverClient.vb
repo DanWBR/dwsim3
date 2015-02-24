@@ -134,7 +134,11 @@ Namespace DWSIM.Flowsheet
 
                     If My.MyApplication.CalculatorStopRequested = True Then
                         My.MyApplication.CalculatorStopRequested = False
-                        Throw New TimeoutException(DWSIM.App.GetLocalString("CalculationAborted"))
+                        msg = New BrokeredMessage("")
+                        msg.Properties.Add("requestID", requestID)
+                        msg.Properties.Add("type", "abort")
+                        msg.Properties.Add("origin", "client")
+                        qcc.Send(msg)
                     End If
 
                     Application.DoEvents()
