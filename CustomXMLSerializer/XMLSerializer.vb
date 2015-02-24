@@ -113,6 +113,12 @@ Public Class XMLSerializer
                                     Dim val As Byte = xel.Value
                                     obj.GetType.GetProperty(prop.Name).SetValue(obj, val, Nothing)
                                 End If
+                            ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Date Then
+                                Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
+                                If Not xel Is Nothing Then
+                                    Dim val As Date = Date.Parse(xel.Value, CultureInfo.InvariantCulture)
+                                    obj.GetType.GetProperty(prop.Name).SetValue(obj, val, Nothing)
+                                End If
                             End If
                         End If
                     End If
@@ -199,6 +205,12 @@ Public Class XMLSerializer
                                 Dim val As Byte = xel.Value
                                 obj.GetType.GetField(prop.Name).SetValue(obj, val)
                             End If
+                        ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Date Then
+                            Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
+                            If Not xel Is Nothing Then
+                                Dim val As Date = Date.Parse(xel.Value, CultureInfo.InvariantCulture)
+                                obj.GetType.GetField(prop.Name).SetValue(obj, val)
+                            End If
                         End If
                     End If
                 End If
@@ -264,6 +276,8 @@ Public Class XMLSerializer
                                 .Add(New XElement(prop.Name, ColorTranslator.ToHtml(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing))))
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Byte Then
                                 .Add(New XElement(prop.Name, obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing)))
+                            ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Date Then
+                                .Add(New XElement(prop.Name, DirectCast(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing), Date).ToString(CultureInfo.InvariantCulture)))
                             End If
                         End If
                     End If
@@ -308,6 +322,8 @@ Public Class XMLSerializer
                             .Add(New XElement(prop.Name, ColorTranslator.ToHtml(obj.GetType.GetField(prop.Name).GetValue(obj))))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Byte Then
                             .Add(New XElement(prop.Name, obj.GetType.GetField(prop.Name).GetValue(obj)))
+                        ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Date Then
+                            .Add(New XElement(prop.Name, DirectCast(obj.GetType.GetField(prop.Name).GetValue(obj), Date).ToString(CultureInfo.InvariantCulture)))
                         End If
                     End If
                 Next

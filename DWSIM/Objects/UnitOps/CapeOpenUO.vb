@@ -467,7 +467,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Try
                             _params(i - 1).value = ip.value
                         Catch ex As Exception
-                            Console.WriteLine(ex.ToString)
+                            'Console.WriteLine(ex.ToString)
                         End Try
                     Next
                 End If

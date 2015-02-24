@@ -1675,6 +1675,8 @@ Namespace DWSIM.Flowsheet
                                 If ms.GraphicObject.OutputConnectors(0).IsAttached = False Then
                                     lists(0).Add(baseobj.Nome)
                                 End If
+                            ElseIf baseobj.GraphicObject.TipoObjeto = TipoObjeto.EnergyStream Then
+                                lists(0).Add(baseobj.Nome)
                             ElseIf baseobj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then
                                 lists(0).Add(baseobj.Nome)
                             End If

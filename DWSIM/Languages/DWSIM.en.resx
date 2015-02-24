@@ -5060,6 +5060,6 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Active server found on Service Bus Endpoint. Preparing data for uploading...</value>
   </data>
   <data name="LastUpdatedOn" xml:space="preserve">
-    <value>Data updated on</value>
+    <value>Last successful calculation on</value>
   </data>
 </root>
