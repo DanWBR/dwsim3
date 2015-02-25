@@ -1613,6 +1613,8 @@ Namespace DWSIM.Flowsheet
 
             If form.Options.CalculatorActivated Then
 
+                'this is the cancellation token for background threads. it checks for calculator stop requests and passes the request to the tasks.
+
                 Dim ct As CancellationToken
                 If ts Is Nothing Then ts = New CancellationTokenSource
                 My.MyApplication.TaskCancellationTokenSource = ts
@@ -1633,6 +1635,8 @@ Namespace DWSIM.Flowsheet
 
                 Dim obj As SimulationObjects_BaseClass
 
+                'process scripts associated with the solverstarted event
+
                 form.ProcessScripts(Script.EventType.SolverStarted, Script.ObjectType.Solver)
 
                 RaiseEvent FlowsheetCalculationStarted(form, New System.EventArgs(), Nothing)
@@ -1643,6 +1647,8 @@ Namespace DWSIM.Flowsheet
 
                 form.WriteToLog(DWSIM.App.GetLocalString("FSstartedsolving"), Color.Blue, FormClasses.TipoAviso.Informacao)
 
+                'set all objects status to not calculated (red)
+
                 For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                     baseobj.Calculated = False
                     If Not baseobj.GraphicObject Is Nothing Then baseobj.GraphicObject.Calculated = baseobj.Calculated
@@ -1651,6 +1657,8 @@ Namespace DWSIM.Flowsheet
                 Select Case mode
 
                     Case 0, 1, 2
+
+                        '0 = main thread, 1 = bg thread, 2 = bg parallel threads
 
                         'find recycles.
 
@@ -1740,6 +1748,8 @@ Namespace DWSIM.Flowsheet
 
                             If t0 Is Nothing Then
 
+                                'if the task hasn't been created yet...
+
                                 For Each o As String In objstack
                                     obj = form.Collections.ObjectCollection(o)
                                     objargs = New DWSIM.Outros.StatusChangeEventArgs
@@ -1760,14 +1770,6 @@ Namespace DWSIM.Flowsheet
                                 If mode = 0 Then
                                     t0 = New Task(Sub()
                                                       ProcessCalculationQueue(form, True, True, 0)
-                                                      CheckCalculatorStatus()
-                                                      converged = True
-                                                      For Each r As String In recycles
-                                                          obj = form.Collections.CLCS_RecycleCollection(r)
-                                                          converged = DirectCast(obj, SpecialOps.Recycle).Converged
-                                                          If Not converged Then Exit For
-                                                      Next
-                                                      form.ProcessScripts(Script.EventType.SolverRecycleLoop, Script.ObjectType.Solver)
                                                   End Sub, ct)
                                     t0.RunSynchronously()
                                 ElseIf mode = 1 Or mode = 2 Then
@@ -1829,11 +1831,13 @@ Namespace DWSIM.Flowsheet
                                         converged = DirectCast(obj, SpecialOps.Recycle).Converged
                                         If Not converged Then Exit For
                                     Next
+                                    't0.Dispose()
+                                    t0 = Nothing
                                     form.ProcessScripts(Script.EventType.SolverRecycleLoop, Script.ObjectType.Solver)
                                 End If
                             End If
 
-                            Application.DoEvents()
+                            CheckCalculatorStatus()
 
                         End While
 
