@@ -2,7 +2,9 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{34BE2D2D-9B3C-4C12-8C90-732E21CD7CB1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <StartupObject>DWSIM.My.MyApplication</StartupObject>
@@ -18,12 +20,18 @@
     <ApplicationIcon>dwsim_splash.ico</ApplicationIcon>
     <TargetZone>LocalIntranet</TargetZone>
     <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <OptionStrict>Off</OptionStrict>
+    <OptionCompare>Binary</OptionCompare>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -39,6 +47,31 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>DWSIM.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>DWSIM.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>false</DefineDebug>
@@ -46,10 +79,10 @@
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DocumentationFile>DWSIM.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <DebugType>Full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <AdditionalParameters>
-    </AdditionalParameters>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,11 +92,9 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DefineDebug>false</DefineDebug>
-    <AdditionalParameters>
-    </AdditionalParameters>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'x86|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -73,10 +104,8 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DefineDebug>false</DefineDebug>
-    <AdditionalParameters>
-    </AdditionalParameters>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'x86|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -85,29 +114,76 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>false</DefineTrace>
-    <AdditionalParameters>
-    </AdditionalParameters>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>false</DefineTrace>
-    <AdditionalParameters>
-    </AdditionalParameters>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AeroWizard">
       <HintPath>References\AeroWizard.dll</HintPath>
     </Reference>
+    <Reference Include="Ascend, Version=1.0.0.6, Culture=neutral, PublicKeyToken=25c7a393ba3f37cd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Ascend.dll</HintPath>
+    </Reference>
+    <Reference Include="Ascend.Windows.Forms, Version=1.0.0.6, Culture=neutral, PublicKeyToken=ecd86ece2d3eb46d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Ascend.Windows.Forms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CapeOpen, Version=1.0.4118.14986, Culture=neutral, PublicKeyToken=100cc1b5ee8fe630, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\CapeOpen.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ciloci.Flee, Version=0.9.14.0, Culture=neutral, PublicKeyToken=c8526a021ef298ed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Ciloci.Flee.dll</HintPath>
+    </Reference>
+    <Reference Include="Cudafy.NET, Version=1.20.4797.29543, Culture=neutral, PublicKeyToken=63a4c9931616906b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Cudafy.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Cureos.Numerics, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Cureos.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNumerics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\DotNumerics.dll</HintPath>
+    </Reference>
+    <Reference Include="EWSoftware.StatusBarText, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\EWSoftware.StatusBarText.dll</HintPath>
+    </Reference>
     <Reference Include="ExcelApi">
       <HintPath>References\ExcelApi.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ExcelDna.Integration, Version=0.29.4165.35922, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\ExcelDna.Integration.dll</HintPath>
+    </Reference>
+    <Reference Include="FileHelpers, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\FileHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Core, Version=0.44.0.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\IKVM.OpenJDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Jdbc, Version=0.44.0.5, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\IKVM.OpenJDK.Jdbc.dll</HintPath>
     </Reference>
     <Reference Include="indigo-dotnet">
       <HintPath>References\indigo-dotnet.dll</HintPath>
@@ -118,6 +194,41 @@
     <Reference Include="indigo-renderer-dotnet">
       <HintPath>References\indigo-renderer-dotnet.dll</HintPath>
     </Reference>
+    <Reference Include="Infralution.Localization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Infralution.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.CAPEOPEN110, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Interop.CAPEOPEN110.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\IronPython.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython.Modules, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\IronPython.Modules.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="jcosmo_net, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\jcosmo_net.dll</HintPath>
+    </Reference>
+    <Reference Include="LabelWithDivider, Version=1.1.0.1, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\LabelWithDivider.dll</HintPath>
+    </Reference>
+    <Reference Include="LuaInterface, Version=2.0.0.16708, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\LuaInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="Mapack, Version=1.0.9.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Mapack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Dynamic">
       <HintPath>References\Microsoft.Dynamic.dll</HintPath>
     </Reference>
@@ -125,13 +236,45 @@
       <HintPath>References\Microsoft.Scripting.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
+    <Reference Include="Mono.CSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Mono.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="NeoDataType.MyNeoReport, Version=1.4.0.0, Culture=neutral, PublicKeyToken=cc45d3430ba4f561, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\NeoDataType.MyNeoReport.dll</HintPath>
+    </Reference>
     <Reference Include="NetOffice">
       <HintPath>References\NetOffice.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Nini, Version=1.1.0.0, Culture=neutral, PublicKeyToken=691faec150a7fa7b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Nini.dll</HintPath>
+    </Reference>
     <Reference Include="OfficeApi">
       <HintPath>References\OfficeApi.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="OutlookGrid, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\OutlookGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Puzzle.SyntaxBox.NET2.0, Version=1.4.10.17492, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\Puzzle.SyntaxBox.NET2.0.dll</HintPath>
+    </Reference>
+    <Reference Include="RichTextBoxExtended, Version=2.0.2954.894, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\RichTextBoxExtended.dll</HintPath>
+    </Reference>
+    <Reference Include="SpinningProgress, Version=1.0.2444.27714, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\SpinningProgress.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperToolTip, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\SuperToolTip.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -140,106 +283,22 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="TabStrip, Version=2.0.2773.39305, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\TabStrip.dll</HintPath>
+    </Reference>
     <Reference Include="VBIDEApi">
       <HintPath>References\VBIDEApi.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Ascend">
-      <HintPath>References\Ascend.dll</HintPath>
-    </Reference>
-    <Reference Include="Ascend.Windows.Forms">
-      <HintPath>References\Ascend.Windows.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="CapeOpen">
-      <HintPath>References\CapeOpen.dll</HintPath>
-    </Reference>
-    <Reference Include="Ciloci.Flee">
-      <HintPath>References\Ciloci.Flee.dll</HintPath>
-    </Reference>
-    <Reference Include="Cudafy.NET">
-      <HintPath>References\Cudafy.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="Cureos.Numerics">
-      <HintPath>References\Cureos.Numerics.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNumerics">
-      <HintPath>References\DotNumerics.dll</HintPath>
-    </Reference>
-    <Reference Include="EWSoftware.StatusBarText">
-      <HintPath>References\EWSoftware.StatusBarText.dll</HintPath>
-    </Reference>
-    <Reference Include="ExcelDna.Integration">
-      <HintPath>References\ExcelDna.Integration.dll</HintPath>
-    </Reference>
-    <Reference Include="FileHelpers">
-      <HintPath>References\FileHelpers.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>References\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="IKVM.OpenJDK.Core">
-      <HintPath>References\IKVM.OpenJDK.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="IKVM.OpenJDK.Jdbc">
-      <HintPath>References\IKVM.OpenJDK.Jdbc.dll</HintPath>
-    </Reference>
-    <Reference Include="Infralution.Localization">
-      <HintPath>References\Infralution.Localization.dll</HintPath>
-    </Reference>
-    <Reference Include="Interop.CAPEOPEN110">
-      <HintPath>References\Interop.CAPEOPEN110.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython">
-      <HintPath>References\IronPython.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython.Modules">
-      <HintPath>References\IronPython.Modules.dll</HintPath>
-    </Reference>
-    <Reference Include="jcosmo_net">
-      <HintPath>References\jcosmo_net.dll</HintPath>
-    </Reference>
-    <Reference Include="LabelWithDivider">
-      <HintPath>References\LabelWithDivider.dll</HintPath>
-    </Reference>
-    <Reference Include="LuaInterface">
-      <HintPath>References\LuaInterface.dll</HintPath>
-    </Reference>
-    <Reference Include="Mapack">
-      <HintPath>References\Mapack.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.CSharp">
-      <HintPath>References\Mono.CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="NeoDataType.MyNeoReport">
-      <HintPath>References\NeoDataType.MyNeoReport.dll</HintPath>
-    </Reference>
-    <Reference Include="Nini">
-      <HintPath>References\Nini.dll</HintPath>
-    </Reference>
-    <Reference Include="OutlookGrid">
-      <HintPath>References\OutlookGrid.dll</HintPath>
-    </Reference>
-    <Reference Include="Puzzle.SyntaxBox.NET2.0">
-      <HintPath>References\Puzzle.SyntaxBox.NET2.0.dll</HintPath>
-    </Reference>
-    <Reference Include="RichTextBoxExtended">
-      <HintPath>References\RichTextBoxExtended.dll</HintPath>
-    </Reference>
-    <Reference Include="SpinningProgress">
-      <HintPath>References\SpinningProgress.dll</HintPath>
-    </Reference>
-    <Reference Include="SuperToolTip">
-      <HintPath>References\SuperToolTip.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="TabStrip">
-      <HintPath>References\TabStrip.dll</HintPath>
-    </Reference>
-    <Reference Include="WeifenLuo.WinFormsUI.Docking">
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.7.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>References\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
     </Reference>
-    <Reference Include="ZedGraph">
+    <Reference Include="ZedGraph, Version=5.1.0.32336, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>References\ZedGraph.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -1336,7 +1395,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoolPropInterface\CoolPropInterface.csproj">
-      <Project>{A5F6E7CC-0710-4129-9FAA-9FBE9BC4FFCF}</Project>
+      <Project>{a5f6e7cc-0710-4129-9faa-9fbe9bc4ffcf}</Project>
       <Name>CoolPropInterface</Name>
     </ProjectReference>
     <ProjectReference Include="..\CustomXMLSerializer\CustomXMLSerializer.vbproj">
