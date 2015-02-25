@@ -863,9 +863,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             StOutCold.Fases(0).SPMProperties.enthalpy = Hc2
 
             If Th2 < Tc1 Or Tc2 > Th1 Then
-                FlowSheet.UIThread(Sub()
-                                       FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Temperature Cross", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
-                                   End Sub)
+                FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Temperature Cross", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
             End If
 
             'Call the flowsheet calculation routine
@@ -881,7 +879,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function DeCalculate() As Integer
 
-            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
+            Dim form As Global.DWSIM.FormFlowsheet = Me.FlowSheet
 
             If Me.GraphicObject.OutputConnectors(0).IsAttached Then
 
