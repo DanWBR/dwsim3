@@ -1794,21 +1794,11 @@ Namespace DWSIM.Flowsheet
                                                                                          End Sub,
                                                                                              ct,
                                                                                              TaskCreationOptions.LongRunning)
-                                                                       t.Start()
+                                                                       If Not t.IsCanceled Then t.Start()
                                                                        If Not t.Wait(My.Settings.SolverTimeoutSeconds * 1000, ct) Then
                                                                            Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
                                                                        End If
-                                                                   End Sub).ContinueWith(Sub(t)
-                                                                                             converged = True
-                                                                                             For Each r As String In recycles
-                                                                                                 obj = form.Collections.CLCS_RecycleCollection(r)
-                                                                                                 converged = DirectCast(obj, SpecialOps.Recycle).Converged
-                                                                                                 If Not converged Then Exit For
-                                                                                             Next
-                                                                                             form.UIThread(Sub()
-                                                                                                               form.ProcessScripts(Script.EventType.SolverRecycleLoop, Script.ObjectType.Solver)
-                                                                                                           End Sub)
-                                                                                         End Sub, TaskContinuationOptions.OnlyOnRanToCompletion)
+                                                                   End Sub)
                                     Catch agex As AggregateException
                                         age = agex
                                         Exit While
@@ -1826,8 +1816,21 @@ Namespace DWSIM.Flowsheet
                                 If t0.IsCanceled Then
                                     age = New AggregateException(DWSIM.App.GetLocalString("CalculationAborted"), New OperationCanceledException(DWSIM.App.GetLocalString("CalculationAborted")))
                                     Exit While
+                                ElseIf t0.IsFaulted And ts.IsCancellationRequested Then
+                                    age = New AggregateException(DWSIM.App.GetLocalString("CalculationAborted"), t0.Exception)
+                                    Exit While
+                                ElseIf t0.IsFaulted Then
+                                    age = New AggregateException(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), t0.Exception)
+                                    Exit While
+                                ElseIf t0.Status = TaskStatus.RanToCompletion Then
+                                    converged = True
+                                    For Each r As String In recycles
+                                        obj = form.Collections.CLCS_RecycleCollection(r)
+                                        converged = DirectCast(obj, SpecialOps.Recycle).Converged
+                                        If Not converged Then Exit For
+                                    Next
+                                    form.ProcessScripts(Script.EventType.SolverRecycleLoop, Script.ObjectType.Solver)
                                 End If
-
                             End If
 
                             Application.DoEvents()
@@ -1836,8 +1839,10 @@ Namespace DWSIM.Flowsheet
 
                         form.CalculationQueue.Clear()
 
-                        ts.Dispose()
-                        If form.Visible Then form.FormSurface.Enabled = True
+                        If form.Visible Then
+                            ts.Dispose()
+                            form.FormSurface.Enabled = True
+                        End If
 
                         My.MyApplication.TaskCancellationTokenSource = Nothing
 
@@ -1855,6 +1860,9 @@ Namespace DWSIM.Flowsheet
                             azureclient.SolveFlowsheet(form)
                         Catch ex As Exception
                             age = New AggregateException(ex.Message.ToString, ex)
+                        Finally
+                            If Not azureclient.qcc.IsClosed Then azureclient.qcc.Close()
+                            If Not azureclient.qcs.IsClosed Then azureclient.qcs.Close()
                         End Try
 
                     Case 4

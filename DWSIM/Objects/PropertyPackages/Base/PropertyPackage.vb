@@ -6019,6 +6019,8 @@ Final3:
 
             Tr = T / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature
 
+            If Tr >= 1 Then Return 0.0#
+
             If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "DWSIM" Or _
                                 Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "" Then
                 If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.IsHYPO = 1 Or _
@@ -6046,7 +6048,7 @@ Final3:
                 result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, T / Tr) / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight / 1000 'kJ/kg
                     Return result
                 Else
-                    Return 0
+                Return 0.0#
                 End If
 
         End Function

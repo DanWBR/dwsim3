@@ -77,11 +77,11 @@ Module AzureServer
 
             While (qcc.Peek() IsNot Nothing)
                 Dim brokeredMessage = qcc.Receive(New TimeSpan(0, 0, 0))
-                brokeredMessage.Complete()
+                If Not brokeredMessage Is Nothing Then brokeredMessage.Complete()
             End While
             While (qcs.Peek() IsNot Nothing)
                 Dim brokeredMessage = qcs.Receive(New TimeSpan(0, 0, 0))
-                brokeredMessage.Complete()
+                If Not brokeredMessage Is Nothing Then brokeredMessage.Complete()
             End While
 
             Console.WriteLine("[" & Date.Now.ToString & "] " & "Cleared ok")
@@ -90,10 +90,10 @@ Module AzureServer
 
             Dim bytearr As New List(Of Byte())
 
-            If ts Is Nothing Then ts = New CancellationTokenSource
-            Dim ct As CancellationToken = ts.Token
-
             While True
+
+                If ts Is Nothing Then ts = New CancellationTokenSource
+                Dim ct As CancellationToken = ts.Token
 
                 Thread.Sleep(1000)
 
@@ -156,13 +156,29 @@ Module AzureServer
                                                           End Sub,
                                                           TaskCreationOptions.LongRunning,
                                                           ct).ContinueWith(Sub(t)
-                                                                               Console.WriteLine("[" & Date.Now.ToString & "] " & t.Exception.Flatten().ToString)
-                                                                               msg = New BrokeredMessage(t.Exception.Flatten().ToString)
-                                                                               msg.Properties.Add("requestID", requestID)
-                                                                               msg.Properties.Add("type", "exception")
-                                                                               msg.Properties.Add("origin", "server")
-                                                                               qcs.Send(msg)
-                                                                           End Sub, TaskContinuationOptions.OnlyOnFaulted)
+                                                                               If Not t Is Nothing Then
+                                                                                   If Not t.Exception Is Nothing Then
+                                                                                       Console.WriteLine("[" & Date.Now.ToString & "] " & t.Exception.Flatten().ToString)
+                                                                                       msg = New BrokeredMessage(t.Exception.Flatten().ToString)
+                                                                                       msg.Properties.Add("requestID", requestID)
+                                                                                       msg.Properties.Add("type", "exception")
+                                                                                       msg.Properties.Add("origin", "server")
+                                                                                       qcs.Send(msg)
+                                                                                   ElseIf t.IsCanceled Then
+                                                                                       Console.WriteLine("[" & Date.Now.ToString & "] " & "Calculation aborted.")
+                                                                                       msg = New BrokeredMessage("Calculation aborted.")
+                                                                                       msg.Properties.Add("requestID", requestID)
+                                                                                       msg.Properties.Add("type", "text")
+                                                                                       msg.Properties.Add("origin", "server")
+                                                                                       qcs.Send(msg)
+                                                                                   End If
+                                                                               End If
+                                                                           End Sub,
+                                                                           TaskContinuationOptions.OnlyOnFaulted).ContinueWith(Sub()
+                                                                                                                                   ts.Dispose()
+                                                                                                                                   ts = Nothing
+                                                                                                                               End Sub)
+
                                 End If
 
                             ElseIf message.Properties("type") = "connectioncheck" Then
@@ -192,9 +208,6 @@ Module AzureServer
                 End If
 
             End While
-
-            ts.Dispose()
-            ts = Nothing
 
             qcc.Close()
             qcs.Close()

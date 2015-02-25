@@ -28,7 +28,7 @@ Namespace DWSIM.Flowsheet
     Public Class AzureSolverClient
 
         Private nm As NamespaceManager
-        Private qcc, qcs As QueueClient
+        Public qcc, qcs As QueueClient
         Private queueNameS As String = "DWSIMserver"
         Private queueNameC As String = "DWSIMclient"
 
@@ -49,11 +49,11 @@ Namespace DWSIM.Flowsheet
 
                 While (qcc.Peek() IsNot Nothing)
                     Dim brokeredMessage = qcc.Receive(New TimeSpan(0, 0, 0))
-                    brokeredMessage.Complete()
+                    If Not brokeredMessage Is Nothing Then brokeredMessage.Complete()
                 End While
                 While (qcs.Peek() IsNot Nothing)
                     Dim brokeredMessage = qcs.Receive(New TimeSpan(0, 0, 0))
-                    brokeredMessage.Complete()
+                    If Not brokeredMessage Is Nothing Then brokeredMessage.Complete()
                 End While
 
                 Dim message As BrokeredMessage

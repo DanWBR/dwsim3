@@ -103,10 +103,18 @@ Module TCPServer
             Task.Factory.StartNew(Sub()
                                       ProcessData(bytes, sessionID, dataChannel)
                                   End Sub, ct, TaskCreationOptions.LongRunning).ContinueWith(Sub(t)
-                                                                                                 Console.WriteLine("[" & Date.Now.ToString & "] " & "Error solving flowsheet: " & t.Exception.ToString)
-                                                                                                 errmsg = ""
-                                                                                                 If Not server.SendText("Error solving flowsheet: " & t.Exception.ToString, 3, sessionID, errmsg) Then
-                                                                                                     Console.WriteLine(errmsg)
+                                                                                                 If Not t.Exception Is Nothing Then
+                                                                                                     Console.WriteLine("[" & Date.Now.ToString & "] " & "Error solving flowsheet: " & t.Exception.ToString)
+                                                                                                     errmsg = ""
+                                                                                                     If Not server.SendText("Error solving flowsheet: " & t.Exception.ToString, 3, sessionID, errmsg) Then
+                                                                                                         Console.WriteLine(errmsg)
+                                                                                                     End If
+                                                                                                 ElseIf t.IsCanceled Then
+                                                                                                     Console.WriteLine("[" & Date.Now.ToString & "] " & "Calculation aborted.")
+                                                                                                     errmsg = ""
+                                                                                                     If Not server.SendText("Calculation aborted.", 2, sessionID, errmsg) Then
+                                                                                                         Console.WriteLine(errmsg)
+                                                                                                     End If
                                                                                                  End If
                                                                                              End Sub,
                                                         TaskContinuationOptions.OnlyOnFaulted).ContinueWith(Sub()
