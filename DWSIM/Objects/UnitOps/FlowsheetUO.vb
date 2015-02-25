@@ -783,37 +783,40 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Sub UpdateProcessData(path As String)
 
-            Try
+            If Me.Initialized Then
 
-                Dim xdoc As XDocument = XDocument.Load(path)
+                Try
 
-                Dim xel As XElement
+                    Dim xdoc As XDocument = XDocument.Load(path)
 
-                xel = xdoc.Element("DWSIM_Simulation_Data").Element("GeneralInfo")
+                    Dim xel As XElement
 
-                xel.RemoveAll()
-                xel.Add(New XElement("BuildVersion", My.Application.Info.Version.ToString))
-                xel.Add(New XElement("BuildDate", CType("01/01/2000", DateTime).AddDays(My.Application.Info.Version.Build).AddSeconds(My.Application.Info.Version.Revision * 2)))
-                xel.Add(New XElement("OSInfo", My.Computer.Info.OSFullName & ", Version " & My.Computer.Info.OSVersion & ", " & My.Computer.Info.OSPlatform & " Platform"))
-                xel.Add(New XElement("SavedOn", Date.Now))
+                    xel = xdoc.Element("DWSIM_Simulation_Data").Element("GeneralInfo")
 
-                xel = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects")
-                xel.RemoveAll()
+                    xel.RemoveAll()
+                    xel.Add(New XElement("BuildVersion", My.Application.Info.Version.ToString))
+                    xel.Add(New XElement("BuildDate", CType("01/01/2000", DateTime).AddDays(My.Application.Info.Version.Build).AddSeconds(My.Application.Info.Version.Revision * 2)))
+                    xel.Add(New XElement("OSInfo", My.Computer.Info.OSFullName & ", Version " & My.Computer.Info.OSVersion & ", " & My.Computer.Info.OSPlatform & " Platform"))
+                    xel.Add(New XElement("SavedOn", Date.Now))
 
-                For Each so As SimulationObjects_BaseClass In Me.Fsheet.Collections.ObjectCollection.Values
-                    xel.Add(New XElement("SimulationObject", {so.SaveData().ToArray()}))
-                Next
+                    xel = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects")
+                    xel.RemoveAll()
 
-                xdoc.Save(path)
+                    For Each so As SimulationObjects_BaseClass In Me.Fsheet.Collections.ObjectCollection.Values
+                        xel.Add(New XElement("SimulationObject", {so.SaveData().ToArray()}))
+                    Next
 
-                FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": " & DWSIM.App.GetLocalString("SubFSUpdateSuccess"), Color.Blue, FormClasses.TipoAviso.Informacao)
+                    xdoc.Save(path)
 
-            Catch ex As Exception
+                    FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": " & DWSIM.App.GetLocalString("SubFSUpdateSuccess"), Color.Blue, FormClasses.TipoAviso.Informacao)
 
-                FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": " & DWSIM.App.GetLocalString("SubFSUpdateFailed") & " " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                Catch ex As Exception
 
-            End Try
+                    FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": " & DWSIM.App.GetLocalString("SubFSUpdateFailed") & " " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
 
+                End Try
+
+            End If
 
         End Sub
 
@@ -1370,7 +1373,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
             ParseFilePath()
 
             If InitializeOnLoad Then
-                If IO.File.Exists(SimulationFile) Then Me.Fsheet = InitializeFlowsheet(SimulationFile)
+                If IO.File.Exists(SimulationFile) Then
+                    Me.Fsheet = InitializeFlowsheet(SimulationFile)
+                    Me.Initialized = True
+                End If
             End If
 
             Dim i As Integer

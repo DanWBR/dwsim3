@@ -441,9 +441,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Try
                             ip.value = _params(i - 1).value
                         Catch ex As Exception
-                            Console.WriteLine(ex.ToString)
-                            Dim ecu As CapeOpen.ECapeUser = myuo
-                            Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": CAPE-OPEN Exception: " & ecu.code & " at " & ecu.interfaceName & ". Reason: " & ecu.description, Color.DarkGray, FormClasses.TipoAviso.Aviso)
+                            'Console.WriteLine(ex.ToString)
+                            'Dim ecu As CapeOpen.ECapeUser = myuo
+                            'Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": CAPE-OPEN Exception: " & ecu.code & " at " & ecu.interfaceName & ". Reason: " & ecu.description, Color.DarkGray, FormClasses.TipoAviso.Aviso)
                         End Try
                     Next
                 End If

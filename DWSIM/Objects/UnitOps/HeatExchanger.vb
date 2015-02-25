@@ -863,11 +863,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
             StOutCold.Fases(0).SPMProperties.enthalpy = Hc2
 
             If Th2 < Tc1 Or Tc2 > Th1 Then
-                FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Temperature Cross", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                FlowSheet.UIThread(Sub()
+                                       FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Temperature Cross", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                                   End Sub)
             End If
-
-            'CalculateMaterialStream(FlowSheet, StOutHot)
-            'CalculateMaterialStream(FlowSheet, StOutCold)
 
             'Call the flowsheet calculation routine
             With objargs
@@ -875,6 +874,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 .Nome = Me.Nome
                 .Tipo = Me.ObjectType
             End With
+
             FlowSheet.CalculationQueue.Enqueue(objargs)
 
         End Function
