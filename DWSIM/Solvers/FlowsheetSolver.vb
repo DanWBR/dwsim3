@@ -1888,6 +1888,7 @@ Namespace DWSIM.Flowsheet
 
                 For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                     If Not baseobj.GraphicObject Is Nothing Then
+                        baseobj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                         baseobj.GraphicObject.Calculated = baseobj.Calculated
                     End If
                 Next
