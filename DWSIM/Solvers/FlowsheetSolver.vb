@@ -1981,63 +1981,6 @@ Namespace DWSIM.Flowsheet
         ''' <param name="ObjID">Unique Id of the object ("Name" or "GraphicObject.Name" properties). This is not the object's Flowsheet display name ("Tag" property or its GraphicObject object).</param>
         ''' <remarks></remarks>
 
-        Public Shared Sub CalculateObjectAsync(ByVal form As FormFlowsheet, ByVal ObjID As String)
-
-            If form.Collections.ObjectCollection.ContainsKey(ObjID) Then
-
-                Dim baseobj As SimulationObjects_BaseClass = form.Collections.ObjectCollection(ObjID)
-
-                If baseobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream Then
-                    Dim ms As Streams.MaterialStream = baseobj
-                    If ms.GraphicObject.InputConnectors(0).IsAttached = False Then
-                        'add this stream to the calculator queue list
-                        Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                        With objargs
-                            .Calculado = True
-                            .Nome = ms.Nome
-                            .Tipo = TipoObjeto.MaterialStream
-                            .Tag = ms.GraphicObject.Tag
-                        End With
-                        If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then
-                            form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
-                        End If
-                        form.CalculationQueue.Enqueue(objargs)
-                        ProcessQueueInternal(form)
-                    Else
-                        If ms.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.OT_Reciclo Then
-                            'add this stream to the calculator queue list
-                            Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                            With objargs
-                                .Calculado = True
-                                .Nome = ms.Nome
-                                .Tipo = TipoObjeto.MaterialStream
-                                .Tag = ms.GraphicObject.Tag
-                            End With
-                            If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then
-                                form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
-                            End If
-                            form.CalculationQueue.Enqueue(objargs)
-                            ProcessQueueInternal(form)
-                        End If
-                    End If
-                Else
-                    Dim unit As SimulationObjects_UnitOpBaseClass = baseobj
-                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                    With objargs
-                        .Emissor = "PropertyGrid"
-                        .Calculado = True
-                        .Nome = unit.Nome
-                        .Tipo = unit.GraphicObject.TipoObjeto
-                        .Tag = unit.GraphicObject.Tag
-                    End With
-                    form.CalculationQueue.Enqueue(objargs)
-                    ProcessQueueInternal(form)
-                End If
-
-            End If
-
-        End Sub
-
         Public Shared Sub CalculateObject(ByVal form As FormFlowsheet, ByVal ObjID As String)
 
             If form.Collections.ObjectCollection.ContainsKey(ObjID) Then
